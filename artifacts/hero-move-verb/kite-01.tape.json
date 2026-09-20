@@ -1,0 +1,128 @@
+{
+  "version": 2,
+  "id": "agent-97e85a39-c5e7f73a-6f61-4b2b-9c4f-51efec0f02e3",
+  "createdAt": 0,
+  "kept": true,
+  "contract": "the-claim",
+  "seed": "the-claim-01",
+  "difficulty": "trail",
+  "simVersion": 1,
+  "meta": {
+    "buildId": "420c97d1d",
+    "engineHash": "869a6149fd3f11eda31da2edb838809b65ef973c2b3f9425e22f4902bbfee872",
+    "era": 5,
+    "viewVersion": 2
+  },
+  "runStart": {
+    "meta": {
+      "version": 1,
+      "tracks": {
+        "territory": 0,
+        "science": 0,
+        "hero": 0,
+        "agent": 0
+      }
+    },
+    "research": {
+      "version": 1,
+      "epochId": "epoch-1-frontier",
+      "metaScienceCursor": 0,
+      "progress": {
+        "version": 1,
+        "tracks": {
+          "territory": 0,
+          "science": 0,
+          "hero": 0,
+          "agent": 0
+        }
+      },
+      "taken": [],
+      "proposalSalt": 0,
+      "pinnedTarget": null,
+      "unlocks": {}
+    }
+  },
+  "inputLog": {
+    "version": 1,
+    "name": "agent-97e85a39",
+    "contractId": "the-claim",
+    "seed": "the-claim-01",
+    "difficultyPreset": "trail",
+    "stepSeconds": 0.03333333333333333,
+    "start": {
+      "x": 0,
+      "z": 12
+    },
+    "durationTicks": 1649,
+    "entries": [
+      {
+        "t": 0,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": -6
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 900,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 8,
+                  "z": 10
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 1475,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "truncated": null,
+    "primarySlot": 0,
+    "streams": []
+  },
+  "eventLogHash": "fnv1a32:335f880f",
+  "outcome": {
+    "reason": "death",
+    "secured": false,
+    "waves": 1,
+    "timeAlive": 54.967,
+    "gold": 30
+  }
+}

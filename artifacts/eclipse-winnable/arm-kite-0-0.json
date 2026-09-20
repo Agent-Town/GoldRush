@@ -1,0 +1,5374 @@
+{
+  "contract": "e8-eclipse",
+  "policy": {
+    "verbs": [
+      "HARVEST",
+      "BUILD",
+      "MOVE_TO",
+      "MOVE_HERO",
+      "HOLD",
+      "BLAST_AT",
+      "CONTEXT_ACTION",
+      "PICK_UPGRADE",
+      "SECURE_CHOICE"
+    ],
+    "home": {
+      "x": 0,
+      "z": 5.5
+    },
+    "errand": "regolith",
+    "airMargin": 10,
+    "panTailReserve": 2,
+    "fortProfile": "default",
+    "heroPost": {
+      "x": 0,
+      "z": 0
+    },
+    "defence": [
+      {
+        "what": "turret",
+        "where": {
+          "x": -3,
+          "z": 1
+        }
+      },
+      {
+        "what": "turret",
+        "where": {
+          "x": 3,
+          "z": 1
+        }
+      },
+      {
+        "what": "turret",
+        "where": {
+          "x": -6,
+          "z": 2
+        }
+      },
+      {
+        "what": "turret",
+        "where": {
+          "x": 6,
+          "z": 2
+        }
+      },
+      {
+        "what": "sentry_beacon",
+        "where": {
+          "x": -1,
+          "z": 6
+        }
+      },
+      {
+        "what": "sentry_beacon",
+        "where": {
+          "x": 1,
+          "z": 6
+        }
+      },
+      {
+        "what": "sentry_beacon",
+        "where": {
+          "x": -3,
+          "z": 6
+        }
+      },
+      {
+        "what": "sentry_beacon",
+        "where": {
+          "x": 3,
+          "z": 6
+        }
+      },
+      {
+        "what": "sentry_beacon",
+        "where": {
+          "x": -5,
+          "z": 6
+        }
+      },
+      {
+        "what": "sentry_beacon",
+        "where": {
+          "x": 5,
+          "z": 6
+        }
+      }
+    ]
+  },
+  "identical": false,
+  "secured": true,
+  "runs": [
+    {
+      "seed": "e8-eclipse-01",
+      "exitCode": 0,
+      "turns": 80,
+      "picks": 28,
+      "outcome": {
+        "secured": true,
+        "waves": 20,
+        "timeMs": 600000,
+        "gold": 80,
+        "kills": 919,
+        "calls": 79,
+        "defaultedPicks": 0,
+        "defaultedSecure": 0,
+        "eventLogHash": "fnv1a32:1723fe17"
+      },
+      "run": 1,
+      "tape": null,
+      "trace": [
+        {
+          "wave": 0,
+          "runSeconds": 0,
+          "gold": 0,
+          "suit": 60,
+          "inDome": null,
+          "window": 0,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "worked": [],
+          "required": 4,
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "solar": "online",
+          "after": "0/1",
+          "works": {},
+          "tiers": [],
+          "heroHp": 100,
+          "heroAt": {
+            "x": 0,
+            "z": 12
+          },
+          "threats": 0,
+          "body": {
+            "x": -1.8,
+            "z": 10.9
+          },
+          "lastOrders": [],
+          "plan": "credit",
+          "target": "gold-seam-1",
+          "sortieSeconds": 9.16,
+          "pans": 26,
+          "build": "turret@-3,1"
+        },
+        {
+          "wave": 0,
+          "runSeconds": 7.9,
+          "gold": 30,
+          "suit": 55,
+          "inDome": null,
+          "window": 0,
+          "windowWaves": 4,
+          "creditedThisWindow": 1,
+          "worked": [
+            3
+          ],
+          "required": 4,
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "solar": "online",
+          "after": "0/1",
+          "works": {},
+          "tiers": [],
+          "heroHp": 100,
+          "heroAt": {
+            "x": 0,
+            "z": -6.29
+          },
+          "threats": 1,
+          "body": {
+            "x": 16,
+            "z": 22
+          },
+          "lastOrders": [
+            [
+              "MOVE_HERO",
+              "done",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ],
+            [
+              "BUILD",
+              "pending",
+              null
+            ]
+          ],
+          "plan": "work",
+          "target": "gold-seam-2",
+          "sortieSeconds": 11.43,
+          "pans": 27,
+          "build": "turret@-3,1"
+        },
+        {
+          "wave": 0,
+          "runSeconds": 29.3,
+          "gold": 10,
+          "suit": 37.433,
+          "inDome": null,
+          "window": 0,
+          "windowWaves": 4,
+          "creditedThisWindow": 1,
+          "worked": [
+            3
+          ],
+          "required": 4,
+          "held": 6,
+          "breathless": 0,
+          "complete": false,
+          "solar": "online",
+          "after": "0/1",
+          "works": {
+            "turret": 1
+          },
+          "tiers": [
+            1
+          ],
+          "heroHp": 100,
+          "heroAt": {
+            "x": 0,
+            "z": 6.04
+          },
+          "threats": 4,
+          "body": {
+            "x": 30,
+            "z": 30
+          },
+          "lastOrders": [
+            [
+              "MOVE_HERO",
+              "done",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "BUILD",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ]
+          ],
+          "plan": "work",
+          "target": "gold-seam-1",
+          "sortieSeconds": 21.06,
+          "pans": 27,
+          "build": "turret@3,1"
+        },
+        {
+          "wave": 1,
+          "runSeconds": 30,
+          "gold": 10,
+          "suit": 36.733,
+          "inDome": null,
+          "window": 0,
+          "windowWaves": 4,
+          "creditedThisWindow": 1,
+          "worked": [
+            3
+          ],
+          "required": 4,
+          "held": 6,
+          "breathless": 0,
+          "complete": false,
+          "solar": "online",
+          "after": "0/1",
+          "works": {
+            "turret": 1
+          },
+          "tiers": [
+            1
+          ],
+          "heroHp": 100,
+          "heroAt": {
+            "x": 0,
+            "z": 4.17
+          },
+          "threats": 7,
+          "body": {
+            "x": 30,
+            "z": 30
+          },
+          "lastOrders": [
+            [
+              "MOVE_HERO",
+              "active",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "pending",
+              null
+            ],
+            [
+              "BUILD",
+              "pending",
+              null
+            ],
+            [
+              "HARVEST",
+              "pending",
+              null
+            ]
+          ],
+          "plan": "work",
+          "target": "gold-seam-1",
+          "sortieSeconds": 21.06,
+          "pans": 27,
+          "build": "turret@3,1"
+        },
+        {
+          "wave": 1,
+          "runSeconds": 44.57,
+          "gold": 40,
+          "suit": 22.167,
+          "inDome": null,
+          "window": 0,
+          "windowWaves": 4,
+          "creditedThisWindow": 1,
+          "worked": [
+            3
+          ],
+          "required": 4,
+          "held": 12,
+          "breathless": 0,
+          "complete": false,
+          "solar": "online",
+          "after": "0/1",
+          "works": {
+            "turret": 1
+          },
+          "tiers": [
+            1
+          ],
+          "heroHp": 100,
+          "heroAt": {
+            "x": 0,
+            "z": -6.1
+          },
+          "threats": 3,
+          "body": {
+            "x": -34,
+            "z": 12
+          },
+          "lastOrders": [
+            [
+              "MOVE_HERO",
+              "done",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "BUILD",
+              "pending",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ]
+          ],
+          "plan": "work",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 0,
+          "build": "turret@3,1"
+        },
+        {
+          "wave": 2,
+          "runSeconds": 60.03,
+          "gold": 40,
+          "suit": 45.2,
+          "inDome": "dome-cluster-pad-center",
+          "window": 0,
+          "windowWaves": 4,
+          "creditedThisWindow": 1,
+          "worked": [
+            3
+          ],
+          "required": 4,
+          "held": 12,
+          "breathless": 0,
+          "complete": false,
+          "solar": "online",
+          "after": "0/1",
+          "works": {
+            "turret": 1
+          },
+          "tiers": [
+            1
+          ],
+          "heroHp": 100,
+          "heroAt": {
+            "x": 0,
+            "z": 6.04
+          },
+          "threats": 8,
+          "body": {
+            "x": 0,
+            "z": 5.5
+          },
+          "lastOrders": [
+            [
+              "MOVE_HERO",
+              "done",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "BUILD",
+              "pending",
+              null
+            ],
+            [
+              "MOVE_TO",
+              "done",
+              null
+            ]
+          ],
+          "plan": "work",
+          "target": "gold-seam-2",
+          "sortieSeconds": 14.42,
+          "pans": 27,
+          "build": "turret@3,1"
+        },
+        {
+          "wave": 2,
+          "runSeconds": 75.13,
+          "gold": 0,
+          "suit": 51.267,
+          "inDome": null,
+          "window": 0,
+          "windowWaves": 4,
+          "creditedThisWindow": 1,
+          "worked": [
+            3
+          ],
+          "required": 4,
+          "held": 18,
+          "breathless": 0,
+          "complete": false,
+          "solar": "online",
+          "after": "0/1",
+          "works": {
+            "turret": 2
+          },
+          "tiers": [
+            1,
+            1
+          ],
+          "heroHp": 100,
+          "heroAt": {
+            "x": 0,
+            "z": -6.1
+          },
+          "threats": 3,
+          "body": {
+            "x": 8.2,
+            "z": 2.9
+          },
+          "lastOrders": [
+            [
+              "MOVE_HERO",
+              "done",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "BUILD",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ]
+          ],
+          "plan": "work",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 27,
+          "build": "turret@-6,2"
+        },
+        {
+          "wave": 2,
+          "runSeconds": 82.17,
+          "gold": 30,
+          "suit": 55.767,
+          "inDome": null,
+          "window": 0,
+          "windowWaves": 4,
+          "creditedThisWindow": 1,
+          "worked": [
+            3
+          ],
+          "required": 4,
+          "held": 18,
+          "breathless": 0,
+          "complete": false,
+          "solar": "online",
+          "after": "0/1",
+          "works": {
+            "turret": 2
+          },
+          "tiers": [
+            1,
+            1
+          ],
+          "heroHp": 100,
+          "heroAt": {
+            "x": 0,
+            "z": 5.99
+          },
+          "threats": 2,
+          "body": {
+            "x": 16,
+            "z": 22
+          },
+          "lastOrders": [
+            [
+              "MOVE_HERO",
+              "done",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "BUILD",
+              "pending",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ]
+          ],
+          "plan": "work",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 0,
+          "build": "turret@-6,2"
+        },
+        {
+          "wave": 3,
+          "runSeconds": 90.03,
+          "gold": 30,
+          "suit": 58.4,
+          "inDome": "dome-cluster-pad-center",
+          "window": 0,
+          "windowWaves": 4,
+          "creditedThisWindow": 1,
+          "worked": [
+            3
+          ],
+          "required": 4,
+          "held": 18,
+          "breathless": 0,
+          "complete": false,
+          "solar": "online",
+          "after": "0/1",
+          "works": {
+            "turret": 2
+          },
+          "tiers": [
+            1,
+            1
+          ],
+          "heroHp": 100,
+          "heroAt": {
+            "x": 0,
+            "z": -6.1
+          },
+          "threats": 8,
+          "body": {
+            "x": 0,
+            "z": 5.5
+          },
+          "lastOrders": [
+            [
+              "MOVE_HERO",
+              "done",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "BUILD",
+              "pending",
+              null
+            ],
+            [
+              "MOVE_TO",
+              "done",
+              null
+            ]
+          ],
+          "plan": "work",
+          "target": "gold-seam-2",
+          "sortieSeconds": 16.14,
+          "pans": 27,
+          "build": "turret@-6,2"
+        },
+        {
+          "wave": 3,
+          "runSeconds": 100.47,
+          "gold": 60,
+          "suit": 52.4,
+          "inDome": null,
+          "window": 0,
+          "windowWaves": 4,
+          "creditedThisWindow": 1,
+          "worked": [
+            3
+          ],
+          "required": 4,
+          "held": 24,
+          "breathless": 0,
+          "complete": false,
+          "solar": "online",
+          "after": "0/1",
+          "works": {
+            "turret": 2
+          },
+          "tiers": [
+            1,
+            1
+          ],
+          "heroHp": 100,
+          "heroAt": {
+            "x": 0,
+            "z": 6.03
+          },
+          "threats": 7,
+          "body": {
+            "x": 30,
+            "z": 30
+          },
+          "lastOrders": [
+            [
+              "MOVE_HERO",
+              "done",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "BUILD",
+              "pending",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ]
+          ],
+          "plan": "work",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 0,
+          "build": "turret@-6,2"
+        },
+        {
+          "wave": 3,
+          "runSeconds": 119.07,
+          "gold": 60,
+          "suit": 60,
+          "inDome": "dome-cluster-pad-center",
+          "window": 0,
+          "windowWaves": 4,
+          "creditedThisWindow": 1,
+          "worked": [
+            3
+          ],
+          "required": 4,
+          "held": 24,
+          "breathless": 0,
+          "complete": false,
+          "solar": "online",
+          "after": "0/1",
+          "works": {
+            "turret": 2
+          },
+          "tiers": [
+            1,
+            1
+          ],
+          "heroHp": 100,
+          "heroAt": {
+            "x": 0,
+            "z": -6.12
+          },
+          "threats": 2,
+          "body": {
+            "x": 0,
+            "z": 5.5
+          },
+          "lastOrders": [
+            [
+              "MOVE_HERO",
+              "done",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "BUILD",
+              "pending",
+              null
+            ],
+            [
+              "MOVE_TO",
+              "done",
+              null
+            ]
+          ],
+          "plan": "work",
+          "target": "gold-seam-1",
+          "sortieSeconds": 12.53,
+          "pans": 27,
+          "build": "turret@-6,2"
+        },
+        {
+          "wave": 4,
+          "runSeconds": 120.03,
+          "gold": 60,
+          "suit": 60,
+          "inDome": "dome-cluster-pad-center",
+          "window": 1,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "worked": [
+            3
+          ],
+          "required": 4,
+          "held": 24,
+          "breathless": 0,
+          "complete": false,
+          "solar": "online",
+          "after": "0/1",
+          "works": {
+            "turret": 2
+          },
+          "tiers": [
+            1,
+            1
+          ],
+          "heroHp": 125,
+          "heroAt": {
+            "x": 0,
+            "z": -3.13
+          },
+          "threats": 11,
+          "body": {
+            "x": -0.5,
+            "z": 2.9
+          },
+          "lastOrders": [
+            [
+              "PICK_UPGRADE",
+              "done",
+              null
+            ],
+            [
+              "MOVE_HERO",
+              "active",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "pending",
+              null
+            ],
+            [
+              "BUILD",
+              "pending",
+              null
+            ]
+          ],
+          "plan": "credit",
+          "target": "gold-seam-1",
+          "sortieSeconds": 12.85,
+          "pans": 26,
+          "build": "turret@-6,2"
+        },
+        {
+          "wave": 4,
+          "runSeconds": 123.93,
+          "gold": 60,
+          "suit": 57.867,
+          "inDome": null,
+          "window": 1,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "worked": [
+            3
+          ],
+          "required": 4,
+          "held": 24,
+          "breathless": 0,
+          "complete": false,
+          "solar": "online",
+          "after": "0/1",
+          "works": {
+            "turret": 2
+          },
+          "tiers": [
+            1,
+            1
+          ],
+          "heroHp": 125,
+          "heroAt": {
+            "x": 0,
+            "z": 5.68
+          },
+          "threats": 6,
+          "body": {
+            "x": -11.4,
+            "z": 13.7
+          },
+          "lastOrders": [
+            [
+              "MOVE_HERO",
+              "done",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "active",
+              null
+            ],
+            [
+              "BUILD",
+              "pending",
+              null
+            ]
+          ],
+          "plan": "credit",
+          "target": "gold-seam-1",
+          "sortieSeconds": 9.65,
+          "pans": 26,
+          "build": "turret@-6,2"
+        },
+        {
+          "wave": 4,
+          "runSeconds": 127.57,
+          "gold": 90,
+          "suit": 54.233,
+          "inDome": null,
+          "window": 1,
+          "windowWaves": 4,
+          "creditedThisWindow": 1,
+          "worked": [
+            1,
+            3
+          ],
+          "required": 4,
+          "held": 24,
+          "breathless": 0,
+          "complete": false,
+          "solar": "online",
+          "after": "0/1",
+          "works": {
+            "turret": 2
+          },
+          "tiers": [
+            1,
+            1
+          ],
+          "heroHp": 150,
+          "heroAt": {
+            "x": 0,
+            "z": -5.11
+          },
+          "threats": 1,
+          "body": {
+            "x": -22,
+            "z": 26
+          },
+          "lastOrders": [
+            [
+              "PICK_UPGRADE",
+              "done",
+              null
+            ],
+            [
+              "MOVE_HERO",
+              "done",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ]
+          ],
+          "plan": "work",
+          "target": "gold-seam-2",
+          "sortieSeconds": 19.24,
+          "pans": 28,
+          "build": "turret@-6,2"
+        },
+        {
+          "wave": 4,
+          "runSeconds": 130.67,
+          "gold": 90,
+          "suit": 51.133,
+          "inDome": null,
+          "window": 1,
+          "windowWaves": 4,
+          "creditedThisWindow": 1,
+          "worked": [
+            1,
+            3
+          ],
+          "required": 4,
+          "held": 24,
+          "breathless": 0,
+          "complete": false,
+          "solar": "online",
+          "after": "0/1",
+          "works": {
+            "turret": 2
+          },
+          "tiers": [
+            1,
+            1
+          ],
+          "heroHp": 150,
+          "heroAt": {
+            "x": 0,
+            "z": 4.6
+          },
+          "threats": 7,
+          "body": {
+            "x": -13.1,
+            "z": 23.1
+          },
+          "lastOrders": [
+            [
+              "MOVE_HERO",
+              "done",
+              null
+            ],
+            [
+              "BUILD",
+              "pending",
+              null
+            ],
+            [
+              "HARVEST",
+              "active",
+              null
+            ],
+            [
+              "HARVEST",
+              "pending",
+              null
+            ]
+          ],
+          "plan": "work",
+          "target": "gold-seam-2",
+          "sortieSeconds": 17.28,
+          "pans": 27,
+          "build": "turret@-6,2"
+        },
+        {
+          "wave": 4,
+          "runSeconds": 137.27,
+          "gold": 90,
+          "suit": 44.533,
+          "inDome": null,
+          "window": 1,
+          "windowWaves": 4,
+          "creditedThisWindow": 1,
+          "worked": [
+            1,
+            3
+          ],
+          "required": 4,
+          "held": 24,
+          "breathless": 0,
+          "complete": false,
+          "solar": "online",
+          "after": "0/1",
+          "works": {
+            "turret": 2
+          },
+          "tiers": [
+            1,
+            1
+          ],
+          "heroHp": 150,
+          "heroAt": {
+            "x": 0,
+            "z": -5.6
+          },
+          "threats": 2,
+          "body": {
+            "x": 17.8,
+            "z": 15.8
+          },
+          "lastOrders": [
+            [
+              "PICK_UPGRADE",
+              "done",
+              null
+            ],
+            [
+              "MOVE_HERO",
+              "done",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "BUILD",
+              "pending",
+              null
+            ]
+          ],
+          "plan": "work",
+          "target": "gold-seam-2",
+          "sortieSeconds": 10.68,
+          "pans": 27,
+          "build": "turret@-6,2"
+        },
+        {
+          "wave": 5,
+          "runSeconds": 150.03,
+          "gold": 0,
+          "suit": 45.6,
+          "inDome": null,
+          "window": 1,
+          "windowWaves": 4,
+          "creditedThisWindow": 1,
+          "worked": [
+            1,
+            3
+          ],
+          "required": 4,
+          "held": 25,
+          "breathless": 0,
+          "complete": false,
+          "solar": "online",
+          "after": "0/1",
+          "works": {
+            "turret": 3
+          },
+          "tiers": [
+            1,
+            1,
+            1
+          ],
+          "heroHp": 150,
+          "heroAt": {
+            "x": 0,
+            "z": 5.86
+          },
+          "threats": 14,
+          "body": {
+            "x": 8.1,
+            "z": 5.5
+          },
+          "lastOrders": [
+            [
+              "PICK_UPGRADE",
+              "done",
+              null
+            ],
+            [
+              "MOVE_HERO",
+              "done",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "BUILD",
+              "done",
+              null
+            ]
+          ],
+          "plan": "work",
+          "target": "gold-seam-2",
+          "sortieSeconds": 12.78,
+          "pans": 27,
+          "build": "turret@6,2"
+        },
+        {
+          "wave": 5,
+          "runSeconds": 154.43,
+          "gold": 0,
+          "suit": 41.2,
+          "inDome": null,
+          "window": 1,
+          "windowWaves": 4,
+          "creditedThisWindow": 1,
+          "worked": [
+            1,
+            3
+          ],
+          "required": 4,
+          "held": 25,
+          "breathless": 0,
+          "complete": false,
+          "solar": "online",
+          "after": "0/1",
+          "works": {
+            "turret": 3
+          },
+          "tiers": [
+            1,
+            1,
+            1
+          ],
+          "heroHp": 150,
+          "heroAt": {
+            "x": 0,
+            "z": -5.58
+          },
+          "threats": 9,
+          "body": {
+            "x": 28.6,
+            "z": 10.6
+          },
+          "lastOrders": [
+            [
+              "MOVE_HERO",
+              "done",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "BUILD",
+              "pending",
+              null
+            ],
+            [
+              "HARVEST",
+              "active",
+              null
+            ]
+          ],
+          "plan": "work",
+          "target": "gold-seam-2",
+          "sortieSeconds": 8.38,
+          "pans": 27,
+          "build": "turret@6,2"
+        },
+        {
+          "wave": 5,
+          "runSeconds": 156.23,
+          "gold": 25,
+          "suit": 39.4,
+          "inDome": null,
+          "window": 1,
+          "windowWaves": 4,
+          "creditedThisWindow": 1,
+          "worked": [
+            1,
+            3
+          ],
+          "required": 4,
+          "held": 30,
+          "breathless": 0,
+          "complete": false,
+          "solar": "online",
+          "after": "0/1",
+          "works": {
+            "turret": 3
+          },
+          "tiers": [
+            1,
+            1,
+            1
+          ],
+          "heroHp": 150,
+          "heroAt": {
+            "x": 0,
+            "z": 1.38
+          },
+          "threats": 5,
+          "body": {
+            "x": 34,
+            "z": 12
+          },
+          "lastOrders": [
+            [
+              "PICK_UPGRADE",
+              "done",
+              null
+            ],
+            [
+              "MOVE_HERO",
+              "done",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "BUILD",
+              "pending",
+              null
+            ]
+          ],
+          "plan": "work",
+          "target": "gold-seam-1",
+          "sortieSeconds": 21.38,
+          "pans": 28,
+          "build": "turret@6,2"
+        },
+        {
+          "wave": 5,
+          "runSeconds": 162.2,
+          "gold": 25,
+          "suit": 33.433,
+          "inDome": null,
+          "window": 1,
+          "windowWaves": 4,
+          "creditedThisWindow": 1,
+          "worked": [
+            1,
+            3
+          ],
+          "required": 4,
+          "held": 30,
+          "breathless": 0,
+          "complete": false,
+          "solar": "online",
+          "after": "0/1",
+          "works": {
+            "turret": 3
+          },
+          "tiers": [
+            1,
+            1,
+            1
+          ],
+          "heroHp": 150,
+          "heroAt": {
+            "x": 0,
+            "z": -4.03
+          },
+          "threats": 6,
+          "body": {
+            "x": 9,
+            "z": 12
+          },
+          "lastOrders": [
+            [
+              "MOVE_HERO",
+              "done",
+              null
+            ],
+            [
+              "BUILD",
+              "pending",
+              null
+            ],
+            [
+              "HARVEST",
+              "active",
+              null
+            ],
+            [
+              "HARVEST",
+              "pending",
+              null
+            ]
+          ],
+          "plan": "work",
+          "target": "gold-seam-1",
+          "sortieSeconds": 16.18,
+          "pans": 27,
+          "build": "turret@6,2"
+        },
+        {
+          "wave": 5,
+          "runSeconds": 171.43,
+          "gold": 55,
+          "suit": 24.2,
+          "inDome": null,
+          "window": 1,
+          "windowWaves": 4,
+          "creditedThisWindow": 1,
+          "worked": [
+            1,
+            3
+          ],
+          "required": 4,
+          "held": 36,
+          "breathless": 0,
+          "complete": false,
+          "solar": "online",
+          "after": "0/1",
+          "works": {
+            "turret": 3
+          },
+          "tiers": [
+            1,
+            1,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": 5.62
+          },
+          "threats": 3,
+          "body": {
+            "x": -34,
+            "z": 12
+          },
+          "lastOrders": [
+            [
+              "PICK_UPGRADE",
+              "done",
+              null
+            ],
+            [
+              "MOVE_HERO",
+              "done",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "BUILD",
+              "pending",
+              null
+            ]
+          ],
+          "plan": "work",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 0,
+          "build": "turret@6,2"
+        },
+        {
+          "wave": 5,
+          "runSeconds": 178.17,
+          "gold": 55,
+          "suit": 17.467,
+          "inDome": null,
+          "window": 1,
+          "windowWaves": 4,
+          "creditedThisWindow": 1,
+          "worked": [
+            1,
+            3
+          ],
+          "required": 4,
+          "held": 36,
+          "breathless": 0,
+          "complete": false,
+          "solar": "online",
+          "after": "0/1",
+          "works": {
+            "turret": 3
+          },
+          "tiers": [
+            1,
+            1,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": -5.81
+          },
+          "threats": 2,
+          "body": {
+            "x": -7.5,
+            "z": 6.9
+          },
+          "lastOrders": [
+            [
+              "MOVE_HERO",
+              "done",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "BUILD",
+              "pending",
+              null
+            ],
+            [
+              "MOVE_TO",
+              "active",
+              null
+            ]
+          ],
+          "plan": "work",
+          "target": "gold-seam-2",
+          "sortieSeconds": 6.19,
+          "pans": 27,
+          "build": "turret@6,2"
+        },
+        {
+          "wave": 6,
+          "runSeconds": 180.03,
+          "gold": 55,
+          "suit": 18.267,
+          "inDome": null,
+          "window": 1,
+          "windowWaves": 4,
+          "creditedThisWindow": 1,
+          "worked": [
+            1,
+            3
+          ],
+          "required": 4,
+          "held": 36,
+          "breathless": 0,
+          "complete": false,
+          "solar": "online",
+          "after": "0/1",
+          "works": {
+            "turret": 3
+          },
+          "tiers": [
+            1,
+            1,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": 1.67
+          },
+          "threats": 13,
+          "body": {
+            "x": -1.4,
+            "z": 7.3
+          },
+          "lastOrders": [
+            [
+              "PICK_UPGRADE",
+              "done",
+              null
+            ],
+            [
+              "MOVE_HERO",
+              "done",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "BUILD",
+              "pending",
+              null
+            ]
+          ],
+          "plan": "work",
+          "target": "gold-seam-2",
+          "sortieSeconds": 6.43,
+          "pans": 28,
+          "build": "turret@6,2"
+        },
+        {
+          "wave": 6,
+          "runSeconds": 183.27,
+          "gold": 85,
+          "suit": 15.033,
+          "inDome": null,
+          "window": 1,
+          "windowWaves": 4,
+          "creditedThisWindow": 1,
+          "worked": [
+            1,
+            3
+          ],
+          "required": 4,
+          "held": 42,
+          "breathless": 0,
+          "complete": false,
+          "solar": "online",
+          "after": "0/1",
+          "works": {
+            "turret": 3
+          },
+          "tiers": [
+            1,
+            1,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": -3.73
+          },
+          "threats": 12,
+          "body": {
+            "x": -8,
+            "z": 20
+          },
+          "lastOrders": [
+            [
+              "MOVE_HERO",
+              "done",
+              null
+            ],
+            [
+              "BUILD",
+              "pending",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ]
+          ],
+          "plan": "work",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 0,
+          "build": "turret@6,2"
+        },
+        {
+          "wave": 6,
+          "runSeconds": 192.27,
+          "gold": 85,
+          "suit": 29.533,
+          "inDome": "dome-cluster-pad-center",
+          "window": 1,
+          "windowWaves": 4,
+          "creditedThisWindow": 1,
+          "worked": [
+            1,
+            3
+          ],
+          "required": 4,
+          "held": 42,
+          "breathless": 0,
+          "complete": false,
+          "solar": "online",
+          "after": "0/1",
+          "works": {
+            "turret": 3
+          },
+          "tiers": [
+            1,
+            1,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": 5.47
+          },
+          "threats": 10,
+          "body": {
+            "x": 0,
+            "z": 5.5
+          },
+          "lastOrders": [
+            [
+              "MOVE_HERO",
+              "done",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "BUILD",
+              "pending",
+              null
+            ],
+            [
+              "MOVE_TO",
+              "done",
+              null
+            ]
+          ],
+          "plan": "work",
+          "target": "gold-seam-1",
+          "sortieSeconds": 6.9,
+          "pans": 27,
+          "build": "turret@6,2"
+        },
+        {
+          "wave": 6,
+          "runSeconds": 197.87,
+          "gold": 115,
+          "suit": 35.1,
+          "inDome": null,
+          "window": 1,
+          "windowWaves": 4,
+          "creditedThisWindow": 1,
+          "worked": [
+            1,
+            3
+          ],
+          "required": 4,
+          "held": 48,
+          "breathless": 0,
+          "complete": false,
+          "solar": "online",
+          "after": "0/1",
+          "works": {
+            "turret": 3
+          },
+          "tiers": [
+            1,
+            1,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": -5.86
+          },
+          "threats": 6,
+          "body": {
+            "x": -8,
+            "z": 20
+          },
+          "lastOrders": [
+            [
+              "PICK_UPGRADE",
+              "done",
+              null
+            ],
+            [
+              "MOVE_HERO",
+              "done",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "BUILD",
+              "pending",
+              null
+            ]
+          ],
+          "plan": "work",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 0,
+          "build": "turret@6,2"
+        },
+        {
+          "wave": 6,
+          "runSeconds": 209.3,
+          "gold": 115,
+          "suit": 58.667,
+          "inDome": "dome-cluster-pad-center",
+          "window": 1,
+          "windowWaves": 4,
+          "creditedThisWindow": 1,
+          "worked": [
+            1,
+            3
+          ],
+          "required": 4,
+          "held": 48,
+          "breathless": 0,
+          "complete": false,
+          "solar": "online",
+          "after": "0/1",
+          "works": {
+            "turret": 3
+          },
+          "tiers": [
+            1,
+            1,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": 5.99
+          },
+          "threats": 3,
+          "body": {
+            "x": 0,
+            "z": 5.5
+          },
+          "lastOrders": [
+            [
+              "MOVE_HERO",
+              "done",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "BUILD",
+              "pending",
+              null
+            ],
+            [
+              "MOVE_TO",
+              "done",
+              null
+            ]
+          ],
+          "plan": "work",
+          "target": "gold-seam-2",
+          "sortieSeconds": 14.42,
+          "pans": 27,
+          "build": "turret@6,2"
+        },
+        {
+          "wave": 7,
+          "runSeconds": 210.03,
+          "gold": 115,
+          "suit": 60,
+          "inDome": "dome-cluster-pad-center",
+          "window": 1,
+          "windowWaves": 4,
+          "creditedThisWindow": 1,
+          "worked": [
+            1,
+            3
+          ],
+          "required": 4,
+          "held": 48,
+          "breathless": 0,
+          "complete": false,
+          "solar": "online",
+          "after": "0/1",
+          "works": {
+            "turret": 3
+          },
+          "tiers": [
+            1,
+            1,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": 4.12
+          },
+          "threats": 16,
+          "body": {
+            "x": -1.3,
+            "z": 4.1
+          },
+          "lastOrders": [
+            [
+              "PICK_UPGRADE",
+              "done",
+              null
+            ],
+            [
+              "MOVE_HERO",
+              "active",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "pending",
+              null
+            ],
+            [
+              "BUILD",
+              "pending",
+              null
+            ]
+          ],
+          "plan": "work",
+          "target": "gold-seam-2",
+          "sortieSeconds": 14.21,
+          "pans": 27,
+          "build": "turret@6,2"
+        },
+        {
+          "wave": 7,
+          "runSeconds": 224.53,
+          "gold": 125,
+          "suit": 52.033,
+          "inDome": "dome-cluster-pad-center",
+          "window": 1,
+          "windowWaves": 4,
+          "creditedThisWindow": 1,
+          "worked": [
+            1,
+            3
+          ],
+          "required": 4,
+          "held": 50,
+          "breathless": 0,
+          "complete": false,
+          "solar": "online",
+          "after": "0/1",
+          "works": {
+            "turret": 3
+          },
+          "tiers": [
+            1,
+            1,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": -5.93
+          },
+          "threats": 12,
+          "body": {
+            "x": -3.3,
+            "z": 4.3
+          },
+          "lastOrders": [
+            [
+              "MOVE_HERO",
+              "done",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "BUILD",
+              "active",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ]
+          ],
+          "plan": "work",
+          "target": "gold-seam-2",
+          "sortieSeconds": 13.81,
+          "pans": 27,
+          "build": "turret@6,2"
+        },
+        {
+          "wave": 7,
+          "runSeconds": 234.33,
+          "gold": 20,
+          "suit": 53.767,
+          "inDome": null,
+          "window": 1,
+          "windowWaves": 4,
+          "creditedThisWindow": 1,
+          "worked": [
+            1,
+            3
+          ],
+          "required": 4,
+          "held": 54,
+          "breathless": 0,
+          "complete": false,
+          "solar": "online",
+          "after": "0/1",
+          "works": {
+            "turret": 4
+          },
+          "tiers": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": 5.99
+          },
+          "threats": 6,
+          "body": {
+            "x": -34,
+            "z": 12
+          },
+          "lastOrders": [
+            [
+              "PICK_UPGRADE",
+              "done",
+              null
+            ],
+            [
+              "MOVE_HERO",
+              "done",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "BUILD",
+              "done",
+              null
+            ]
+          ],
+          "plan": "work",
+          "target": "gold-seam-1",
+          "sortieSeconds": 21.38,
+          "pans": 27,
+          "build": "sentry_beacon@-1,6"
+        },
+        {
+          "wave": 8,
+          "runSeconds": 240.03,
+          "gold": 20,
+          "suit": 48.067,
+          "inDome": null,
+          "window": 2,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "worked": [
+            1,
+            3
+          ],
+          "required": 4,
+          "held": 54,
+          "breathless": 0,
+          "complete": false,
+          "solar": "online",
+          "after": "0/1",
+          "works": {
+            "turret": 4
+          },
+          "tiers": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": -5.78
+          },
+          "threats": 19,
+          "body": {
+            "x": -12.1,
+            "z": 11.7
+          },
+          "lastOrders": [
+            [
+              "MOVE_HERO",
+              "done",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "BUILD",
+              "pending",
+              null
+            ],
+            [
+              "HARVEST",
+              "active",
+              null
+            ]
+          ],
+          "plan": "credit",
+          "target": "gold-seam-1",
+          "sortieSeconds": 16.82,
+          "pans": 26,
+          "build": "sentry_beacon@-1,6"
+        },
+        {
+          "wave": 8,
+          "runSeconds": 242.53,
+          "gold": 20,
+          "suit": 45.567,
+          "inDome": null,
+          "window": 2,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "worked": [
+            1,
+            3
+          ],
+          "required": 4,
+          "held": 54,
+          "breathless": 0,
+          "complete": false,
+          "solar": "online",
+          "after": "0/1",
+          "works": {
+            "turret": 4
+          },
+          "tiers": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": 3.59
+          },
+          "threats": 15,
+          "body": {
+            "x": -0.1,
+            "z": 11.7
+          },
+          "lastOrders": [
+            [
+              "MOVE_HERO",
+              "done",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "active",
+              null
+            ],
+            [
+              "BUILD",
+              "pending",
+              null
+            ]
+          ],
+          "plan": "credit",
+          "target": "gold-seam-1",
+          "sortieSeconds": 14.32,
+          "pans": 27,
+          "build": "sentry_beacon@-1,6"
+        },
+        {
+          "wave": 8,
+          "runSeconds": 253.97,
+          "gold": 25,
+          "suit": 34.133,
+          "inDome": null,
+          "window": 2,
+          "windowWaves": 4,
+          "creditedThisWindow": 1,
+          "worked": [
+            1,
+            3,
+            5
+          ],
+          "required": 4,
+          "held": 54,
+          "breathless": 0,
+          "complete": false,
+          "solar": "online",
+          "after": "0/1",
+          "works": {
+            "turret": 4
+          },
+          "tiers": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": -5.5
+          },
+          "threats": 8,
+          "body": {
+            "x": 13.8,
+            "z": 8.5
+          },
+          "lastOrders": [
+            [
+              "PICK_UPGRADE",
+              "done",
+              null
+            ],
+            [
+              "MOVE_HERO",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ],
+            [
+              "BUILD",
+              "active",
+              null
+            ]
+          ],
+          "plan": "work",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 27,
+          "build": "sentry_beacon@-1,6"
+        },
+        {
+          "wave": 8,
+          "runSeconds": 262.3,
+          "gold": 25,
+          "suit": 25.8,
+          "inDome": null,
+          "window": 2,
+          "windowWaves": 4,
+          "creditedThisWindow": 1,
+          "worked": [
+            1,
+            3,
+            5
+          ],
+          "required": 4,
+          "held": 54,
+          "breathless": 0,
+          "complete": false,
+          "solar": "online",
+          "after": "0/1",
+          "works": {
+            "sentry_beacon": 1,
+            "turret": 4
+          },
+          "tiers": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": 5.98
+          },
+          "threats": 5,
+          "body": {
+            "x": 34,
+            "z": 12
+          },
+          "lastOrders": [
+            [
+              "PICK_UPGRADE",
+              "done",
+              null
+            ],
+            [
+              "MOVE_HERO",
+              "done",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "BUILD",
+              "done",
+              null
+            ]
+          ],
+          "plan": "work",
+          "target": "gold-seam-2",
+          "sortieSeconds": 11.91,
+          "pans": 27,
+          "build": "sentry_beacon@1,6"
+        },
+        {
+          "wave": 9,
+          "runSeconds": 270.03,
+          "gold": 35,
+          "suit": 18.067,
+          "inDome": null,
+          "window": 2,
+          "windowWaves": 4,
+          "creditedThisWindow": 1,
+          "worked": [
+            1,
+            3,
+            5
+          ],
+          "required": 4,
+          "held": 56,
+          "breathless": 0,
+          "complete": false,
+          "solar": "online",
+          "after": "0/1",
+          "works": {
+            "sentry_beacon": 1,
+            "turret": 4
+          },
+          "tiers": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": -5.91
+          },
+          "threats": 21,
+          "body": {
+            "x": 21.4,
+            "z": 22.9
+          },
+          "lastOrders": [
+            [
+              "MOVE_HERO",
+              "done",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "BUILD",
+              "active",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ]
+          ],
+          "plan": "work",
+          "target": "gold-seam-2",
+          "sortieSeconds": 10.4,
+          "pans": 27,
+          "build": "sentry_beacon@1,6"
+        },
+        {
+          "wave": 9,
+          "runSeconds": 275.8,
+          "gold": 0,
+          "suit": 12.3,
+          "inDome": null,
+          "window": 2,
+          "windowWaves": 4,
+          "creditedThisWindow": 1,
+          "worked": [
+            1,
+            3,
+            5
+          ],
+          "required": 4,
+          "held": 56,
+          "breathless": 0,
+          "complete": false,
+          "solar": "online",
+          "after": "0/1",
+          "works": {
+            "sentry_beacon": 2,
+            "turret": 4
+          },
+          "tiers": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": 5.85
+          },
+          "threats": 11,
+          "body": {
+            "x": 10.9,
+            "z": 14.2
+          },
+          "lastOrders": [
+            [
+              "MOVE_HERO",
+              "done",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "BUILD",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "active",
+              null
+            ]
+          ],
+          "plan": "work",
+          "target": "gold-seam-2",
+          "sortieSeconds": 13.24,
+          "pans": 27,
+          "build": "sentry_beacon@-3,6"
+        },
+        {
+          "wave": 9,
+          "runSeconds": 281.17,
+          "gold": 20,
+          "suit": 6.933,
+          "inDome": null,
+          "window": 2,
+          "windowWaves": 4,
+          "creditedThisWindow": 1,
+          "worked": [
+            1,
+            3,
+            5
+          ],
+          "required": 4,
+          "held": 60,
+          "breathless": 0,
+          "complete": false,
+          "solar": "online",
+          "after": "0/1",
+          "works": {
+            "sentry_beacon": 2,
+            "turret": 4
+          },
+          "tiers": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": -5.79
+          },
+          "threats": 16,
+          "body": {
+            "x": 30,
+            "z": 30
+          },
+          "lastOrders": [
+            [
+              "PICK_UPGRADE",
+              "done",
+              null
+            ],
+            [
+              "MOVE_HERO",
+              "done",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "BUILD",
+              "pending",
+              null
+            ]
+          ],
+          "plan": "work",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 0,
+          "build": "sentry_beacon@-3,6"
+        },
+        {
+          "wave": 9,
+          "runSeconds": 290.17,
+          "gold": 20,
+          "suit": 0,
+          "inDome": null,
+          "window": 2,
+          "windowWaves": 4,
+          "creditedThisWindow": 1,
+          "worked": [
+            1,
+            3,
+            5
+          ],
+          "required": 4,
+          "held": 60,
+          "breathless": 0,
+          "complete": false,
+          "solar": "online",
+          "after": "0/1",
+          "works": {
+            "sentry_beacon": 2,
+            "turret": 4
+          },
+          "tiers": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": 6.03
+          },
+          "threats": 7,
+          "body": {
+            "x": 0.7,
+            "z": 6.1
+          },
+          "lastOrders": [
+            [
+              "MOVE_HERO",
+              "done",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "BUILD",
+              "pending",
+              null
+            ],
+            [
+              "MOVE_TO",
+              "active",
+              null
+            ]
+          ],
+          "plan": "work",
+          "target": "gold-seam-1",
+          "sortieSeconds": 6.87,
+          "pans": 27,
+          "build": "sentry_beacon@-3,6"
+        },
+        {
+          "wave": 9,
+          "runSeconds": 299.67,
+          "gold": 5,
+          "suit": 2,
+          "inDome": null,
+          "window": 2,
+          "windowWaves": 4,
+          "creditedThisWindow": 1,
+          "worked": [
+            1,
+            3,
+            5
+          ],
+          "required": 4,
+          "held": 66,
+          "breathless": 0,
+          "complete": false,
+          "solar": "online",
+          "after": "0/1",
+          "works": {
+            "sentry_beacon": 3,
+            "turret": 4
+          },
+          "tiers": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": -6.11
+          },
+          "threats": 7,
+          "body": {
+            "x": -8,
+            "z": 20
+          },
+          "lastOrders": [
+            [
+              "PICK_UPGRADE",
+              "done",
+              null
+            ],
+            [
+              "MOVE_HERO",
+              "done",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "BUILD",
+              "done",
+              null
+            ]
+          ],
+          "plan": "work",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 0,
+          "build": "sentry_beacon@3,6"
+        },
+        {
+          "wave": 10,
+          "runSeconds": 300,
+          "gold": 5,
+          "suit": 1.667,
+          "inDome": null,
+          "window": 2,
+          "windowWaves": 4,
+          "creditedThisWindow": 1,
+          "worked": [
+            1,
+            3,
+            5
+          ],
+          "required": 4,
+          "held": 66,
+          "breathless": 0,
+          "complete": false,
+          "solar": "offline",
+          "after": "0/1",
+          "works": {
+            "sentry_beacon": 3,
+            "turret": 4
+          },
+          "tiers": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": -5.61
+          },
+          "threats": 24,
+          "body": {
+            "x": -8,
+            "z": 20
+          },
+          "lastOrders": [
+            [
+              "MOVE_HERO",
+              "active",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "pending",
+              null
+            ],
+            [
+              "BUILD",
+              "pending",
+              null
+            ],
+            [
+              "MOVE_TO",
+              "pending",
+              null
+            ]
+          ],
+          "plan": "work",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 0,
+          "build": "sentry_beacon@3,6"
+        },
+        {
+          "wave": 10,
+          "runSeconds": 308.53,
+          "gold": 5,
+          "suit": 17.6,
+          "inDome": "dome-cluster-pad-center",
+          "window": 2,
+          "windowWaves": 4,
+          "creditedThisWindow": 1,
+          "worked": [
+            1,
+            3,
+            5
+          ],
+          "required": 4,
+          "held": 66,
+          "breathless": 0,
+          "complete": false,
+          "solar": "offline",
+          "after": "0/1",
+          "works": {
+            "sentry_beacon": 3,
+            "turret": 4
+          },
+          "tiers": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": 6.02
+          },
+          "threats": 19,
+          "body": {
+            "x": 0,
+            "z": 5.5
+          },
+          "lastOrders": [
+            [
+              "MOVE_HERO",
+              "done",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "BUILD",
+              "pending",
+              null
+            ],
+            [
+              "MOVE_TO",
+              "done",
+              null
+            ]
+          ],
+          "plan": "work",
+          "target": "gold-seam-2",
+          "sortieSeconds": 14.42,
+          "pans": 27,
+          "build": "sentry_beacon@3,6"
+        },
+        {
+          "wave": 10,
+          "runSeconds": 317.37,
+          "gold": 35,
+          "suit": 23.933,
+          "inDome": null,
+          "window": 2,
+          "windowWaves": 4,
+          "creditedThisWindow": 1,
+          "worked": [
+            1,
+            3,
+            5
+          ],
+          "required": 4,
+          "held": 72,
+          "breathless": 0,
+          "complete": false,
+          "solar": "offline",
+          "after": "6/1",
+          "works": {
+            "sentry_beacon": 3,
+            "turret": 4
+          },
+          "tiers": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": -6.1
+          },
+          "threats": 9,
+          "body": {
+            "x": -34,
+            "z": 12
+          },
+          "lastOrders": [
+            [
+              "PICK_UPGRADE",
+              "done",
+              null
+            ],
+            [
+              "MOVE_HERO",
+              "done",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "BUILD",
+              "pending",
+              null
+            ]
+          ],
+          "plan": "work",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 0,
+          "build": "sentry_beacon@3,6"
+        },
+        {
+          "wave": 10,
+          "runSeconds": 327.67,
+          "gold": 35,
+          "suit": 26.3,
+          "inDome": "dome-cluster-pad-center",
+          "window": 2,
+          "windowWaves": 4,
+          "creditedThisWindow": 1,
+          "worked": [
+            1,
+            3,
+            5
+          ],
+          "required": 4,
+          "held": 72,
+          "breathless": 0,
+          "complete": false,
+          "solar": "offline",
+          "after": "6/1",
+          "works": {
+            "sentry_beacon": 3,
+            "turret": 4
+          },
+          "tiers": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": 6.03
+          },
+          "threats": 6,
+          "body": {
+            "x": 0,
+            "z": 5.5
+          },
+          "lastOrders": [
+            [
+              "MOVE_HERO",
+              "done",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "BUILD",
+              "pending",
+              null
+            ],
+            [
+              "MOVE_TO",
+              "done",
+              null
+            ]
+          ],
+          "plan": "work",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 27,
+          "build": "sentry_beacon@3,6"
+        },
+        {
+          "wave": 11,
+          "runSeconds": 330,
+          "gold": 35,
+          "suit": 35.633,
+          "inDome": "dome-cluster-pad-center",
+          "window": 2,
+          "windowWaves": 4,
+          "creditedThisWindow": 1,
+          "worked": [
+            1,
+            3,
+            5
+          ],
+          "required": 4,
+          "held": 72,
+          "breathless": 0,
+          "complete": false,
+          "solar": "offline",
+          "after": "6/1",
+          "works": {
+            "sentry_beacon": 3,
+            "turret": 4
+          },
+          "tiers": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": -3.05
+          },
+          "threats": 24,
+          "body": {
+            "x": -4.4,
+            "z": 5.2
+          },
+          "lastOrders": [
+            [
+              "PICK_UPGRADE",
+              "done",
+              null
+            ],
+            [
+              "MOVE_HERO",
+              "done",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "BUILD",
+              "pending",
+              null
+            ]
+          ],
+          "plan": "work",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 28,
+          "build": "sentry_beacon@3,6"
+        },
+        {
+          "wave": 11,
+          "runSeconds": 344,
+          "gold": 0,
+          "suit": 22.633,
+          "inDome": null,
+          "window": 2,
+          "windowWaves": 4,
+          "creditedThisWindow": 1,
+          "worked": [
+            1,
+            3,
+            5
+          ],
+          "required": 4,
+          "held": 72,
+          "breathless": 0,
+          "complete": false,
+          "solar": "offline",
+          "after": "10/1",
+          "works": {
+            "sentry_beacon": 4,
+            "turret": 4
+          },
+          "tiers": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": 5.38
+          },
+          "threats": 15,
+          "body": {
+            "x": -11.6,
+            "z": 17.7
+          },
+          "lastOrders": [
+            [
+              "MOVE_HERO",
+              "done",
+              null
+            ],
+            [
+              "BUILD",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ]
+          ],
+          "plan": "work",
+          "target": "gold-seam-2",
+          "sortieSeconds": 4.35,
+          "pans": 27,
+          "build": "sentry_beacon@-5,6"
+        },
+        {
+          "wave": 11,
+          "runSeconds": 347.47,
+          "gold": 30,
+          "suit": 19.167,
+          "inDome": null,
+          "window": 2,
+          "windowWaves": 4,
+          "creditedThisWindow": 1,
+          "worked": [
+            1,
+            3,
+            5
+          ],
+          "required": 4,
+          "held": 78,
+          "breathless": 0,
+          "complete": false,
+          "solar": "offline",
+          "after": "16/1",
+          "works": {
+            "sentry_beacon": 4,
+            "turret": 4
+          },
+          "tiers": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": -4.88
+          },
+          "threats": 8,
+          "body": {
+            "x": -8,
+            "z": 20
+          },
+          "lastOrders": [
+            [
+              "PICK_UPGRADE",
+              "done",
+              null
+            ],
+            [
+              "MOVE_HERO",
+              "done",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "BUILD",
+              "pending",
+              null
+            ]
+          ],
+          "plan": "work",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 28,
+          "build": "sentry_beacon@-5,6"
+        },
+        {
+          "wave": 11,
+          "runSeconds": 352.17,
+          "gold": 40,
+          "suit": 14.467,
+          "inDome": null,
+          "window": 2,
+          "windowWaves": 4,
+          "creditedThisWindow": 1,
+          "worked": [
+            1,
+            3,
+            5
+          ],
+          "required": 4,
+          "held": 78,
+          "breathless": 0,
+          "complete": false,
+          "solar": "offline",
+          "after": "18/1",
+          "works": {
+            "sentry_beacon": 4,
+            "turret": 4
+          },
+          "tiers": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": 5.42
+          },
+          "threats": 7,
+          "body": {
+            "x": -22,
+            "z": 26
+          },
+          "lastOrders": [
+            [
+              "MOVE_HERO",
+              "done",
+              null
+            ],
+            [
+              "BUILD",
+              "pending",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ]
+          ],
+          "plan": "work",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 0,
+          "build": "sentry_beacon@-5,6"
+        },
+        {
+          "wave": 12,
+          "runSeconds": 360,
+          "gold": 40,
+          "suit": 9.8,
+          "inDome": "dome-cluster-pad-center",
+          "window": 3,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "worked": [
+            1,
+            3,
+            5
+          ],
+          "required": 4,
+          "held": 78,
+          "breathless": 0,
+          "complete": false,
+          "solar": "offline",
+          "after": "18/1",
+          "works": {
+            "sentry_beacon": 4,
+            "turret": 4
+          },
+          "tiers": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": -5.89
+          },
+          "threats": 27,
+          "body": {
+            "x": 0,
+            "z": 5.5
+          },
+          "lastOrders": [
+            [
+              "MOVE_HERO",
+              "done",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "BUILD",
+              "pending",
+              null
+            ],
+            [
+              "MOVE_TO",
+              "done",
+              null
+            ]
+          ],
+          "plan": "work",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 0,
+          "build": "sentry_beacon@-5,6"
+        },
+        {
+          "wave": 12,
+          "runSeconds": 363.63,
+          "gold": 40,
+          "suit": 24.333,
+          "inDome": "dome-cluster-pad-center",
+          "window": 3,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "worked": [
+            1,
+            3,
+            5
+          ],
+          "required": 4,
+          "held": 78,
+          "breathless": 0,
+          "complete": false,
+          "solar": "offline",
+          "after": "18/1",
+          "works": {
+            "sentry_beacon": 4,
+            "turret": 4
+          },
+          "tiers": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": 5.08
+          },
+          "threats": 15,
+          "body": {
+            "x": 0,
+            "z": 5.5
+          },
+          "lastOrders": [
+            [
+              "MOVE_HERO",
+              "done",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "BUILD",
+              "pending",
+              null
+            ],
+            [
+              "MOVE_TO",
+              "done",
+              null
+            ]
+          ],
+          "plan": "work",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 0,
+          "build": "sentry_beacon@-5,6"
+        },
+        {
+          "wave": 12,
+          "runSeconds": 380.27,
+          "gold": 40,
+          "suit": 60,
+          "inDome": "dome-cluster-pad-center",
+          "window": 3,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "worked": [
+            1,
+            3,
+            5
+          ],
+          "required": 4,
+          "held": 78,
+          "breathless": 0,
+          "complete": false,
+          "solar": "offline",
+          "after": "18/1",
+          "works": {
+            "sentry_beacon": 4,
+            "turret": 4
+          },
+          "tiers": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": -5.78
+          },
+          "threats": 9,
+          "body": {
+            "x": 0,
+            "z": 5.5
+          },
+          "lastOrders": [
+            [
+              "PICK_UPGRADE",
+              "done",
+              null
+            ],
+            [
+              "MOVE_HERO",
+              "done",
+              null
+            ],
+            [
+              "BUILD",
+              "pending",
+              null
+            ],
+            [
+              "MOVE_TO",
+              "done",
+              null
+            ]
+          ],
+          "plan": "work",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 27,
+          "build": "sentry_beacon@-5,6"
+        },
+        {
+          "wave": 12,
+          "runSeconds": 387.43,
+          "gold": 70,
+          "suit": 55.433,
+          "inDome": null,
+          "window": 3,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "worked": [
+            1,
+            3,
+            5
+          ],
+          "required": 4,
+          "held": 78,
+          "breathless": 0,
+          "complete": false,
+          "solar": "offline",
+          "after": "24/1",
+          "works": {
+            "sentry_beacon": 4,
+            "turret": 4
+          },
+          "tiers": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": 5.88
+          },
+          "threats": 10,
+          "body": {
+            "x": 16,
+            "z": 22
+          },
+          "lastOrders": [
+            [
+              "PICK_UPGRADE",
+              "done",
+              null
+            ],
+            [
+              "MOVE_HERO",
+              "done",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "BUILD",
+              "pending",
+              null
+            ]
+          ],
+          "plan": "work",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 27,
+          "build": "sentry_beacon@-5,6"
+        },
+        {
+          "wave": 13,
+          "runSeconds": 390,
+          "gold": 70,
+          "suit": 52.867,
+          "inDome": null,
+          "window": 3,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "worked": [
+            1,
+            3,
+            5
+          ],
+          "required": 4,
+          "held": 78,
+          "breathless": 0,
+          "complete": false,
+          "solar": "offline",
+          "after": "24/1",
+          "works": {
+            "sentry_beacon": 4,
+            "turret": 4
+          },
+          "tiers": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": -3.67
+          },
+          "threats": 25,
+          "body": {
+            "x": 20,
+            "z": 18.6
+          },
+          "lastOrders": [
+            [
+              "MOVE_HERO",
+              "done",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "BUILD",
+              "pending",
+              null
+            ],
+            [
+              "HARVEST",
+              "active",
+              null
+            ]
+          ],
+          "plan": "work",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 28,
+          "build": "sentry_beacon@-5,6"
+        },
+        {
+          "wave": 13,
+          "runSeconds": 401.93,
+          "gold": 0,
+          "suit": 40.933,
+          "inDome": null,
+          "window": 3,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "worked": [
+            1,
+            3,
+            5
+          ],
+          "required": 4,
+          "held": 78,
+          "breathless": 0,
+          "complete": false,
+          "solar": "offline",
+          "after": "25/1",
+          "works": {
+            "sentry_beacon": 5,
+            "turret": 4
+          },
+          "tiers": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": 5.51
+          },
+          "threats": 20,
+          "body": {
+            "x": 8.4,
+            "z": 8.1
+          },
+          "lastOrders": [
+            [
+              "MOVE_HERO",
+              "done",
+              null
+            ],
+            [
+              "BUILD",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "active",
+              null
+            ]
+          ],
+          "plan": "work",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 27,
+          "build": "sentry_beacon@5,6"
+        },
+        {
+          "wave": 13,
+          "runSeconds": 407.53,
+          "gold": 25,
+          "suit": 35.333,
+          "inDome": null,
+          "window": 3,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "worked": [
+            1,
+            3,
+            5
+          ],
+          "required": 4,
+          "held": 78,
+          "breathless": 0,
+          "complete": false,
+          "solar": "offline",
+          "after": "30/1",
+          "works": {
+            "sentry_beacon": 5,
+            "turret": 4
+          },
+          "tiers": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": -5.81
+          },
+          "threats": 10,
+          "body": {
+            "x": 34,
+            "z": 12
+          },
+          "lastOrders": [
+            [
+              "PICK_UPGRADE",
+              "done",
+              null
+            ],
+            [
+              "MOVE_HERO",
+              "done",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "BUILD",
+              "pending",
+              null
+            ]
+          ],
+          "plan": "credit",
+          "target": "gold-seam-1",
+          "sortieSeconds": 11.91,
+          "pans": 26,
+          "build": "sentry_beacon@5,6"
+        },
+        {
+          "wave": 13,
+          "runSeconds": 413.13,
+          "gold": 55,
+          "suit": 29.733,
+          "inDome": null,
+          "window": 3,
+          "windowWaves": 4,
+          "creditedThisWindow": 1,
+          "worked": [
+            1,
+            3,
+            4,
+            5
+          ],
+          "required": 4,
+          "held": 78,
+          "breathless": 0,
+          "complete": true,
+          "solar": "offline",
+          "after": "36/1",
+          "works": {
+            "sentry_beacon": 5,
+            "turret": 4
+          },
+          "tiers": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": 5.86
+          },
+          "threats": 9,
+          "body": {
+            "x": 30,
+            "z": 30
+          },
+          "lastOrders": [
+            [
+              "MOVE_HERO",
+              "done",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ],
+            [
+              "BUILD",
+              "pending",
+              null
+            ]
+          ],
+          "plan": "work",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 0,
+          "build": "sentry_beacon@5,6"
+        },
+        {
+          "wave": 14,
+          "runSeconds": 420,
+          "gold": 55,
+          "suit": 22.867,
+          "inDome": null,
+          "window": 3,
+          "windowWaves": 4,
+          "creditedThisWindow": 1,
+          "worked": [
+            1,
+            3,
+            4,
+            5
+          ],
+          "required": 4,
+          "held": 78,
+          "breathless": 0,
+          "complete": true,
+          "solar": "offline",
+          "after": "36/1",
+          "works": {
+            "sentry_beacon": 5,
+            "turret": 4
+          },
+          "tiers": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": -5.92
+          },
+          "threats": 28,
+          "body": {
+            "x": 8.7,
+            "z": 12.5
+          },
+          "lastOrders": [
+            [
+              "MOVE_HERO",
+              "done",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "BUILD",
+              "pending",
+              null
+            ],
+            [
+              "MOVE_TO",
+              "active",
+              null
+            ]
+          ],
+          "plan": "work",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 0,
+          "build": "sentry_beacon@5,6"
+        },
+        {
+          "wave": 14,
+          "runSeconds": 423.13,
+          "gold": 55,
+          "suit": 24.733,
+          "inDome": "dome-cluster-pad-center",
+          "window": 3,
+          "windowWaves": 4,
+          "creditedThisWindow": 1,
+          "worked": [
+            1,
+            3,
+            4,
+            5
+          ],
+          "required": 4,
+          "held": 78,
+          "breathless": 0,
+          "complete": true,
+          "solar": "offline",
+          "after": "36/1",
+          "works": {
+            "sentry_beacon": 5,
+            "turret": 4
+          },
+          "tiers": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": 4.53
+          },
+          "threats": 18,
+          "body": {
+            "x": 0,
+            "z": 5.5
+          },
+          "lastOrders": [
+            [
+              "MOVE_HERO",
+              "done",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "BUILD",
+              "pending",
+              null
+            ],
+            [
+              "MOVE_TO",
+              "done",
+              null
+            ]
+          ],
+          "plan": "work",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 0,
+          "build": "sentry_beacon@5,6"
+        },
+        {
+          "wave": 14,
+          "runSeconds": 442.07,
+          "gold": 55,
+          "suit": 60,
+          "inDome": "dome-cluster-pad-center",
+          "window": 3,
+          "windowWaves": 4,
+          "creditedThisWindow": 1,
+          "worked": [
+            1,
+            3,
+            4,
+            5
+          ],
+          "required": 4,
+          "held": 78,
+          "breathless": 0,
+          "complete": true,
+          "solar": "offline",
+          "after": "36/1",
+          "works": {
+            "sentry_beacon": 5,
+            "turret": 4
+          },
+          "tiers": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": -5.7
+          },
+          "threats": 9,
+          "body": {
+            "x": 0,
+            "z": 5.5
+          },
+          "lastOrders": [
+            [
+              "PICK_UPGRADE",
+              "done",
+              null
+            ],
+            [
+              "MOVE_HERO",
+              "done",
+              null
+            ],
+            [
+              "BUILD",
+              "pending",
+              null
+            ],
+            [
+              "MOVE_TO",
+              "done",
+              null
+            ]
+          ],
+          "plan": "work",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 27,
+          "build": "sentry_beacon@5,6"
+        },
+        {
+          "wave": 14,
+          "runSeconds": 449.27,
+          "gold": 85,
+          "suit": 55.4,
+          "inDome": null,
+          "window": 3,
+          "windowWaves": 4,
+          "creditedThisWindow": 1,
+          "worked": [
+            1,
+            3,
+            4,
+            5
+          ],
+          "required": 4,
+          "held": 78,
+          "breathless": 0,
+          "complete": true,
+          "solar": "offline",
+          "after": "42/1",
+          "works": {
+            "sentry_beacon": 5,
+            "turret": 4
+          },
+          "tiers": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": 5.97
+          },
+          "threats": 10,
+          "body": {
+            "x": 16,
+            "z": 22
+          },
+          "lastOrders": [
+            [
+              "PICK_UPGRADE",
+              "done",
+              null
+            ],
+            [
+              "MOVE_HERO",
+              "done",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "BUILD",
+              "pending",
+              null
+            ]
+          ],
+          "plan": "work",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 27,
+          "build": "sentry_beacon@5,6"
+        },
+        {
+          "wave": 15,
+          "runSeconds": 450,
+          "gold": 85,
+          "suit": 54.667,
+          "inDome": null,
+          "window": 3,
+          "windowWaves": 4,
+          "creditedThisWindow": 1,
+          "worked": [
+            1,
+            3,
+            4,
+            5
+          ],
+          "required": 4,
+          "held": 78,
+          "breathless": 0,
+          "complete": true,
+          "solar": "offline",
+          "after": "42/1",
+          "works": {
+            "sentry_beacon": 5,
+            "turret": 4
+          },
+          "tiers": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": 3.96
+          },
+          "threats": 30,
+          "body": {
+            "x": 16,
+            "z": 22
+          },
+          "lastOrders": [
+            [
+              "MOVE_HERO",
+              "active",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "pending",
+              null
+            ],
+            [
+              "BUILD",
+              "pending",
+              null
+            ],
+            [
+              "HARVEST",
+              "pending",
+              null
+            ]
+          ],
+          "plan": "work",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 27,
+          "build": "sentry_beacon@5,6"
+        },
+        {
+          "wave": 15,
+          "runSeconds": 465.23,
+          "gold": 20,
+          "suit": 39.433,
+          "inDome": null,
+          "window": 3,
+          "windowWaves": 4,
+          "creditedThisWindow": 1,
+          "worked": [
+            1,
+            3,
+            4,
+            5
+          ],
+          "required": 4,
+          "held": 78,
+          "breathless": 0,
+          "complete": true,
+          "solar": "offline",
+          "after": "48/1",
+          "works": {
+            "sentry_beacon": 6,
+            "turret": 4
+          },
+          "tiers": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": -5.94
+          },
+          "threats": 19,
+          "body": {
+            "x": 34,
+            "z": 12
+          },
+          "lastOrders": [
+            [
+              "MOVE_HERO",
+              "done",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "BUILD",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ]
+          ],
+          "plan": "work",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 0,
+          "build": null
+        },
+        {
+          "wave": 15,
+          "runSeconds": 465.4,
+          "gold": 20,
+          "suit": 39.267,
+          "inDome": null,
+          "window": 3,
+          "windowWaves": 4,
+          "creditedThisWindow": 1,
+          "worked": [
+            1,
+            3,
+            4,
+            5
+          ],
+          "required": 4,
+          "held": 78,
+          "breathless": 0,
+          "complete": true,
+          "solar": "offline",
+          "after": "48/1",
+          "works": {
+            "sentry_beacon": 6,
+            "turret": 4
+          },
+          "tiers": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": -5.82
+          },
+          "threats": 18,
+          "body": {
+            "x": 34,
+            "z": 12
+          },
+          "lastOrders": [
+            [
+              "MOVE_HERO",
+              "active",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "pending",
+              null
+            ],
+            [
+              "MOVE_TO",
+              "pending",
+              null
+            ],
+            [
+              "HOLD",
+              "pending",
+              null
+            ]
+          ],
+          "plan": "work",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 0,
+          "build": null
+        },
+        {
+          "wave": 16,
+          "runSeconds": 480,
+          "gold": 20,
+          "suit": 59.667,
+          "inDome": "dome-cluster-pad-center",
+          "window": 4,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "worked": [
+            1,
+            3,
+            4,
+            5
+          ],
+          "required": 4,
+          "held": 78,
+          "breathless": 0,
+          "complete": true,
+          "solar": "offline",
+          "after": "48/1",
+          "works": {
+            "sentry_beacon": 6,
+            "turret": 4
+          },
+          "tiers": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": 6.02
+          },
+          "threats": 29,
+          "body": {
+            "x": 0,
+            "z": 5.5
+          },
+          "lastOrders": [
+            [
+              "PICK_UPGRADE",
+              "done",
+              null
+            ],
+            [
+              "MOVE_HERO",
+              "done",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "MOVE_TO",
+              "done",
+              null
+            ]
+          ],
+          "plan": "work",
+          "target": "gold-seam-2",
+          "sortieSeconds": 6.9,
+          "pans": 28,
+          "build": null
+        },
+        {
+          "wave": 16,
+          "runSeconds": 485.63,
+          "gold": 50,
+          "suit": 56.667,
+          "inDome": null,
+          "window": 4,
+          "windowWaves": 4,
+          "creditedThisWindow": 1,
+          "worked": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "required": 4,
+          "held": 78,
+          "breathless": 0,
+          "complete": true,
+          "solar": "offline",
+          "after": "54/1",
+          "works": {
+            "sentry_beacon": 6,
+            "turret": 4
+          },
+          "tiers": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": -5.95
+          },
+          "threats": 20,
+          "body": {
+            "x": -8,
+            "z": 20
+          },
+          "lastOrders": [
+            [
+              "MOVE_HERO",
+              "done",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ]
+          ],
+          "plan": "work",
+          "target": "gold-seam-1",
+          "sortieSeconds": 12.88,
+          "pans": 28,
+          "build": null
+        },
+        {
+          "wave": 16,
+          "runSeconds": 489.03,
+          "gold": 50,
+          "suit": 53.267,
+          "inDome": null,
+          "window": 4,
+          "windowWaves": 4,
+          "creditedThisWindow": 1,
+          "worked": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "required": 4,
+          "held": 78,
+          "breathless": 0,
+          "complete": true,
+          "solar": "offline",
+          "after": "54/1",
+          "works": {
+            "sentry_beacon": 6,
+            "turret": 4
+          },
+          "tiers": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": 4.93
+          },
+          "threats": 25,
+          "body": {
+            "x": -16.6,
+            "z": 16.3
+          },
+          "lastOrders": [
+            [
+              "MOVE_HERO",
+              "done",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "active",
+              null
+            ],
+            [
+              "HARVEST",
+              "pending",
+              null
+            ]
+          ],
+          "plan": "work",
+          "target": "gold-seam-1",
+          "sortieSeconds": 10.95,
+          "pans": 28,
+          "build": null
+        },
+        {
+          "wave": 16,
+          "runSeconds": 493.03,
+          "gold": 80,
+          "suit": 49.267,
+          "inDome": null,
+          "window": 4,
+          "windowWaves": 4,
+          "creditedThisWindow": 1,
+          "worked": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "required": 4,
+          "held": 84,
+          "breathless": 0,
+          "complete": true,
+          "solar": "offline",
+          "after": "60/1",
+          "works": {
+            "sentry_beacon": 6,
+            "turret": 4
+          },
+          "tiers": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": -5.19
+          },
+          "threats": 18,
+          "body": {
+            "x": -34,
+            "z": 12
+          },
+          "lastOrders": [
+            [
+              "PICK_UPGRADE",
+              "done",
+              null
+            ],
+            [
+              "MOVE_HERO",
+              "done",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ]
+          ],
+          "plan": "work",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 0,
+          "build": null
+        },
+        {
+          "wave": 17,
+          "runSeconds": 510,
+          "gold": 80,
+          "suit": 60,
+          "inDome": "dome-cluster-pad-center",
+          "window": 4,
+          "windowWaves": 4,
+          "creditedThisWindow": 1,
+          "worked": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "required": 4,
+          "held": 84,
+          "breathless": 0,
+          "complete": true,
+          "solar": "offline",
+          "after": "60/1",
+          "works": {
+            "sentry_beacon": 6,
+            "turret": 4
+          },
+          "tiers": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": 5.84
+          },
+          "threats": 31,
+          "body": {
+            "x": 0,
+            "z": 5.5
+          },
+          "lastOrders": [
+            [
+              "MOVE_HERO",
+              "done",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "MOVE_TO",
+              "done",
+              null
+            ],
+            [
+              "HOLD",
+              "active",
+              null
+            ]
+          ],
+          "plan": "work",
+          "target": "gold-seam-2",
+          "sortieSeconds": 14.42,
+          "pans": 28,
+          "build": null
+        },
+        {
+          "wave": 17,
+          "runSeconds": 516.17,
+          "gold": 80,
+          "suit": 56.233,
+          "inDome": null,
+          "window": 4,
+          "windowWaves": 4,
+          "creditedThisWindow": 1,
+          "worked": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "required": 4,
+          "held": 84,
+          "breathless": 0,
+          "complete": true,
+          "solar": "offline",
+          "after": "60/1",
+          "works": {
+            "sentry_beacon": 6,
+            "turret": 4
+          },
+          "tiers": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": -5.99
+          },
+          "threats": 20,
+          "body": {
+            "x": -23.3,
+            "z": 8.7
+          },
+          "lastOrders": [
+            [
+              "MOVE_HERO",
+              "done",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "active",
+              null
+            ],
+            [
+              "HARVEST",
+              "pending",
+              null
+            ]
+          ],
+          "plan": "work",
+          "target": "gold-seam-2",
+          "sortieSeconds": 9.55,
+          "pans": 28,
+          "build": null
+        },
+        {
+          "wave": 17,
+          "runSeconds": 518.77,
+          "gold": 110,
+          "suit": 53.633,
+          "inDome": null,
+          "window": 4,
+          "windowWaves": 4,
+          "creditedThisWindow": 1,
+          "worked": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "required": 4,
+          "held": 90,
+          "breathless": 0,
+          "complete": true,
+          "solar": "offline",
+          "after": "66/1",
+          "works": {
+            "sentry_beacon": 6,
+            "turret": 4
+          },
+          "tiers": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": 3.68
+          },
+          "threats": 32,
+          "body": {
+            "x": -34,
+            "z": 12
+          },
+          "lastOrders": [
+            [
+              "PICK_UPGRADE",
+              "done",
+              null
+            ],
+            [
+              "MOVE_HERO",
+              "done",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ]
+          ],
+          "plan": "work",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 29,
+          "build": null
+        },
+        {
+          "wave": 17,
+          "runSeconds": 534.2,
+          "gold": 140,
+          "suit": 38.2,
+          "inDome": null,
+          "window": 4,
+          "windowWaves": 4,
+          "creditedThisWindow": 1,
+          "worked": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "required": 4,
+          "held": 90,
+          "breathless": 0,
+          "complete": true,
+          "solar": "offline",
+          "after": "72/1",
+          "works": {
+            "sentry_beacon": 6,
+            "turret": 4
+          },
+          "tiers": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": -5.47
+          },
+          "threats": 10,
+          "body": {
+            "x": 34,
+            "z": 12
+          },
+          "lastOrders": [
+            [
+              "MOVE_HERO",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ]
+          ],
+          "plan": "work",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 0,
+          "build": null
+        },
+        {
+          "wave": 18,
+          "runSeconds": 540,
+          "gold": 140,
+          "suit": 32.4,
+          "inDome": null,
+          "window": 4,
+          "windowWaves": 4,
+          "creditedThisWindow": 1,
+          "worked": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "required": 4,
+          "held": 90,
+          "breathless": 0,
+          "complete": true,
+          "solar": "offline",
+          "after": "72/1",
+          "works": {
+            "sentry_beacon": 6,
+            "turret": 4
+          },
+          "tiers": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": 5.88
+          },
+          "threats": 33,
+          "body": {
+            "x": 11.9,
+            "z": 7.7
+          },
+          "lastOrders": [
+            [
+              "MOVE_HERO",
+              "done",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "MOVE_TO",
+              "active",
+              null
+            ],
+            [
+              "HOLD",
+              "pending",
+              null
+            ]
+          ],
+          "plan": "work",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 28,
+          "build": null
+        },
+        {
+          "wave": 18,
+          "runSeconds": 540.3,
+          "gold": 140,
+          "suit": 32.1,
+          "inDome": null,
+          "window": 4,
+          "windowWaves": 4,
+          "creditedThisWindow": 1,
+          "worked": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "required": 4,
+          "held": 90,
+          "breathless": 0,
+          "complete": true,
+          "solar": "offline",
+          "after": "72/1",
+          "works": {
+            "sentry_beacon": 6,
+            "turret": 4
+          },
+          "tiers": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": 5.51
+          },
+          "threats": 32,
+          "body": {
+            "x": 10.4,
+            "z": 7.4
+          },
+          "lastOrders": [
+            [
+              "MOVE_HERO",
+              "active",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "pending",
+              null
+            ],
+            [
+              "HARVEST",
+              "pending",
+              null
+            ],
+            [
+              "HARVEST",
+              "pending",
+              null
+            ]
+          ],
+          "plan": "work",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 28,
+          "build": null
+        },
+        {
+          "wave": 18,
+          "runSeconds": 548.9,
+          "gold": 170,
+          "suit": 23.5,
+          "inDome": null,
+          "window": 4,
+          "windowWaves": 4,
+          "creditedThisWindow": 1,
+          "worked": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "required": 4,
+          "held": 90,
+          "breathless": 0,
+          "complete": true,
+          "solar": "offline",
+          "after": "78/1",
+          "works": {
+            "sentry_beacon": 6,
+            "turret": 4
+          },
+          "tiers": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": -6.01
+          },
+          "threats": 31,
+          "body": {
+            "x": 30,
+            "z": 30
+          },
+          "lastOrders": [
+            [
+              "PICK_UPGRADE",
+              "done",
+              null
+            ],
+            [
+              "MOVE_HERO",
+              "done",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ]
+          ],
+          "plan": "work",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 0,
+          "build": null
+        },
+        {
+          "wave": 18,
+          "runSeconds": 561.13,
+          "gold": 20,
+          "suit": 28.933,
+          "inDome": "dome-cluster-pad-center",
+          "window": 4,
+          "windowWaves": 4,
+          "creditedThisWindow": 1,
+          "worked": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "required": 4,
+          "held": 90,
+          "breathless": 0,
+          "complete": true,
+          "solar": "offline",
+          "after": "78/1",
+          "works": {
+            "sentry_beacon": 6,
+            "turret": 4
+          },
+          "tiers": [
+            2,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 167.8,
+          "heroAt": {
+            "x": 0,
+            "z": 6.12
+          },
+          "threats": 11,
+          "body": {
+            "x": 0,
+            "z": 5.5
+          },
+          "lastOrders": [
+            [
+              "MOVE_HERO",
+              "done",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "MOVE_TO",
+              "done",
+              null
+            ],
+            [
+              "CONTEXT_ACTION",
+              "done",
+              null
+            ]
+          ],
+          "plan": "work",
+          "target": "gold-seam-1",
+          "sortieSeconds": 14.42,
+          "pans": 28,
+          "build": null
+        },
+        {
+          "wave": 18,
+          "runSeconds": 569.9,
+          "gold": 50,
+          "suit": 32.167,
+          "inDome": null,
+          "window": 4,
+          "windowWaves": 4,
+          "creditedThisWindow": 1,
+          "worked": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "required": 4,
+          "held": 96,
+          "breathless": 0,
+          "complete": true,
+          "solar": "offline",
+          "after": "84/1",
+          "works": {
+            "sentry_beacon": 6,
+            "turret": 4
+          },
+          "tiers": [
+            2,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 167.8,
+          "heroAt": {
+            "x": 0,
+            "z": -6.01
+          },
+          "threats": 9,
+          "body": {
+            "x": -34,
+            "z": 12
+          },
+          "lastOrders": [
+            [
+              "PICK_UPGRADE",
+              "done",
+              null
+            ],
+            [
+              "MOVE_HERO",
+              "done",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ]
+          ],
+          "plan": "work",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 28,
+          "build": null
+        },
+        {
+          "wave": 19,
+          "runSeconds": 570,
+          "gold": 50,
+          "suit": 32.067,
+          "inDome": null,
+          "window": 4,
+          "windowWaves": 4,
+          "creditedThisWindow": 1,
+          "worked": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "required": 4,
+          "held": 96,
+          "breathless": 0,
+          "complete": true,
+          "solar": "offline",
+          "after": "84/1",
+          "works": {
+            "sentry_beacon": 6,
+            "turret": 4
+          },
+          "tiers": [
+            2,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 167.8,
+          "heroAt": {
+            "x": 0,
+            "z": -5.97
+          },
+          "threats": 29,
+          "body": {
+            "x": -34,
+            "z": 12
+          },
+          "lastOrders": [
+            [
+              "MOVE_HERO",
+              "active",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "pending",
+              null
+            ],
+            [
+              "HARVEST",
+              "pending",
+              null
+            ],
+            [
+              "HARVEST",
+              "pending",
+              null
+            ]
+          ],
+          "plan": "work",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 28,
+          "build": null
+        },
+        {
+          "wave": 19,
+          "runSeconds": 577.03,
+          "gold": 80,
+          "suit": 25.033,
+          "inDome": null,
+          "window": 4,
+          "windowWaves": 4,
+          "creditedThisWindow": 1,
+          "worked": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "required": 4,
+          "held": 96,
+          "breathless": 0,
+          "complete": true,
+          "solar": "offline",
+          "after": "90/1",
+          "works": {
+            "sentry_beacon": 6,
+            "turret": 4
+          },
+          "tiers": [
+            2,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 167.8,
+          "heroAt": {
+            "x": 0,
+            "z": 6.08
+          },
+          "threats": 11,
+          "body": {
+            "x": -8,
+            "z": 20
+          },
+          "lastOrders": [
+            [
+              "MOVE_HERO",
+              "done",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ]
+          ],
+          "plan": "work",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 0,
+          "build": null
+        },
+        {
+          "wave": 19,
+          "runSeconds": 587.87,
+          "gold": 80,
+          "suit": 46.033,
+          "inDome": "dome-cluster-pad-center",
+          "window": 4,
+          "windowWaves": 4,
+          "creditedThisWindow": 1,
+          "worked": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "required": 4,
+          "held": 96,
+          "breathless": 0,
+          "complete": true,
+          "solar": "offline",
+          "after": "90/1",
+          "works": {
+            "sentry_beacon": 6,
+            "turret": 4
+          },
+          "tiers": [
+            2,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 167.8,
+          "heroAt": {
+            "x": 0,
+            "z": -6.03
+          },
+          "threats": 15,
+          "body": {
+            "x": 0,
+            "z": 5.5
+          },
+          "lastOrders": [
+            [
+              "MOVE_HERO",
+              "done",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "MOVE_TO",
+              "done",
+              null
+            ],
+            [
+              "HOLD",
+              "active",
+              null
+            ]
+          ],
+          "plan": "work",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 0,
+          "build": null
+        },
+        {
+          "wave": 20,
+          "runSeconds": 600,
+          "gold": 80,
+          "suit": 60,
+          "inDome": "dome-cluster-pad-center",
+          "window": 5,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "worked": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "required": 4,
+          "held": 96,
+          "breathless": 0,
+          "complete": true,
+          "solar": "offline",
+          "after": "90/1",
+          "works": {
+            "sentry_beacon": 6,
+            "turret": 4
+          },
+          "tiers": [
+            2,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 167.8,
+          "heroAt": {
+            "x": 0,
+            "z": 6.11
+          },
+          "threats": 15,
+          "body": {
+            "x": -0.1,
+            "z": 5.5
+          },
+          "lastOrders": [
+            [
+              "SECURE_CHOICE",
+              "done",
+              null
+            ]
+          ],
+          "plan": "work",
+          "target": "gold-seam-2",
+          "sortieSeconds": 14.41,
+          "pans": 28,
+          "build": null
+        }
+      ],
+      "stderrTail": [
+        "gr-sim speed: 0.47 waves/s"
+      ]
+    }
+  ],
+  "arm": {
+    "label": "kite-0-0",
+    "patch": {},
+    "tilePatch": {},
+    "defence": null,
+    "kite": "0,0",
+    "seconds": 44
+  }
+}

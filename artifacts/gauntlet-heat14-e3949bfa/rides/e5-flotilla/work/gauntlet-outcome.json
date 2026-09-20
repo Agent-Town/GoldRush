@@ -1,0 +1,54 @@
+{
+  "secured": true,
+  "waves": 12,
+  "timeMs": 272000,
+  "gold": 200,
+  "kills": 33,
+  "calls": 25,
+  "defaultedPicks": 0,
+  "defaultedSecure": 1,
+  "eventLogHash": "fnv1a32:0cca8f67",
+
+  "tape": "/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/heat14/opus/e5-flotilla/attempt-1-tape.json",
+  "scored": true,
+  "runsSoFar": 2,
+  "scoredAttempts": 1,
+  "worldModel": "sim-import",
+
+  "note": "ONE RIDE UNDER TWO FILENAMES. The first controller (ctrl-v1.mjs) secured on its first ride as tune-1; attempt-1-tape.json is a BYTE-IDENTICAL copy of tune-1-tape.json (29715 bytes, verified equal). The stop rule ends the heat at the first SECURED outcome, so it is promoted by name here rather than re-ridden.",
+
+  "contract": "e5-flotilla",
+  "seed": "e5-flotilla-01",
+  "difficulty": "trail",
+  "tapeHeaderEventLogHash": "fnv1a32:fdb7fa6c",
+  "outcomeLineEventLogHash": "fnv1a32:0cca8f67",
+  "hashNote": "These two are DIFFERENT BY DESIGN. The local assay reproduces the TAPE HEADER hash (fdb7fa6c), never the stdout outcome line's (0cca8f67); comparing the wrong pair reads as a false mismatch on a clean reel.",
+  "era": 6,
+  "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+  "buildId": "3ad2cb9e3",
+  "viewVersion": 2,
+
+  "envelope": {
+    "durationTicks": 8160,
+    "lastEntryTick": 7441,
+    "slackTicks": 719,
+    "entries": 25,
+    "bytes": 29715,
+    "verdict": "all three axes comfortable; the secure boundary was answered with SILENCE (defaultedSecure: 1), which cannot be rejected, so the replay cannot diverge on refused in-window submissions"
+  },
+
+  "rankingAxes": {
+    "waves": "12 — PINNED by twist.secureWave: 12",
+    "timeAlive": "272.000 s — PINNED; the storm scheduler replaces the wave clock, wave N at 8 + 24(N-1)",
+    "gold": "200 — the bank cap IS the arithmetic ceiling here: stockpile (60g x2, +150 cap each) is on the roster but every BUILD on the three published hull-deck zones answers UNREACHABLE (open water), measured this run. A ceiling, not a margin left behind."
+  },
+
+  "finalState": {
+    "heroHp": "100/100 at every one of 26 views — handleEnemyContact is skipped while deepwater.diagnostics.flotilla exists (HeadlessContractSim:2042), so the hero is invulnerable and hp is decoration",
+    "hulls": "kitchen-scow 16/96 (straggler, took every corsair all run), turret-raft 96/96 untouched, still-room-barge 96/96 untouched",
+    "lossCondition": "all THREE hulls lost; two pristine hulls of slack at the bank",
+    "corsairs": "36 spawned, 33 killed, 3 alive",
+    "harpoonBallistaFires": 50,
+    "goldStolen": 0
+  }
+}

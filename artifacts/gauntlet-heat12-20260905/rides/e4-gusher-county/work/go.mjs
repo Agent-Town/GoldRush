@@ -1,0 +1,13 @@
+import fs from 'node:fs';
+import { ride } from './runner.mjs';
+import { makeController } from './ctrl.mjs';
+const name = process.argv[2] || 'tune-1';
+const scored = process.argv[3] === 'scored';
+const WS = '/tmp/heat12-038cc280/artifacts/heat12/opus/e4-gusher-county';
+const lines = [];
+const log = o => { lines.push(JSON.stringify(o)); };
+const r = await ride({ name, controller: makeController(log), scored });
+fs.writeFileSync(`${WS}/${name}-ctrl.jsonl`, lines.join('\n') + '\n');
+console.log(JSON.stringify(r.outcome));
+console.log('env', JSON.stringify(r.env));
+for (const l of lines) console.log(l);

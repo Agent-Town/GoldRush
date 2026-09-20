@@ -1,0 +1,273 @@
+{
+  "contract": "e10-ember-shore",
+  "seeds": [
+    "e10-ember-shore-01",
+    "e10-ember-shore-02"
+  ],
+  "stepSeconds": 0.03333333333333333,
+  "sampledTicks": [
+    1,
+    1801,
+    2041,
+    2400,
+    2790,
+    2791,
+    3031,
+    5071,
+    5821
+  ],
+  "identical": true,
+  "stateTable": [
+    {
+      "seed": "e10-ember-shore-01",
+      "rows": [
+        {
+          "tick": 1,
+          "phase": "calm",
+          "blowing": false,
+          "warmth": 100,
+          "alight": true,
+          "guttered": false,
+          "decaying": false,
+          "squallsSurvived": 0,
+          "pressShare": 0.25,
+          "objectiveMet": false
+        },
+        {
+          "tick": 1801,
+          "phase": "telegraph",
+          "blowing": false,
+          "warmth": 100,
+          "alight": true,
+          "guttered": false,
+          "decaying": false,
+          "squallsSurvived": 0,
+          "pressShare": 0.25,
+          "objectiveMet": false
+        },
+        {
+          "tick": 2041,
+          "phase": "squall",
+          "blowing": true,
+          "warmth": 99.867,
+          "alight": true,
+          "guttered": false,
+          "decaying": true,
+          "squallsSurvived": 0,
+          "pressShare": 0.5,
+          "objectiveMet": false
+        },
+        {
+          "tick": 2400,
+          "phase": "squall",
+          "blowing": true,
+          "warmth": 52,
+          "alight": true,
+          "guttered": false,
+          "decaying": true,
+          "squallsSurvived": 0,
+          "pressShare": 0.5,
+          "objectiveMet": false
+        },
+        {
+          "tick": 2790,
+          "phase": "squall",
+          "blowing": true,
+          "warmth": 0,
+          "alight": false,
+          "guttered": true,
+          "decaying": false,
+          "squallsSurvived": 0,
+          "pressShare": 0,
+          "objectiveMet": false
+        }
+      ]
+    },
+    {
+      "seed": "e10-ember-shore-02",
+      "rows": [
+        {
+          "tick": 1,
+          "phase": "calm",
+          "blowing": false,
+          "warmth": 100,
+          "alight": true,
+          "guttered": false,
+          "decaying": false,
+          "squallsSurvived": 0,
+          "pressShare": 0.25,
+          "objectiveMet": false
+        },
+        {
+          "tick": 1801,
+          "phase": "telegraph",
+          "blowing": false,
+          "warmth": 100,
+          "alight": true,
+          "guttered": false,
+          "decaying": false,
+          "squallsSurvived": 0,
+          "pressShare": 0.25,
+          "objectiveMet": false
+        },
+        {
+          "tick": 2041,
+          "phase": "squall",
+          "blowing": true,
+          "warmth": 99.867,
+          "alight": true,
+          "guttered": false,
+          "decaying": true,
+          "squallsSurvived": 0,
+          "pressShare": 0.5,
+          "objectiveMet": false
+        },
+        {
+          "tick": 2400,
+          "phase": "squall",
+          "blowing": true,
+          "warmth": 52,
+          "alight": true,
+          "guttered": false,
+          "decaying": true,
+          "squallsSurvived": 0,
+          "pressShare": 0.5,
+          "objectiveMet": false
+        },
+        {
+          "tick": 2790,
+          "phase": "squall",
+          "blowing": true,
+          "warmth": 0,
+          "alight": false,
+          "guttered": true,
+          "decaying": false,
+          "squallsSurvived": 0,
+          "pressShare": 0,
+          "objectiveMet": false
+        }
+      ]
+    }
+  ],
+  "idle": [
+    {
+      "seed": "e10-ember-shore-01",
+      "run": 1,
+      "terminal": true,
+      "secured": false,
+      "waves": 3,
+      "timeMs": 93000,
+      "gold": 0,
+      "kills": 43,
+      "eventLogHash": "fnv1a32:1b73c4b7",
+      "endReason": "vent_guttered",
+      "squallsStarted": 1,
+      "squallsCompleted": 0,
+      "warmth": 0,
+      "guttered": true,
+      "gutteredAtSeconds": 93,
+      "stokes": 0,
+      "objectiveMet": false
+    },
+    {
+      "seed": "e10-ember-shore-01",
+      "run": 2,
+      "terminal": true,
+      "secured": false,
+      "waves": 3,
+      "timeMs": 93000,
+      "gold": 0,
+      "kills": 43,
+      "eventLogHash": "fnv1a32:1b73c4b7",
+      "endReason": "vent_guttered",
+      "squallsStarted": 1,
+      "squallsCompleted": 0,
+      "warmth": 0,
+      "guttered": true,
+      "gutteredAtSeconds": 93,
+      "stokes": 0,
+      "objectiveMet": false
+    },
+    {
+      "seed": "e10-ember-shore-02",
+      "run": 1,
+      "terminal": true,
+      "secured": false,
+      "waves": 3,
+      "timeMs": 93000,
+      "gold": 0,
+      "kills": 43,
+      "eventLogHash": "fnv1a32:5c8b38ac",
+      "endReason": "vent_guttered",
+      "squallsStarted": 1,
+      "squallsCompleted": 0,
+      "warmth": 0,
+      "guttered": true,
+      "gutteredAtSeconds": 93,
+      "stokes": 0,
+      "objectiveMet": false
+    },
+    {
+      "seed": "e10-ember-shore-02",
+      "run": 2,
+      "terminal": true,
+      "secured": false,
+      "waves": 3,
+      "timeMs": 93000,
+      "gold": 0,
+      "kills": 43,
+      "eventLogHash": "fnv1a32:5c8b38ac",
+      "endReason": "vent_guttered",
+      "squallsStarted": 1,
+      "squallsCompleted": 0,
+      "warmth": 0,
+      "guttered": true,
+      "gutteredAtSeconds": 93,
+      "stokes": 0,
+      "objectiveMet": false
+    }
+  ],
+  "stoked": [
+    {
+      "run": 1,
+      "terminal": true,
+      "secured": false,
+      "waves": 3,
+      "eventLogHash": "fnv1a32:51793370",
+      "endReason": "vent_guttered",
+      "warmth": 0,
+      "guttered": true,
+      "stokes": 0,
+      "refusals": {
+        "undeclared": 0,
+        "guttered": 0,
+        "out-of-reach": 0,
+        "insufficient-gold": 2,
+        "already-warm": 4
+      },
+      "squallsSurvived": 0,
+      "objectiveMet": false
+    },
+    {
+      "run": 2,
+      "terminal": true,
+      "secured": false,
+      "waves": 3,
+      "eventLogHash": "fnv1a32:51793370",
+      "endReason": "vent_guttered",
+      "warmth": 0,
+      "guttered": true,
+      "stokes": 0,
+      "refusals": {
+        "undeclared": 0,
+        "guttered": 0,
+        "out-of-reach": 0,
+        "insufficient-gold": 2,
+        "already-warm": 4
+      },
+      "squallsSurvived": 0,
+      "objectiveMet": false
+    }
+  ],
+  "engineHash": "9127fd31ad6795e748c627c0cbbbdbcb68c1567f9a8a911b4969a341e9f1e70d"
+}

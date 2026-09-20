@@ -1,0 +1,107 @@
+{
+  "rig": "fable",
+  "contract": "e2-pressure-garden",
+  "model": "claude-fable-5",
+  "sessionId": "e9404033-957f-4459-aa43-69d7ac8aab92",
+  "startedAt": "2026-09-03T20:29:11.320Z",
+  "endedAt": "2026-09-03T20:48:02.826Z",
+  "wallClockSeconds": 1132,
+  "wallHit": false,
+  "exitCode": 0,
+  "signal": null,
+  "setupToFirstOutputSeconds": 240,
+  "arenaTrackedChanges": [],
+  "workspaceFiles": [
+    "attempt-1-log.ndjson",
+    "attempt-1-tape.json",
+    "controller.mjs",
+    "gauntlet-outcome.json",
+    "gauntlet-report.md",
+    "probe-idle-tape.json",
+    "probe-idle.ndjson",
+    "probe-idle.stderr.txt",
+    "probe-runner.mjs",
+    "tune-1-log.ndjson",
+    "tune-1-tape.json",
+    "tune-2-log.ndjson",
+    "tune-2-tape.json",
+    "tune-3-log.ndjson",
+    "tune-3-tape.json"
+  ],
+  "outcome": {
+    "secured": true,
+    "waves": 12,
+    "timeMs": 360000,
+    "gold": 63,
+    "kills": 395,
+    "calls": 38,
+    "defaultedPicks": 0,
+    "defaultedSecure": 0,
+    "eventLogHash": "fnv1a32:17044e3b",
+    "tape": "/private/tmp/heat11-5e7a7c0b/artifacts/heat11/fable/e2-pressure-garden/attempt-1-tape.json",
+    "scored": true,
+    "runsSoFar": 5,
+    "scoredAttempts": 1,
+    "worldModel": "sim-import",
+    "determinism": "attempt-1 re-run reproduced tune-3 exactly: identical eventLogHash fnv1a32:17044e3b, identical w12/360.0s/63g/395k/38 calls"
+  },
+  "outcomeError": null,
+  "scoredTapes": [
+    {
+      "file": "attempt-1-tape.json",
+      "id": "agent-fa0b6486-18ee5da2-1e02-4664-af4e-ffd0506b3aa4",
+      "contract": "e2-pressure-garden",
+      "seed": "e2-pressure-garden-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "5e7a7c0ba",
+        "engineHash": "a607a81f44e10dc2b2262682c1e116c15917edffeeaa0c5909f383ccea5d8e04",
+        "era": 5,
+        "viewVersion": 1
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 12,
+        "timeAlive": 360,
+        "gold": 63
+      },
+      "entries": 38
+    }
+  ],
+  "otherSecuredTapes": [
+    {
+      "file": "tune-3-tape.json",
+      "id": "agent-fa0b6486-9b66e1f9-6846-4e1c-9cd4-191f5bf0982e",
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 12,
+        "timeAlive": 360,
+        "gold": 63
+      },
+      "meta": {
+        "buildId": "5e7a7c0ba",
+        "engineHash": "a607a81f44e10dc2b2262682c1e116c15917edffeeaa0c5909f383ccea5d8e04",
+        "era": 5,
+        "viewVersion": 1
+      }
+    }
+  ],
+  "report": {
+    "outcome": "SECURED — waves 12, timeAlive 360.000s, gold 63, kills 395, calls 38, defaultedPicks 0,\ndefaultedSecure 0, eventLogHash `fnv1a32:17044e3b`. Tape put forward:\n`/private/tmp/heat11-5e7a7c0b/artifacts/heat11/fable/e2-pressure-garden/attempt-1-tape.json`\n(38 accepted entries, trail, bench seed e2-pressure-garden-01). 5 sim runs, 1 scored attempt.\nController: `controller.mjs` (v3) in this directory; worldModel: sim-import.\nWinning shape: hero is FIXED at the west boiler bed (-12,12) — fort rings him on the boiler\nterrace (3 turrets + 2 beacons was all the economy afforded: T (-16,12), (-8,12), (-12,8);\nB (-14,14), (-10,10)); hero on `SET_WEAPON blast` (AoE vs the trickle clumps); Prospector chases\nevery active seam map-wide in perfect safety; REPAIR_UNDER 65 standing; 13 upgrade stacks taken,\nnone defaulted (tinkers_plating x3 → 175 maxHp, prospectors_luck x2, beacon_dynamo x2, plus\nlong_resonator/powder_charge/wide_ring/quick_fuse/heavy_spark/split_spark); single-element\nSECURE_CHOICE bank at the wave-12 boundary.",
+    "whatTheMapAsked": "The era's signature vent-or-boom pressure line is authored and visible — `twist.pressureEnabled`,\nthree published `map.coalSeams` on the top terrace, `boiler_house` at 70g on the board — but it is\nunreachable-by-construction for a plain door boot: every pressure consumer is research-gated\n(`PressureArsenalSystem.ts:116`), so nothing a cold rider builds can spend a single unit of\npressure, and the map secures without ever touching coal (same verdict as my e2-incline ride, and\nthis contract predates the era-mechanic audit). What the map actually asked was a **fixed-hero\nlogistics race**: `now.hero` never moves from the heroStart stake, every verb drives the separate\nProspector, and the real mechanic is that the 30g-capacity seams (`now.seams` live positions,\n`remaining`, 20s respawn across six anchors on two terrace clusters) must be chased map-wide by an\ninvulnerable worker while a continuous 2.4s trickle plus four-gate wave packs (`almanac`\ncomposition, wrecker/thief flags in the roster) grind the stationary hero. The fields that carried\nit: `now.prospector` vs `now.hero` (two different bodies), `now.seams`, `now.works.entries` (repair\ntargets), `now.pendingOffer` (13 stacks of visible power), and the BUILD `goldGte` gates against\nthe 50/70/95/125 turret curve. E2's named cap mechanic never bound: gold peaked ~95.",
+    "winnability": "Winnable through the door from the starting kit, on the third full ride, with visible margin: hero\nhp never fell below 92/100 before plating and rode waves 6-12 at 167/175, all five works stood at\nthe end — but only after two deaths taught that the fort must ring the fixed hero, not the seams;\nthe wall in my first two rides was my own world model, not the map.",
+    "lessons": "- e2-pressure-garden FIRST SECURE (cold plain boot, w12/360.0s/63g/395 kills/38 calls, hash\n  fnv1a32:17044e3b, zero defaults, determinism proven by identical re-run): fort = 3 turrets\n  (-16,12), (-8,12), (-12,8) + 2 beacons (-14,14), (-10,10) ringing the FIXED hero at (-12,12);\n  hero on SET_WEAPON blast; Prospector chases all 6 seam anchors map-wide; REPAIR_UNDER 65;\n  no stockpiles (coal thieves can only rob stockpile holdings — deny them targets and they revert\n  to ordinary hero-hunters); no boiler/coal (research-gated arsenal, gen-8 law reconfirmed).\n- THE FIXED-HERO LAW: `now.hero` and `now.prospector` are DIFFERENT BODIES. On contracts whose\n  stakeMarkers pin the heroStart, the hero never moves; MOVE_TO/HOLD/HARVEST/BUILD all steer the\n  Prospector, who is untargetable — pan in total safety anywhere, and put every defense coin at\n  the hero's fixed feet. Check `now.prospector` against `now.hero` on the FIRST view of any new\n  contract before choosing fort ground; my seam-camp fort (two dead rides) defended a body that\n  was never in danger.\n- THE ALARM-PROBE LEVER (new, proven): a BUILD at a deliberately illegal site (a dead band\n  between build zones, e.g. z 30..35 here) gated `goldGte: current+20` fails the instant the gate\n  crosses → order_failure surprise → fresh view MID-WAVE. This turns the wave-boundary-only view\n  cadence into self-paced replanning: re-target depleted seams, land builds promptly, re-aim\n  repairs. Place the probe site within placement radius (~6wu) of the standing HOLD target so the\n  Prospector doesn't detour to fail. Skip it once the secure wave is imminent.\n- Seam capacity vs first-turret price is the opening riddle: 30g seams, 50g turret. The idle\n  floor (w1/57s) is a death sentence for any plan that waits at one seam. Opening that secured:\n  drain the near seam (alarm at 25g), cross and drain the far seam, first turret gated at 50g\n  lands ~t46 — and the hero survives the naked first wave because blast-mode AoE plus fort-adjacent\n  contact geometry carry it (hp low point 92/100 at w3-4).\n- SET_WEAPON blast for a fixed hero vs continuous-trickle maps: the enemies stack ON the hero, so\n  wave-scaled AoE beats the single-target rig; with it the ride took 395 kills. Idempotent order —\n  safe to resend in every standing set.\n- A 3-turret + 2-beacon fort was ENOUGH at trail w12 because 13 undefaulted upgrade stacks are the\n  real second economy: plating x3 (100→175 maxHp) is the armor, dynamo x2 upgrades beacons, and\n  the combat stack (powder/wide_ring/quick_fuse/heavy_spark/split_spark on blast) is the dps curve.\n  Head-of-array PICK_UPGRADE (gen-8 law) converted every offer; alarm-probe views helped picks\n  land within seconds of opening.\n- Gold-starved ≠ losing on this map: gold never exceeded ~95 and turret 4 (125g) never existed;\n  the drain is repair gold (REPAIR_UNDER 65 with wreckers at 2.5x building damage). Don't read\n  low bank as failure — read hero hp and works minimum hp."
+  },
+  "usage": {
+    "transcript": "/Users/robin/.claude/projects/-private-tmp-heat11-5e7a7c0b/e9404033-957f-4459-aa43-69d7ac8aab92.jsonl",
+    "assistantTurns": 129,
+    "toolCalls": 61,
+    "tokensIn": 258,
+    "tokensOut": 203395,
+    "cacheReadTokens": 19681327,
+    "cacheWriteTokens": 590768,
+    "note": "tokensIn excludes cache reads/writes (reported separately); summed from the CLI session transcript, not self-reported by the rig"
+  }
+}

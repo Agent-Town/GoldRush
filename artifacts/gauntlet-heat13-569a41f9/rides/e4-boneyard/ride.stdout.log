@@ -1,0 +1,13 @@
+**SECURED** — `e4-boneyard` on `e4-boneyard-01`, wave 12 / 360.000 s / **200 gold** (the bank cap) / 321 kills / 50 calls, `towed: true`.
+
+**3 runs, 1 scored attempt.** Stopped at the first secure; both free ranking axes were already at their ceilings (a fixed wave-12 gate pins waves and `timeAlive`, and 200 is the bank cap).
+
+**Tape put forward:** `artifacts/heat13/opus/e4-boneyard/attempt-1-tape.json`, declared in `gauntlet-outcome.json`'s `"tape"` field — byte-identical to `tune-2-tape.json`. Local assay reproduces the tape header's `fnv1a32:464d1a6b` and all four outcome fields, with `securedSnapshot.gold === 200` so the row can't draw `score_mismatch`. Envelope: 10 800/18 002 ticks (last order at 10 763), 50/3 601 entries, 171 KB/1.94 MB.
+
+What decided it:
+
+- **The era's lever gates the secure and its arithmetic bound.** The tow is two rests (hitch at the hulk, deliver at the corridor stake) against a 36-fuel leash; I drew **26.688 fuel for 69.469 units** — a 15 % storm surcharge over clear weather. Two tar nodes (24 fuel) would have stranded the objective; that's why I toured all three. `GRADE` is genuinely worthless here (`graded: []`) because the delivery point *is* the corridor's start.
+- **The grammar change was not free on this map.** My notebook's geometry all reproduced, but `HAUL` now reads the **hero's** ground, and the hero — unlike the retired `MOVE_TO`'s Prospector — is refused by landmark collision. `spent-boiler-west` pads to a 2.333 × 1.759 blocker, leaving a walkable band ~0.7 wu thick inside the 2.5 stop reach. My first controller's standoff answered `UNREACHABLE_TERRAIN` and cost a whole run.
+- **`tune-1`'s other two faults were mine, not the map's**: the fort was gated behind `objective.arrived` (it died at wave 4 holding 200 gold and zero works), and the seam chain walked the Prospector 64 wu for 5 gold. Fixing the chain took panning from 200 g/105 s to 645 g/360 s.
+
+Margin: enormous on survival (hero never below its running maximum, finishing 175/175, 0 of 7 works ever wrecked), thin on the purse — gold hit the cap at t = 340 of 360.

@@ -1,0 +1,21 @@
+HARNESS RIDE: hero buffed (applyStats 10000/heal) to outlive the null floor. NOT a floor ride, NOT a door result.
+ride: e8-low-orbit seed=e8-low-orbit-01 policy=harness viewVersion=2 schema=goldrush.view.v1
+claim={"x":0,"z":12} hero={"x":0,"z":12,"hp":10100} prospector={"x":-1.8,"z":10.93}
+goals=["Cross the salvaged Claw scaffold by its central spine.","Build across the carcass yard and both scaffold decks."]
+now.gravity={"source":"zero-gravity","movement":"free-fall","feelG":0,"lobArcDistanceMultiplier":4.8,"lobAirTimeMultiplier":4.8,"knockbackScale":1.75,"orbitalReturn":true,"vacuum":true}
+now.air={"wall":"suit-only","suit":{"body":"prospector","seconds":60,"capacity":60,"refillPerSecond":4,"inDome":null,"empty":false,"drainedTotal":0,"emptySeconds":0},"domes":[{"id":"west-scaffold-deck","air":1,"breached":false,"breaches":0,"siegers":0},{"id":"claw-carcass-yard","air":1,"breached":false,"breaches":0,"siegers":0},{"id":"east-scaffold-deck","air":1,"breached":false,"breaches":0,"siegers":0}],"regolith":{"grounds":4,"required":0,"worked":[],"runsOnAir":0,"breathlessPans":0,"complete":false},"crossing":{"zones":["west-scaffold-deck","claw-carcass-yard","east-scaffold-deck"],"required":3,"reached":[],"breathlessEntries":0,"complete":false}}
+wave=1 t=30s CROSSED ON AIR -> ["west-scaffold-deck","claw-carcass-yard"] (2/3) breathlessEntries=0 suit=60s shelter=west-scaffold-deck
+wave=2 t=60.03s CROSSED ON AIR -> ["west-scaffold-deck","claw-carcass-yard","east-scaffold-deck"] (3/3) breathlessEntries=0 suit=60s shelter=east-scaffold-deck
+wave=3 t=109.4s gold=0 hero=9804/10100 prospector={"x":37,"z":0} suit=60s shelter=east-scaffold-deck shelters=[["west-scaffold-deck",1],["claw-carcass-yard",1],["east-scaffold-deck",1]] crossed=3/3 worked=0/0
+wave=6 t=180.03s gold=0 hero=9356/10100 prospector={"x":37,"z":0} suit=60s shelter=east-scaffold-deck shelters=[["west-scaffold-deck",1],["claw-carcass-yard",1],["east-scaffold-deck",1]] crossed=3/3 worked=0/0
+wave=8 t=249.4s gold=0 hero=8901/10100 prospector={"x":37,"z":0} suit=60s shelter=east-scaffold-deck shelters=[["west-scaffold-deck",1],["claw-carcass-yard",1],["east-scaffold-deck",1]] crossed=3/3 worked=0/0
+wave=10 t=329.4s gold=0 hero=7813/10100 prospector={"x":37,"z":0} suit=60s shelter=east-scaffold-deck shelters=[["west-scaffold-deck",1],["claw-carcass-yard",1],["east-scaffold-deck",1]] crossed=3/3 worked=0/0
+wave=13 t=390s gold=0 hero=6974/10100 prospector={"x":37,"z":0} suit=60s shelter=east-scaffold-deck shelters=[["west-scaffold-deck",1],["claw-carcass-yard",1],["east-scaffold-deck",1]] crossed=3/3 worked=0/0
+wave=15 t=469.4s gold=0 hero=5879/10100 prospector={"x":37,"z":0} suit=60s shelter=east-scaffold-deck shelters=[["west-scaffold-deck",1],["claw-carcass-yard",1],["east-scaffold-deck",1]] crossed=3/3 worked=0/0
+wave=18 t=540s gold=0 hero=4863/10100 prospector={"x":37,"z":0} suit=60s shelter=east-scaffold-deck shelters=[["west-scaffold-deck",1],["claw-carcass-yard",1],["east-scaffold-deck",1]] crossed=3/3 worked=0/0
+wave=20 t=600s PENDING SECURE (crossing=["west-scaffold-deck","claw-carcass-yard","east-scaffold-deck"] worked=[] complete=true) -> bank
+TERMINAL decisions=46 outcome={"secured":true,"waves":20,"timeMs":600000,"gold":0,"kills":766,"calls":46,"defaultedPicks":25,"defaultedSecure":0,"eventLogHash":"fnv1a32:33f85945"}
+final now.air={"wall":"suit-only","suit":{"body":"prospector","seconds":60,"capacity":60,"refillPerSecond":4,"inDome":"east-scaffold-deck","empty":false,"drainedTotal":5.067,"emptySeconds":0},"domes":[{"id":"west-scaffold-deck","air":1,"breached":false,"breaches":0,"siegers":0},{"id":"claw-carcass-yard","air":1,"breached":false,"breaches":0,"siegers":0},{"id":"east-scaffold-deck","air":1,"breached":false,"breaches":0,"siegers":0}],"regolith":{"grounds":4,"required":0,"worked":[],"runsOnAir":0,"breathlessPans":0,"complete":true},"crossing":{"zones":["west-scaffold-deck","claw-carcass-yard","east-scaffold-deck"],"required":3,"reached":["west-scaffold-deck","claw-carcass-yard","east-scaffold-deck"],"breathlessEntries":0,"complete":true}}
+final now.probeRecovery=null
+minSuitSeconds=60 shelterEntries=2 firstCrossingAt=30s crossingCompleteAt=60.03s
+event kinds={"run_started":1,"orders":46,"enemy_killed":766,"announcement":78,"wave_started":20,"hero_damaged":772,"run_secured":1}

@@ -1,0 +1,12 @@
+**NOT SECURED** — `e4-dust-flats` on `e4-dust-flats-01`, era 6. Best run: **w13 / 396.633 s / 175 gold / 48 calls**, 3 runs, 1 scored attempt. Nothing put forward; an unsecured run must not be submitted.
+
+**What I got right:** the pre-ride reading. `null-floors.json` published this seed's floor (`w2 / 79033 ms / fnv1a32:7e5b43cc`), the idle probe reproduced it byte for byte, and zero of era 6's eight pins names this contract — so the re-survey moved this map's rendering, not its rules. The era gate fell cleanly: staging at the corridor stake, `GRADE`-ing the road, then hauling meant **16.279 of 36 fuel drawn** and `arrived` latched at **t = 25.6** of a 600-second ceiling, where the naive open drive would have cost ~27.5 clear and ~39 under a storm.
+
+**What beat me:** two faults my own notebook had already named.
+
+1. `tune-1` put the build ladder only in the post-errand branch, so phase A returned early and the fort was gated behind the errand — zero works at death, wave 2. One structural edit (ladder + tail emitted unconditionally in every phase, plus a 25-gold beacon as rung 0) took the same seed **w2 → w13**.
+2. `attempt-1` then died one wave short of the wave-14 boss with **175 gold idle and three of four turrets standing**, because my hard build floor at t = 330 refused the 125-gold fourth turret when gold reached 145 at t = 362. That is the bank-gate/build-floor conspiracy from generations 110, 111 and 113 — the fourth sighting, and the first where I wrote the floor already knowing the lesson.
+
+The fix is two lines, not a strategy: bypass the floor while the core ladder is unfinished or the hero is below ~60%. The turret ring itself is solved and untested against the boss — (±12, ±13) is r = 17.692, which is 99.9% of the optimal arc with 0.308 of margin under the crane's reach-6 cliff at r = 18, where generation 16's (±13, ±13) sits on the wrong side.
+
+Files written: `gauntlet-outcome.json` (hand-corrected — the comparator had promoted the idle probe over the w13 run, the eleventh time that caveat has bitten), `gauntlet-report.md` with all four required sections, plus per-view tables, view logs, tapes and the controller.

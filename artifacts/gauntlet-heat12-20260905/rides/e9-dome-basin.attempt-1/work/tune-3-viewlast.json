@@ -1,0 +1,1646 @@
+{
+ "schema": "goldrush.view.v1",
+ "viewVersion": 2,
+ "stablePrefix": {
+  "seed": "e9-dome-basin-01",
+  "contract": {
+   "id": "e9-dome-basin",
+   "name": "The Dome Basin",
+   "briefing": {
+    "geography": "A height-four ice-quarry scarp feeds a dry canal through three stage gates into a height-minus-two basin ringed by domes, rows, the weather spire, and Ark yards.",
+    "goals": [
+     "Work the ice quarry above the basin.",
+     "Defend stage-gates C1, C2, and C3 along the feeder canal.",
+     "Build at the rim domes, weather spire, seed rows, and Ark yards while watching the dust-devil lane."
+    ],
+    "rules": [
+     "The north ice-quarry scarp stands at height four above a central basin floor at height minus two.",
+     "The feeder canal begins dry; C1, C2, and C3 mark its stage gates.",
+     "Dust devils follow a telegraphed wander lane."
+    ]
+   }
+  },
+  "mechanics": {
+   "schema": "goldrush.mechanics.v1",
+   "contractId": "e9-dome-basin",
+   "buildables": [
+    {
+     "id": "sentry_beacon",
+     "operation": "BUILD",
+     "meaning": "Lights the dark and slows what it touches; radius 8wu.",
+     "cost": 25,
+     "costs": [
+      25,
+      35,
+      45,
+      55,
+      75,
+      95
+     ],
+     "costRule": "ceil-to-5",
+     "maxCount": 6,
+     "source": "buildables.registry"
+    },
+    {
+     "id": "palisade",
+     "operation": "BUILD",
+     "meaning": "Timber that holds. Bandits break it before you.",
+     "cost": 10,
+     "costs": [
+      10,
+      10,
+      10,
+      10,
+      10,
+      10
+     ],
+     "maxCount": 48,
+     "source": "buildables.registry"
+    },
+    {
+     "id": "sluice",
+     "operation": "BUILD",
+     "meaning": "Works the river for you: 3g per cycle beside water.",
+     "cost": 40,
+     "costs": [
+      40,
+      40,
+      40
+     ],
+     "maxCount": 3,
+     "source": "buildables.registry"
+    },
+    {
+     "id": "stockpile",
+     "operation": "BUILD",
+     "meaning": "Holds +150 gold above the pan cap.",
+     "cost": 60,
+     "costs": [
+      60,
+      60
+     ],
+     "maxCount": 2,
+     "source": "buildables.registry"
+    },
+    {
+     "id": "turret",
+     "operation": "BUILD",
+     "meaning": "Spark bolts, line-of-sight, 16wu range.",
+     "cost": 50,
+     "costs": [
+      50,
+      70,
+      95,
+      125
+     ],
+     "costRule": "ceil-to-5",
+     "maxCount": 4,
+     "source": "buildables.registry"
+    },
+    {
+     "id": "assay_office",
+     "operation": "BUILD",
+     "meaning": "Write orders; the town's craftsmen answer. One per claim.",
+     "cost": 80,
+     "costs": [
+      80
+     ],
+     "maxCount": 1,
+     "source": "buildables.registry"
+    }
+   ],
+   "interactables": [],
+   "rules": [
+    {
+     "id": "build_zones",
+     "source": "tileParams.buildZones",
+     "data": {
+      "count": 6,
+      "banks": [
+       "north",
+       "south"
+      ]
+     }
+    }
+   ],
+   "modes": [],
+   "posting": {
+    "waves": [],
+    "spawnEdges": [
+     "east",
+     "north",
+     "west"
+    ],
+    "lossStakes": []
+   }
+  },
+  "map": {
+   "claim": {
+    "x": 0,
+    "z": 12
+   },
+   "seams": [
+    {
+     "id": "gold-seam-1",
+     "x": 22,
+     "z": -28
+    },
+    {
+     "id": "gold-seam-2",
+     "x": 28,
+     "z": -22
+    },
+    {
+     "id": "gold-seam-3",
+     "x": 34,
+     "z": -28
+    },
+    {
+     "id": "gold-seam-4",
+     "x": 40,
+     "z": -22
+    }
+   ],
+   "coalSeams": [],
+   "water": {
+    "river": false,
+    "ford": false,
+    "sources": 0,
+    "descriptor": null
+   },
+   "spawnGates": [
+    {
+     "edge": "north"
+    },
+    {
+     "edge": "west"
+    },
+    {
+     "edge": "east"
+    }
+   ]
+  },
+  "orders": [
+   {
+    "id": "orders-265-1",
+    "order": {
+     "verb": "PICK_UPGRADE",
+     "id": "sharpen"
+    },
+    "status": "done"
+   },
+   {
+    "id": "orders-265-2",
+    "order": {
+     "verb": "BLAST_AT",
+     "pos": {
+      "x": 0,
+      "z": 12
+     }
+    },
+    "status": "done"
+   },
+   {
+    "id": "orders-265-3",
+    "order": {
+     "verb": "REPAIR_UNDER",
+     "pct": 75
+    },
+    "status": "done"
+   },
+   {
+    "id": "orders-265-4",
+    "order": {
+     "verb": "REPAIR_UNDER",
+     "pct": 75
+    },
+    "status": "done"
+   },
+   {
+    "id": "orders-265-5",
+    "order": {
+     "verb": "REPAIR_UNDER",
+     "pct": 75
+    },
+    "status": "done"
+   },
+   {
+    "id": "orders-265-6",
+    "order": {
+     "verb": "REPAIR_UNDER",
+     "pct": 75
+    },
+    "status": "done"
+   },
+   {
+    "id": "orders-265-7",
+    "order": {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 40,
+      "z": -4
+     },
+     "when": {
+      "goldGte": 10
+     }
+    },
+    "status": "done"
+   },
+   {
+    "id": "orders-265-8",
+    "order": {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 42,
+      "z": -4
+     },
+     "when": {
+      "goldGte": 10
+     }
+    },
+    "status": "done"
+   },
+   {
+    "id": "orders-265-9",
+    "order": {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 32,
+      "z": -6
+     },
+     "when": {
+      "goldGte": 10
+     }
+    },
+    "status": "failed",
+    "reason": "FAILED (collision): BUILD action was rejected."
+   },
+   {
+    "id": "orders-265-10",
+    "order": {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    "status": "done"
+   },
+   {
+    "id": "orders-265-11",
+    "order": {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    "status": "done"
+   },
+   {
+    "id": "orders-265-12",
+    "order": {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    "status": "done"
+   },
+   {
+    "id": "orders-265-13",
+    "order": {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    "status": "done"
+   },
+   {
+    "id": "orders-265-14",
+    "order": {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    "status": "done"
+   },
+   {
+    "id": "orders-265-15",
+    "order": {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    "status": "done"
+   },
+   {
+    "id": "orders-265-16",
+    "order": {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    "status": "done"
+   },
+   {
+    "id": "orders-265-17",
+    "order": {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    "status": "done"
+   },
+   {
+    "id": "orders-265-18",
+    "order": {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    "status": "done"
+   },
+   {
+    "id": "orders-265-19",
+    "order": {
+     "verb": "HOLD",
+     "pos": {
+      "x": 34,
+      "z": -28
+     }
+    },
+    "status": "active"
+   }
+  ]
+ },
+ "appendLog": [
+  {
+   "wave": 1,
+   "outcome": "held",
+   "goldDelta": -5,
+   "worksHp": {
+    "current": 38.8,
+    "max": 50,
+    "delta": 0
+   },
+   "kills": 15,
+   "surprises": [
+    "order_failure",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage"
+   ]
+  },
+  {
+   "wave": 2,
+   "outcome": "held",
+   "goldDelta": 74,
+   "worksHp": {
+    "current": 38.8,
+    "max": 50,
+    "delta": 0
+   },
+   "kills": 21,
+   "surprises": [
+    "claim_damage",
+    "claim_damage",
+    "order_failure",
+    "order_failure"
+   ]
+  },
+  {
+   "wave": 3,
+   "outcome": "held",
+   "goldDelta": -6,
+   "worksHp": {
+    "current": 100,
+    "max": 100,
+    "delta": 61.2
+   },
+   "kills": 20,
+   "surprises": [
+    "claim_damage",
+    "order_failure",
+    "order_failure",
+    "order_failure"
+   ]
+  },
+  {
+   "wave": 4,
+   "outcome": "held",
+   "goldDelta": -5,
+   "worksHp": {
+    "current": 150,
+    "max": 150,
+    "delta": 50
+   },
+   "kills": 29,
+   "surprises": [
+    "order_failure",
+    "order_failure",
+    "order_failure"
+   ]
+  },
+  {
+   "wave": 5,
+   "outcome": "held",
+   "goldDelta": -85,
+   "worksHp": {
+    "current": 500,
+    "max": 500,
+    "delta": 350
+   },
+   "kills": 33,
+   "surprises": [
+    "order_failure",
+    "order_failure",
+    "order_failure"
+   ]
+  },
+  {
+   "wave": 6,
+   "outcome": "held",
+   "goldDelta": 61,
+   "worksHp": {
+    "current": 556.8,
+    "max": 568,
+    "delta": 56.8
+   },
+   "kills": 38,
+   "surprises": [
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "order_failure",
+    "order_failure",
+    "order_failure",
+    "claim_damage"
+   ]
+  },
+  {
+   "wave": 7,
+   "outcome": "held",
+   "goldDelta": -16,
+   "worksHp": {
+    "current": 860.8,
+    "max": 872,
+    "delta": 304
+   },
+   "kills": 40,
+   "surprises": [
+    "order_failure",
+    "order_failure",
+    "order_failure",
+    "order_failure",
+    "order_failure",
+    "claim_damage",
+    "order_failure",
+    "claim_damage"
+   ]
+  },
+  {
+   "wave": 8,
+   "outcome": "held",
+   "goldDelta": 30,
+   "worksHp": {
+    "current": 1017.6,
+    "max": 1040,
+    "delta": 156.8
+   },
+   "kills": 43,
+   "surprises": [
+    "order_failure",
+    "order_failure",
+    "order_failure",
+    "claim_damage"
+   ]
+  },
+  {
+   "wave": 9,
+   "outcome": "held",
+   "goldDelta": -22,
+   "worksHp": {
+    "current": 1396.8,
+    "max": 1408,
+    "delta": 379.2
+   },
+   "kills": 53,
+   "surprises": [
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "order_failure",
+    "order_failure",
+    "claim_damage",
+    "claim_damage",
+    "order_failure",
+    "order_failure",
+    "order_failure",
+    "order_failure",
+    "claim_damage"
+   ]
+  },
+  {
+   "wave": 10,
+   "outcome": "held",
+   "goldDelta": -23,
+   "worksHp": {
+    "current": 1874.4,
+    "max": 1908,
+    "delta": 477.6
+   },
+   "kills": 54,
+   "surprises": [
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "order_failure",
+    "order_failure",
+    "order_failure",
+    "order_failure",
+    "order_failure",
+    "order_failure",
+    "order_failure",
+    "order_failure",
+    "claim_damage"
+   ]
+  },
+  {
+   "wave": 11,
+   "outcome": "works-damaged",
+   "goldDelta": -4,
+   "worksHp": {
+    "current": 1863.2,
+    "max": 1908,
+    "delta": -11.2
+   },
+   "kills": 59,
+   "surprises": [
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "order_failure",
+    "claim_damage"
+   ]
+  },
+  {
+   "wave": 12,
+   "outcome": "held",
+   "goldDelta": -28,
+   "worksHp": {
+    "current": 2001.6,
+    "max": 2024,
+    "delta": 138.4
+   },
+   "kills": 64,
+   "surprises": [
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage"
+   ]
+  },
+  {
+   "wave": 13,
+   "outcome": "works-damaged",
+   "goldDelta": 43,
+   "worksHp": {
+    "current": 1734.4,
+    "max": 2024,
+    "delta": -267.2
+   },
+   "kills": 59,
+   "surprises": [
+    "order_failure",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage"
+   ]
+  },
+  {
+   "wave": 14,
+   "outcome": "works-damaged",
+   "goldDelta": -27,
+   "worksHp": {
+    "current": 162.4,
+    "max": 2024,
+    "delta": -1572
+   },
+   "kills": 47,
+   "surprises": [
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage"
+   ]
+  },
+  {
+   "wave": 15,
+   "outcome": "works-lost",
+   "goldDelta": 53,
+   "worksHp": {
+    "current": 0,
+    "max": 2304,
+    "delta": -162.4
+   },
+   "kills": 46,
+   "surprises": [
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "order_failure",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage",
+    "claim_damage"
+   ]
+  },
+  {
+   "wave": 16,
+   "outcome": "rider-down",
+   "goldDelta": 10,
+   "worksHp": {
+    "current": 0,
+    "max": 2304,
+    "delta": 0
+   },
+   "kills": 21,
+   "surprises": [
+    "hero_down"
+   ]
+  }
+ ],
+ "now": {
+  "wave": 16,
+  "blastReadyInMs": 0,
+  "weapon": "rig",
+  "timers": {
+   "runSeconds": 499.2,
+   "nextWaveInSeconds": 10.8
+  },
+  "gold": 80,
+  "hero": {
+   "hp": 0,
+   "maxHp": 175,
+   "x": 0,
+   "z": 12,
+   "level": 24,
+   "upgradesTaken": {
+    "double_tap_coil": 3,
+    "split_spark": 2,
+    "tinkers_plating": 3,
+    "long_resonator": 2,
+    "heavy_spark": 3,
+    "wide_ring": 2,
+    "powder_charge": 2,
+    "quick_fuse": 2,
+    "prospectors_luck": 2,
+    "sharpen": 1
+   },
+   "upgradeChoiceRule": "first-offer"
+  },
+  "prospector": {
+   "x": 34,
+   "z": -28
+  },
+  "works": {
+   "hp": 0,
+   "maxHp": 2304,
+   "standing": 0,
+   "wrecked": 28,
+   "byKind": {
+    "palisade": 24,
+    "turret": 4
+   },
+   "entries": [
+    {
+     "id": "palisade",
+     "index": 0,
+     "tier": 1,
+     "hp": 0,
+     "maxHp": 60,
+     "wrecked": true,
+     "position": {
+      "x": 32,
+      "z": 8
+     }
+    },
+    {
+     "id": "palisade",
+     "index": 1,
+     "tier": 1,
+     "hp": 0,
+     "maxHp": 60,
+     "wrecked": true,
+     "position": {
+      "x": 34,
+      "z": 8
+     }
+    },
+    {
+     "id": "palisade",
+     "index": 2,
+     "tier": 1,
+     "hp": 0,
+     "maxHp": 60,
+     "wrecked": true,
+     "position": {
+      "x": 36,
+      "z": 8
+     }
+    },
+    {
+     "id": "palisade",
+     "index": 3,
+     "tier": 1,
+     "hp": 0,
+     "maxHp": 60,
+     "wrecked": true,
+     "position": {
+      "x": 38,
+      "z": 8
+     }
+    },
+    {
+     "id": "palisade",
+     "index": 4,
+     "tier": 1,
+     "hp": 0,
+     "maxHp": 60,
+     "wrecked": true,
+     "position": {
+      "x": 40,
+      "z": 8
+     }
+    },
+    {
+     "id": "palisade",
+     "index": 5,
+     "tier": 1,
+     "hp": 0,
+     "maxHp": 68,
+     "wrecked": true,
+     "position": {
+      "x": 42,
+      "z": 8
+     }
+    },
+    {
+     "id": "palisade",
+     "index": 6,
+     "tier": 1,
+     "hp": 0,
+     "maxHp": 76,
+     "wrecked": true,
+     "position": {
+      "x": 32,
+      "z": 4
+     }
+    },
+    {
+     "id": "palisade",
+     "index": 7,
+     "tier": 1,
+     "hp": 0,
+     "maxHp": 76,
+     "wrecked": true,
+     "position": {
+      "x": 34,
+      "z": 4
+     }
+    },
+    {
+     "id": "palisade",
+     "index": 8,
+     "tier": 1,
+     "hp": 0,
+     "maxHp": 76,
+     "wrecked": true,
+     "position": {
+      "x": 36,
+      "z": 4
+     }
+    },
+    {
+     "id": "palisade",
+     "index": 9,
+     "tier": 1,
+     "hp": 0,
+     "maxHp": 76,
+     "wrecked": true,
+     "position": {
+      "x": 38,
+      "z": 4
+     }
+    },
+    {
+     "id": "palisade",
+     "index": 10,
+     "tier": 1,
+     "hp": 0,
+     "maxHp": 84,
+     "wrecked": true,
+     "position": {
+      "x": 40,
+      "z": 4
+     }
+    },
+    {
+     "id": "palisade",
+     "index": 11,
+     "tier": 1,
+     "hp": 0,
+     "maxHp": 84,
+     "wrecked": true,
+     "position": {
+      "x": 42,
+      "z": 4
+     }
+    },
+    {
+     "id": "palisade",
+     "index": 12,
+     "tier": 1,
+     "hp": 0,
+     "maxHp": 92,
+     "wrecked": true,
+     "position": {
+      "x": 32,
+      "z": 0
+     }
+    },
+    {
+     "id": "palisade",
+     "index": 13,
+     "tier": 1,
+     "hp": 0,
+     "maxHp": 92,
+     "wrecked": true,
+     "position": {
+      "x": 34,
+      "z": 0
+     }
+    },
+    {
+     "id": "palisade",
+     "index": 14,
+     "tier": 1,
+     "hp": 0,
+     "maxHp": 92,
+     "wrecked": true,
+     "position": {
+      "x": 36,
+      "z": 0
+     }
+    },
+    {
+     "id": "palisade",
+     "index": 15,
+     "tier": 1,
+     "hp": 0,
+     "maxHp": 92,
+     "wrecked": true,
+     "position": {
+      "x": 38,
+      "z": 0
+     }
+    },
+    {
+     "id": "palisade",
+     "index": 16,
+     "tier": 1,
+     "hp": 0,
+     "maxHp": 100,
+     "wrecked": true,
+     "position": {
+      "x": 40,
+      "z": 0
+     }
+    },
+    {
+     "id": "palisade",
+     "index": 17,
+     "tier": 1,
+     "hp": 0,
+     "maxHp": 100,
+     "wrecked": true,
+     "position": {
+      "x": 42,
+      "z": 0
+     }
+    },
+    {
+     "id": "palisade",
+     "index": 18,
+     "tier": 1,
+     "hp": 0,
+     "maxHp": 100,
+     "wrecked": true,
+     "position": {
+      "x": 32,
+      "z": -4
+     }
+    },
+    {
+     "id": "palisade",
+     "index": 19,
+     "tier": 1,
+     "hp": 0,
+     "maxHp": 100,
+     "wrecked": true,
+     "position": {
+      "x": 34,
+      "z": -4
+     }
+    },
+    {
+     "id": "palisade",
+     "index": 20,
+     "tier": 1,
+     "hp": 0,
+     "maxHp": 100,
+     "wrecked": true,
+     "position": {
+      "x": 36,
+      "z": -4
+     }
+    },
+    {
+     "id": "palisade",
+     "index": 21,
+     "tier": 1,
+     "hp": 0,
+     "maxHp": 116,
+     "wrecked": true,
+     "position": {
+      "x": 38,
+      "z": -4
+     }
+    },
+    {
+     "id": "palisade",
+     "index": 22,
+     "tier": 1,
+     "hp": 0,
+     "maxHp": 140,
+     "wrecked": true,
+     "position": {
+      "x": 40,
+      "z": -4
+     }
+    },
+    {
+     "id": "palisade",
+     "index": 23,
+     "tier": 1,
+     "hp": 0,
+     "maxHp": 140,
+     "wrecked": true,
+     "position": {
+      "x": 42,
+      "z": -4
+     }
+    },
+    {
+     "id": "turret",
+     "index": 0,
+     "tier": 1,
+     "hp": 0,
+     "maxHp": 50,
+     "wrecked": true,
+     "position": {
+      "x": 28,
+      "z": 8
+     }
+    },
+    {
+     "id": "turret",
+     "index": 1,
+     "tier": 1,
+     "hp": 0,
+     "maxHp": 50,
+     "wrecked": true,
+     "position": {
+      "x": 30,
+      "z": 8
+     }
+    },
+    {
+     "id": "turret",
+     "index": 2,
+     "tier": 1,
+     "hp": 0,
+     "maxHp": 50,
+     "wrecked": true,
+     "position": {
+      "x": 28,
+      "z": 4
+     }
+    },
+    {
+     "id": "turret",
+     "index": 3,
+     "tier": 1,
+     "hp": 0,
+     "maxHp": 50,
+     "wrecked": true,
+     "position": {
+      "x": 30,
+      "z": 4
+     }
+    }
+   ]
+  },
+  "threats": {
+   "alive": 60,
+   "state": "active",
+   "edge": "east",
+   "thieves": 11,
+   "wreckers": 49,
+   "spawnedTotal": 710,
+   "defeatedTotal": 650,
+   "defeatedBasis": "all enemies, including continuous tricklers"
+  },
+  "orders": [
+   {
+    "id": "orders-265-1",
+    "order": {
+     "verb": "PICK_UPGRADE",
+     "id": "sharpen"
+    },
+    "status": "done"
+   },
+   {
+    "id": "orders-265-2",
+    "order": {
+     "verb": "BLAST_AT",
+     "pos": {
+      "x": 0,
+      "z": 12
+     }
+    },
+    "status": "done"
+   },
+   {
+    "id": "orders-265-3",
+    "order": {
+     "verb": "REPAIR_UNDER",
+     "pct": 75
+    },
+    "status": "done"
+   },
+   {
+    "id": "orders-265-4",
+    "order": {
+     "verb": "REPAIR_UNDER",
+     "pct": 75
+    },
+    "status": "done"
+   },
+   {
+    "id": "orders-265-5",
+    "order": {
+     "verb": "REPAIR_UNDER",
+     "pct": 75
+    },
+    "status": "done"
+   },
+   {
+    "id": "orders-265-6",
+    "order": {
+     "verb": "REPAIR_UNDER",
+     "pct": 75
+    },
+    "status": "done"
+   },
+   {
+    "id": "orders-265-7",
+    "order": {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 40,
+      "z": -4
+     },
+     "when": {
+      "goldGte": 10
+     }
+    },
+    "status": "done"
+   },
+   {
+    "id": "orders-265-8",
+    "order": {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 42,
+      "z": -4
+     },
+     "when": {
+      "goldGte": 10
+     }
+    },
+    "status": "done"
+   },
+   {
+    "id": "orders-265-9",
+    "order": {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 32,
+      "z": -6
+     },
+     "when": {
+      "goldGte": 10
+     }
+    },
+    "status": "failed",
+    "reason": "FAILED (collision): BUILD action was rejected."
+   },
+   {
+    "id": "orders-265-10",
+    "order": {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    "status": "done"
+   },
+   {
+    "id": "orders-265-11",
+    "order": {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    "status": "done"
+   },
+   {
+    "id": "orders-265-12",
+    "order": {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    "status": "done"
+   },
+   {
+    "id": "orders-265-13",
+    "order": {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    "status": "done"
+   },
+   {
+    "id": "orders-265-14",
+    "order": {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    "status": "done"
+   },
+   {
+    "id": "orders-265-15",
+    "order": {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    "status": "done"
+   },
+   {
+    "id": "orders-265-16",
+    "order": {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    "status": "done"
+   },
+   {
+    "id": "orders-265-17",
+    "order": {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    "status": "done"
+   },
+   {
+    "id": "orders-265-18",
+    "order": {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    "status": "done"
+   },
+   {
+    "id": "orders-265-19",
+    "order": {
+     "verb": "HOLD",
+     "pos": {
+      "x": 34,
+      "z": -28
+     }
+    },
+    "status": "active"
+   }
+  ],
+  "needsRider": true,
+  "seams": [
+   {
+    "id": "gold-seam-1",
+    "active": true,
+    "remaining": 5,
+    "x": 40,
+    "z": -22,
+    "anchorIndex": 3
+   },
+   {
+    "id": "gold-seam-2",
+    "active": true,
+    "remaining": 50,
+    "x": 28,
+    "z": -22,
+    "anchorIndex": 1
+   },
+   {
+    "id": "gold-seam-3",
+    "active": true,
+    "remaining": 10,
+    "x": 22,
+    "z": -28,
+    "anchorIndex": 0
+   },
+   {
+    "id": "gold-seam-4",
+    "active": false,
+    "remaining": 30,
+    "x": null,
+    "z": null,
+    "anchorIndex": null
+   }
+  ],
+  "score": {
+   "wavesSurvived": 16,
+   "goldPanned": 895,
+   "goldPannedByProspector": 0,
+   "goldStolen": 0,
+   "goldReclaimed": 0,
+   "goldReclaimedByProspector": 0,
+   "buildingsBuilt": 28
+  },
+  "pendingOffer": [
+   {
+    "id": "spring_heels",
+    "name": "Spring Heels",
+    "effectText": "+12% move speed"
+   },
+   {
+    "id": "pan_legend",
+    "name": "Pan Like a Legend",
+    "effectText": "30% faster panning"
+   },
+   {
+    "id": "sharpen",
+    "name": "Sharpen",
+    "effectText": "+5% spark damage"
+   }
+  ],
+  "expiresAtSimMs": 507233
+ },
+ "almanac": {
+  "label": "the Almanac reckons",
+  "estimate": true,
+  "nextWave": {
+   "wave": 17,
+   "arrivalInSeconds": 10.8,
+   "basis": "estimated-from-wave-schedule",
+   "composition": [
+    {
+     "id": "feral_terraformer",
+     "label": "Faithful Terraformer",
+     "count": 19
+    },
+    {
+     "id": "claim_jump_prospect_drone",
+     "label": "Claim-Jump Prospect Drone",
+     "count": 19
+    }
+   ],
+   "compositionScope": "wave-horn packs only; continuous tricklers are additional",
+   "continuousTrickle": {
+    "currentIntervalSeconds": 0.8,
+    "includedInComposition": false,
+    "includedInDefeatedTotal": true
+   }
+  },
+  "projection": {
+   "expectedLeaks": 23,
+   "expectedWorksDamage": 0,
+   "expectedGold": 57.51,
+   "currentWorks": 0,
+   "harnessHash": "fnv1a32:a6c7acd9"
+  }
+ }
+}

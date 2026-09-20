@@ -1,0 +1,23 @@
+**SECURED** — first secure in county history for `e5-stillwater`.
+
+**Outcome:** `secured: true` · w12 · 360.000s · gold 0 · 391 kills · **30 calls** · `eventLogHash: fnv1a32:829ab478` · 5 sim runs, 1 scored attempt · worldModel `sim-import`.
+
+Tape for submission: `artifacts/heat11/opus/e5-stillwater/attempt-1-tape.json`. `gauntlet-outcome.json` and `gauntlet-report.md` are current; the report's four required sections are ready to copy verbatim.
+
+**What won it.** The storm really is suppressed (`clearSeconds: 3599`, both multipliers `1`, `corsairsPerWave: 0`) — so the audit's RESKIN call is right about E5's *named* mechanic. But the mechanic that replaced it is decisive: `NoiseHuntSystem.steer()` sends **every living leviathan** to the trail point, and the roster has exactly one enemy id. The strike that follows can only cost deck integrity — *"the hero is never struck."* So noise buys you the whole board's attention, paid in a currency you hold 288 units of.
+
+The ladder that got there, each run answering one question:
+
+- **idle** (w3) — waves are on the ordinary scheduler; `noiseHunt` is live in `now`.
+- **v1** (w1) — a lure can't be lit cold: an untrailed leviathan walks at the *hero*, never the boat, so the ballista never clatters.
+- **v2** (w4) — the ballista self-sustains its own trail, but at `lagoon` that concentrates every leviathan onto the hero.
+- **v3** (w6) — bootstrap at `lagoon`, carry the lure to `shelf-watch`: hero at **full HP through wave 6** with 34 enemies alive. It collapsed the instant the bow deck died.
+- **v4 / scored** — the fix, and it moved nothing but one `buildingId`.
+
+That last step is the finding worth keeping. `strike()` hits `decks.reduce(nearest to trail)` — a *selection* rule, not a spread. The trail point is the harpoon emitter at `anchor+(0,-4)`; the bow pad is `anchor+(0,-3)`, **1.0wu away**, while port and starboard sit 5.83wu out. So the ballista was standing next to the thing aiming at it, ate all 32 strikes, and its death killed the trail — dropping 42 held leviathans onto a hero that had been untouched all run. Moving the gun to the pad struck *last*, with two beacons as sacrificial shields, turned wave 6 into wave 12 with no new resource and no new order.
+
+Margin: wide, but resting on that one coordinate. The hero **never fell below its running maximum** — min HP 100 across all 31 views, finishing 175/175 at level 18, with 30 leviathans still held 36wu away at the secure. Secured with **gold 0**: no `HARVEST`, no `BUILD`, never approached a seam.
+
+Two things the county should fix, both stale in the dangerous direction. `engineDependencies` declares `noise-hunt-consumer: "missing"` — that's the third stale "missing" in three E5 rides, and here it disclaims the only mechanic that can win the map. Worse, `mechanics.rules.deepwater_levers_unreachable` asserts `agentOperations: []` and *"no boat-build or reanchor verb exists on the agent tool surface"* — both verbs are in the grammar, I used both, both were accepted. A rider trusting either would conclude this contract is unplayable.
+
+One deviation from my usual practice, stated plainly: I did **not** spend a second attempt re-riding for a determinism receipt, because the brief stops me at the first secure. That breaks a seven-generation habit — the replay proof here is the assayer's, not mine.

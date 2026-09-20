@@ -1,0 +1,4048 @@
+{
+  "version": 2,
+  "id": "agent-7a9eb212-52d61473-452a-4bbc-b8f9-839a96a13102",
+  "createdAt": 0,
+  "kept": true,
+  "contract": "e1-baron",
+  "seed": "e1-baron-01",
+  "difficulty": "trail",
+  "simVersion": 1,
+  "meta": {
+    "buildId": "c13b4c24d",
+    "engineHash": "25040ad58451125adfa7d1d6c19c70f40ce17cd8cc6d377134e0a545922ca2ca",
+    "era": 5
+  },
+  "runStart": {
+    "meta": {
+      "version": 1,
+      "tracks": {
+        "territory": 0,
+        "science": 0,
+        "hero": 0,
+        "agent": 0
+      }
+    },
+    "research": {
+      "version": 1,
+      "epochId": "epoch-1-frontier",
+      "metaScienceCursor": 0,
+      "progress": {
+        "version": 1,
+        "tracks": {
+          "territory": 0,
+          "science": 0,
+          "hero": 0,
+          "agent": 0
+        }
+      },
+      "taken": [],
+      "proposalSalt": 0,
+      "pinnedTarget": null,
+      "unlocks": {}
+    }
+  },
+  "inputLog": {
+    "version": 1,
+    "name": "agent-7a9eb212",
+    "contractId": "e1-baron",
+    "seed": "e1-baron-01",
+    "difficultyPreset": "trail",
+    "stepSeconds": 0.03333333333333333,
+    "start": {
+      "x": 0,
+      "z": 12
+    },
+    "durationTicks": 9827,
+    "entries": [
+      {
+        "t": 0,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -9,
+                  "z": 6.7
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 783,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": -6,
+                  "z": 10
+                },
+                "when": {
+                  "goldGte": 25
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -1.5,
+                  "z": -6.4
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 1566,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 6,
+                  "z": 10
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 6,
+                  "z": 10
+                },
+                "when": {
+                  "goldGte": 35
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 6,
+                  "z": 10
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 1783,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "heavy_spark"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 6,
+                  "z": 10
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 2348,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 0,
+                  "z": 6
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 6
+                },
+                "when": {
+                  "goldGte": 45
+                }
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 60
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 6
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 3131,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 0,
+                  "z": 6
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 6
+                },
+                "when": {
+                  "goldGte": 45
+                }
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 60
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 6
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 3583,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 0,
+                  "z": 6
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 6
+                },
+                "when": {
+                  "goldGte": 45
+                }
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 60
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 6
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 3600,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 6
+                },
+                "when": {
+                  "goldGte": 45
+                }
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 6
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 3610,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 6
+                },
+                "when": {
+                  "goldGte": 45
+                }
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 6
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 3627,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 6
+                },
+                "when": {
+                  "goldGte": 45
+                }
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 6
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 3637,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 6
+                },
+                "when": {
+                  "goldGte": 45
+                }
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 6
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 3639,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 6
+                },
+                "when": {
+                  "goldGte": 45
+                }
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 6
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 3679,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "heavy_spark"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 6
+                },
+                "when": {
+                  "goldGte": 45
+                }
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 6
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 3897,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "heavy_spark"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 6
+                },
+                "when": {
+                  "goldGte": 45
+                }
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 6
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 3914,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 6
+                },
+                "when": {
+                  "goldGte": 45
+                }
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 6
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 4119,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "beacon_dynamo"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 6
+                },
+                "when": {
+                  "goldGte": 45
+                }
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 6
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 4349,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 6
+                },
+                "when": {
+                  "goldGte": 45
+                }
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 90
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 6
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 4376,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 6
+                },
+                "when": {
+                  "goldGte": 45
+                }
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 90
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 6
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 4381,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 6
+                },
+                "when": {
+                  "goldGte": 45
+                }
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 90
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 6
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 4387,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 6
+                },
+                "when": {
+                  "goldGte": 45
+                }
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 6
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 4389,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "tinkers_plating"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 60
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 6
+                },
+                "when": {
+                  "goldGte": 45
+                }
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 6
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 4391,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 6
+                },
+                "when": {
+                  "goldGte": 45
+                }
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 6
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 4403,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 60
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 6
+                },
+                "when": {
+                  "goldGte": 45
+                }
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 6
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 4408,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 60
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 6
+                },
+                "when": {
+                  "goldGte": 45
+                }
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 6
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 4696,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 6
+                },
+                "when": {
+                  "goldGte": 45
+                }
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 60
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 6
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 4871,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "split_spark"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 6
+                },
+                "when": {
+                  "goldGte": 45
+                }
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 6
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 5167,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "double_tap_coil"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 100
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 6
+                },
+                "when": {
+                  "goldGte": 45
+                }
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 6
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 5173,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 100
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 6
+                },
+                "when": {
+                  "goldGte": 45
+                }
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 6
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 5200,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 100
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 6
+                },
+                "when": {
+                  "goldGte": 45
+                }
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 6
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 5206,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 6
+                },
+                "when": {
+                  "goldGte": 45
+                }
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 6
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 5479,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 6
+                },
+                "when": {
+                  "goldGte": 45
+                }
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 6
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 5595,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "split_spark"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 6
+                },
+                "when": {
+                  "goldGte": 45
+                }
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 6
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 5856,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "beacon_dynamo"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 50
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 6
+                },
+                "when": {
+                  "goldGte": 45
+                }
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 6
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 5895,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 60
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 6,
+                  "z": 12
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -6,
+                  "z": 12
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 6
+                },
+                "when": {
+                  "goldGte": 45
+                }
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 8
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 6261,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 100
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 0,
+                  "z": 4
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 8,
+                  "z": 12
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 0,
+                  "z": 20
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -8,
+                  "z": 12
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 6
+                },
+                "when": {
+                  "goldGte": 45
+                }
+              },
+              {
+                "verb": "FALLBACK_IF",
+                "threat": {
+                  "enemiesGte": 12
+                },
+                "pos": {
+                  "x": 0,
+                  "z": 10
+                }
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 8
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 6422,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "double_tap_coil"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 100
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 0,
+                  "z": 4
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 8,
+                  "z": 12
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 0,
+                  "z": 20
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -8,
+                  "z": 12
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 6
+                },
+                "when": {
+                  "goldGte": 45
+                }
+              },
+              {
+                "verb": "FALLBACK_IF",
+                "threat": {
+                  "enemiesGte": 12
+                },
+                "pos": {
+                  "x": 0,
+                  "z": 10
+                }
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 8
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 6457,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 8,
+                  "z": 12
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 0,
+                  "z": 4
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 0,
+                  "z": 20
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -8,
+                  "z": 12
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 6
+                },
+                "when": {
+                  "goldGte": 45
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "FALLBACK_IF",
+                "threat": {
+                  "enemiesGte": 12
+                },
+                "pos": {
+                  "x": 0,
+                  "z": 10
+                }
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 8
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 6673,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "FALLBACK_IF",
+                "threat": {
+                  "enemiesGte": 12
+                },
+                "pos": {
+                  "x": 0,
+                  "z": 10
+                }
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 8,
+                  "z": 12
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 0,
+                  "z": 4
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 0,
+                  "z": 20
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -8,
+                  "z": 12
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 6
+                },
+                "when": {
+                  "goldGte": 45
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 8
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 6674,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "FALLBACK_IF",
+                "threat": {
+                  "enemiesGte": 12
+                },
+                "pos": {
+                  "x": 0,
+                  "z": 10
+                }
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 0,
+                  "z": 4
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 0,
+                  "z": 20
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -8,
+                  "z": 16
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 8,
+                  "z": 16
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 10
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 6700,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "FALLBACK_IF",
+                "threat": {
+                  "enemiesGte": 12
+                },
+                "pos": {
+                  "x": 0,
+                  "z": 10
+                }
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 0,
+                  "z": 4
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 0,
+                  "z": 4
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 0,
+                  "z": 20
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 0,
+                  "z": 20
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -8,
+                  "z": 16
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -8,
+                  "z": 16
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 8,
+                  "z": 16
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 8,
+                  "z": 16
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 10
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 6719,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "prospectors_luck"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "FALLBACK_IF",
+                "threat": {
+                  "enemiesGte": 12
+                },
+                "pos": {
+                  "x": 0,
+                  "z": 10
+                }
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 0,
+                  "z": 4
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 0,
+                  "z": 4
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 0,
+                  "z": 20
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 0,
+                  "z": 20
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -8,
+                  "z": 16
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -8,
+                  "z": 16
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 8,
+                  "z": 16
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 8,
+                  "z": 16
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 10
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 6776,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "FALLBACK_IF",
+                "threat": {
+                  "enemiesGte": 12
+                },
+                "pos": {
+                  "x": 0,
+                  "z": 10
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 0,
+                  "z": 4
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 0,
+                  "z": 4
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 0,
+                  "z": 20
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 0,
+                  "z": 20
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -8,
+                  "z": 16
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -8,
+                  "z": 16
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 8,
+                  "z": 16
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 8,
+                  "z": 16
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 10
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 7044,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 50
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 8,
+                  "z": 16
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 8,
+                  "z": 16
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -8,
+                  "z": 16
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -8,
+                  "z": 16
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 0,
+                  "z": 20
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 0,
+                  "z": 20
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 0,
+                  "z": 4
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 0,
+                  "z": 4
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "FALLBACK_IF",
+                "threat": {
+                  "enemiesGte": 36
+                },
+                "pos": {
+                  "x": 0,
+                  "z": 10
+                }
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 10
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 7290,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "double_tap_coil"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 50
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 8,
+                  "z": 16
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 8,
+                  "z": 16
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -8,
+                  "z": 16
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -8,
+                  "z": 16
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 0,
+                  "z": 20
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 0,
+                  "z": 20
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 0,
+                  "z": 4
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 0,
+                  "z": 4
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "FALLBACK_IF",
+                "threat": {
+                  "enemiesGte": 36
+                },
+                "pos": {
+                  "x": 0,
+                  "z": 10
+                }
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 10
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 7454,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 50
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 8,
+                  "z": 16
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 8,
+                  "z": 16
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -8,
+                  "z": 16
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -8,
+                  "z": 16
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 0,
+                  "z": 20
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 0,
+                  "z": 20
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 0,
+                  "z": 4
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 0,
+                  "z": 4
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "FALLBACK_IF",
+                "threat": {
+                  "enemiesGte": 36
+                },
+                "pos": {
+                  "x": 0,
+                  "z": 10
+                }
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 10
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 7460,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 60
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 8,
+                  "z": 16
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 8,
+                  "z": 16
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -8,
+                  "z": 16
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -8,
+                  "z": 16
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 0,
+                  "z": 20
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 0,
+                  "z": 20
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 0,
+                  "z": 4
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 0,
+                  "z": 4
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "FALLBACK_IF",
+                "threat": {
+                  "enemiesGte": 36
+                },
+                "pos": {
+                  "x": 0,
+                  "z": 10
+                }
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 10
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 7704,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "spring_heels"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 60
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 8,
+                  "z": 16
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 8,
+                  "z": 16
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -8,
+                  "z": 16
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -8,
+                  "z": 16
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 0,
+                  "z": 20
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 0,
+                  "z": 20
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 0,
+                  "z": 4
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 0,
+                  "z": 4
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "FALLBACK_IF",
+                "threat": {
+                  "enemiesGte": 36
+                },
+                "pos": {
+                  "x": 0,
+                  "z": 10
+                }
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 10
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 7827,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 60
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 8,
+                  "z": 16
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 8,
+                  "z": 16
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -8,
+                  "z": 16
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -8,
+                  "z": 16
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 0,
+                  "z": 20
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 0,
+                  "z": 20
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 0,
+                  "z": 4
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 0,
+                  "z": 4
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "FALLBACK_IF",
+                "threat": {
+                  "enemiesGte": 36
+                },
+                "pos": {
+                  "x": 0,
+                  "z": 10
+                }
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 10
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 8218,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "tinkers_plating"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 60
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 8,
+                  "z": 16
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 8,
+                  "z": 16
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -8,
+                  "z": 16
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -8,
+                  "z": 16
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 0,
+                  "z": 20
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 0,
+                  "z": 20
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 0,
+                  "z": 4
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 0,
+                  "z": 4
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "FALLBACK_IF",
+                "threat": {
+                  "enemiesGte": 36
+                },
+                "pos": {
+                  "x": 0,
+                  "z": 10
+                }
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 10
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 8609,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 60
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 8,
+                  "z": 16
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -8,
+                  "z": 16
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 0,
+                  "z": 20
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 0,
+                  "z": 4
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "FALLBACK_IF",
+                "threat": {
+                  "enemiesGte": 36
+                },
+                "pos": {
+                  "x": 0,
+                  "z": 10
+                }
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 10
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 8768,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "long_resonator"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 60
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 8,
+                  "z": 16
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -8,
+                  "z": 16
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 0,
+                  "z": 20
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 0,
+                  "z": 4
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "FALLBACK_IF",
+                "threat": {
+                  "enemiesGte": 36
+                },
+                "pos": {
+                  "x": 0,
+                  "z": 10
+                }
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 10
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 9013,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 60
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 8,
+                  "z": 16
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -8,
+                  "z": 16
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 0,
+                  "z": 20
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 0,
+                  "z": 4
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "FALLBACK_IF",
+                "threat": {
+                  "enemiesGte": 36
+                },
+                "pos": {
+                  "x": 0,
+                  "z": 10
+                }
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 10
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 9040,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 8,
+                  "z": 10
+                }
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 60
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 8,
+                  "z": 16
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -8,
+                  "z": 16
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 0,
+                  "z": 20
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 0,
+                  "z": 4
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "FALLBACK_IF",
+                "threat": {
+                  "enemiesGte": 36
+                },
+                "pos": {
+                  "x": 0,
+                  "z": 10
+                }
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 10
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 9069,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 80
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 8,
+                  "z": 16
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -8,
+                  "z": 16
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 0,
+                  "z": 20
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 0,
+                  "z": 4
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "FALLBACK_IF",
+                "threat": {
+                  "enemiesGte": 36
+                },
+                "pos": {
+                  "x": 0,
+                  "z": 10
+                }
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 10
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 9070,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "FALLBACK_IF",
+                "threat": {
+                  "enemiesGte": 32
+                },
+                "pos": {
+                  "x": 0,
+                  "z": 10
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 80
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 8,
+                  "z": 16
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -8,
+                  "z": 16
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 0,
+                  "z": 20
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 0,
+                  "z": 4
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 10
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 9185,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "tinkers_plating"
+              },
+              {
+                "verb": "FALLBACK_IF",
+                "threat": {
+                  "enemiesGte": 32
+                },
+                "pos": {
+                  "x": 0,
+                  "z": 10
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 80
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 8,
+                  "z": 16
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -8,
+                  "z": 16
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 0,
+                  "z": 20
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 0,
+                  "z": 4
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 10
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 9392,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "FALLBACK_IF",
+                "threat": {
+                  "enemiesGte": 32
+                },
+                "pos": {
+                  "x": 0,
+                  "z": 10
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 80
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 8,
+                  "z": 16
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -8,
+                  "z": 16
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 0,
+                  "z": 20
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 0,
+                  "z": 4
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 10
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 9733,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "prospectors_luck"
+              },
+              {
+                "verb": "FALLBACK_IF",
+                "threat": {
+                  "enemiesGte": 32
+                },
+                "pos": {
+                  "x": 0,
+                  "z": 10
+                }
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 80
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 8,
+                  "z": 16
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -8,
+                  "z": 16
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 0,
+                  "z": 20
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 0,
+                  "z": 4
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 10
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 9806,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "FALLBACK_IF",
+                "threat": {
+                  "enemiesGte": 32
+                },
+                "pos": {
+                  "x": 0,
+                  "z": 10
+                }
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 80
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 8,
+                  "z": 16
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -8,
+                  "z": 16
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 0,
+                  "z": 20
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 0,
+                  "z": 4
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 10
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 9809,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "FALLBACK_IF",
+                "threat": {
+                  "enemiesGte": 32
+                },
+                "pos": {
+                  "x": 0,
+                  "z": 10
+                }
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 60
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 8,
+                  "z": 16
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 8,
+                  "z": 16
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -8,
+                  "z": 16
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -8,
+                  "z": 16
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 0,
+                  "z": 20
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 0,
+                  "z": 20
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 0,
+                  "z": 4
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 0,
+                  "z": 4
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 10
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 9814,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "FALLBACK_IF",
+                "threat": {
+                  "enemiesGte": 32
+                },
+                "pos": {
+                  "x": 0,
+                  "z": 10
+                }
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 60
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 8,
+                  "z": 16
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 8,
+                  "z": 16
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -8,
+                  "z": 16
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -8,
+                  "z": 16
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 0,
+                  "z": 20
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 0,
+                  "z": 20
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 0,
+                  "z": 4
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 0,
+                  "z": 4
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 10
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "truncated": null,
+    "primarySlot": 0,
+    "streams": []
+  },
+  "eventLogHash": "fnv1a32:58bf2f7f",
+  "outcome": {
+    "reason": "death",
+    "secured": false,
+    "waves": 12,
+    "timeAlive": 327.567,
+    "gold": 5
+  }
+}

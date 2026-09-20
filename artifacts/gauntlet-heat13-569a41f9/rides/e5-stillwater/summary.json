@@ -1,0 +1,208 @@
+{
+  "rig": "opus",
+  "contract": "e5-stillwater",
+  "model": "claude-opus-5",
+  "sessionId": "5cbbed52-fde2-4d8e-a33e-be8024b4badc",
+  "startedAt": "2026-09-07T10:52:56.719Z",
+  "endedAt": "2026-09-07T11:01:43.155Z",
+  "wallClockSeconds": 526,
+  "wallHit": false,
+  "exitCode": 0,
+  "signal": null,
+  "setupToFirstOutputSeconds": 60,
+  "arenaTrackedChanges": [],
+  "workspaceFiles": [
+    "attempt-1-tape.json",
+    "ctrl-v1.mjs",
+    "gauntlet-outcome.json",
+    "gauntlet-report.md",
+    "probe-idle-stderr.txt",
+    "probe-idle-summary.json",
+    "probe-idle-tape.json",
+    "probe-idle-view0.json",
+    "probe-idle-views.jsonl",
+    "runner.mjs",
+    "tune-1-stderr.txt",
+    "tune-1-summary.json",
+    "tune-1-tape.json",
+    "tune-1-view0.json",
+    "tune-1-views.jsonl"
+  ],
+  "outcome": {
+    "secured": true,
+    "waves": 12,
+    "timeMs": 360000,
+    "gold": 200,
+    "kills": 56,
+    "calls": 19,
+    "defaultedPicks": 0,
+    "defaultedSecure": 1,
+    "eventLogHash": "fnv1a32:165d5ab9",
+    "tape": "/private/tmp/heat13-569a41f9/artifacts/heat13/opus/e5-stillwater/attempt-1-tape.json",
+    "scored": true,
+    "runsSoFar": 2,
+    "scoredAttempts": 1,
+    "worldModel": "sim-import",
+    "note": "The securing ride was tune-1 (ctrl-v1, the first controller of the heat). Per the brief's promotion clause it is my scored attempt: attempt-1-tape.json is a BYTE-IDENTICAL copy of tune-1-tape.json (27,323 bytes, verified). One ride under two filenames; the operator should submit the tape named in this field.",
+    "envelope": {
+      "durationTicks": 10800,
+      "maxTicks": 18002,
+      "lastEntryTick": 9900,
+      "entries": 19,
+      "maxEntries": 3601,
+      "bytes": 27323,
+      "tapeEventLogHash": "fnv1a32:ca1df167",
+      "note": "All three axes measured off the first reel that existed. lastEntryTick 9900 < durationTicks 10800, so no terminal-tick (F-HEAT11-1) exposure; bytes are ~2% of the permitted ceiling."
+    },
+    "assay": {
+      "tool": "scripts/assay-replay-agent.mjs",
+      "eventLogHash": "fnv1a32:ca1df167",
+      "outcome": {
+        "secured": true,
+        "waves": 12,
+        "gold": 200,
+        "timeAlive": 360
+      },
+      "note": "Local replay of the PROMOTED tape reproduces the tape header's own hash and all four outcome fields. This is the tape hash, not the stdout outcome line's fnv1a32:165d5ab9 - different numbers by design."
+    },
+    "runs": [
+      {
+        "label": "probe-idle",
+        "tape": "probe-idle-tape.json",
+        "secured": false,
+        "waves": 3,
+        "timeMs": 104433,
+        "gold": 0,
+        "scored": false
+      },
+      {
+        "label": "tune-1",
+        "tape": "tune-1-tape.json",
+        "secured": true,
+        "waves": 12,
+        "timeMs": 360000,
+        "gold": 200,
+        "scored": true,
+        "promoted": true
+      }
+    ]
+  },
+  "outcomeError": null,
+  "promotedTapeName": "attempt-1-tape.json",
+  "scoredTapes": [
+    {
+      "file": "attempt-1-tape.json",
+      "id": "agent-45c39a81-d59be821-4def-4712-9f3e-86b90c50baad",
+      "contract": "e5-stillwater",
+      "seed": "e5-stillwater-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "43715dd25",
+        "engineHash": "09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 12,
+        "timeAlive": 360,
+        "gold": 200
+      },
+      "entries": 19,
+      "durationTicks": 10800,
+      "lastEntryTick": 9900,
+      "promotedByRig": true,
+      "discoveredBy": "outcome-file+filename"
+    }
+  ],
+  "otherTapes": [
+    {
+      "file": "probe-idle-tape.json",
+      "id": "agent-ecf6624e-413b75aa-54e9-40e9-87d6-a14369ed7e02",
+      "contract": "e5-stillwater",
+      "seed": "e5-stillwater-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "43715dd25",
+        "engineHash": "09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 3,
+        "timeAlive": 104.433,
+        "gold": 0
+      },
+      "entries": 0,
+      "durationTicks": 3133,
+      "lastEntryTick": null
+    },
+    {
+      "file": "tune-1-tape.json",
+      "id": "agent-45c39a81-d59be821-4def-4712-9f3e-86b90c50baad",
+      "contract": "e5-stillwater",
+      "seed": "e5-stillwater-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "43715dd25",
+        "engineHash": "09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 12,
+        "timeAlive": 360,
+        "gold": 200
+      },
+      "entries": 19,
+      "durationTicks": 10800,
+      "lastEntryTick": 9900
+    }
+  ],
+  "otherSecuredTapes": [
+    {
+      "file": "tune-1-tape.json",
+      "id": "agent-45c39a81-d59be821-4def-4712-9f3e-86b90c50baad",
+      "contract": "e5-stillwater",
+      "seed": "e5-stillwater-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "43715dd25",
+        "engineHash": "09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 12,
+        "timeAlive": 360,
+        "gold": 200
+      },
+      "entries": 19,
+      "durationTicks": 10800,
+      "lastEntryTick": 9900
+    }
+  ],
+  "report": {
+    "outcome": "**SECURED.** `waves 12 · timeAlive 360.000 s · gold 200 · calls 19 · kills 56 · defaultedSecure 1`\n(`eventLogHash fnv1a32:165d5ab9`). Gold finished pinned at the 200 bank cap from t = 193.1, and\nwith `twist.secureWave: 12` fixing both waves and `timeAlive`, gold was the only free ranking axis —\nit is maxed. I put forward `attempt-1-tape.json`, which is the `tune-1` ride under a second\nfilename and is declared in `gauntlet-outcome.json`'s `tape` field. **2 sim runs, 1 scored attempt**\n(the idle probe plus the securing controller; I stopped at the first secure as the rules require).",
+    "whatTheMapAsked": "It asked me about **noise** — and its era's named signature, \"E5 storms schedule the waves\", is\nlive here but does **not** schedule anything, so this is neither ordinary stationary survival nor\nthe mechanic the ladder names. The storm is real and fully published: `now.deepwater.storm` carried\na 32-second cycle with all **12 fronts** listed, `movementMultiplier` 0.72 while a front stands, and\n`corsairWaves 12 / corsairsSpawned 12 / corsairsRecycledAtExit 6` — the era-pin's\n`e5-stillwater-front-crew-2` crewing each front with one `corsair_skiff`. But\n`deepwaterStormDisablesScheduledWaves` excludes any contract carrying `tileParams.stillwater`, so\nthe twelve waves arrived on the ordinary 30-second scheduler (t = 30, 60, … 360) beside the storm's\nown 32-second clock, and the skiffs are `scriptMoveTo`'d straight across at z = 0 and recycled at\nx ≥ 62 — they never turn on a hero 30 wu north. Both published storm multipliers are inert for a\nrider who stands still. What decides the map is `noise_hunt`, and it is the most load-bearing thing\nin E5: the fields that carried the run were `now.deepwater.noiseHunt.trail.{target,x,z,strikes}`,\n`.sources[].{running,silenced,level}`, **`.decks[].{padId,integrity}`** (the field that chooses the\nplacement), `now.deepwater.anchor`/`anchors`, `pads[].occupied`, `arsenal.fires.harpoonBallista`,\nplus `now.seams[].active/x/z`, `now.gold` against `now.score.goldPanned`, `now.threats.alive` and\n`now.hero.hp`. The orders were **`BOAT_BUILD` ×3**, **one `REANCHOR`**, `HARVEST`, one `BLAST_AT`\nper ready window, and a blank line at the secure boundary. Not a gold piece was spent on the\ndefence: both era verbs are free.\n\nMy notebook remembers this map from generations 22 and 46, and **it still plays the way I remember\nin its bones and not in its controls.** Every structural number reproduced — the same three\nmachines, the same two quiet zones, the same `shelf-watch` third anchor, the same nearest-deck\nstrike rule, `strikeDamage 3` / `deckIntegrity 96` / `trailHoldSeconds 8`, the same 12-wave secure\nat 360.000 s, the same 200-gold bank cap. What moved is the grammar: generation 46 rode `HOLD`, and\nthis ride had to be re-derived without it. The answer turned out to be free — the hero has no\ndrift, so silence *is* a hold, and the unemployed Prospector drifts to the hero, which is exactly\nwhere `HOLD` used to park it.",
+    "winnability": "Secured, and the margin was **wide in every direction at once**: the hero took **zero damage across\nall 22 views** (100/100, level 1, never once offered a draft), gold sat at the 200 cap for the last\n167 seconds, and the loop's single point of failure — the ballista's own pad — banked at **39 of 96\nintegrity**, thirteen more strikes (~52 seconds) of slack beyond the secure.",
+    "lessons": "- **When a ruling retires a verb, ask what that verb was FOR before assuming it was load-bearing.**\n  `HOLD` existed because an idle Prospector drifts back toward the hero; it was never a hero\n  control. On a map whose winning line is \"the hero stands still and the boat is the lure\", the\n  removal cost me exactly nothing: I issued **zero `MOVE_HERO`** and the drift put the Prospector\n  where `HOLD` used to park it. Third heat running where the 1:1 ruling turned out to be a syntax\n  change and not a strategy change on a stationary-hero board — I should stop bracing for it and\n  start checking, in one read of `StandingOrders`' own comment block, which body each retired verb\n  actually moved.\n- **A notebook entry can hold in its bones and expire in its controls, and the two need separate\n  verdicts.** Generation 46's geometry, dial values, strike selector and anchor arithmetic all\n  reproduced to the unit; its order list did not survive the ruling. Grading the entry clause by\n  clause — mechanic constants first, then grammar — is what let the first controller of the heat\n  secure. (Generation 64 wrote the inverse case; this is the same rule from the other side.)\n- **Read the strike SELECTOR, not the strike damage, and buy pads for it.** `strike()` picks\n  `decks.reduce(nearest to trailX/trailZ)`, and the trail alternates between two emitters\n  (`harpoon-reload` at anchor+(0,−4) while the ballista fires, `air-pump` at anchor+(−3,−1) while\n  the Prospector pans). Compute the distance ordering of your own pads under **both** emitters and\n  put the load-bearing asset last in it: `bow` 1.0/3.61, `port` 5.83/2.0, `starboard` 5.83/6.32 —\n  so the ballista is last under either, and two 0-gold palisades bought 64 of the run's 83 strikes.\n- **Gate a phase transition on the live precondition, never on your own clock — and inherit the\n  CONDITION rather than the timestamp.** Generation 22 paid a run to learn that a t = 0 `REANCHOR`\n  lights nothing (no pack yet, engine noise expires, the trail drops). Carrying\n  `anchor==='lagoon' && trail.target && alive>=6 && starboard occupied` rather than \"fire at the\n  t=30 view\" made it fire at t≈20 instead, ten seconds earlier than my predecessor, on the first\n  ride.\n- **`now.seams` publishes `x`/`z`/`anchorIndex` as `null` for an inactive seam.** One non-finite\n  number refuses the WHOLE array and installs none of it, silently — the run then looks like it is\n  ignoring you. `Number.isFinite` on both coordinates before any sort or order is now unconditional\n  in my skeleton, and it cost generation 59 a whole ride.\n- **When both ranking axes are pinned, stop.** `twist.secureWave: 12` fixes waves at 12 and\n  `timeAlive` at 360.000 s, and the bank cap fixes gold at 200. The first controller hit all three,\n  so a second scored attempt could only have moved the reel's bytes. The remaining budget went to\n  the envelope check and the local assay instead — measured on the first reel that existed, exactly\n  as generation 30 learned to.\n- **`ClaimBoat.placeBuilding` validates nothing but emptiness and occupancy.** Any string takes a\n  pad, and `DeepwaterArsenal` reads only `turret` and `sentry_beacon`, so a `palisade` on a pad is\n  free, gold-less deck mass that exists purely to be nearest to the emitter. Ask of any\n  damage-selector mechanic: *what is the cheapest legal thing I can put in front of it?*\n- **Track deck placements LOCALLY, not from `pads[].occupied`.** A knocked-out pad re-reads as\n  unoccupied (`boatBuildings` filters lost pads out) while `placeBoatBuilding` refuses it by rule\n  (`lostHullPads`), so a naive re-issue is a refusal you did not intend. Generation 46 got nine\n  harmless ones; a `Set` of what I have actually placed got zero.\n- **The runner before the probe, sixth heat running.** Shell redirection and compound commands are\n  refused in this arena. A node runner that spawns `gr-sim`, drives the controller, logs every view\n  to JSONL and writes `gauntlet-outcome.json` plus all three envelope axes on every child exit made\n  the intermediate-results law automatic — a truthful row existed from the idle probe onward — and\n  its per-view table is the entire evidence base of this report. One fix to carry: read the entry\n  tick off `entries[].t`, not `.tick`; my first envelope print silently dropped `lastEntryTick` as\n  `undefined`, which looks exactly like a field that passed."
+  },
+  "usage": {
+    "transcript": "/Users/robin/.claude/projects/-private-tmp-heat13-569a41f9/5cbbed52-fde2-4d8e-a33e-be8024b4badc.jsonl",
+    "assistantTurns": 54,
+    "toolCalls": 33,
+    "tokensIn": 108,
+    "tokensOut": 78682,
+    "cacheReadTokens": 17238236,
+    "cacheWriteTokens": 1000799,
+    "note": "tokensIn excludes cache reads/writes (reported separately); summed from the CLI session transcript, not self-reported by the rig"
+  }
+}

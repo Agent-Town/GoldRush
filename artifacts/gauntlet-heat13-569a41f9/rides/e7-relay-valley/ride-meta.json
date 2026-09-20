@@ -1,0 +1,19 @@
+{
+  "rig": "opus",
+  "model": "claude-opus-5",
+  "arena": "/tmp/heat13-569a41f9",
+  "workdir": "/tmp/heat13-569a41f9/artifacts/heat13/opus/e7-relay-valley",
+  "charterFile": "/private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/rides/e7-relay-valley/charter.md",
+  "charterSha256": "1438053656ece04130ac2179f9bdc3ed806b0723dbd0c7e0d8070f66bb7e125e",
+  "sessionId": "8ed6ee91-4d66-4d80-8303-dd6aedbe666f",
+  "wallSeconds": 1500,
+  "startedAt": "2026-09-07T14:18:33.268Z",
+  "invocation": "env -u CLAUDECODE -u CLAUDE_CODE_ENTRYPOINT -u CLAUDE_CONFIG_DIR claude -p \"<charter text, see charterFile>\" --model claude-opus-5 --allowedTools Read,Write,Glob,Bash(node *) --output-format text --session-id 8ed6ee91-4d66-4d80-8303-dd6aedbe666f",
+  "endedAt": "2026-09-07T14:26:45.305Z",
+  "wallClockSeconds": 492,
+  "exitCode": 0,
+  "signal": null,
+  "wallHit": false,
+  "firstOutputAt": "2026-09-07T14:19:48.285Z",
+  "setupToFirstOutputSeconds": 75
+}

@@ -1,0 +1,26 @@
+Clean — only my untracked workspace. Done, well inside the wall.
+
+## Result: NOT SECURED — and the reason is a finding, not a failure
+
+`e1-drill-yard` is the county's **practice yard**. It cannot be secured by anyone, through any door, with any orders.
+
+**The proof, read rather than grepped:**
+
+1. `assets/contracts/epoch-1-frontier/contracts.json` authors `e1-drill-yard.twist.secureWave = 0`.
+2. `HeadlessContractSim.ts:1089` and `:1123` pass that `0` through to `RunManager` (`??` doesn't fall back on zero).
+3. `RunManager.ts:291` — `if (!this.host || secureWave <= 0 || wave < secureWave) return;` — **`secureWave <= 0` returns early at every wave**. `run_secured` is never emitted, `now.pendingSecure` never appears, `SECURE_CHOICE` is never accepted.
+4. `gr-sim.mjs:111` then sets `waveCeiling = secureWave + 2 = 2`, so every ride ends at wave 2 / 60.03s on `wave-ceiling`.
+
+All four of my rides confirmed the prediction exactly: `pendingSecure` was `null` in every view, `defaultedSecure: 0` in every outcome.
+
+**Two independent corroborations:** `winnability-receipts.json` marks it `{status: unclaimed, reason: "standings-disabled"}`, and `e2e/field-book.spec.ts:113-126` asserts a drill-yard standing POST returns HTTP 400 **`training_ground`** ("practice is its own reward"), writes no row, and refuses the GET board — `training_ground` being a published entry in skill.md's own refusal taxonomy. So even a hypothetical secure could never become a standing.
+
+**Scored attempt 1** (`attempt-1-tape.json`): waves 2, 60.033s, gold 5, kills 23, calls 3, `fnv1a32:eed8345a`. It landed a standing palisade, answered the draft explicitly, and raised **zero order failures** — the door's BUILD/HARVEST/REPAIR/PICK_UPGRADE paths all work here. Only the secure gate is welded shut.
+
+**I deliberately did not spend the second attempt.** No order, seed, difficulty or flag reachable through the door changes `twist.secureWave`, and `--overtime`'s rush path needs a `bankedSecureWave` only `run_secured` can set. A second ride would have been theatre.
+
+**One thing worth your attention beyond the verdict:** the yard's own economy is browser-only. `stablePrefix.mechanics.interactables` publishes `assay_tent_faucet`/`top_up` (100 practice gold) and `drill_bell`/`ring` — and **the grammar has no verb for either**. A headless rider gets `HARVEST` alone: 15 gold in the whole 60-second ceiling, against a 25g beacon. Separately, `practice.scheduledWaves: false` turned out not to reach the headless engine at all — it ran its normal wave schedule and killed 23 enemies.
+
+**Recommendation for the door list:** L2 says every door contract must be winnable from its own starting kit, yet this one is served by `gr-sim` and listed in `door-contracts` while being, by design, unwinnable. The honest fix is a list change, not a balance change — drop it from the roster and the standing marker, or mark it an L2-exempt training ground, so no future rider spends a heat re-proving this.
+
+`gauntlet-outcome.json` and `gauntlet-report.md` are current, with the four verbatim sections ready to copy.

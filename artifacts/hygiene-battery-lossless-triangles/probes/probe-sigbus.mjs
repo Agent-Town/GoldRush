@@ -1,0 +1,14 @@
+import { createServer } from 'vite';
+const location = new URL('http://rider-parity-retirement.test/?debug&contract=the-claim&seed=e1-the-claim-01');
+globalThis.location = location; globalThis.window = { location };
+const vite = await createServer({ appType: 'custom', logLevel: 'silent', server: { middlewareMode: true, watch: null } });
+const { validateStandingOrders } = await vite.ssrLoadModule('/src/agent/StandingOrders.ts');
+const step = (label, fn) => { console.error('STEP ' + label); const r = fn(); console.error('  -> ' + JSON.stringify(r).slice(0,120)); };
+step('MOVE_TO', () => validateStandingOrders([{ verb: 'MOVE_TO', pos: { x: 1, z: 2 } }]));
+step('HOLD', () => validateStandingOrders([{ verb: 'HOLD', pos: { x: 1, z: 2 } }]));
+step('FALLBACK_IF', () => validateStandingOrders([{ verb: 'FALLBACK_IF', threat: { enemiesGte: 3 }, pos: { x: 1, z: 2 } }]));
+step('mixed', () => validateStandingOrders([{ verb: 'REPAIR_UNDER', pct: 60 }, { verb: 'MOVE_HERO', pos: { x: 0, z: 0 } }, { verb: 'HOLD', pos: { x: 0, z: 0 } }]));
+step('MOVE_HERO', () => validateStandingOrders([{ verb: 'MOVE_HERO', pos: { x: 1, z: 2 } }]));
+console.error('CLOSING');
+await vite.close();
+console.error('CLOSED OK');

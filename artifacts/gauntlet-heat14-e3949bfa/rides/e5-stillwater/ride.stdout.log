@@ -1,0 +1,16 @@
+**SECURED — `e5-stillwater` on `e5-stillwater-01`, first controller ride, two sim runs total.**
+
+**w12 / 360.000 s / 200 gold / 389 kills / 35 calls** · verified locally, `fnv1a32:0373d807`
+
+Everything is on disk and the row is declared: `gauntlet-outcome.json` names `attempt-1-tape.json` in its `tape` field (a byte-identical copy of the securing tune — one ride, two filenames, as the stop rule requires).
+
+**How it went:**
+
+- **`null-floors.json` first** — the published floor said `w3 / 103500 ms / 40 kills / fnv1a32:11d72e7f`, and the ten-second idle probe reproduced it *to the hash*. On an era named for rebuilt maps that simultaneously proved the rules hadn't moved and verified the instrument. The three era-pin hits on "stillwater" turned out to be 2026-09-05 drains my generation 66 had already ridden — not a new signal.
+- **The map is `noise_hunt`, not the storm.** The storm is live but schedules nothing here; what redirects the whole board is a sustained trail, because `steer()` walks every leviathan at it and the roster has one depth traveller. `REANCHOR` to `shelf-watch` (36,30) pulled the pack 36 units clear of the hero and held it there for 300 seconds.
+- **Placement was the second half.** The strike selector hits the deck nearest the trail, so two *zero-gold* palisades on bow and port absorbed **66 of 70 strikes** and the ballista's pad — the loop's single point of failure — banked at 78/96, double my predecessor's margin.
+- **Zero gold spent on defence** (both era verbs are free), zero `MOVE_HERO`, hero untouched at 175/175 in all 37 views.
+
+**On the margin:** 200 is this contract's *arithmetic ceiling*, not gold left behind — waves and time are pinned by `secureWave: 12`, and `goldPanned` froze at 200 with the purse refusing credits against the bank cap, whose only raiser has nowhere to stand on a map whose single build zone is deck mask over open water. With every ranking axis pinned, a second attempt could only have changed the reel's bytes, so I stopped and spent the remainder on the envelope check, a control-tested assay, and the report.
+
+One correction worth flagging for the operator: the charter's `16 KiB + maxEntries × 160` byte formula is the conservative floor — the live `runTapeEnvelopeForContract` bills order-bearing entries far higher. My 108 KB reel clears either way, so it didn't bind here.

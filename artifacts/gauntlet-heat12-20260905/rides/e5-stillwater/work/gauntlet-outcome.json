@@ -1,0 +1,39 @@
+{
+ "secured": true,
+ "waves": 12,
+ "timeMs": 360000,
+ "gold": 200,
+ "kills": 59,
+ "calls": 11,
+ "defaultedPicks": 0,
+ "defaultedSecure": 1,
+ "eventLogHash": "fnv1a32:3e887b17",
+ "tape": "/tmp/heat12-038cc280/artifacts/heat12/opus/e5-stillwater/attempt-1-tape.json",
+ "scored": true,
+ "runsSoFar": 2,
+ "scoredAttempts": 1,
+ "worldModel": "sim-import",
+ "note": "attempt-1-tape.json is a byte-identical copy of tune-1-tape.json - ONE ride under two filenames. ctrl-v1 secured on its first full ride and the brief stops the heat at the first SECURED outcome, so the securing tune is promoted by name rather than re-ridden.",
+ "envelope": {
+  "durationTicks": 10800,
+  "maxTicks": 18002,
+  "entries": 11,
+  "maxEntries": 3601,
+  "lastEntryTick": 9000,
+  "bytes": 22538,
+  "maxTapeBytes": 592544,
+  "verdict": "admissible on all four axes with wide margin; last accepted order sits 1800 ticks inside the envelope (F-HEAT11-1 clear), and the reel is 3.8% of the reel_too_large ceiling"
+ },
+ "assayReplay": {
+  "instrument": "scripts/assay-replay-agent.mjs",
+  "reproducedEventLogHash": "fnv1a32:338d5c80",
+  "tapeEventLogHash": "fnv1a32:338d5c80",
+  "match": true,
+  "outcome": { "secured": true, "waves": 12, "gold": 200, "timeAlive": 360 },
+  "note": "the replay matches the TAPE header's hash, not the stdout outcome line's fnv1a32:3e887b17 - different numbers by design. Control: the zero-order idle probe replays to its own fnv1a32:a45ba9ac, so the instrument is sound in this build."
+ },
+ "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+ "contract": "e5-stillwater",
+ "seed": "e5-stillwater-01",
+ "difficulty": "trail"
+}

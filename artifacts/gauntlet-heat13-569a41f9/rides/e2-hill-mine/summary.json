@@ -1,0 +1,166 @@
+{
+  "rig": "opus",
+  "contract": "e2-hill-mine",
+  "model": "claude-opus-5",
+  "sessionId": "85bbefa3-ee60-49e2-bb98-23408da53219",
+  "startedAt": "2026-09-07T14:08:49.583Z",
+  "endedAt": "2026-09-07T14:18:32.954Z",
+  "wallClockSeconds": 583,
+  "wallHit": false,
+  "exitCode": 0,
+  "signal": null,
+  "setupToFirstOutputSeconds": 90,
+  "arenaTrackedChanges": [],
+  "workspaceFiles": [
+    "attempt-1-tape.json",
+    "attempt-1-views.jsonl",
+    "attempt-2-tape.json",
+    "attempt-2-views.jsonl",
+    "ctrl-idle.mjs",
+    "ctrl-v1.mjs",
+    "ctrl-v2.mjs",
+    "ctrl-v3.mjs",
+    "gauntlet-outcome.json",
+    "gauntlet-report.md",
+    "probe-idle-tape.json",
+    "probe-idle-views.jsonl",
+    "run.mjs",
+    "tune-1-tape.json",
+    "tune-1-views.jsonl"
+  ],
+  "outcome": {
+    "secured": false,
+    "waves": 14,
+    "timeMs": 426800,
+    "gold": 0,
+    "kills": 346,
+    "calls": 103,
+    "defaultedPicks": 0,
+    "defaultedSecure": 0,
+    "eventLogHash": "fnv1a32:36b85b03",
+    "tape": "/private/tmp/heat13-569a41f9/artifacts/heat13/opus/e2-hill-mine/attempt-2-tape.json",
+    "scored": true,
+    "runsSoFar": 4,
+    "scoredAttempts": 2,
+    "worldModel": "sim-import"
+  },
+  "outcomeError": null,
+  "promotedTapeName": "attempt-2-tape.json",
+  "scoredTapes": [
+    {
+      "file": "attempt-1-tape.json",
+      "id": "agent-2b14dc2b-a7f69c7d-f23a-4d2c-b7de-109f69bc07d6",
+      "contract": "e2-hill-mine",
+      "seed": "e2-hill-mine-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "1894581f2",
+        "engineHash": "09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 13,
+        "timeAlive": 416.767,
+        "gold": 37
+      },
+      "entries": 82,
+      "durationTicks": 12503,
+      "lastEntryTick": 12293,
+      "promotedByRig": false,
+      "discoveredBy": "filename"
+    },
+    {
+      "file": "attempt-2-tape.json",
+      "id": "agent-67db9108-40bb5c2b-5d56-4621-a16e-33e60a3b9bf0",
+      "contract": "e2-hill-mine",
+      "seed": "e2-hill-mine-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "1894581f2",
+        "engineHash": "09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 14,
+        "timeAlive": 426.8,
+        "gold": 0
+      },
+      "entries": 103,
+      "durationTicks": 12804,
+      "lastEntryTick": 12744,
+      "promotedByRig": true,
+      "discoveredBy": "outcome-file+filename"
+    }
+  ],
+  "otherTapes": [
+    {
+      "file": "probe-idle-tape.json",
+      "id": "agent-d8920c6a-c8083a03-b692-47c2-b100-aed1999e3715",
+      "contract": "e2-hill-mine",
+      "seed": "e2-hill-mine-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "cae42d75f",
+        "engineHash": "09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 2,
+        "timeAlive": 82.767,
+        "gold": 0
+      },
+      "entries": 0,
+      "durationTicks": 2483,
+      "lastEntryTick": null
+    },
+    {
+      "file": "tune-1-tape.json",
+      "id": "agent-429cd9c3-1174323e-1621-4e07-9ecf-c491695dfc64",
+      "contract": "e2-hill-mine",
+      "seed": "e2-hill-mine-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "cae42d75f",
+        "engineHash": "09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 10,
+        "timeAlive": 314.367,
+        "gold": 28
+      },
+      "entries": 79,
+      "durationTicks": 9431,
+      "lastEntryTick": 9196
+    }
+  ],
+  "otherSecuredTapes": [],
+  "report": {
+    "outcome": "**NOT SECURED.** Best ride: **waves 14, timeAlive 426.800 s, gold 0, kills 346, calls 103**\n(`attempt-2`, `eventLogHash fnv1a32:36b85b03`, reel 103 entries / 260,303 B /\n`durationTicks` 12,804 with the last accepted order at 12,744 — comfortably inside every\nenvelope axis). **4 sim runs, 2 scored attempts.**\n\n**Nothing is put forward.** The run is unsecured (`endReason`: hero down at wave 14 of an\n18-wave ceiling), and an unsecured run must not be submitted as a standing. The rising line\nacross the heat was w10 → w13 → w14, each step a single interpretable diff.",
+    "whatTheMapAsked": "It asked about **the rail and the wreckers, and it asked nothing at all about its era's\nsignature mechanic.** E2's named lever is pressure with hazard — vent-or-boom — and for the\nfifth time across my generations it is published and unplayable: `boiler_house` is on the\nroster at 70 g × 3 and `stablePrefix.map.coalSeams` publishes three seams at (−12,39),\n(−5,43), (3,39), but the union of `now` keys across all 83 views of `attempt-1` is\n`wave · blastReadyInMs · weapon · timers · gold · hero · prospector · works · threats ·\norders · needsRider · seams · score` — **no pressure value, no band, no coal count, no\nboiler fuel** — and the grammar has no vent verb. A rider can pay 70 gold to start a process\nit cannot observe, cannot steer and cannot spend. What the map asks instead is two real\nquestions: a **spatial** one the boss gate makes mandatory (the railcar rides a fixed line at\nz ≈ 0 with `pursuitRange: 0`, so distance from each work to that *polyline* — not to the\nclaim — is what buys damage, and the only legal ground in reach is the `base-t1` strip at\nz 8..16, from whose z = 9–10 row a 16 wu turret covers ±12.5 of rail, about 13 seconds of\nfire per pass at 1.9 wu/s), and an **attrition** one that beat me (`steam_wrecker`,\n`buildingDamageScale: 2.5`, entering at (0,46) onto the fort's north face). The fields that\ncarried the run were `now.works.entries`/`byKind`/`wrecked`, `now.seams[].active/x/z`\n(inactive seams publish `x`/`z`/`anchorIndex` as `null`), `now.gold` against\n`now.score.goldPanned`, `now.hero.hp/maxHp/x/z`, `now.threats.alive` (saturating at 60 from\nwave 8) and `now.orders[].status/reason`. Orders: `BUILD`, `HARVEST`, `PICK_UPGRADE`,\n`BLAST_AT`, `REPAIR_UNDER`, **`MOVE_HERO`**. Not one E2 verb, because E2 has none.\n\n**Does my notebook still describe this map? Its bones yes, its controls no — and the control\nchange is the whole heat.** Generation 3 secured this seed at w15/454.2 s and generation 57\nreached w15/470.6 s unsecured; every structural number reproduced (same claim at (0,12),\nsame cliff, same five harvest anchors of which two are live, same 12.5×-scaled three-part\nrailcar, same idle floor at w2/82.8 s). What is dead is the sentence **both** of those\ngenerations opened from: *\"the railcar sits 12.16 wu away against blast range 10 — no hero\nweapon can ever touch it.\"* `MOVE_HERO` deletes it. In `attempt-1` the hero walked off the\nwelded claim to (0, 6–8) at t = 334, six units from the rail and inside both the Spark Rig's\nrange 10 and `BLAST_AT`'s reach 10. The hero can now fight the boss; that lever did not exist\nwhen the map was last measured.",
+    "winnability": "**Undecided-leaning-yes, and what stopped me was my own budget, not a wall in the map, the\ngrammar or the economy:** the fort is solved (four turrets, six beacons, `0` wrecked through\nwave 11, hero at 175/175 to t = 284) and the boss is reachable by hero weapons for the first\ntime in this contract's history, but my two scored attempts went to finding my own\ncontroller's faults — a gold-gated repair that never fired, then a `MOVE_HERO` ladder that\nshuttled the hero between posts and froze panning and repair — so the run that combines what\nthey proved (parked hero + ungated repair + the ~600 g tier-2 turret sink that 2.3 g/s income\nnow supports, worth ×1.65 dps on the only works whose 16 wu range reaches the rail) was never\nridden; on the arithmetic that remains, ~3,100 boss HP against four tier-2 turrets' ~13-second\nrail windows plus a hero at ~24 dps rig and ~28 dps blast closes inside the six-wave grace\nwindow, and I finished 4 waves short of the ceiling rather than short of the damage.",
+    "lessons": "- **A `MOVE_HERO` ladder is a shuttle, not a fallback — emit ONE post and drop it once the\n  hero is parked.** Gen 72 taught me to ship a ladder of candidate standoffs so an unwalkable\n  one fails in a tick and yields. That is right for a *one-shot* errand and catastrophic for a\n  *standing* post: every candidate completes on arrival, marks `done`, and hands the tick to\n  the next, so the hero walks (0,6)→(0,5)→(0,7)→… forever. And a walking `MOVE_HERO` owns the\n  tick, so panning, building and repair all stop. `pan` frozen at 660 from t = 377 while the\n  hero oscillated between z 5.6 and 7.8 is the signature. **Advance the post index only on an\n  actual refusal record, and omit the order entirely once `dist(hero, post) < 1`.**\n- **`REPAIR_UNDER` should carry no gold gate now that ADR-005 bounded it to the rig radius.**\n  Mending is 25 % of cost — 12.5 g for a turret, 6.25 g for a beacon — and the verb can no\n  longer walk the Prospector across the map, which was the whole reason my generations 11, 40\n  and 58 feared it. tune-1 gated it on `gold >= 30` against a purse that sat at 10–40 and the\n  fort went **0 → 8 wrecked inside a single wave**; ungating it (and stacking a `pct: 95` above\n  a `pct: 60`) held **0 wrecked through eleven waves** on the identical fort. That one change\n  was worth three waves. **Re-check which of my standing warnings a ruling retires; carrying a\n  dead warning costs runs.**\n- **On a boss whose gate is a KILL, the era ruling that moved a BODY can move the whole\n  contract.** Two prior generations of mine wrote that no hero weapon can reach this railcar,\n  and both were right under the welded hero. The parity ruling did not merely re-word the\n  grammar here: it opened a damage source on a map whose only failure mode was insufficient\n  boss damage. **When a ruling retires a verb, ask what the replacement makes REACHABLE, not\n  just what it costs.**\n- **Compute the boss's HP from the manifest before choosing a plan.** `enemy.hp` ×\n  `hpScalePerWave^(wave−1)` × `twist.baron.hpScale` × Σ`components[].hpScale` is four numbers\n  and two minutes, and it turns \"can four turrets grind a 12.5× railcar\" from a vibe into\n  ~3,100 against a measurable dps × window product. Two of my generations rode this map\n  without ever writing that number down.\n- **Spread and cluster are EQUAL for boss damage on a fixed rail, and unequal for survival.**\n  Total damage is dps × turret-seconds-in-window, and four turrets each with their own 27.7 wu\n  window along the rail give the same 58 turret-seconds as four sharing one window. So the\n  placement decision is settled entirely by the second job — holding the claim — which is what\n  gen 57 measured (cluster w15, spread w13) and which I should have inherited as a *conclusion*\n  rather than re-deriving the arithmetic that does not discriminate.\n- **Two runs of budget is not a heat on a boss map, and the door publishes the cure I again\n  did not use.** `--resume <tape> --to-tick <n>` replays a reel to any recorded tick. Wave 11\n  is ~tick 9,900; resuming there would have bought me half a dozen boss-phase experiments in\n  the wall I spent riding two 400-second approaches. Generation 55 wrote this sentence, gen 75\n  wrote it again, and this is the third heat running I have paid ~330 seconds of sim per run to\n  re-prove waves 1–11 that were never in doubt. **On a boss map: get one tape to the horn, then\n  resume from it for every experiment after.**\n- **E2 pressure is unplayable through the door — now measured on a fifth contract.** Drill Yard\n  (gen 5), Incline (gen 8), Pressure Garden (gen 9), Trestle (gen 10), Hill Mine (gens 57 and\n  77). `boiler_house` on the roster, three coal seams published in `stablePrefix.map`, and no\n  pressure field in any view. Stop re-deriving this per contract: dump the `now`-key union once\n  and spend the time on what the map actually asks.\n- **The runner before the probe, eighth heat running.** This arena refuses shell redirection,\n  compound commands and env-prefixed invocations, so a node runner that spawns `gr-sim`, drives\n  the controller, logs every view to a compact table and writes `gauntlet-outcome.json` plus all\n  three envelope axes on every child exit is not a convenience — it made the intermediate-results\n  law automatic and its per-view table located both faults in one read each."
+  },
+  "usage": {
+    "transcript": "/Users/robin/.claude/projects/-private-tmp-heat13-569a41f9/85bbefa3-ee60-49e2-bb98-23408da53219.jsonl",
+    "assistantTurns": 55,
+    "toolCalls": 31,
+    "tokensIn": 110,
+    "tokensOut": 88434,
+    "cacheReadTokens": 19117361,
+    "cacheWriteTokens": 1126811,
+    "note": "tokensIn excludes cache reads/writes (reported separately); summed from the CLI session transcript, not self-reported by the rig"
+  }
+}

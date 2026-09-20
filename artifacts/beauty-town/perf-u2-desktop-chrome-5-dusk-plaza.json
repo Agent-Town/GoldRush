@@ -1,0 +1,53 @@
+{
+  "phase": "u2",
+  "project": "desktop-chrome",
+  "shot": "5-dusk-plaza",
+  "frameMs": {
+    "last": 7.299999713897705,
+    "avg": 8.330555555555556,
+    "p95": 10.100000381469727,
+    "sampleCount": 180
+  },
+  "renderMs": {
+    "last": 5,
+    "avg": 0.7994444661670261,
+    "p95": 4.799999713897705,
+    "sampleCount": 180
+  },
+  "renderer": {
+    "calls": 35,
+    "geometries": 70,
+    "textures": 99,
+    "triangles": 82414
+  },
+  "canvas": {
+    "width": 1280,
+    "height": 800,
+    "dpr": 1
+  },
+  "zoom": 0.6197,
+  "contact": {
+    "blobShadows": 11,
+    "skirts": 6,
+    "sunShadow": {
+      "enabled": true,
+      "mapSize": 1536,
+      "extent": 17
+    }
+  },
+  "lighting": {
+    "night": false,
+    "background": "#e9c98d",
+    "fog": "#e9c98d",
+    "fogNear": 34,
+    "fogFar": 76,
+    "sunIntensity": 1.85,
+    "fillIntensity": 1.15
+  },
+  "tier": "full",
+  "buildings": 6,
+  "errors": {
+    "consoleErrors": [],
+    "pageErrors": []
+  }
+}

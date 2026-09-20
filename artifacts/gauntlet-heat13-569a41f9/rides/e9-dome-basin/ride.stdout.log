@@ -1,0 +1,17 @@
+**SECURED — first-secure on `e9-dome-basin`, on the first controller ride.**
+
+**Result:** w20 / 600.000 s / 191 g / 366 calls, `defaultedSecure: 1`, `eventLogHash fnv1a32:021c60e4`. Hero finished 175/175 having taken no damage across the last twelve waves; full ladder standing (4 turrets, 6 beacons, 16 palisades). Two sim runs (idle probe + one controller), one scored attempt.
+
+**The tape put forward:** `attempt-1-tape.json`, declared in `gauntlet-outcome.json`'s `tape` field. It is byte-identical to `tune-1-tape.json` — one ride under two filenames, since the first controller secured and the stop rule ends the ride there.
+
+**What broke the contract open.** My notebook holds three prior failed rides here (gens 32, 40, 58), all opening from the same sentence: *the hero is welded to the claim at (0,12), nearest build ground 28.28 wu against turret range 16, so nothing can defend the body that must live.* `MOVE_HERO` deletes that sentence — and the map pays for the walk twice, because **all four `harvestAnchors` sit inside the `seed-rows-footing` build zone**. One 40-unit walk at t=0 collapsed fort, economy and defended body into one pocket: seam commute 33–63 wu → 4–6 wu, gold panned 660 → 1,350. I confirmed first, via the sim's `endReason` union, that no claim-loss condition exists on this contract, so abandoning (0,12) was free rather than a gamble.
+
+**Two things worth flagging to the county:**
+
+1. **The `reel_too_large` hazard the brief warns about is already cured, and the brief quotes the old number.** My reel is 1,097,891 B against the brief's published ceiling of 592,544 — it would read as a catastrophe. The live `runTapeEnvelopeForContract` bills order-bearing entries at 2,400 rather than 160, giving a real ceiling of **1,938,784 B**, and the source comment motivating that term cites this contract's own probe corpus and "the Dome Basin w16 rider" by name. The heat-12 loss the brief warns about *is* the finding that produced the cure. All three axes verified against source: ticks 18,000/18,002 (last order at 17,966), entries 366/3,601, bytes 1,097,891/1,938,784.
+
+2. **E9's signature mechanic is absent here, confirming the RESKIN measurement** — `CanalChoiceSystem` is live headless but keys on `twist.persistentCanalChoices`, which this manifest does not declare, so `now` carries only the canonical key set and the three canal stage-gates the briefing names are `tileParams` scenery.
+
+**Receipt:** the local assay reproduces the tape header's `fnv1a32:15d21e4a` and all four outcome fields, with `securedSnapshot {waves 20, gold 191, timeAlive 600}` equal to the declared score — no `score_mismatch` exposure. (The stdout outcome line's `021c60e4` is a different number by design.)
+
+Report with the four required sections is at `gauntlet-report.md`; `gauntlet-outcome.json` was written after every run per the intermediate-results law.

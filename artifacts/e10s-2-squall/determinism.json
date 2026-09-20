@@ -1,0 +1,216 @@
+{
+  "contract": "e10-ember-shore",
+  "seed": "e10-ember-shore-squall-probe",
+  "stepSeconds": 0.03333333333333333,
+  "clockTicks": 3100,
+  "identical": true,
+  "clock": [
+    {
+      "run": 1,
+      "ticks": 3100,
+      "phase": "calm",
+      "cycle": 1,
+      "squallsStarted": 1,
+      "squallsCompleted": 1,
+      "transitions": [
+        {
+          "from": null,
+          "to": "calm",
+          "tick": 0,
+          "atSeconds": 0,
+          "cycle": 0
+        },
+        {
+          "from": "calm",
+          "to": "telegraph",
+          "tick": 1801,
+          "atSeconds": 60.033,
+          "cycle": 0
+        },
+        {
+          "from": "telegraph",
+          "to": "squall",
+          "tick": 2041,
+          "atSeconds": 68.033,
+          "cycle": 0
+        },
+        {
+          "from": "squall",
+          "to": "recover",
+          "tick": 2791,
+          "atSeconds": 93.033,
+          "cycle": 0
+        },
+        {
+          "from": "recover",
+          "to": "calm",
+          "tick": 3031,
+          "atSeconds": 101.033,
+          "cycle": 1
+        }
+      ]
+    },
+    {
+      "run": 2,
+      "ticks": 3100,
+      "phase": "calm",
+      "cycle": 1,
+      "squallsStarted": 1,
+      "squallsCompleted": 1,
+      "transitions": [
+        {
+          "from": null,
+          "to": "calm",
+          "tick": 0,
+          "atSeconds": 0,
+          "cycle": 0
+        },
+        {
+          "from": "calm",
+          "to": "telegraph",
+          "tick": 1801,
+          "atSeconds": 60.033,
+          "cycle": 0
+        },
+        {
+          "from": "telegraph",
+          "to": "squall",
+          "tick": 2041,
+          "atSeconds": 68.033,
+          "cycle": 0
+        },
+        {
+          "from": "squall",
+          "to": "recover",
+          "tick": 2791,
+          "atSeconds": 93.033,
+          "cycle": 0
+        },
+        {
+          "from": "recover",
+          "to": "calm",
+          "tick": 3031,
+          "atSeconds": 101.033,
+          "cycle": 1
+        }
+      ]
+    }
+  ],
+  "idle": [
+    {
+      "run": 1,
+      "terminal": true,
+      "ticks": 3374,
+      "phase": "calm",
+      "cycle": 1,
+      "squallsStarted": 1,
+      "squallsCompleted": 1,
+      "transitions": [
+        {
+          "from": null,
+          "to": "calm",
+          "tick": 0,
+          "atSeconds": 0,
+          "cycle": 0
+        },
+        {
+          "from": "calm",
+          "to": "telegraph",
+          "tick": 1801,
+          "atSeconds": 60.033,
+          "cycle": 0
+        },
+        {
+          "from": "telegraph",
+          "to": "squall",
+          "tick": 2041,
+          "atSeconds": 68.033,
+          "cycle": 0
+        },
+        {
+          "from": "squall",
+          "to": "recover",
+          "tick": 2791,
+          "atSeconds": 93.033,
+          "cycle": 0
+        },
+        {
+          "from": "recover",
+          "to": "calm",
+          "tick": 3031,
+          "atSeconds": 101.033,
+          "cycle": 1
+        }
+      ],
+      "outcome": {
+        "secured": false,
+        "waves": 3,
+        "timeMs": 112467,
+        "gold": 0,
+        "kills": 55,
+        "calls": 0,
+        "defaultedPicks": 0,
+        "defaultedSecure": 0,
+        "eventLogHash": "fnv1a32:30b18787"
+      }
+    },
+    {
+      "run": 2,
+      "terminal": true,
+      "ticks": 3374,
+      "phase": "calm",
+      "cycle": 1,
+      "squallsStarted": 1,
+      "squallsCompleted": 1,
+      "transitions": [
+        {
+          "from": null,
+          "to": "calm",
+          "tick": 0,
+          "atSeconds": 0,
+          "cycle": 0
+        },
+        {
+          "from": "calm",
+          "to": "telegraph",
+          "tick": 1801,
+          "atSeconds": 60.033,
+          "cycle": 0
+        },
+        {
+          "from": "telegraph",
+          "to": "squall",
+          "tick": 2041,
+          "atSeconds": 68.033,
+          "cycle": 0
+        },
+        {
+          "from": "squall",
+          "to": "recover",
+          "tick": 2791,
+          "atSeconds": 93.033,
+          "cycle": 0
+        },
+        {
+          "from": "recover",
+          "to": "calm",
+          "tick": 3031,
+          "atSeconds": 101.033,
+          "cycle": 1
+        }
+      ],
+      "outcome": {
+        "secured": false,
+        "waves": 3,
+        "timeMs": 112467,
+        "gold": 0,
+        "kills": 55,
+        "calls": 0,
+        "defaultedPicks": 0,
+        "defaultedSecure": 0,
+        "eventLogHash": "fnv1a32:30b18787"
+      }
+    }
+  ],
+  "engineHash": "df00b2a3cef37ef0ddcadfd5eff6bc11eb82e284f8d5e04072dfa229dbafdaf8"
+}

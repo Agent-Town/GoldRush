@@ -1,0 +1,149 @@
+{
+  "rig": "opus",
+  "contract": "e7-dead-band",
+  "model": "claude-opus-5",
+  "sessionId": "9d8e2b90-f182-4800-bad1-4a921bcc3212",
+  "startedAt": "2026-09-18T02:32:50.025Z",
+  "endedAt": "2026-09-18T02:42:49.936Z",
+  "wallClockSeconds": 600,
+  "wallHit": false,
+  "exitCode": 0,
+  "signal": null,
+  "setupToFirstOutputSeconds": 165,
+  "arenaTrackedChanges": [],
+  "workspaceFiles": [
+    "attempt-1-tape.json",
+    "ctrl-v1.mjs",
+    "gauntlet-outcome.json",
+    "gauntlet-report.md",
+    "probe-summary.json",
+    "probe-tape.json",
+    "probe-view0.json",
+    "probe-views.json",
+    "runner.mjs",
+    "tune-1-summary.json",
+    "tune-1-tape.json",
+    "tune-1-view0.json",
+    "tune-1-views.json"
+  ],
+  "outcome": {
+    "secured": true,
+    "waves": 20,
+    "timeMs": 600000,
+    "gold": 5,
+    "kills": 895,
+    "calls": 68,
+    "defaultedPicks": 0,
+    "defaultedSecure": 1,
+    "eventLogHash": "fnv1a32:a8cebf16",
+    "tape": "artifacts/heat14/opus/e7-dead-band/tune-1-tape.json",
+    "note": "tune-1 SECURED on the first controller; the stop rule ends the ride at the first secured outcome, so it is promoted BY NAME as the scored attempt. attempt-1-tape.json is a byte-identical copy of the same single ride.",
+    "scored": true,
+    "runsSoFar": 2,
+    "scoredAttempts": 1,
+    "worldModel": "sim-import",
+    "envelope": {
+      "durationTicks": 18000,
+      "lastEntryTick": 17484,
+      "entries": 68,
+      "bytes": 240120,
+      "maxTicks": 18000
+    }
+  },
+  "outcomeError": null,
+  "promotedTapeName": "tune-1-tape.json",
+  "scoredTapes": [
+    {
+      "file": "attempt-1-tape.json",
+      "id": "agent-9d864d65-c0e1c87b-c1e1-494f-bf40-10f8459f528b",
+      "contract": "e7-dead-band",
+      "seed": "e7-dead-band-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "5cb808b23",
+        "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+        "era": 6,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 20,
+        "timeAlive": 600,
+        "gold": 5
+      },
+      "entries": 68,
+      "durationTicks": 18000,
+      "lastEntryTick": 17484,
+      "promotedByRig": false,
+      "discoveredBy": "filename"
+    },
+    {
+      "file": "tune-1-tape.json",
+      "id": "agent-9d864d65-c0e1c87b-c1e1-494f-bf40-10f8459f528b",
+      "contract": "e7-dead-band",
+      "seed": "e7-dead-band-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "5cb808b23",
+        "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+        "era": 6,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 20,
+        "timeAlive": 600,
+        "gold": 5
+      },
+      "entries": 68,
+      "durationTicks": 18000,
+      "lastEntryTick": 17484,
+      "promotedByRig": true,
+      "discoveredBy": "outcome-file"
+    }
+  ],
+  "otherTapes": [
+    {
+      "file": "probe-tape.json",
+      "id": "agent-a5489e0e-e1cf1eaa-1385-46d0-b5b6-2a3cb53f3b79",
+      "contract": "e7-dead-band",
+      "seed": "e7-dead-band-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "c8ff3b5aa",
+        "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+        "era": 6,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 4,
+        "timeAlive": 128.1,
+        "gold": 0
+      },
+      "entries": 0,
+      "durationTicks": 3843,
+      "lastEntryTick": null
+    }
+  ],
+  "otherSecuredTapes": [],
+  "report": {
+    "outcome": "**SECURED** — waves **20**, timeAlive **600.000 s**, gold **5**, calls **68**, kills 895.\n`defaultedSecure: 1`, `defaultedPicks: 0`.\n\n- **2 sim runs** (one idle probe, one controller), **1 scored attempt**.\n- Tape put forward: **`artifacts/heat14/opus/e7-dead-band/tune-1-tape.json`**, declared in\n  `gauntlet-outcome.json`'s `tape` field. It secured on the first controller, and the stop rule ends\n  the ride at the first SECURED outcome, so it is promoted **by name**; `attempt-1-tape.json` is a\n  byte-identical copy of that same single ride, not a second one.\n- **Envelope, measured on the first reel that existed:** `durationTicks` 18 000, last accepted order\n  at tick **17 484** (516 inside the terminal tick — the F-HEAT11-1 hazard), 68 entries, 240 120\n  bytes. Clear on all three axes.\n- **Receipt:** the assay instrument was control-tested on the zero-order idle probe first (it\n  reproduced its own header `fnv1a32:a45ba9ac`), then the scored reel reproduced its own **tape\n  header** `fnv1a32:c5d9ddaa` with `securedSnapshot {waves: 20, gold: 5, timeAlive: 600}` — which is\n  exactly what the door's `score_mismatch` rule compares against the declared gold. (That is the tape\n  header's hash, not the outcome line's `fnv1a32:a8cebf16`; they are different numbers by design.)",
+    "whatTheMapAsked": "It asked for **its era's signature mechanic in exactly one order, at t = 0, and then for 599.97\nseconds of ordinary stationary survival** — so E7's playbooks and the Echo are load-bearing here in\nthe strictest sense and free in every other sense. The Dead Band's proof is `refusal`:\n`now.playbookUse.objective` reads `\"refusal\"`, `now.signalSuppression` declares\n`{drones, playbooks, relayChains}` all suppressed, and the latch wants `suppressedUses > 0` — so no\nwave count secures this claim until a `PLAYBOOK_USE` has been **refused**. Because the suppression\ngate is asked *before* the `NOTHING_RECORDED` branch, the refusal counts on the way through with\nnothing yet demonstrated: one order in the opening array, and `objectiveMet` was **true in the very\nfirst view (t = 0)**, `refusals.suppressed: 1`, never touched again. This is the only map where\nfailing the verb is passing the contract, and it is the most legible era gate on the door —\n`playbookUse` and `signalSuppression` publish declaration, objective, refusal counts and the last\nanswer, so a rider working from the view alone can both play it and check it. The Echo itself is\ngenuinely absent rather than hidden, and the suppression row publishes that fact instead of staying\nsilent. Everything after t = 0.033 was plain survival, carried by `now.gold` against\n`now.score.goldPanned` **and `now.score.goldStolen`** (the column that decided this ride),\n`now.works.entries`/`byKind`, `now.seams[].active/x/z/anchorIndex`, `now.hero.hp/maxHp/x/z`,\n`now.threats.alive/wreckers/thieves`, and `now.orders[].status/reason`. Orders used: `PLAYBOOK_USE`,\n`PICK_UPGRADE`, `BUILD`, `HARVEST`, `BLAST_AT`, `MOVE_HERO` (a displacement guard that never had to\nfire), and one blank line.\n\n**My notebook remembers this map from generations 27, 45 and 65, and on an era named for rebuilt\nmaps it still plays exactly the way I remember — which is itself the result.** Every structural\nnumber reproduced: the claim at (0,12) sitting on the north edge of a yard that reaches z = 12 (so\nthe fort rings the welded hero, the exact inverse of `e7-relay-valley` which reuses this tile and\nputs every zone 31.24 wu away); the four anchors at 22.8 and 42.2 wu; the one-id thief-only roster\nwhose `thief: true` forces `wrecker = false` (**0 works wrecked across all 70 views**, so\n`REPAIR_UNDER` and palisade bait are dead weight); the wave-20 default. The map is not named as cured\nthis week and its first minute confirmed it: the era gate latched at t = 0 and the opening was the\nordinary race to the first 50-gold turret. The re-survey moved this map's rendering, not its rules.",
+    "winnability": "Secured, and the margin was **wide on survival and catastrophic on the only axis that is still\nfree**: the hero never fell below 72.6/175 (41.5 %, at t = 582.8) with 7 works standing, none ever\nwrecked, and `threats.alive` peaking at 32 — while the banked purse came in at **5 of a 350 live\ncap**, because I built a `stockpile` on a thief-only roster and it cost me **435 gold of 820\npanned**. The causal chain is dated in my own per-view log: `goldStolen` was **0 through t = 299.1**,\nthe stockpile landed at t = 299.1, the first theft hit at t = 357.7, and from there theft ran at\n~1.45 g/s against a 1.37 g/s pan rate — a stockpile is what makes `nearestGoldHolding` non-empty, so\nevery `data_rustler` switched from hero-chaser to gold-grabber. That then starved the ladder as well\nas the purse: the bank gate kept projecting that the purse could not refill, so the fort stopped at 7\nworks instead of 10. **My own generation 63 wrote this warning down verbatim and I overrode it with\nan arithmetic estimate (4 concurrent thieves × 10 g ≈ 40 gold) that was off by a factor of ten.** The\nfix is a one-line deletion, not a redesign: drop both stockpile rungs, accept the 200 cap, and the\nsame controller banks ~200 with a full 670-gold fort — which is what generation 45 measured on this\nseed with `goldStolen: 0`.",
+    "lessons": "- **A notebook warning I chose to override cost me the whole ranked axis, and the override was\n  arithmetic, not judgement.** Generation 63 wrote, about this exact enemy id: *\"Do not buy a\n  stockpile on a thief-only roster… raising the cap by inviting theft is a trade in the wrong\n  direction.\"* I priced the risk at ~40 gold from `Balance.steal.maxConcurrent` (2 + floor(wave/6),\n  capped at 4) and measured **435**. The cap is on *concurrent* thieves, not on total grabs over 600\n  seconds — a concurrency cap bounds the instantaneous rate, and the run integrates it. **When a past\n  generation names a lever a trap, the burden of proof is a measurement, not an estimate; and never\n  estimate a total from a concurrency cap without multiplying by the clock.**\n- **`goldStolen` is a first-class diagnostic column and I have been logging it without reading it.**\n  I already carry `gold` vs `goldPanned` (it names dead sink / starved economy / attrition). This\n  ride adds the fourth signature: **`goldPanned` climbing while `goldStolen` climbs with it** =\n  *income is being taken off the board*, and the cause is always a gold-holding building you chose to\n  stand. Its onset is dated to the view, so it names its own cause.\n- **On a thief-only roster the cap-raiser is the trap and the 200 cap is the ceiling, full stop.**\n  The general rule I now carry: before buying a cap-raiser, check whether the roster contains a\n  `thief`. A stockpile is +90 net gold on a wrecker-or-empty roster (gens 82, 97, 99) and a large net\n  *loss* on a thief roster, because it converts every thief's target register from the hero to your\n  bank. Same building, opposite sign, decided by one roster flag.\n- **A bank gate amplifies an economy fault instead of damping it.** My gate refuses a spend unless\n  the purse can still refill to the cap. With theft draining the purse, it refused the ladder that\n  would have killed the thieves — 7 works instead of 10. A gate that reads *projected surplus* is\n  only safe when income is under my control; when something is removing income, the gate and the\n  drain reinforce each other. **Add the roster's theft to the gate's model, or do not gate at all on\n  a board that steals.**\n- **The era gate is one order at t = 0 and should be view-0 business — third generation confirming\n  it.** Suppression is asked before `NOTHING_RECORDED`, so the cheapest legal moment to satisfy this\n  map is the first array with nothing recorded. `objectiveMet` was true in view 0.\n  Reading the *early-return order inside the verb* (not just the predicate that reads its counter) has\n  now decided seven contracts for me (gens 45, 61, 63, 64, 65, 104, 106).\n- **An era named for rebuilt maps can leave a map's rules untouched — sixth heat running, and the\n  procedure is now fixed and costs four minutes.** Read `assets/engine-era.json`'s pins as a\n  per-contract diff; check whether any pin names *your* map; confirm the twist, zones and anchors\n  against the notebook; then one ten-second idle probe against the remembered floor. It redirects the\n  whole budget from geometry to whatever is actually free — here, the economy, which is exactly where\n  I then lost it.\n- **Silence at `pendingSecure` did its four jobs again, seventeenth contract running:** it banked the\n  default (`defaultedSecure: 1`), it left the last accepted order **516 ticks inside the terminal tick\n  18 000** on a map whose `clockTicks` equals its run length, it held a 70-view run to 68 entries and\n  240 KB, and — the reason that matters most — it **cannot be rejected**, so the replay cannot diverge\n  the way generation 84's nearly did.\n- **The stop rule ends the ride at the first SECURED outcome, and this time I obeyed it.** Generation\n  104 secured on a tune and rode again anyway. Here tune-1 secured, so I stopped, promoted it by name\n  in the outcome file's `tape` field, said plainly that `attempt-1-tape.json` is a byte-identical copy\n  of one ride, and spent the remaining wall on the envelope check, a control-tested assay and this\n  report. **The gold I left behind is not a reason to break the rule — it is the finding.**\n- **A first-secure ride and a top-of-board ride are still different designs, and the stop rule makes\n  you choose before you know.** Fourth generation to name this. On a bare board the receipt is worth\n  more than the row, so securing on ride one was right — but the gold plan has to be in the FIRST\n  controller because there is no second, and mine carried a lever my own notebook had already\n  condemned."
+  },
+  "usage": {
+    "transcript": "/Users/robin/.claude/projects/-private-tmp-claude-501--Users-robin-Claude-Projects-Gold-Rush-fe6b8d27-b064-40eb-934b-1d29d57a71db-scratchpad-arena-heat14-e3949bfa/9d8e2b90-f182-4800-bad1-4a921bcc3212.jsonl",
+    "assistantTurns": 40,
+    "toolCalls": 15,
+    "tokensIn": 80,
+    "tokensOut": 93529,
+    "cacheReadTokens": 16603312,
+    "cacheWriteTokens": 931721,
+    "note": "tokensIn excludes cache reads/writes (reported separately); summed from the CLI session transcript, not self-reported by the rig"
+  }
+}

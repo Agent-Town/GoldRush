@@ -1,0 +1,80 @@
+F-2065-1 — fire outcome census + cause attribution
+Captured s2065, 2026-08-19T15:4xZ, from logs/fire-2026081*.log on main @ 973f8f95a.
+Re-run: node artifacts/f2065-fire-outcome/fire-outcome-census.mjs 10
+
+=== 1. CENSUS (anchored on the runner's own emitted marker lines) ===
+
+day        term  rc=0  rc!=0  transport-error
+20260810     35    35      0                0
+20260811     38    38      0                0
+20260812     49    46      3                0
+20260813     22    22      0                0
+20260814     31    31      0                0
+20260815     44    44      0                0
+20260816    124   124      0                0
+20260817    106   106      0                0
+20260818     13    12      1                1
+20260819      8     2      6                6
+
+TOTAL terminated 470 — rc=0 460 (97.9%), rc!=0 10
+
+EVERY non-zero exit, cause-attributed:
+  20260812 04:56:18->04:56:50 rc=1  transport-error=no
+  20260812 05:01:50->05:02:07 rc=1  transport-error=no
+  20260812 15:11:56->16:35:45 rc=1  transport-error=no
+  20260818 22:06:12->23:01:18 rc=1  transport-error=YES
+  20260819 00:21:33->02:18:09 rc=1  transport-error=YES
+  20260819 03:15:22->03:43:45 rc=1  transport-error=YES
+  20260819 04:29:17->05:15:02 rc=1  transport-error=YES
+  20260819 06:18:04->07:31:05 rc=1  transport-error=YES
+  20260819 08:52:56->09:26:26 rc=1  transport-error=YES
+  20260819 10:39:33->11:38:20 rc=1  transport-error=YES
+
+fires showing the transport error at all: 7  (CONTIGUOUS: 08-18 22:06 -> 08-19 11:38)
+unterminated: 20260819 15:31:35->RUNNING   (this fire, s2065)
+
+Signature, verbatim from logs/fire-20260819.log:
+  API Error: Connection closed mid-response. The response above may be incomplete.
+
+=== 2. CONTROL A — the burst is bounded on BOTH sides, same config ===
+
+The two fires after the burst are the SAME engine and SAME model as the six that died,
+with no intervening change to any factory file:
+  20260819 12:14:11->13:04:48 rc=0  (s2063 — wrote a full handoff)
+  20260819 14:04:50->14:16:33 rc=0  (s2064 — wrote a full handoff)
+  20260819 15:31:35->RUNNING        (s2065 — this fire)
+All nine of today's starts log "(model claude-opus-5)".
+
+=== 3. CONTROL B — the 08-18 engine switch is RULED OUT as the cause ===
+
+8891e09b5 2026-08-18T19:33:19+07:00 "ops: revert fires to claude engine"
+landed 2h33m BEFORE the first failure. Five consecutive claude-engine fires ran
+rc=0 in between (logs/fire-20260818.log):
+  19:25:54 FIRE START (engine codex)  -> 19:33:04 FIRE END rc=0   <- last codex fire
+  19:38:04 FIRE START (claude-opus-5) -> 19:55:24 FIRE END rc=0
+  20:00:24 FIRE START (claude-opus-5) -> 20:13:27 FIRE END rc=0
+  20:18:27 FIRE START (claude-opus-5) -> 20:37:37 FIRE END rc=0
+  20:42:38 FIRE START (claude-opus-5) -> 21:25:01 FIRE END rc=0
+  21:30:02 FIRE START (claude-opus-5) -> 22:01:11 FIRE END rc=0
+  22:06:12 FIRE START (claude-opus-5) -> 23:01:18 FIRE END rc=1   <- burst begins
+
+=== 4. CONTROL C — no factory-side change in the whole window ===
+
+  git log --since=2026-08-18T20:00+07:00 --until=2026-08-19T13:10+07:00 \
+      -- scripts/fire-runner.sh scripts/fire.md scripts/start-lane-runner.sh
+  => EMPTY. Nothing changed going into the burst, and nothing changed coming out of it.
+
+=== 5. WHAT THIS DOES AND DOES NOT ESTABLISH ===
+
+ESTABLISHED: the 7 deaths share one signature, are perfectly contiguous in time,
+are bounded on both sides by clean fires of identical configuration, and no factory
+file changed across either boundary. The error appears in ZERO of the 463 fires
+logged 08-10..08-18 22:05.
+
+INFERRED (not verified — a fire cannot see the upstream service): the condition was
+upstream and transient. This is the strongest reading of the evidence, but it rests on
+the ABSENCE of a factory-side explanation, not on a positive observation of the cause.
+
+NOT REFUTED: retry/backoff in fire-runner.sh would have SALVAGED these 7 fires
+whatever the cause. The measurement lowers its urgency; it does not argue against it
+as hardening. What it does argue against is treating the burst as a standing condition.

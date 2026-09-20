@@ -1,0 +1,38 @@
+{
+  "secured": true,
+  "waves": 12,
+  "timeMs": 360000,
+  "gold": 455,
+  "kills": 424,
+  "calls": 116,
+  "defaultedPicks": 0,
+  "defaultedSecure": 1,
+  "eventLogHash": "fnv1a32:954d11ca",
+  "tape": "/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/heat14/opus/e3-moth-season/attempt-1-tape.json",
+  "scored": true,
+  "runsSoFar": 3,
+  "scoredAttempts": 1,
+  "worldModel": "sim-import",
+  "contract": "e3-moth-season",
+  "seed": "e3-moth-season-01",
+  "difficulty": "trail",
+  "envelope": {
+    "durationTicks": 10800,
+    "lastEntryTick": 10788,
+    "entries": 116,
+    "maxEntriesCeiling": 3601,
+    "bytes": 346378,
+    "byteCeiling": 1938784,
+    "verdict": "clear on all three axes"
+  },
+  "note": "attempt-1 (ctrl-v2) is the scored attempt and the tape put forward. tune-1 (ctrl-v1) also secured at w12/360.000s/294g; attempt-1 is the same policy with the spend plan corrected and ranks above it on gold, the only free axis (secureWave 12 pins waves at 12 and timeAlive at 360.000s). Live bank cap is 200 + 150 per standing stockpile = 500 with both standing; 455 is 45 short of that ceiling.",
+  "supersededRun": {
+    "label": "tune-1",
+    "tape": "artifacts/heat14/opus/e3-moth-season/tune-1-tape.json",
+    "secured": true,
+    "waves": 12,
+    "timeMs": 360000,
+    "gold": 294,
+    "eventLogHash": "fnv1a32:be8618c6"
+  }
+}

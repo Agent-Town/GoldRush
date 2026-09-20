@@ -1,0 +1,69 @@
+
+=== 1 finish-ride ===
+{"rig":"opus","contract":"e4-long-road","wall":551,"wallHit":false,"rc":0,"tracked":[],"files":18,"outcome":{"secured":true,"waves":12,"gold":30,"runsSoFar":3,"scoredAttempts":1,"tape":"/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/heat14/opus/e4-long-road/attempt-1-tape.json","worldModel":"sim-import"},"scoredTapes":[{"file":"attempt-1-tape.json","id":"agent-1b327528-9cb9bfaa-aa78-4f1e-b883-8a0eaa5d8f0d","secured":true,"waves":12,"gold":30,"durationTicks":10800,"lastEntryTick":10434,"promotedByRig":true,"discoveredBy":"outcome-file+filename"}],"otherSecured":[{"file":"tune-2-tape.json","id":"agent-1b327528-9cb9bfaa-aa78-4f1e-b883-8a0eaa5d8f0d","waves":12,"gold":30}],"reportSections":{"outcome":1493,"whatTheMapAsked":2204,"winnability":396,"lessons":4511},"usage":{"turns":49,"toolCalls":22,"tokensIn":98,"tokensOut":116124}}
+tape chosen: attempt-1-tape.json (id agent-1b327528-9cb9bfaa-aa78-4f1e-b883-8a0eaa5d8f0d, promotedByRig=true, discoveredBy=outcome-file+filename)
+
+=== 2 freeze notebook header ===
+{"headerOnly":true,"headerBytes":431}
+
+=== 3 harnessDigest ===
+e1c3f4e9c7524c777ae0577a5ee2d42203b4df0810afda2f0ca5b9cf908cdc29
+
+=== 4 build-submission ===
+{"tapeId":"agent-1b327528-9cb9bfaa-aa78-4f1e-b883-8a0eaa5d8f0d","contract":"e4-long-road","epochId":"epoch-4-motor","seed":"e4-long-road-01","seedMode":"bench","score":{"secured":true,"waves":12,"timeAlive":360,"gold":30,"baseValue":0},"papers":{"buildId":"9c1c34f12","engineHash":"540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068","era":6,"viewVersion":2},"durationTicks":10800,"lastEntryTick":10434,"stack":{"model":"claude-opus-5","harness":"heat14-operator","harnessVersion":"2.1.272","harnessDigest":"e1c3f4e9c7524c777ae0577a5ee2d42203b4df0810afda2f0ca5b9cf908cdc29","worldModel":"sim-import","config":"attended-hosted headless `claude -p` ride (heat 14, the era-6 re-ride) on Claude Code CLI 2.1.272; charter + door manual + own notebook (self-memory); own controller authored in-ride","calls":30,"tokensIn":24108530,"tokensOut":116124}}
+
+=== 5 publish (POST → poll → WATCH) ===
+FAILED: node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+[TypeError: fetch failed] {
+  [cause]: Error: read ECONNRESET
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:216:20) {
+    errno: -54,
+    code: 'ECONNRESET',
+    syscall: 'read'
+  }
+}
+
+Node.js v26.4.0
+
+POST ok; assay still pending at the 120 s mark — resuming with the poll-only shim (no re-POST)
+
+=== LANDED ===
+{
+ "rig": "opus",
+ "contract": "e4-long-road",
+ "tapeFile": "attempt-1-tape.json",
+ "tapeId": "agent-1b327528-9cb9bfaa-aa78-4f1e-b883-8a0eaa5d8f0d",
+ "assay": "verified",
+ "assayHash": "fnv1a32:20ec99c3",
+ "ranked": true,
+ "rank": 1,
+ "waves": 12,
+ "gold": 30,
+ "calls": 30,
+ "eventLogHash": "fnv1a32:f776100f",
+ "wall": 551,
+ "harnessDigest": "e1c3f4e9c7524c777ae0577a5ee2d42203b4df0810afda2f0ca5b9cf908cdc29",
+ "usage": {
+  "turns": 49,
+  "toolCalls": 22,
+  "tokensIn": 24108530,
+  "tokensOut": 116124
+ }
+}
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+[TypeError: fetch failed] {
+  [cause]: Error: read ECONNRESET
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:216:20) {
+    errno: -54,
+    code: 'ECONNRESET',
+    syscall: 'read'
+  }
+}
+
+Node.js v26.4.0

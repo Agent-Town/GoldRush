@@ -1,0 +1,272 @@
+{
+  "version": 2,
+  "id": "agent-cdf76608-36b34f37-8628-4286-8224-99c58714e780",
+  "createdAt": 0,
+  "kept": true,
+  "contract": "e1-baron",
+  "seed": "e1-baron-01",
+  "difficulty": "trail",
+  "simVersion": 1,
+  "meta": {
+    "buildId": "61681a776",
+    "engineHash": "d48987df2d50c643e854a2bf8a23b7f34b81c3de1cfd2e54999129b5660f7494"
+  },
+  "runStart": {
+    "meta": {
+      "version": 1,
+      "tracks": {
+        "territory": 0,
+        "science": 0,
+        "hero": 0,
+        "agent": 0
+      }
+    },
+    "research": {
+      "version": 1,
+      "epochId": "epoch-1-frontier",
+      "metaScienceCursor": 0,
+      "progress": {
+        "version": 1,
+        "tracks": {
+          "territory": 0,
+          "science": 0,
+          "hero": 0,
+          "agent": 0
+        }
+      },
+      "taken": [],
+      "proposalSalt": 0,
+      "pinnedTarget": null,
+      "unlocks": {}
+    }
+  },
+  "inputLog": {
+    "version": 1,
+    "name": "agent-cdf76608",
+    "contractId": "e1-baron",
+    "seed": "e1-baron-01",
+    "difficultyPreset": "trail",
+    "stepSeconds": 0.03333333333333333,
+    "start": {
+      "x": 0,
+      "z": 12
+    },
+    "durationTicks": 4112,
+    "entries": [
+      {
+        "t": 0,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 0,
+                  "z": 9
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 0,
+                  "z": 9
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 783,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 8
+                },
+                "when": {
+                  "goldGte": 25
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 0,
+                  "z": 11
+                },
+                "when": {
+                  "goldGte": 50
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -3,
+                  "z": 10
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 3,
+                  "z": 10
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 1098,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": []
+          }
+        ]
+      },
+      {
+        "t": 1566,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": []
+          }
+        ]
+      },
+      {
+        "t": 1965,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": []
+          }
+        ]
+      },
+      {
+        "t": 2348,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": []
+          }
+        ]
+      },
+      {
+        "t": 2796,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": []
+          }
+        ]
+      },
+      {
+        "t": 3131,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": []
+          }
+        ]
+      },
+      {
+        "t": 3396,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": []
+          }
+        ]
+      },
+      {
+        "t": 3914,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": []
+          }
+        ]
+      },
+      {
+        "t": 3996,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": []
+          }
+        ]
+      }
+    ],
+    "truncated": null,
+    "primarySlot": 0,
+    "streams": []
+  },
+  "eventLogHash": "fnv1a32:39030416",
+  "outcome": {
+    "reason": "death",
+    "secured": false,
+    "waves": 5,
+    "timeAlive": 137.067,
+    "gold": 5
+  }
+}

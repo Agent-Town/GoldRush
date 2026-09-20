@@ -1,0 +1,22 @@
+{
+  "contract": "the-claim",
+  "seed": "e1-the-claim-01",
+  "filterRetired": true,
+  "ordersDropped": 66,
+  "rc": 0,
+  "outcome": {
+    "secured": true,
+    "waves": 10,
+    "timeMs": 300000,
+    "gold": 335,
+    "kills": 299,
+    "calls": 57,
+    "defaultedPicks": 5,
+    "defaultedSecure": 0,
+    "eventLogHash": "fnv1a32:84edc5e3"
+  },
+  "surpriseCount": 0,
+  "firstSurprises": [],
+  "lastSurprises": [],
+  "stderr": "gr-sim rejected orders: PICK_UPGRADE requires a live offered id; \"split_spark\" is not available.\ngr-sim rejected orders: PICK_UPGRADE requires a live offered id; \"tinkers_plating\" is not available.\ngr-sim rejected orders: PICK_UPGRADE requires a live offered id; \"prospectors_luck\" is not available.\ngr-sim rejected orders: PICK_UPGRADE requires a live offered id; \"heavy_spark\" is not available.\ngr-sim speed: 1.15 waves/s\n"
+}

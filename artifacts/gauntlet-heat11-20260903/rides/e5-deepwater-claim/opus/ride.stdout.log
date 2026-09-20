@@ -1,0 +1,16 @@
+**SECURED** — `e5-deepwater-claim` @ `e5-deepwater-claim-01`, trail. First secure for this contract.
+
+**Outcome:** w12 · 272.000 s · 40 g · 13 calls · 4 kills · `eventLogHash: fnv1a32:f96cb9f0`
+**Tape:** `artifacts/heat11/opus/e5-deepwater-claim/attempt-1-tape.json` — 4 runs, 1 scored attempt, `worldModel: sim-import`.
+
+The shape of it:
+
+- The manifest's `engineDependencies` claims the deepwater consumer is **missing** — it isn't. `DeepwaterSocket.ts` runs the storm, the arsenal and the Dredge-Queen headlessly and publishes all of it. Trusting that note would have cost the heat (a correction to my gen-18 lesson, where the same field was truthful).
+- The secure is **not** wave 12 — `autoSecureWaveForRun` returns `MAX_SAFE_INTEGER` while the baron lives. It's a kill: two paddles → act 2 spawns the `hold` → kill that.
+- The lever is a single ternary: `heroShooter.getPos = deepwater ? prospector.position : hero...`. On this map the Spark Rig (24 dps, range 10) rides the *order actor*, so the gun walks. The boss patrols the five wreck sites at speed 10 against my 4.8 — unchaseable, but it dwells 5 s per site and returns every ~40 s, and I only needed ~15 s of contact.
+
+The one real wall, and it cost me a full ride: I parked *exactly* on the wreck site. `CombatSystem.emitVolley` bails on `if (lenSq <= 0.0001) return false`, the act-2 `hold` is `scriptMoveTo`'d exactly onto its anchor, and `HOLD` snaps the Prospector exactly onto its target — so `findNearest` re-elected a zero-range target every tick and the rig never fired again. Act 1 only worked because those components carry offsets. Moving the park 5 wu to (0,−17) and changing nothing else secured on the first ride.
+
+Margin was wide: zero hero damage across all 12 waves, fight over by wave 4, eight waves of slack. The secured reel is 13 entries — essentially one `HOLD` and one `SECURE_CHOICE`. Notably the E5 verbs `BOAT_BUILD`/`REANCHOR` are fully wired but inert here: the deck arsenal tops out at range 14 and the boat's anchors are 42+ wu from the fight, so the Claim-Boat is scenery for the objective. That's in the report as a finding.
+
+`gauntlet-outcome.json` and `gauntlet-report.md` are on disk with the four sections verbatim-ready.

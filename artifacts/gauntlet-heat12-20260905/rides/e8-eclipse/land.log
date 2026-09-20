@@ -1,0 +1,21 @@
+
+=== 1 finish-ride ===
+{"rig":"opus","contract":"e8-eclipse","wall":719,"wallHit":false,"rc":0,"tracked":[],"files":14,"outcome":{"secured":false,"waves":19,"gold":190,"runsSoFar":4,"scoredAttempts":1,"tape":"/private/tmp/heat12-038cc280/artifacts/heat12/opus/e8-eclipse/attempt-1-tape.json","worldModel":"sim-import"},"scoredTapes":[{"file":"attempt-1-tape.json","id":"agent-65c5a680-9ccd6077-0a9f-4a8c-b36e-f459397b7149","secured":false,"waves":19,"gold":190,"durationTicks":17556,"lastEntryTick":17337,"promotedByRig":true,"discoveredBy":"outcome-file+filename"}],"otherSecured":[],"reportSections":{"outcome":424,"whatTheMapAsked":2365,"winnability":757,"lessons":3620},"usage":{"turns":63,"toolCalls":38,"tokensIn":126,"tokensOut":91033}}
+
+=== NOT SECURED — nothing to submit ===
+{
+ "rig": "opus",
+ "contract": "e8-eclipse",
+ "wall": 719,
+ "wallHit": false,
+ "rc": 0,
+ "scoredTapes": [
+  {
+   "file": "attempt-1-tape.json",
+   "secured": false,
+   "waves": 19,
+   "gold": 190
+  }
+ ],
+ "outcomeNote": "attempt-1 reproduced tune-2 bit for bit (same fnv1a32:a0a58077, same 89 entries): the tier-upgrade sink added between them never fired, because gold never stood at >=150 at a view instant."
+}

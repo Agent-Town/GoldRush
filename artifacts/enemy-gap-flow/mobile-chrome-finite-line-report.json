@@ -1,0 +1,81 @@
+{
+  "enemy": {
+    "x": 0.030773686755540694,
+    "y": 0.3620005552958732,
+    "z": 11.983139538935399,
+    "id": 0,
+    "spreadOffset": -1.3479215058879743,
+    "hp": 25.2,
+    "maxHp": 25.2,
+    "speed": 2.7,
+    "contactDamage": 8,
+    "buildingDamage": 8,
+    "supportBuildingDamage": 8,
+    "heroPursuitRange": 0,
+    "hitRadius": 0.6,
+    "boltDamageMult": 1,
+    "bossGroupSize": 0,
+    "bossGroupTotalHp": 0,
+    "bossDegradeSpeedMult": 1,
+    "presentation": {
+      "mesh": false,
+      "visible": false,
+      "railY": 0.3620005552958732,
+      "railRotation": 1.6871955332777193,
+      "textureKey": "boss-railcar-unknown",
+      "damaged": false,
+      "damageThreshold": 0.5,
+      "wreckerMarker": false,
+      "markerColor": "#a0522d",
+      "source": "billboard",
+      "mounted": false,
+      "morphInfluence": 0,
+      "bossBarY": 0,
+      "bossBarScale": 1
+    },
+    "scale": 1,
+    "hasBanner": false,
+    "vx": 2.376478945753782,
+    "vz": 0.2778763599709144,
+    "thief": false,
+    "wrecker": false,
+    "state": "none",
+    "wreckState": "none",
+    "carried": 0,
+    "edge": null,
+    "zone": "bank",
+    "light": 1,
+    "nightSpeedMultiplier": 1,
+    "watchPainted": false,
+    "readState": "fevered",
+    "fevered": true,
+    "freed": false,
+    "feverAccent": {
+      "active": true,
+      "kind": "human",
+      "strength": 0.64,
+      "surged": false,
+      "channel": "watch-paint-instanced"
+    },
+    "terrain": {
+      "grounded": true,
+      "slope": {
+        "dx": 0,
+        "dz": 0
+      },
+      "traversable": true,
+      "speedMul": 1
+    }
+  },
+  "wreck": {
+    "wreckers": 0,
+    "swinging": 0,
+    "gnawing": 0,
+    "stuckWatchdogTrips": 0,
+    "ruins": 0,
+    "hitsResolved": 0,
+    "wrecked": 0,
+    "repairs": 0,
+    "repairGold": 0
+  }
+}

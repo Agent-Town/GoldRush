@@ -1,0 +1,130 @@
+{
+  "note": "see this file's header; every number below is produced by the command in it",
+  "canonical": {
+    "tape": {
+      "file": "artifacts/e10s-4-door/prover-01.tape.json",
+      "durationTicks": 10801,
+      "entries": 29,
+      "lastEntryTick": 10800,
+      "lastEntryOrders": [
+        {
+          "verb": "SECURE_CHOICE",
+          "choice": "bank"
+        }
+      ],
+      "stokeOrders": 29,
+      "harvestOrders": 144,
+      "ordersLogHash": "fnv1a32:06e15430",
+      "recordedOutcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 12,
+        "timeAlive": 360,
+        "gold": 125
+      }
+    },
+    "runOutcomeHash": "fnv1a32:84aace38",
+    "replays": [
+      {
+        "secured": true,
+        "waves": 12,
+        "timeMs": 360000,
+        "gold": 125,
+        "kills": 414,
+        "calls": 28,
+        "defaultedPicks": 12,
+        "defaultedSecure": 1,
+        "eventLogHash": "fnv1a32:b7cb15c0"
+      },
+      {
+        "secured": true,
+        "waves": 12,
+        "timeMs": 360000,
+        "gold": 125,
+        "kills": 414,
+        "calls": 28,
+        "defaultedPicks": 12,
+        "defaultedSecure": 1,
+        "eventLogHash": "fnv1a32:b7cb15c0"
+      }
+    ],
+    "replayReproducesRunHash": false
+  },
+  "control": {
+    "tape": {
+      "file": "artifacts/e10s-4-door/control-default-secure.tape.json",
+      "durationTicks": 10800,
+      "entries": 28,
+      "lastEntryTick": 10729,
+      "lastEntryOrders": [
+        {
+          "verb": "HARVEST",
+          "seam": "gold-seam-3"
+        },
+        {
+          "verb": "HARVEST",
+          "seam": "gold-seam-3"
+        },
+        {
+          "verb": "HARVEST",
+          "seam": "gold-seam-3"
+        },
+        {
+          "verb": "MOVE_TO",
+          "pos": {
+            "x": 3,
+            "z": -12.5
+          }
+        },
+        {
+          "verb": "CONTEXT_ACTION",
+          "action": "stoke"
+        },
+        {
+          "verb": "HOLD",
+          "pos": {
+            "x": 3,
+            "z": -12.5
+          }
+        }
+      ],
+      "stokeOrders": 29,
+      "harvestOrders": 144,
+      "ordersLogHash": "fnv1a32:54fdb915",
+      "recordedOutcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 12,
+        "timeAlive": 360,
+        "gold": 125
+      }
+    },
+    "runOutcomeHash": "fnv1a32:b7cb15c0",
+    "replays": [
+      {
+        "secured": true,
+        "waves": 12,
+        "timeMs": 360000,
+        "gold": 125,
+        "kills": 414,
+        "calls": 28,
+        "defaultedPicks": 12,
+        "defaultedSecure": 1,
+        "eventLogHash": "fnv1a32:b7cb15c0"
+      },
+      {
+        "secured": true,
+        "waves": 12,
+        "timeMs": 360000,
+        "gold": 125,
+        "kills": 414,
+        "calls": 28,
+        "defaultedPicks": 12,
+        "defaultedSecure": 1,
+        "eventLogHash": "fnv1a32:b7cb15c0"
+      }
+    ],
+    "replayReproducesRunHash": true
+  },
+  "replayOfCanonicalEqualsControlRun": true
+}

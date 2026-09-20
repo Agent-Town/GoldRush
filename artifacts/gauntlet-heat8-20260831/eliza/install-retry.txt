@@ -1,0 +1,7 @@
+elizaOS bounded fresh-install retry — 2026-08-31
+
+- `npm view @elizaos/cli version` returned stable version `1.7.2`.
+- In fresh temporary HOME `/tmp/heat8-eliza.8VCZXC/home` and npm cache, the operator ran:
+  `HOME=<fresh-home> NPM_CONFIG_CACHE=<fresh-cache> perl -e 'alarm 60; exec @ARGV' npm exec --yes --package=@elizaos/cli@1.7.2 -- elizaos --version`
+- It produced no version output inside the 60-second bound and terminated by alarm with exit code `142`.
+- Verdict: DNF (install/runtime); no ride, submission, or reel.

@@ -1,0 +1,110 @@
+{
+  "label": "before",
+  "project": "desktop-chrome",
+  "viewport": {
+    "width": 1280,
+    "height": 800
+  },
+  "dataset": {
+    "state": "ready",
+    "renderSource": "glb",
+    "landmarks": "5",
+    "landmarkSkipped": "0",
+    "landmarkExpected": "5",
+    "landmarkEmissive": "3",
+    "landmarkDiagnostics": "",
+    "hiddenGroundLayers": "TerrainVistaRing|TerrainContinuousGroundMesh|terrain.river|terrain.ford|FordSteppingStones|SpringPonds",
+    "meshes": "1",
+    "triangles": "32768",
+    "vertices": "16641",
+    "materials": "1"
+  },
+  "captured": [
+    {
+      "frame": "run-camera",
+      "hero": [
+        0,
+        12
+      ],
+      "file": "/Users/robin/Claude/Projects/gr-task-beauty2-e2-hill-mine/artifacts/beauty-e2-hill-mine/before/desktop-chrome-run-camera.png",
+      "render": {
+        "calls": 82,
+        "triangles": 116622,
+        "p95": 10,
+        "avg": 8.087777777777784,
+        "samples": 180,
+        "tier": null
+      }
+    },
+    {
+      "frame": "gallery-trestle",
+      "hero": [
+        0,
+        8
+      ],
+      "file": "/Users/robin/Claude/Projects/gr-task-beauty2-e2-hill-mine/artifacts/beauty-e2-hill-mine/before/desktop-chrome-gallery-trestle.png",
+      "render": {
+        "calls": 82,
+        "triangles": 116622,
+        "p95": 9.600000000000364,
+        "avg": 7.9844444444444385,
+        "samples": 180,
+        "tier": null
+      }
+    },
+    {
+      "frame": "upper-terraces",
+      "hero": [
+        -6,
+        34
+      ],
+      "file": "/Users/robin/Claude/Projects/gr-task-beauty2-e2-hill-mine/artifacts/beauty-e2-hill-mine/before/desktop-chrome-upper-terraces.png",
+      "render": {
+        "calls": 85,
+        "triangles": 116958,
+        "p95": 10.5,
+        "avg": 8.159444444444448,
+        "samples": 180,
+        "tier": null
+      }
+    },
+    {
+      "frame": "boiler-approach",
+      "hero": [
+        4,
+        18
+      ],
+      "file": "/Users/robin/Claude/Projects/gr-task-beauty2-e2-hill-mine/artifacts/beauty-e2-hill-mine/before/desktop-chrome-boiler-approach.png",
+      "render": {
+        "calls": 84,
+        "triangles": 116660,
+        "p95": 10.69999999999709,
+        "avg": 8.252777777777778,
+        "samples": 180,
+        "tier": null
+      }
+    },
+    {
+      "frame": "rail-cut-east",
+      "hero": [
+        22,
+        6
+      ],
+      "file": "/Users/robin/Claude/Projects/gr-task-beauty2-e2-hill-mine/artifacts/beauty-e2-hill-mine/before/desktop-chrome-rail-cut-east.png",
+      "render": {
+        "calls": 76,
+        "triangles": 115526,
+        "p95": 10.400000000001455,
+        "avg": 8.216666666666667,
+        "samples": 180,
+        "tier": null
+      }
+    }
+  ],
+  "consoleErrors": [],
+  "loadavg": [
+    90.0341796875,
+    41.9482421875,
+    20.01025390625
+  ]
+}

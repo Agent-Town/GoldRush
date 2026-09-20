@@ -1,0 +1,980 @@
+{
+ "schema": "goldrush.view.v1",
+ "viewVersion": 2,
+ "stablePrefix": {
+  "seed": "e4-gusher-county-01",
+  "contract": {
+   "id": "e4-gusher-county",
+   "name": "Gusher County",
+   "briefing": {
+    "geography": "A 160 by 160 derrick county: eight wild gushers on three leases around one camp.",
+    "goals": [
+     "Build from the County Camp across the three leases.",
+     "Watch all four edges around the eight derricks."
+    ],
+    "rules": [
+     "Eight derricks mark the county's harvest grounds.",
+     "Tar seams and surveyed roads divide the leases.",
+     "One outhouse geyser marks the eastern field."
+    ]
+   }
+  },
+  "mechanics": {
+   "schema": "goldrush.mechanics.v1",
+   "contractId": "e4-gusher-county",
+   "buildables": [
+    {
+     "id": "sentry_beacon",
+     "operation": "BUILD",
+     "meaning": "Lights the dark and slows what it touches; radius 8wu.",
+     "cost": 25,
+     "costs": [
+      25,
+      35,
+      45,
+      55,
+      75,
+      95
+     ],
+     "costRule": "ceil-to-5",
+     "maxCount": 6,
+     "source": "buildables.registry"
+    },
+    {
+     "id": "palisade",
+     "operation": "BUILD",
+     "meaning": "Timber that holds. Bandits break it before you.",
+     "cost": 10,
+     "costs": [
+      10,
+      10,
+      10,
+      10,
+      10,
+      10
+     ],
+     "maxCount": 48,
+     "source": "buildables.registry"
+    },
+    {
+     "id": "sluice",
+     "operation": "BUILD",
+     "meaning": "Works the river for you: 3g per cycle beside water.",
+     "cost": 40,
+     "costs": [
+      40,
+      40,
+      40
+     ],
+     "maxCount": 3,
+     "source": "buildables.registry"
+    },
+    {
+     "id": "stockpile",
+     "operation": "BUILD",
+     "meaning": "Holds +150 gold above the pan cap.",
+     "cost": 60,
+     "costs": [
+      60,
+      60
+     ],
+     "maxCount": 2,
+     "source": "buildables.registry"
+    },
+    {
+     "id": "turret",
+     "operation": "BUILD",
+     "meaning": "Spark bolts, line-of-sight, 16wu range.",
+     "cost": 50,
+     "costs": [
+      50,
+      70,
+      95,
+      125
+     ],
+     "costRule": "ceil-to-5",
+     "maxCount": 4,
+     "source": "buildables.registry"
+    },
+    {
+     "id": "assay_office",
+     "operation": "BUILD",
+     "meaning": "Write orders; the town's craftsmen answer. One per claim.",
+     "cost": 80,
+     "costs": [
+      80
+     ],
+     "maxCount": 1,
+     "source": "buildables.registry"
+    }
+   ],
+   "interactables": [],
+   "rules": [
+    {
+     "id": "build_zones",
+     "source": "tileParams.buildZones",
+     "data": {
+      "count": 4,
+      "banks": [
+       "north",
+       "south"
+      ]
+     }
+    },
+    {
+     "id": "motor_closures",
+     "source": "MotorSocket.syncClosures",
+     "data": {
+      "corridorIds": [
+       "camp-to-west-lease",
+       "camp-to-east-lease",
+       "camp-to-north-lease"
+      ],
+      "closedWhile": "weather.phase === storm",
+      "picks": "corridorIds[weather.cycle % corridorIds.length]",
+      "effect": "no road bonus on the closed lease and no delivery through it; the road is not a wall",
+      "engines": "gr-sim"
+     }
+    },
+    {
+     "id": "motor_fuel",
+     "source": "FuelSystem.update",
+     "data": {
+      "nodes": [
+       {
+        "x": -12,
+        "z": -8
+       },
+       {
+        "x": 0,
+        "z": -8
+       },
+       {
+        "x": 12,
+        "z": -8
+       }
+      ],
+      "harvestRange": 1.35,
+      "harvestSeconds": 0.5,
+      "tarPerNode": 3,
+      "fuelPerTar": 4,
+      "refineSeconds": 0.25,
+      "capacity": 24,
+      "harvestedBy": "any actor standing within harvestRange for harvestSeconds; the Prospector counts",
+      "engines": "gr-sim"
+     }
+    },
+    {
+     "id": "motor_haul_objective",
+     "source": "MotorSocket.objectiveAllowsSecure",
+     "data": {
+      "kind": "deliveries",
+      "corridorIds": [
+       "camp-to-west-lease",
+       "camp-to-east-lease",
+       "camp-to-north-lease"
+      ],
+      "label": "the three lease heads",
+      "stops": [
+       {
+        "corridorId": "camp-to-west-lease",
+        "x": -50,
+        "z": -40
+       },
+       {
+        "corridorId": "camp-to-east-lease",
+        "x": 48,
+        "z": -38
+       },
+       {
+        "corridorId": "camp-to-north-lease",
+        "x": 0,
+        "z": 46
+       }
+      ],
+      "stopReach": 2.5,
+      "closures": true,
+      "requires": "the Hauler at rest within stopReach of every lease road end, each while that road is open",
+      "engines": "gr-sim"
+     }
+    },
+    {
+     "id": "motor_hauler",
+     "source": "Vehicle.update",
+     "data": {
+      "startX": -12,
+      "startZ": -10,
+      "speed": 9,
+      "burnPerSecond": 3,
+      "arriveRadius": 0.05,
+      "stormMovementMultiplier": 0.7,
+      "verb": "HAUL drives the Hauler to where the Prospector stands; it halts dry when the tank empties and resumes as tar refines",
+      "engines": "gr-sim"
+     }
+    },
+    {
+     "id": "motor_roads",
+     "source": "MotorSocket.gradeAt",
+     "data": {
+      "corridors": [
+       "camp-to-east-lease",
+       "camp-to-north-lease",
+       "camp-to-west-lease"
+      ],
+      "count": 3,
+      "gradeReach": 2.5,
+      "halfWidth": 1.5,
+      "friendlySpeedMultiplier": 2.5,
+      "friendlyFuelMultiplier": 0.4,
+      "verb": "GRADE with the Prospector within gradeReach of an ungraded corridor start",
+      "engines": "gr-sim"
+     }
+    },
+    {
+     "id": "motor_weather",
+     "source": "WeatherSystem.sample",
+     "data": {
+      "cycleSeconds": 30,
+      "clearSeconds": 6,
+      "telegraphSeconds": 4,
+      "stormSeconds": 12,
+      "stormMovementMultiplier": 0.7,
+      "stormVisibilityMultiplier": 0.55,
+      "slows": [
+       "hauler",
+       "convoy",
+       "enemies"
+      ],
+      "visibility": "rider-visible only; no simulation consumer",
+      "engines": "gr-sim"
+     }
+    }
+   ],
+   "modes": [],
+   "posting": {
+    "waves": [
+     {
+      "event": "secure",
+      "wave": 12,
+      "source": "twist.secureWave"
+     }
+    ],
+    "spawnEdges": [
+     "east",
+     "north",
+     "south",
+     "west"
+    ],
+    "lossStakes": [
+     {
+      "id": "county-camp",
+      "x": 0,
+      "z": -4,
+      "source": "tileParams.stakeMarkers"
+     }
+    ]
+   }
+  },
+  "map": {
+   "claim": {
+    "x": 0,
+    "z": -4
+   },
+   "seams": [
+    {
+     "id": "gold-seam-1",
+     "x": -56,
+     "z": -36
+    },
+    {
+     "id": "gold-seam-2",
+     "x": -40,
+     "z": -48
+    },
+    {
+     "id": "gold-seam-3",
+     "x": 40,
+     "z": -44
+    },
+    {
+     "id": "gold-seam-4",
+     "x": 56,
+     "z": -32
+    },
+    {
+     "id": "gold-seam-5",
+     "x": -44,
+     "z": 44
+    },
+    {
+     "id": "gold-seam-6",
+     "x": -16,
+     "z": 52
+    },
+    {
+     "id": "gold-seam-7",
+     "x": 20,
+     "z": 48
+    },
+    {
+     "id": "gold-seam-8",
+     "x": 48,
+     "z": 40
+    }
+   ],
+   "coalSeams": [],
+   "water": {
+    "river": false,
+    "ford": false,
+    "sources": 0,
+    "descriptor": null
+   },
+   "spawnGates": [
+    {
+     "edge": "north"
+    },
+    {
+     "edge": "east"
+    },
+    {
+     "edge": "south"
+    },
+    {
+     "edge": "west"
+    }
+   ]
+  },
+  "orders": [
+   {
+    "id": "orders-49-1",
+    "order": {
+     "verb": "SECURE_CHOICE",
+     "choice": "bank"
+    },
+    "status": "done"
+   }
+  ]
+ },
+ "appendLog": [
+  {
+   "wave": 1,
+   "outcome": "held",
+   "goldDelta": 10,
+   "worksHp": {
+    "current": 50,
+    "max": 50,
+    "delta": 50
+   },
+   "kills": 17,
+   "surprises": [
+    "order_failure"
+   ]
+  },
+  {
+   "wave": 2,
+   "outcome": "held",
+   "goldDelta": 10,
+   "worksHp": {
+    "current": 50,
+    "max": 50,
+    "delta": 0
+   },
+   "kills": 20,
+   "surprises": [
+    "order_failure"
+   ]
+  },
+  {
+   "wave": 3,
+   "outcome": "held",
+   "goldDelta": 0,
+   "worksHp": {
+    "current": 50,
+    "max": 50,
+    "delta": 0
+   },
+   "kills": 23,
+   "surprises": []
+  },
+  {
+   "wave": 4,
+   "outcome": "held",
+   "goldDelta": 0,
+   "worksHp": {
+    "current": 50,
+    "max": 50,
+    "delta": 0
+   },
+   "kills": 25,
+   "surprises": []
+  },
+  {
+   "wave": 5,
+   "outcome": "held",
+   "goldDelta": 5,
+   "worksHp": {
+    "current": 50,
+    "max": 50,
+    "delta": 0
+   },
+   "kills": 32,
+   "surprises": []
+  },
+  {
+   "wave": 6,
+   "outcome": "held",
+   "goldDelta": -10,
+   "worksHp": {
+    "current": 96,
+    "max": 96,
+    "delta": 46
+   },
+   "kills": 31,
+   "surprises": [
+    "order_failure"
+   ]
+  },
+  {
+   "wave": 7,
+   "outcome": "held",
+   "goldDelta": 20,
+   "worksHp": {
+    "current": 96,
+    "max": 96,
+    "delta": 0
+   },
+   "kills": 41,
+   "surprises": [
+    "order_failure"
+   ]
+  },
+  {
+   "wave": 8,
+   "outcome": "held",
+   "goldDelta": 15,
+   "worksHp": {
+    "current": 154,
+    "max": 154,
+    "delta": 58
+   },
+   "kills": 48,
+   "surprises": [
+    "order_failure",
+    "order_failure",
+    "order_failure",
+    "order_failure",
+    "order_failure"
+   ]
+  },
+  {
+   "wave": 9,
+   "outcome": "held",
+   "goldDelta": -50,
+   "worksHp": {
+    "current": 236,
+    "max": 236,
+    "delta": 82
+   },
+   "kills": 54,
+   "surprises": [
+    "order_failure"
+   ]
+  },
+  {
+   "wave": 10,
+   "outcome": "held",
+   "goldDelta": 80,
+   "worksHp": {
+    "current": 236,
+    "max": 236,
+    "delta": 0
+   },
+   "kills": 56,
+   "surprises": [
+    "order_failure",
+    "order_failure",
+    "order_failure",
+    "order_failure",
+    "order_failure",
+    "order_failure",
+    "order_failure",
+    "order_failure"
+   ]
+  },
+  {
+   "wave": 11,
+   "outcome": "held",
+   "goldDelta": -80,
+   "worksHp": {
+    "current": 334,
+    "max": 334,
+    "delta": 98
+   },
+   "kills": 61,
+   "surprises": [
+    "order_failure"
+   ]
+  },
+  {
+   "wave": 12,
+   "outcome": "secured",
+   "goldDelta": 0,
+   "worksHp": {
+    "current": 334,
+    "max": 334,
+    "delta": 0
+   },
+   "kills": 0,
+   "surprises": []
+  }
+ ],
+ "now": {
+  "wave": 12,
+  "blastReadyInMs": 0,
+  "weapon": "rig",
+  "timers": {
+   "runSeconds": 360,
+   "nextWaveInSeconds": 0
+  },
+  "gold": 0,
+  "hero": {
+   "hp": 155.8,
+   "maxHp": 175,
+   "x": 0,
+   "z": -6.6,
+   "level": 18,
+   "upgradesTaken": {
+    "double_tap_coil": 3,
+    "tinkers_plating": 3,
+    "wide_ring": 2,
+    "quick_fuse": 1,
+    "beacon_dynamo": 2,
+    "heavy_spark": 3,
+    "prospectors_luck": 2,
+    "powder_charge": 1
+   },
+   "upgradeChoiceRule": "first-offer"
+  },
+  "prospector": {
+   "x": -15.28,
+   "z": 49.05
+  },
+  "works": {
+   "hp": 334,
+   "maxHp": 334,
+   "standing": 5,
+   "wrecked": 0,
+   "byKind": {
+    "sentry_beacon": 2,
+    "turret": 3
+   },
+   "entries": [
+    {
+     "id": "sentry_beacon",
+     "index": 0,
+     "tier": 1,
+     "hp": 46,
+     "maxHp": 46,
+     "wrecked": false,
+     "position": {
+      "x": 0,
+      "z": -1
+     }
+    },
+    {
+     "id": "sentry_beacon",
+     "index": 1,
+     "tier": 1,
+     "hp": 58,
+     "maxHp": 58,
+     "wrecked": false,
+     "position": {
+      "x": -6,
+      "z": -4
+     }
+    },
+    {
+     "id": "turret",
+     "index": 0,
+     "tier": 1,
+     "hp": 50,
+     "maxHp": 50,
+     "wrecked": false,
+     "position": {
+      "x": -3,
+      "z": -7
+     }
+    },
+    {
+     "id": "turret",
+     "index": 1,
+     "tier": 1,
+     "hp": 82,
+     "maxHp": 82,
+     "wrecked": false,
+     "position": {
+      "x": 3,
+      "z": -7
+     }
+    },
+    {
+     "id": "turret",
+     "index": 2,
+     "tier": 1,
+     "hp": 98,
+     "maxHp": 98,
+     "wrecked": false,
+     "position": {
+      "x": -3,
+      "z": -1
+     }
+    }
+   ]
+  },
+  "threats": {
+   "alive": 6,
+   "state": "warning",
+   "edge": "east",
+   "thieves": 0,
+   "wreckers": 0,
+   "spawnedTotal": 421,
+   "defeatedTotal": 415,
+   "defeatedBasis": "all enemies, including continuous tricklers"
+  },
+  "orders": [
+   {
+    "id": "orders-49-1",
+    "order": {
+     "verb": "SECURE_CHOICE",
+     "choice": "bank"
+    },
+    "status": "done"
+   }
+  ],
+  "needsRider": false,
+  "seams": [
+   {
+    "id": "gold-seam-1",
+    "active": true,
+    "remaining": 50,
+    "x": -56,
+    "z": -36,
+    "anchorIndex": 0
+   },
+   {
+    "id": "gold-seam-2",
+    "active": true,
+    "remaining": 35,
+    "x": -16,
+    "z": 52,
+    "anchorIndex": 5
+   },
+   {
+    "id": "gold-seam-3",
+    "active": true,
+    "remaining": 50,
+    "x": -40,
+    "z": -48,
+    "anchorIndex": 1
+   },
+   {
+    "id": "gold-seam-4",
+    "active": false,
+    "remaining": 30,
+    "x": null,
+    "z": null,
+    "anchorIndex": null
+   },
+   {
+    "id": "gold-seam-5",
+    "active": false,
+    "remaining": 30,
+    "x": null,
+    "z": null,
+    "anchorIndex": null
+   },
+   {
+    "id": "gold-seam-6",
+    "active": false,
+    "remaining": 30,
+    "x": null,
+    "z": null,
+    "anchorIndex": null
+   },
+   {
+    "id": "gold-seam-7",
+    "active": false,
+    "remaining": 30,
+    "x": null,
+    "z": null,
+    "anchorIndex": null
+   },
+   {
+    "id": "gold-seam-8",
+    "active": false,
+    "remaining": 30,
+    "x": null,
+    "z": null,
+    "anchorIndex": null
+   }
+  ],
+  "score": {
+   "wavesSurvived": 12,
+   "goldPanned": 275,
+   "goldPannedByProspector": 0,
+   "goldStolen": 0,
+   "goldReclaimed": 0,
+   "goldReclaimedByProspector": 0,
+   "buildingsBuilt": 5
+  },
+  "motor": {
+   "contractId": "e4-gusher-county",
+   "objective": {
+    "kind": "deliveries",
+    "corridorId": "camp-to-north-lease",
+    "label": "the three lease heads",
+    "stop": {
+     "x": 0,
+     "z": 46
+    },
+    "stopReach": 2.5,
+    "arrived": true,
+    "arrivedAt": 154.9,
+    "roadDistanceAtArrival": 230.5,
+    "securableAtWave": 12,
+    "remaining": [],
+    "delivered": [
+     "camp-to-west-lease",
+     "camp-to-east-lease",
+     "camp-to-north-lease"
+    ]
+   },
+   "weather": {
+    "era": 4,
+    "contractId": "e4-gusher-county",
+    "phase": "clear",
+    "phaseProgress": 0,
+    "cycle": 12,
+    "simTime": 360,
+    "movementMultiplier": 1,
+    "visibilityMultiplier": 1,
+    "hazeColor": "#c99052",
+    "hazeStrength": 0,
+    "warning": false,
+    "nextPhaseInSeconds": 6
+   },
+   "roads": {
+    "segments": 3,
+    "length": 134.54,
+    "friendlySpeedMultiplier": 2.5,
+    "friendlyFuelMultiplier": 0.4,
+    "enemyRouteCostMultiplier": 0.25,
+    "gradeReach": 2.5,
+    "graded": [
+     "camp-to-east-lease",
+     "camp-to-north-lease",
+     "camp-to-west-lease"
+    ],
+    "corridors": [
+     {
+      "id": "camp-to-west-lease",
+      "start": {
+       "x": -12,
+       "z": -8
+      },
+      "end": {
+       "x": -50,
+       "z": -40
+      },
+      "graded": true,
+      "closed": false
+     },
+     {
+      "id": "camp-to-east-lease",
+      "start": {
+       "x": 12,
+       "z": -8
+      },
+      "end": {
+       "x": 48,
+       "z": -38
+      },
+      "graded": true,
+      "closed": false
+     },
+     {
+      "id": "camp-to-north-lease",
+      "start": {
+       "x": 0,
+       "z": 8
+      },
+      "end": {
+       "x": 0,
+       "z": 46
+      },
+      "graded": true,
+      "closed": false
+     }
+    ],
+    "closed": [],
+    "closesNext": "camp-to-west-lease"
+   },
+   "fuel": {
+    "active": true,
+    "tar": 0,
+    "stored": 11.271,
+    "capacity": 24,
+    "harvestedNodes": 3,
+    "refinedTar": 9,
+    "drawn": 24.729,
+    "nodes": [
+     {
+      "x": -12,
+      "z": -8,
+      "harvested": true,
+      "progress": 1
+     },
+     {
+      "x": 0,
+      "z": -8,
+      "harvested": true,
+      "progress": 1
+     },
+     {
+      "x": 12,
+      "z": -8,
+      "harvested": true,
+      "progress": 1
+     }
+    ]
+   },
+   "vehicle": {
+    "active": true,
+    "kind": "hauler",
+    "state": "arrived",
+    "x": 48,
+    "z": -38,
+    "target": null,
+    "speed": 9,
+    "burnPerSecond": 3,
+    "distanceTravelled": 264.4,
+    "onRoad": true,
+    "roadDistance": 230.5,
+    "dispatch": {
+     "x": 48,
+     "z": -38
+    }
+   },
+   "convoy": null,
+   "events": [
+    {
+     "type": "motor_road_reopened",
+     "at": 292,
+     "corridorId": "camp-to-west-lease",
+     "cycle": 9
+    },
+    {
+     "type": "motor_weather",
+     "at": 292,
+     "phase": "clear",
+     "cycle": 9
+    },
+    {
+     "type": "motor_weather",
+     "at": 306,
+     "phase": "telegraph",
+     "cycle": 10
+    },
+    {
+     "type": "motor_road_closed",
+     "at": 310,
+     "corridorId": "camp-to-east-lease",
+     "cycle": 10
+    },
+    {
+     "type": "motor_weather",
+     "at": 310,
+     "phase": "storm",
+     "cycle": 10
+    },
+    {
+     "type": "motor_road_reopened",
+     "at": 322,
+     "corridorId": "camp-to-east-lease",
+     "cycle": 10
+    },
+    {
+     "type": "motor_weather",
+     "at": 322,
+     "phase": "clear",
+     "cycle": 10
+    },
+    {
+     "type": "motor_weather",
+     "at": 336,
+     "phase": "telegraph",
+     "cycle": 11
+    },
+    {
+     "type": "motor_road_closed",
+     "at": 340,
+     "corridorId": "camp-to-north-lease",
+     "cycle": 11
+    },
+    {
+     "type": "motor_weather",
+     "at": 340,
+     "phase": "storm",
+     "cycle": 11
+    },
+    {
+     "type": "motor_road_reopened",
+     "at": 352,
+     "corridorId": "camp-to-north-lease",
+     "cycle": 11
+    },
+    {
+     "type": "motor_weather",
+     "at": 352,
+     "phase": "clear",
+     "cycle": 11
+    }
+   ],
+   "eventCount": 86
+  }
+ },
+ "almanac": {
+  "label": "the Almanac reckons",
+  "estimate": true,
+  "nextWave": {
+   "wave": 13,
+   "arrivalInSeconds": 0,
+   "basis": "estimated-from-wave-schedule",
+   "composition": [
+    {
+     "id": "motor_gang",
+     "label": "Motor Gang",
+     "count": 18
+    },
+    {
+     "id": "tar_sprite",
+     "label": "Tar Sprite",
+     "count": 18
+    }
+   ],
+   "compositionScope": "wave-horn packs only; continuous tricklers are additional",
+   "continuousTrickle": {
+    "currentIntervalSeconds": 0.826,
+    "includedInComposition": false,
+    "includedInDefeatedTotal": true
+   }
+  },
+  "projection": {
+   "expectedLeaks": 0,
+   "expectedWorksDamage": 0,
+   "expectedGold": 56.67,
+   "currentWorks": 5,
+   "harnessHash": "fnv1a32:6337289a"
+  }
+ }
+}

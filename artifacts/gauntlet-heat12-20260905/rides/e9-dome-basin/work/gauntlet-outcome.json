@@ -1,0 +1,35 @@
+{
+ "secured": false,
+ "waves": 14,
+ "timeMs": 439567,
+ "gold": 96,
+ "kills": 531,
+ "calls": 151,
+ "defaultedPicks": 0,
+ "defaultedSecure": 0,
+ "eventLogHash": "fnv1a32:17e14213",
+ "tape": "/tmp/heat12-038cc280/artifacts/heat12/opus/e9-dome-basin/tune-1-tape.json",
+ "scored": false,
+ "label": "tune-1",
+ "envelope": {
+  "ticks": 13187,
+  "entries": 151,
+  "bytes": 538306,
+  "capTicks": 18002,
+  "capEntries": 3601,
+  "capBytes": 576176
+ },
+ "views": 172,
+ "worldModel": "sim-import",
+ "exitCode": 0,
+ "runsSoFar": 4,
+ "scoredAttempts": 1,
+ "submit": "DO NOT SUBMIT — not secured (endReason: hero_down). Nothing is put forward.",
+ "note": "Best of 4 runs. tune-1 (two-sided bait, mend on) w14/439.567s beats attempt-1 (synthesis) w13/419.367s and tune-2 (economy-only) w13/402.267s. NOT SECURED: the contract needs w20/600s and declares no earlier window. attempt-1-tape.json is the scored attempt and is the WORSE run; this file names tune-1 as the best outcome, per the intermediate-results law. Neither is submittable.",
+ "bestOfRuns": {
+  "probe-idle": "w2 / 82.6s / 0g  (idle floor, matches gen 40)",
+  "tune-1": "w14 / 439.567s / 96g / 151 calls — two-sided bait + REPAIR_UNDER; purse froze at 1.09 g/s; 538,306 B of a 576,176 B ceiling at w14 (would be reel_too_large at w20)",
+  "tune-2": "w13 / 402.267s / 100g / 68 calls — mend removed; 2.16 g/s, full ladder landed, all 20 works wrecked; 185,090 B",
+  "attempt-1 (SCORED)": "w13 / 419.367s / 11g / 66 calls — synthesis: v2 economy + surplus-gated mend + 40 palisade rungs; hero 158/175 at t=300 then collapsed; 176,472 B"
+ }
+}

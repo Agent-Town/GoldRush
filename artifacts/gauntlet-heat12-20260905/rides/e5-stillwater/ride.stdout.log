@@ -1,0 +1,15 @@
+**SECURED — `e5-stillwater` on `e5-stillwater-01`, wave 12 / 360.000 s / 200 gold / 11 calls**, on the first controller ride. 2 sim runs, 1 scored attempt.
+
+**Tape put forward:** `artifacts/heat12/opus/e5-stillwater/attempt-1-tape.json` (declared in `gauntlet-outcome.json`'s `"tape"` field; byte-identical copy of `tune-1-tape.json` — one ride under two filenames, since the brief stops the heat at the first secure).
+
+**What the week's change was, verified against source:** the split put `deepwaterStormCarriesCorsairs` (true here, `corsairWaveSize` 0→1) apart from `deepwaterStormDisablesScheduledWaves`, which is `carriesCorsairs && !tileParams.stillwater` — **false** on this map. So Stillwater now runs *two* clocks: the ordinary 30 s wave scheduler (wave 12 at exactly 360.000 s) beside a real 32 s storm cycle that crews one corsair skiff per front. The twelve skiffs are scripted straight across at z = 0 and recycled at x ≥ 62 (`DeepwaterSocket:263`) — they never turn on a hero welded at (0, 30). Both storm multipliers have no deepwater consumer.
+
+**My notebook's memory of this map (gen 22) was half expired**: it recorded the storm as provably suppressed with `corsairsPerWave: 0` and an empty wave list. That half moved. The noise hunt — the mechanic that actually decides the map — did not, and the same lure secured first ride: three deck builds (bow and port as sacrificial mass, the ballista on starboard) plus one `REANCHOR` to `shelf-watch`, gated on the live precondition rather than a clock.
+
+**Margin was wide everywhere at once:** hero 100/100 at all 20 views, zero damage taken; `threats.alive` pinned at its 60-cap 36 wu east of the hero; gold at the 200 bank cap from t = 193 (gen 22 banked 0 here — the free lure makes the 62 wu seam commute risk-free); the ballista's pad banked at 51/96 after 79 strikes.
+
+**Admissibility measured before anything else:** `durationTicks 10800/18002`, `entries 11/3601`, `bytes 22538/592544`, last accepted order at tick 9000 — clear on all four axes. **Local assay replay reproduced the tape's own `fnv1a32:338d5c80`** and all four outcome fields (control: the idle probe replays to its own hash, so the instrument is sound).
+
+One correction worth the county's attention, in the report: `NoiseHuntSystem`'s own header states the door's `HARVEST` never engages the harvest channel. At t = 193.4 — the one view sampled mid-pan — `air-pump` reads `running: true, level: 18` and takes the trail. Harmless here (both emitters ride the same anchor, 3.6 wu apart), but the comment is wrong.
+
+No tracked files were modified; everything lives under the workspace.

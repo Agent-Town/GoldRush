@@ -1,0 +1,53 @@
+{
+  "wave": "THE ARK PLAZA (E10)",
+  "baseSha": "d944dc7ebd690141d52f363d38aa6dc1a83f4343",
+  "production": {
+    "blend": "assets/pilots/ark-plaza-e10-3d/ark-plaza-e10.blend",
+    "glb": "assets/pilots/ark-plaza-e10-3d/ark-plaza-e10.glb",
+    "triangles": 19676,
+    "triangleBudget": 20000,
+    "meshTree": [
+      "ArkPlazaE10"
+    ],
+    "materials": 1,
+    "atlas": [
+      2048,
+      2048
+    ],
+    "lights": 0,
+    "cameras": 0,
+    "origin": "base-center; deck top y=0 after GLTF Y-up conversion"
+  },
+  "design": {
+    "target": "a working Generation Ark plaza where ten subdued era decks converge on the Pan Monument's final fountain in ship-light",
+    "heritageMount": "Pan Monument remains a separate unchanged GLB at [0,0,0]; the plate supplies its fountain",
+    "lineageDecks": 10,
+    "northPortal": "Long Table hall",
+    "southPortal": "world-window bridge",
+    "antiResortGrit": [
+      "exposed service runs",
+      "patched deck plates",
+      "rivets",
+      "open airlock breaks"
+    ]
+  },
+  "flatWalk": {
+    "law": "all inherited town walk loops remain within +/-0.05; relief beyond 0.05 lives outside the actor surface",
+    "sampleCount": 1116,
+    "minimum": 0.0,
+    "maximum": 0.018,
+    "maxAbs": 0.018,
+    "limit": 0.05,
+    "centerFloor": 0.0,
+    "eraInlayHeight": 0.018
+  },
+  "sources": {
+    "assets/pilots/town-plate-3d/build_town_plate.py": "d46c3799bf395387ac62c22074fa9bc5b2cc2c0be9549c8382ca4395b4e286ce",
+    "src/town/townLayout.ts": "6d000feac3c0e2e14051f287205e5450b3b701bec4c44e513613a34ea39017d0",
+    "assets/raw/kit-the-ark.png": "462ad2e6a2e687111bf137aff5811ea639661f16be320e09fcc60033196d3475",
+    "assets/raw/kit-era-10.png": "19f79418c8e9aa8bbee493c8fc9c88d8d5364ce21576d8fd5f05304eee80614b",
+    "assets/raw/plate-e10-pan-shrine.png": "fa388fd06fea386bd51d14d643aa881ffd1323c7feca61e231218bec015c3236",
+    "assets/raw/plate-e10-long-table.png": "b5349ca7ee9405304bfd56101d887bb90024a3c693bbc788f299a9dd0caf1abf",
+    "specs/epoch-saga/e10-deepsky-bundle.md": "9d10bbd7b9591d56870f6f483b06488e3c0c1e64a7438dbf2fa7ea72f96bf493"
+  }
+}

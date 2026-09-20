@@ -1,0 +1,6567 @@
+{
+  "version": 2,
+  "id": "agent-47c581e1-f2b91c15-2abf-4f2f-88de-e7e93098ef99",
+  "createdAt": 0,
+  "kept": true,
+  "contract": "e2-trestle",
+  "seed": "e2-trestle-01",
+  "difficulty": "trail",
+  "simVersion": 1,
+  "meta": {
+    "buildId": "5e7a7c0ba",
+    "engineHash": "a607a81f44e10dc2b2262682c1e116c15917edffeeaa0c5909f383ccea5d8e04",
+    "era": 5,
+    "viewVersion": 1
+  },
+  "runStart": {
+    "meta": {
+      "version": 1,
+      "tracks": {
+        "territory": 0,
+        "science": 0,
+        "hero": 0,
+        "agent": 0
+      }
+    },
+    "research": {
+      "version": 1,
+      "epochId": "epoch-1-frontier",
+      "metaScienceCursor": 0,
+      "progress": {
+        "version": 1,
+        "tracks": {
+          "territory": 0,
+          "science": 0,
+          "hero": 0,
+          "agent": 0
+        }
+      },
+      "taken": [],
+      "proposalSalt": 0,
+      "pinnedTarget": null,
+      "unlocks": {}
+    }
+  },
+  "inputLog": {
+    "version": 1,
+    "name": "agent-47c581e1",
+    "contractId": "e2-trestle",
+    "seed": "e2-trestle-01",
+    "difficultyPreset": "trail",
+    "stepSeconds": 0.03333333333333333,
+    "start": {
+      "x": 12,
+      "z": -12
+    },
+    "durationTicks": 17532,
+    "entries": [
+      {
+        "t": 0,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 16,
+                  "z": -12
+                },
+                "when": {
+                  "goldGte": 50
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 6,
+                  "z": -12
+                },
+                "when": {
+                  "goldGte": 70
+                }
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 12
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 188,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 16,
+                  "z": -12
+                },
+                "when": {
+                  "goldGte": 50
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 6,
+                  "z": -12
+                },
+                "when": {
+                  "goldGte": 70
+                }
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 27
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 281,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 16,
+                  "z": -12
+                },
+                "when": {
+                  "goldGte": 50
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 6,
+                  "z": -12
+                },
+                "when": {
+                  "goldGte": 70
+                }
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 31.5,
+                  "z": 20
+                },
+                "when": {
+                  "goldGte": 42
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 24,
+                  "z": 20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 622,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 16,
+                  "z": -12
+                },
+                "when": {
+                  "goldGte": 50
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 6,
+                  "z": -12
+                },
+                "when": {
+                  "goldGte": 70
+                }
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 31.5,
+                  "z": 20
+                },
+                "when": {
+                  "goldGte": 57
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 24,
+                  "z": 20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 1286,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 6,
+                  "z": -12
+                },
+                "when": {
+                  "goldGte": 70
+                }
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 22
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 1768,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 6,
+                  "z": -12
+                },
+                "when": {
+                  "goldGte": 70
+                }
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 37
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 1861,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 6,
+                  "z": -12
+                },
+                "when": {
+                  "goldGte": 70
+                }
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 52
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 2251,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 6,
+                  "z": -12
+                },
+                "when": {
+                  "goldGte": 70
+                }
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 67
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 2572,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 15,
+                  "z": -9
+                },
+                "when": {
+                  "goldGte": 25
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 9,
+                  "z": -15
+                },
+                "when": {
+                  "goldGte": 35
+                }
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 17
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 2655,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 15,
+                  "z": -9
+                },
+                "when": {
+                  "goldGte": 25
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 9,
+                  "z": -15
+                },
+                "when": {
+                  "goldGte": 35
+                }
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 30
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 3858,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 9,
+                  "z": -15
+                },
+                "when": {
+                  "goldGte": 35
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 12,
+                  "z": -18
+                },
+                "when": {
+                  "goldGte": 95
+                }
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 17
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 3963,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "heavy_spark"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 9,
+                  "z": -15
+                },
+                "when": {
+                  "goldGte": 35
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 12,
+                  "z": -18
+                },
+                "when": {
+                  "goldGte": 95
+                }
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 17
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 4073,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "heavy_spark"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 9,
+                  "z": -15
+                },
+                "when": {
+                  "goldGte": 35
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 12,
+                  "z": -18
+                },
+                "when": {
+                  "goldGte": 95
+                }
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 17
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 4249,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 9,
+                  "z": -15
+                },
+                "when": {
+                  "goldGte": 35
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 12,
+                  "z": -18
+                },
+                "when": {
+                  "goldGte": 95
+                }
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 32
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 4320,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "heavy_spark"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 9,
+                  "z": -15
+                },
+                "when": {
+                  "goldGte": 35
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 12,
+                  "z": -18
+                },
+                "when": {
+                  "goldGte": 95
+                }
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 35
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 4689,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "tinkers_plating"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 12,
+                  "z": -18
+                },
+                "when": {
+                  "goldGte": 95
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 12,
+                  "z": -8
+                },
+                "when": {
+                  "goldGte": 125
+                }
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -31.5,
+                  "z": 20
+                },
+                "when": {
+                  "goldGte": 12
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -24,
+                  "z": 20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 5031,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 12,
+                  "z": -18
+                },
+                "when": {
+                  "goldGte": 95
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 12,
+                  "z": -8
+                },
+                "when": {
+                  "goldGte": 125
+                }
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 27
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 5143,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 12,
+                  "z": -18
+                },
+                "when": {
+                  "goldGte": 95
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 12,
+                  "z": -8
+                },
+                "when": {
+                  "goldGte": 125
+                }
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 27
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 5188,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "prospectors_luck"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 12,
+                  "z": -18
+                },
+                "when": {
+                  "goldGte": 95
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 12,
+                  "z": -8
+                },
+                "when": {
+                  "goldGte": 125
+                }
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 27
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 5559,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "tinkers_plating"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 12,
+                  "z": -18
+                },
+                "when": {
+                  "goldGte": 95
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 12,
+                  "z": -8
+                },
+                "when": {
+                  "goldGte": 125
+                }
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 47
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 5653,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 12,
+                  "z": -18
+                },
+                "when": {
+                  "goldGte": 95
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 12,
+                  "z": -8
+                },
+                "when": {
+                  "goldGte": 125
+                }
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 55
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 5658,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 12,
+                  "z": -18
+                },
+                "when": {
+                  "goldGte": 95
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 12,
+                  "z": -8
+                },
+                "when": {
+                  "goldGte": 125
+                }
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 31.5,
+                  "z": 20
+                },
+                "when": {
+                  "goldGte": 67
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 24,
+                  "z": 20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 5999,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 12,
+                  "z": -18
+                },
+                "when": {
+                  "goldGte": 95
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 12,
+                  "z": -8
+                },
+                "when": {
+                  "goldGte": 125
+                }
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 31.5,
+                  "z": 20
+                },
+                "when": {
+                  "goldGte": 82
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 24,
+                  "z": 20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 6010,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "split_spark"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 12,
+                  "z": -18
+                },
+                "when": {
+                  "goldGte": 95
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 12,
+                  "z": -8
+                },
+                "when": {
+                  "goldGte": 125
+                }
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 31.5,
+                  "z": 20
+                },
+                "when": {
+                  "goldGte": 87
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 24,
+                  "z": 20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 6101,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 12,
+                  "z": -18
+                },
+                "when": {
+                  "goldGte": 95
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 12,
+                  "z": -8
+                },
+                "when": {
+                  "goldGte": 125
+                }
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 31.5,
+                  "z": 20
+                },
+                "when": {
+                  "goldGte": 95
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 24,
+                  "z": 20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 6429,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 12,
+                  "z": -8
+                },
+                "when": {
+                  "goldGte": 125
+                }
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 12
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 6619,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "powder_charge"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 12,
+                  "z": -8
+                },
+                "when": {
+                  "goldGte": 125
+                }
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 12
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 6831,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 12,
+                  "z": -8
+                },
+                "when": {
+                  "goldGte": 125
+                }
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 27
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 6924,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 12,
+                  "z": -8
+                },
+                "when": {
+                  "goldGte": 125
+                }
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 40
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 6972,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 12,
+                  "z": -8
+                },
+                "when": {
+                  "goldGte": 125
+                }
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 52
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 7017,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "tinkers_plating"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 12,
+                  "z": -8
+                },
+                "when": {
+                  "goldGte": 125
+                }
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 52
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 7705,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "beacon_dynamo"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 12,
+                  "z": -8
+                },
+                "when": {
+                  "goldGte": 125
+                }
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 31.5,
+                  "z": 20
+                },
+                "when": {
+                  "goldGte": 92
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 24,
+                  "z": 20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 7715,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 12,
+                  "z": -8
+                },
+                "when": {
+                  "goldGte": 125
+                }
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 31.5,
+                  "z": 20
+                },
+                "when": {
+                  "goldGte": 92
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 24,
+                  "z": 20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 8047,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 12,
+                  "z": -8
+                },
+                "when": {
+                  "goldGte": 125
+                }
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 107
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 8199,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "powder_charge"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 12,
+                  "z": -8
+                },
+                "when": {
+                  "goldGte": 125
+                }
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 107
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 8528,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 12,
+                  "z": -8
+                },
+                "when": {
+                  "goldGte": 125
+                }
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 122
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 8870,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "split_spark"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 15,
+                  "z": -15
+                },
+                "when": {
+                  "goldGte": 45
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 9,
+                  "z": -9
+                },
+                "when": {
+                  "goldGte": 55
+                }
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 9000,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 15,
+                  "z": -15
+                },
+                "when": {
+                  "goldGte": 45
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 9,
+                  "z": -9
+                },
+                "when": {
+                  "goldGte": 55
+                }
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 9067,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 15,
+                  "z": -15
+                },
+                "when": {
+                  "goldGte": 45
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 9,
+                  "z": -9
+                },
+                "when": {
+                  "goldGte": 55
+                }
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -31.5,
+                  "z": 20
+                },
+                "when": {
+                  "goldGte": 22
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -24,
+                  "z": 20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 9398,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "quick_fuse"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 15,
+                  "z": -15
+                },
+                "when": {
+                  "goldGte": 45
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 9,
+                  "z": -9
+                },
+                "when": {
+                  "goldGte": 55
+                }
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -31.5,
+                  "z": 20
+                },
+                "when": {
+                  "goldGte": 32
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -24,
+                  "z": 20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 9462,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 15,
+                  "z": -15
+                },
+                "when": {
+                  "goldGte": 45
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 9,
+                  "z": -9
+                },
+                "when": {
+                  "goldGte": 55
+                }
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 31.5,
+                  "z": 20
+                },
+                "when": {
+                  "goldGte": 47
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 24,
+                  "z": 20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 10094,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "wide_ring"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 9,
+                  "z": -9
+                },
+                "when": {
+                  "goldGte": 55
+                }
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 12
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 10286,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 9,
+                  "z": -9
+                },
+                "when": {
+                  "goldGte": 55
+                }
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 12
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 10683,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "wide_ring"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 9,
+                  "z": -9
+                },
+                "when": {
+                  "goldGte": 55
+                }
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 40
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 11320,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "beacon_dynamo"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 9,
+                  "z": -9
+                },
+                "when": {
+                  "goldGte": 55
+                }
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 52
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 11572,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 9,
+                  "z": -9
+                },
+                "when": {
+                  "goldGte": 55
+                }
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 52
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 11887,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "double_tap_coil"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 12
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 12589,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "prospectors_luck"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 37
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 12858,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 37
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 13276,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "double_tap_coil"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 75
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 13282,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -31.5,
+                  "z": 20
+                },
+                "when": {
+                  "goldGte": 87
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -24,
+                  "z": 20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 13337,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -31.5,
+                  "z": 20
+                },
+                "when": {
+                  "goldGte": 87
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -24,
+                  "z": 20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 13338,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -31.5,
+                  "z": 20
+                },
+                "when": {
+                  "goldGte": 87
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -24,
+                  "z": 20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 13356,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -31.5,
+                  "z": 20
+                },
+                "when": {
+                  "goldGte": 87
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -24,
+                  "z": 20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 14010,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 99
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 14143,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 99
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 14293,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "double_tap_coil"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 99
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 14491,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 114
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 14584,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 129
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 14632,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 137
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 14644,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 137
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 14671,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 137
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 14906,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "quick_fuse"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 119
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 14912,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 31.5,
+                  "z": 20
+                },
+                "when": {
+                  "goldGte": 131
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 24,
+                  "z": 20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 15253,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 146
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 15429,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 146
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 15655,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 151
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 15656,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 151
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 15674,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 151
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 15675,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 151
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 15678,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 151
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 15681,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 151
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 15710,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 151
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 15711,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 151
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 15712,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 151
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 15714,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 151
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 15723,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 151
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 15725,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 151
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 15727,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 151
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 15730,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 151
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 15736,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 151
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 15750,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 151
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 15757,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 151
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 15771,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 151
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 15775,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 151
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 15776,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 151
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 15792,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 151
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 15804,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 151
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 15812,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 151
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 15877,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "spring_heels"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 151
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 15920,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 144
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 15925,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 144
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 15952,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 137
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 15959,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 137
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 15980,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 130
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 15981,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 130
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 15997,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 123
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 16021,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 123
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 16159,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 107
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 16186,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 107
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 16371,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 86
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 16398,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 86
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 16443,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 86
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 16544,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 72
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 16608,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 58
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 16635,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 58
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 16707,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 44
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 16715,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 44
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 16745,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 31
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 16802,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 13
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 16828,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 13
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 16854,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 13
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 16954,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 13
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 16975,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 13
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 16979,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 13
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 17008,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "spring_heels"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 13
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 17021,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 13
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 17171,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 13
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 17175,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 13
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 17180,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 13
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 17257,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 13
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 17427,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 40
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -31.5,
+                  "z": -20
+                },
+                "when": {
+                  "goldGte": 13
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -24,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "truncated": null,
+    "primarySlot": 0,
+    "streams": []
+  },
+  "eventLogHash": "fnv1a32:d060efb2",
+  "outcome": {
+    "reason": "death",
+    "secured": false,
+    "waves": 13,
+    "timeAlive": 584.4,
+    "gold": 1
+  }
+}

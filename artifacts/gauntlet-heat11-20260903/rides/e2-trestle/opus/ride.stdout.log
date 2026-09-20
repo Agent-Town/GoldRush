@@ -1,0 +1,24 @@
+Everything is written. Ride complete.
+
+## Result: NOT SECURED — with a structural finding that decides the contract
+
+**`e2-trestle` cannot be secured by surviving to its secure wave.** `HeadlessContractSim.ts:1095`, `autoSecureWaveForRun`, returns `Number.MAX_SAFE_INTEGER` while `twist.baron && !this.baronBeaten` — so with the wave-12 railcar alive, `maybeSecureRun` never fires, `now.pendingSecure` never appears, and `SECURE_CHOICE` is never accepted. The only door is `bossKillSecuresRun` (`:251`): all three railcar components dead, `bossRemaining === 0`.
+
+That also corrects my own generation-8 notebook entry, which recorded that the secure gate has no defeat condition. It has one on every contract declaring a baron — I read `maybeSecureRun` but not the value it reads.
+
+**Rides (6 runs, 1 scored attempt):**
+
+| run | waves | timeAlive | kills | secured |
+|---|---|---|---|---|
+| idle probe | 1 | 65.5 s | 22 | no |
+| v1 ×3 (identical, `fnv1a32:e6ab6e1f`) | 12 | 532.0 s | 580 | no |
+| v2 tune | 13 | 568.5 s | 653 | no |
+| **attempt 1 (v3)** | **13** | **571.733 s** | 646 | no |
+
+Scored attempt tape: `attempt-1-tape.json`, `eventLogHash fnv1a32:bc6eaac7`. **Nothing to submit** — unsecured runs are not standings.
+
+The progression is worth reading: v1 built the textbook fort on the stake and only one of its four turrets was inside 16 wu of the railcar's fixed line at x = 0. v2 moved the turrets onto the rail shoulder and rode deeper, but a phase-gated ladder stalled forever on one unplaceable slot at (9,−13) — it fought the whole contract on three turrets. v3 made the ladder failure-tolerant and landed the full fort (4 turrets, 6 beacons, hero untouched at 175/175 into wave 11) — and moved the result three seconds, because survival was never the thing that ends this run.
+
+**Winnability:** undecided, and the wall is boss damage in the map, not the grammar or the economy. Survival is solved and gold is in surplus; four capped turrets and six capped beacons do not finish an `hpScale: 12.5` three-component railcar during the dozen-odd seconds it spends in range. I did not spend the second attempt — an identical retry could not close a gap I could name, and the wall was closing.
+
+**Vent-or-boom, third E2 contract running:** published in full (`pressure_generation`, `pressure_bands`, `pressure_auto_vent`, four `pressure_powers`), coal owned by the map at ~29 wu — and `now` carries no pressure value, no band, no coal count, and the grammar has no vent verb.

@@ -1,0 +1,1646 @@
+{
+  "contract": "e8-mare-claim",
+  "seed": "e8-mare-claim-01",
+  "tape": "artifacts/gauntlet-heat12-20260905/rides/e8-mare-claim/work/attempt-1-tape.json",
+  "reproducedTape": false,
+  "replayRefusal": "the run ended before tick 2701 of the order stream",
+  "tapeEventLogHash": "fnv1a32:f84d1d2b",
+  "replayEventLogHash": null,
+  "outcome": {
+    "secured": false,
+    "waves": 2,
+    "gold": 45,
+    "timeAlive": 80.033
+  },
+  "shelters": [
+    {
+      "id": "dome-cluster-pad-west",
+      "minX": -24,
+      "maxX": -12,
+      "minZ": -6,
+      "maxZ": 6
+    },
+    {
+      "id": "dome-cluster-pad-center",
+      "minX": -6,
+      "maxX": 6,
+      "minZ": -6,
+      "maxZ": 6
+    },
+    {
+      "id": "dome-cluster-pad-east",
+      "minX": 12,
+      "maxX": 24,
+      "minZ": -6,
+      "maxZ": 6
+    }
+  ],
+  "sampledSeconds": 80,
+  "hero": {
+    "secondsOutsideShelter": 81,
+    "secondsInsideShelter": 0,
+    "longestUnbrokenSecondsOutside": 81,
+    "startedInside": false,
+    "distinctZones": []
+  },
+  "prospector": {
+    "secondsOutsideShelter": 81,
+    "secondsInsideShelter": 0,
+    "distinctZones": []
+  },
+  "air": {
+    "declared": true,
+    "wall": "suit-timer",
+    "suit": {
+      "body": "hero",
+      "seconds": 0,
+      "capacity": 60,
+      "refillPerSecond": 4,
+      "harmPerSecond": 5,
+      "inDome": null,
+      "empty": true,
+      "drainedTotal": 60,
+      "emptySeconds": 20.033,
+      "harmDealt": 100,
+      "harmTicks": 20
+    },
+    "domes": [
+      {
+        "id": "dome-cluster-pad-west",
+        "air": 1,
+        "breached": false,
+        "breaches": 0,
+        "siegers": 0
+      },
+      {
+        "id": "dome-cluster-pad-center",
+        "air": 1,
+        "breached": false,
+        "breaches": 0,
+        "siegers": 0
+      },
+      {
+        "id": "dome-cluster-pad-east",
+        "air": 1,
+        "breached": false,
+        "breaches": 0,
+        "siegers": 0
+      }
+    ],
+    "regolith": {
+      "grounds": 6,
+      "required": 4,
+      "worked": [
+        1
+      ],
+      "runsOnAir": 18,
+      "breathlessPans": 6,
+      "complete": false,
+      "windowWaves": 4,
+      "window": 0,
+      "creditedThisWindow": 1,
+      "windowHeldPans": 12
+    }
+  },
+  "samples": [
+    {
+      "t": 0,
+      "wave": 0,
+      "hero": {
+        "x": 0,
+        "z": 12
+      },
+      "heroHp": 100,
+      "heroShelter": null,
+      "heroZone": null,
+      "agent": {
+        "x": -1.8,
+        "z": 10.93
+      },
+      "agentShelter": null,
+      "agentZone": null,
+      "suitSeconds": 60,
+      "inDome": null
+    },
+    {
+      "t": 1,
+      "wave": 0,
+      "hero": {
+        "x": 0,
+        "z": 12
+      },
+      "heroHp": 100,
+      "heroShelter": null,
+      "heroZone": null,
+      "agent": {
+        "x": -5.52,
+        "z": 13.7
+      },
+      "agentShelter": null,
+      "agentZone": null,
+      "suitSeconds": 59,
+      "inDome": null
+    },
+    {
+      "t": 2,
+      "wave": 0,
+      "hero": {
+        "x": 0,
+        "z": 12
+      },
+      "heroHp": 100,
+      "heroShelter": null,
+      "heroZone": null,
+      "agent": {
+        "x": -9.37,
+        "z": 16.57
+      },
+      "agentShelter": null,
+      "agentZone": null,
+      "suitSeconds": 58,
+      "inDome": null
+    },
+    {
+      "t": 3,
+      "wave": 0,
+      "hero": {
+        "x": 0,
+        "z": 12
+      },
+      "heroHp": 100,
+      "heroShelter": null,
+      "heroZone": null,
+      "agent": {
+        "x": -13.21,
+        "z": 19.45
+      },
+      "agentShelter": null,
+      "agentZone": null,
+      "suitSeconds": 57,
+      "inDome": null
+    },
+    {
+      "t": 4,
+      "wave": 0,
+      "hero": {
+        "x": 0,
+        "z": 12
+      },
+      "heroHp": 100,
+      "heroShelter": null,
+      "heroZone": null,
+      "agent": {
+        "x": -17.06,
+        "z": 22.32
+      },
+      "agentShelter": null,
+      "agentZone": null,
+      "suitSeconds": 56,
+      "inDome": null
+    },
+    {
+      "t": 5,
+      "wave": 0,
+      "hero": {
+        "x": 0,
+        "z": 12
+      },
+      "heroHp": 100,
+      "heroShelter": null,
+      "heroZone": null,
+      "agent": {
+        "x": -20.91,
+        "z": 25.19
+      },
+      "agentShelter": null,
+      "agentZone": null,
+      "suitSeconds": 55,
+      "inDome": null
+    },
+    {
+      "t": 6,
+      "wave": 0,
+      "hero": {
+        "x": 0,
+        "z": 12
+      },
+      "heroHp": 100,
+      "heroShelter": null,
+      "heroZone": null,
+      "agent": {
+        "x": -19.61,
+        "z": 26.18
+      },
+      "agentShelter": null,
+      "agentZone": null,
+      "suitSeconds": 54,
+      "inDome": null
+    },
+    {
+      "t": 7,
+      "wave": 0,
+      "hero": {
+        "x": 0,
+        "z": 12
+      },
+      "heroHp": 100,
+      "heroShelter": null,
+      "heroZone": null,
+      "agent": {
+        "x": -14.82,
+        "z": 26.55
+      },
+      "agentShelter": null,
+      "agentZone": null,
+      "suitSeconds": 53,
+      "inDome": null
+    },
+    {
+      "t": 8,
+      "wave": 0,
+      "hero": {
+        "x": 0,
+        "z": 12
+      },
+      "heroHp": 100,
+      "heroShelter": null,
+      "heroZone": null,
+      "agent": {
+        "x": -10.04,
+        "z": 26.92
+      },
+      "agentShelter": null,
+      "agentZone": null,
+      "suitSeconds": 52,
+      "inDome": null
+    },
+    {
+      "t": 9,
+      "wave": 0,
+      "hero": {
+        "x": 0,
+        "z": 12
+      },
+      "heroHp": 100,
+      "heroShelter": null,
+      "heroZone": null,
+      "agent": {
+        "x": -5.25,
+        "z": 27.29
+      },
+      "agentShelter": null,
+      "agentZone": null,
+      "suitSeconds": 51,
+      "inDome": null
+    },
+    {
+      "t": 10,
+      "wave": 0,
+      "hero": {
+        "x": 0,
+        "z": 12
+      },
+      "heroHp": 100,
+      "heroShelter": null,
+      "heroZone": null,
+      "agent": {
+        "x": -0.46,
+        "z": 27.66
+      },
+      "agentShelter": null,
+      "agentZone": null,
+      "suitSeconds": 50,
+      "inDome": null
+    },
+    {
+      "t": 11,
+      "wave": 0,
+      "hero": {
+        "x": 0,
+        "z": 12
+      },
+      "heroHp": 100,
+      "heroShelter": null,
+      "heroZone": null,
+      "agent": {
+        "x": 4.32,
+        "z": 28.02
+      },
+      "agentShelter": null,
+      "agentZone": null,
+      "suitSeconds": 49,
+      "inDome": null
+    },
+    {
+      "t": 12,
+      "wave": 0,
+      "hero": {
+        "x": 0,
+        "z": 12
+      },
+      "heroHp": 100,
+      "heroShelter": null,
+      "heroZone": null,
+      "agent": {
+        "x": 9.11,
+        "z": 28.39
+      },
+      "agentShelter": null,
+      "agentZone": null,
+      "suitSeconds": 48,
+      "inDome": null
+    },
+    {
+      "t": 13,
+      "wave": 0,
+      "hero": {
+        "x": 0,
+        "z": 12
+      },
+      "heroHp": 100,
+      "heroShelter": null,
+      "heroZone": null,
+      "agent": {
+        "x": 13.89,
+        "z": 28.76
+      },
+      "agentShelter": null,
+      "agentZone": null,
+      "suitSeconds": 47,
+      "inDome": null
+    },
+    {
+      "t": 14,
+      "wave": 0,
+      "hero": {
+        "x": 0,
+        "z": 12
+      },
+      "heroHp": 100,
+      "heroShelter": null,
+      "heroZone": null,
+      "agent": {
+        "x": 18.68,
+        "z": 29.13
+      },
+      "agentShelter": null,
+      "agentZone": null,
+      "suitSeconds": 46,
+      "inDome": null
+    },
+    {
+      "t": 15,
+      "wave": 0,
+      "hero": {
+        "x": 0,
+        "z": 12
+      },
+      "heroHp": 100,
+      "heroShelter": null,
+      "heroZone": null,
+      "agent": {
+        "x": 23.47,
+        "z": 29.5
+      },
+      "agentShelter": null,
+      "agentZone": null,
+      "suitSeconds": 45,
+      "inDome": null
+    },
+    {
+      "t": 16,
+      "wave": 0,
+      "hero": {
+        "x": 0,
+        "z": 12
+      },
+      "heroHp": 100,
+      "heroShelter": null,
+      "heroZone": null,
+      "agent": {
+        "x": 28.25,
+        "z": 29.87
+      },
+      "agentShelter": null,
+      "agentZone": null,
+      "suitSeconds": 44,
+      "inDome": null
+    },
+    {
+      "t": 17,
+      "wave": 0,
+      "hero": {
+        "x": 0,
+        "z": 12
+      },
+      "heroHp": 100,
+      "heroShelter": null,
+      "heroZone": null,
+      "agent": {
+        "x": 28.11,
+        "z": 28.53
+      },
+      "agentShelter": null,
+      "agentZone": null,
+      "suitSeconds": 43,
+      "inDome": null
+    },
+    {
+      "t": 18,
+      "wave": 0,
+      "hero": {
+        "x": 0,
+        "z": 12
+      },
+      "heroHp": 100,
+      "heroShelter": null,
+      "heroZone": null,
+      "agent": {
+        "x": 24.32,
+        "z": 25.58
+      },
+      "agentShelter": null,
+      "agentZone": null,
+      "suitSeconds": 42,
+      "inDome": null
+    },
+    {
+      "t": 19,
+      "wave": 0,
+      "hero": {
+        "x": 0,
+        "z": 12
+      },
+      "heroHp": 100,
+      "heroShelter": null,
+      "heroZone": null,
+      "agent": {
+        "x": 20.53,
+        "z": 22.63
+      },
+      "agentShelter": null,
+      "agentZone": null,
+      "suitSeconds": 41,
+      "inDome": null
+    },
+    {
+      "t": 20,
+      "wave": 0,
+      "hero": {
+        "x": 0,
+        "z": 12
+      },
+      "heroHp": 100,
+      "heroShelter": null,
+      "heroZone": null,
+      "agent": {
+        "x": 16.74,
+        "z": 19.69
+      },
+      "agentShelter": null,
+      "agentZone": null,
+      "suitSeconds": 40,
+      "inDome": null
+    },
+    {
+      "t": 21,
+      "wave": 0,
+      "hero": {
+        "x": 0,
+        "z": 12
+      },
+      "heroHp": 100,
+      "heroShelter": null,
+      "heroZone": null,
+      "agent": {
+        "x": 12.95,
+        "z": 16.74
+      },
+      "agentShelter": null,
+      "agentZone": null,
+      "suitSeconds": 39,
+      "inDome": null
+    },
+    {
+      "t": 22,
+      "wave": 0,
+      "hero": {
+        "x": 0,
+        "z": 12
+      },
+      "heroHp": 100,
+      "heroShelter": null,
+      "heroZone": null,
+      "agent": {
+        "x": 9.16,
+        "z": 13.79
+      },
+      "agentShelter": null,
+      "agentZone": null,
+      "suitSeconds": 38,
+      "inDome": null
+    },
+    {
+      "t": 23,
+      "wave": 0,
+      "hero": {
+        "x": 0,
+        "z": 12
+      },
+      "heroHp": 100,
+      "heroShelter": null,
+      "heroZone": null,
+      "agent": {
+        "x": 5.37,
+        "z": 10.85
+      },
+      "agentShelter": null,
+      "agentZone": null,
+      "suitSeconds": 37,
+      "inDome": null
+    },
+    {
+      "t": 24,
+      "wave": 0,
+      "hero": {
+        "x": 0,
+        "z": 12
+      },
+      "heroHp": 100,
+      "heroShelter": null,
+      "heroZone": null,
+      "agent": {
+        "x": 1.58,
+        "z": 7.9
+      },
+      "agentShelter": null,
+      "agentZone": null,
+      "suitSeconds": 36,
+      "inDome": null
+    },
+    {
+      "t": 25,
+      "wave": 0,
+      "hero": {
+        "x": 0,
+        "z": 12
+      },
+      "heroHp": 100,
+      "heroShelter": null,
+      "heroZone": null,
+      "agent": {
+        "x": -0.69,
+        "z": 6.13
+      },
+      "agentShelter": null,
+      "agentZone": null,
+      "suitSeconds": 35,
+      "inDome": null
+    },
+    {
+      "t": 26,
+      "wave": 0,
+      "hero": {
+        "x": 0,
+        "z": 12
+      },
+      "heroHp": 100,
+      "heroShelter": null,
+      "heroZone": null,
+      "agent": {
+        "x": 3.1,
+        "z": 9.08
+      },
+      "agentShelter": null,
+      "agentZone": null,
+      "suitSeconds": 34,
+      "inDome": null
+    },
+    {
+      "t": 27,
+      "wave": 0,
+      "hero": {
+        "x": 0,
+        "z": 12
+      },
+      "heroHp": 100,
+      "heroShelter": null,
+      "heroZone": null,
+      "agent": {
+        "x": 6.89,
+        "z": 12.02
+      },
+      "agentShelter": null,
+      "agentZone": null,
+      "suitSeconds": 33,
+      "inDome": null
+    },
+    {
+      "t": 28,
+      "wave": 0,
+      "hero": {
+        "x": 0,
+        "z": 12
+      },
+      "heroHp": 100,
+      "heroShelter": null,
+      "heroZone": null,
+      "agent": {
+        "x": 10.68,
+        "z": 14.97
+      },
+      "agentShelter": null,
+      "agentZone": null,
+      "suitSeconds": 32,
+      "inDome": null
+    },
+    {
+      "t": 29,
+      "wave": 0,
+      "hero": {
+        "x": 0,
+        "z": 12
+      },
+      "heroHp": 100,
+      "heroShelter": null,
+      "heroZone": null,
+      "agent": {
+        "x": 14.47,
+        "z": 17.92
+      },
+      "agentShelter": null,
+      "agentZone": null,
+      "suitSeconds": 31,
+      "inDome": null
+    },
+    {
+      "t": 30,
+      "wave": 1,
+      "hero": {
+        "x": 0,
+        "z": 12
+      },
+      "heroHp": 100,
+      "heroShelter": null,
+      "heroZone": null,
+      "agent": {
+        "x": 18.25,
+        "z": 20.86
+      },
+      "agentShelter": null,
+      "agentZone": null,
+      "suitSeconds": 30,
+      "inDome": null
+    },
+    {
+      "t": 31,
+      "wave": 1,
+      "hero": {
+        "x": 0,
+        "z": 12
+      },
+      "heroHp": 100,
+      "heroShelter": null,
+      "heroZone": null,
+      "agent": {
+        "x": 22.04,
+        "z": 23.81
+      },
+      "agentShelter": null,
+      "agentZone": null,
+      "suitSeconds": 29,
+      "inDome": null
+    },
+    {
+      "t": 32,
+      "wave": 1,
+      "hero": {
+        "x": 0,
+        "z": 12
+      },
+      "heroHp": 100,
+      "heroShelter": null,
+      "heroZone": null,
+      "agent": {
+        "x": 25.83,
+        "z": 26.76
+      },
+      "agentShelter": null,
+      "agentZone": null,
+      "suitSeconds": 28,
+      "inDome": null
+    },
+    {
+      "t": 33,
+      "wave": 1,
+      "hero": {
+        "x": 0,
+        "z": 12
+      },
+      "heroHp": 100,
+      "heroShelter": null,
+      "heroZone": null,
+      "agent": {
+        "x": 29.62,
+        "z": 29.71
+      },
+      "agentShelter": null,
+      "agentZone": null,
+      "suitSeconds": 27,
+      "inDome": null
+    },
+    {
+      "t": 34,
+      "wave": 1,
+      "hero": {
+        "x": 0,
+        "z": 12
+      },
+      "heroHp": 100,
+      "heroShelter": null,
+      "heroZone": null,
+      "agent": {
+        "x": 26.44,
+        "z": 29.06
+      },
+      "agentShelter": null,
+      "agentZone": null,
+      "suitSeconds": 26,
+      "inDome": null
+    },
+    {
+      "t": 35,
+      "wave": 1,
+      "hero": {
+        "x": 0,
+        "z": 12
+      },
+      "heroHp": 100,
+      "heroShelter": null,
+      "heroZone": null,
+      "agent": {
+        "x": 21.8,
+        "z": 27.84
+      },
+      "agentShelter": null,
+      "agentZone": null,
+      "suitSeconds": 25,
+      "inDome": null
+    },
+    {
+      "t": 36,
+      "wave": 1,
+      "hero": {
+        "x": 0,
+        "z": 12
+      },
+      "heroHp": 100,
+      "heroShelter": null,
+      "heroZone": null,
+      "agent": {
+        "x": 17.16,
+        "z": 26.62
+      },
+      "agentShelter": null,
+      "agentZone": null,
+      "suitSeconds": 24,
+      "inDome": null
+    },
+    {
+      "t": 37,
+      "wave": 1,
+      "hero": {
+        "x": 0,
+        "z": 12
+      },
+      "heroHp": 100,
+      "heroShelter": null,
+      "heroZone": null,
+      "agent": {
+        "x": 12.52,
+        "z": 25.4
+      },
+      "agentShelter": null,
+      "agentZone": null,
+      "suitSeconds": 23,
+      "inDome": null
+    },
+    {
+      "t": 38,
+      "wave": 1,
+      "hero": {
+        "x": 0,
+        "z": 12
+      },
+      "heroHp": 100,
+      "heroShelter": null,
+      "heroZone": null,
+      "agent": {
+        "x": 7.87,
+        "z": 24.18
+      },
+      "agentShelter": null,
+      "agentZone": null,
+      "suitSeconds": 22,
+      "inDome": null
+    },
+    {
+      "t": 39,
+      "wave": 1,
+      "hero": {
+        "x": 0,
+        "z": 12
+      },
+      "heroHp": 100,
+      "heroShelter": null,
+      "heroZone": null,
+      "agent": {
+        "x": 3.23,
+        "z": 22.96
+      },
+      "agentShelter": null,
+      "agentZone": null,
+      "suitSeconds": 21,
+      "inDome": null
+    },
+    {
+      "t": 40,
+      "wave": 1,
+      "hero": {
+        "x": 0,
+        "z": 12
+      },
+      "heroHp": 100,
+      "heroShelter": null,
+      "heroZone": null,
+      "agent": {
+        "x": -1.41,
+        "z": 21.73
+      },
+      "agentShelter": null,
+      "agentZone": null,
+      "suitSeconds": 20,
+      "inDome": null
+    },
+    {
+      "t": 41,
+      "wave": 1,
+      "hero": {
+        "x": 0,
+        "z": 12
+      },
+      "heroHp": 100,
+      "heroShelter": null,
+      "heroZone": null,
+      "agent": {
+        "x": -6.05,
+        "z": 20.51
+      },
+      "agentShelter": null,
+      "agentZone": null,
+      "suitSeconds": 19,
+      "inDome": null
+    },
+    {
+      "t": 42,
+      "wave": 1,
+      "hero": {
+        "x": 0,
+        "z": 12
+      },
+      "heroHp": 100,
+      "heroShelter": null,
+      "heroZone": null,
+      "agent": {
+        "x": -6.89,
+        "z": 18.06
+      },
+      "agentShelter": null,
+      "agentZone": null,
+      "suitSeconds": 18,
+      "inDome": null
+    },
+    {
+      "t": 43,
+      "wave": 1,
+      "hero": {
+        "x": 0,
+        "z": 12
+      },
+      "heroHp": 100,
+      "heroShelter": null,
+      "heroZone": null,
+      "agent": {
+        "x": -4.51,
+        "z": 13.89
+      },
+      "agentShelter": null,
+      "agentZone": null,
+      "suitSeconds": 17,
+      "inDome": null
+    },
+    {
+      "t": 44,
+      "wave": 1,
+      "hero": {
+        "x": 0,
+        "z": 12
+      },
+      "heroHp": 100,
+      "heroShelter": null,
+      "heroZone": null,
+      "agent": {
+        "x": -3.55,
+        "z": 12.22
+      },
+      "agentShelter": null,
+      "agentZone": null,
+      "suitSeconds": 16,
+      "inDome": null
+    },
+    {
+      "t": 45,
+      "wave": 1,
+      "hero": {
+        "x": 0,
+        "z": 12
+      },
+      "heroHp": 100,
+      "heroShelter": null,
+      "heroZone": null,
+      "agent": {
+        "x": -5.94,
+        "z": 16.39
+      },
+      "agentShelter": null,
+      "agentZone": null,
+      "suitSeconds": 15,
+      "inDome": null
+    },
+    {
+      "t": 46,
+      "wave": 1,
+      "hero": {
+        "x": 0,
+        "z": 12
+      },
+      "heroHp": 100,
+      "heroShelter": null,
+      "heroZone": null,
+      "agent": {
+        "x": -8,
+        "z": 20
+      },
+      "agentShelter": null,
+      "agentZone": null,
+      "suitSeconds": 14,
+      "inDome": null
+    },
+    {
+      "t": 47,
+      "wave": 1,
+      "hero": {
+        "x": 0,
+        "z": 12
+      },
+      "heroHp": 100,
+      "heroShelter": null,
+      "heroZone": null,
+      "agent": {
+        "x": -5.36,
+        "z": 16.38
+      },
+      "agentShelter": null,
+      "agentZone": null,
+      "suitSeconds": 13,
+      "inDome": null
+    },
+    {
+      "t": 48,
+      "wave": 1,
+      "hero": {
+        "x": 0,
+        "z": 12
+      },
+      "heroHp": 100,
+      "heroShelter": null,
+      "heroZone": null,
+      "agent": {
+        "x": -2.54,
+        "z": 12.49
+      },
+      "agentShelter": null,
+      "agentZone": null,
+      "suitSeconds": 12,
+      "inDome": null
+    },
+    {
+      "t": 49,
+      "wave": 1,
+      "hero": {
+        "x": 0,
+        "z": 12
+      },
+      "heroHp": 100,
+      "heroShelter": null,
+      "heroZone": null,
+      "agent": {
+        "x": 0,
+        "z": 9
+      },
+      "agentShelter": null,
+      "agentZone": null,
+      "suitSeconds": 11,
+      "inDome": null
+    },
+    {
+      "t": 50,
+      "wave": 1,
+      "hero": {
+        "x": 0,
+        "z": 12
+      },
+      "heroHp": 100,
+      "heroShelter": null,
+      "heroZone": null,
+      "agent": {
+        "x": 0,
+        "z": 9
+      },
+      "agentShelter": null,
+      "agentZone": null,
+      "suitSeconds": 10,
+      "inDome": null
+    },
+    {
+      "t": 51,
+      "wave": 1,
+      "hero": {
+        "x": 0,
+        "z": 12
+      },
+      "heroHp": 100,
+      "heroShelter": null,
+      "heroZone": null,
+      "agent": {
+        "x": 0,
+        "z": 9
+      },
+      "agentShelter": null,
+      "agentZone": null,
+      "suitSeconds": 9,
+      "inDome": null
+    },
+    {
+      "t": 52,
+      "wave": 1,
+      "hero": {
+        "x": 0,
+        "z": 12
+      },
+      "heroHp": 100,
+      "heroShelter": null,
+      "heroZone": null,
+      "agent": {
+        "x": 0,
+        "z": 9
+      },
+      "agentShelter": null,
+      "agentZone": null,
+      "suitSeconds": 8,
+      "inDome": null
+    },
+    {
+      "t": 53,
+      "wave": 1,
+      "hero": {
+        "x": 0,
+        "z": 12
+      },
+      "heroHp": 100,
+      "heroShelter": null,
+      "heroZone": null,
+      "agent": {
+        "x": 0,
+        "z": 9
+      },
+      "agentShelter": null,
+      "agentZone": null,
+      "suitSeconds": 7,
+      "inDome": null
+    },
+    {
+      "t": 54,
+      "wave": 1,
+      "hero": {
+        "x": 0,
+        "z": 12
+      },
+      "heroHp": 100,
+      "heroShelter": null,
+      "heroZone": null,
+      "agent": {
+        "x": 0,
+        "z": 9
+      },
+      "agentShelter": null,
+      "agentZone": null,
+      "suitSeconds": 6,
+      "inDome": null
+    },
+    {
+      "t": 55,
+      "wave": 1,
+      "hero": {
+        "x": 0,
+        "z": 12
+      },
+      "heroHp": 100,
+      "heroShelter": null,
+      "heroZone": null,
+      "agent": {
+        "x": 0,
+        "z": 9
+      },
+      "agentShelter": null,
+      "agentZone": null,
+      "suitSeconds": 5,
+      "inDome": null
+    },
+    {
+      "t": 56,
+      "wave": 1,
+      "hero": {
+        "x": 0,
+        "z": 12
+      },
+      "heroHp": 100,
+      "heroShelter": null,
+      "heroZone": null,
+      "agent": {
+        "x": 0,
+        "z": 9
+      },
+      "agentShelter": null,
+      "agentZone": null,
+      "suitSeconds": 4,
+      "inDome": null
+    },
+    {
+      "t": 57,
+      "wave": 1,
+      "hero": {
+        "x": 0,
+        "z": 12
+      },
+      "heroHp": 100,
+      "heroShelter": null,
+      "heroZone": null,
+      "agent": {
+        "x": 0,
+        "z": 9
+      },
+      "agentShelter": null,
+      "agentZone": null,
+      "suitSeconds": 3,
+      "inDome": null
+    },
+    {
+      "t": 58,
+      "wave": 1,
+      "hero": {
+        "x": 0,
+        "z": 12
+      },
+      "heroHp": 100,
+      "heroShelter": null,
+      "heroZone": null,
+      "agent": {
+        "x": 0,
+        "z": 9
+      },
+      "agentShelter": null,
+      "agentZone": null,
+      "suitSeconds": 2,
+      "inDome": null
+    },
+    {
+      "t": 59,
+      "wave": 1,
+      "hero": {
+        "x": 0,
+        "z": 12
+      },
+      "heroHp": 100,
+      "heroShelter": null,
+      "heroZone": null,
+      "agent": {
+        "x": 0,
+        "z": 9
+      },
+      "agentShelter": null,
+      "agentZone": null,
+      "suitSeconds": 1,
+      "inDome": null
+    },
+    {
+      "t": 60,
+      "wave": 1,
+      "hero": {
+        "x": 0,
+        "z": 12
+      },
+      "heroHp": 100,
+      "heroShelter": null,
+      "heroZone": null,
+      "agent": {
+        "x": 0,
+        "z": 9
+      },
+      "agentShelter": null,
+      "agentZone": null,
+      "suitSeconds": 0,
+      "inDome": null
+    },
+    {
+      "t": 61,
+      "wave": 2,
+      "hero": {
+        "x": 0,
+        "z": 12
+      },
+      "heroHp": 100,
+      "heroShelter": null,
+      "heroZone": null,
+      "agent": {
+        "x": 3.43,
+        "z": 11.88
+      },
+      "agentShelter": null,
+      "agentZone": null,
+      "suitSeconds": 0,
+      "inDome": null
+    },
+    {
+      "t": 62,
+      "wave": 2,
+      "hero": {
+        "x": 0,
+        "z": 12
+      },
+      "heroHp": 95,
+      "heroShelter": null,
+      "heroZone": null,
+      "agent": {
+        "x": 7.17,
+        "z": 14.89
+      },
+      "agentShelter": null,
+      "agentZone": null,
+      "suitSeconds": 0,
+      "inDome": null
+    },
+    {
+      "t": 63,
+      "wave": 2,
+      "hero": {
+        "x": 0,
+        "z": 12
+      },
+      "heroHp": 90,
+      "heroShelter": null,
+      "heroZone": null,
+      "agent": {
+        "x": 10.91,
+        "z": 17.9
+      },
+      "agentShelter": null,
+      "agentZone": null,
+      "suitSeconds": 0,
+      "inDome": null
+    },
+    {
+      "t": 64,
+      "wave": 2,
+      "hero": {
+        "x": 0,
+        "z": 12
+      },
+      "heroHp": 85,
+      "heroShelter": null,
+      "heroZone": null,
+      "agent": {
+        "x": 14.64,
+        "z": 20.91
+      },
+      "agentShelter": null,
+      "agentZone": null,
+      "suitSeconds": 0,
+      "inDome": null
+    },
+    {
+      "t": 65,
+      "wave": 2,
+      "hero": {
+        "x": 0,
+        "z": 12
+      },
+      "heroHp": 80,
+      "heroShelter": null,
+      "heroZone": null,
+      "agent": {
+        "x": 14.63,
+        "z": 20.89
+      },
+      "agentShelter": null,
+      "agentZone": null,
+      "suitSeconds": 0,
+      "inDome": null
+    },
+    {
+      "t": 66,
+      "wave": 2,
+      "hero": {
+        "x": 0,
+        "z": 12
+      },
+      "heroHp": 75,
+      "heroShelter": null,
+      "heroZone": null,
+      "agent": {
+        "x": 10.91,
+        "z": 17.86
+      },
+      "agentShelter": null,
+      "agentZone": null,
+      "suitSeconds": 0,
+      "inDome": null
+    },
+    {
+      "t": 67,
+      "wave": 2,
+      "hero": {
+        "x": 0,
+        "z": 12
+      },
+      "heroHp": 70,
+      "heroShelter": null,
+      "heroZone": null,
+      "agent": {
+        "x": 7.18,
+        "z": 14.84
+      },
+      "agentShelter": null,
+      "agentZone": null,
+      "suitSeconds": 0,
+      "inDome": null
+    },
+    {
+      "t": 68,
+      "wave": 2,
+      "hero": {
+        "x": 0,
+        "z": 12
+      },
+      "heroHp": 65,
+      "heroShelter": null,
+      "heroZone": null,
+      "agent": {
+        "x": 3.46,
+        "z": 11.81
+      },
+      "agentShelter": null,
+      "agentZone": null,
+      "suitSeconds": 0,
+      "inDome": null
+    },
+    {
+      "t": 69,
+      "wave": 2,
+      "hero": {
+        "x": 0,
+        "z": 12
+      },
+      "heroHp": 60,
+      "heroShelter": null,
+      "heroZone": null,
+      "agent": {
+        "x": 0,
+        "z": 9
+      },
+      "agentShelter": null,
+      "agentZone": null,
+      "suitSeconds": 0,
+      "inDome": null
+    },
+    {
+      "t": 70,
+      "wave": 2,
+      "hero": {
+        "x": 0,
+        "z": 12
+      },
+      "heroHp": 55,
+      "heroShelter": null,
+      "heroZone": null,
+      "agent": {
+        "x": 0,
+        "z": 9
+      },
+      "agentShelter": null,
+      "agentZone": null,
+      "suitSeconds": 0,
+      "inDome": null
+    },
+    {
+      "t": 71,
+      "wave": 2,
+      "hero": {
+        "x": 0,
+        "z": 12
+      },
+      "heroHp": 50,
+      "heroShelter": null,
+      "heroZone": null,
+      "agent": {
+        "x": 0,
+        "z": 9
+      },
+      "agentShelter": null,
+      "agentZone": null,
+      "suitSeconds": 0,
+      "inDome": null
+    },
+    {
+      "t": 72,
+      "wave": 2,
+      "hero": {
+        "x": 0,
+        "z": 12
+      },
+      "heroHp": 45,
+      "heroShelter": null,
+      "heroZone": null,
+      "agent": {
+        "x": 0,
+        "z": 9
+      },
+      "agentShelter": null,
+      "agentZone": null,
+      "suitSeconds": 0,
+      "inDome": null
+    },
+    {
+      "t": 73,
+      "wave": 2,
+      "hero": {
+        "x": 0,
+        "z": 12
+      },
+      "heroHp": 40,
+      "heroShelter": null,
+      "heroZone": null,
+      "agent": {
+        "x": 0,
+        "z": 9
+      },
+      "agentShelter": null,
+      "agentZone": null,
+      "suitSeconds": 0,
+      "inDome": null
+    },
+    {
+      "t": 74,
+      "wave": 2,
+      "hero": {
+        "x": 0,
+        "z": 12
+      },
+      "heroHp": 35,
+      "heroShelter": null,
+      "heroZone": null,
+      "agent": {
+        "x": 0,
+        "z": 9
+      },
+      "agentShelter": null,
+      "agentZone": null,
+      "suitSeconds": 0,
+      "inDome": null
+    },
+    {
+      "t": 75,
+      "wave": 2,
+      "hero": {
+        "x": 0,
+        "z": 12
+      },
+      "heroHp": 30,
+      "heroShelter": null,
+      "heroZone": null,
+      "agent": {
+        "x": 0,
+        "z": 9
+      },
+      "agentShelter": null,
+      "agentZone": null,
+      "suitSeconds": 0,
+      "inDome": null
+    },
+    {
+      "t": 76,
+      "wave": 2,
+      "hero": {
+        "x": 0,
+        "z": 12
+      },
+      "heroHp": 25,
+      "heroShelter": null,
+      "heroZone": null,
+      "agent": {
+        "x": 0,
+        "z": 9
+      },
+      "agentShelter": null,
+      "agentZone": null,
+      "suitSeconds": 0,
+      "inDome": null
+    },
+    {
+      "t": 77,
+      "wave": 2,
+      "hero": {
+        "x": 0,
+        "z": 12
+      },
+      "heroHp": 20,
+      "heroShelter": null,
+      "heroZone": null,
+      "agent": {
+        "x": 0,
+        "z": 9
+      },
+      "agentShelter": null,
+      "agentZone": null,
+      "suitSeconds": 0,
+      "inDome": null
+    },
+    {
+      "t": 78,
+      "wave": 2,
+      "hero": {
+        "x": 0,
+        "z": 12
+      },
+      "heroHp": 15,
+      "heroShelter": null,
+      "heroZone": null,
+      "agent": {
+        "x": 0,
+        "z": 9
+      },
+      "agentShelter": null,
+      "agentZone": null,
+      "suitSeconds": 0,
+      "inDome": null
+    },
+    {
+      "t": 79,
+      "wave": 2,
+      "hero": {
+        "x": 0,
+        "z": 12
+      },
+      "heroHp": 10,
+      "heroShelter": null,
+      "heroZone": null,
+      "agent": {
+        "x": 0,
+        "z": 9
+      },
+      "agentShelter": null,
+      "agentZone": null,
+      "suitSeconds": 0,
+      "inDome": null
+    },
+    {
+      "t": 80,
+      "wave": 2,
+      "hero": {
+        "x": 0,
+        "z": 12
+      },
+      "heroHp": 5,
+      "heroShelter": null,
+      "heroZone": null,
+      "agent": {
+        "x": 0,
+        "z": 9
+      },
+      "agentShelter": null,
+      "agentZone": null,
+      "suitSeconds": 0,
+      "inDome": null
+    }
+  ]
+}

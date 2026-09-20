@@ -1,0 +1,46 @@
+
+########## RIDE e4-long-road · seed e4-long-road-01 · gen 70 · stake open-question · wall 1500s ##########
+--- 1 charter ---
+{"rig":"opus","contract":"e4-long-road","seed":"e4-long-road-01","seedMode":"bench","stake":"open-question","generation":70,"wall":1500,"notebookSha256":"67e3558510de45d078e00141fca87acd4055abd085aac72fde7bcf5a645d36b9","charterSha256":"1e1a44b056beeed94c3cb57e92afc2cb78793f4ff3fd53bceffa18cf487f14c5","bytes":565520,"out":"/private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/rides/e4-long-road/charter.md"}
+--- 2 ride ---
+START opus claude-opus-5 pid=26934 session=c00ec3c1-3bd9-4b11-832f-9ac0bc17def0 at=2026-09-07T11:49:27.754Z
+FIRST-OUTPUT opus +60s
+OUTCOME opus secured=false waves=4 gold=0 runsSoFar=1 scored=0 +75s
+OUTCOME opus secured=false waves=4 gold=0 runsSoFar=2 scored=0 +585s
+OUTCOME opus secured=false waves=4 gold=0 runsSoFar=3 scored=0 +750s
+OUTCOME opus secured=false waves=4 gold=0 runsSoFar=4 scored=0 +870s
+OUTCOME opus secured=false waves=14 gold=0 runsSoFar=5 scored=0 +1005s
+OUTCOME opus secured=false waves=14 gold=0 runsSoFar=5 scored=1 +1185s
+END opus rc=0 signal=null wall=1265s wallHit=false
+ride-wall rc=0 signal=-
+--- 3 land ---
+
+=== 1 finish-ride ===
+{"rig":"opus","contract":"e4-long-road","wall":1265,"wallHit":false,"rc":0,"tracked":[],"files":33,"outcome":{"secured":false,"waves":14,"gold":0,"runsSoFar":5,"scoredAttempts":1,"tape":"/private/tmp/heat13-569a41f9/artifacts/heat13/opus/e4-long-road/attempt-1-tape.json","worldModel":"sim-import"},"scoredTapes":[{"file":"attempt-1-tape.json","id":"agent-a5c13c96-d557c8f3-89df-498a-a1e1-c007bebba0f9","secured":false,"waves":14,"gold":0,"durationTicks":12600,"lastEntryTick":11700,"promotedByRig":true,"discoveredBy":"outcome-file+filename"}],"otherSecured":[],"reportSections":{"outcome":1022,"whatTheMapAsked":1847,"winnability":1159,"lessons":4051},"usage":{"turns":114,"toolCalls":68,"tokensIn":228,"tokensOut":243162}}
+
+=== NOT SECURED — nothing to submit ===
+{
+ "rig": "opus",
+ "contract": "e4-long-road",
+ "wall": 1265,
+ "wallHit": false,
+ "rc": 0,
+ "scoredTapes": [
+  {
+   "file": "attempt-1-tape.json",
+   "secured": false,
+   "waves": 14,
+   "gold": 0
+  }
+ ],
+ "outcomeNote": "attempt-1-tape.json is a byte-identical copy of tune-v3.json, the same single ride, promoted by declaration."
+}
+
+land rc=0
+--- 4 notebook ---
+{"notebook":"/Users/robin/Claude/Projects/goldrush-gauntlet/memories/claude__opus-5/NOTEBOOK.md","generation":70,"headerBytes":432,"entryBytes":7954}
+--- 5 matrix ---
+| 10 | e4-long-road | `e4-long-road-01` | open-question | 70 | **not secured** | 14 | 0 | 420.000s | 1265s | `attempt-1-tape.json` · `agent-a5c13c96-d557c8f3-89df-498a-a1e1-c007bebba0f9`<br>fnv1a32:bf54242b | — | gen 70 |
+{"contract":"e4-long-road","secured":false,"tapesOnDisk":17,"scoredTapes":1,"otherSecured":0,"runs":5,"scoredAttempts":1,"wallHit":false,"rc":0,"assay":null,"ranked":null,"winnability":"**No — `e4-long-road` is not winnable through this door from its starting kit, and the wall is in the\ngrammar, not the map, the economy or my budget:** the run cannot be offered a secure at any wave until\n`now.motor.objective.arrived` (`HeadlessContractSim.ts:2354`/`:1493`), `arrived` for `kind: \"convoy\"`\ndemands `leaderDistance >= 370 − 1e-6` i.e. the lead Hauler within ~0.0005 wu of (190, 0)\n(`MotorSocket.ts:345`, `ConvoyBehavior.ts:71`), `HAUL` can only send the Hauler to the hero's own\nfloat position (`HeadlessContractSim.ts:3107`), and `MOVE_HERO` refuses (190, 0) — and (190, ±3) and\n(188.7, 0) — as `UNREACHABLE_TERRAIN` while having no arrival snap at all, so the nearest legal rest\nI could measure was (191.070, −0.355) and the latch closed 0.359 wu short and stayed there for five\nminutes; the retired `MOVE_TO`/`HOLD` steered the Prospector, whose `stepTowardTarget` assigns\n`position = target` exactly, which is precisely how generation 18 secured this same seed on 2026-09-03,\nso the cheapest cure is one clause — latch `convoy` on `MOTOR_STOP_REACH` as `haul` and `tow` already\ndo, or make the railhead walkable — and not a balance change."}
+########## END e4-long-road ##########
+

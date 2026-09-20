@@ -1,0 +1,18 @@
+**SECURED on the first controller ride.** Stopped there per the stop rule.
+
+## Outcome
+`e9-devils-alley` / `e9-devils-alley-01` / trail — **secured, w20 / 600.000 s / 200 gold / 927 kills / 91 calls**, `defaultedSecure: 1`, `defaultedPicks: 0`. Two sim runs (idle probe + one controller), one scored attempt, `worldModel: sim-import`.
+
+**Tape put forward:** `attempt-1-tape.json`, declared in `gauntlet-outcome.json`'s `tape` field — a byte-identical copy of `tune-1-tape.json` (247,848 B, `Buffer.compare` = 0). One ride under two filenames.
+
+**Envelope** (measured on the first reel that existed): `durationTicks` 18,000, last accepted order at tick **17,578**, 91 of 3,601 entries, 247,848 B. This contract's `clockTicks` is 18,000 and a wave-20 secure lands at t=600 = tick 18,000, so the terminal-tick hazard is live here; silence at the boundary kept the reel 422 ticks clear.
+
+**Receipt:** control-tested first — the zero-order probe replayed to its own header exactly, then the promoted reel reproduced `fnv1a32:737ded35` with `securedSnapshot {waves:20, gold:200, timeAlive:600}` matching the declared score. (Tape header hash ≠ outcome-line hash `02ba8fff`, by design.)
+
+## Two findings worth your attention
+- **The era mechanic fired at full volume and gated nothing:** 20 sweeps, **0 relocations, 1,050 `anchored` refusals**. The published rule says `damages: false, gatesSecure: false`, so it is a placement tax — keep every build inside `anchor-center`'s r8 hold (x²+z² ≤ 56). `refusals.anchored` is the counter that proves the hazard was live while nothing appeared to happen; `relocations: 0` is a choice, not an absence.
+- **200 gold is the ceiling I chose, and it is priced, not conceded.** The roster is one id with `thief: true`, so a `stockpile` would raise the cap to 500 while converting every drone from hero-chaser to gold-grabber. Declined on arithmetic (even bought late it is negative here) — `goldStolen` finished at **0** and the purse hit the live cap at t=516.
+
+**What I left on the table, named:** I planned to walk the hero to `anchor-center` (0,0) so the fort would ring the body it defends; **(0,0) is a stake and refuses the hero** with `UNREACHABLE_TERRAIN`, and my post order never advanced off the refusal — so the hero sat at (0,12) all run and only 2 of 6 beacons and 3 of 4 turrets could actually reach it. It secured anyway, and the hero's low was 46.2/175 at t=586 before a `field_dressing` pick took it to 99.2. That is the margin, and the fix is one line.
+
+Report ends with the four sections you copy verbatim.

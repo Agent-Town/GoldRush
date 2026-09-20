@@ -1,0 +1,55 @@
+
+########## RIDE e1-baron · seed e1-baron-01 · gen 75 · stake never-claimed · wall 1500s ##########
+--- 1 charter ---
+{"rig":"opus","contract":"e1-baron","seed":"e1-baron-01","seedMode":"bench","stake":"never-claimed","generation":75,"wall":1500,"notebookSha256":"098e47ca48105266a1c0fa8c7ea12e74366b5e4580639a5327e94bdf299fc67b","charterSha256":"9f4e3f20a7f0b00a12f20b87462ce31c04252ca6077ee9c4b6e3ab7122e3556a","bytes":613885,"out":"/private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/rides/e1-baron/charter.md"}
+--- 2 ride ---
+START opus claude-opus-5 pid=91452 session=dd4fdd6a-6f5d-4a7f-8697-99066251e4bb at=2026-09-07T13:29:58.131Z
+FIRST-OUTPUT opus +120s
+OUTCOME opus secured=false waves=5 gold=0 runsSoFar=1 scored=0 +120s
+OUTCOME opus secured=false waves=20 gold=300 runsSoFar=2 scored=0 +450s
+OUTCOME opus secured=false waves=20 gold=300 runsSoFar=3 scored=0 +645s
+OUTCOME opus secured=false waves=20 gold=260 runsSoFar=4 scored=0 +780s
+OUTCOME opus secured=false waves=20 gold=300 runsSoFar=5 scored=0 +855s
+OUTCOME opus secured=false waves=20 gold=300 runsSoFar=5 scored=1 +885s
+OUTCOME opus secured=false waves=20 gold=134 runsSoFar=6 scored=1 +1065s
+OUTCOME opus secured=false waves=23 gold=134 runsSoFar=7 scored=1 +1275s
+WALL opus 1500s reached — SIGTERM to process group 91452
+END opus rc=143 signal=null wall=1500s wallHit=true
+ride-wall rc=124 signal=-
+--- 3 land ---
+
+=== 1 finish-ride ===
+{"rig":"opus","contract":"e1-baron","wall":1500,"wallHit":true,"rc":143,"tracked":[],"files":26,"outcome":{"secured":false,"waves":23,"gold":134,"runsSoFar":7,"scoredAttempts":1,"tape":"/tmp/heat13-569a41f9/artifacts/heat13/opus/e1-baron/tune-6.json","worldModel":"sim-import"},"scoredTapes":[{"file":"attempt-1-tape.json","id":"agent-5120191d-863fc716-b852-43da-b80a-eacee4230b9c","secured":false,"waves":20,"gold":300,"durationTicks":16144,"lastEntryTick":16120,"promotedByRig":false,"discoveredBy":"filename"},{"file":"tune-6.json","id":"agent-07378b6b-d101bfc1-bf8d-4326-aea7-d8b8c074ed5b","secured":false,"waves":23,"gold":134,"durationTicks":18312,"lastEntryTick":18225,"promotedByRig":true,"discoveredBy":"outcome-file"}],"otherSecured":[],"reportSections":{"outcome":1206,"whatTheMapAsked":2382,"winnability":2262,"lessons":4819},"usage":{"turns":96,"toolCalls":48,"tokensIn":192,"tokensOut":165711}}
+
+=== NOT SECURED — nothing to submit ===
+{
+ "rig": "opus",
+ "contract": "e1-baron",
+ "wall": 1500,
+ "wallHit": true,
+ "rc": 143,
+ "scoredTapes": [
+  {
+   "file": "attempt-1-tape.json",
+   "secured": false,
+   "waves": 20,
+   "gold": 300
+  },
+  {
+   "file": "tune-6.json",
+   "secured": false,
+   "waves": 23,
+   "gold": 134
+  }
+ ],
+ "outcomeNote": null
+}
+
+land rc=0
+--- 4 notebook ---
+{"notebook":"/Users/robin/Claude/Projects/goldrush-gauntlet/memories/claude__opus-5/NOTEBOOK.md","generation":75,"headerBytes":448,"entryBytes":10385}
+--- 5 matrix ---
+| 15 | e1-baron | `e1-baron-01` | never-claimed | 75 | **not secured (WALL)** | 23 | 134 | 610.400s | 1500s ⏱ | `tune-6.json` · `agent-07378b6b-d101bfc1-bf8d-4326-aea7-d8b8c074ed5b`<br>fnv1a32:3f634159 | — | gen 75 |
+{"contract":"e1-baron","secured":false,"tapesOnDisk":23,"scoredTapes":2,"otherSecured":0,"runs":7,"scoredAttempts":1,"wallHit":true,"rc":143,"assay":null,"ranked":null,"winnability":"**Undecided-leaning-yes, and what stopped me was my own budget, not a wall in the map, the grammar or\nthe economy:** the fort is solved (wave 19 at 175/175, ten works, zero wrecked, all turrets tier 2,\n~600 dps against a ~47,900-hp boss inside a 156-second grace window, which is enough by a comfortable\nmargin), and the one thing between me and the kill is that I could not keep a 175-hp hero alive for\n80 seconds inside a 40-enemy wave — with the ride's decisive lever, `MOVE_HERO`, only found and\ndebugged on my last two runs and never combined with the palisade leash that tune-2 proved.\n\nThe load-bearing discovery, which I ran out of wall clock to exploit rather than failing to find:\n`Enemy.ts:970 shouldPursueHero` means a baron within `pursuitRange` 18 of the hero **walks the hero\nand never calls `updateWrecker` on my turrets** — it retargets only to a palisade that blocks the\nroute (`Enemy.ts:955`) — and `HeadlessContractSim.ts:2450 baronRocketMeleeSuppressed` **switches the\n3 × 18 rocket volley off entirely whenever the baron is within wreck reach of any building**. There\nis no line-of-sight term anywhere in the engine, so timber never shadows a turret. A palisade ring\noutside the guns is therefore three things at once: the missing gold sink, the baron's leash, and its\nrocket silencer — while the guns keep firing through it. tune-2 built that ring and held the hero at\n**175/175 until t = 528**, the best survival of the heat; it lost only because the ring was\ngold-starved into ~13 of 24 posts (6 orders per array, 10 g each, against a purse at 0–15 g) and the\nbaron walked through a 3.4-wu gap and landed four clean 40-damage contacts.\n\nThe run I would ride first with another hour is one edit from tune-2, and every part of it is\nmeasured rather than guessed: **the dense ring built early.** Start the ring at wave 10 rather than\n14 (so it also keeps the purse from ever capping), 32 posts at radius 13 with ~10 orders per array,\n`REPAIR_UNDER` from wave 16 only (mending is 2.5 g but the travel is ruinous to panning), and let the\ntier-2 upgrades take whatever is left. That buys a stationary, rocket-silenced boss inside the kill\nzone of four tier-2 turrets, which is the only configuration of this map in which the arithmetic\ncloses."}
+########## END e1-baron ##########
+

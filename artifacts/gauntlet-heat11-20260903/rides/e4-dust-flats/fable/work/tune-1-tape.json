@@ -1,0 +1,435 @@
+{
+  "version": 2,
+  "id": "agent-14708cb6-ea5fcb34-9c20-423c-9168-66bca32a0454",
+  "createdAt": 0,
+  "kept": true,
+  "contract": "e4-dust-flats",
+  "seed": "e4-dust-flats-01",
+  "difficulty": "trail",
+  "simVersion": 1,
+  "meta": {
+    "buildId": "b118c4d20",
+    "engineHash": "49c34f8bba3d61e003d1f421398e3835e3107945f396800fa124f946b2e4b2f9",
+    "era": 5,
+    "viewVersion": 2
+  },
+  "runStart": {
+    "meta": {
+      "version": 1,
+      "tracks": {
+        "territory": 0,
+        "science": 0,
+        "hero": 0,
+        "agent": 0
+      }
+    },
+    "research": {
+      "version": 1,
+      "epochId": "epoch-1-frontier",
+      "metaScienceCursor": 0,
+      "progress": {
+        "version": 1,
+        "tracks": {
+          "territory": 0,
+          "science": 0,
+          "hero": 0,
+          "agent": 0
+        }
+      },
+      "taken": [],
+      "proposalSalt": 0,
+      "pinnedTarget": null,
+      "unlocks": {}
+    }
+  },
+  "inputLog": {
+    "version": 1,
+    "name": "agent-14708cb6",
+    "contractId": "e4-dust-flats",
+    "seed": "e4-dust-flats-01",
+    "difficultyPreset": "trail",
+    "stepSeconds": 0.03333333333333333,
+    "start": {
+      "x": 0,
+      "z": 8
+    },
+    "durationTicks": 942,
+    "entries": [
+      {
+        "t": 0,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "BUILD",
+                "what": "sluice",
+                "where": {
+                  "x": -1.8,
+                  "z": 6.9
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -18,
+                  "z": 46
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 537,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "BUILD",
+                "what": "sluice",
+                "where": {
+                  "x": -4.2,
+                  "z": 12.4
+                },
+                "when": {
+                  "goldGte": 20
+                }
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -18,
+                  "z": 46
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 806,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "double_tap_coil"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "BUILD",
+                "what": "sluice",
+                "where": {
+                  "x": -18,
+                  "z": 46
+                },
+                "when": {
+                  "goldGte": 25
+                }
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -18,
+                  "z": 46
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 813,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 11
+                },
+                "when": {
+                  "goldGte": 25
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "GRADE"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 0,
+                  "z": -8
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 0.6,
+                  "z": -8
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 0,
+                  "z": -8
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -12,
+                  "z": -8
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -11.4,
+                  "z": -8
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -12,
+                  "z": -8
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 12,
+                  "z": -8
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 12.6,
+                  "z": -8
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 12,
+                  "z": -8
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "HAUL"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 0,
+                  "z": 72
+                }
+              },
+              {
+                "verb": "HAUL"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -18,
+                  "z": 46
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 900,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 11
+                },
+                "when": {
+                  "goldGte": 25
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "GRADE"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 0,
+                  "z": -8
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 0.6,
+                  "z": -8
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 0,
+                  "z": -8
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -12,
+                  "z": -8
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -11.4,
+                  "z": -8
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -12,
+                  "z": -8
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 12,
+                  "z": -8
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 12.6,
+                  "z": -8
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 12,
+                  "z": -8
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "HAUL"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 0,
+                  "z": 72
+                }
+              },
+              {
+                "verb": "HAUL"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -18,
+                  "z": 46
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "truncated": null,
+    "primarySlot": 0,
+    "streams": []
+  },
+  "eventLogHash": "fnv1a32:17e21020",
+  "outcome": {
+    "reason": "death",
+    "secured": false,
+    "waves": 1,
+    "timeAlive": 31.4,
+    "gold": 25
+  }
+}

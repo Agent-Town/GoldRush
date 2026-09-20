@@ -1,0 +1,48 @@
+{
+  "totalEntries": 65,
+  "refusedEntries": 64,
+  "firstRefusal": {
+    "entryIndex": 0,
+    "tick": 0,
+    "orders": 27,
+    "error": "{\"ok\":false,\"message\":\"orders[26].verb \\\"HOLD\\\" is unknown.\"}"
+  },
+  "lastRefusal": {
+    "entryIndex": 63,
+    "tick": 8989,
+    "orders": 32,
+    "error": "{\"ok\":false,\"message\":\"orders[31].verb \\\"HOLD\\\" is unknown.\"}"
+  },
+  "allRefusals": [
+    {
+      "entryIndex": 0,
+      "tick": 0,
+      "orders": 27,
+      "error": "{\"ok\":false,\"message\":\"orders[26].verb \\\"HOLD\\\" is unknown.\"}"
+    },
+    {
+      "entryIndex": 1,
+      "tick": 60,
+      "orders": 20,
+      "error": "{\"ok\":false,\"message\":\"orders[19].verb \\\"HOLD\\\" is unknown.\"}"
+    },
+    {
+      "entryIndex": 2,
+      "tick": 196,
+      "orders": 14,
+      "error": "{\"ok\":false,\"message\":\"orders[13].verb \\\"HOLD\\\" is unknown.\"}"
+    },
+    {
+      "entryIndex": 3,
+      "tick": 310,
+      "orders": 7,
+      "error": "{\"ok\":false,\"message\":\"orders[6].verb \\\"HOLD\\\" is unknown.\"}"
+    },
+    {
+      "entryIndex": 4,
+      "tick": 703,
+      "orders": 13,
+      "error": "{\"ok\":false,\"message\":\"orders[12].verb \\\"HOLD\\\" is unknown.\"}"
+    }
+  ]
+}

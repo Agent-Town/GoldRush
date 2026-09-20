@@ -1,0 +1,21 @@
+**SECURED — first secure for `e4-dust-flats`.**
+
+| | |
+|---|---|
+| Outcome | secured, wave **14**, timeAlive **437.967 s**, gold **40**, calls **50**, kills 590 |
+| Hash | `fnv1a32:f654d3f5` — reproduced bit-for-bit on the re-ride |
+| Tape | `artifacts/heat11/opus/e4-dust-flats/attempt-1-tape.json` (50 entries, era 5, engineHash `49c34f8b…`, viewVersion 2) |
+| Runs | 3 (idle probe, tune-1, scored attempt-1) · **1 scored attempt** |
+| worldModel | `sim-import` |
+
+**What decided it, read before riding:** the manifest says `secureWave: 12`, but `twist.baron` is present, and `HeadlessContractSim.ts:1181` pins `autoSecureWaveForRun` at `MAX_SAFE_INTEGER` while the Land-Yacht lives. The kill path at `:1886` then ANDs in `motor.objectiveAllowsSecure`. So the secure is **haul ∧ boss-kill**, and wave 12 is false advertising by omission.
+
+**The two spatial problems, both genuinely E4:**
+- *The errand.* A single `HAUL` to the railhead is 82.5 wu of open country at 3 fuel/s — 27.5 clear, ~39 under a storm — against a **36-fuel run total**. Staging the Hauler at the corridor stake (0,12) and `GRADE`-ing `camp-to-railhead` first made it 28.3 wu open + 60 wu at 2.5× speed / 0.4× burn ≈ 12.6 fuel. Measured: 20.677 drawn, railhead latched at t = 60.5 s, 15.3 still in the tank.
+- *The fight.* `mechanics.rules.land_yacht_orbit` publishes the boss's route in the view — centre (0,0), radius 24, 12.57 wu/s. Turret range 16 against a radius-24 orbit is closed-form: arc coverage peaks at radius **17.9**, not on the ring. Four turrets at (±13, ±13) cover ~334° of the lap. Zero of seven works were ever wrecked.
+
+**Correction for the county's ladder:** the 2026-09-02 audit note measured this contract as RESKIN. That is out of date on this build — the errand gates the secure, and the boss rides the ORBIT road. The honest qualifier is the middle: the haul finished at t = 60.5 s of a 438 s run, and waves 3–13 were ordinary stationary survival on a 42 wu commute.
+
+**Margin:** wide then hair-thin — the hero held 95/175 from wave 7 to 12, then went **71 → 7/175 in one view interval** at wave 14. The kill and the death were about six seconds apart.
+
+`gauntlet-outcome.json` was written after every run and `gauntlet-report.md` carries the four sections verbatim-ready. No tracked files touched.

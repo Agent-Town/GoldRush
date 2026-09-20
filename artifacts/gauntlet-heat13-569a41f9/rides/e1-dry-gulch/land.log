@@ -1,0 +1,61 @@
+
+=== 1 finish-ride ===
+{"rig":"opus","contract":"e1-dry-gulch","wall":794,"wallHit":false,"rc":0,"tracked":[],"files":11,"outcome":{"secured":true,"waves":20,"gold":198,"runsSoFar":2,"scoredAttempts":1,"tape":"/private/tmp/heat13-569a41f9/artifacts/heat13/opus/e1-dry-gulch/attempt-1-tape.json","worldModel":"sim-import"},"scoredTapes":[{"file":"attempt-1-tape.json","id":"agent-1747ab2c-9f162e6c-b27d-4c5a-a973-2d7545bc16b8","secured":true,"waves":20,"gold":198,"durationTicks":18000,"lastEntryTick":17100,"promotedByRig":true,"discoveredBy":"outcome-file+filename"}],"otherSecured":[{"file":"tune-1-tape.json","id":"agent-1747ab2c-9f162e6c-b27d-4c5a-a973-2d7545bc16b8","waves":20,"gold":198}],"reportSections":{"outcome":1547,"whatTheMapAsked":3181,"winnability":672,"lessons":5222},"usage":{"turns":86,"toolCalls":41,"tokensIn":172,"tokensOut":137874}}
+tape chosen: attempt-1-tape.json (id agent-1747ab2c-9f162e6c-b27d-4c5a-a973-2d7545bc16b8, promotedByRig=true, discoveredBy=outcome-file+filename)
+
+=== 2 freeze notebook header ===
+{"headerOnly":true,"headerBytes":431}
+
+=== 3 harnessDigest ===
+d2725834f77c689fa482a71ededc56ad8cb9a043b93fea417728e6c4f2474ab1
+
+=== 4 build-submission ===
+{"tapeId":"agent-1747ab2c-9f162e6c-b27d-4c5a-a973-2d7545bc16b8","contract":"e1-dry-gulch","epochId":"epoch-1-frontier","seed":"e1-dry-gulch-01","seedMode":"bench","score":{"secured":true,"waves":20,"timeAlive":600,"gold":198,"baseValue":0},"papers":{"buildId":"c3b7d06c6","engineHash":"09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4","era":5,"viewVersion":2},"durationTicks":18000,"lastEntryTick":17100,"stack":{"model":"claude-opus-5","harness":"heat13-operator","harnessVersion":"2.1.257","harnessDigest":"d2725834f77c689fa482a71ededc56ad8cb9a043b93fea417728e6c4f2474ab1","worldModel":"sim-import","config":"attended-hosted headless `claude -p` ride (heat 13, the 1:1-grammar re-ride) on Claude Code CLI 2.1.257; charter + door manual + own notebook (self-memory); own controller authored in-ride","calls":53,"tokensIn":32401649,"tokensOut":137874}}
+
+=== 5 publish (POST → poll → WATCH) ===
+FAILED: file:///private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/publish-submission.mjs:37
+if (slip?.assay !== 'verified') throw new Error(`assay ${slip?.assay ?? 'missing'}: ${slip?.assayReason ?? 'no reason'}`);
+                                      ^
+
+Error: assay pending: no reason
+    at file:///private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/publish-submission.mjs:37:39
+
+Node.js v23.11.1
+
+POST ok; assay still pending at the 120 s mark — resuming with the poll-only shim (no re-POST)
+
+=== 6 poll-verdict (no re-POST) ===
+{"tapeId":"agent-1747ab2c-9f162e6c-b27d-4c5a-a973-2d7545bc16b8","assay":"verified","assayHash":"fnv1a32:e490fcd5","ranked":true,"papers":{"buildId":"c3b7d06c6","engineHash":"09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4","era":5,"viewVersion":2}}
+
+=== LANDED ===
+{
+ "rig": "opus",
+ "contract": "e1-dry-gulch",
+ "tapeFile": "attempt-1-tape.json",
+ "tapeId": "agent-1747ab2c-9f162e6c-b27d-4c5a-a973-2d7545bc16b8",
+ "assay": "verified",
+ "assayHash": "fnv1a32:e490fcd5",
+ "ranked": true,
+ "rank": 1,
+ "waves": 20,
+ "gold": 198,
+ "calls": 53,
+ "eventLogHash": "fnv1a32:5a6ea965",
+ "wall": 794,
+ "harnessDigest": "d2725834f77c689fa482a71ededc56ad8cb9a043b93fea417728e6c4f2474ab1",
+ "usage": {
+  "turns": 86,
+  "toolCalls": 41,
+  "tokensIn": 32401649,
+  "tokensOut": 137874
+ }
+}
+file:///private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/publish-submission.mjs:37
+if (slip?.assay !== 'verified') throw new Error(`assay ${slip?.assay ?? 'missing'}: ${slip?.assayReason ?? 'no reason'}`);
+                                      ^
+
+Error: assay pending: no reason
+    at file:///private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/publish-submission.mjs:37:39
+
+Node.js v23.11.1
+fetch retry 1: ECONNRESET

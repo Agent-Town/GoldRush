@@ -1,0 +1,62 @@
+{
+  "at": "2026-09-08T20:09:38.188583+00:00",
+  "scope": "Exact numeric values from the recorded failed original tests match the early and settled states on unchanged final E5. Both settled snapshot pairs pass; this supplemental diagnostic does not convert the original failed tests into passes.",
+  "cases": [
+    {
+      "file": "e1-dry-gulch.spec.ts",
+      "early": {
+        "heroStart": 0.03282685093848995,
+        "river": -0.11125009752425308,
+        "ford": -0.11627637291397969,
+        "nearBank": -0.18,
+        "farBank": 0.28454854437802024
+      },
+      "settled": {
+        "heroStart": 0.3227446377277374,
+        "river": 0.32766586542129517,
+        "ford": 0.3357805013656616,
+        "nearBank": 0.490425169467926,
+        "farBank": 0.4995045065879822
+      },
+      "failedDiffValues": {
+        "heroStart": [
+          0.03282685093848995,
+          0.3227446377277374
+        ],
+        "river": [
+          -0.11125009752425308,
+          0.32766586542129517
+        ],
+        "ford": [
+          -0.11627637291397969,
+          0.3357805013656616
+        ],
+        "nearBank": [
+          -0.18,
+          0.490425169467926
+        ],
+        "farBank": [
+          0.28454854437802024,
+          0.4995045065879822
+        ]
+      },
+      "allFailureValuesMatchLoadingTransition": true
+    },
+    {
+      "file": "e1-twin-banks.spec.ts",
+      "early": {
+        "y": 0.07178324562509593
+      },
+      "settled": {
+        "y": 0.3672938919067383
+      },
+      "failedDiffValues": {
+        "y": [
+          0.07178324562509593,
+          0.3672938919067383
+        ]
+      },
+      "allFailureValuesMatchLoadingTransition": true
+    }
+  ]
+}

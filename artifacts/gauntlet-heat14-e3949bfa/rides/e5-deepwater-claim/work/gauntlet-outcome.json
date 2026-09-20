@@ -1,0 +1,47 @@
+{
+  "secured": true,
+  "waves": 12,
+  "timeMs": 272000,
+  "gold": 200,
+  "kills": 4,
+  "calls": 22,
+  "defaultedPicks": 0,
+  "defaultedSecure": 1,
+  "eventLogHash": "fnv1a32:9be76ab1",
+
+  "tape": "/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/heat14/opus/e5-deepwater-claim/attempt-1-tape.json",
+  "scored": true,
+  "runsSoFar": 2,
+  "scoredAttempts": 1,
+  "worldModel": "sim-import",
+
+  "note": "ONE RIDE UNDER TWO FILENAMES. The first controller (ctrl-v1) secured, and the stop rule ends the heat at the first SECURED outcome, so tune-1-tape.json was promoted by name; attempt-1-tape.json is a byte-identical copy of it. The operator reads this `tape` field, never the filename.",
+
+  "envelope": {
+    "durationTicks": 8160,
+    "lastEntryTick": 7441,
+    "ticksOfSlack": 719,
+    "entries": 22,
+    "entriesCap": 3601,
+    "bytes": 60203,
+    "note": "all three axes measured off the first reel that existed; comfortable on each"
+  },
+
+  "receipt": {
+    "localAssay": "verified",
+    "replayEventLogHash": "fnv1a32:217967af",
+    "tapeHeaderHash": "fnv1a32:217967af",
+    "stdoutOutcomeHash": "fnv1a32:9be76ab1",
+    "securedSnapshot": { "waves": 12, "gold": 200, "timeAlive": 272 },
+    "note": "The replay matches the TAPE HEADER's hash, not the stdout outcome line's — different numbers by design. The idle probe was replayed first as a control and the instrument failed on it ('tape ran out with the run still alive'), which localises that failure to zero-order ceiling tapes rather than to this reel.",
+    "engineEra": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+    "viewVersion": 2
+  },
+
+  "goldCeiling": {
+    "banked": 200,
+    "claim": "200 is the ARITHMETIC CEILING of this contract, not a margin left on the table.",
+    "why": "Balance.economy.bankCap is 200. The only cap-raiser is `stockpile` (capBonus 150). economy.addCapSource() is called ONLY from BuildSystem's placement path (BuildSystem.ts:1161/1408/1886/1929), and this map publishes exactly one build zone — `claim-boat-deck-mask`, x -5..5 / z 26..34 — whose ground refuses every placement with `UNREACHABLE: BUILD target is outside buildable terrain`. All six candidate coordinates inside that zone were attempted and all six were refused; works.byKind stayed {} for the whole run.",
+    "measured": "goldPanned 160 + goldReclaimed 40 (the hold's 5 loot units x 8) = 200 exactly. From t=69.63 every HARVEST answered `FAILED: HARVEST action was rejected` and goldPanned froze at 160 for the remaining 202 seconds — the cap switching the economy off, live."
+  }
+}

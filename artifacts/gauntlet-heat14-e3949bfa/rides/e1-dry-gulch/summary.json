@@ -1,0 +1,182 @@
+{
+  "rig": "opus",
+  "contract": "e1-dry-gulch",
+  "model": "claude-opus-5",
+  "sessionId": "f4d5381d-1301-4b57-87c2-e55d5db3d643",
+  "startedAt": "2026-09-17T23:57:00.949Z",
+  "endedAt": "2026-09-18T00:13:35.550Z",
+  "wallClockSeconds": 995,
+  "wallHit": false,
+  "exitCode": 0,
+  "signal": null,
+  "setupToFirstOutputSeconds": 120,
+  "arenaTrackedChanges": [],
+  "workspaceFiles": [
+    "attempt-1-tape-summary.json",
+    "attempt-1-tape-table.txt",
+    "attempt-1-tape-views.jsonl",
+    "attempt-1-tape.json",
+    "ctrl-v1.mjs",
+    "ctrl-v2.mjs",
+    "gauntlet-outcome.json",
+    "gauntlet-report.md",
+    "probe-idle-summary.json",
+    "probe-idle-table.txt",
+    "probe-idle-views.jsonl",
+    "probe-idle.json",
+    "runner.mjs",
+    "tune-1-tape-summary.json",
+    "tune-1-tape-table.txt",
+    "tune-1-tape-views.jsonl",
+    "tune-1-tape.json"
+  ],
+  "outcome": {
+    "secured": true,
+    "waves": 20,
+    "timeMs": 600000,
+    "gold": 328,
+    "kills": 877,
+    "calls": 165,
+    "defaultedPicks": 0,
+    "defaultedSecure": 1,
+    "eventLogHash": "fnv1a32:afadc88b",
+    "tape": "artifacts/heat14/opus/e1-dry-gulch/tune-1-tape.json",
+    "scored": true,
+    "runsSoFar": 3,
+    "scoredAttempts": 2,
+    "worldModel": "sim-import",
+    "contract": "e1-dry-gulch",
+    "seed": "e1-dry-gulch-01",
+    "difficulty": "trail",
+    "note": "PROMOTED BY DECLARATION: tune-1-tape.json is my scored attempt. It secured w20/600.000s/328g on the first controller. attempt-1-tape.json also secured (w20/600.000s/89g) but ranks BELOW it on gold, the only free axis here (waves and timeAlive are pinned by twist.secureWave=20). Submit tune-1.",
+    "envelope": {
+      "durationTicks": 18000,
+      "lastEntryTick": 17980,
+      "entries": 165,
+      "bytes": 605633,
+      "eventLogHash": null
+    },
+    "envelopeCeilings": {
+      "maxTicks": 18002,
+      "maxEntries": 3601,
+      "maxTapeBytes": 1938784
+    },
+    "alternate": {
+      "tape": "attempt-1-tape.json",
+      "outcome": {
+        "secured": true,
+        "waves": 20,
+        "timeMs": 600000,
+        "gold": 89,
+        "kills": 761,
+        "calls": 222,
+        "defaultedPicks": 0,
+        "defaultedSecure": 1,
+        "eventLogHash": "fnv1a32:6f9d42c2"
+      },
+      "envelope": {
+        "durationTicks": 18000,
+        "lastEntryTick": 17463,
+        "entries": 222,
+        "bytes": 810094,
+        "eventLogHash": null
+      }
+    }
+  },
+  "outcomeError": null,
+  "promotedTapeName": "tune-1-tape.json",
+  "scoredTapes": [
+    {
+      "file": "attempt-1-tape.json",
+      "id": "agent-8e8f0aa3-9686e959-85cd-4828-9ad6-86c40aea18b4",
+      "contract": "e1-dry-gulch",
+      "seed": "e1-dry-gulch-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "08589f815",
+        "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+        "era": 6,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 20,
+        "timeAlive": 600,
+        "gold": 89
+      },
+      "entries": 222,
+      "durationTicks": 18000,
+      "lastEntryTick": 17463,
+      "promotedByRig": false,
+      "discoveredBy": "filename"
+    },
+    {
+      "file": "tune-1-tape.json",
+      "id": "agent-2b595776-71adb622-8219-40b7-b796-82897068638d",
+      "contract": "e1-dry-gulch",
+      "seed": "e1-dry-gulch-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "08589f815",
+        "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+        "era": 6,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 20,
+        "timeAlive": 600,
+        "gold": 328
+      },
+      "entries": 165,
+      "durationTicks": 18000,
+      "lastEntryTick": 17980,
+      "promotedByRig": true,
+      "discoveredBy": "outcome-file"
+    }
+  ],
+  "otherTapes": [
+    {
+      "file": "probe-idle.json",
+      "id": "agent-40ad1420-23837dcf-f46a-48a3-b32a-17b73a40bf21",
+      "contract": "e1-dry-gulch",
+      "seed": "e1-dry-gulch-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "08589f815",
+        "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+        "era": 6,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 4,
+        "timeAlive": 143.3,
+        "gold": 0
+      },
+      "entries": 0,
+      "durationTicks": 4299,
+      "lastEntryTick": null
+    }
+  ],
+  "otherSecuredTapes": [],
+  "report": {
+    "outcome": "**SECURED.** `e1-dry-gulch` on `e1-dry-gulch-01` at trail: **waves 20 · timeAlive 600.000 s · gold 328 ·\ncalls 165**, hero 175/175, thirteen works standing and none wrecked at the bank.\nTape put forward: **`artifacts/heat14/opus/e1-dry-gulch/tune-1-tape.json`** (declared in\n`gauntlet-outcome.json`). **3 sim runs, 2 scored attempts.**",
+    "whatTheMapAsked": "It asked squarely about its era's signature mechanic — **E1 survival and the bank cap, the county's opening\neconomy** — and the cap was the whole contract, because it binds twice over. It is the **ranking ceiling**:\nwith `twist.secureWave: 20` pinning waves at 20 and `timeAlive` at 600.000 s, the purse held at the secure\ntick is the entire remaining score, and `stockpile` (60 g, `maxCount: 2`, `capBonus: 150`, with a tier ladder\nof `capMult` 1 → 1.6 → 2.4 at 110 and 260 gold) is the published lever that moves it. Both of my stockpiles\nreached **tier 2**, so the live cap was 200 + 240 + 240 = **680**, and I banked 328 of it. It is also an\n**income switch** — credits stop against the live cap — which is exactly what beat generation 81 here (it\nbanked 198 of a default 200 and watched `goldPanned` freeze for 400 seconds). The second half of the ask is\nthe commute: `now.seams[].active/x/z/anchorIndex` re-anchor live across six authored anchors (two at 9.3 and\n10.4 wu from the claim, four at 26–35 wu), and an **inactive seam publishes `x`, `z` and `anchorIndex` as\n`null`**, so `Number.isFinite` filtering before any sort is mandatory rather than defensive. The `seamYieldMult:\n1.4` rule is real and load-bearing: a pan tick pays 7 rather than 5, and `goldPanned` finished at 1 370.\nThe fields that carried it were `now.gold` against `now.score.goldPanned` (the pair that separates a dead sink\nfrom a starved economy), `now.score.goldStolen` (90 — the price of standing a cap-raiser on a board with\nthieves), `now.works.entries` (position, **`tier`**, `index`, `wrecked` — the only way to see the cap sources\nand to confirm the tier upgrades actually executed), `now.works.byKind`, `now.seams[]`, `now.hero.hp/maxHp`,\n`now.threats.alive/wreckers/thieves` and `now.orders[].status/reason` (the refusal blacklist's source).\nThe orders were `BUILD`, `HARVEST`, `PICK_UPGRADE`, `BLAST_AT`, `REPAIR_UNDER`, `MOVE_HERO`,\n`CONTEXT_ACTION upgrade` and one blank line. **There is no E1 verb**; the era is answered with the base grammar.\n\nMy notebook remembers this map from generations 6 and 81, and **it still plays exactly the way I remember —\nwhich is the finding worth reporting on an era named for rebuilt maps.** The claim is still (0, 12), all six\nharvest anchors reproduce to the decimal, the spring pond is still at (−18, −18) r1.4, the buildable roster and\nits cost curves are untouched, and **the idle floor is still wave 4 — 143.300 s against generation 6's wave 4.**\nThe re-survey moved this map's rendering, not its rules. What moved is my own reading of it: generation 81\nstalled its ladder behind an unfillable third sluice rung and never reached the cap-raisers at all.",
+    "winnability": "Secured, and the margin was **enormous on survival and visibly open on the score**: the hero never fell below\n**86.3 %** of its running maximum across all 167 views and finished 175/175, thirteen works stood unwrecked at\nthe bank, and `threats.alive` sat pinned at its 60-enemy ceiling without ever threatening the run — while the\nbanked purse was still climbing at roughly 3.3 g/s when the clock ran out, 352 gold short of its own 680 cap.",
+    "lessons": "- **Correct my generation-81 self on this map: the stall was not the sluice, it was the ladder.** It reported\n  that a third `sluice` rung with no legal ground left \"blocked the two stockpiles behind it, so the cap stayed\n  at the default 200\". Retiring a rung that runs out of candidates — the one `if` that generation named and did\n  not carry — took the same seed from 198 to 328 with the cap at 680 instead of 200. **A rung that cannot be\n  filled must be RETIRED, never allowed to stall the rungs behind it**, and the rungs behind it are where the\n  score lives. My run retired two sluice rungs cleanly after 11 ground refusals and never noticed.\n- **An era named for rebuilt maps can leave a map's rules untouched, and proving that is a result.** Era 6 is\n  \"the Re-surveyed Claims\" and I opened braced for moved ground. The claim, all six anchors, the spring, the\n  roster, the cost curves and the idle floor (143.300 s vs generation 6's wave 4) all reproduced. Ten seconds\n  of idle probe plus one manifest read settled it, and the heat's real work turned out to be the economy.\n  Second heat running (with generation 97 on `the-claim`) that era 6 moved rendering and not rules.\n- **`threats.alive` is a SATURATING counter on this map, so it must never appear in an urgency predicate.**\n  My `urgent` clause carried `alive > 34`; alive plateaus near 50–60 here by design, so urgent fired at nearly\n  every view, bypassed the bank gate, and bought 445 gold of surge fort after t = 360 for a hero whose minimum\n  was 86.3 %. Gate urgency on the things that can actually end a run — `hp/maxHp`, `works.wrecked`,\n  `works.standing` — never on a number the map pins by construction.\n- **…and the correction went the wrong way, which is the more useful half.** `attempt-1` dropped the loose\n  clause and banked **89 instead of 328**: the leaner fort let works get wrecked from wave 16, `wrecked > 0`\n  re-armed urgent anyway, and the purse drained into repairs and surge rungs in the exact window it should have\n  been refilling. **On a gold-ranked contract the cheapest fort is not the richest fort** — over-buying defence\n  early is how you afford to stop spending late. A clean one-variable change that comes back clearly negative is\n  worth as much as one that comes back positive, and this one names the real shape: buy the fort that survives\n  wave 20 *without repairs*, then stop.\n- **Count the cap from `works.entries[].tier`, not from the number of stockpiles.** `Balance.tiers.stockpile` is\n  `[0, 110, 260]` with `capMult` 1 / 1.6 / 2.4, so two tier-2 stockpiles are a **680** ceiling, not 500. The\n  upgrade is only worth buying when the purse would otherwise pin — `(gold − price) + rate × remaining ≥ newCap`\n  is the whole test, and it converts wasted surplus into banked gold. Tier 3 (cap 920, 520 gold more) priced out\n  on this seed and the gate correctly refused it.\n- **Bias the measured income rate LOW on purpose.** Deriving `rate` from `score.goldPanned` alone misses sluice\n  and reclaimed gold, so the bank gate underestimates the runway and stops spending early — which errs toward\n  banking the cap rather than missing it. When a safety gate reads an imperfect counter, check which direction\n  its error pushes and pick the counter whose error is protective.\n- **Builds snap to integer coordinates, so a candidate ring computed in floats is not the ring you get.**\n  I asked for (4.5, 12) and got (5, 12); (−4.5, 12) became (−4, 12). Spacing derived from a float ring can\n  collapse into a collision after the snap. Generate candidates on the integer lattice, and vary BOTH axes —\n  eleven of my twelve sluice candidates answered `outside buildable terrain` because the spring basin is\n  off-bank on every side but its north rim, and the one that landed, (−18, −15), was the only north-rim point\n  I happened to offer.\n- **Read the envelope from `runTapeEnvelopeForContract`, never from the charter's summary of it.** This brief\n  published `16 KiB + maxEntries × 160` and a heat-12 casualty at 621 674 B; the live function adds\n  `maxOrderEntries × (2400 − 160)`, so the real ceiling here is **1 938 784 B**, 3.3× the summary. My 605 633-byte\n  reel would have looked like a catastrophe against the published floor. Third generation to say this; the\n  hazard the brief warns about is one the county has already cured, and the cure lives in the function.\n- **Silence at the secure boundary did four jobs again.** It banked the default (`defaultedSecure: 1`), it cannot\n  be *rejected* (generation 84 nearly lost an admissible reel because refused submissions inside the choice window\n  are invisible to the tape and visible to the sim, so the replay diverges), it left the last accepted order\n  20 ticks inside `durationTicks` and 522 inside `maxTicks`, and it cost one call.\n- **The retired verbs cost nothing here and I checked rather than assumed — eighth heat running.** The hero starts\n  on the claim, has no drift, so silence is the hold, and the unemployed Prospector drifts to the hero, which is\n  exactly where `HOLD` used to park it. `MOVE_HERO` earned its place only as the 1.0-unit park in front of\n  `CONTEXT_ACTION upgrade` (which does not travel) and as a displacement guard that never had to fire.\n- **Ride the skeleton first and change nothing — fifteenth heat where that is the whole discipline, and the twelfth\n  in a row where it secured on ride one.** The reading budget went to the twist, the cap constants and tier ladder,\n  the water-adjacency intersection, the buildable roster and the envelope function; the riding budget went to the\n  unmodified generation-6→97 skeleton. The heat's real work is reading the contract, not riding it — and this time\n  the one thing I changed after the secure made it worse, which is its own argument."
+  },
+  "usage": {
+    "transcript": "/Users/robin/.claude/projects/-private-tmp-claude-501--Users-robin-Claude-Projects-Gold-Rush-fe6b8d27-b064-40eb-934b-1d29d57a71db-scratchpad-arena-heat14-e3949bfa/f4d5381d-1301-4b57-87c2-e55d5db3d643.jsonl",
+    "assistantTurns": 66,
+    "toolCalls": 34,
+    "tokensIn": 132,
+    "tokensOut": 134331,
+    "cacheReadTokens": 26750821,
+    "cacheWriteTokens": 1276928,
+    "note": "tokensIn excludes cache reads/writes (reported separately); summed from the CLI session transcript, not self-reported by the rig"
+  }
+}

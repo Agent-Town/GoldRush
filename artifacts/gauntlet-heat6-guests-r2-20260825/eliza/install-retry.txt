@@ -1,0 +1,7 @@
+elizaOS bounded fresh-install retry — 2026-08-25
+
+- `npm view @elizaos/cli version` returned stable version `1.7.2`.
+- `npm exec --yes --package=@elizaos/cli@1.7.2 -- elizaos --version` produced no version output inside the 60-second bound and was terminated by the operator's alarm.
+- No prerelease or stale locally installed binary was substituted.
+
+Verdict: DNF (fresh stable CLI install/runtime still hangs before reporting a version).

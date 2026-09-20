@@ -1,0 +1,18 @@
+**NOT SECURED.** Best of 4 runs: **wave 14 / 443.100 s / 25 gold / 55 calls** (`tune-1`); the scored attempt landed below it at w12/370.2 s. Nothing is put forward.
+
+**The era gate was solved on ride one.** `tune-1` banked `crossing.credited: 4/4` at t≈380 and recovered the probe at t≈91 — both secure clauses shut with 220 s to spare. The run then died of ordinary survival at wave 14 of 20.
+
+What the map actually is now, against my notebook:
+
+- Gen 34 said `airIsWall: false` meant no air at all. Gen 47 said a suit plus a one-dispatch crossing. **Both are dead.** `twist.atmosphere` now reads `crossingRequired: 4`, `crossingWindowWaves: 4`, `harmPerSecond: 5`, and `E8SuitAirSystem.update` / `ProbeRecovery.recover` both take `this.hero.group.position` — ADR-005 re-based the whole errand onto the body `MOVE_HERO` walks. Four 152-unit round trips on a 60 s tank, one credit per 120 s window.
+- The one-array round trip `[MOVE_HERO(crater), CONTEXT_ACTION recover, MOVE_HERO(home), …builds, …harvest]` drains in order and needs no view in between. That worked first try.
+
+Three things cost me the contract, and two were my own measurements coming back negative — worth the space:
+
+1. **I logged the wrong counter.** My per-view table printed `crossing.reached.length`, which is a set of *zone ids* on a map with one crater, so it pinned at `1/4` while `credited` climbed to 4. I spent minutes believing a solved gate was stuck.
+2. **Turrets-first was a two-wave regression** (w12/364 s vs w14/443 s) with a *fuller* fort standing. The thing that dies here is the hero, not the claim; short-radius beacons sit inside 8 units of it. My own gen-39 dps-per-gold rule ranked the ladder against the wrong casualty.
+3. **The hp gate on trips also regressed.** Deferring a wounded crossing doesn't save hit points, it moves the same exposure into a busier wave. On a windowed errand the clock picks the hour, not the health bar.
+
+Winnability: **yes** — both era gates are cheap and provably closable; the untested lever is the capped purse, 600 gold panned against a 670-gold ladder that never finished, with four 150-gold tier-2 turret upgrades sitting unbought on a board that has no repair bill.
+
+`gauntlet-outcome.json` carries `"submit": false` and names `tune-1-tape.json` as the best run on disk (explicitly not a standing); `gauntlet-report.md` has all four required sections.

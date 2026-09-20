@@ -1,0 +1,141 @@
+{
+  "version": 2,
+  "id": "agent-0729e0d5-34faa951-beba-4b1e-88b1-5b16711d9340",
+  "createdAt": 0,
+  "kept": true,
+  "contract": "the-claim",
+  "seed": "eh3-fixture",
+  "difficulty": "trail",
+  "simVersion": 1,
+  "meta": {
+    "buildId": "03ab7362f",
+    "engineHash": "d5b04061596bdf43b313a0e430229a46d10e67e52877c6394b61aea05efd389a",
+    "era": 4
+  },
+  "runStart": {
+    "meta": {
+      "version": 1,
+      "tracks": {
+        "territory": 0,
+        "science": 0,
+        "hero": 0,
+        "agent": 0
+      }
+    },
+    "research": {
+      "version": 1,
+      "epochId": "epoch-1-frontier",
+      "metaScienceCursor": 0,
+      "progress": {
+        "version": 1,
+        "tracks": {
+          "territory": 0,
+          "science": 0,
+          "hero": 0,
+          "agent": 0
+        }
+      },
+      "taken": [],
+      "proposalSalt": 0,
+      "pinnedTarget": null,
+      "unlocks": {}
+    }
+  },
+  "inputLog": {
+    "version": 1,
+    "name": "agent-0729e0d5",
+    "contractId": "the-claim",
+    "seed": "eh3-fixture",
+    "difficultyPreset": "trail",
+    "stepSeconds": 0.03333333333333333,
+    "start": {
+      "x": 0,
+      "z": 12
+    },
+    "durationTicks": 2361,
+    "entries": [
+      {
+        "t": 0,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -6,
+                  "z": 8
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -6,
+                  "z": 8
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 900,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": []
+          }
+        ]
+      },
+      {
+        "t": 1801,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": []
+          }
+        ]
+      },
+      {
+        "t": 2015,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": []
+          }
+        ]
+      }
+    ],
+    "truncated": null,
+    "primarySlot": 0,
+    "streams": []
+  },
+  "eventLogHash": "fnv1a32:5df74748",
+  "outcome": {
+    "reason": "death",
+    "secured": false,
+    "waves": 2,
+    "timeAlive": 78.7,
+    "gold": 0
+  }
+}

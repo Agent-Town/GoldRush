@@ -1,0 +1,231 @@
+{
+  "rig": "opus",
+  "contract": "e5-regatta",
+  "model": "claude-opus-5",
+  "sessionId": "dab65079-a146-4361-8db0-085017a2733c",
+  "startedAt": "2026-09-18T05:28:36.891Z",
+  "endedAt": "2026-09-18T05:41:31.839Z",
+  "wallClockSeconds": 775,
+  "wallHit": false,
+  "exitCode": 0,
+  "signal": null,
+  "setupToFirstOutputSeconds": 165,
+  "arenaTrackedChanges": [],
+  "workspaceFiles": [
+    "attempt-1-tape.json",
+    "ctrl-terrain.mjs",
+    "ctrl-v1.mjs",
+    "ctrl-v2.mjs",
+    "gauntlet-outcome.json",
+    "gauntlet-report.md",
+    "probe-envelope.json",
+    "probe-rows.json",
+    "probe-summary.json",
+    "probe-tape.json",
+    "probe-views.jsonl",
+    "runner.mjs",
+    "terrain-envelope.json",
+    "terrain-rows.json",
+    "terrain-summary.json",
+    "terrain-tape.json",
+    "terrain-views.jsonl",
+    "tune-1-envelope.json",
+    "tune-1-rows.json",
+    "tune-1-summary.json",
+    "tune-1-tape.json",
+    "tune-1-views.jsonl",
+    "tune-2-envelope.json",
+    "tune-2-rows.json",
+    "tune-2-summary.json",
+    "tune-2-tape.json",
+    "tune-2-views.jsonl"
+  ],
+  "outcome": {
+    "secured": true,
+    "waves": 12,
+    "timeMs": 272000,
+    "gold": 200,
+    "kills": 33,
+    "calls": 21,
+    "defaultedPicks": 0,
+    "defaultedSecure": 1,
+    "eventLogHash": "fnv1a32:5b5372c2",
+    "tape": "/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/heat14/opus/e5-regatta/attempt-1-tape.json",
+    "note": "attempt-1-tape.json is a byte-identical copy of tune-2-tape.json: ONE ride, promoted by name per the brief. Securing controller: ctrl-v2.mjs.",
+    "scored": true,
+    "runsSoFar": 4,
+    "scoredAttempts": 1,
+    "worldModel": "sim-import",
+    "envelope": {
+      "durationTicks": 8160,
+      "lastEntryTick": 7441,
+      "entries": 21,
+      "bytes": 70988
+    },
+    "goldCeiling": "200 is the arithmetic maximum on this contract: one spring_pond r64 at (0,0) makes every sample zone=shallows, and Terrain.isBuildable:244 demands zone===bank, so the roster stockpile (60g x2, +150 cap each) can never be placed. Measured in tune-1: every BUILD answered outside buildable terrain."
+  },
+  "outcomeError": null,
+  "promotedTapeName": "attempt-1-tape.json",
+  "scoredTapes": [
+    {
+      "file": "attempt-1-tape.json",
+      "id": "agent-3137e409-af61f6c2-95cd-4fdc-b022-4dfe45a49b5a",
+      "contract": "e5-regatta",
+      "seed": "e5-regatta-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "5c54970c3",
+        "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+        "era": 6,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 12,
+        "timeAlive": 272,
+        "gold": 200
+      },
+      "entries": 21,
+      "durationTicks": 8160,
+      "lastEntryTick": 7441,
+      "promotedByRig": true,
+      "discoveredBy": "outcome-file+filename"
+    }
+  ],
+  "otherTapes": [
+    {
+      "file": "probe-tape.json",
+      "id": "agent-aa9b15ba-8e6d5ec5-42f3-425f-afa7-8c34a22b0917",
+      "contract": "e5-regatta",
+      "seed": "e5-regatta-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "5c54970c3",
+        "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+        "era": 6,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 14,
+        "timeAlive": 320,
+        "gold": 0
+      },
+      "entries": 0,
+      "durationTicks": 9600,
+      "lastEntryTick": null
+    },
+    {
+      "file": "terrain-tape.json",
+      "id": "agent-15b21a25-30d437ec-341e-4c93-b2cd-79b124521861",
+      "contract": "e5-regatta",
+      "seed": "e5-regatta-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "5c54970c3",
+        "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+        "era": 6,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 14,
+        "timeAlive": 320,
+        "gold": 0
+      },
+      "entries": 22,
+      "durationTicks": 9600,
+      "lastEntryTick": 8880
+    },
+    {
+      "file": "tune-1-tape.json",
+      "id": "agent-7889711b-e728f42e-0421-45b9-a956-0a585ed03391",
+      "contract": "e5-regatta",
+      "seed": "e5-regatta-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "5c54970c3",
+        "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+        "era": 6,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 14,
+        "timeAlive": 320,
+        "gold": 200
+      },
+      "entries": 40,
+      "durationTicks": 9600,
+      "lastEntryTick": 8880
+    },
+    {
+      "file": "tune-2-tape.json",
+      "id": "agent-3137e409-af61f6c2-95cd-4fdc-b022-4dfe45a49b5a",
+      "contract": "e5-regatta",
+      "seed": "e5-regatta-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "5c54970c3",
+        "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+        "era": 6,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 12,
+        "timeAlive": 272,
+        "gold": 200
+      },
+      "entries": 21,
+      "durationTicks": 8160,
+      "lastEntryTick": 7441
+    }
+  ],
+  "otherSecuredTapes": [
+    {
+      "file": "tune-2-tape.json",
+      "id": "agent-3137e409-af61f6c2-95cd-4fdc-b022-4dfe45a49b5a",
+      "contract": "e5-regatta",
+      "seed": "e5-regatta-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "5c54970c3",
+        "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+        "era": 6,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 12,
+        "timeAlive": 272,
+        "gold": 200
+      },
+      "entries": 21,
+      "durationTicks": 8160,
+      "lastEntryTick": 7441
+    }
+  ],
+  "report": {
+    "outcome": "**SECURED.** `{\"secured\":true,\"waves\":12,\"timeMs\":272000,\"gold\":200,\"kills\":33,\"calls\":21,\"defaultedPicks\":0,\"defaultedSecure\":1,\"eventLogHash\":\"fnv1a32:5b5372c2\"}`\n\n- waves **12**, timeAlive **272.000 s**, gold **200**, calls **21**\n- tape put forward: `artifacts/heat14/opus/e5-regatta/attempt-1-tape.json` (declared in `gauntlet-outcome.json`'s `tape` field; byte-identical copy of `tune-2-tape.json` — **one ride under two filenames**, promoted by name per the brief, because the stop rule ends the heat at the first secured outcome)\n- **4 sim runs, 1 scored attempt**\n- envelope, all three axes measured off the reel: `durationTicks` 8160, last accepted order at tick **7441** (719 inside), **21** entries of 3601, **70,988** bytes against a live ceiling of 1,938,784 (`runTapeEnvelopeForContract` bills order-bearing entries at 2,400 on top of the 160-byte movement term — the charter's `16 KiB + maxEntries × 160` is the conservative floor, not the ceiling)\n- determinism: the local assay reproduces the reel's own header hash `fnv1a32:f86da74c` with `securedSnapshot {waves:12, gold:200, timeAlive:272}` — the field the door's `score_mismatch` rule compares. Instrument control-tested first: the zero-order idle probe fails the replay (\"tape ran out with the run still alive\"), which is the known ceiling-tape behaviour, not a defect in this reel. Note the hash pair: the tape header is `f86da74c`, the stdout outcome line is `5b5372c2`; they are different numbers by design.",
+    "whatTheMapAsked": "It asked me about **the storm as a clock and the course as a deadline**, and this is not stationary survival wearing E5's name — it is the opposite, a contract where the fort is free and the errand is everything. The storm scheduler genuinely *is* the wave clock: `deepwaterStormDisablesScheduledWaves` makes `currentRunWave()` read `deepwater.diagnostics.corsairWaves`, so waves land at `8 + 24(N−1)` and wave 12 arrives at exactly **272.000 s** — a number the storm and nothing else chooses, published in view 0. `HeadlessContractSim:1466` ANDs `race.finished === true` into `autoSecureWaveForRun`, so no wave secures until the course is done, while `RegattaRaceSystem:40` returns early at `wave >= secureWave` and **freezes the course forever** — the whole plan is therefore a distance-over-time budget denominated in storm cycles, computable before the first order. That half of the era's name is real. The *adversarial* half is not: `stormMovementMultiplier: 0.72` and `stormVisibilityMultiplier: 0.58` are published and never touch a body — `HeadlessContractSim:1903` multiplies the hero's terrain sample only by `deepwater.movementMultiplier`, which is `RegattaRaceSystem.movementMultiplierAt` and returns the **fast-water 1.35 or 1**. The fast-water band (z 34…54) is load-bearing in the other direction: two of the four checkpoints sit at z = 38, inside it, so the daring northern line is also the quick one, which is the teaching intent working. Fields that carried it: `now.deepwater.race` (`nextGate`, `gatesPassed`, `finished`, `fastWaterMultiplier`), `now.deepwater.anchor`/`anchors`/`pads[].occupied`, `now.hero.x/z`, `now.seams[].active/x/z/anchorIndex`, `now.gold` against `now.score.goldPanned`, `now.orders[].status/reason` — the field that diagnosed the whole heat. Orders: **`MOVE_HERO`**, `BOAT_BUILD`, `HARVEST`, `PICK_UPGRADE` (never fired — 33 kills opened no draft), and one blank line.\n\n**Does my notebook remember this map, and does it still play that way?** Generation 20 secured this seed on era 5, and the answer is that **its bones held to the unit and its central control clause is dead.** Reproduced exactly: the five beacons and their radii, the two anchors, the three pads, the storm cadence, the wave-12 secure at 272.000 s, the free first-and-last gate off the boat's anchor, the 200-gold outcome. What moved is the body that races. Generation 20 rode `MOVE_TO`, which positioned the **Prospector**; ADR-005 retired it, and `advanceRace` now measures `[heroPosition(), boat.anchor]` with `heroPosition` bound to `this.hero.group.position` (`HeadlessContractSim:1327`), while the fast-water multiplier is applied to `this.hero.update`'s own terrain sample. The racer is the hero, and unlike the Prospector the hero is refused by landmark collision — which is exactly what cost me a run. This contract is **not** named as cured this week: none of era 6's eight pins mentions it (they name `e2-trestle`/`e2-incline`, the sprite runtime, the boss models and the town cast). Its first minute did what it has always done — gate 0 passed for free at t ≤ 8 with the hero standing still, and nothing threatening happened at all: `threats.alive` never exceeded 4 and the hero took **zero damage in every run of this heat**, including the idle probe's full 320 seconds.",
+    "winnability": "Secured, and the margin was **enormous on the clock and exactly at the ceiling on the score**: the course latched at **t = 39.53 against a t = 272 freeze** (6.9× slack), the hero took zero damage across all 21 views, and the banked 200 is this contract's **arithmetic maximum, not a margin I left behind** — one `spring_pond` of radius 64 at (0,0) makes `Terrain.sample` return zone `shallows` everywhere, `Terrain.isBuildable:244` demands `zone === 'bank'`, and so the roster's `stockpile` (60 g × 2, `capBonus` 150 each) can never be placed; `tune-1` measured every BUILD refusing with *outside buildable terrain*, and its purse pinned at the default 200 cap by t = 59.5 with `goldPanned` frozen thereafter. The only thing that could plausibly lose this contract is aiming at the beacon you are told to reach.",
+    "lessons": "- **A gate is a RADIUS, and the point it names can be the one point you may not stand on.** Every beacon here declares `radius: 3` and every beacon CENTRE is a landmark blocker, as is the Claim-Boat's own mooring at `(-49,0)`. I aimed dead-on at all four — my habit from a dozen exact-coordinate errands — and lost a whole run to `UNREACHABLE_TERRAIN` on every leg at once. **When an objective publishes a tolerance, aim inside the tolerance and off the marker**; the marker is exactly the thing the world is most likely to have put a model on.\n- **Three refusals in a row on targets that source-reading says are legal means my source reading is wrong, and the probe is cheaper than the next page.** I had traced `Terrain.sample` to `walkable: true` (spring-pond depth 0.2 against `wadeDepth` 0.35) and was still reading files to explain the contradiction. A 28-candidate `MOVE_HERO` ladder in one array — gen 70's terrain probe — returned the exact walkable/blocked boundary (`(-48,-1)` refuses, `(-47,-1)` walks) in one run. `LANDMARK_BLOCKERS` sits ABOVE the water branch in `sample`, so every clause I verified was true and irrelevant.\n- **A ladder of candidate bearings per waypoint is the cure, not a smarter single guess.** Four bearings per gate at 2.2 units cost nothing when the first works (an unwalkable leg fails in one tick and yields) and saved the run twice: `UNREACHABLE_APPROACH` fired on two alternates mid-course and the array simply moved on. Gen 72 learned this for a standoff; it generalises to every point on a map with landmark models.\n- **`UNREACHABLE_TERRAIN` and `UNREACHABLE_APPROACH` are different diagnoses and I should read them as such.** The first is *the ground is illegal* (re-aim); the second is *this body is stuck* (yield to the next bearing). Both appeared in the securing run and only one of them was a fault.\n- **A published build zone can be real, correctly authored, and permanently unbuildable — and that makes a CEILING, not a margin.** `claim-boat-deck-mask` is declared, six buildables are published with full cost curves, and the pond makes the whole map `shallows` while `isBuildable` wants `bank`. Report a ceiling as a ceiling: calling 200 gold \"gold I left behind\" would send the next rider hunting a stockpile that cannot exist. Gen 115 hit this exact shape on the Flotilla; two sightings make it an E5 pattern worth expecting.\n- **When a ruling retires a verb, ask which body the replacement is, and then ask what refuses THAT body.** Generation 20 raced the Prospector, which `Embodiment.stepTowardTarget` snaps geometrically and which landmark collision does not refuse. The hero is depenetrated and refused. Same map, same course, same coordinates — and the old plan's waypoints are now all illegal. Gen 72 learned this on the Boneyard's `HAUL`; gen 116 is the second map where the parity ruling moved a mechanic onto a body the terrain treats differently.\n- **Two free `BOAT_BUILD`s and silence were the entire defence.** No gold, no range check, placed in the opening array; the hero then took zero damage in 320 seconds of idle and 272 of play. On a map whose objective is an errand, check what the socket gives you for nothing before pricing any fort — and read the idle probe for the *inventory* (0 gold, 0 works, 39 kills, hero untouched at the ceiling) rather than the curve: an orderless hero that cannot die and cannot win is telling you the secure is a conjunction, not a fight.\n- **The blank line at `pendingSecure` did its four jobs again, twenty-third contract running:** it banked the default (`defaultedSecure: 1`), left the last accepted order 719 ticks inside `durationTicks`, held a 21-view run to 21 entries and 71 KB, and — the reason that matters most — it **cannot be rejected**, so the replay cannot diverge the way generation 84's nearly did.\n- **Control-test the assay before believing it, and compare the right pair of hashes.** The zero-order probe's ceiling tape fails the replay by design; the securing reel reproduced its own header `f86da74c` (not the outcome line's `5b5372c2`). Running the thing that cannot be wrong first is what keeps a failed control from reading as a failed reel."
+  },
+  "usage": {
+    "transcript": "/Users/robin/.claude/projects/-private-tmp-claude-501--Users-robin-Claude-Projects-Gold-Rush-fe6b8d27-b064-40eb-934b-1d29d57a71db-scratchpad-arena-heat14-e3949bfa/dab65079-a146-4361-8db0-085017a2733c.jsonl",
+    "assistantTurns": 71,
+    "toolCalls": 39,
+    "tokensIn": 142,
+    "tokensOut": 131316,
+    "cacheReadTokens": 34010708,
+    "cacheWriteTokens": 1518487,
+    "note": "tokensIn excludes cache reads/writes (reported separately); summed from the CLI session transcript, not self-reported by the rig"
+  }
+}

@@ -1,0 +1,16 @@
+No tracked files touched; everything new lives under my workspace. The ride is done — stopping at the first secured outcome, as the rules require.
+
+## SECURED — the first receipt of era 6 on this map
+
+`{"secured":true,"waves":10,"timeMs":300000,"gold":498,"kills":298,"calls":36,"defaultedPicks":0,"defaultedSecure":1,"eventLogHash":"fnv1a32:6d830a40"}`
+
+**Tape put forward:** `artifacts/heat14/opus/the-claim/attempt-1-tape.json` — declared in `gauntlet-outcome.json`'s `tape` field. It is a byte-identical copy of `tune-1-tape.json`, the first controller of the heat, which secured on its only ride. **2 sim runs, 1 scored attempt.**
+
+**The receipt checks all pass:**
+- Era papers: the reel stamps era **6** and engine hash `540b49af…`, the arena's own pin.
+- Envelope (from `runTapeEnvelopeForContract`, not the brief's summary formula — the live byte ceiling is 3.3× larger): ticks 9,000/18,002 · **last accepted order at tick 8,770 < 9,000** (no terminal-tick order) · entries 36/3,601 · bytes 103,604/1,938,784.
+- Local assay: instrument control-tested on the idle probe first, then the reel replayed to **`fnv1a32:79bb2437`** = its own tape header, with `securedSnapshot {waves 10, gold 498, timeAlive 300}` — which is exactly what the door's `score_mismatch` rule compares.
+
+**What the map asked, and the thing worth your attention:** era 6 is named for rebuilt maps, and this map's *rules* did not move at all — claim (0,12), all six anchors to the decimal, the same three live seams at 9.3 and 10.4 wu, the same idle floor (wave 2 at 81.767 s), the same ladder prices. What moved was my own notebook. Generation 74 secured here at 200 gold and recorded that "200, the bank cap itself, is the arithmetic maximum this contract can publish." That is the *default* cap: `Balance.economy.bankCap` is 200 and `stockpile` carries `capBonus: 150` at `maxCount: 2`, so the real ceiling is **500**. With waves and `timeAlive` both pinned by `twist.secureWave: 10`, gold is the only free ranking axis — so two 60-gold stockpiles bought +300 points of headroom, a four-rung 240-gold ladder held ten waves (hero 175/175, nothing ever wrecked, `threats.alive` peaking at 23 of 60), and 380 gold of contingency rungs stayed unspent behind a pressure latch that never fired.
+
+The one thing left on the table is **2 gold**: a single proportional `REPAIR_UNDER` mend of a scratch at t=240 cost 2 gold that a capped economy could never re-earn, which is precisely the gap between 498 and the 500 ceiling.

@@ -1,0 +1,17 @@
+**SECURED** — `e4-dust-flats` on `e4-dust-flats-01`, first controller ride.
+
+## Outcome
+`secured: true · waves 14 · timeAlive 424.000s · gold 0 · kills 550 · calls 49` · 2 sim runs, 1 scored attempt · worldModel `sim-import`.
+
+Tape put forward: `attempt-1-tape.json` — a byte-identical copy of `tune-1-tape.json` (one ride, two filenames), declared in `gauntlet-outcome.json`'s `tape` field. Local assay reproduces the tape header's `fnv1a32:803c0a58` and all four outcome fields. Envelope clear on all four axes: 12,720/18,002 ticks, last order 61 ticks inside, 49/3,601 entries, 239,782/1,938,784 bytes.
+
+## How it went
+Two things decided it, both from reading rather than riding:
+
+1. **`GRADE` and `HAUL` read the hero's position** (`HeadlessContractSim.ts:3106`), so the whole Motor errand became one self-draining `MOVE_HERO` array: three tar nodes with a ±0.5 dwell zig → corridor stake → `GRADE` → `HAUL` (stage) → railhead → `HAUL` → home. Latched at **t=24.267** against my own generation-16 t=60.5, with 16.23 of 36 fuel drawn. The hero's 9.7-second walk north is longer than the Hauler's 3.1-second staging drive, so no view was needed between the two hauls.
+
+2. **The Land-Yacht's placement radius is set by the crane, not the arc.** The turret fire arc is nearly flat from r=14 to r=18, but `land_yacht_crane` reaches 6 from the boss once act 2 pins it at radius 24 and one-shots turrets for `maxHp` — a hard cliff at r=18. I built at r=15 (snapped to ±11,±11 → 15.56), which also keeps all four turrets inside range 16 of a hero standing at the orbit centre. Zero of eight works wrecked.
+
+The grammar ruling cost nothing here and paid twice: `objective.stopReach` is a 2.5 radius (not the exact-equality latch that killed `e4-long-road`), and `MOVE_HERO` deleted the "hero welded at (0,8)" sentence two of my prior generations opened from — so the fort could ring the orbit centre instead of compromising.
+
+**One real miss, named in the report:** waves and time are pinned by a fixed-wave boss secure, so gold is the only free ranking axis, and I banked **0 of 500 panned** because an eighth build fired one boundary before the bank. The cure is a line I still haven't written — stop emitting `BUILD` once the boss wave is live.

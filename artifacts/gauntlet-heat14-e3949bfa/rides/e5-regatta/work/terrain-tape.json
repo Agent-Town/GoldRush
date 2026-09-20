@@ -1,0 +1,4735 @@
+{
+  "version": 2,
+  "id": "agent-15b21a25-30d437ec-341e-4c93-b2cd-79b124521861",
+  "createdAt": 0,
+  "kept": true,
+  "contract": "e5-regatta",
+  "seed": "e5-regatta-01",
+  "difficulty": "trail",
+  "simVersion": 1,
+  "meta": {
+    "buildId": "5c54970c3",
+    "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+    "era": 6,
+    "viewVersion": 2
+  },
+  "runStart": {
+    "meta": {
+      "version": 1,
+      "tracks": {
+        "territory": 0,
+        "science": 0,
+        "hero": 0,
+        "agent": 0
+      }
+    },
+    "research": {
+      "version": 1,
+      "epochId": "epoch-5-deepwater",
+      "metaScienceCursor": 0,
+      "progress": {
+        "version": 1,
+        "tracks": {
+          "territory": 0,
+          "science": 0,
+          "hero": 0,
+          "agent": 0
+        }
+      },
+      "taken": [],
+      "proposalSalt": 0,
+      "pinnedTarget": null,
+      "unlocks": {}
+    }
+  },
+  "inputLog": {
+    "version": 1,
+    "name": "agent-15b21a25",
+    "contractId": "e5-regatta",
+    "seed": "e5-regatta-01",
+    "difficultyPreset": "trail",
+    "stepSeconds": 0.03333333333333333,
+    "start": {
+      "x": -49,
+      "z": 0
+    },
+    "durationTicks": 9600,
+    "entries": [
+      {
+        "t": 0,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -49,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -49,
+                  "z": -1
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -48,
+                  "z": -1
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -47,
+                  "z": -1
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -45,
+                  "z": -1
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -49,
+                  "z": 2
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -49,
+                  "z": -4
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -45,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -40,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -30,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -20,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -10,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 10,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 20,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 30,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 40,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 49,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 5
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 10
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 18
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 30
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 38
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -28,
+                  "z": 38
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 28,
+                  "z": 38
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -20,
+                  "z": 20
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 20,
+                  "z": 20
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": -18
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 1,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -49,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -49,
+                  "z": -1
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -48,
+                  "z": -1
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -47,
+                  "z": -1
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -45,
+                  "z": -1
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -49,
+                  "z": 2
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -49,
+                  "z": -4
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -45,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -40,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -30,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -20,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -10,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 10,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 20,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 30,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 40,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 49,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 5
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 10
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 18
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 30
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 38
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -28,
+                  "z": 38
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 28,
+                  "z": 38
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -20,
+                  "z": 20
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 20,
+                  "z": 20
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": -18
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 3,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -49,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -49,
+                  "z": -1
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -48,
+                  "z": -1
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -47,
+                  "z": -1
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -45,
+                  "z": -1
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -49,
+                  "z": 2
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -49,
+                  "z": -4
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -45,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -40,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -30,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -20,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -10,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 10,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 20,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 30,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 40,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 49,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 5
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 10
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 18
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 30
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 38
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -28,
+                  "z": 38
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 28,
+                  "z": 38
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -20,
+                  "z": 20
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 20,
+                  "z": 20
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": -18
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 6,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -49,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -49,
+                  "z": -1
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -48,
+                  "z": -1
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -47,
+                  "z": -1
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -45,
+                  "z": -1
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -49,
+                  "z": 2
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -49,
+                  "z": -4
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -45,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -40,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -30,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -20,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -10,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 10,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 20,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 30,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 40,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 49,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 5
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 10
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 18
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 30
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 38
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -28,
+                  "z": 38
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 28,
+                  "z": 38
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -20,
+                  "z": 20
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 20,
+                  "z": 20
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": -18
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 10,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -49,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -49,
+                  "z": -1
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -48,
+                  "z": -1
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -47,
+                  "z": -1
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -45,
+                  "z": -1
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -49,
+                  "z": 2
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -49,
+                  "z": -4
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -45,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -40,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -30,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -20,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -10,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 10,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 20,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 30,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 40,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 49,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 5
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 10
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 18
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 30
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 38
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -28,
+                  "z": 38
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 28,
+                  "z": 38
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -20,
+                  "z": 20
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 20,
+                  "z": 20
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": -18
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 198,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -49,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -49,
+                  "z": -1
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -48,
+                  "z": -1
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -47,
+                  "z": -1
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -45,
+                  "z": -1
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -49,
+                  "z": 2
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -49,
+                  "z": -4
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -45,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -40,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -30,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -20,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -10,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 10,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 20,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 30,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 40,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 49,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 5
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 10
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 18
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 30
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 38
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -28,
+                  "z": 38
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 28,
+                  "z": 38
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -20,
+                  "z": 20
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 20,
+                  "z": 20
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": -18
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 241,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -49,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -49,
+                  "z": -1
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -48,
+                  "z": -1
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -47,
+                  "z": -1
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -45,
+                  "z": -1
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -49,
+                  "z": 2
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -49,
+                  "z": -4
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -45,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -40,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -30,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -20,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -10,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 10,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 20,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 30,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 40,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 49,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 5
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 10
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 18
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 30
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 38
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -28,
+                  "z": 38
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 28,
+                  "z": 38
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -20,
+                  "z": 20
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 20,
+                  "z": 20
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": -18
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 878,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -49,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -49,
+                  "z": -1
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -48,
+                  "z": -1
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -47,
+                  "z": -1
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -45,
+                  "z": -1
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -49,
+                  "z": 2
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -49,
+                  "z": -4
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -45,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -40,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -30,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -20,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -10,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 10,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 20,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 30,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 40,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 49,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 5
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 10
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 18
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 30
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 38
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -28,
+                  "z": 38
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 28,
+                  "z": 38
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -20,
+                  "z": 20
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 20,
+                  "z": 20
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": -18
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 960,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -49,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -49,
+                  "z": -1
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -48,
+                  "z": -1
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -47,
+                  "z": -1
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -45,
+                  "z": -1
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -49,
+                  "z": 2
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -49,
+                  "z": -4
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -45,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -40,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -30,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -20,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -10,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 10,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 20,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 30,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 40,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 49,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 5
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 10
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 18
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 30
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 38
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -28,
+                  "z": 38
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 28,
+                  "z": 38
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -20,
+                  "z": 20
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 20,
+                  "z": 20
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": -18
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 1681,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -49,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -49,
+                  "z": -1
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -48,
+                  "z": -1
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -47,
+                  "z": -1
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -45,
+                  "z": -1
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -49,
+                  "z": 2
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -49,
+                  "z": -4
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -45,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -40,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -30,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -20,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -10,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 10,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 20,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 30,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 40,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 49,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 5
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 10
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 18
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 30
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 38
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -28,
+                  "z": 38
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 28,
+                  "z": 38
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -20,
+                  "z": 20
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 20,
+                  "z": 20
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": -18
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 2401,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -49,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -49,
+                  "z": -1
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -48,
+                  "z": -1
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -47,
+                  "z": -1
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -45,
+                  "z": -1
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -49,
+                  "z": 2
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -49,
+                  "z": -4
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -45,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -40,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -30,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -20,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -10,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 10,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 20,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 30,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 40,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 49,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 5
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 10
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 18
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 30
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 38
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -28,
+                  "z": 38
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 28,
+                  "z": 38
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -20,
+                  "z": 20
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 20,
+                  "z": 20
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": -18
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 2687,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -49,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -49,
+                  "z": -1
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -48,
+                  "z": -1
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -47,
+                  "z": -1
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -45,
+                  "z": -1
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -49,
+                  "z": 2
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -49,
+                  "z": -4
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -45,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -40,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -30,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -20,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -10,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 10,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 20,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 30,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 40,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 49,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 5
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 10
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 18
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 30
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 38
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -28,
+                  "z": 38
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 28,
+                  "z": 38
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -20,
+                  "z": 20
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 20,
+                  "z": 20
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": -18
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 3121,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -49,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -49,
+                  "z": -1
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -48,
+                  "z": -1
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -47,
+                  "z": -1
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -45,
+                  "z": -1
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -49,
+                  "z": 2
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -49,
+                  "z": -4
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -45,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -40,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -30,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -20,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -10,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 10,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 20,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 30,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 40,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 49,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 5
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 10
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 18
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 30
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 38
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -28,
+                  "z": 38
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 28,
+                  "z": 38
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -20,
+                  "z": 20
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 20,
+                  "z": 20
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": -18
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 3841,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -49,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -49,
+                  "z": -1
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -48,
+                  "z": -1
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -47,
+                  "z": -1
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -45,
+                  "z": -1
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -49,
+                  "z": 2
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -49,
+                  "z": -4
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -45,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -40,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -30,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -20,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -10,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 10,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 20,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 30,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 40,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 49,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 5
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 10
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 18
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 30
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 38
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -28,
+                  "z": 38
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 28,
+                  "z": 38
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -20,
+                  "z": 20
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 20,
+                  "z": 20
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": -18
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 4561,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -49,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -49,
+                  "z": -1
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -48,
+                  "z": -1
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -47,
+                  "z": -1
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -45,
+                  "z": -1
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -49,
+                  "z": 2
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -49,
+                  "z": -4
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -45,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -40,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -30,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -20,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -10,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 10,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 20,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 30,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 40,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 49,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 5
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 10
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 18
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 30
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 38
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -28,
+                  "z": 38
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 28,
+                  "z": 38
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -20,
+                  "z": 20
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 20,
+                  "z": 20
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": -18
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 5281,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -49,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -49,
+                  "z": -1
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -48,
+                  "z": -1
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -47,
+                  "z": -1
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -45,
+                  "z": -1
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -49,
+                  "z": 2
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -49,
+                  "z": -4
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -45,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -40,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -30,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -20,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -10,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 10,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 20,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 30,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 40,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 49,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 5
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 10
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 18
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 30
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 38
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -28,
+                  "z": 38
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 28,
+                  "z": 38
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -20,
+                  "z": 20
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 20,
+                  "z": 20
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": -18
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 6001,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -49,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -49,
+                  "z": -1
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -48,
+                  "z": -1
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -47,
+                  "z": -1
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -45,
+                  "z": -1
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -49,
+                  "z": 2
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -49,
+                  "z": -4
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -45,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -40,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -30,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -20,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -10,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 10,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 20,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 30,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 40,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 49,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 5
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 10
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 18
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 30
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 38
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -28,
+                  "z": 38
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 28,
+                  "z": 38
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -20,
+                  "z": 20
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 20,
+                  "z": 20
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": -18
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 6179,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -49,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -49,
+                  "z": -1
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -48,
+                  "z": -1
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -47,
+                  "z": -1
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -45,
+                  "z": -1
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -49,
+                  "z": 2
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -49,
+                  "z": -4
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -45,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -40,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -30,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -20,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -10,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 10,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 20,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 30,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 40,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 49,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 5
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 10
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 18
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 30
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 38
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -28,
+                  "z": 38
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 28,
+                  "z": 38
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -20,
+                  "z": 20
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 20,
+                  "z": 20
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": -18
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 6721,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -49,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -49,
+                  "z": -1
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -48,
+                  "z": -1
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -47,
+                  "z": -1
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -45,
+                  "z": -1
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -49,
+                  "z": 2
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -49,
+                  "z": -4
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -45,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -40,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -30,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -20,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -10,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 10,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 20,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 30,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 40,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 49,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 5
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 10
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 18
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 30
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 38
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -28,
+                  "z": 38
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 28,
+                  "z": 38
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -20,
+                  "z": 20
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 20,
+                  "z": 20
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": -18
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 7441,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -49,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -49,
+                  "z": -1
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -48,
+                  "z": -1
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -47,
+                  "z": -1
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -45,
+                  "z": -1
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -49,
+                  "z": 2
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -49,
+                  "z": -4
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -45,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -40,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -30,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -20,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -10,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 10,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 20,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 30,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 40,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 49,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 5
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 10
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 18
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 30
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 38
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -28,
+                  "z": 38
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 28,
+                  "z": 38
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -20,
+                  "z": 20
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 20,
+                  "z": 20
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": -18
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 8160,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -49,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -49,
+                  "z": -1
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -48,
+                  "z": -1
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -47,
+                  "z": -1
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -45,
+                  "z": -1
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -49,
+                  "z": 2
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -49,
+                  "z": -4
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -45,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -40,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -30,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -20,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -10,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 10,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 20,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 30,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 40,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 49,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 5
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 10
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 18
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 30
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 38
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -28,
+                  "z": 38
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 28,
+                  "z": 38
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -20,
+                  "z": 20
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 20,
+                  "z": 20
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": -18
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 8880,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -49,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -49,
+                  "z": -1
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -48,
+                  "z": -1
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -47,
+                  "z": -1
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -45,
+                  "z": -1
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -49,
+                  "z": 2
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -49,
+                  "z": -4
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -45,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -40,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -30,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -20,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -10,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 10,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 20,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 30,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 40,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 49,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 5
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 10
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 18
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 30
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": 38
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -28,
+                  "z": 38
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 28,
+                  "z": 38
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -20,
+                  "z": 20
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 20,
+                  "z": 20
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": -18
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "truncated": null,
+    "primarySlot": 0,
+    "streams": []
+  },
+  "eventLogHash": "fnv1a32:f732f6d9",
+  "outcome": {
+    "reason": "death",
+    "secured": false,
+    "waves": 14,
+    "timeAlive": 320,
+    "gold": 0
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "phase": "after",
+  "project": "desktop-chrome",
+  "shot": "7-night-plaza",
+  "frameMs": {
+    "last": 8,
+    "avg": 8.333888891008165,
+    "p95": 10.199999809265137,
+    "sampleCount": 180
+  },
+  "renderMs": {
+    "last": 0.2999997138977051,
+    "avg": 0.6288888719346788,
+    "p95": 2.5999999046325684,
+    "sampleCount": 180
+  },
+  "renderer": {
+    "calls": 45,
+    "geometries": 94,
+    "textures": 86,
+    "triangles": 86188
+  },
+  "canvas": {
+    "width": 1280,
+    "height": 800,
+    "dpr": 1
+  },
+  "zoom": 0.6197,
+  "contact": {
+    "blobShadows": 11,
+    "skirts": 6,
+    "sunShadow": {
+      "enabled": true,
+      "mapSize": 1536,
+      "extent": 17
+    }
+  },
+  "lighting": {
+    "night": true,
+    "background": "#41365a",
+    "fog": "#41365a",
+    "fogNear": 24,
+    "fogFar": 58,
+    "sunIntensity": 0.82,
+    "fillIntensity": 0.7
+  },
+  "tier": "full",
+  "buildings": 6,
+  "errors": {
+    "consoleErrors": [],
+    "pageErrors": []
+  }
+}

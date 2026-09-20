@@ -1,0 +1,91 @@
+
+########## RIDE e1-night-shift · seed e1-night-shift-01 · gen 123 · stake era-retired · wall 1500s ##########
+--- 1 charter ---
+{"rig":"opus","contract":"e1-night-shift","seed":"e1-night-shift-01","seedMode":"bench","stake":"era-retired","generation":123,"wall":1500,"notebookSha256":"da9183d91dd038b0cb356fa9b8abaafaccc32fd4333d20dec8e02d312a8a2f12","charterSha256":"d0485497b160be9f8bcaf39a428f30fa84114f5a8ca05d2a3478994deba6ccca","bytes":998736,"out":"/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/gauntlet-heat14-e3949bfa/rides/e1-night-shift/charter.md"}
+--- 2 ride ---
+START opus claude-opus-5 pid=31908 session=39621d65-0d8d-4bd1-9433-9b91ef2cd694 at=2026-09-18T07:41:59.882Z
+FIRST-OUTPUT opus +120s
+OUTCOME opus secured=false waves=4 gold=0 runsSoFar=1 scored=0 +135s
+OUTCOME opus secured=false waves=22 gold=200 runsSoFar=2 scored=0 +570s
+OUTCOME opus secured=false waves=24 gold=200 runsSoFar=3 scored=1 +930s
+OUTCOME opus secured=false waves=24 gold=200 runsSoFar=3 scored=1 +975s
+OUTCOME opus secured=true waves=25 gold=200 runsSoFar=4 scored=2 +1335s
+WALL opus 1500s reached — SIGTERM to process group 31908
+END opus rc=143 signal=null wall=1501s wallHit=true
+ride-wall rc=124 signal=-
+--- 3 land ---
+
+=== 1 finish-ride ===
+{"rig":"opus","contract":"e1-night-shift","wall":1501,"wallHit":true,"rc":143,"tracked":[],"files":22,"outcome":{"secured":true,"waves":25,"gold":200,"runsSoFar":4,"scoredAttempts":2,"tape":"/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/heat14/opus/e1-night-shift/attempt-2-tape.json","worldModel":"sim-import"},"scoredTapes":[{"file":"attempt-1-tape.json","id":"agent-04e477b5-6a0415c1-5cbd-4139-909f-b733d55cfbe2","secured":false,"waves":24,"gold":200,"durationTicks":21933,"lastEntryTick":21919,"promotedByRig":false,"discoveredBy":"filename"},{"file":"attempt-2-tape.json","id":"agent-8b9ea9eb-d838f2da-9d40-4f72-bf4d-f0375daf1f3b","secured":true,"waves":25,"gold":200,"durationTicks":22501,"lastEntryTick":22486,"promotedByRig":true,"discoveredBy":"outcome-file+filename"}],"otherSecured":[],"reportSections":{"outcome":814,"whatTheMapAsked":3163,"winnability":1076,"lessons":4299},"usage":{"turns":57,"toolCalls":29,"tokensIn":114,"tokensOut":120483}}
+tape chosen: attempt-2-tape.json (id agent-8b9ea9eb-d838f2da-9d40-4f72-bf4d-f0375daf1f3b, promotedByRig=true, discoveredBy=outcome-file+filename)
+
+=== 2 freeze notebook header ===
+{"headerOnly":true,"headerBytes":455}
+
+=== 3 harnessDigest ===
+948c707bf497a42d4fa9ca1b6083d19b8cfcd42f54685900c8be10a424b9d275
+
+=== 4 build-submission ===
+{"tapeId":"agent-8b9ea9eb-d838f2da-9d40-4f72-bf4d-f0375daf1f3b","contract":"e1-night-shift","epochId":"epoch-1-frontier","seed":"e1-night-shift-01","seedMode":"bench","score":{"secured":true,"waves":25,"timeAlive":750.033,"gold":200,"baseValue":0},"papers":{"buildId":"0a8dd499c","engineHash":"540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068","era":6,"viewVersion":2},"durationTicks":22501,"lastEntryTick":22486,"stack":{"model":"claude-opus-5","harness":"heat14-operator","harnessVersion":"2.1.272","harnessDigest":"948c707bf497a42d4fa9ca1b6083d19b8cfcd42f54685900c8be10a424b9d275","worldModel":"sim-import","config":"attended-hosted headless `claude -p` ride (heat 14, the era-6 re-ride) on Claude Code CLI 2.1.272; charter + door manual + own notebook (self-memory); own controller authored in-ride","calls":699,"tokensIn":27991126,"tokensOut":120483}}
+
+=== 5 publish (POST → poll → WATCH) ===
+FAILED: file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/gauntlet-heat14-e3949bfa/publish-submission.mjs:37
+if (slip?.assay !== 'verified') throw new Error(`assay ${slip?.assay ?? 'missing'}: ${slip?.assayReason ?? 'no reason'}`);
+                                      ^
+
+Error: assay pending: no reason
+    at file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/gauntlet-heat14-e3949bfa/publish-submission.mjs:37:39
+
+Node.js v26.4.0
+
+POST ok; assay still pending at the 120 s mark — resuming with the poll-only shim (no re-POST)
+
+=== 6 poll-verdict (no re-POST) ===
+FAILED: file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/gauntlet-heat14-e3949bfa/poll-verdict.mjs:26
+if (slip?.assay !== 'verified') throw new Error(`assay ${slip?.assay ?? 'missing'}: ${slip?.assayReason ?? 'no reason'}`);
+                                      ^
+
+Error: assay pending: no reason
+    at file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/gauntlet-heat14-e3949bfa/poll-verdict.mjs:26:39
+
+Node.js v26.4.0
+
+file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/gauntlet-heat14-e3949bfa/publish-submission.mjs:37
+if (slip?.assay !== 'verified') throw new Error(`assay ${slip?.assay ?? 'missing'}: ${slip?.assayReason ?? 'no reason'}`);
+                                      ^
+
+Error: assay pending: no reason
+    at file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/gauntlet-heat14-e3949bfa/publish-submission.mjs:37:39
+
+Node.js v26.4.0
+file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/gauntlet-heat14-e3949bfa/poll-verdict.mjs:26
+if (slip?.assay !== 'verified') throw new Error(`assay ${slip?.assay ?? 'missing'}: ${slip?.assayReason ?? 'no reason'}`);
+                                      ^
+
+Error: assay pending: no reason
+    at file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/gauntlet-heat14-e3949bfa/poll-verdict.mjs:26:39
+
+Node.js v26.4.0
+file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/gauntlet-heat14-e3949bfa/land-ride.mjs:31
+const step = (name, fn) => { process.stdout.write(`\n=== ${name} ===\n`); try { return fn(); } catch (error) { process.stdout.write(`FAILED: ${(error.stdout ?? '') + (error.stderr ?? error.message)}\n`); throw Object.assign(new Error(name), { step: name }); } };
+                                                                                                                                                                                                                                ^
+
+Error: 6 poll-verdict (no re-POST)
+    at step (file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/gauntlet-heat14-e3949bfa/land-ride.mjs:31:225)
+    at file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/gauntlet-heat14-e3949bfa/land-ride.mjs:68:3
+    at ModuleJob.run (node:internal/modules/esm/module_job:447:25)
+    at async node:internal/modules/esm/loader:646:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+  step: '6 poll-verdict (no re-POST)'
+}
+
+Node.js v26.4.0
+
+land rc=1
+--- 4 notebook ---
+{"notebook":"/Users/robin/Claude/Projects/goldrush-gauntlet/memories/claude__opus-5/NOTEBOOK.md","generation":123,"headerBytes":455,"entryBytes":9429}
+--- 5 matrix ---
+| 27 | e1-night-shift | `e1-night-shift-01` | era-retired | 123 | **SECURED** | 25 | 200 | 750.033s | 1501s ⏱ | `attempt-2-tape.json` · `agent-8b9ea9eb-d838f2da-9d40-4f72-bf4d-f0375daf1f3b`<br>fnv1a32:fcceee6e | pending rank 1 | gen 123<br>slip `agent-8b9ea9eb-d838f2da-9d40-4f72-bf4d-f0375daf1f3b` |
+{"contract":"e1-night-shift","secured":true,"tapesOnDisk":9,"scoredTapes":2,"otherSecured":0,"runs":4,"scoredAttempts":2,"wallHit":true,"rc":143,"assay":"pending","ranked":true,"winnability":"**Yes — winnable, and what stopped me was a gate I wrote on a counter that can never reach zero:**\nthe fort is solved (4 turrets, 6 beacons, 3 sluices, 34 palisades, hero at maxHp 175 holding to\nt = 730), the economy is solved (the purse *pinned at the 200 cap from t = 444.7* with `goldPanned`\nfrozen — income the map paid me and I had nowhere to put), and the 600-gold sink that converts that\nsurplus into ×1.65 turret dps **never fired once**: all four turrets finished at `tier: 1` and\n`entries.filter(e => e.tier > 1).length` is **0** across 707 views, because I gated the upgrade on\n`now.works.wrecked === 0` and that counter includes the **seven pre-placed wrecked lantern posts**,\nwhich lie outside the bounded repair sweep and are therefore permanently non-zero. The whole\nw22 → w24 gain came from the twenty extra palisades alone; the bigger lever was withheld by one\nboolean. Gate it on `hpFrac` (or on *my* wrecked works, `byKind` minus the pre-placed) and 600 gold\nof idle purse becomes 65 % more dps on the four range-16 guns — against a deficit of 18.9 seconds."}
+########## END e1-night-shift ##########
+

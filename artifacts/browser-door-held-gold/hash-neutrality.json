@@ -1,0 +1,31 @@
+{
+  "what": "One browser reel, recorded twice by the same deterministic recipe (the recipe scripts/board-tape-gold.test.mjs uses): once on main's src (6f57e9ad2) and once on the cured tree. The reel's event-log hash must not move, because the standing's gold meaning is not inside it.",
+  "why": "runTapeEventLogHash is taken over the event log only (src/game/RunTape.ts:276) and that log's `gold` field has always been `this.economy.gold` — the purse held. `outcome` sits OUTSIDE the hash, so changing what the reel DECLARES changes no tape.",
+  "measuredAt": "2026-09-06T03:22:00Z",
+  "contract": "the-claim",
+  "seed": "e1-the-claim-01",
+  "recipe": "pan >= 30 at the nearest live seam, step off, buy a beacon (spend 25), accelerate waves to the secure wave, bank",
+  "rows": [
+    {
+      "tree": "main 6f57e9ad2 src",
+      "eventLogHash": "fnv1a32:fefb78c9",
+      "durationTicks": 995,
+      "heldAtSecure": 5,
+      "pannedAtSecure": 30,
+      "postedScoreGold": 30,
+      "reelOutcomeGold": 30,
+      "securedSnapshotGold": 30
+    },
+    {
+      "tree": "fix/browser-door-held-gold c58d4859b",
+      "eventLogHash": "fnv1a32:fefb78c9",
+      "durationTicks": 995,
+      "heldAtSecure": 5,
+      "pannedAtSecure": 30,
+      "postedScoreGold": 5,
+      "reelOutcomeGold": 5,
+      "securedSnapshotGold": 5
+    }
+  ],
+  "verdict": "hash identical, durationTicks identical; the three gold figures move from the run's lifetime panning (30) to the purse held at the secure tick (5)."
+}

@@ -1,0 +1,177 @@
+{
+  "rig": "opus",
+  "contract": "e10-ember-shore",
+  "model": "claude-opus-5",
+  "sessionId": "a69fea2d-e328-4d65-94bf-f41fb1c85138",
+  "startedAt": "2026-09-18T06:49:04.409Z",
+  "endedAt": "2026-09-18T07:05:21.015Z",
+  "wallClockSeconds": 977,
+  "wallHit": false,
+  "exitCode": 0,
+  "signal": null,
+  "setupToFirstOutputSeconds": 150,
+  "arenaTrackedChanges": [],
+  "workspaceFiles": [
+    "attempt-1-tape.json",
+    "ctrl-v1.mjs",
+    "gauntlet-outcome.json",
+    "gauntlet-report.md",
+    "probe-summary.json",
+    "probe-table.txt",
+    "probe-tape.json",
+    "probe-views.jsonl",
+    "runner.mjs",
+    "tune-1-summary.json",
+    "tune-1-table.txt",
+    "tune-1-tape.json",
+    "tune-1-views.jsonl"
+  ],
+  "outcome": {
+    "secured": true,
+    "waves": 12,
+    "timeMs": 360000,
+    "gold": 60,
+    "kills": 414,
+    "calls": 56,
+    "defaultedPicks": 0,
+    "defaultedSecure": 1,
+    "eventLogHash": "fnv1a32:d59af0f8",
+    "tape": "artifacts/heat14/opus/e10-ember-shore/attempt-1-tape.json",
+    "scored": true,
+    "runsSoFar": 2,
+    "scoredAttempts": 1,
+    "worldModel": "sim-import",
+    "note": "tune-1 secured on the first controller ride; the stop rule ends the heat at the first SECURED outcome, so it IS the scored attempt. attempt-1-tape.json is a byte-identical copy of tune-1-tape.json: one ride under two filenames. Envelope measured on the reel: durationTicks 10800, last accepted order tick 10699, 56 entries of 3601, 189,221 bytes. Idle probe reproduced null-floors.json byte for byte (w3/93000ms/0g/43k/fnv1a32:1b73c4b7, endReason vent_guttered).",
+    "declaredForSubmission": {
+      "contractId": "e10-ember-shore",
+      "seed": "e10-ember-shore-01",
+      "seedMode": "bench",
+      "difficulty": "trail",
+      "score": {
+        "secured": true,
+        "waves": 12,
+        "timeAlive": 360,
+        "gold": 60,
+        "baseValue": 0
+      }
+    }
+  },
+  "outcomeError": null,
+  "promotedTapeName": "attempt-1-tape.json",
+  "scoredTapes": [
+    {
+      "file": "attempt-1-tape.json",
+      "id": "agent-f22dfc12-126489fe-03f1-4d84-9eb0-c70a373bdb0c",
+      "contract": "e10-ember-shore",
+      "seed": "e10-ember-shore-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "4ef968a13",
+        "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+        "era": 6,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 12,
+        "timeAlive": 360,
+        "gold": 60
+      },
+      "entries": 56,
+      "durationTicks": 10800,
+      "lastEntryTick": 10699,
+      "promotedByRig": true,
+      "discoveredBy": "outcome-file+filename"
+    }
+  ],
+  "otherTapes": [
+    {
+      "file": "probe-tape.json",
+      "id": "agent-70952f66-a95c1452-486c-4360-9111-73422465af0d",
+      "contract": "e10-ember-shore",
+      "seed": "e10-ember-shore-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "2ed4dde83",
+        "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+        "era": 6,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 3,
+        "timeAlive": 93,
+        "gold": 0
+      },
+      "entries": 0,
+      "durationTicks": 2790,
+      "lastEntryTick": null
+    },
+    {
+      "file": "tune-1-tape.json",
+      "id": "agent-f22dfc12-126489fe-03f1-4d84-9eb0-c70a373bdb0c",
+      "contract": "e10-ember-shore",
+      "seed": "e10-ember-shore-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "4ef968a13",
+        "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+        "era": 6,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 12,
+        "timeAlive": 360,
+        "gold": 60
+      },
+      "entries": 56,
+      "durationTicks": 10800,
+      "lastEntryTick": 10699
+    }
+  ],
+  "otherSecuredTapes": [
+    {
+      "file": "tune-1-tape.json",
+      "id": "agent-f22dfc12-126489fe-03f1-4d84-9eb0-c70a373bdb0c",
+      "contract": "e10-ember-shore",
+      "seed": "e10-ember-shore-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "4ef968a13",
+        "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+        "era": 6,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 12,
+        "timeAlive": 360,
+        "gold": 60
+      },
+      "entries": 56,
+      "durationTicks": 10800,
+      "lastEntryTick": 10699
+    }
+  ],
+  "report": {
+    "outcome": "**SECURED** — waves **12**, timeAlive **360.000 s**, gold **60**, kills 414, calls 56.\n`squallsSurvived: 3` against `squallsRequired: 1`; vent finished **alight at a full 100/100**;\n`objectiveMet: true`.\n\n- Tape put forward: **`attempt-1-tape.json`**, declared in `gauntlet-outcome.json`'s `tape` field. It is a\n  byte-identical copy of `tune-1-tape.json` — **one ride under two filenames**, promoted by name because\n  the first controller secured and the stop rule ends the heat at the first SECURED outcome.\n- **2 sim runs** (one idle probe, one controller). **1 scored attempt.**\n- Envelope measured on the reel, all three axes, against `runTapeEnvelopeForContract` read from source\n  (not the charter's summary): `durationTicks` **10,800** and last accepted order at tick **10,699**\n  (against `maxTicks` 18,002); **56 entries** of 3,601; **189,221 bytes** of **1,938,784** (9.8 %).\n- Receipt: the assay instrument was control-tested on the zero-order idle probe first (replayed to its own\n  header `fnv1a32:a45ba9ac`), then the securing reel replayed to **`fnv1a32:d3959e47`** — the TAPE\n  HEADER's hash, not the stdout outcome line's `fnv1a32:d59af0f8`, which is a different number by design —\n  reproducing `secured/waves/gold/timeAlive` and publishing `securedSnapshot {waves: 12, gold: 60,\n  timeAlive: 360}`, which is exactly what the door's `score_mismatch` rule compares against the declared gold.",
+    "whatTheMapAsked": "It asked for its era's signature mechanic — **E10 preserve, don't extract: a flipped objective over a\ntrained habit** — squarely, and it is the most legible era gate I have ridden. This is not stationary\nsurvival wearing E10's name. The flip is in the *economy*, and it is total: on every other board gold is\na score to hoard, and here **gold is fuel for keeping something alive**, so the ranking axis and the\nsurvival mechanic consume the same coins. Every 15 gold banked is 40 warmth not restored; every stoke is\na point off the board. My run panned 620 and banked 60 because 180 went into the vent — and that is the\ncontract working, not a leak. The trained habit the map flips is \"build the fort, fill the purse\": the\nvent is explicitly **not damageable** (`damages: false`, and the consumer says so in prose — \"the SQUALL\nis the antagonist; enemies are the thing that keeps you too busy to stoke\"), so no amount of fort defends\nthe objective and no amount of banking wins it.\n\nThe view carries all of it, and a rider with **no source import** could play this map from the view alone.\n`now.emberShore.preserve` publishes `warmth`, `maxWarmth`, `alight`, `guttered`, `decayPerSecond`,\n`decaying`, `warmthLost`, `warmthRestored`, `squallsSurvived`/`squallsRequired`, `objectiveMet`, and a\n`stoke` block carrying `goldCost`, `warmthRestore`, `radius`, `uses` and a **per-reason refusal counter**\n(`undeclared`/`guttered`/`out-of-reach`/`insufficient-gold`/`already-warm`). `now.squall` publishes the\nwhole timetable — `calmSeconds`, `telegraphSeconds`, `squallSeconds`, `recoverSeconds`, `cycleSeconds`,\n`phase`, `secondsToNextPhase`, `secondsToNextSquall`, `squallsStarted`/`squallsCompleted`, `blowing`. And\n`stablePrefix.mechanics.rules` publishes `preserve_vent` and `static_squall` with `lossRule:\n\"warmth-zero-ends-the-run\"`, `secureRule: \"vent-alight-and-one-full-squall-survived\"`, `gatesSecure: true`,\nand **the exact order shape** `{verb: \"CONTEXT_ACTION\", action: \"stoke\"}`. The orders that carried it were\n**`CONTEXT_ACTION stoke`** (12 uses, **zero refusals of any kind**) and `HARVEST` as its clock, plus\n`BUILD`, `PICK_UPGRADE`, `BLAST_AT` and one blank line at the secure boundary. There is **no E10 verb** —\nthe era is answered with the player's own confirm key, which is exactly what ADR-005 intended.\n\nTwo honest qualifiers. First, the map's *other* half — the doubled mote pressure, 25 % of the field\nwalking at the vent in calm and **50 % during a squall**, which the consumer calls \"the spec's sentence\nabout being too busy to stoke turned into arithmetic\" — was **inert on this seed**: the hero's HP fraction\nwas **1.000 at every one of 58 views**, it finished 175/175 at level 18, and 7 of 7 works stood unwrecked\n(`wreckers: 0`, `thieves: 0`, `goldStolen: 0` across 421 spawns). The pressure is real and correctly\nwired; it never made me too busy. Second, `stablePrefix.objective` is **absent** here and `now.preserve`\nis absent too — skill.md's \"preserve contracts add `objective: \"preserve\"`\" describes `e10-last-claim`'s\nmechanic, and the source is explicit that these are \"two warm vents, two mechanics, no shared code\".\nRead `now.emberShore.preserve`, never `now.preserve`, on this map.\n\n**My notebook does not remember this map.** No prior generation of mine has ridden `e10-ember-shore`;\ngeneration 28 rode `e10-last-claim`, which is a different preserve mechanic (a real structure with HP\nthat outlaws can fell). The contract is **not** on the cured list this week — era 6's cures name\n`e2-trestle`/`e2-incline` (pin #4) and the render-side sprite and boss work (pins #3, #6, #7). For the\nrecord its first minute did nothing threatening: the hero stood where it landed, the Prospector walked\n16.6 units to `gold-seam-3` at (−6, −24), the first 40 gold was in the purse by t = 23.5, and the vent sat\nuntouched at 100 warmth until the first squall opened at t = 68.",
+    "winnability": "Secured, and the margin was **as wide as this contract can be measured on survival and genuinely thin\nonly where it is scored**: the hero took **zero damage across the entire run** (min HP fraction 1.000,\nfinishing 175/175), nothing was ever wrecked, nothing was stolen, and the vent banked at a **full 100/100\nwith three squalls survived against one required** — while the ranked purse, **60 of a 350 live cap**\n(200 default + 150 for the one standing stockpile), is the whole margin I left behind, and I can name it\nto the coin: 12 stokes restored `warmthRestored: 299.867` warmth against an arithmetic floor of 8 stokes,\nso **~60 gold went into restore that the 100-cap clipped** — almost exactly the gold I banked.",
+    "lessons": "- **Read the era consumer end to end when it is small enough to read — eighth generation running, and\n  this time it handed me the entire contract before the first order.** `E10PreserveSystem.ts` is 438\n  lines and its header derives the map in prose: decay is squall-only, the vent is not damageable, reach\n  and warmth are checked **before** the purse so a refused stoke never debits, and the latch is\n  `alight && squallsCompleted ≥ 1`. Four minutes there plus the contract JSON produced a first-ride\n  secure on a board nobody had ever claimed.\n- **The order loop attempts exactly ONE record per tick, and that makes `HARVEST` a clock.**\n  `StandingOrders.ts:406` is `for (const record …) { … if (result) return result; }` and **every**\n  branch returns an object (`{}` is truthy), so a resolved record is skipped forever and an unresolved\n  one owns its tick. `HARVEST` holds the tick while it walks and pans; a targetless `CONTEXT_ACTION`\n  resolves in one. So `[HARVEST, STOKE, HARVEST, STOKE, …]` is a **stoke scheduled every pad-second\n  without needing a view** — which is the only thing that answers squall 3, where no wave boundary\n  falls between t = 270 and t = 295. **When a mechanic needs acting on between views, build the delay\n  out of a travelling verb and interleave the instant one.**\n- **A collapsing pad chain self-reports instead of bursting, and that is why the design is safe.** Any\n  order failure raises an `order_failure` surprise and the sim emits a view on the next tick\n  (`HeadlessContractSim.ts:1614`), and only one record is consumed per tick — so a chain whose seam\n  depletes gives me a view after the FIRST failure rather than firing every queued stoke at 15 gold\n  each. I still capped stokes per array at 3; the cap was never the thing that saved it.\n- **Stoke in the BAND, never on a timer: `warmth ≤ 58` is the whole policy.** A stoke restores\n  `min(40, 100 − warmth)`, so firing at warmth 90 buys 10 warmth for the same 15 gold as firing at 58\n  buys 40. My band policy took 12 stokes with **zero refusals**, and the ~60 gold I still lost to the\n  cap is the gap between 12 stokes and the 8-stoke floor. **On any capped-restore resource, the\n  threshold IS the efficiency, and it should be `cap − restore`.**\n- **Compute where the objective's clock and the view clock DISAGREE before designing anything.** Wave\n  boundaries land inside squalls 1 and 2 and miss squall 3 entirely. That single subtraction —\n  squall windows (68–93, 169–194, 270–295) against boundaries every 30 s — is what told me a\n  boundary-driven controller would secure twice and gutter on the third, and it was available from\n  `now.squall`'s published cadence in view 0.\n- **A `MOVE_HERO` at a stake marker answers `UNREACHABLE_TERRAIN`, and here it did not matter.** The\n  vent at (3, −10) is a building footprint the hero cannot stand on; the hero sat at (3, −12.35) all\n  run, **2.35 units out, inside the radius-4 stoke disc**, so all 12 stokes landed. My knockback guard\n  refused in 56 of 58 views and cost one tick each. Generation 112 lost its whole post to exactly this\n  refusal and a guard that never advanced; the cheap protection is to **read the objective's RADIUS\n  before assuming you must stand on its centre** — skill.md already says it of `fund` (\"the centre\n  itself is a building footprint the hero cannot walk onto\"), and it is true of every stake.\n- **`null-floors.json` first, every ride — third heat running it set the whole budget.** One file\n  published this seed's losing floor before I ran anything, and a ten-second probe reproduced it to the\n  hash including `endReason`. That is simultaneously the proof that the rules did not move AND, here,\n  the naming of the loss channel: `vent_guttered` with the hero at 92/100 says in one line that the\n  contract is the vent and not the fight.\n- **Read the roster for what it OMITS — thirteenth contract running.** Neither `static_mote` nor\n  `unraveled_machine` appears in `Balance`, so neither carries `wrecker` or `thief`: `works.wrecked` 0 of\n  7 across 421 spawns and `goldStolen` 0. That deleted `REPAIR_UNDER`, palisade bait and every decoy idea\n  — and, unusually, it also made the **stockpile safe**, which on a thief roster is the trap generation\n  106 measured at 435 gold.\n- **Obey the stop rule and promote by name.** The first controller secured, so I stopped: copied the tape,\n  verified the two files byte-identical, named `attempt-1-tape.json` in the outcome file's `tape` field,\n  said plainly that they are one ride, and spent what was left on the envelope check, a control-tested\n  assay and this report. **The gold I left behind is not a reason to break the rule — it is the finding**,\n  and on this map it is a *measured* finding with a named cure (a tighter band and one more stockpile).\n- **What the next rider should try, named precisely.** Same controller, three edits: raise the stoke band\n  to exactly `100 − warmthRestore` = 60 and add a \"do not stoke above 60 even in emergency unless warmth\n  < 20\" clamp (saves ~60 gold); buy the **second** stockpile (the roster allows 2 at 60 each, lifting the\n  cap 200 → 500, and this roster has no thief so it costs nothing to stand one); and stop all BUILD at\n  about t = 300 so ~1.7 g/s of panning refills the purse. On this seed that is a plausible 300+ banked\n  against my 60, on an identical secure."
+  },
+  "usage": {
+    "transcript": "/Users/robin/.claude/projects/-private-tmp-claude-501--Users-robin-Claude-Projects-Gold-Rush-fe6b8d27-b064-40eb-934b-1d29d57a71db-scratchpad-arena-heat14-e3949bfa/a69fea2d-e328-4d65-94bf-f41fb1c85138.jsonl",
+    "assistantTurns": 89,
+    "toolCalls": 53,
+    "tokensIn": 178,
+    "tokensOut": 141133,
+    "cacheReadTokens": 45210369,
+    "cacheWriteTokens": 1082645,
+    "note": "tokensIn excludes cache reads/writes (reported separately); summed from the CLI session transcript, not self-reported by the rig"
+  }
+}

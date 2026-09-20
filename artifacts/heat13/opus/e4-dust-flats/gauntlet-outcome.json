@@ -1,0 +1,50 @@
+{
+  "secured": true,
+  "waves": 14,
+  "timeMs": 424000,
+  "gold": 0,
+  "kills": 550,
+  "calls": 49,
+  "defaultedPicks": 0,
+  "defaultedSecure": 1,
+  "eventLogHash": "fnv1a32:b08906ed",
+  "motor": {
+    "graded": ["camp-to-railhead"],
+    "hauled": true,
+    "arrivedAt": 24.267,
+    "roadDistance": 59.202,
+    "distanceTravelled": 86.292,
+    "fuelDrawn": 16.23,
+    "tarHarvested": 9,
+    "convoyArrived": null
+  },
+  "tape": "/private/tmp/heat13-569a41f9/artifacts/heat13/opus/e4-dust-flats/attempt-1-tape.json",
+  "scored": true,
+  "runsSoFar": 2,
+  "scoredAttempts": 1,
+  "worldModel": "sim-import",
+  "note": "tune-1 secured on the first controller ride; the stop rule ends the heat at the first SECURED outcome. attempt-1-tape.json is a byte-identical copy of tune-1-tape.json — ONE ride under two filenames, promoted by name here. The operator reads this `tape` field.",
+  "envelope": {
+    "durationTicks": 12720,
+    "maxTicks": 18002,
+    "lastEntryTick": 12659,
+    "entries": 49,
+    "maxEntries": 3601,
+    "bytes": 239782,
+    "maxTapeBytes": 1938784,
+    "admissible": true
+  },
+  "tapeEventLogHash": "fnv1a32:803c0a58",
+  "localAssay": {
+    "tool": "scripts/assay-replay-agent.mjs",
+    "eventLogHash": "fnv1a32:803c0a58",
+    "matchesTapeHeader": true,
+    "outcome": { "secured": true, "waves": 14, "gold": 0, "timeAlive": 424 },
+    "securedSnapshot": { "waves": 12, "gold": 0, "timeAlive": 424 }
+  },
+  "era": "09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4",
+  "viewVersion": 2,
+  "contract": "e4-dust-flats",
+  "seed": "e4-dust-flats-01",
+  "difficulty": "trail"
+}

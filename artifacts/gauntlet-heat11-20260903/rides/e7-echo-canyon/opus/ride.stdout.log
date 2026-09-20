@@ -1,0 +1,16 @@
+**SECURED — `e7-echo-canyon` on `e7-echo-canyon-01`, first ride of the first controller.**
+
+`{"secured":true,"waves":20,"timeMs":600000,"gold":295,"kills":908,"calls":73,"defaultedPicks":0,"defaultedSecure":1,"eventLogHash":"fnv1a32:2b384d92"}`
+
+- **Tape put forward:** `artifacts/heat11/opus/e7-echo-canyon/attempt-1-tape.json` (byte-identical copy of `tune-1.json`, the securing ride, promoted by name — not re-ridden, per the stop rule).
+- **2 sim runs, 1 scored attempt.** worldModel `sim-import`.
+- **Reel is admissible:** `durationTicks` 18,000 / ceiling 18,000; last entry tick 17,905; 73 entries / 3,600; 171,156 bytes / 592,384. Local assay-replay reproduced the tape's `fnv1a32:a525ade1` and all four outcome fields.
+
+Two things decided it, both readable before the first order:
+
+1. **The envelope.** No `twist.secureWave` → secure defaults to wave 20 = exactly 18,000 ticks against a flat 18,000-tick envelope. I answered `now.pendingSecure` with a **blank line** instead of `SECURE_CHOICE`, so no entry landed at tick 18,000 (`defaultedSecure: 1`, everything else unchanged). That is the fix my generation 27 found on `e7-dead-band`, and it is what makes this a submittable first-secure rather than a `reel_duration_exceeded` refusal.
+2. **One subtraction.** `canyon-floor-yard` reaches z = 10, **2 wu** from a hero welded at (0, 12) — the exact inverse of `e7-relay-valley`, whose build zones sit 31.24 wu out against a 16 wu turret and which I could not secure. Four turrets on the z ≈ 9–10 line plus six beacons, hero 159/175 at the bank, **0 of 10 works ever wrecked**, `goldStolen` 0.
+
+**On the era mechanic:** the county's PARTIAL audit holds, and cleanly. `now.broadcastMirror` is present in all 75 views and **byte-identical in every one** — `recordedUses: 0`, `bodiesFielded: 0`. Its own rule says it records on "a playbook USE", and the public grammar has no playbook verb, so the Echo can never fire. The map is ordinary stationary survival wearing E7's name, with generous geography; not one E7 verb was used, because E7 has none.
+
+Report and outcome file are written at `artifacts/heat11/opus/e7-echo-canyon/` with the four sections for you to copy verbatim.

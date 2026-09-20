@@ -1,0 +1,25 @@
+**SECURED** — `e4-gusher-county` / `e4-gusher-county-01`, first controller ride.
+
+## Result
+
+`waves 12 · timeAlive 360.000 s · gold 5 · calls 39 · kills 416` — 2 sim runs (idle probe + the ride), 1 scored attempt, `worldModel: sim-import`.
+
+Errand `arrived` at **t = 114.167**: all three lease heads delivered, `tarHarvested: 9`, `fuelDrawn: 32.952` of 36, `roadDistance: 325.232` of `distanceTravelled: 359.942` — 90% of the drive on graded road.
+
+**Tape put forward:** `artifacts/heat12/opus/e4-gusher-county/attempt-1-tape.json`, declared in `gauntlet-outcome.json`'s `tape` field. It is a byte-identical copy of `tune-1-tape.json` — one ride under two filenames, since the tune secured and the rules end the ride there.
+
+Admissibility measured off the tape before calling it an attempt: `durationTicks` 10800, last accepted order at tick **10717** (83 ticks of slack, clear of the F-HEAT11-1 terminal-tick case), 39 entries, 111,961 bytes against a ~345 KB ceiling. Local assay reproduced the tape's own `fnv1a32:abfd532f` and all four outcome fields.
+
+## What decided it
+
+Route arithmetic, before any order: all six tour orderings priced against a 36-fuel leash. **W(out,home) → cross → N(out,home) → cross → E(out)** is 25.87 fuel; N-first is 33.5. Open country costs 6× graded road per unit, so the rule is "minimise open crossings between stakes, last lease gets no return leg."
+
+Two things made it cheap: the west and east corridor stakes **are** tar nodes 1 and 3, so all three corridors graded inside 18 s for free; and `HAUL` captures the Prospector's position at dispatch, so the worker walks to the next waypoint while the current drive is in flight.
+
+The closure clock was gated in closed form (`corridorIds[floor(t/30)%3]` while `t mod 30 ∈ [10,22)`) against *projected* dispatch times, with a `HOLD` terminating the chain when unsafe — it fired once, for the north lease at t = 60, and cost one wave boundary. A closed lease takes no delivery and strips the road bonus: the west road is 2.65 fuel graded and 23.6 driven closed-and-storming.
+
+## On the changed mechanic
+
+The map still plays the way generation 17 remembers it — same tar nodes, same leash, same closure pick, same optimal route, same w5/155 s idle floor. On the week's second drain I can be exact: `motorActions` is pushed only by `RunTape.recordMotorAction`, whose callers are the browser game, and my reel carries three accepted `HAUL`s and no `motorActions` key at all. That change is browser-side; the headless door does not see it.
+
+Margin was wide on the errand and thin on the purse — I banked 5 gold of 370 panned with the fort still buying at wave 11, which is the one thing I'd name as left on the table. Report sections are in `gauntlet-report.md` for verbatim copying.

@@ -1,0 +1,17 @@
+**SECURED — `e8-mare-claim` on `e8-mare-claim-01`, first secure candidate.**
+
+`w20 / 600.000 s / 60 gold / 916 kills / 77 calls`, `defaultedSecure: 1`, `eventLogHash fnv1a32:e06bda53`. 4 sim runs, 1 scored attempt.
+
+**Tape put forward:** `artifacts/heat12/opus/e8-mare-claim/attempt-1-tape.json` — declared in `gauntlet-outcome.json`'s `"tape"` field. It is the tune-3 ride under a second filename (byte-identical to `tune-3-tape.json`); the rules stop at the first secure, so the securing tune *is* the scored attempt.
+
+**Admissible:** `durationTicks` 18 000, last entry tick 17 946, 77 entries, 221 274 bytes. This contract declares no `twist.secureWave`, so it takes the flat 18 000-tick envelope — I answered the secure boundary with a blank line, which keeps the last accepted order off the terminal tick (F-HEAT11-1). Local assay reproduced the tape's own `fnv1a32:f84d1d2b` and all four outcome fields.
+
+**What was actually blocking it.** Generation 29 rode this map to w19/586.1 s and called it "probably winnable, blocked by my own budget." That was right, and the fix was an array index. `works.entries[].tier` is **1-based** — a fresh turret reports `tier: 1`, so its next step costs `Balance.tiers.turret[1].cost = 150`, not 300. My tune-1 priced it off the wrong index, issued zero `CONTEXT_ACTION upgrade`s, and reproduced gen-29's near-miss almost exactly (584.1 s) with gold pinned at the 200 cap and `goldPanned` frozen for the last 107 seconds. Correcting that, plus a turret-first ladder, secured on the next ride with three turrets at tier 2.
+
+One useful negative on the way: tune-2 tested an income-first upgrade draft as a single variable. It panned 100 *more* gold and died 116 seconds *earlier* (w15 vs w19) — the map is DPS-bound, not gold-bound, and every draft pick spent on movement/panning is combat power given away.
+
+**Margin was wide, not thin:** hero held its full 175 HP from t=270 to t=448 and finished 92.6/175, all ten works stood unwrecked (neither E8 roster entry is a wrecker or thief), `threats.alive` peaked at 34 against a 60 cap.
+
+**On the era mechanic:** air is genuinely composed and genuinely gates the secure (`now.air.regolith.complete`), but `required` is **1**, so the whole air wall costs one pan — my suit then sat empty for 488.8 of 600 seconds with 197 breathless pans and no consequence. Half an exercise: a real gate, priced at one order, and 550 seconds of ordinary stationary survival on ground where nothing can be built within 6 wu of the hero.
+
+Report at `artifacts/heat12/opus/e8-mare-claim/gauntlet-report.md` with the four sections for you to copy verbatim.

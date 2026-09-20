@@ -1,0 +1,888 @@
+{
+  "source": {
+    "src/systems/HomemakerBossSystem.ts": "e2deac8fc7cca87df8110ddc3ff60da8909b5b4eb128388f324602ba5d615030",
+    "src/game/Game.ts": "900b03f23b083c0296ad0fc1af402ea9b00697a6c4d3815c61837a67f6a65bb6",
+    "assets/pilots/homemaker-9000-3d/homemaker-9000.glb": "3dc03cfafaab0645dc44350843ade2ede19e5ddf4f1a55519afbabeebc649ba9",
+    "candidateSource": "8c0b2d6da50709df851ec1402cee53ef02801d350b660342fc57f5735cdc1294",
+    "candidateAsset": "d81454a11c49f963251563812a70883e84822092fd6f6482ef8d994ddd4d42d5"
+  },
+  "scope": "Isolated V12 asset/runtime draft routed into actual Game, accelerated waves/manual simulation, fixed hero framing. Read-only baseline for model/camera/terrain alignment; not natural progression or a performance benchmark.",
+  "cases": [
+    {
+      "name": "desktop",
+      "label": "default",
+      "file": "desktop-default.png",
+      "boundsMaxY": 11.637241744995118,
+      "actualMaxY": 11.637241744995118,
+      "labelBarGap": 40.56430193184109,
+      "barVisible": true,
+      "pictogramGap": 2.799999999999999,
+      "diagnostics": {
+        "active": true,
+        "act": 1,
+        "position": {
+          "x": 8,
+          "z": 4
+        },
+        "tidiedMarkers": 2,
+        "liveComponents": [
+          "vac",
+          "rack"
+        ],
+        "unbuilds": 0,
+        "unbuildOrder": [],
+        "partsStackPickups": 0,
+        "rackArcs": 0,
+        "rackTelegraphed": false,
+        "structureDamageEvents": 0,
+        "playerDamageEvents": 0,
+        "pickupsCurated": 0,
+        "loosePickups": 0,
+        "pileCenters": [
+          {
+            "x": 6.5,
+            "z": 6.2
+          },
+          {
+            "x": 9.5,
+            "z": 6.2
+          }
+        ],
+        "pictogram": "sparkle",
+        "chairPlaced": false,
+        "poweredDown": false,
+        "nonHostile": false,
+        "kept": false,
+        "persistentKept": false
+      },
+      "machine": [
+        8,
+        5.025,
+        4
+      ],
+      "parts": [
+        {
+          "id": "vac",
+          "morph": 0
+        },
+        {
+          "id": "rack",
+          "morph": 0
+        },
+        {
+          "id": "core",
+          "morph": 0
+        }
+      ],
+      "terrain": {
+        "below": 0,
+        "count": 17748,
+        "worst": 0
+      },
+      "targets": [
+        {
+          "id": "vac",
+          "position": [
+            5.8,
+            5.05,
+            4
+          ]
+        },
+        {
+          "id": "rack",
+          "position": [
+            10.2,
+            5.05,
+            4
+          ]
+        }
+      ],
+      "camera": [
+        7.999999999997456,
+        31.259999999998726,
+        31.299999999985694
+      ]
+    },
+    {
+      "name": "desktop",
+      "label": "arrived",
+      "file": "desktop-arrived.png",
+      "boundsMaxY": 11.637241744995118,
+      "actualMaxY": 11.637241744995118,
+      "labelBarGap": 36.169937895329475,
+      "barVisible": true,
+      "pictogramGap": 2.799999999999999,
+      "diagnostics": {
+        "active": true,
+        "act": 1,
+        "position": {
+          "x": 8,
+          "z": 4
+        },
+        "tidiedMarkers": 2,
+        "liveComponents": [
+          "vac",
+          "rack"
+        ],
+        "unbuilds": 0,
+        "unbuildOrder": [],
+        "partsStackPickups": 0,
+        "rackArcs": 0,
+        "rackTelegraphed": false,
+        "structureDamageEvents": 0,
+        "playerDamageEvents": 0,
+        "pickupsCurated": 0,
+        "loosePickups": 0,
+        "pileCenters": [
+          {
+            "x": 6.5,
+            "z": 6.2
+          },
+          {
+            "x": 9.5,
+            "z": 6.2
+          }
+        ],
+        "pictogram": "sparkle",
+        "chairPlaced": false,
+        "poweredDown": false,
+        "nonHostile": false,
+        "kept": false,
+        "persistentKept": false
+      },
+      "machine": [
+        8,
+        5.025,
+        4
+      ],
+      "parts": [
+        {
+          "id": "vac",
+          "morph": 0
+        },
+        {
+          "id": "rack",
+          "morph": 0
+        },
+        {
+          "id": "core",
+          "morph": 0
+        }
+      ],
+      "terrain": {
+        "below": 0,
+        "count": 17748,
+        "worst": 0
+      },
+      "targets": [
+        {
+          "id": "vac",
+          "position": [
+            5.8,
+            5.05,
+            4
+          ]
+        },
+        {
+          "id": "rack",
+          "position": [
+            10.2,
+            5.05,
+            4
+          ]
+        }
+      ],
+      "camera": [
+        7.999999999999993,
+        31.259999999999973,
+        26.35850973738521
+      ]
+    },
+    {
+      "name": "desktop",
+      "label": "rack-destroyed",
+      "file": "desktop-rack-destroyed.png",
+      "boundsMaxY": 11.4681791305542,
+      "actualMaxY": 11.4681791305542,
+      "labelBarGap": 42.80539454035059,
+      "barVisible": true,
+      "pictogramGap": 2.799999999999999,
+      "diagnostics": {
+        "active": true,
+        "act": 1,
+        "position": {
+          "x": 8,
+          "z": 4
+        },
+        "tidiedMarkers": 2,
+        "liveComponents": [
+          "vac"
+        ],
+        "unbuilds": 0,
+        "unbuildOrder": [],
+        "partsStackPickups": 0,
+        "rackArcs": 0,
+        "rackTelegraphed": false,
+        "structureDamageEvents": 0,
+        "playerDamageEvents": 0,
+        "pickupsCurated": 0,
+        "loosePickups": 0,
+        "pileCenters": [
+          {
+            "x": 6.5,
+            "z": 6.2
+          },
+          {
+            "x": 9.5,
+            "z": 6.2
+          }
+        ],
+        "pictogram": "sparkle",
+        "chairPlaced": false,
+        "poweredDown": false,
+        "nonHostile": false,
+        "kept": false,
+        "persistentKept": false
+      },
+      "machine": [
+        8,
+        5.025,
+        4
+      ],
+      "parts": [
+        {
+          "id": "vac",
+          "morph": 0
+        },
+        {
+          "id": "rack",
+          "morph": 1
+        },
+        {
+          "id": "core",
+          "morph": 0
+        }
+      ],
+      "terrain": {
+        "below": 0,
+        "count": 17748,
+        "worst": 0
+      },
+      "targets": [
+        {
+          "id": "vac",
+          "position": [
+            5.8,
+            5.05,
+            4
+          ]
+        }
+      ],
+      "camera": [
+        8,
+        31.259999999999998,
+        26.3
+      ]
+    },
+    {
+      "name": "desktop",
+      "label": "vac-destroyed",
+      "file": "desktop-vac-destroyed.png",
+      "boundsMaxY": 11.4681791305542,
+      "actualMaxY": 11.4681791305542,
+      "labelBarGap": 42.80539454035055,
+      "barVisible": true,
+      "pictogramGap": 2.799999999999999,
+      "diagnostics": {
+        "active": true,
+        "act": 2,
+        "position": {
+          "x": 8,
+          "z": 4
+        },
+        "tidiedMarkers": 2,
+        "liveComponents": [
+          "core"
+        ],
+        "unbuilds": 0,
+        "unbuildOrder": [],
+        "partsStackPickups": 0,
+        "rackArcs": 0,
+        "rackTelegraphed": false,
+        "structureDamageEvents": 0,
+        "playerDamageEvents": 0,
+        "pickupsCurated": 0,
+        "loosePickups": 0,
+        "pileCenters": [
+          {
+            "x": 6.5,
+            "z": 6.2
+          },
+          {
+            "x": 9.5,
+            "z": 6.2
+          }
+        ],
+        "pictogram": "broom",
+        "chairPlaced": false,
+        "poweredDown": false,
+        "nonHostile": false,
+        "kept": false,
+        "persistentKept": false
+      },
+      "machine": [
+        8,
+        5.025,
+        4
+      ],
+      "parts": [
+        {
+          "id": "vac",
+          "morph": 1
+        },
+        {
+          "id": "rack",
+          "morph": 1
+        },
+        {
+          "id": "core",
+          "morph": 0
+        }
+      ],
+      "terrain": {
+        "below": 0,
+        "count": 17748,
+        "worst": 0
+      },
+      "targets": [
+        {
+          "id": "core",
+          "position": [
+            8,
+            5.05,
+            4
+          ]
+        }
+      ],
+      "camera": [
+        8,
+        31.259999999999998,
+        26.3
+      ]
+    },
+    {
+      "name": "desktop",
+      "label": "core-destroyed",
+      "file": "desktop-core-destroyed.png",
+      "boundsMaxY": null,
+      "actualMaxY": 10.139242061972618,
+      "labelBarGap": 101.05259373505416,
+      "barVisible": false,
+      "pictogramGap": 2.799999999999999,
+      "diagnostics": {
+        "active": false,
+        "act": 3,
+        "position": {
+          "x": 8,
+          "z": 4
+        },
+        "tidiedMarkers": 2,
+        "liveComponents": [],
+        "unbuilds": 0,
+        "unbuildOrder": [],
+        "partsStackPickups": 0,
+        "rackArcs": 0,
+        "rackTelegraphed": false,
+        "structureDamageEvents": 0,
+        "playerDamageEvents": 0,
+        "pickupsCurated": 0,
+        "loosePickups": 0,
+        "pileCenters": [
+          {
+            "x": 6.5,
+            "z": 6.2
+          },
+          {
+            "x": 9.5,
+            "z": 6.2
+          }
+        ],
+        "pictogram": "DONE",
+        "chairPlaced": true,
+        "poweredDown": true,
+        "nonHostile": true,
+        "kept": true,
+        "persistentKept": false
+      },
+      "machine": [
+        8,
+        5.01863087117672,
+        4
+      ],
+      "parts": [
+        {
+          "id": "vac",
+          "morph": 1
+        },
+        {
+          "id": "rack",
+          "morph": 1
+        },
+        {
+          "id": "core",
+          "morph": 1
+        }
+      ],
+      "terrain": {
+        "below": 0,
+        "count": 17748,
+        "worst": 0
+      },
+      "targets": [],
+      "camera": [
+        8,
+        31.259999999999998,
+        26.3
+      ]
+    },
+    {
+      "name": "mobile",
+      "label": "default",
+      "file": "mobile-default.png",
+      "boundsMaxY": 11.637241744995118,
+      "actualMaxY": 11.637241744995118,
+      "labelBarGap": 42.795338538092764,
+      "barVisible": true,
+      "pictogramGap": 2.799999999999999,
+      "diagnostics": {
+        "active": true,
+        "act": 1,
+        "position": {
+          "x": 8,
+          "z": 4
+        },
+        "tidiedMarkers": 2,
+        "liveComponents": [
+          "vac",
+          "rack"
+        ],
+        "unbuilds": 0,
+        "unbuildOrder": [],
+        "partsStackPickups": 0,
+        "rackArcs": 0,
+        "rackTelegraphed": false,
+        "structureDamageEvents": 0,
+        "playerDamageEvents": 0,
+        "pickupsCurated": 0,
+        "loosePickups": 0,
+        "pileCenters": [
+          {
+            "x": 6.5,
+            "z": 6.2
+          },
+          {
+            "x": 9.5,
+            "z": 6.2
+          }
+        ],
+        "pictogram": "sparkle",
+        "chairPlaced": false,
+        "poweredDown": false,
+        "nonHostile": false,
+        "kept": false,
+        "persistentKept": false
+      },
+      "machine": [
+        8,
+        5.025,
+        4
+      ],
+      "parts": [
+        {
+          "id": "vac",
+          "morph": 0
+        },
+        {
+          "id": "rack",
+          "morph": 0
+        },
+        {
+          "id": "core",
+          "morph": 0
+        }
+      ],
+      "terrain": {
+        "below": 0,
+        "count": 17748,
+        "worst": 0
+      },
+      "targets": [
+        {
+          "id": "vac",
+          "position": [
+            5.8,
+            5.05,
+            4
+          ]
+        },
+        {
+          "id": "rack",
+          "position": [
+            10.2,
+            5.05,
+            4
+          ]
+        }
+      ],
+      "camera": [
+        7.999999999997002,
+        31.259999999998495,
+        31.299999999983143
+      ]
+    },
+    {
+      "name": "mobile",
+      "label": "arrived",
+      "file": "mobile-arrived.png",
+      "boundsMaxY": 11.637241744995118,
+      "actualMaxY": 11.637241744995118,
+      "labelBarGap": 10.170575868024505,
+      "barVisible": true,
+      "pictogramGap": 2.799999999999999,
+      "diagnostics": {
+        "active": true,
+        "act": 1,
+        "position": {
+          "x": 8,
+          "z": 4
+        },
+        "tidiedMarkers": 2,
+        "liveComponents": [
+          "vac",
+          "rack"
+        ],
+        "unbuilds": 0,
+        "unbuildOrder": [],
+        "partsStackPickups": 0,
+        "rackArcs": 0,
+        "rackTelegraphed": false,
+        "structureDamageEvents": 0,
+        "playerDamageEvents": 0,
+        "pickupsCurated": 0,
+        "loosePickups": 0,
+        "pileCenters": [
+          {
+            "x": 6.5,
+            "z": 6.2
+          },
+          {
+            "x": 9.5,
+            "z": 6.2
+          }
+        ],
+        "pictogram": "sparkle",
+        "chairPlaced": false,
+        "poweredDown": false,
+        "nonHostile": false,
+        "kept": false,
+        "persistentKept": false
+      },
+      "machine": [
+        8,
+        5.025,
+        4
+      ],
+      "parts": [
+        {
+          "id": "vac",
+          "morph": 0
+        },
+        {
+          "id": "rack",
+          "morph": 0
+        },
+        {
+          "id": "core",
+          "morph": 0
+        }
+      ],
+      "terrain": {
+        "below": 0,
+        "count": 17748,
+        "worst": 0
+      },
+      "targets": [
+        {
+          "id": "vac",
+          "position": [
+            5.8,
+            5.05,
+            4
+          ]
+        },
+        {
+          "id": "rack",
+          "position": [
+            10.2,
+            5.05,
+            4
+          ]
+        }
+      ],
+      "camera": [
+        7.999999999999985,
+        46.67218040457162,
+        37.11207678176754
+      ]
+    },
+    {
+      "name": "mobile",
+      "label": "rack-destroyed",
+      "file": "mobile-rack-destroyed.png",
+      "boundsMaxY": 11.4681791305542,
+      "actualMaxY": 11.4681791305542,
+      "labelBarGap": 15.664679626622048,
+      "barVisible": true,
+      "pictogramGap": 2.799999999999999,
+      "diagnostics": {
+        "active": true,
+        "act": 1,
+        "position": {
+          "x": 8,
+          "z": 4
+        },
+        "tidiedMarkers": 2,
+        "liveComponents": [
+          "vac"
+        ],
+        "unbuilds": 0,
+        "unbuildOrder": [],
+        "partsStackPickups": 0,
+        "rackArcs": 0,
+        "rackTelegraphed": false,
+        "structureDamageEvents": 0,
+        "playerDamageEvents": 0,
+        "pickupsCurated": 0,
+        "loosePickups": 0,
+        "pileCenters": [
+          {
+            "x": 6.5,
+            "z": 6.2
+          },
+          {
+            "x": 9.5,
+            "z": 6.2
+          }
+        ],
+        "pictogram": "sparkle",
+        "chairPlaced": false,
+        "poweredDown": false,
+        "nonHostile": false,
+        "kept": false,
+        "persistentKept": false
+      },
+      "machine": [
+        8,
+        5.025,
+        4
+      ],
+      "parts": [
+        {
+          "id": "vac",
+          "morph": 0
+        },
+        {
+          "id": "rack",
+          "morph": 1
+        },
+        {
+          "id": "core",
+          "morph": 0
+        }
+      ],
+      "terrain": {
+        "below": 0,
+        "count": 17748,
+        "worst": 0
+      },
+      "targets": [
+        {
+          "id": "vac",
+          "position": [
+            5.8,
+            5.05,
+            4
+          ]
+        }
+      ],
+      "camera": [
+        8,
+        46.980000000000004,
+        37.28
+      ]
+    },
+    {
+      "name": "mobile",
+      "label": "vac-destroyed",
+      "file": "mobile-vac-destroyed.png",
+      "boundsMaxY": 11.4681791305542,
+      "actualMaxY": 11.4681791305542,
+      "labelBarGap": 15.664679626621885,
+      "barVisible": true,
+      "pictogramGap": 2.799999999999999,
+      "diagnostics": {
+        "active": true,
+        "act": 2,
+        "position": {
+          "x": 8,
+          "z": 4
+        },
+        "tidiedMarkers": 2,
+        "liveComponents": [
+          "core"
+        ],
+        "unbuilds": 0,
+        "unbuildOrder": [],
+        "partsStackPickups": 0,
+        "rackArcs": 0,
+        "rackTelegraphed": false,
+        "structureDamageEvents": 0,
+        "playerDamageEvents": 0,
+        "pickupsCurated": 0,
+        "loosePickups": 0,
+        "pileCenters": [
+          {
+            "x": 6.5,
+            "z": 6.2
+          },
+          {
+            "x": 9.5,
+            "z": 6.2
+          }
+        ],
+        "pictogram": "broom",
+        "chairPlaced": false,
+        "poweredDown": false,
+        "nonHostile": false,
+        "kept": false,
+        "persistentKept": false
+      },
+      "machine": [
+        8,
+        5.025,
+        4
+      ],
+      "parts": [
+        {
+          "id": "vac",
+          "morph": 1
+        },
+        {
+          "id": "rack",
+          "morph": 1
+        },
+        {
+          "id": "core",
+          "morph": 0
+        }
+      ],
+      "terrain": {
+        "below": 0,
+        "count": 17748,
+        "worst": 0
+      },
+      "targets": [
+        {
+          "id": "core",
+          "position": [
+            8,
+            5.05,
+            4
+          ]
+        }
+      ],
+      "camera": [
+        8,
+        46.980000000000004,
+        37.28
+      ]
+    },
+    {
+      "name": "mobile",
+      "label": "core-destroyed",
+      "file": "mobile-core-destroyed.png",
+      "boundsMaxY": null,
+      "actualMaxY": 10.139242061972618,
+      "labelBarGap": 58.97116925546165,
+      "barVisible": false,
+      "pictogramGap": 2.799999999999999,
+      "diagnostics": {
+        "active": false,
+        "act": 3,
+        "position": {
+          "x": 8,
+          "z": 4
+        },
+        "tidiedMarkers": 2,
+        "liveComponents": [],
+        "unbuilds": 0,
+        "unbuildOrder": [],
+        "partsStackPickups": 0,
+        "rackArcs": 0,
+        "rackTelegraphed": false,
+        "structureDamageEvents": 0,
+        "playerDamageEvents": 0,
+        "pickupsCurated": 0,
+        "loosePickups": 0,
+        "pileCenters": [
+          {
+            "x": 6.5,
+            "z": 6.2
+          },
+          {
+            "x": 9.5,
+            "z": 6.2
+          }
+        ],
+        "pictogram": "DONE",
+        "chairPlaced": true,
+        "poweredDown": true,
+        "nonHostile": true,
+        "kept": true,
+        "persistentKept": false
+      },
+      "machine": [
+        8,
+        5.01863087117672,
+        4
+      ],
+      "parts": [
+        {
+          "id": "vac",
+          "morph": 1
+        },
+        {
+          "id": "rack",
+          "morph": 1
+        },
+        {
+          "id": "core",
+          "morph": 1
+        }
+      ],
+      "terrain": {
+        "below": 0,
+        "count": 17748,
+        "worst": 0
+      },
+      "targets": [],
+      "camera": [
+        8,
+        46.980000000000004,
+        37.28
+      ]
+    }
+  ],
+  "errors": [],
+  "completed": true
+}

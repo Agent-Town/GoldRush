@@ -1,0 +1,32 @@
+diff --git a/0867a696eb3d9281637910b655cc493f0fa11afc b/06fd728469670d53f1f30fb4a0ff5f7702e85165
+index 0867a696..06fd7284 100644
+--- a/0867a696eb3d9281637910b655cc493f0fa11afc
++++ b/06fd728469670d53f1f30fb4a0ff5f7702e85165
+@@ -27,6 +27,16 @@ for (const contract of steamworks.contracts) {
+     let vite: ViteDevServer | undefined;
+     let restoreRig: (() => void) | undefined;
+ 
++    // Node's default 'warning' handler prints via console.error on a later tick, so a
++    // process-level ExperimentalWarning lands in the capture below and reds the
++    // zero-console assertion. Node >= 26 emits exactly one the first time anything reads
++    // globalThis.localStorage without --localstorage-file, which .nvmrc's pinned 26.4.0
++    // does and the runner's off-pin 23.11.1 does not. Own the channel so this assertion
++    // stays about the APP's console output, which is what it is for.
++    const previousWarningListeners = process.listeners('warning');
++    process.removeAllListeners('warning');
++    process.on('warning', () => {});
++
+     host.location = location;
+     host.window = { location };
+     console.error = (...args: unknown[]) => consoleErrors.push(args.map(String).join(' '));
+@@ -81,6 +91,10 @@ for (const contract of steamworks.contracts) {
+       else host.location = previousLocation;
+       if (previousWindow === undefined) delete host.window;
+       else host.window = previousWindow;
++      process.removeAllListeners('warning');
++      for (const listener of previousWarningListeners) {
++        process.on('warning', listener as (warning: Error) => void);
++      }
+     }
+   });
+ }

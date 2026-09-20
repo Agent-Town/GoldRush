@@ -1,0 +1,68 @@
+
+########## RIDE e10-archive-world · seed e10-archive-world-01 · gen 133 · stake never-claimed · wall 1500s ##########
+--- 1 charter ---
+{"rig":"opus","contract":"e10-archive-world","seed":"e10-archive-world-01","seedMode":"bench","stake":"never-claimed","generation":133,"wall":1500,"notebookSha256":"f8778d51f762de8550f8c5d34c16561f71bb05c139bcef7d181ff12ad0e4b71b","charterSha256":"0e49273e8823e79ae8187242e07f5db09afa88f96904c41eeac319ea0366593d","bytes":1091948,"out":"/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/gauntlet-heat14-e3949bfa/rides/e10-archive-world/charter.md"}
+--- 2 ride ---
+START opus claude-opus-5 pid=62465 session=c8137fdf-83f9-417f-b353-b998ca17e652 at=2026-09-18T11:02:02.970Z
+FIRST-OUTPUT opus +270s
+OUTCOME opus secured=false waves=2 gold=0 runsSoFar=1 scored=0 +270s
+OUTCOME opus secured=true waves=12 gold=200 runsSoFar=2 scored=0 +555s
+OUTCOME opus secured=true waves=12 gold=200 runsSoFar=2 scored=1 +615s
+OUTCOME opus secured=true waves=12 gold=200 runsSoFar=2 scored=1 +855s
+END opus rc=0 signal=null wall=880s wallHit=false
+ride-wall rc=0 signal=-
+--- 3 land ---
+
+=== 1 finish-ride ===
+{"rig":"opus","contract":"e10-archive-world","wall":880,"wallHit":false,"rc":0,"tracked":[],"files":11,"outcome":{"secured":true,"waves":12,"gold":200,"runsSoFar":2,"scoredAttempts":1,"tape":"/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/heat14/opus/e10-archive-world/attempt-1-tape.json","worldModel":"sim-import"},"scoredTapes":[{"file":"attempt-1-tape.json","id":"agent-95cae990-be5bfe55-c25b-4145-a370-7f4904a6312f","secured":true,"waves":12,"gold":200,"durationTicks":10800,"lastEntryTick":10271,"promotedByRig":true,"discoveredBy":"outcome-file+filename"}],"otherSecured":[{"file":"tune-1-tape.json","id":"agent-95cae990-be5bfe55-c25b-4145-a370-7f4904a6312f","waves":12,"gold":200}],"reportSections":{"outcome":1375,"whatTheMapAsked":4278,"winnability":1458,"lessons":6363},"usage":{"turns":79,"toolCalls":45,"tokensIn":158,"tokensOut":137172}}
+tape chosen: attempt-1-tape.json (id agent-95cae990-be5bfe55-c25b-4145-a370-7f4904a6312f, promotedByRig=true, discoveredBy=outcome-file+filename)
+
+=== 2 freeze notebook header ===
+{"headerOnly":true,"headerBytes":437}
+
+=== 3 harnessDigest ===
+c8518a56b7e67e992c4b9aee34ec9ae662dc01590a935080582038e34416e71c
+
+=== 4 build-submission ===
+{"tapeId":"agent-95cae990-be5bfe55-c25b-4145-a370-7f4904a6312f","contract":"e10-archive-world","epochId":"epoch-10-deepsky","seed":"e10-archive-world-01","seedMode":"bench","score":{"secured":true,"waves":12,"timeAlive":360,"gold":200,"baseValue":0},"papers":{"buildId":"2195d162f","engineHash":"540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068","era":6,"viewVersion":2},"durationTicks":10800,"lastEntryTick":10271,"stack":{"model":"claude-opus-5","harness":"heat14-operator","harnessVersion":"2.1.272","harnessDigest":"c8518a56b7e67e992c4b9aee34ec9ae662dc01590a935080582038e34416e71c","worldModel":"sim-import","config":"attended-hosted headless `claude -p` ride (heat 14, the era-6 re-ride) on Claude Code CLI 2.1.272; charter + door manual + own notebook (self-memory); own controller authored in-ride","calls":57,"tokensIn":43030136,"tokensOut":137172}}
+
+=== 5 publish (POST → poll → WATCH) ===
+FAILED: file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/gauntlet-heat14-e3949bfa/publish-submission.mjs:28
+if (!post.ok) throw new Error(`POST ${post.status}: ${postText}`);
+                    ^
+
+Error: POST 429: {"ok":false,"error":"rate_limited","message":"The county clerk needs a spell."}
+    at file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/gauntlet-heat14-e3949bfa/publish-submission.mjs:28:21
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+Node.js v26.4.0
+
+file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/gauntlet-heat14-e3949bfa/publish-submission.mjs:28
+if (!post.ok) throw new Error(`POST ${post.status}: ${postText}`);
+                    ^
+
+Error: POST 429: {"ok":false,"error":"rate_limited","message":"The county clerk needs a spell."}
+    at file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/gauntlet-heat14-e3949bfa/publish-submission.mjs:28:21
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+Node.js v26.4.0
+file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/gauntlet-heat14-e3949bfa/land-ride.mjs:62
+catch { posted = existsSync(`${dir}/post-response.json`) && JSON.parse(readFileSync(`${dir}/post-response.json`, 'utf8')).ok === true; if (!posted) throw new Error('POST itself failed — see post-response.json'); process.stdout.write('POST ok; assay still pending at the 120 s mark — resuming with the poll-only shim (no re-POST)\n'); }
+                                                                                                                                                          ^
+
+Error: POST itself failed — see post-response.json
+    at file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/gauntlet-heat14-e3949bfa/land-ride.mjs:62:155
+    at ModuleJob.run (node:internal/modules/esm/module_job:447:25)
+    at async node:internal/modules/esm/loader:646:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v26.4.0
+
+land rc=1
+--- 4 notebook ---
+{"notebook":"/Users/robin/Claude/Projects/goldrush-gauntlet/memories/claude__opus-5/NOTEBOOK.md","generation":133,"headerBytes":437,"entryBytes":13101}
+--- 5 matrix ---
+| 37 | e10-archive-world | `e10-archive-world-01` | never-claimed | 133 | **SECURED** | 12 | 200 | 360s | 880s | `attempt-1-tape.json` · `agent-95cae990-be5bfe55-c25b-4145-a370-7f4904a6312f`<br>fnv1a32:d05bd4b5 | ⚠ not submitted | gen 133 |
+{"contract":"e10-archive-world","secured":true,"tapesOnDisk":6,"scoredTapes":1,"otherSecured":1,"runs":2,"scoredAttempts":1,"wallHit":false,"rc":0,"assay":null,"ranked":null,"winnability":"Secured, and the margin was **enormous on survival, thin on one coordinate, and openly left on\nthe table where it scores**: the hero never fell below **68 %** of its running maximum (68/100 at\nt = 42, before the plating picks; finishing **143/175 at level 18**), **0 of 7 works was ever\nwrecked** and `goldStolen` finished at **0** across 416 kills — because neither roster entry\ndeclares `wrecker` or `thief` — while the objective latched 300 seconds before the gate. The\ngenuinely thin thing was the objective's *ground*: eleven of twelve candidate coordinates inside\nthe light disc are unbuildable, and a rider offering only the stake's own centre would report\nthis contract unwinnable. The ranked number, **200 of a 200 default cap**, is the margin I left\nbehind and I can name it to the second: the purse pinned at 200 at **t ≈ 312** and\n`score.goldPanned` froze at **645** for the last 48 seconds, because the two `stockpile` rungs\n(60 g each, +150 cap, safe on a thief-free roster) were emitted **once**, at t = 265.7, **both at\nthe same coordinate (-2,-53)** — my spot chooser reads standing works and does not reserve a spot\nalready chosen *in the same array* — and were then wiped 4.3 seconds later by my own\n`t > secure − 90` hard build floor, before the Prospector could walk the 28 units to place the\nfirst one. A stockpile landing at t ≈ 250 lifts the ceiling to 350 and turns the frozen tail into\nroughly 250–300 banked on an identical secure."}
+########## END e10-archive-world ##########
+

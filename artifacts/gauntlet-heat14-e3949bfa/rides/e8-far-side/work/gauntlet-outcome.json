@@ -1,0 +1,38 @@
+{
+  "secured": true,
+  "waves": 20,
+  "timeMs": 600000,
+  "gold": 60,
+  "kills": 919,
+  "calls": 101,
+  "defaultedPicks": 0,
+  "defaultedSecure": 1,
+  "eventLogHash": "fnv1a32:64b3b447",
+  "tape": "/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/heat14/opus/e8-far-side/attempt-2-tape.json",
+  "scored": true,
+  "runsSoFar": 5,
+  "scoredAttempts": 2,
+  "worldModel": "sim-import",
+  "note": "SECURED on attempt-2. Runs: probe(idle), tune-1(w10), tune-2(w17), attempt-1(w19/592.5s), attempt-2(w20 SECURED). attempt-1 and attempt-2 are the two scored attempts.",
+  "envelope": {
+    "ticks": 18000,
+    "lastEntryTick": 17899,
+    "entries": 101,
+    "bytes": 332714,
+    "tapeHash": "fnv1a32:1795242e"
+  },
+  "assay": {
+    "instrumentControl": "probe-tape replayed to its own header fnv1a32:a45ba9ac",
+    "replayHash": "fnv1a32:1795242e (tape header; outcome line is fnv1a32:64b3b447 by design)",
+    "securedSnapshot": {
+      "waves": 20,
+      "gold": 60,
+      "timeAlive": 600
+    }
+  },
+  "envelopeCeilings": {
+    "maxTicks": 18002,
+    "maxEntries": 3601,
+    "maxTapeBytes": 1938784
+  }
+}

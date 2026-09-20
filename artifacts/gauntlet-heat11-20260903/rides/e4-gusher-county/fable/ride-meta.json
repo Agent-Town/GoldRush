@@ -1,0 +1,19 @@
+{
+  "rig": "fable",
+  "model": "claude-fable-5",
+  "arena": "/tmp/heat11-b118c4d2",
+  "workdir": "/tmp/heat11-b118c4d2/artifacts/heat11/fable/e4-gusher-county",
+  "charterFile": "rides/e4-gusher-county/fable/charter.md",
+  "charterSha256": "e5d7cfbf4bda8b3cc16d8cb15cf4bae1b3e8e3fd4a19dbaec959ae4e5345c784",
+  "sessionId": "9a97b640-c085-444d-a5ce-93fc151d38a1",
+  "wallSeconds": 1500,
+  "startedAt": "2026-09-03T23:20:16.520Z",
+  "invocation": "env -u CLAUDECODE -u CLAUDE_CODE_ENTRYPOINT -u CLAUDE_CONFIG_DIR claude -p \"<charter text, see charterFile>\" --model claude-fable-5 --allowedTools Read,Write,Glob,Bash(node *) --output-format text --session-id 9a97b640-c085-444d-a5ce-93fc151d38a1",
+  "endedAt": "2026-09-03T23:41:41.633Z",
+  "wallClockSeconds": 1285,
+  "exitCode": 0,
+  "signal": null,
+  "wallHit": false,
+  "firstOutputAt": "2026-09-03T23:32:01.574Z",
+  "setupToFirstOutputSeconds": 705
+}

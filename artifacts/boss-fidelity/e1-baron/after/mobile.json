@@ -1,0 +1,178 @@
+{
+  "stage": "after",
+  "viewport": {
+    "width": 390,
+    "height": 844
+  },
+  "telegraph": {
+    "rocket": {
+      "cartVisible": true,
+      "carried": true,
+      "distanceFromBaron": 1.7472263734273243,
+      "telegraphActive": true,
+      "telegraphElapsed": 0,
+      "nextVolleyIn": 0,
+      "volleys": 0,
+      "suppressed": false,
+      "targetKind": "hero",
+      "lastOwnerId": "",
+      "lastTarget": {
+        "x": 0,
+        "z": 0
+      },
+      "target": {
+        "x": 1.6,
+        "z": 12
+      },
+      "props": {
+        "state": "ready",
+        "source": "glb",
+        "launcher": true,
+        "rocket": true,
+        "powderKeg": true,
+        "triangles": {
+          "launcher": 2020,
+          "rocket": 876,
+          "powder_keg": 704
+        }
+      },
+      "manifest": {
+        "count": 3,
+        "damage": 0,
+        "radius": 2.35,
+        "cadenceSeconds": 2,
+        "telegraphSeconds": 0.5,
+        "airTime": 1.1,
+        "spreadRadius": 0.9
+      }
+    },
+    "vfx": {
+      "tracers": {
+        "active": 0,
+        "capacity": 16,
+        "spawned": 0
+      },
+      "rockets": {
+        "active": 0,
+        "capacity": 16,
+        "modelReady": true
+      },
+      "rings": {
+        "active": 0,
+        "capacity": 8,
+        "spawned": 0
+      },
+      "wisps": {
+        "active": 0,
+        "capacity": 8,
+        "spawned": 0
+      },
+      "detail": true
+    },
+    "launcherEmission": 2.2615255758470405,
+    "kegEmission": 1,
+    "launcherEmissiveIsAlbedo": false,
+    "render": {
+      "calls": 72,
+      "triangles": 109674,
+      "geometries": 78,
+      "textures": 25
+    }
+  },
+  "flight": {
+    "rocket": {
+      "cartVisible": true,
+      "carried": true,
+      "distanceFromBaron": 1.7533281864628936,
+      "telegraphActive": false,
+      "telegraphElapsed": 0,
+      "nextVolleyIn": 1.8999999999999995,
+      "volleys": 1,
+      "suppressed": false,
+      "targetKind": null,
+      "lastOwnerId": "baron_rocket:0",
+      "lastTarget": {
+        "x": 1.6,
+        "z": 12
+      },
+      "target": {
+        "x": 1.6,
+        "z": 12
+      },
+      "props": {
+        "state": "ready",
+        "source": "glb",
+        "launcher": true,
+        "rocket": true,
+        "powderKeg": true,
+        "triangles": {
+          "launcher": 2020,
+          "rocket": 876,
+          "powder_keg": 704
+        }
+      },
+      "manifest": {
+        "count": 3,
+        "damage": 0,
+        "radius": 2.35,
+        "cadenceSeconds": 2,
+        "telegraphSeconds": 0.5,
+        "airTime": 1.1,
+        "spreadRadius": 0.9
+      }
+    },
+    "vfx": {
+      "tracers": {
+        "active": 3,
+        "capacity": 16,
+        "spawned": 3
+      },
+      "rockets": {
+        "active": 3,
+        "capacity": 16,
+        "modelReady": true
+      },
+      "rings": {
+        "active": 0,
+        "capacity": 8,
+        "spawned": 0
+      },
+      "wisps": {
+        "active": 0,
+        "capacity": 8,
+        "spawned": 0
+      },
+      "detail": true
+    },
+    "launcherEmission": 1,
+    "kegEmission": 1,
+    "launcherEmissiveIsAlbedo": false,
+    "render": {
+      "calls": 77,
+      "triangles": 125132,
+      "geometries": 82,
+      "textures": 26
+    }
+  },
+  "errors": [],
+  "crops": {
+    "carried": {
+      "left": 55,
+      "top": 40,
+      "width": 280,
+      "height": 280
+    },
+    "telegraph": {
+      "left": 0,
+      "top": 50,
+      "width": 280,
+      "height": 280
+    },
+    "flight": {
+      "left": 0,
+      "top": 50,
+      "width": 280,
+      "height": 280
+    }
+  }
+}

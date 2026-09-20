@@ -1,0 +1,21 @@
+All deliverables are on disk. Ride complete.
+
+## Result: NOT SECURED — and the reason is a priced impossibility, not a failed attempt
+
+**`e4-long-road` cannot be secured through the post-ADR-005 door.** The chain, every link verified in source and measured in-sim:
+
+1. No wave secures until `now.motor.objective.arrived` (`HeadlessContractSim.ts:2354`, `:1493`).
+2. For `kind: "convoy"`, `arrived` needs `leaderDistance >= 370 − 1e-6` — the lead Hauler within ~**0.0005 wu** of (190, 0) (`MotorSocket.ts:345`; `ConvoyBehavior.ts:71` `round3`s the value, which is the only slack there is).
+3. `HAUL` now drives the Hauler **only to the hero's float position** (`HeadlessContractSim.ts:3107` → `haulTo(this.hero.group.position)`).
+4. `MOVE_HERO` refuses the stop: **(190,0), (190,−3), (190,1.2) and (188.7,0) all answer `UNREACHABLE_TERRAIN`**. `(191.1,0)` is accepted; the hero rests at **(191.070, −0.355)**.
+5. Even on legal ground the hero cannot be placed exactly — `MOVE_HERO` completes at a 0.5 arrival radius and `Hero.update` decelerates asymptotically with **no arrival snap**, unlike `Embodiment.stepTowardTarget:271`, which assigns `position = target` outright. That snap is exactly how generation 18's `MOVE_TO`/`HOLD` put the Hauler on (190,0) and secured this seed on 2026-09-03.
+
+**Measured wall: `leaderDistance 369.641 / 370` — short by 0.359 wu, 0.097% of the route, held for five minutes.** Of that, 0.354 is the hero's residual z offset; only ~0.06 is the Hauler's along-track sampling.
+
+Everything *else* about the errand worked: road graded at t=1.7, all 9 tar by t=60, Hauler driven 371.079 units entirely on road for 21.099 of 36 fuel. And survival is now trivially solved — the hero (6.0 wu/s vs outlaws capped at 4.14, roster carries no wrecker or thief) took **zero damage from t=0 to t=420** and rode to the wave-14 ceiling.
+
+Two things worth the owner's desk:
+- `now.motor.objective.stopReach` publishes **2.5** here and reads like the tolerance. For `convoy` nothing consumes it — `MOTOR_STOP_REACH` gates only `haul` (`:309`) and `tow` (`:406`). A rider plans for 2.5 wu and is asked for 1e-6.
+- Cheapest fix is one clause: latch `convoy` on `MOTOR_STOP_REACH` like its two siblings, or make the railhead ground walkable. Neither is a balance change.
+
+**Tape put forward: `attempt-1-tape.json`** (declared in `gauntlet-outcome.json`'s `tape` field; byte-identical copy of `tune-v3.json`, one ride under two filenames) — w14 / 420.000 s / 0 g / 28 calls, `endReason: wave-ceiling`. **It must not be submitted:** unsecured, ended on an external cap. 5 sim runs, 1 scored attempt.

@@ -1,0 +1,32 @@
+✖ goal tree schema is valid (1.839916ms)
+✔ ten sampled merged leaves have a done receipt and ancestral merge (15279.239292ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 1
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 15330.457084
+
+✖ failing tests:
+
+test at scripts/goal-tracker.test.mjs:61:1
+✖ goal tree schema is valid (1.839916ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /^[0-9a-f]{40}$/. Input:
+  
+  'b89f70c70'
+  
+      at checkLeaf (file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-sprites-control/scripts/goal-tracker.test.mjs:80:32)
+      at TestContext.<anonymous> (file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-sprites-control/scripts/goal-tracker.test.mjs:98:41)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'b89f70c70',
+    expected: /^[0-9a-f]{40}$/,
+    operator: 'match',
+    diff: 'simple'
+  }

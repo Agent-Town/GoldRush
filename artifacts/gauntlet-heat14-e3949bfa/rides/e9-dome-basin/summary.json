@@ -1,0 +1,184 @@
+{
+  "rig": "opus",
+  "contract": "e9-dome-basin",
+  "model": "claude-opus-5",
+  "sessionId": "d3309f90-6b22-4554-a707-42e6ad35c1ae",
+  "startedAt": "2026-09-18T04:30:47.174Z",
+  "endedAt": "2026-09-18T04:51:57.681Z",
+  "wallClockSeconds": 1271,
+  "wallHit": false,
+  "exitCode": 0,
+  "signal": null,
+  "setupToFirstOutputSeconds": 180,
+  "arenaTrackedChanges": [],
+  "workspaceFiles": [
+    "attempt-1-stderr.txt",
+    "attempt-1-summary.json",
+    "attempt-1-table.txt",
+    "attempt-1-tape.json",
+    "attempt-1-view0.json",
+    "attempt-1-viewlast.json",
+    "attempt-1-views.json",
+    "ctrl-v1.mjs",
+    "ctrl-v2.mjs",
+    "gauntlet-outcome.json",
+    "gauntlet-report.md",
+    "probe-stderr.txt",
+    "probe-summary.json",
+    "probe-table.txt",
+    "probe-tape.json",
+    "probe-view0.json",
+    "probe-viewlast.json",
+    "probe-views.json",
+    "runner.mjs",
+    "tune-1-stderr.txt",
+    "tune-1-summary.json",
+    "tune-1-table.txt",
+    "tune-1-tape.json",
+    "tune-1-view0.json",
+    "tune-1-viewlast.json",
+    "tune-1-views.json"
+  ],
+  "outcome": {
+    "secured": true,
+    "waves": 20,
+    "timeMs": 600000,
+    "gold": 12,
+    "kills": 883,
+    "calls": 926,
+    "defaultedPicks": 0,
+    "defaultedSecure": 1,
+    "eventLogHash": "fnv1a32:bba2de00",
+    "tape": "/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/heat14/opus/e9-dome-basin/attempt-1-tape.json",
+    "scored": true,
+    "runsSoFar": 3,
+    "scoredAttempts": 1,
+    "worldModel": "sim-import",
+    "envelope": {
+      "durationTicks": 18000,
+      "lastEntryTick": 17999,
+      "entries": 926,
+      "bytes": 3230134,
+      "tapeHash": "fnv1a32:142981d1",
+      "maxTicks": 18002,
+      "maxEntries": 3601,
+      "maxTapeBytes": 1938784,
+      "ticksOk": true,
+      "entriesOk": true,
+      "bytesOk": false
+    },
+    "doorRisk": {
+      "expect": "reel_too_large",
+      "why": "runTapeEnvelopeForContract(e9-dome-basin) -> maxTapeBytes 1938784 B; this reel is 3230134 B (1.67x). Ticks and entries both pass (lastEntryTick 17999 < durationTicks 18000 <= 18002; entries 926 <= 3601). The breach is BYTES ONLY.",
+      "cause": "The board emits a surprise view about every 1.5 s once the harvest tail starts failing on depleted seams, and every one of those 926 views was answered with a fresh 32-order array at ~3.5 KB. The play is sound; the SUBMISSION RATE is what breaches.",
+      "cure": "Identical policy plus a submission floor: answer a view with a blank line (gr-sim records no entry) unless pendingOffer is live, a BUILD is emittable, or ~4 s of sim time has passed since the last accepted array. That cuts ~926 entries to ~340 and the reel to ~1.2 MB with no change to the orders themselves. NOT RIDDEN: the stop rule ends the heat at the first SECURED outcome, which this run is."
+    },
+    "assay": {
+      "instrumentControl": "probe-tape.json replayed to its own header fnv1a32:a45ba9ac (instrument verified before use)",
+      "replayHash": "fnv1a32:142981d1",
+      "tapeHeaderHash": "fnv1a32:142981d1",
+      "outcomeLineHash": "fnv1a32:bba2de00",
+      "note": "the replay matches the TAPE HEADER hash, not the stdout outcome line hash - different numbers by design",
+      "securedSnapshot": {
+        "waves": 20,
+        "gold": 12,
+        "timeAlive": 600
+      },
+      "verdict": "deterministic, self-consistent"
+    }
+  },
+  "outcomeError": null,
+  "promotedTapeName": "attempt-1-tape.json",
+  "scoredTapes": [
+    {
+      "file": "attempt-1-tape.json",
+      "id": "agent-933cae82-8bacfafd-82dc-4bed-bb0e-acd019849888",
+      "contract": "e9-dome-basin",
+      "seed": "e9-dome-basin-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "5c57f01b2",
+        "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+        "era": 6,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 20,
+        "timeAlive": 600,
+        "gold": 12
+      },
+      "entries": 926,
+      "durationTicks": 18000,
+      "lastEntryTick": 17999,
+      "promotedByRig": true,
+      "discoveredBy": "outcome-file+filename"
+    }
+  ],
+  "otherTapes": [
+    {
+      "file": "probe-tape.json",
+      "id": "agent-8f747406-f757eb97-5dc9-4089-bda4-3ac9a5cd6545",
+      "contract": "e9-dome-basin",
+      "seed": "e9-dome-basin-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "3c338e0ff",
+        "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+        "era": 6,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 2,
+        "timeAlive": 82.6,
+        "gold": 0
+      },
+      "entries": 0,
+      "durationTicks": 2478,
+      "lastEntryTick": null
+    },
+    {
+      "file": "tune-1-tape.json",
+      "id": "agent-3253ef82-ac13110f-4282-4f6a-a7c8-c08f716330b2",
+      "contract": "e9-dome-basin",
+      "seed": "e9-dome-basin-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "3c338e0ff",
+        "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+        "era": 6,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 18,
+        "timeAlive": 564.5,
+        "gold": 197
+      },
+      "entries": 319,
+      "durationTicks": 16935,
+      "lastEntryTick": 16775
+    }
+  ],
+  "otherSecuredTapes": [],
+  "report": {
+    "outcome": "**SECURED** — waves **20**, timeAlive **600.000 s**, gold **12**, calls **926**, kills 883,\n`defaultedSecure: 1`, `defaultedPicks: 0`, outcome hash `fnv1a32:bba2de00`.\n\n- Tape put forward: **`attempt-1-tape.json`** (declared in `gauntlet-outcome.json`'s `tape` field),\n  tape header hash `fnv1a32:142981d1`.\n- **3 sim runs** (idle probe, `tune-1`, `attempt-1`) · **1 scored attempt**. Stopped at the first\n  SECURED outcome per the brief.\n- **Receipt:** the assay instrument was control-tested first (the zero-order probe tape replayed to\n  its own header `fnv1a32:a45ba9ac`), then the secured reel replayed to **`fnv1a32:142981d1`** — the\n  tape header's hash, not the stdout outcome line's `fnv1a32:bba2de00`, which are different numbers by\n  design — reproducing all four outcome fields and a `securedSnapshot` of\n  `{waves 20, gold 12, timeAlive 600}`, which is exactly what the door's `score_mismatch` rule compares\n  against the declared gold. The reel is deterministic; its only defect is its size.\n\n**DOOR RISK — READ BEFORE SUBMITTING.** The reel passes two admission axes and breaches the third:\n\n| axis | measured | ceiling | verdict |\n|---|---|---|---|\n| ticks | `durationTicks` 18 000, last accepted order at **17 999** | `maxTicks` 18 002 | pass |\n| entries | 926 | `maxEntries` 3 601 | pass |\n| **bytes** | **3 230 134** | **`maxTapeBytes` 1 938 784** | **FAIL — 1.67×** |\n\nComputed from `runTapeEnvelopeForContract` itself, not from the charter's summary of it (the charter's\n`16 KiB + maxEntries × 160` is the floor term only; the live function adds\n`maxOrderEntries × (2400 − 160)`, here 601 × 2 240). Expect **`reel_too_large`**.\n\nThe *play* is not what breaches — the **submission rate** is. Once the harvest tail starts failing on\ndepleted seams the board emits a surprise view roughly every 1.5 s, and all 926 of them were answered\nwith a fresh 32-order array at ~3.5 KB. The cure is one clause and changes no order: answer a view\nwith a blank line (`gr-sim` records no entry) unless `pendingOffer` is live, a `BUILD` is emittable,\nor ~4 s of sim time has passed since the last accepted array — ~340 entries, ~1.2 MB. I did not ride\nit, because the brief stops the heat at the first SECURED outcome and this run is it.",
+    "whatTheMapAsked": "It asked me **nothing at all about E9 persistent tiles**, and the county's RESKIN measurement is right\n— sharply so, because the engine *owns* the consumer and this contract declines it. `CanalChoiceSystem`\nis live headless and gates the secure through `autoSecureWaveForRun`, with `CONTEXT_ACTION`\n`redig`/`backfill` as public verbs, but it keys on `twist.persistentCanalChoices` and this manifest\ndeclares only `clockTicks` and a roster. So the three canal stage-gates C1 (−28,34), C2 (−12,10),\nC3 (4,−24) that the briefing tells me to defend, the feeder-canal rail through them, the ice quarry\nand the height-four scarp are all `tileParams` scenery: the union of `now` keys across every view is\nthe canonical set — `blastReadyInMs · gold · hero · needsRider · orders · prospector · score · seams ·\nthreats · timers · wave · weapon · works` — with no `canalChoices`, no tile state, and **nothing that\npersists across a wave**. `stablePrefix.mechanics.rules` carries two entries. There is no E9 verb and\nnothing to steward; the whole contract is answered with epoch-1 grammar.\n\nWhat it asks instead is one hard geometry question — *where can you build, relative to the body that\nmust live, and may that body leave?* — and after ADR-005 the answer is yes. All four `harvestAnchors`\n((22,−28), (28,−22), (34,−28), (40,−22)) sit **inside** the `seed-rows-footing` build zone\n(x 18..44, z −32..−18), and the claim is not a loss condition, so the hero walks 40 units off the\nclaim and the fort, the economy and the defended body collapse into one pocket: seam commute ~4–6 wu,\n`goldPanned` 1 305. The fields that carried it were `now.works.entries`/`byKind`/`standing`/`wrecked`,\n`now.seams[].active/x/z/anchorIndex`, `now.gold` against `now.score.goldPanned` and `goldStolen`,\n`now.hero.hp/maxHp/x/z`, `now.threats.alive/wreckers/thieves`, and `now.orders[].status/reason`.\nOrders: `MOVE_HERO`, `BUILD`, `HARVEST`, `PICK_UPGRADE`, `BLAST_AT`, `REPAIR_UNDER`, and one silence.\n\n**Does it still play the way my notebook remembers? Yes, in every particular I checked** — and on an\nera named *the Re-surveyed Claims* that is itself the result. Generations 32, 40 and 58 failed here\nand generation 79 secured it; the claim at (0,12), the 28.28 wu subtraction to the nearest build\nground, the four anchors, the pinned seam set, the 60-enemy cap and the w2/82.600 s idle floor all\nreproduced to the decimal. The map is **not** named as cured this week, and its first minute\nconfirmed it: the hero walked to (28,−25), the first pan landed at t ≈ 12, the first turret went up\naround t ≈ 35, and nothing threatening arrived until wave 2.",
+    "winnability": "Secured, and the margin was **wide on survival and nil on the score**: the hero never fell below\n**96.8 %** of its running maximum (finishing 169.4/175) and the pocket held `threats.alive` in the\n40–58 band for the last six waves — while the banked purse is **12**, because the aggressive mend that\n*is* the defence on this board spends the purse continuously, and the run that banks gold instead\n(`tune-1`, identical but for that one clause) **died at wave 18** with 197 gold in hand and 22 of 24\nworks wrecked. On this contract gold and survival are the same lever pointed in opposite directions,\nand only one of them secures.",
+    "lessons": "- **`byKind` counts WRECKED works, so on a board with a wrecker the ladder is permanently satisfied and\n  `REPAIR_UNDER` is the only thing that re-arms the fort.** `tune-1` finished with\n  `byKind {turret 4, sentry_beacon 6, palisade 14}` and `standing 0, wrecked 24`. My ladder correctly\n  declined to rebuild (a wrecked frame still occupies its ground), which is right — and it means the\n  mend is not a maintenance order, it is **the entire defence**. Check whether `byKind` is\n  standing-only before deciding what your ladder is for.\n- **At the cap, income is already being refused, so spending is FREE — and a score gate that does not\n  know this will kill the run.** `tune-1`'s `nearCap` mend-suppression clause (my own generation-102\n  lesson, written to protect the last gold on a comfortable board) fired *permanently* from t = 365,\n  because the purse simply sits at the cap on this map. `pan` froze at 1 040 and `gold` pinned at 197\n  for 200 seconds while the fort went 24 → 2 standing. **One cause, one fix, one measurement:** w18 →\n  **w20**, peak wrecked 24 (all 24 works) → 17, pan 1 040 → 1 305, hero 141/175-and-falling → 169.4/175.\n  This is the third time (gens 110, 111, 113) a score-protecting gate has made the fort unreachable\n  exactly when it was needed. **Give any spend gate a hard bypass on `pinned || wrecked > 0`.**\n- **`gold` pinned beside a frozen `goldPanned` is now the twelfth generation of the same diagnostic —\n  and this ride adds a fourth reading of it.** The known three are dead sink, starved economy and\n  attrition drain. The new one is **a suppressed mend**: pan flat *and* gold flat *and* `standing`\n  falling. Log `standing` next to the economy pair; the three columns together name the cause in one\n  read, and they did here on the first look.\n- **Price the cap-raiser by finding the line that arms the thief, not by estimating theft.**\n  `claimGold()` returns 0 unless `holding.kind === 'stockpile'`, so on this roster a stockpile is not\n  merely risky — it is the *sole* switch that turns every `claim_jump_prospect_drone` from a\n  hero-chaser into a gold-grabber. Declining it made `goldStolen: 0` a certainty rather than a hope.\n  That closes the \"buy the pair late\" question I have owed the notebook since generation 107 for the\n  mixed-roster case: on a map whose defence is a continuous repair bill, there is no late window in\n  which the raised cap can be filled faster than the mend drains it.\n- **Measure the envelope from `runTapeEnvelopeForContract`, and measure all three axes — the two that\n  pass are not the answer.** Ticks and entries cleared comfortably (17 999 < 18 000 ≤ 18 002; 926 ≤\n  3 601) and **bytes breached at 1.67×**. Sixth generation to say read the function not the charter,\n  and the first where I read it correctly and *still* shipped a breach, because I budgeted the axes I\n  had lost reels to before and never budgeted the one I had not.\n- **A surprise-view storm is a byte budget, not a free decision-point windfall.** Generation 2's \"an\n  order that fails honestly buys a decision point\" is true and it is no longer free: 926 views × a\n  32-order array is 3.2 MB. The submission floor (blank-line unless an offer is live, a build is\n  emittable, or ~4 s has passed) costs nothing in play and two-thirds of the bytes. **Put the floor in\n  the FIRST controller on any contract whose tail is designed to fail.**\n- **Ride the skeleton first, then change exactly one CAUSE — and it paid again.** `tune-1` was the\n  unmodified generation-6→112 skeleton retargeted; the per-view table named a single cause on the\n  first read; `attempt-1` changed that one clause and the diff is a measurement rather than a guess.\n  Two rides, one scored, secured.\n- **An era named for rebuilt maps can leave a map's rules untouched, and `null-floors.json` proves it\n  before you ride.** Eleventh heat running. The procedure is now three files and four minutes: grep\n  the era pins for the contract id, read the contract JSON's `twist`, and compare `null-floors.json`\n  against the notebook's remembered floor. It redirected this whole heat from geometry to the economy."
+  },
+  "usage": {
+    "transcript": "/Users/robin/.claude/projects/-private-tmp-claude-501--Users-robin-Claude-Projects-Gold-Rush-fe6b8d27-b064-40eb-934b-1d29d57a71db-scratchpad-arena-heat14-e3949bfa/d3309f90-6b22-4554-a707-42e6ad35c1ae.jsonl",
+    "assistantTurns": 68,
+    "toolCalls": 34,
+    "tokensIn": 136,
+    "tokensOut": 126436,
+    "cacheReadTokens": 31041807,
+    "cacheWriteTokens": 1894755,
+    "note": "tokensIn excludes cache reads/writes (reported separately); summed from the CLI session transcript, not self-reported by the rig"
+  }
+}

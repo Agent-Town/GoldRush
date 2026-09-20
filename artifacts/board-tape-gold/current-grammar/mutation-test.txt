@@ -1,0 +1,36 @@
+✖ e3-moth-season: the standing's gold is the purse held at the secure tick (12434.877166ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 12657.606375
+
+✖ failing tests:
+
+test at scripts/board-tape-gold.test.mjs:79:3
+✖ e3-moth-season: the standing's gold is the purse held at the secure tick (12434.877166ms)
+  AssertionError [ERR_ASSERTION]: the secure snapshot and the declared score disagree at one tick
+  + actual - expected
+  
+    {
+  +   gold: 90,
+  -   gold: 0,
+      timeAlive: 360,
+      waves: 12
+    }
+  
+      at TestContext.<anonymous> (file:///private/tmp/gr-board-gold-mutation/scripts/board-tape-gold.test.mjs:95:12)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: { waves: 12, gold: 90, timeAlive: 360 },
+    expected: { waves: 12, gold: 0, timeAlive: 360 },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

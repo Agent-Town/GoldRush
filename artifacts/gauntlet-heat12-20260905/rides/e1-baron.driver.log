@@ -1,0 +1,43 @@
+
+########## RIDE e1-baron · seed e1-baron-01 · gen 55 · stake stale-receipt · wall 900s ##########
+--- 1 charter ---
+{"rig":"opus","contract":"e1-baron","seed":"e1-baron-01","seedMode":"bench","stake":"stale-receipt","generation":55,"wall":900,"notebookSha256":"ff25a8d7d7025163373b034583d14216f07e1091675585cc53b945c82d0d81de","charterSha256":"6c862844cce60e757cd7387fe205d6e0fee28c69fcbcfa6b83ea1b72a73b9b85","bytes":428102,"out":"/private/tmp/heat12-038cc280/artifacts/gauntlet-heat12-20260905/rides/e1-baron/charter.md"}
+--- 2 ride ---
+START opus claude-opus-5 pid=99108 session=f9fd1b78-7044-4222-9c63-733923c00f73 at=2026-09-05T20:17:14.821Z
+FIRST-OUTPUT opus +180s
+OUTCOME opus secured=false waves=20 gold=200 runsSoFar=1 scored=0 +255s
+OUTCOME opus secured=false waves=20 gold=125 runsSoFar=2 scored=0 +420s
+OUTCOME opus secured=false waves=20 gold=200 runsSoFar=3 scored=1 +450s
+END opus rc=0 signal=null wall=512s wallHit=false
+ride-wall rc=0 signal=-
+--- 3 land ---
+
+=== 1 finish-ride ===
+{"rig":"opus","contract":"e1-baron","wall":512,"wallHit":false,"rc":0,"tracked":[],"files":9,"outcome":{"secured":false,"waves":20,"gold":200,"runsSoFar":3,"scoredAttempts":1,"tape":"/private/tmp/heat12-038cc280/artifacts/heat12/opus/e1-baron/tune-1.json","worldModel":"sim-import"},"scoredTapes":[{"file":"tune-1.json","id":"agent-454a4585-356542d5-cc71-4209-9bd9-279bf6858e42","secured":false,"waves":20,"gold":200,"durationTicks":16086,"lastEntryTick":16080,"promotedByRig":true,"discoveredBy":"outcome-file"}],"otherSecured":[],"reportSections":{"outcome":655,"whatTheMapAsked":2062,"winnability":829,"lessons":3479},"usage":{"turns":37,"toolCalls":20,"tokensIn":74,"tokensOut":73267}}
+
+=== NOT SECURED — nothing to submit ===
+{
+ "rig": "opus",
+ "contract": "e1-baron",
+ "wall": 512,
+ "wallHit": false,
+ "rc": 0,
+ "scoredTapes": [
+  {
+   "file": "tune-1.json",
+   "secured": false,
+   "waves": 20,
+   "gold": 200
+  }
+ ],
+ "outcomeNote": "NOT SECURED - do not submit. tune-1 is the best of 3 runs (1 idle probe + 2 controller rides) and is the ride I call my scored attempt; tune-2 (w20/540.867s/125g, fnv1a32:d859a3ef) regressed because its turret tier-2 sink is REFUSED on this build (works.entries tier stays 1 for all ten works) while its MOVE_TO walks cost 440 gold of panning. Both rides reach wave 20 at full 175/175 HP with the complete 4-turret/6-beacon ladder standing and die to the Baron inside 14 seconds."
+}
+
+land rc=0
+--- 4 notebook ---
+{"notebook":"/Users/robin/Claude/Projects/goldrush-gauntlet/memories/claude__opus-5/NOTEBOOK.md","generation":55,"headerBytes":424,"entryBytes":7186}
+--- 5 matrix ---
+| 19 | e1-baron | `e1-baron-01` | stale-receipt | 55 | **not secured** | 20 | 200 | 536.200s | 512s | `tune-1.json` · `agent-454a4585-356542d5-cc71-4209-9bd9-279bf6858e42`<br>fnv1a32:41f0518d | — | gen 55 |
+{"contract":"e1-baron","secured":false,"tapesOnDisk":6,"scoredTapes":1,"otherSecured":0,"runs":3,"scoredAttempts":1,"wallHit":false,"rc":0,"assay":null,"ranked":null,"winnability":"**Undecided-leaning-yes, and what stopped me was my own budget, not a wall:** survival to the horn is solved outright — full ladder, 175/175, one work lost in twenty waves, with ~900 gold of income spare — so the whole contract is \"convert a capped purse into boss damage,\" and the two sinks that do it went untested (`stockpile`, 60 g ×2, +150 cap each, which is the *published* counter to the cap and would have banked ~300 more for the fight, and `palisade`, 10 g ×48, a 480-gold body-block ring that makes the Baron chew timber inside four turrets' fire); the third, `CONTEXT_ACTION upgrade` to turret tier 2, I did test and it is **refused on this build** — `works.entries[].tier` stays 1 for all ten works across 195 views — while its `MOVE_TO` walks cost 440 gold of panning, so it is a trap on this contract, not a lever."}
+########## END e1-baron ##########
+

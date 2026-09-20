@@ -1,0 +1,25 @@
+{
+  "outcome": {
+    "secured": true,
+    "waves": 20,
+    "timeMs": 600000,
+    "gold": 200,
+    "kills": 644,
+    "calls": 68,
+    "defaultedPicks": 0,
+    "defaultedSecure": 0,
+    "eventLogHash": "fnv1a32:1c343c70"
+  },
+  "tape": "/tmp/heat11-5e7a7c0b/artifacts/heat11/opus/e7-relay-rush/attempt-1-tape.json",
+  "scored": true,
+  "runsSoFar": 2,
+  "scoredAttempts": 1,
+  "worldModel": "sim-import",
+  "note": "attempt-1-tape.json is a byte-identical copy of tune-1-tape.json — the SAME single securing ride, promoted by name under the brief's promotion clause (the stop rule ends the ride at the first SECURED outcome, so it was not re-ridden).",
+  "doorRisk": {
+    "warning": "reel_duration_exceeded is likely",
+    "durationTicks": 18001,
+    "envelopeMaxTicks": 18000,
+    "reason": "e7-relay-rush declares no twist.secureWave, so PlaybookFormat.runTapeEnvelopeForContract skips its +2 inclusive-endpoint slack and grants a flat MAX_PLAYBOOK_TICKS=18000. The secure lands at wave 20 = t 600.000s = tick 18000; gr-sim records the SECURE_CHOICE at tick 18000 and reports durationTicks = lastEntryTick+1 = 18001. No rider policy can avoid this: it is the same envelope defect that refused generations 24 and 25."
+  }
+}

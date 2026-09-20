@@ -1,0 +1,19 @@
+{
+  "rig": "opus",
+  "model": "claude-opus-5",
+  "arena": "/tmp/heat12-038cc280",
+  "workdir": "/tmp/heat12-038cc280/artifacts/heat12/opus/e8-mare-claim",
+  "charterFile": "/private/tmp/heat12-038cc280/artifacts/gauntlet-heat12-20260905/rides/e8-mare-claim/charter.md",
+  "charterSha256": "48bd127565dc9d3703441effc966fa6f873f1dcb6763bb58702c1c7a9c55e109",
+  "sessionId": "86a4e88b-15e4-41d1-bcfe-1d54e5d2dbdb",
+  "wallSeconds": 1500,
+  "startedAt": "2026-09-05T15:48:52.060Z",
+  "invocation": "env -u CLAUDECODE -u CLAUDE_CODE_ENTRYPOINT -u CLAUDE_CONFIG_DIR claude -p \"<charter text, see charterFile>\" --model claude-opus-5 --allowedTools Read,Write,Glob,Bash(node *) --output-format text --session-id 86a4e88b-15e4-41d1-bcfe-1d54e5d2dbdb",
+  "endedAt": "2026-09-05T16:04:09.787Z",
+  "wallClockSeconds": 918,
+  "exitCode": 0,
+  "signal": null,
+  "wallHit": false,
+  "firstOutputAt": "2026-09-05T15:50:22.079Z",
+  "setupToFirstOutputSeconds": 90
+}

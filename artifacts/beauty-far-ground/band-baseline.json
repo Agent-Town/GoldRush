@@ -1,0 +1,9 @@
+{
+  "_what": "Top-quarter luma delta, apron on vs off, hero z-30, desktop 1280x800, recorded on the far-ground shift host 2026-08-04.",
+  "_how": "node scripts/beauty-far-ground-board.mjs before && ... after; delta = |after - before| of bands.top25.meanLuma.",
+  "_readBy": "e2e/beauty-far-ground.spec.ts ONLY when GR_FAR_GROUND_COMPARE=1. The default path never opens this file (F-1440-2).",
+  "the-claim": 43.9,
+  "e1-dry-gulch": 70.66,
+  "e1-twin-banks": 48.25,
+  "e1-baron": 47.47
+}

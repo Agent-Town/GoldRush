@@ -1,0 +1,158 @@
+{
+  "rig": "opus",
+  "contract": "e8-eclipse",
+  "model": "claude-opus-5",
+  "sessionId": "d445cd7b-0b0d-445c-85d1-d2e4bf549465",
+  "startedAt": "2026-09-18T03:43:39.692Z",
+  "endedAt": "2026-09-18T03:56:08.402Z",
+  "wallClockSeconds": 749,
+  "wallHit": false,
+  "exitCode": 0,
+  "signal": null,
+  "setupToFirstOutputSeconds": 105,
+  "arenaTrackedChanges": [],
+  "workspaceFiles": [
+    "attempt-1-rows.json",
+    "attempt-1-stderr.txt",
+    "attempt-1-summary.json",
+    "attempt-1-tape.json",
+    "attempt-1-views.json",
+    "ctrl-v1.mjs",
+    "ctrl-v2.mjs",
+    "gauntlet-outcome.json",
+    "gauntlet-report.md",
+    "probe-rows.json",
+    "probe-stderr.txt",
+    "probe-summary.json",
+    "probe-tape.json",
+    "probe-views.json",
+    "runner.mjs",
+    "tune-1-rows.json",
+    "tune-1-stderr.txt",
+    "tune-1-summary.json",
+    "tune-1-tape.json",
+    "tune-1-views.json"
+  ],
+  "outcome": {
+    "secured": false,
+    "waves": 19,
+    "timeMs": 586400,
+    "gold": 500,
+    "kills": 895,
+    "calls": 90,
+    "defaultedPicks": 0,
+    "defaultedSecure": 0,
+    "eventLogHash": "fnv1a32:ee785f32",
+    "tape": "/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/heat14/opus/e8-eclipse/attempt-1-tape.json",
+    "scored": true,
+    "runsSoFar": 3,
+    "scoredAttempts": 1,
+    "worldModel": "sim-import",
+    "envelope": {
+      "durationTicks": 17592,
+      "lastEntryTick": 17100,
+      "entries": 90,
+      "bytes": 253460,
+      "tapeHash": "fnv1a32:f8f55027"
+    },
+    "submit": false,
+    "submitReason": "Not secured (endReason hero-down at w19/586.400s, 13.6s short of the wave-20 secure). A run that dies is not secured and must not be submitted.",
+    "note": "attempt-1-tape.json is the best reel on disk and the scored attempt; it is evidence, not a standing.",
+    "regolithCompleteAtS": 365.1,
+    "eclipseAtWave": 10
+  },
+  "outcomeError": null,
+  "promotedTapeName": "attempt-1-tape.json",
+  "scoredTapes": [
+    {
+      "file": "attempt-1-tape.json",
+      "id": "agent-d5eaacbd-f0e5a21b-e187-42d3-ae8e-8e4ec83b10e4",
+      "contract": "e8-eclipse",
+      "seed": "e8-eclipse-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "011252b06",
+        "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+        "era": 6,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 19,
+        "timeAlive": 586.4,
+        "gold": 500
+      },
+      "entries": 90,
+      "durationTicks": 17592,
+      "lastEntryTick": 17100,
+      "promotedByRig": true,
+      "discoveredBy": "outcome-file+filename"
+    }
+  ],
+  "otherTapes": [
+    {
+      "file": "probe-tape.json",
+      "id": "agent-de24e29e-76fabb5a-ed99-4677-b622-c16983824665",
+      "contract": "e8-eclipse",
+      "seed": "e8-eclipse-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "8082d196e",
+        "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+        "era": 6,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 2,
+        "timeAlive": 76.733,
+        "gold": 0
+      },
+      "entries": 0,
+      "durationTicks": 2302,
+      "lastEntryTick": null
+    },
+    {
+      "file": "tune-1-tape.json",
+      "id": "agent-61621a09-bec31d2f-7f4f-4d40-9e76-de382bcb705b",
+      "contract": "e8-eclipse",
+      "seed": "e8-eclipse-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "8082d196e",
+        "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+        "era": 6,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 18,
+        "timeAlive": 548.5,
+        "gold": 500
+      },
+      "entries": 81,
+      "durationTicks": 16455,
+      "lastEntryTick": 16200
+    }
+  ],
+  "otherSecuredTapes": [],
+  "report": {
+    "outcome": "**NOT SECURED.** Best and scored: `waves 19 · timeAlive 586.400 s · gold 500 · calls 90 ·\nkills 895`, `eventLogHash fnv1a32:ee785f32`.\n\n- **Tape put forward: none.** The run died; a run that is not secured must not be submitted.\n  `attempt-1-tape.json` is named in `gauntlet-outcome.json`'s `tape` field as the best reel on\n  disk and is declared `secured: false` — it is evidence, not a standing.\n- **Sim runs: 3** (idle probe, tune-1, attempt-1). **Scored attempts: 1.**\n- Envelope, measured off the reel: `durationTicks 17592`, last accepted order at tick **17100**,\n  90 entries, 253,460 B — comfortably inside every axis (the live ceiling from\n  `runTapeEnvelopeForContract` is 1,938,784 B, not the charter's 592,544 summary).\n- Assay instrument control-tested on the zero-order idle probe first: it replayed to its own\n  header `fnv1a32:a45ba9ac`, so the instrument is sound.",
+    "whatTheMapAsked": "It asked me for **air as a wall, and it asked twice** — so this contract genuinely exercises\nE8's signature mechanic (low gravity, air as wall, transfer under changed physics) rather than\nwearing its name. The *air* half is the contract and it is a real two-body problem.\n`now.air` publishes `suit` (`body: \"hero\"`, 60 s capacity, 4/s refill inside a dome, **5 hp/s**\nharm outside), a per-pad `domes` dial, `regolith` (`grounds` 6, `required` 4, `windowWaves` 4,\n`worked`, `creditedThisWindow`, `breathlessPans`) and an `eclipse` block no sibling map\npublishes. No wave secures until four **distinct** grounds are worked, at most one per\n120-second window, each while **her** suit holds air — and `notePan(anchorIndex)` reads the\nhero's lungs while the **Prospector's** hands do the panning, 20–35 units out in vacuum. So the\nwinning shape is a body split: park her in the dome, dispatch it to a fresh ground.\n`now.seams[].anchorIndex` is the direct handle that turns \"pan a fresh ground\" into a sort.\nThen the second ask: at **wave 10** (`ceil(secureWave/2)`, derivable before the first order on a\ncontract that declares `firstRunWarning: false` and publishes no countdown) the shadow takes\nevery pad offline but `nearestToOrigin(shelters)` — the centre pad, the one that *contains* the\norigin. A hero posted there from t = 0 pays nothing for the eclipse, and after it lands\n`requiredAfter` is 1, satisfied by any pan on air. The *gravity* half stayed decorative\n(`feelG 0.6`, `floaty`, `orbitalReturn: false`); I used the 2.4× lob only as free supplementary\n`BLAST_AT` damage, on generation 29's measurement that the auto-lob is ~10 dps against the\nSpark Rig's 24. **There is no E8 verb** — the whole era is answered with `MOVE_HERO` and\n`HARVEST`, which is exactly what ADR-005 intended.\n\n**My notebook remembers this map from generations 36, 49 and 69, and its rules did not move.**\nEra 6 is named for rebuilt maps, and I opened braced for moved ground: all eight pins grep to\n**zero** matches for this contract, and the manifest, the claim at (0,12), the three pads, the\nsix anchors, the roster and the wave-20 default all reproduced to the decimal. The map is **not**\nnamed as cured this week. Its first minute: the hero lands six paces *north* of the only air on\nthe map with `inDome: null` and a suit falling 1 s/s — so the first order is a six-unit walk\nsouth onto the reserve pad, the first pan lands ~t = 20, and nothing threatening happens until\nwave 2. The idle floor reproduced at **w2 / 76.733 s** against generation 69's w2 / 76.0 s.",
+    "winnability": "**Yes — winnable, and what stopped me was my own budget, not a wall in the map, the grammar, the\neconomy or the door:** both era gates close with 235 seconds to spare, the full roster-cap fort\n(4 turrets, 6 beacons, 2 stockpiles) holds the hero at an untouched 175/175 through t = 524.9,\nand the run died **13.6 seconds short** of the secure with **500 gold idle and `goldPanned`\nfrozen at 1,290 for the last 150 seconds** — a purse that was already refusing income while a\ntier-2 sink worth ×1.65 dps on four turrets sat un-executed for reasons I ran out of wall clock\nto separate.",
+    "lessons": "- **A second rung list restarts the ordinal and silently deletes a rung.** tune-1 split the\n  ladder into CORE and SURPLUS arrays, each with its own `seen` counter; `byKind.turret` already\n  read 3 from the first list, so SURPLUS's turret rung tested `3 >= 1` and was skipped on every\n  view, forever — `turret: 3` at the end is the proof. **One ladder, ONE ordinal, always.** This\n  is the third distinct way I have broken a ladder in four heats (gen 81 stalled on an unfillable\n  rung, gen 99 double-counted the instance index, gen 102 let the map's own furniture retire my\n  rungs), and each time the symptom was \"the ladder looks like it is choosing not to buy.\"\n- **Read the roster caps and treat them as the fort's ceiling before sizing the economy.**\n  `turret` 4 + `sentry_beacon` 6 + `stockpile` 2 = twelve works and ~815 gold is *everything*\n  this board sells. Against ~1,290 panned that leaves ~475 gold with nowhere to go, on a contract\n  where the purse refuses credit at the cap. **A fort that is capped out and a purse that is\n  pinned are the same fact, and the only remaining sinks are tiers and palisades.**\n- **`goldPanned` frozen beside a pinned purse named the fault in both rides, eleventh generation\n  running** — and this heat adds the sharpest reading of it: *at the cap, income is already being\n  refused, so spending is free.* I encoded that as the `pinning` clause and it correctly bought\n  the whole fort; what I failed to do was give it anything to buy afterwards.\n- **Verify a new order actually EXECUTED, not just that it was emitted.** Generation 49 lost a\n  ride to this exact shape on this exact map and wrote the cure down: count the successful\n  executions (`entries.filter(e => e.tier > 1).length`), not the emissions. I wrote the sink,\n  shipped it, and cannot say from my own log whether it was ever refused or never reached,\n  because I logged neither the `CONTEXT_ACTION` record nor a tier count. **Log the field the\n  latch reads, and log the refusal reason of any order you are relying on.**\n- **A one-cause change with several faces is still one interpretable diff, and it paid.**\n  tune-1 → attempt-1 changed the ordinal, the ladder length and the sink — all descending from\n  \"the purse pinned while the fort stood still\" — and the result is a measurement, not a guess:\n  w18 → w19, works 9 → 12, hero's flat-175 window 403 s → 525 s, pan 995 → 1,290.\n- **The era gate on this map is cheap and front-loaded; the survival curve is the contract.**\n  Regolith 4/4 by t = 365 and the eclipse neutralised by a post chosen at t = 0. Everything that\n  decided the ride happened in the last 60 seconds of a 600-second run, against a board that\n  reaches 34 alive. **Budget the heat against waves 17–20, not against the objective.**\n- **Era 6 left this map's rules untouched, and proving it is a result — third heat running.**\n  Grep the pins for the contract id first (four minutes), confirm the manifest against the\n  notebook, then one ten-second idle probe against the remembered floor. It redirected the whole\n  budget from geometry to the economy, which is where the contract actually lives.\n- **`timeout` is still not on macOS and this arena still refuses shell redirection** — third and\n  eleventh generation respectively. The node runner (spawn `gr-sim`, drive the controller, log\n  every view to a compact table, write `gauntlet-outcome.json` plus all three envelope axes on\n  every child exit) made the intermediate-results law automatic: a truthful row existed from the\n  idle probe onward, the comparator promoted the scored tape with **no hand edit**, and its\n  per-view table is the entire evidence base of this report.\n- **Two rides is not a heat on a 600-second contract.** Each ride is ~90 s of wall plus analysis,\n  and the reading budget (which was right — it produced the whole plan before the first order)\n  left room for exactly one correction. The synthesis I never fired is one line: a working gold\n  sink. **On a map whose fort caps out, write the sink into the FIRST controller and verify it\n  executes on the first view it is legal.**"
+  },
+  "usage": {
+    "transcript": "/Users/robin/.claude/projects/-private-tmp-claude-501--Users-robin-Claude-Projects-Gold-Rush-fe6b8d27-b064-40eb-934b-1d29d57a71db-scratchpad-arena-heat14-e3949bfa/d445cd7b-0b0d-445c-85d1-d2e4bf549465.jsonl",
+    "assistantTurns": 80,
+    "toolCalls": 40,
+    "tokensIn": 160,
+    "tokensOut": 147613,
+    "cacheReadTokens": 36903578,
+    "cacheWriteTokens": 1068747,
+    "note": "tokensIn excludes cache reads/writes (reported separately); summed from the CLI session transcript, not self-reported by the rig"
+  }
+}

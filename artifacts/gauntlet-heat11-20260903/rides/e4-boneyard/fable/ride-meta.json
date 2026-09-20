@@ -1,0 +1,19 @@
+{
+  "rig": "fable",
+  "model": "claude-fable-5",
+  "arena": "/tmp/heat11-b118c4d2",
+  "workdir": "/tmp/heat11-b118c4d2/artifacts/heat11/fable/e4-boneyard",
+  "charterFile": "rides/e4-boneyard/fable/charter.md",
+  "charterSha256": "baff31a0a81354914245b8eb253d02551263d5059147f3f049c2aac9bfbf58d8",
+  "sessionId": "6317f74d-bd43-4271-af8e-63189d73d4a1",
+  "wallSeconds": 1500,
+  "startedAt": "2026-09-03T22:28:24.265Z",
+  "invocation": "env -u CLAUDECODE -u CLAUDE_CODE_ENTRYPOINT -u CLAUDE_CONFIG_DIR claude -p \"<charter text, see charterFile>\" --model claude-fable-5 --allowedTools Read,Write,Glob,Bash(node *) --output-format text --session-id 6317f74d-bd43-4271-af8e-63189d73d4a1",
+  "endedAt": "2026-09-03T22:45:55.558Z",
+  "wallClockSeconds": 1051,
+  "exitCode": 0,
+  "signal": null,
+  "wallHit": false,
+  "firstOutputAt": "2026-09-03T22:38:24.365Z",
+  "setupToFirstOutputSeconds": 600
+}

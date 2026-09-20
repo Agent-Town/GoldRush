@@ -1,0 +1,113 @@
+# ZONE PRINT e8-low-orbit (seed e8-low-orbit-01) — measured on this tree
+terrain bounds  -64..  64 x  -64..  64   hero radius 0.5
+
+## build zones (tileParams.buildZones) — the only ground BUILD accepts (Terrain.isBuildable, src/world/Terrain.ts:238)
+  claw-carcass-yard            bank=north   -18..  18 x  -14..  14  (36 x 28)
+  west-scaffold-deck           bank=north   -48.. -26 x  -10..  10  (22 x 20)
+  east-scaffold-deck           bank=north    26..  48 x  -10..  10  (22 x 20)
+
+## orbital scaffold zones (tileParams.orbitalScaffoldZones) — the crossing candidates
+  west-scaffold-deck            -48.. -26 x  -10..  10
+  claw-carcass-yard             -18..  18 x  -14..  14
+  east-scaffold-deck             26..  48 x  -10..  10
+
+## debris fields
+  north-debris-field            -54..  54 x   24..  54
+  south-debris-field            -54..  54 x  -54.. -24
+
+## handhold routes
+  claw-yard-handhold-spine     (-48,0) -> (-18,0) -> (0,-12) -> (18,0) -> (48,0)
+
+## harvest anchors
+  ( -38,    2)  in west-scaffold-deck
+  ( -12,    4)  in claw-carcass-yard
+  (  12,    4)  in claw-carcass-yard
+  (  38,    2)  in east-scaffold-deck
+
+## the hero
+  start (HeadlessContractSim.ts:1007-1008, stakeMarkers []) = (0, 12)
+  start is inside: claw-carcass-yard
+  start walkable=true buildable=true
+
+## the air system (E8SuitAirSystem.create, src/systems/E8SuitAirSystem.ts:265)
+  pressurisedZoneIds (authored) = ["claw-carcass-yard"]
+  shelters  = []
+  crossings = []
+  suit 60s, harm 5/s, required 4 in windows of 4 waves
+
+## buildable raster — rows are z, columns are x; # buildable, . walkable-not-buildable, space unwalkable
+      5    4    3    2    1    0    1    2    3    4    5   (x tens digit; step 2 from -50 to 50)
+z=  34 ...................................................
+z=  32 ...................................................
+z=  30 ...................................................
+z=  28 ...................................................
+z=  26 ...................................................
+z=  24 ...................................................
+z=  22 ...................................................
+z=  20 ...................................................
+z=  18 ...................................................
+z=  16 ...................................................
+z=  14 ................###################................
+z=  12 ................###################................
+z=  10 .############...###################...############.
+z=   8 .############...###################...############.
+z=   6 .############...###################...############.
+z=   4 .############...###################...############.
+z=   2 .############...########   ########...############.
+z=   0 .############...########   ########...############.
+z=  -2 .############...########   ########...############.
+z=  -4 .############...###################...############.
+z=  -6 .############...###################...############.
+z=  -8 .############...###################...############.
+z= -10 .############...###################...############.
+z= -12 ................###################................
+z= -14 ................###################................
+z= -16 ...................................................
+z= -18 ...................................................
+z= -20 ...................................................
+z= -22 ...................................................
+z= -24 ...................................................
+z= -26 ...................................................
+z= -28 ...................................................
+z= -30 ...................................................
+z= -32 ...................................................
+z= -34 ...................................................
+
+## the prover fort (artifacts/e8-air-logical/prover.mjs:235-246) against the authored ground
+  turret         ( -12,    4)  buildable=true  zone=claw-carcass-yard
+  turret         (  12,    4)  buildable=true  zone=claw-carcass-yard
+  turret         ( -14,   12)  buildable=true  zone=claw-carcass-yard
+  turret         (  14,   12)  buildable=true  zone=claw-carcass-yard
+  sentry_beacon  (  -5,   14)  buildable=true  zone=claw-carcass-yard
+  sentry_beacon  (   5,   14)  buildable=true  zone=claw-carcass-yard
+  sentry_beacon  (  -5,    8)  buildable=true  zone=claw-carcass-yard
+  sentry_beacon  (   5,    8)  buildable=true  zone=claw-carcass-yard
+  sentry_beacon  (  -7,   12)  buildable=true  zone=claw-carcass-yard
+  sentry_beacon  (   7,   12)  buildable=true  zone=claw-carcass-yard
+
+## reach — turret range and beacon range against the hero post and the crossing entries
+  Balance.turret.range=16 maxCount=4; Balance.beacon.range=8 maxCount=6 gridSnap=1 overlapRadius=1.2
+  west-scaffold-deck: enter (-28, 0) is 29.7 wu from the post (0, 10); walkable=true
+     covered by 0 of the fort's ten works
+     nearest build zone: west-scaffold-deck 0.0wu | claw-carcass-yard 10.0wu | east-scaffold-deck 54.0wu
+  east-scaffold-deck: enter (28, 0) is 29.7 wu from the post (0, 10); walkable=true
+     covered by 0 of the fort's ten works
+     nearest build zone: east-scaffold-deck 0.0wu | claw-carcass-yard 10.0wu | west-scaffold-deck 54.0wu
+
+## the sortie leg — every 2 wu along z=0 from the post to the west entry
+  (   0,   0) walkable=false buildable=false zone=claw-carcass-yard    works in range=2
+  (  -2,   0) walkable=false buildable=false zone=claw-carcass-yard    works in range=2
+  (  -4,   0) walkable=true  buildable=true  zone=claw-carcass-yard    works in range=2
+  (  -6,   0) walkable=true  buildable=true  zone=claw-carcass-yard    works in range=2
+  (  -8,   0) walkable=true  buildable=true  zone=claw-carcass-yard    works in range=2
+  ( -10,   0) walkable=true  buildable=true  zone=claw-carcass-yard    works in range=2
+  ( -12,   0) walkable=true  buildable=true  zone=claw-carcass-yard    works in range=2
+  ( -14,   0) walkable=true  buildable=true  zone=claw-carcass-yard    works in range=2
+  ( -16,   0) walkable=true  buildable=true  zone=claw-carcass-yard    works in range=2
+  ( -18,   0) walkable=true  buildable=true  zone=claw-carcass-yard    works in range=2
+  ( -20,   0) walkable=true  buildable=false zone=-                    works in range=2
+  ( -22,   0) walkable=true  buildable=false zone=-                    works in range=2
+  ( -24,   0) walkable=true  buildable=false zone=-                    works in range=2
+  ( -26,   0) walkable=true  buildable=true  zone=west-scaffold-deck   works in range=1
+  ( -28,   0) walkable=true  buildable=true  zone=west-scaffold-deck   works in range=0
+  ( -30,   0) walkable=true  buildable=true  zone=west-scaffold-deck   works in range=0

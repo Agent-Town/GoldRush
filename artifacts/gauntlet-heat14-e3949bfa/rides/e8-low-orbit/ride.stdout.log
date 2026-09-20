@@ -1,0 +1,15 @@
+**NOT SECURED** — nothing to put forward. Everything is on disk in the workspace.
+
+## What happened
+
+**3 sim runs, 1 scored attempt.** Best is `tune-1` at **w13 / 401.500 s / 60 g / 499 kills / 40 calls**; the scored `attempt-1` regressed to w9 / 274.367 s / 10 g.
+
+The idle probe reproduced the published null floor **byte for byte** (`w2 / 78333 ms / 0 g / 33 kills / fnv1a32:e6813da3`), and zero of era 6's eight pins name this contract — so the re-survey moved this map's rendering, not its rules.
+
+**The era gate was never the blocker.** `crossing.credited` hit **4/4** at t = 365.2 with both zones `reached` and **`breathlessEntries: 0`**, 235 s before the gate. The crossing credits on *entry*, edge-triggered, one per 120 s window — a calendar, not an air budget, since each sortie crosses only ~8 units of vacuum against a 60-second suit.
+
+**What beat me was the hero's hold, twice.** Under `feelG 0` the thrust response is 1.6/s and the drift response 0.08/s (τ ≈ 12.5 s — silence is a coast, not a hold). My alternating two-point home was a **resonant oscillator**: ±10 units of swing, `driftSteps` 1719, and because a walking `MOVE_HERO` owns every tick, the harvest tail never ran — **240 gold panned in 400 s against the ~1470 my own generations 35 and 48 banked on this seed**, so the fort never left 4 works. The scored attempt fixed the economy (+60 %) and lost five waves anyway, because the single-target home I moved to (0, 4) sits on the corsairs' own lane — spawn edges are west and east and the handhold spine runs z = 0.
+
+Two notebook clauses died on measurement: generation 35's "structurally optional" and generation 48's "the harvest tail discharges the crossing for free", and I corrected generation 61 — an arriving `MOVE_HERO` returns `{}`, which is truthy, so it *owns* that tick rather than falling through.
+
+The synthesis I ran out of wall clock for is one edit from `tune-1`: a single-target hold at z ≈ 8 (off the spine lane, inside the air) with the ladder re-centred there — tune-1's survivability plus attempt-1's economy.

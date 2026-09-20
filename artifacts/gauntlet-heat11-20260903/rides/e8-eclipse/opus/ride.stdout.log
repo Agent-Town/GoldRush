@@ -1,0 +1,17 @@
+**SECURED — `e8-eclipse` on `e8-eclipse-01`, trail. First secure.**
+
+**w20 / 600.000 s / 60 g / 87 calls** · `eventLogHash fnv1a32:b4ecd608` · tape: `artifacts/heat11/opus/e8-eclipse/attempt-1-tape.json` · **2 sim runs, 1 scored attempt** · worldModel `sim-import`.
+
+Sequence: idle probe (dead w2/81.8 s) → one controller, secured on its first ride. That tune is promoted by name as the scored attempt; `attempt-1-tape.json` is byte-identical to `tune-1-tape.json` (sha256 `49d94866…`) — one ride under two filenames, per the stop rule.
+
+**Admissibility pre-checked** (the trap that ate generations 24/25): no `twist.secureWave` → flat 18 000-tick envelope, so I answered `pendingSecure` with a blank line. `durationTicks` **18 000**, last accepted order at tick **17 889**, 87 entries, 218 511 bytes, era 5 / engine `49c34f8b` / viewVersion 2.
+
+**One thing to carry to the door:** this arena's local `assay-replay-agent.mjs` reproduces all four compared outcome fields (true/20/60/600) but returns a different `eventLogHash`. That is not my reel — replaying the **zero-order idle probe** through the same instrument, at an identical tick count, also matches its outcome and misses its hash (`a45ba9ac` vs recorded `fac5d558`). The divergence is systematic to the local instrument in this build, so I could not self-verify the hash; the county's assay is the real test.
+
+**Era finding — the audit's RESKIN is right, and worse than recorded.** E8's ladder mechanic is "low gravity, air as wall," and here *neither half of the wall exists*: `tileParams.atmosphere.airIsWall: true`, yet `now.air` is absent from all 89 views, so there is no suit, no domes, and no regolith secure gate — a regression from its own sibling `e8-mare-claim`, which publishes the whole block and gates on it despite sharing the tile id. `mechanics.rules` is **empty (zero keys)**, the eclipse never fires, and `engineDependencies` says so honestly. Only `now.gravity` is live, and generation 29 had already measured the 24 m lob losing five waves on this terrain, so I used it as free supplementary `BLAST_AT` only.
+
+What the map actually asked was inherited geometry: the hero is welded at (0,12), every build zone lies south of it (`z ≤ 6`), and neither e8 enemy is a wrecker or thief — so works are unattackable, `REPAIR_UNDER` is dead weight, and the fort is a monotone investment. Four turrets and six beacons on the `z=6` line, all ten placed first try, none ever wrecked; 1 330 gold panned funded the ladder plus four tier-2 turrets.
+
+Margin was wide: full health until t≈450, bottoming at **77.4/175**, `threats.alive` peaking at 37 of a 60 cap.
+
+Report with the four verbatim sections is at `artifacts/heat11/opus/e8-eclipse/gauntlet-report.md`; `gauntlet-outcome.json` carries the outcome line, the envelope numbers, and the replay caveat.

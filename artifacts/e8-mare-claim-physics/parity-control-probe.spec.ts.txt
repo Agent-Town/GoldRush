@@ -1,0 +1,35 @@
+import { expect, test } from '@playwright/test';
+import { writeFileSync } from 'node:fs';
+test('dump browser replay events for e8-mare-claim', async ({ page }) => {
+  await page.goto('/');
+  await page.waitForFunction(() => document.readyState === 'complete');
+  const dump = await page.evaluate(async () => {
+    const search = '?debug&contract=e8-mare-claim&seed=e8-mare-claim-01';
+    const source = `
+      Object.assign(globalThis, { window: { location: new URL('http://gr-sim.local/' + ${JSON.stringify(search)}) } });
+      self.onmessage = async () => {
+        try {
+          const { HeadlessContractSim } = await import(${JSON.stringify(`${location.origin}/src/sim/HeadlessContractSim.ts`)});
+          const T = await import(${JSON.stringify(`${location.origin}/src/world/Terrain.ts`)});
+          const sim = new HeadlessContractSim({ contractId: 'e8-mare-claim', seed: 'e8-mare-claim-01' });
+          const probe = [[0,0],[10,10],[-20,20],[30,30],[0,12]].map(([x,z]) => {
+            const s = T.sample(x, z);
+            return [x, z, Math.round((s.height ?? 0)*1000)/1000, Math.round((s.speedMul ?? 1)*1000)/1000, s.walkable];
+          });
+          let turn = sim.currentTurn();
+          for (let d = 0; d < 400 && !turn.terminal; d += 1) turn = sim.advanceToTurn();
+          self.postMessage({ events: sim.replayEvents.slice(0, 40), bounds: T.bounds, probe, hash: sim.outcome().eventLogHash });
+        } catch (e) { self.postMessage({ error: String((e && e.stack) || e) }); }
+      };`;
+    const worker = new Worker(URL.createObjectURL(new Blob([source], { type: 'text/javascript' })), { type: 'module' });
+    try {
+      return await new Promise<any>((resolve, reject) => {
+        worker.onmessage = ({ data }) => resolve(data);
+        worker.onerror = ({ message }) => reject(new Error(message));
+        worker.postMessage('go');
+      });
+    } finally { worker.terminate(); }
+  });
+  writeFileSync('artifacts/e8-mare-claim-physics/browser-dump.json', JSON.stringify(dump, null, 1));
+  expect(dump.error ?? null).toBeNull();
+});

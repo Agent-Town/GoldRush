@@ -1,0 +1,206 @@
+{
+  "rig": "opus",
+  "contract": "e4-dust-flats",
+  "model": "claude-opus-5",
+  "sessionId": "9a534b1a-b4cc-48bc-a72d-eebf7f98a874",
+  "startedAt": "2026-09-07T12:10:33.050Z",
+  "endedAt": "2026-09-07T12:21:52.619Z",
+  "wallClockSeconds": 680,
+  "wallHit": false,
+  "exitCode": 0,
+  "signal": null,
+  "setupToFirstOutputSeconds": 210,
+  "arenaTrackedChanges": [],
+  "workspaceFiles": [
+    "attempt-1-tape.json",
+    "ctrl-v1.mjs",
+    "gauntlet-outcome.json",
+    "gauntlet-report.md",
+    "probe-table.json",
+    "probe-tape.json",
+    "probe-views.jsonl",
+    "runner.mjs",
+    "tune-1-table.json",
+    "tune-1-tape.json",
+    "tune-1-views.jsonl"
+  ],
+  "outcome": {
+    "secured": true,
+    "waves": 14,
+    "timeMs": 424000,
+    "gold": 0,
+    "kills": 550,
+    "calls": 49,
+    "defaultedPicks": 0,
+    "defaultedSecure": 1,
+    "eventLogHash": "fnv1a32:b08906ed",
+    "motor": {
+      "graded": [
+        "camp-to-railhead"
+      ],
+      "hauled": true,
+      "arrivedAt": 24.267,
+      "roadDistance": 59.202,
+      "distanceTravelled": 86.292,
+      "fuelDrawn": 16.23,
+      "tarHarvested": 9,
+      "convoyArrived": null
+    },
+    "tape": "/private/tmp/heat13-569a41f9/artifacts/heat13/opus/e4-dust-flats/attempt-1-tape.json",
+    "scored": true,
+    "runsSoFar": 2,
+    "scoredAttempts": 1,
+    "worldModel": "sim-import",
+    "note": "tune-1 secured on the first controller ride; the stop rule ends the heat at the first SECURED outcome. attempt-1-tape.json is a byte-identical copy of tune-1-tape.json — ONE ride under two filenames, promoted by name here. The operator reads this `tape` field.",
+    "envelope": {
+      "durationTicks": 12720,
+      "maxTicks": 18002,
+      "lastEntryTick": 12659,
+      "entries": 49,
+      "maxEntries": 3601,
+      "bytes": 239782,
+      "maxTapeBytes": 1938784,
+      "admissible": true
+    },
+    "tapeEventLogHash": "fnv1a32:803c0a58",
+    "localAssay": {
+      "tool": "scripts/assay-replay-agent.mjs",
+      "eventLogHash": "fnv1a32:803c0a58",
+      "matchesTapeHeader": true,
+      "outcome": {
+        "secured": true,
+        "waves": 14,
+        "gold": 0,
+        "timeAlive": 424
+      },
+      "securedSnapshot": {
+        "waves": 12,
+        "gold": 0,
+        "timeAlive": 424
+      }
+    },
+    "era": "09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4",
+    "viewVersion": 2,
+    "contract": "e4-dust-flats",
+    "seed": "e4-dust-flats-01",
+    "difficulty": "trail"
+  },
+  "outcomeError": null,
+  "promotedTapeName": "attempt-1-tape.json",
+  "scoredTapes": [
+    {
+      "file": "attempt-1-tape.json",
+      "id": "agent-fb7c49b2-764ea1cc-2321-4f40-89f3-d48bf32ba36b",
+      "contract": "e4-dust-flats",
+      "seed": "e4-dust-flats-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "80b91a090",
+        "engineHash": "09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 14,
+        "timeAlive": 424,
+        "gold": 0
+      },
+      "entries": 49,
+      "durationTicks": 12720,
+      "lastEntryTick": 12659,
+      "promotedByRig": true,
+      "discoveredBy": "outcome-file+filename"
+    }
+  ],
+  "otherTapes": [
+    {
+      "file": "probe-tape.json",
+      "id": "agent-53a5d7fe-5bf724a6-3299-4bcd-9949-614fade7726f",
+      "contract": "e4-dust-flats",
+      "seed": "e4-dust-flats-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "a70f96a1d",
+        "engineHash": "09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 2,
+        "timeAlive": 79.033,
+        "gold": 0
+      },
+      "entries": 0,
+      "durationTicks": 2371,
+      "lastEntryTick": null
+    },
+    {
+      "file": "tune-1-tape.json",
+      "id": "agent-fb7c49b2-764ea1cc-2321-4f40-89f3-d48bf32ba36b",
+      "contract": "e4-dust-flats",
+      "seed": "e4-dust-flats-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "80b91a090",
+        "engineHash": "09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 14,
+        "timeAlive": 424,
+        "gold": 0
+      },
+      "entries": 49,
+      "durationTicks": 12720,
+      "lastEntryTick": 12659
+    }
+  ],
+  "otherSecuredTapes": [
+    {
+      "file": "tune-1-tape.json",
+      "id": "agent-fb7c49b2-764ea1cc-2321-4f40-89f3-d48bf32ba36b",
+      "contract": "e4-dust-flats",
+      "seed": "e4-dust-flats-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "80b91a090",
+        "engineHash": "09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 14,
+        "timeAlive": 424,
+        "gold": 0
+      },
+      "entries": 49,
+      "durationTicks": 12720,
+      "lastEntryTick": 12659
+    }
+  ],
+  "report": {
+    "outcome": "**SECURED.** `waves 14 · timeAlive 424.000 s · gold 0 · kills 550 · calls 49 · defaultedSecure 1`.\n\n- Tape put forward: `attempt-1-tape.json` (declared in `gauntlet-outcome.json`'s `tape` field).\n  It is a **byte-identical copy of `tune-1-tape.json` — one ride under two filenames**, promoted\n  by name because the stop rule ends the heat at the first SECURED outcome.\n- Sim runs: **2** (one idle probe, one controller). Scored attempts: **1**.\n- Admissibility, measured off the reel: `durationTicks` 12,720 of 18,002 · last accepted order at\n  tick 12,659 (61 inside) · 49 entries of 3,601 · 239,782 bytes of 1,938,784. All four axes clear.\n- Local assay (`scripts/assay-replay-agent.mjs`) reproduces the tape header's own\n  `fnv1a32:803c0a58` and all four outcome fields. (Note the standing trap: that is the *tape's*\n  hash, not the stdout outcome line's `fnv1a32:b08906ed` — different numbers by design.)",
+    "whatTheMapAsked": "It asked about **distance, road and fuel — E4's signature mechanic, live, legible and gating the\nsecure — and then it asked the same question a second time in the shape of a boss.** This is not\nstationary survival wearing the era's name at either end. `now.motor.objective.arrived` is ANDed\ninto the secure at every wave and the boss kill only secures a run whose errand is already done, so\nthe errand is half the win condition; and the leash is real arithmetic, not flavour: 36 fuel total\nagainst a burn priced by the second, a naive open drive of 82.5 units costing 27.5 fuel clear and\n~39 under a storm, so a rider who neither stages nor grades can strand the objective outright and\nmake the contract unsecurable however long it survives. Staging at the corridor stake and grading\nfirst turned that into 16.23 drawn with 19.77 still in the tank. The fields that carried it were\n`now.motor.objective` (`kind`, `corridorId`, `stop`, `stopReach`, `arrived`),\n`now.motor.fuel.nodes[].harvested/progress` with `tar`/`stored`/`drawn`,\n`now.motor.roads.corridors[].start/graded` with `roads.gradeReach`, `now.motor.vehicle.state/x/z`\nand `now.motor.weather.phase`; the orders were **`MOVE_HERO`, `GRADE` and `HAUL`**. The boss is the\nsecond, better spatial question and it publishes its own counter — `land_yacht_orbit` gives centre,\nradius and angular speed in the view, and `land_yacht_crane` gives reach 6, so the fort radius falls\nout of a two-sided inequality rather than a guess. The honest qualifier is the one every Motor map\nhas earned: the errand latched at t = 24 of a 424-second run and waves 2–13 were ordinary survival\non a 42-unit seam commute. Call it two-thirds of an era, bracketed at both ends.\n\n**Does it still play the way my notebook remembers?** In its bones yes; in its *controls* no, and\nthe control change is the whole heat. Every structural number generations 16 and 51 recorded\nreproduced exactly — same claim, same three tar nodes on the z = −8 line, same `camp-to-railhead`\nstake, same 82.5-unit naive drive, same orbit at radius 24, same w2/79.03 idle floor. What moved is\nthat the errand's cursor changed body. Generation 16 aimed `GRADE`/`HAUL` with the Prospector's\n`MOVE_TO`; that verb is gone and `MOVE_HERO` took its place, which cost me nothing here (a radius\nobjective, not an equality latch) and *paid* me twice: the errand ran in one self-draining array,\nand the hero is no longer welded to (0,8), so the fort could be built around the orbit centre where\nall four turrets cover it. Generation 51's central complaint — 340 gold of turret against a fort\n45 units from the money — is simply a different problem now.",
+    "winnability": "Secured, and the margin was **wide on defence and objective and nil on the purse**: the hero\nbottomed at 44/100 in waves 3–4 *before* the plating picks landed and finished 111/175, all eight\nworks stood unwrecked across 550 kills (`motor_gang` carries neither `wrecker` nor `thief`, so\n`works.wrecked` and `goldStolen` were 0 at every view), the errand latched 400 seconds before the\ngate with 19.77 fuel unspent, and `threats.alive` peaked at 27 — but the ranked gold is **0 of 500\npanned**, because an eighth build fired at view 48 one wave boundary before the bank.",
+    "lessons": "- **When a ruling retires a verb, ask what the verb was AIMED at — and here the answer was worth\n  two levers rather than costing one.** Generation 70 lost `e4-long-road` because `MOVE_TO` was\n  that contract's errand cursor and `MOVE_HERO` cannot land an exact-equality latch. The Dust Flats\n  is the same epoch, the same socket and the opposite verdict: `objective.stopReach` is **2.5**, a\n  radius, so a hero parked at (0,70) delivers a stop at (0,72) with 0.5 to spare. **Read the latch's\n  tolerance before deciding whether a retirement is fatal** — `haul`, `tow` and `deliveries` all\n  compare against `stopReach`; only `convoy` compares against `total − 1e-6`.\n- **The retired verb's replacement deleted a sentence three of my generations opened from.** Gens\n  16 and 51 both begin \"the hero is welded to the claim at (0,8)\". It walks now, so the fort no\n  longer has to compromise between covering the claim and covering the orbit: park the hero at the\n  orbit centre and one ring of turrets does both jobs. A geometry that was a trade for two\n  generations is not a trade any more.\n- **On a boss whose route is published, the placement radius is decided by the SECOND rule, not the\n  first.** The arc integral is nearly flat from r = 14 to 18 (41.8° vs 40.8°), so optimising it is\n  worth ~2% — while `land_yacht_crane`'s reach 6 against a pinned boss at radius 24 is a hard cliff\n  at r = 18 that one-shots turrets for `target.maxHp`. Generation 16 won at r = 18.38 on an engine\n  that had no crane; generation 51 found the crane. **Rank the candidate radii by the constraint\n  that can zero you, not by the one that shaves a percent.** `gridSnap: 1` moved my 10.607 to 11\n  (r = 15.56) and I should have checked that *before* the ride, not after — at r = 17.7 the same\n  snap would have put me at 18.38, on the wrong side of the cliff.\n- **A `MOVE_HERO` worklist self-sequences, and the hero's walk time is free scheduling for the\n  Hauler.** Each record blocks the tick while walking, goes `done` on arrival and hands the tick to\n  the next, so `[3 × (node + dwell zig), stake, GRADE, HAUL, railhead, HAUL, home]` drove a\n  ~135-unit unattended journey in one array. The 9.7-second walk from the stake to the railhead is\n  longer than the Hauler's 3.1-second staging drive, so no view was needed between the two `HAUL`s.\n  **Design a motor errand as one draining array whose hero legs are longer than the vehicle legs.**\n- **`MOVE_HERO` owns the tick while walking, so an errand phase is an income outage — price it and\n  spend it early.** Roughly 35 seconds of zero panning at the opening, when gold is 0 and the\n  Prospector would have spent 8.75 s walking to the seam anyway. Cheap at t = 0; it would have been\n  a wave at t = 200.\n- **The dwell pattern survives the grammar change, resized for the new body.** `MOVE_HERO` has\n  arrival radius 0.5 and the hero moves at 6.0, so a node → +0.5 → +0.5 → node zig keeps the body\n  inside `harvestRange` 1.35 for about a second against a 0.5-second harvest. Nine tar on the first\n  try. The grammar still has no wait verb and probably never will.\n- **On a fixed-wave boss secure, waves and time are pinned and gold is the ONLY free axis — so the\n  ladder's tail is the score, and mine cost me all of it.** I banked **0 of 500 panned** because an\n  eighth build fired one boundary before the bank. Sixth generation to name this and the first to\n  lose the entire axis to it. The fix is one line I still have not written: **stop emitting BUILD\n  once the boss wave is live**, and let the purse refill for the secure tick. A cumulative gate\n  protects a cheap rung from stealing an expensive one; it does nothing about a rung stealing the\n  scoreboard.\n- **Read the roster for what it OMITS — eighth contract running, and here it was half the design.**\n  One id, `motor_gang`, no `wrecker`, no `thief`: `works.wrecked` 0 and `goldStolen` 0 at every\n  view. That deletes `REPAIR_UNDER`, palisade chaff and every decoy idea, and makes the fort a\n  monotone investment — which is exactly what let me spend the first 24 seconds entirely on the\n  errand with nothing standing.\n- **Ride the skeleton first and change nothing — sixth heat where that is the whole discipline, and\n  the fourth in a row where it secured on ride one.** Draft first under replace semantics with a\n  plating-first scorer (maxHp 100 → 175, which is the difference between the 44/100 trough at wave 3\n  and finishing at 111/175); a cumulatively-gated ladder; more candidate spots than slots with a\n  refusal blacklist partitioned into GROUND (poison the coordinate) and ECONOMY\n  (`insufficient_gold` — retry, poison nothing); `Number.isFinite` filtering on seam coordinates\n  before any sort; one seam drained in a block before walking; a blank line at `pendingSecure`.\n  Eight builds, zero stalls. Twelve of my generations end on \"I proved the parts and never fired the\n  combination\"; the cure keeps turning out to be reading, not riding.\n- **The blank line at `pendingSecure` is standing equipment, ninth contract running** — it banked\n  the secure for free (`defaultedSecure: 1`) and left the last accepted order 61 ticks inside the\n  envelope.\n- **A standing in my own name dates the reel, not the map — eleventh heat running.** I am the listed\n  first-securer of `e4-dust-flats` from 2026-09-03, and that row was retired because the *grammar*\n  moved underneath it while the contract did not. Grade the notebook clause by clause: here every\n  geometry clause held and every control clause was dead."
+  },
+  "usage": {
+    "transcript": "/Users/robin/.claude/projects/-private-tmp-heat13-569a41f9/9a534b1a-b4cc-48bc-a72d-eebf7f98a874.jsonl",
+    "assistantTurns": 50,
+    "toolCalls": 27,
+    "tokensIn": 100,
+    "tokensOut": 109113,
+    "cacheReadTokens": 16462670,
+    "cacheWriteTokens": 1013895,
+    "note": "tokensIn excludes cache reads/writes (reported separately); summed from the CLI session transcript, not self-reported by the rig"
+  }
+}

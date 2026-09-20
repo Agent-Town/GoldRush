@@ -1,0 +1,332 @@
+{
+  "contract": "e10-ember-shore",
+  "heroSpeed": 6,
+  "stokeDisc": {
+    "id": "last-warm-vent",
+    "x": 3,
+    "z": -10,
+    "heroStart": true,
+    "radius": 4,
+    "sampledAt": 0.25,
+    "cellsInside": 797,
+    "cellsWalkable": 398,
+    "closestWalkable": {
+      "x": 3,
+      "z": -12.5,
+      "away": 2.5
+    }
+  },
+  "buildZones": [
+    {
+      "id": "last-warm-vent-site",
+      "bank": "south",
+      "minX": -2,
+      "maxX": 8,
+      "minZ": -16,
+      "maxZ": -4
+    },
+    {
+      "id": "cooled-titan-machine-mount",
+      "bank": "north",
+      "minX": 14,
+      "maxX": 38,
+      "minZ": 22,
+      "maxZ": 46
+    }
+  ],
+  "landmarkBlockers": 5,
+  "stepWu": 0.5,
+  "anchors": [
+    {
+      "index": 0,
+      "x": -6,
+      "z": -24,
+      "walkableHere": true,
+      "fromVent": {
+        "wu": 16.64,
+        "walkSeconds": 2.77,
+        "line": {
+          "samples": 35,
+          "blocked": 6,
+          "firstBlockedAt": {
+            "x": 3,
+            "z": -10
+          },
+          "clear": false
+        },
+        "path": {
+          "reachable": true,
+          "pathWu": 16.49,
+          "walkSeconds": 2.75,
+          "fromSnapWu": 3,
+          "toSnapWu": 0
+        }
+      },
+      "fromZones": [
+        {
+          "zone": "last-warm-vent-site",
+          "nearestPoint": {
+            "x": -2,
+            "z": -16
+          },
+          "wu": 8.94,
+          "walkSeconds": 1.49,
+          "line": {
+            "samples": 19,
+            "blocked": 0,
+            "firstBlockedAt": null,
+            "clear": true
+          },
+          "path": {
+            "reachable": true,
+            "pathWu": 9.66,
+            "walkSeconds": 1.61,
+            "fromSnapWu": 0,
+            "toSnapWu": 0
+          }
+        },
+        {
+          "zone": "cooled-titan-machine-mount",
+          "nearestPoint": {
+            "x": 14,
+            "z": 22
+          },
+          "wu": 50.16,
+          "walkSeconds": 8.36,
+          "line": {
+            "samples": 102,
+            "blocked": 4,
+            "firstBlockedAt": {
+              "x": 0.93,
+              "z": -8.06
+            },
+            "clear": false
+          },
+          "path": {
+            "reachable": true,
+            "pathWu": 54.28,
+            "walkSeconds": 9.05,
+            "fromSnapWu": 0,
+            "toSnapWu": 0
+          }
+        }
+      ]
+    },
+    {
+      "index": 1,
+      "x": -20,
+      "z": -34,
+      "walkableHere": true,
+      "fromVent": {
+        "wu": 33.24,
+        "walkSeconds": 5.54,
+        "line": {
+          "samples": 68,
+          "blocked": 7,
+          "firstBlockedAt": {
+            "x": 3,
+            "z": -10
+          },
+          "clear": false
+        },
+        "path": {
+          "reachable": true,
+          "pathWu": 32.28,
+          "walkSeconds": 5.38,
+          "fromSnapWu": 3,
+          "toSnapWu": 0
+        }
+      },
+      "fromZones": [
+        {
+          "zone": "last-warm-vent-site",
+          "nearestPoint": {
+            "x": -2,
+            "z": -16
+          },
+          "wu": 25.46,
+          "walkSeconds": 4.24,
+          "line": {
+            "samples": 52,
+            "blocked": 0,
+            "firstBlockedAt": null,
+            "clear": true
+          },
+          "path": {
+            "reachable": true,
+            "pathWu": 25.46,
+            "walkSeconds": 4.24,
+            "fromSnapWu": 0,
+            "toSnapWu": 0
+          }
+        },
+        {
+          "zone": "cooled-titan-machine-mount",
+          "nearestPoint": {
+            "x": 14,
+            "z": 22
+          },
+          "wu": 65.51,
+          "walkSeconds": 10.92,
+          "line": {
+            "samples": 133,
+            "blocked": 0,
+            "firstBlockedAt": null,
+            "clear": true
+          },
+          "path": {
+            "reachable": true,
+            "pathWu": 70.08,
+            "walkSeconds": 11.68,
+            "fromSnapWu": 0,
+            "toSnapWu": 0
+          }
+        }
+      ]
+    },
+    {
+      "index": 2,
+      "x": -38,
+      "z": -22,
+      "walkableHere": true,
+      "fromVent": {
+        "wu": 42.72,
+        "walkSeconds": 7.12,
+        "line": {
+          "samples": 87,
+          "blocked": 6,
+          "firstBlockedAt": {
+            "x": 3,
+            "z": -10
+          },
+          "clear": false
+        },
+        "path": {
+          "reachable": true,
+          "pathWu": 42.97,
+          "walkSeconds": 7.16,
+          "fromSnapWu": 3,
+          "toSnapWu": 0
+        }
+      },
+      "fromZones": [
+        {
+          "zone": "last-warm-vent-site",
+          "nearestPoint": {
+            "x": -2,
+            "z": -16
+          },
+          "wu": 36.5,
+          "walkSeconds": 6.08,
+          "line": {
+            "samples": 74,
+            "blocked": 0,
+            "firstBlockedAt": null,
+            "clear": true
+          },
+          "path": {
+            "reachable": true,
+            "pathWu": 38.49,
+            "walkSeconds": 6.41,
+            "fromSnapWu": 0,
+            "toSnapWu": 0
+          }
+        },
+        {
+          "zone": "cooled-titan-machine-mount",
+          "nearestPoint": {
+            "x": 14,
+            "z": 22
+          },
+          "wu": 68.12,
+          "walkSeconds": 11.35,
+          "line": {
+            "samples": 138,
+            "blocked": 0,
+            "firstBlockedAt": null,
+            "clear": true
+          },
+          "path": {
+            "reachable": true,
+            "pathWu": 70.23,
+            "walkSeconds": 11.7,
+            "fromSnapWu": 0,
+            "toSnapWu": 0
+          }
+        }
+      ]
+    },
+    {
+      "index": 3,
+      "x": -54,
+      "z": -12,
+      "walkableHere": true,
+      "fromVent": {
+        "wu": 57.04,
+        "walkSeconds": 9.51,
+        "line": {
+          "samples": 116,
+          "blocked": 6,
+          "firstBlockedAt": {
+            "x": 3,
+            "z": -10
+          },
+          "clear": false
+        },
+        "path": {
+          "reachable": true,
+          "pathWu": 54.83,
+          "walkSeconds": 9.14,
+          "fromSnapWu": 3,
+          "toSnapWu": 0
+        }
+      },
+      "fromZones": [
+        {
+          "zone": "last-warm-vent-site",
+          "nearestPoint": {
+            "x": -2,
+            "z": -12
+          },
+          "wu": 52,
+          "walkSeconds": 8.67,
+          "line": {
+            "samples": 105,
+            "blocked": 0,
+            "firstBlockedAt": null,
+            "clear": true
+          },
+          "path": {
+            "reachable": true,
+            "pathWu": 52,
+            "walkSeconds": 8.67,
+            "fromSnapWu": 0,
+            "toSnapWu": 0
+          }
+        },
+        {
+          "zone": "cooled-titan-machine-mount",
+          "nearestPoint": {
+            "x": 14,
+            "z": 22
+          },
+          "wu": 76.03,
+          "walkSeconds": 12.67,
+          "line": {
+            "samples": 154,
+            "blocked": 0,
+            "firstBlockedAt": null,
+            "clear": true
+          },
+          "path": {
+            "reachable": true,
+            "pathWu": 82.08,
+            "walkSeconds": 13.68,
+            "fromSnapWu": 0,
+            "toSnapWu": 0
+          }
+        }
+      ]
+    }
+  ]
+}

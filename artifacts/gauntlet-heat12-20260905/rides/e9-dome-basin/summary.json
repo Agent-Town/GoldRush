@@ -1,0 +1,192 @@
+{
+  "rig": "opus",
+  "contract": "e9-dome-basin",
+  "model": "claude-opus-5",
+  "sessionId": "ecf5a598-3c48-46ff-aa0b-ed4716272443",
+  "startedAt": "2026-09-05T20:44:31.849Z",
+  "endedAt": "2026-09-05T20:55:57.665Z",
+  "wallClockSeconds": 686,
+  "wallHit": false,
+  "exitCode": 0,
+  "signal": null,
+  "setupToFirstOutputSeconds": 135,
+  "arenaTrackedChanges": [],
+  "workspaceFiles": [
+    "attempt-1-outcome.json",
+    "attempt-1-rows.json",
+    "attempt-1-tape.json",
+    "attempt-1-views.jsonl",
+    "ctrl-v1.mjs",
+    "ctrl-v2.mjs",
+    "ctrl-v3.mjs",
+    "gauntlet-outcome.json",
+    "gauntlet-report.md",
+    "probe-idle-outcome.json",
+    "probe-idle-rows.json",
+    "probe-idle-tape.json",
+    "probe-idle-views.jsonl",
+    "run.mjs",
+    "tune-1-outcome.json",
+    "tune-1-rows.json",
+    "tune-1-tape.json",
+    "tune-1-views.jsonl",
+    "tune-2-outcome.json",
+    "tune-2-rows.json",
+    "tune-2-tape.json",
+    "tune-2-views.jsonl"
+  ],
+  "outcome": {
+    "secured": false,
+    "waves": 14,
+    "timeMs": 439567,
+    "gold": 96,
+    "kills": 531,
+    "calls": 151,
+    "defaultedPicks": 0,
+    "defaultedSecure": 0,
+    "eventLogHash": "fnv1a32:17e14213",
+    "tape": "/tmp/heat12-038cc280/artifacts/heat12/opus/e9-dome-basin/tune-1-tape.json",
+    "scored": false,
+    "label": "tune-1",
+    "envelope": {
+      "ticks": 13187,
+      "entries": 151,
+      "bytes": 538306,
+      "capTicks": 18002,
+      "capEntries": 3601,
+      "capBytes": 576176
+    },
+    "views": 172,
+    "worldModel": "sim-import",
+    "exitCode": 0,
+    "runsSoFar": 4,
+    "scoredAttempts": 1,
+    "submit": "DO NOT SUBMIT — not secured (endReason: hero_down). Nothing is put forward.",
+    "note": "Best of 4 runs. tune-1 (two-sided bait, mend on) w14/439.567s beats attempt-1 (synthesis) w13/419.367s and tune-2 (economy-only) w13/402.267s. NOT SECURED: the contract needs w20/600s and declares no earlier window. attempt-1-tape.json is the scored attempt and is the WORSE run; this file names tune-1 as the best outcome, per the intermediate-results law. Neither is submittable.",
+    "bestOfRuns": {
+      "probe-idle": "w2 / 82.6s / 0g  (idle floor, matches gen 40)",
+      "tune-1": "w14 / 439.567s / 96g / 151 calls — two-sided bait + REPAIR_UNDER; purse froze at 1.09 g/s; 538,306 B of a 576,176 B ceiling at w14 (would be reel_too_large at w20)",
+      "tune-2": "w13 / 402.267s / 100g / 68 calls — mend removed; 2.16 g/s, full ladder landed, all 20 works wrecked; 185,090 B",
+      "attempt-1 (SCORED)": "w13 / 419.367s / 11g / 66 calls — synthesis: v2 economy + surplus-gated mend + 40 palisade rungs; hero 158/175 at t=300 then collapsed; 176,472 B"
+    }
+  },
+  "outcomeError": null,
+  "promotedTapeName": "tune-1-tape.json",
+  "scoredTapes": [
+    {
+      "file": "attempt-1-tape.json",
+      "id": "agent-b5c95c01-f1f1dac0-418e-47dc-a535-8d9f69fec32a",
+      "contract": "e9-dome-basin",
+      "seed": "e9-dome-basin-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "9332804e2",
+        "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 13,
+        "timeAlive": 419.367,
+        "gold": 11
+      },
+      "entries": 66,
+      "durationTicks": 12581,
+      "lastEntryTick": 12333,
+      "promotedByRig": false,
+      "discoveredBy": "filename"
+    },
+    {
+      "file": "tune-1-tape.json",
+      "id": "agent-8e51d98b-58f6f224-e330-4e62-b071-e3d3d8d93ac2",
+      "contract": "e9-dome-basin",
+      "seed": "e9-dome-basin-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "9332804e2",
+        "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 14,
+        "timeAlive": 439.567,
+        "gold": 96
+      },
+      "entries": 151,
+      "durationTicks": 13187,
+      "lastEntryTick": 12743,
+      "promotedByRig": true,
+      "discoveredBy": "outcome-file"
+    }
+  ],
+  "otherTapes": [
+    {
+      "file": "probe-idle-tape.json",
+      "id": "agent-8f747406-578fe9ce-bec5-42d0-a8df-3be3c95d6d31",
+      "contract": "e9-dome-basin",
+      "seed": "e9-dome-basin-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "9332804e2",
+        "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 2,
+        "timeAlive": 82.6,
+        "gold": 0
+      },
+      "entries": 0,
+      "durationTicks": 2478,
+      "lastEntryTick": null
+    },
+    {
+      "file": "tune-2-tape.json",
+      "id": "agent-283a437a-c3d2c77e-9751-47a6-b38e-3f66b484a758",
+      "contract": "e9-dome-basin",
+      "seed": "e9-dome-basin-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "9332804e2",
+        "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 13,
+        "timeAlive": 402.267,
+        "gold": 100
+      },
+      "entries": 68,
+      "durationTicks": 12068,
+      "lastEntryTick": 11662
+    }
+  ],
+  "otherSecuredTapes": [],
+  "report": {
+    "outcome": "**NOT SECURED.** Best of the heat: **w14 / 439.567 s / 96 gold / 151 calls** (tune-1,\n`fnv1a32:17e14213`). Scored attempt: **w13 / 419.367 s / 11 gold / 66 calls** (attempt-1,\n`fnv1a32:9932057f`) — the synthesis ride, which held the hero better mid-run (158/175 at\nt = 300 against tune-2's 93) and still finished a wave short of tune-1.\n\n**Tape put forward: none.** No run secured, so nothing is submittable; `gauntlet-outcome.json`\nnames `tune-1-tape.json` in its `\"tape\"` field because that is the best outcome measured, not\nbecause it is a claim. tune-1 is additionally over the byte budget for a full ride and would be\nrefused `reel_too_large` even if it had secured.\n\nSim runs: **4** (1 idle probe, 2 tunes, 1 scored attempt). Scored attempts: **1**.\nThe contract needs w20 / 600 s and declares no earlier window: `twist` carries only\n`clockTicks: 18000` and a roster, so `secureWave` falls through to `Balance.run.secureWave = 20`.",
+    "whatTheMapAsked": "It asked **nothing at all about E9 persistent tiles**, and the county's RESKIN measurement is\nright — sharply so, because the engine *owns* the consumer and this contract declines it.\n`CanalChoiceSystem` is live headless and gates the secure through `autoSecureWaveForRun`, with\n`CONTEXT_ACTION redig`/`backfill` as public verbs — but it keys on `twist.persistentCanalChoices`,\nand this manifest declares **no twist but `clockTicks` and a two-entry enemy roster**. So the\nthree canal stage-gates C1 (−28,34), C2 (−12,10), C3 (4,−24) the briefing tells me to defend,\nthe feeder-canal rail through them, the ice quarry and the height-four scarp are all\n`tileParams` scenery. I dumped the union of `now` keys across every view of every run and it is\n`wave · blastReadyInMs · weapon · timers · gold · hero · prospector · works · threats · orders ·\nneedsRider · seams · score` (+ `pendingOffer`/`pendingSecure`) — **no `canalChoices`, no tile\nstate, nothing that persists across a wave.** `stablePrefix.mechanics.rules` carries exactly one\nkey, `build_zones`. There is no E9 verb and there is nothing to steward.\n\nWhat it asks instead is one hard geometry question, and it is a good one: *where can you build,\nrelative to the body you must keep alive, and what does the enemy walk toward?* The answer is the\n28.28 wu subtraction plus `nearestBuilding` — you cannot defend the hero, so you buy its life in\nbait mass on the pads that beat the claim to a spawn lane, and the map gives you two of those and\nwithholds the third. The fields that carried it were `now.works.entries` (position, `wrecked` —\nthe only way to watch the wall being eaten), `now.works.byKind`/`standing`/`wrecked`,\n`now.score.goldPanned` against `now.gold` (the pair that separated tune-1's frozen purse from\ntune-2's eaten fort), `now.seams[].active/x/z`, `now.hero.hp/maxHp/level`,\n`now.threats.alive/wreckers/thieves` and `now.orders[].status/reason`. The orders were `BUILD`,\n`HARVEST`, `PICK_UPGRADE`, `BLAST_AT`, `REPAIR_UNDER`, `MOVE_TO`, `CONTEXT_ACTION upgrade`,\n`HOLD` and one blank line — epoch-1 grammar throughout.\n\nMy notebook remembers this map from generation 40, and **it still plays exactly the way I\nremember**: same welded hero at (0,12), same 28.3 wu nearest ground, same claim-is-nearest-\nbuilding problem, same w2/82.6 s idle floor, same 60-enemy alive cap. The engine moved around it\n(rendering, sampler, lighting; every recent pin says \"every contract replays byte-identical\") and\nits rules did not.",
+    "winnability": "**Undecided-leaning-yes, and what stopped me was my own budget against a real and now-priced\ntension in the map, not the grammar and not the door:** the two tunes are a clean one-variable\npair that jointly name the whole remaining problem — mended bait holds the hero flat at 119/175\nfor 200 seconds while freezing the purse at 1.09 g/s (tune-1), and an unmended fort runs at\n2.16 g/s and lands the entire ladder while being eaten to 20/20 wrecked (tune-2) — because one\nProspector's feet must both pan a seam cluster 33–63 wu from the pads and replace ~0.24 works/s\nof bait mass; my scored synthesis narrowed it (hero 158/175 at t = 300) and still died at w13 of\n20, so the honest verdict is that I have priced the trade without closing it, and the untested\nlever the data points at is buying the bait's *replacement* out of a shorter commute — palisades\non the east pad only, with the west lane held by turrets that kill what they lure rather than by\nmass that must be rebuilt. The reel side is solved and no longer a risk (176,472 bytes of a\n576,176 ceiling, 66 of 3,601 entries, last accepted order well inside the 18,002-tick envelope).",
+    "lessons": "- **Fire the synthesis FIRST — sixth heat running, and this time I can price exactly what the\n  delay cost.** Generations 32, 40, 49, 50, 51 and 57 all end with this sentence, and gen 40\n  ended it naming *this* run: \"write the two-sided-bait run first next time; it was derivable\n  before the idle probe.\" I did write it first this time, and it was right — but I then spent\n  runs 2 and 3 discovering that the bait and the economy trade against each other, which gen 40\n  had ALREADY measured and written down as its own second lever. **The synthesis I should have\n  ridden was not \"two-sided bait\", it was \"two-sided bait + a mend rate that does not spend the\n  panning feet\".** Read the predecessor's *list* of untested levers as a conjunction, not a menu.\n- **`REPAIR_UNDER` is cheap in gold and ruinous in feet, and the ratio is the whole contract\n  here.** A wrecked palisade mends for 2.5 g — but the mend is a 33 wu or 63 wu round trip, and\n  it fires on EVERY array once anything is damaged, which on this map is from wave 4 onward.\n  Two mend orders per array cost 1.07 g/s of income (1.09 measured against 2.16 without them):\n  **more than the entire ladder.** Gate a travelling verb on surplus, not on damage — damage is\n  permanent here and therefore not a trigger, it is a constant.\n- **`goldPanned` against `gold` named both failures in one column, seventh generation running.**\n  Flat `pan` with `gold` low = the worker is not working (tune-1's mend churn). Climbing `pan`\n  with everything wrecked = the fort is being eaten faster than it is bought (tune-2). The two\n  signatures are distinguishable at a glance and neither needed a second run to identify.\n- **Measure all three envelope axes on the FIRST reel, and pace submissions against the byte\n  budget rather than hoping.** tune-1 spent 538,306 of 576,176 bytes by wave 14 — a wave-20 ride\n  on that policy is refused outright, so my best run so far was also my most unsubmittable. The\n  cure is not a strategy change: an adaptive floor on the gap between submissions\n  (`(600 − t) / entriesLeft`, drafts and newly-affordable batches always answering) took the same\n  policy to 185,090 bytes across a longer ride. Gen 26 measured the ceiling, gen 40 predicted the\n  breach; this is the first ride that budgeted against it in the controller.\n- **A bait that both lures and kills beats a bait that only absorbs.** A turret on the pad corner\n  is 4.5 wu from its spawn point, inside its own range 16 — it is the nearest building to that\n  lane *and* it shoots what it pulls. That is why the ladder is turrets-and-beacons on the corners\n  with palisades as surplus, not a palisade wall: gen 40 measured 220 g of turret traded for 22\n  palisades as a two-wave loss, and this ride is consistent with it.\n- **The unbaitable lane is a design statement, not an oversight.** Two of three spawn gates have a\n  build zone nearer to them than the claim; the north one does not, at 34.7 vs 26. So one third of\n  the wreckers is the hero's problem by construction no matter how rich the rider gets, and the\n  contract's real question is how long a 175-HP hero can hold a third of a 60-enemy cap alone.\n  Compute `min distance(spawn point, buildZone)` against `distance(spawn point, claim)` **per\n  gate** — the per-lane decomposition was available from the manifest in two minutes and it is\n  what should size the whole plan.\n- **A middle setting between two measured extremes can be worse than either — and mine was.**\n  tune-1 (mend always) reached w14, tune-2 (mend never) w13, and the surplus-gated compromise\n  w13. It moved the *symptom* correctly — the hero sat at 158/175 at t = 300 where tune-2 had it\n  at 93 — and still lost, because gating the mend on `gold ≥ 80` means it fires exactly when the\n  ladder wants that gold, so the compromise starves both jobs a little instead of one job\n  completely. **When two policies fail for opposite reasons, interpolating between them is not\n  the synthesis; the synthesis is finding the resource that makes the trade unnecessary** — here,\n  a shorter commute to the bait, not a smarter trigger on the same long one.\n- **An idle floor reproducing to the tenth of a second is the cheapest possible confirmation that\n  a notebook entry has not expired.** w2 / 82.6 s here against gen 40's ~82 s, on a heat whose\n  whole premise is that the engine moved. Run the probe before trusting the memory, and trust the\n  memory once it reproduces — five of my last six heats spent real minutes re-deriving geometry\n  that a ten-second probe had already validated."
+  },
+  "usage": {
+    "transcript": "/Users/robin/.claude/projects/-private-tmp-heat12-038cc280/ecf5a598-3c48-46ff-aa0b-ed4716272443.jsonl",
+    "assistantTurns": 59,
+    "toolCalls": 32,
+    "tokensIn": 118,
+    "tokensOut": 101711,
+    "cacheReadTokens": 16460155,
+    "cacheWriteTokens": 888702,
+    "note": "tokensIn excludes cache reads/writes (reported separately); summed from the CLI session transcript, not self-reported by the rig"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "scope": "Isolated full development-variant production bundle with intended E6 change; not main-worktree adoption.",
+  "build": {
+    "command": "npm run build",
+    "exitCode": 0,
+    "log": "build.log"
+  },
+  "unchangedEncounterTests": {
+    "command": "GR_ASSET_DIET_REUSE_BUILD=1 GR_PREVIEW_PORT=5247 playwright test e2e/e6-boss-homemaker.spec.ts --config playwright.preview.config.ts --workers=1 --project=desktop-chrome --project=mobile-chrome",
+    "exitCode": 0,
+    "stats": {
+      "startTime": "2026-09-08T18:23:05.717Z",
+      "duration": 18783.374,
+      "expected": 2,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "report": "focused-preview-report.json"
+  },
+  "runtime": "runtime-clean/report.json",
+  "optimizedEquivalence": "optimized-equivalence.json"
+}

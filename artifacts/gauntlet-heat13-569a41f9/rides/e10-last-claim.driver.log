@@ -1,0 +1,32 @@
+
+########## RIDE e10-last-claim · seed default · gen 96 · stake never-claimed · wall 1500s ##########
+--- 1 charter ---
+{"rig":"opus","contract":"e10-last-claim","seed":"gold-rush","seedMode":"live","stake":"never-claimed","generation":96,"wall":1500,"notebookSha256":"c801b4455f3712e3addd045e84003069bd1ee6dc4d6d283bc23235dfd0b659ec","charterSha256":"99b67cf574356ec3b4ca4c3fdef3e6c8ba5bfe0d434a70408989a2ed77f7ef0c","bytes":740835,"out":"/private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/rides/e10-last-claim/charter.md"}
+--- 2 ride ---
+START opus claude-opus-5 pid=14677 session=24dcc713-529d-4af2-ab4f-996150cffcf5 at=2026-09-07T16:48:50.603Z
+END opus rc=1 signal=null wall=2s wallHit=false
+ride-wall rc=1 signal=-
+--- 3 land ---
+
+=== 1 finish-ride ===
+{"rig":"opus","contract":"e10-last-claim","wall":2,"wallHit":false,"rc":1,"tracked":[],"files":0,"outcome":null,"scoredTapes":[],"otherSecured":[],"reportSections":null,"usage":{"turns":1,"toolCalls":0,"tokensIn":0,"tokensOut":0}}
+
+=== NOT SECURED — nothing to submit ===
+{
+ "rig": "opus",
+ "contract": "e10-last-claim",
+ "wall": 2,
+ "wallHit": false,
+ "rc": 1,
+ "scoredTapes": [],
+ "outcomeNote": null
+}
+
+land rc=0
+--- 4 notebook ---
+{"notebook":"/Users/robin/Claude/Projects/goldrush-gauntlet/memories/claude__opus-5/NOTEBOOK.md","generation":96,"headerBytes":415,"entryBytes":888}
+--- 5 matrix ---
+| 36 | e10-last-claim | `default` | never-claimed | 96 | **not secured** | — | — | —s | 2s | —<br>— | — | gen 96 |
+{"contract":"e10-last-claim","secured":false,"tapesOnDisk":0,"scoredTapes":0,"otherSecured":0,"wallHit":false,"rc":1,"assay":null,"ranked":null,"winnability":null}
+########## END e10-last-claim ##########
+

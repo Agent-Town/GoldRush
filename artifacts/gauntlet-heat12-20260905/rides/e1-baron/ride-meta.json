@@ -1,0 +1,19 @@
+{
+  "rig": "opus",
+  "model": "claude-opus-5",
+  "arena": "/tmp/heat12-038cc280",
+  "workdir": "/tmp/heat12-038cc280/artifacts/heat12/opus/e1-baron",
+  "charterFile": "/private/tmp/heat12-038cc280/artifacts/gauntlet-heat12-20260905/rides/e1-baron/charter.md",
+  "charterSha256": "6c862844cce60e757cd7387fe205d6e0fee28c69fcbcfa6b83ea1b72a73b9b85",
+  "sessionId": "f9fd1b78-7044-4222-9c63-733923c00f73",
+  "wallSeconds": 900,
+  "startedAt": "2026-09-05T20:17:14.821Z",
+  "invocation": "env -u CLAUDECODE -u CLAUDE_CODE_ENTRYPOINT -u CLAUDE_CONFIG_DIR claude -p \"<charter text, see charterFile>\" --model claude-opus-5 --allowedTools Read,Write,Glob,Bash(node *) --output-format text --session-id f9fd1b78-7044-4222-9c63-733923c00f73",
+  "endedAt": "2026-09-05T20:25:46.912Z",
+  "wallClockSeconds": 512,
+  "exitCode": 0,
+  "signal": null,
+  "wallHit": false,
+  "firstOutputAt": "2026-09-05T20:20:14.848Z",
+  "setupToFirstOutputSeconds": 180
+}

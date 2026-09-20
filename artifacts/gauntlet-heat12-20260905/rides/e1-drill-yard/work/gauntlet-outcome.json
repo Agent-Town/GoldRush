@@ -1,0 +1,28 @@
+{
+  "secured": false,
+  "waves": 2,
+  "timeMs": 60033,
+  "gold": 180,
+  "kills": 23,
+  "calls": 6,
+  "defaultedPicks": 0,
+  "defaultedSecure": 0,
+  "eventLogHash": "fnv1a32:ff497859",
+  "endReason": "wave-ceiling",
+  "tape": "/private/tmp/heat12-038cc280/artifacts/heat12/opus/e1-drill-yard/attempt-1-tape.json",
+  "scored": true,
+  "runsSoFar": 4,
+  "scoredAttempts": 1,
+  "worldModel": "sim-import",
+  "envelope": {
+    "durationTicks": 1801,
+    "lastEntryTick": 1263,
+    "entryCount": 6,
+    "bytes": 13036
+  },
+  "submit": false,
+  "submitNote": "DO NOT SUBMIT. The run is unsecured (endReason wave-ceiling), and skill.md forbids submitting a run that hits an external cap. The contract is additionally refused by the county as `training_ground` (practice.standings=false; the board marks it data-training-ground=true and publishes no standings row). Nothing is put forward.",
+  "finding": "e1-drill-yard CANNOT BE SECURED through the door, by any policy, on any seed. twist.secureWave=0, so RunManager.maybeSecureRun (src/game/RunManager.ts:300, `secureWave <= 0` -> early return) never emits `run_secured`; HeadlessContractSim.ts:2033 sets secureChoice='pending' ONLY on that event, so now.pendingSecure never appears and SECURE_CHOICE is never accepted. The only other caller of secureRun is secureCurrentRun (RunManager.ts:226-230, ungated) reachable in the headless door solely via bossKillSecuresRun (HeadlessContractSim.ts:2058), and this contract declares no twist.baron. Independently the wave ceiling is secureWave+2 = 2 (gr-sim.mjs:111). Confirmed empirically: pendingSecure absent from all 24 views across 4 runs.",
+  "determinism": "attempt-1 re-rode ctrl-v1 and reproduced tune-1's eventLogHash fnv1a32:ff497859 bit for bit (same waves/time/gold/calls).",
+  "economyCeiling": "180 gold is the map's hard 60-second ceiling: exactly two seam generations x 3 live seams x 30 capacity. The E1 bank cap (200) is published and live but structurally unreachable here -- the wave-2 clock stops the run one seam generation (20 gold) short."
+}

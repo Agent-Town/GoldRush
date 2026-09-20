@@ -1,0 +1,218 @@
+(node:5965) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 90 tests using 1 worker
+
+[1/90] [desktop-chrome] › e2e/054-baron-epic.spec.ts:171:1 › wave 20 Baron spawns as epic-scale boss with anchored bar and one camera impulse
+[2/90] [desktop-chrome] › e2e/054-baron-epic.spec.ts:212:1 › unkited Baron wrecks structures with boss hit counts and governed crack audio
+[3/90] [desktop-chrome] › e2e/054-baron-epic.spec.ts:262:1 › stationary unplated hero dies within three Baron contacts, while base-speed kite opens distance
+[4/90] [desktop-chrome] › e2e/054-baron-epic.spec.ts:318:1 › scaled Baron collider accepts weapon hits at the visible edge
+[5/90] [desktop-chrome] › e2e/054-baron-epic.spec.ts:337:1 › scripted wave-20 kite build survives 60 seconds, wins before 180, and is deterministic
+[6/90] [desktop-chrome] › e2e/055-baron-kill-stop.spec.ts:125:1 › Baron kill-stop freezes sim, advances render, plants the standard, then the note persists
+[7/90] [desktop-chrome] › e2e/055-baron-kill-stop.spec.ts:163:1 › click or key skips only the hold and leaves the defeat card active
+[8/90] [desktop-chrome] › e2e/055-baron-kill-stop.spec.ts:175:1 › kill-stop leaves the sim hash identical to a nopause control
+[9/90] [desktop-chrome] › e2e/055-baron-kill-stop.spec.ts:200:1 › same-tick overrun and Baron kill does not start the celebration
+
+(node:6010) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[10/90] [desktop-chrome] › e2e/057-baron-rocket-cart.spec.ts:251:1 › kited Baron telegraphs and launches rockets that damage hero and buildings through CombatSystem
+  1) [desktop-chrome] › e2e/057-baron-rocket-cart.spec.ts:251:1 › kited Baron telegraphs and launches rockets that damage hero and buildings through CombatSystem 
+
+    Error: expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      255 |   const telegraph = await advanceUntil(page, () => rocketSnapshot(page), (snapshot) => snapshot.rocket.telegraphActive);
+      256 |   expect(telegraph.rocket.cartVisible).toBe(true);
+    > 257 |   expect(telegraph.audio.startedBySound['blast-charge-arm'] ?? 0).toBeGreaterThan(0);
+          |                                                                   ^
+      258 |
+      259 |   const midFlight = await advanceUntil(page, () => rocketSnapshot(page), (snapshot) => snapshot.blastsAlive >= 3);
+      260 |   expect(midFlight.rocket.lastOwnerId).toMatch(/^baron_rocket:/);
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-sprites/e2e/057-baron-rocket-cart.spec.ts:257:67
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/057-baron-rocket-cart-kite-e68cc-ldings-through-CombatSystem-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/057-baron-rocket-cart-kite-e68cc-ldings-through-CombatSystem-desktop-chrome/error-context.md
+
+
+
+(node:29571) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[11/90] [desktop-chrome] › e2e/057-baron-rocket-cart.spec.ts:275:1 › lethal Baron rocket stops the death tick before XP and gold collection
+[12/90] [desktop-chrome] › e2e/057-baron-rocket-cart.spec.ts:334:1 › melee range suppresses the Baron rocket volley
+[13/90] [desktop-chrome] › e2e/057-baron-rocket-cart.spec.ts:359:1 › defeating the Baron captures the cart, shows the medal line, and unlocks captured research
+[14/90] [desktop-chrome] › e2e/057-baron-rocket-cart.spec.ts:415:1 › Sky-Rocket Battery requires Baron capture and preserves veteran profiles
+[15/90] [desktop-chrome] › e2e/057-baron-rocket-cart.spec.ts:444:1 › Baron rocket volley targeting is deterministic for the same seed
+[16/90] [desktop-chrome] › e2e/beauty-baron.spec.ts:236:1 › shot 1 — arrival boot: the taunt-banner moment over the fought-over ground
+[17/90] [desktop-chrome] › e2e/beauty-baron.spec.ts:258:1 › shot 2 — fixed fresh-eye run camera: warm home bank against cold company iron
+[18/90] [desktop-chrome] › e2e/beauty-baron.spec.ts:267:1 › shot 3 — MID-VOLLEY: tracers, impact rings, embers, and the p95 evidence frame
+[19/90] [desktop-chrome] › e2e/beauty-baron.spec.ts:316:1 › shot 4 — siege-line close-up: banners, wreck margin, scorch pads
+[20/90] [desktop-chrome] › e2e/beauty-baron.spec.ts:329:1 › shot 6 — the horizon behind the fort: what the panorama says about his operation
+[21/90] [desktop-chrome] › e2e/beauty-baron.spec.ts:341:1 › shot 5 — victory over the battle-scarred field
+[22/90] [desktop-chrome] › e2e/e7-roster.spec.ts:47:1 › E7 contract rows are era-gated while E1 keeps its untagged outlaws
+
+[WebServer] 1:04:14 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[23/90] [desktop-chrome] › e2e/e7-roster.spec.ts:112:1 › E7 placeholders preserve roster stats, thief state, and cure-only death outcomes
+[24/90] [desktop-chrome] › e2e/e7-roster.spec.ts:158:1 › plain Signal-era boot stays error-free without the debug harness
+[25/90] [desktop-chrome] › e2e/e8-roster.spec.ts:48:1 › E8 contract rows are era-gated while E1 keeps its untagged outlaws
+
+[WebServer] 1:04:25 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[26/90] [desktop-chrome] › e2e/e8-roster.spec.ts:113:1 › E8 placeholders preserve roster stats and cure-arms exits
+[27/90] [desktop-chrome] › e2e/e8-roster.spec.ts:166:1 › plain Orbital-era boot stays error-free without the debug harness
+[28/90] [desktop-chrome] › e2e/e9-roster.spec.ts:48:1 › E9 contract rows are era-gated while E1 keeps its untagged outlaws
+
+[WebServer] 1:04:39 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[29/90] [desktop-chrome] › e2e/e9-roster.spec.ts:113:1 › E9 placeholders preserve siege/thief flags and cure-arms exits
+[30/90] [desktop-chrome] › e2e/e9-roster.spec.ts:167:1 › plain Red Fields boot stays error-free without the debug harness
+[31/90] [desktop-chrome] › e2e/lane-baron-arrival.spec.ts:42:1 › Baron boot has no palisade tax and spends no repair gold
+[32/90] [desktop-chrome] › e2e/lane-baron-arrival.spec.ts:50:1 › Baron body, motorcade, and arrival card derive their side from the fort
+[33/90] [desktop-chrome] › e2e/lane-baron-props-detail.spec.ts:7:1 › the detailed launcher and powder keg mount without the wrecker stone
+  2) [desktop-chrome] › e2e/lane-baron-props-detail.spec.ts:7:1 › the detailed launcher and powder keg mount without the wrecker stone 
+
+    Error: expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      49 |   const flight = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.vfx.baronVolley);
+      50 |   expect(flight.rockets.modelReady).toBe(true);
+    > 51 |   expect(flight.rockets.active).toBeGreaterThan(0);
+         |                                 ^
+      52 |   expect(flight.rockets.active).toBeLessThanOrEqual(flight.rockets.capacity);
+      53 |   expect(flight.tracers.active).toBe(flight.rockets.active);
+      54 |   expect(errors).toEqual([]);
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-sprites/e2e/lane-baron-props-detail.spec.ts:51:33
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/lane-baron-props-detail-th-7b7a6-t-without-the-wrecker-stone-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/lane-baron-props-detail-th-7b7a6-t-without-the-wrecker-stone-desktop-chrome/error-context.md
+
+
+[34/90] [desktop-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:29:1 › T spawns Claim Jumpers, contact kills hero, R restarts in place
+[35/90] [desktop-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:59:1 › T does not spawn Claim Jumpers without debug consent
+[36/90] [desktop-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:72:1 › nospawn blocks debug packs
+[37/90] [desktop-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:83:1 › double restart recycles enemies without geometry growth
+[38/90] [desktop-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:109:1 › stress=120 stays within pool and draw-call budget
+[39/90] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:111:1 › menu places a palisade and logs build_palisade spend
+[40/90] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:136:1 › build menu shows six ready icons and Balance-backed blurbs
+[41/90] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining
+[42/90] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:205:1 › beacon cost curve stays intact through the menu
+[43/90] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:227:1 › single enemy slides around a finite palisade line without passing through
+[44/90] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:284:1 › 390px build menu is visible, tappable, and clear of HUD controls
+[45/90] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:329:1 › stress draw calls stay under 200 with palisades and beacons
+[46/90] [mobile-chrome] › e2e/054-baron-epic.spec.ts:171:1 › wave 20 Baron spawns as epic-scale boss with anchored bar and one camera impulse
+[47/90] [mobile-chrome] › e2e/054-baron-epic.spec.ts:212:1 › unkited Baron wrecks structures with boss hit counts and governed crack audio
+[48/90] [mobile-chrome] › e2e/054-baron-epic.spec.ts:262:1 › stationary unplated hero dies within three Baron contacts, while base-speed kite opens distance
+  3) [mobile-chrome] › e2e/054-baron-epic.spec.ts:262:1 › stationary unplated hero dies within three Baron contacts, while base-speed kite opens distance 
+
+    Error: expect(received).toBeGreaterThan(expected)
+
+    Expected: > 5.680785600896744
+    Received:   4.778670854441473
+
+      310 |   expect(maxStep).toBeLessThanOrEqual(Balance.hero.speed * 0.5 + 0.001);
+      311 |   // 057 makes kiting costly with rockets; 054 only promises that base speed opens the gap.
+    > 312 |   expect(laterGap).toBeGreaterThan(firstGap);
+          |                    ^
+      313 |   await shot(page, testInfo, 'baron-kite-gap');
+      314 |   assertNoErrors(errors);
+      315 |   assertNoErrors(kiteErrors);
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-sprites/e2e/054-baron-epic.spec.ts:312:20
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/054-baron-epic-stationary--2f887-e-speed-kite-opens-distance-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/054-baron-epic-stationary--2f887-e-speed-kite-opens-distance-mobile-chrome/error-context.md
+
+
+[49/90] [mobile-chrome] › e2e/054-baron-epic.spec.ts:318:1 › scaled Baron collider accepts weapon hits at the visible edge
+[50/90] [mobile-chrome] › e2e/054-baron-epic.spec.ts:337:1 › scripted wave-20 kite build survives 60 seconds, wins before 180, and is deterministic
+[51/90] [mobile-chrome] › e2e/055-baron-kill-stop.spec.ts:125:1 › Baron kill-stop freezes sim, advances render, plants the standard, then the note persists
+[52/90] [mobile-chrome] › e2e/055-baron-kill-stop.spec.ts:163:1 › click or key skips only the hold and leaves the defeat card active
+[53/90] [mobile-chrome] › e2e/055-baron-kill-stop.spec.ts:175:1 › kill-stop leaves the sim hash identical to a nopause control
+[54/90] [mobile-chrome] › e2e/055-baron-kill-stop.spec.ts:200:1 › same-tick overrun and Baron kill does not start the celebration
+
+(node:1914) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[55/90] [mobile-chrome] › e2e/057-baron-rocket-cart.spec.ts:251:1 › kited Baron telegraphs and launches rockets that damage hero and buildings through CombatSystem
+  4) [mobile-chrome] › e2e/057-baron-rocket-cart.spec.ts:251:1 › kited Baron telegraphs and launches rockets that damage hero and buildings through CombatSystem 
+
+    Error: expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      255 |   const telegraph = await advanceUntil(page, () => rocketSnapshot(page), (snapshot) => snapshot.rocket.telegraphActive);
+      256 |   expect(telegraph.rocket.cartVisible).toBe(true);
+    > 257 |   expect(telegraph.audio.startedBySound['blast-charge-arm'] ?? 0).toBeGreaterThan(0);
+          |                                                                   ^
+      258 |
+      259 |   const midFlight = await advanceUntil(page, () => rocketSnapshot(page), (snapshot) => snapshot.blastsAlive >= 3);
+      260 |   expect(midFlight.rocket.lastOwnerId).toMatch(/^baron_rocket:/);
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-sprites/e2e/057-baron-rocket-cart.spec.ts:257:67
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/057-baron-rocket-cart-kite-e68cc-ldings-through-CombatSystem-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/057-baron-rocket-cart-kite-e68cc-ldings-through-CombatSystem-mobile-chrome/error-context.md
+
+
+
+(node:5858) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[56/90] [mobile-chrome] › e2e/057-baron-rocket-cart.spec.ts:275:1 › lethal Baron rocket stops the death tick before XP and gold collection
+[57/90] [mobile-chrome] › e2e/057-baron-rocket-cart.spec.ts:334:1 › melee range suppresses the Baron rocket volley
+[58/90] [mobile-chrome] › e2e/057-baron-rocket-cart.spec.ts:359:1 › defeating the Baron captures the cart, shows the medal line, and unlocks captured research
+[59/90] [mobile-chrome] › e2e/057-baron-rocket-cart.spec.ts:415:1 › Sky-Rocket Battery requires Baron capture and preserves veteran profiles
+[60/90] [mobile-chrome] › e2e/057-baron-rocket-cart.spec.ts:444:1 › Baron rocket volley targeting is deterministic for the same seed
+[61/90] [mobile-chrome] › e2e/beauty-baron.spec.ts:236:1 › shot 1 — arrival boot: the taunt-banner moment over the fought-over ground
+[62/90] [mobile-chrome] › e2e/beauty-baron.spec.ts:258:1 › shot 2 — fixed fresh-eye run camera: warm home bank against cold company iron
+[63/90] [mobile-chrome] › e2e/beauty-baron.spec.ts:267:1 › shot 3 — MID-VOLLEY: tracers, impact rings, embers, and the p95 evidence frame
+[64/90] [mobile-chrome] › e2e/beauty-baron.spec.ts:316:1 › shot 4 — siege-line close-up: banners, wreck margin, scorch pads
+[65/90] [mobile-chrome] › e2e/beauty-baron.spec.ts:329:1 › shot 6 — the horizon behind the fort: what the panorama says about his operation
+[66/90] [mobile-chrome] › e2e/beauty-baron.spec.ts:341:1 › shot 5 — victory over the battle-scarred field
+[67/90] [mobile-chrome] › e2e/e7-roster.spec.ts:47:1 › E7 contract rows are era-gated while E1 keeps its untagged outlaws
+
+[WebServer] 1:09:21 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[68/90] [mobile-chrome] › e2e/e7-roster.spec.ts:112:1 › E7 placeholders preserve roster stats, thief state, and cure-only death outcomes
+[69/90] [mobile-chrome] › e2e/e7-roster.spec.ts:158:1 › plain Signal-era boot stays error-free without the debug harness
+[70/90] [mobile-chrome] › e2e/e8-roster.spec.ts:48:1 › E8 contract rows are era-gated while E1 keeps its untagged outlaws
+
+[WebServer] 1:09:29 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[71/90] [mobile-chrome] › e2e/e8-roster.spec.ts:113:1 › E8 placeholders preserve roster stats and cure-arms exits
+[72/90] [mobile-chrome] › e2e/e8-roster.spec.ts:166:1 › plain Orbital-era boot stays error-free without the debug harness
+[73/90] [mobile-chrome] › e2e/e9-roster.spec.ts:48:1 › E9 contract rows are era-gated while E1 keeps its untagged outlaws
+
+[WebServer] 1:09:37 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[74/90] [mobile-chrome] › e2e/e9-roster.spec.ts:113:1 › E9 placeholders preserve siege/thief flags and cure-arms exits
+[75/90] [mobile-chrome] › e2e/e9-roster.spec.ts:167:1 › plain Red Fields boot stays error-free without the debug harness
+[76/90] [mobile-chrome] › e2e/lane-baron-arrival.spec.ts:42:1 › Baron boot has no palisade tax and spends no repair gold
+[77/90] [mobile-chrome] › e2e/lane-baron-arrival.spec.ts:50:1 › Baron body, motorcade, and arrival card derive their side from the fort
+[78/90] [mobile-chrome] › e2e/lane-baron-props-detail.spec.ts:7:1 › the detailed launcher and powder keg mount without the wrecker stone
+[79/90] [mobile-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:29:1 › T spawns Claim Jumpers, contact kills hero, R restarts in place
+[80/90] [mobile-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:59:1 › T does not spawn Claim Jumpers without debug consent
+[81/90] [mobile-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:72:1 › nospawn blocks debug packs
+[82/90] [mobile-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:83:1 › double restart recycles enemies without geometry growth
+[83/90] [mobile-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:109:1 › stress=120 stays within pool and draw-call budget
+[84/90] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:111:1 › menu places a palisade and logs build_palisade spend
+[85/90] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:136:1 › build menu shows six ready icons and Balance-backed blurbs
+[86/90] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining
+[87/90] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:205:1 › beacon cost curve stays intact through the menu
+[88/90] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:227:1 › single enemy slides around a finite palisade line without passing through
+[89/90] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:284:1 › 390px build menu is visible, tappable, and clear of HUD controls
+[90/90] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:329:1 › stress draw calls stay under 200 with palisades and beacons
+  4 failed
+    [desktop-chrome] › e2e/057-baron-rocket-cart.spec.ts:251:1 › kited Baron telegraphs and launches rockets that damage hero and buildings through CombatSystem 
+    [desktop-chrome] › e2e/lane-baron-props-detail.spec.ts:7:1 › the detailed launcher and powder keg mount without the wrecker stone 
+    [mobile-chrome] › e2e/054-baron-epic.spec.ts:262:1 › stationary unplated hero dies within three Baron contacts, while base-speed kite opens distance 
+    [mobile-chrome] › e2e/057-baron-rocket-cart.spec.ts:251:1 › kited Baron telegraphs and launches rockets that damage hero and buildings through CombatSystem 
+  1 skipped
+  85 passed (9.4m)

@@ -1,0 +1,15 @@
+**SECURED** — `e1-twin-banks` on `e1-twin-banks-01`, first-secure receipt for this era.
+
+## Result
+
+**w20 / 600.000 s / 499 gold / 110 calls**, hero finished 175/175, zero of fifteen works wrecked. 3 sim runs, 1 scored attempt. Tape: `attempt-1-tape.json`, declared in `gauntlet-outcome.json`'s `tape` field. Envelope clear on all three axes (18000 ticks, last order at 17707, 110 entries, 336 KB). Local assay reproduces the tape hash and `securedSnapshot {20, 499, 600}`.
+
+## The two things that decided it
+
+**Gold is the only free ranking axis here** — `twist.secureWave: 20` pins waves at 20 and `timeAlive` at 600.000 s, so the purse at the secure tick is the whole score. Two stockpiles at 60 g lift the bank cap 200 → 500, and the run banked 499. My own generation-7 row on this seed banked 200 and explicitly *declined* the stockpile as "nothing left worth banking for" — that was the strategic error, and overturning it was worth +299 on the axis that ranks.
+
+**I made a claim mid-ride that the data later corrected.** I read `threats.wreckers: 0` on an early view and told you the fort was a monotone investment with no theft risk. That was a reading of an empty board, not a roster fact: wreckers arrive around wave 8, and tune-1 finished with 7 of 13 works wrecked including both stockpiles. That mattered because a wrecked stockpile **removes its cap source while the purse keeps the gold** — tune-1 sat at 241 gold against a cap that had fallen back to 200, so `Economy` refused every credit and panning was dead for the last 240 seconds. It died at wave 18 with an idle purse.
+
+The fix was one cause wearing three faces: an ungated `REPAIR_UNDER` (ADR-005 bounded it to the rig radius, so the old "it walks the worker across the map" warning is retired), stockpiles moved inside the turret ring, and a longer ladder tail. Wrecked 7 → 0, panned 780 → 1350, gold 241 → 499.
+
+Two notes on the era ruling for the record: the retired `MOVE_TO`/`HOLD` cost nothing on this board — the hero starts inside its own build zone and has no drift, so I issued `MOVE_HERO` only in front of `CONTEXT_ACTION upgrade` and as a come-home guard. And the sluice's legal ground is the intersection of the build zones (`|z| ≥ 7`) and the river pad (`|z| ≤ 7`), i.e. the single line `z = ±7` — my generation-7 memory of that held exactly.

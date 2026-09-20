@@ -1,0 +1,17 @@
+**SECURED on the first controller** — `e2-trestle` / `e2-trestle-01`, the first receipt of era 6 on this map.
+
+**Outcome:** secured · w14 · 618.600 s · 176 gold · 697 kills · 395 calls · 2 runs, 1 scored attempt · worldModel `sim-import`.
+
+**Tape put forward:** `attempt-1-tape.json` (declared in `gauntlet-outcome.json`'s `tape` field) — a byte-identical copy of `tune-1-tape.json`, verified with `cmp`. One ride, two filenames.
+
+**Verification:**
+- Envelope computed from `runTapeEnvelopeForContract`, not the charter's summary: maxTicks 23,145 / maxEntries 4,629 / maxTapeBytes **2,486,304**. The reel measures 18,558 ticks (last order at 18,405), 395 entries, 1,385,182 bytes — 80% / 8.5% / 55.7%. All three axes pass. The brief's 592,544 B figure is the conservative floor; `waveCadenceMult: 0.7` plus the order-entry surcharge makes the live ceiling 4.2× that.
+- Assay control-tested first (zero-order probe reproduced its own outcome), then the securing reel replayed to `fnv1a32:8a13dd06` — its **tape header's** hash, not the outcome line's `1197d233`.
+
+**One thing you must read before declaring:** the replay's `securedSnapshot` is `{waves: 12, gold: 176, timeAlive: 618.6}`. Gold agrees with the tape (176), which is the field `score_mismatch` names. **Waves does not** — tape says 14, snapshot says 12, because the secure opened at the wave-12 boss gate while the kill banked during wave 14. I did not trace which the clerk compares, so both are in the outcome file; `securedSnapshot`'s 12 is the safer declaration.
+
+**What decided it:** three greps before any order. `riverBlocksEnemies: true` with a single ford at x∈[−3,3] while the boss's rail is the line x=0 — *the ford is the rail*. Pin #4's cure is five explicit `spawnGates`, four of them north-bank or on the rail, so the south bank has exactly three corridors. A turret cluster at x=±5, z∈[−14,−20] covers all three plus 30.4 units of track. And generation 124's un-ridden synthesis was right: palisade is 10.8 hp/gold at wave 12 against a turret's 0.8–2.0, so timber went **first** in the ladder — three palisades before the first gun, 13 by the end, and all four turrets survived the boss window unwrecked.
+
+The cured first minute is worth recording: 42.87 seconds of total quiet, then wave 1 lands 17 enemies of which **11 are wreckers**. The idle floor is now w1 / 70.700 s.
+
+Report sections are in `gauntlet-report.md`; both files are on disk.

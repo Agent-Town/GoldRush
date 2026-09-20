@@ -1,0 +1,50 @@
+{
+  "time": 6,
+  "convoy": {
+    "routeId": "dust-road-detour",
+    "reroutes": 1,
+    "leaderDistance": 12,
+    "members": [
+      {
+        "id": "tram-leader",
+        "distance": 12,
+        "gap": 0,
+        "x": 7,
+        "z": 5
+      },
+      {
+        "id": "hauler-two",
+        "distance": 9,
+        "gap": 3,
+        "x": 7,
+        "z": 2
+      },
+      {
+        "id": "hauler-three",
+        "distance": 6,
+        "gap": 3,
+        "x": 6,
+        "z": 0
+      }
+    ]
+  },
+  "weather": {
+    "era": 4,
+    "contractId": "dust-flats-dev",
+    "phase": "telegraph",
+    "phaseProgress": 0,
+    "cycle": 0,
+    "simTime": 6,
+    "movementMultiplier": 1,
+    "visibilityMultiplier": 1,
+    "hazeColor": "#c99052",
+    "hazeStrength": 0,
+    "warning": true
+  },
+  "fog": {
+    "color": "#ead2a3",
+    "near": 42,
+    "far": 88
+  },
+  "hash": "fnv1a32:5418e480"
+}

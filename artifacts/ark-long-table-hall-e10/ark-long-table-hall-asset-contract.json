@@ -1,0 +1,191 @@
+{
+  "blender": "5.1.2",
+  "baseSha": "101c0d97e9527b26cc5c94fdafab5b4f77aa33c0",
+  "checked": {
+    "sha256": "ab40e265cac4ba9d7a71dc25b0e781bd992bd5fd0d3808f4853fc3a7188c0ee9",
+    "bytes": 2620456,
+    "nodes": [
+      "ArkLongTableHallE10",
+      "portrait_anchor_01",
+      "portrait_anchor_02",
+      "portrait_anchor_03",
+      "portrait_anchor_04",
+      "portrait_anchor_05",
+      "portrait_anchor_06",
+      "portrait_anchor_07",
+      "portrait_anchor_08",
+      "portrait_anchor_09",
+      "portrait_anchor_10",
+      "pan_shrine_anchor",
+      "elder_tree_anchor"
+    ],
+    "anchors": [
+      "elder_tree_anchor",
+      "pan_shrine_anchor",
+      "portrait_anchor_01",
+      "portrait_anchor_02",
+      "portrait_anchor_03",
+      "portrait_anchor_04",
+      "portrait_anchor_05",
+      "portrait_anchor_06",
+      "portrait_anchor_07",
+      "portrait_anchor_08",
+      "portrait_anchor_09",
+      "portrait_anchor_10"
+    ],
+    "meshes": 1,
+    "primitives": 1,
+    "triangles": 16308,
+    "materials": 1,
+    "textures": 1,
+    "images": 1,
+    "embeddedImages": 1,
+    "imageDimensions": [
+      [
+        2048,
+        2048
+      ]
+    ],
+    "cameras": 0,
+    "lights": 0,
+    "animations": 0,
+    "bounds": {
+      "min": [
+        -9,
+        -0.2,
+        -11
+      ],
+      "max": [
+        9,
+        8.139897,
+        11
+      ],
+      "size": [
+        18,
+        8.339897,
+        22
+      ]
+    }
+  },
+  "reexported": {
+    "sha256": "ab40e265cac4ba9d7a71dc25b0e781bd992bd5fd0d3808f4853fc3a7188c0ee9",
+    "bytes": 2620456,
+    "nodes": [
+      "ArkLongTableHallE10",
+      "portrait_anchor_01",
+      "portrait_anchor_02",
+      "portrait_anchor_03",
+      "portrait_anchor_04",
+      "portrait_anchor_05",
+      "portrait_anchor_06",
+      "portrait_anchor_07",
+      "portrait_anchor_08",
+      "portrait_anchor_09",
+      "portrait_anchor_10",
+      "pan_shrine_anchor",
+      "elder_tree_anchor"
+    ],
+    "anchors": [
+      "elder_tree_anchor",
+      "pan_shrine_anchor",
+      "portrait_anchor_01",
+      "portrait_anchor_02",
+      "portrait_anchor_03",
+      "portrait_anchor_04",
+      "portrait_anchor_05",
+      "portrait_anchor_06",
+      "portrait_anchor_07",
+      "portrait_anchor_08",
+      "portrait_anchor_09",
+      "portrait_anchor_10"
+    ],
+    "meshes": 1,
+    "primitives": 1,
+    "triangles": 16308,
+    "materials": 1,
+    "textures": 1,
+    "images": 1,
+    "embeddedImages": 1,
+    "imageDimensions": [
+      [
+        2048,
+        2048
+      ]
+    ],
+    "cameras": 0,
+    "lights": 0,
+    "animations": 0,
+    "bounds": {
+      "min": [
+        -9,
+        -0.2,
+        -11
+      ],
+      "max": [
+        9,
+        8.139897,
+        11
+      ],
+      "size": [
+        18,
+        8.339897,
+        22
+      ]
+    }
+  },
+  "byteIdentical": true,
+  "semanticIdentical": {
+    "nodes": true,
+    "anchors": true,
+    "meshes": true,
+    "primitives": true,
+    "triangles": true,
+    "materials": true,
+    "textures": true,
+    "images": true,
+    "embeddedImages": true,
+    "imageDimensions": true,
+    "cameras": true,
+    "lights": true,
+    "animations": true,
+    "bounds": true
+  },
+  "circulationSurface": {
+    "surface": "saved BLEND ray-cast on the five production circulation aisles around the fixed table/shrine/tree",
+    "samples": 510,
+    "maxAbs": 0.04200001060962677,
+    "limit": 0.05,
+    "routes": {
+      "south-entry": {
+        "samples": 26,
+        "minimum": 0.030500002205371857,
+        "maximum": 0.04200001060962677,
+        "maxAbs": 0.04200001060962677
+      },
+      "port-circulation": {
+        "samples": 161,
+        "minimum": -1.4901161193847656e-08,
+        "maximum": 0.03950001299381256,
+        "maxAbs": 0.03950001299381256
+      },
+      "starboard-circulation": {
+        "samples": 161,
+        "minimum": -1.4901161193847656e-08,
+        "maximum": 0.03950001299381256,
+        "maxAbs": 0.03950001299381256
+      },
+      "forward-cross-aisle": {
+        "samples": 81,
+        "minimum": -7.450580596923828e-09,
+        "maximum": 0.04200000315904617,
+        "maxAbs": 0.04200000315904617
+      },
+      "aft-cross-aisle": {
+        "samples": 81,
+        "minimum": -7.450580596923828e-09,
+        "maximum": 0.04200000315904617,
+        "maxAbs": 0.04200000315904617
+      }
+    }
+  }
+}

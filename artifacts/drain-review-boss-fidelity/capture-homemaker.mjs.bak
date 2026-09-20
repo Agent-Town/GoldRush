@@ -1,0 +1,30 @@
+// Eyes-on capture for E6 Homemaker-9000: the one boss whose committed evidence has zero images.
+// Boot recipe copied from e2e/e6-boss-homemaker.spec.ts (QUERY + spawnBoss).
+import { mkdir } from 'node:fs/promises';
+import { chromium } from 'playwright';
+const base = process.argv[2], out = process.argv[3];
+await mkdir(out, { recursive: true });
+const wave = Number(process.argv[4] ?? 14);
+const b = await chromium.launch({ channel: 'chromium', headless: true });
+for (const [name, vp] of [['desktop',{width:1280,height:800}],['mobile',{width:390,height:844}]]) {
+  const p = await b.newPage({ viewport: vp, deviceScaleFactor: 1 });
+  const errors=[]; p.on('console', m=>m.type()==='error'&&errors.push(m.text())); p.on('pageerror', e=>errors.push(e.message));
+  await p.addInitScript(() => localStorage.setItem('gr.activeEpoch', 'epoch-6-atomic'));
+  await p.goto(`${base}/?debug&epoch=epoch-6-atomic&contract=e6-glow-mesa&nolevel&nopause&seed=homemaker-9000`, { waitUntil:'load', timeout:90000 });
+  await p.waitForFunction(() => window.__GR_TEST__ && window.__THREE_GAME_DIAGNOSTICS__?.contract.activeId === 'e6-glow-mesa', null, { timeout: 90000 });
+  const d = p.getByTestId('contract-briefing-dismiss');
+  if (await d.isVisible().catch(()=>false)) await d.evaluate(x=>x.click());
+  await p.evaluate((w) => { const h=window.__GR_TEST__;
+    h.setManualSim(true); h.setBalance('waves.waveInterval',0.35); h.setBalance('waves.trickleInterval',999);
+    h.setBalance('waves.pulseBase',0); h.setBalance('waves.pulsePerWave',0); h.setBalance('enemy.contactDamage',0);
+    h.setBalance('homemaker.arrivalSpeed',40); h.setWave(w-1); h.advanceSim(0.4);
+    h.setBalance('waves.waveInterval',999); h.setWave(w); h.advanceSim(0.35);
+  }, wave);
+  for (let i=0;i<14;i+=1) await p.evaluate(()=>window.__GR_TEST__.advanceSim(0.5));
+  const diag = await p.evaluate(() => ({ boss: window.__THREE_GAME_DIAGNOSTICS__?.homemakerBoss ?? null,
+    parts: window.__GR_TEST__.enemyPositions().filter(e=>e.variantId==='homemaker_9000').map(e=>({id:e.bossComponentId,x:+e.x.toFixed(2),z:+e.z.toFixed(2)})) }));
+  await p.screenshot({ path: `${out}/${name}-homemaker.png` });
+  console.log(name, JSON.stringify({ diag, errors }));
+  await p.close();
+}
+await b.close();

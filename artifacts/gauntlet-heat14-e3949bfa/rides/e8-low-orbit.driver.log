@@ -1,0 +1,48 @@
+
+########## RIDE e8-low-orbit · seed e8-low-orbit-01 · gen 132 · stake open-question · wall 1500s ##########
+--- 1 charter ---
+{"rig":"opus","contract":"e8-low-orbit","seed":"e8-low-orbit-01","seedMode":"bench","stake":"open-question","generation":132,"wall":1500,"notebookSha256":"2b88d07477e49ca470b49318c1a7d6945fcc3246b92a7fcf0f8c2591be8de137","charterSha256":"a022dab57eab3963dae709543be9f898a479820ddf93e04d44f158875c8e5137","bytes":1082832,"out":"/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/gauntlet-heat14-e3949bfa/rides/e8-low-orbit/charter.md"}
+--- 2 ride ---
+START opus claude-opus-5 pid=42521 session=4faff3bc-14e2-4d95-8899-c6ab122b5f12 at=2026-09-18T10:45:42.565Z
+FIRST-OUTPUT opus +210s
+OUTCOME opus secured=false waves=13 gold=60 runsSoFar=2 scored=0 +450s
+OUTCOME opus secured=false waves=13 gold=60 runsSoFar=3 scored=1 +540s
+END opus rc=0 signal=null wall=611s wallHit=false
+ride-wall rc=0 signal=-
+--- 3 land ---
+
+=== 1 finish-ride ===
+{"rig":"opus","contract":"e8-low-orbit","wall":611,"wallHit":false,"rc":0,"tracked":[],"files":17,"outcome":{"secured":false,"waves":13,"gold":60,"runsSoFar":3,"scoredAttempts":1,"tape":"tune-1-tape.json","worldModel":"sim-import"},"scoredTapes":[{"file":"attempt-1-tape.json","id":"agent-b6a2cc77-99e99999-82bc-4935-b307-97a3f4ffeb32","secured":false,"waves":9,"gold":10,"durationTicks":8231,"lastEntryTick":8101,"promotedByRig":false,"discoveredBy":"filename"},{"file":"tune-1-tape.json","id":"agent-4d9b57ba-8eef855e-6986-419a-8186-0b5c73016202","secured":false,"waves":13,"gold":60,"durationTicks":12045,"lastEntryTick":11917,"promotedByRig":true,"discoveredBy":"outcome-file"}],"otherSecured":[],"reportSections":{"outcome":692,"whatTheMapAsked":2771,"winnability":1354,"lessons":3819},"usage":{"turns":52,"toolCalls":27,"tokensIn":104,"tokensOut":105954}}
+
+=== NOT SECURED — nothing to submit ===
+{
+ "rig": "opus",
+ "contract": "e8-low-orbit",
+ "wall": 611,
+ "wallHit": false,
+ "rc": 0,
+ "scoredTapes": [
+  {
+   "file": "attempt-1-tape.json",
+   "secured": false,
+   "waves": 9,
+   "gold": 10
+  },
+  {
+   "file": "tune-1-tape.json",
+   "secured": false,
+   "waves": 13,
+   "gold": 60
+  }
+ ],
+ "outcomeNote": "NOT SECURED - nothing to put forward. Best of 3 runs is tune-1 (w13/401.5s/60g). attempt-1 (ctrl-v2, w9/274.4s/10g) was the scored attempt and regressed. Era gate SOLVED in both: crossing 4/4 credits, reach 2/2, breathlessEntries 0."
+}
+
+land rc=0
+--- 4 notebook ---
+{"notebook":"/Users/robin/Claude/Projects/goldrush-gauntlet/memories/claude__opus-5/NOTEBOOK.md","generation":132,"headerBytes":432,"entryBytes":8774}
+--- 5 matrix ---
+| 36 | e8-low-orbit | `e8-low-orbit-01` | open-question | 132 | **not secured** | 13 | 60 | 401.500s | 611s | `tune-1-tape.json` · `agent-4d9b57ba-8eef855e-6986-419a-8186-0b5c73016202`<br>fnv1a32:8dc75ee2 | — | gen 132 |
+{"contract":"e8-low-orbit","secured":false,"tapesOnDisk":7,"scoredTapes":2,"otherSecured":0,"runs":3,"scoredAttempts":1,"wallHit":false,"rc":0,"assay":null,"ranked":null,"winnability":"**Winnable, and what stopped me was my own budget against one thing I got backwards twice:** the era gate closes with 235 seconds to spare and nothing about the map, the grammar, the economy or the door refused me — but I spent both rides on the hero's *hold*, and the hold is the contract. tune-1's alternating two-point home (A/B, 1.2 units apart) is a **resonant oscillator** under a 1.6/s thrust response: the hero swung ±10 units, `driftSteps` hit 1719, and because a walking `MOVE_HERO` owns the tick, `HARVEST` almost never ran — **240 gold panned in 400 seconds (0.6 g/s) against the ~1470 my own generations 35 and 48 banked here**, so the fort never left 4 works. attempt-1 cured that (pan 250 by t = 270, ~60 % better) and lost five waves anyway, because the single-target home I moved to (0, 4) sits **on the corsairs' own lane** — the spawn edges are west and east and the handhold spine runs z = 0, so the hero was standing in the funnel: hp 12/100 at t = 180 and 4/100 at t = 195. The synthesis I had no wall clock to ride is one edit from tune-1: **a single-target hold (never alternating) at tune-1's z ≈ 8**, off the spine lane but well inside the air, with the ladder re-centred there — that keeps attempt-1's economy and tune-1's survivability, and 1400 gold of income against a 670-gold core is a fort neither ride ever got to build."}
+########## END e8-low-orbit ##########
+

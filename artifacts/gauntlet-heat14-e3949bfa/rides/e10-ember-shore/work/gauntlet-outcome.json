@@ -1,0 +1,24 @@
+{
+  "secured": true,
+  "waves": 12,
+  "timeMs": 360000,
+  "gold": 60,
+  "kills": 414,
+  "calls": 56,
+  "defaultedPicks": 0,
+  "defaultedSecure": 1,
+  "eventLogHash": "fnv1a32:d59af0f8",
+  "tape": "artifacts/heat14/opus/e10-ember-shore/attempt-1-tape.json",
+  "scored": true,
+  "runsSoFar": 2,
+  "scoredAttempts": 1,
+  "worldModel": "sim-import",
+  "note": "tune-1 secured on the first controller ride; the stop rule ends the heat at the first SECURED outcome, so it IS the scored attempt. attempt-1-tape.json is a byte-identical copy of tune-1-tape.json: one ride under two filenames. Envelope measured on the reel: durationTicks 10800, last accepted order tick 10699, 56 entries of 3601, 189,221 bytes. Idle probe reproduced null-floors.json byte for byte (w3/93000ms/0g/43k/fnv1a32:1b73c4b7, endReason vent_guttered).",
+  "declaredForSubmission": {
+    "contractId": "e10-ember-shore",
+    "seed": "e10-ember-shore-01",
+    "seedMode": "bench",
+    "difficulty": "trail",
+    "score": { "secured": true, "waves": 12, "timeAlive": 360.0, "gold": 60, "baseValue": 0 }
+  }
+}

@@ -1,0 +1,71 @@
+(node:27225) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+{"wave":0,"hp":100,"maxHp":100,"level":1,"gold":0,"threats":0,"worksHp":0,"works":{},"needsRider":false,"failures":[]}
+{"wave":0,"hp":100,"maxHp":100,"level":1,"gold":30,"threats":0,"worksHp":0,"works":{},"needsRider":true,"failures":["INVALID_TARGET: gold-seam-2 is unavailable."]}
+{"wave":0,"hp":100,"maxHp":100,"level":1,"gold":60,"threats":2,"worksHp":0,"works":{},"needsRider":true,"failures":["INVALID_TARGET: gold-seam-1 is unavailable."]}
+{"wave":1,"hp":100,"maxHp":100,"level":1,"gold":60,"threats":11,"worksHp":0,"works":{},"needsRider":false,"failures":[]}
+{"wave":2,"hp":100,"maxHp":100,"level":1,"gold":10,"threats":16,"worksHp":50,"works":{"turret":1},"needsRider":false,"failures":[]}
+{"wave":2,"hp":100,"maxHp":100,"level":1,"gold":40,"threats":13,"worksHp":50,"works":{"turret":1},"needsRider":true,"failures":["INVALID_TARGET: gold-seam-2 is unavailable."]}
+{"wave":2,"hp":100,"maxHp":100,"level":1,"gold":70,"threats":16,"worksHp":50,"works":{"turret":1},"needsRider":true,"failures":["INVALID_TARGET: gold-seam-1 is unavailable."]}
+{"wave":3,"hp":100,"maxHp":100,"level":1,"gold":70,"threats":24,"worksHp":50,"works":{"turret":1},"needsRider":false,"failures":[]}
+build refused turret:-1.25:12:0: FAILED (out_of_zone): BUILD action was rejected.
+{"wave":3,"hp":100,"maxHp":100,"level":1,"gold":70,"threats":24,"worksHp":50,"works":{"turret":1},"needsRider":true,"failures":["FAILED (out_of_zone): BUILD action was rejected."]}
+{"wave":4,"hp":100,"maxHp":100,"level":1,"gold":0,"threats":32,"worksHp":100,"works":{"turret":2},"needsRider":false,"failures":[]}
+{"wave":4,"hp":100,"maxHp":100,"level":1,"gold":30,"threats":28,"worksHp":100,"works":{"turret":2},"needsRider":true,"failures":["INVALID_TARGET: gold-seam-2 is unavailable."]}
+{"wave":4,"hp":100,"maxHp":100,"level":1,"gold":60,"threats":31,"worksHp":100,"works":{"turret":2},"needsRider":true,"failures":["INVALID_TARGET: gold-seam-1 is unavailable."]}
+{"wave":5,"hp":100,"maxHp":100,"level":2,"gold":60,"threats":37,"worksHp":100,"works":{"turret":2},"needsRider":false,"failures":[]}
+{"wave":5,"hp":100,"maxHp":100,"level":3,"gold":90,"threats":33,"worksHp":100,"works":{"turret":2},"needsRider":true,"failures":["INVALID_TARGET: gold-seam-2 is unavailable."]}
+build refused boiler_house:1.45:12:0: FAILED (out_of_zone): BUILD action was rejected.
+{"wave":5,"hp":100,"maxHp":100,"level":5,"gold":90,"threats":36,"worksHp":100,"works":{"turret":2},"needsRider":true,"failures":["FAILED (out_of_zone): BUILD action was rejected."]}
+{"wave":6,"hp":100,"maxHp":100,"level":5,"gold":20,"threats":50,"worksHp":180,"works":{"boiler_house":1,"turret":2},"needsRider":false,"failures":[]}
+{"wave":6,"hp":100,"maxHp":100,"level":5,"gold":50,"threats":43,"worksHp":180,"works":{"boiler_house":1,"turret":2},"needsRider":true,"failures":["INVALID_TARGET: gold-seam-2 is unavailable."]}
+{"wave":6,"hp":100,"maxHp":100,"level":6,"gold":80,"threats":46,"worksHp":180,"works":{"boiler_house":1,"turret":2},"needsRider":true,"failures":["INVALID_TARGET: gold-seam-1 is unavailable."]}
+build refused boiler_house:-1.25:9.5:0: FAILED (out_of_zone): BUILD action was rejected.
+{"wave":6,"hp":150,"maxHp":150,"level":8,"gold":80,"threats":34,"worksHp":180,"works":{"boiler_house":1,"turret":2},"needsRider":true,"failures":["FAILED (out_of_zone): BUILD action was rejected."]}
+{"wave":7,"hp":150,"maxHp":150,"level":8,"gold":10,"threats":44,"worksHp":260,"works":{"boiler_house":2,"turret":2},"needsRider":false,"failures":[]}
+{"wave":7,"hp":150,"maxHp":150,"level":8,"gold":40,"threats":51,"worksHp":260,"works":{"boiler_house":2,"turret":2},"needsRider":true,"failures":["INVALID_TARGET: gold-seam-2 is unavailable."]}
+{"wave":7,"hp":150,"maxHp":150,"level":9,"gold":70,"threats":49,"worksHp":260,"works":{"boiler_house":2,"turret":2},"needsRider":true,"failures":["INVALID_TARGET: gold-seam-1 is unavailable."]}
+{"wave":8,"hp":150,"maxHp":150,"level":9,"gold":70,"threats":60,"worksHp":260,"works":{"boiler_house":2,"turret":2},"needsRider":false,"failures":[]}
+{"wave":8,"hp":175,"maxHp":175,"level":10,"gold":100,"threats":55,"worksHp":260,"works":{"boiler_house":2,"turret":2},"needsRider":true,"failures":["INVALID_TARGET: gold-seam-2 is unavailable."]}
+{"wave":8,"hp":175,"maxHp":175,"level":10,"gold":100,"threats":55,"worksHp":240,"works":{"boiler_house":2,"turret":2},"needsRider":true,"failures":[]}
+{"wave":8,"hp":175,"maxHp":175,"level":11,"gold":100,"threats":50,"worksHp":240,"works":{"boiler_house":2,"turret":2},"offer":["double_tap_coil","wide_ring","pan_legend"],"needsRider":true,"failures":[]}
+{"wave":9,"hp":175,"maxHp":175,"level":11,"gold":5,"threats":60,"worksHp":314,"works":{"boiler_house":2,"turret":3},"needsRider":false,"failures":[]}
+{"wave":9,"hp":175,"maxHp":175,"level":12,"gold":35,"threats":54,"worksHp":314,"works":{"boiler_house":2,"turret":3},"needsRider":true,"failures":["INVALID_TARGET: gold-seam-2 is unavailable."]}
+{"wave":9,"hp":175,"maxHp":175,"level":12,"gold":65,"threats":51,"worksHp":314,"works":{"boiler_house":2,"turret":3},"needsRider":true,"failures":["INVALID_TARGET: gold-seam-1 is unavailable."]}
+{"wave":10,"hp":175,"maxHp":175,"level":13,"gold":65,"threats":57,"worksHp":314,"works":{"boiler_house":2,"turret":3},"needsRider":false,"failures":[]}
+{"wave":10,"hp":175,"maxHp":175,"level":14,"gold":95,"threats":48,"worksHp":314,"works":{"boiler_house":2,"turret":3},"needsRider":true,"failures":["INVALID_TARGET: gold-seam-2 is unavailable."]}
+{"wave":11,"hp":175,"maxHp":175,"level":15,"gold":95,"threats":60,"worksHp":314,"works":{"boiler_house":2,"turret":3},"needsRider":false,"failures":[]}
+{"wave":11,"hp":175,"maxHp":175,"level":15,"gold":125,"threats":56,"worksHp":314,"works":{"boiler_house":2,"turret":3},"needsRider":true,"failures":["INVALID_TARGET: gold-seam-2 is unavailable."]}
+{"wave":11,"hp":175,"maxHp":175,"level":16,"gold":0,"threats":54,"worksHp":392,"works":{"boiler_house":2,"turret":4},"needsRider":true,"failures":[]}
+{"wave":11,"hp":175,"maxHp":175,"level":16,"gold":0,"threats":53,"worksHp":372,"works":{"boiler_house":2,"turret":4},"needsRider":true,"failures":[]}
+{"wave":11,"hp":175,"maxHp":175,"level":16,"gold":0,"threats":53,"worksHp":352,"works":{"boiler_house":2,"turret":4},"needsRider":true,"failures":[]}
+{"wave":11,"hp":175,"maxHp":175,"level":16,"gold":0,"threats":53,"worksHp":352,"works":{"boiler_house":2,"turret":4},"needsRider":true,"failures":["FAILED: REPAIR_UNDER action was rejected."]}
+{"wave":11,"hp":175,"maxHp":175,"level":16,"gold":0,"threats":53,"worksHp":332,"works":{"boiler_house":2,"turret":4},"needsRider":true,"failures":["FAILED: REPAIR_UNDER action was rejected."]}
+{"wave":11,"hp":175,"maxHp":175,"level":16,"gold":0,"threats":52,"worksHp":314,"works":{"boiler_house":2,"turret":4},"needsRider":true,"failures":[]}
+{"wave":12,"hp":175,"maxHp":175,"level":16,"gold":0,"threats":63,"worksHp":314,"works":{"boiler_house":2,"turret":4},"needsRider":true,"failures":["FAILED: REPAIR_UNDER action was rejected."]}
+{"wave":12,"hp":175,"maxHp":175,"level":17,"gold":40,"threats":48,"worksHp":314,"works":{"boiler_house":2,"turret":4},"needsRider":true,"failures":["FAILED: REPAIR_UNDER action was rejected.","INVALID_TARGET: gold-seam-2 is unavailable."]}
+{"wave":13,"hp":175,"maxHp":175,"level":18,"gold":40,"threats":60,"worksHp":314,"works":{"boiler_house":2,"turret":4},"offer":["prospectors_luck","pan_legend","powder_charge"],"needsRider":false,"failures":[]}
+{"wave":13,"hp":167,"maxHp":175,"level":18,"gold":8,"threats":57,"worksHp":392,"works":{"boiler_house":2,"turret":4},"needsRider":true,"failures":[]}
+{"wave":13,"hp":159,"maxHp":175,"level":18,"gold":8,"threats":57,"worksHp":372,"works":{"boiler_house":2,"turret":4},"needsRider":true,"failures":[]}
+{"wave":13,"hp":159,"maxHp":175,"level":18,"gold":8,"threats":58,"worksHp":352,"works":{"boiler_house":2,"turret":4},"needsRider":true,"failures":[]}
+{"wave":13,"hp":151,"maxHp":175,"level":18,"gold":8,"threats":56,"worksHp":352,"works":{"boiler_house":2,"turret":4},"needsRider":true,"failures":["FAILED: REPAIR_UNDER action was rejected."]}
+{"wave":13,"hp":151,"maxHp":175,"level":18,"gold":8,"threats":56,"worksHp":332,"works":{"boiler_house":2,"turret":4},"needsRider":true,"failures":["FAILED: REPAIR_UNDER action was rejected."]}
+{"wave":13,"hp":151,"maxHp":175,"level":18,"gold":8,"threats":56,"worksHp":322,"works":{"boiler_house":2,"turret":4},"needsRider":true,"failures":["FAILED: REPAIR_UNDER action was rejected."]}
+{"wave":13,"hp":151,"maxHp":175,"level":18,"gold":8,"threats":55,"worksHp":302,"works":{"boiler_house":2,"turret":4},"needsRider":true,"failures":["FAILED: REPAIR_UNDER action was rejected."]}
+{"wave":13,"hp":151,"maxHp":175,"level":18,"gold":8,"threats":56,"worksHp":282,"works":{"boiler_house":2,"turret":4},"needsRider":true,"failures":["FAILED: REPAIR_UNDER action was rejected."]}
+{"wave":13,"hp":151,"maxHp":175,"level":18,"gold":8,"threats":55,"worksHp":262,"works":{"boiler_house":2,"turret":4},"needsRider":true,"failures":["FAILED: REPAIR_UNDER action was rejected."]}
+{"wave":13,"hp":151,"maxHp":175,"level":18,"gold":8,"threats":53,"worksHp":242,"works":{"boiler_house":2,"turret":4},"needsRider":true,"failures":[]}
+{"wave":13,"hp":151,"maxHp":175,"level":18,"gold":8,"threats":52,"worksHp":222,"works":{"boiler_house":2,"turret":4},"needsRider":true,"failures":[]}
+{"wave":13,"hp":151,"maxHp":175,"level":18,"gold":8,"threats":52,"worksHp":208,"works":{"boiler_house":2,"turret":4},"needsRider":true,"failures":["FAILED: REPAIR_UNDER action was rejected."]}
+{"wave":13,"hp":151,"maxHp":175,"level":19,"gold":8,"threats":48,"worksHp":188,"works":{"boiler_house":2,"turret":4},"needsRider":true,"failures":["FAILED: REPAIR_UNDER action was rejected."]}
+{"wave":13,"hp":151,"maxHp":175,"level":19,"gold":8,"threats":48,"worksHp":168,"works":{"boiler_house":2,"turret":4},"needsRider":true,"failures":[]}
+{"wave":13,"hp":151,"maxHp":175,"level":19,"gold":8,"threats":48,"worksHp":148,"works":{"boiler_house":2,"turret":4},"needsRider":true,"failures":[]}
+{"wave":13,"hp":151,"maxHp":175,"level":19,"gold":8,"threats":46,"worksHp":128,"works":{"boiler_house":2,"turret":4},"needsRider":true,"failures":["FAILED: REPAIR_UNDER action was rejected."]}
+{"wave":13,"hp":151,"maxHp":175,"level":19,"gold":8,"threats":47,"worksHp":108,"works":{"boiler_house":2,"turret":4},"needsRider":true,"failures":[]}
+{"wave":13,"hp":151,"maxHp":175,"level":19,"gold":8,"threats":47,"worksHp":98,"works":{"boiler_house":2,"turret":4},"needsRider":true,"failures":[]}
+{"wave":14,"hp":151,"maxHp":175,"level":19,"gold":8,"threats":60,"worksHp":98,"works":{"boiler_house":2,"turret":4},"needsRider":true,"failures":[]}
+{"wave":14,"hp":143,"maxHp":175,"level":19,"gold":58,"threats":53,"worksHp":98,"works":{"boiler_house":2,"turret":4},"needsRider":true,"failures":["FAILED: REPAIR_UNDER action was rejected.","INVALID_TARGET: gold-seam-2 is unavailable."]}
+{"wave":14,"hp":15,"maxHp":175,"level":19,"gold":40,"threats":58,"worksHp":158,"works":{"boiler_house":2,"turret":4},"needsRider":true,"failures":[]}
+{"wave":14,"hp":7,"maxHp":175,"level":19,"gold":31,"threats":58,"worksHp":178,"works":{"boiler_house":2,"turret":4},"needsRider":true,"failures":[]}
+{"wave":14,"hp":0,"maxHp":175,"level":19,"gold":13,"threats":58,"worksHp":258,"works":{"boiler_house":2,"turret":4},"needsRider":true,"failures":[]}
+gr-sim speed: 0.61 waves/s

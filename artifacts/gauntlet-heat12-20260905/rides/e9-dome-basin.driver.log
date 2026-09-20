@@ -1,0 +1,51 @@
+
+########## RIDE e9-dome-basin · seed e9-dome-basin-01 · gen 58 · stake second-attempt · wall 1500s ##########
+--- 1 charter ---
+{"rig":"opus","contract":"e9-dome-basin","seed":"e9-dome-basin-01","seedMode":"bench","stake":"second-attempt","generation":58,"wall":1500,"notebookSha256":"af88604bfddaa6a99a628aff8d4d8faa2bf8e4dd32977dc45a4de05f743811f9","charterSha256":"69ebb57eae8faf855504681a0bf6e95c77dd24feafab236a0d7aa8dbe00bd7d7","bytes":453037,"out":"/private/tmp/heat12-038cc280/artifacts/gauntlet-heat12-20260905/rides/e9-dome-basin/charter.md"}
+--- 2 ride ---
+START opus claude-opus-5 pid=41449 session=ecf5a598-3c48-46ff-aa0b-ed4716272443 at=2026-09-05T20:44:31.849Z
+FIRST-OUTPUT opus +135s
+OUTCOME opus secured=false waves=2 gold=0 runsSoFar=1 scored=0 +135s
+OUTCOME opus secured=false waves=2 gold=0 runsSoFar=2 scored=0 +315s
+OUTCOME opus secured=false waves=2 gold=0 runsSoFar=3 scored=0 +495s
+OUTCOME opus secured=false waves=2 gold=0 runsSoFar=4 scored=1 +570s
+OUTCOME opus secured=false waves=14 gold=96 runsSoFar=4 scored=1 +630s
+END opus rc=0 signal=null wall=686s wallHit=false
+ride-wall rc=0 signal=-
+--- 3 land ---
+
+=== 1 finish-ride ===
+{"rig":"opus","contract":"e9-dome-basin","wall":686,"wallHit":false,"rc":0,"tracked":[],"files":22,"outcome":{"secured":false,"waves":14,"gold":96,"runsSoFar":4,"scoredAttempts":1,"tape":"/tmp/heat12-038cc280/artifacts/heat12/opus/e9-dome-basin/tune-1-tape.json","worldModel":"sim-import"},"scoredTapes":[{"file":"attempt-1-tape.json","id":"agent-b5c95c01-f1f1dac0-418e-47dc-a535-8d9f69fec32a","secured":false,"waves":13,"gold":11,"durationTicks":12581,"lastEntryTick":12333,"promotedByRig":false,"discoveredBy":"filename"},{"file":"tune-1-tape.json","id":"agent-8e51d98b-58f6f224-e330-4e62-b071-e3d3d8d93ac2","secured":false,"waves":14,"gold":96,"durationTicks":13187,"lastEntryTick":12743,"promotedByRig":true,"discoveredBy":"outcome-file"}],"otherSecured":[],"reportSections":{"outcome":937,"whatTheMapAsked":2489,"winnability":1141,"lessons":4562},"usage":{"turns":59,"toolCalls":32,"tokensIn":118,"tokensOut":101711}}
+
+=== NOT SECURED — nothing to submit ===
+{
+ "rig": "opus",
+ "contract": "e9-dome-basin",
+ "wall": 686,
+ "wallHit": false,
+ "rc": 0,
+ "scoredTapes": [
+  {
+   "file": "attempt-1-tape.json",
+   "secured": false,
+   "waves": 13,
+   "gold": 11
+  },
+  {
+   "file": "tune-1-tape.json",
+   "secured": false,
+   "waves": 14,
+   "gold": 96
+  }
+ ],
+ "outcomeNote": "Best of 4 runs. tune-1 (two-sided bait, mend on) w14/439.567s beats attempt-1 (synthesis) w13/419.367s and tune-2 (economy-only) w13/402.267s. NOT SECURED: the contract needs w20/600s and declares no earlier window. attempt-1-tape.json is the scored attempt and is the WORSE run; this file names tune-1 as the best outcome, per the intermediate-results law. Neither is submittable."
+}
+
+land rc=0
+--- 4 notebook ---
+{"notebook":"/Users/robin/Claude/Projects/goldrush-gauntlet/memories/claude__opus-5/NOTEBOOK.md","generation":58,"headerBytes":432,"entryBytes":9119}
+--- 5 matrix ---
+| 22 | e9-dome-basin | `e9-dome-basin-01` | second-attempt | 58 | **not secured** | 14 | 96 | 439.567s | 686s | `attempt-1-tape.json` · `agent-b5c95c01-f1f1dac0-418e-47dc-a535-8d9f69fec32a`<br>fnv1a32:17e14213 | — | gen 58 |
+{"contract":"e9-dome-basin","secured":false,"tapesOnDisk":13,"scoredTapes":2,"otherSecured":0,"runs":4,"scoredAttempts":1,"wallHit":false,"rc":0,"assay":null,"ranked":null,"winnability":"**Undecided-leaning-yes, and what stopped me was my own budget against a real and now-priced\ntension in the map, not the grammar and not the door:** the two tunes are a clean one-variable\npair that jointly name the whole remaining problem — mended bait holds the hero flat at 119/175\nfor 200 seconds while freezing the purse at 1.09 g/s (tune-1), and an unmended fort runs at\n2.16 g/s and lands the entire ladder while being eaten to 20/20 wrecked (tune-2) — because one\nProspector's feet must both pan a seam cluster 33–63 wu from the pads and replace ~0.24 works/s\nof bait mass; my scored synthesis narrowed it (hero 158/175 at t = 300) and still died at w13 of\n20, so the honest verdict is that I have priced the trade without closing it, and the untested\nlever the data points at is buying the bait's *replacement* out of a shorter commute — palisades\non the east pad only, with the west lane held by turrets that kill what they lure rather than by\nmass that must be rebuilt. The reel side is solved and no longer a risk (176,472 bytes of a\n576,176 ceiling, 66 of 3,601 entries, last accepted order well inside the 18,002-tick envelope)."}
+########## END e9-dome-basin ##########
+

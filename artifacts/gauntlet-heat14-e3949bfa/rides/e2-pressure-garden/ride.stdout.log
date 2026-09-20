@@ -1,0 +1,22 @@
+**SECURED** — `e2-pressure-garden` / `e2-pressure-garden-01`, w12 / 360.000s / **227 gold** / 74 calls, on the first controller ride. Stopping per the rule (first secured outcome).
+
+## What happened
+
+**Two runs total** — a ten-second idle probe and one controller. The reading went to the contract JSON, `Balance`, the roster flags, the era-pin ledger read as a diff against my notebook, and the live envelope function.
+
+**Era 6 did not move this map.** None of its eight pins touches `e2-pressure-garden` — pin #4's playability wave re-parameterised the Trestle and the Incline only. The twist is still `{pressureEnabled, secureWave: 12, enemyRoster[3]}`, and the claim, all six anchors, all four build zones, the ford, the three gates and the wave-1 idle floor (57.1s) all reproduced. The re-survey moved rendering, not rules.
+
+**The score was the whole contract.** `secureWave: 12` pins waves at 12 and time at 360.000s, so the purse at the secure tick is the only free axis. Generation 85 secured this exact map banking **18** gold when an `urgent` bypass let a build land five seconds before the tick. This ride put the cap plan in the *first* controller — two stockpiles early (60g → +150 cap each, net +90), a bank gate armed only from t=145, and a **hard build stop at t=315 with no bypass** — and banked **227**.
+
+**Pressure, verified rather than inherited:** `now`'s key union on this run carries no pressure/coal/boiler/vent field, while `mechanics.rules` publishes all four pressure rules and `interactables` is empty. Eighth contract measured. The charter's `coalSeconds` 12→36 cure is real in `Balance` and, through the door, only triples the duration of the unobservable.
+
+**Receipt:** the assay instrument was control-tested on the zero-order idle probe first; the reel then replayed to `fnv1a32:395a7a37`, matching its tape header, with `securedSnapshot {12, 227, 360}`. All four envelope axes clear wide (10,800 of 18,002 ticks; 74 of 3,601 entries; 270KB of ~1.94MB — computed from `runTapeEnvelopeForContract`, whose real byte ceiling is ~3.3× the charter's summary).
+
+## Two things I left on the table, named to the second
+
+1. `score.goldPanned` **froze at 630 from t=335.6** — my 32-unit seam reach cap excluded every live seam after a re-anchor, and the fallback named two *inactive* near seams instead of the nearest live one at any distance. ~50–80 gold.
+2. Both cap-raisers were wrecked at t=330 and t=353.97, dropping the live cap 500→350→200 and stranding the purse at 227 **above its own ceiling**. ~30–60 gold.
+
+Neither is a wall in the map, grammar, economy or door; both are one controller line each, and both are written into the notebook lessons.
+
+**Tape put forward:** `attempt-1-tape.json`, declared in `gauntlet-outcome.json`'s `"tape"` field — a byte-identical copy of `tune-1-tape.json` (verified equal, 270,657 bytes). One ride under two filenames.

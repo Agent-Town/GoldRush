@@ -1,0 +1,93 @@
+{
+  "url": "http://127.0.0.1:5188",
+  "mode": "mobile",
+  "screenshotPath": "artifacts/canvas-inspection/mobile.png",
+  "result": {
+    "ok": true,
+    "reason": "nonblank",
+    "rect": {
+      "x": 0,
+      "y": 0,
+      "width": 390,
+      "height": 664
+    },
+    "drawingBuffer": {
+      "width": 780,
+      "height": 1328
+    },
+    "alphaPixels": 4097,
+    "variance": 235,
+    "colorBuckets": 53,
+    "diagnostics": {
+      "frame": 52,
+      "elapsed": 2.549431999999254,
+      "score": 0,
+      "targetScore": 0,
+      "complete": false,
+      "heroPos": {
+        "x": 0,
+        "y": 0.06,
+        "z": 12
+      },
+      "speed": 0,
+      "player": {
+        "position": {
+          "x": 0,
+          "y": 0.06,
+          "z": 12
+        },
+        "speed": 0
+      },
+      "renderer": {
+        "calls": 8,
+        "triangles": 862,
+        "geometries": 20,
+        "textures": 6
+      },
+      "terrain": {
+        "playerZone": "bank",
+        "probes": {
+          "bank": {
+            "walkable": true,
+            "speedMul": 1,
+            "zone": "bank"
+          },
+          "shallows": {
+            "walkable": true,
+            "speedMul": 0.8,
+            "zone": "shallows"
+          },
+          "river": {
+            "walkable": true,
+            "speedMul": 0.55,
+            "zone": "river"
+          },
+          "ford": {
+            "walkable": true,
+            "speedMul": 0.85,
+            "zone": "ford"
+          },
+          "northBank": {
+            "walkable": true,
+            "speedMul": 1,
+            "zone": "bank"
+          },
+          "out": {
+            "walkable": false,
+            "speedMul": 0,
+            "zone": "out"
+          }
+        }
+      },
+      "canvas": {
+        "clientWidth": 390,
+        "clientHeight": 664,
+        "width": 780,
+        "height": 1328,
+        "dpr": 2
+      }
+    }
+  },
+  "consoleErrors": [],
+  "pageErrors": []
+}

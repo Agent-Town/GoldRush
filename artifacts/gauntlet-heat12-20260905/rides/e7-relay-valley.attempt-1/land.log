@@ -1,0 +1,21 @@
+
+=== 1 finish-ride ===
+{"rig":"opus","contract":"e7-relay-valley","wall":919,"wallHit":false,"rc":0,"tracked":[],"files":22,"outcome":{"secured":false,"waves":15,"gold":40,"runsSoFar":4,"scoredAttempts":1,"tape":"/private/tmp/heat12-038cc280/artifacts/heat12/opus/e7-relay-valley/tune-3-tape.json","worldModel":"sim-import"},"scoredTapes":[{"file":"tune-3-tape.json","id":"agent-211bb7c1-655ec773-5a6b-4afd-8665-5871fa07cff4","secured":false,"waves":15,"gold":40,"durationTicks":13810,"lastEntryTick":13614,"promotedByRig":true,"discoveredBy":"outcome-file"}],"otherSecured":[],"reportSections":{"outcome":1346,"whatTheMapAsked":4448,"winnability":1105,"lessons":4542},"usage":{"turns":85,"toolCalls":50,"tokensIn":170,"tokensOut":130704}}
+
+=== NOT SECURED — nothing to submit ===
+{
+ "rig": "opus",
+ "contract": "e7-relay-valley",
+ "wall": 919,
+ "wallHit": false,
+ "rc": 0,
+ "scoredTapes": [
+  {
+   "file": "tune-3-tape.json",
+   "secured": false,
+   "waves": 15,
+   "gold": 40
+  }
+ ],
+ "outcomeNote": "NOT SECURED. The E7 objective latch WAS discharged on every controller ride (now.playbookUse.objectiveMet true, relaysLitByProgram ['relay-site-r3'], programRuns 1, at t=11.6s on the cheap line). What ends the run is attrition on a welded 100/175-hp hero that no buildable can defend. Ladder: idle w2/79.3s -> v1 w13/398.5s -> v2 (thief decoy) w14/429.9s -> v3 w15/460.3s. F-HEAT11-1 is cured for this contract: twist.clockTicks 18000 now feeds runTapeEnvelopeForContract, giving maxTicks 18002 against a wave-20 secure at tick 18000."
+}

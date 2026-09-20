@@ -1,0 +1,28 @@
+{
+  "secured": false,
+  "waves": 2,
+  "timeMs": 60033,
+  "gold": 5,
+  "kills": 23,
+  "calls": 3,
+  "defaultedPicks": 0,
+  "defaultedSecure": 0,
+  "eventLogHash": "fnv1a32:eed8345a",
+  "endReason": "wave-ceiling",
+  "tape": "/tmp/heat11-5e7a7c0b/artifacts/heat11/opus/e1-drill-yard/attempt-1-tape.json",
+  "scored": true,
+  "runsSoFar": 3,
+  "scoredAttempts": 1,
+  "worldModel": "sim-import",
+  "submittable": false,
+  "finding": "e1-drill-yard is STRUCTURALLY UNSECURABLE through the door, and is not meant to be secured. It is the county's practice yard. assets/contracts/epoch-1-frontier/contracts.json authors twist.secureWave = 0; HeadlessContractSim.ts:1089 and :1123 pass that 0 through to RunManager, whose secure gate at RunManager.ts:291 reads `if (!this.host || secureWave <= 0 || wave < secureWave) return;` — so maybeSecureRun returns early at EVERY wave, run_secured is never emitted, now.pendingSecure never appears, and SECURE_CHOICE is never accepted. gr-sim.mjs:111 then sets waveCeiling = secureWave + 2 = 2, ending every ride at wave 2 / 60.03s with endReason wave-ceiling.",
+  "corroboration": [
+    "assets/contracts/winnability-receipts.json -> e1-drill-yard: {status: unclaimed, reason: standings-disabled}",
+    "e2e/field-book.spec.ts:113-126 asserts a drill-yard POST to /api/standings returns HTTP 400 error 'training_ground', message 'The Drill Yard is the training ground - practice is its own reward.', writes no KV row, and refuses the GET board too. 'training_ground' is in skill.md's published refusal taxonomy.",
+    "contracts.json practice block declares standings:false, tapes:false, scores:false, metaProgress:false, runHistory:false"
+  ],
+  "otherRuns": {
+    "probe-idle.json": { "secured": false, "waves": 2, "timeMs": 60033, "gold": 0, "kills": 23, "calls": 0, "eventLogHash": "fnv1a32:134de7dc" },
+    "tune-1-tape.json": { "secured": false, "waves": 2, "timeMs": 60033, "gold": 15, "kills": 23, "calls": 6, "eventLogHash": "fnv1a32:7ff9b669", "note": "higher gold than the scored attempt (15 vs 5) but built no works; neither is secured, so neither is submittable" }
+  }
+}

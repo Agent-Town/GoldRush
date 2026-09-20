@@ -1,0 +1,1326 @@
+
+> gold-rush@0.1.0 test:node-guards
+> node scripts/run-node-guards.mjs scripts/same-game-audit.test.mjs scripts/same-game-report-guard.test.mjs scripts/door-admission-ratchet.test.mjs scripts/gazette-backfill-sweep.test.mjs scripts/wrangler-version-assert.test.mjs scripts/agent-rung-conformance.test.mjs scripts/agent-seat.test.mjs scripts/agent-reels.test.mjs scripts/assay-replay.test.mjs scripts/assay-worker.test.mjs scripts/assert-release-build.test.mjs scripts/bench-seeds.test.mjs scripts/null-floor-anchors.test.mjs scripts/season-registry.test.mjs scripts/blocker-panel-closed-guard.test.mjs scripts/character-direction-assets.test.mjs scripts/citation-title-guard.test.mjs scripts/claimed-spec-harness-guard.test.mjs scripts/collection-guards-cwd-invariance.test.mjs scripts/stale-ready-for-gates-guard.test.mjs scripts/component-boss-secure.test.mjs scripts/console-watch-single-source.test.mjs scripts/cross-engine-skip.test.mjs scripts/desk-declaration-guard.test.mjs scripts/desk-birth-guard.test.mjs scripts/drain-block-check.test.mjs scripts/e3-mask-tables.test.mjs scripts/entry-damage-table.test.mjs scripts/external-server-is-dev.test.mjs scripts/findings-state-guard.test.mjs scripts/fire-shell-serialisation.test.mjs scripts/fixture-teardown.test.mjs scripts/function-cors-allowlist.test.mjs scripts/gate-caller-audit.test.mjs scripts/gate-battery.test.mjs scripts/glob-fallback-completeness.test.mjs scripts/goal-closure-reason.test.mjs scripts/goal-tracker.test.mjs scripts/gr-sim.test.mjs scripts/gr-sim-campaign.test.mjs scripts/moth-season-pressure.test.mjs scripts/law-pointer-guard.test.mjs scripts/lane-residue.test.mjs scripts/lane-usable-dirt-parse.test.mjs scripts/lane-usable-busy-self.test.mjs scripts/probe-base.test.mjs scripts/rehearsal-base.test.mjs scripts/red-inventory-lookup.test.mjs scripts/review-evidence-audit.test.mjs scripts/ruling-propagation-guard.test.mjs scripts/run-guards.test.mjs scripts/run-log-retention.test.mjs scripts/script-tree-parse.test.mjs scripts/site-contract.test.mjs scripts/skillmd-guard.test.mjs scripts/stream-curate.test.mjs scripts/stream-director.test.mjs scripts/stream-showcase-queue.test.mjs scripts/subject-tree.test.mjs scripts/suite-red-inventory.test.mjs scripts/town-era-props-node-safety.test.mjs scripts/town-spec-collection.test.mjs scripts/wave-scaling-cross-engine.test.mjs scripts/whole-suite-collection.test.mjs scripts/worker-type-coverage.test.mjs scripts/node-guards-concurrency.test.mjs scripts/node-guards-timeout.test.mjs scripts/node-guards-contention.test.mjs scripts/master-shipped-classifier.test.mjs src/encyclopedia/stackDirectory.test.mjs && node scripts/test-ticker-stats.mjs && npm run test:findings-state && npm run test:blocker-panel && npm run test:ruling-propagation && npm run test:desk-declaration && node scripts/nul-audit.mjs
+
+✔ agent reel validation reuses the door bounds and CLI tapes are byte deterministic (8840.823834ms)
+✔ agent consent keeps the ruled pan and build rungs plus shipped repair rung (1.566083ms)
+✔ tool surface keeps auto-pan and place-building at their ruled rungs (0.111417ms)
+✔ standing orders keep harvest at rung 2 and build at rung 3 (0.133458ms)
+(node:44987) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+✔ a wire act crosses into the sim and changes it (3020.123292ms)
+✔ agent_orders validates the standing-order grammar and wire bounds (480.343833ms)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+✔ two independently booted sims agree tick for tick (3785.065625ms)
+✔ the seat carries BUILD and refuses to stretch for the rest (1899.874959ms)
+✔ the seat carries the facing, and refuses a facing the county does not keep (502.952667ms)
+✔ the throttle ceiling is the relay rate limit, not a taste (3722.896833ms)
+✔ rob's v1 live reel is retained but reported as unverifiable legacy (338.848083ms)
+✔ once processes verified, mismatch, crash, and legacy rows fail-honestly (306.07025ms)
+✔ dry-run prints the verdict without posting it (101.008166ms)
+✔ API failures back off before polling again (181.43675ms)
+✔ a missing dist/ is refused, not cleared (37.747208ms)
+✔ CONTROL: the same fixture with one benign dist file passes — it is the emptiness, not the fixture (41.272625ms)
+✔ an empty later-asset blacklist is refused — the leak check would otherwise pass vacuously (40.144833ms)
+✔ the success line reports the denominator, so a vacuous clearance would be legible (37.596166ms)
+✔ POSITIVE CONTROL: a later-epoch manifest id in dist still fails (45.308166ms)
+✔ POSITIVE CONTROL: a leaked later-epoch plate asset in dist still fails (72.547875ms)
+✔ POSITIVE CONTROL: the GR_RELEASE=e1 precondition still refuses a bare invocation (38.865125ms)
+✔ an E1 asset whose content hash reads like an era tag is NOT a leak (36.997209ms)
+✔ POSITIVE CONTROL: a genuine later-era asset in dist still fails (53.659625ms)
+✔ POSITIVE CONTROL: a later-era tag ENDING the module name still fails (the `$` anchor) (41.686833ms)
+✔ contract ids are globally unique across the ten epoch bundles (0.7085ms)
+✔ bench seed sets cover Frontier and contain only valid known-contract seeds (0.171292ms)
+✔ reds on the pre-strike ledger that manufactured the owner directive, greens on the struck one (1133.7855ms)
+✔ a closure APPENDED below the panel row does not clear the panel — which is the whole defect (64.26725ms)
+✔ striking the ORIGINAL line clears the panel — the fix the guard prescribes actually works (52.393334ms)
+✔ an open finding on the panel is left alone (67.934458ms)
+✔ REFUSES rather than passes when the panel moves out from under it (34.574542ms)
+✔ the wide closure vocabulary is opt-in and does not leak into the default census (0.384125ms)
+✔ contract direction files exist under assets/processed (0.960417ms)
+✔ contract direction aliases do not overwrite explicit directions (1.641708ms)
+✔ a bare spec:line citation fails the guard (301.983958ms)
+✔ a citation carrying an exact test title passes (265.861041ms)
+✔ a short code span cannot consume the following quoted title (261.992375ms)
+✔ a bare apostrophe cannot consume the following quoted title (208.166584ms)
+✔ an odd same-kind delimiter cannot consume the following quoted title (274.558375ms)
+✔ a test helper string is not harvested as a title (210.50825ms)
+✔ chained describe modifiers remain title declarations (229.96675ms)
+✔ a citation carrying an ELIDED test title passes (213.422041ms)
+✔ a quoted title that does not exist in the spec still fails (262.015916ms)
+✔ a grandfathered bare citation passes, and a second copy of it does not (443.2655ms)
+✔ --report never gates (194.155167ms)
+✔ REFUSES when no tracked task markdown exists (denominator 0 docs) (278.689375ms)
+✔ REFUSES when task docs exist but carry zero citations (191.730209ms)
+✔ REFUSES when the baseline it ratchets against is missing (302.750791ms)
+✔ a citation quoting a real NON-TEST source line is carried, not a violation (195.964209ms)
+✔ a quote matching NEITHER a title nor any source line still fails (218.084084ms)
+✔ the verdict names the citations it did NOT gate (333.838333ms)
+✔ --report still never gates, even on a denominator it could not read (272.980083ms)
+✔ the claimed-spec -> owning-config map is DERIVED, not tabulated (4.129084ms)
+✔ derivation REFUSES rather than silently measuring nothing if the array is renamed (0.768584ms)
+✔ MANUFACTURED: a claimed spec whose owning config has NO npm caller is named (1.984417ms)
+✔ a runnerless harness WARNS and never changes the exit code (41.17225ms)
+✔ NO package.json is not the same as no caller — a synthetic root must stay silent (48.478833ms)
+✔ MANUFACTURED: a bare playwright command naming a claimed spec FAILS the guard (39.852542ms)
+✔ MANUFACTURED: a CHECKLIST-form adjacent-suite line FAILS the guard (why arm (b), not (a)) (35.027375ms)
+✔ MANUFACTURED: a mention inside the SELF-CHECK region FAILS the guard (61.135209ms)
+✔ a DESCRIPTIVE mention outside any gate region is NOT an offender (why not arm (c)) (55.83975ms)
+✔ naming the owning CONFIG clears the master (41.058ms)
+✔ naming the npm ALIAS clears the master (35.561042ms)
+✔ the guard actually RUNS when invoked as a script (entrypoint is not a silent no-op) (220.10325ms)
+✔ the live board has no LIVE offender (137.491625ms)
+✔ every grandfathered file is still a real offender (no stale excuses) (165.714125ms)
+✔ the guard sets process.exitCode and never force-exits (F-2098-1) (0.421375ms)
+✔ whole-suite collection guard is cwd-invariant (2909.314792ms)
+✔ town-spec collection guard is cwd-invariant (877.063041ms)
+(node:45000) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ E2 default railcar group secures only when its last component dies (0.411333ms)
+✔ E2 default railcar group rejects a wrong group id (0.072167ms)
+✔ E3 variant uses the component-boss group suffix, not railcar (0.049125ms)
+✔ E1 plain Baron accepts no group id and rejects a defined one (0.04375ms)
+✔ E6 Homemaker secures on its CORE only, never on the authored VAC+RACK group (0.072209ms)
+✔ elite kind must match even when the component group is fully down (0.043875ms)
+✔ console error watching stays in one literal-prefix source (20.423041ms)
+✔ fire shell SKIPS the cross-engine guard, with a reason a reader can act on (0.431ms)
+✔ lane and attended shells RUN the cross-engine guard (0.0665ms)
+✔ a missing second interpreter still outranks the shell question (0.051209ms)
+✔ the SELECTOR admits an owner ACT and refuses a gate that merely says the word (0.978208ms)
+✔ a NEGATED owner gate is a disclaimer and must NOT flag (F-1551-4) (0.210792ms)
+✔ negation handling does not disarm the guard — every positive still flags (0.066ms)
+✔ a negation is scoped to its own sentence, so a mixed gate keeps its owner half (0.0705ms)
+✔ the selector reads the other real owner-gate phrasings on the board (0.064625ms)
+✔ and refuses the fire-actionable phrasings that sit beside them (0.068833ms)
+✔ a row is keyed by the id it INTRODUCES, not one its prose cites (0.112167ms)
+✔ gateOf takes the LAST gate clause, since row prose quotes earlier ones (0.049833ms)
+✔ MANUFACTURED DEFECT — an owner-gated row filed with no desk mention is named (0.436875ms)
+✔ THE REAL s1540->s1541 EVENT: both undesked owner rows are caught, the six others are not (0.143583ms)
+✔ ...and once they are ON the desk, the same window passes (0.074583ms)
+✔ the desk is the LAST desk word, so an upstream PROSE mention does not satisfy it (0.060792ms)
+✔ DESK-NOT-OWED excuses an id, and is scoped so it cannot cover an unrelated one (1.387167ms)
+✔ SKIPS mid-fire on an ACTIVE lock, so drain batteries are unaffected (0.048458ms)
+✔ REFUSES rather than greening when line-1 carries no desk at all (0.034542ms)
+✔ the backtick header is readable here too — the three desk parsers stay in step (0.055375ms)
+✔ addedRows reads the ledger glyphs and ignores diff noise (0.567916ms)
+✔ a desk item WITH a declaring row passes (44.687666ms)
+✔ MANUFACTURED: a desk item with NO row anywhere exits 1 and names the id (48.518375ms)
+✔ MANUFACTURED: the F-1328-3 shape — MENTIONED inside another finding row is NOT declared (34.956917ms)
+✔ a row whose id sits past the 90-char subject zone does NOT declare it (64.113958ms)
+✔ the leading GLYPH is irrelevant — F-1334-1 refuted marker equality (155.453375ms)
+✔ the markdown list bullet is stripped: bulleted and unbulleted rows read alike (65.080792ms)
+✔ GROUND TRUTH — the real s1529 backtick header must NOT read as "no desk" (41.125ms)
+✔ REFUSES (exit 2) rather than greening when there is no OWNER DESK segment (32.223042ms)
+✔ REFUSES (exit 2) when the desk segment holds zero keyed items (32.517375ms)
+✔ REFUSES (exit 2) when BACKLOG.md is missing (33.934625ms)
+✔ the entrypoint actually RUNS — a space in the repo path must not no-op it (34.565959ms)
+✔ the live board is green under this guard (baseline is honest) (59.5255ms)
+✔ MANUFACTURED F-1471-3: an ARCHIVED desk never satisfies the guard (33.449375ms)
+✔ MANUFACTURED F-1471-3: an archived desk must not MASK an undeclared LIVE item (43.264959ms)
+✔ all five desk spellings are read — the majority form was invisible (179.022959ms)
+✔ an ACTIVE lock line SKIPs (exit 0) — the desk is written at handoff time (30.915541ms)
+✔ a lock line that MENTIONS the desk in prose is still a lock, not a desk (34.280875ms)
+✔ MANUFACTURED: a prose mention upstream loses to the REAL desk in the tail (33.11025ms)
+✔ a handoff whose desk header has no F-IDs after it REFUSES (exit 2) (31.339584ms)
+✔ a SLUG-keyed desk item WITH a declaring row passes (29.917458ms)
+✔ MANUFACTURED F-1534-2: a SLUG desk item with NO row exits 1 and names the slug (30.707542ms)
+✔ the F-1328-3 shape on the SLUG axis: a slug CITED in another row is not declared (34.487667ms)
+✔ F-1535-1: a backtick in an item's PROSE is not a desk item (the flat-scan trap) (43.765625ms)
+✔ F-1535-1: an item keyed by an F-ID that also cites its slug is ONE F-keyed item (35.99175ms)
+✔ a desk of ONLY slug items does not trip the zero-keyed-items refusal (33.501209ms)
+✔ the grandfather list may only SHRINK — never grows past the s1334 baseline (0.276458ms)
+✔ every grandfathered id is still on the desk — the list must not rot (17.041625ms)
+✔ MANUFACTURED: with the list EMPTY the guard is strict — no id is excused (32.903084ms)
+(node:45029) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ derived door matches the fixed admission baseline (2738.33475ms)
+✔ drain path REFUSES a terminal-closed leaf (F-1248-1) — and clears the same fixture when live (78.177833ms)
+✔ every TERMINAL_CLOSED word is refused on the drain path, and no other word is (389.678459ms)
+✔ an owner BLOCK still outranks everything and still names the owner (unchanged by F-1248-1) (32.036292ms)
+✔ --queue keeps its own wording and its own reason line (34.129208ms)
+✔ F-1311-2: --queue refuses a fresh bare citation and names the repair (196.389625ms)
+✔ F-1311-2: --queue accepts the same citation with its test title (174.483ms)
+✔ F-1311-2: --queue respects the grandfathered baseline (181.584917ms)
+✔ F-1311-2: the drain arm remains unchanged for a fresh bare citation (30.878541ms)
+✔ a closed leaf whose reason sits under a session-stamped key is still explained (71.860417ms)
+✔ F-1249-1: a session-stamped reason key that varies the STEM is explained, and non-reason keys are not (94.905ms)
+✔ F-1249-1: a stale blockedReason is never printed as the CLOSURE cause (65.623834ms)
+✔ F-1249-1: the leaf TITLE is printed on both refusal arms, even when a reason key exists (97.340292ms)
+✔ --all reports terminal-closed leaves but its exit code still tracks BLOCKED alone (64.216333ms)
+✔ F-1250-1: an EXACT taskFile match outranks a longer-named sibling (no false CLEAR) (92.213041ms)
+✔ F-1250-1: the reverse — a lawful merged drain is not reddened by a longer closed predecessor (66.979917ms)
+✔ F-1250-1: with NO exact match, longest-wins still decides (the tie-break is kept, not replaced) (30.161667ms)
+✔ F-1250-1 rider: a blocked SIBLING still refuses, but now says which leaf you actually named (62.640584ms)
+✔ a missing leaf is still UNKNOWN-not-a-clearance, and --strict still escalates it (65.074ms)
+✔ --queue REFUSES a master a runner already holds (F-1322-1) — and clears it once the slot frees (236.099916ms)
+✔ the live-run match is the runner's exact shape, not a name suffix (237.970667ms)
+✔ an UNDRAINED done-move WARNS but never refuses — s1320's lawful §7.5 re-dispatch must pass (541.464166ms)
+✔ F-2097-1: an UNREGISTERED master is still refused when a runner holds it (92.3855ms)
+✔ the DRAIN path is untouched by both arms — a done-move is what a drain is FOR (32.846416ms)
+✔ published mask tables exactly track authored contract data (42.75025ms)
+✔ published Moth Season mask stays inside bounds and agrees with authored water (1.565417ms)
+✔ e2-trestle mask stays inside bounds and agrees with authored water (0.471208ms)
+✔ e2-pressure-garden mask stays inside bounds and agrees with authored water (0.819083ms)
+✔ e2-incline mask stays inside bounds and agrees with authored water (0.778709ms)
+✔ e3-canyon-works mask stays inside bounds and agrees with authored water (0.59ms)
+✔ e3-blackout-ridge mask stays inside bounds and agrees with authored water (0.711083ms)
+✔ e3-moth-season mask stays inside bounds and agrees with authored water (0.28725ms)
+✔ e3-fairground mask stays inside bounds and agrees with authored water (0.27ms)
+✔ e4-dust-flats mask stays inside bounds and agrees with authored water (0.563959ms)
+✔ e4-long-road mask stays inside bounds and agrees with authored water (0.270791ms)
+✔ e4-gusher-county mask stays inside bounds and agrees with authored water (0.38225ms)
+✔ e4-boneyard mask stays inside bounds and agrees with authored water (0.206542ms)
+✔ e5-regatta mask stays inside bounds and agrees with authored water (0.296208ms)
+✔ e5-stillwater mask stays inside bounds and agrees with authored water (0.529083ms)
+✔ e5-flotilla mask stays inside bounds and agrees with authored water (0.2305ms)
+✔ e6-glow-mesa mask stays inside bounds and agrees with authored water (0.392791ms)
+✔ e6-showroom mask stays inside bounds and agrees with authored water (0.234958ms)
+✔ e6-half-life-hollow mask stays inside bounds and agrees with authored water (0.245958ms)
+✔ e6-picnic mask stays inside bounds and agrees with authored water (0.227583ms)
+✔ e7-relay-valley mask stays inside bounds and agrees with authored water (0.2105ms)
+✔ e7-echo-canyon mask stays inside bounds and agrees with authored water (0.1905ms)
+✔ e7-dead-band mask stays inside bounds and agrees with authored water (0.212875ms)
+✔ e7-relay-rush mask stays inside bounds and agrees with authored water (0.173916ms)
+✔ e8-mare-claim mask stays inside bounds and agrees with authored water (0.235541ms)
+✔ e9-dome-basin mask stays inside bounds and agrees with authored water (0.362042ms)
+✔ e9-seed-run mask stays inside bounds and agrees with authored water (0.3325ms)
+✔ e9-devils-alley mask stays inside bounds and agrees with authored water (0.325417ms)
+✔ e9-old-canal mask stays inside bounds and agrees with authored water (0.24375ms)
+✔ e10-ember-shore mask stays inside bounds and agrees with authored water (0.54775ms)
+✔ entry damage tables include both E1 contracts (0.376417ms)
+✔ night shift wave 3 has reduced entry damage (0.066833ms)
+✔ night shift wave 12 has no entry damage scale (0.061625ms)
+✔ entry damage scaling ends after wave 10 (0.057208ms)
+✔ entry damage scales are finite reductions (0.071416ms)
+✔ E1 entry damage tables agree (0.287584ms)
+✔ a dev server classifies as dev (33.17925ms)
+✔ a preview server classifies as not-dev — status 200 must NOT exonerate it (3.020791ms)
+✔ a dead port classifies as unreachable (1.650208ms)
+✔ a trailing slash on baseURL does not break the probe (3.995875ms)
+✔ the not-dev message names the actual fix, not just the fault (0.420625ms)
+✔ globalSetup THROWS on a preview server — the violation path actually runs (3.955791ms)
+✔ globalSetup RESOLVES on a dev server — the guard is not one that always fires (0.931792ms)
+✔ globalSetup is INERT when the flag is unset — lanes and ordinary runs pay nothing (0.095ms)
+✔ real history has exactly the four former double-state findings and current BACKLOG has none (162.80975ms)
+✔ prose citations are not declarations, only struck declarations close, and duplicate opens stay open (38.936708ms)
+✔ regression arm: narrow open vocabulary is byte-identical when explicitly selected (0.726625ms)
+✔ wide open vocabulary admits an explicit 🟠 OPEN declaration (0.114542ms)
+✔ 🟢 RULING without a state word is not an open declaration (0.069917ms)
+✔ wide open vocabulary exposes a ✅ plus separate 🔬 OPEN conflict without reddening narrow (39.279666ms)
+✔ wide-open advisory reports skipped rows, hidden open IDs, and narrow closed-only IDs (38.027083ms)
+✔ fire shell (CLAUDE_CONFIG_DIR present) resolves playwright workers to 1 (535.162791ms)
+✔ non-fire shell (CLAUDE_CONFIG_DIR absent) keeps playwright parallelism (431.155792ms)
+✖ all 34 scripts/*.test.mjs fixture owners remove their temp directories (75720.573333ms)
+✔ every worker CORS allowlist admits both agenttown origins (2.869667ms)
+✔ no worker leaves the allowlist subject by deleting its declaration (1.824625ms)
+✔ a second battery APPENDS — it never destroys the first arm evidence (144.413709ms)
+✔ playwright jobs get --workers=1 injected (0.421542ms)
+✔ an explicit --workers is respected, so a deliberate parallelism control is not overridden (0.081125ms)
+✔ non-playwright jobs are left exactly as given (0.063917ms)
+✔ a failing job produces a non-zero overall verdict (103.8855ms)
+✔ a command that cannot spawn is recorded as a failure, not a pass (53.323541ms)
+✔ misuse exits 2 rather than reporting a vacuous green (90.42025ms)
+✔ a bare build:release job is refused as misuse, not run and reported as a red leaf (34.731417ms)
+✔ --env GR_RELEASE=e1 satisfies the precondition, so the lawful form is not refused (40.3115ms)
+✔ an inherited GR_RELEASE=e1 also satisfies it — the check reads the RESOLVED environment (41.907417ms)
+✔ a battery with no release job is untouched by the precondition (37.803333ms)
+✔ --cwd actually runs the job in that directory (39.239709ms)
+✔ --env reaches the child process (60.889041ms)
+✔ --env is merged over the inherited environment, not a replacement (71.779667ms)
+✔ a non-existent --cwd exits 2 rather than falling back to the repo root (29.009167ms)
+✔ a malformed --env exits 2 rather than dropping the variable silently (65.604125ms)
+✔ the jobs spec is still found when the new flags precede it (62.491083ms)
+✔ a gate nothing calls is reported as a NEW orphan and exits 1 (282.494333ms)
+✔ a tracked test file nothing calls is reported as a NEW orphan and exits 1 (169.885666ms)
+✔ grandfathering that orphan with a reason turns the gate green (208.936208ms)
+✔ a gate whose only caller is a *.config.ts webServer command counts as REACHED (221.530333ms)
+✔ a guard named only in a COMMENT is not reached — prose is not a caller (175.891875ms)
+✔ putting it in the GUARDS array clears it — the control for the arm above (182.089583ms)
+✔ a non-gate script (dev, preview, census) is never ratcheted on (157.192ms)
+✔ an orphan that GAINED a caller is reported so the baseline can tighten (223.539792ms)
+✔ --report never gates, even with a fresh orphan present (179.506959ms)
+✔ REGRESSION: an untracked guard-shaped file is byte-invisible by default (213.661ms)
+✔ --include-untracked reports an untracked guard-shaped file as NEW with no caller (234.375709ms)
+✔ a tracked baselined orphan stays known under --include-untracked (195.702416ms)
+✔ --include-untracked still excludes untracked SCRATCH_FILE probes (262.832291ms)
+✔ --include-untracked excludes gitignored guard-shaped files (169.663875ms)
+✔ --update-baseline --include-untracked REFUSES without writing baseline bytes (162.8075ms)
+✔ REFUSES (rc=2) when package.json has no scripts block (184.260333ms)
+✔ REFUSES (rc=2) when no scripts/*.mjs is tracked (139.089625ms)
+✔ REFUSES (rc=2) when the resolver cannot reach its own anchors (204.975125ms)
+✔ REFUSES (rc=2) when the baseline file is missing — not read as {} (249.768084ms)
+✔ REFUSES (rc=2) when the baseline is unreadable (237.232ms)
+✔ REFUSES (rc=2) when no subject matches the gate patterns (475.938958ms)
+✔ an owner escalation whose cited F-ID has no ledger row exits 1 (334.682625ms)
+✔ the SAME escalation goes green once the F-ID has a ledger row -- the control (233.590709ms)
+✔ escalating with NO F-ID cited at all exits 1 -- it can never be found (214.739541ms)
+✔ all five desk spellings are matched, so the check cannot be dodged by an apostrophe (1078.220875ms)
+✔ POSITIVE CONTROL: the real repo passes, with a non-empty measured subject (115.53175ms)
+✔ classifies citation purpose with paragraph scope (0.498125ms)
+✔ date-only sweep windows start at midnight instead of the current clock time (0.091041ms)
+fallbackTownEraPropManifests: 7 fallback keys = 7 static imports = 7 files
+fallbackManifests (non-release): 10 fallback keys = 10 files
+fallbackFamilyBundles: 1 fallback keys = 1 files
+fallbackCapsBundles: 1 fallback keys = 1 files
+fallbackContractBundles (non-release): 10 fallback keys = 10 files
+✔ node glob fallbacks match every on-disk manifest (non-release branches) (3.499375ms)
+✔ every terminal-closed goal leaf can state why it closed (1.032708ms)
+✔ the mirrored resolver vocabulary still matches drain-block-check.mjs (0.210333ms)
+✔ goal tree schema is valid (1.714125ms)
+✔ ten sampled merged leaves have a done receipt and ancestral merge (20932.868125ms)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+(node:47865) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ FakeStorage threads research into the headless sim without moving the cold hash (7522.896459ms)
+✔ campaign walks E1 legally, persists each leg, and hashes deterministically (6263.046583ms)
+✔ a killed campaign resumes from its last profile checkpoint (3753.207458ms)
+✔ gr-sim replays the same contract, seed, and orders byte-for-byte (14112.461334ms)
+✔ headless landmark starts release before enemies can stall at the perimeter (18294.494042ms)
+(node:49758) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+✔ a distant HARVEST walks before it pays (1486.586458ms)
+✔ gr-sim keeps standing orders through free blank and null turns (3779.1705ms)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+✔ gr-sim hashes a fractional-yield run identically twice (3731.899833ms)
+✔ gr-sim deterministically runs the Claim objective (5473.429083ms)
+✔ overtime banks the Claim secure and measures the homestead on both Node engines (97191.81225ms)
+✔ runtime rush and --overtime use the same CLI ceiling and terminal stream (47540.620042ms)
+✔ the CLI science input reaches and funds the published megaproject cost (1673.557333ms)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+✔ gr-sim boots escort mode from data instead of URL state (3133.306834ms)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+✔ the Claim driver consumes declared water and posts RunManager secure at wave 10 (4879.476042ms)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+✔ Twin Banks consumes its declared crossings and build zones before securing at wave 20 (17445.142791ms)
+✔ the frozen Claim environment rows equal the five pinned bench seeds (1.044292ms)
+✔ gr-sim places Night Shift fixtures from the contract (12039.792625ms)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+✔ Night Shift wreckers outrun lantern light headlessly (1680.2725ms)
+﹣ gr-sim ends an idle Baron run at its grace ceiling (0.082334ms) # F-E2S-3 owner ruling 2026-08-09: no still-listed Baron contract reaches its ceiling under idle; the pressure-to-damage socket slice restores this test.
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+✔ the Baron driver runs the declared fight and keeps medal writes off headless (15397.084542ms)
+﹣ the E2 Baron fights keep their pinned outcomes (0.092917ms) # F-E2S-3 owner ruling 2026-08-09: no still-listed Baron contract reaches its ceiling under idle; the pressure-to-damage socket slice restores these railcar pins.
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+✔ identical order failures coalesce across submissions without hiding a new failure (1733.025458ms)
+✔ all added lines present in main are absorbed (0.838458ms)
+✔ one absent line is returned as residue (0.272791ms)
+✔ token-rich lane lines can be absorbed by a main superset line (0.109667ms)
+✔ token-poor lane lines are not absorbed by unrelated main text (0.081ms)
+✔ token fallback starts at exactly eight qualifying tokens (0.089125ms)
+✔ binary diffs are never counted (0.099459ms)
+✔ blank and whitespace-only additions are ignored (0.067041ms)
+✔ missing text is undecidable and never counted (0.057583ms)
+✔ a lane-only new file reports every added line absent from main (0.205875ms)
+✔ a lane-only new binary file remains binary and uncounted (0.222709ms)
+✔ an unreadable lane-tip path remains undecidable (1.14975ms)
+✔ zero residue remains HELD rather than changing the verdict (0.170458ms)
+✔ absorbed-lines counts a lane-created text file missing in main (0.159792ms)
+✔ absorbed-lines keeps a lane-created binary file binary (0.0605ms)
+✔ absorbed-lines narrows undecidable to an unreadable lane tip (0.066833ms)
+Preparing worktree (checking out 'tmp-ledger-drift')
+Preparing worktree (checking out 'tmp-no-ledger-drift')
+✔ no pidfile: the slot is free (0.433125ms)
+✔ our OWN dispatcher does not count as busy (the F-1418-1 cure) (241.817584ms)
+✔ a FOREIGN runner IS busy — the direction that must never regress (118.263708ms)
+✔ pid 1 is an ancestor of EVERY process and must still read busy (70.510333ms)
+✔ fail safe: anything we cannot establish reads busy (0.129125ms)
+✔ an unrelated pid that is merely NUMERIC is not trusted (64.9505ms)
+✔ bookkeeping reassurance narrows only when tasks are behind (870.331084ms)
+✔ the FIRST line keeps its leading space — no character is eaten (F-1416-1) (0.713ms)
+✔ a churn path on the FIRST line is still recognised as churn (the false DIRTY) (0.080291ms)
+✔ every CHURN constant is recognised in first position (0.078125ms)
+✔ a churn DIRECTORY matches by prefix, not by equality (0.06475ms)
+✔ untracked debris and tracked dirt stay in separate buckets (s1299) (0.062875ms)
+✔ staged and staged+unstaged prefixes parse identically (0.06075ms)
+✔ a trailing newline produces no phantom entry (0.065333ms)
+✔ empty porcelain is a clean tree (0.061834ms)
+✔ a correctly-pointed law passes once baselined (75.174625ms)
+✔ CODE-SIDE ROT: the cited line moves under a fixed coordinate -> POINTER DRIFT (the fire.md :315 shape) (84.014042ms)
+✔ LAW-SIDE ROT: the law is edited to a stale coordinate -> red until re-verified (the F-1276-2 shape) (81.817542ms)
+✔ a pointer past EOF is caught as OUT OF RANGE, not silently skipped (41.706417ms)
+✔ a pointer to a file that does not exist fails rather than being ignored (39.762417ms)
+✔ prose that is not a file:line is not mistaken for a pointer (36.401791ms)
+✔ a MISSING law surface is itself a red — the law cannot be checked if it is gone (39.12225ms)
+✔ THE REAL TREE: every law-surface pointer in this repo currently holds (46.025917ms)
+✔ MARKDOWN TARGET: a law surface citing another .md by coordinate is checked, not skipped (F-1278-2) (127.046834ms)
+✔ GOAL LEDGER ROT: a live non-terminal blockedReason pointer moves -> red names the leaf (118.02675ms)
+✔ BACKLOG COORDINATE BAN: live leaves red, --update cannot bury it, terminal history stays out (225.05ms)
+✔ a drained done-move ships the master and names its hash (20.499958ms)
+✔ a slot-stripped review ships the master and manufactures F-1569-1 (18.863833ms)
+✔ a failed trace is ran but unmerged (16.531709ms)
+✔ a master with no trace and no banner is a candidate (32.354875ms)
+✔ a no-trace master records its DO NOT QUEUE banner and is not a candidate (28.914208ms)
+✔ archive-CODEX-WALL real NEVER QUEUE wording is a banner (15.549875ms)
+✔ art-era-motion real NOT QUEUEABLE wording is a banner (17.51475ms)
+✔ 058b real NOT FIRE-QUEUEABLE wording is a banner (19.441958ms)
+✔ regression: DO NOT QUEUE and DO-NOT-QUEUE remain banners (51.961083ms)
+✔ queue this after the drain mentions queueing without refusing it (24.245084ms)
+✔ the banner window ends after line six (17.874625ms)
+✔ a merged goal leaf ships its exact task file with its hash (18.741958ms)
+moth-season idle {"secured":false,"waves":4,"timeMs":122500,"gold":0,"kills":55,"calls":0,"defaultedPicks":1,"defaultedSecure":0,"eventLogHash":"fnv1a32:7f1ac8a2"}
+moth-season competent {"secured":true,"waves":12,"timeMs":360000,"gold":25,"kills":433,"calls":31,"defaultedPicks":0,"defaultedSecure":1,"eventLogHash":"fnv1a32:712df2be"}
+✔ Moth Season rejects idle darkness while lantern, turret, and harvest play secures (12203.720167ms)
+✔ fire shell bounds node-guard file concurrency and explains the reduced run (0.4325ms)
+✔ lane and attended shells keep Node's default file concurrency (0.063041ms)
+✔ launcher propagates a non-zero node:test child exit code exactly (129.930459ms)
+MANUFACTURED_DETECTION: shell + node sibling collapsed to 1 battery; reported 2 total
+EXIT_CODES: passing alone=0 sibling=0; failing alone=1 sibling=1
+✔ contention is advisory, correctly counted, and absent when alone (1552.435667ms)
+✔ the harness gives the battery a finite default per-test timeout (156.636708ms)
+✔ a per-test timeout still overrides the default, so declared budgets are untouched (4081.790791ms)
+(node:57376) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ null-floor artifact exactly covers every door-servable bench seed (0.863292ms)
+✔ rejects an unset PROBE_BASE before launching a browser (202.537708ms)
+✔ rejects an unset PROBE_BASE before checking the browser executable (202.551667ms)
+✔ rejects a positional base URL with a PROBE_BASE directive (183.524917ms)
+✔ title lookup finds a red even when its recorded coordinate has rotted (87.994625ms)
+✔ matching file:line never substitutes for an exact title match (54.153166ms)
+✔ clean and absent specs have distinct words and exit codes (162.944291ms)
+✔ json output still names the outcome and denominator (53.620417ms)
+✔ strict mode makes a known red actionable without changing its word (69.906458ms)
+✔ skipped-only tests are not called clean (75.094458ms)
+✔ literal backslashes survive markdown parsing (66.181709ms)
+✔ absent and malformed inventories fail loudly (99.543917ms)
+✔ bare names are misuse and verdict dates track the compact snapshot (143.716834ms)
+✔ a correction is printed above the snapshot row it outranks (190.772291ms)
+✔ a stale snapshot warns and a fresh one does not (160.638917ms)
+✔ the staleness warning names the direction of the error, which differs by outcome (129.463459ms)
+✔ the staleness warning prints above the snapshot rows and corrections it qualifies (93.549042ms)
+✔ an uncomputable age is treated as STALE, never as fresh (107.570209ms)
+✔ a bad threshold or clock override fails loudly instead of disabling the warning (95.660208ms)
+✔ staleness is advisory and changes no exit code (508.233125ms)
+✔ json carries the staleness fields so a caller need not parse prose (137.1775ms)
+✔ a malformed corrections table fails loudly instead of dropping the warning (34.046708ms)
+✔ rejects an unset base before probing ownership (0.742792ms)
+✔ accepts a listener owned by this checkout (0.12225ms)
+✔ rejects a listener owned by another checkout (2.847541ms)
+✔ rejects a port with no listener (0.155208ms)
+✔ rejects an unusable ownership probe (0.101584ms)
+✔ a review citing a tracked file is TRACKED (189.944041ms)
+✔ 274-vs-13 regression: a review citing a tracked directory is TRACKED (158.3285ms)
+✔ an ignored on-disk log is ON-DISK-UNTRACKED and strict exits non-zero (207.621542ms)
+✔ a brace range is SKIPPED rather than a violation (230.452791ms)
+✔ a line suffix resolves against the tracked file without it (223.599042ms)
+✔ default mode exits zero with ON-DISK-UNTRACKED evidence (224.835792ms)
+✔ a blocked leaf citing a RULED finding is stale (0.892834ms)
+✔ a blocked leaf citing an UNRULED finding is not stale (0.08825ms)
+✔ "RULING REQUIRED" prose does not count as a ruling — only "<id> RULED" does (0.0525ms)
+✔ terminal-closed statuses refuse work too, so their reasons are checked (0.068584ms)
+✔ a merged leaf is not a refusal, however its reason reads (0.066875ms)
+✔ a leaf is any node carrying taskFile — NOT a childless node (0.054583ms)
+✔ denominator agrees with drain-block-check on the live tree (4.013625ms)
+✔ the live tree carries no stale refusal (13.24475ms)
+✔ runner exit follows guard exit codes (4206.741208ms)
+✔ --only rejects unknown guards and runs one known guard (237.103375ms)
+✔ --only accepts a comma-separated subset in canonical order (685.370584ms)
+✔ --only rejects a list containing an unknown guard rather than narrowing (28.521958ms)
+✔ power-budget rows include p95 only when printed (424.782333ms)
+✔ --changed-since runs the base gate when no path rule matches (1227.417458ms)
+✔ --changed-since adds the worker guards when functions/ moved (2579.025709ms)
+✔ --changed-since exits 2 on a bad ref rather than narrowing to the base gate (159.445ms)
+✔ --changed-since exits 2 when the untracked listing fails rather than reporting a green (1668.397667ms)
+✔ guards run with GR_GUARD_NO_ARTIFACT so a gate cannot dirty its own tree (167.413167ms)
+✔ a signal-killed guard is never a pass (158.023541ms)
+✔ each guard gets a 15-minute outer timeout (0.134375ms)
+AT RISK (archive files absent from git ls-files; informational): 616 files, 2017.10 MB
+Task-stats high-water: subject 614 rows, baseline 608
+Run log retention: 614 entries checked, 0 unrecoverable
+✔ every recorded run log remains recoverable (779.348417ms)
+✔ same-game audit runs over every contract and keeps its row schema (9398.920958ms)
+✔ same-game audit follows the door grammar through the final AP-16 verbs (6054.808958ms)
+✔ same-game audit also emits a complete markdown table (5644.373333ms)
+✔ same-game report exemption prose matches its table (2.721209ms)
+(node:65722) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ same-game report exemption table matches source (3936.251166ms)
+✔ same-game report exemption reasons and citations match source (3867.890875ms)
+✔ every scripts/**/*.mjs parses (2904.459875ms)
+✔ every scripts/**/*.sh parses (316.906666ms)
+✔ every rehearsal/**/*.mjs parses (235.664334ms)
+✔ every foundry/**/*.mjs parses (27.366458ms)
+✔ every foundry/**/*.sh parses (26.430042ms)
+✔ registry turns from Season 1 to Season 2 at the half-open boundary (0.3875ms)
+✔ season resolver leaves dates before all seasons unlabelled (0.061417ms)
+✔ season resolver leaves missing timestamps unlabelled (0.054333ms)
+✔ season resolver treats null endsAt as open-ended (0.047417ms)
+✔ site: every local <script src> the pages load actually exists (3.750834ms)
+✔ site: each loaded script parses under the grammar its tag requests (30.300791ms)
+✔ site: each inline <script> parses under the grammar its tag requests (33.425833ms)
+✔ site: every local href/src resolves to a file that exists (2.961792ms)
+✔ site: the denominator still contains a data-* reference and an escaping path (2.260959ms)
+✔ site: every in-page anchor targets an element that exists (2.720917ms)
+✔ site: assay-office duration vocabulary matches functions/api/stats.ts (3.531583ms)
+(node:67340) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ skill.md grammar matches every StandingOrder source form (1.173625ms)
+✔ skill.md buildables match BuildableId (0.198125ms)
+✔ skill.md bench seeds match the source registry (0.162333ms)
+✔ skill.md door-contracts match SUPPORTED_CONTRACTS in HeadlessContractSim (0.094333ms)
+✔ the guard BITES a drifted skill.md (positive control, manufactured defect) (4254.411ms)
+✔ reds on the s1461 incident row that motivated the finding (0.681667ms)
+✔ reds on the live e3-moth-socket ghost line (0.137334ms)
+✔ stays silent on a leaf mentioned in the body as an aside (0.064125ms)
+✔ does not red on an open 🟡 finding whose slice merged (arm (a) is rejected) (0.062083ms)
+✔ treats a backticked mention as a quotation, not a claim (0.083083ms)
+✔ stays silent on a row already marked closed (0.044541ms)
+✔ stays silent while the leaf has not landed (0.061583ms)
+✔ reports a claim it cannot resolve rather than guessing (0.047125ms)
+✔ rows without the claim are not classified at all (0.060459ms)
+✔ resolves a leaf by taskFile as well as by id (0.091542ms)
+✔ headline is the leading bold span, and falls back when there is none (0.187625ms)
+✔ the guard RUNS when invoked as a script (entrypoint is not a silent no-op) (56.268083ms)
+✔ the live ledger carries no stale READY-FOR-GATES claim (52.203ms)
+✔ a shipped leaf counts as landed, not only a merged one (0.135041ms)
+✔ curation is deterministic, interleaved, and never repeats thin-pool items (1.535167ms)
+✔ intake rejects headless captures and explicit banned files (2.221709ms)
+✔ OBS v5 authentication, scene discovery, and switch request use one websocket (1.962917ms)
+✔ failed preconditions are silent no-ops (0.129041ms)
+✔ missing spec, websocket, or required scenes never enter FACTORY (2.572916ms)
+✔ offline stream leaves FACTORY untouched (0.486542ms)
+✔ green showcase switches FACTORY, dwells, and always restores AUTOPILOT (0.800625ms)
+✔ red showcase skips dwell and restores AUTOPILOT (0.984542ms)
+✔ append is hash-idempotent and keeps one JSON line per entry (16.471208ms)
+✔ downtime accumulates and catch-up shows oldest first without double-show (22.952709ms)
+✔ concurrent appenders preserve every entry and concurrent consumers show once (250.810167ms)
+✔ missing subject directory fires the actionable existence message (1.513792ms)
+✔ subject below its floor reports expected and walked counts (0.602208ms)
+✔ subject exactly at its floor passes (0.660166ms)
+✔ empty present subject fires the floor instead of passing silently (0.383792ms)
+✔ ignoreReadErrors returns only readable paths (1.587417ms)
+✔ default walk fails closed on an unreadable subtree (1.02875ms)
+✔ floor catches files hidden by an ignored read error (1.182958ms)
+✔ reducer output is cwd-invariant (337.49225ms)
+✔ reducer reports configured and actual workers distinctly (247.497875ms)
+✔ reducer reports absent harness config as unrecorded (209.57775ms)
+✔ reducer reports the captured revision (385.204125ms)
+✔ reducer reports an absent revision as unrecorded (204.041917ms)
+✔ reducer reports a dirty captured revision (239.962083ms)
+✖ reducer output is script-root-invariant (38.57025ms)
+✖ reducer renders absolute raw paths relative to the recorded tree (33.01825ms)
+✖ reducer refuses body statistics when the recorded tree is unavailable (31.115042ms)
+✔ an unresolved masking row never outranks a resolved row (184.925875ms)
+✔ reducer preserves an appended tail section byte-for-byte (332.678958ms)
+✔ reducer preserves corrections before failing tests (319.520041ms)
+✔ reducer replaces generated sections instead of duplicating them (318.311167ms)
+✔ reducer keeps fresh-output behavior when output is absent (160.78975ms)
+✖ reducer loss guard fails closed without touching output (31.507583ms)
+✔ townEraProps resolves its manifests under plain node, not only under Vite (66.875ms)
+✔ town specs collect without loading Vite-only modules (908.053459ms)
+✔ e1-dry-gulch hash is identical across installed Node engines (20282.922334ms)
+✔ the-claim hash is identical across installed Node engines (9494.170666ms)
+✔ e1-night-shift hash is identical across installed Node engines (68318.167208ms)
+✔ whole suite collects without loading Vite-only modules (2479.234875ms)
+✖ every functions/**/*.ts is type-checked (39.8545ms)
+✔ positive arm accepts the expected Wrangler version (1.001459ms)
+✔ violation arm rejects Wrangler version drift (4.005916ms)
+✔ missing arm reports Wrangler absent from PATH (0.157667ms)
+✔ escape arm warns loudly and permits explicit drift (3.446375ms)
+✔ county stack directory matches the live rig names by whole normalized words (0.45725ms)
+✔ county stack directory links public mind ids without guessing bare unknowns (0.12475ms)
+ℹ tests 477
+ℹ suites 0
+ℹ pass 469
+ℹ fail 6
+ℹ cancelled 0
+ℹ skipped 2
+ℹ todo 0
+ℹ duration_ms 251040.439584
+
+✖ failing tests:
+
+test at scripts/fixture-teardown.test.mjs:24:1
+✖ all 34 scripts/*.test.mjs fixture owners remove their temp directories (75720.573333ms)
+  AssertionError [ERR_ASSERTION]: scripts/suite-red-inventory.test.mjs child failed:
+  ✔ reducer output is cwd-invariant (279.950333ms)
+  ✔ reducer reports configured and actual workers distinctly (140.488542ms)
+  ✔ reducer reports absent harness config as unrecorded (138.976959ms)
+  ✔ reducer reports the captured revision (138.300166ms)
+  ✔ reducer reports an absent revision as unrecorded (138.734375ms)
+  ✔ reducer reports a dirty captured revision (139.970583ms)
+  ✖ reducer output is script-root-invariant (28.180459ms)
+  ✖ reducer renders absolute raw paths relative to the recorded tree (28.587416ms)
+  ✖ reducer refuses body statistics when the recorded tree is unavailable (31.112625ms)
+  ✔ an unresolved masking row never outranks a resolved row (144.047625ms)
+  ✔ reducer preserves an appended tail section byte-for-byte (293.71225ms)
+  ✔ reducer preserves corrections before failing tests (292.2045ms)
+  ✔ reducer replaces generated sections instead of duplicating them (292.600917ms)
+  ✔ reducer keeps fresh-output behavior when output is absent (144.5845ms)
+  ✖ reducer loss guard fails closed without touching output (30.272959ms)
+  ℹ tests 15
+  ℹ suites 0
+  ℹ pass 11
+  ℹ fail 4
+  ℹ cancelled 0
+  ℹ skipped 0
+  ℹ todo 0
+  ℹ duration_ms 2302.401917
+  
+  ✖ failing tests:
+  
+  test at scripts/suite-red-inventory.test.mjs:153:1
+  ✖ reducer output is script-root-invariant (28.180459ms)
+    AssertionError [ERR_ASSERTION]: node:internal/modules/package_json_reader:301
+      throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+            ^
+    
+    Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'typescript' imported from /private/var/folders/cd/p02kvf6s5qgfn47w85hhtzjc0000gn/T/gold-rush-fixture-teardown-GV4xp3/gold-rush-suite-red-scripts-r9EPm1/a/scripts/suite-red-inventory.mjs
+        at Object.getPackageJSONURL (node:internal/modules/package_json_reader:301:9)
+        at packageResolve (node:internal/modules/esm/resolve:784:25)
+        at moduleResolve (node:internal/modules/esm/resolve:873:18)
+        at defaultResolve (node:internal/modules/esm/resolve:1006:11)
+        at #cachedDefaultResolve (node:internal/modules/esm/loader:704:20)
+        at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:724:38)
+        at ModuleLoader.resolveSync (node:internal/modules/esm/loader:762:56)
+        at #resolve (node:internal/modules/esm/loader:686:17)
+        at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:606:35)
+        at ModuleJob.syncLink (node:internal/modules/esm/module_job:164:33) {
+      code: 'ERR_MODULE_NOT_FOUND'
+    }
+    
+    Node.js v26.4.0
+    
+    
+    1 !== 0
+    
+        at file:///Users/robin/Claude/Projects/Gold%20Rush/.claude/worktrees/agent-afb0b4a8ee24d0d5f/scripts/suite-red-inventory.test.mjs:160:12
+        at Array.forEach (<anonymous>)
+        at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/Gold%20Rush/.claude/worktrees/agent-afb0b4a8ee24d0d5f/scripts/suite-red-inventory.test.mjs:158:11)
+        at Test.runInAsyncScope (node:async_hooks:226:14)
+        at Test.run (node:internal/test_runner/test:1382:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+        at Test.postRun (node:internal/test_runner/test:1522:19)
+        at Test.run (node:internal/test_runner/test:1447:12)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+      generatedMessage: false,
+      code: 'ERR_ASSERTION',
+      actual: 1,
+      expected: 0,
+      operator: 'strictEqual',
+      diff: 'simple'
+    }
+  
+  test at scripts/suite-red-inventory.test.mjs:165:1
+  ✖ reducer renders absolute raw paths relative to the recorded tree (28.587416ms)
+    AssertionError [ERR_ASSERTION]: node:internal/modules/package_json_reader:301
+      throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+            ^
+    
+    Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'typescript' imported from /private/var/folders/cd/p02kvf6s5qgfn47w85hhtzjc0000gn/T/gold-rush-fixture-teardown-GV4xp3/gold-rush-suite-red-scripts-iUmJBc/a/scripts/suite-red-inventory.mjs
+        at Object.getPackageJSONURL (node:internal/modules/package_json_reader:301:9)
+        at packageResolve (node:internal/modules/esm/resolve:784:25)
+        at moduleResolve (node:internal/modules/esm/resolve:873:18)
+        at defaultResolve (node:internal/modules/esm/resolve:1006:11)
+        at #cachedDefaultResolve (node:internal/modules/esm/loader:704:20)
+        at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:724:38)
+        at ModuleLoader.resolveSync (node:internal/modules/esm/loader:762:56)
+        at #resolve (node:internal/modules/esm/loader:686:17)
+        at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:606:35)
+        at ModuleJob.syncLink (node:internal/modules/esm/module_job:164:33) {
+      code: 'ERR_MODULE_NOT_FOUND'
+    }
+    
+    Node.js v26.4.0
+    
+    
+    1 !== 0
+    
+        at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/Gold%20Rush/.claude/worktrees/agent-afb0b4a8ee24d0d5f/scripts/suite-red-inventory.test.mjs:170:10)
+        at Test.runInAsyncScope (node:async_hooks:226:14)
+        at Test.run (node:internal/test_runner/test:1382:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+        at Test.postRun (node:internal/test_runner/test:1522:19)
+        at Test.run (node:internal/test_runner/test:1447:12)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+      generatedMessage: false,
+      code: 'ERR_ASSERTION',
+      actual: 1,
+      expected: 0,
+      operator: 'strictEqual',
+      diff: 'simple'
+    }
+  
+  test at scripts/suite-red-inventory.test.mjs:180:1
+  ✖ reducer refuses body statistics when the recorded tree is unavailable (31.112625ms)
+    AssertionError [ERR_ASSERTION]: node:internal/modules/package_json_reader:301
+      throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+            ^
+    
+    Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'typescript' imported from /private/var/folders/cd/p02kvf6s5qgfn47w85hhtzjc0000gn/T/gold-rush-fixture-teardown-GV4xp3/gold-rush-suite-red-scripts-7ff2Ac/a/scripts/suite-red-inventory.mjs
+        at Object.getPackageJSONURL (node:internal/modules/package_json_reader:301:9)
+        at packageResolve (node:internal/modules/esm/resolve:784:25)
+        at moduleResolve (node:internal/modules/esm/resolve:873:18)
+        at defaultResolve (node:internal/modules/esm/resolve:1006:11)
+        at #cachedDefaultResolve (node:internal/modules/esm/loader:704:20)
+        at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:724:38)
+        at ModuleLoader.resolveSync (node:internal/modules/esm/loader:762:56)
+        at #resolve (node:internal/modules/esm/loader:686:17)
+        at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:606:35)
+        at ModuleJob.syncLink (node:internal/modules/esm/module_job:164:33) {
+      code: 'ERR_MODULE_NOT_FOUND'
+    }
+    
+    Node.js v26.4.0
+    
+    
+    1 !== 0
+    
+        at file:///Users/robin/Claude/Projects/Gold%20Rush/.claude/worktrees/agent-afb0b4a8ee24d0d5f/scripts/suite-red-inventory.test.mjs:194:12
+        at Array.forEach (<anonymous>)
+        at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/Gold%20Rush/.claude/worktrees/agent-afb0b4a8ee24d0d5f/scripts/suite-red-inventory.test.mjs:192:11)
+        at Test.runInAsyncScope (node:async_hooks:226:14)
+        at Test.run (node:internal/test_runner/test:1382:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+        at Test.postRun (node:internal/test_runner/test:1522:19)
+        at Test.run (node:internal/test_runner/test:1447:12)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+      generatedMessage: false,
+      code: 'ERR_ASSERTION',
+      actual: 1,
+      expected: 0,
+      operator: 'strictEqual',
+      diff: 'simple'
+    }
+  
+  test at scripts/suite-red-inventory.test.mjs:286:1
+  ✖ reducer loss guard fails closed without touching output (30.272959ms)
+    AssertionError [ERR_ASSERTION]: The input did not match the regular expression /would lose preserved section: ## Durable finding/. Input:
+    
+    'node:internal/modules/package_json_reader:301\n' +
+      '  throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);\n' +
+      '        ^\n' +
+      '\n' +
+      "Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'typescript' imported from /private/var/folders/cd/p02kvf6s5qgfn47w85hhtzjc0000gn/T/gold-rush-fixture-teardown-GV4xp3/gold-rush-suite-red-scripts-vw6pdf/a/scripts/suite-red-inventory.mjs\n" +
+      '    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:301:9)\n' +
+      '    at packageResolve (node:internal/modules/esm/resolve:784:25)\n' +
+      '    at moduleResolve (node:internal/modules/esm/resolve:873:18)\n' +
+      '    at defaultResolve (node:internal/modules/esm/resolve:1006:11)\n' +
+      '    at #cachedDefaultResolve (node:internal/modules/esm/loader:704:20)\n' +
+      '    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:724:38)\n' +
+      '    at ModuleLoader.resolveSync (node:internal/modules/esm/loader:762:56)\n' +
+      '    at #resolve (node:internal/modules/esm/loader:686:17)\n' +
+      '    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:606:35)\n' +
+      '    at ModuleJob.syncLink (node:internal/modules/esm/module_job:164:33) {\n' +
+      "  code: 'ERR_MODULE_NOT_FOUND'\n" +
+      '}\n' +
+      '\n' +
+      'Node.js v26.4.0\n'
+    
+        at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/Gold%20Rush/.claude/worktrees/agent-afb0b4a8ee24d0d5f/scripts/suite-red-inventory.test.mjs:303:10)
+        at Test.runInAsyncScope (node:async_hooks:226:14)
+        at Test.run (node:internal/test_runner/test:1382:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+        at Test.postRun (node:internal/test_runner/test:1522:19)
+        at Test.run (node:internal/test_runner/test:1447:12)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+      generatedMessage: true,
+      code: 'ERR_ASSERTION',
+      actual: "node:internal/modules/package_json_reader:301\n  throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);\n        ^\n\nError [ERR_MODULE_NOT_FOUND]: Cannot find package 'typescript' imported from /private/var/folders/cd/p02kvf6s5qgfn47w85hhtzjc0000gn/T/gold-rush-fixture-teardown-GV4xp3/gold-rush-suite-red-scripts-vw6pdf/a/scripts/suite-red-inventory.mjs\n    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:301:9)\n    at packageResolve (node:internal/modules/esm/resolve:784:25)\n    at moduleResolve (node:internal/modules/esm/resolve:873:18)\n    at defaultResolve (node:internal/modules/esm/resolve:1006:11)\n    at #cachedDefaultResolve (node:internal/modules/esm/loader:704:20)\n    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:724:38)\n    at ModuleLoader.resolveSync (node:internal/modules/esm/loader:762:56)\n    at #resolve (node:internal/modules/esm/loader:686:17)\n    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:606:35)\n    at ModuleJob.syncLink (node:internal/modules/esm/module_job:164:33) {\n  code: 'ERR_MODULE_NOT_FOUND'\n}\n\nNode.js v26.4.0\n",
+      expected: /would lose preserved section: ## Durable finding/,
+      operator: 'match',
+      diff: 'simple'
+    }
+  
+  
+  1 !== 0
+  
+      at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/Gold%20Rush/.claude/worktrees/agent-afb0b4a8ee24d0d5f/scripts/fixture-teardown.test.mjs:40:14)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at scripts/suite-red-inventory.test.mjs:153:1
+✖ reducer output is script-root-invariant (38.57025ms)
+  AssertionError [ERR_ASSERTION]: node:internal/modules/package_json_reader:301
+    throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+          ^
+  
+  Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'typescript' imported from /private/var/folders/cd/p02kvf6s5qgfn47w85hhtzjc0000gn/T/gold-rush-suite-red-scripts-3ZpGwe/a/scripts/suite-red-inventory.mjs
+      at Object.getPackageJSONURL (node:internal/modules/package_json_reader:301:9)
+      at packageResolve (node:internal/modules/esm/resolve:784:25)
+      at moduleResolve (node:internal/modules/esm/resolve:873:18)
+      at defaultResolve (node:internal/modules/esm/resolve:1006:11)
+      at #cachedDefaultResolve (node:internal/modules/esm/loader:704:20)
+      at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:724:38)
+      at ModuleLoader.resolveSync (node:internal/modules/esm/loader:762:56)
+      at #resolve (node:internal/modules/esm/loader:686:17)
+      at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:606:35)
+      at ModuleJob.syncLink (node:internal/modules/esm/module_job:164:33) {
+    code: 'ERR_MODULE_NOT_FOUND'
+  }
+  
+  Node.js v26.4.0
+  
+  
+  1 !== 0
+  
+      at file:///Users/robin/Claude/Projects/Gold%20Rush/.claude/worktrees/agent-afb0b4a8ee24d0d5f/scripts/suite-red-inventory.test.mjs:160:12
+      at Array.forEach (<anonymous>)
+      at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/Gold%20Rush/.claude/worktrees/agent-afb0b4a8ee24d0d5f/scripts/suite-red-inventory.test.mjs:158:11)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at scripts/suite-red-inventory.test.mjs:165:1
+✖ reducer renders absolute raw paths relative to the recorded tree (33.01825ms)
+  AssertionError [ERR_ASSERTION]: node:internal/modules/package_json_reader:301
+    throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+          ^
+  
+  Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'typescript' imported from /private/var/folders/cd/p02kvf6s5qgfn47w85hhtzjc0000gn/T/gold-rush-suite-red-scripts-MPHrSD/a/scripts/suite-red-inventory.mjs
+      at Object.getPackageJSONURL (node:internal/modules/package_json_reader:301:9)
+      at packageResolve (node:internal/modules/esm/resolve:784:25)
+      at moduleResolve (node:internal/modules/esm/resolve:873:18)
+      at defaultResolve (node:internal/modules/esm/resolve:1006:11)
+      at #cachedDefaultResolve (node:internal/modules/esm/loader:704:20)
+      at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:724:38)
+      at ModuleLoader.resolveSync (node:internal/modules/esm/loader:762:56)
+      at #resolve (node:internal/modules/esm/loader:686:17)
+      at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:606:35)
+      at ModuleJob.syncLink (node:internal/modules/esm/module_job:164:33) {
+    code: 'ERR_MODULE_NOT_FOUND'
+  }
+  
+  Node.js v26.4.0
+  
+  
+  1 !== 0
+  
+      at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/Gold%20Rush/.claude/worktrees/agent-afb0b4a8ee24d0d5f/scripts/suite-red-inventory.test.mjs:170:10)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at scripts/suite-red-inventory.test.mjs:180:1
+✖ reducer refuses body statistics when the recorded tree is unavailable (31.115042ms)
+  AssertionError [ERR_ASSERTION]: node:internal/modules/package_json_reader:301
+    throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+          ^
+  
+  Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'typescript' imported from /private/var/folders/cd/p02kvf6s5qgfn47w85hhtzjc0000gn/T/gold-rush-suite-red-scripts-3owtPt/a/scripts/suite-red-inventory.mjs
+      at Object.getPackageJSONURL (node:internal/modules/package_json_reader:301:9)
+      at packageResolve (node:internal/modules/esm/resolve:784:25)
+      at moduleResolve (node:internal/modules/esm/resolve:873:18)
+      at defaultResolve (node:internal/modules/esm/resolve:1006:11)
+      at #cachedDefaultResolve (node:internal/modules/esm/loader:704:20)
+      at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:724:38)
+      at ModuleLoader.resolveSync (node:internal/modules/esm/loader:762:56)
+      at #resolve (node:internal/modules/esm/loader:686:17)
+      at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:606:35)
+      at ModuleJob.syncLink (node:internal/modules/esm/module_job:164:33) {
+    code: 'ERR_MODULE_NOT_FOUND'
+  }
+  
+  Node.js v26.4.0
+  
+  
+  1 !== 0
+  
+      at file:///Users/robin/Claude/Projects/Gold%20Rush/.claude/worktrees/agent-afb0b4a8ee24d0d5f/scripts/suite-red-inventory.test.mjs:194:12
+      at Array.forEach (<anonymous>)
+      at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/Gold%20Rush/.claude/worktrees/agent-afb0b4a8ee24d0d5f/scripts/suite-red-inventory.test.mjs:192:11)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at scripts/suite-red-inventory.test.mjs:286:1
+✖ reducer loss guard fails closed without touching output (31.507583ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /would lose preserved section: ## Durable finding/. Input:
+  
+  'node:internal/modules/package_json_reader:301\n' +
+    '  throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);\n' +
+    '        ^\n' +
+    '\n' +
+    "Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'typescript' imported from /private/var/folders/cd/p02kvf6s5qgfn47w85hhtzjc0000gn/T/gold-rush-suite-red-scripts-QKrRRP/a/scripts/suite-red-inventory.mjs\n" +
+    '    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:301:9)\n' +
+    '    at packageResolve (node:internal/modules/esm/resolve:784:25)\n' +
+    '    at moduleResolve (node:internal/modules/esm/resolve:873:18)\n' +
+    '    at defaultResolve (node:internal/modules/esm/resolve:1006:11)\n' +
+    '    at #cachedDefaultResolve (node:internal/modules/esm/loader:704:20)\n' +
+    '    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:724:38)\n' +
+    '    at ModuleLoader.resolveSync (node:internal/modules/esm/loader:762:56)\n' +
+    '    at #resolve (node:internal/modules/esm/loader:686:17)\n' +
+    '    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:606:35)\n' +
+    '    at ModuleJob.syncLink (node:internal/modules/esm/module_job:164:33) {\n' +
+    "  code: 'ERR_MODULE_NOT_FOUND'\n" +
+    '}\n' +
+    '\n' +
+    'Node.js v26.4.0\n'
+  
+      at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/Gold%20Rush/.claude/worktrees/agent-afb0b4a8ee24d0d5f/scripts/suite-red-inventory.test.mjs:303:10)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: "node:internal/modules/package_json_reader:301\n  throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);\n        ^\n\nError [ERR_MODULE_NOT_FOUND]: Cannot find package 'typescript' imported from /private/var/folders/cd/p02kvf6s5qgfn47w85hhtzjc0000gn/T/gold-rush-suite-red-scripts-QKrRRP/a/scripts/suite-red-inventory.mjs\n    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:301:9)\n    at packageResolve (node:internal/modules/esm/resolve:784:25)\n    at moduleResolve (node:internal/modules/esm/resolve:873:18)\n    at defaultResolve (node:internal/modules/esm/resolve:1006:11)\n    at #cachedDefaultResolve (node:internal/modules/esm/loader:704:20)\n    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:724:38)\n    at ModuleLoader.resolveSync (node:internal/modules/esm/loader:762:56)\n    at #resolve (node:internal/modules/esm/loader:686:17)\n    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:606:35)\n    at ModuleJob.syncLink (node:internal/modules/esm/module_job:164:33) {\n  code: 'ERR_MODULE_NOT_FOUND'\n}\n\nNode.js v26.4.0\n",
+    expected: /would lose preserved section: ## Durable finding/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at scripts/worker-type-coverage.test.mjs:14:3
+✖ every functions/**/*.ts is type-checked (39.8545ms)
+  AssertionError [ERR_ASSERTION]: node:internal/modules/cjs/loader:1572
+    throw err;
+    ^
+  
+  Error: Cannot find module '/Users/robin/Claude/Projects/Gold Rush/.claude/worktrees/agent-afb0b4a8ee24d0d5f/node_modules/typescript/bin/tsc'
+      at Module._resolveFilename (node:internal/modules/cjs/loader:1568:15)
+      at wrapResolveFilename (node:internal/modules/cjs/loader:1122:27)
+      at defaultResolveImplForCJSLoading (node:internal/modules/cjs/loader:1146:10)
+      at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1173:12)
+      at Module._load (node:internal/modules/cjs/loader:1345:5)
+      at wrapModuleLoad (node:internal/modules/cjs/loader:260:19)
+      at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)
+      at node:internal/main/run_main_module:33:47 {
+    code: 'MODULE_NOT_FOUND',
+    requireStack: []
+  }
+  
+  Node.js v26.4.0
+  
+  
+  1 !== 0
+  
+      at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/Gold%20Rush/.claude/worktrees/agent-afb0b4a8ee24d0d5f/scripts/worker-type-coverage.test.mjs:28:12)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+rc=1

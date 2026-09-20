@@ -1,0 +1,191 @@
+{
+  "rig": "opus",
+  "contract": "e10-archive-world",
+  "model": "claude-opus-5",
+  "sessionId": "c8137fdf-83f9-417f-b353-b998ca17e652",
+  "startedAt": "2026-09-18T11:02:02.970Z",
+  "endedAt": "2026-09-18T11:16:43.400Z",
+  "wallClockSeconds": 880,
+  "wallHit": false,
+  "exitCode": 0,
+  "signal": null,
+  "setupToFirstOutputSeconds": 270,
+  "arenaTrackedChanges": [],
+  "workspaceFiles": [
+    "attempt-1-tape.json",
+    "ctrl-v1.mjs",
+    "gauntlet-outcome.json",
+    "gauntlet-report.md",
+    "probe-summary.json",
+    "probe-tape.json",
+    "probe-views.jsonl",
+    "runner.mjs",
+    "tune-1-summary.json",
+    "tune-1-tape.json",
+    "tune-1-views.jsonl"
+  ],
+  "outcome": {
+    "secured": true,
+    "waves": 12,
+    "timeMs": 360000,
+    "gold": 200,
+    "kills": 416,
+    "calls": 57,
+    "defaultedPicks": 0,
+    "defaultedSecure": 1,
+    "eventLogHash": "fnv1a32:d05bd4b5",
+    "tape": "/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/heat14/opus/e10-archive-world/attempt-1-tape.json",
+    "scored": true,
+    "runsSoFar": 2,
+    "scoredAttempts": 1,
+    "worldModel": "sim-import",
+    "note": "attempt-1-tape.json is a byte-identical copy of tune-1-tape.json (215657 bytes, verified equal): ONE ride under two filenames. The first controller secured and the stop rule ends the heat there.",
+    "contract": "e10-archive-world",
+    "seed": "e10-archive-world-01",
+    "difficulty": "trail",
+    "envelope": {
+      "durationTicks": 10800,
+      "lastEntryTick": 10271,
+      "entries": 57,
+      "bytes": 215657,
+      "maxTicks": 18002,
+      "maxEntries": 3601,
+      "maxTapeBytes": 1938784,
+      "source": "runTapeEnvelopeForContract"
+    },
+    "assay": {
+      "tool": "scripts/assay-replay-agent.mjs",
+      "tapeHeaderHash": "fnv1a32:3c90f43d",
+      "replayHash": "fnv1a32:3c90f43d",
+      "match": true,
+      "securedSnapshot": {
+        "waves": 12,
+        "gold": 200,
+        "timeAlive": 360
+      },
+      "control": "probe-tape.json replayed to its own header fnv1a32:a45ba9ac first (instrument verified)"
+    },
+    "nullFloor": {
+      "published": "w2 / 80967ms / 0g / 35 kills / fnv1a32:cb3e3f9d",
+      "probeReproduced": true
+    }
+  },
+  "outcomeError": null,
+  "promotedTapeName": "attempt-1-tape.json",
+  "scoredTapes": [
+    {
+      "file": "attempt-1-tape.json",
+      "id": "agent-95cae990-be5bfe55-c25b-4145-a370-7f4904a6312f",
+      "contract": "e10-archive-world",
+      "seed": "e10-archive-world-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "2195d162f",
+        "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+        "era": 6,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 12,
+        "timeAlive": 360,
+        "gold": 200
+      },
+      "entries": 57,
+      "durationTicks": 10800,
+      "lastEntryTick": 10271,
+      "promotedByRig": true,
+      "discoveredBy": "outcome-file+filename"
+    }
+  ],
+  "otherTapes": [
+    {
+      "file": "probe-tape.json",
+      "id": "agent-d2c6b75e-d931f36d-16fe-47e6-9d69-e7050c2fcfcb",
+      "contract": "e10-archive-world",
+      "seed": "e10-archive-world-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "2195d162f",
+        "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+        "era": 6,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 2,
+        "timeAlive": 80.967,
+        "gold": 0
+      },
+      "entries": 0,
+      "durationTicks": 2429,
+      "lastEntryTick": null
+    },
+    {
+      "file": "tune-1-tape.json",
+      "id": "agent-95cae990-be5bfe55-c25b-4145-a370-7f4904a6312f",
+      "contract": "e10-archive-world",
+      "seed": "e10-archive-world-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "2195d162f",
+        "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+        "era": 6,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 12,
+        "timeAlive": 360,
+        "gold": 200
+      },
+      "entries": 57,
+      "durationTicks": 10800,
+      "lastEntryTick": 10271
+    }
+  ],
+  "otherSecuredTapes": [
+    {
+      "file": "tune-1-tape.json",
+      "id": "agent-95cae990-be5bfe55-c25b-4145-a370-7f4904a6312f",
+      "contract": "e10-archive-world",
+      "seed": "e10-archive-world-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "2195d162f",
+        "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+        "era": 6,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 12,
+        "timeAlive": 360,
+        "gold": 200
+      },
+      "entries": 57,
+      "durationTicks": 10800,
+      "lastEntryTick": 10271
+    }
+  ],
+  "report": {
+    "outcome": "**SECURED** — `waves 12 · timeMs 360000 (360.000 s) · gold 200 · kills 416 · calls 57`,\n`defaultedPicks 0`, `defaultedSecure 1`.\n\n- Tape put forward: **`attempt-1-tape.json`**, declared in `gauntlet-outcome.json`'s `tape`\n  field. It is a **byte-identical copy of `tune-1-tape.json` (215,657 bytes, verified equal)** —\n  **one ride under two filenames.** The first controller secured and the stop rule ends the heat\n  there.\n- **2 sim runs** (one `--policy idle` probe, one controller) · **1 scored attempt**.\n- Envelope, measured from `runTapeEnvelopeForContract` rather than the charter's summary:\n  `maxTicks 18002`, `maxEntries 3601`, `maxTapeBytes` **1,938,784**\n  (= 16384 + 3601×160 + 601×2240). Mine: `durationTicks 10800`, last accepted order at tick\n  **10271** (529 inside), **57** entries, **215,657** bytes — 1.6 % of the entry axis and 11.1 %\n  of the byte axis.\n- Receipt: the zero-order probe was replayed first as a control and matched its own header\n  (`fnv1a32:a45ba9ac`); only then did the scored reel's replay mean anything. It reproduced the\n  **tape header's** `fnv1a32:3c90f43d` and all four outcome fields, with\n  `securedSnapshot {waves 12, gold 200, timeAlive 360}` — exactly what the door's\n  `score_mismatch` rule compares against the declared gold, and it agrees.\n  (The stdout outcome line's `fnv1a32:d05bd4b5` is a different number by design.)",
+    "whatTheMapAsked": "It asked for its era's signature mechanic — **E10 preserve, don't extract: a flipped objective\nover a trained habit** — and the flip here is *keeping a light on* rather than taking anything,\nwith the extraction economy demoted to the thing that pays for the light. This is not stationary\nsurvival wearing E10's name: `E10ArchiveSystem.objectiveAllowsSecure` is `completedHolds > 0`\nand `HeadlessContractSim.ts:1521` ANDs it into the secure at every wave, so **no wave count\nsecures this claim until a wing has been re-inked.**\n\nThe view publishes the entire law, so a rider with no source import can play it. `now.squall`\ncarries `phase`, `cycle`, `phaseProgress`, `secondsToNextPhase`, `secondsToNextSquall`,\n`squallsStarted`/`squallsCompleted` and the full `transitions` log; `now.archive` carries\n`holdingWingId`, `completedHolds`, `restoredWingIds` and `objectiveAllowsSecure`; and\n`stablePrefix.mechanics.rules` states the hold verbatim — *\"Keep a living, powered sentry beacon\nwithin the next light site radius throughout telegraph and squall. An interruption retries next\ncycle\"* — beside the cadence (`60/8/25/8`, `cycleSeconds 101`) and the pressure rule (*\"During\nsqualls Static Motes steer toward lit sites; Unraveled Memories pursue the Prospector\"*).\n\nThe reasoning it wants is a **schedule against a geometry**, and both halves are real:\n\n- **The schedule.** Telegraph opens at t = 60, 161, 262, 363 and a hold takes 8 + 25 = 33 s of\n  unbroken light, latching on the squall→recover edge. Wave 12 lands at t = 360, so there are\n  exactly **three** chances and the first is free. My beacon stood at **t = 19.17**,\n  `holdingWingId: west-stacks-wing` latched at **t = 60.03** — the telegraph tick itself — and\n  `completedHolds` was 1 by the next view. 41 seconds of slack on the only irreversible clock.\n- **The geometry, which is where the contract nearly refused me.** `litSiteIds` is\n  `build.hasPoweredBeaconWithin(site.x, site.z, 4)`, so the whole objective is one 25-gold\n  `sentry_beacon` inside a radius-4 disc at (-28, -6). **Eleven of my twelve candidates in that\n  disc answered `UNREACHABLE: BUILD target is outside buildable terrain`** — every one at\n  z ≤ −4, including the stake's own centre — and the twelfth, **(-28, -3)**, landed. The\n  declared `west-stacks-wing` zone is z −30…18; the ground actually accepts the beacon only from\n  z ≈ −3. Against a disc that reaches z ≤ −2, the legal band is about **two units deep**. Carrying\n  more candidates than slots and varying *both* axes is the only reason this ride has a receipt.\n\nTwo honest qualifiers. First, the era's ask is **cheap and front-loaded**: 25 gold and one build\ntrip in the first twenty seconds of a 360-second contract, after which the mechanic never asks\nagain (a lit beacon cannot be put out here — see below). Second, the pressure half was a **gift\nrather than a cost**: `pressureTarget` steers every `static_mote` at the lit site during a\nsquall, and my beacon sat 54 units north of the hero, so for 25 seconds of every 101-second\ncycle the mote population walked *away* from the body that had to survive. Everything else was\nordinary stationary survival in the entry-hall pocket — carried by `now.works.byKind`/`entries`,\n`now.seams[].active/x/z/anchorIndex` (an inactive seam publishes all three as `null`, and one\nnon-finite number refuses the whole array silently), `now.gold` against `score.goldPanned` and\n`goldStolen`, `now.hero.hp/maxHp`, `now.threats.alive/wreckers/thieves` and\n`now.orders[].status/reason`. Orders used: `BUILD`, `HARVEST`, `PICK_UPGRADE`, `BLAST_AT`, and\none blank line. **There is no E10 verb**; `mechanics.interactables` is empty and the era is\nanswered with the base grammar.\n\nMy notebook has no prior generation on this map (generation 120 rode `e10-ember-shore`, which\nshares the squall scheduler but runs a *warmth* mechanic and a `stoke` verb; generation 121 rode\n`e10-last-claim`, a different preserve mechanic with a damageable vent). The contract is not\nnamed as cured this week, but for the record its first minute did this: the hero stood where it\nlanded at (0, −52), the Prospector panned the entry-hall seams, the objective beacon went up at\nt = 19.17, the first turret at t = 75, and the telegraph at t = 60 found the light already on.",
+    "winnability": "Secured, and the margin was **enormous on survival, thin on one coordinate, and openly left on\nthe table where it scores**: the hero never fell below **68 %** of its running maximum (68/100 at\nt = 42, before the plating picks; finishing **143/175 at level 18**), **0 of 7 works was ever\nwrecked** and `goldStolen` finished at **0** across 416 kills — because neither roster entry\ndeclares `wrecker` or `thief` — while the objective latched 300 seconds before the gate. The\ngenuinely thin thing was the objective's *ground*: eleven of twelve candidate coordinates inside\nthe light disc are unbuildable, and a rider offering only the stake's own centre would report\nthis contract unwinnable. The ranked number, **200 of a 200 default cap**, is the margin I left\nbehind and I can name it to the second: the purse pinned at 200 at **t ≈ 312** and\n`score.goldPanned` froze at **645** for the last 48 seconds, because the two `stockpile` rungs\n(60 g each, +150 cap, safe on a thief-free roster) were emitted **once**, at t = 265.7, **both at\nthe same coordinate (-2,-53)** — my spot chooser reads standing works and does not reserve a spot\nalready chosen *in the same array* — and were then wiped 4.3 seconds later by my own\n`t > secure − 90` hard build floor, before the Prospector could walk the 28 units to place the\nfirst one. A stockpile landing at t ≈ 250 lifts the ceiling to 350 and turns the frozen tail into\nroughly 250–300 banked on an identical secure.",
+    "lessons": "- **`null-floors.json` first, then grep the era pins for the contract id — eleventh heat running,\n  and it has never once been wrong.** One file published this seed's losing floor before I ran\n  anything and the ten-second probe reproduced it to the hash, which simultaneously proved the\n  rules had not moved, verified the instrument, and freed the entire reading budget for the two\n  things that decide the map. Four minutes, and it is the cheapest document in the county.\n- **A published build zone is not buildable ground, and on an objective disc that can be the\n  whole contract.** `west-stacks-wing` is declared z −30…18 and refuses every coordinate at\n  z ≤ −4, including the light stake's own centre; the radius-4 disc's legal band is about two\n  units deep at z ∈ [−3, −2]. Eleven `UNREACHABLE` refusals fired in **0.4 seconds** (t = 4.33 →\n  4.70, a refusal yields the tick) and the twelfth landed. Generation 21 learned that a declared\n  zone can be refused by terrain and generation 98 learned to vary **both** axes; **generation\n  133 adds the case where the refused ground is the OBJECTIVE, so the candidate ladder is not\n  insurance — it is the only thing standing between a first secure and a \"not winnable\" report.\n  Offer ten-plus candidates spanning the disc's full extent in x AND z before concluding a\n  site cannot be lit.**\n- **Reserve a spot in-array, not just against standing works.** My chooser skips coordinates\n  within 1.7 of an existing `works.entries` position, which is correct and insufficient: two rungs\n  emitted in the SAME array both picked `(-2,-53)`, so the second was a guaranteed collision.\n  Track the spots chosen this tick as well as the ones already built.\n- **A hard build floor must never cancel a build already IN FLIGHT.** A `BUILD` implies travel;\n  mine was emitted at t = 265.7 with the Prospector 28 units away (≈6 s of walking) and my\n  `t > secure − 90` floor replaced the array at t = 270 with one that carried no build. Four\n  point three seconds of a six-second errand. Generations 110, 111, 113, 128 and 131 all record a\n  score-protecting gate making the fort unreachable exactly when it was needed; **this is the same\n  family's sixth face — once a BUILD is emitted, keep re-emitting it until `works.byKind` shows it\n  standing or the view shows it refused, regardless of any clock.**\n- **A cumulative gate and a late floor interact, and the interaction is invisible in either one.**\n  The stockpile sat `pending` from t = 170 to t = 207 gated at `goldGte 185` (its own 60 stacked\n  behind a 125-gold turret ahead of it in the same array), then never became the head rung until\n  t = 265 — by which time the floor was 4.3 seconds away. Anti-starvation gating is right; it just\n  means a rung's *effective* first-fireable moment is much later than its price suggests. Compute\n  that moment before deciding where the spend floor goes.\n- **Read the pressure rule for who it steers and where.** `pressureTarget` returns a site only\n  for `static_mote` and only while a squall blows, so lighting the objective 54 units from the\n  hero converts 25 % of every cycle into a board that walks away from the body that must live.\n  I priced the lit site as a cost and it was a gift. **On any map that steers enemies at a thing\n  you choose to place, the placement is a crowd-control decision as well as an objective one.**\n- **Read the roster for what it OMITS — fifteenth contract running, and here it decided the\n  shape.** `static_mote` and `unraveled_machine` appear in no `Balance` table and declare neither\n  `wrecker` nor `thief` on THIS contract (the same two ids DO declare `wrecker: true` on\n  `e10-last-claim`, one file away). So: works cannot be attacked, gold cannot be stolen, a lit\n  beacon can never be put out, `REPAIR_UNDER` and palisade bait are dead weight, and the\n  cap-raising stockpile is safe rather than the 435-gold trap generation 106 measured on a thief\n  roster. Compare the roster against its siblings, not against the epoch.\n- **Ride the skeleton first and change nothing — twenty-seventh heat where that is the whole\n  discipline, and the twenty-second in a row where it secured on ride one.** Two runs total: the\n  reading budget went to the null floor, the era pins, the contract JSON and two era systems read\n  end to end; the riding budget went to the unmodified generation-6→132 skeleton (draft first\n  under replace semantics with a plating-then-heal scorer, maxHp 100 → 175; ONE ladder with ONE\n  ordinal per id priced at `costs[standing]`; a rung with no candidates left RETIRED rather than\n  stalling the rungs behind it; a refusal blacklist partitioned into GROUND and ECONOMY;\n  `Number.isFinite` seam filtering; alternating blocks of six across the nearest live seams; a\n  free `BLAST_AT` above the traveller; a blank line at `pendingSecure`) plus the one thing this\n  board does differently. **The heat's real work is reading the contract, not riding it.**\n- **Zero `MOVE_HERO` was correct and I checked rather than assumed — tenth heat running on a\n  stationary-hero board.** `now` publishes no `gravity`, so movement is `normal`: the hero has no\n  drift, silence is the hold, and the unemployed Prospector drifts to the hero — exactly where\n  the retired `HOLD` used to park it. The hero sat at (0, −52) in all 59 views while the\n  Prospector made the 54-unit objective trip on the `BUILD` order's own travel.\n- **Silence at `pendingSecure` did its four jobs again, twenty-ninth contract running:** it took\n  the `bank` default (`defaultedSecure: 1`), left the last accepted order 529 ticks inside\n  `durationTicks`, held a 59-view run to 57 entries, and — the reason that matters most — **it\n  cannot be rejected**, so the replay cannot diverge the way generation 84's nearly did when\n  refused in-window submissions (invisible to the tape, visible to the sim) desynchronised a\n  clean reel.\n- **Obey the stop rule and promote by name.** The first controller secured, so I stopped: copied\n  the tape, verified the two files byte-identical, named `attempt-1-tape.json` in the outcome\n  file's `tape` field, said plainly there that they are one ride, and spent what was left on the\n  envelope arithmetic, a control-tested assay and this report. **The gold I left behind is not a\n  reason to break the rule — it is the finding, and it is named to the second above.**"
+  },
+  "usage": {
+    "transcript": "/Users/robin/.claude/projects/-private-tmp-claude-501--Users-robin-Claude-Projects-Gold-Rush-fe6b8d27-b064-40eb-934b-1d29d57a71db-scratchpad-arena-heat14-e3949bfa/c8137fdf-83f9-417f-b353-b998ca17e652.jsonl",
+    "assistantTurns": 79,
+    "toolCalls": 45,
+    "tokensIn": 158,
+    "tokensOut": 137172,
+    "cacheReadTokens": 43029978,
+    "cacheWriteTokens": 1714865,
+    "note": "tokensIn excludes cache reads/writes (reported separately); summed from the CLI session transcript, not self-reported by the rig"
+  }
+}

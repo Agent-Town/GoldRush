@@ -1,0 +1,35 @@
+{
+ "secured": true,
+ "waves": 12,
+ "timeMs": 360000,
+ "gold": 481,
+ "kills": 58,
+ "calls": 101,
+ "defaultedPicks": 0,
+ "defaultedSecure": 1,
+ "eventLogHash": "fnv1a32:09bc3731",
+ "tape": "/private/tmp/heat13-569a41f9/artifacts/heat13/opus/e3-blackout-ridge/attempt-1-tape.json",
+ "scored": true,
+ "runsSoFar": 3,
+ "scoredAttempts": 1,
+ "worldModel": "sim-import",
+ "note": "The securing ride was tune-1 (the first controller). Under the brief's promotion clause it IS the scored attempt: attempt-1-tape.json is a byte-identical copy of tune-1-tape.json, one ride under two filenames. The operator reads this tape field.",
+ "tapeHeaderHash": "fnv1a32:ade266f4",
+ "localAssay": {
+  "tool": "scripts/assay-replay-agent.mjs",
+  "eventLogHash": "fnv1a32:ade266f4",
+  "matchesTapeHeader": true,
+  "outcome": { "secured": true, "waves": 12, "gold": 481, "timeAlive": 360 },
+  "securedSnapshot": { "waves": 12, "gold": 481, "timeAlive": 360 }
+ },
+ "envelope": {
+  "durationTicks": 10800,
+  "maxTicks": 18002,
+  "entries": 101,
+  "maxEntries": 3601,
+  "lastEntryTick": 10174,
+  "bytes": 339746,
+  "maxTapeBytes": 1938784,
+  "allAxesClear": true
+ }
+}

@@ -1,0 +1,111 @@
+{
+  "rig": "opus",
+  "contract": "e1-drill-yard",
+  "model": "claude-opus-5",
+  "sessionId": "228abdba-b6ab-4087-b946-e7b7f8c847af",
+  "startedAt": "2026-09-03T13:00:13.440Z",
+  "endedAt": "2026-09-03T13:06:15.169Z",
+  "wallClockSeconds": 362,
+  "wallHit": false,
+  "exitCode": 0,
+  "signal": null,
+  "setupToFirstOutputSeconds": 75,
+  "arenaTrackedChanges": [],
+  "workspaceFiles": [
+    "attempt-1-tape-log.txt",
+    "attempt-1-tape.json",
+    "controller.mjs",
+    "gauntlet-outcome.json",
+    "gauntlet-report.md",
+    "probe-idle.json",
+    "probe-idle.out.jsonl",
+    "tune-1-tape-log.txt",
+    "tune-1-tape.json"
+  ],
+  "outcome": {
+    "secured": false,
+    "waves": 2,
+    "timeMs": 60033,
+    "gold": 5,
+    "kills": 23,
+    "calls": 3,
+    "defaultedPicks": 0,
+    "defaultedSecure": 0,
+    "eventLogHash": "fnv1a32:eed8345a",
+    "endReason": "wave-ceiling",
+    "tape": "/tmp/heat11-5e7a7c0b/artifacts/heat11/opus/e1-drill-yard/attempt-1-tape.json",
+    "scored": true,
+    "runsSoFar": 3,
+    "scoredAttempts": 1,
+    "worldModel": "sim-import",
+    "submittable": false,
+    "finding": "e1-drill-yard is STRUCTURALLY UNSECURABLE through the door, and is not meant to be secured. It is the county's practice yard. assets/contracts/epoch-1-frontier/contracts.json authors twist.secureWave = 0; HeadlessContractSim.ts:1089 and :1123 pass that 0 through to RunManager, whose secure gate at RunManager.ts:291 reads `if (!this.host || secureWave <= 0 || wave < secureWave) return;` — so maybeSecureRun returns early at EVERY wave, run_secured is never emitted, now.pendingSecure never appears, and SECURE_CHOICE is never accepted. gr-sim.mjs:111 then sets waveCeiling = secureWave + 2 = 2, ending every ride at wave 2 / 60.03s with endReason wave-ceiling.",
+    "corroboration": [
+      "assets/contracts/winnability-receipts.json -> e1-drill-yard: {status: unclaimed, reason: standings-disabled}",
+      "e2e/field-book.spec.ts:113-126 asserts a drill-yard POST to /api/standings returns HTTP 400 error 'training_ground', message 'The Drill Yard is the training ground - practice is its own reward.', writes no KV row, and refuses the GET board too. 'training_ground' is in skill.md's published refusal taxonomy.",
+      "contracts.json practice block declares standings:false, tapes:false, scores:false, metaProgress:false, runHistory:false"
+    ],
+    "otherRuns": {
+      "probe-idle.json": {
+        "secured": false,
+        "waves": 2,
+        "timeMs": 60033,
+        "gold": 0,
+        "kills": 23,
+        "calls": 0,
+        "eventLogHash": "fnv1a32:134de7dc"
+      },
+      "tune-1-tape.json": {
+        "secured": false,
+        "waves": 2,
+        "timeMs": 60033,
+        "gold": 15,
+        "kills": 23,
+        "calls": 6,
+        "eventLogHash": "fnv1a32:7ff9b669",
+        "note": "higher gold than the scored attempt (15 vs 5) but built no works; neither is secured, so neither is submittable"
+      }
+    }
+  },
+  "outcomeError": null,
+  "scoredTapes": [
+    {
+      "file": "attempt-1-tape.json",
+      "id": "agent-14e889bb-11442a1a-a9ee-4d54-af49-73a01a6e8aeb",
+      "contract": "e1-drill-yard",
+      "seed": "gold-rush",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "5e7a7c0ba",
+        "engineHash": "a607a81f44e10dc2b2262682c1e116c15917edffeeaa0c5909f383ccea5d8e04",
+        "era": 5,
+        "viewVersion": 1
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 2,
+        "timeAlive": 60.033,
+        "gold": 5
+      },
+      "entries": 3
+    }
+  ],
+  "otherSecuredTapes": [],
+  "report": {
+    "outcome": "**Not secured — and not securable.** Best and scored ride: `attempt-1-tape.json` — `secured: false`,\n**waves 2**, **timeAlive 60.033 s**, **gold 5**, **kills 23**, **calls 3**, `defaultedPicks: 0`,\n`defaultedSecure: 0`, `eventLogHash fnv1a32:eed8345a`, `endReason: \"wave-ceiling\"`. **4 sim runs, 1\nscored attempt.** I put forward **no tape for submission**: the run is unsecured, and the county's\nown door would refuse a drill-yard standing with HTTP 400 `training_ground` even if it were not.",
+    "whatTheMapAsked": "It asked me almost nothing, and the interesting part is *why*. This is not E1 survival-and-bank-cap\nwearing a name — it is not a claim at all. It is the tutorial range: two straw men, two rolling logs\nand a third straw man that respawn every 1.5 s with `speedScale: 0` and `contactDamageScale: 0`,\nplus a gold faucet that lends 100 practice gold and a bell that rings one 8-enemy wave on demand. The\nera's signature mechanic — the bank cap and the opening economy — is *present in the fixtures but\nunreachable through the door*: `stablePrefix.mechanics.interactables` publishes\n`assay_tent_faucet` with operation `top_up` and `drill_bell` with operation `ring`, and **the grammar\nhas no verb for either**. `CONTEXT_ACTION` accepts `upgrade`, `demolish`, `fund`, `recover`, `plant`,\n`redig`, `backfill` — nothing that pulls a lever or rings a bell. So the yard's whole designed economy\n(a 100-gold faucet, repeatable against the bank cap, which is exactly where you would *study* the E1\ncap) is a browser-only affordance, and a headless rider is left with `HARVEST` alone: 5 gold a pan,\n15 gold in the entire 60-second ceiling, against a 25-gold beacon and a 50-gold turret. The fields\nthat carried anything at all were `now.seams` (three of six live), `now.gold`, and `now.pendingOffer`;\n`now.pendingSecure` — the field the objective actually depends on — never appeared. The one genuinely\nuseful thing the map taught me is that `practice.scheduledWaves: false` is *also* browser-side: the\nheadless sim ran its ordinary 30-second wave schedule anyway and killed 23 enemies, so the \"no\nstakes\" yard is, headless, just a very short ordinary map with the secure gate welded shut.",
+    "winnability": "**No — `e1-drill-yard` is not winnable through the door from its starting kit, and the blocker is\nneither the map, the economy nor my budget: it is authored in the contract.** `twist.secureWave = 0`\nmakes `RunManager.maybeSecureRun` (`RunManager.ts:291`, `secureWave <= 0` → early return) refuse to\nsecure at every wave, so `pendingSecure` never appears and `SECURE_CHOICE` is never accepted, while\n`gr-sim.mjs:111` caps the same run at wave 2 — and the county independently marks the contract\n`standings-disabled` and refuses its standings with `training_ground`. This is a **finding about the\ndoor contract list, not a failure**: L2 says every door contract must be winnable from its own\nstarting kit, and this one is served by `gr-sim` and listed in `door-contracts` while being, by\ndesign, a practice ground that cannot be won. The honest fix is a list change, not a balance change —\neither drop `e1-drill-yard` from the door-contract roster and the standing marker, or mark it\nexplicitly as a training ground exempt from L2, so no future rider spends a heat proving this again.",
+    "lessons": "- **Read the contract manifest before writing a single order.** Two minutes in\n  `assets/contracts/<epoch>/contracts.json` told me more than four rides did. `twist.secureWave` is\n  the first field to look at: it sets both the objective *and*, through `gr-sim.mjs`, the wave ceiling\n  (`secureWave + 2` for a non-boss map). A ceiling of 2 is a tell that something is wrong before you\n  ride at all.\n- **`secureWave: 0` means \"cannot be secured\", not \"secures immediately\".** The gate is\n  `if (secureWave <= 0 || wave < secureWave) return` — zero and negative are the *closed* case. I\n  guessed \"already secured\" first and the code said the opposite; the guess would have cost me the\n  whole heat.\n- **`unclaimed` on the door list is not a difficulty rating.** It can mean \"structurally\n  unclaimable\". Cross-check `assets/contracts/winnability-receipts.json` — it carries a per-contract\n  `status`/`reason`, and for this one it said `standings-disabled` outright.\n- **The published refusal taxonomy is a map of what the county won't take.** `training_ground` sits\n  in skill.md's own list; I could have inferred a whole class of unsubmittable contracts from that\n  word alone, before touching the sim.\n- **A practice contract's suppressions are browser-side, not sim-side.** `practice.scheduledWaves:\n  false` did not stop the headless sim from running its normal wave schedule (23 kills in 60 s).\n  Never assume a manifest flag reaches the headless engine — check which engine reads it.\n- **The mechanics manifest lists interactables the grammar cannot reach.** `top_up` and `ring` are\n  published under `stablePrefix.mechanics.interactables` with no corresponding verb. A published\n  operation is not a promise of a door verb — the same lesson as gen-3's \"a rejected array installs\n  nothing\", one layer up: *an advertised affordance is not an available one*.\n- **Repeating gen-4's correction, now proven again in the other direction:** an identical retry is\n  worthless when the blocker is structural. I had a second scored attempt in hand and deliberately\n  did not spend it, because I could name the line of code that would refuse it. Knowing when *not*\n  to ride is worth as much as a good policy.\n- **A lone `PICK_UPGRADE` array wipes your standing orders.** Replace semantics apply to the draft\n  answer too. Put the pick first in the array so it owns the tick, then resend every order you still\n  want — my first tune stood the whole claim down for a wave and I nearly shipped that."
+  },
+  "usage": {
+    "transcript": "/Users/robin/.claude/projects/-private-tmp-heat11-5e7a7c0b/228abdba-b6ab-4087-b946-e7b7f8c847af.jsonl",
+    "assistantTurns": 67,
+    "toolCalls": 39,
+    "tokensIn": 134,
+    "tokensOut": 58940,
+    "cacheReadTokens": 8245919,
+    "cacheWriteTokens": 436768,
+    "note": "tokensIn excludes cache reads/writes (reported separately); summed from the CLI session transcript, not self-reported by the rig"
+  }
+}

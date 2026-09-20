@@ -1,0 +1,14 @@
+base=cec0e113c5bc3a84b33b62d84656b40824940cc9
+branch=feat/e10s-4-door
+
+git diff --check
+
+git diff --name-only
+e2e/m1-01-claim-jumpers-death.spec.ts
+
+git status --short
+ M e2e/m1-01-claim-jumpers-death.spec.ts
+?? artifacts/m1-debug-spawn-contract/
+
+touch-only tracked diff check
+PASS

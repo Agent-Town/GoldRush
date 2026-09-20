@@ -1,0 +1,75 @@
+{
+  "time": 4,
+  "orbit": {
+    "contractId": "dust-flats-dev",
+    "enabled": true,
+    "radius": 24,
+    "members": [
+      {
+        "id": "wave-1-1",
+        "wave": 1,
+        "state": "orbiting",
+        "x": 20.785,
+        "z": 12,
+        "radius": 24,
+        "peelPointId": "east-cut",
+        "telegraphed": false,
+        "telegraphAt": 7,
+        "peelAt": 9
+      },
+      {
+        "id": "wave-1-2",
+        "wave": 1,
+        "state": "orbiting",
+        "x": 19.759,
+        "z": 13.623,
+        "radius": 24,
+        "peelPointId": "north-cut",
+        "telegraphed": false,
+        "telegraphAt": 9.847,
+        "peelAt": 11.847
+      },
+      {
+        "id": "wave-1-3",
+        "wave": 1,
+        "state": "orbiting",
+        "x": 18.607,
+        "z": 15.158,
+        "radius": 24,
+        "peelPointId": "east-cut",
+        "telegraphed": false,
+        "telegraphAt": 6.694,
+        "peelAt": 8.694
+      }
+    ]
+  },
+  "roads": {
+    "segments": 1,
+    "length": 120,
+    "friendlySpeedMultiplier": 2.5,
+    "friendlyFuelMultiplier": 0.4,
+    "enemyRouteCostMultiplier": 0.25
+  },
+  "friendly": {
+    "road": {
+      "x": 50,
+      "z": 0,
+      "fuel": 25.2,
+      "distance": 90
+    },
+    "dirt": {
+      "x": -4,
+      "z": 8,
+      "fuel": 18,
+      "distance": 36
+    },
+    "speedRatio": 2.5,
+    "fuelRatio": 0.4
+  },
+  "enemyRoute": {
+    "routeId": "graded-road",
+    "cost": 6,
+    "roadLength": 24
+  },
+  "hash": "fnv1a32:5c6971e0"
+}

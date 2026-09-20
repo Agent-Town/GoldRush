@@ -1,0 +1,162 @@
+{
+  "schema": "goldrush.e10-launchable.v1",
+  "task": "tasks/e10-empty-harvest-anchors-unlaunchable.md",
+  "branch": "fix/e10-harvest-anchors",
+  "at": "2026-09-05T17:24:18.841Z",
+  "decision": {
+    "path": "exemption",
+    "reason": "Authoring harvestAnchors is forbidden by the landed corrective tasks/e10s-1c-ember-shore-inert-landing.md:27 (F-2165-1, commit 14dbb496a): anchors ARE the agent-play admission key (src/sim/HeadlessContractSim.ts:254, ratcheted by scripts/door-admission-baseline.json), so re-authoring them would admit three unproven maps and red skillmd-guard + door-admission-ratchet through door surfaces this firewall forbids.",
+    "perMap": {
+      "e10-ember-shore": {
+        "choice": "harvest-free declaration",
+        "citation": "specs/epoch-saga/e10-deepsky-bundle.md:17; specs/agent-play/e10-ember-shore-preserve.md:18"
+      },
+      "e10-archive-world": {
+        "choice": "harvest-free declaration",
+        "citation": "specs/agent-play/e10-archive-world-restoration.md:24"
+      },
+      "e10-river": {
+        "choice": "harvest-free declaration",
+        "citation": "specs/agent-play/door-completion-sheet.md:36 (RATIFIED 2026-08-20); specs/enemy-rosters-e6-e10.md:195"
+      }
+    },
+    "mechanism": "twist.harvestFreeObjective declared in assets/contracts/epoch-10-deepsky/contracts.json; read inline at src/meta/ContractFamilies.ts:1349"
+  },
+  "engineHash": {
+    "before": "97add8282c1f1702589e291126d035f343303e50ebde57d8c23fd203bbef9bc6",
+    "after": "3641cb32ec719bca05d9478c58bb1364fc953a09c21b91eaa549b23e8f18626b",
+    "era": 5,
+    "note": "assets/contracts + src both changed; the drain pins the new hash"
+  },
+  "launchProof": {
+    "harness": "e2e/playability-smoke.spec.ts via GR_SMOKE_ONLY, plain boot (no ?debug), own dev server 127.0.0.1:5306",
+    "projects": [
+      "desktop-chrome 1280x800",
+      "mobile-chrome 390x844"
+    ],
+    "cells": [
+      {
+        "contract": "e10-ember-shore",
+        "project": "desktop-chrome",
+        "boots": true,
+        "briefing": true,
+        "hud": true,
+        "moves": true,
+        "wave2": true,
+        "clean": true,
+        "activeId": "activeId=e10-ember-shore fallbackReason=null",
+        "screenshot": "artifacts/e10-launchable/shots/e10-ember-shore-desktop-chrome.png"
+      },
+      {
+        "contract": "e10-archive-world",
+        "project": "desktop-chrome",
+        "boots": true,
+        "briefing": true,
+        "hud": true,
+        "moves": true,
+        "wave2": true,
+        "clean": true,
+        "activeId": "activeId=e10-archive-world fallbackReason=null",
+        "screenshot": "artifacts/e10-launchable/shots/e10-archive-world-desktop-chrome.png"
+      },
+      {
+        "contract": "e10-river",
+        "project": "desktop-chrome",
+        "boots": true,
+        "briefing": true,
+        "hud": true,
+        "moves": true,
+        "wave2": true,
+        "clean": true,
+        "activeId": "activeId=e10-river fallbackReason=null",
+        "screenshot": "artifacts/e10-launchable/shots/e10-river-desktop-chrome.png"
+      },
+      {
+        "contract": "e10-ember-shore",
+        "project": "mobile-chrome",
+        "boots": true,
+        "briefing": true,
+        "hud": true,
+        "moves": true,
+        "wave2": true,
+        "clean": true,
+        "activeId": "activeId=e10-ember-shore fallbackReason=null",
+        "screenshot": "artifacts/e10-launchable/shots/e10-ember-shore-mobile-chrome.png"
+      },
+      {
+        "contract": "e10-archive-world",
+        "project": "mobile-chrome",
+        "boots": true,
+        "briefing": true,
+        "hud": true,
+        "moves": true,
+        "wave2": true,
+        "clean": true,
+        "activeId": "activeId=e10-archive-world fallbackReason=null",
+        "screenshot": "artifacts/e10-launchable/shots/e10-archive-world-mobile-chrome.png"
+      },
+      {
+        "contract": "e10-river",
+        "project": "mobile-chrome",
+        "boots": true,
+        "briefing": true,
+        "hud": true,
+        "moves": true,
+        "wave2": true,
+        "clean": true,
+        "activeId": "activeId=e10-river fallbackReason=null",
+        "screenshot": "artifacts/e10-launchable/shots/e10-river-mobile-chrome.png"
+      }
+    ],
+    "flakes": "first matrix run: e10-ember-shore/desktop HUD and e10-archive-world/mobile HUD+moves failed on getByTestId(pause-meta-panel), the class playability-smoke.spec.ts:288 documents (measured: e5-regatta, probe 2); both re-ran GREEN single-cell and those greens are the rows above"
+  },
+  "guards": {
+    "green": [
+      "board-launchable-guard 5/5",
+      "law-pointer-guard 58/58",
+      "door-admission-ratchet 1/1",
+      "null-floor-anchors 1/1",
+      "e3-mask-tables 30/30",
+      "no-emdash-guard 1/1",
+      "terrain-contract-scope 4/4",
+      "view-schema-guard 3/3",
+      "same-game-report-guard 3/3",
+      "findings-state PASS",
+      "citations PASS",
+      "tsc rc=0",
+      "npm run build rc=0"
+    ],
+    "red": [
+      {
+        "guard": "engine-era-guard / bench-seeds.test.mjs:47",
+        "cause": "engine hash rotated; expected, the drain pins it"
+      },
+      {
+        "guard": "same-game-audit.test.mjs:122",
+        "cause": "F-E10L-2: not-offered pin 3 -> 0, outside this firewall; attributed by revert-and-reproduce"
+      },
+      {
+        "guard": "gate-caller-audit",
+        "cause": "F-E10L-3: PRE-EXISTING NEW npm:test:playability NO CALLER, shipped with abcf171e6, absent from scripts/gate-caller-baseline.json"
+      }
+    ],
+    "notRun": [
+      {
+        "guard": "test:desk-declaration",
+        "reason": "refuses to certify from a scratch worktree by design (frozen-tree refusal, F-2232-1 class); re-run from the main worktree"
+      }
+    ]
+  },
+  "sameGameAudit": {
+    "notOffered": {
+      "before": 3,
+      "after": 0
+    },
+    "rows": {
+      "before": 1602,
+      "after": 1719
+    },
+    "measurements": 10,
+    "exemptions": 3
+  }
+}

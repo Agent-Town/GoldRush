@@ -1,0 +1,116 @@
+
+########## RIDE e3-fairground · seed e3-fairground-01 · gen 126 · stake era-retired · wall 1500s ##########
+--- 1 charter ---
+{"rig":"opus","contract":"e3-fairground","seed":"e3-fairground-01","seedMode":"bench","stake":"era-retired","generation":126,"wall":1500,"notebookSha256":"2169a023b1bbf512eafdc51f34b2368ada4dc99caaa823706b12631bcd98c08f","charterSha256":"485842155b101309eded96881cb82394a21ff6104931c6ce79bf918489c8e61e","bytes":1027470,"out":"/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/gauntlet-heat14-e3949bfa/rides/e3-fairground/charter.md"}
+--- 2 ride ---
+START opus claude-opus-5 pid=32674 session=3f7d4227-1d0d-4bff-b9af-ae3063a61060 at=2026-09-18T09:01:49.725Z
+FIRST-OUTPUT opus +375s
+OUTCOME opus secured=false waves=1 gold=0 runsSoFar=1 scored=0 +375s
+OUTCOME opus secured=false waves=5 gold=0 runsSoFar=2 scored=0 +690s
+OUTCOME opus secured=false waves=5 gold=0 runsSoFar=3 scored=1 +780s
+OUTCOME opus secured=true waves=12 gold=62 runsSoFar=4 scored=2 +870s
+OUTCOME opus secured=true waves=12 gold=62 runsSoFar=4 scored=2 +885s
+END opus rc=0 signal=null wall=953s wallHit=false
+ride-wall rc=0 signal=-
+--- 3 land ---
+
+=== 1 finish-ride ===
+{"rig":"opus","contract":"e3-fairground","wall":953,"wallHit":false,"rc":0,"tracked":[],"files":18,"outcome":{"secured":true,"waves":12,"gold":62,"runsSoFar":4,"scoredAttempts":2,"tape":"artifacts/heat14/opus/e3-fairground/attempt-2-tape.json","worldModel":"sim-import"},"scoredTapes":[{"file":"attempt-1-tape.json","id":"agent-d8d56848-8c4b9cea-0827-44d5-b82c-acf576d08f6e","secured":false,"waves":4,"gold":5,"durationTicks":4081,"lastEntryTick":4073,"promotedByRig":false,"discoveredBy":"filename"},{"file":"attempt-2-tape.json","id":"agent-beea931a-f98a26f6-98b4-4190-a93c-38e583719e11","secured":true,"waves":12,"gold":62,"durationTicks":10800,"lastEntryTick":10782,"promotedByRig":true,"discoveredBy":"outcome-file+filename"}],"otherSecured":[],"reportSections":{"outcome":504,"whatTheMapAsked":3471,"winnability":487,"lessons":3929},"usage":{"turns":62,"toolCalls":26,"tokensIn":124,"tokensOut":178540}}
+tape chosen: attempt-2-tape.json (id agent-beea931a-f98a26f6-98b4-4190-a93c-38e583719e11, promotedByRig=true, discoveredBy=outcome-file+filename)
+
+=== 2 freeze notebook header ===
+{"headerOnly":true,"headerBytes":433}
+
+=== 3 harnessDigest ===
+cb2b11a3a6264766bc95b095534994c4d68cc5aab51c727ed5c249874b9fd589
+
+=== 4 build-submission ===
+{"tapeId":"agent-beea931a-f98a26f6-98b4-4190-a93c-38e583719e11","contract":"e3-fairground","epochId":"epoch-3-voltage","seed":"e3-fairground-01","seedMode":"bench","score":{"secured":true,"waves":12,"timeAlive":360,"gold":62,"baseValue":0},"papers":{"buildId":"0648b57e7","engineHash":"540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068","era":6,"viewVersion":2},"durationTicks":10800,"lastEntryTick":10782,"stack":{"model":"claude-opus-5","harness":"heat14-operator","harnessVersion":"2.1.272","harnessDigest":"cb2b11a3a6264766bc95b095534994c4d68cc5aab51c727ed5c249874b9fd589","worldModel":"sim-import","config":"attended-hosted headless `claude -p` ride (heat 14, the era-6 re-ride) on Claude Code CLI 2.1.272; charter + door manual + own notebook (self-memory); own controller authored in-ride","calls":269,"tokensIn":32102091,"tokensOut":178540}}
+
+=== 5 publish (POST → poll → WATCH) ===
+FAILED: node:internal/deps/undici/undici:14341
+            fetchParams.controller.controller.error(new TypeError("terminated", {
+                                                    ^
+
+TypeError: terminated
+    at Fetch.onAborted (node:internal/deps/undici/undici:14341:53)
+    at Fetch.emit (node:events:509:20)
+    at Fetch.terminate (node:internal/deps/undici/undici:13462:14)
+    at Object.onResponseError (node:internal/deps/undici/undici:14477:40)
+    at Request.onResponseError (node:internal/deps/undici/undici:3029:48)
+    at Object.errorRequest (node:internal/deps/undici/undici:2329:17)
+    at Object.abort (node:internal/deps/undici/undici:8947:14)
+    at ClientHttp2Stream.onError (node:internal/deps/undici/undici:9194:13)
+    at Object.onceWrapper (node:events:631:12)
+    at ClientHttp2Stream.emit (node:events:509:20) {
+  [cause]: Error: read ECONNRESET
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:216:20) {
+    errno: -54,
+    code: 'ECONNRESET',
+    syscall: 'read'
+  }
+}
+
+Node.js v26.4.0
+
+POST ok; assay still pending at the 120 s mark — resuming with the poll-only shim (no re-POST)
+
+=== 6 poll-verdict (no re-POST) ===
+{"tapeId":"agent-beea931a-f98a26f6-98b4-4190-a93c-38e583719e11","assay":"verified","assayHash":"fnv1a32:092d72d8","ranked":true,"papers":{"buildId":"0648b57e7","engineHash":"540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068","era":6,"viewVersion":2}}
+
+=== LANDED ===
+{
+ "rig": "opus",
+ "contract": "e3-fairground",
+ "tapeFile": "attempt-2-tape.json",
+ "tapeId": "agent-beea931a-f98a26f6-98b4-4190-a93c-38e583719e11",
+ "assay": "verified",
+ "assayHash": "fnv1a32:092d72d8",
+ "ranked": true,
+ "rank": 1,
+ "waves": 12,
+ "gold": 62,
+ "calls": 269,
+ "eventLogHash": "fnv1a32:f9983ffb",
+ "wall": 953,
+ "harnessDigest": "cb2b11a3a6264766bc95b095534994c4d68cc5aab51c727ed5c249874b9fd589",
+ "usage": {
+  "turns": 62,
+  "toolCalls": 26,
+  "tokensIn": 32102091,
+  "tokensOut": 178540
+ }
+}
+node:internal/deps/undici/undici:14341
+            fetchParams.controller.controller.error(new TypeError("terminated", {
+                                                    ^
+
+TypeError: terminated
+    at Fetch.onAborted (node:internal/deps/undici/undici:14341:53)
+    at Fetch.emit (node:events:509:20)
+    at Fetch.terminate (node:internal/deps/undici/undici:13462:14)
+    at Object.onResponseError (node:internal/deps/undici/undici:14477:40)
+    at Request.onResponseError (node:internal/deps/undici/undici:3029:48)
+    at Object.errorRequest (node:internal/deps/undici/undici:2329:17)
+    at Object.abort (node:internal/deps/undici/undici:8947:14)
+    at ClientHttp2Stream.onError (node:internal/deps/undici/undici:9194:13)
+    at Object.onceWrapper (node:events:631:12)
+    at ClientHttp2Stream.emit (node:events:509:20) {
+  [cause]: Error: read ECONNRESET
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:216:20) {
+    errno: -54,
+    code: 'ECONNRESET',
+    syscall: 'read'
+  }
+}
+
+Node.js v26.4.0
+
+land rc=0
+--- 4 notebook ---
+{"notebook":"/Users/robin/Claude/Projects/goldrush-gauntlet/memories/claude__opus-5/NOTEBOOK.md","generation":126,"headerBytes":433,"entryBytes":8798}
+--- 5 matrix ---
+| 30 | e3-fairground | `e3-fairground-01` | era-retired | 126 | **SECURED** | 12 | 62 | 360s | 953s | `attempt-2-tape.json` · `agent-beea931a-f98a26f6-98b4-4190-a93c-38e583719e11`<br>fnv1a32:f9983ffb | verified `fnv1a32:092d72d8` rank 1 | gen 126<br>slip `agent-beea931a-f98a26f6-98b4-4190-a93c-38e583719e11` |
+{"contract":"e3-fairground","secured":true,"tapesOnDisk":9,"scoredTapes":2,"otherSecured":0,"runs":4,"scoredAttempts":2,"wallHit":false,"rc":0,"assay":"verified","ranked":true,"winnability":"Secured, and the margin was **wide on both clauses and thin only on the purse**: the objective was\ndischarged by wave 3 with twelve waves of slack, the wheel never took a single point of damage,\nand the hero finished at its full running maximum with twenty works standing — while the banked\n62 of a 200 cap is the whole margin left behind, because the ladder kept buying ten-gold timber to\nthe end and neither stockpile (+150 cap each, and this roster has **no thief**) was ever reached."}
+########## END e3-fairground ##########
+

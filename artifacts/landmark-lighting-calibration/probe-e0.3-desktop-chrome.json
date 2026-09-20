@@ -1,0 +1,1042 @@
+[
+  {
+    "scene": "e3-moth-season",
+    "contract": "e3-moth-season",
+    "project": "desktop-chrome",
+    "phase": "probe-e0.3",
+    "query": "&lmemissive=0.3",
+    "focusMount": "north-migration-watch-gate",
+    "standoff": [
+      0,
+      9
+    ],
+    "frameMedianLuminance": 0.0529,
+    "terrainMedianLuminance": 0.9295,
+    "landmarkMedianLuminance": 0.0512,
+    "landmarkAllMountsMedian": 0.0467,
+    "heroLuminance": 0.044,
+    "landmarkOverTerrain": 0.055,
+    "emissiveIntensity": [
+      {
+        "id": "north-migration-watch-gate",
+        "range": [
+          0.3,
+          0.3
+        ]
+      },
+      {
+        "id": "south-quiet-road-gate",
+        "range": [
+          0.3,
+          0.3
+        ]
+      },
+      {
+        "id": "west-lamplighter-refuge",
+        "range": [
+          0.3,
+          0.3
+        ]
+      },
+      {
+        "id": "east-tithe-bell-house",
+        "range": [
+          0.3,
+          0.3
+        ]
+      },
+      {
+        "id": "mothglass-counting-cage",
+        "range": [
+          0.3,
+          0.3
+        ]
+      }
+    ],
+    "sideCensus": "{\"total\":{\"meshes\":5,\"closed\":5,\"open\":0,\"culled\":5,\"doubleSided\":0},\"mounts\":[{\"id\":\"north-migration-watch-gate\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.625,\"topY\":8.545},{\"id\":\"south-quiet-road-gate\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.527,\"topY\":4.427},{\"id\":\"west-lamplighter-refuge\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":2.284,\"topY\":6.801},{\"id\":\"east-tithe-bell-house\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":2.748,\"topY\":9.898},{\"id\":\"mothglass-counting-cage\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.397,\"topY\":5.963}]}",
+    "p95Ms": 9.8,
+    "screenshot": "artifacts/landmark-lighting-calibration/probe-e0.3-e3-moth-season-desktop-chrome.png",
+    "probes": [
+      {
+        "id": "north-migration-watch-gate@0.30h",
+        "family": "landmark",
+        "x": 640,
+        "y": 520.4,
+        "inView": true,
+        "luminance": 0.1185
+      },
+      {
+        "id": "north-migration-watch-gate@0.42h",
+        "family": "landmark",
+        "x": 640,
+        "y": 500.6,
+        "inView": true,
+        "luminance": 0.0445
+      },
+      {
+        "id": "north-migration-watch-gate@0.55h",
+        "family": "landmark",
+        "x": 640,
+        "y": 477.9,
+        "inView": true,
+        "luminance": 0.0434
+      },
+      {
+        "id": "north-migration-watch-gate@0.68h",
+        "family": "landmark",
+        "x": 640,
+        "y": 453.8,
+        "inView": true,
+        "luminance": 0.0512
+      },
+      {
+        "id": "south-quiet-road-gate@0.30h",
+        "family": "landmark",
+        "x": 640,
+        "y": -352.7,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "south-quiet-road-gate@0.42h",
+        "family": "landmark",
+        "x": 640,
+        "y": -359.8,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "south-quiet-road-gate@0.55h",
+        "family": "landmark",
+        "x": 640,
+        "y": -367.4,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "south-quiet-road-gate@0.68h",
+        "family": "landmark",
+        "x": 640,
+        "y": -375.2,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "west-lamplighter-refuge@0.30h",
+        "family": "landmark",
+        "x": -81.1,
+        "y": -156.1,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "west-lamplighter-refuge@0.42h",
+        "family": "landmark",
+        "x": -86.6,
+        "y": -167,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "west-lamplighter-refuge@0.55h",
+        "family": "landmark",
+        "x": -92.6,
+        "y": -179,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "west-lamplighter-refuge@0.68h",
+        "family": "landmark",
+        "x": -98.7,
+        "y": -191.2,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "east-tithe-bell-house@0.30h",
+        "family": "landmark",
+        "x": 1373.9,
+        "y": -181.6,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "east-tithe-bell-house@0.42h",
+        "family": "landmark",
+        "x": 1382.9,
+        "y": -199.5,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "east-tithe-bell-house@0.55h",
+        "family": "landmark",
+        "x": 1393,
+        "y": -219.5,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "east-tithe-bell-house@0.68h",
+        "family": "landmark",
+        "x": 1403.3,
+        "y": -240,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "mothglass-counting-cage@0.30h",
+        "family": "landmark",
+        "x": 640,
+        "y": 377.4,
+        "inView": true,
+        "luminance": 0.0398
+      },
+      {
+        "id": "mothglass-counting-cage@0.42h",
+        "family": "landmark",
+        "x": 640,
+        "y": 363.3,
+        "inView": true,
+        "luminance": 0.0398
+      },
+      {
+        "id": "mothglass-counting-cage@0.55h",
+        "family": "landmark",
+        "x": 640,
+        "y": 347.5,
+        "inView": true,
+        "luminance": 0.0467
+      },
+      {
+        "id": "mothglass-counting-cage@0.68h",
+        "family": "landmark",
+        "x": 640,
+        "y": 331.1,
+        "inView": true,
+        "luminance": 0.0476
+      },
+      {
+        "id": "ground5_5",
+        "family": "terrain",
+        "x": 832.8,
+        "y": 733.2,
+        "inView": true,
+        "luminance": 0.9175
+      },
+      {
+        "id": "ground-5_5",
+        "family": "terrain",
+        "x": 447.2,
+        "y": 733.2,
+        "inView": true,
+        "luminance": 0.9517
+      },
+      {
+        "id": "ground0_6",
+        "family": "terrain",
+        "x": 640,
+        "y": 771.6,
+        "inView": true,
+        "luminance": 0.9295
+      },
+      {
+        "id": "ground5_-5",
+        "family": "terrain",
+        "x": 795.8,
+        "y": 430.5,
+        "inView": true,
+        "luminance": 0.0835
+      },
+      {
+        "id": "hero",
+        "family": "hero",
+        "x": 640,
+        "y": 476.3,
+        "inView": true,
+        "luminance": 0.044
+      }
+    ]
+  },
+  {
+    "scene": "e6-glow-mesa",
+    "contract": "e6-glow-mesa",
+    "project": "desktop-chrome",
+    "phase": "probe-e0.3",
+    "query": "&lmemissive=0.3",
+    "focusMount": "mesa-starstone-derrick",
+    "standoff": [
+      0,
+      9
+    ],
+    "frameMedianLuminance": 0.1223,
+    "terrainMedianLuminance": 0.2577,
+    "landmarkMedianLuminance": 0.2395,
+    "landmarkAllMountsMedian": 0.2395,
+    "heroLuminance": 0.2808,
+    "landmarkOverTerrain": 0.929,
+    "emissiveIntensity": [
+      {
+        "id": "mesa-starstone-derrick",
+        "range": [
+          0.3,
+          0.3
+        ]
+      },
+      {
+        "id": "six-vein-control-pylon",
+        "range": [
+          0.3,
+          0.3
+        ]
+      },
+      {
+        "id": "isotope-cooling-rack",
+        "range": [
+          0.3,
+          0.3
+        ]
+      },
+      {
+        "id": "west-herd-glow-gate",
+        "range": [
+          0.3,
+          0.3
+        ]
+      },
+      {
+        "id": "east-herd-glow-gate",
+        "range": [
+          0.3,
+          0.3
+        ]
+      }
+    ],
+    "sideCensus": "{\"total\":{\"meshes\":5,\"closed\":5,\"open\":0,\"culled\":5,\"doubleSided\":0},\"mounts\":[{\"id\":\"mesa-starstone-derrick\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.934,\"topY\":10.134},{\"id\":\"six-vein-control-pylon\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":1.052,\"topY\":9.017},{\"id\":\"isotope-cooling-rack\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.945,\"topY\":5.745},{\"id\":\"west-herd-glow-gate\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.965,\"topY\":6.215},{\"id\":\"east-herd-glow-gate\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.957,\"topY\":6.207}]}",
+    "p95Ms": 10.4,
+    "screenshot": "artifacts/landmark-lighting-calibration/probe-e0.3-e6-glow-mesa-desktop-chrome.png",
+    "probes": [
+      {
+        "id": "mesa-starstone-derrick@0.30h",
+        "family": "landmark",
+        "x": 640.8,
+        "y": 232.2,
+        "inView": true,
+        "luminance": 0.0476
+      },
+      {
+        "id": "mesa-starstone-derrick@0.42h",
+        "family": "landmark",
+        "x": 640.8,
+        "y": 206.8,
+        "inView": true,
+        "luminance": 0.1201
+      },
+      {
+        "id": "mesa-starstone-derrick@0.55h",
+        "family": "landmark",
+        "x": 640.9,
+        "y": 177.9,
+        "inView": true,
+        "luminance": 0.2395
+      },
+      {
+        "id": "mesa-starstone-derrick@0.68h",
+        "family": "landmark",
+        "x": 640.9,
+        "y": 147.3,
+        "inView": true,
+        "luminance": 0.2761
+      },
+      {
+        "id": "six-vein-control-pylon@0.30h",
+        "family": "landmark",
+        "x": 1454.7,
+        "y": -310.6,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "six-vein-control-pylon@0.42h",
+        "family": "landmark",
+        "x": 1463,
+        "y": -326.8,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "six-vein-control-pylon@0.55h",
+        "family": "landmark",
+        "x": 1472.3,
+        "y": -344.8,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "six-vein-control-pylon@0.68h",
+        "family": "landmark",
+        "x": 1481.8,
+        "y": -363.3,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "isotope-cooling-rack@0.30h",
+        "family": "landmark",
+        "x": 1470.9,
+        "y": -467.2,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "isotope-cooling-rack@0.42h",
+        "family": "landmark",
+        "x": 1474.4,
+        "y": -474.5,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "isotope-cooling-rack@0.55h",
+        "family": "landmark",
+        "x": 1478.2,
+        "y": -482.5,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "isotope-cooling-rack@0.68h",
+        "family": "landmark",
+        "x": 1482,
+        "y": -490.5,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "west-herd-glow-gate@0.30h",
+        "family": "landmark",
+        "x": 643.5,
+        "y": -157,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "west-herd-glow-gate@0.42h",
+        "family": "landmark",
+        "x": 643.5,
+        "y": -168.9,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "west-herd-glow-gate@0.55h",
+        "family": "landmark",
+        "x": 643.6,
+        "y": -182.1,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "west-herd-glow-gate@0.68h",
+        "family": "landmark",
+        "x": 643.6,
+        "y": -195.5,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "east-herd-glow-gate@0.30h",
+        "family": "landmark",
+        "x": 2662.2,
+        "y": -152.6,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "east-herd-glow-gate@0.42h",
+        "family": "landmark",
+        "x": 2679.2,
+        "y": -164.6,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "east-herd-glow-gate@0.55h",
+        "family": "landmark",
+        "x": 2698,
+        "y": -177.8,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "east-herd-glow-gate@0.68h",
+        "family": "landmark",
+        "x": 2717.2,
+        "y": -191.3,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "ground5_5",
+        "family": "terrain",
+        "x": 791.6,
+        "y": 397.2,
+        "inView": true,
+        "luminance": 0.1827
+      },
+      {
+        "id": "ground-5_5",
+        "family": "terrain",
+        "x": 488.8,
+        "y": 396.1,
+        "inView": true,
+        "luminance": 0.0769
+      },
+      {
+        "id": "ground0_6",
+        "family": "terrain",
+        "x": 639.9,
+        "y": 420.3,
+        "inView": true,
+        "luminance": 0.315
+      },
+      {
+        "id": "ground5_-5",
+        "family": "terrain",
+        "x": 769,
+        "y": 201.6,
+        "inView": true,
+        "luminance": 0.2577
+      },
+      {
+        "id": "hero",
+        "family": "hero",
+        "x": 639.4,
+        "y": 476.7,
+        "inView": true,
+        "luminance": 0.2808
+      }
+    ]
+  },
+  {
+    "scene": "e2-pressure-garden",
+    "contract": "e2-pressure-garden",
+    "project": "desktop-chrome",
+    "phase": "probe-e0.3",
+    "query": "&lmemissive=0.3",
+    "focusMount": "garden-pressure-manifold",
+    "standoff": [
+      0,
+      9
+    ],
+    "frameMedianLuminance": 0.2397,
+    "terrainMedianLuminance": 0.1309,
+    "landmarkMedianLuminance": 0.0581,
+    "landmarkAllMountsMedian": 0.0581,
+    "heroLuminance": 0.2732,
+    "landmarkOverTerrain": 0.444,
+    "emissiveIntensity": [
+      {
+        "id": "garden-pressure-manifold",
+        "range": [
+          0.3,
+          0.3
+        ]
+      },
+      {
+        "id": "west-terrace-pipe-header",
+        "range": [
+          0.3,
+          0.3
+        ]
+      },
+      {
+        "id": "east-terrace-pipe-header",
+        "range": [
+          0.3,
+          0.3
+        ]
+      },
+      {
+        "id": "coal-seam-service-winch",
+        "range": [
+          0.3,
+          0.3
+        ]
+      },
+      {
+        "id": "water-band-pump-station",
+        "range": [
+          0.3,
+          0.3
+        ]
+      }
+    ],
+    "sideCensus": "{\"total\":{\"meshes\":5,\"closed\":5,\"open\":0,\"culled\":5,\"doubleSided\":0},\"mounts\":[{\"id\":\"garden-pressure-manifold\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":-0.18,\"topY\":4.82},{\"id\":\"west-terrace-pipe-header\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":1.676,\"topY\":6.426},{\"id\":\"east-terrace-pipe-header\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":1.665,\"topY\":6.485},{\"id\":\"coal-seam-service-winch\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":2.474,\"topY\":5.474},{\"id\":\"water-band-pump-station\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.008,\"topY\":4.908}]}",
+    "p95Ms": 10.3,
+    "screenshot": "artifacts/landmark-lighting-calibration/probe-e0.3-e2-pressure-garden-desktop-chrome.png",
+    "probes": [
+      {
+        "id": "garden-pressure-manifold@0.30h",
+        "family": "landmark",
+        "x": 639.8,
+        "y": 278.9,
+        "inView": true,
+        "luminance": 0.0635
+      },
+      {
+        "id": "garden-pressure-manifold@0.42h",
+        "family": "landmark",
+        "x": 639.8,
+        "y": 266.5,
+        "inView": true,
+        "luminance": 0.0581
+      },
+      {
+        "id": "garden-pressure-manifold@0.55h",
+        "family": "landmark",
+        "x": 639.8,
+        "y": 252.7,
+        "inView": true,
+        "luminance": 0.0543
+      },
+      {
+        "id": "garden-pressure-manifold@0.68h",
+        "family": "landmark",
+        "x": 639.8,
+        "y": 238.5,
+        "inView": true,
+        "luminance": 0.0543
+      },
+      {
+        "id": "west-terrace-pipe-header@0.30h",
+        "family": "landmark",
+        "x": -1624.4,
+        "y": 847.4,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "west-terrace-pipe-header@0.42h",
+        "family": "landmark",
+        "x": -1668.2,
+        "y": 839.1,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "west-terrace-pipe-header@0.55h",
+        "family": "landmark",
+        "x": -1717.6,
+        "y": 829.7,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "west-terrace-pipe-header@0.68h",
+        "family": "landmark",
+        "x": -1769.1,
+        "y": 820,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "east-terrace-pipe-header@0.30h",
+        "family": "landmark",
+        "x": 2899.6,
+        "y": 842,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "east-terrace-pipe-header@0.42h",
+        "family": "landmark",
+        "x": 2943.8,
+        "y": 833.5,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "east-terrace-pipe-header@0.55h",
+        "family": "landmark",
+        "x": 2993.7,
+        "y": 824,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "east-terrace-pipe-header@0.68h",
+        "family": "landmark",
+        "x": 3045.8,
+        "y": 814,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "coal-seam-service-winch@0.30h",
+        "family": "landmark",
+        "x": -2857.8,
+        "y": 2228.6,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "coal-seam-service-winch@0.42h",
+        "family": "landmark",
+        "x": -2936.6,
+        "y": 2250.1,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "coal-seam-service-winch@0.55h",
+        "family": "landmark",
+        "x": -3026.1,
+        "y": 2274.5,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "coal-seam-service-winch@0.68h",
+        "family": "landmark",
+        "x": -3120.2,
+        "y": 2300.1,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "water-band-pump-station@0.30h",
+        "family": "landmark",
+        "x": 1643,
+        "y": 110.4,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "water-band-pump-station@0.42h",
+        "family": "landmark",
+        "x": 1653.5,
+        "y": 98.2,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "water-band-pump-station@0.55h",
+        "family": "landmark",
+        "x": 1665.1,
+        "y": 84.8,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "water-band-pump-station@0.68h",
+        "family": "landmark",
+        "x": 1676.9,
+        "y": 71,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "ground5_5",
+        "family": "terrain",
+        "x": 788,
+        "y": 413.6,
+        "inView": true,
+        "luminance": 0.1133
+      },
+      {
+        "id": "ground-5_5",
+        "family": "terrain",
+        "x": 492,
+        "y": 413.8,
+        "inView": true,
+        "luminance": 0.1309
+      },
+      {
+        "id": "ground0_6",
+        "family": "terrain",
+        "x": 640,
+        "y": 437,
+        "inView": true,
+        "luminance": 0.0915
+      },
+      {
+        "id": "ground5_-5",
+        "family": "terrain",
+        "x": 764.8,
+        "y": 219.9,
+        "inView": true,
+        "luminance": 0.3072
+      },
+      {
+        "id": "hero",
+        "family": "hero",
+        "x": 640.1,
+        "y": 476.1,
+        "inView": true,
+        "luminance": 0.2732
+      }
+    ]
+  },
+  {
+    "scene": "e6-picnic",
+    "contract": "e6-picnic",
+    "project": "desktop-chrome",
+    "phase": "probe-e0.3",
+    "query": "&lmemissive=0.3",
+    "focusMount": "mesa-starstone-derrick",
+    "standoff": [
+      0,
+      9
+    ],
+    "frameMedianLuminance": 0.1223,
+    "terrainMedianLuminance": 0.2568,
+    "landmarkMedianLuminance": 0.2462,
+    "landmarkAllMountsMedian": 0.2462,
+    "heroLuminance": 0.28,
+    "landmarkOverTerrain": 0.959,
+    "emissiveIntensity": [
+      {
+        "id": "mesa-starstone-derrick",
+        "range": [
+          0.3,
+          0.3
+        ]
+      },
+      {
+        "id": "six-vein-control-pylon",
+        "range": [
+          0.3,
+          0.3
+        ]
+      },
+      {
+        "id": "isotope-cooling-rack",
+        "range": [
+          0.3,
+          0.3
+        ]
+      },
+      {
+        "id": "west-herd-glow-gate",
+        "range": [
+          0.3,
+          0.3
+        ]
+      },
+      {
+        "id": "east-herd-glow-gate",
+        "range": [
+          0.3,
+          0.3
+        ]
+      }
+    ],
+    "sideCensus": "{\"total\":{\"meshes\":5,\"closed\":5,\"open\":0,\"culled\":5,\"doubleSided\":0},\"mounts\":[{\"id\":\"mesa-starstone-derrick\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.934,\"topY\":10.134},{\"id\":\"six-vein-control-pylon\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":1.052,\"topY\":9.017},{\"id\":\"isotope-cooling-rack\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.945,\"topY\":5.745},{\"id\":\"west-herd-glow-gate\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.965,\"topY\":6.215},{\"id\":\"east-herd-glow-gate\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.957,\"topY\":6.207}]}",
+    "p95Ms": 10.1,
+    "screenshot": "artifacts/landmark-lighting-calibration/probe-e0.3-e6-picnic-desktop-chrome.png",
+    "probes": [
+      {
+        "id": "mesa-starstone-derrick@0.30h",
+        "family": "landmark",
+        "x": 640.9,
+        "y": 232.5,
+        "inView": true,
+        "luminance": 0.0501
+      },
+      {
+        "id": "mesa-starstone-derrick@0.42h",
+        "family": "landmark",
+        "x": 640.9,
+        "y": 207.2,
+        "inView": true,
+        "luminance": 0.1249
+      },
+      {
+        "id": "mesa-starstone-derrick@0.55h",
+        "family": "landmark",
+        "x": 640.9,
+        "y": 178.3,
+        "inView": true,
+        "luminance": 0.2462
+      },
+      {
+        "id": "mesa-starstone-derrick@0.68h",
+        "family": "landmark",
+        "x": 641,
+        "y": 147.8,
+        "inView": true,
+        "luminance": 0.2668
+      },
+      {
+        "id": "six-vein-control-pylon@0.30h",
+        "family": "landmark",
+        "x": 1453.9,
+        "y": -308.3,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "six-vein-control-pylon@0.42h",
+        "family": "landmark",
+        "x": 1462.2,
+        "y": -324.6,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "six-vein-control-pylon@0.55h",
+        "family": "landmark",
+        "x": 1471.5,
+        "y": -342.5,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "six-vein-control-pylon@0.68h",
+        "family": "landmark",
+        "x": 1480.9,
+        "y": -360.9,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "isotope-cooling-rack@0.30h",
+        "family": "landmark",
+        "x": 1470.2,
+        "y": -464.5,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "isotope-cooling-rack@0.42h",
+        "family": "landmark",
+        "x": 1473.7,
+        "y": -471.8,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "isotope-cooling-rack@0.55h",
+        "family": "landmark",
+        "x": 1477.5,
+        "y": -479.7,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "isotope-cooling-rack@0.68h",
+        "family": "landmark",
+        "x": 1481.3,
+        "y": -487.7,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "west-herd-glow-gate@0.30h",
+        "family": "landmark",
+        "x": 643.9,
+        "y": -155.3,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "west-herd-glow-gate@0.42h",
+        "family": "landmark",
+        "x": 643.9,
+        "y": -167.3,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "west-herd-glow-gate@0.55h",
+        "family": "landmark",
+        "x": 643.9,
+        "y": -180.4,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "west-herd-glow-gate@0.68h",
+        "family": "landmark",
+        "x": 644,
+        "y": -193.8,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "east-herd-glow-gate@0.30h",
+        "family": "landmark",
+        "x": 2660.3,
+        "y": -150.5,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "east-herd-glow-gate@0.42h",
+        "family": "landmark",
+        "x": 2677.3,
+        "y": -162.5,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "east-herd-glow-gate@0.55h",
+        "family": "landmark",
+        "x": 2696.1,
+        "y": -175.7,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "east-herd-glow-gate@0.68h",
+        "family": "landmark",
+        "x": 2715.2,
+        "y": -189.1,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "ground5_5",
+        "family": "terrain",
+        "x": 791.3,
+        "y": 397.4,
+        "inView": true,
+        "luminance": 0.1863
+      },
+      {
+        "id": "ground-5_5",
+        "family": "terrain",
+        "x": 489,
+        "y": 396.1,
+        "inView": true,
+        "luminance": 0.0761
+      },
+      {
+        "id": "ground0_6",
+        "family": "terrain",
+        "x": 639.9,
+        "y": 420.3,
+        "inView": true,
+        "luminance": 0.3153
+      },
+      {
+        "id": "ground5_-5",
+        "family": "terrain",
+        "x": 769,
+        "y": 202.2,
+        "inView": true,
+        "luminance": 0.2568
+      },
+      {
+        "id": "hero",
+        "family": "hero",
+        "x": 639.4,
+        "y": 476.4,
+        "inView": true,
+        "luminance": 0.28
+      }
+    ]
+  }
+]

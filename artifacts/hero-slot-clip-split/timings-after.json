@@ -1,0 +1,330 @@
+{
+ "label": "after",
+ "base": "http://127.0.0.1:5294",
+ "at": "2026-09-07T00:01:48.227Z",
+ "runs": 3,
+ "arms": {
+  "loopback": {
+   "town": [
+    {
+     "arm": "loopback",
+     "scenario": "town",
+     "errors": [],
+     "claimCellsInTownWindow": 0,
+     "townReadyMs": 1692,
+     "claimCellsInsideTownWindow": false,
+     "claimCellCount": 0,
+     "heroReadyMs": null,
+     "attackCellsFetchedInRun": 0,
+     "attackCellsMs": 0,
+     "panCellsMs": 0,
+     "swingStallMs": null,
+     "groups": [
+      "town"
+     ]
+    },
+    {
+     "arm": "loopback",
+     "scenario": "town",
+     "errors": [],
+     "claimCellsInTownWindow": 0,
+     "townReadyMs": 1967,
+     "claimCellsInsideTownWindow": false,
+     "claimCellCount": 0,
+     "heroReadyMs": null,
+     "attackCellsFetchedInRun": 0,
+     "attackCellsMs": 0,
+     "panCellsMs": 0,
+     "swingStallMs": null,
+     "groups": [
+      "town"
+     ]
+    },
+    {
+     "arm": "loopback",
+     "scenario": "town",
+     "errors": [],
+     "claimCellsInTownWindow": 0,
+     "townReadyMs": 2295,
+     "claimCellsInsideTownWindow": false,
+     "claimCellCount": 0,
+     "heroReadyMs": null,
+     "attackCellsFetchedInRun": 0,
+     "attackCellsMs": 0,
+     "panCellsMs": 0,
+     "swingStallMs": null,
+     "groups": [
+      "town"
+     ]
+    }
+   ],
+   "claim-cold": [
+    {
+     "arm": "loopback",
+     "scenario": "claim-cold",
+     "errors": [],
+     "townReadyMs": null,
+     "claimCellsInsideTownWindow": false,
+     "claimCellCount": 35,
+     "heroReadyMs": 17424,
+     "attackCellsFetchedInRun": 6,
+     "attackCellsMs": 17152,
+     "panCellsMs": 16879,
+     "swingStallMs": 0,
+     "groups": [
+      "claim town"
+     ]
+    },
+    {
+     "arm": "loopback",
+     "scenario": "claim-cold",
+     "errors": [],
+     "townReadyMs": null,
+     "claimCellsInsideTownWindow": false,
+     "claimCellCount": 35,
+     "heroReadyMs": 20348,
+     "attackCellsFetchedInRun": 6,
+     "attackCellsMs": 20032,
+     "panCellsMs": 17409,
+     "swingStallMs": 0,
+     "groups": [
+      "claim town"
+     ]
+    },
+    {
+     "arm": "loopback",
+     "scenario": "claim-cold",
+     "errors": [],
+     "townReadyMs": null,
+     "claimCellsInsideTownWindow": false,
+     "claimCellCount": 35,
+     "heroReadyMs": 17188,
+     "attackCellsFetchedInRun": 6,
+     "attackCellsMs": 16913,
+     "panCellsMs": 16780,
+     "swingStallMs": 0,
+     "groups": [
+      "claim town"
+     ]
+    }
+   ],
+   "claim-warm": [
+    {
+     "arm": "loopback",
+     "scenario": "claim-warm",
+     "errors": [],
+     "claimCellsInTownWindow": 0,
+     "warmedInTown": 8,
+     "townReadyMs": null,
+     "claimCellsInsideTownWindow": false,
+     "claimCellCount": 43,
+     "heroReadyMs": 17089,
+     "attackCellsFetchedInRun": 6,
+     "attackCellsMs": 16802,
+     "panCellsMs": 16489,
+     "swingStallMs": 0,
+     "groups": [
+      "claim town"
+     ]
+    },
+    {
+     "arm": "loopback",
+     "scenario": "claim-warm",
+     "errors": [],
+     "claimCellsInTownWindow": 0,
+     "warmedInTown": 0,
+     "townReadyMs": null,
+     "claimCellsInsideTownWindow": false,
+     "claimCellCount": 43,
+     "heroReadyMs": 20284,
+     "attackCellsFetchedInRun": 6,
+     "attackCellsMs": 19954,
+     "panCellsMs": 17286,
+     "swingStallMs": 0,
+     "groups": [
+      "claim town"
+     ]
+    },
+    {
+     "arm": "loopback",
+     "scenario": "claim-warm",
+     "errors": [],
+     "claimCellsInTownWindow": 0,
+     "warmedInTown": 0,
+     "townReadyMs": null,
+     "claimCellsInsideTownWindow": false,
+     "claimCellCount": 43,
+     "heroReadyMs": 20237,
+     "attackCellsFetchedInRun": 6,
+     "attackCellsMs": 17454,
+     "panCellsMs": 17301,
+     "swingStallMs": 0,
+     "groups": [
+      "claim town"
+     ]
+    }
+   ]
+  },
+  "8mbps-100ms": {
+   "town": [
+    {
+     "arm": "8mbps-100ms",
+     "scenario": "town",
+     "errors": [],
+     "claimCellsInTownWindow": 0,
+     "townReadyMs": 6008,
+     "claimCellsInsideTownWindow": false,
+     "claimCellCount": 0,
+     "heroReadyMs": null,
+     "attackCellsFetchedInRun": 0,
+     "attackCellsMs": 0,
+     "panCellsMs": 0,
+     "swingStallMs": null,
+     "groups": [
+      "town"
+     ]
+    },
+    {
+     "arm": "8mbps-100ms",
+     "scenario": "town",
+     "errors": [],
+     "claimCellsInTownWindow": 0,
+     "townReadyMs": 6003,
+     "claimCellsInsideTownWindow": false,
+     "claimCellCount": 0,
+     "heroReadyMs": null,
+     "attackCellsFetchedInRun": 0,
+     "attackCellsMs": 0,
+     "panCellsMs": 0,
+     "swingStallMs": null,
+     "groups": [
+      "town"
+     ]
+    },
+    {
+     "arm": "8mbps-100ms",
+     "scenario": "town",
+     "errors": [],
+     "claimCellsInTownWindow": 0,
+     "townReadyMs": 6217,
+     "claimCellsInsideTownWindow": false,
+     "claimCellCount": 0,
+     "heroReadyMs": null,
+     "attackCellsFetchedInRun": 0,
+     "attackCellsMs": 0,
+     "panCellsMs": 0,
+     "swingStallMs": null,
+     "groups": [
+      "town"
+     ]
+    }
+   ],
+   "claim-cold": [
+    {
+     "arm": "8mbps-100ms",
+     "scenario": "claim-cold",
+     "errors": [],
+     "townReadyMs": null,
+     "claimCellsInsideTownWindow": false,
+     "claimCellCount": 35,
+     "heroReadyMs": 51524,
+     "attackCellsFetchedInRun": 6,
+     "attackCellsMs": 50402,
+     "panCellsMs": 50104,
+     "swingStallMs": 0,
+     "groups": [
+      "claim town"
+     ]
+    },
+    {
+     "arm": "8mbps-100ms",
+     "scenario": "claim-cold",
+     "errors": [],
+     "townReadyMs": null,
+     "claimCellsInsideTownWindow": false,
+     "claimCellCount": 35,
+     "heroReadyMs": 50748,
+     "attackCellsFetchedInRun": 6,
+     "attackCellsMs": 49592,
+     "panCellsMs": 49155,
+     "swingStallMs": 0,
+     "groups": [
+      "claim town"
+     ]
+    },
+    {
+     "arm": "8mbps-100ms",
+     "scenario": "claim-cold",
+     "errors": [],
+     "townReadyMs": null,
+     "claimCellsInsideTownWindow": false,
+     "claimCellCount": 35,
+     "heroReadyMs": 54460,
+     "attackCellsFetchedInRun": 6,
+     "attackCellsMs": 53417,
+     "panCellsMs": 52984,
+     "swingStallMs": 0,
+     "groups": [
+      "claim town"
+     ]
+    }
+   ],
+   "claim-warm": [
+    {
+     "arm": "8mbps-100ms",
+     "scenario": "claim-warm",
+     "errors": [],
+     "claimCellsInTownWindow": 0,
+     "warmedInTown": 0,
+     "townReadyMs": null,
+     "claimCellsInsideTownWindow": false,
+     "claimCellCount": 42,
+     "heroReadyMs": 48278,
+     "attackCellsFetchedInRun": 6,
+     "attackCellsMs": 47009,
+     "panCellsMs": 46566,
+     "swingStallMs": 0,
+     "groups": [
+      "claim town"
+     ]
+    },
+    {
+     "arm": "8mbps-100ms",
+     "scenario": "claim-warm",
+     "errors": [],
+     "claimCellsInTownWindow": 0,
+     "warmedInTown": 0,
+     "townReadyMs": null,
+     "claimCellsInsideTownWindow": false,
+     "claimCellCount": 41,
+     "heroReadyMs": 47853,
+     "attackCellsFetchedInRun": 6,
+     "attackCellsMs": 46576,
+     "panCellsMs": 46204,
+     "swingStallMs": 0,
+     "groups": [
+      "claim town"
+     ]
+    },
+    {
+     "arm": "8mbps-100ms",
+     "scenario": "claim-warm",
+     "errors": [],
+     "claimCellsInTownWindow": 0,
+     "warmedInTown": 0,
+     "townReadyMs": null,
+     "claimCellsInsideTownWindow": false,
+     "claimCellCount": 41,
+     "heroReadyMs": 47639,
+     "attackCellsFetchedInRun": 6,
+     "attackCellsMs": 46058,
+     "panCellsMs": 45330,
+     "swingStallMs": 0,
+     "groups": [
+      "claim town"
+     ]
+    }
+   ]
+  }
+ }
+}

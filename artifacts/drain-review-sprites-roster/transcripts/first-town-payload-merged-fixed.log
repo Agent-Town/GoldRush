@@ -1,0 +1,44 @@
+first-town payload — declared families summed from dist/
+
+| group | gated | families | files | bytes |
+| --- | --- | ---: | ---: | ---: |
+| hero | yes | 8 | 106 | 5285305 |
+| cast | yes | 14 | 279 | 34015034 |
+| plates | yes | 19 | 19 | 5032000 |
+| models | yes | 16 | 16 | 3918764 |
+| audio | yes | 1 | 1 | 8821 |
+| code | yes | 33 | 33 | 2465427 |
+| document | yes | 1 | 1 | 1087 |
+| GATED TOTAL | yes | 92 | 455 | 50726438 |
+| DECLARED TOTAL (gated + demand-paged) | — | — | — | 50726438 |
+
+largest gated families
+    4778815  cast  char-tavernkeeper-sheet-walk8.png
+    4418482  cast  char-youngster-m-sheet-walk8.png
+    4391203  cast  char-elder-sheet-walk8.png
+    4381720  cast  char-youngster-f-sheet-walk8.png
+    4374551  cast  char-storekeeper-sheet-walk8.png
+    3765969  cast  char-newsie-mei-sheet-walk8.png
+    2027962  cast  char-assay-clerk-sheet-walk8-a.png
+    1994668  cast  char-schoolteacher-sheet-walk8-a.png
+
+Save Data arm (advance stream drops dynamo-hall, stamp-mill): 50543278 bytes (-183160)
+excluded by declaration: 12 families, 7604488 bytes in this build
+          0  char-hero-sheet-attack8-r2-east-clean-v1.png (not emitted by this build)
+     816400  char-hero-sheet-attack8.png
+          0  char-hero-sheet-work8-east-clean-v1.png (not emitted by this build)
+          0  char-hero-sheet-work8-north-clean-v1.png (not emitted by this build)
+          0  char-hero-sheet-work8-south-clean-v7.png (not emitted by this build)
+          0  char-hero-sheet-work8-west-recovered-v1.png (not emitted by this build)
+    3934689  char-hero-sheet-work8.png
+        110  era-e1-frontier-loop.js
+    1800881  era-e1-frontier-loop.mp3
+      86344  the-claim-panorama.glb
+     966064  the-claim-terrain.glb
+          0  version.json (not emitted by this build)
+
+cue-window corpus cross-check: 2 files, 82 families observed, 0 undeclared
+
+first-town payload demand-paged: 0 bytes
+first-town payload declared: 50726438 bytes
+first-town payload: 50726438 bytes

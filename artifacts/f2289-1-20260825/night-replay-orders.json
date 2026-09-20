@@ -1,0 +1,4924 @@
+{
+  "mode": "replay",
+  "tape": "artifacts/gauntlet-heat5b-20260825/e1-night-shift/attempt-1-tape.json",
+  "claimedHash": "fnv1a32:889d9357",
+  "producedHash": "fnv1a32:889d9357",
+  "outcome": {
+    "secured": true,
+    "waves": 25,
+    "gold": 115,
+    "timeAlive": 750.033
+  },
+  "submitted": 62,
+  "consumed": 62,
+  "accepted": 62,
+  "rejected": [],
+  "ordersReplaced": [
+    {
+      "type": "orders_replaced",
+      "orders": [
+        {
+          "id": "orders-1-1",
+          "order": {
+            "verb": "SET_WEAPON",
+            "weapon": "blast"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-1-2",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-1-3",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-1-4",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-1-5",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-1-6",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-1-7",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-1-8",
+          "order": {
+            "verb": "HOLD",
+            "pos": {
+              "x": 0,
+              "z": 12
+            }
+          },
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "type": "orders_replaced",
+      "orders": [
+        {
+          "id": "orders-2-1",
+          "order": {
+            "verb": "PICK_UPGRADE",
+            "id": "double_tap_coil"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-2-2",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-2-3",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-2-4",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-2-5",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-2-6",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-2-7",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-2-8",
+          "order": {
+            "verb": "HOLD",
+            "pos": {
+              "x": 0,
+              "z": 12
+            }
+          },
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "type": "orders_replaced",
+      "orders": [
+        {
+          "id": "orders-3-1",
+          "order": {
+            "verb": "MOVE_TO",
+            "pos": {
+              "x": -2.7,
+              "z": 12
+            }
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-3-2",
+          "order": {
+            "verb": "BUILD",
+            "what": "turret",
+            "where": {
+              "x": -2.7,
+              "z": 12
+            },
+            "when": {
+              "goldGte": 50
+            }
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-3-3",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-3-4",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-3-5",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-3-6",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-3-7",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-3-8",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-3-9",
+          "order": {
+            "verb": "HOLD",
+            "pos": {
+              "x": 0,
+              "z": 12
+            }
+          },
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "type": "orders_replaced",
+      "orders": [
+        {
+          "id": "orders-4-1",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-4-2",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-4-3",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-4-4",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-4-5",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-4-6",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-4-7",
+          "order": {
+            "verb": "HOLD",
+            "pos": {
+              "x": 0,
+              "z": 12
+            }
+          },
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "type": "orders_replaced",
+      "orders": [
+        {
+          "id": "orders-5-1",
+          "order": {
+            "verb": "MOVE_TO",
+            "pos": {
+              "x": 2.7,
+              "z": 12
+            }
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-5-2",
+          "order": {
+            "verb": "BUILD",
+            "what": "turret",
+            "where": {
+              "x": 2.7,
+              "z": 12
+            },
+            "when": {
+              "goldGte": 70
+            }
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-5-3",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-5-4",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-5-5",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-5-6",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-5-7",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-5-8",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-5-9",
+          "order": {
+            "verb": "HOLD",
+            "pos": {
+              "x": 0,
+              "z": 12
+            }
+          },
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "type": "orders_replaced",
+      "orders": [
+        {
+          "id": "orders-6-1",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-6-2",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-6-3",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-6-4",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-6-5",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-6-6",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-6-7",
+          "order": {
+            "verb": "HOLD",
+            "pos": {
+              "x": 0,
+              "z": 12
+            }
+          },
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "type": "orders_replaced",
+      "orders": [
+        {
+          "id": "orders-7-1",
+          "order": {
+            "verb": "PICK_UPGRADE",
+            "id": "heavy_spark"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-7-2",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-7-3",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-7-4",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-7-5",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-7-6",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-7-7",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-7-8",
+          "order": {
+            "verb": "HOLD",
+            "pos": {
+              "x": 0,
+              "z": 12
+            }
+          },
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "type": "orders_replaced",
+      "orders": [
+        {
+          "id": "orders-8-1",
+          "order": {
+            "verb": "PICK_UPGRADE",
+            "id": "quick_fuse"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-8-2",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-8-3",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-8-4",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-8-5",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-8-6",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-8-7",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-8-8",
+          "order": {
+            "verb": "HOLD",
+            "pos": {
+              "x": 0,
+              "z": 12
+            }
+          },
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "type": "orders_replaced",
+      "orders": [
+        {
+          "id": "orders-9-1",
+          "order": {
+            "verb": "PICK_UPGRADE",
+            "id": "heavy_spark"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-9-2",
+          "order": {
+            "verb": "HOLD",
+            "pos": {
+              "x": 0,
+              "z": 12
+            }
+          },
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "type": "orders_replaced",
+      "orders": [
+        {
+          "id": "orders-10-1",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-10-2",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-10-3",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-10-4",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-10-5",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-10-6",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-10-7",
+          "order": {
+            "verb": "HOLD",
+            "pos": {
+              "x": 0,
+              "z": 12
+            }
+          },
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "type": "orders_replaced",
+      "orders": [
+        {
+          "id": "orders-11-1",
+          "order": {
+            "verb": "PICK_UPGRADE",
+            "id": "heavy_spark"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-11-2",
+          "order": {
+            "verb": "MOVE_TO",
+            "pos": {
+              "x": -5.4,
+              "z": 12
+            }
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-11-3",
+          "order": {
+            "verb": "BUILD",
+            "what": "turret",
+            "where": {
+              "x": -5.4,
+              "z": 12
+            },
+            "when": {
+              "goldGte": 95
+            }
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-11-4",
+          "order": {
+            "verb": "HOLD",
+            "pos": {
+              "x": 0,
+              "z": 12
+            }
+          },
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "type": "orders_replaced",
+      "orders": [
+        {
+          "id": "orders-12-1",
+          "order": {
+            "verb": "PICK_UPGRADE",
+            "id": "long_resonator"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-12-2",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-12-3",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-12-4",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-12-5",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-12-6",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-12-7",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-12-8",
+          "order": {
+            "verb": "HOLD",
+            "pos": {
+              "x": 0,
+              "z": 12
+            }
+          },
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "type": "orders_replaced",
+      "orders": [
+        {
+          "id": "orders-13-1",
+          "order": {
+            "verb": "PICK_UPGRADE",
+            "id": "double_tap_coil"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-13-2",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-13-3",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-13-4",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-13-5",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-13-6",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-13-7",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-13-8",
+          "order": {
+            "verb": "HOLD",
+            "pos": {
+              "x": 0,
+              "z": 12
+            }
+          },
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "type": "orders_replaced",
+      "orders": [
+        {
+          "id": "orders-14-1",
+          "order": {
+            "verb": "PICK_UPGRADE",
+            "id": "double_tap_coil"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-14-2",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-14-3",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-14-4",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-14-5",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-14-6",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-14-7",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-14-8",
+          "order": {
+            "verb": "HOLD",
+            "pos": {
+              "x": 0,
+              "z": 12
+            }
+          },
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "type": "orders_replaced",
+      "orders": [
+        {
+          "id": "orders-15-1",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-15-2",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-15-3",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-15-4",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-15-5",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-15-6",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-15-7",
+          "order": {
+            "verb": "HOLD",
+            "pos": {
+              "x": 0,
+              "z": 12
+            }
+          },
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "type": "orders_replaced",
+      "orders": [
+        {
+          "id": "orders-16-1",
+          "order": {
+            "verb": "PICK_UPGRADE",
+            "id": "long_resonator"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-16-2",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-16-3",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-16-4",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-16-5",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-16-6",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-16-7",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-16-8",
+          "order": {
+            "verb": "HOLD",
+            "pos": {
+              "x": 0,
+              "z": 12
+            }
+          },
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "type": "orders_replaced",
+      "orders": [
+        {
+          "id": "orders-17-1",
+          "order": {
+            "verb": "PICK_UPGRADE",
+            "id": "powder_charge"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-17-2",
+          "order": {
+            "verb": "MOVE_TO",
+            "pos": {
+              "x": 5.4,
+              "z": 12
+            }
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-17-3",
+          "order": {
+            "verb": "BUILD",
+            "what": "turret",
+            "where": {
+              "x": 5.4,
+              "z": 12
+            },
+            "when": {
+              "goldGte": 125
+            }
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-17-4",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-17-5",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-17-6",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-17-7",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-17-8",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-17-9",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-17-10",
+          "order": {
+            "verb": "HOLD",
+            "pos": {
+              "x": 0,
+              "z": 12
+            }
+          },
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "type": "orders_replaced",
+      "orders": [
+        {
+          "id": "orders-18-1",
+          "order": {
+            "verb": "MOVE_TO",
+            "pos": {
+              "x": 0,
+              "z": 9.5
+            }
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-18-2",
+          "order": {
+            "verb": "BUILD",
+            "what": "sentry_beacon",
+            "where": {
+              "x": 0,
+              "z": 9.5
+            },
+            "when": {
+              "goldGte": 25
+            }
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-18-3",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-18-4",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-18-5",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-18-6",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-18-7",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-18-8",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-18-9",
+          "order": {
+            "verb": "HOLD",
+            "pos": {
+              "x": 0,
+              "z": 12
+            }
+          },
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "type": "orders_replaced",
+      "orders": [
+        {
+          "id": "orders-19-1",
+          "order": {
+            "verb": "PICK_UPGRADE",
+            "id": "split_spark"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-19-2",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-19-3",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-19-4",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-19-5",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-19-6",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-19-7",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-19-8",
+          "order": {
+            "verb": "HOLD",
+            "pos": {
+              "x": 0,
+              "z": 12
+            }
+          },
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "type": "orders_replaced",
+      "orders": [
+        {
+          "id": "orders-20-1",
+          "order": {
+            "verb": "PICK_UPGRADE",
+            "id": "tinkers_plating"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-20-2",
+          "order": {
+            "verb": "MOVE_TO",
+            "pos": {
+              "x": 0,
+              "z": 14.5
+            }
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-20-3",
+          "order": {
+            "verb": "BUILD",
+            "what": "sentry_beacon",
+            "where": {
+              "x": 0,
+              "z": 14.5
+            },
+            "when": {
+              "goldGte": 35
+            }
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-20-4",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-20-5",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-20-6",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-20-7",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-20-8",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-20-9",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-20-10",
+          "order": {
+            "verb": "HOLD",
+            "pos": {
+              "x": 0,
+              "z": 12
+            }
+          },
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "type": "orders_replaced",
+      "orders": [
+        {
+          "id": "orders-21-1",
+          "order": {
+            "verb": "MOVE_TO",
+            "pos": {
+              "x": -2.7,
+              "z": 9.5
+            }
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-21-2",
+          "order": {
+            "verb": "BUILD",
+            "what": "sentry_beacon",
+            "where": {
+              "x": -2.7,
+              "z": 9.5
+            },
+            "when": {
+              "goldGte": 45
+            }
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-21-3",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-21-4",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-21-5",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-21-6",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-21-7",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-21-8",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-21-9",
+          "order": {
+            "verb": "HOLD",
+            "pos": {
+              "x": 0,
+              "z": 12
+            }
+          },
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "type": "orders_replaced",
+      "orders": [
+        {
+          "id": "orders-22-1",
+          "order": {
+            "verb": "PICK_UPGRADE",
+            "id": "powder_charge"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-22-2",
+          "order": {
+            "verb": "HOLD",
+            "pos": {
+              "x": 0,
+              "z": 12
+            }
+          },
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "type": "orders_replaced",
+      "orders": [
+        {
+          "id": "orders-23-1",
+          "order": {
+            "verb": "PICK_UPGRADE",
+            "id": "tinkers_plating"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-23-2",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-23-3",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-23-4",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-23-5",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-23-6",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-23-7",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-23-8",
+          "order": {
+            "verb": "HOLD",
+            "pos": {
+              "x": 0,
+              "z": 12
+            }
+          },
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "type": "orders_replaced",
+      "orders": [
+        {
+          "id": "orders-24-1",
+          "order": {
+            "verb": "MOVE_TO",
+            "pos": {
+              "x": 2.7,
+              "z": 9.5
+            }
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-24-2",
+          "order": {
+            "verb": "BUILD",
+            "what": "sentry_beacon",
+            "where": {
+              "x": 2.7,
+              "z": 9.5
+            },
+            "when": {
+              "goldGte": 55
+            }
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-24-3",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-24-4",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-24-5",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-24-6",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-24-7",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-24-8",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-24-9",
+          "order": {
+            "verb": "HOLD",
+            "pos": {
+              "x": 0,
+              "z": 12
+            }
+          },
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "type": "orders_replaced",
+      "orders": [
+        {
+          "id": "orders-25-1",
+          "order": {
+            "verb": "PICK_UPGRADE",
+            "id": "split_spark"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-25-2",
+          "order": {
+            "verb": "HOLD",
+            "pos": {
+              "x": 0,
+              "z": 12
+            }
+          },
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "type": "orders_replaced",
+      "orders": [
+        {
+          "id": "orders-26-1",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-26-2",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-26-3",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-26-4",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-26-5",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-26-6",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-26-7",
+          "order": {
+            "verb": "HOLD",
+            "pos": {
+              "x": 0,
+              "z": 12
+            }
+          },
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "type": "orders_replaced",
+      "orders": [
+        {
+          "id": "orders-27-1",
+          "order": {
+            "verb": "PICK_UPGRADE",
+            "id": "quick_fuse"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-27-2",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-27-3",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-27-4",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-27-5",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-27-6",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-27-7",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-27-8",
+          "order": {
+            "verb": "HOLD",
+            "pos": {
+              "x": 0,
+              "z": 12
+            }
+          },
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "type": "orders_replaced",
+      "orders": [
+        {
+          "id": "orders-28-1",
+          "order": {
+            "verb": "PICK_UPGRADE",
+            "id": "tinkers_plating"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-28-2",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-28-3",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-28-4",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-28-5",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-28-6",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-28-7",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-28-8",
+          "order": {
+            "verb": "HOLD",
+            "pos": {
+              "x": 0,
+              "z": 12
+            }
+          },
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "type": "orders_replaced",
+      "orders": [
+        {
+          "id": "orders-29-1",
+          "order": {
+            "verb": "MOVE_TO",
+            "pos": {
+              "x": -2.7,
+              "z": 14.5
+            }
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-29-2",
+          "order": {
+            "verb": "BUILD",
+            "what": "sentry_beacon",
+            "where": {
+              "x": -2.7,
+              "z": 14.5
+            },
+            "when": {
+              "goldGte": 75
+            }
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-29-3",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-29-4",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-29-5",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-29-6",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-29-7",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-29-8",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-29-9",
+          "order": {
+            "verb": "HOLD",
+            "pos": {
+              "x": 0,
+              "z": 12
+            }
+          },
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "type": "orders_replaced",
+      "orders": [
+        {
+          "id": "orders-30-1",
+          "order": {
+            "verb": "PICK_UPGRADE",
+            "id": "pan_legend"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-30-2",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-30-3",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-30-4",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-30-5",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-30-6",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-30-7",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-30-8",
+          "order": {
+            "verb": "HOLD",
+            "pos": {
+              "x": 0,
+              "z": 12
+            }
+          },
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "type": "orders_replaced",
+      "orders": [
+        {
+          "id": "orders-31-1",
+          "order": {
+            "verb": "PICK_UPGRADE",
+            "id": "prospectors_luck"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-31-2",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-31-3",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-31-4",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-31-5",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-31-6",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-31-7",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-31-8",
+          "order": {
+            "verb": "HOLD",
+            "pos": {
+              "x": 0,
+              "z": 12
+            }
+          },
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "type": "orders_replaced",
+      "orders": [
+        {
+          "id": "orders-32-1",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-32-2",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-32-3",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-32-4",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-32-5",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-32-6",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-32-7",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-32-8",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-32-9",
+          "order": {
+            "verb": "HOLD",
+            "pos": {
+              "x": 0,
+              "z": 12
+            }
+          },
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "type": "orders_replaced",
+      "orders": [
+        {
+          "id": "orders-33-1",
+          "order": {
+            "verb": "PICK_UPGRADE",
+            "id": "beacon_dynamo"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-33-2",
+          "order": {
+            "verb": "MOVE_TO",
+            "pos": {
+              "x": 2.7,
+              "z": 14.5
+            }
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-33-3",
+          "order": {
+            "verb": "BUILD",
+            "what": "sentry_beacon",
+            "where": {
+              "x": 2.7,
+              "z": 14.5
+            },
+            "when": {
+              "goldGte": 95
+            }
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-33-4",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-33-5",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-33-6",
+          "order": {
+            "verb": "HOLD",
+            "pos": {
+              "x": 0,
+              "z": 12
+            }
+          },
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "type": "orders_replaced",
+      "orders": [
+        {
+          "id": "orders-34-1",
+          "order": {
+            "verb": "MOVE_TO",
+            "pos": {
+              "x": -12,
+              "z": 7
+            }
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-34-2",
+          "order": {
+            "verb": "BUILD",
+            "what": "palisade",
+            "where": {
+              "x": -12,
+              "z": 7
+            },
+            "when": {
+              "goldGte": 10
+            },
+            "rotationSteps": 1
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-34-3",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-34-4",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-34-5",
+          "order": {
+            "verb": "HOLD",
+            "pos": {
+              "x": 0,
+              "z": 12
+            }
+          },
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "type": "orders_replaced",
+      "orders": [
+        {
+          "id": "orders-35-1",
+          "order": {
+            "verb": "MOVE_TO",
+            "pos": {
+              "x": -12,
+              "z": 17
+            }
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-35-2",
+          "order": {
+            "verb": "BUILD",
+            "what": "palisade",
+            "where": {
+              "x": -12,
+              "z": 17
+            },
+            "when": {
+              "goldGte": 10
+            },
+            "rotationSteps": 1
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-35-3",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-35-4",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-35-5",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-35-6",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-35-7",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-35-8",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-35-9",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-35-10",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-35-11",
+          "order": {
+            "verb": "HOLD",
+            "pos": {
+              "x": 0,
+              "z": 12
+            }
+          },
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "type": "orders_replaced",
+      "orders": [
+        {
+          "id": "orders-36-1",
+          "order": {
+            "verb": "PICK_UPGRADE",
+            "id": "beacon_dynamo"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-36-2",
+          "order": {
+            "verb": "MOVE_TO",
+            "pos": {
+              "x": -9,
+              "z": 7
+            }
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-36-3",
+          "order": {
+            "verb": "BUILD",
+            "what": "palisade",
+            "where": {
+              "x": -9,
+              "z": 7
+            },
+            "when": {
+              "goldGte": 10
+            },
+            "rotationSteps": 1
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-36-4",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-36-5",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-36-6",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-36-7",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-36-8",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-36-9",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-36-10",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-36-11",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-36-12",
+          "order": {
+            "verb": "HOLD",
+            "pos": {
+              "x": 0,
+              "z": 12
+            }
+          },
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "type": "orders_replaced",
+      "orders": [
+        {
+          "id": "orders-37-1",
+          "order": {
+            "verb": "MOVE_TO",
+            "pos": {
+              "x": -9,
+              "z": 17
+            }
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-37-2",
+          "order": {
+            "verb": "BUILD",
+            "what": "palisade",
+            "where": {
+              "x": -9,
+              "z": 17
+            },
+            "when": {
+              "goldGte": 10
+            },
+            "rotationSteps": 1
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-37-3",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-37-4",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-37-5",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-37-6",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-37-7",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-37-8",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-37-9",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-37-10",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-37-11",
+          "order": {
+            "verb": "HOLD",
+            "pos": {
+              "x": 0,
+              "z": 12
+            }
+          },
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "type": "orders_replaced",
+      "orders": [
+        {
+          "id": "orders-38-1",
+          "order": {
+            "verb": "PICK_UPGRADE",
+            "id": "pan_legend"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-38-2",
+          "order": {
+            "verb": "MOVE_TO",
+            "pos": {
+              "x": -6,
+              "z": 7
+            }
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-38-3",
+          "order": {
+            "verb": "BUILD",
+            "what": "palisade",
+            "where": {
+              "x": -6,
+              "z": 7
+            },
+            "when": {
+              "goldGte": 10
+            },
+            "rotationSteps": 1
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-38-4",
+          "order": {
+            "verb": "MOVE_TO",
+            "pos": {
+              "x": -3,
+              "z": 12
+            }
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-38-5",
+          "order": {
+            "verb": "CONTEXT_ACTION",
+            "action": "upgrade",
+            "target": {
+              "id": "turret",
+              "index": 0
+            }
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-38-6",
+          "order": {
+            "verb": "HOLD",
+            "pos": {
+              "x": 0,
+              "z": 12
+            }
+          },
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "type": "orders_replaced",
+      "orders": [
+        {
+          "id": "orders-39-1",
+          "order": {
+            "verb": "MOVE_TO",
+            "pos": {
+              "x": -6,
+              "z": 17
+            }
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-39-2",
+          "order": {
+            "verb": "BUILD",
+            "what": "palisade",
+            "where": {
+              "x": -6,
+              "z": 17
+            },
+            "when": {
+              "goldGte": 10
+            },
+            "rotationSteps": 1
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-39-3",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-39-4",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-39-5",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-39-6",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-39-7",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-39-8",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-39-9",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-39-10",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-39-11",
+          "order": {
+            "verb": "HOLD",
+            "pos": {
+              "x": 0,
+              "z": 12
+            }
+          },
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "type": "orders_replaced",
+      "orders": [
+        {
+          "id": "orders-40-1",
+          "order": {
+            "verb": "MOVE_TO",
+            "pos": {
+              "x": -3,
+              "z": 7
+            }
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-40-2",
+          "order": {
+            "verb": "BUILD",
+            "what": "palisade",
+            "where": {
+              "x": -3,
+              "z": 7
+            },
+            "when": {
+              "goldGte": 10
+            },
+            "rotationSteps": 1
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-40-3",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-40-4",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-40-5",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-40-6",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-40-7",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-40-8",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-40-9",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-40-10",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-40-11",
+          "order": {
+            "verb": "HOLD",
+            "pos": {
+              "x": 0,
+              "z": 12
+            }
+          },
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "type": "orders_replaced",
+      "orders": [
+        {
+          "id": "orders-41-1",
+          "order": {
+            "verb": "MOVE_TO",
+            "pos": {
+              "x": -3,
+              "z": 17
+            }
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-41-2",
+          "order": {
+            "verb": "BUILD",
+            "what": "palisade",
+            "where": {
+              "x": -3,
+              "z": 17
+            },
+            "when": {
+              "goldGte": 10
+            },
+            "rotationSteps": 1
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-41-3",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-41-4",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-41-5",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-41-6",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-41-7",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-41-8",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-41-9",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-41-10",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-41-11",
+          "order": {
+            "verb": "HOLD",
+            "pos": {
+              "x": 0,
+              "z": 12
+            }
+          },
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "type": "orders_replaced",
+      "orders": [
+        {
+          "id": "orders-42-1",
+          "order": {
+            "verb": "PICK_UPGRADE",
+            "id": "prospectors_luck"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-42-2",
+          "order": {
+            "verb": "MOVE_TO",
+            "pos": {
+              "x": -3,
+              "z": 17
+            }
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-42-3",
+          "order": {
+            "verb": "BUILD",
+            "what": "palisade",
+            "where": {
+              "x": -3,
+              "z": 17
+            },
+            "when": {
+              "goldGte": 10
+            },
+            "rotationSteps": 1
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-42-4",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-42-5",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-42-6",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-42-7",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-42-8",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-42-9",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-42-10",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-42-11",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-42-12",
+          "order": {
+            "verb": "HOLD",
+            "pos": {
+              "x": 0,
+              "z": 12
+            }
+          },
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "type": "orders_replaced",
+      "orders": [
+        {
+          "id": "orders-43-1",
+          "order": {
+            "verb": "MOVE_TO",
+            "pos": {
+              "x": -3,
+              "z": 17
+            }
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-43-2",
+          "order": {
+            "verb": "BUILD",
+            "what": "palisade",
+            "where": {
+              "x": -3,
+              "z": 17
+            },
+            "when": {
+              "goldGte": 10
+            },
+            "rotationSteps": 1
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-43-3",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-43-4",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-43-5",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-43-6",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-43-7",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-43-8",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-43-9",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-43-10",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-43-11",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-43-12",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-43-13",
+          "order": {
+            "verb": "HOLD",
+            "pos": {
+              "x": 0,
+              "z": 12
+            }
+          },
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "type": "orders_replaced",
+      "orders": [
+        {
+          "id": "orders-44-1",
+          "order": {
+            "verb": "MOVE_TO",
+            "pos": {
+              "x": 0,
+              "z": 7
+            }
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-44-2",
+          "order": {
+            "verb": "BUILD",
+            "what": "palisade",
+            "where": {
+              "x": 0,
+              "z": 7
+            },
+            "when": {
+              "goldGte": 10
+            },
+            "rotationSteps": 1
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-44-3",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-44-4",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-44-5",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-44-6",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-44-7",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-44-8",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-44-9",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-44-10",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-44-11",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-44-12",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-44-13",
+          "order": {
+            "verb": "HOLD",
+            "pos": {
+              "x": 0,
+              "z": 12
+            }
+          },
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "type": "orders_replaced",
+      "orders": [
+        {
+          "id": "orders-45-1",
+          "order": {
+            "verb": "MOVE_TO",
+            "pos": {
+              "x": 0,
+              "z": 17
+            }
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-45-2",
+          "order": {
+            "verb": "BUILD",
+            "what": "palisade",
+            "where": {
+              "x": 0,
+              "z": 17
+            },
+            "when": {
+              "goldGte": 10
+            },
+            "rotationSteps": 1
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-45-3",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-45-4",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-45-5",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-45-6",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-45-7",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-45-8",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-45-9",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-45-10",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-45-11",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-45-12",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-45-13",
+          "order": {
+            "verb": "HOLD",
+            "pos": {
+              "x": 0,
+              "z": 12
+            }
+          },
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "type": "orders_replaced",
+      "orders": [
+        {
+          "id": "orders-46-1",
+          "order": {
+            "verb": "PICK_UPGRADE",
+            "id": "field_dressing"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-46-2",
+          "order": {
+            "verb": "MOVE_TO",
+            "pos": {
+              "x": 3,
+              "z": 7
+            }
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-46-3",
+          "order": {
+            "verb": "BUILD",
+            "what": "palisade",
+            "where": {
+              "x": 3,
+              "z": 7
+            },
+            "when": {
+              "goldGte": 10
+            },
+            "rotationSteps": 1
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-46-4",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-46-5",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-46-6",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-46-7",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-46-8",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-46-9",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-46-10",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-46-11",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-46-12",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-46-13",
+          "order": {
+            "verb": "HOLD",
+            "pos": {
+              "x": 0,
+              "z": 12
+            }
+          },
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "type": "orders_replaced",
+      "orders": [
+        {
+          "id": "orders-47-1",
+          "order": {
+            "verb": "MOVE_TO",
+            "pos": {
+              "x": 3,
+              "z": 17
+            }
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-47-2",
+          "order": {
+            "verb": "BUILD",
+            "what": "palisade",
+            "where": {
+              "x": 3,
+              "z": 17
+            },
+            "when": {
+              "goldGte": 10
+            },
+            "rotationSteps": 1
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-47-3",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-47-4",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-47-5",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-47-6",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-47-7",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-47-8",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-47-9",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-47-10",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-47-11",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-47-12",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-47-13",
+          "order": {
+            "verb": "HOLD",
+            "pos": {
+              "x": 0,
+              "z": 12
+            }
+          },
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "type": "orders_replaced",
+      "orders": [
+        {
+          "id": "orders-48-1",
+          "order": {
+            "verb": "MOVE_TO",
+            "pos": {
+              "x": 6,
+              "z": 7
+            }
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-48-2",
+          "order": {
+            "verb": "BUILD",
+            "what": "palisade",
+            "where": {
+              "x": 6,
+              "z": 7
+            },
+            "when": {
+              "goldGte": 10
+            },
+            "rotationSteps": 1
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-48-3",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-48-4",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-48-5",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-48-6",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-48-7",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-48-8",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-48-9",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-48-10",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-48-11",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-48-12",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-48-13",
+          "order": {
+            "verb": "HOLD",
+            "pos": {
+              "x": 0,
+              "z": 12
+            }
+          },
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "type": "orders_replaced",
+      "orders": [
+        {
+          "id": "orders-49-1",
+          "order": {
+            "verb": "PICK_UPGRADE",
+            "id": "sharpen"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-49-2",
+          "order": {
+            "verb": "MOVE_TO",
+            "pos": {
+              "x": 6,
+              "z": 17
+            }
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-49-3",
+          "order": {
+            "verb": "BUILD",
+            "what": "palisade",
+            "where": {
+              "x": 6,
+              "z": 17
+            },
+            "when": {
+              "goldGte": 10
+            },
+            "rotationSteps": 1
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-49-4",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-49-5",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-49-6",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-49-7",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-49-8",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-49-9",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-49-10",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-49-11",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-49-12",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-49-13",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-49-14",
+          "order": {
+            "verb": "HOLD",
+            "pos": {
+              "x": 0,
+              "z": 12
+            }
+          },
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "type": "orders_replaced",
+      "orders": [
+        {
+          "id": "orders-50-1",
+          "order": {
+            "verb": "MOVE_TO",
+            "pos": {
+              "x": 9,
+              "z": 7
+            }
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-50-2",
+          "order": {
+            "verb": "BUILD",
+            "what": "palisade",
+            "where": {
+              "x": 9,
+              "z": 7
+            },
+            "when": {
+              "goldGte": 10
+            },
+            "rotationSteps": 1
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-50-3",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-50-4",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-50-5",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-50-6",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-50-7",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-50-8",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-50-9",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-50-10",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-50-11",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-50-12",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-50-13",
+          "order": {
+            "verb": "HOLD",
+            "pos": {
+              "x": 0,
+              "z": 12
+            }
+          },
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "type": "orders_replaced",
+      "orders": [
+        {
+          "id": "orders-51-1",
+          "order": {
+            "verb": "MOVE_TO",
+            "pos": {
+              "x": 9,
+              "z": 17
+            }
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-51-2",
+          "order": {
+            "verb": "BUILD",
+            "what": "palisade",
+            "where": {
+              "x": 9,
+              "z": 17
+            },
+            "when": {
+              "goldGte": 10
+            },
+            "rotationSteps": 1
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-51-3",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-51-4",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-51-5",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-51-6",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-51-7",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-51-8",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-51-9",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-51-10",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-51-11",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-51-12",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-51-13",
+          "order": {
+            "verb": "HOLD",
+            "pos": {
+              "x": 0,
+              "z": 12
+            }
+          },
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "type": "orders_replaced",
+      "orders": [
+        {
+          "id": "orders-52-1",
+          "order": {
+            "verb": "MOVE_TO",
+            "pos": {
+              "x": 12,
+              "z": 7
+            }
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-52-2",
+          "order": {
+            "verb": "BUILD",
+            "what": "palisade",
+            "where": {
+              "x": 12,
+              "z": 7
+            },
+            "when": {
+              "goldGte": 10
+            },
+            "rotationSteps": 1
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-52-3",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-52-4",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-52-5",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-52-6",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-52-7",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-52-8",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-52-9",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-52-10",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-52-11",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-52-12",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-52-13",
+          "order": {
+            "verb": "HOLD",
+            "pos": {
+              "x": 0,
+              "z": 12
+            }
+          },
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "type": "orders_replaced",
+      "orders": [
+        {
+          "id": "orders-53-1",
+          "order": {
+            "verb": "MOVE_TO",
+            "pos": {
+              "x": 12,
+              "z": 17
+            }
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-53-2",
+          "order": {
+            "verb": "BUILD",
+            "what": "palisade",
+            "where": {
+              "x": 12,
+              "z": 17
+            },
+            "when": {
+              "goldGte": 10
+            },
+            "rotationSteps": 1
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-53-3",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-53-4",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-53-5",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-53-6",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-53-7",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-53-8",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-53-9",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-53-10",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-53-11",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-53-12",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-1"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-53-13",
+          "order": {
+            "verb": "HOLD",
+            "pos": {
+              "x": 0,
+              "z": 12
+            }
+          },
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "type": "orders_replaced",
+      "orders": [
+        {
+          "id": "orders-54-1",
+          "order": {
+            "verb": "PICK_UPGRADE",
+            "id": "field_dressing"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-54-2",
+          "order": {
+            "verb": "MOVE_TO",
+            "pos": {
+              "x": 12,
+              "z": 17
+            }
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-54-3",
+          "order": {
+            "verb": "BUILD",
+            "what": "palisade",
+            "where": {
+              "x": 12,
+              "z": 17
+            },
+            "when": {
+              "goldGte": 10
+            },
+            "rotationSteps": 1
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-54-4",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-54-5",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-54-6",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-54-7",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-54-8",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-54-9",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-54-10",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-54-11",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-54-12",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-54-13",
+          "order": {
+            "verb": "HARVEST",
+            "seam": "gold-seam-2"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-54-14",
+          "order": {
+            "verb": "HOLD",
+            "pos": {
+              "x": 0,
+              "z": 12
+            }
+          },
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "type": "orders_replaced",
+      "orders": [
+        {
+          "id": "orders-55-1",
+          "order": {
+            "verb": "HOLD",
+            "pos": {
+              "x": 0,
+              "z": 12
+            }
+          },
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "type": "orders_replaced",
+      "orders": [
+        {
+          "id": "orders-56-1",
+          "order": {
+            "verb": "PICK_UPGRADE",
+            "id": "field_dressing"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-56-2",
+          "order": {
+            "verb": "HOLD",
+            "pos": {
+              "x": 0,
+              "z": 12
+            }
+          },
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "type": "orders_replaced",
+      "orders": [
+        {
+          "id": "orders-57-1",
+          "order": {
+            "verb": "PICK_UPGRADE",
+            "id": "sharpen"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-57-2",
+          "order": {
+            "verb": "HOLD",
+            "pos": {
+              "x": 0,
+              "z": 12
+            }
+          },
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "type": "orders_replaced",
+      "orders": [
+        {
+          "id": "orders-58-1",
+          "order": {
+            "verb": "PICK_UPGRADE",
+            "id": "field_dressing"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-58-2",
+          "order": {
+            "verb": "HOLD",
+            "pos": {
+              "x": 0,
+              "z": 12
+            }
+          },
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "type": "orders_replaced",
+      "orders": [
+        {
+          "id": "orders-59-1",
+          "order": {
+            "verb": "PICK_UPGRADE",
+            "id": "wide_ring"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-59-2",
+          "order": {
+            "verb": "HOLD",
+            "pos": {
+              "x": 0,
+              "z": 12
+            }
+          },
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "type": "orders_replaced",
+      "orders": [
+        {
+          "id": "orders-60-1",
+          "order": {
+            "verb": "PICK_UPGRADE",
+            "id": "sharpen"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-60-2",
+          "order": {
+            "verb": "HOLD",
+            "pos": {
+              "x": 0,
+              "z": 12
+            }
+          },
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "type": "orders_replaced",
+      "orders": [
+        {
+          "id": "orders-61-1",
+          "order": {
+            "verb": "PICK_UPGRADE",
+            "id": "sharpen"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-61-2",
+          "order": {
+            "verb": "HOLD",
+            "pos": {
+              "x": 0,
+              "z": 12
+            }
+          },
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "type": "orders_replaced",
+      "orders": [
+        {
+          "id": "orders-62-1",
+          "order": {
+            "verb": "PICK_UPGRADE",
+            "id": "sharpen"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "orders-62-2",
+          "order": {
+            "verb": "HOLD",
+            "pos": {
+              "x": 0,
+              "z": 12
+            }
+          },
+          "status": "pending"
+        }
+      ]
+    }
+  ]
+}

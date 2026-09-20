@@ -1,0 +1,13 @@
+**NOT SECURED** — `e1-night-shift` on `e1-night-shift-01`, best run **w20 / 615.400 s / 32 g / 123 calls**, 3 sim runs, 1 scored attempt. Nothing is put forward; the run died at wave 20 of a 25-wave secure.
+
+Everything is written to `/tmp/heat12-038cc280/artifacts/heat12/opus/e1-night-shift/`: `gauntlet-outcome.json` (truthful from the idle probe onward, rewritten on every child exit), `gauntlet-report.md` with the four required sections, `run.mjs`, both tapes and per-view logs.
+
+The three things worth your attention:
+
+**This is a 25-wave, 750-second contract** (`twist.secureWave: 25`) — double every other E1 board. The tape envelope scales with it (22,502 ticks), so admissibility was never at risk; survival was.
+
+**The era's named mechanic is inert and the map's real one is a slot trap.** The bank cap (200) never bound once: 980 gold panned, purse never above 95 — income rate, not the cap, is what this map is about. What *is* live is the light ramp: I traced `nightSpeedMultiplier` (`HeadlessContractSim.ts:2558`) and confirmed wreckers outside a lit disc move at 1.18×, with `lantern_post` radius 7. But the map pre-places **seven wrecked lantern posts against a `maxCount` of 8**, so a rider can build exactly one — the lever is *relighting* (8 g, via `REPAIR_UNDER`), not building, and four of the seven sit across the river.
+
+**The loss was self-inflicted and I can name it.** Those four unbuildable lantern rungs kept `ladderDone` false for an entire ride, which silently withheld the 600-gold tier-2 turret sink. I fixed that for the scored attempt but also added stockpiles in the same run — 120 gold spent raising a cap the purse never reached, plus 27 gold of theft invited — so the attempt gained 1.1 seconds and I cannot cleanly attribute it. That's generation 29's "don't change two things in your last ride," repeated.
+
+Winnability: undecided-leaning-yes, blocked by my budget. Both controllers held wave 20 with the full fort and hero at 175 maxHp; the gap is 1.59 g/s of income against a ladder plus sink that wants more, and my harvest tail round-robined three seams instead of draining the nearest (9.3 wu) block-wise — the untested fix the two rides jointly pointed at, which I ran out of wall clock to ride.

@@ -1,0 +1,48 @@
+/Users/robin/.codex/worktrees/572c/Gold Rush/assets/pilots/railcar-3d/build_railcar.py:54: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  material.use_nodes = True
+Info: Saved as "railcar.blend"
+INFO Draco mesh compression is available, use library at /Applications/Blender.app/Contents/Resources/5.1/scripts/addons_core/io_scene_gltf2/libextern_draco.dylib
+11:33:45 | INFO: Starting glTF 2.0 export
+11:33:45 | INFO: Extracting primitive: Railcar_WheelsMesh
+11:33:45 | INFO: Primitives created: 1
+11:33:45 | INFO: Extracting primitive: Railcar_BoilerMesh
+11:33:45 | INFO: Primitives created: 1
+11:33:45 | INFO: Extracting primitive: Railcar_CabinMesh
+11:33:45 | INFO: Primitives created: 1
+11:33:45 | INFO: Finished glTF 2.0 export in 0.02040696144104004 s
+
+{
+  "blend": "/Users/robin/.codex/worktrees/572c/Gold Rush/assets/pilots/railcar-3d/railcar.blend",
+  "glb": "/Users/robin/.codex/worktrees/572c/Gold Rush/assets/pilots/railcar-3d/railcar.glb",
+  "sha256": "206a539a40c57791fc249c31912d98b00709d47ff808d6409cc1c89c0e99da21",
+  "sourcePlateSha256": "410a4cb77c24b40fbda47ef148f33e5655c7d9d8fe793c97ccac844eb5b5e536",
+  "surfaceSource": "assets/raw/railcar-atlas-fidelity-e2.png",
+  "surfaceSha256": "448ae3819f1d611d2b1edcefe3a353cf075b90a556dc3080b419cb175b479532",
+  "objects": [
+    "Railcar_Wheels",
+    "Railcar_Boiler",
+    "Railcar_Cabin"
+  ],
+  "damageMorphs": [
+    "Damage_BentWheels",
+    "Damage_VentingBoiler",
+    "Damage_CrackedCabin"
+  ],
+  "triangles": 11936,
+  "boundsBlender": {
+    "min": [
+      -1.65,
+      -0.62414,
+      0.0
+    ],
+    "max": [
+      1.65,
+      0.62414,
+      1.242
+    ]
+  },
+  "lengthGaugeRatio": 4.2308
+}
+Blender 5.1.2 (hash ec6e62d40fa9 built 2026-05-19 01:30:33)
+
+Blender quit

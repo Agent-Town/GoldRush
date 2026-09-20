@@ -1,0 +1,603 @@
+{
+  "contract": "e8-far-side",
+  "policyAir": "ignore-air",
+  "policy": {
+    "verbs": [
+      "HARVEST",
+      "BUILD",
+      "MOVE_TO",
+      "MOVE_HERO",
+      "HOLD",
+      "BLAST_AT",
+      "CONTEXT_ACTION",
+      "PICK_UPGRADE",
+      "SECURE_CHOICE"
+    ],
+    "home": {
+      "x": 0,
+      "z": -31
+    },
+    "errand": "crossing",
+    "airMargin": 10,
+    "panTailReserve": 2,
+    "fortProfile": "default",
+    "heroPost": {
+      "x": 0,
+      "z": -36
+    },
+    "defence": [
+      {
+        "what": "turret",
+        "where": {
+          "x": -12,
+          "z": -31
+        }
+      },
+      {
+        "what": "turret",
+        "where": {
+          "x": 12,
+          "z": -31
+        }
+      },
+      {
+        "what": "turret",
+        "where": {
+          "x": -12,
+          "z": -41
+        }
+      },
+      {
+        "what": "turret",
+        "where": {
+          "x": 12,
+          "z": -41
+        }
+      },
+      {
+        "what": "sentry_beacon",
+        "where": {
+          "x": -5,
+          "z": -33
+        }
+      },
+      {
+        "what": "sentry_beacon",
+        "where": {
+          "x": 5,
+          "z": -33
+        }
+      },
+      {
+        "what": "sentry_beacon",
+        "where": {
+          "x": -5,
+          "z": -39
+        }
+      },
+      {
+        "what": "sentry_beacon",
+        "where": {
+          "x": 5,
+          "z": -39
+        }
+      },
+      {
+        "what": "sentry_beacon",
+        "where": {
+          "x": 0,
+          "z": -31
+        }
+      },
+      {
+        "what": "sentry_beacon",
+        "where": {
+          "x": 0,
+          "z": -41
+        }
+      }
+    ]
+  },
+  "identical": false,
+  "secured": false,
+  "runs": [
+    {
+      "seed": "e8-far-side-01",
+      "exitCode": 0,
+      "turns": 9,
+      "picks": 1,
+      "outcome": {
+        "secured": false,
+        "waves": 2,
+        "timeMs": 79500,
+        "gold": 40,
+        "kills": 24,
+        "calls": 8,
+        "defaultedPicks": 0,
+        "defaultedSecure": 0,
+        "eventLogHash": "fnv1a32:09e0bf55"
+      },
+      "run": 1,
+      "tape": null,
+      "trace": [
+        {
+          "wave": 0,
+          "runSeconds": 13.13,
+          "gold": 0,
+          "suit": 48.333,
+          "inDome": null,
+          "window": 0,
+          "windowWaves": 4,
+          "creditedThisWindow": 1,
+          "credited": 1,
+          "required": 4,
+          "reached": [
+            "listening-probe-crater"
+          ],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {},
+          "tiers": [],
+          "heroHp": 100,
+          "heroAt": {
+            "x": 0,
+            "z": 39.71
+          },
+          "threats": 2,
+          "body": {
+            "x": -1.8,
+            "z": -0.9
+          },
+          "lastOrders": [
+            [
+              "MOVE_HERO",
+              "done",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "failed",
+              "OUT_OF_RANGE: BLAST_AT must be within 24m of the hero."
+            ],
+            [
+              "MOVE_TO",
+              "pending",
+              null
+            ],
+            [
+              "CONTEXT_ACTION",
+              "pending",
+              null
+            ]
+          ],
+          "plan": "ignore-air",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 26,
+          "build": "turret@-12,-31"
+        },
+        {
+          "wave": 1,
+          "runSeconds": 30,
+          "gold": 0,
+          "suit": 31.467,
+          "inDome": null,
+          "window": 0,
+          "windowWaves": 4,
+          "creditedThisWindow": 1,
+          "credited": 1,
+          "required": 4,
+          "reached": [
+            "listening-probe-crater"
+          ],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {},
+          "tiers": [],
+          "heroHp": 100,
+          "heroAt": {
+            "x": 0,
+            "z": 46.38
+          },
+          "threats": 11,
+          "body": {
+            "x": -4.7,
+            "z": 10.6
+          },
+          "lastOrders": [
+            [
+              "BLAST_AT",
+              "failed",
+              "OUT_OF_RANGE: BLAST_AT must be within 24m of the hero."
+            ],
+            [
+              "MOVE_TO",
+              "done",
+              null
+            ],
+            [
+              "CONTEXT_ACTION",
+              "done",
+              null
+            ],
+            [
+              "BUILD",
+              "pending",
+              null
+            ]
+          ],
+          "plan": "ignore-air",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 27,
+          "build": "turret@-12,-31"
+        },
+        {
+          "wave": 1,
+          "runSeconds": 37.1,
+          "gold": 30,
+          "suit": 24.367,
+          "inDome": null,
+          "window": 0,
+          "windowWaves": 4,
+          "creditedThisWindow": 1,
+          "credited": 1,
+          "required": 4,
+          "reached": [
+            "listening-probe-crater"
+          ],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {},
+          "tiers": [],
+          "heroHp": 92.8,
+          "heroAt": {
+            "x": 0,
+            "z": 33.86
+          },
+          "threats": 9,
+          "body": {
+            "x": -9,
+            "z": -22
+          },
+          "lastOrders": [
+            [
+              "MOVE_HERO",
+              "done",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "failed",
+              "OUT_OF_RANGE: BLAST_AT must be within 24m of the hero."
+            ],
+            [
+              "BUILD",
+              "pending",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ]
+          ],
+          "plan": "ignore-air",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 27,
+          "build": "turret@-12,-31"
+        },
+        {
+          "wave": 1,
+          "runSeconds": 46.67,
+          "gold": 50,
+          "suit": 14.8,
+          "inDome": null,
+          "window": 0,
+          "windowWaves": 4,
+          "creditedThisWindow": 1,
+          "credited": 1,
+          "required": 4,
+          "reached": [
+            "listening-probe-crater"
+          ],
+          "held": 1,
+          "breathless": 0,
+          "complete": false,
+          "works": {},
+          "tiers": [],
+          "heroHp": 92.8,
+          "heroAt": {
+            "x": 0,
+            "z": 45.97
+          },
+          "threats": 9,
+          "body": {
+            "x": 6.1,
+            "z": -32.9
+          },
+          "lastOrders": [
+            [
+              "MOVE_HERO",
+              "done",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "failed",
+              "OUT_OF_RANGE: BLAST_AT must be within 24m of the hero."
+            ],
+            [
+              "BUILD",
+              "active",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ]
+          ],
+          "plan": "ignore-air",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 27,
+          "build": "turret@-12,-31"
+        },
+        {
+          "wave": 1,
+          "runSeconds": 54.03,
+          "gold": 10,
+          "suit": 7.433,
+          "inDome": null,
+          "window": 0,
+          "windowWaves": 4,
+          "creditedThisWindow": 1,
+          "credited": 1,
+          "required": 4,
+          "reached": [
+            "listening-probe-crater"
+          ],
+          "held": 1,
+          "breathless": 0,
+          "complete": false,
+          "works": {
+            "turret": 1
+          },
+          "tiers": [
+            1
+          ],
+          "heroHp": 85.6,
+          "heroAt": {
+            "x": 0,
+            "z": 34.09
+          },
+          "threats": 10,
+          "body": {
+            "x": 16,
+            "z": -34
+          },
+          "lastOrders": [
+            [
+              "PICK_UPGRADE",
+              "done",
+              null
+            ],
+            [
+              "MOVE_HERO",
+              "done",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "failed",
+              "OUT_OF_RANGE: BLAST_AT must be within 24m of the hero."
+            ],
+            [
+              "BUILD",
+              "done",
+              null
+            ]
+          ],
+          "plan": "ignore-air",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 0,
+          "build": "turret@12,-31"
+        },
+        {
+          "wave": 2,
+          "runSeconds": 60.03,
+          "gold": 10,
+          "suit": 1.433,
+          "inDome": null,
+          "window": 0,
+          "windowWaves": 4,
+          "creditedThisWindow": 1,
+          "credited": 1,
+          "required": 4,
+          "reached": [
+            "listening-probe-crater"
+          ],
+          "held": 2,
+          "breathless": 0,
+          "complete": false,
+          "works": {
+            "turret": 1
+          },
+          "tiers": [
+            1
+          ],
+          "heroHp": 85.6,
+          "heroAt": {
+            "x": 0,
+            "z": 45.87
+          },
+          "threats": 16,
+          "body": {
+            "x": 0,
+            "z": -31
+          },
+          "lastOrders": [
+            [
+              "MOVE_HERO",
+              "done",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "failed",
+              "OUT_OF_RANGE: BLAST_AT must be within 24m of the hero."
+            ],
+            [
+              "BUILD",
+              "pending",
+              null
+            ],
+            [
+              "MOVE_TO",
+              "done",
+              null
+            ]
+          ],
+          "plan": "ignore-air",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 27,
+          "build": "turret@12,-31"
+        },
+        {
+          "wave": 2,
+          "runSeconds": 65.33,
+          "gold": 40,
+          "suit": 0,
+          "inDome": null,
+          "window": 0,
+          "windowWaves": 4,
+          "creditedThisWindow": 1,
+          "credited": 1,
+          "required": 4,
+          "reached": [
+            "listening-probe-crater"
+          ],
+          "held": 2,
+          "breathless": 0,
+          "complete": false,
+          "works": {
+            "turret": 1
+          },
+          "tiers": [
+            1
+          ],
+          "heroHp": 70.6,
+          "heroAt": {
+            "x": 0,
+            "z": 34.23
+          },
+          "threats": 15,
+          "body": {
+            "x": -16,
+            "z": -34
+          },
+          "lastOrders": [
+            [
+              "MOVE_HERO",
+              "done",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "failed",
+              "OUT_OF_RANGE: BLAST_AT must be within 24m of the hero."
+            ],
+            [
+              "BUILD",
+              "pending",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ]
+          ],
+          "plan": "ignore-air",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 0,
+          "build": "turret@12,-31"
+        },
+        {
+          "wave": 2,
+          "runSeconds": 79.5,
+          "gold": 40,
+          "suit": 0,
+          "inDome": null,
+          "window": 0,
+          "windowWaves": 4,
+          "creditedThisWindow": 1,
+          "credited": 1,
+          "required": 4,
+          "reached": [
+            "listening-probe-crater"
+          ],
+          "held": 2,
+          "breathless": 1,
+          "complete": false,
+          "works": {
+            "turret": 1
+          },
+          "tiers": [
+            1
+          ],
+          "heroHp": 0,
+          "heroAt": {
+            "x": 0,
+            "z": 46.05
+          },
+          "threats": 16,
+          "body": {
+            "x": 0,
+            "z": -31
+          },
+          "lastOrders": [
+            [
+              "MOVE_HERO",
+              "done",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "failed",
+              "OUT_OF_RANGE: BLAST_AT must be within 24m of the hero."
+            ],
+            [
+              "BUILD",
+              "pending",
+              null
+            ],
+            [
+              "MOVE_TO",
+              "done",
+              null
+            ]
+          ],
+          "plan": "ignore-air",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 27,
+          "build": "turret@12,-31"
+        }
+      ],
+      "stderrTail": [
+        "(node:95390) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.",
+        "(Use `node --trace-warnings ...` to show where the warning was created)",
+        "gr-sim speed: 1.64 waves/s"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,2441 @@
+{
+  "baseURL": "http://127.0.0.1:5199",
+  "viewport": "1280x800",
+  "recipe": "/?debug&era=<era>&contract=<id>&nowaves&nolevel&nokill&nopause&tier=full&seed=dossier-<id>",
+  "probed": 29,
+  "rows": [
+    {
+      "id": "e2-trestle",
+      "era": 2,
+      "name": "The Trestle",
+      "boot": "PASS",
+      "console": {
+        "errors": [],
+        "warnings": [],
+        "pageErrors": []
+      },
+      "door": {
+        "activeId": "e2-trestle",
+        "requestedId": "e2-trestle",
+        "fallbackReason": null,
+        "gameBelievesActive": "e2-trestle"
+      },
+      "bootMs": 18783,
+      "pilot": {
+        "state": "ready",
+        "contract": "e2-trestle",
+        "renderSource": "glb",
+        "heightSource": "baked-grid",
+        "failure": null,
+        "terrainLoadState": "mounted",
+        "panoramaLoadState": "mounted",
+        "landmarkLoadState": "mounted",
+        "meshes": 1,
+        "triangles": 32768,
+        "vertices": 16641,
+        "materials": 1,
+        "panorama": "trestle-panorama",
+        "panoramaMeshes": 1,
+        "panoramaTriangles": 1920,
+        "panoramaFraming": "world-projected-horizon",
+        "panoramaFog": "excluded",
+        "continuation": "sculpt-edge-continuation",
+        "landmarks": 6,
+        "landmarkExpected": 6,
+        "landmarkSkipped": 0,
+        "landmarkDiagnostics": "",
+        "landmarkMountIds": [
+          "trestle-crossing",
+          "south-boiler-site",
+          "north-boiler-site",
+          "south-approach-kit",
+          "north-approach-kit",
+          "mine-spur-kit"
+        ]
+      },
+      "relief": {
+        "stations": 441,
+        "nonFinite": 0,
+        "min": -0.872,
+        "max": 1.182,
+        "range": 2.054,
+        "sd": 0.391
+      },
+      "shot": "reviews/shots-campaign-dossier/e2-trestle.png",
+      "frame": {
+        "size": "1280x800",
+        "meanLuma": 70.35,
+        "peakLuma": 248.3,
+        "litShare": 87.55,
+        "hist": [
+          12.4,
+          44.3,
+          33.6,
+          0.5,
+          1.4,
+          0.4,
+          0.6,
+          6.9
+        ]
+      },
+      "landmarkShot": "reviews/shots-campaign-dossier/e2-trestle-landmark.png",
+      "landmarkFrame": {
+        "size": "1280x800",
+        "meanLuma": 58.81,
+        "peakLuma": 248.3,
+        "litShare": 67.37,
+        "hist": [
+          32.6,
+          41.9,
+          15.5,
+          0.6,
+          1.4,
+          0.4,
+          0.6,
+          6.9
+        ]
+      },
+      "landmarkStation": {
+        "id": "trestle-crossing",
+        "x": 0,
+        "z": 0
+      },
+      "disk": {
+        "slug": "trestle",
+        "pack": [
+          "mine-spur-kit.glb",
+          "north-approach-kit.glb",
+          "north-boiler-site.glb",
+          "south-approach-kit.glb",
+          "south-boiler-site.glb",
+          "trestle-crossing.glb"
+        ],
+        "ownContract": {
+          "file": "assets/pilots/map-rebuild-spike/trestle-terrain-contract.json",
+          "contractId": "e2-trestle",
+          "mounts": 6,
+          "mountAssets": [
+            "landmarks/trestle/trestle-crossing.glb",
+            "landmarks/trestle/south-boiler-site.glb",
+            "landmarks/trestle/north-boiler-site.glb",
+            "landmarks/trestle/south-approach-kit.glb",
+            "landmarks/trestle/north-approach-kit.glb",
+            "landmarks/trestle/mine-spur-kit.glb"
+          ]
+        },
+        "harvestAnchors": 4
+      }
+    },
+    {
+      "id": "e2-pressure-garden",
+      "era": 2,
+      "name": "The Pressure Garden",
+      "boot": "PASS",
+      "console": {
+        "errors": [],
+        "warnings": [],
+        "pageErrors": []
+      },
+      "door": {
+        "activeId": "e2-pressure-garden",
+        "requestedId": "e2-pressure-garden",
+        "fallbackReason": null,
+        "gameBelievesActive": "e2-pressure-garden"
+      },
+      "bootMs": 22212,
+      "pilot": {
+        "state": "ready",
+        "contract": "e2-pressure-garden",
+        "renderSource": "glb",
+        "heightSource": "baked-grid",
+        "failure": null,
+        "terrainLoadState": "mounted",
+        "panoramaLoadState": "mounted",
+        "landmarkLoadState": "mounted",
+        "meshes": 1,
+        "triangles": 32768,
+        "vertices": 16641,
+        "materials": 1,
+        "panorama": "pressure-garden-panorama",
+        "panoramaMeshes": 1,
+        "panoramaTriangles": 2112,
+        "panoramaFraming": "world-projected-horizon",
+        "panoramaFog": "excluded",
+        "continuation": "sculpt-edge-continuation",
+        "landmarks": 5,
+        "landmarkExpected": 5,
+        "landmarkSkipped": 0,
+        "landmarkDiagnostics": "",
+        "landmarkMountIds": [
+          "garden-pressure-manifold",
+          "west-terrace-pipe-header",
+          "east-terrace-pipe-header",
+          "coal-seam-service-winch",
+          "water-band-pump-station"
+        ]
+      },
+      "relief": {
+        "stations": 441,
+        "nonFinite": 0,
+        "min": -0.289,
+        "max": 2.503,
+        "range": 2.792,
+        "sd": 1.058
+      },
+      "shot": "reviews/shots-campaign-dossier/e2-pressure-garden.png",
+      "frame": {
+        "size": "1280x800",
+        "meanLuma": 76.68,
+        "peakLuma": 248.3,
+        "litShare": 87.94,
+        "hist": [
+          12.1,
+          40.5,
+          34.6,
+          0.5,
+          1.4,
+          0.5,
+          0.9,
+          9.5
+        ]
+      },
+      "landmarkShot": "reviews/shots-campaign-dossier/e2-pressure-garden-landmark.png",
+      "landmarkFrame": {
+        "size": "1280x800",
+        "meanLuma": 84.84,
+        "peakLuma": 248.3,
+        "litShare": 97.03,
+        "hist": [
+          3,
+          30.1,
+          54.1,
+          0.4,
+          1.5,
+          0.5,
+          0.8,
+          9.6
+        ]
+      },
+      "landmarkStation": {
+        "id": "garden-pressure-manifold",
+        "x": 0,
+        "z": 4
+      },
+      "disk": {
+        "slug": "pressure-garden",
+        "pack": [
+          "coal-seam-service-winch.glb",
+          "east-terrace-pipe-header.glb",
+          "garden-pressure-manifold.glb",
+          "water-band-pump-station.glb",
+          "west-terrace-pipe-header.glb"
+        ],
+        "ownContract": {
+          "file": "assets/pilots/map-rebuild-spike/pressure-garden-terrain-contract.json",
+          "contractId": "e2-pressure-garden",
+          "mounts": 5,
+          "mountAssets": [
+            "landmarks/pressure-garden/garden-pressure-manifold.glb",
+            "landmarks/pressure-garden/west-terrace-pipe-header.glb",
+            "landmarks/pressure-garden/east-terrace-pipe-header.glb",
+            "landmarks/pressure-garden/coal-seam-service-winch.glb",
+            "landmarks/pressure-garden/water-band-pump-station.glb"
+          ]
+        },
+        "harvestAnchors": 6
+      }
+    },
+    {
+      "id": "e2-incline",
+      "era": 2,
+      "name": "The Incline",
+      "boot": "PASS",
+      "console": {
+        "errors": [],
+        "warnings": [],
+        "pageErrors": []
+      },
+      "door": {
+        "activeId": "e2-incline",
+        "requestedId": "e2-incline",
+        "fallbackReason": null,
+        "gameBelievesActive": "e2-incline"
+      },
+      "bootMs": 18736,
+      "pilot": {
+        "state": "ready",
+        "contract": "e2-incline",
+        "renderSource": "glb",
+        "heightSource": "baked-grid",
+        "failure": null,
+        "terrainLoadState": "mounted",
+        "panoramaLoadState": "mounted",
+        "landmarkLoadState": "mounted",
+        "meshes": 1,
+        "triangles": 32768,
+        "vertices": 16641,
+        "materials": 1,
+        "panorama": "incline-panorama",
+        "panoramaMeshes": 1,
+        "panoramaTriangles": 2112,
+        "panoramaFraming": "world-projected-horizon",
+        "panoramaFog": "excluded",
+        "continuation": "sculpt-edge-continuation",
+        "landmarks": 5,
+        "landmarkExpected": 5,
+        "landmarkSkipped": 0,
+        "landmarkDiagnostics": "",
+        "landmarkMountIds": [
+          "lower-yard-engine-crane",
+          "west-line-brake-tower",
+          "east-line-brake-tower",
+          "upper-ore-cable-house",
+          "ford-service-pump"
+        ]
+      },
+      "relief": {
+        "stations": 441,
+        "nonFinite": 0,
+        "min": -0.398,
+        "max": 3.926,
+        "range": 4.324,
+        "sd": 1.45
+      },
+      "shot": "reviews/shots-campaign-dossier/e2-incline.png",
+      "frame": {
+        "size": "1280x800",
+        "meanLuma": 65.17,
+        "peakLuma": 248.3,
+        "litShare": 80.21,
+        "hist": [
+          19.8,
+          59.7,
+          8.4,
+          0.4,
+          1.4,
+          0.7,
+          0.6,
+          8.9
+        ]
+      },
+      "landmarkShot": "reviews/shots-campaign-dossier/e2-incline-landmark.png",
+      "landmarkFrame": {
+        "size": "1280x800",
+        "meanLuma": 63.79,
+        "peakLuma": 248.3,
+        "litShare": 82.53,
+        "hist": [
+          17.5,
+          59.5,
+          11,
+          2.3,
+          1.8,
+          0.4,
+          0.6,
+          6.9
+        ]
+      },
+      "landmarkStation": {
+        "id": "lower-yard-engine-crane",
+        "x": 2,
+        "z": 21.8
+      },
+      "disk": {
+        "slug": "incline",
+        "pack": [
+          "east-line-brake-tower.glb",
+          "ford-service-pump.glb",
+          "lower-yard-engine-crane.glb",
+          "upper-ore-cable-house.glb",
+          "west-line-brake-tower.glb"
+        ],
+        "ownContract": {
+          "file": "assets/pilots/map-rebuild-spike/incline-terrain-contract.json",
+          "contractId": "e2-incline",
+          "mounts": 5,
+          "mountAssets": [
+            "landmarks/incline/lower-yard-engine-crane.glb",
+            "landmarks/incline/west-line-brake-tower.glb",
+            "landmarks/incline/east-line-brake-tower.glb",
+            "landmarks/incline/upper-ore-cable-house.glb",
+            "landmarks/incline/ford-service-pump.glb"
+          ]
+        },
+        "harvestAnchors": 6
+      }
+    },
+    {
+      "id": "e3-blackout-ridge",
+      "era": 3,
+      "name": "Blackout Ridge",
+      "boot": "PASS",
+      "console": {
+        "errors": [],
+        "warnings": [],
+        "pageErrors": []
+      },
+      "door": {
+        "activeId": "e3-blackout-ridge",
+        "requestedId": "e3-blackout-ridge",
+        "fallbackReason": null,
+        "gameBelievesActive": "e3-blackout-ridge"
+      },
+      "bootMs": 18380,
+      "pilot": {
+        "state": "ready",
+        "contract": "e3-blackout-ridge",
+        "renderSource": "glb",
+        "heightSource": "baked-grid",
+        "failure": null,
+        "terrainLoadState": "mounted",
+        "panoramaLoadState": "mounted",
+        "landmarkLoadState": "mounted",
+        "meshes": 1,
+        "triangles": 32768,
+        "vertices": 16641,
+        "materials": 1,
+        "panorama": "blackout-ridge-panorama",
+        "panoramaMeshes": 1,
+        "panoramaTriangles": 3072,
+        "panoramaFraming": "world-projected-horizon",
+        "panoramaFog": "excluded",
+        "continuation": "panorama-owned-continuation",
+        "landmarks": 5,
+        "landmarkExpected": 5,
+        "landmarkSkipped": 0,
+        "landmarkDiagnostics": "",
+        "landmarkMountIds": [
+          "off-map-current-receiver",
+          "trunk-line-breaker-shelter",
+          "breath-bank-service-rack",
+          "ridge-switch-house",
+          "blackout-watch-lamp"
+        ]
+      },
+      "relief": {
+        "stations": 441,
+        "nonFinite": 0,
+        "min": -0.021,
+        "max": 7.306,
+        "range": 7.327,
+        "sd": 1.896
+      },
+      "shot": "reviews/shots-campaign-dossier/e3-blackout-ridge.png",
+      "frame": {
+        "size": "1280x800",
+        "meanLuma": 81.51,
+        "peakLuma": 248.3,
+        "litShare": 76.81,
+        "hist": [
+          23.2,
+          18.6,
+          37.8,
+          5.4,
+          3.3,
+          0.6,
+          0.7,
+          10.5
+        ]
+      },
+      "landmarkShot": "reviews/shots-campaign-dossier/e3-blackout-ridge-landmark.png",
+      "landmarkFrame": {
+        "size": "1280x800",
+        "meanLuma": 48.84,
+        "peakLuma": 248.3,
+        "litShare": 29.55,
+        "hist": [
+          70.4,
+          5.5,
+          9.5,
+          3.7,
+          1.6,
+          0.5,
+          0.9,
+          7.9
+        ]
+      },
+      "landmarkStation": {
+        "id": "off-map-current-receiver",
+        "x": -36,
+        "z": -44
+      },
+      "disk": {
+        "slug": "blackout-ridge",
+        "pack": [
+          "blackout-watch-lamp.glb",
+          "breath-bank-service-rack.glb",
+          "off-map-current-receiver.glb",
+          "ridge-switch-house.glb",
+          "trunk-line-breaker-shelter.glb"
+        ],
+        "ownContract": {
+          "file": "assets/pilots/map-rebuild-spike/blackout-ridge-terrain-contract.json",
+          "contractId": "e3-blackout-ridge",
+          "mounts": 5,
+          "mountAssets": [
+            "landmarks/blackout-ridge/off-map-current-receiver.glb",
+            "landmarks/blackout-ridge/trunk-line-breaker-shelter.glb",
+            "landmarks/blackout-ridge/breath-bank-service-rack.glb",
+            "landmarks/blackout-ridge/ridge-switch-house.glb",
+            "landmarks/blackout-ridge/blackout-watch-lamp.glb"
+          ]
+        },
+        "harvestAnchors": 3
+      }
+    },
+    {
+      "id": "e3-fairground",
+      "era": 3,
+      "name": "The Fairground",
+      "boot": "PASS",
+      "console": {
+        "errors": [],
+        "warnings": [],
+        "pageErrors": []
+      },
+      "door": {
+        "activeId": "e3-fairground",
+        "requestedId": "e3-fairground",
+        "fallbackReason": null,
+        "gameBelievesActive": "e3-fairground"
+      },
+      "bootMs": 14640,
+      "pilot": {
+        "state": "ready",
+        "contract": "e3-fairground",
+        "renderSource": "glb",
+        "heightSource": "baked-grid",
+        "failure": null,
+        "terrainLoadState": "mounted",
+        "panoramaLoadState": "mounted",
+        "landmarkLoadState": "mounted",
+        "meshes": 1,
+        "triangles": 32768,
+        "vertices": 16641,
+        "materials": 1,
+        "panorama": "fairground-panorama",
+        "panoramaMeshes": 1,
+        "panoramaTriangles": 3072,
+        "panoramaFraming": "world-projected-horizon",
+        "panoramaFog": "excluded",
+        "continuation": "panorama-owned-continuation",
+        "landmarks": 5,
+        "landmarkExpected": 5,
+        "landmarkSkipped": 0,
+        "landmarkDiagnostics": "",
+        "landmarkMountIds": [
+          "south-midway-admission-arch",
+          "west-current-calliope-wagon",
+          "east-mothglass-prize-cage",
+          "north-crowd-counting-rostrum",
+          "fair-bell-battery-kiosk"
+        ]
+      },
+      "relief": {
+        "stations": 441,
+        "nonFinite": 0,
+        "min": -0.452,
+        "max": 4.198,
+        "range": 4.651,
+        "sd": 1.183
+      },
+      "shot": "reviews/shots-campaign-dossier/e3-fairground.png",
+      "frame": {
+        "size": "1280x800",
+        "meanLuma": 58.8,
+        "peakLuma": 248.3,
+        "litShare": 41.12,
+        "hist": [
+          58.9,
+          22.1,
+          2.1,
+          1.2,
+          2.6,
+          1.5,
+          1,
+          10.6
+        ]
+      },
+      "landmarkShot": "reviews/shots-campaign-dossier/e3-fairground-landmark.png",
+      "landmarkFrame": {
+        "size": "1280x800",
+        "meanLuma": 57.18,
+        "peakLuma": 248.3,
+        "litShare": 39.33,
+        "hist": [
+          60.7,
+          16.1,
+          3,
+          3.3,
+          7,
+          0.6,
+          0.8,
+          8.6
+        ]
+      },
+      "landmarkStation": {
+        "id": "south-midway-admission-arch",
+        "x": 0,
+        "z": -42
+      },
+      "disk": {
+        "slug": "fairground",
+        "pack": [
+          "east-mothglass-prize-cage.glb",
+          "fair-bell-battery-kiosk.glb",
+          "north-crowd-counting-rostrum.glb",
+          "south-midway-admission-arch.glb",
+          "west-current-calliope-wagon.glb"
+        ],
+        "ownContract": {
+          "file": "assets/pilots/map-rebuild-spike/fairground-terrain-contract.json",
+          "contractId": "e3-fairground",
+          "mounts": 5,
+          "mountAssets": [
+            "landmarks/fairground/south-midway-admission-arch.glb",
+            "landmarks/fairground/west-current-calliope-wagon.glb",
+            "landmarks/fairground/east-mothglass-prize-cage.glb",
+            "landmarks/fairground/north-crowd-counting-rostrum.glb",
+            "landmarks/fairground/fair-bell-battery-kiosk.glb"
+          ]
+        },
+        "harvestAnchors": null
+      }
+    },
+    {
+      "id": "e3-moth-season",
+      "era": 3,
+      "name": "Moth Season",
+      "boot": "PASS",
+      "console": {
+        "errors": [],
+        "warnings": [],
+        "pageErrors": []
+      },
+      "door": {
+        "activeId": "e3-moth-season",
+        "requestedId": "e3-moth-season",
+        "fallbackReason": null,
+        "gameBelievesActive": "e3-moth-season"
+      },
+      "bootMs": 18671,
+      "pilot": {
+        "state": "ready",
+        "contract": "e3-moth-season",
+        "renderSource": "glb",
+        "heightSource": "baked-grid",
+        "failure": null,
+        "terrainLoadState": "mounted",
+        "panoramaLoadState": "mounted",
+        "landmarkLoadState": "mounted",
+        "meshes": 1,
+        "triangles": 32768,
+        "vertices": 16641,
+        "materials": 1,
+        "panorama": "moth-season-panorama",
+        "panoramaMeshes": 1,
+        "panoramaTriangles": 2496,
+        "panoramaFraming": "world-projected-horizon",
+        "panoramaFog": "excluded",
+        "continuation": "sculpt-edge-continuation",
+        "landmarks": 5,
+        "landmarkExpected": 5,
+        "landmarkSkipped": 0,
+        "landmarkDiagnostics": "",
+        "landmarkMountIds": [
+          "north-migration-watch-gate",
+          "south-quiet-road-gate",
+          "west-lamplighter-refuge",
+          "east-tithe-bell-house",
+          "mothglass-counting-cage"
+        ]
+      },
+      "relief": {
+        "stations": 441,
+        "nonFinite": 0,
+        "min": -0.331,
+        "max": 3.328,
+        "range": 3.659,
+        "sd": 0.925
+      },
+      "shot": "reviews/shots-campaign-dossier/e3-moth-season.png",
+      "frame": {
+        "size": "1280x800",
+        "meanLuma": 39.89,
+        "peakLuma": 248.3,
+        "litShare": 19.79,
+        "hist": [
+          80.2,
+          3.6,
+          4.6,
+          0.3,
+          1.4,
+          0.4,
+          0.6,
+          8.9
+        ]
+      },
+      "landmarkShot": "reviews/shots-campaign-dossier/e3-moth-season-landmark.png",
+      "landmarkFrame": {
+        "size": "1280x800",
+        "meanLuma": 35.62,
+        "peakLuma": 248.3,
+        "litShare": 18.77,
+        "hist": [
+          81.2,
+          4.7,
+          4.4,
+          0.5,
+          1.3,
+          0.4,
+          0.6,
+          6.9
+        ]
+      },
+      "landmarkStation": {
+        "id": "north-migration-watch-gate",
+        "x": 0,
+        "z": 42
+      },
+      "disk": {
+        "slug": "moth-season",
+        "pack": [
+          "east-tithe-bell-house.glb",
+          "mothglass-counting-cage.glb",
+          "north-migration-watch-gate.glb",
+          "south-quiet-road-gate.glb",
+          "west-lamplighter-refuge.glb"
+        ],
+        "ownContract": {
+          "file": "assets/pilots/map-rebuild-spike/moth-season-terrain-contract.json",
+          "contractId": "e3-moth-season",
+          "mounts": 5,
+          "mountAssets": [
+            "landmarks/moth-season/north-migration-watch-gate.glb",
+            "landmarks/moth-season/south-quiet-road-gate.glb",
+            "landmarks/moth-season/west-lamplighter-refuge.glb",
+            "landmarks/moth-season/east-tithe-bell-house.glb",
+            "landmarks/moth-season/mothglass-counting-cage.glb"
+          ]
+        },
+        "harvestAnchors": null
+      }
+    },
+    {
+      "id": "e4-long-road",
+      "era": 4,
+      "name": "The Long Road",
+      "boot": "PASS",
+      "console": {
+        "errors": [],
+        "warnings": [],
+        "pageErrors": []
+      },
+      "door": {
+        "activeId": "e4-long-road",
+        "requestedId": "e4-long-road",
+        "fallbackReason": null,
+        "gameBelievesActive": "e4-long-road"
+      },
+      "bootMs": 17003,
+      "pilot": {
+        "state": "ready",
+        "contract": "e4-long-road",
+        "renderSource": "glb",
+        "heightSource": "baked-grid",
+        "failure": null,
+        "terrainLoadState": "mounted",
+        "panoramaLoadState": "mounted",
+        "landmarkLoadState": "mounted",
+        "meshes": 1,
+        "triangles": 32768,
+        "vertices": 16641,
+        "materials": 1,
+        "panorama": "long-road-panorama",
+        "panoramaMeshes": 1,
+        "panoramaTriangles": 2688,
+        "panoramaFraming": "world-projected-horizon",
+        "panoramaFog": "excluded",
+        "continuation": "panorama-owned-continuation",
+        "landmarks": 5,
+        "landmarkExpected": 5,
+        "landmarkSkipped": 0,
+        "landmarkDiagnostics": "",
+        "landmarkMountIds": [
+          "west-way-station",
+          "middle-way-station",
+          "east-way-station",
+          "convoy-lead-hauler-start",
+          "east-railhead"
+        ]
+      },
+      "relief": {
+        "stations": 441,
+        "nonFinite": 0,
+        "min": -0.129,
+        "max": 1.542,
+        "range": 1.671,
+        "sd": 0.318
+      },
+      "shot": "reviews/shots-campaign-dossier/e4-long-road.png",
+      "frame": {
+        "size": "1280x800",
+        "meanLuma": 55.5,
+        "peakLuma": 248.3,
+        "litShare": 50.26,
+        "hist": [
+          49.7,
+          31.5,
+          6.1,
+          1.2,
+          1.4,
+          0.5,
+          0.6,
+          8.9
+        ]
+      },
+      "landmarkShot": "reviews/shots-campaign-dossier/e4-long-road-landmark.png",
+      "landmarkFrame": {
+        "size": "1280x800",
+        "meanLuma": 57.05,
+        "peakLuma": 248.3,
+        "litShare": 61.21,
+        "hist": [
+          38.8,
+          37.6,
+          13.2,
+          1.2,
+          1.4,
+          0.4,
+          0.6,
+          6.9
+        ]
+      },
+      "landmarkStation": {
+        "id": "west-way-station",
+        "x": -136,
+        "z": -14
+      },
+      "disk": {
+        "slug": "long-road",
+        "pack": [
+          "convoy-lead-hauler-start.glb",
+          "east-railhead.glb",
+          "east-way-station.glb",
+          "middle-way-station.glb",
+          "west-way-station.glb"
+        ],
+        "ownContract": {
+          "file": "assets/pilots/map-rebuild-spike/long-road-terrain-contract.json",
+          "contractId": "e4-long-road",
+          "mounts": 5,
+          "mountAssets": [
+            "landmarks/long-road/west-way-station.glb",
+            "landmarks/long-road/middle-way-station.glb",
+            "landmarks/long-road/east-way-station.glb",
+            "landmarks/long-road/convoy-lead-hauler-start.glb",
+            "landmarks/long-road/east-railhead.glb"
+          ]
+        },
+        "harvestAnchors": 6
+      }
+    },
+    {
+      "id": "e4-gusher-county",
+      "era": 4,
+      "name": "Gusher County",
+      "boot": "PASS",
+      "console": {
+        "errors": [],
+        "warnings": [],
+        "pageErrors": []
+      },
+      "door": {
+        "activeId": "e4-gusher-county",
+        "requestedId": "e4-gusher-county",
+        "fallbackReason": null,
+        "gameBelievesActive": "e4-gusher-county"
+      },
+      "bootMs": 18610,
+      "pilot": {
+        "state": "ready",
+        "contract": "e4-gusher-county",
+        "renderSource": "glb",
+        "heightSource": "baked-grid",
+        "failure": null,
+        "terrainLoadState": "mounted",
+        "panoramaLoadState": "mounted",
+        "landmarkLoadState": "mounted",
+        "meshes": 1,
+        "triangles": 32768,
+        "vertices": 16641,
+        "materials": 1,
+        "panorama": "gusher-county-panorama",
+        "panoramaMeshes": 1,
+        "panoramaTriangles": 3072,
+        "panoramaFraming": "world-projected-horizon",
+        "panoramaFog": "excluded",
+        "continuation": "panorama-owned-continuation",
+        "landmarks": 10,
+        "landmarkExpected": 10,
+        "landmarkSkipped": 0,
+        "landmarkDiagnostics": "",
+        "landmarkMountIds": [
+          "derrick-01",
+          "derrick-02",
+          "derrick-03",
+          "derrick-04",
+          "derrick-05",
+          "derrick-06",
+          "derrick-07",
+          "derrick-08",
+          "outhouse-geyser",
+          "county-camp-rig"
+        ]
+      },
+      "relief": {
+        "stations": 441,
+        "nonFinite": 0,
+        "min": 0.033,
+        "max": 0.78,
+        "range": 0.747,
+        "sd": 0.26
+      },
+      "shot": "reviews/shots-campaign-dossier/e4-gusher-county.png",
+      "frame": {
+        "size": "1280x800",
+        "meanLuma": 55.76,
+        "peakLuma": 248.3,
+        "litShare": 55.72,
+        "hist": [
+          44.3,
+          36.6,
+          5.7,
+          2.7,
+          2.5,
+          0.5,
+          0.7,
+          7
+        ]
+      },
+      "landmarkShot": "reviews/shots-campaign-dossier/e4-gusher-county-landmark.png",
+      "landmarkFrame": {
+        "size": "1280x800",
+        "meanLuma": 59.48,
+        "peakLuma": 248.3,
+        "litShare": 63.3,
+        "hist": [
+          36.7,
+          41.8,
+          7.6,
+          1.8,
+          2.9,
+          1.1,
+          1.2,
+          6.9
+        ]
+      },
+      "landmarkStation": {
+        "id": "derrick-01",
+        "x": -56,
+        "z": -36
+      },
+      "disk": {
+        "slug": "gusher-county",
+        "pack": [
+          "county-camp-rig.glb",
+          "derrick-01.glb",
+          "derrick-02.glb",
+          "derrick-03.glb",
+          "derrick-04.glb",
+          "derrick-05.glb",
+          "derrick-06.glb",
+          "derrick-07.glb",
+          "derrick-08.glb",
+          "outhouse-geyser.glb"
+        ],
+        "ownContract": {
+          "file": "assets/pilots/map-rebuild-spike/gusher-county-terrain-contract.json",
+          "contractId": "e4-gusher-county",
+          "mounts": 10,
+          "mountAssets": [
+            "landmarks/gusher-county/derrick-01.glb",
+            "landmarks/gusher-county/derrick-02.glb",
+            "landmarks/gusher-county/derrick-03.glb",
+            "landmarks/gusher-county/derrick-04.glb",
+            "landmarks/gusher-county/derrick-05.glb",
+            "landmarks/gusher-county/derrick-06.glb",
+            "landmarks/gusher-county/derrick-07.glb",
+            "landmarks/gusher-county/derrick-08.glb",
+            "landmarks/gusher-county/outhouse-geyser.glb",
+            "landmarks/gusher-county/county-camp-rig.glb"
+          ]
+        },
+        "harvestAnchors": 8
+      }
+    },
+    {
+      "id": "e4-boneyard",
+      "era": 4,
+      "name": "The Boneyard",
+      "boot": "PASS",
+      "console": {
+        "errors": [],
+        "warnings": [],
+        "pageErrors": []
+      },
+      "door": {
+        "activeId": "e4-boneyard",
+        "requestedId": "e4-boneyard",
+        "fallbackReason": null,
+        "gameBelievesActive": "e4-boneyard"
+      },
+      "bootMs": 16564,
+      "pilot": {
+        "state": "ready",
+        "contract": "e4-boneyard",
+        "renderSource": "glb",
+        "heightSource": "baked-grid",
+        "failure": null,
+        "terrainLoadState": "mounted",
+        "panoramaLoadState": "mounted",
+        "landmarkLoadState": "mounted",
+        "meshes": 1,
+        "triangles": 32768,
+        "vertices": 16641,
+        "materials": 1,
+        "panorama": "boneyard-panorama",
+        "panoramaMeshes": 1,
+        "panoramaTriangles": 3072,
+        "panoramaFraming": "world-projected-horizon",
+        "panoramaFog": "excluded",
+        "continuation": "panorama-owned-continuation",
+        "landmarks": 12,
+        "landmarkExpected": 12,
+        "landmarkSkipped": 0,
+        "landmarkDiagnostics": "",
+        "landmarkMountIds": [
+          "flivver-row-west-a",
+          "flivver-row-west-b",
+          "flivver-row-west-c",
+          "spent-boiler-west",
+          "spent-boiler-east",
+          "flivver-row-east-a",
+          "flivver-row-east-b",
+          "flivver-row-east-c",
+          "hauler-bed-north-a",
+          "hauler-bed-north-b",
+          "half-buried-sleeper",
+          "unmarked-wagon"
+        ]
+      },
+      "relief": {
+        "stations": 441,
+        "nonFinite": 0,
+        "min": -0.237,
+        "max": 1.117,
+        "range": 1.354,
+        "sd": 0.21
+      },
+      "shot": "reviews/shots-campaign-dossier/e4-boneyard.png",
+      "frame": {
+        "size": "1280x800",
+        "meanLuma": 59.51,
+        "peakLuma": 248.3,
+        "litShare": 60.68,
+        "hist": [
+          39.3,
+          39.2,
+          9.8,
+          0.3,
+          1.4,
+          0.4,
+          0.6,
+          8.9
+        ]
+      },
+      "landmarkShot": "reviews/shots-campaign-dossier/e4-boneyard-landmark.png",
+      "landmarkFrame": {
+        "size": "1280x800",
+        "meanLuma": 48.14,
+        "peakLuma": 248.3,
+        "litShare": 42.91,
+        "hist": [
+          57.1,
+          31.1,
+          2.3,
+          0.3,
+          1.4,
+          0.4,
+          0.6,
+          6.9
+        ]
+      },
+      "landmarkStation": {
+        "id": "flivver-row-west-a",
+        "x": -48,
+        "z": -12
+      },
+      "disk": {
+        "slug": "boneyard",
+        "pack": [
+          "flivver-row-east-a.glb",
+          "flivver-row-east-b.glb",
+          "flivver-row-east-c.glb",
+          "flivver-row-west-a.glb",
+          "flivver-row-west-b.glb",
+          "flivver-row-west-c.glb",
+          "half-buried-sleeper.glb",
+          "hauler-bed-north-a.glb",
+          "hauler-bed-north-b.glb",
+          "spent-boiler-east.glb",
+          "spent-boiler-west.glb",
+          "unmarked-wagon.glb"
+        ],
+        "ownContract": {
+          "file": "assets/pilots/map-rebuild-spike/boneyard-terrain-contract.json",
+          "contractId": "e4-boneyard",
+          "mounts": 12,
+          "mountAssets": [
+            "landmarks/boneyard/flivver-row-west-a.glb",
+            "landmarks/boneyard/flivver-row-west-b.glb",
+            "landmarks/boneyard/flivver-row-west-c.glb",
+            "landmarks/boneyard/spent-boiler-west.glb",
+            "landmarks/boneyard/spent-boiler-east.glb",
+            "landmarks/boneyard/flivver-row-east-a.glb",
+            "landmarks/boneyard/flivver-row-east-b.glb",
+            "landmarks/boneyard/flivver-row-east-c.glb",
+            "landmarks/boneyard/hauler-bed-north-a.glb",
+            "landmarks/boneyard/hauler-bed-north-b.glb",
+            "landmarks/boneyard/half-buried-sleeper.glb",
+            "landmarks/boneyard/unmarked-wagon.glb"
+          ]
+        },
+        "harvestAnchors": 10
+      }
+    },
+    {
+      "id": "e5-flotilla",
+      "era": 5,
+      "name": "The Flotilla",
+      "reuse": "e5-deepwater-claim",
+      "boot": "REFUSED: unavailable-contract (opened the-claim)",
+      "console": {
+        "errors": [],
+        "warnings": [],
+        "pageErrors": []
+      },
+      "door": {
+        "activeId": "the-claim",
+        "requestedId": "e5-flotilla",
+        "fallbackReason": "unavailable-contract",
+        "gameBelievesActive": "the-claim"
+      },
+      "bootMs": 22513,
+      "disk": {
+        "slug": "flotilla",
+        "pack": null,
+        "ownContract": null,
+        "harvestAnchors": 0,
+        "reusePack": null
+      }
+    },
+    {
+      "id": "e5-stillwater",
+      "era": 5,
+      "name": "Stillwater",
+      "reuse": "e5-deepwater-claim",
+      "boot": "PASS",
+      "console": {
+        "errors": [],
+        "warnings": [],
+        "pageErrors": []
+      },
+      "door": {
+        "activeId": "e5-stillwater",
+        "requestedId": "e5-stillwater",
+        "fallbackReason": null,
+        "gameBelievesActive": "e5-stillwater"
+      },
+      "bootMs": 13920,
+      "pilot": {
+        "state": "ready",
+        "contract": "e5-stillwater",
+        "renderSource": "glb",
+        "heightSource": "baked-grid",
+        "failure": null,
+        "terrainLoadState": "mounted",
+        "panoramaLoadState": "mounted",
+        "landmarkLoadState": "mounted",
+        "meshes": 1,
+        "triangles": 32768,
+        "vertices": 16641,
+        "materials": 1,
+        "panorama": "deepwater-claim-panorama",
+        "panoramaMeshes": 1,
+        "panoramaTriangles": 2704,
+        "panoramaFraming": "world-projected-horizon",
+        "panoramaFog": "excluded",
+        "continuation": "panorama-owned-continuation",
+        "landmarks": 0,
+        "landmarkExpected": 4,
+        "landmarkSkipped": 4,
+        "landmarkDiagnostics": "drowned-claim-office: asset unavailable; drowned-chapel: asset unavailable; drowned-general-store: asset unavailable; drowned-stamp-mill: asset unavailable",
+        "landmarkMountIds": []
+      },
+      "relief": {
+        "stations": 441,
+        "nonFinite": 0,
+        "min": -5.788,
+        "max": -0.388,
+        "range": 5.4,
+        "sd": 1.219
+      },
+      "shot": "reviews/shots-campaign-dossier/e5-stillwater.png",
+      "frame": {
+        "size": "1280x800",
+        "meanLuma": 60.93,
+        "peakLuma": 248.3,
+        "litShare": 70.65,
+        "hist": [
+          29.3,
+          55.9,
+          3.1,
+          0.3,
+          1.4,
+          0.4,
+          0.6,
+          8.9
+        ]
+      },
+      "disk": {
+        "slug": "stillwater",
+        "pack": null,
+        "ownContract": null,
+        "harvestAnchors": 5,
+        "reusePack": null
+      }
+    },
+    {
+      "id": "e5-regatta",
+      "era": 5,
+      "name": "The Regatta",
+      "boot": "REFUSED: unavailable-contract (opened the-claim)",
+      "console": {
+        "errors": [],
+        "warnings": [],
+        "pageErrors": []
+      },
+      "door": {
+        "activeId": "the-claim",
+        "requestedId": "e5-regatta",
+        "fallbackReason": "unavailable-contract",
+        "gameBelievesActive": "the-claim"
+      },
+      "bootMs": 18476,
+      "disk": {
+        "slug": "regatta",
+        "pack": [
+          "finish-line-rig.glb",
+          "judges-tower.glb",
+          "midcourse-buoy-line-anchor.glb",
+          "northeast-buoy-line-anchor.glb",
+          "northwest-buoy-line-anchor.glb",
+          "spectator-raft-port.glb",
+          "spectator-raft-starboard.glb",
+          "start-line-rig.glb"
+        ],
+        "ownContract": {
+          "file": "assets/pilots/map-rebuild-spike/regatta-terrain-contract.json",
+          "contractId": "e5-regatta",
+          "mounts": 8,
+          "mountAssets": [
+            "landmarks/regatta/start-line-rig.glb",
+            "landmarks/regatta/finish-line-rig.glb",
+            "landmarks/regatta/northwest-buoy-line-anchor.glb",
+            "landmarks/regatta/midcourse-buoy-line-anchor.glb",
+            "landmarks/regatta/northeast-buoy-line-anchor.glb",
+            "landmarks/regatta/spectator-raft-port.glb",
+            "landmarks/regatta/spectator-raft-starboard.glb",
+            "landmarks/regatta/judges-tower.glb"
+          ]
+        },
+        "harvestAnchors": 0
+      }
+    },
+    {
+      "id": "e6-showroom",
+      "era": 6,
+      "name": "The Showroom",
+      "boot": "PASS",
+      "console": {
+        "errors": [],
+        "warnings": [],
+        "pageErrors": []
+      },
+      "door": {
+        "activeId": "e6-showroom",
+        "requestedId": "e6-showroom",
+        "fallbackReason": null,
+        "gameBelievesActive": "e6-showroom"
+      },
+      "bootMs": 13773,
+      "pilot": {
+        "state": "ready",
+        "contract": "e6-showroom",
+        "renderSource": "glb",
+        "heightSource": "baked-grid",
+        "failure": null,
+        "terrainLoadState": "mounted",
+        "panoramaLoadState": "mounted",
+        "landmarkLoadState": "mounted",
+        "meshes": 1,
+        "triangles": 32768,
+        "vertices": 16641,
+        "materials": 1,
+        "panorama": "showroom-panorama",
+        "panoramaMeshes": 1,
+        "panoramaTriangles": 2688,
+        "panoramaFraming": "world-projected-horizon",
+        "panoramaFog": "excluded",
+        "continuation": "panorama-owned-continuation",
+        "landmarks": 5,
+        "landmarkExpected": 5,
+        "landmarkSkipped": 0,
+        "landmarkDiagnostics": "",
+        "landmarkMountIds": [
+          "showroom-entrance-arch",
+          "west-starburst-billboard",
+          "east-starburst-billboard",
+          "abandoned-catalog-office",
+          "catalog-sorting-gantry"
+        ]
+      },
+      "relief": {
+        "stations": 441,
+        "nonFinite": 0,
+        "min": -0.281,
+        "max": 1.52,
+        "range": 1.801,
+        "sd": 0.405
+      },
+      "shot": "reviews/shots-campaign-dossier/e6-showroom.png",
+      "frame": {
+        "size": "1280x800",
+        "meanLuma": 68.79,
+        "peakLuma": 248.3,
+        "litShare": 74.93,
+        "hist": [
+          25.1,
+          39.6,
+          21.7,
+          2.2,
+          1.4,
+          0.5,
+          0.6,
+          8.9
+        ]
+      },
+      "landmarkShot": "reviews/shots-campaign-dossier/e6-showroom-landmark.png",
+      "landmarkFrame": {
+        "size": "1280x800",
+        "meanLuma": 56.16,
+        "peakLuma": 248.3,
+        "litShare": 73.15,
+        "hist": [
+          26.8,
+          57.5,
+          4.5,
+          0.9,
+          1.7,
+          0.7,
+          1,
+          6.9
+        ]
+      },
+      "landmarkStation": {
+        "id": "showroom-entrance-arch",
+        "x": 0,
+        "z": -59
+      },
+      "disk": {
+        "slug": "showroom",
+        "pack": [
+          "abandoned-catalog-office.glb",
+          "catalog-sorting-gantry.glb",
+          "east-starburst-billboard.glb",
+          "showroom-entrance-arch.glb",
+          "west-starburst-billboard.glb"
+        ],
+        "ownContract": {
+          "file": "assets/pilots/map-rebuild-spike/showroom-terrain-contract.json",
+          "contractId": "e6-showroom",
+          "mounts": 5,
+          "mountAssets": [
+            "landmarks/showroom/showroom-entrance-arch.glb",
+            "landmarks/showroom/west-starburst-billboard.glb",
+            "landmarks/showroom/east-starburst-billboard.glb",
+            "landmarks/showroom/abandoned-catalog-office.glb",
+            "landmarks/showroom/catalog-sorting-gantry.glb"
+          ]
+        },
+        "harvestAnchors": 6
+      }
+    },
+    {
+      "id": "e6-half-life-hollow",
+      "era": 6,
+      "name": "Half-Life Hollow",
+      "boot": "REFUSED: unavailable-contract (opened the-claim)",
+      "console": {
+        "errors": [],
+        "warnings": [],
+        "pageErrors": []
+      },
+      "door": {
+        "activeId": "the-claim",
+        "requestedId": "e6-half-life-hollow",
+        "fallbackReason": "unavailable-contract",
+        "gameBelievesActive": "the-claim"
+      },
+      "bootMs": 18105,
+      "disk": {
+        "slug": "half-life-hollow",
+        "pack": [
+          "east-hollow-warning-pylon.glb",
+          "expired-appliance-convoy.glb",
+          "north-extraction-gantry.glb",
+          "south-countdown-gate.glb",
+          "west-hollow-warning-pylon.glb"
+        ],
+        "ownContract": {
+          "file": "assets/pilots/map-rebuild-spike/half-life-hollow-terrain-contract.json",
+          "contractId": "e6-half-life-hollow",
+          "mounts": 5,
+          "mountAssets": [
+            "landmarks/half-life-hollow/south-countdown-gate.glb",
+            "landmarks/half-life-hollow/west-hollow-warning-pylon.glb",
+            "landmarks/half-life-hollow/east-hollow-warning-pylon.glb",
+            "landmarks/half-life-hollow/expired-appliance-convoy.glb",
+            "landmarks/half-life-hollow/north-extraction-gantry.glb"
+          ]
+        },
+        "harvestAnchors": 0
+      }
+    },
+    {
+      "id": "e6-picnic",
+      "era": 6,
+      "name": "The Picnic",
+      "reuse": "e6-glow-mesa",
+      "boot": "REFUSED: unavailable-contract (opened the-claim)",
+      "console": {
+        "errors": [],
+        "warnings": [],
+        "pageErrors": []
+      },
+      "door": {
+        "activeId": "the-claim",
+        "requestedId": "e6-picnic",
+        "fallbackReason": "unavailable-contract",
+        "gameBelievesActive": "the-claim"
+      },
+      "bootMs": 18610,
+      "disk": {
+        "slug": "picnic",
+        "pack": [
+          "center-picnic-blanket.glb",
+          "east-picnic-blanket.glb",
+          "mesa-civilian-shade.glb",
+          "picnic-staging-gate.glb",
+          "west-picnic-blanket.glb"
+        ],
+        "ownContract": {
+          "file": "assets/pilots/map-rebuild-spike/picnic-terrain-contract.json",
+          "contractId": "picnic-reuse-verdict",
+          "mounts": 5,
+          "mountAssets": [
+            "landmarks/picnic/picnic-staging-gate.glb",
+            "landmarks/picnic/west-picnic-blanket.glb",
+            "landmarks/picnic/center-picnic-blanket.glb",
+            "landmarks/picnic/east-picnic-blanket.glb",
+            "landmarks/picnic/mesa-civilian-shade.glb"
+          ]
+        },
+        "harvestAnchors": 0,
+        "reusePack": [
+          "east-herd-glow-gate.glb",
+          "isotope-cooling-rack.glb",
+          "mesa-starstone-derrick.glb",
+          "six-vein-control-pylon.glb",
+          "west-herd-glow-gate.glb"
+        ]
+      }
+    },
+    {
+      "id": "e7-echo-canyon",
+      "era": 7,
+      "name": "Echo Canyon",
+      "boot": "REFUSED: unavailable-contract (opened the-claim)",
+      "console": {
+        "errors": [],
+        "warnings": [],
+        "pageErrors": []
+      },
+      "door": {
+        "activeId": "the-claim",
+        "requestedId": "e7-echo-canyon",
+        "fallbackReason": "unavailable-contract",
+        "gameBelievesActive": "the-claim"
+      },
+      "bootMs": 19788,
+      "disk": {
+        "slug": "echo-canyon",
+        "pack": [
+          "east-echo-array.glb",
+          "mirror-observation-post.glb",
+          "north-return-gate.glb",
+          "south-broadcast-gate.glb",
+          "west-echo-array.glb"
+        ],
+        "ownContract": {
+          "file": "assets/pilots/map-rebuild-spike/echo-canyon-terrain-contract.json",
+          "contractId": "e7-echo-canyon",
+          "mounts": 5,
+          "mountAssets": [
+            "landmarks/echo-canyon/south-broadcast-gate.glb",
+            "landmarks/echo-canyon/west-echo-array.glb",
+            "landmarks/echo-canyon/east-echo-array.glb",
+            "landmarks/echo-canyon/mirror-observation-post.glb",
+            "landmarks/echo-canyon/north-return-gate.glb"
+          ]
+        },
+        "harvestAnchors": 0
+      }
+    },
+    {
+      "id": "e7-dead-band",
+      "era": 7,
+      "name": "The Dead Band",
+      "reuse": "e7-relay-valley",
+      "boot": "REFUSED: unavailable-contract (opened the-claim)",
+      "console": {
+        "errors": [],
+        "warnings": [],
+        "pageErrors": []
+      },
+      "door": {
+        "activeId": "the-claim",
+        "requestedId": "e7-dead-band",
+        "fallbackReason": "unavailable-contract",
+        "gameBelievesActive": "the-claim"
+      },
+      "bootMs": 18397,
+      "disk": {
+        "slug": "dead-band",
+        "pack": [
+          "dead-band-yard-null-post.glb",
+          "east-old-tool-cache.glb",
+          "iron-shadow-warning-frame.glb",
+          "north-silence-gate.glb",
+          "west-old-tool-cache.glb"
+        ],
+        "ownContract": {
+          "file": "assets/pilots/map-rebuild-spike/dead-band-terrain-contract.json",
+          "contractId": "dead-band-reuse-verdict",
+          "mounts": 5,
+          "mountAssets": [
+            "landmarks/dead-band/dead-band-yard-null-post.glb",
+            "landmarks/dead-band/west-old-tool-cache.glb",
+            "landmarks/dead-band/east-old-tool-cache.glb",
+            "landmarks/dead-band/iron-shadow-warning-frame.glb",
+            "landmarks/dead-band/north-silence-gate.glb"
+          ]
+        },
+        "harvestAnchors": 0,
+        "reusePack": [
+          "dead-gap-charting-station.glb",
+          "drone-recovery-beacon.glb",
+          "east-ridge-dish-cluster.glb",
+          "valley-cable-drum-yard.glb",
+          "west-ridge-dish-cluster.glb"
+        ]
+      }
+    },
+    {
+      "id": "e7-relay-rush",
+      "era": 7,
+      "name": "Relay Rush",
+      "reuse": "e7-relay-valley",
+      "boot": "REFUSED: unavailable-contract (opened the-claim)",
+      "console": {
+        "errors": [],
+        "warnings": [],
+        "pageErrors": []
+      },
+      "door": {
+        "activeId": "the-claim",
+        "requestedId": "e7-relay-rush",
+        "fallbackReason": "unavailable-contract",
+        "gameBelievesActive": "the-claim"
+      },
+      "bootMs": 19028,
+      "disk": {
+        "slug": "relay-rush",
+        "pack": [
+          "rush-relay-r1-frame.glb",
+          "rush-relay-r2-frame.glb",
+          "rush-relay-r3-frame.glb",
+          "rush-relay-r4-frame.glb",
+          "rush-start-horn.glb"
+        ],
+        "ownContract": {
+          "file": "assets/pilots/map-rebuild-spike/relay-rush-terrain-contract.json",
+          "contractId": "relay-rush-reuse-verdict",
+          "mounts": 5,
+          "mountAssets": [
+            "landmarks/relay-rush/rush-start-horn.glb",
+            "landmarks/relay-rush/rush-relay-r1-frame.glb",
+            "landmarks/relay-rush/rush-relay-r2-frame.glb",
+            "landmarks/relay-rush/rush-relay-r3-frame.glb",
+            "landmarks/relay-rush/rush-relay-r4-frame.glb"
+          ]
+        },
+        "harvestAnchors": 0,
+        "reusePack": [
+          "dead-gap-charting-station.glb",
+          "drone-recovery-beacon.glb",
+          "east-ridge-dish-cluster.glb",
+          "valley-cable-drum-yard.glb",
+          "west-ridge-dish-cluster.glb"
+        ]
+      }
+    },
+    {
+      "id": "e8-far-side",
+      "era": 8,
+      "name": "The Far Side",
+      "reuse": "e8-mare-claim",
+      "boot": "REFUSED: unavailable-contract (opened the-claim)",
+      "console": {
+        "errors": [],
+        "warnings": [],
+        "pageErrors": []
+      },
+      "door": {
+        "activeId": "the-claim",
+        "requestedId": "e8-far-side",
+        "fallbackReason": "unavailable-contract",
+        "gameBelievesActive": "the-claim"
+      },
+      "bootMs": 20964,
+      "disk": {
+        "slug": "far-side",
+        "pack": [
+          "east-suit-cache-rack.glb",
+          "far-horizon-listening-post.glb",
+          "far-side-landing-frame.glb",
+          "probe-recovery-cradle.glb",
+          "west-comms-shadow-marker.glb"
+        ],
+        "ownContract": {
+          "file": "assets/pilots/map-rebuild-spike/far-side-terrain-contract.json",
+          "contractId": "far-side-reuse-verdict",
+          "mounts": 5,
+          "mountAssets": [
+            "landmarks/far-side/far-side-landing-frame.glb",
+            "landmarks/far-side/probe-recovery-cradle.glb",
+            "landmarks/far-side/west-comms-shadow-marker.glb",
+            "landmarks/far-side/east-suit-cache-rack.glb",
+            "landmarks/far-side/far-horizon-listening-post.glb"
+          ]
+        },
+        "harvestAnchors": 0,
+        "reusePack": [
+          "earthrise-listening-array.glb",
+          "east-rim-debris-catcher.glb",
+          "lava-tube-survey-gantry.glb",
+          "regolith-core-yard.glb",
+          "west-rim-debris-catcher.glb"
+        ]
+      }
+    },
+    {
+      "id": "e8-low-orbit",
+      "era": 8,
+      "name": "Low Orbit",
+      "boot": "REFUSED: unavailable-contract (opened the-claim)",
+      "console": {
+        "errors": [],
+        "warnings": [],
+        "pageErrors": []
+      },
+      "door": {
+        "activeId": "the-claim",
+        "requestedId": "e8-low-orbit",
+        "fallbackReason": "unavailable-contract",
+        "gameBelievesActive": "the-claim"
+      },
+      "bootMs": 20027,
+      "disk": {
+        "slug": "low-orbit",
+        "pack": [
+          "claw-carcass-rig.glb",
+          "east-scaffold-handhold-frame.glb",
+          "north-debris-catcher.glb",
+          "south-return-beacon.glb",
+          "west-scaffold-handhold-frame.glb"
+        ],
+        "ownContract": {
+          "file": "assets/pilots/map-rebuild-spike/low-orbit-terrain-contract.json",
+          "contractId": "e8-low-orbit",
+          "mounts": 5,
+          "mountAssets": [
+            "landmarks/low-orbit/west-scaffold-handhold-frame.glb",
+            "landmarks/low-orbit/claw-carcass-rig.glb",
+            "landmarks/low-orbit/east-scaffold-handhold-frame.glb",
+            "landmarks/low-orbit/north-debris-catcher.glb",
+            "landmarks/low-orbit/south-return-beacon.glb"
+          ]
+        },
+        "harvestAnchors": 0
+      }
+    },
+    {
+      "id": "e8-eclipse",
+      "era": 8,
+      "name": "The Eclipse",
+      "reuse": "e8-mare-claim",
+      "boot": "PASS",
+      "console": {
+        "errors": [],
+        "warnings": [],
+        "pageErrors": []
+      },
+      "door": {
+        "activeId": "e8-eclipse",
+        "requestedId": "e8-eclipse",
+        "fallbackReason": null,
+        "gameBelievesActive": "e8-eclipse"
+      },
+      "bootMs": 14310,
+      "pilot": {
+        "state": "ready",
+        "contract": "e8-eclipse",
+        "renderSource": "glb",
+        "heightSource": "baked-grid",
+        "failure": null,
+        "terrainLoadState": "mounted",
+        "panoramaLoadState": "mounted",
+        "landmarkLoadState": "mounted",
+        "meshes": 1,
+        "triangles": 32768,
+        "vertices": 16641,
+        "materials": 1,
+        "panorama": "mare-claim-panorama",
+        "panoramaMeshes": 1,
+        "panoramaTriangles": 3072,
+        "panoramaFraming": "world-projected-horizon",
+        "panoramaFog": "excluded",
+        "continuation": "panorama-owned-continuation",
+        "landmarks": 5,
+        "landmarkExpected": 5,
+        "landmarkSkipped": 0,
+        "landmarkDiagnostics": "",
+        "landmarkMountIds": [
+          "earthrise-listening-array",
+          "lava-tube-survey-gantry",
+          "regolith-core-yard",
+          "west-rim-debris-catcher",
+          "east-rim-debris-catcher"
+        ]
+      },
+      "relief": {
+        "stations": 441,
+        "nonFinite": 0,
+        "min": -1.386,
+        "max": 6,
+        "range": 7.386,
+        "sd": 2.828
+      },
+      "shot": "reviews/shots-campaign-dossier/e8-eclipse.png",
+      "frame": {
+        "size": "1280x800",
+        "meanLuma": 64.77,
+        "peakLuma": 248.3,
+        "litShare": 97.9,
+        "hist": [
+          2.1,
+          86.1,
+          0.3,
+          0.3,
+          1.4,
+          0.5,
+          0.7,
+          8.5
+        ]
+      },
+      "landmarkShot": "reviews/shots-campaign-dossier/e8-eclipse-landmark.png",
+      "landmarkFrame": {
+        "size": "1280x800",
+        "meanLuma": 68.93,
+        "peakLuma": 248.3,
+        "litShare": 91.02,
+        "hist": [
+          9,
+          62.9,
+          16,
+          1.5,
+          2.2,
+          1.2,
+          0.8,
+          6.5
+        ]
+      },
+      "landmarkStation": {
+        "id": "earthrise-listening-array",
+        "x": 0,
+        "z": 56
+      },
+      "disk": {
+        "slug": "eclipse",
+        "pack": [
+          "east-rim-solar-witness.glb",
+          "eclipse-shadow-dial.glb",
+          "launch-shadow-gate.glb",
+          "mass-driver-eclipse-marker.glb",
+          "west-rim-solar-witness.glb"
+        ],
+        "ownContract": {
+          "file": "assets/pilots/map-rebuild-spike/eclipse-terrain-contract.json",
+          "contractId": "eclipse-reuse-verdict",
+          "mounts": 5,
+          "mountAssets": [
+            "landmarks/eclipse/eclipse-shadow-dial.glb",
+            "landmarks/eclipse/west-rim-solar-witness.glb",
+            "landmarks/eclipse/east-rim-solar-witness.glb",
+            "landmarks/eclipse/launch-shadow-gate.glb",
+            "landmarks/eclipse/mass-driver-eclipse-marker.glb"
+          ]
+        },
+        "harvestAnchors": 6,
+        "reusePack": [
+          "earthrise-listening-array.glb",
+          "east-rim-debris-catcher.glb",
+          "lava-tube-survey-gantry.glb",
+          "regolith-core-yard.glb",
+          "west-rim-debris-catcher.glb"
+        ]
+      }
+    },
+    {
+      "id": "e9-seed-run",
+      "era": 9,
+      "name": "The Seed Run",
+      "boot": "REFUSED: unavailable-contract (opened the-claim)",
+      "console": {
+        "errors": [],
+        "warnings": [],
+        "pageErrors": []
+      },
+      "door": {
+        "activeId": "the-claim",
+        "requestedId": "e9-seed-run",
+        "fallbackReason": "unavailable-contract",
+        "gameBelievesActive": "the-claim"
+      },
+      "bootMs": 18375,
+      "disk": {
+        "slug": "seed-run",
+        "pack": [
+          "center-seed-vault.glb",
+          "east-seed-vault.glb",
+          "north-basin-waygate.glb",
+          "south-seed-caravan-gate.glb",
+          "west-seed-vault.glb"
+        ],
+        "ownContract": {
+          "file": "assets/pilots/map-rebuild-spike/seed-run-terrain-contract.json",
+          "contractId": "e9-seed-run",
+          "mounts": 5,
+          "mountAssets": [
+            "landmarks/seed-run/south-seed-caravan-gate.glb",
+            "landmarks/seed-run/west-seed-vault.glb",
+            "landmarks/seed-run/center-seed-vault.glb",
+            "landmarks/seed-run/east-seed-vault.glb",
+            "landmarks/seed-run/north-basin-waygate.glb"
+          ]
+        },
+        "harvestAnchors": 0
+      }
+    },
+    {
+      "id": "e9-devils-alley",
+      "era": 9,
+      "name": "Devil's Alley",
+      "boot": "REFUSED: unavailable-contract (opened the-claim)",
+      "console": {
+        "errors": [],
+        "warnings": [],
+        "pageErrors": []
+      },
+      "door": {
+        "activeId": "the-claim",
+        "requestedId": "e9-devils-alley",
+        "fallbackReason": "unavailable-contract",
+        "gameBelievesActive": "the-claim"
+      },
+      "bootMs": 17367,
+      "disk": {
+        "slug": "devils-alley",
+        "pack": [
+          "center-wind-anchor.glb",
+          "east-wind-anchor.glb",
+          "north-anchor-gate.glb",
+          "south-anchor-gate.glb",
+          "west-wind-anchor.glb"
+        ],
+        "ownContract": {
+          "file": "assets/pilots/map-rebuild-spike/devils-alley-terrain-contract.json",
+          "contractId": "e9-devils-alley",
+          "mounts": 5,
+          "mountAssets": [
+            "landmarks/devils-alley/south-anchor-gate.glb",
+            "landmarks/devils-alley/west-wind-anchor.glb",
+            "landmarks/devils-alley/center-wind-anchor.glb",
+            "landmarks/devils-alley/east-wind-anchor.glb",
+            "landmarks/devils-alley/north-anchor-gate.glb"
+          ]
+        },
+        "harvestAnchors": 0
+      }
+    },
+    {
+      "id": "e9-old-canal",
+      "era": 9,
+      "name": "The Old Canal",
+      "boot": "REFUSED: unavailable-contract (opened the-claim)",
+      "console": {
+        "errors": [],
+        "warnings": [],
+        "pageErrors": []
+      },
+      "door": {
+        "activeId": "the-claim",
+        "requestedId": "e9-old-canal",
+        "fallbackReason": "unavailable-contract",
+        "gameBelievesActive": "the-claim"
+      },
+      "bootMs": 18566,
+      "disk": {
+        "slug": "old-canal",
+        "pack": [
+          "canal-segment-a-marker.glb",
+          "canal-segment-b-marker.glb",
+          "canal-segment-c-marker.glb",
+          "north-outflow-gate.glb",
+          "south-survey-rig.glb"
+        ],
+        "ownContract": {
+          "file": "assets/pilots/map-rebuild-spike/old-canal-terrain-contract.json",
+          "contractId": "e9-old-canal",
+          "mounts": 5,
+          "mountAssets": [
+            "landmarks/old-canal/south-survey-rig.glb",
+            "landmarks/old-canal/canal-segment-a-marker.glb",
+            "landmarks/old-canal/canal-segment-b-marker.glb",
+            "landmarks/old-canal/canal-segment-c-marker.glb",
+            "landmarks/old-canal/north-outflow-gate.glb"
+          ]
+        },
+        "harvestAnchors": 0
+      }
+    },
+    {
+      "id": "e10-archive-world",
+      "era": 10,
+      "name": "The Archive World",
+      "boot": "REFUSED: unavailable-contract (opened the-claim)",
+      "console": {
+        "errors": [],
+        "warnings": [],
+        "pageErrors": []
+      },
+      "door": {
+        "activeId": "the-claim",
+        "requestedId": "e10-archive-world",
+        "fallbackReason": "unavailable-contract",
+        "gameBelievesActive": "the-claim"
+      },
+      "bootMs": 17423,
+      "disk": {
+        "slug": "archive-world",
+        "pack": [
+          "archive-entry-gate.glb",
+          "east-stack-ruin.glb",
+          "ours-unless-marker.glb",
+          "warning-shelf-ruin.glb",
+          "west-stack-ruin.glb"
+        ],
+        "ownContract": {
+          "file": "assets/pilots/map-rebuild-spike/archive-world-terrain-contract.json",
+          "contractId": "e10-archive-world",
+          "mounts": 5,
+          "mountAssets": [
+            "landmarks/archive-world/archive-entry-gate.glb",
+            "landmarks/archive-world/west-stack-ruin.glb",
+            "landmarks/archive-world/east-stack-ruin.glb",
+            "landmarks/archive-world/warning-shelf-ruin.glb",
+            "landmarks/archive-world/ours-unless-marker.glb"
+          ]
+        },
+        "harvestAnchors": 0
+      }
+    },
+    {
+      "id": "e5-deepwater-claim",
+      "era": 5,
+      "name": "Deepwater Claim",
+      "host": true,
+      "boot": "PASS",
+      "console": {
+        "errors": [],
+        "warnings": [],
+        "pageErrors": []
+      },
+      "door": {
+        "activeId": "e5-deepwater-claim",
+        "requestedId": "e5-deepwater-claim",
+        "fallbackReason": null,
+        "gameBelievesActive": "e5-deepwater-claim"
+      },
+      "bootMs": 14104,
+      "pilot": {
+        "state": "ready",
+        "contract": "e5-deepwater-claim",
+        "renderSource": "glb",
+        "heightSource": "baked-grid",
+        "failure": null,
+        "terrainLoadState": "mounted",
+        "panoramaLoadState": "mounted",
+        "landmarkLoadState": "mounted",
+        "meshes": 1,
+        "triangles": 32768,
+        "vertices": 16641,
+        "materials": 1,
+        "panorama": "deepwater-claim-panorama",
+        "panoramaMeshes": 1,
+        "panoramaTriangles": 2704,
+        "panoramaFraming": "world-projected-horizon",
+        "panoramaFog": "excluded",
+        "continuation": "panorama-owned-continuation",
+        "landmarks": 0,
+        "landmarkExpected": 4,
+        "landmarkSkipped": 4,
+        "landmarkDiagnostics": "drowned-claim-office: asset unavailable; drowned-chapel: asset unavailable; drowned-general-store: asset unavailable; drowned-stamp-mill: asset unavailable",
+        "landmarkMountIds": []
+      },
+      "relief": {
+        "stations": 441,
+        "nonFinite": 0,
+        "min": -5.788,
+        "max": -0.388,
+        "range": 5.4,
+        "sd": 1.219
+      },
+      "shot": "reviews/shots-campaign-dossier/e5-deepwater-claim.png",
+      "frame": {
+        "size": "1280x800",
+        "meanLuma": 60.93,
+        "peakLuma": 248.3,
+        "litShare": 70.64,
+        "hist": [
+          29.4,
+          55.9,
+          3.1,
+          0.3,
+          1.4,
+          0.4,
+          0.6,
+          8.9
+        ]
+      },
+      "disk": {
+        "slug": "deepwater-claim",
+        "pack": null,
+        "ownContract": {
+          "file": "assets/pilots/map-rebuild-spike/deepwater-claim-terrain-contract.json",
+          "contractId": "e5-deepwater-claim",
+          "mounts": 4,
+          "mountAssets": [
+            "assets/pilots/claim-office-3d/claim-office.e4.glb",
+            "assets/pilots/chapel-3d/chapel.e4.glb",
+            "assets/pilots/general-store-3d/general-store.e4.glb",
+            "assets/pilots/stamp-mill-3d/stamp-mill.e4.glb"
+          ]
+        },
+        "harvestAnchors": 5
+      }
+    },
+    {
+      "id": "e6-glow-mesa",
+      "era": 6,
+      "name": "Glow Mesa",
+      "host": true,
+      "boot": "PASS",
+      "console": {
+        "errors": [],
+        "warnings": [],
+        "pageErrors": []
+      },
+      "door": {
+        "activeId": "e6-glow-mesa",
+        "requestedId": "e6-glow-mesa",
+        "fallbackReason": null,
+        "gameBelievesActive": "e6-glow-mesa"
+      },
+      "bootMs": 14081,
+      "pilot": {
+        "state": "ready",
+        "contract": "e6-glow-mesa",
+        "renderSource": "glb",
+        "heightSource": "baked-grid",
+        "failure": null,
+        "terrainLoadState": "mounted",
+        "panoramaLoadState": "mounted",
+        "landmarkLoadState": "mounted",
+        "meshes": 1,
+        "triangles": 32768,
+        "vertices": 16641,
+        "materials": 1,
+        "panorama": "glow-mesa-panorama",
+        "panoramaMeshes": 1,
+        "panoramaTriangles": 2496,
+        "panoramaFraming": "world-projected-horizon",
+        "panoramaFog": "excluded",
+        "continuation": "panorama-owned-continuation",
+        "landmarks": 5,
+        "landmarkExpected": 5,
+        "landmarkSkipped": 0,
+        "landmarkDiagnostics": "",
+        "landmarkMountIds": [
+          "mesa-starstone-derrick",
+          "six-vein-control-pylon",
+          "isotope-cooling-rack",
+          "west-herd-glow-gate",
+          "east-herd-glow-gate"
+        ]
+      },
+      "relief": {
+        "stations": 441,
+        "nonFinite": 0,
+        "min": 0.953,
+        "max": 5.011,
+        "range": 4.059,
+        "sd": 1.846
+      },
+      "shot": "reviews/shots-campaign-dossier/e6-glow-mesa.png",
+      "frame": {
+        "size": "1280x800",
+        "meanLuma": 72.11,
+        "peakLuma": 248.3,
+        "litShare": 89.55,
+        "hist": [
+          10.5,
+          55.8,
+          21.1,
+          1.3,
+          1.4,
+          0.4,
+          0.6,
+          8.9
+        ]
+      },
+      "landmarkShot": "reviews/shots-campaign-dossier/e6-glow-mesa-landmark.png",
+      "landmarkFrame": {
+        "size": "1280x800",
+        "meanLuma": 64.55,
+        "peakLuma": 248.3,
+        "litShare": 62.63,
+        "hist": [
+          37.4,
+          31.8,
+          14.5,
+          4.5,
+          2.6,
+          1.4,
+          0.9,
+          6.9
+        ]
+      },
+      "landmarkStation": {
+        "id": "mesa-starstone-derrick",
+        "x": -56,
+        "z": 50
+      },
+      "disk": {
+        "slug": "glow-mesa",
+        "pack": [
+          "east-herd-glow-gate.glb",
+          "isotope-cooling-rack.glb",
+          "mesa-starstone-derrick.glb",
+          "six-vein-control-pylon.glb",
+          "west-herd-glow-gate.glb"
+        ],
+        "ownContract": {
+          "file": "assets/pilots/map-rebuild-spike/glow-mesa-terrain-contract.json",
+          "contractId": "e6-glow-mesa",
+          "mounts": 5,
+          "mountAssets": [
+            "landmarks/glow-mesa/mesa-starstone-derrick.glb",
+            "landmarks/glow-mesa/six-vein-control-pylon.glb",
+            "landmarks/glow-mesa/isotope-cooling-rack.glb",
+            "landmarks/glow-mesa/west-herd-glow-gate.glb",
+            "landmarks/glow-mesa/east-herd-glow-gate.glb"
+          ]
+        },
+        "harvestAnchors": 6
+      }
+    },
+    {
+      "id": "e7-relay-valley",
+      "era": 7,
+      "name": "Relay Valley",
+      "host": true,
+      "boot": "PASS",
+      "console": {
+        "errors": [],
+        "warnings": [],
+        "pageErrors": []
+      },
+      "door": {
+        "activeId": "e7-relay-valley",
+        "requestedId": "e7-relay-valley",
+        "fallbackReason": null,
+        "gameBelievesActive": "e7-relay-valley"
+      },
+      "bootMs": 14168,
+      "pilot": {
+        "state": "ready",
+        "contract": "e7-relay-valley",
+        "renderSource": "glb",
+        "heightSource": "baked-grid",
+        "failure": null,
+        "terrainLoadState": "mounted",
+        "panoramaLoadState": "mounted",
+        "landmarkLoadState": "mounted",
+        "meshes": 1,
+        "triangles": 32768,
+        "vertices": 16641,
+        "materials": 1,
+        "panorama": "relay-valley-panorama",
+        "panoramaMeshes": 1,
+        "panoramaTriangles": 3084,
+        "panoramaFraming": "world-projected-horizon",
+        "panoramaFog": "excluded",
+        "continuation": "panorama-owned-continuation",
+        "landmarks": 5,
+        "landmarkExpected": 5,
+        "landmarkSkipped": 0,
+        "landmarkDiagnostics": "",
+        "landmarkMountIds": [
+          "west-ridge-dish-cluster",
+          "east-ridge-dish-cluster",
+          "dead-gap-charting-station",
+          "valley-cable-drum-yard",
+          "drone-recovery-beacon"
+        ]
+      },
+      "relief": {
+        "stations": 441,
+        "nonFinite": 0,
+        "min": -0.49,
+        "max": 5.015,
+        "range": 5.505,
+        "sd": 2.202
+      },
+      "shot": "reviews/shots-campaign-dossier/e7-relay-valley.png",
+      "frame": {
+        "size": "1280x800",
+        "meanLuma": 52.02,
+        "peakLuma": 248.3,
+        "litShare": 45.01,
+        "hist": [
+          55,
+          31.9,
+          1.8,
+          0.5,
+          1.4,
+          0.6,
+          0.7,
+          8
+        ]
+      },
+      "landmarkShot": "reviews/shots-campaign-dossier/e7-relay-valley-landmark.png",
+      "landmarkFrame": {
+        "size": "1280x800",
+        "meanLuma": 52.95,
+        "peakLuma": 248.3,
+        "litShare": 55.29,
+        "hist": [
+          44.7,
+          39.7,
+          6,
+          0.7,
+          1.5,
+          0.6,
+          0.7,
+          5.9
+        ]
+      },
+      "landmarkStation": {
+        "id": "west-ridge-dish-cluster",
+        "x": -56,
+        "z": 30
+      },
+      "disk": {
+        "slug": "relay-valley",
+        "pack": [
+          "dead-gap-charting-station.glb",
+          "drone-recovery-beacon.glb",
+          "east-ridge-dish-cluster.glb",
+          "valley-cable-drum-yard.glb",
+          "west-ridge-dish-cluster.glb"
+        ],
+        "ownContract": {
+          "file": "assets/pilots/map-rebuild-spike/relay-valley-terrain-contract.json",
+          "contractId": "e7-relay-valley",
+          "mounts": 5,
+          "mountAssets": [
+            "landmarks/relay-valley/west-ridge-dish-cluster.glb",
+            "landmarks/relay-valley/east-ridge-dish-cluster.glb",
+            "landmarks/relay-valley/dead-gap-charting-station.glb",
+            "landmarks/relay-valley/valley-cable-drum-yard.glb",
+            "landmarks/relay-valley/drone-recovery-beacon.glb"
+          ]
+        },
+        "harvestAnchors": 4
+      }
+    },
+    {
+      "id": "e8-mare-claim",
+      "era": 8,
+      "name": "Mare Claim",
+      "host": true,
+      "boot": "PASS",
+      "console": {
+        "errors": [],
+        "warnings": [],
+        "pageErrors": []
+      },
+      "door": {
+        "activeId": "e8-mare-claim",
+        "requestedId": "e8-mare-claim",
+        "fallbackReason": null,
+        "gameBelievesActive": "e8-mare-claim"
+      },
+      "bootMs": 14615,
+      "pilot": {
+        "state": "ready",
+        "contract": "e8-mare-claim",
+        "renderSource": "glb",
+        "heightSource": "baked-grid",
+        "failure": null,
+        "terrainLoadState": "mounted",
+        "panoramaLoadState": "mounted",
+        "landmarkLoadState": "mounted",
+        "meshes": 1,
+        "triangles": 32768,
+        "vertices": 16641,
+        "materials": 1,
+        "panorama": "mare-claim-panorama",
+        "panoramaMeshes": 1,
+        "panoramaTriangles": 3072,
+        "panoramaFraming": "world-projected-horizon",
+        "panoramaFog": "excluded",
+        "continuation": "panorama-owned-continuation",
+        "landmarks": 5,
+        "landmarkExpected": 5,
+        "landmarkSkipped": 0,
+        "landmarkDiagnostics": "",
+        "landmarkMountIds": [
+          "earthrise-listening-array",
+          "lava-tube-survey-gantry",
+          "regolith-core-yard",
+          "west-rim-debris-catcher",
+          "east-rim-debris-catcher"
+        ]
+      },
+      "relief": {
+        "stations": 441,
+        "nonFinite": 0,
+        "min": -1.386,
+        "max": 6,
+        "range": 7.386,
+        "sd": 2.828
+      },
+      "shot": "reviews/shots-campaign-dossier/e8-mare-claim.png",
+      "frame": {
+        "size": "1280x800",
+        "meanLuma": 64.76,
+        "peakLuma": 248.3,
+        "litShare": 97.87,
+        "hist": [
+          2.1,
+          86.1,
+          0.3,
+          0.3,
+          1.4,
+          0.5,
+          0.7,
+          8.5
+        ]
+      },
+      "landmarkShot": "reviews/shots-campaign-dossier/e8-mare-claim-landmark.png",
+      "landmarkFrame": {
+        "size": "1280x800",
+        "meanLuma": 68.93,
+        "peakLuma": 248.3,
+        "litShare": 91.01,
+        "hist": [
+          9,
+          62.7,
+          16.1,
+          1.5,
+          2.2,
+          1.2,
+          0.8,
+          6.5
+        ]
+      },
+      "landmarkStation": {
+        "id": "earthrise-listening-array",
+        "x": 0,
+        "z": 56
+      },
+      "disk": {
+        "slug": "mare-claim",
+        "pack": [
+          "earthrise-listening-array.glb",
+          "east-rim-debris-catcher.glb",
+          "lava-tube-survey-gantry.glb",
+          "regolith-core-yard.glb",
+          "west-rim-debris-catcher.glb"
+        ],
+        "ownContract": {
+          "file": "assets/pilots/map-rebuild-spike/mare-claim-terrain-contract.json",
+          "contractId": "e8-mare-claim",
+          "mounts": 5,
+          "mountAssets": [
+            "landmarks/mare-claim/earthrise-listening-array.glb",
+            "landmarks/mare-claim/lava-tube-survey-gantry.glb",
+            "landmarks/mare-claim/regolith-core-yard.glb",
+            "landmarks/mare-claim/west-rim-debris-catcher.glb",
+            "landmarks/mare-claim/east-rim-debris-catcher.glb"
+          ]
+        },
+        "harvestAnchors": 6
+      }
+    }
+  ]
+}

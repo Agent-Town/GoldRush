@@ -1,0 +1,163 @@
+
+Running 12 tests using 5 workers
+
+[1/12] [desktop-chrome] › e2e/e4-orbit-road.spec.ts:23:1 › wave circles the literal ring road, warns, then peels inward
+[2/12] [desktop-chrome] › e2e/e4-vehicles-fuel.spec.ts:30:1 › tar harvest fuels the HAULER, dry-halts it, and resumes without a jump
+[3/12] [desktop-chrome] › e2e/e4-convoy-weather.spec.ts:16:1 › convoy holds three-unit formation when the leader reroutes
+[4/12] [desktop-chrome] › e2e/e4-dust-flats.spec.ts:31:1 › fires the authored storm and peels a convoy off the ORBIT road
+[5/12] [desktop-chrome] › e2e/e4-landyacht-boss.spec.ts:89:1 › plays the Land-Yacht acts on the Dust Flats ring road
+[6/12] [desktop-chrome] › e2e/e4-orbit-road.spec.ts:39:1 › graded road is 2.5x faster, burns less fuel, and attracts enemy convoys
+[7/12] [desktop-chrome] › e2e/e4-convoy-weather.spec.ts:31:1 › scheduled storm telegraphs, applies modifiers, clears, and repeats deterministically
+[8/12] [desktop-chrome] › e2e/e4-orbit-road.spec.ts:50:1 › orbit and road results repeat deterministically
+[9/12] [desktop-chrome] › e2e/e4-landyacht-boss.spec.ts:161:1 › arrives without an early warning and holds later acts behind the wheels
+  1) [desktop-chrome] › e2e/e4-vehicles-fuel.spec.ts:30:1 › tar harvest fuels the HAULER, dry-halts it, and resumes without a jump 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for getByRole('button', { name: 'Begin' })
+        - locator resolved to <button type="button" class="contract-briefing__dismiss" data-testid="contract-briefing-dismiss">Begin</button>
+      - attempting click action
+        - waiting for element to be visible, enabled and stable
+        - element is visible, enabled and stable
+        - scrolling into view if needed
+        - done scrolling
+        - performing click action
+        - <canvas width="1280" height="800" id="game-canvas" data-css-aspect="1.6" data-hero-skin="stock" data-hero-sheet="young" data-camera-aspect="1.6" data-railcar3d-state="off" data-boss-bar-depleted="0" data-crawler3d-state="off" data-boss-bar-remaining="0" data-boss-bar-anchor="none" data-engine="three.js r184" data-run3d-pilot-meshes="0" data-homemaker3d-state="off" data-prospector-skin="stock" data-hero-skin-sheet="stock" data-boss-bar-visible="false" data-boss-bar-semantic="none" data-boss-bar-positio…></canvas> intercepts pointer events
+      - retrying click action
+        - waiting for element to be visible, enabled and stable
+        - element is not visible
+      - retrying click action
+        - waiting 20ms
+        2 × waiting for element to be visible, enabled and stable
+          - element is not visible
+        - retrying click action
+          - waiting 100ms
+        54 × waiting for element to be visible, enabled and stable
+           - element is not visible
+         - retrying click action
+           - waiting 500ms
+
+
+      11 |   await page.waitForFunction(() => window.__THREE_GAME_DIAGNOSTICS__?.vehicle?.active === true && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+      12 |   const begin = page.getByRole('button', { name: 'Begin' });
+    > 13 |   if (await begin.isVisible()) await begin.click();
+         |                                            ^
+      14 |   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.runState)).toBe('playing');
+      15 |   await page.evaluate(() => window.__GR_TEST__!.setManualSim(true));
+      16 |   return watch;
+        at openHarness (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/e4-vehicles-fuel.spec.ts:13:44)
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/e4-vehicles-fuel.spec.ts:31:17
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e4-vehicles-fuel-tar-harve-ffcd5--and-resumes-without-a-jump-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e4-vehicles-fuel-tar-harve-ffcd5--and-resumes-without-a-jump-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e4-vehicles-fuel-tar-harve-ffcd5--and-resumes-without-a-jump-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e4-vehicles-fuel-tar-harve-ffcd5--and-resumes-without-a-jump-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[10/12] [desktop-chrome] › e2e/e4-vehicles-fuel.spec.ts:59:1 › fixed-step fuel and vehicle results are deterministic
+[desktop-chrome] › e2e/e4-vehicles-fuel.spec.ts:59:1 › fixed-step fuel and vehicle results are deterministic
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+  2) [desktop-chrome] › e2e/e4-dust-flats.spec.ts:31:1 › fires the authored storm and peels a convoy off the ORBIT road 
+
+    Test timeout of 90000ms exceeded.
+
+    Error: locator.click: Test timeout of 90000ms exceeded.
+    Call log:
+      - waiting for getByTestId('contract-briefing-dismiss')
+        - locator resolved to <button type="button" class="contract-briefing__dismiss" data-testid="contract-briefing-dismiss">Begin</button>
+      - attempting click action
+        - waiting for element to be visible, enabled and stable
+        - element is visible, enabled and stable
+        - scrolling into view if needed
+        - done scrolling
+        - <canvas width="1280" height="800" id="game-canvas" data-css-aspect="1.6" data-hero-skin="stock" data-camera-aspect="1.6" data-hero-sheet="midlife" data-railcar3d-state="off" data-boss-bar-depleted="0" data-crawler3d-state="off" data-boss-bar-remaining="0" data-boss-bar-anchor="none" data-engine="three.js r184" data-run3d-pilot-meshes="0" data-homemaker3d-state="off" data-prospector-skin="stock" data-hero-skin-sheet="stock" data-boss-bar-visible="false" data-boss-bar-semantic="none" data-boss-bar-posit…></canvas> intercepts pointer events
+      - retrying click action
+        - waiting for element to be visible, enabled and stable
+        - element is not visible
+      - retrying click action
+        - waiting 20ms
+        2 × waiting for element to be visible, enabled and stable
+          - element is not visible
+        - retrying click action
+          - waiting 100ms
+        170 × waiting for element to be visible, enabled and stable
+            - element is not visible
+          - retrying click action
+            - waiting 500ms
+
+
+      19 |   await page.waitForFunction(() => window.__GR_TEST__ && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+      20 |   const briefing = page.getByTestId('contract-briefing');
+    > 21 |   if (await briefing.isVisible()) await page.getByTestId('contract-briefing-dismiss').click();
+         |                                                                                       ^
+      22 |   await page.evaluate(() => window.__GR_TEST__!.setManualSim(true));
+      23 |   return errors;
+      24 | }
+        at open (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/e4-dust-flats.spec.ts:21:87)
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/e4-dust-flats.spec.ts:32:18
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e4-dust-flats-fires-the-au-75229-a-convoy-off-the-ORBIT-road-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e4-dust-flats-fires-the-au-75229-a-convoy-off-the-ORBIT-road-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e4-dust-flats-fires-the-au-75229-a-convoy-off-the-ORBIT-road-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e4-dust-flats-fires-the-au-75229-a-convoy-off-the-ORBIT-road-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[11/12] [desktop-chrome] › e2e/e4-dust-flats.spec.ts:75:1 › publishes a mask table that matches the real Dust Flats contract
+[12/12] [desktop-chrome] › e2e/e4-dust-flats.spec.ts:97:1 › offers road grading and the hauler in a normal Motor-era run
+  3) [desktop-chrome] › e2e/e4-dust-flats.spec.ts:97:1 › offers road grading and the hauler in a normal Motor-era run 
+
+    Test timeout of 90000ms exceeded.
+
+    Error: page.waitForFunction: Test timeout of 90000ms exceeded.
+
+      101 |   await page.addInitScript(() => sessionStorage.setItem('gr.contract.launch.v1', 'e4-dust-flats'));
+      102 |   await page.goto('/?contract=e4-dust-flats&nowaves&nospawn&nokill&nolevel&nopause');
+    > 103 |   await page.waitForFunction(() => window.__THREE_GAME_DIAGNOSTICS__?.contract.activeId === 'e4-dust-flats' && window.__THREE_GAME_DIAGNOSTICS__?.vehicle?.active === true);
+          |              ^
+      104 |   const briefing = page.getByTestId('contract-briefing');
+      105 |   if (await briefing.isVisible()) await page.getByTestId('contract-briefing-dismiss').click();
+      106 |   await page.keyboard.down('KeyS');
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/e4-dust-flats.spec.ts:103:14
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e4-dust-flats-offers-road--3fb8b-r-in-a-normal-Motor-era-run-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e4-dust-flats-offers-road--3fb8b-r-in-a-normal-Motor-era-run-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e4-dust-flats-offers-road--3fb8b-r-in-a-normal-Motor-era-run-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e4-dust-flats-offers-road--3fb8b-r-in-a-normal-Motor-era-run-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  3 failed
+    [desktop-chrome] › e2e/e4-dust-flats.spec.ts:31:1 › fires the authored storm and peels a convoy off the ORBIT road 
+    [desktop-chrome] › e2e/e4-dust-flats.spec.ts:97:1 › offers road grading and the hauler in a normal Motor-era run 
+    [desktop-chrome] › e2e/e4-vehicles-fuel.spec.ts:30:1 › tar harvest fuels the HAULER, dry-halts it, and resumes without a jump 
+  9 passed (3.9m)
+EXIT=1

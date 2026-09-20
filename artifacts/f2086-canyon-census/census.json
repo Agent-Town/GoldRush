@@ -1,0 +1,11 @@
+{
+  "schema": "goldrush.f2086.canyon-census.v1",
+  "status": "blocked",
+  "blockedReason": "scripts/gr-sim-campaign.mjs filters the campaign board to the-claim and e1-* contracts, so it cannot select e3-canyon-works without an out-of-scope edit to an existing script.",
+  "requestedContractId": "e3-canyon-works",
+  "requestedSeeds": [
+    "e3-canyon-works-01",
+    "e3-canyon-works-02"
+  ],
+  "rows": []
+}

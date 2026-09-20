@@ -1,0 +1,42 @@
+{
+  "secured": true,
+  "waves": 12,
+  "timeMs": 360000,
+  "gold": 113,
+  "kills": 322,
+  "calls": 269,
+  "defaultedPicks": 0,
+  "defaultedSecure": 1,
+  "eventLogHash": "fnv1a32:d10521cf",
+  "tape": "/private/tmp/heat13-569a41f9/artifacts/heat13/opus/e3-moth-season/attempt-1-tape.json",
+  "scored": true,
+  "runsSoFar": 2,
+  "scoredAttempts": 1,
+  "worldModel": "sim-import",
+  "note": "tune-1 secured on the first controller. Per the stop rule I ended the ride at that secure and PROMOTED it: attempt-1-tape.json is a byte-identical copy of tune-1-tape.json (937,547 bytes, verified equal). One ride under two filenames, not two rides.",
+  "tapeDeclaredHash": "fnv1a32:6f7df0c3",
+  "assayReplay": {
+    "command": "node scripts/assay-replay-agent.mjs artifacts/heat13/opus/e3-moth-season/tune-1-tape.json",
+    "eventLogHash": "fnv1a32:6f7df0c3",
+    "matchesTapeHeader": true,
+    "outcome": { "secured": true, "waves": 12, "gold": 113, "timeAlive": 360 },
+    "note": "The replay reproduces the TAPE header's hash (6f7df0c3), not the stdout outcome line's (d10521cf); they are different numbers by design."
+  },
+  "envelope": {
+    "bytes": 937547,
+    "maxTapeBytes": 1938784,
+    "entries": 269,
+    "maxEntries": 3601,
+    "durationTicks": 10800,
+    "maxTicks": 18002,
+    "lastEntryTick": 10784,
+    "allAxesPass": true,
+    "note": "maxTicks = max(MAX_PLAYBOOK_TICKS 18000, contractTicks 10800) + 2 = 18002; the 18000 floor is what makes the byte ceiling generous here. Last accepted order sits 16 ticks inside durationTicks (F-HEAT11-1 avoided by blank-lining the secure boundary)."
+  },
+  "era": 5,
+  "engineHash": "09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4",
+  "viewVersion": 2,
+  "contract": "e3-moth-season",
+  "seed": "e3-moth-season-01",
+  "difficulty": "trail"
+}

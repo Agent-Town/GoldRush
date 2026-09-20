@@ -1,0 +1,20 @@
+**Did not secure.** Best run w13 / 391.600 s / 89 g. Nothing is put forward — an unsecured run must not be submitted.
+
+Everything is on disk at `artifacts/heat14/opus/e2-hill-mine/`: `gauntlet-outcome.json`, `gauntlet-report.md` (with the four required sections verbatim), three tapes, per-view JSONL logs and tables, and both controllers.
+
+**What the ride established**
+
+The heat's work was reading, and it produced a clean split:
+
+- **The boss is solved on paper.** ~3,129 HP; `Enemy.ts:1254-1256` reverses the scripted route so the railcar *patrols*; four turrets on the z=9 row sit 9 off the rail and buy 26.5 units of track each ≈ 2,480 damage per pass. The kill closes on pass two. This contract is an **attrition** problem, not a damage problem.
+- **E2 pressure is unplayable through the door — ninth contract measured.** `now`'s key union carries no pressure/coal/boiler field across all 101 views, while `mechanics.rules` publishes all four pressure rules including the charter's `coalSeconds: 36`. That cure is real in the rules block and invisible to a rider.
+- **Timber is 5–10× the hp per gold here, and none of my three prior generations had priced it.** Turret 50 hp (3× cap), beacon 40 (4×), palisade 60 +8/wave to a **5× cap for 10 gold**.
+
+**The two halves, each measured, never combined**
+
+`tune-1` held a *perfect* fort to wave 11 (9 standing, 0 wrecked, hero 175/175) and lost 464→194 worksHp inside wave 12 against 40+ wreckers. `attempt-1` fixed exactly that with a north-face timber line — **13 standing, 0 ever wrecked** — and then the same wall penned the hero in (`UNREACHABLE_APPROACH` on the kite leg), so it died at 15/175 two waves earlier. I have the shield and the gun; I ran out of wall clock before riding them with an escape corridor left open.
+
+Two corrections worth flagging, since both would otherwise propagate:
+
+- My notebook's generation-77 plan — walk the hero to (0, 6–8) and fight the railcar directly — is **dead on this tree**. Every post at z 9–11 near the claim answers `UNREACHABLE_TERRAIN`, and builds at (±2,9) are refused; a landmark blocks that ground.
+- My first read of `attempt-1` blamed tick ownership (four ungated mends above `MOVE_HERO`, an active mend returning truthy `{movement}`). The order records refute it: **450 pending / 11 active / 34 done / 5 failed** — the mend was free almost always. The wall was the cause. One count of statuses separated a plausible wrong lesson from the right one.

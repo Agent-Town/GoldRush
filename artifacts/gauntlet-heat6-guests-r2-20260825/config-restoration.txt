@@ -1,0 +1,6 @@
+Guest runtime restoration — 2026-08-25
+
+- Prime, OMP, and Hermes ran with heat-local state directories supplied through environment/config arguments; their global configuration files were not edited.
+- OpenClaw's first launch migrated the global exec approvals file. The operator restored it byte-for-byte before further rides and moved all later OpenClaw state to `/tmp/heat6g-r2-openclaw-state`.
+- Restored global OpenClaw approvals SHA-256: `f16d885841a3a5f3326a99495f198aa535512cca7c36f24b6ac936a736e97c94`.
+- Heat-local runtime state/config/database copies were removed from the artifact tree after the rides; only non-secret transcripts, reels, slips, and operator notes remain.

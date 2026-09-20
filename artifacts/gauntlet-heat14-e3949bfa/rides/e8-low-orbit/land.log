@@ -1,0 +1,27 @@
+
+=== 1 finish-ride ===
+{"rig":"opus","contract":"e8-low-orbit","wall":611,"wallHit":false,"rc":0,"tracked":[],"files":17,"outcome":{"secured":false,"waves":13,"gold":60,"runsSoFar":3,"scoredAttempts":1,"tape":"tune-1-tape.json","worldModel":"sim-import"},"scoredTapes":[{"file":"attempt-1-tape.json","id":"agent-b6a2cc77-99e99999-82bc-4935-b307-97a3f4ffeb32","secured":false,"waves":9,"gold":10,"durationTicks":8231,"lastEntryTick":8101,"promotedByRig":false,"discoveredBy":"filename"},{"file":"tune-1-tape.json","id":"agent-4d9b57ba-8eef855e-6986-419a-8186-0b5c73016202","secured":false,"waves":13,"gold":60,"durationTicks":12045,"lastEntryTick":11917,"promotedByRig":true,"discoveredBy":"outcome-file"}],"otherSecured":[],"reportSections":{"outcome":692,"whatTheMapAsked":2771,"winnability":1354,"lessons":3819},"usage":{"turns":52,"toolCalls":27,"tokensIn":104,"tokensOut":105954}}
+
+=== NOT SECURED — nothing to submit ===
+{
+ "rig": "opus",
+ "contract": "e8-low-orbit",
+ "wall": 611,
+ "wallHit": false,
+ "rc": 0,
+ "scoredTapes": [
+  {
+   "file": "attempt-1-tape.json",
+   "secured": false,
+   "waves": 9,
+   "gold": 10
+  },
+  {
+   "file": "tune-1-tape.json",
+   "secured": false,
+   "waves": 13,
+   "gold": 60
+  }
+ ],
+ "outcomeNote": "NOT SECURED - nothing to put forward. Best of 3 runs is tune-1 (w13/401.5s/60g). attempt-1 (ctrl-v2, w9/274.4s/10g) was the scored attempt and regressed. Era gate SOLVED in both: crossing 4/4 credits, reach 2/2, breathlessEntries 0."
+}

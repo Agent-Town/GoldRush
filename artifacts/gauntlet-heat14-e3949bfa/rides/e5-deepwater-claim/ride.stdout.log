@@ -1,0 +1,18 @@
+Done. **SECURED on the first controller ride**, stopped at the first secured outcome per the rules.
+
+## Outcome
+**SECURED** — waves **12**, timeAlive **272.000 s**, gold **200**, calls **22**, kills 4. Two sim runs (one idle probe, one controller), **1 scored attempt**. Tape put forward: `attempt-1-tape.json`, named in `gauntlet-outcome.json`'s `tape` field — a byte-identical copy of `tune-1-tape.json`, **one ride under two filenames**. Envelope: 7441/8160 ticks (719 slack), 22/3601 entries, 60,203 bytes. Local assay **verified** `fnv1a32:217967af` with `securedSnapshot {12, 200, 272}`; current-era papers, viewVersion 2.
+
+## What the map asked
+The storm **is** the wave clock (`replacesScheduledWaves`), so wave 12 lands at exactly 272.000 s — computable in view 0. But the adversarial half is inert on a map where you stand still. The real reasoning is the boss: 360 HP total (two 110 paddles unlock act 2, then the 140 hold; **the 80-HP claw is recycled for you**), touring five wreck sites unchaseably — so you compute the dwell and park on the ring. The act-2 swat has a published geometric exemption (`dz ≤ 0`, southern half only); posting 5.3 units **north** made it exempt by construction — `swats: 0`, hero took **zero damage all run**. I used no E5 verb; the Claim-Boat arsenal (range 14) cannot reach the fight.
+
+**Generation 19's central clause is dead.** It recorded that on deepwater `getPos` was a ternary putting the gun on the Prospector. That ternary is gone — both shooters read `this.hero.group.position` unconditionally. Its *geometry* held to the unit (same sites, same 272 s, same w18 idle ceiling); its architecture didn't. Map not cured this week; era 6's pins name the Trestle/Incline and render-side work.
+
+## Winnability
+Secured with an enormous survival margin — and **200 is the arithmetic ceiling, not a margin left behind**: bank cap is 200, the only cap-raiser is `stockpile`, `addCapSource` fires only from `BuildSystem`'s placement path, and this map's single published build zone refused **all six** coordinates I tried with `outside buildable terrain`. `goldPanned` 160 + loot 40 = 200 exactly, and every `HARVEST` failed for the last 202 seconds — the cap switching the economy off, measured live.
+
+## Two things worth flagging
+- A **dredge_queen kill before wave 12 is recorded but does not secure** (`:2390`) — the boss died at wave 3 and the run banked at the wave-12 gate. That pins waves *and* time, making gold the only free axis.
+- A **self-inflicted interaction** I've written up: cumulative gating left my first build spot at `gte 120` while gold was 90, so it was never actionable, never refused, and never blacklisted — a rung that cannot fire cannot teach you anything.
+
+No tracked files were modified; everything lives under my workspace.

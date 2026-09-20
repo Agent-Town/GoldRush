@@ -1,0 +1,42 @@
+
+########## RIDE e7-relay-valley · seed e7-relay-valley-01 · gen 59 · stake second-attempt · wall 1400s ##########
+--- 1 charter ---
+{"rig":"opus","contract":"e7-relay-valley","seed":"e7-relay-valley-01","seedMode":"bench","stake":"second-attempt","generation":59,"wall":1400,"notebookSha256":"8f7f2ecdd2e53b9cbfe92fcb273bc5eec1b9eee8a24bbff326fe00abb58ffe7c","charterSha256":"92ff43896b48355c01eb73b9bd2f939d028c3ef30027539a3508d89739711a0f","bytes":462487,"out":"/private/tmp/heat12-038cc280/artifacts/gauntlet-heat12-20260905/rides/e7-relay-valley/charter.md"}
+--- 2 ride ---
+START opus claude-opus-5 pid=58792 session=7c28f346-7923-4cc6-8a4e-2f33e65d1ba4 at=2026-09-05T20:55:57.907Z
+FIRST-OUTPUT opus +285s
+OUTCOME opus secured=false waves=6 gold=25 runsSoFar=1 scored=0 +375s
+OUTCOME opus secured=false waves=10 gold=70 runsSoFar=2 scored=1 +495s
+END opus rc=0 signal=null wall=554s wallHit=false
+ride-wall rc=0 signal=-
+--- 3 land ---
+
+=== 1 finish-ride ===
+{"rig":"opus","contract":"e7-relay-valley","wall":554,"wallHit":false,"rc":0,"tracked":[],"files":9,"outcome":{"secured":false,"waves":10,"gold":70,"runsSoFar":2,"scoredAttempts":1,"tape":"/tmp/heat12-038cc280/artifacts/heat12/opus/e7-relay-valley/attempt-1-tape.json","worldModel":"sim-import"},"scoredTapes":[{"file":"attempt-1-tape.json","id":"agent-807d85f3-a7f9ed28-db67-492a-9bd0-df4c2c0b3454","secured":false,"waves":10,"gold":70,"durationTicks":9236,"lastEntryTick":9226,"promotedByRig":true,"discoveredBy":"outcome-file+filename"}],"otherSecured":[],"reportSections":{"outcome":1595,"whatTheMapAsked":2023,"winnability":1117,"lessons":4125},"usage":{"turns":54,"toolCalls":32,"tokensIn":108,"tokensOut":81615}}
+
+=== NOT SECURED — nothing to submit ===
+{
+ "rig": "opus",
+ "contract": "e7-relay-valley",
+ "wall": 554,
+ "wallHit": false,
+ "rc": 0,
+ "scoredTapes": [
+  {
+   "file": "attempt-1-tape.json",
+   "secured": false,
+   "waves": 10,
+   "gold": 70
+  }
+ ],
+ "outcomeNote": null
+}
+
+land rc=0
+--- 4 notebook ---
+{"notebook":"/Users/robin/Claude/Projects/goldrush-gauntlet/memories/claude__opus-5/NOTEBOOK.md","generation":59,"headerBytes":433,"entryBytes":8152}
+--- 5 matrix ---
+| 23 | e7-relay-valley | `e7-relay-valley-01` | second-attempt | 59 | **not secured** | 10 | 70 | 307.867s | 554s | `attempt-1-tape.json` · `agent-807d85f3-a7f9ed28-db67-492a-9bd0-df4c2c0b3454`<br>fnv1a32:56777ed0 | — | gen 59 |
+{"contract":"e7-relay-valley","secured":false,"tapesOnDisk":5,"scoredTapes":1,"otherSecured":0,"runs":2,"scoredAttempts":1,"wallHit":false,"rc":0,"assay":null,"ranked":null,"winnability":"**Undecided-leaning-yes, and what stopped me was my own budget — two of my three faults were\ncontroller bugs, not the map:** the era gate is cheap and provably closable (t = 34.5), the economy\nis fine (810 panned by t = 300), and gen 38 already showed w15/460 s on this seed, but I spent\nrun 1 on a refused-array freeze (`now.seams` publishes `x`/`z` as **null** for an inactive seam, so\nmy terminal `HOLD` carried non-finite numbers, the whole array was refused, and `goldPanned` sat at\nexactly 75 for 110 seconds) and run 2 on a hypothesis the constants already refuted — a second\nstockpile cannot help when `Balance.steal.maxConcurrentCap` is 4 — while a per-tick order-failure\nsurprise loop burned 259 entries and 960 KB of a 576 KB reel. The wall in the map is real but\nun-hit by me: the hero has a 175 hp ceiling, nothing can be built within 31.24 wu of it, and the\nonly unbounded heal (`field_dressing`) is a filler that `rollOffer` will not offer until fewer than\nthree non-filler cards remain eligible — roughly 21 picks, which is ~480 kills of XP, which\ngen 38 reached at t = 460 and I never reached at all."}
+########## END e7-relay-valley ##########
+

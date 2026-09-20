@@ -1,0 +1,1252 @@
+[
+ {
+  "t": 0,
+  "w": 0,
+  "gold": 0,
+  "pan": 0,
+  "hp": "100/100",
+  "hero": "0,-44",
+  "pros": "-2,-45",
+  "alive": 0,
+  "works": {},
+  "wrecked": 0,
+  "phase": "tar+hitch",
+  "built": 0,
+  "n": 32,
+  "fuel": "st0 tar0 n0 drawn0",
+  "tow": "h:false a:false veh:0.0,-40.0:idle",
+  "chain": [
+   "gold-seam-3@-48,-12",
+   "gold-seam-2@-36,4"
+  ],
+  "fails": []
+ },
+ {
+  "t": 25.5,
+  "w": 0,
+  "gold": 0,
+  "pan": 0,
+  "hp": "100/100",
+  "hero": "-18,-10",
+  "pros": "-20,-11",
+  "alive": 7,
+  "works": {},
+  "wrecked": 0,
+  "phase": "tar+hitch",
+  "built": 0,
+  "n": 32,
+  "fuel": "st24 tar3 n3 drawn0",
+  "tow": "h:false a:false veh:0.0,-40.0:idle",
+  "chain": [
+   "gold-seam-2@-36,4",
+   "gold-seam-3@-48,-12"
+  ],
+  "fails": [
+   "MOVE_HERO:UNREACHABLE_APPROACH: MOVE_HERO target has n"
+  ]
+ },
+ {
+  "t": 30,
+  "w": 1,
+  "gold": 0,
+  "pan": 0,
+  "hp": "100/100",
+  "hero": "-18,-10",
+  "pros": "-20,-11",
+  "alive": 13,
+  "works": {},
+  "wrecked": 0,
+  "phase": "tar+hitch",
+  "built": 0,
+  "n": 32,
+  "fuel": "st24 tar3 n3 drawn0",
+  "tow": "h:false a:false veh:0.0,-40.0:idle",
+  "chain": [
+   "gold-seam-2@-36,4",
+   "gold-seam-3@-48,-12"
+  ],
+  "fails": []
+ },
+ {
+  "t": 49.5,
+  "w": 1,
+  "gold": 55,
+  "pan": 55,
+  "hp": "100/100",
+  "hero": "-20,-8",
+  "pros": "-36,4",
+  "alive": 11,
+  "works": {},
+  "wrecked": 0,
+  "phase": "deliver",
+  "built": 1,
+  "n": 32,
+  "fuel": "st23.437 tar0 n3 drawn12.563",
+  "tow": "h:true a:false veh:-20.4,-8.3:arrived",
+  "chain": [
+   "gold-seam-3@-48,-12"
+  ],
+  "fails": [
+   "MOVE_HERO:UNREACHABLE_APPROACH: MOVE_HERO target has n",
+   "HARVEST:INVALID_TARGET: gold-seam-2 is unavailable."
+  ]
+ },
+ {
+  "t": 60,
+  "w": 2,
+  "gold": 55,
+  "pan": 55,
+  "hp": "100/100",
+  "hero": "-0,-44",
+  "pros": "-17,-24",
+  "alive": 20,
+  "works": {},
+  "wrecked": 0,
+  "phase": "fort",
+  "built": 1,
+  "n": 32,
+  "fuel": "st9.312 tar0 n3 drawn26.688",
+  "tow": "h:true a:true veh:-8.2,-37.6:arrived",
+  "chain": [
+   "gold-seam-3@-48,-12"
+  ],
+  "fails": []
+ },
+ {
+  "t": 71.9,
+  "w": 2,
+  "gold": 10,
+  "pan": 60,
+  "hp": "100/100",
+  "hero": "-0,-44",
+  "pros": "-48,-12",
+  "alive": 20,
+  "works": {
+   "turret": 1
+  },
+  "wrecked": 0,
+  "phase": "fort",
+  "built": 0,
+  "n": 32,
+  "fuel": "st9.312 tar0 n3 drawn26.688",
+  "tow": "h:true a:true veh:-8.2,-37.6:arrived",
+  "chain": [
+   "gold-seam-2@-8,34"
+  ],
+  "fails": [
+   "HARVEST:INVALID_TARGET: gold-seam-3 is unavailable."
+  ]
+ },
+ {
+  "t": 84.8,
+  "w": 2,
+  "gold": 40,
+  "pan": 90,
+  "hp": "100/100",
+  "hero": "-0,-44",
+  "pros": "-8,34",
+  "alive": 25,
+  "works": {
+   "turret": 1
+  },
+  "wrecked": 0,
+  "phase": "fort",
+  "built": 0,
+  "n": 32,
+  "fuel": "st9.312 tar0 n3 drawn26.688",
+  "tow": "h:true a:true veh:-8.2,-37.6:arrived",
+  "chain": [
+   "gold-seam-1@48,-12"
+  ],
+  "fails": [
+   "HARVEST:INVALID_TARGET: gold-seam-2 is unavailable."
+  ]
+ },
+ {
+  "t": 90,
+  "w": 3,
+  "gold": 40,
+  "pan": 90,
+  "hp": "100/100",
+  "hero": "-0,-44",
+  "pros": "11,18",
+  "alive": 33,
+  "works": {
+   "turret": 1
+  },
+  "wrecked": 0,
+  "phase": "fort",
+  "built": 0,
+  "n": 32,
+  "fuel": "st9.312 tar0 n3 drawn26.688",
+  "tow": "h:true a:true veh:-8.2,-37.6:arrived",
+  "chain": [
+   "gold-seam-1@48,-12"
+  ],
+  "fails": []
+ },
+ {
+  "t": 100.2,
+  "w": 3,
+  "gold": 70,
+  "pan": 120,
+  "hp": "100/100",
+  "hero": "-0,-44",
+  "pros": "48,-12",
+  "alive": 38,
+  "works": {
+   "turret": 1
+  },
+  "wrecked": 0,
+  "phase": "fort",
+  "built": 1,
+  "n": 32,
+  "fuel": "st9.312 tar0 n3 drawn26.688",
+  "tow": "h:true a:true veh:-8.2,-37.6:arrived",
+  "chain": [
+   "gold-seam-3@8,34"
+  ],
+  "fails": [
+   "HARVEST:INVALID_TARGET: gold-seam-1 is unavailable."
+  ]
+ },
+ {
+  "t": 120,
+  "w": 4,
+  "gold": 0,
+  "pan": 120,
+  "hp": "100/100",
+  "hero": "-0,-44",
+  "pros": "9,16",
+  "alive": 39,
+  "works": {
+   "turret": 2
+  },
+  "wrecked": 0,
+  "phase": "fort",
+  "built": 0,
+  "n": 32,
+  "fuel": "st9.312 tar0 n3 drawn26.688",
+  "tow": "h:true a:true veh:-8.2,-37.6:arrived",
+  "chain": [
+   "gold-seam-3@8,34"
+  ],
+  "fails": []
+ },
+ {
+  "t": 124.1,
+  "w": 4,
+  "gold": 30,
+  "pan": 150,
+  "hp": "100/100",
+  "hero": "-0,-44",
+  "pros": "8,34",
+  "alive": 37,
+  "works": {
+   "turret": 2
+  },
+  "wrecked": 0,
+  "phase": "fort",
+  "built": 0,
+  "n": 32,
+  "fuel": "st9.312 tar0 n3 drawn26.688",
+  "tow": "h:true a:true veh:-8.2,-37.6:arrived",
+  "chain": [
+   "gold-seam-2@-24,18"
+  ],
+  "fails": [
+   "HARVEST:INVALID_TARGET: gold-seam-3 is unavailable."
+  ]
+ },
+ {
+  "t": 131.8,
+  "w": 4,
+  "gold": 60,
+  "pan": 180,
+  "hp": "100/100",
+  "hero": "-0,-44",
+  "pros": "-24,18",
+  "alive": 42,
+  "works": {
+   "turret": 2
+  },
+  "wrecked": 0,
+  "phase": "fort",
+  "built": 0,
+  "n": 32,
+  "fuel": "st9.312 tar0 n3 drawn26.688",
+  "tow": "h:true a:true veh:-8.2,-37.6:arrived",
+  "chain": [
+   "gold-seam-1@-48,-12"
+  ],
+  "fails": [
+   "HARVEST:INVALID_TARGET: gold-seam-2 is unavailable."
+  ]
+ },
+ {
+  "t": 140.1,
+  "w": 4,
+  "gold": 90,
+  "pan": 210,
+  "hp": "100/100",
+  "hero": "-0,-44",
+  "pros": "-48,-12",
+  "alive": 38,
+  "works": {
+   "turret": 2
+  },
+  "wrecked": 0,
+  "phase": "fort",
+  "built": 0,
+  "n": 1,
+  "fuel": "st9.312 tar0 n3 drawn26.688",
+  "tow": "h:true a:true veh:-8.2,-37.6:arrived",
+  "chain": [],
+  "fails": [
+   "HARVEST:INVALID_TARGET: gold-seam-1 is unavailable."
+  ]
+ },
+ {
+  "t": 150,
+  "w": 5,
+  "gold": 90,
+  "pan": 210,
+  "hp": "100/100",
+  "hero": "-0,-44",
+  "pros": "-28,-27",
+  "alive": 47,
+  "works": {
+   "turret": 2
+  },
+  "wrecked": 0,
+  "phase": "fort",
+  "built": 0,
+  "n": 32,
+  "fuel": "st9.312 tar0 n3 drawn26.688",
+  "tow": "h:true a:true veh:-8.2,-37.6:arrived",
+  "chain": [
+   "gold-seam-3@-18,-8"
+  ],
+  "fails": []
+ },
+ {
+  "t": 154.7,
+  "w": 5,
+  "gold": 120,
+  "pan": 240,
+  "hp": "100/100",
+  "hero": "-0,-44",
+  "pros": "-18,-8",
+  "alive": 42,
+  "works": {
+   "turret": 2
+  },
+  "wrecked": 0,
+  "phase": "fort",
+  "built": 1,
+  "n": 32,
+  "fuel": "st9.312 tar0 n3 drawn26.688",
+  "tow": "h:true a:true veh:-8.2,-37.6:arrived",
+  "chain": [
+   "gold-seam-2@-36,4"
+  ],
+  "fails": [
+   "HARVEST:INVALID_TARGET: gold-seam-3 is unavailable."
+  ]
+ },
+ {
+  "t": 156.9,
+  "w": 5,
+  "gold": 120,
+  "pan": 240,
+  "hp": "100/100",
+  "hero": "-0,-44",
+  "pros": "-13,-17",
+  "alive": 41,
+  "works": {
+   "turret": 2
+  },
+  "wrecked": 0,
+  "phase": "fort",
+  "built": 1,
+  "n": 32,
+  "fuel": "st9.312 tar0 n3 drawn26.688",
+  "tow": "h:true a:true veh:-8.2,-37.6:arrived",
+  "chain": [
+   "gold-seam-2@-36,4"
+  ],
+  "fails": []
+ },
+ {
+  "t": 161.7,
+  "w": 5,
+  "gold": 25,
+  "pan": 240,
+  "hp": "125/125",
+  "hero": "-0,-44",
+  "pros": "-7,-28",
+  "alive": 46,
+  "works": {
+   "turret": 3
+  },
+  "wrecked": 0,
+  "phase": "fort",
+  "built": 0,
+  "n": 32,
+  "fuel": "st9.312 tar0 n3 drawn26.688",
+  "tow": "h:true a:true veh:-8.2,-37.6:arrived",
+  "chain": [
+   "gold-seam-1@-18,-8",
+   "gold-seam-2@-36,4"
+  ],
+  "fails": []
+ },
+ {
+  "t": 167.1,
+  "w": 5,
+  "gold": 50,
+  "pan": 265,
+  "hp": "125/125",
+  "hero": "-0,-44",
+  "pros": "-19,-7",
+  "alive": 43,
+  "works": {
+   "turret": 3
+  },
+  "wrecked": 0,
+  "phase": "fort",
+  "built": 0,
+  "n": 32,
+  "fuel": "st9.312 tar0 n3 drawn26.688",
+  "tow": "h:true a:true veh:-8.2,-37.6:arrived",
+  "chain": [
+   "gold-seam-1@-18,-8",
+   "gold-seam-2@-36,4"
+  ],
+  "fails": []
+ },
+ {
+  "t": 167.7,
+  "w": 5,
+  "gold": 55,
+  "pan": 270,
+  "hp": "125/125",
+  "hero": "-0,-44",
+  "pros": "-18,-8",
+  "alive": 42,
+  "works": {
+   "turret": 3
+  },
+  "wrecked": 0,
+  "phase": "fort",
+  "built": 0,
+  "n": 32,
+  "fuel": "st9.312 tar0 n3 drawn26.688",
+  "tow": "h:true a:true veh:-8.2,-37.6:arrived",
+  "chain": [
+   "gold-seam-2@-36,4"
+  ],
+  "fails": [
+   "HARVEST:INVALID_TARGET: gold-seam-1 is unavailable."
+  ]
+ },
+ {
+  "t": 172.5,
+  "w": 5,
+  "gold": 85,
+  "pan": 300,
+  "hp": "125/125",
+  "hero": "-0,-44",
+  "pros": "-36,4",
+  "alive": 41,
+  "works": {
+   "turret": 3
+  },
+  "wrecked": 0,
+  "phase": "fort",
+  "built": 0,
+  "n": 1,
+  "fuel": "st9.312 tar0 n3 drawn26.688",
+  "tow": "h:true a:true veh:-8.2,-37.6:arrived",
+  "chain": [],
+  "fails": [
+   "HARVEST:INVALID_TARGET: gold-seam-2 is unavailable."
+  ]
+ },
+ {
+  "t": 174.8,
+  "w": 5,
+  "gold": 85,
+  "pan": 300,
+  "hp": "125/125",
+  "hero": "-0,-44",
+  "pros": "-34,1",
+  "alive": 39,
+  "works": {
+   "turret": 3
+  },
+  "wrecked": 0,
+  "phase": "fort",
+  "built": 0,
+  "n": 32,
+  "fuel": "st9.312 tar0 n3 drawn26.688",
+  "tow": "h:true a:true veh:-8.2,-37.6:arrived",
+  "chain": [
+   "gold-seam-3@-24,18"
+  ],
+  "fails": []
+ },
+ {
+  "t": 179.3,
+  "w": 5,
+  "gold": 115,
+  "pan": 330,
+  "hp": "150/150",
+  "hero": "-0,-44",
+  "pros": "-24,18",
+  "alive": 37,
+  "works": {
+   "turret": 3
+  },
+  "wrecked": 0,
+  "phase": "fort",
+  "built": 0,
+  "n": 1,
+  "fuel": "st9.312 tar0 n3 drawn26.688",
+  "tow": "h:true a:true veh:-8.2,-37.6:arrived",
+  "chain": [],
+  "fails": [
+   "HARVEST:INVALID_TARGET: gold-seam-3 is unavailable."
+  ]
+ },
+ {
+  "t": 180,
+  "w": 6,
+  "gold": 115,
+  "pan": 330,
+  "hp": "150/150",
+  "hero": "-0,-44",
+  "pros": "-24,18",
+  "alive": 47,
+  "works": {
+   "turret": 3
+  },
+  "wrecked": 0,
+  "phase": "fort",
+  "built": 0,
+  "n": 1,
+  "fuel": "st9.312 tar0 n3 drawn26.688",
+  "tow": "h:true a:true veh:-8.2,-37.6:arrived",
+  "chain": [],
+  "fails": []
+ },
+ {
+  "t": 189.4,
+  "w": 6,
+  "gold": 115,
+  "pan": 330,
+  "hp": "150/150",
+  "hero": "-0,-44",
+  "pros": "-16,-6",
+  "alive": 53,
+  "works": {
+   "turret": 3
+  },
+  "wrecked": 0,
+  "phase": "fort",
+  "built": 0,
+  "n": 32,
+  "fuel": "st9.312 tar0 n3 drawn26.688",
+  "tow": "h:true a:true veh:-8.2,-37.6:arrived",
+  "chain": [
+   "gold-seam-1@18,-8"
+  ],
+  "fails": []
+ },
+ {
+  "t": 196.7,
+  "w": 6,
+  "gold": 145,
+  "pan": 360,
+  "hp": "150/150",
+  "hero": "-0,-44",
+  "pros": "18,-8",
+  "alive": 52,
+  "works": {
+   "turret": 3
+  },
+  "wrecked": 0,
+  "phase": "fort",
+  "built": 1,
+  "n": 32,
+  "fuel": "st9.312 tar0 n3 drawn26.688",
+  "tow": "h:true a:true veh:-8.2,-37.6:arrived",
+  "chain": [
+   "gold-seam-2@-24,18"
+  ],
+  "fails": [
+   "HARVEST:INVALID_TARGET: gold-seam-1 is unavailable."
+  ]
+ },
+ {
+  "t": 199.4,
+  "w": 6,
+  "gold": 145,
+  "pan": 360,
+  "hp": "150/150",
+  "hero": "-0,-44",
+  "pros": "9,-17",
+  "alive": 47,
+  "works": {
+   "turret": 3
+  },
+  "wrecked": 0,
+  "phase": "fort",
+  "built": 1,
+  "n": 32,
+  "fuel": "st9.312 tar0 n3 drawn26.688",
+  "tow": "h:true a:true veh:-8.2,-37.6:arrived",
+  "chain": [
+   "gold-seam-2@-24,18",
+   "gold-seam-3@-8,34"
+  ],
+  "fails": []
+ },
+ {
+  "t": 207.3,
+  "w": 6,
+  "gold": 20,
+  "pan": 360,
+  "hp": "175/175",
+  "hero": "-0,-44",
+  "pros": "-13,-27",
+  "alive": 38,
+  "works": {
+   "turret": 4
+  },
+  "wrecked": 0,
+  "phase": "fort",
+  "built": 0,
+  "n": 32,
+  "fuel": "st9.312 tar0 n3 drawn26.688",
+  "tow": "h:true a:true veh:-8.2,-37.6:arrived",
+  "chain": [
+   "gold-seam-2@-24,18",
+   "gold-seam-3@-8,34"
+  ],
+  "fails": []
+ },
+ {
+  "t": 210,
+  "w": 7,
+  "gold": 20,
+  "pan": 360,
+  "hp": "175/175",
+  "hero": "-0,-44",
+  "pros": "-16,-14",
+  "alive": 50,
+  "works": {
+   "turret": 4
+  },
+  "wrecked": 0,
+  "phase": "fort",
+  "built": 0,
+  "n": 32,
+  "fuel": "st9.312 tar0 n3 drawn26.688",
+  "tow": "h:true a:true veh:-8.2,-37.6:arrived",
+  "chain": [
+   "gold-seam-2@-24,18",
+   "gold-seam-3@-8,34"
+  ],
+  "fails": []
+ },
+ {
+  "t": 226.8,
+  "w": 7,
+  "gold": 75,
+  "pan": 415,
+  "hp": "175/175",
+  "hero": "-0,-44",
+  "pros": "-24,18",
+  "alive": 57,
+  "works": {
+   "turret": 4
+  },
+  "wrecked": 0,
+  "phase": "fort",
+  "built": 2,
+  "n": 32,
+  "fuel": "st9.312 tar0 n3 drawn26.688",
+  "tow": "h:true a:true veh:-8.2,-37.6:arrived",
+  "chain": [
+   "gold-seam-3@-8,34"
+  ],
+  "fails": [
+   "HARVEST:INVALID_TARGET: gold-seam-2 is unavailable."
+  ]
+ },
+ {
+  "t": 228.6,
+  "w": 7,
+  "gold": 75,
+  "pan": 415,
+  "hp": "175/175",
+  "hero": "-0,-44",
+  "pros": "-21,10",
+  "alive": 55,
+  "works": {
+   "turret": 4
+  },
+  "wrecked": 0,
+  "phase": "fort",
+  "built": 2,
+  "n": 32,
+  "fuel": "st9.312 tar0 n3 drawn26.688",
+  "tow": "h:true a:true veh:-8.2,-37.6:arrived",
+  "chain": [
+   "gold-seam-1@-18,-8"
+  ],
+  "fails": []
+ },
+ {
+  "t": 237.9,
+  "w": 7,
+  "gold": 75,
+  "pan": 415,
+  "hp": "175/175",
+  "hero": "-0,-44",
+  "pros": "-7,-33",
+  "alive": 44,
+  "works": {
+   "turret": 4
+  },
+  "wrecked": 0,
+  "phase": "fort",
+  "built": 2,
+  "n": 32,
+  "fuel": "st9.312 tar0 n3 drawn26.688",
+  "tow": "h:true a:true veh:-8.2,-37.6:arrived",
+  "chain": [
+   "gold-seam-1@-18,-8"
+  ],
+  "fails": []
+ },
+ {
+  "t": 240,
+  "w": 8,
+  "gold": 15,
+  "pan": 415,
+  "hp": "175/175",
+  "hero": "-0,-44",
+  "pros": "-1,-39",
+  "alive": 55,
+  "works": {
+   "sentry_beacon": 2,
+   "turret": 4
+  },
+  "wrecked": 0,
+  "phase": "fort",
+  "built": 0,
+  "n": 32,
+  "fuel": "st9.312 tar0 n3 drawn26.688",
+  "tow": "h:true a:true veh:-8.2,-37.6:arrived",
+  "chain": [
+   "gold-seam-1@-18,-8"
+  ],
+  "fails": []
+ },
+ {
+  "t": 247.6,
+  "w": 8,
+  "gold": 45,
+  "pan": 445,
+  "hp": "175/175",
+  "hero": "-0,-44",
+  "pros": "-18,-8",
+  "alive": 47,
+  "works": {
+   "sentry_beacon": 2,
+   "turret": 4
+  },
+  "wrecked": 0,
+  "phase": "fort",
+  "built": 1,
+  "n": 32,
+  "fuel": "st9.312 tar0 n3 drawn26.688",
+  "tow": "h:true a:true veh:-8.2,-37.6:arrived",
+  "chain": [
+   "gold-seam-2@18,-8"
+  ],
+  "fails": [
+   "HARVEST:INVALID_TARGET: gold-seam-1 is unavailable."
+  ]
+ },
+ {
+  "t": 256.7,
+  "w": 8,
+  "gold": 0,
+  "pan": 445,
+  "hp": "175/175",
+  "hero": "-0,-44",
+  "pros": "1,-36",
+  "alive": 57,
+  "works": {
+   "sentry_beacon": 3,
+   "turret": 4
+  },
+  "wrecked": 0,
+  "phase": "fort",
+  "built": 0,
+  "n": 32,
+  "fuel": "st9.312 tar0 n3 drawn26.688",
+  "tow": "h:true a:true veh:-8.2,-37.6:arrived",
+  "chain": [
+   "gold-seam-2@18,-8"
+  ],
+  "fails": []
+ },
+ {
+  "t": 263.8,
+  "w": 8,
+  "gold": 30,
+  "pan": 475,
+  "hp": "175/175",
+  "hero": "-0,-44",
+  "pros": "18,-8",
+  "alive": 54,
+  "works": {
+   "sentry_beacon": 3,
+   "turret": 4
+  },
+  "wrecked": 0,
+  "phase": "fort",
+  "built": 0,
+  "n": 32,
+  "fuel": "st9.312 tar0 n3 drawn26.688",
+  "tow": "h:true a:true veh:-8.2,-37.6:arrived",
+  "chain": [
+   "gold-seam-3@-8,34"
+  ],
+  "fails": [
+   "HARVEST:INVALID_TARGET: gold-seam-2 is unavailable."
+  ]
+ },
+ {
+  "t": 270,
+  "w": 9,
+  "gold": 30,
+  "pan": 475,
+  "hp": "175/175",
+  "hero": "-0,-44",
+  "pros": "2,17",
+  "alive": 59,
+  "works": {
+   "sentry_beacon": 3,
+   "turret": 4
+  },
+  "wrecked": 0,
+  "phase": "fort",
+  "built": 0,
+  "n": 32,
+  "fuel": "st9.312 tar0 n3 drawn26.688",
+  "tow": "h:true a:true veh:-8.2,-37.6:arrived",
+  "chain": [
+   "gold-seam-3@-8,34"
+  ],
+  "fails": []
+ },
+ {
+  "t": 271.7,
+  "w": 9,
+  "gold": 30,
+  "pan": 475,
+  "hp": "175/175",
+  "hero": "-0,-44",
+  "pros": "-2,24",
+  "alive": 56,
+  "works": {
+   "sentry_beacon": 3,
+   "turret": 4
+  },
+  "wrecked": 0,
+  "phase": "fort",
+  "built": 0,
+  "n": 32,
+  "fuel": "st9.312 tar0 n3 drawn26.688",
+  "tow": "h:true a:true veh:-8.2,-37.6:arrived",
+  "chain": [
+   "gold-seam-3@-8,34"
+  ],
+  "fails": []
+ },
+ {
+  "t": 274.2,
+  "w": 9,
+  "gold": 35,
+  "pan": 480,
+  "hp": "175/175",
+  "hero": "-0,-44",
+  "pros": "-8,34",
+  "alive": 53,
+  "works": {
+   "sentry_beacon": 3,
+   "turret": 4
+  },
+  "wrecked": 0,
+  "phase": "fort",
+  "built": 0,
+  "n": 32,
+  "fuel": "st9.312 tar0 n3 drawn26.688",
+  "tow": "h:true a:true veh:-8.2,-37.6:arrived",
+  "chain": [
+   "gold-seam-1@-36,4"
+  ],
+  "fails": [
+   "HARVEST:INVALID_TARGET: gold-seam-3 is unavailable."
+  ]
+ },
+ {
+  "t": 283,
+  "w": 9,
+  "gold": 65,
+  "pan": 510,
+  "hp": "175/175",
+  "hero": "-0,-44",
+  "pros": "-36,4",
+  "alive": 59,
+  "works": {
+   "sentry_beacon": 3,
+   "turret": 4
+  },
+  "wrecked": 0,
+  "phase": "fort",
+  "built": 0,
+  "n": 1,
+  "fuel": "st9.312 tar0 n3 drawn26.688",
+  "tow": "h:true a:true veh:-8.2,-37.6:arrived",
+  "chain": [],
+  "fails": [
+   "HARVEST:INVALID_TARGET: gold-seam-1 is unavailable."
+  ]
+ },
+ {
+  "t": 290.1,
+  "w": 9,
+  "gold": 65,
+  "pan": 510,
+  "hp": "175/175",
+  "hero": "-0,-44",
+  "pros": "-26,-10",
+  "alive": 53,
+  "works": {
+   "sentry_beacon": 3,
+   "turret": 4
+  },
+  "wrecked": 0,
+  "phase": "fort",
+  "built": 0,
+  "n": 32,
+  "fuel": "st9.312 tar0 n3 drawn26.688",
+  "tow": "h:true a:true veh:-8.2,-37.6:arrived",
+  "chain": [
+   "gold-seam-2@24,18"
+  ],
+  "fails": []
+ },
+ {
+  "t": 300,
+  "w": 10,
+  "gold": 65,
+  "pan": 510,
+  "hp": "175/175",
+  "hero": "-0,-44",
+  "pros": "15,13",
+  "alive": 60,
+  "works": {
+   "sentry_beacon": 3,
+   "turret": 4
+  },
+  "wrecked": 0,
+  "phase": "fort",
+  "built": 0,
+  "n": 32,
+  "fuel": "st9.312 tar0 n3 drawn26.688",
+  "tow": "h:true a:true veh:-8.2,-37.6:arrived",
+  "chain": [
+   "gold-seam-2@24,18"
+  ],
+  "fails": []
+ },
+ {
+  "t": 302.4,
+  "w": 10,
+  "gold": 95,
+  "pan": 540,
+  "hp": "175/175",
+  "hero": "-0,-44",
+  "pros": "24,18",
+  "alive": 57,
+  "works": {
+   "sentry_beacon": 3,
+   "turret": 4
+  },
+  "wrecked": 0,
+  "phase": "fort",
+  "built": 0,
+  "n": 32,
+  "fuel": "st9.312 tar0 n3 drawn26.688",
+  "tow": "h:true a:true veh:-8.2,-37.6:arrived",
+  "chain": [
+   "gold-seam-3@48,-12"
+  ],
+  "fails": [
+   "HARVEST:INVALID_TARGET: gold-seam-2 is unavailable."
+  ]
+ },
+ {
+  "t": 310.7,
+  "w": 10,
+  "gold": 125,
+  "pan": 570,
+  "hp": "175/175",
+  "hero": "-0,-44",
+  "pros": "48,-12",
+  "alive": 58,
+  "works": {
+   "sentry_beacon": 3,
+   "turret": 4
+  },
+  "wrecked": 0,
+  "phase": "fort",
+  "built": 0,
+  "n": 32,
+  "fuel": "st9.312 tar0 n3 drawn26.688",
+  "tow": "h:true a:true veh:-8.2,-37.6:arrived",
+  "chain": [
+   "gold-seam-1@-48,-12"
+  ],
+  "fails": [
+   "HARVEST:INVALID_TARGET: gold-seam-3 is unavailable."
+  ]
+ },
+ {
+  "t": 314.4,
+  "w": 10,
+  "gold": 125,
+  "pan": 570,
+  "hp": "175/175",
+  "hero": "-0,-44",
+  "pros": "31,-12",
+  "alive": 58,
+  "works": {
+   "sentry_beacon": 3,
+   "turret": 4
+  },
+  "wrecked": 0,
+  "phase": "fort",
+  "built": 0,
+  "n": 32,
+  "fuel": "st9.312 tar0 n3 drawn26.688",
+  "tow": "h:true a:true veh:-8.2,-37.6:arrived",
+  "chain": [
+   "gold-seam-1@-48,-12"
+  ],
+  "fails": []
+ },
+ {
+  "t": 330,
+  "w": 11,
+  "gold": 125,
+  "pan": 570,
+  "hp": "175/175",
+  "hero": "-0,-44",
+  "pros": "-44,-12",
+  "alive": 60,
+  "works": {
+   "sentry_beacon": 3,
+   "turret": 4
+  },
+  "wrecked": 0,
+  "phase": "fort",
+  "built": 0,
+  "n": 32,
+  "fuel": "st9.312 tar0 n3 drawn26.688",
+  "tow": "h:true a:true veh:-8.2,-37.6:arrived",
+  "chain": [
+   "gold-seam-1@-48,-12"
+  ],
+  "fails": []
+ },
+ {
+  "t": 331,
+  "w": 11,
+  "gold": 155,
+  "pan": 600,
+  "hp": "175/175",
+  "hero": "-0,-44",
+  "pros": "-48,-12",
+  "alive": 59,
+  "works": {
+   "sentry_beacon": 3,
+   "turret": 4
+  },
+  "wrecked": 0,
+  "phase": "fort",
+  "built": 0,
+  "n": 32,
+  "fuel": "st9.312 tar0 n3 drawn26.688",
+  "tow": "h:true a:true veh:-8.2,-37.6:arrived",
+  "chain": [
+   "gold-seam-3@-36,4",
+   "gold-seam-2@-18,-8"
+  ],
+  "fails": [
+   "HARVEST:INVALID_TARGET: gold-seam-1 is unavailable."
+  ]
+ },
+ {
+  "t": 333.3,
+  "w": 11,
+  "gold": 155,
+  "pan": 600,
+  "hp": "175/175",
+  "hero": "-0,-44",
+  "pros": "-42,-4",
+  "alive": 57,
+  "works": {
+   "sentry_beacon": 3,
+   "turret": 4
+  },
+  "wrecked": 0,
+  "phase": "fort",
+  "built": 0,
+  "n": 32,
+  "fuel": "st9.312 tar0 n3 drawn26.688",
+  "tow": "h:true a:true veh:-8.2,-37.6:arrived",
+  "chain": [
+   "gold-seam-3@-36,4",
+   "gold-seam-2@-18,-8"
+  ],
+  "fails": []
+ },
+ {
+  "t": 340.1,
+  "w": 11,
+  "gold": 200,
+  "pan": 645,
+  "hp": "175/175",
+  "hero": "-0,-44",
+  "pros": "-18,-8",
+  "alive": 60,
+  "works": {
+   "sentry_beacon": 3,
+   "turret": 4
+  },
+  "wrecked": 0,
+  "phase": "fort",
+  "built": 0,
+  "n": 32,
+  "fuel": "st9.312 tar0 n3 drawn26.688",
+  "tow": "h:true a:true veh:-8.2,-37.6:arrived",
+  "chain": [
+   "gold-seam-2@-18,-8",
+   "gold-seam-3@-36,4"
+  ],
+  "fails": [
+   "HARVEST:FAILED: HARVEST action was rejected."
+  ]
+ },
+ {
+  "t": 344.9,
+  "w": 11,
+  "gold": 200,
+  "pan": 645,
+  "hp": "175/175",
+  "hero": "-0,-44",
+  "pros": "-36,4",
+  "alive": 60,
+  "works": {
+   "sentry_beacon": 3,
+   "turret": 4
+  },
+  "wrecked": 0,
+  "phase": "fort",
+  "built": 0,
+  "n": 32,
+  "fuel": "st9.312 tar0 n3 drawn26.688",
+  "tow": "h:true a:true veh:-8.2,-37.6:arrived",
+  "chain": [
+   "gold-seam-3@-36,4",
+   "gold-seam-2@-18,-8"
+  ],
+  "fails": [
+   "HARVEST:FAILED: HARVEST action was rejected.",
+   "HARVEST:FAILED: HARVEST action was rejected.",
+   "HARVEST:FAILED: HARVEST action was rejected."
+  ]
+ },
+ {
+  "t": 358.8,
+  "w": 11,
+  "gold": 200,
+  "pan": 645,
+  "hp": "175/175",
+  "hero": "-0,-44",
+  "pros": "-20,-6",
+  "alive": 55,
+  "works": {
+   "sentry_beacon": 3,
+   "turret": 4
+  },
+  "wrecked": 0,
+  "phase": "fort",
+  "built": 0,
+  "n": 32,
+  "fuel": "st9.312 tar0 n3 drawn26.688",
+  "tow": "h:true a:true veh:-8.2,-37.6:arrived",
+  "chain": [
+   "gold-seam-2@-18,-8",
+   "gold-seam-3@-36,4"
+  ],
+  "fails": [
+   "HARVEST:FAILED: HARVEST action was rejected.",
+   "HARVEST:FAILED: HARVEST action was rejected.",
+   "HARVEST:FAILED: HARVEST action was rejected."
+  ]
+ },
+ {
+  "t": 360,
+  "note": "secure-boundary blank line",
+  "gold": 200,
+  "wave": 12
+ },
+ {
+  "t": 360,
+  "w": 12,
+  "gold": 200,
+  "pan": 645,
+  "hp": "175/175",
+  "hero": "-0,-44",
+  "pros": "-19,-7",
+  "alive": 54,
+  "works": {
+   "sentry_beacon": 3,
+   "turret": 4
+  },
+  "wrecked": 0,
+  "phase": "fort",
+  "built": 0,
+  "n": 32,
+  "fuel": "st9.312 tar0 n3 drawn26.688",
+  "tow": "h:true a:true veh:-8.2,-37.6:arrived",
+  "chain": [
+   "gold-seam-2@-18,-8",
+   "gold-seam-3@-36,4"
+  ],
+  "fails": [
+   "HARVEST:FAILED: HARVEST action was rejected.",
+   "HARVEST:FAILED: HARVEST action was rejected.",
+   "HARVEST:FAILED: HARVEST action was rejected."
+  ]
+ }
+]

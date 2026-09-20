@@ -1,0 +1,228 @@
+{
+  "rig": "opus",
+  "contract": "e8-mare-claim",
+  "model": "claude-opus-5",
+  "sessionId": "86a4e88b-15e4-41d1-bcfe-1d54e5d2dbdb",
+  "startedAt": "2026-09-05T15:48:52.060Z",
+  "endedAt": "2026-09-05T16:04:09.787Z",
+  "wallClockSeconds": 918,
+  "wallHit": false,
+  "exitCode": 0,
+  "signal": null,
+  "setupToFirstOutputSeconds": 90,
+  "arenaTrackedChanges": [],
+  "workspaceFiles": [
+    "assay.mjs",
+    "attempt-1-tape.json",
+    "ctrl-v1.mjs",
+    "ctrl-v2.mjs",
+    "ctrl-v3.mjs",
+    "gauntlet-outcome.json",
+    "gauntlet-report.md",
+    "probe-idle-stderr.log",
+    "probe-idle-tape.json",
+    "probe-idle-views.ndjson",
+    "run.mjs",
+    "runs-ledger.json",
+    "tune-1-stderr.log",
+    "tune-1-tape.json",
+    "tune-1-views.ndjson",
+    "tune-2-stderr.log",
+    "tune-2-tape.json",
+    "tune-2-views.ndjson",
+    "tune-3-stderr.log",
+    "tune-3-tape.json",
+    "tune-3-views.ndjson"
+  ],
+  "outcome": {
+    "secured": true,
+    "waves": 20,
+    "timeMs": 600000,
+    "gold": 60,
+    "kills": 916,
+    "calls": 77,
+    "defaultedPicks": 0,
+    "defaultedSecure": 1,
+    "eventLogHash": "fnv1a32:e06bda53",
+    "tape": "/private/tmp/heat12-038cc280/artifacts/heat12/opus/e8-mare-claim/attempt-1-tape.json",
+    "scored": true,
+    "runsSoFar": 4,
+    "scoredAttempts": 1,
+    "worldModel": "sim-import",
+    "promotion": "tune-3 secured on its first ride; the rules stop the ride at the first SECURED outcome, so that securing tape IS the scored attempt. It is byte-identical under two filenames: tune-3-tape.json and attempt-1-tape.json. Submit attempt-1-tape.json.",
+    "tapeStats": {
+      "durationTicks": 18000,
+      "entries": 77,
+      "lastEntryTick": 17946,
+      "bytes": 221274,
+      "envelopeNote": "e8-mare-claim declares no twist.secureWave, so it gets the flat 18000-tick envelope. The secure boundary was answered with a BLANK LINE (defaultedSecure: 1), which keeps the last recorded entry at tick 17946 and durationTicks at exactly 18000 - inside the ceiling, not one tick over it (F-HEAT11-1)."
+    },
+    "tapeEventLogHash": "fnv1a32:f84d1d2b",
+    "localAssay": "scripts/assay-replay-agent.mjs reproduced the tape's own eventLogHash fnv1a32:f84d1d2b and all four outcome fields (secured true / waves 20 / gold 60 / timeAlive 600) without riding anything.",
+    "note": "FIRST SECURE candidate for e8-mare-claim. Generation 29 rode this contract to w19/586.1s and did not secure; see runs-ledger.json for this heat's four runs."
+  },
+  "outcomeError": null,
+  "promotedTapeName": "attempt-1-tape.json",
+  "scoredTapes": [
+    {
+      "file": "attempt-1-tape.json",
+      "id": "agent-4036192d-b1ebab0e-a2e1-42ba-b7dd-c2edf9f3d797",
+      "contract": "e8-mare-claim",
+      "seed": "e8-mare-claim-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "b5ad8c636",
+        "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 20,
+        "timeAlive": 600,
+        "gold": 60
+      },
+      "entries": 77,
+      "durationTicks": 18000,
+      "lastEntryTick": 17946,
+      "promotedByRig": true,
+      "discoveredBy": "outcome-file+filename"
+    }
+  ],
+  "otherTapes": [
+    {
+      "file": "probe-idle-tape.json",
+      "id": "agent-8aadbf92-aea67fed-74f0-43cb-87bf-989d698f0be7",
+      "contract": "e8-mare-claim",
+      "seed": "e8-mare-claim-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "0cfe192c6",
+        "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 2,
+        "timeAlive": 81.233,
+        "gold": 0
+      },
+      "entries": 0,
+      "durationTicks": 2437,
+      "lastEntryTick": null
+    },
+    {
+      "file": "tune-1-tape.json",
+      "id": "agent-109c12fa-ae723ba9-a456-4d41-9a54-67795e9e565e",
+      "contract": "e8-mare-claim",
+      "seed": "e8-mare-claim-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "0cfe192c6",
+        "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 19,
+        "timeAlive": 584.067,
+        "gold": 200
+      },
+      "entries": 72,
+      "durationTicks": 17522,
+      "lastEntryTick": 17100
+    },
+    {
+      "file": "tune-2-tape.json",
+      "id": "agent-edea6b1f-9d96787e-7d8b-4ab4-b34f-339572613de8",
+      "contract": "e8-mare-claim",
+      "seed": "e8-mare-claim-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "0cfe192c6",
+        "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 15,
+        "timeAlive": 468.133,
+        "gold": 0
+      },
+      "entries": 60,
+      "durationTicks": 14044,
+      "lastEntryTick": 14035
+    },
+    {
+      "file": "tune-3-tape.json",
+      "id": "agent-4036192d-b1ebab0e-a2e1-42ba-b7dd-c2edf9f3d797",
+      "contract": "e8-mare-claim",
+      "seed": "e8-mare-claim-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "b5ad8c636",
+        "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 20,
+        "timeAlive": 600,
+        "gold": 60
+      },
+      "entries": 77,
+      "durationTicks": 18000,
+      "lastEntryTick": 17946
+    }
+  ],
+  "otherSecuredTapes": [
+    {
+      "file": "tune-3-tape.json",
+      "id": "agent-4036192d-b1ebab0e-a2e1-42ba-b7dd-c2edf9f3d797",
+      "contract": "e8-mare-claim",
+      "seed": "e8-mare-claim-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "b5ad8c636",
+        "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 20,
+        "timeAlive": 600,
+        "gold": 60
+      },
+      "entries": 77,
+      "durationTicks": 18000,
+      "lastEntryTick": 17946
+    }
+  ],
+  "report": {
+    "outcome": "**SECURED.** `waves: 20`, `timeAlive: 600.000 s`, `gold: 60`, `kills: 916`, `calls: 77`,\n`defaultedPicks: 0`, `defaultedSecure: 1`, outcome-line `eventLogHash: fnv1a32:e06bda53`.\n\nTape put forward: **`/private/tmp/heat12-038cc280/artifacts/heat12/opus/e8-mare-claim/attempt-1-tape.json`**\n— declared in `gauntlet-outcome.json`'s `\"tape\"` field. It is the tune-3 ride under a second\nfilename, byte-identical to `tune-3-tape.json`; the rules stop the ride at the first SECURED\noutcome, so the securing tune IS the scored attempt.\n\n**4 sim runs, 1 scored attempt.**\n\nAdmissibility, measured off the tape before calling anything an attempt: `durationTicks` **18 000**,\nlast entry at tick **17 946**, 77 entries, **221 274 bytes**. This contract declares no\n`twist.secureWave`, so it takes the flat 18 000-tick envelope; the secure boundary was answered\nwith a **blank line** (`defaultedSecure: 1`), which is what keeps the last accepted order off the\nterminal tick and the reel inside the ceiling (F-HEAT11-1). Reel size is well under the byte\nceiling that bit heat 11 — 32-order arrays across 77 views, not thousands.\n\nReceipt: `scripts/assay-replay-agent.mjs` reproduced the tape's own\n`eventLogHash: fnv1a32:f84d1d2b` and all four outcome fields (`secured true / waves 20 / gold 60 /\ntimeAlive 600`) without riding anything. (That is the TAPE header's hash; the stdout outcome\nline's `e06bda53` is a different number by design — do not read the pair as a mismatch.)",
+    "whatTheMapAsked": "It asked about **air exactly once, for one order, and then about a 600-second grind** — so this is\n**half** an exercise of E8's signature mechanic, not the reskin the audit once recorded and not a\nfull exercise either. The era's lever is genuinely composed headless and it genuinely gates the\nsecure: `now.air` publishes `suit` (60 s capacity, 1 s/s drain outside a dome, 4/s refill inside,\n`inDome`, `empty`, `drainedTotal`, `emptySeconds`), a `domes[]` dial per `dome-cluster-pad-*` with\n`air`/`breached`/`breaches`/`siegers`, and `regolith` with `grounds: 6`, `required: 1`, `worked`,\n`runsOnAir`, `breathlessPans`, `complete` — and no secure is offered at any wave until\n`regolith.complete` is true. But `required` is **1**, so the whole air wall costs a single pan:\nmy first `HARVEST` reached a seam inside the opening seconds with the suit still nearly full, the\nlatch closed, and after that the suit sat empty for **488.8 of 600 seconds** with 197 breathless\npans and nothing whatsoever happening — the consumer damages nothing and mints nothing once the\ngate is shut. The map's other E8 field, `now.gravity` (`feelG 0.6`, `movement: \"floaty\"`,\n`lobArcDistanceMultiplier`/`lobAirTimeMultiplier` 2.4, `knockbackScale` 1.3, `vacuum: true`), is\nreal and I used it only as free supplementary damage — one `BLAST_AT (0,14)` per view whenever\n`blastReadyInMs` was 0, inside the 24-metre lobbed reach. I did **not** take `SET_WEAPON blast`,\non generation 29's measurement that the auto-lob is ~10 dps against the Spark Rig's 24.\n\nWhat actually decided the contract is inherited geometry, and it is a good question in its own\nright: the hero is welded to the claim at **(0, 12)**, and every legal square of build ground lies\n**south** of it — the three `dome-cluster` pads end at `z = 6`. So nothing can be built within 6 wu\nof the body that must survive, and the design reduces to two range facts. A sentry beacon's radius\nis 8, so it only touches the scrum that actually damages the hero from the `z = 6` line with\n`|x| ≤ 5.29`; a turret's range is 16, so it can sit back at `z ≈ 1–2` and still cover the approach.\nSix beacons went on the `z = 6` line at `x ∈ {0, ±1.5, ±3, ±5}` and four turrets at\n`(±6, 2)` and `(±3, 1)` — ten builds, **zero ever wrecked**, because neither roster entry\n(`scrap_corsair`, `sun_glare_shambler` in `Balance.e8Roster`) carries `wrecker` or `thief`.\n`goldStolen` finished at 0 and `REPAIR_UNDER` and palisades would have been dead weight.\n\nFields that carried the run: `now.works.entries` (position, **`tier`**, `index`, `wrecked` — the\nfield that decided the whole heat), `now.works.byKind`, `now.seams[].active/x/z`, `now.gold`\nagainst the 200 cap, `now.hero.hp/maxHp/level`, `now.threats.alive` (peaked at 34), `now.orders[]`\n(the refusal blacklist's source), `now.air.regolith.complete`, and\n`now.pendingOffer`/`now.pendingSecure`. Orders: `HARVEST`, gated `BUILD`, `PICK_UPGRADE`,\n`BLAST_AT`, `MOVE_TO`, `CONTEXT_ACTION upgrade`, and one blank line. **Not one E8 verb, because\nE8 has none.**\n\nMy notebook remembers this map from generation 29, and **it still plays the way I remember**: same\nwelded hero, same z ≤ 6 build ground, same one-pan regolith latch, same 26–35 wu seam commute, same\nwave-19 wall for a controller that stops spending. The engine era moved (`49c34f8b` → `86e53f37`);\nthe contract's shape did not, and neither did the reason it had never been claimed — the wall was a\npurse that fills and stops buying, not a wall in the map.",
+    "winnability": "Secured, and the margin was **wide, not thin**: the hero held its full running maximum of 175 HP\nfrom t = 270 to t = 448, finished **92.6/175**, all ten works stood unwrecked at the bank, and\n`threats.alive` peaked at 34 against a published 60 cap — the run had health, defence and a live\ngold sink all in hand at the boundary, and the thin part was only the opening, where 30 seconds of\nquiet buys exactly one 50-gold turret.",
+    "lessons": "- **`works.entries[].tier` is 1-BASED, and getting that wrong is a silent, run-losing no-op.** A\n  freshly built turret reports `tier: 1`; its next step is `Balance.tiers.turret[1].cost = 150`.\n  I indexed the tier array with the tier itself, demanded 300 gold, and never issued a single\n  upgrade — the purse pinned at the 200 cap for the last 107 seconds and ~250 gold of income was\n  banked into a full bucket and lost. **`score.goldPanned` going FLAT while `gold` sits at the cap\n  is the signature of a dead sink**; it is a one-line check on any run that ends rich.\n- **Generation 29 named this exact lever and I still had to re-measure it.** Its lesson said \"a\n  capped purse is a lost margin, and the sink is the tier upgrade.\" It was right, it was the whole\n  contract, and inheriting the sentence was not the same as implementing the arithmetic. When a\n  past generation names the lever, re-derive the *price*, not just the plan.\n- **Test which resource the map is actually short of before optimising the other one.** tune-2 was\n  a clean one-variable test of an income-first draft: it panned 100 more gold and died 116 seconds\n  earlier. On a board where the ladder caps at 4 turrets + 6 beacons, gold stops being the\n  constraint the moment it has somewhere to go, and every draft pick spent on `spring_heels` /\n  `pan_legend` / `prospectors_luck` is combat power given away. **A regression that big from one\n  changed variable is worth more than a marginal improvement.**\n- **Sort the ladder by strategy and truncate at the first price DECREASE — never sort by price.**\n  Cheapest-first put three beacons up before the first turret, and a beacon is\n  `(10 + 0.75·wave) × 1.2` dps — about 13 at wave 1 against a turret's flat 57. Gen-9's\n  non-decreasing prefix is an anti-starvation device, not an ordering policy; pick the order first,\n  then let the prefix rule protect it.\n- **Read the order record's shape before writing a refusal blacklist.** The record nests the order:\n  `rec.order.verb` / `rec.order.where` / `rec.order.what`, with `rec.status` and `rec.reason` at the\n  top level. v1's blacklist read `rec.verb`, matched nothing, and silently retried a colliding\n  coordinate. A blacklist that never fires looks exactly like a blacklist that is not needed.\n- **Compute the coverage circle against the DEFENDED POINT, not the build zone.** Beacon radius 8\n  and a hero welded at (0, 12) with build ground ending at `z = 6` means only `|x| ≤ 5.29` on the\n  `z = 6` line reaches the scrum at all. Turret range 16 is free of that constraint, so give the\n  short-range buildable the scarce ground and push the long-range one back. That one subtraction\n  chose all ten coordinates.\n- **The E8 air wall costs exactly one order when `regolith.required` is 1.** Read `required` off\n  `now.air.regolith` before budgeting anything for the suit: my suit was empty for 488.8 of 600\n  seconds and 197 breathless pans cost nothing, because the latch had closed at t ≈ 7. An era gate\n  that is genuinely load-bearing can still be genuinely cheap — price it, then stop thinking about it.\n- **The blank-line secure is standing equipment and it worked first try, fourth contract running.**\n  No `twist.secureWave` means wave 20 / 600 s AND a flat 18 000-tick envelope; answering\n  `now.pendingSecure` with `\"\\n\"` gave `durationTicks` 18 000 with the last entry at 17 946.\n  Measure `durationTicks`, `lastEntryTick`, entry count and bytes off the FIRST reel that exists,\n  not off the attempt.\n- **The stop rule leaves room for exactly one receipt, and it is the local assay.** The replay\n  reproduced the tape's own `fnv1a32:f84d1d2b` and all four outcome fields. Note again that this is\n  the TAPE header's hash, not the stdout outcome line's `e06bda53` — they are different numbers by\n  design, and comparing the wrong pair reads as a false mismatch on a perfectly good reel.\n- **An unclaimed contract is not necessarily a hard one; it can be a contract nobody has finished\n  spending on.** This map had been ridden to w19 twice and called \"probably winnable, blocked by my\n  own budget.\" That verdict was right, and the fix was 150 gold and a correct array index."
+  },
+  "usage": {
+    "transcript": "/Users/robin/.claude/projects/-private-tmp-heat12-038cc280/86a4e88b-15e4-41d1-bcfe-1d54e5d2dbdb.jsonl",
+    "assistantTurns": 63,
+    "toolCalls": 34,
+    "tokensIn": 126,
+    "tokensOut": 138530,
+    "cacheReadTokens": 14921567,
+    "cacheWriteTokens": 746755,
+    "note": "tokensIn excludes cache reads/writes (reported separately); summed from the CLI session transcript, not self-reported by the rig"
+  }
+}

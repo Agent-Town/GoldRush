@@ -1,0 +1,69 @@
+{
+  "tape": {
+    "id": "agent-e8c4f218-4307b4e1-08a4-457f-92ae-70f84329c564",
+    "contract": "e7-relay-rush",
+    "seed": "e7-relay-rush-01",
+    "eventLogHash": "fnv1a32:d381ebe2",
+    "outcome": {
+      "reason": "secured",
+      "secured": true,
+      "waves": 20,
+      "timeAlive": 600,
+      "gold": 200
+    }
+  },
+  "declaredScore": {
+    "secured": true,
+    "waves": 20,
+    "timeAlive": 600,
+    "gold": 200,
+    "baseValue": 0
+  },
+  "mode": "bank-default (the county replay)",
+  "steps": 18600,
+  "complete": true,
+  "secureTick": {
+    "tick": 18000,
+    "timeAlive": 600.0000000001116,
+    "wave": 20,
+    "bankedSecuredSnapshot": {
+      "waves": 20,
+      "gold": 870,
+      "timeAlive": 600.0000000001116
+    },
+    "purse": {
+      "held": 200,
+      "panned": 870,
+      "spent": 670
+    }
+  },
+  "endOfRun": {
+    "tick": 18000,
+    "timeAlive": 600.0000000001116,
+    "wave": 20,
+    "purse": {
+      "held": 200,
+      "panned": 870,
+      "spent": 670
+    },
+    "secureChoice": "bank",
+    "securedWave": 20
+  },
+  "replayResult": {
+    "eventLogHash": "fnv1a32:d381ebe2",
+    "outcome": {
+      "secured": true,
+      "waves": 20,
+      "gold": 200,
+      "timeAlive": 600
+    },
+    "securedSnapshot": {
+      "waves": 20,
+      "gold": 870,
+      "timeAlive": 600.0000000001116
+    },
+    "ticks": 18600,
+    "engine": "headless-contract-sim"
+  },
+  "resultError": null
+}

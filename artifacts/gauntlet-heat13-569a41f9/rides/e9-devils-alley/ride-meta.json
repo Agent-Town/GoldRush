@@ -1,0 +1,19 @@
+{
+  "rig": "opus",
+  "model": "claude-opus-5",
+  "arena": "/tmp/heat13-569a41f9",
+  "workdir": "/tmp/heat13-569a41f9/artifacts/heat13/opus/e9-devils-alley",
+  "charterFile": "/private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/rides/e9-devils-alley/charter.md",
+  "charterSha256": "262c242dfb677f7e97671a13e0b798eeee6d6b5c03d98efb30d07363f2ca442c",
+  "sessionId": "3c713f59-1eb8-46e5-b043-2b51ed5caa8c",
+  "wallSeconds": 1500,
+  "startedAt": "2026-09-07T16:48:46.375Z",
+  "invocation": "env -u CLAUDECODE -u CLAUDE_CODE_ENTRYPOINT -u CLAUDE_CONFIG_DIR claude -p \"<charter text, see charterFile>\" --model claude-opus-5 --allowedTools Read,Write,Glob,Bash(node *) --output-format text --session-id 3c713f59-1eb8-46e5-b043-2b51ed5caa8c",
+  "endedAt": "2026-09-07T16:48:48.230Z",
+  "wallClockSeconds": 2,
+  "exitCode": 1,
+  "signal": null,
+  "wallHit": false,
+  "firstOutputAt": null,
+  "setupToFirstOutputSeconds": null
+}

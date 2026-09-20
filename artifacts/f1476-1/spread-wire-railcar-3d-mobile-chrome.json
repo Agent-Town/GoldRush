@@ -1,0 +1,248 @@
+{
+  "slice": "wire-railcar-3d",
+  "project": "mobile-chrome",
+  "commit": "14028bd8eb637877971c0525aa39c11ab4de5787",
+  "n": 8,
+  "phases": {
+    "baseline": {
+      "calls": {
+        "min": 67,
+        "max": 67,
+        "spread": 0,
+        "values": [
+          67
+        ],
+        "stable": true
+      },
+      "triangles": {
+        "min": 113084,
+        "max": 113084,
+        "spread": 0,
+        "values": [
+          113084
+        ],
+        "stable": true
+      },
+      "geometries": {
+        "min": 84,
+        "max": 84,
+        "spread": 0,
+        "values": [
+          84
+        ],
+        "stable": true
+      },
+      "textures": {
+        "min": 37,
+        "max": 37,
+        "spread": 0,
+        "values": [
+          37
+        ],
+        "stable": true
+      }
+    },
+    "mounted": {
+      "calls": {
+        "min": 60,
+        "max": 60,
+        "spread": 0,
+        "values": [
+          60
+        ],
+        "stable": true
+      },
+      "triangles": {
+        "min": 120992,
+        "max": 120992,
+        "spread": 0,
+        "values": [
+          120992
+        ],
+        "stable": true
+      },
+      "geometries": {
+        "min": 92,
+        "max": 92,
+        "spread": 0,
+        "values": [
+          92
+        ],
+        "stable": true
+      },
+      "textures": {
+        "min": 41,
+        "max": 41,
+        "spread": 0,
+        "values": [
+          41
+        ],
+        "stable": true
+      }
+    },
+    "despawned": {
+      "calls": {
+        "min": 53,
+        "max": 53,
+        "spread": 0,
+        "values": [
+          53
+        ],
+        "stable": true
+      },
+      "triangles": {
+        "min": 109996,
+        "max": 109996,
+        "spread": 0,
+        "values": [
+          109996
+        ],
+        "stable": true
+      },
+      "geometries": {
+        "min": 89,
+        "max": 89,
+        "spread": 0,
+        "values": [
+          89
+        ],
+        "stable": true
+      },
+      "textures": {
+        "min": 37,
+        "max": 37,
+        "spread": 0,
+        "values": [
+          37
+        ],
+        "stable": true
+      }
+    },
+    "combatDeath": {
+      "calls": {
+        "min": 53,
+        "max": 54,
+        "spread": 1,
+        "values": [
+          53,
+          54
+        ],
+        "stable": false
+      },
+      "triangles": {
+        "min": 109996,
+        "max": 109998,
+        "spread": 2,
+        "values": [
+          109996,
+          109998
+        ],
+        "stable": false
+      },
+      "geometries": {
+        "min": 89,
+        "max": 89,
+        "spread": 0,
+        "values": [
+          89
+        ],
+        "stable": true
+      },
+      "textures": {
+        "min": 37,
+        "max": 37,
+        "spread": 0,
+        "values": [
+          37
+        ],
+        "stable": true
+      }
+    }
+  },
+  "deltas": {
+    "mounted-baseline": {
+      "geometries": {
+        "values": [
+          8
+        ],
+        "stable": true
+      },
+      "textures": {
+        "values": [
+          4
+        ],
+        "stable": true
+      }
+    },
+    "despawned-baseline": {
+      "geometries": {
+        "values": [
+          5
+        ],
+        "stable": true
+      },
+      "textures": {
+        "values": [
+          0
+        ],
+        "stable": true
+      }
+    },
+    "combatDeath-baseline": {
+      "geometries": {
+        "values": [
+          5
+        ],
+        "stable": true
+      },
+      "textures": {
+        "values": [
+          0
+        ],
+        "stable": true
+      }
+    },
+    "despawned-mounted": {
+      "geometries": {
+        "values": [
+          -3
+        ],
+        "stable": true
+      },
+      "textures": {
+        "values": [
+          -4
+        ],
+        "stable": true
+      }
+    },
+    "combatDeath-mounted": {
+      "geometries": {
+        "values": [
+          -3
+        ],
+        "stable": true
+      },
+      "textures": {
+        "values": [
+          -4
+        ],
+        "stable": true
+      }
+    },
+    "combatDeath-despawned": {
+      "geometries": {
+        "values": [
+          0
+        ],
+        "stable": true
+      },
+      "textures": {
+        "values": [
+          0
+        ],
+        "stable": true
+      }
+    }
+  }
+}

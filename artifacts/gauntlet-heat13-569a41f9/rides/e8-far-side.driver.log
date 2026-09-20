@@ -1,0 +1,51 @@
+
+########## RIDE e8-far-side · seed e8-far-side-01 · gen 67 · stake re-ride · wall 1500s ##########
+--- 1 charter ---
+{"rig":"opus","contract":"e8-far-side","seed":"e8-far-side-01","seedMode":"bench","stake":"re-ride","generation":67,"wall":1500,"notebookSha256":"0b92bbd6de8aeaafbdc5b5528f63d8e9710aed9520710ac35e7a2f49c000739a","charterSha256":"886a0e733864432472423d5ac1dd9dfd3894b842bf01aee32466a628f1ce9ccd","bytes":538145,"out":"/private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/rides/e8-far-side/charter.md"}
+--- 2 ride ---
+START opus claude-opus-5 pid=92702 session=8bddd583-e91f-40f3-a6fb-6a55830394c8 at=2026-09-07T11:13:27.116Z
+FIRST-OUTPUT opus +60s
+OUTCOME opus secured=false waves=2 gold=0 runsSoFar=1 scored=0 +75s
+OUTCOME opus secured=false waves=14 gold=25 runsSoFar=2 scored=0 +360s
+OUTCOME opus secured=false waves=14 gold=25 runsSoFar=3 scored=0 +525s
+OUTCOME opus secured=false waves=14 gold=25 runsSoFar=4 scored=1 +570s
+OUTCOME opus secured=false waves=14 gold=25 runsSoFar=4 scored=1 +660s
+END opus rc=0 signal=null wall=684s wallHit=false
+ride-wall rc=0 signal=-
+--- 3 land ---
+
+=== 1 finish-ride ===
+{"rig":"opus","contract":"e8-far-side","wall":684,"wallHit":false,"rc":0,"tracked":[],"files":20,"outcome":{"secured":false,"waves":14,"gold":25,"runsSoFar":4,"scoredAttempts":1,"tape":"/private/tmp/heat13-569a41f9/artifacts/heat13/opus/e8-far-side/tune-1-tape.json","worldModel":"sim-import"},"scoredTapes":[{"file":"attempt-1-tape.json","id":"agent-27648e03-0bd7e797-de71-4bc3-a5fb-5e9fa2a311c3","secured":false,"waves":12,"gold":70,"durationTicks":11106,"lastEntryTick":10938,"promotedByRig":false,"discoveredBy":"filename"},{"file":"tune-1-tape.json","id":"agent-33706bb2-45f14875-1e95-4827-91e9-75d29cbe46f3","secured":false,"waves":14,"gold":25,"durationTicks":13293,"lastEntryTick":13072,"promotedByRig":true,"discoveredBy":"outcome-file"}],"otherSecured":[],"reportSections":{"outcome":1406,"whatTheMapAsked":2246,"winnability":723,"lessons":5060},"usage":{"turns":78,"toolCalls":44,"tokensIn":156,"tokensOut":129529}}
+
+=== NOT SECURED — nothing to submit ===
+{
+ "rig": "opus",
+ "contract": "e8-far-side",
+ "wall": 684,
+ "wallHit": false,
+ "rc": 0,
+ "scoredTapes": [
+  {
+   "file": "attempt-1-tape.json",
+   "secured": false,
+   "waves": 12,
+   "gold": 70
+  },
+  {
+   "file": "tune-1-tape.json",
+   "secured": false,
+   "waves": 14,
+   "gold": 25
+  }
+ ],
+ "outcomeNote": "NOT SECURED - do not submit. Best of 4 runs is tune-1 (w14/443.100s/25g/55 calls). The scored attempt (attempt-1-tape.json, w12/370.200s/70g) ranks BELOW it; the tape named above is the best run on disk, not a standing. Both era gates were met in tune-1 (crossing.credited 4/4 at t~380, probeRecovery.recovered at t~91); the run died of ordinary survival at wave 14 of 20."
+}
+
+land rc=0
+--- 4 notebook ---
+{"notebook":"/Users/robin/Claude/Projects/goldrush-gauntlet/memories/claude__opus-5/NOTEBOOK.md","generation":67,"headerBytes":429,"entryBytes":8944}
+--- 5 matrix ---
+| 7 | e8-far-side | `e8-far-side-01` | re-ride | 67 | **not secured** | 14 | 25 | 443.100s | 684s | `tune-1-tape.json` · `agent-33706bb2-45f14875-1e95-4827-91e9-75d29cbe46f3`<br>fnv1a32:82f0740f | — | gen 67 |
+{"contract":"e8-far-side","secured":false,"tapesOnDisk":13,"scoredTapes":2,"otherSecured":0,"runs":4,"scoredAttempts":1,"wallHit":false,"rc":0,"assay":null,"ranked":null,"winnability":"**Winnable, and what stopped me was my own budget, not a wall in the map, the grammar, or the\neconomy:** both era gates shut cleanly at t ≈ 380 of a 600 s run with 220 seconds to spare, so the\ncontract reduces entirely to \"can a 175-hp hero hold a claim it must abandon four times\" — and my\nbest ride reached wave 14 of 20 with the fort intact (nothing can wreck it here) while the hero\nalone bled out; the untested lever the data names is the capped purse, which `tune-1` left as\n600 gold panned against a 670-gold ladder that never finished, and which four `CONTEXT_ACTION\nupgrade` tier-2 turrets (150 g each, the only sink on a board with no repair bill) would have\nconverted into the ~65% dps the last six waves needed."}
+########## END e8-far-side ##########
+

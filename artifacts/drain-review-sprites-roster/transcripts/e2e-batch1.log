@@ -1,0 +1,333 @@
+(node:358) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 78 tests using 1 worker
+
+
+(node:460) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[1/78] [desktop-chrome] › e2e/elder-walk8-woman.spec.ts:37:1 › every Elder cell differs from the bearded sheet it replaces
+
+[desktop-chrome] › e2e/elder-walk8-woman.spec.ts:37:1 › every Elder cell differs from the bearded sheet it replaces
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  1) [desktop-chrome] › e2e/elder-walk8-woman.spec.ts:37:1 › every Elder cell differs from the bearded sheet it replaces 
+
+    Error: measured minimum figure height
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 296
+    Received: 297
+
+      73 |     expect(height, `r${cell.row}c${cell.col} figure height, 298-321 +/- the master's 10 px`).toBeLessThanOrEqual(331);
+      74 |   }
+    > 75 |   expect(Math.min(...heights), 'measured minimum figure height').toBe(296);
+         |                                                                  ^
+      76 |   expect(Math.max(...heights), 'measured maximum figure height').toBe(328);
+      77 |   expect(heights.filter((height) => height < 298 || height > 321), 'cells outside the nominal band').toHaveLength(5);
+      78 | });
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-sprites/e2e/elder-walk8-woman.spec.ts:75:66
+
+    Error Context: test-results/elder-walk8-woman-every-El-df9b0-e-bearded-sheet-it-replaces-desktop-chrome/error-context.md
+
+
+
+(node:2008) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[2/78] [desktop-chrome] › e2e/elder-walk8-woman.spec.ts:80:1 › a plain town boot walks the Elder on anchored feet at the schoolhouse
+[3/78] [desktop-chrome] › e2e/hero-pose-library.spec.ts:8:1 › hero pans, fires, and returns to walk with curated pose frames
+[4/78] [desktop-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:29:1 › T spawns Claim Jumpers, contact kills hero, R restarts in place
+[5/78] [desktop-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:59:1 › T does not spawn Claim Jumpers without debug consent
+[6/78] [desktop-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:72:1 › nospawn blocks debug packs
+[7/78] [desktop-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:83:1 › double restart recycles enemies without geometry growth
+
+[WebServer] 12:54:41 PM [vite] (client) [console.error] THREE.GLTFLoader: Couldn't load texture blob:http://127.0.0.1:5321/db3b9800-b890-4fb0-822b-4da72adfcf86
+
+[WebServer] 12:54:41 PM [vite] (client) [console.warn] [gold-rush] render demotion {"event":"render_demotion","reason":"pilot-load-failed:Failed to fetch","contractId":"the-claim","buildId":"dev","tier":"FULL","dataset":{"terrain3dPilotState":"failed","terrain3dPilotRenderSource":"painted","run3dPilotState":"loading","run3dPilotMeshes":"0","run3dPilotTriangles":"0","terrain3dPilotContract":"the-claim","terrain3dPilotTerrainLoadState":"pending","terrain3dPilotPanoramaLoadState":"pending","terrain3dPilotLandmarkLoadState":"pending","terrain3dPilotHeightSource":"painted","terrain3dPilotMeshes":"0","terrain3dPilotTriangles":"0","terrain3dPilotMaterials":"0","terrain3dPilotVertices":"0","terrain3dPilotPanorama":"off","terrain3dPilotPanoramaMeshes":"0","terrain3dPilotPanoramaTriangles":"0","terrain3dPilotPanoramaMaterials":"0","terrain3dPilotPanoramaVertices":"0"}}
+  2) [desktop-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:83:1 › double restart recycles enemies without geometry growth 
+
+    Error: page.evaluate: Execution context was destroyed, most likely because of a navigation.
+
+      87 |   // Warm the float-text pool first: kills during the swarm drop xp motes whose
+      88 |   // pickup floats would otherwise lazily upload sprite geometry mid-test.
+    > 89 |   await page.evaluate(() => window.__GR_TEST__?.warmVfx());
+         |              ^
+      90 |   await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 20);
+      91 |   const baseline = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.renderer.geometries ?? 0);
+      92 |
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-sprites/e2e/m1-01-claim-jumpers-death.spec.ts:89:14
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/m1-01-claim-jumpers-death--f5452-ies-without-geometry-growth-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/m1-01-claim-jumpers-death--f5452-ies-without-geometry-growth-desktop-chrome/error-context.md
+
+
+[8/78] [desktop-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:109:1 › stress=120 stays within pool and draw-call budget
+[9/78] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:111:1 › menu places a palisade and logs build_palisade spend
+[10/78] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:136:1 › build menu shows six ready icons and Balance-backed blurbs
+[11/78] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining
+  3) [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining 
+
+    Error: page.evaluate: Execution context was destroyed, most likely because of a navigation
+
+      184 |   await teleport(page, 0, 12);
+      185 |   await page.evaluate(() => window.__GR_TEST__?.selectBuildable('palisade'));
+    > 186 |   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.ghostValid ?? true)).toBe(false);
+          |                                ^
+      187 |   const tick = await page.evaluate(() => {
+      188 |     const before = window.__THREE_GAME_DIAGNOSTICS__?.simulation.tick ?? 0;
+      189 |     window.dispatchEvent(new KeyboardEvent('keydown', { code: 'Enter' }));
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-sprites/e2e/m2-01-build-menu.spec.ts:186:32
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-sprites/e2e/m2-01-build-menu.spec.ts:186:3
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/m2-01-build-menu-palisade--49d2a-llowing-edge-touch-chaining-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/m2-01-build-menu-palisade--49d2a-llowing-edge-touch-chaining-desktop-chrome/error-context.md
+
+
+[12/78] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:205:1 › beacon cost curve stays intact through the menu
+[13/78] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:227:1 › single enemy slides around a finite palisade line without passing through
+[14/78] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:284:1 › 390px build menu is visible, tappable, and clear of HUD controls
+[15/78] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:329:1 › stress draw calls stay under 200 with palisades and beacons
+[16/78] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:105:1 › enemy crossing the river reaches the hero through the ford only
+[17/78] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:123:1 › scheduled waves never place enemies in deep river over three waves
+[18/78] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:139:1 › hero stops in the shallows and keeps weapons armed at the deep channel
+[19/78] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:181:1 › xp from a residual deep-water death is auto-banked with no mote
+[20/78] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:202:1 › far-bank sluice stays untouched when the river flank is open
+
+(node:30532) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[21/78] [desktop-chrome] › e2e/town-cast-wiring.spec.ts:13:1 › town cast contracts name every shipped direction cell
+[22/78] [desktop-chrome] › e2e/town-cast-wiring.spec.ts:27:1 › plain town boot shows the tavernkeeper and storekeeper walking on anchored feet
+[23/78] [desktop-chrome] › e2e/town-t5-townsfolk.spec.ts:209:1 › townsfolk bark data is epoch-scoped and short
+[24/78] [desktop-chrome] › e2e/town-t5-townsfolk.spec.ts:219:1 › seeded growth tiers show the correct townsfolk roster with no run sim diagnostics
+[25/78] [desktop-chrome] › e2e/town-t5-townsfolk.spec.ts:252:1 › approach barks identify sampled speakers and the Prospector greets by town name
+[26/78] [desktop-chrome] › e2e/town-t5-townsfolk.spec.ts:272:1 › youngsters ride the town ring road
+[27/78] [desktop-chrome] › e2e/town-t5-townsfolk.spec.ts:290:1 › mobile bark card is readable above the stick zone and captures concept comparison
+[28/78] [desktop-chrome] › e2e/trail-guide-plain-boot.spec.ts:127:1 › plain fresh boot teaches the first claim once
+[29/78] [desktop-chrome] › e2e/vp-02-sprite-animation.spec.ts:320:1 › hero test clip advances on sim time and holds during hit-pause
+[30/78] [desktop-chrome] › e2e/vp-02-sprite-animation.spec.ts:367:1 › missing sheet cells fall back to the existing one-frame billboard without drift
+[desktop-chrome] › e2e/vp-02-sprite-animation.spec.ts:367:1 › missing sheet cells fall back to the existing one-frame billboard without drift
+[fallback] abortedRotationCells=20
+
+[31/78] [desktop-chrome] › e2e/vp-02-sprite-animation.spec.ts:405:1 › warmed test clip swaps do not grow renderer memory or draw calls
+[32/78] [desktop-chrome] › e2e/vp-02-sprite-animation.spec.ts:472:1 › hero rotation contract fires both stride cells for all 8 headings
+[33/78] [desktop-chrome] › e2e/vp-02-sprite-animation.spec.ts:531:1 › hero walk frameKey alternates while each 8-way heading is held
+[34/78] [desktop-chrome] › e2e/vp-02-sprite-animation.spec.ts:566:1 › east heading uses explicit rotation2 files with unmirrored pixels
+[desktop-chrome] › e2e/vp-02-sprite-animation.spec.ts:566:1 › east heading uses explicit rotation2 files with unmirrored pixels
+[mirror-pixels] heroCropDifference direct=0.0511 flipped=0.0213
+
+[35/78] [desktop-chrome] › e2e/vp-02-sprite-animation.spec.ts:619:1 › damped heading sweep visits every orientation in order
+[36/78] [desktop-chrome] › e2e/vp-02-sprite-animation.spec.ts:639:1 › 180-degree reversal crosses intermediate orientations
+[37/78] [desktop-chrome] › e2e/vp-02-sprite-animation.spec.ts:659:1 › small boundary wiggle does not oscillate orientation
+[38/78] [desktop-chrome] › e2e/vp-02-sprite-animation.spec.ts:678:1 › orientation swap crossfades once and adds no draw call at rest
+[39/78] [desktop-chrome] › e2e/vp-02-sprite-animation.spec.ts:732:1 › captures VP-02 desktop and narrow screenshots
+
+(node:73345) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[40/78] [mobile-chrome] › e2e/elder-walk8-woman.spec.ts:37:1 › every Elder cell differs from the bearded sheet it replaces
+
+[mobile-chrome] › e2e/elder-walk8-woman.spec.ts:37:1 › every Elder cell differs from the bearded sheet it replaces
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  4) [mobile-chrome] › e2e/elder-walk8-woman.spec.ts:37:1 › every Elder cell differs from the bearded sheet it replaces 
+
+    Error: measured minimum figure height
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 296
+    Received: 297
+
+      73 |     expect(height, `r${cell.row}c${cell.col} figure height, 298-321 +/- the master's 10 px`).toBeLessThanOrEqual(331);
+      74 |   }
+    > 75 |   expect(Math.min(...heights), 'measured minimum figure height').toBe(296);
+         |                                                                  ^
+      76 |   expect(Math.max(...heights), 'measured maximum figure height').toBe(328);
+      77 |   expect(heights.filter((height) => height < 298 || height > 321), 'cells outside the nominal band').toHaveLength(5);
+      78 | });
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-sprites/e2e/elder-walk8-woman.spec.ts:75:66
+
+    Error Context: test-results/elder-walk8-woman-every-El-df9b0-e-bearded-sheet-it-replaces-mobile-chrome/error-context.md
+
+
+
+(node:75110) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[41/78] [mobile-chrome] › e2e/elder-walk8-woman.spec.ts:80:1 › a plain town boot walks the Elder on anchored feet at the schoolhouse
+[42/78] [mobile-chrome] › e2e/hero-pose-library.spec.ts:8:1 › hero pans, fires, and returns to walk with curated pose frames
+[43/78] [mobile-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:29:1 › T spawns Claim Jumpers, contact kills hero, R restarts in place
+[44/78] [mobile-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:59:1 › T does not spawn Claim Jumpers without debug consent
+[45/78] [mobile-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:72:1 › nospawn blocks debug packs
+[46/78] [mobile-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:83:1 › double restart recycles enemies without geometry growth
+[47/78] [mobile-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:109:1 › stress=120 stays within pool and draw-call budget
+[48/78] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:111:1 › menu places a palisade and logs build_palisade spend
+[49/78] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:136:1 › build menu shows six ready icons and Balance-backed blurbs
+[50/78] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining
+[51/78] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:205:1 › beacon cost curve stays intact through the menu
+[52/78] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:227:1 › single enemy slides around a finite palisade line without passing through
+[53/78] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:284:1 › 390px build menu is visible, tappable, and clear of HUD controls
+[54/78] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:329:1 › stress draw calls stay under 200 with palisades and beacons
+[55/78] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:105:1 › enemy crossing the river reaches the hero through the ford only
+[56/78] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:123:1 › scheduled waves never place enemies in deep river over three waves
+[57/78] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:139:1 › hero stops in the shallows and keeps weapons armed at the deep channel
+[58/78] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:181:1 › xp from a residual deep-water death is auto-banked with no mote
+[59/78] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:202:1 › far-bank sluice stays untouched when the river flank is open
+[60/78] [mobile-chrome] › e2e/town-cast-wiring.spec.ts:13:1 › town cast contracts name every shipped direction cell
+[61/78] [mobile-chrome] › e2e/town-cast-wiring.spec.ts:27:1 › plain town boot shows the tavernkeeper and storekeeper walking on anchored feet
+[62/78] [mobile-chrome] › e2e/town-t5-townsfolk.spec.ts:209:1 › townsfolk bark data is epoch-scoped and short
+[63/78] [mobile-chrome] › e2e/town-t5-townsfolk.spec.ts:219:1 › seeded growth tiers show the correct townsfolk roster with no run sim diagnostics
+[64/78] [mobile-chrome] › e2e/town-t5-townsfolk.spec.ts:252:1 › approach barks identify sampled speakers and the Prospector greets by town name
+[65/78] [mobile-chrome] › e2e/town-t5-townsfolk.spec.ts:272:1 › youngsters ride the town ring road
+[66/78] [mobile-chrome] › e2e/town-t5-townsfolk.spec.ts:290:1 › mobile bark card is readable above the stick zone and captures concept comparison
+[67/78] [mobile-chrome] › e2e/trail-guide-plain-boot.spec.ts:127:1 › plain fresh boot teaches the first claim once
+[68/78] [mobile-chrome] › e2e/vp-02-sprite-animation.spec.ts:320:1 › hero test clip advances on sim time and holds during hit-pause
+[69/78] [mobile-chrome] › e2e/vp-02-sprite-animation.spec.ts:367:1 › missing sheet cells fall back to the existing one-frame billboard without drift
+[mobile-chrome] › e2e/vp-02-sprite-animation.spec.ts:367:1 › missing sheet cells fall back to the existing one-frame billboard without drift
+[fallback] abortedRotationCells=20
+
+[70/78] [mobile-chrome] › e2e/vp-02-sprite-animation.spec.ts:405:1 › warmed test clip swaps do not grow renderer memory or draw calls
+[71/78] [mobile-chrome] › e2e/vp-02-sprite-animation.spec.ts:472:1 › hero rotation contract fires both stride cells for all 8 headings
+[72/78] [mobile-chrome] › e2e/vp-02-sprite-animation.spec.ts:531:1 › hero walk frameKey alternates while each 8-way heading is held
+[73/78] [mobile-chrome] › e2e/vp-02-sprite-animation.spec.ts:566:1 › east heading uses explicit rotation2 files with unmirrored pixels
+[mobile-chrome] › e2e/vp-02-sprite-animation.spec.ts:566:1 › east heading uses explicit rotation2 files with unmirrored pixels
+[mirror-pixels] heroCropDifference direct=0.0336 flipped=0.0329
+
+[74/78] [mobile-chrome] › e2e/vp-02-sprite-animation.spec.ts:619:1 › damped heading sweep visits every orientation in order
+[75/78] [mobile-chrome] › e2e/vp-02-sprite-animation.spec.ts:639:1 › 180-degree reversal crosses intermediate orientations
+[76/78] [mobile-chrome] › e2e/vp-02-sprite-animation.spec.ts:659:1 › small boundary wiggle does not oscillate orientation
+[77/78] [mobile-chrome] › e2e/vp-02-sprite-animation.spec.ts:678:1 › orientation swap crossfades once and adds no draw call at rest
+[78/78] [mobile-chrome] › e2e/vp-02-sprite-animation.spec.ts:732:1 › captures VP-02 desktop and narrow screenshots
+  4 failed
+    [desktop-chrome] › e2e/elder-walk8-woman.spec.ts:37:1 › every Elder cell differs from the bearded sheet it replaces 
+    [desktop-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:83:1 › double restart recycles enemies without geometry growth 
+    [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining 
+    [mobile-chrome] › e2e/elder-walk8-woman.spec.ts:37:1 › every Elder cell differs from the bearded sheet it replaces 
+  74 passed (7.2m)

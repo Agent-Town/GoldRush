@@ -1,0 +1,73 @@
+{
+  "project": "desktop-chrome",
+  "link": "8mbps",
+  "bundle": true,
+  "navigatedAtMs": 375,
+  "clickedAtMs": 609,
+  "townReadyAtMs": 6456,
+  "cueWindow": {
+    "responses": 156,
+    "bytes": 7744332,
+    "mp3": [
+      {
+        "url": "/assets/menu-tap-DMz5CpTr-diet-1408f6b4.mp3",
+        "bytes": 8821,
+        "at": 1057
+      },
+      {
+        "url": "/assets/era-e1-frontier-loop-CQyR4akc-diet-1408f6b4.mp3",
+        "bytes": 1800881,
+        "at": 5994
+      }
+    ]
+  },
+  "townRaisingAtMs": 1073,
+  "townPlayableAtMs": 5852,
+  "afterTownReady": {
+    "music": []
+  },
+  "musicFetchedWhileTownRaising": [],
+  "musicFetchedBeforeTownPlayable": [],
+  "audioFetches": [
+    {
+      "url": "http://127.0.0.1:5294/assets/menu-tap-DMz5CpTr-diet-1408f6b4.mp3",
+      "at": 810,
+      "label": "",
+      "state": "",
+      "progress": ""
+    },
+    {
+      "url": "http://127.0.0.1:5294/assets/era-e1-frontier-loop-CQyR4akc-diet-1408f6b4.mp3",
+      "at": 5920,
+      "label": "the town",
+      "state": "ready",
+      "progress": "28/28"
+    }
+  ],
+  "loadingPhases": [
+    {
+      "at": 77,
+      "label": "",
+      "state": "",
+      "progress": ""
+    },
+    {
+      "at": 954,
+      "label": "the town",
+      "state": "ready",
+      "progress": "0/0"
+    },
+    {
+      "at": 1073,
+      "label": "the town",
+      "state": "loading",
+      "progress": "0/20"
+    },
+    {
+      "at": 5852,
+      "label": "the town",
+      "state": "ready",
+      "progress": "28/28"
+    }
+  ]
+}

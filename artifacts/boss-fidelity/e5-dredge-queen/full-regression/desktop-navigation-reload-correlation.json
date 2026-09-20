@@ -1,0 +1,44 @@
+{
+  "scope": "Three desktop execution-context errors correlated using Playwright trace wallTime + monotonic offset. Vite log seconds are rounded; this is timing correlation with a verified all-client reload mechanism, not a successful confirmation run.",
+  "rows": [
+    {
+      "trace": "artifacts/boss-fidelity/e5-dredge-queen/full-regression/full-workers2/test-results/story-signal-emitters-a-se-8b981-ach-the-last-three-E1-beats-desktop-chrome/trace.zip",
+      "callId": "pw:api@32",
+      "errorAtUTC": "2026-09-08T17:34:47.257228+00:00",
+      "error": "Error: page.evaluate: Execution context was destroyed, most likely because of a navigation.",
+      "nearestReload": {
+        "line": 232,
+        "atUTC": "2026-09-08T17:34:47+00:00",
+        "kind": "all-client-reload",
+        "source": "12:34:47 AM [vite] (client) page reload artifacts/boss-fidelity/e6-homemaker/candidate-runtime/HomemakerBossSystem.browser.ts"
+      },
+      "secondsAfterReload": 0.257228
+    },
+    {
+      "trace": "artifacts/boss-fidelity/e5-dredge-queen/full-regression/full-workers2/test-results/task-031-anim-roundness-ze-6f549-serve-hard-frameKey-cycling-desktop-chrome/trace.zip",
+      "callId": "pw:api@55",
+      "errorAtUTC": "2026-09-08T17:34:47.172017+00:00",
+      "error": "Error: page.evaluate: Execution context was destroyed, most likely because of a navigation.",
+      "nearestReload": {
+        "line": 232,
+        "atUTC": "2026-09-08T17:34:47+00:00",
+        "kind": "all-client-reload",
+        "source": "12:34:47 AM [vite] (client) page reload artifacts/boss-fidelity/e6-homemaker/candidate-runtime/HomemakerBossSystem.browser.ts"
+      },
+      "secondsAfterReload": 0.172017
+    },
+    {
+      "trace": "artifacts/boss-fidelity/e5-dredge-queen/full-regression/full-workers2/test-results/soak-30-scripted-auto-play-50cb7-ide-perf-and-pool-envelopes-desktop-chrome/trace.zip",
+      "callId": "pw:api@190",
+      "errorAtUTC": "2026-09-08T17:22:28.631495+00:00",
+      "error": "Error: page.evaluate: Execution context was destroyed, most likely because of a navigation",
+      "nearestReload": {
+        "line": 214,
+        "atUTC": "2026-09-08T17:22:28+00:00",
+        "kind": "all-client-reload",
+        "source": "12:22:28 AM [vite] (client) page reload artifacts/boss-fidelity/e6-homemaker/candidate-runtime/HomemakerBossSystem.browser.ts"
+      },
+      "secondsAfterReload": 0.631495
+    }
+  ]
+}

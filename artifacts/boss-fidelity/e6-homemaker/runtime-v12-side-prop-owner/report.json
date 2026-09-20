@@ -1,0 +1,309 @@
+{
+  "source": {
+    "src/systems/HomemakerBossSystem.ts": "e2deac8fc7cca87df8110ddc3ff60da8909b5b4eb128388f324602ba5d615030",
+    "src/game/Game.ts": "900b03f23b083c0296ad0fc1af402ea9b00697a6c4d3815c61837a67f6a65bb6",
+    "assets/pilots/homemaker-9000-3d/homemaker-9000.glb": "3dc03cfafaab0645dc44350843ade2ede19e5ddf4f1a55519afbabeebc649ba9",
+    "candidateSource": "8c0b2d6da50709df851ec1402cee53ef02801d350b660342fc57f5735cdc1294",
+    "candidateAsset": "d81454a11c49f963251563812a70883e84822092fd6f6482ef8d994ddd4d42d5"
+  },
+  "scope": "Isolated V12 asset/runtime draft routed into actual Game, accelerated waves/manual simulation, fixed hero framing. Read-only baseline for model/camera/terrain alignment; not natural progression or a performance benchmark.",
+  "cases": [
+    {
+      "name": "desktop",
+      "label": "arrived",
+      "file": "desktop-arrived.png",
+      "diagnostics": {
+        "active": true,
+        "act": 1,
+        "position": {
+          "x": 8,
+          "z": 4
+        },
+        "tidiedMarkers": 2,
+        "liveComponents": [
+          "vac",
+          "rack"
+        ],
+        "unbuilds": 0,
+        "unbuildOrder": [],
+        "partsStackPickups": 0,
+        "rackArcs": 0,
+        "rackTelegraphed": false,
+        "structureDamageEvents": 0,
+        "playerDamageEvents": 0,
+        "pickupsCurated": 0,
+        "loosePickups": 0,
+        "pileCenters": [
+          {
+            "x": 6.5,
+            "z": 6.2
+          },
+          {
+            "x": 9.5,
+            "z": 6.2
+          }
+        ],
+        "pictogram": "sparkle",
+        "chairPlaced": false,
+        "poweredDown": false,
+        "nonHostile": false,
+        "kept": false,
+        "persistentKept": false
+      },
+      "machine": [
+        8,
+        5.025,
+        4
+      ],
+      "parts": [
+        {
+          "id": "vac",
+          "morph": 0
+        },
+        {
+          "id": "rack",
+          "morph": 0
+        },
+        {
+          "id": "core",
+          "morph": 0
+        }
+      ],
+      "terrain": {
+        "below": 0,
+        "count": 17748,
+        "worst": 0
+      },
+      "targets": [
+        {
+          "id": "vac",
+          "position": [
+            5.8,
+            5.05,
+            4
+          ]
+        },
+        {
+          "id": "rack",
+          "position": [
+            10.2,
+            5.05,
+            4
+          ]
+        }
+      ],
+      "camera": [
+        7.793314808703155,
+        31.156657404351503,
+        25.266574043515043
+      ],
+      "hits": [
+        {
+          "distance": 34.838714445581104,
+          "point": [
+            4.1087020357469735,
+            5.41818348747541,
+            2.153114480353885
+          ],
+          "chain": [
+            {
+              "name": "night-vein-6",
+              "type": "Mesh",
+              "uuid": "a9189656-8512-4ae3-9dbc-dc3d3e1180ba",
+              "userData": {}
+            },
+            {
+              "name": "E6TileConsumerSystem",
+              "type": "Group",
+              "uuid": "00799f60-b945-43e7-a89b-ff623b6aa499",
+              "userData": {}
+            },
+            {
+              "name": "",
+              "type": "Scene",
+              "uuid": "6ab7f3c8-aec5-4d9c-bbc3-e511ce0e4b59",
+              "userData": {}
+            }
+          ]
+        },
+        {
+          "distance": 34.89426751696307,
+          "point": [
+            4.1028057867969405,
+            5.377131043662061,
+            2.11615403061041
+          ],
+          "chain": [
+            {
+              "name": "",
+              "type": "Sprite",
+              "uuid": "544271f2-ca96-402e-b418-907635aafd54",
+              "userData": {
+                "worldSpriteTintBound": true,
+                "assetSlot": "node.gold_seam"
+              }
+            },
+            {
+              "name": "GeneratedGoldSeamSprites",
+              "type": "Group",
+              "uuid": "98dcda7b-0791-43b5-92fc-bda4544fd01c",
+              "userData": {
+                "assetSlot": "node.gold_seam"
+              }
+            },
+            {
+              "name": "GoldSeamVisualBatch",
+              "type": "Group",
+              "uuid": "d1967865-684d-4f79-82d9-239060b30147",
+              "userData": {
+                "assetSlot": "node.gold_seam"
+              }
+            },
+            {
+              "name": "HarvestSystem",
+              "type": "Group",
+              "uuid": "abf9be1d-0159-45ea-b3fb-19a767f86378",
+              "userData": {}
+            },
+            {
+              "name": "",
+              "type": "Scene",
+              "uuid": "6ab7f3c8-aec5-4d9c-bbc3-e511ce0e4b59",
+              "userData": {}
+            }
+          ]
+        },
+        {
+          "distance": 35.40460955370431,
+          "point": [
+            4.0486394981753016,
+            5,
+            1.776614366434739
+          ],
+          "chain": [
+            {
+              "name": "GlowMesaTerrain",
+              "type": "Mesh",
+              "uuid": "d78827bf-3006-4101-ba2c-11c0fc796bbf",
+              "userData": {
+                "name": "GlowMesaTerrain",
+                "render_only": true,
+                "sim_authority": "published mask table and planar simulation; unchanged",
+                "height_socket": "Terrain.visualY",
+                "contract_id": "e6-glow-mesa",
+                "tile_id": "e6-glow-mesa",
+                "mask_table": "assets/contracts/epoch-6-atomic/mask-tables/e6-glow-mesa.json",
+                "load_bearing_sites_flat": true,
+                "landmarks_frozen": false
+              }
+            },
+            {
+              "name": "Terrain3dClaimPilot",
+              "type": "Group",
+              "uuid": "95d9a493-1896-412a-ae90-23bfb8516e3a",
+              "userData": {}
+            },
+            {
+              "name": "",
+              "type": "Scene",
+              "uuid": "6ab7f3c8-aec5-4d9c-bbc3-e511ce0e4b59",
+              "userData": {}
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "desktop",
+      "label": "boss-only",
+      "file": "desktop-boss-only.png",
+      "diagnostics": {
+        "active": true,
+        "act": 1,
+        "position": {
+          "x": 8,
+          "z": 4
+        },
+        "tidiedMarkers": 2,
+        "liveComponents": [
+          "vac",
+          "rack"
+        ],
+        "unbuilds": 0,
+        "unbuildOrder": [],
+        "partsStackPickups": 0,
+        "rackArcs": 0,
+        "rackTelegraphed": false,
+        "structureDamageEvents": 0,
+        "playerDamageEvents": 0,
+        "pickupsCurated": 0,
+        "loosePickups": 0,
+        "pileCenters": [
+          {
+            "x": 6.5,
+            "z": 6.2
+          },
+          {
+            "x": 9.5,
+            "z": 6.2
+          }
+        ],
+        "pictogram": "sparkle",
+        "chairPlaced": false,
+        "poweredDown": false,
+        "nonHostile": false,
+        "kept": false,
+        "persistentKept": false
+      },
+      "machine": [
+        8,
+        5.025,
+        4
+      ],
+      "parts": [
+        {
+          "id": "vac",
+          "morph": 0
+        },
+        {
+          "id": "rack",
+          "morph": 0
+        },
+        {
+          "id": "core",
+          "morph": 0
+        }
+      ],
+      "terrain": {
+        "below": 0,
+        "count": 17748,
+        "worst": 0
+      },
+      "targets": [
+        {
+          "id": "vac",
+          "position": [
+            5.8,
+            5.05,
+            4
+          ]
+        },
+        {
+          "id": "rack",
+          "position": [
+            10.2,
+            5.05,
+            4
+          ]
+        }
+      ],
+      "camera": [
+        7.99661778725361,
+        31.2583088936268,
+        26.283088936268044
+      ]
+    }
+  ],
+  "errors": [],
+  "completed": true
+}

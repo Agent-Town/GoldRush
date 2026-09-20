@@ -1,0 +1,17 @@
+{
+  "secured": false,
+  "waves": 13,
+  "timeMs": 571733,
+  "gold": 11,
+  "kills": 646,
+  "calls": 106,
+  "defaultedPicks": 0,
+  "defaultedSecure": 0,
+  "eventLogHash": "fnv1a32:bc6eaac7",
+  "tape": "/tmp/heat11-5e7a7c0b/artifacts/heat11/opus/e2-trestle/attempt-1-tape.json",
+  "scored": true,
+  "runsSoFar": 6,
+  "scoredAttempts": 1,
+  "worldModel": "sim-import",
+  "note": "NOT SECURED and NOT submittable. THE SECURE IS THE RAILCAR: HeadlessContractSim.ts:1095 autoSecureWaveForRun returns MAX_SAFE_INTEGER while (twist.baron && !baronBeaten), so surviving twist.secureWave 12 never opens pendingSecure; the run secures only via bossKillSecuresRun (HeadlessContractSim.ts:251) when all three railcar components die (bossRemaining === 0). Best ride reached wave 13 / 571.733s / 646 kills with the full ladder standing (4 turrets, 6 beacons, 3 palisades) and the boss alive."
+}

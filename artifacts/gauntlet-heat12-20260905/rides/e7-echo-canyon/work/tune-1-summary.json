@@ -1,0 +1,62 @@
+{
+  "tag": "tune-1",
+  "scored": false,
+  "outcome": {
+    "secured": true,
+    "waves": 20,
+    "timeMs": 600000,
+    "gold": 200,
+    "kills": 903,
+    "calls": 65,
+    "defaultedPicks": 1,
+    "defaultedSecure": 1,
+    "eventLogHash": "fnv1a32:19817b46"
+  },
+  "envelope": {
+    "durationTicks": 18000,
+    "lastEntryTick": 16212,
+    "entryCount": 65,
+    "bytes": 250846,
+    "ceilingBytes": 576016
+  },
+  "lastRow": {
+    "t": 600,
+    "w": 20,
+    "gold": 200,
+    "panned": 870,
+    "hp": 175,
+    "maxHp": 175,
+    "lvl": 28,
+    "alive": 33,
+    "wrecked": 0,
+    "standing": 10,
+    "byKind": {
+      "sentry_beacon": 6,
+      "turret": 4
+    },
+    "mirror": {
+      "uses": 1,
+      "fielded": 1,
+      "bodies": 2,
+      "pending": 0
+    },
+    "pb": {
+      "met": true,
+      "uses": 1,
+      "running": null,
+      "last": {
+        "name": "echo-once",
+        "ok": true,
+        "reason": null,
+        "at": 0.033
+      },
+      "refusals": {
+        "suppressed": 0,
+        "muted": 0,
+        "unrecorded": 0
+      }
+    },
+    "secure": false
+  },
+  "callsSubmitted": 66
+}

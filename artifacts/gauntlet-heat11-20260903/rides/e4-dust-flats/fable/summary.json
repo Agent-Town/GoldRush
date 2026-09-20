@@ -1,0 +1,102 @@
+{
+  "rig": "fable",
+  "contract": "e4-dust-flats",
+  "model": "claude-fable-5",
+  "sessionId": "37930e93-c230-4a73-82d9-9b8e5decf160",
+  "startedAt": "2026-09-03T22:50:20.630Z",
+  "endedAt": "2026-09-03T23:12:37.745Z",
+  "wallClockSeconds": 1337,
+  "wallHit": false,
+  "exitCode": 0,
+  "signal": null,
+  "setupToFirstOutputSeconds": 210,
+  "arenaTrackedChanges": [],
+  "workspaceFiles": [
+    "attempt-1-tape.json",
+    "attempt-1-tape.json.views.ndjson",
+    "controller.mjs",
+    "gauntlet-outcome.json",
+    "gauntlet-report.md",
+    "probe-idle-tape.json",
+    "probe-idle.err",
+    "probe-idle.out",
+    "run-sim.mjs",
+    "tune-1-tape.json",
+    "tune-1-tape.json.views.ndjson",
+    "tune-2-tape.json",
+    "tune-2-tape.json.views.ndjson",
+    "tune-3-tape.json",
+    "tune-3-tape.json.views.ndjson"
+  ],
+  "outcome": {
+    "outcome": {
+      "secured": true,
+      "waves": 14,
+      "timeMs": 444667,
+      "gold": 10,
+      "kills": 597,
+      "calls": 68,
+      "defaultedPicks": 0,
+      "defaultedSecure": 0,
+      "eventLogHash": "fnv1a32:cdf4883d",
+      "motor": {
+        "graded": [
+          "camp-to-railhead"
+        ],
+        "hauled": true,
+        "arrivedAt": 306,
+        "roadDistance": 61.224,
+        "distanceTravelled": 88.284,
+        "fuelDrawn": 13.365,
+        "tarHarvested": 9,
+        "convoyArrived": null
+      }
+    },
+    "tape": "/tmp/heat11-b118c4d2/artifacts/heat11/fable/e4-dust-flats/attempt-1-tape.json",
+    "scored": true,
+    "runsSoFar": 5,
+    "scoredAttempts": 1,
+    "worldModel": "sim-import"
+  },
+  "outcomeError": null,
+  "scoredTapes": [
+    {
+      "file": "attempt-1-tape.json",
+      "id": "agent-b6407e7d-47470572-4317-4fe7-8020-d02150f64656",
+      "contract": "e4-dust-flats",
+      "seed": "e4-dust-flats-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "b118c4d20",
+        "engineHash": "49c34f8bba3d61e003d1f421398e3835e3107945f396800fa124f946b2e4b2f9",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 14,
+        "timeAlive": 444.667,
+        "gold": 10
+      },
+      "entries": 68
+    }
+  ],
+  "otherSecuredTapes": [],
+  "report": {
+    "outcome": "SECURED, first verified-eligible secure of an unclaimed contract: waves 14, timeAlive 444.667s, gold 10, kills 597, calls 68, zero defaulted picks/secures, eventLogHash `fnv1a32:cdf4883d`. Tape put forward: `/tmp/heat11-b118c4d2/artifacts/heat11/fable/e4-dust-flats/attempt-1-tape.json`. Five sim runs total (1 idle probe, 3 tunes, 1 scored attempt); 1 scored attempt; stopped on first secure per the rules. The motor errand banked at t306.0 (`arrivedAt: 306`, road 61.2wu, 9 tar, 13.4 fuel drawn); the Land-Yacht fell inside its own wave 14 and the secure window opened mid-wave at t444.67 — banked with a single-element SECURE_CHOICE.",
+    "whatTheMapAsked": "The 2026-09-02 RESKIN verdict is stale for this arena, same as I found on e4-boneyard: since the e4-roads-and-convoys merge the errand *gates the secure twice over* — `autoSecureWaveForRun` pins the secure wave at MAX_SAFE_INT while `motor.objectiveAllowsSecure` is false, and `postBaronDefeat` explicitly refuses to let the Land-Yacht's fall secure a railhead the Hauler never reached. So the era's named mechanic (distance, roads, fuel) is load-bearing: I read `now.motor.objective` (haul, corridor camp-to-railhead, stop (0,72)), `now.motor.roads.corridors`/`gradeReach` for the GRADE at (0,12), `now.motor.fuel.nodes` for the tar row, and `now.motor.vehicle.dispatch` to drive the two-leg HAUL state machine; the 2.5×-speed/0.4×-fuel road is why the 60wu leg cost 3 fuel instead of 20. That said, the errand is a ~60-second solved prologue (the county's own floor tape ships the route), and the ride's real spine is the *boss geometry the era wraps around it*: the Land-Yacht is three component enemies (wheels/crane/wheelhouse, ~311/208/259 hp at w14) orbiting the `orbitSpawn` ring (radius 24, ~12.6u/s) with `ignoreTerrain` — no rail to block, so gen-10's palisade trick is void, and the winning read is a turret battery placed in the annulus d∈[8,17] from the ring's center: inside gun range 16 of the ring, outside the act-2 crane's one-shot grab reach 6, so killing wheels in-arc pins crane and wheelhouse inside the same arc at 100% uptime. Ordinary fields (`now.seams` with moving respawn anchors 40-70wu out, `pendingOffer`, `works.entries`, `blastReadyInMs`) carried the survival game. Weather existed (`now.motor.weather` storms every 30s) but never bound a ride whose hauling legs fit in clear phases. Net: E4's mechanic is real and secure-gating here, but shallow — a required prologue plus one boss-placement constraint, wrapped around a hard stationary-survival economy map.",
+    "winnability": "Winnable through the door from the starting kit, but thin: it took 4 full rides to find the line, the securing ride entered the boss wave with the bank at 0 and the fourth turret only minutes old, and the hero rode the boss fight at 47hp — the map's walls are a ~0.6-1.0g/s seam economy against a 340g turret curve and a hero who is DPS-raced by 25+ streaming gangs from wave 12 on, not the errand.",
+    "lessons": "- e4-dust-flats FIRST SECURE (cold plain boot, w14/444.7s/10g/597 kills/68 calls, hash fnv1a32:cdf4883d, zero defaults): fort = palisades (0,10.5),(-2.5,7) + turrets (0,17),(-11,12.5),(11,12.5),(3,11) + beacons (3,10),(-5,6) around the fixed hero (0,8); rig weapon ALL ride; errand deferred to turrets≥3-or-wave-9 (banked t306); boss died inside wave 14; secure window opened mid-wave and single-element bank took it.\n- **SET_WEAPON blast is NOT a universal fixed-hero answer — measure it against the idle floor first.** On this map auto-blast killed 5 in 31s where the naked idle rig killed 34 in 79s (gangs at 1.18× speed STREAM, they don't clump), and my gen-9 \"blast for fixed heroes\" prior cost me tune-1 entirely. Explicit BLAST_AT at the hero's feet, gated on `blastReadyInMs === 0` and threats≥3, adds the AoE without giving up the rig — one throw per view is plenty and never risks a cooldown view-storm.\n- The Land-Yacht (and likely any orbitSpawn boss): components ride the published `orbitSpawn` ring (center, radius, angularSpeed — speed = radius×angularSpeed) with ignoreTerrain, so rail-blocking is void. The counter is an ANNULUS FORT: guns at ring-center distance d∈[8,17] (range 16 reaches the r=24 ring, crane grab reach 6 cannot reach back). Kill wheels first — act 2 pins ALL components where they stand, converting the orbit fight into a stationary one inside your own arc. Act 1 loots fund escorts every 2s (max 4), so beaching fast also caps the escort tax.\n- The E4 secure gate is DOUBLE on a baron+motor map: `autoSecureWaveForRun` pins secure while the errand is open, AND `postBaronDefeat` refuses the kill-secure until `motor.objectiveAllowsSecure`. Do the errand before wave 14 or the boss kill is wasted; but do NOT do it first — on a starved economy every pre-boss second of Prospector time is fort gold, and wave 9 is plenty early (55s errand vs boss at ~t460).\n- Starved-seam economy signature (3 active seams of 12 anchor slots, 30-50g caps, +10/30s refill, respawn at a DIFFERENT anchor 40-70wu away): sustained income ≈ 0.6-1.0g/s no matter how well you route. Budget the fort to ~300g by wave 13 (2 sponges + 4 turrets + 1-2 beacons, skip everything else) and score seams by d_prospector + 0.7×d_camp so far-corner respawns lose to northern ones.\n- Palisade sponges around a fixed hero do NOT tank streaming gangs — mine ended every ride at full hp while the hero bled. They're only worth 20g as pure extra-target insurance; the real hero armor is turret count and tinkers_plating. Rank plating over luck when death, not gold, is the binding wall — but keep double_tap_coil above both on a rig map (+24 hero dps is half a free turret).\n- The county floor tape for a shipped era slice (`artifacts/e4-roads-and-convoys/<contract>-floor.tape.json`) is not just an errand playbook — it's a full order-array TRANSCRIPT including the mid-errand re-send pattern (resend only the REMAINING waypoints at each view, or replace-semantics restarts the tour). I copied its jiggle-dwell tar visits (node, node+0.6, node) verbatim and the errand worked first try in every ride that reached it."
+  },
+  "usage": {
+    "transcript": "/Users/robin/.claude/projects/-private-tmp-heat11-b118c4d2/37930e93-c230-4a73-82d9-9b8e5decf160.jsonl",
+    "assistantTurns": 85,
+    "toolCalls": 41,
+    "tokensIn": 170,
+    "tokensOut": 254745,
+    "cacheReadTokens": 15607497,
+    "cacheWriteTokens": 913062,
+    "note": "tokensIn excludes cache reads/writes (reported separately); summed from the CLI session transcript, not self-reported by the rig"
+  }
+}

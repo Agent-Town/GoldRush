@@ -1,0 +1,1529 @@
+=== QUEUE 1 e8-mare-claim (gen 61, wall 1500s, free 107034MiB) 09:44:23Z ===
+
+########## RIDE e8-mare-claim · seed e8-mare-claim-01 · gen 61 · stake re-ride · wall 1500s ##########
+--- 1 charter ---
+{"rig":"opus","contract":"e8-mare-claim","seed":"e8-mare-claim-01","seedMode":"bench","stake":"re-ride","generation":61,"wall":1500,"notebookSha256":"b162e31d9407f5707fbf7cbabab0cfcfcc219826b1b8fe5991d30fee5a32ffd7","charterSha256":"c05778c90840ed71a68830a10bff2c443810c379b564cc6f13c178cf96352478","bytes":479655,"out":"/private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/rides/e8-mare-claim/charter.md"}
+--- 2 ride ---
+START opus claude-opus-5 pid=70698 session=387495a1-7add-433f-961e-bc4230e3248e at=2026-09-07T09:44:23.138Z
+FIRST-OUTPUT opus +90s
+OUTCOME opus secured=false waves=2 gold=0 runsSoFar=1 scored=0 +105s
+OUTCOME opus secured=false waves=15 gold=65 runsSoFar=2 scored=0 +360s
+OUTCOME opus secured=true waves=20 gold=70 runsSoFar=3 scored=1 +555s
+OUTCOME opus secured=true waves=20 gold=70 runsSoFar=3 scored=1 +705s
+END opus rc=0 signal=null wall=793s wallHit=false
+ride-wall rc=0 signal=-
+--- 3 land ---
+
+=== 1 finish-ride ===
+{"rig":"opus","contract":"e8-mare-claim","wall":793,"wallHit":false,"rc":0,"tracked":[],"files":13,"outcome":{"secured":true,"waves":20,"gold":70,"runsSoFar":3,"scoredAttempts":1,"tape":"/private/tmp/heat13-569a41f9/artifacts/heat13/opus/e8-mare-claim/attempt-1-tape.json","worldModel":"sim-import"},"scoredTapes":[{"file":"attempt-1-tape.json","id":"agent-71e56661-87597c87-7b75-4e89-a421-3f6e7b80b635","secured":true,"waves":20,"gold":70,"durationTicks":18000,"lastEntryTick":17681,"promotedByRig":true,"discoveredBy":"outcome-file+filename"}],"otherSecured":[],"reportSections":{"outcome":1349,"whatTheMapAsked":3829,"winnability":509,"lessons":5997},"usage":{"turns":111,"toolCalls":58,"tokensIn":222,"tokensOut":139134}}
+tape chosen: attempt-1-tape.json (id agent-71e56661-87597c87-7b75-4e89-a421-3f6e7b80b635, promotedByRig=true, discoveredBy=outcome-file+filename)
+
+=== 2 freeze notebook header ===
+{"headerOnly":true,"headerBytes":432}
+
+=== 3 harnessDigest ===
+c2f986a93da8aa4982463cd4f421ff48c16fe6928ae2b2076ba19d37e3331e03
+
+=== 4 build-submission ===
+{"tapeId":"agent-71e56661-87597c87-7b75-4e89-a421-3f6e7b80b635","contract":"e8-mare-claim","epochId":"epoch-8-orbital","seed":"e8-mare-claim-01","seedMode":"bench","score":{"secured":true,"waves":20,"timeAlive":600,"gold":70,"baseValue":0},"papers":{"buildId":"4e7d98930","engineHash":"09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4","era":5,"viewVersion":2},"durationTicks":18000,"lastEntryTick":17681,"stack":{"model":"claude-opus-5","harness":"heat13-operator","harnessVersion":"2.1.257","harnessDigest":"c2f986a93da8aa4982463cd4f421ff48c16fe6928ae2b2076ba19d37e3331e03","worldModel":"sim-import","config":"attended-hosted headless `claude -p` ride (heat 13, the 1:1-grammar re-ride) on Claude Code CLI 2.1.257; charter + door manual + own notebook (self-memory); own controller authored in-ride","calls":60,"tokensIn":36197181,"tokensOut":139134}}
+
+=== 5 publish (POST → poll → WATCH) ===
+{"rank":1,"tapeId":"agent-71e56661-87597c87-7b75-4e89-a421-3f6e7b80b635","assay":"verified","assayHash":"fnv1a32:5ace32f2","papers":{"buildId":"4e7d98930","engineHash":"09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4","era":5,"viewVersion":2}}
+
+=== LANDED ===
+{
+ "rig": "opus",
+ "contract": "e8-mare-claim",
+ "tapeFile": "attempt-1-tape.json",
+ "tapeId": "agent-71e56661-87597c87-7b75-4e89-a421-3f6e7b80b635",
+ "assay": "verified",
+ "assayHash": "fnv1a32:5ace32f2",
+ "ranked": true,
+ "rank": 1,
+ "waves": 20,
+ "gold": 70,
+ "calls": 60,
+ "eventLogHash": "fnv1a32:9163b781",
+ "wall": 793,
+ "harnessDigest": "c2f986a93da8aa4982463cd4f421ff48c16fe6928ae2b2076ba19d37e3331e03",
+ "usage": {
+  "turns": 111,
+  "toolCalls": 58,
+  "tokensIn": 36197181,
+  "tokensOut": 139134
+ }
+}
+
+land rc=0
+--- 4 notebook ---
+{"notebook":"/Users/robin/Claude/Projects/goldrush-gauntlet/memories/claude__opus-5/NOTEBOOK.md","generation":61,"headerBytes":432,"entryBytes":11284}
+--- 5 matrix ---
+| 1 | e8-mare-claim | `e8-mare-claim-01` | re-ride | 61 | **SECURED** | 20 | 70 | 600s | 793s | `attempt-1-tape.json` · `agent-71e56661-87597c87-7b75-4e89-a421-3f6e7b80b635`<br>fnv1a32:9163b781 | verified `fnv1a32:5ace32f2` rank 1 | gen 61<br>slip `agent-71e56661-87597c87-7b75-4e89-a421-3f6e7b80b635` |
+{"contract":"e8-mare-claim","secured":true,"tapesOnDisk":10,"scoredTapes":1,"otherSecured":0,"runs":3,"scoredAttempts":1,"wallHit":false,"rc":0,"assay":"verified","ranked":true,"winnability":"Secured, and the margin was **comfortable on the objective and honestly narrowing on hit points**:\nthe era gate latched at t = 364.4 s with 235 seconds of slack, none of the eight works was ever\nwrecked (neither roster entry carries `wrecker` or `thief`), and the suit held 40–60 of 60 for the\nwhole back half — but the hero came down from 167/175 to **93.6/175** over the last seventy seconds\nagainst 36–59 live threats, so a wave-22 gate on this line would have been a real question rather\nthan a formality."}
+########## END e8-mare-claim ##########
+
+=== QUEUE 2 e3-moth-season (gen 62, wall 1500s, free 106940MiB) 09:59:31Z ===
+
+########## RIDE e3-moth-season · seed e3-moth-season-01 · gen 62 · stake open-question · wall 1500s ##########
+--- 1 charter ---
+{"rig":"opus","contract":"e3-moth-season","seed":"e3-moth-season-01","seedMode":"bench","stake":"open-question","generation":62,"wall":1500,"notebookSha256":"a2e766e7f5538ecde9f949cfd1176f5e81e61d6a0376d207cee9b509920b32cb","charterSha256":"d3327d1576dce2b83dc04381639c5707bd17ad0101be609af33749c6df02f15d","bytes":490860,"out":"/private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/rides/e3-moth-season/charter.md"}
+--- 2 ride ---
+START opus claude-opus-5 pid=56406 session=277a606d-21a8-4764-bac4-a93b8e4153e0 at=2026-09-07T09:59:31.845Z
+FIRST-OUTPUT opus +90s
+OUTCOME opus secured=false waves=4 gold=0 runsSoFar=1 scored=0 +105s
+OUTCOME opus secured=true waves=12 gold=113 runsSoFar=2 scored=0 +375s
+OUTCOME opus secured=true waves=12 gold=113 runsSoFar=2 scored=1 +540s
+END opus rc=0 signal=null wall=620s wallHit=false
+ride-wall rc=0 signal=-
+--- 3 land ---
+
+=== 1 finish-ride ===
+{"rig":"opus","contract":"e3-moth-season","wall":620,"wallHit":false,"rc":0,"tracked":[],"files":11,"outcome":{"secured":true,"waves":12,"gold":113,"runsSoFar":2,"scoredAttempts":1,"tape":"/private/tmp/heat13-569a41f9/artifacts/heat13/opus/e3-moth-season/attempt-1-tape.json","worldModel":"sim-import"},"scoredTapes":[{"file":"attempt-1-tape.json","id":"agent-2897f5db-9d427783-6cd8-47e0-8e00-a498447a7d0f","secured":true,"waves":12,"gold":113,"durationTicks":10800,"lastEntryTick":10784,"promotedByRig":true,"discoveredBy":"outcome-file+filename"}],"otherSecured":[{"file":"tune-1-tape.json","id":"agent-2897f5db-9d427783-6cd8-47e0-8e00-a498447a7d0f","waves":12,"gold":113}],"reportSections":{"outcome":1815,"whatTheMapAsked":2881,"winnability":549,"lessons":4771},"usage":{"turns":74,"toolCalls":40,"tokensIn":148,"tokensOut":87555}}
+tape chosen: attempt-1-tape.json (id agent-2897f5db-9d427783-6cd8-47e0-8e00-a498447a7d0f, promotedByRig=true, discoveredBy=outcome-file+filename)
+
+=== 2 freeze notebook header ===
+{"headerOnly":true,"headerBytes":431}
+
+=== 3 harnessDigest ===
+cc24b2359da6c91136855df6b6ed92321b3331f9d64a0060e9c6a45e0fb3a321
+
+=== 4 build-submission ===
+{"tapeId":"agent-2897f5db-9d427783-6cd8-47e0-8e00-a498447a7d0f","contract":"e3-moth-season","epochId":"epoch-3-voltage","seed":"e3-moth-season-01","seedMode":"bench","score":{"secured":true,"waves":12,"timeAlive":360,"gold":113,"baseValue":0},"papers":{"buildId":"7b698fc36","engineHash":"09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4","era":5,"viewVersion":2},"durationTicks":10800,"lastEntryTick":10784,"stack":{"model":"claude-opus-5","harness":"heat13-operator","harnessVersion":"2.1.257","harnessDigest":"cc24b2359da6c91136855df6b6ed92321b3331f9d64a0060e9c6a45e0fb3a321","worldModel":"sim-import","config":"attended-hosted headless `claude -p` ride (heat 13, the 1:1-grammar re-ride) on Claude Code CLI 2.1.257; charter + door manual + own notebook (self-memory); own controller authored in-ride","calls":269,"tokensIn":21998412,"tokensOut":87555}}
+
+=== 5 publish (POST → poll → WATCH) ===
+FAILED: file:///private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/publish-submission.mjs:19
+if (slip?.assay !== 'verified') throw new Error(`assay ${slip?.assay ?? 'missing'}: ${slip?.assayReason ?? 'no reason'}`);
+                                      ^
+
+Error: assay pending: no reason
+    at file:///private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/publish-submission.mjs:19:39
+
+Node.js v23.11.1
+
+POST ok; assay still pending at the 120 s mark — resuming with the poll-only shim (no re-POST)
+
+=== 6 poll-verdict (no re-POST) ===
+{"tapeId":"agent-2897f5db-9d427783-6cd8-47e0-8e00-a498447a7d0f","assay":"verified","assayHash":"fnv1a32:6f7df0c3","ranked":true,"papers":{"buildId":"7b698fc36","engineHash":"09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4","era":5,"viewVersion":2}}
+
+=== LANDED ===
+{
+ "rig": "opus",
+ "contract": "e3-moth-season",
+ "tapeFile": "attempt-1-tape.json",
+ "tapeId": "agent-2897f5db-9d427783-6cd8-47e0-8e00-a498447a7d0f",
+ "assay": "verified",
+ "assayHash": "fnv1a32:6f7df0c3",
+ "ranked": true,
+ "rank": 1,
+ "waves": 12,
+ "gold": 113,
+ "calls": 269,
+ "eventLogHash": "fnv1a32:d10521cf",
+ "wall": 620,
+ "harnessDigest": "cc24b2359da6c91136855df6b6ed92321b3331f9d64a0060e9c6a45e0fb3a321",
+ "usage": {
+  "turns": 74,
+  "toolCalls": 40,
+  "tokensIn": 21998412,
+  "tokensOut": 87555
+ }
+}
+file:///private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/publish-submission.mjs:19
+if (slip?.assay !== 'verified') throw new Error(`assay ${slip?.assay ?? 'missing'}: ${slip?.assayReason ?? 'no reason'}`);
+                                      ^
+
+Error: assay pending: no reason
+    at file:///private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/publish-submission.mjs:19:39
+
+Node.js v23.11.1
+
+land rc=0
+--- 4 notebook ---
+{"notebook":"/Users/robin/Claude/Projects/goldrush-gauntlet/memories/claude__opus-5/NOTEBOOK.md","generation":62,"headerBytes":431,"entryBytes":9032}
+--- 5 matrix ---
+| 2 | e3-moth-season | `e3-moth-season-01` | open-question | 62 | **SECURED** | 12 | 113 | 360s | 620s | `attempt-1-tape.json` · `agent-2897f5db-9d427783-6cd8-47e0-8e00-a498447a7d0f`<br>fnv1a32:d10521cf | verified `fnv1a32:6f7df0c3` rank 1 | gen 62<br>slip `agent-2897f5db-9d427783-6cd8-47e0-8e00-a498447a7d0f` |
+{"contract":"e3-moth-season","secured":true,"tapesOnDisk":4,"scoredTapes":1,"otherSecured":1,"runs":2,"scoredAttempts":1,"wallHit":false,"rc":0,"assay":"verified","ranked":true,"winnability":"Secured, and the margin was **wide on health and thin only on the purse**: the hero never once dropped below its running maximum across 271 views and finished 175/175 having taken effectively nothing, with the era gate latched at t = 30 of a 360-second contract and 690 gold panned — the one number with real slack left on it is the banked **113 of a 200 cap**, which is the *only* free ranking axis here (waves and `timeAlive` are both pinned by a fixed wave-12 secure), and I stopped at the first secure rather than spend a second ride chasing it."}
+########## END e3-moth-season ##########
+
+=== QUEUE 3 e7-relay-rush (gen 63, wall 1500s, free 106971MiB) 10:13:32Z ===
+
+########## RIDE e7-relay-rush · seed e7-relay-rush-01 · gen 63 · stake re-ride · wall 1500s ##########
+--- 1 charter ---
+{"rig":"opus","contract":"e7-relay-rush","seed":"e7-relay-rush-01","seedMode":"bench","stake":"re-ride","generation":63,"wall":1500,"notebookSha256":"0959d33df0006dd329d61e29dcf76a590a1ad3cdf92e394fbcd483e0127c1889","charterSha256":"1070b9a9a40e642b9204a3a5d9dcdd15096f9b06fdca97f88a289f096b838178","bytes":500019,"out":"/private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/rides/e7-relay-rush/charter.md"}
+--- 2 ride ---
+START opus claude-opus-5 pid=79068 session=ec98380a-5fed-4daf-8421-ce0ca600455b at=2026-09-07T10:13:32.206Z
+FIRST-OUTPUT opus +195s
+OUTCOME opus secured=false waves=2 gold=0 runsSoFar=1 scored=0 +210s
+OUTCOME opus secured=true waves=20 gold=55 runsSoFar=2 scored=0 +465s
+OUTCOME opus secured=true waves=20 gold=55 runsSoFar=2 scored=1 +510s
+END opus rc=0 signal=null wall=658s wallHit=false
+ride-wall rc=0 signal=-
+--- 3 land ---
+
+=== 1 finish-ride ===
+{"rig":"opus","contract":"e7-relay-rush","wall":658,"wallHit":false,"rc":0,"tracked":[],"files":15,"outcome":{"secured":true,"waves":20,"gold":55,"runsSoFar":2,"scoredAttempts":1,"tape":"/private/tmp/heat13-569a41f9/artifacts/heat13/opus/e7-relay-rush/attempt-1-tape.json","worldModel":"sim-import"},"scoredTapes":[{"file":"attempt-1-tape.json","id":"agent-852e5efb-f0e35dd3-5802-4cf2-a229-290d784ef0d4","secured":true,"waves":20,"gold":55,"durationTicks":18000,"lastEntryTick":17967,"promotedByRig":true,"discoveredBy":"outcome-file+filename"}],"otherSecured":[{"file":"tune-1-tape.json","id":"agent-852e5efb-f0e35dd3-5802-4cf2-a229-290d784ef0d4","waves":20,"gold":55}],"reportSections":{"outcome":726,"whatTheMapAsked":3399,"winnability":568,"lessons":5759},"usage":{"turns":60,"toolCalls":34,"tokensIn":120,"tokensOut":101041}}
+tape chosen: attempt-1-tape.json (id agent-852e5efb-f0e35dd3-5802-4cf2-a229-290d784ef0d4, promotedByRig=true, discoveredBy=outcome-file+filename)
+
+=== 2 freeze notebook header ===
+{"headerOnly":true,"headerBytes":432}
+
+=== 3 harnessDigest ===
+a2be7b394df8a4754a9302f54549edb48d3b21e6311e7cbace58be9db2b00b70
+
+=== 4 build-submission ===
+{"tapeId":"agent-852e5efb-f0e35dd3-5802-4cf2-a229-290d784ef0d4","contract":"e7-relay-rush","epochId":"epoch-7-signal","seed":"e7-relay-rush-01","seedMode":"bench","score":{"secured":true,"waves":20,"timeAlive":600,"gold":55,"baseValue":0},"papers":{"buildId":"7b698fc36","engineHash":"09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4","era":5,"viewVersion":2},"durationTicks":18000,"lastEntryTick":17967,"stack":{"model":"claude-opus-5","harness":"heat13-operator","harnessVersion":"2.1.257","harnessDigest":"a2be7b394df8a4754a9302f54549edb48d3b21e6311e7cbace58be9db2b00b70","worldModel":"sim-import","config":"attended-hosted headless `claude -p` ride (heat 13, the 1:1-grammar re-ride) on Claude Code CLI 2.1.257; charter + door manual + own notebook (self-memory); own controller authored in-ride","calls":67,"tokensIn":18437405,"tokensOut":101041}}
+
+=== 5 publish (POST → poll → WATCH) ===
+FAILED: file:///private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/publish-submission.mjs:19
+if (slip?.assay !== 'verified') throw new Error(`assay ${slip?.assay ?? 'missing'}: ${slip?.assayReason ?? 'no reason'}`);
+                                      ^
+
+Error: assay pending: no reason
+    at file:///private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/publish-submission.mjs:19:39
+
+Node.js v23.11.1
+
+POST ok; assay still pending at the 120 s mark — resuming with the poll-only shim (no re-POST)
+
+=== 6 poll-verdict (no re-POST) ===
+{"tapeId":"agent-852e5efb-f0e35dd3-5802-4cf2-a229-290d784ef0d4","assay":"verified","assayHash":"fnv1a32:e4238fc2","ranked":true,"papers":{"buildId":"7b698fc36","engineHash":"09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4","era":5,"viewVersion":2}}
+
+=== LANDED ===
+{
+ "rig": "opus",
+ "contract": "e7-relay-rush",
+ "tapeFile": "attempt-1-tape.json",
+ "tapeId": "agent-852e5efb-f0e35dd3-5802-4cf2-a229-290d784ef0d4",
+ "assay": "verified",
+ "assayHash": "fnv1a32:e4238fc2",
+ "ranked": true,
+ "rank": 1,
+ "waves": 20,
+ "gold": 55,
+ "calls": 67,
+ "eventLogHash": "fnv1a32:eb68871c",
+ "wall": 658,
+ "harnessDigest": "a2be7b394df8a4754a9302f54549edb48d3b21e6311e7cbace58be9db2b00b70",
+ "usage": {
+  "turns": 60,
+  "toolCalls": 34,
+  "tokensIn": 18437405,
+  "tokensOut": 101041
+ }
+}
+file:///private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/publish-submission.mjs:19
+if (slip?.assay !== 'verified') throw new Error(`assay ${slip?.assay ?? 'missing'}: ${slip?.assayReason ?? 'no reason'}`);
+                                      ^
+
+Error: assay pending: no reason
+    at file:///private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/publish-submission.mjs:19:39
+
+Node.js v23.11.1
+
+land rc=0
+--- 4 notebook ---
+{"notebook":"/Users/robin/Claude/Projects/goldrush-gauntlet/memories/claude__opus-5/NOTEBOOK.md","generation":63,"headerBytes":432,"entryBytes":10643}
+--- 5 matrix ---
+| 3 | e7-relay-rush | `e7-relay-rush-01` | re-ride | 63 | **SECURED** | 20 | 55 | 600s | 658s | `attempt-1-tape.json` · `agent-852e5efb-f0e35dd3-5802-4cf2-a229-290d784ef0d4`<br>fnv1a32:eb68871c | verified `fnv1a32:e4238fc2` rank 1 | gen 63<br>slip `agent-852e5efb-f0e35dd3-5802-4cf2-a229-290d784ef0d4` |
+{"contract":"e7-relay-rush","secured":true,"tapesOnDisk":8,"scoredTapes":1,"otherSecured":1,"runs":2,"scoredAttempts":1,"wallHit":false,"rc":0,"assay":"verified","ranked":true,"winnability":"Secured, and the margin was **wide on survival and exactly-nil on the deadline sample**: the hero\nnever once dropped below its running maximum across all 72 views and no work was ever wrecked, but\n`litAtDeadline` came in at **3 against a target of 3** — one refused build coordinate on the r1 or r3\ntrip and the run would have been unsecurable at every later wave — and the one number I genuinely\nleft on the table is gold, where a tier-upgrade sink fired in the last second and took a purse that\nhad reached the 200 cap at t = 598.9 down to **55** at the secure tick."}
+########## END e7-relay-rush ##########
+
+=== QUEUE 4 e7-echo-canyon (gen 64, wall 1500s, free 106910MiB) 10:27:08Z ===
+
+########## RIDE e7-echo-canyon · seed e7-echo-canyon-01 · gen 64 · stake re-ride · wall 1500s ##########
+--- 1 charter ---
+{"rig":"opus","contract":"e7-echo-canyon","seed":"e7-echo-canyon-01","seedMode":"bench","stake":"re-ride","generation":64,"wall":1500,"notebookSha256":"95f4d6f420fac7709e3f353f7ff3659f2d7f6c040898e436fd3b9621280ac4c2","charterSha256":"fbdb4f546ff6ddbd2b25f2a4c66d283768aee746e3303a34745a43babd275ed5","bytes":510671,"out":"/private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/rides/e7-echo-canyon/charter.md"}
+--- 2 ride ---
+START opus claude-opus-5 pid=4140 session=fab4e0da-8263-4d34-8d3f-f4620706dcb8 at=2026-09-07T10:27:08.498Z
+FIRST-OUTPUT opus +150s
+OUTCOME opus secured=false waves=4 gold=0 runsSoFar=1 scored=0 +150s
+OUTCOME opus secured=true waves=20 gold=295 runsSoFar=2 scored=0 +330s
+OUTCOME opus secured=true waves=20 gold=295 runsSoFar=2 scored=1 +450s
+OUTCOME opus secured=true waves=20 gold=295 runsSoFar=2 scored=1 +480s
+END opus rc=0 signal=null wall=566s wallHit=false
+ride-wall rc=0 signal=-
+--- 3 land ---
+
+=== 1 finish-ride ===
+{"rig":"opus","contract":"e7-echo-canyon","wall":566,"wallHit":false,"rc":0,"tracked":[],"files":15,"outcome":{"secured":true,"waves":20,"gold":295,"runsSoFar":2,"scoredAttempts":1,"tape":"/private/tmp/heat13-569a41f9/artifacts/heat13/opus/e7-echo-canyon/attempt-1-tape.json","worldModel":"sim-import"},"scoredTapes":[{"file":"attempt-1-tape.json","id":"agent-9d868a34-3862eef2-634b-40e9-8e25-dd0d6160b0fa","secured":true,"waves":20,"gold":295,"durationTicks":18000,"lastEntryTick":17705,"promotedByRig":true,"discoveredBy":"outcome-file+filename"}],"otherSecured":[{"file":"tune-1-tape.json","id":"agent-9d868a34-3862eef2-634b-40e9-8e25-dd0d6160b0fa","waves":20,"gold":295}],"reportSections":{"outcome":1315,"whatTheMapAsked":3896,"winnability":550,"lessons":5722},"usage":{"turns":51,"toolCalls":27,"tokensIn":102,"tokensOut":78469}}
+tape chosen: attempt-1-tape.json (id agent-9d868a34-3862eef2-634b-40e9-8e25-dd0d6160b0fa, promotedByRig=true, discoveredBy=outcome-file+filename)
+
+=== 2 freeze notebook header ===
+{"headerOnly":true,"headerBytes":432}
+
+=== 3 harnessDigest ===
+9cddba152def48120550a1c3f596aa3f7c2555e4501741ee4ede81f56f1356ac
+
+=== 4 build-submission ===
+{"tapeId":"agent-9d868a34-3862eef2-634b-40e9-8e25-dd0d6160b0fa","contract":"e7-echo-canyon","epochId":"epoch-7-signal","seed":"e7-echo-canyon-01","seedMode":"bench","score":{"secured":true,"waves":20,"timeAlive":600,"gold":295,"baseValue":0},"papers":{"buildId":"bf0bdddd6","engineHash":"09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4","era":5,"viewVersion":2},"durationTicks":18000,"lastEntryTick":17705,"stack":{"model":"claude-opus-5","harness":"heat13-operator","harnessVersion":"2.1.257","harnessDigest":"9cddba152def48120550a1c3f596aa3f7c2555e4501741ee4ede81f56f1356ac","worldModel":"sim-import","config":"attended-hosted headless `claude -p` ride (heat 13, the 1:1-grammar re-ride) on Claude Code CLI 2.1.257; charter + door manual + own notebook (self-memory); own controller authored in-ride","calls":89,"tokensIn":15361739,"tokensOut":78469}}
+
+=== 5 publish (POST → poll → WATCH) ===
+FAILED: file:///private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/publish-submission.mjs:19
+if (slip?.assay !== 'verified') throw new Error(`assay ${slip?.assay ?? 'missing'}: ${slip?.assayReason ?? 'no reason'}`);
+                                      ^
+
+Error: assay pending: no reason
+    at file:///private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/publish-submission.mjs:19:39
+
+Node.js v23.11.1
+
+POST ok; assay still pending at the 120 s mark — resuming with the poll-only shim (no re-POST)
+
+=== 6 poll-verdict (no re-POST) ===
+{"tapeId":"agent-9d868a34-3862eef2-634b-40e9-8e25-dd0d6160b0fa","assay":"verified","assayHash":"fnv1a32:d8c34088","ranked":true,"papers":{"buildId":"bf0bdddd6","engineHash":"09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4","era":5,"viewVersion":2}}
+
+=== LANDED ===
+{
+ "rig": "opus",
+ "contract": "e7-echo-canyon",
+ "tapeFile": "attempt-1-tape.json",
+ "tapeId": "agent-9d868a34-3862eef2-634b-40e9-8e25-dd0d6160b0fa",
+ "assay": "verified",
+ "assayHash": "fnv1a32:d8c34088",
+ "ranked": true,
+ "rank": 1,
+ "waves": 20,
+ "gold": 295,
+ "calls": 89,
+ "eventLogHash": "fnv1a32:0aaf72f4",
+ "wall": 566,
+ "harnessDigest": "9cddba152def48120550a1c3f596aa3f7c2555e4501741ee4ede81f56f1356ac",
+ "usage": {
+  "turns": 51,
+  "toolCalls": 27,
+  "tokensIn": 15361739,
+  "tokensOut": 78469
+ }
+}
+file:///private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/publish-submission.mjs:19
+if (slip?.assay !== 'verified') throw new Error(`assay ${slip?.assay ?? 'missing'}: ${slip?.assayReason ?? 'no reason'}`);
+                                      ^
+
+Error: assay pending: no reason
+    at file:///private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/publish-submission.mjs:19:39
+
+Node.js v23.11.1
+
+land rc=0
+--- 4 notebook ---
+{"notebook":"/Users/robin/Claude/Projects/goldrush-gauntlet/memories/claude__opus-5/NOTEBOOK.md","generation":64,"headerBytes":432,"entryBytes":11089}
+--- 5 matrix ---
+| 4 | e7-echo-canyon | `e7-echo-canyon-01` | re-ride | 64 | **SECURED** | 20 | 295 | 600s | 566s | `attempt-1-tape.json` · `agent-9d868a34-3862eef2-634b-40e9-8e25-dd0d6160b0fa`<br>fnv1a32:0aaf72f4 | verified `fnv1a32:d8c34088` rank 1 | gen 64<br>slip `agent-9d868a34-3862eef2-634b-40e9-8e25-dd0d6160b0fa` |
+{"contract":"e7-echo-canyon","secured":true,"tapesOnDisk":8,"scoredTapes":1,"otherSecured":1,"runs":2,"scoredAttempts":1,"wallHit":false,"rc":0,"assay":"verified","ranked":true,"winnability":"Secured, and the margin was **wide in every direction at once**: the hero bottomed at 63/175 early\nand finished **175/175** at its running maximum, **zero of ten works were ever wrecked** across 921\nkills, `goldStolen` was 0, all four turrets reached tier 2, and the era gate closed at t = 30 of a\n600-second contract with 570 seconds of slack — the only genuinely thin thing on the board is the\nshadow's shape, which a demonstration containing one `BUILD` would have turned from two thieves\ninto a squad of wreckers on a map that otherwise has none."}
+########## END e7-echo-canyon ##########
+
+=== QUEUE 5 e7-dead-band (gen 65, wall 1500s, free 91774MiB) 10:40:02Z ===
+
+########## RIDE e7-dead-band · seed e7-dead-band-01 · gen 65 · stake re-ride · wall 1500s ##########
+--- 1 charter ---
+{"rig":"opus","contract":"e7-dead-band","seed":"e7-dead-band-01","seedMode":"bench","stake":"re-ride","generation":65,"wall":1500,"notebookSha256":"8b25e0a99a6696662f7ea68900857c91729523f15297e1b4302551d5544264df","charterSha256":"9198d602042d94e8e7fc484a3d1b153c6d5390cb025804f925f7675b58786399","bytes":521742,"out":"/private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/rides/e7-dead-band/charter.md"}
+--- 2 ride ---
+START opus claude-opus-5 pid=98609 session=1eb1d615-f70b-43ff-9383-8c162d0497c3 at=2026-09-07T10:40:02.416Z
+FIRST-OUTPUT opus +135s
+OUTCOME opus secured=false waves=4 gold=0 runsSoFar=1 scored=0 +150s
+OUTCOME opus secured=false waves=19 gold=285 runsSoFar=2 scored=0 +300s
+OUTCOME opus secured=true waves=20 gold=335 runsSoFar=3 scored=1 +480s
+OUTCOME opus secured=true waves=20 gold=335 runsSoFar=3 scored=1 +525s
+END opus rc=0 signal=null wall=631s wallHit=false
+ride-wall rc=0 signal=-
+--- 3 land ---
+
+=== 1 finish-ride ===
+{"rig":"opus","contract":"e7-dead-band","wall":631,"wallHit":false,"rc":0,"tracked":[],"files":18,"outcome":{"secured":true,"waves":20,"gold":335,"runsSoFar":3,"scoredAttempts":1,"tape":"/private/tmp/heat13-569a41f9/artifacts/heat13/opus/e7-dead-band/attempt-1-tape.json","worldModel":"sim-import"},"scoredTapes":[{"file":"attempt-1-tape.json","id":"agent-b9d92a82-48465cff-c503-46ee-ac7c-ab0820d31b06","secured":true,"waves":20,"gold":335,"durationTicks":18000,"lastEntryTick":17594,"promotedByRig":true,"discoveredBy":"outcome-file+filename"}],"otherSecured":[],"reportSections":{"outcome":980,"whatTheMapAsked":2748,"winnability":387,"lessons":4435},"usage":{"turns":59,"toolCalls":31,"tokensIn":118,"tokensOut":91555}}
+tape chosen: attempt-1-tape.json (id agent-b9d92a82-48465cff-c503-46ee-ac7c-ab0820d31b06, promotedByRig=true, discoveredBy=outcome-file+filename)
+
+=== 2 freeze notebook header ===
+{"headerOnly":true,"headerBytes":430}
+
+=== 3 harnessDigest ===
+5c735316dbb7248c39b016bebee73146d6e541333f701a438a97c8ee66a94b8d
+
+=== 4 build-submission ===
+{"tapeId":"agent-b9d92a82-48465cff-c503-46ee-ac7c-ab0820d31b06","contract":"e7-dead-band","epochId":"epoch-7-signal","seed":"e7-dead-band-01","seedMode":"bench","score":{"secured":true,"waves":20,"timeAlive":600,"gold":335,"baseValue":0},"papers":{"buildId":"f3cf4fb52","engineHash":"09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4","era":5,"viewVersion":2},"durationTicks":18000,"lastEntryTick":17594,"stack":{"model":"claude-opus-5","harness":"heat13-operator","harnessVersion":"2.1.257","harnessDigest":"5c735316dbb7248c39b016bebee73146d6e541333f701a438a97c8ee66a94b8d","worldModel":"sim-import","config":"attended-hosted headless `claude -p` ride (heat 13, the 1:1-grammar re-ride) on Claude Code CLI 2.1.257; charter + door manual + own notebook (self-memory); own controller authored in-ride","calls":82,"tokensIn":18284867,"tokensOut":91555}}
+
+=== 5 publish (POST → poll → WATCH) ===
+FAILED: file:///private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/publish-submission.mjs:19
+if (slip?.assay !== 'verified') throw new Error(`assay ${slip?.assay ?? 'missing'}: ${slip?.assayReason ?? 'no reason'}`);
+                                      ^
+
+Error: assay pending: no reason
+    at file:///private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/publish-submission.mjs:19:39
+
+Node.js v23.11.1
+
+POST ok; assay still pending at the 120 s mark — resuming with the poll-only shim (no re-POST)
+
+=== 6 poll-verdict (no re-POST) ===
+{"tapeId":"agent-b9d92a82-48465cff-c503-46ee-ac7c-ab0820d31b06","assay":"verified","assayHash":"fnv1a32:b3234ac0","ranked":true,"papers":{"buildId":"f3cf4fb52","engineHash":"09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4","era":5,"viewVersion":2}}
+
+=== LANDED ===
+{
+ "rig": "opus",
+ "contract": "e7-dead-band",
+ "tapeFile": "attempt-1-tape.json",
+ "tapeId": "agent-b9d92a82-48465cff-c503-46ee-ac7c-ab0820d31b06",
+ "assay": "verified",
+ "assayHash": "fnv1a32:b3234ac0",
+ "ranked": true,
+ "rank": 1,
+ "waves": 20,
+ "gold": 335,
+ "calls": 82,
+ "eventLogHash": "fnv1a32:7048ee41",
+ "wall": 631,
+ "harnessDigest": "5c735316dbb7248c39b016bebee73146d6e541333f701a438a97c8ee66a94b8d",
+ "usage": {
+  "turns": 59,
+  "toolCalls": 31,
+  "tokensIn": 18284867,
+  "tokensOut": 91555
+ }
+}
+file:///private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/publish-submission.mjs:19
+if (slip?.assay !== 'verified') throw new Error(`assay ${slip?.assay ?? 'missing'}: ${slip?.assayReason ?? 'no reason'}`);
+                                      ^
+
+Error: assay pending: no reason
+    at file:///private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/publish-submission.mjs:19:39
+
+Node.js v23.11.1
+
+land rc=0
+--- 4 notebook ---
+{"notebook":"/Users/robin/Claude/Projects/goldrush-gauntlet/memories/claude__opus-5/NOTEBOOK.md","generation":65,"headerBytes":430,"entryBytes":8457}
+--- 5 matrix ---
+| 5 | e7-dead-band | `e7-dead-band-01` | re-ride | 65 | **SECURED** | 20 | 335 | 600s | 631s | `attempt-1-tape.json` · `agent-b9d92a82-48465cff-c503-46ee-ac7c-ab0820d31b06`<br>fnv1a32:7048ee41 | verified `fnv1a32:b3234ac0` rank 1 | gen 65<br>slip `agent-b9d92a82-48465cff-c503-46ee-ac7c-ab0820d31b06` |
+{"contract":"e7-dead-band","secured":true,"tapesOnDisk":8,"scoredTapes":1,"otherSecured":0,"runs":3,"scoredAttempts":1,"wallHit":false,"rc":0,"assay":"verified","ranked":true,"winnability":"Secured, and the margin was **wide by the end and entirely self-inflicted in the middle**: the\nhero finished **123.8/175** with all ten works standing unwrecked and `threats.alive` down to 6,\nbut the identical policy with one 1.71-unit positioning error died at w19 / 578.8 s — the gap\nbetween the two rides is 21 seconds of clock and 255 gold of income a pinned purse refused to\ncredit."}
+########## END e7-dead-band ##########
+
+=== QUEUE 6 e5-stillwater (gen 66, wall 1500s, free 91402MiB) 10:52:56Z ===
+
+########## RIDE e5-stillwater · seed e5-stillwater-01 · gen 66 · stake re-ride · wall 1500s ##########
+--- 1 charter ---
+{"rig":"opus","contract":"e5-stillwater","seed":"e5-stillwater-01","seedMode":"bench","stake":"re-ride","generation":66,"wall":1500,"notebookSha256":"0ceef156118c2947af69a3817d2ddc2ef7b633610380a77035685132d9e1a481","charterSha256":"fcf2a7de30ad8ee4b1fd3bb2f186d91030fadbc1bb76cc3b907f263e4c2494a5","bytes":530152,"out":"/private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/rides/e5-stillwater/charter.md"}
+--- 2 ride ---
+START opus claude-opus-5 pid=51399 session=5cbbed52-fde2-4d8e-a33e-be8024b4badc at=2026-09-07T10:52:56.719Z
+FIRST-OUTPUT opus +60s
+OUTCOME opus secured=false waves=3 gold=0 runsSoFar=1 scored=0 +60s
+OUTCOME opus secured=true waves=12 gold=200 runsSoFar=2 scored=0 +330s
+OUTCOME opus secured=true waves=12 gold=200 runsSoFar=2 scored=1 +450s
+END opus rc=0 signal=null wall=526s wallHit=false
+ride-wall rc=0 signal=-
+--- 3 land ---
+
+=== 1 finish-ride ===
+{"rig":"opus","contract":"e5-stillwater","wall":526,"wallHit":false,"rc":0,"tracked":[],"files":15,"outcome":{"secured":true,"waves":12,"gold":200,"runsSoFar":2,"scoredAttempts":1,"tape":"/private/tmp/heat13-569a41f9/artifacts/heat13/opus/e5-stillwater/attempt-1-tape.json","worldModel":"sim-import"},"scoredTapes":[{"file":"attempt-1-tape.json","id":"agent-45c39a81-d59be821-4def-4712-9f3e-86b90c50baad","secured":true,"waves":12,"gold":200,"durationTicks":10800,"lastEntryTick":9900,"promotedByRig":true,"discoveredBy":"outcome-file+filename"}],"otherSecured":[{"file":"tune-1-tape.json","id":"agent-45c39a81-d59be821-4def-4712-9f3e-86b90c50baad","waves":12,"gold":200}],"reportSections":{"outcome":587,"whatTheMapAsked":2374,"winnability":376,"lessons":4392},"usage":{"turns":54,"toolCalls":33,"tokensIn":108,"tokensOut":78682}}
+tape chosen: attempt-1-tape.json (id agent-45c39a81-d59be821-4def-4712-9f3e-86b90c50baad, promotedByRig=true, discoveredBy=outcome-file+filename)
+
+=== 2 freeze notebook header ===
+{"headerOnly":true,"headerBytes":430}
+
+=== 3 harnessDigest ===
+80a5110f03b153ca657a31a1038393106f590bba6d60ebd1a3fb0d84b686802a
+
+=== 4 build-submission ===
+{"tapeId":"agent-45c39a81-d59be821-4def-4712-9f3e-86b90c50baad","contract":"e5-stillwater","epochId":"epoch-5-deepwater","seed":"e5-stillwater-01","seedMode":"bench","score":{"secured":true,"waves":12,"timeAlive":360,"gold":200,"baseValue":0},"papers":{"buildId":"43715dd25","engineHash":"09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4","era":5,"viewVersion":2},"durationTicks":10800,"lastEntryTick":9900,"stack":{"model":"claude-opus-5","harness":"heat13-operator","harnessVersion":"2.1.257","harnessDigest":"80a5110f03b153ca657a31a1038393106f590bba6d60ebd1a3fb0d84b686802a","worldModel":"sim-import","config":"attended-hosted headless `claude -p` ride (heat 13, the 1:1-grammar re-ride) on Claude Code CLI 2.1.257; charter + door manual + own notebook (self-memory); own controller authored in-ride","calls":19,"tokensIn":17238344,"tokensOut":78682}}
+
+=== 5 publish (POST → poll → WATCH) ===
+FAILED: file:///private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/publish-submission.mjs:19
+if (slip?.assay !== 'verified') throw new Error(`assay ${slip?.assay ?? 'missing'}: ${slip?.assayReason ?? 'no reason'}`);
+                                      ^
+
+Error: assay pending: no reason
+    at file:///private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/publish-submission.mjs:19:39
+
+Node.js v23.11.1
+
+POST ok; assay still pending at the 120 s mark — resuming with the poll-only shim (no re-POST)
+
+=== 6 poll-verdict (no re-POST) ===
+FAILED: file:///private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/poll-verdict.mjs:26
+if (slip?.assay !== 'verified') throw new Error(`assay ${slip?.assay ?? 'missing'}: ${slip?.assayReason ?? 'no reason'}`);
+                                      ^
+
+Error: assay missing: no reason
+    at file:///private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/poll-verdict.mjs:26:39
+
+Node.js v23.11.1
+
+file:///private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/publish-submission.mjs:19
+if (slip?.assay !== 'verified') throw new Error(`assay ${slip?.assay ?? 'missing'}: ${slip?.assayReason ?? 'no reason'}`);
+                                      ^
+
+Error: assay pending: no reason
+    at file:///private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/publish-submission.mjs:19:39
+
+Node.js v23.11.1
+file:///private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/poll-verdict.mjs:26
+if (slip?.assay !== 'verified') throw new Error(`assay ${slip?.assay ?? 'missing'}: ${slip?.assayReason ?? 'no reason'}`);
+                                      ^
+
+Error: assay missing: no reason
+    at file:///private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/poll-verdict.mjs:26:39
+
+Node.js v23.11.1
+file:///private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/land-ride.mjs:31
+const step = (name, fn) => { process.stdout.write(`\n=== ${name} ===\n`); try { return fn(); } catch (error) { process.stdout.write(`FAILED: ${(error.stdout ?? '') + (error.stderr ?? error.message)}\n`); throw Object.assign(new Error(name), { step: name }); } };
+                                                                                                                                                                                                                                ^
+
+Error: 6 poll-verdict (no re-POST)
+    at step (file:///private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/land-ride.mjs:31:225)
+    at file:///private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/land-ride.mjs:68:3
+    at ModuleJob.run (node:internal/modules/esm/module_job:274:25)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:644:26)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:98:5) {
+  step: '6 poll-verdict (no re-POST)'
+}
+
+Node.js v23.11.1
+
+land rc=1
+--- 4 notebook ---
+{"notebook":"/Users/robin/Claude/Projects/goldrush-gauntlet/memories/claude__opus-5/NOTEBOOK.md","generation":66,"headerBytes":430,"entryBytes":8003}
+--- 5 matrix ---
+| 6 | e5-stillwater | `e5-stillwater-01` | re-ride | 66 | **SECURED** | 12 | 200 | 360s | 526s | `attempt-1-tape.json` · `agent-45c39a81-d59be821-4def-4712-9f3e-86b90c50baad`<br>fnv1a32:165d5ab9 | pending rank 1 | gen 66<br>slip `agent-45c39a81-d59be821-4def-4712-9f3e-86b90c50baad` |
+{"contract":"e5-stillwater","secured":true,"tapesOnDisk":8,"scoredTapes":1,"otherSecured":1,"runs":2,"scoredAttempts":1,"wallHit":false,"rc":0,"assay":"pending","ranked":true,"winnability":"Secured, and the margin was **wide in every direction at once**: the hero took **zero damage across\nall 22 views** (100/100, level 1, never once offered a draft), gold sat at the 200 cap for the last\n167 seconds, and the loop's single point of failure — the ballista's own pad — banked at **39 of 96\nintegrity**, thirteen more strikes (~52 seconds) of slack beyond the secure."}
+########## END e5-stillwater ##########
+
+=== QUEUE 7 e8-far-side (gen 67, wall 1500s, free 91364MiB) 11:13:27Z ===
+
+########## RIDE e8-far-side · seed e8-far-side-01 · gen 67 · stake re-ride · wall 1500s ##########
+--- 1 charter ---
+{"rig":"opus","contract":"e8-far-side","seed":"e8-far-side-01","seedMode":"bench","stake":"re-ride","generation":67,"wall":1500,"notebookSha256":"0b92bbd6de8aeaafbdc5b5528f63d8e9710aed9520710ac35e7a2f49c000739a","charterSha256":"886a0e733864432472423d5ac1dd9dfd3894b842bf01aee32466a628f1ce9ccd","bytes":538145,"out":"/private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/rides/e8-far-side/charter.md"}
+--- 2 ride ---
+START opus claude-opus-5 pid=92702 session=8bddd583-e91f-40f3-a6fb-6a55830394c8 at=2026-09-07T11:13:27.116Z
+FIRST-OUTPUT opus +60s
+OUTCOME opus secured=false waves=2 gold=0 runsSoFar=1 scored=0 +75s
+OUTCOME opus secured=false waves=14 gold=25 runsSoFar=2 scored=0 +360s
+OUTCOME opus secured=false waves=14 gold=25 runsSoFar=3 scored=0 +525s
+OUTCOME opus secured=false waves=14 gold=25 runsSoFar=4 scored=1 +570s
+OUTCOME opus secured=false waves=14 gold=25 runsSoFar=4 scored=1 +660s
+END opus rc=0 signal=null wall=684s wallHit=false
+ride-wall rc=0 signal=-
+--- 3 land ---
+
+=== 1 finish-ride ===
+{"rig":"opus","contract":"e8-far-side","wall":684,"wallHit":false,"rc":0,"tracked":[],"files":20,"outcome":{"secured":false,"waves":14,"gold":25,"runsSoFar":4,"scoredAttempts":1,"tape":"/private/tmp/heat13-569a41f9/artifacts/heat13/opus/e8-far-side/tune-1-tape.json","worldModel":"sim-import"},"scoredTapes":[{"file":"attempt-1-tape.json","id":"agent-27648e03-0bd7e797-de71-4bc3-a5fb-5e9fa2a311c3","secured":false,"waves":12,"gold":70,"durationTicks":11106,"lastEntryTick":10938,"promotedByRig":false,"discoveredBy":"filename"},{"file":"tune-1-tape.json","id":"agent-33706bb2-45f14875-1e95-4827-91e9-75d29cbe46f3","secured":false,"waves":14,"gold":25,"durationTicks":13293,"lastEntryTick":13072,"promotedByRig":true,"discoveredBy":"outcome-file"}],"otherSecured":[],"reportSections":{"outcome":1406,"whatTheMapAsked":2246,"winnability":723,"lessons":5060},"usage":{"turns":78,"toolCalls":44,"tokensIn":156,"tokensOut":129529}}
+
+=== NOT SECURED — nothing to submit ===
+{
+ "rig": "opus",
+ "contract": "e8-far-side",
+ "wall": 684,
+ "wallHit": false,
+ "rc": 0,
+ "scoredTapes": [
+  {
+   "file": "attempt-1-tape.json",
+   "secured": false,
+   "waves": 12,
+   "gold": 70
+  },
+  {
+   "file": "tune-1-tape.json",
+   "secured": false,
+   "waves": 14,
+   "gold": 25
+  }
+ ],
+ "outcomeNote": "NOT SECURED - do not submit. Best of 4 runs is tune-1 (w14/443.100s/25g/55 calls). The scored attempt (attempt-1-tape.json, w12/370.200s/70g) ranks BELOW it; the tape named above is the best run on disk, not a standing. Both era gates were met in tune-1 (crossing.credited 4/4 at t~380, probeRecovery.recovered at t~91); the run died of ordinary survival at wave 14 of 20."
+}
+
+land rc=0
+--- 4 notebook ---
+{"notebook":"/Users/robin/Claude/Projects/goldrush-gauntlet/memories/claude__opus-5/NOTEBOOK.md","generation":67,"headerBytes":429,"entryBytes":8944}
+--- 5 matrix ---
+| 7 | e8-far-side | `e8-far-side-01` | re-ride | 67 | **not secured** | 14 | 25 | 443.100s | 684s | `tune-1-tape.json` · `agent-33706bb2-45f14875-1e95-4827-91e9-75d29cbe46f3`<br>fnv1a32:82f0740f | — | gen 67 |
+{"contract":"e8-far-side","secured":false,"tapesOnDisk":13,"scoredTapes":2,"otherSecured":0,"runs":4,"scoredAttempts":1,"wallHit":false,"rc":0,"assay":null,"ranked":null,"winnability":"**Winnable, and what stopped me was my own budget, not a wall in the map, the grammar, or the\neconomy:** both era gates shut cleanly at t ≈ 380 of a 600 s run with 220 seconds to spare, so the\ncontract reduces entirely to \"can a 175-hp hero hold a claim it must abandon four times\" — and my\nbest ride reached wave 14 of 20 with the fort intact (nothing can wreck it here) while the hero\nalone bled out; the untested lever the data names is the capped purse, which `tune-1` left as\n600 gold panned against a 670-gold ladder that never finished, and which four `CONTEXT_ACTION\nupgrade` tier-2 turrets (150 g each, the only sink on a board with no repair bill) would have\nconverted into the ~65% dps the last six waves needed."}
+########## END e8-far-side ##########
+
+=== QUEUE 8 e8-low-orbit (gen 68, wall 1500s, free 106314MiB) 11:24:50Z ===
+
+########## RIDE e8-low-orbit · seed e8-low-orbit-01 · gen 68 · stake open-question · wall 1500s ##########
+--- 1 charter ---
+{"rig":"opus","contract":"e8-low-orbit","seed":"e8-low-orbit-01","seedMode":"bench","stake":"open-question","generation":68,"wall":1500,"notebookSha256":"e15973fa168cd1ac4da8e94ac6cd0ccc14b0e490577bbadaebfa6499c1ca4b45","charterSha256":"f10c186c7cd08abfbf0cd07756b7383b236e7d4a693cd7a7630f13766a33c068","bytes":547056,"out":"/private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/rides/e8-low-orbit/charter.md"}
+--- 2 ride ---
+START opus claude-opus-5 pid=14868 session=edb7baab-d832-4837-bd84-49ae0694376b at=2026-09-07T11:24:50.912Z
+FIRST-OUTPUT opus +165s
+OUTCOME opus secured=false waves=2 gold=0 runsSoFar=1 scored=0 +165s
+OUTCOME opus secured=false waves=3 gold=30 runsSoFar=2 scored=0 +465s
+OUTCOME opus secured=false waves=3 gold=30 runsSoFar=3 scored=0 +555s
+OUTCOME opus secured=false waves=14 gold=45 runsSoFar=4 scored=0 +750s
+OUTCOME opus secured=false waves=14 gold=45 runsSoFar=5 scored=1 +825s
+OUTCOME opus secured=false waves=14 gold=45 runsSoFar=5 scored=1 +915s
+END opus rc=0 signal=null wall=970s wallHit=false
+ride-wall rc=0 signal=-
+--- 3 land ---
+
+=== 1 finish-ride ===
+{"rig":"opus","contract":"e8-low-orbit","wall":970,"wallHit":false,"rc":0,"tracked":[],"files":26,"outcome":{"secured":false,"waves":14,"gold":45,"runsSoFar":5,"scoredAttempts":1,"tape":"/private/tmp/heat13-569a41f9/artifacts/heat13/opus/e8-low-orbit/tune-2-tape.json","worldModel":"sim-import"},"scoredTapes":[{"file":"attempt-1-tape.json","id":"agent-f3d60623-c1837350-c0f6-4079-b85e-5b2c45948334","secured":false,"waves":4,"gold":70,"durationTicks":3844,"lastEntryTick":3601,"promotedByRig":false,"discoveredBy":"filename"},{"file":"tune-2-tape.json","id":"agent-01971015-6405d777-0ba8-4725-8ffd-fe9a9d708ca5","secured":false,"waves":14,"gold":45,"durationTicks":13229,"lastEntryTick":13054,"promotedByRig":true,"discoveredBy":"outcome-file"}],"otherSecured":[],"reportSections":{"outcome":572,"whatTheMapAsked":2070,"winnability":680,"lessons":4582},"usage":{"turns":73,"toolCalls":46,"tokensIn":146,"tokensOut":145846}}
+
+=== NOT SECURED — nothing to submit ===
+{
+ "rig": "opus",
+ "contract": "e8-low-orbit",
+ "wall": 970,
+ "wallHit": false,
+ "rc": 0,
+ "scoredTapes": [
+  {
+   "file": "attempt-1-tape.json",
+   "secured": false,
+   "waves": 4,
+   "gold": 70
+  },
+  {
+   "file": "tune-2-tape.json",
+   "secured": false,
+   "waves": 14,
+   "gold": 45
+  }
+ ],
+ "outcomeNote": "NOT SECURED. Nothing is put forward. Best ride is tune-2 (w14/440.967s/45g); attempt-1 (ctrl-v3, w4/128.133s/70g, fnv1a32:b7254a26) was the scored attempt and regressed. The era gate was fully satisfied in tune-2 at t=368.4 (credited 4/4, reached 2, breathlessEntries 0); the run dies to hero momentum under feelG 0, not to the air."
+}
+
+land rc=0
+--- 4 notebook ---
+{"notebook":"/Users/robin/Claude/Projects/goldrush-gauntlet/memories/claude__opus-5/NOTEBOOK.md","generation":68,"headerBytes":431,"entryBytes":8237}
+--- 5 matrix ---
+| 8 | e8-low-orbit | `e8-low-orbit-01` | open-question | 68 | **not secured** | 14 | 45 | 440.967s | 970s | `tune-2-tape.json` · `agent-01971015-6405d777-0ba8-4725-8ffd-fe9a9d708ca5`<br>fnv1a32:3705d684 | — | gen 68 |
+{"contract":"e8-low-orbit","secured":false,"tapesOnDisk":15,"scoredTapes":2,"otherSecured":0,"runs":5,"scoredAttempts":1,"wallHit":false,"rc":0,"assay":null,"ranked":null,"winnability":"**Winnable, and what stopped me was my own budget against one un-modelled physics fact — not a wall\nin the map, the grammar or the economy:** the era gate discharges with 232 s to spare and zero\nbreathless entries, no work can ever be wrecked (the roster's one id carries neither `wrecker` nor\n`thief`), and the fort was still buying at wave 12 — the run dies only because under `feelG 0` the\nhero's steering is thrust rather than position, so it coasts forty to sixty units out of its own\nturret ring and every naive correction overshoots (measured: chasing it home cost ten waves, w14 →\nw4), and I ran out of wall clock before riding the controller that damps instead of chases."}
+########## END e8-low-orbit ##########
+
+=== QUEUE 9 e8-eclipse (gen 69, wall 1500s, free 105921MiB) 11:41:00Z ===
+
+########## RIDE e8-eclipse · seed e8-eclipse-01 · gen 69 · stake never-claimed · wall 1500s ##########
+--- 1 charter ---
+{"rig":"opus","contract":"e8-eclipse","seed":"e8-eclipse-01","seedMode":"bench","stake":"never-claimed","generation":69,"wall":1500,"notebookSha256":"b8b4ee13fdeca347a754c807cbfdf4ff78153f083713980b0eb030084e8d81b6","charterSha256":"4474e86d74e2f3918aafe4380fc959c1e815c12fea3a742abd8f64f05b911085","bytes":555187,"out":"/private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/rides/e8-eclipse/charter.md"}
+--- 2 ride ---
+START opus claude-opus-5 pid=13690 session=d2d3967a-b8ef-4b2e-a503-fc8e81869784 at=2026-09-07T11:41:00.757Z
+FIRST-OUTPUT opus +135s
+OUTCOME opus secured=false waves=2 gold=0 runsSoFar=1 scored=0 +135s
+OUTCOME opus secured=true waves=20 gold=80 runsSoFar=2 scored=0 +330s
+OUTCOME opus secured=true waves=20 gold=80 runsSoFar=2 scored=1 +405s
+END opus rc=0 signal=null wall=507s wallHit=false
+ride-wall rc=0 signal=-
+--- 3 land ---
+
+=== 1 finish-ride ===
+{"rig":"opus","contract":"e8-eclipse","wall":507,"wallHit":false,"rc":0,"tracked":[],"files":15,"outcome":{"secured":true,"waves":20,"gold":80,"runsSoFar":2,"scoredAttempts":1,"tape":"/private/tmp/heat13-569a41f9/artifacts/heat13/opus/e8-eclipse/attempt-1-tape.json","worldModel":"sim-import"},"scoredTapes":[{"file":"attempt-1-tape.json","id":"agent-bd3d5fb2-e971ffac-dcd5-4d42-8ed2-d9221bb99a7e","secured":true,"waves":20,"gold":80,"durationTicks":18000,"lastEntryTick":17628,"promotedByRig":true,"discoveredBy":"outcome-file+filename"}],"otherSecured":[{"file":"tune-1-tape.json","id":"agent-bd3d5fb2-e971ffac-dcd5-4d42-8ed2-d9221bb99a7e","waves":20,"gold":80}],"reportSections":{"outcome":419,"whatTheMapAsked":3403,"winnability":1011,"lessons":4958},"usage":{"turns":43,"toolCalls":24,"tokensIn":86,"tokensOut":77871}}
+tape chosen: attempt-1-tape.json (id agent-bd3d5fb2-e971ffac-dcd5-4d42-8ed2-d9221bb99a7e, promotedByRig=true, discoveredBy=outcome-file+filename)
+
+=== 2 freeze notebook header ===
+{"headerOnly":true,"headerBytes":427}
+
+=== 3 harnessDigest ===
+0b6b39e0285a9a46cbaa953cf0ca38a4bdb4e67d69c73cdada3f6f5bb91d1a0d
+
+=== 4 build-submission ===
+{"tapeId":"agent-bd3d5fb2-e971ffac-dcd5-4d42-8ed2-d9221bb99a7e","contract":"e8-eclipse","epochId":"epoch-8-orbital","seed":"e8-eclipse-01","seedMode":"bench","score":{"secured":true,"waves":20,"timeAlive":600,"gold":80,"baseValue":0},"papers":{"buildId":"b664fe78c","engineHash":"09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4","era":5,"viewVersion":2},"durationTicks":18000,"lastEntryTick":17628,"stack":{"model":"claude-opus-5","harness":"heat13-operator","harnessVersion":"2.1.257","harnessDigest":"0b6b39e0285a9a46cbaa953cf0ca38a4bdb4e67d69c73cdada3f6f5bb91d1a0d","worldModel":"sim-import","config":"attended-hosted headless `claude -p` ride (heat 13, the 1:1-grammar re-ride) on Claude Code CLI 2.1.257; charter + door manual + own notebook (self-memory); own controller authored in-ride","calls":77,"tokensIn":13393267,"tokensOut":77871}}
+
+=== 5 publish (POST → poll → WATCH) ===
+FAILED: node:internal/deps/undici/undici:13510
+      Error.captureStackTrace(err);
+            ^
+
+TypeError: fetch failed
+    at node:internal/deps/undici/undici:13510:13
+    at async file:///private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/publish-submission.mjs:7:14 {
+  [cause]: SocketError: other side closed
+      at TLSSocket.<anonymous> (node:internal/deps/undici/undici:6294:28)
+      at TLSSocket.emit (node:events:519:35)
+      at endReadableNT (node:internal/streams/readable:1696:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+    code: 'UND_ERR_SOCKET',
+    socket: {
+      localAddress: '2001:fb1:177:8a2e:f932:a24b:a792:32e1',
+      localPort: 53211,
+      remoteAddress: undefined,
+      remotePort: undefined,
+      remoteFamily: undefined,
+      timeout: undefined,
+      bytesWritten: 114062,
+      bytesRead: 0
+    }
+  }
+}
+
+Node.js v23.11.1
+
+node:internal/deps/undici/undici:13510
+      Error.captureStackTrace(err);
+            ^
+
+TypeError: fetch failed
+    at node:internal/deps/undici/undici:13510:13
+    at async file:///private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/publish-submission.mjs:7:14 {
+  [cause]: SocketError: other side closed
+      at TLSSocket.<anonymous> (node:internal/deps/undici/undici:6294:28)
+      at TLSSocket.emit (node:events:519:35)
+      at endReadableNT (node:internal/streams/readable:1696:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+    code: 'UND_ERR_SOCKET',
+    socket: {
+      localAddress: '2001:fb1:177:8a2e:f932:a24b:a792:32e1',
+      localPort: 53211,
+      remoteAddress: undefined,
+      remotePort: undefined,
+      remoteFamily: undefined,
+      timeout: undefined,
+      bytesWritten: 114062,
+      bytesRead: 0
+    }
+  }
+}
+
+Node.js v23.11.1
+file:///private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/land-ride.mjs:62
+catch { posted = existsSync(`${dir}/post-response.json`) && JSON.parse(readFileSync(`${dir}/post-response.json`, 'utf8')).ok === true; if (!posted) throw new Error('POST itself failed — see post-response.json'); process.stdout.write('POST ok; assay still pending at the 120 s mark — resuming with the poll-only shim (no re-POST)\n'); }
+                                                                                                                                                          ^
+
+Error: POST itself failed — see post-response.json
+    at file:///private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/land-ride.mjs:62:155
+    at ModuleJob.run (node:internal/modules/esm/module_job:274:25)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:644:26)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:98:5)
+
+Node.js v23.11.1
+
+land rc=1
+--- 4 notebook ---
+{"notebook":"/Users/robin/Claude/Projects/goldrush-gauntlet/memories/claude__opus-5/NOTEBOOK.md","generation":69,"headerBytes":427,"entryBytes":10260}
+--- 5 matrix ---
+| 9 | e8-eclipse | `e8-eclipse-01` | never-claimed | 69 | **SECURED** | 20 | 80 | 600s | 507s | `attempt-1-tape.json` · `agent-bd3d5fb2-e971ffac-dcd5-4d42-8ed2-d9221bb99a7e`<br>fnv1a32:d939e5f7 | ⚠ not submitted | gen 69 |
+{"contract":"e8-eclipse","secured":true,"tapesOnDisk":8,"scoredTapes":1,"otherSecured":1,"runs":2,"scoredAttempts":1,"wallHit":false,"rc":0,"assay":null,"ranked":null,"winnability":"Secured, and the margin was **wide in every direction at once**: the hero never dropped below its\nrunning maximum across all 79 views (minimum 100, finishing **167.8/175**), the suit **never once\nfell below its full 60 seconds** after the opening walk and `breathlessPans` finished at **0**, all\nten works stood **unwrecked** across 923 kills (neither `sun_glare_shambler` nor `scrap_corsair`\ncarries `wrecker` or `thief`, so `goldStolen` was 0 too), `threats.alive` peaked at 31 against a\n60 cap, the era gate closed 234 seconds early, and the hero was outside her pad in exactly **one**\nview of 79 — view 1, the start. The one number with real slack left on it is **gold: 80 of 900\npanned**, and since waves and `timeAlive` are both pinned by a fixed wave-20 secure, gold is the\nonly free ranking axis; the tier-2 turret sink never fired because a 32-deep harvest tail kept the\npurse below 150 at every view boundary. That is the margin I left on the table, and it is a\ncontroller fault rather than a map one."}
+########## END e8-eclipse ##########
+
+=== QUEUE 10 e4-long-road (gen 70, wall 1500s, free 105393MiB) 11:49:27Z ===
+
+########## RIDE e4-long-road · seed e4-long-road-01 · gen 70 · stake open-question · wall 1500s ##########
+--- 1 charter ---
+{"rig":"opus","contract":"e4-long-road","seed":"e4-long-road-01","seedMode":"bench","stake":"open-question","generation":70,"wall":1500,"notebookSha256":"67e3558510de45d078e00141fca87acd4055abd085aac72fde7bcf5a645d36b9","charterSha256":"1e1a44b056beeed94c3cb57e92afc2cb78793f4ff3fd53bceffa18cf487f14c5","bytes":565520,"out":"/private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/rides/e4-long-road/charter.md"}
+--- 2 ride ---
+START opus claude-opus-5 pid=26934 session=c00ec3c1-3bd9-4b11-832f-9ac0bc17def0 at=2026-09-07T11:49:27.754Z
+FIRST-OUTPUT opus +60s
+OUTCOME opus secured=false waves=4 gold=0 runsSoFar=1 scored=0 +75s
+OUTCOME opus secured=false waves=4 gold=0 runsSoFar=2 scored=0 +585s
+OUTCOME opus secured=false waves=4 gold=0 runsSoFar=3 scored=0 +750s
+OUTCOME opus secured=false waves=4 gold=0 runsSoFar=4 scored=0 +870s
+OUTCOME opus secured=false waves=14 gold=0 runsSoFar=5 scored=0 +1005s
+OUTCOME opus secured=false waves=14 gold=0 runsSoFar=5 scored=1 +1185s
+END opus rc=0 signal=null wall=1265s wallHit=false
+ride-wall rc=0 signal=-
+--- 3 land ---
+
+=== 1 finish-ride ===
+{"rig":"opus","contract":"e4-long-road","wall":1265,"wallHit":false,"rc":0,"tracked":[],"files":33,"outcome":{"secured":false,"waves":14,"gold":0,"runsSoFar":5,"scoredAttempts":1,"tape":"/private/tmp/heat13-569a41f9/artifacts/heat13/opus/e4-long-road/attempt-1-tape.json","worldModel":"sim-import"},"scoredTapes":[{"file":"attempt-1-tape.json","id":"agent-a5c13c96-d557c8f3-89df-498a-a1e1-c007bebba0f9","secured":false,"waves":14,"gold":0,"durationTicks":12600,"lastEntryTick":11700,"promotedByRig":true,"discoveredBy":"outcome-file+filename"}],"otherSecured":[],"reportSections":{"outcome":1022,"whatTheMapAsked":1847,"winnability":1159,"lessons":4051},"usage":{"turns":114,"toolCalls":68,"tokensIn":228,"tokensOut":243162}}
+
+=== NOT SECURED — nothing to submit ===
+{
+ "rig": "opus",
+ "contract": "e4-long-road",
+ "wall": 1265,
+ "wallHit": false,
+ "rc": 0,
+ "scoredTapes": [
+  {
+   "file": "attempt-1-tape.json",
+   "secured": false,
+   "waves": 14,
+   "gold": 0
+  }
+ ],
+ "outcomeNote": "attempt-1-tape.json is a byte-identical copy of tune-v3.json, the same single ride, promoted by declaration."
+}
+
+land rc=0
+--- 4 notebook ---
+{"notebook":"/Users/robin/Claude/Projects/goldrush-gauntlet/memories/claude__opus-5/NOTEBOOK.md","generation":70,"headerBytes":432,"entryBytes":7954}
+--- 5 matrix ---
+| 10 | e4-long-road | `e4-long-road-01` | open-question | 70 | **not secured** | 14 | 0 | 420.000s | 1265s | `attempt-1-tape.json` · `agent-a5c13c96-d557c8f3-89df-498a-a1e1-c007bebba0f9`<br>fnv1a32:bf54242b | — | gen 70 |
+{"contract":"e4-long-road","secured":false,"tapesOnDisk":17,"scoredTapes":1,"otherSecured":0,"runs":5,"scoredAttempts":1,"wallHit":false,"rc":0,"assay":null,"ranked":null,"winnability":"**No — `e4-long-road` is not winnable through this door from its starting kit, and the wall is in the\ngrammar, not the map, the economy or my budget:** the run cannot be offered a secure at any wave until\n`now.motor.objective.arrived` (`HeadlessContractSim.ts:2354`/`:1493`), `arrived` for `kind: \"convoy\"`\ndemands `leaderDistance >= 370 − 1e-6` i.e. the lead Hauler within ~0.0005 wu of (190, 0)\n(`MotorSocket.ts:345`, `ConvoyBehavior.ts:71`), `HAUL` can only send the Hauler to the hero's own\nfloat position (`HeadlessContractSim.ts:3107`), and `MOVE_HERO` refuses (190, 0) — and (190, ±3) and\n(188.7, 0) — as `UNREACHABLE_TERRAIN` while having no arrival snap at all, so the nearest legal rest\nI could measure was (191.070, −0.355) and the latch closed 0.359 wu short and stayed there for five\nminutes; the retired `MOVE_TO`/`HOLD` steered the Prospector, whose `stepTowardTarget` assigns\n`position = target` exactly, which is precisely how generation 18 secured this same seed on 2026-09-03,\nso the cheapest cure is one clause — latch `convoy` on `MOTOR_STOP_REACH` as `haul` and `tow` already\ndo, or make the railhead walkable — and not a balance change."}
+########## END e4-long-road ##########
+
+=== QUEUE 11 e4-dust-flats (gen 71, wall 1500s, free 105170MiB) 12:10:32Z ===
+
+########## RIDE e4-dust-flats · seed e4-dust-flats-01 · gen 71 · stake re-ride · wall 1500s ##########
+--- 1 charter ---
+{"rig":"opus","contract":"e4-dust-flats","seed":"e4-dust-flats-01","seedMode":"bench","stake":"re-ride","generation":71,"wall":1500,"notebookSha256":"62325cdf435b697d8fdf3a3d86f2b132b7e661be041af50dad48c56e13f4a9d7","charterSha256":"f4e0a7f16b9fa4da9271a7e83317db90f3b39fee84b05ee5e3fe7b6dc36d63af","bytes":573592,"out":"/private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/rides/e4-dust-flats/charter.md"}
+--- 2 ride ---
+START opus claude-opus-5 pid=71523 session=9a534b1a-b4cc-48bc-a72d-eebf7f98a874 at=2026-09-07T12:10:33.050Z
+FIRST-OUTPUT opus +210s
+OUTCOME opus secured=false waves=2 gold=0 runsSoFar=1 scored=0 +210s
+OUTCOME opus secured=true waves=14 gold=0 runsSoFar=2 scored=0 +495s
+OUTCOME opus secured=true waves=14 gold=0 runsSoFar=2 scored=1 +585s
+END opus rc=0 signal=null wall=680s wallHit=false
+ride-wall rc=0 signal=-
+--- 3 land ---
+
+=== 1 finish-ride ===
+{"rig":"opus","contract":"e4-dust-flats","wall":680,"wallHit":false,"rc":0,"tracked":[],"files":11,"outcome":{"secured":true,"waves":14,"gold":0,"runsSoFar":2,"scoredAttempts":1,"tape":"/private/tmp/heat13-569a41f9/artifacts/heat13/opus/e4-dust-flats/attempt-1-tape.json","worldModel":"sim-import"},"scoredTapes":[{"file":"attempt-1-tape.json","id":"agent-fb7c49b2-764ea1cc-2321-4f40-89f3-d48bf32ba36b","secured":true,"waves":14,"gold":0,"durationTicks":12720,"lastEntryTick":12659,"promotedByRig":true,"discoveredBy":"outcome-file+filename"}],"otherSecured":[{"file":"tune-1-tape.json","id":"agent-fb7c49b2-764ea1cc-2321-4f40-89f3-d48bf32ba36b","waves":14,"gold":0}],"reportSections":{"outcome":908,"whatTheMapAsked":2649,"winnability":568,"lessons":5531},"usage":{"turns":50,"toolCalls":27,"tokensIn":100,"tokensOut":109113}}
+tape chosen: attempt-1-tape.json (id agent-fb7c49b2-764ea1cc-2321-4f40-89f3-d48bf32ba36b, promotedByRig=true, discoveredBy=outcome-file+filename)
+
+=== 2 freeze notebook header ===
+{"headerOnly":true,"headerBytes":432}
+
+=== 3 harnessDigest ===
+55debe5bbe8faa1fb0f5d72b2b475b86aef78e576317985c7c624d3eb69cba4e
+
+=== 4 build-submission ===
+{"tapeId":"agent-fb7c49b2-764ea1cc-2321-4f40-89f3-d48bf32ba36b","contract":"e4-dust-flats","epochId":"epoch-4-motor","seed":"e4-dust-flats-01","seedMode":"bench","score":{"secured":true,"waves":14,"timeAlive":424,"gold":0,"baseValue":0},"papers":{"buildId":"80b91a090","engineHash":"09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4","era":5,"viewVersion":2},"durationTicks":12720,"lastEntryTick":12659,"stack":{"model":"claude-opus-5","harness":"heat13-operator","harnessVersion":"2.1.257","harnessDigest":"55debe5bbe8faa1fb0f5d72b2b475b86aef78e576317985c7c624d3eb69cba4e","worldModel":"sim-import","config":"attended-hosted headless `claude -p` ride (heat 13, the 1:1-grammar re-ride) on Claude Code CLI 2.1.257; charter + door manual + own notebook (self-memory); own controller authored in-ride","calls":49,"tokensIn":16462770,"tokensOut":109113}}
+
+=== 5 publish (POST → poll → WATCH) ===
+FAILED: node:internal/deps/undici/undici:13510
+      Error.captureStackTrace(err);
+            ^
+
+TypeError: fetch failed
+    at node:internal/deps/undici/undici:13510:13
+    at async file:///private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/publish-submission.mjs:32:20 {
+  [cause]: Error: read ECONNRESET
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:216:20) {
+    errno: -54,
+    code: 'ECONNRESET',
+    syscall: 'read'
+  }
+}
+
+Node.js v23.11.1
+
+POST ok; assay still pending at the 120 s mark — resuming with the poll-only shim (no re-POST)
+
+=== 6 poll-verdict (no re-POST) ===
+FAILED: fetch retry 1: ECONNRESET
+fetch retry 1: ECONNRESET
+fetch retry 1: ECONNRESET
+file:///private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/poll-verdict.mjs:26
+if (slip?.assay !== 'verified') throw new Error(`assay ${slip?.assay ?? 'missing'}: ${slip?.assayReason ?? 'no reason'}`);
+                                      ^
+
+Error: assay pending: no reason
+    at file:///private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/poll-verdict.mjs:26:39
+
+Node.js v23.11.1
+
+node:internal/deps/undici/undici:13510
+      Error.captureStackTrace(err);
+            ^
+
+TypeError: fetch failed
+    at node:internal/deps/undici/undici:13510:13
+    at async file:///private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/publish-submission.mjs:32:20 {
+  [cause]: Error: read ECONNRESET
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:216:20) {
+    errno: -54,
+    code: 'ECONNRESET',
+    syscall: 'read'
+  }
+}
+
+Node.js v23.11.1
+fetch retry 1: ECONNRESET
+fetch retry 1: ECONNRESET
+fetch retry 1: ECONNRESET
+file:///private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/poll-verdict.mjs:26
+if (slip?.assay !== 'verified') throw new Error(`assay ${slip?.assay ?? 'missing'}: ${slip?.assayReason ?? 'no reason'}`);
+                                      ^
+
+Error: assay pending: no reason
+    at file:///private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/poll-verdict.mjs:26:39
+
+Node.js v23.11.1
+file:///private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/land-ride.mjs:31
+const step = (name, fn) => { process.stdout.write(`\n=== ${name} ===\n`); try { return fn(); } catch (error) { process.stdout.write(`FAILED: ${(error.stdout ?? '') + (error.stderr ?? error.message)}\n`); throw Object.assign(new Error(name), { step: name }); } };
+                                                                                                                                                                                                                                ^
+
+Error: 6 poll-verdict (no re-POST)
+    at step (file:///private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/land-ride.mjs:31:225)
+    at file:///private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/land-ride.mjs:68:3
+    at ModuleJob.run (node:internal/modules/esm/module_job:274:25)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:644:26)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:98:5) {
+  step: '6 poll-verdict (no re-POST)'
+}
+
+Node.js v23.11.1
+
+land rc=1
+--- 4 notebook ---
+{"notebook":"/Users/robin/Claude/Projects/goldrush-gauntlet/memories/claude__opus-5/NOTEBOOK.md","generation":71,"headerBytes":432,"entryBytes":9648}
+--- 5 matrix ---
+| 11 | e4-dust-flats | `e4-dust-flats-01` | re-ride | 71 | **SECURED** | 14 | 0 | 424s | 680s | `attempt-1-tape.json` · `agent-fb7c49b2-764ea1cc-2321-4f40-89f3-d48bf32ba36b`<br>fnv1a32:b08906ed | pending rank 1 | gen 71<br>slip `agent-fb7c49b2-764ea1cc-2321-4f40-89f3-d48bf32ba36b` |
+{"contract":"e4-dust-flats","secured":true,"tapesOnDisk":6,"scoredTapes":1,"otherSecured":1,"runs":2,"scoredAttempts":1,"wallHit":false,"rc":0,"assay":"pending","ranked":true,"winnability":"Secured, and the margin was **wide on defence and objective and nil on the purse**: the hero\nbottomed at 44/100 in waves 3–4 *before* the plating picks landed and finished 111/175, all eight\nworks stood unwrecked across 550 kills (`motor_gang` carries neither `wrecker` nor `thief`, so\n`works.wrecked` and `goldStolen` were 0 at every view), the errand latched 400 seconds before the\ngate with 19.77 fuel unspent, and `threats.alive` peaked at 27 — but the ranked gold is **0 of 500\npanned**, because an eighth build fired at view 48 one wave boundary before the bank."}
+########## END e4-dust-flats ##########
+
+=== QUEUE 12 e4-boneyard (gen 72, wall 1500s, free 105086MiB) 12:32:40Z ===
+
+########## RIDE e4-boneyard · seed e4-boneyard-01 · gen 72 · stake re-ride · wall 1500s ##########
+--- 1 charter ---
+{"rig":"opus","contract":"e4-boneyard","seed":"e4-boneyard-01","seedMode":"bench","stake":"re-ride","generation":72,"wall":1500,"notebookSha256":"8233406af55f2b47418707f0d1ef274eaf8dc4d7a7df7c81e7f248efa8f94e54","charterSha256":"c676cafd3378112bd04d8c8d7e0e873c258986daf3386ed3af5c0bab5b021133","bytes":583222,"out":"/private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/rides/e4-boneyard/charter.md"}
+--- 2 ride ---
+START opus claude-opus-5 pid=27740 session=929e11a7-baf5-4149-9696-5937a5d2a768 at=2026-09-07T12:32:40.202Z
+FIRST-OUTPUT opus +300s
+OUTCOME opus secured=true waves=12 gold=200 runsSoFar=3 scored=1 +840s
+END opus rc=0 signal=null wall=983s wallHit=false
+ride-wall rc=0 signal=-
+--- 3 land ---
+
+=== 1 finish-ride ===
+{"rig":"opus","contract":"e4-boneyard","wall":983,"wallHit":false,"rc":0,"tracked":[],"files":17,"outcome":{"secured":true,"waves":12,"gold":200,"runsSoFar":3,"scoredAttempts":1,"tape":"/private/tmp/heat13-569a41f9/artifacts/heat13/opus/e4-boneyard/attempt-1-tape.json","worldModel":"sim-import"},"scoredTapes":[{"file":"attempt-1-tape.json","id":"agent-24ca48ea-826315fa-35ef-4a40-ab60-ccdd7db6bb91","secured":true,"waves":12,"gold":200,"durationTicks":10800,"lastEntryTick":10763,"promotedByRig":true,"discoveredBy":"outcome-file+filename"}],"otherSecured":[{"file":"tune-2-tape.json","id":"agent-24ca48ea-826315fa-35ef-4a40-ab60-ccdd7db6bb91","waves":12,"gold":200}],"reportSections":{"outcome":952,"whatTheMapAsked":3496,"winnability":431,"lessons":4730},"usage":{"turns":74,"toolCalls":40,"tokensIn":148,"tokensOut":162232}}
+tape chosen: attempt-1-tape.json (id agent-24ca48ea-826315fa-35ef-4a40-ab60-ccdd7db6bb91, promotedByRig=true, discoveredBy=outcome-file+filename)
+
+=== 2 freeze notebook header ===
+{"headerOnly":true,"headerBytes":430}
+
+=== 3 harnessDigest ===
+bb5f57a2c503330bbcb3b57e11f1edc7157e575bfcf7350178db7c16f937c27d
+
+=== 4 build-submission ===
+{"tapeId":"agent-24ca48ea-826315fa-35ef-4a40-ab60-ccdd7db6bb91","contract":"e4-boneyard","epochId":"epoch-4-motor","seed":"e4-boneyard-01","seedMode":"bench","score":{"secured":true,"waves":12,"timeAlive":360,"gold":200,"baseValue":0},"papers":{"buildId":"b25f5fedf","engineHash":"09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4","era":5,"viewVersion":2},"durationTicks":10800,"lastEntryTick":10763,"stack":{"model":"claude-opus-5","harness":"heat13-operator","harnessVersion":"2.1.257","harnessDigest":"bb5f57a2c503330bbcb3b57e11f1edc7157e575bfcf7350178db7c16f937c27d","worldModel":"sim-import","config":"attended-hosted headless `claude -p` ride (heat 13, the 1:1-grammar re-ride) on Claude Code CLI 2.1.257; charter + door manual + own notebook (self-memory); own controller authored in-ride","calls":50,"tokensIn":26177952,"tokensOut":162232}}
+
+=== 5 publish (POST → poll → WATCH) ===
+FAILED: file:///private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/publish-submission.mjs:37
+if (slip?.assay !== 'verified') throw new Error(`assay ${slip?.assay ?? 'missing'}: ${slip?.assayReason ?? 'no reason'}`);
+                                      ^
+
+Error: assay pending: no reason
+    at file:///private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/publish-submission.mjs:37:39
+
+Node.js v23.11.1
+
+POST ok; assay still pending at the 120 s mark — resuming with the poll-only shim (no re-POST)
+
+=== 6 poll-verdict (no re-POST) ===
+FAILED: file:///private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/poll-verdict.mjs:26
+if (slip?.assay !== 'verified') throw new Error(`assay ${slip?.assay ?? 'missing'}: ${slip?.assayReason ?? 'no reason'}`);
+                                      ^
+
+Error: assay missing: no reason
+    at file:///private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/poll-verdict.mjs:26:39
+
+Node.js v23.11.1
+
+file:///private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/publish-submission.mjs:37
+if (slip?.assay !== 'verified') throw new Error(`assay ${slip?.assay ?? 'missing'}: ${slip?.assayReason ?? 'no reason'}`);
+                                      ^
+
+Error: assay pending: no reason
+    at file:///private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/publish-submission.mjs:37:39
+
+Node.js v23.11.1
+file:///private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/poll-verdict.mjs:26
+if (slip?.assay !== 'verified') throw new Error(`assay ${slip?.assay ?? 'missing'}: ${slip?.assayReason ?? 'no reason'}`);
+                                      ^
+
+Error: assay missing: no reason
+    at file:///private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/poll-verdict.mjs:26:39
+
+Node.js v23.11.1
+file:///private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/land-ride.mjs:31
+const step = (name, fn) => { process.stdout.write(`\n=== ${name} ===\n`); try { return fn(); } catch (error) { process.stdout.write(`FAILED: ${(error.stdout ?? '') + (error.stderr ?? error.message)}\n`); throw Object.assign(new Error(name), { step: name }); } };
+                                                                                                                                                                                                                                ^
+
+Error: 6 poll-verdict (no re-POST)
+    at step (file:///private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/land-ride.mjs:31:225)
+    at file:///private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/land-ride.mjs:68:3
+    at ModuleJob.run (node:internal/modules/esm/module_job:274:25)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:644:26)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:98:5) {
+  step: '6 poll-verdict (no re-POST)'
+}
+
+Node.js v23.11.1
+
+land rc=1
+--- 4 notebook ---
+{"notebook":"/Users/robin/Claude/Projects/goldrush-gauntlet/memories/claude__opus-5/NOTEBOOK.md","generation":72,"headerBytes":430,"entryBytes":9550}
+--- 5 matrix ---
+| 12 | e4-boneyard | `e4-boneyard-01` | re-ride | 72 | **SECURED** | 12 | 200 | 360s | 983s | `attempt-1-tape.json` · `agent-24ca48ea-826315fa-35ef-4a40-ab60-ccdd7db6bb91`<br>fnv1a32:2f7af13a | pending rank 1 | gen 72<br>slip `agent-24ca48ea-826315fa-35ef-4a40-ab60-ccdd7db6bb91` |
+{"contract":"e4-boneyard","secured":true,"tapesOnDisk":10,"scoredTapes":1,"otherSecured":1,"runs":3,"scoredAttempts":1,"wallHit":false,"rc":0,"assay":"pending","ranked":true,"winnability":"Secured, and the margin was **enormous on survival and genuinely thin on the purse**: the hero took\neffectively no damage across all 52 views and finished 175/175 with all seven works standing\nunwrecked, but gold reached the 200 cap only at **t = 340.1 of 360** — my last beacon spent the\npurse to 0 at t = 256.7 and it took 83 seconds of panning to climb back, so ~20 seconds of slack\nstood between a 200-gold row and a worse one."}
+########## END e4-boneyard ##########
+
+=== QUEUE 13 e4-gusher-county (gen 73, wall 1500s, free 89524MiB) 13:02:14Z ===
+
+########## RIDE e4-gusher-county · seed e4-gusher-county-01 · gen 73 · stake re-ride · wall 1500s ##########
+--- 1 charter ---
+{"rig":"opus","contract":"e4-gusher-county","seed":"e4-gusher-county-01","seedMode":"bench","stake":"re-ride","generation":73,"wall":1500,"notebookSha256":"5f74fe0b3c8c05909662cecc5e40c66cada1f4dfa127fe75da424bdb83c615cf","charterSha256":"bc8c4c95d7fdff4668c220107e5079d00f7435a3388de3f6d7690caed7f66bc9","bytes":592817,"out":"/private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/rides/e4-gusher-county/charter.md"}
+--- 2 ride ---
+START opus claude-opus-5 pid=29944 session=d87bdd64-0b02-4b3b-90c5-25f3b8a388ab at=2026-09-07T13:02:14.312Z
+FIRST-OUTPUT opus +195s
+OUTCOME opus secured=false waves=5 gold=0 runsSoFar=1 scored=0 +195s
+OUTCOME opus secured=true waves=12 gold=170 runsSoFar=2 scored=0 +735s
+OUTCOME opus secured=true waves=12 gold=170 runsSoFar=2 scored=1 +765s
+END opus rc=0 signal=null wall=897s wallHit=false
+ride-wall rc=0 signal=-
+--- 3 land ---
+
+=== 1 finish-ride ===
+{"rig":"opus","contract":"e4-gusher-county","wall":897,"wallHit":false,"rc":0,"tracked":[],"files":11,"outcome":{"secured":true,"waves":12,"gold":170,"runsSoFar":2,"scoredAttempts":1,"tape":"/private/tmp/heat13-569a41f9/artifacts/heat13/opus/e4-gusher-county/attempt-1-tape.json","worldModel":"sim-import"},"scoredTapes":[{"file":"attempt-1-tape.json","id":"agent-5b4b48cd-74050fa2-e26f-4d95-82ba-cd9104ca9947","secured":true,"waves":12,"gold":170,"durationTicks":10800,"lastEntryTick":10780,"promotedByRig":true,"discoveredBy":"outcome-file+filename"}],"otherSecured":[{"file":"tune-1-tape.json","id":"agent-5b4b48cd-74050fa2-e26f-4d95-82ba-cd9104ca9947","waves":12,"gold":170}],"reportSections":{"outcome":1323,"whatTheMapAsked":3900,"winnability":598,"lessons":6418},"usage":{"turns":43,"toolCalls":23,"tokensIn":86,"tokensOut":163893}}
+tape chosen: attempt-1-tape.json (id agent-5b4b48cd-74050fa2-e26f-4d95-82ba-cd9104ca9947, promotedByRig=true, discoveredBy=outcome-file+filename)
+
+=== 2 freeze notebook header ===
+{"headerOnly":true,"headerBytes":434}
+
+=== 3 harnessDigest ===
+1412d039d07624e32659b907af89ce6cf6bfd7847582347bbd15fb09856674c9
+
+=== 4 build-submission ===
+{"tapeId":"agent-5b4b48cd-74050fa2-e26f-4d95-82ba-cd9104ca9947","contract":"e4-gusher-county","epochId":"epoch-4-motor","seed":"e4-gusher-county-01","seedMode":"bench","score":{"secured":true,"waves":12,"timeAlive":360,"gold":170,"baseValue":0},"papers":{"buildId":"fc4553675","engineHash":"09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4","era":5,"viewVersion":2},"durationTicks":10800,"lastEntryTick":10780,"stack":{"model":"claude-opus-5","harness":"heat13-operator","harnessVersion":"2.1.257","harnessDigest":"1412d039d07624e32659b907af89ce6cf6bfd7847582347bbd15fb09856674c9","worldModel":"sim-import","config":"attended-hosted headless `claude -p` ride (heat 13, the 1:1-grammar re-ride) on Claude Code CLI 2.1.257; charter + door manual + own notebook (self-memory); own controller authored in-ride","calls":49,"tokensIn":14469806,"tokensOut":163893}}
+
+=== 5 publish (POST → poll → WATCH) ===
+{"rank":1,"tapeId":"agent-5b4b48cd-74050fa2-e26f-4d95-82ba-cd9104ca9947","assay":"verified","assayHash":"fnv1a32:0e24753e","papers":{"buildId":"fc4553675","engineHash":"09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4","era":5,"viewVersion":2}}
+
+=== LANDED ===
+{
+ "rig": "opus",
+ "contract": "e4-gusher-county",
+ "tapeFile": "attempt-1-tape.json",
+ "tapeId": "agent-5b4b48cd-74050fa2-e26f-4d95-82ba-cd9104ca9947",
+ "assay": "verified",
+ "assayHash": "fnv1a32:0e24753e",
+ "ranked": true,
+ "rank": 1,
+ "waves": 12,
+ "gold": 170,
+ "calls": 49,
+ "eventLogHash": "fnv1a32:1c64ed8e",
+ "wall": 897,
+ "harnessDigest": "1412d039d07624e32659b907af89ce6cf6bfd7847582347bbd15fb09856674c9",
+ "usage": {
+  "turns": 43,
+  "toolCalls": 23,
+  "tokensIn": 14469806,
+  "tokensOut": 163893
+ }
+}
+
+land rc=0
+--- 4 notebook ---
+{"notebook":"/Users/robin/Claude/Projects/goldrush-gauntlet/memories/claude__opus-5/NOTEBOOK.md","generation":73,"headerBytes":434,"entryBytes":11784}
+--- 5 matrix ---
+| 13 | e4-gusher-county | `e4-gusher-county-01` | re-ride | 73 | **SECURED** | 12 | 170 | 360s | 897s | `attempt-1-tape.json` · `agent-5b4b48cd-74050fa2-e26f-4d95-82ba-cd9104ca9947`<br>fnv1a32:1c64ed8e | verified `fnv1a32:0e24753e` rank 1 | gen 73<br>slip `agent-5b4b48cd-74050fa2-e26f-4d95-82ba-cd9104ca9947` |
+{"contract":"e4-gusher-county","secured":true,"tapesOnDisk":6,"scoredTapes":1,"otherSecured":1,"runs":2,"scoredAttempts":1,"wallHit":false,"rc":0,"assay":"verified","ranked":true,"winnability":"Secured, and the margin was **wide on survival, comfortable on the clock, and effectively nil on fuel**: nothing was ever wrecked, `threats.alive` peaked at 26 against a hero that finished 117/175 (its worst moment was 62/100 at wave 3, before the plating picks landed), and the errand latched with 300 seconds to spare against the wave-12 gate — but the Hauler drew **36 of 36 fuel** and ran dry at t = 70.5, so the tank had about four fuel left at the instant the third lease landed, and one closed-road dispatch would have stranded the objective and made the run unsecurable at every later wave."}
+########## END e4-gusher-county ##########
+
+=== QUEUE 14 the-claim (gen 74, wall 1500s, free 104635MiB) 13:18:57Z ===
+
+########## RIDE the-claim · seed e1-the-claim-01 · gen 74 · stake re-ride · wall 1500s ##########
+--- 1 charter ---
+{"rig":"opus","contract":"the-claim","seed":"e1-the-claim-01","seedMode":"bench","stake":"re-ride","generation":74,"wall":1500,"notebookSha256":"857d8fe1ac1ca68c6b405355e1ead5c905bd3e6a27b9a1074a490f2d4623421e","charterSha256":"68fcfc3f732f12da0524b8ed72ca74f146fc061507ca92c7e2c15a628d6a2a75","bytes":604391,"out":"/private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/rides/the-claim/charter.md"}
+--- 2 ride ---
+START opus claude-opus-5 pid=57971 session=6dee6cc0-4141-4f90-9c42-b054e4ecc7cb at=2026-09-07T13:18:57.339Z
+FIRST-OUTPUT opus +120s
+OUTCOME opus secured=false waves=2 gold=0 runsSoFar=1 scored=0 +135s
+OUTCOME opus secured=true waves=10 gold=200 runsSoFar=2 scored=0 +360s
+OUTCOME opus secured=true waves=10 gold=200 runsSoFar=2 scored=1 +465s
+END opus rc=0 signal=null wall=541s wallHit=false
+ride-wall rc=0 signal=-
+--- 3 land ---
+
+=== 1 finish-ride ===
+{"rig":"opus","contract":"the-claim","wall":541,"wallHit":false,"rc":0,"tracked":[],"files":11,"outcome":{"secured":true,"waves":10,"gold":200,"runsSoFar":2,"scoredAttempts":1,"tape":"/private/tmp/heat13-569a41f9/artifacts/heat13/opus/the-claim/attempt-1-tape.json","worldModel":"sim-import"},"scoredTapes":[{"file":"attempt-1-tape.json","id":"agent-421bae96-cb182021-8bdd-4d68-afb7-75792cd15150","secured":true,"waves":10,"gold":200,"durationTicks":9000,"lastEntryTick":8882,"promotedByRig":true,"discoveredBy":"outcome-file+filename"}],"otherSecured":[{"file":"tune-1.json","id":"agent-421bae96-cb182021-8bdd-4d68-afb7-75792cd15150","waves":10,"gold":200}],"reportSections":{"outcome":483,"whatTheMapAsked":2376,"winnability":517,"lessons":5816},"usage":{"turns":43,"toolCalls":20,"tokensIn":86,"tokensOut":93718}}
+tape chosen: attempt-1-tape.json (id agent-421bae96-cb182021-8bdd-4d68-afb7-75792cd15150, promotedByRig=true, discoveredBy=outcome-file+filename)
+
+=== 2 freeze notebook header ===
+{"headerOnly":true,"headerBytes":426}
+
+=== 3 harnessDigest ===
+7db1dab829fda89d91b28d0ee2ff3a395233c97dcc35c490ae4a1faf3e6f8873
+
+=== 4 build-submission ===
+{"tapeId":"agent-421bae96-cb182021-8bdd-4d68-afb7-75792cd15150","contract":"the-claim","epochId":"epoch-1-frontier","seed":"e1-the-claim-01","seedMode":"bench","score":{"secured":true,"waves":10,"timeAlive":300,"gold":200,"baseValue":0},"papers":{"buildId":"fc4553675","engineHash":"09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4","era":5,"viewVersion":2},"durationTicks":9000,"lastEntryTick":8882,"stack":{"model":"claude-opus-5","harness":"heat13-operator","harnessVersion":"2.1.257","harnessDigest":"7db1dab829fda89d91b28d0ee2ff3a395233c97dcc35c490ae4a1faf3e6f8873","worldModel":"sim-import","config":"attended-hosted headless `claude -p` ride (heat 13, the 1:1-grammar re-ride) on Claude Code CLI 2.1.257; charter + door manual + own notebook (self-memory); own controller authored in-ride","calls":679,"tokensIn":13967458,"tokensOut":93718}}
+
+=== 5 publish (POST → poll → WATCH) ===
+{"rank":1,"tapeId":"agent-421bae96-cb182021-8bdd-4d68-afb7-75792cd15150","assay":"verified","assayHash":"fnv1a32:22ca1b99","papers":{"buildId":"fc4553675","engineHash":"09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4","era":5,"viewVersion":2}}
+
+=== LANDED ===
+{
+ "rig": "opus",
+ "contract": "the-claim",
+ "tapeFile": "attempt-1-tape.json",
+ "tapeId": "agent-421bae96-cb182021-8bdd-4d68-afb7-75792cd15150",
+ "assay": "verified",
+ "assayHash": "fnv1a32:22ca1b99",
+ "ranked": true,
+ "rank": 1,
+ "waves": 10,
+ "gold": 200,
+ "calls": 679,
+ "eventLogHash": "fnv1a32:150ebe1c",
+ "wall": 541,
+ "harnessDigest": "7db1dab829fda89d91b28d0ee2ff3a395233c97dcc35c490ae4a1faf3e6f8873",
+ "usage": {
+  "turns": 43,
+  "toolCalls": 20,
+  "tokensIn": 13967458,
+  "tokensOut": 93718
+ }
+}
+
+land rc=0
+--- 4 notebook ---
+{"notebook":"/Users/robin/Claude/Projects/goldrush-gauntlet/memories/claude__opus-5/NOTEBOOK.md","generation":74,"headerBytes":426,"entryBytes":9639}
+--- 5 matrix ---
+| 14 | the-claim | `e1-the-claim-01` | re-ride | 74 | **SECURED** | 10 | 200 | 300s | 541s | `attempt-1-tape.json` · `agent-421bae96-cb182021-8bdd-4d68-afb7-75792cd15150`<br>fnv1a32:150ebe1c | verified `fnv1a32:22ca1b99` rank 1 | gen 74<br>slip `agent-421bae96-cb182021-8bdd-4d68-afb7-75792cd15150` |
+{"contract":"the-claim","secured":true,"tapesOnDisk":6,"scoredTapes":1,"otherSecured":1,"wallHit":false,"rc":0,"assay":"verified","ranked":true,"winnability":"Secured, and the margin was **wide on survival and exact on the score**: hero 175/175\nhaving never dropped below its running maximum, zero of ten works ever wrecked across 299\nkills, `threats.alive` peaking at 21 of a 60 cap — while the ranked number landed on\n**200, the bank cap itself**, which is the arithmetic maximum this contract can publish\nnow that `twist.secureWave: 10` has pinned both waves and `timeAlive`. No rider can beat\nthis row on any axis; an exact tie can only be broken by an earlier submission."}
+########## END the-claim ##########
+
+=== QUEUE 15 e1-baron (gen 75, wall 1500s, free 89459MiB) 13:29:58Z ===
+
+########## RIDE e1-baron · seed e1-baron-01 · gen 75 · stake never-claimed · wall 1500s ##########
+--- 1 charter ---
+{"rig":"opus","contract":"e1-baron","seed":"e1-baron-01","seedMode":"bench","stake":"never-claimed","generation":75,"wall":1500,"notebookSha256":"098e47ca48105266a1c0fa8c7ea12e74366b5e4580639a5327e94bdf299fc67b","charterSha256":"9f4e3f20a7f0b00a12f20b87462ce31c04252ca6077ee9c4b6e3ab7122e3556a","bytes":613885,"out":"/private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/rides/e1-baron/charter.md"}
+--- 2 ride ---
+START opus claude-opus-5 pid=91452 session=dd4fdd6a-6f5d-4a7f-8697-99066251e4bb at=2026-09-07T13:29:58.131Z
+FIRST-OUTPUT opus +120s
+OUTCOME opus secured=false waves=5 gold=0 runsSoFar=1 scored=0 +120s
+OUTCOME opus secured=false waves=20 gold=300 runsSoFar=2 scored=0 +450s
+OUTCOME opus secured=false waves=20 gold=300 runsSoFar=3 scored=0 +645s
+OUTCOME opus secured=false waves=20 gold=260 runsSoFar=4 scored=0 +780s
+OUTCOME opus secured=false waves=20 gold=300 runsSoFar=5 scored=0 +855s
+OUTCOME opus secured=false waves=20 gold=300 runsSoFar=5 scored=1 +885s
+OUTCOME opus secured=false waves=20 gold=134 runsSoFar=6 scored=1 +1065s
+OUTCOME opus secured=false waves=23 gold=134 runsSoFar=7 scored=1 +1275s
+WALL opus 1500s reached — SIGTERM to process group 91452
+END opus rc=143 signal=null wall=1500s wallHit=true
+ride-wall rc=124 signal=-
+--- 3 land ---
+
+=== 1 finish-ride ===
+{"rig":"opus","contract":"e1-baron","wall":1500,"wallHit":true,"rc":143,"tracked":[],"files":26,"outcome":{"secured":false,"waves":23,"gold":134,"runsSoFar":7,"scoredAttempts":1,"tape":"/tmp/heat13-569a41f9/artifacts/heat13/opus/e1-baron/tune-6.json","worldModel":"sim-import"},"scoredTapes":[{"file":"attempt-1-tape.json","id":"agent-5120191d-863fc716-b852-43da-b80a-eacee4230b9c","secured":false,"waves":20,"gold":300,"durationTicks":16144,"lastEntryTick":16120,"promotedByRig":false,"discoveredBy":"filename"},{"file":"tune-6.json","id":"agent-07378b6b-d101bfc1-bf8d-4326-aea7-d8b8c074ed5b","secured":false,"waves":23,"gold":134,"durationTicks":18312,"lastEntryTick":18225,"promotedByRig":true,"discoveredBy":"outcome-file"}],"otherSecured":[],"reportSections":{"outcome":1206,"whatTheMapAsked":2382,"winnability":2262,"lessons":4819},"usage":{"turns":96,"toolCalls":48,"tokensIn":192,"tokensOut":165711}}
+
+=== NOT SECURED — nothing to submit ===
+{
+ "rig": "opus",
+ "contract": "e1-baron",
+ "wall": 1500,
+ "wallHit": true,
+ "rc": 143,
+ "scoredTapes": [
+  {
+   "file": "attempt-1-tape.json",
+   "secured": false,
+   "waves": 20,
+   "gold": 300
+  },
+  {
+   "file": "tune-6.json",
+   "secured": false,
+   "waves": 23,
+   "gold": 134
+  }
+ ],
+ "outcomeNote": null
+}
+
+land rc=0
+--- 4 notebook ---
+{"notebook":"/Users/robin/Claude/Projects/goldrush-gauntlet/memories/claude__opus-5/NOTEBOOK.md","generation":75,"headerBytes":448,"entryBytes":10385}
+--- 5 matrix ---
+| 15 | e1-baron | `e1-baron-01` | never-claimed | 75 | **not secured (WALL)** | 23 | 134 | 610.400s | 1500s ⏱ | `tune-6.json` · `agent-07378b6b-d101bfc1-bf8d-4326-aea7-d8b8c074ed5b`<br>fnv1a32:3f634159 | — | gen 75 |
+{"contract":"e1-baron","secured":false,"tapesOnDisk":23,"scoredTapes":2,"otherSecured":0,"runs":7,"scoredAttempts":1,"wallHit":true,"rc":143,"assay":null,"ranked":null,"winnability":"**Undecided-leaning-yes, and what stopped me was my own budget, not a wall in the map, the grammar or\nthe economy:** the fort is solved (wave 19 at 175/175, ten works, zero wrecked, all turrets tier 2,\n~600 dps against a ~47,900-hp boss inside a 156-second grace window, which is enough by a comfortable\nmargin), and the one thing between me and the kill is that I could not keep a 175-hp hero alive for\n80 seconds inside a 40-enemy wave — with the ride's decisive lever, `MOVE_HERO`, only found and\ndebugged on my last two runs and never combined with the palisade leash that tune-2 proved.\n\nThe load-bearing discovery, which I ran out of wall clock to exploit rather than failing to find:\n`Enemy.ts:970 shouldPursueHero` means a baron within `pursuitRange` 18 of the hero **walks the hero\nand never calls `updateWrecker` on my turrets** — it retargets only to a palisade that blocks the\nroute (`Enemy.ts:955`) — and `HeadlessContractSim.ts:2450 baronRocketMeleeSuppressed` **switches the\n3 × 18 rocket volley off entirely whenever the baron is within wreck reach of any building**. There\nis no line-of-sight term anywhere in the engine, so timber never shadows a turret. A palisade ring\noutside the guns is therefore three things at once: the missing gold sink, the baron's leash, and its\nrocket silencer — while the guns keep firing through it. tune-2 built that ring and held the hero at\n**175/175 until t = 528**, the best survival of the heat; it lost only because the ring was\ngold-starved into ~13 of 24 posts (6 orders per array, 10 g each, against a purse at 0–15 g) and the\nbaron walked through a 3.4-wu gap and landed four clean 40-damage contacts.\n\nThe run I would ride first with another hour is one edit from tune-2, and every part of it is\nmeasured rather than guessed: **the dense ring built early.** Start the ring at wave 10 rather than\n14 (so it also keeps the purse from ever capping), 32 posts at radius 13 with ~10 orders per array,\n`REPAIR_UNDER` from wave 16 only (mending is 2.5 g but the travel is ruinous to panning), and let the\ntier-2 upgrades take whatever is left. That buys a stationary, rocket-silenced boss inside the kill\nzone of four tier-2 turrets, which is the only configuration of this map in which the arithmetic\ncloses."}
+########## END e1-baron ##########
+
+=== QUEUE 16 e1-night-shift (gen 76, wall 1500s, free 104273MiB) 13:54:58Z ===
+
+########## RIDE e1-night-shift · seed e1-night-shift-01 · gen 76 · stake never-claimed · wall 1500s ##########
+--- 1 charter ---
+{"rig":"opus","contract":"e1-night-shift","seed":"e1-night-shift-01","seedMode":"bench","stake":"never-claimed","generation":76,"wall":1500,"notebookSha256":"9e5f676244dc1cd05bbaa3aa4ddd5cd7772cdb65dceecf54a12c2d13d803fee3","charterSha256":"cc4089cd48774a1b3b84a5c3ab5f605f32397b5e0c17758848c779e931e61cc7","bytes":624324,"out":"/private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/rides/e1-night-shift/charter.md"}
+--- 2 ride ---
+START opus claude-opus-5 pid=67598 session=cd202c46-850f-4cea-a7eb-7108c556616c at=2026-09-07T13:54:58.563Z
+FIRST-OUTPUT opus +75s
+OUTCOME opus secured=false waves=4 gold=0 runsSoFar=1 scored=0 +90s
+OUTCOME opus secured=false waves=5 gold=198 runsSoFar=2 scored=0 +360s
+OUTCOME opus secured=false waves=23 gold=116 runsSoFar=3 scored=0 +615s
+OUTCOME opus secured=false waves=23 gold=116 runsSoFar=4 scored=1 +735s
+OUTCOME opus secured=false waves=23 gold=116 runsSoFar=4 scored=1 +750s
+END opus rc=0 signal=null wall=831s wallHit=false
+ride-wall rc=0 signal=-
+--- 3 land ---
+
+=== 1 finish-ride ===
+{"rig":"opus","contract":"e1-night-shift","wall":831,"wallHit":false,"rc":0,"tracked":[],"files":16,"outcome":{"secured":false,"waves":23,"gold":116,"runsSoFar":4,"scoredAttempts":1,"tape":"/tmp/heat13-569a41f9/artifacts/heat13/opus/e1-night-shift/tune-2-tape.json","worldModel":"sim-import"},"scoredTapes":[{"file":"attempt-1-tape.json","id":"agent-af1b6e7d-1e0bef05-1fd0-4ddc-803e-2ce83efe37e6","secured":false,"waves":23,"gold":14,"durationTicks":21022,"lastEntryTick":21011,"promotedByRig":false,"discoveredBy":"filename"},{"file":"tune-2-tape.json","id":"agent-98cd41c5-a116fdbf-342a-4bf8-a509-cbebd0d2e854","secured":false,"waves":23,"gold":116,"durationTicks":21133,"lastEntryTick":21132,"promotedByRig":true,"discoveredBy":"outcome-file"}],"otherSecured":[],"reportSections":{"outcome":831,"whatTheMapAsked":3126,"winnability":1607,"lessons":4505},"usage":{"turns":43,"toolCalls":24,"tokensIn":86,"tokensOut":93735}}
+
+=== NOT SECURED — nothing to submit ===
+{
+ "rig": "opus",
+ "contract": "e1-night-shift",
+ "wall": 831,
+ "wallHit": false,
+ "rc": 0,
+ "scoredTapes": [
+  {
+   "file": "attempt-1-tape.json",
+   "secured": false,
+   "waves": 23,
+   "gold": 14
+  },
+  {
+   "file": "tune-2-tape.json",
+   "secured": false,
+   "waves": 23,
+   "gold": 116
+  }
+ ],
+ "outcomeNote": "NOT SECURED - nothing is put forward. Best run of the heat is tune-2 (w23/704.433s), 45.6s short of the wave-25 dawn at t=750. The scored attempt (attempt-1-tape.json, w23/700.733s) is not secured either and is not promoted; the tape field names the BEST run, which is the honest row. No submission."
+}
+
+land rc=0
+--- 4 notebook ---
+{"notebook":"/Users/robin/Claude/Projects/goldrush-gauntlet/memories/claude__opus-5/NOTEBOOK.md","generation":76,"headerBytes":430,"entryBytes":10146}
+--- 5 matrix ---
+| 16 | e1-night-shift | `e1-night-shift-01` | never-claimed | 76 | **not secured** | 23 | 116 | 704.433s | 831s | `tune-2-tape.json` · `agent-98cd41c5-a116fdbf-342a-4bf8-a509-cbebd0d2e854`<br>fnv1a32:d6289d26 | — | gen 76 |
+{"contract":"e1-night-shift","secured":false,"tapesOnDisk":13,"scoredTapes":2,"otherSecured":0,"runs":4,"scoredAttempts":1,"wallHit":false,"rc":0,"assay":null,"ranked":null,"winnability":"**Undecided-leaning-yes, and what stopped me was my own budget — one field name cost me two of my\nfour runs:** `tune-1` spent its whole ride with *zero* works on the board because I read the\nbuildables block's cap as `b.max` when the field is `b.maxCount`, so `n < undefined` was false, the\nladder never emitted a single `BUILD`, and I burned a run and a diagnostic finding it; the one\ncontroller that actually rode reached **w23 / 704.4 s, 45.6 seconds short of dawn**, with the full\nfort standing (4 turrets all at tier 2, 6 beacons, 13 palisades, hero 175/175 and untouched through\nwave 18) and the map's own economy the binding constraint — 1650 gold panned against ~1460 spent,\nso there is no idle purse left to convert, and my scored attempt proved that buying the timber\nearlier simply trades panning feet for it (1520 panned, same 23 waves, 3.7 s worse). The untested\nlevers that close 45 seconds are named and cheap: **(a)** stop building entirely from about t = 640\nso the Prospector's last 110 seconds are pure panning *and* pure repair rather than 13 palisade\nround trips to a radius-10 ring — mending is 25 % of cost and the wrecked frame holds its ground;\n**(b)** put the palisade ring at radius 6–7 instead of 10–13, inside the beacon light and inside\nturret cover, so the timber is defended while it absorbs instead of being chewed in the dark; and\n**(c)** buy the one legal `lantern_post` plus relight the (0,16) post *early*, before wave 10, since\ndarkness is a speed bonus for exactly the class that ends the run. None of those is blocked by the\nmap, the grammar, the economy or the door."}
+########## END e1-night-shift ##########
+
+=== QUEUE 17 e2-hill-mine (gen 77, wall 1500s, free 104253MiB) 14:08:49Z ===
+
+########## RIDE e2-hill-mine · seed e2-hill-mine-01 · gen 77 · stake never-claimed · wall 1500s ##########
+--- 1 charter ---
+{"rig":"opus","contract":"e2-hill-mine","seed":"e2-hill-mine-01","seedMode":"bench","stake":"never-claimed","generation":77,"wall":1500,"notebookSha256":"540c0e0035ae170b1a744c535914458e97faa3464209111617b0b7251553e26e","charterSha256":"ed485a9e4fcbf29c16c3c55c27bf16c0088ece259e601ee34ae3f327d99e5f59","bytes":634449,"out":"/private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/rides/e2-hill-mine/charter.md"}
+--- 2 ride ---
+START opus claude-opus-5 pid=95577 session=85bbefa3-ee60-49e2-bb98-23408da53219 at=2026-09-07T14:08:49.583Z
+FIRST-OUTPUT opus +90s
+OUTCOME opus secured=false waves=2 gold=0 runsSoFar=1 scored=0 +105s
+OUTCOME opus secured=false waves=10 gold=28 runsSoFar=2 scored=0 +330s
+OUTCOME opus secured=false waves=13 gold=37 runsSoFar=3 scored=1 +465s
+OUTCOME opus secured=false waves=14 gold=0 runsSoFar=4 scored=2 +510s
+END opus rc=0 signal=null wall=583s wallHit=false
+ride-wall rc=0 signal=-
+--- 3 land ---
+
+=== 1 finish-ride ===
+{"rig":"opus","contract":"e2-hill-mine","wall":583,"wallHit":false,"rc":0,"tracked":[],"files":15,"outcome":{"secured":false,"waves":14,"gold":0,"runsSoFar":4,"scoredAttempts":2,"tape":"/private/tmp/heat13-569a41f9/artifacts/heat13/opus/e2-hill-mine/attempt-2-tape.json","worldModel":"sim-import"},"scoredTapes":[{"file":"attempt-1-tape.json","id":"agent-2b14dc2b-a7f69c7d-f23a-4d2c-b7de-109f69bc07d6","secured":false,"waves":13,"gold":37,"durationTicks":12503,"lastEntryTick":12293,"promotedByRig":false,"discoveredBy":"filename"},{"file":"attempt-2-tape.json","id":"agent-67db9108-40bb5c2b-5d56-4621-a16e-33e60a3b9bf0","secured":false,"waves":14,"gold":0,"durationTicks":12804,"lastEntryTick":12744,"promotedByRig":true,"discoveredBy":"outcome-file+filename"}],"otherSecured":[],"reportSections":{"outcome":568,"whatTheMapAsked":2611,"winnability":1002,"lessons":4348},"usage":{"turns":55,"toolCalls":31,"tokensIn":110,"tokensOut":88434}}
+
+=== NOT SECURED — nothing to submit ===
+{
+ "rig": "opus",
+ "contract": "e2-hill-mine",
+ "wall": 583,
+ "wallHit": false,
+ "rc": 0,
+ "scoredTapes": [
+  {
+   "file": "attempt-1-tape.json",
+   "secured": false,
+   "waves": 13,
+   "gold": 37
+  },
+  {
+   "file": "attempt-2-tape.json",
+   "secured": false,
+   "waves": 14,
+   "gold": 0
+  }
+ ],
+ "outcomeNote": null
+}
+
+land rc=0
+--- 4 notebook ---
+{"notebook":"/Users/robin/Claude/Projects/goldrush-gauntlet/memories/claude__opus-5/NOTEBOOK.md","generation":77,"headerBytes":429,"entryBytes":8901}
+--- 5 matrix ---
+| 17 | e2-hill-mine | `e2-hill-mine-01` | never-claimed | 77 | **not secured** | 14 | 0 | 426.800s | 583s | `attempt-2-tape.json` · `agent-67db9108-40bb5c2b-5d56-4621-a16e-33e60a3b9bf0`<br>fnv1a32:36b85b03 | — | gen 77 |
+{"contract":"e2-hill-mine","secured":false,"tapesOnDisk":5,"scoredTapes":2,"otherSecured":0,"runs":4,"scoredAttempts":2,"wallHit":false,"rc":0,"assay":null,"ranked":null,"winnability":"**Undecided-leaning-yes, and what stopped me was my own budget, not a wall in the map, the\ngrammar or the economy:** the fort is solved (four turrets, six beacons, `0` wrecked through\nwave 11, hero at 175/175 to t = 284) and the boss is reachable by hero weapons for the first\ntime in this contract's history, but my two scored attempts went to finding my own\ncontroller's faults — a gold-gated repair that never fired, then a `MOVE_HERO` ladder that\nshuttled the hero between posts and froze panning and repair — so the run that combines what\nthey proved (parked hero + ungated repair + the ~600 g tier-2 turret sink that 2.3 g/s income\nnow supports, worth ×1.65 dps on the only works whose 16 wu range reaches the rail) was never\nridden; on the arithmetic that remains, ~3,100 boss HP against four tier-2 turrets' ~13-second\nrail windows plus a hero at ~24 dps rig and ~28 dps blast closes inside the six-wave grace\nwindow, and I finished 4 waves short of the ceiling rather than short of the damage."}
+########## END e2-hill-mine ##########
+
+=== QUEUE 18 e7-relay-valley (gen 78, wall 1500s, free 104227MiB) 14:18:33Z ===
+
+########## RIDE e7-relay-valley · seed e7-relay-valley-01 · gen 78 · stake never-claimed · wall 1500s ##########
+--- 1 charter ---
+{"rig":"opus","contract":"e7-relay-valley","seed":"e7-relay-valley-01","seedMode":"bench","stake":"never-claimed","generation":78,"wall":1500,"notebookSha256":"36666bb93c80381c365e9c4d1221a9290731f166938d9e437deec9e4dfc9f6ed","charterSha256":"1438053656ece04130ac2179f9bdc3ed806b0723dbd0c7e0d8070f66bb7e125e","bytes":643547,"out":"/private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/rides/e7-relay-valley/charter.md"}
+--- 2 ride ---
+START opus claude-opus-5 pid=17664 session=8ed6ee91-4d66-4d80-8303-dd6aedbe666f at=2026-09-07T14:18:33.268Z
+FIRST-OUTPUT opus +75s
+OUTCOME opus secured=false waves=7 gold=0 runsSoFar=1 scored=0 +285s
+OUTCOME opus secured=true waves=20 gold=110 runsSoFar=2 scored=1 +420s
+END opus rc=0 signal=null wall=492s wallHit=false
+ride-wall rc=0 signal=-
+--- 3 land ---
+
+=== 1 finish-ride ===
+{"rig":"opus","contract":"e7-relay-valley","wall":492,"wallHit":false,"rc":0,"tracked":[],"files":15,"outcome":{"secured":true,"waves":20,"gold":110,"runsSoFar":2,"scoredAttempts":1,"tape":"/tmp/heat13-569a41f9/artifacts/heat13/opus/e7-relay-valley/attempt-1-tape.json","worldModel":"sim-import"},"scoredTapes":[{"file":"attempt-1-tape.json","id":"agent-a4d1c6f6-13c0ebe1-201f-4677-ab80-3b2bc18e43e0","secured":true,"waves":20,"gold":110,"durationTicks":18000,"lastEntryTick":17915,"promotedByRig":true,"discoveredBy":"outcome-file+filename"}],"otherSecured":[{"file":"tune-1-tape.json","id":"agent-a4d1c6f6-13c0ebe1-201f-4677-ab80-3b2bc18e43e0","waves":20,"gold":110}],"reportSections":{"outcome":1149,"whatTheMapAsked":2602,"winnability":715,"lessons":4792},"usage":{"turns":61,"toolCalls":31,"tokensIn":122,"tokensOut":81704}}
+tape chosen: attempt-1-tape.json (id agent-a4d1c6f6-13c0ebe1-201f-4677-ab80-3b2bc18e43e0, promotedByRig=true, discoveredBy=outcome-file+filename)
+
+=== 2 freeze notebook header ===
+{"headerOnly":true,"headerBytes":432}
+
+=== 3 harnessDigest ===
+d6050d081fef7e411ad2eb5b844c380433458761d59c2190be9ae317b9e3dbaf
+
+=== 4 build-submission ===
+{"tapeId":"agent-a4d1c6f6-13c0ebe1-201f-4677-ab80-3b2bc18e43e0","contract":"e7-relay-valley","epochId":"epoch-7-signal","seed":"e7-relay-valley-01","seedMode":"bench","score":{"secured":true,"waves":20,"timeAlive":600,"gold":110,"baseValue":0},"papers":{"buildId":"1894581f2","engineHash":"09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4","era":5,"viewVersion":2},"durationTicks":18000,"lastEntryTick":17915,"stack":{"model":"claude-opus-5","harness":"heat13-operator","harnessVersion":"2.1.257","harnessDigest":"d6050d081fef7e411ad2eb5b844c380433458761d59c2190be9ae317b9e3dbaf","worldModel":"sim-import","config":"attended-hosted headless `claude -p` ride (heat 13, the 1:1-grammar re-ride) on Claude Code CLI 2.1.257; charter + door manual + own notebook (self-memory); own controller authored in-ride","calls":75,"tokensIn":21207976,"tokensOut":81704}}
+
+=== 5 publish (POST → poll → WATCH) ===
+FAILED: file:///private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/publish-submission.mjs:37
+if (slip?.assay !== 'verified') throw new Error(`assay ${slip?.assay ?? 'missing'}: ${slip?.assayReason ?? 'no reason'}`);
+                                      ^
+
+Error: assay pending: no reason
+    at file:///private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/publish-submission.mjs:37:39
+
+Node.js v23.11.1
+
+POST ok; assay still pending at the 120 s mark — resuming with the poll-only shim (no re-POST)
+
+=== 6 poll-verdict (no re-POST) ===
+{"tapeId":"agent-a4d1c6f6-13c0ebe1-201f-4677-ab80-3b2bc18e43e0","assay":"verified","assayHash":"fnv1a32:41eea3b5","ranked":true,"papers":{"buildId":"1894581f2","engineHash":"09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4","era":5,"viewVersion":2}}
+
+=== LANDED ===
+{
+ "rig": "opus",
+ "contract": "e7-relay-valley",
+ "tapeFile": "attempt-1-tape.json",
+ "tapeId": "agent-a4d1c6f6-13c0ebe1-201f-4677-ab80-3b2bc18e43e0",
+ "assay": "verified",
+ "assayHash": "fnv1a32:41eea3b5",
+ "ranked": true,
+ "rank": 1,
+ "waves": 20,
+ "gold": 110,
+ "calls": 75,
+ "eventLogHash": "fnv1a32:ea5b188c",
+ "wall": 492,
+ "harnessDigest": "d6050d081fef7e411ad2eb5b844c380433458761d59c2190be9ae317b9e3dbaf",
+ "usage": {
+  "turns": 61,
+  "toolCalls": 31,
+  "tokensIn": 21207976,
+  "tokensOut": 81704
+ }
+}
+file:///private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/publish-submission.mjs:37
+if (slip?.assay !== 'verified') throw new Error(`assay ${slip?.assay ?? 'missing'}: ${slip?.assayReason ?? 'no reason'}`);
+                                      ^
+
+Error: assay pending: no reason
+    at file:///private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/publish-submission.mjs:37:39
+
+Node.js v23.11.1
+
+land rc=0
+--- 4 notebook ---
+{"notebook":"/Users/robin/Claude/Projects/goldrush-gauntlet/memories/claude__opus-5/NOTEBOOK.md","generation":78,"headerBytes":432,"entryBytes":9027}
+--- 5 matrix ---
+| 18 | e7-relay-valley | `e7-relay-valley-01` | never-claimed | 78 | **SECURED** | 20 | 110 | 600s | 492s | `attempt-1-tape.json` · `agent-a4d1c6f6-13c0ebe1-201f-4677-ab80-3b2bc18e43e0`<br>fnv1a32:ea5b188c | verified `fnv1a32:41eea3b5` rank 1 | gen 78<br>slip `agent-a4d1c6f6-13c0ebe1-201f-4677-ab80-3b2bc18e43e0` |
+{"contract":"e7-relay-valley","secured":true,"tapesOnDisk":8,"scoredTapes":1,"otherSecured":1,"runs":2,"scoredAttempts":1,"wallHit":false,"rc":0,"assay":"verified","ranked":true,"winnability":"Secured, and the margin was **wide in every direction at once**: the hero never\nfell below **371/475 (78.1 %)**, finishing 371/475 at level 28; **zero of ten\nworks were ever wrecked** across 903 kills and `goldStolen` finished at **0**;\nthe full ladder (4 turrets, 6 beacons) stood; `threats.alive` peaked at 51; and\nthe era gate latched 585 seconds before the bank. The one number with real slack\nleft on it is **gold — 110 of 780 panned** — and since waves and `timeAlive` are\nboth pinned by the wave-20 secure, gold is the only free ranking axis; a bank\ngate that stopped spending ~90 s out would have banked far more. The stop rule\ncorrectly ends the heat at the first secure, so that margin stays on the table."}
+########## END e7-relay-valley ##########
+
+=== QUEUE 19 e9-dome-basin (gen 79, wall 1500s, free 104183MiB) 14:29:33Z ===
+
+########## RIDE e9-dome-basin · seed e9-dome-basin-01 · gen 79 · stake never-claimed · wall 1500s ##########
+--- 1 charter ---
+{"rig":"opus","contract":"e9-dome-basin","seed":"e9-dome-basin-01","seedMode":"bench","stake":"never-claimed","generation":79,"wall":1500,"notebookSha256":"ede9ae4fabd071c7e188322325d31c524efb3286cbcb62e4f5656df93ae62730","charterSha256":"9029e76f6ef6a0c5b8438733f661eb6bb15a06ceff1d6f7ec5864dc5cb610840","bytes":652374,"out":"/private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/rides/e9-dome-basin/charter.md"}
+--- 2 ride ---
+START opus claude-opus-5 pid=37243 session=1a063d41-7b37-48c6-aa9e-19d8d57c66d9 at=2026-09-07T14:29:33.227Z
+FIRST-OUTPUT opus +105s
+OUTCOME opus secured=false waves=2 gold=0 runsSoFar=1 scored=0 +120s
+OUTCOME opus secured=true waves=20 gold=191 runsSoFar=1 scored=0 +405s
+OUTCOME opus secured=true waves=20 gold=191 runsSoFar=2 scored=1 +570s
+END opus rc=0 signal=null wall=648s wallHit=false
+ride-wall rc=0 signal=-
+--- 3 land ---
+
+=== 1 finish-ride ===
+{"rig":"opus","contract":"e9-dome-basin","wall":648,"wallHit":false,"rc":0,"tracked":[],"files":14,"outcome":{"secured":true,"waves":20,"gold":191,"runsSoFar":2,"scoredAttempts":1,"tape":"/private/tmp/heat13-569a41f9/artifacts/heat13/opus/e9-dome-basin/attempt-1-tape.json","worldModel":"sim-import"},"scoredTapes":[{"file":"attempt-1-tape.json","id":"agent-b0aac7df-e5137d65-dcc0-444c-a7eb-27c88fe9e5da","secured":true,"waves":20,"gold":191,"durationTicks":18000,"lastEntryTick":17966,"promotedByRig":true,"discoveredBy":"outcome-file+filename"}],"otherSecured":[{"file":"tune-1-tape.json","id":"agent-b0aac7df-e5137d65-dcc0-444c-a7eb-27c88fe9e5da","waves":20,"gold":191}],"reportSections":{"outcome":673,"whatTheMapAsked":2049,"winnability":400,"lessons":4026},"usage":{"turns":47,"toolCalls":23,"tokensIn":94,"tokensOut":72439}}
+tape chosen: attempt-1-tape.json (id agent-b0aac7df-e5137d65-dcc0-444c-a7eb-27c88fe9e5da, promotedByRig=true, discoveredBy=outcome-file+filename)
+
+=== 2 freeze notebook header ===
+{"headerOnly":true,"headerBytes":430}
+
+=== 3 harnessDigest ===
+5ee3480a84315dfc6a9604a1076e7c55165d98cf07ff119e0e57f5904c088ccf
+
+=== 4 build-submission ===
+{"tapeId":"agent-b0aac7df-e5137d65-dcc0-444c-a7eb-27c88fe9e5da","contract":"e9-dome-basin","epochId":"epoch-9-redfields","seed":"e9-dome-basin-01","seedMode":"bench","score":{"secured":true,"waves":20,"timeAlive":600,"gold":191,"baseValue":0},"papers":{"buildId":"1894581f2","engineHash":"09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4","era":5,"viewVersion":2},"durationTicks":18000,"lastEntryTick":17966,"stack":{"model":"claude-opus-5","harness":"heat13-operator","harnessVersion":"2.1.257","harnessDigest":"5ee3480a84315dfc6a9604a1076e7c55165d98cf07ff119e0e57f5904c088ccf","worldModel":"sim-import","config":"attended-hosted headless `claude -p` ride (heat 13, the 1:1-grammar re-ride) on Claude Code CLI 2.1.257; charter + door manual + own notebook (self-memory); own controller authored in-ride","calls":366,"tokensIn":15728347,"tokensOut":72439}}
+
+=== 5 publish (POST → poll → WATCH) ===
+FAILED: node:internal/deps/undici/undici:13510
+      Error.captureStackTrace(err);
+            ^
+
+TypeError: fetch failed
+    at node:internal/deps/undici/undici:13510:13
+    at async file:///private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/publish-submission.mjs:32:20 {
+  [cause]: Error: read ECONNRESET
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:216:20) {
+    errno: -54,
+    code: 'ECONNRESET',
+    syscall: 'read'
+  }
+}
+
+Node.js v23.11.1
+
+POST ok; assay still pending at the 120 s mark — resuming with the poll-only shim (no re-POST)
+
+=== 6 poll-verdict (no re-POST) ===
+{"tapeId":"agent-b0aac7df-e5137d65-dcc0-444c-a7eb-27c88fe9e5da","assay":"verified","assayHash":"fnv1a32:15d21e4a","ranked":true,"papers":{"buildId":"1894581f2","engineHash":"09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4","era":5,"viewVersion":2}}
+
+=== LANDED ===
+{
+ "rig": "opus",
+ "contract": "e9-dome-basin",
+ "tapeFile": "attempt-1-tape.json",
+ "tapeId": "agent-b0aac7df-e5137d65-dcc0-444c-a7eb-27c88fe9e5da",
+ "assay": "verified",
+ "assayHash": "fnv1a32:15d21e4a",
+ "ranked": true,
+ "rank": 1,
+ "waves": 20,
+ "gold": 191,
+ "calls": 366,
+ "eventLogHash": "fnv1a32:021c60e4",
+ "wall": 648,
+ "harnessDigest": "5ee3480a84315dfc6a9604a1076e7c55165d98cf07ff119e0e57f5904c088ccf",
+ "usage": {
+  "turns": 47,
+  "toolCalls": 23,
+  "tokensIn": 15728347,
+  "tokensOut": 72439
+ }
+}
+node:internal/deps/undici/undici:13510
+      Error.captureStackTrace(err);
+            ^
+
+TypeError: fetch failed
+    at node:internal/deps/undici/undici:13510:13
+    at async file:///private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/publish-submission.mjs:32:20 {
+  [cause]: Error: read ECONNRESET
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:216:20) {
+    errno: -54,
+    code: 'ECONNRESET',
+    syscall: 'read'
+  }
+}
+
+Node.js v23.11.1
+fetch retry 1: ECONNRESET
+fetch retry 1: ECONNRESET
+fetch retry 1: ECONNRESET
+
+land rc=0
+--- 4 notebook ---
+{"notebook":"/Users/robin/Claude/Projects/goldrush-gauntlet/memories/claude__opus-5/NOTEBOOK.md","generation":79,"headerBytes":430,"entryBytes":7379}
+--- 5 matrix ---
+| 19 | e9-dome-basin | `e9-dome-basin-01` | never-claimed | 79 | **SECURED** | 20 | 191 | 600s | 648s | `attempt-1-tape.json` · `agent-b0aac7df-e5137d65-dcc0-444c-a7eb-27c88fe9e5da`<br>fnv1a32:021c60e4 | verified `fnv1a32:15d21e4a` rank 1 | gen 79<br>slip `agent-b0aac7df-e5137d65-dcc0-444c-a7eb-27c88fe9e5da` |
+{"contract":"e9-dome-basin","secured":true,"tapesOnDisk":9,"scoredTapes":1,"otherSecured":1,"runs":2,"scoredAttempts":1,"wallHit":false,"rc":0,"assay":"verified","ranked":true,"winnability":"Secured, and the margin was **wide in every direction at once**: the hero finished 175/175 having\ntaken no damage at all across the last twelve waves, the full ladder stood (4 turrets, 6 beacons, 16\npalisades), and gold landed at **191 of a 200 bank cap** — the only free ranking axis, nine short of\nits arithmetic maximum, with the reel clearing its tightest envelope axis (bytes) at 57% of ceiling."}
+########## END e9-dome-basin ##########
+
+=== QUEUE 20 e3-canyon-works (gen 80, wall 1400s, free 104139MiB) 14:47:23Z ===
+
+########## RIDE e3-canyon-works · seed e3-canyon-works-01 · gen 80 · stake never-claimed · wall 1400s ##########
+--- 1 charter ---
+{"rig":"opus","contract":"e3-canyon-works","seed":"e3-canyon-works-01","seedMode":"bench","stake":"never-claimed","generation":80,"wall":1400,"notebookSha256":"d6ad7296925453f9c312f4546723e0cc908ff3382d4b126cdfae24f4bf5af42d","charterSha256":"07c9a2ab2811bda9cc1b2d7c4d8dc2a15850a581e5b8445d06712cf8cea6142d","bytes":659790,"out":"/private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/rides/e3-canyon-works/charter.md"}
+--- 2 ride ---
+START opus claude-opus-5 pid=52425 session=0c70343a-e6b4-4501-90c0-7ed8df15ac7c at=2026-09-07T14:47:23.171Z
+FIRST-OUTPUT opus +120s
+OUTCOME opus secured=false waves=3 gold=0 runsSoFar=1 scored=0 +135s
+OUTCOME opus secured=false waves=20 gold=0 runsSoFar=2 scored=0 +480s
+OUTCOME opus secured=true waves=15 gold=270 runsSoFar=3 scored=0 +600s
+OUTCOME opus secured=true waves=15 gold=270 runsSoFar=3 scored=1 +630s
+OUTCOME opus secured=true waves=15 gold=270 runsSoFar=3 scored=1 +735s
+END opus rc=0 signal=null wall=750s wallHit=false
+ride-wall rc=0 signal=-
+--- 3 land ---
+
+=== 1 finish-ride ===
+{"rig":"opus","contract":"e3-canyon-works","wall":750,"wallHit":false,"rc":0,"tracked":[],"files":18,"outcome":{"secured":true,"waves":15,"gold":270,"runsSoFar":3,"scoredAttempts":1,"tape":"/private/tmp/heat13-569a41f9/artifacts/heat13/opus/e3-canyon-works/attempt-1-tape.json","worldModel":"sim-import"},"scoredTapes":[{"file":"attempt-1-tape.json","id":"agent-0086ee54-428a09cb-eb14-4db5-8d64-48df29c8e4cb","secured":true,"waves":15,"gold":270,"durationTicks":13645,"lastEntryTick":13500,"promotedByRig":true,"discoveredBy":"outcome-file+filename"}],"otherSecured":[{"file":"tune-2-tape.json","id":"agent-0086ee54-428a09cb-eb14-4db5-8d64-48df29c8e4cb","waves":15,"gold":270}],"reportSections":{"outcome":1386,"whatTheMapAsked":2159,"winnability":370,"lessons":4527},"usage":{"turns":61,"toolCalls":35,"tokensIn":122,"tokensOut":108177}}
+tape chosen: attempt-1-tape.json (id agent-0086ee54-428a09cb-eb14-4db5-8d64-48df29c8e4cb, promotedByRig=true, discoveredBy=outcome-file+filename)
+
+=== 2 freeze notebook header ===
+{"headerOnly":true,"headerBytes":434}
+
+=== 3 harnessDigest ===
+db94cfd6150f0e5e238bdb211f87989bb4ea6aae8c304bacb4cce3935d0e8fec
+
+=== 4 build-submission ===
+{"tapeId":"agent-0086ee54-428a09cb-eb14-4db5-8d64-48df29c8e4cb","contract":"e3-canyon-works","epochId":"epoch-3-voltage","seed":"e3-canyon-works-01","seedMode":"bench","score":{"secured":true,"waves":15,"timeAlive":454.833,"gold":270,"baseValue":0},"papers":{"buildId":"2b58f99ab","engineHash":"09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4","era":5,"viewVersion":2},"durationTicks":13645,"lastEntryTick":13500,"stack":{"model":"claude-opus-5","harness":"heat13-operator","harnessVersion":"2.1.257","harnessDigest":"db94cfd6150f0e5e238bdb211f87989bb4ea6aae8c304bacb4cce3935d0e8fec","worldModel":"sim-import","config":"attended-hosted headless `claude -p` ride (heat 13, the 1:1-grammar re-ride) on Claude Code CLI 2.1.257; charter + door manual + own notebook (self-memory); own controller authored in-ride","calls":49,"tokensIn":22814079,"tokensOut":108177}}
+
+=== 5 publish (POST → poll → WATCH) ===
+FAILED: node:internal/deps/undici/undici:11132
+            fetchParams.controller.controller.error(new TypeError("terminated", {
+                                                    ^
+
+TypeError: terminated
+    at Fetch.onAborted (node:internal/deps/undici/undici:11132:53)
+    at Fetch.emit (node:events:507:28)
+    at Fetch.terminate (node:internal/deps/undici/undici:10290:14)
+    at Object.onError (node:internal/deps/undici/undici:11253:38)
+    at Request.onError (node:internal/deps/undici/undici:2094:31)
+    at Object.errorRequest (node:internal/deps/undici/undici:1591:17)
+    at TLSSocket.<anonymous> (node:internal/deps/undici/undici:6319:16)
+    at TLSSocket.emit (node:events:519:35)
+    at node:net:351:12
+    at TCP.done (node:_tls_wrap:650:7) {
+  [cause]: Error: read ECONNRESET
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:216:20) {
+    errno: -54,
+    code: 'ECONNRESET',
+    syscall: 'read'
+  }
+}
+
+Node.js v23.11.1
+
+POST ok; assay still pending at the 120 s mark — resuming with the poll-only shim (no re-POST)
+
+=== 6 poll-verdict (no re-POST) ===
+{"tapeId":"agent-0086ee54-428a09cb-eb14-4db5-8d64-48df29c8e4cb","assay":"verified","assayHash":"fnv1a32:21952647","ranked":true,"papers":{"buildId":"2b58f99ab","engineHash":"09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4","era":5,"viewVersion":2}}
+
+=== LANDED ===
+{
+ "rig": "opus",
+ "contract": "e3-canyon-works",
+ "tapeFile": "attempt-1-tape.json",
+ "tapeId": "agent-0086ee54-428a09cb-eb14-4db5-8d64-48df29c8e4cb",
+ "assay": "verified",
+ "assayHash": "fnv1a32:21952647",
+ "ranked": true,
+ "rank": 1,
+ "waves": 15,
+ "gold": 270,
+ "calls": 49,
+ "eventLogHash": "fnv1a32:b6ceb31c",
+ "wall": 750,
+ "harnessDigest": "db94cfd6150f0e5e238bdb211f87989bb4ea6aae8c304bacb4cce3935d0e8fec",
+ "usage": {
+  "turns": 61,
+  "toolCalls": 35,
+  "tokensIn": 22814079,
+  "tokensOut": 108177
+ }
+}
+node:internal/deps/undici/undici:11132
+            fetchParams.controller.controller.error(new TypeError("terminated", {
+                                                    ^
+
+TypeError: terminated
+    at Fetch.onAborted (node:internal/deps/undici/undici:11132:53)
+    at Fetch.emit (node:events:507:28)
+    at Fetch.terminate (node:internal/deps/undici/undici:10290:14)
+    at Object.onError (node:internal/deps/undici/undici:11253:38)
+    at Request.onError (node:internal/deps/undici/undici:2094:31)
+    at Object.errorRequest (node:internal/deps/undici/undici:1591:17)
+    at TLSSocket.<anonymous> (node:internal/deps/undici/undici:6319:16)
+    at TLSSocket.emit (node:events:519:35)
+    at node:net:351:12
+    at TCP.done (node:_tls_wrap:650:7) {
+  [cause]: Error: read ECONNRESET
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:216:20) {
+    errno: -54,
+    code: 'ECONNRESET',
+    syscall: 'read'
+  }
+}
+
+Node.js v23.11.1
+fetch retry 1: ECONNRESET
+
+land rc=0
+--- 4 notebook ---
+{"notebook":"/Users/robin/Claude/Projects/goldrush-gauntlet/memories/claude__opus-5/NOTEBOOK.md","generation":80,"headerBytes":434,"entryBytes":7954}
+--- 5 matrix ---
+| 20 | e3-canyon-works | `e3-canyon-works-01` | never-claimed | 80 | **SECURED** | 15 | 270 | 454.833s | 750s | `attempt-1-tape.json` · `agent-0086ee54-428a09cb-eb14-4db5-8d64-48df29c8e4cb`<br>fnv1a32:b6ceb31c | verified `fnv1a32:21952647` rank 1 | gen 80<br>slip `agent-0086ee54-428a09cb-eb14-4db5-8d64-48df29c8e4cb` |
+{"contract":"e3-canyon-works","secured":true,"tapesOnDisk":11,"scoredTapes":1,"otherSecured":1,"runs":3,"scoredAttempts":1,"wallHit":false,"rc":0,"assay":"verified","ranked":true,"winnability":"Secured, and the margin was **wide on the objective and honestly thin in the middle**: the chain\nlatched a full wave inside its deadline with 240 of the run's 510 panned gold, and the boss fell with\nfive waves of grace window left — but the hero bottomed at **36/100 at t = 165** before the plating\npicks landed, and one more bad wave in that window would have ended it."}
+########## END e3-canyon-works ##########
+
+=== QUEUE queue.txt DRAINED 15:02:57Z ===

@@ -1,0 +1,22 @@
+first-town-payload-gate — gate battery, 2026-09-07, scratch worktree, ports 5306 (unused, no dev server needed) / preview 5294
+
+npx tsc --noEmit                                      clean (rc=0)
+GR_RELEASE=e1 npm run build                           green (via scripts/deploy.sh --dry-run, 3,157-file tree; dist 109 MB)
+node --test scripts/deploy-budget.test.mjs            27/27
+node --test scripts/first-town-request-families.test.mjs scripts/sprite-cell-url-inlining.test.mjs scripts/hero-clip-groups.test.mjs   14/14
+bash scripts/test-deploy-contract.sh                  PASS (15 cases; the fixture copies deploy.sh alone and exercises the absent-payload-script fallback)
+GR_PREVIEW_PORT=5294 bash scripts/deploy.sh --dry-run  rc=0, outcome dry_run, verdict block in dry-run-verdict.txt
+
+asset-diet on the release build (playwright.preview.config.ts, preview 5294, both projects):
+  1 failed
+  17 passed (5.3m)
+  the single red: e2e/asset-diet.spec.ts:234 'dieted output keeps two terrain census views and town within screenshot tolerance'
+  town.png ratio 0.16 vs maxDiffPixelRatio 0.15 — the F-CELL-1 / F-HCS-2 fingerprint, environmental on this host,
+  attributed by control runs in the sprite-cell-manifests, first-town-audio-deferred and hero-slot-clip-split drains.
+
+re-run of the two byte-gated tests on the FINAL tree (after the spec ceiling moved to 30,000,000):
+[asset-diet] desktop-chrome townResponses: 16101489 bytes
+[asset-diet] mobile-chrome townResponses: 16101489 bytes
+  4 passed (4.1m)
+
+engine hash (src/ moved; the drain pins it): 1926c803891774bc890ce1285a6f1561918efae823a9d57da2fa8f4bb0f7c74d

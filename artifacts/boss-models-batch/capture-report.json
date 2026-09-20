@@ -1,0 +1,128 @@
+{
+ "dq-desktop": {
+  "act": 1,
+  "anchored": true,
+  "mounted": "true",
+  "state3d": "ready",
+  "source": "glb",
+  "presentation": "fight",
+  "damageStates": "{\"claw\":\"intact\",\"paddle_port\":\"intact\",\"paddle_starboard\":\"intact\",\"hold\":\"intact\"}",
+  "renderer": {
+   "calls": 93,
+   "triangles": 179036,
+   "geometries": 114,
+   "textures": 37
+  },
+  "cycles": [
+   0.77,
+   0.87,
+   0.97,
+   0.03,
+   0.13,
+   0.23,
+   0.33,
+   0.43,
+   0.53,
+   0.63,
+   0.73,
+   0.83
+  ],
+  "clawDelta": {
+   "pixels": 1024000,
+   "changed": 74840,
+   "percent": 7.309
+  },
+  "errors": {
+   "console": [],
+   "page": [],
+   "requestFailedNonAbort": [],
+   "requestAborted": 0
+  }
+ },
+ "od-desktop": {
+  "act": 1,
+  "mounted": "true",
+  "state": "ready",
+  "source": "glb",
+  "renderer": {
+   "calls": 95,
+   "triangles": 114452,
+   "geometries": 104,
+   "textures": 27
+  },
+  "wheelDelta": {
+   "pixels": 1024000,
+   "changed": 32094,
+   "percent": 3.134
+  },
+  "errors": {
+   "console": [],
+   "page": [],
+   "requestFailedNonAbort": [],
+   "requestAborted": 0
+  }
+ },
+ "dq-mobile": {
+  "act": 1,
+  "anchored": true,
+  "mounted": "true",
+  "state3d": "ready",
+  "source": "glb",
+  "presentation": "fight",
+  "damageStates": "{\"claw\":\"intact\",\"paddle_port\":\"intact\",\"paddle_starboard\":\"intact\",\"hold\":\"intact\"}",
+  "renderer": {
+   "calls": 73,
+   "triangles": 136426,
+   "geometries": 104,
+   "textures": 33
+  },
+  "cycles": [
+   0.77,
+   0.87,
+   0.97,
+   0.03,
+   0.13,
+   0.23,
+   0.33,
+   0.43,
+   0.53,
+   0.63,
+   0.73,
+   0.83
+  ],
+  "clawDelta": {
+   "pixels": 329160,
+   "changed": 34280,
+   "percent": 10.414
+  },
+  "errors": {
+   "console": [],
+   "page": [],
+   "requestFailedNonAbort": [],
+   "requestAborted": 0
+  }
+ },
+ "od-mobile": {
+  "act": 1,
+  "mounted": "true",
+  "state": "ready",
+  "source": "glb",
+  "renderer": {
+   "calls": 64,
+   "triangles": 109888,
+   "geometries": 78,
+   "textures": 24
+  },
+  "wheelDelta": {
+   "pixels": 329160,
+   "changed": 6232,
+   "percent": 1.893
+  },
+  "errors": {
+   "console": [],
+   "page": [],
+   "requestFailedNonAbort": [],
+   "requestAborted": 0
+  }
+ }
+}

@@ -1,0 +1,393 @@
+{
+  "config": {
+    "argv": [
+      "/Users/robin/.nvm/versions/node/v23.11.1/bin/node",
+      "/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-picnic/node_modules/.bin/playwright",
+      "test",
+      "e2e/e6-picnic-opening.spec.ts",
+      "--workers=1",
+      "--reporter=line,json",
+      "--trace=off"
+    ],
+    "configFile": "/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-picnic/playwright.config.ts",
+    "rootDir": "/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-picnic/e2e",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": "/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-picnic/scripts/external-server-guard.mjs",
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "revision": "74542e974908edf4bec5bd2c716a05d5dbd92441",
+      "dirty": true,
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-picnic/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "revision": "74542e974908edf4bec5bd2c716a05d5dbd92441",
+          "dirty": true,
+          "actualWorkers": 1
+        },
+        "id": "desktop-chrome",
+        "name": "desktop-chrome",
+        "testDir": "/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-picnic/e2e",
+        "testIgnore": [
+          "**/*.rig.ts",
+          "**/release-build.spec.ts",
+          "**/release-base-path.spec.ts",
+          "**/accounts-sync.spec.ts"
+        ],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-picnic/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "revision": "74542e974908edf4bec5bd2c716a05d5dbd92441",
+          "dirty": true,
+          "actualWorkers": 1
+        },
+        "id": "mobile-chrome",
+        "name": "mobile-chrome",
+        "testDir": "/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-picnic/e2e",
+        "testIgnore": [
+          "**/*.rig.ts",
+          "**/release-build.spec.ts",
+          "**/release-base-path.spec.ts",
+          "**/accounts-sync.spec.ts"
+        ],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-picnic/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "revision": "74542e974908edf4bec5bd2c716a05d5dbd92441",
+          "dirty": true,
+          "actualWorkers": 1
+        },
+        "id": "desktop-webkit",
+        "name": "desktop-webkit",
+        "testDir": "/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-picnic/e2e",
+        "testIgnore": [
+          "**/*.rig.ts",
+          "**/release-build.spec.ts",
+          "**/release-base-path.spec.ts",
+          "**/accounts-sync.spec.ts"
+        ],
+        "testMatch": [
+          "/058-device-tiers\\.spec\\.ts/"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "line"
+      ],
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "e6-picnic-opening.spec.ts",
+      "file": "e6-picnic-opening.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "e6-picnic: the opening the card describes",
+          "file": "e6-picnic-opening.spec.ts",
+          "line": 334,
+          "column": 6,
+          "specs": [
+            {
+              "title": "the run card names the hold, its six-second clock and the price of stopping it",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop-chrome",
+                  "projectName": "desktop-chrome",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3526,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-05T17:50:07.824Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "9d9cd6bd61b19a007f6f-80a3679328489b1a9a38",
+              "file": "e6-picnic-opening.spec.ts",
+              "line": 335,
+              "column": 3
+            },
+            {
+              "title": "an unbuilt Picnic ends on the sandwiches, with the Prospector untouched",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [
+                    {
+                      "type": "unbuilt-timeline",
+                      "description": "{\"firstSpawnAt\":7.433333333333317,\"firstStakePressureAt\":10.433333333333307,\"firstHeroDamageAt\":null,\"firstBuildAt\":null,\"firstStakeClaimedAt\":16.43333333333331,\"lastStakeClaimedAt\":73.36666666666507,\"endAt\":73.36666666666507,\"endWave\":2,\"endHp\":100,\"maxHp\":100}"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop-chrome",
+                  "projectName": "desktop-chrome",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 81375,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-05T17:50:11.855Z",
+                      "annotations": [
+                        {
+                          "type": "unbuilt-timeline",
+                          "description": "{\"firstSpawnAt\":7.433333333333317,\"firstStakePressureAt\":10.433333333333307,\"firstHeroDamageAt\":null,\"firstBuildAt\":null,\"firstStakeClaimedAt\":16.43333333333331,\"lastStakeClaimedAt\":73.36666666666507,\"endAt\":73.36666666666507,\"endWave\":2,\"endHp\":100,\"maxHp\":100}"
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "9d9cd6bd61b19a007f6f-8b7d1b202d649991c070",
+              "file": "e6-picnic-opening.spec.ts",
+              "line": 384,
+              "column": 3
+            },
+            {
+              "title": "one panned palisade on a sandwich holds the meadow past sixty seconds and into wave 2",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 300000,
+                  "annotations": [
+                    {
+                      "type": "opening-timeline",
+                      "description": "{\"firstSpawnAt\":7.433333333333317,\"firstStakePressureAt\":12.399999999999967,\"firstHeroDamageAt\":null,\"firstBuildAt\":10.799999999999972,\"firstStakeClaimedAt\":32.76666666666737,\"lastStakeClaimedAt\":null,\"endAt\":null,\"fenced\":\"sandwich-center\",\"atMarkWave\":2,\"atMarkSeconds\":60.2,\"hp\":100,\"stakesHeld\":[\"sandwich-center\"]}"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop-chrome",
+                  "projectName": "desktop-chrome",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 81894,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-05T17:51:33.262Z",
+                      "annotations": [
+                        {
+                          "type": "opening-timeline",
+                          "description": "{\"firstSpawnAt\":7.433333333333317,\"firstStakePressureAt\":12.399999999999967,\"firstHeroDamageAt\":null,\"firstBuildAt\":10.799999999999972,\"firstStakeClaimedAt\":32.76666666666737,\"lastStakeClaimedAt\":null,\"endAt\":null,\"fenced\":\"sandwich-center\",\"atMarkWave\":2,\"atMarkSeconds\":60.2,\"hp\":100,\"stakesHeld\":[\"sandwich-center\"]}"
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "9d9cd6bd61b19a007f6f-c86c49b5027931cca5c1",
+              "file": "e6-picnic-opening.spec.ts",
+              "line": 431,
+              "column": 3
+            },
+            {
+              "title": "the run card names the hold, its six-second clock and the price of stopping it",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile-chrome",
+                  "projectName": "mobile-chrome",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 4870,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-05T17:52:59.450Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "9d9cd6bd61b19a007f6f-d5863b24b746c49e6b82",
+              "file": "e6-picnic-opening.spec.ts",
+              "line": 335,
+              "column": 3
+            },
+            {
+              "title": "an unbuilt Picnic ends on the sandwiches, with the Prospector untouched",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [
+                    {
+                      "type": "unbuilt-timeline",
+                      "description": "{\"firstSpawnAt\":7.433333333333317,\"firstStakePressureAt\":10.433333333333307,\"firstHeroDamageAt\":null,\"firstBuildAt\":null,\"firstStakeClaimedAt\":16.43333333333331,\"lastStakeClaimedAt\":73.36666666666507,\"endAt\":73.36666666666507,\"endWave\":2,\"endHp\":100,\"maxHp\":100}"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile-chrome",
+                  "projectName": "mobile-chrome",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 100546,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-05T17:53:05.110Z",
+                      "annotations": [
+                        {
+                          "type": "unbuilt-timeline",
+                          "description": "{\"firstSpawnAt\":7.433333333333317,\"firstStakePressureAt\":10.433333333333307,\"firstHeroDamageAt\":null,\"firstBuildAt\":null,\"firstStakeClaimedAt\":16.43333333333331,\"lastStakeClaimedAt\":73.36666666666507,\"endAt\":73.36666666666507,\"endWave\":2,\"endHp\":100,\"maxHp\":100}"
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "9d9cd6bd61b19a007f6f-5e92e176831063d5e059",
+              "file": "e6-picnic-opening.spec.ts",
+              "line": 384,
+              "column": 3
+            },
+            {
+              "title": "one panned palisade on a sandwich holds the meadow past sixty seconds and into wave 2",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 300000,
+                  "annotations": [
+                    {
+                      "type": "opening-timeline",
+                      "description": "{\"firstSpawnAt\":7.433333333333317,\"firstStakePressureAt\":9.166666666666645,\"firstHeroDamageAt\":null,\"firstBuildAt\":21.533333333333562,\"firstStakeClaimedAt\":38.13333333333373,\"lastStakeClaimedAt\":null,\"endAt\":null,\"fenced\":\"sandwich-center\",\"atMarkWave\":2,\"atMarkSeconds\":60.1,\"hp\":100,\"stakesHeld\":[\"sandwich-west\",\"sandwich-center\"]}"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile-chrome",
+                  "projectName": "mobile-chrome",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 71534,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-05T17:54:45.798Z",
+                      "annotations": [
+                        {
+                          "type": "opening-timeline",
+                          "description": "{\"firstSpawnAt\":7.433333333333317,\"firstStakePressureAt\":9.166666666666645,\"firstHeroDamageAt\":null,\"firstBuildAt\":21.533333333333562,\"firstStakeClaimedAt\":38.13333333333373,\"lastStakeClaimedAt\":null,\"endAt\":null,\"fenced\":\"sandwich-center\",\"atMarkWave\":2,\"atMarkSeconds\":60.1,\"hp\":100,\"stakesHeld\":[\"sandwich-west\",\"sandwich-center\"]}"
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "9d9cd6bd61b19a007f6f-7dc2e89c03644503aa2c",
+              "file": "e6-picnic-opening.spec.ts",
+              "line": 431,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-09-05T17:50:07.051Z",
+    "duration": 350509.36100000003,
+    "expected": 6,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

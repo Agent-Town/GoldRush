@@ -1,0 +1,101 @@
+
+########## RIDE e9-dome-basin · seed e9-dome-basin-01 · gen 79 · stake never-claimed · wall 1500s ##########
+--- 1 charter ---
+{"rig":"opus","contract":"e9-dome-basin","seed":"e9-dome-basin-01","seedMode":"bench","stake":"never-claimed","generation":79,"wall":1500,"notebookSha256":"ede9ae4fabd071c7e188322325d31c524efb3286cbcb62e4f5656df93ae62730","charterSha256":"9029e76f6ef6a0c5b8438733f661eb6bb15a06ceff1d6f7ec5864dc5cb610840","bytes":652374,"out":"/private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/rides/e9-dome-basin/charter.md"}
+--- 2 ride ---
+START opus claude-opus-5 pid=37243 session=1a063d41-7b37-48c6-aa9e-19d8d57c66d9 at=2026-09-07T14:29:33.227Z
+FIRST-OUTPUT opus +105s
+OUTCOME opus secured=false waves=2 gold=0 runsSoFar=1 scored=0 +120s
+OUTCOME opus secured=true waves=20 gold=191 runsSoFar=1 scored=0 +405s
+OUTCOME opus secured=true waves=20 gold=191 runsSoFar=2 scored=1 +570s
+END opus rc=0 signal=null wall=648s wallHit=false
+ride-wall rc=0 signal=-
+--- 3 land ---
+
+=== 1 finish-ride ===
+{"rig":"opus","contract":"e9-dome-basin","wall":648,"wallHit":false,"rc":0,"tracked":[],"files":14,"outcome":{"secured":true,"waves":20,"gold":191,"runsSoFar":2,"scoredAttempts":1,"tape":"/private/tmp/heat13-569a41f9/artifacts/heat13/opus/e9-dome-basin/attempt-1-tape.json","worldModel":"sim-import"},"scoredTapes":[{"file":"attempt-1-tape.json","id":"agent-b0aac7df-e5137d65-dcc0-444c-a7eb-27c88fe9e5da","secured":true,"waves":20,"gold":191,"durationTicks":18000,"lastEntryTick":17966,"promotedByRig":true,"discoveredBy":"outcome-file+filename"}],"otherSecured":[{"file":"tune-1-tape.json","id":"agent-b0aac7df-e5137d65-dcc0-444c-a7eb-27c88fe9e5da","waves":20,"gold":191}],"reportSections":{"outcome":673,"whatTheMapAsked":2049,"winnability":400,"lessons":4026},"usage":{"turns":47,"toolCalls":23,"tokensIn":94,"tokensOut":72439}}
+tape chosen: attempt-1-tape.json (id agent-b0aac7df-e5137d65-dcc0-444c-a7eb-27c88fe9e5da, promotedByRig=true, discoveredBy=outcome-file+filename)
+
+=== 2 freeze notebook header ===
+{"headerOnly":true,"headerBytes":430}
+
+=== 3 harnessDigest ===
+5ee3480a84315dfc6a9604a1076e7c55165d98cf07ff119e0e57f5904c088ccf
+
+=== 4 build-submission ===
+{"tapeId":"agent-b0aac7df-e5137d65-dcc0-444c-a7eb-27c88fe9e5da","contract":"e9-dome-basin","epochId":"epoch-9-redfields","seed":"e9-dome-basin-01","seedMode":"bench","score":{"secured":true,"waves":20,"timeAlive":600,"gold":191,"baseValue":0},"papers":{"buildId":"1894581f2","engineHash":"09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4","era":5,"viewVersion":2},"durationTicks":18000,"lastEntryTick":17966,"stack":{"model":"claude-opus-5","harness":"heat13-operator","harnessVersion":"2.1.257","harnessDigest":"5ee3480a84315dfc6a9604a1076e7c55165d98cf07ff119e0e57f5904c088ccf","worldModel":"sim-import","config":"attended-hosted headless `claude -p` ride (heat 13, the 1:1-grammar re-ride) on Claude Code CLI 2.1.257; charter + door manual + own notebook (self-memory); own controller authored in-ride","calls":366,"tokensIn":15728347,"tokensOut":72439}}
+
+=== 5 publish (POST → poll → WATCH) ===
+FAILED: node:internal/deps/undici/undici:13510
+      Error.captureStackTrace(err);
+            ^
+
+TypeError: fetch failed
+    at node:internal/deps/undici/undici:13510:13
+    at async file:///private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/publish-submission.mjs:32:20 {
+  [cause]: Error: read ECONNRESET
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:216:20) {
+    errno: -54,
+    code: 'ECONNRESET',
+    syscall: 'read'
+  }
+}
+
+Node.js v23.11.1
+
+POST ok; assay still pending at the 120 s mark — resuming with the poll-only shim (no re-POST)
+
+=== 6 poll-verdict (no re-POST) ===
+{"tapeId":"agent-b0aac7df-e5137d65-dcc0-444c-a7eb-27c88fe9e5da","assay":"verified","assayHash":"fnv1a32:15d21e4a","ranked":true,"papers":{"buildId":"1894581f2","engineHash":"09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4","era":5,"viewVersion":2}}
+
+=== LANDED ===
+{
+ "rig": "opus",
+ "contract": "e9-dome-basin",
+ "tapeFile": "attempt-1-tape.json",
+ "tapeId": "agent-b0aac7df-e5137d65-dcc0-444c-a7eb-27c88fe9e5da",
+ "assay": "verified",
+ "assayHash": "fnv1a32:15d21e4a",
+ "ranked": true,
+ "rank": 1,
+ "waves": 20,
+ "gold": 191,
+ "calls": 366,
+ "eventLogHash": "fnv1a32:021c60e4",
+ "wall": 648,
+ "harnessDigest": "5ee3480a84315dfc6a9604a1076e7c55165d98cf07ff119e0e57f5904c088ccf",
+ "usage": {
+  "turns": 47,
+  "toolCalls": 23,
+  "tokensIn": 15728347,
+  "tokensOut": 72439
+ }
+}
+node:internal/deps/undici/undici:13510
+      Error.captureStackTrace(err);
+            ^
+
+TypeError: fetch failed
+    at node:internal/deps/undici/undici:13510:13
+    at async file:///private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/publish-submission.mjs:32:20 {
+  [cause]: Error: read ECONNRESET
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:216:20) {
+    errno: -54,
+    code: 'ECONNRESET',
+    syscall: 'read'
+  }
+}
+
+Node.js v23.11.1
+fetch retry 1: ECONNRESET
+fetch retry 1: ECONNRESET
+fetch retry 1: ECONNRESET
+
+land rc=0
+--- 4 notebook ---
+{"notebook":"/Users/robin/Claude/Projects/goldrush-gauntlet/memories/claude__opus-5/NOTEBOOK.md","generation":79,"headerBytes":430,"entryBytes":7379}
+--- 5 matrix ---
+| 19 | e9-dome-basin | `e9-dome-basin-01` | never-claimed | 79 | **SECURED** | 20 | 191 | 600s | 648s | `attempt-1-tape.json` · `agent-b0aac7df-e5137d65-dcc0-444c-a7eb-27c88fe9e5da`<br>fnv1a32:021c60e4 | verified `fnv1a32:15d21e4a` rank 1 | gen 79<br>slip `agent-b0aac7df-e5137d65-dcc0-444c-a7eb-27c88fe9e5da` |
+{"contract":"e9-dome-basin","secured":true,"tapesOnDisk":9,"scoredTapes":1,"otherSecured":1,"runs":2,"scoredAttempts":1,"wallHit":false,"rc":0,"assay":"verified","ranked":true,"winnability":"Secured, and the margin was **wide in every direction at once**: the hero finished 175/175 having\ntaken no damage at all across the last twelve waves, the full ladder stood (4 turrets, 6 beacons, 16\npalisades), and gold landed at **191 of a 200 bank cap** — the only free ranking axis, nine short of\nits arithmetic maximum, with the reel clearing its tightest envelope axis (bytes) at 57% of ceiling."}
+########## END e9-dome-basin ##########
+

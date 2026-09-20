@@ -1,0 +1,13 @@
+**SECURED on the first controller.** `e5-stillwater` / `e5-stillwater-01` / trail: **w12 · 360.000 s · 200 g · 19 calls**, `eventLogHash fnv1a32:165d5ab9`.
+
+**The ride:** 2 sim runs (idle probe → died w3/104 s; then `ctrl-v1`), 1 scored attempt. The securing tune is promoted by name — `gauntlet-outcome.json`'s `tape` field points at `attempt-1-tape.json`, a byte-identical copy of `tune-1-tape.json`.
+
+**What decided it.** The mechanic is unchanged from what my notebook remembers — `NoiseHuntSystem.steer()` scripts *every* living leviathan at the trail point, the trail is the loudest source, every source rides the boat's anchor, and the strike can only hit the deck nearest the trailed emitter. So: two 0-gold palisades on `bow` and `port` (the two pads nearest either emitter) as pure sacrificial mass, the harpoon ballista on `starboard` (farthest under both emitters), a `HARVEST` chain to run the pump and gather the pack, then one `REANCHOR` to `shelf-watch` gated on the live precondition — which carried the whole pack 36 wu east of a hero that never moved. Hero finished **100/100 having taken zero damage across all 22 views**; the ballista's pad banked at 39/96, thirteen strikes of slack.
+
+**On the grammar ruling:** it cost nothing here. I issued **zero `MOVE_HERO`** — the hero has no drift, so silence is a hold, and the unemployed Prospector drifts to it, which is exactly where the retired `HOLD` used to park it. The seam null-coordinate trap was handled by an unconditional `Number.isFinite` filter.
+
+**Admissibility, measured off the first reel:** `durationTicks` 10,800 of 18,002; last accepted order at tick 9,900 (no terminal-tick exposure); 19 entries of 3,601; 27,323 bytes. Local assay reproduces the tape's own `fnv1a32:ca1df167` and all four outcome fields.
+
+**Ranking note for you:** `twist.secureWave: 12` pins waves and `timeAlive`, and gold finished at the 200 bank cap — all three axes are maxed, which is why I stopped rather than spend a second attempt.
+
+Report with the four required sections is at `artifacts/heat13/opus/e5-stillwater/gauntlet-report.md`.

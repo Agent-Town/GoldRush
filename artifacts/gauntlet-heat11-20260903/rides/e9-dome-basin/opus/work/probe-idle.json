@@ -1,0 +1,70 @@
+{
+  "version": 2,
+  "id": "agent-8f747406-dfbd90b7-30c7-4d4d-9d66-e4b0169fb2e5",
+  "createdAt": 0,
+  "kept": true,
+  "contract": "e9-dome-basin",
+  "seed": "e9-dome-basin-01",
+  "difficulty": "trail",
+  "simVersion": 1,
+  "meta": {
+    "buildId": "5e7a7c0ba",
+    "engineHash": "a607a81f44e10dc2b2262682c1e116c15917edffeeaa0c5909f383ccea5d8e04",
+    "era": 5,
+    "viewVersion": 1
+  },
+  "runStart": {
+    "meta": {
+      "version": 1,
+      "tracks": {
+        "territory": 0,
+        "science": 0,
+        "hero": 0,
+        "agent": 0
+      }
+    },
+    "research": {
+      "version": 1,
+      "epochId": "epoch-1-frontier",
+      "metaScienceCursor": 0,
+      "progress": {
+        "version": 1,
+        "tracks": {
+          "territory": 0,
+          "science": 0,
+          "hero": 0,
+          "agent": 0
+        }
+      },
+      "taken": [],
+      "proposalSalt": 0,
+      "pinnedTarget": null,
+      "unlocks": {}
+    }
+  },
+  "inputLog": {
+    "version": 1,
+    "name": "agent-8f747406",
+    "contractId": "e9-dome-basin",
+    "seed": "e9-dome-basin-01",
+    "difficultyPreset": "trail",
+    "stepSeconds": 0.03333333333333333,
+    "start": {
+      "x": 0,
+      "z": 12
+    },
+    "durationTicks": 2478,
+    "entries": [],
+    "truncated": null,
+    "primarySlot": 0,
+    "streams": []
+  },
+  "eventLogHash": "fnv1a32:a45ba9ac",
+  "outcome": {
+    "reason": "death",
+    "secured": false,
+    "waves": 2,
+    "timeAlive": 82.6,
+    "gold": 0
+  }
+}

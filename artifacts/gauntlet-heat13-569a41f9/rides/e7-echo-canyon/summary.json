@@ -1,0 +1,234 @@
+{
+  "rig": "opus",
+  "contract": "e7-echo-canyon",
+  "model": "claude-opus-5",
+  "sessionId": "fab4e0da-8263-4d34-8d3f-f4620706dcb8",
+  "startedAt": "2026-09-07T10:27:08.498Z",
+  "endedAt": "2026-09-07T10:36:34.853Z",
+  "wallClockSeconds": 566,
+  "wallHit": false,
+  "exitCode": 0,
+  "signal": null,
+  "setupToFirstOutputSeconds": 150,
+  "arenaTrackedChanges": [],
+  "workspaceFiles": [
+    "attempt-1-tape.json",
+    "controller.mjs",
+    "gauntlet-outcome.json",
+    "gauntlet-report.md",
+    "probe-idle-rows.json",
+    "probe-idle-stderr.txt",
+    "probe-idle-summary.json",
+    "probe-idle-tape.json",
+    "probe-idle-views.jsonl",
+    "runner.mjs",
+    "tune-1-rows.json",
+    "tune-1-stderr.txt",
+    "tune-1-summary.json",
+    "tune-1-tape.json",
+    "tune-1-views.jsonl"
+  ],
+  "outcome": {
+    "secured": true,
+    "waves": 20,
+    "timeMs": 600000,
+    "gold": 295,
+    "kills": 921,
+    "calls": 89,
+    "defaultedPicks": 0,
+    "defaultedSecure": 1,
+    "eventLogHash": "fnv1a32:0aaf72f4",
+    "tape": "/private/tmp/heat13-569a41f9/artifacts/heat13/opus/e7-echo-canyon/attempt-1-tape.json",
+    "scored": true,
+    "runsSoFar": 2,
+    "scoredAttempts": 1,
+    "worldModel": "sim-import",
+    "note": "ONE RIDE UNDER TWO FILENAMES. tune-1 secured on its first controller ride, so under the stop rule it IS the scored attempt; attempt-1-tape.json is a byte-identical copy of tune-1-tape.json (both 332831 bytes, verified equal). Either path is the same reel.",
+    "tapeAlias": "/private/tmp/heat13-569a41f9/artifacts/heat13/opus/e7-echo-canyon/tune-1-tape.json",
+    "tapeEventLogHash": "fnv1a32:d8c34088",
+    "localAssay": {
+      "tool": "scripts/assay-replay-agent.mjs",
+      "verdict": "reproduced",
+      "eventLogHash": "fnv1a32:d8c34088",
+      "outcome": {
+        "secured": true,
+        "waves": 20,
+        "gold": 295,
+        "timeAlive": 600
+      },
+      "securedSnapshot": {
+        "waves": 20,
+        "gold": 295,
+        "timeAlive": 600
+      },
+      "note": "The replay reproduces the TAPE header's hash (d8c34088), not the stdout outcome line's (0aaf72f4). Those are different numbers by design; comparing the wrong pair reads as a false mismatch."
+    },
+    "envelope": {
+      "durationTicks": 18000,
+      "maxTicks": 18002,
+      "lastEntryTick": 17705,
+      "entries": 89,
+      "maxEntries": 3601,
+      "bytes": 332831,
+      "conservativeByteFloor": 592544,
+      "verdict": "all three axes clear with margin"
+    },
+    "eraPapers": {
+      "engineHash": "09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4",
+      "era": 5,
+      "viewVersion": 2,
+      "buildId": "bf0bdddd6"
+    },
+    "grammar": {
+      "verbsUsed": [
+        "PLAYBOOK_USE",
+        "HARVEST",
+        "BUILD",
+        "PICK_UPGRADE",
+        "BLAST_AT",
+        "MOVE_HERO",
+        "CONTEXT_ACTION",
+        "(blank line at pendingSecure)"
+      ],
+      "retiredVerbsUsed": "none - no MOVE_TO, no HOLD, no FALLBACK_IF anywhere in the reel"
+    },
+    "objective": {
+      "playbookObjective": "mirror",
+      "gate": "E7PlaybookLatch.allowsSecure -> fieldedMirrors > 0",
+      "recordedUseAt": 4.633,
+      "squadFieldedAtWave": 1,
+      "objectiveMetAt": 30,
+      "recordedUses": 1,
+      "squadsFielded": 1,
+      "bodiesFielded": 2,
+      "engineeredShape": {
+        "count": 2,
+        "wrecker": false,
+        "thief": true,
+        "roving": false,
+        "hunts": false,
+        "hpScale": 1,
+        "repeat": 0
+      },
+      "shapeNote": "A build-free, blast-free, motionless demonstration is the cheapest legal shadow: MIN_SQUAD of 2, thief rather than wrecker, no roving speed bonus, no extended hunt range."
+    }
+  },
+  "outcomeError": null,
+  "promotedTapeName": "attempt-1-tape.json",
+  "scoredTapes": [
+    {
+      "file": "attempt-1-tape.json",
+      "id": "agent-9d868a34-3862eef2-634b-40e9-8e25-dd0d6160b0fa",
+      "contract": "e7-echo-canyon",
+      "seed": "e7-echo-canyon-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "bf0bdddd6",
+        "engineHash": "09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 20,
+        "timeAlive": 600,
+        "gold": 295
+      },
+      "entries": 89,
+      "durationTicks": 18000,
+      "lastEntryTick": 17705,
+      "promotedByRig": true,
+      "discoveredBy": "outcome-file+filename"
+    }
+  ],
+  "otherTapes": [
+    {
+      "file": "probe-idle-tape.json",
+      "id": "agent-c631cf5e-21012c43-3b5c-477e-bb97-5d8731b15f61",
+      "contract": "e7-echo-canyon",
+      "seed": "e7-echo-canyon-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "bf0bdddd6",
+        "engineHash": "09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 4,
+        "timeAlive": 135.433,
+        "gold": 0
+      },
+      "entries": 0,
+      "durationTicks": 4063,
+      "lastEntryTick": null
+    },
+    {
+      "file": "tune-1-tape.json",
+      "id": "agent-9d868a34-3862eef2-634b-40e9-8e25-dd0d6160b0fa",
+      "contract": "e7-echo-canyon",
+      "seed": "e7-echo-canyon-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "bf0bdddd6",
+        "engineHash": "09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 20,
+        "timeAlive": 600,
+        "gold": 295
+      },
+      "entries": 89,
+      "durationTicks": 18000,
+      "lastEntryTick": 17705
+    }
+  ],
+  "otherSecuredTapes": [
+    {
+      "file": "tune-1-tape.json",
+      "id": "agent-9d868a34-3862eef2-634b-40e9-8e25-dd0d6160b0fa",
+      "contract": "e7-echo-canyon",
+      "seed": "e7-echo-canyon-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "bf0bdddd6",
+        "engineHash": "09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 20,
+        "timeAlive": 600,
+        "gold": 295
+      },
+      "entries": 89,
+      "durationTicks": 18000,
+      "lastEntryTick": 17705
+    }
+  ],
+  "report": {
+    "outcome": "**SECURED.** `waves 20 · timeAlive 600.000 s · gold 295 · calls 89` (kills 921,\n`defaultedPicks 0`, `defaultedSecure 1`).\n\n- Tape put forward: **`artifacts/heat13/opus/e7-echo-canyon/attempt-1-tape.json`**, declared in\n  `gauntlet-outcome.json`'s `tape` field. It is a **byte-identical copy of `tune-1-tape.json`**\n  (both 332,831 bytes, verified equal) — one ride under two filenames, not two rides.\n- Sim runs: **2**. Scored attempts: **1**.\n- Local assay receipt: `scripts/assay-replay-agent.mjs` reproduced the tape's own\n  `eventLogHash fnv1a32:d8c34088` and all four outcome fields plus the secured snapshot\n  (`secured true / waves 20 / gold 295 / timeAlive 600`). Note this is the TAPE header's hash, not\n  the stdout outcome line's `fnv1a32:0aaf72f4` — different numbers by design.\n- Envelope, measured off the first reel that existed: `durationTicks` **18,000** of 18,002,\n  last accepted order at tick **17,705**, **89** entries of 3,601, **332,831** bytes against a\n  conservative 592,544-byte floor. All three axes clear with margin.\n- Grammar: **no retired verb appears anywhere in the reel** — no `MOVE_TO`, no `HOLD`, no\n  `FALLBACK_IF`. The reel uses `PLAYBOOK_USE`, `HARVEST`, `BUILD`, `PICK_UPGRADE`, `BLAST_AT`,\n  `MOVE_HERO`, `CONTEXT_ACTION upgrade`, and one blank line at the secure boundary.",
+    "whatTheMapAsked": "It asked for its era's signature mechanic **squarely, and the mechanic is now the secure gate** —\nso this is not stationary survival wearing E7's name, and it is emphatically not the contract my\nnotebook remembers. E7 is playbooks and the Echo. `now.playbookUse.objective` reads `\"mirror\"`,\nand `E7PlaybookLatch.allowsSecure` returns `fieldedMirrors > 0`, which `HeadlessContractSim:1488`\nANDs into the gate: **no wave count secures this claim until a corrupted copy of my own tape has\nactually been fielded.** The loop is real L1 ladder work and the view carries all of it —\n`now.broadcastMirror` publishes `recordedUses`, `distinctPlaybooks`, `maxRepeat`, `pending[]` with\nthe full shape of each queued shadow, `squadsFielded`, `bodiesFielded`, `capPerWave: 3`,\n`hpPerRepeat: 0.1` — so a rider working from the view alone can both play it and check it.\n\nWhat made it *reasoning* rather than a toll is that **the shadow's shape is a function of the tape\nyou hand it, and you choose the tape.** `BroadcastMirror.shapeOfTape` reads four facts off the\ndemonstration: a tape that placed works returns as a **wrecker**, otherwise a **thief**; a tape\nthat built turrets, threw `BLAST_AT`, or set the blast weapon returns **hunting** from 18wu; a tape\nthat spent half its change-points moving returns **roving** at 1.15× speed; and body count is\n`2 + floor(acting/4)`, bounded 2–4. So I built the demonstration to be the cheapest legal shadow:\nview 1 was a **build-free, blast-free, motionless pan chain**, and view 2 was\n`[PLAYBOOK_USE \"echo-canyon-quiet-pan\", …the same pan chain]`. Measured result, straight off\n`now.broadcastMirror.pending` at t = 10.93:\n`{count: 2, wrecker: false, thief: true, roving: false, hunts: false, hpScale: 1, repeat: 0}` —\n`MIN_SQUAD`, a thief rather than a wrecker, no speed bonus, no extended hunt. That mattered\nspecifically because **this board's own roster (`rogue_automaton`, `data_rustler`) contains no\nwrecker at all**, so a careless demonstration would have introduced the one enemy class the map\notherwise lacks. It didn't: `works.wrecked` was **0** at all 91 views and `goldStolen` finished at\n**0**, even with two mirrored thieves on the board. Recorded at t = 4.633, fielded at wave 1\n(t = 30.0), `objectiveMet` true from that view onward, and I never used the verb again — one use,\none squad, `maxRepeat 0`, so the +10%-per-repeat penalty never engaged. Variety is the cure, and\nabstinence after the first use is the cheapest variety there is.\n\nThe honest qualifier is that the gate is **front-loaded and cheap**: two orders inside the first\nfive seconds of a 600-second contract, and the era never asks again. The other 595 seconds are\nordinary stationary survival in a generous pocket — the claim at (0,12) sits 2wu north of\n`canyon-floor-yard` (z ≤ 10), so turrets on the z = 9 line cover both canyon mouths and beacons at\n|x| ≤ 7.7 reach the hero, and the run finished with all four turrets at **tier 2**, six beacons, ten\nworks standing, 1,470 gold panned and the hero at **175/175**. Fields that carried that half:\n`now.works.entries` (position, `tier`, `index`), `now.works.byKind`, `now.seams[].active/x/z`\n(which publish `null` coordinates when inactive), `now.gold` against `now.score.goldPanned`,\n`now.hero.hp/maxHp`, `now.threats.alive`, `now.orders[].status/reason`, `now.pendingOffer`.\n\n**Does my notebook still describe this map? No, and the change is the whole heat.** Generation 31\nsecured this seed and wrote that `now.broadcastMirror` was \"byte-identical in all 75 views\",\n`recordedUses` pinned at 0 forever, \"the public grammar has no playbook verb… not one E7 verb,\nbecause E7 has none.\" Every clause of that is now dead: the verb exists, the mirror fields, and the\nfielded mirror *is* the secure gate. The geometry — claim (0,12), the floor yard's z = 10 edge, four\nharvest anchors, the two near seams 22.8wu out — reproduced exactly.",
+    "winnability": "Secured, and the margin was **wide in every direction at once**: the hero bottomed at 63/175 early\nand finished **175/175** at its running maximum, **zero of ten works were ever wrecked** across 921\nkills, `goldStolen` was 0, all four turrets reached tier 2, and the era gate closed at t = 30 of a\n600-second contract with 570 seconds of slack — the only genuinely thin thing on the board is the\nshadow's shape, which a demonstration containing one `BUILD` would have turned from two thieves\ninto a squad of wreckers on a map that otherwise has none.",
+    "lessons": "- **A notebook finding can be dead in every clause and still reproduce in its geometry — grade the\n  two separately.** Generation 31 wrote of this exact map: \"`now.broadcastMirror` is byte-identical\n  in all 75 views… not one E7 verb, because E7 has none.\" The verb now exists, the mirror fields,\n  and the fielded mirror IS the secure gate — while the claim, the build zone, the seams and the\n  pocket all reproduced to the unit. My \"diff the notebook clause by clause\" rule from generation 48\n  is now the whole opening move: run the `now`-key dump and read the era-pin as a diff, *especially*\n  when the notebook says the era is inert. **A \"permanent row of zeros\" finding is the one most\n  likely to expire, because a zero is exactly what a mechanic looks like before it is wired.**\n- **When a mechanic reads YOUR OWN tape, the tape is a design surface — build the cheapest legal\n  one on purpose.** `BroadcastMirror.shapeOfTape` derives wrecker/thief, hunts, roving and body\n  count from four facts about the demonstration. Submitting a build-free, blast-free, motionless\n  first array and using the playbook off THAT bought `{count 2, thief, no rove, no hunt}` instead of\n  a hunting wrecker squad — on a board whose own roster has no wrecker, so the careless version\n  would have added an enemy CLASS the map does not otherwise contain. Generation 14 learned \"some\n  named mechanics are opt-in threats and the winning move is not to opt in\"; **generation 64 adds\n  the case where you must opt in — then the move is to opt in with the smallest thing that counts.**\n- **Cost the objective in the currency of its own constants before choosing when to fire it.**\n  `BROADCAST_MIRROR_MIN_SQUAD = 2`, `TICKS_PER_BODY = 4`, `HP_PER_REPEAT = 0.1`, `SQUAD_CAP = 3` are\n  all published in the source and three of them in the view. One use, early, off a short tape is\n  provably the floor: two bodies at `hpScale 1`. Firing later off a longer tape would have cost\n  strictly more for the identical latch. **The cheapest moment to satisfy a \"do it once\" gate is the\n  first moment you legally can, because the price grows with the evidence you have accumulated.**\n- **Read the early-return ORDER inside the verb, not just the gate that reads its counter.**\n  `usePlaybook` asks suppression, then the front, then `NOTHING_RECORDED`, then `noteUse`. That\n  ordering is why the earliest possible use is view 2 and not view 1 (nothing recorded yet) — and it\n  is the same move that decided generation 45's Dead Band from the opposite direction, where the\n  refusal counted on the way through. Fifth generation this has paid.\n- **`PLAYBOOK_USE` installs the tape as your standing orders, so make the demonstration something\n  you would be happy to keep running.** My use array was a pan chain, so the ~5 seconds the sim spent\n  running my own program (`programRuns: 1`) were 5 seconds of the policy I wanted anyway. The next\n  ordinary submission took the wheel back with no gap. Never demonstrate orders you do not want\n  executed unattended.\n- **The gen-6→63 skeleton, retargeted to the post-ADR-005 grammar, secured this on its FIRST ride —\n  third heat running.** Draft first under replace semantics with a plating-first scorer (maxHp\n  100 → 175); an interleaved, cumulatively-gated ladder so a cheap rung can never steal gold an\n  expensive one is waiting for; more candidate spots than slots with a refusal blacklist partitioned\n  into GROUND (poison the coordinate) and ECONOMY (`insufficient_gold` — retry, poison nothing);\n  `Number.isFinite` filtering on seam coordinates before sorting; one seam drained in a block of\n  seven before walking; the tier-2 sink paired with `MOVE_HERO` because `CONTEXT_ACTION` does not\n  travel; a blank line at `pendingSecure`. Ten builds, zero stalls, both ladders capped, all four\n  turrets to tier 2. **Stop treating it as a starting point to re-derive; spend the reading budget on\n  the contract and the riding budget on the unmodified skeleton.**\n- **The retired verbs cost me nothing here, and I should stop bracing for them.** `MOVE_TO`/`HOLD`\n  were load-bearing in my old skeleton and their whole job on this map — \"keep the hero on the\n  claim\" — is done by *silence*, because the hero has no drift. The only `MOVE_HERO` I needed was\n  the one in front of `CONTEXT_ACTION upgrade`. Second heat where the 1:1 ruling turned out to be a\n  syntax change and not a strategy change on a stationary-hero board.\n- **Measure the envelope off the first reel, and read the FORMULA, not the summary.** The brief's\n  `16 KiB + maxEntries × 160` is the conservative floor; `runTapeEnvelopeForContract` adds a second\n  `maxOrderEntries × (2400 − 160)` term for order-bearing entries. My 332,831 bytes cleared even the\n  floor, so it did not matter this time — but generation 62 nearly reported a false `reel_too_large`\n  catastrophe on exactly this gap. **A published formula can be the summary of a formula.**\n- **Verify which hash the assay is supposed to match before reading a mismatch as a defect.** The\n  replay returned `d8c34088` where the stdout outcome line said `0aaf72f4`; the tape's own header\n  says `d8c34088`, so the receipt is clean. Generation 4 wrote this down and generations 34, 35 and\n  52 each re-tripped on it. I checked the tape header first this time and lost no minutes to it.\n- **Two runs is a heat when the reading is done first.** Probe, source read, one controller,\n  secured — and the whole diagnostic value came from four minutes in `E7PlaybookLatch` and\n  `BroadcastMirror` rather than from riding. Eight of my generations end on \"I proved the parts and\n  never fired the combination\"; the cure keeps turning out to be the same one, and it is not more\n  rides."
+  },
+  "usage": {
+    "transcript": "/Users/robin/.claude/projects/-private-tmp-heat13-569a41f9/fab4e0da-8263-4d34-8d3f-f4620706dcb8.jsonl",
+    "assistantTurns": 51,
+    "toolCalls": 27,
+    "tokensIn": 102,
+    "tokensOut": 78469,
+    "cacheReadTokens": 15361637,
+    "cacheWriteTokens": 985606,
+    "note": "tokensIn excludes cache reads/writes (reported separately); summed from the CLI session transcript, not self-reported by the rig"
+  }
+}

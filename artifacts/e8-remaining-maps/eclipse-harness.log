@@ -1,0 +1,32 @@
+HARNESS RIDE: hero buffed (applyStats 10000/heal) to outlive the null floor. NOT a floor ride, NOT a door result.
+ride: e8-eclipse seed=e8-eclipse-01 policy=harness viewVersion=2 schema=goldrush.view.v1
+claim={"x":0,"z":12} hero={"x":0,"z":12,"hp":10100} prospector={"x":-1.8,"z":10.93}
+goals=["Build among the Mare Claim's dome cluster and rim pads.","Work the six regolith harvest grounds across the flat."]
+now.gravity={"source":"gravity","movement":"floaty","feelG":0.6,"lobArcDistanceMultiplier":2.4,"lobAirTimeMultiplier":2.4,"knockbackScale":1.3,"orbitalReturn":false,"vacuum":true}
+now.air={"wall":"suit-timer","suit":{"body":"prospector","seconds":60,"capacity":60,"refillPerSecond":4,"inDome":null,"empty":false,"drainedTotal":0,"emptySeconds":0},"domes":[{"id":"dome-cluster-pad-west","air":1,"breached":false,"breaches":0,"siegers":0},{"id":"dome-cluster-pad-center","air":1,"breached":false,"breaches":0,"siegers":0},{"id":"dome-cluster-pad-east","air":1,"breached":false,"breaches":0,"siegers":0}],"regolith":{"grounds":6,"required":1,"worked":[],"runsOnAir":0,"breathlessPans":0,"complete":false},"eclipse":{"arrived":false,"arrivedAtWave":null,"offline":[],"reserve":"dome-cluster-pad-center","solar":"online","groundsWorkedAfter":0,"requiredAfter":1}}
+wave=1 t=30s GROUND WORKED -> [3] (1/1) runsOnAir=1 breathless=0 afterEclipse=0 suit=30s shelter=null
+wave=2 t=60.03s GROUND WORKED -> [3,4] (2/1) runsOnAir=2 breathless=0 afterEclipse=0 suit=0s shelter=null
+wave=3 t=101.67s gold=20 hero=9976.999999999989/10100 prospector={"x":-1.91,"z":10.61} suit=41.53s shelter=null shelters=[["dome-cluster-pad-west",1],["dome-cluster-pad-center",1],["dome-cluster-pad-east",1]] crossed=n/a/n/a worked=2/1
+wave=6 t=180.03s gold=35 hero=9713.799999999974/10100 prospector={"x":18.54,"z":23.04} suit=31.53s shelter=null shelters=[["dome-cluster-pad-west",0.931],["dome-cluster-pad-center",1],["dome-cluster-pad-east",0.964]] crossed=n/a/n/a worked=2/1
+wave=6 t=195.03s GROUND WORKED -> [0,3,4] (3/1) runsOnAir=8 breathless=0 afterEclipse=0 suit=16.53s shelter=null
+wave=8 t=240.03s gold=55 hero=9113.799999999937/10100 prospector={"x":-25.46,"z":11.63} suit=31.53s shelter=null shelters=[["dome-cluster-pad-west",0.817],["dome-cluster-pad-center",1],["dome-cluster-pad-east",0.823]] crossed=n/a/n/a worked=3/1
+wave=10 t=300s ECLIPSE ARRIVED at wave 10: solar=offline offline=["dome-cluster-pad-west","dome-cluster-pad-east"] reserve=dome-cluster-pad-center needs 1 ground(s) on air after this
+wave=10 t=300s gold=70 hero=8346.19999999991/10100 prospector={"x":-25.42,"z":11.63} suit=33.77s shelter=null shelters=[["dome-cluster-pad-west",0.348],["dome-cluster-pad-center",1],["dome-cluster-pad-east",0.64]] crossed=n/a/n/a worked=3/1
+wave=12 t=371.07s gold=90 hero=7373.399999999915/10100 prospector={"x":30,"z":30} suit=39.67s shelter=null shelters=[["dome-cluster-pad-west",0],["dome-cluster-pad-center",1],["dome-cluster-pad-east",0]] crossed=n/a/n/a worked=3/1
+wave=12 t=388.77s GROUND WORKED -> [0,3,4,5] (4/1) runsOnAir=19 breathless=0 afterEclipse=5 suit=21.97s shelter=null
+wave=15 t=450s gold=110 hero=6281.399999999925/10100 prospector={"x":21.2,"z":12} suit=31.43s shelter=null shelters=[["dome-cluster-pad-west",0],["dome-cluster-pad-center",1],["dome-cluster-pad-east",0]] crossed=n/a/n/a worked=4/1
+wave=19 t=570s gold=130 hero=4630.199999999944/10100 prospector={"x":-2.02,"z":10.84} suit=1.5s shelter=null shelters=[["dome-cluster-pad-west",0],["dome-cluster-pad-center",1],["dome-cluster-pad-east",0]] crossed=n/a/n/a worked=4/1
+wave=20 t=600s PENDING SECURE (crossing=undefined worked=[0,3,4,5] complete=true) -> bank
+TERMINAL decisions=45 outcome={"secured":true,"waves":20,"timeMs":600000,"gold":130,"kills":469,"calls":45,"defaultedPicks":18,"defaultedSecure":0,"eventLogHash":"fnv1a32:c45bd2ae"}
+final now.air={"wall":"suit-timer","suit":{"body":"prospector","seconds":54.233,"capacity":60,"refillPerSecond":4,"inDome":null,"empty":false,"drainedTotal":412,"emptySeconds":1.067},"domes":[{"id":"dome-cluster-pad-west","air":0,"breached":false,"breaches":34,"siegers":0},{"id":"dome-cluster-pad-center","air":1,"breached":false,"breaches":1,"siegers":0},{"id":"dome-cluster-pad-east","air":0,"breached":true,"breaches":37,"siegers":3}],"regolith":{"grounds":6,"required":1,"worked":[0,3,4,5],"runsOnAir":26,"breathlessPans":0,"complete":true},"eclipse":{"arrived":true,"arrivedAtWave":10,"offline":["dome-cluster-pad-west","dome-cluster-pad-east"],"reserve":"dome-cluster-pad-center","solar":"offline","groundsWorkedAfter":12,"requiredAfter":1}}
+final now.probeRecovery=null
+minSuitSeconds=0 shelterEntries=8 firstCrossingAt=n/as crossingCompleteAt=n/as
+event kinds={"run_started":1,"orders":45,"regolith_ground_worked":4,"enemy_killed":469,"announcement":78,"wave_started":20,"blast_at":15,"hero_damaged":783,"run_secured":1}
+event {"type":"blast_at","at":37.867,"pos":{"x":-20,"z":12},"lob":{"reach":24,"airTime":1.68}}
+event {"type":"blast_at","at":87.467,"pos":{"x":20,"z":12},"lob":{"reach":24,"airTime":1.68}}
+event {"type":"blast_at","at":96.567,"pos":{"x":20,"z":12},"lob":{"reach":24,"airTime":1.68}}
+event {"type":"blast_at","at":109.767,"pos":{"x":20,"z":12},"lob":{"reach":24,"airTime":1.68}}
+event {"type":"regolith_ground_worked","at":4.433,"ground":3,"worked":1}
+event {"type":"regolith_ground_worked","at":37.8,"ground":4,"worked":2}
+event {"type":"regolith_ground_worked","at":191.267,"ground":0,"worked":3}
+event {"type":"regolith_ground_worked","at":375.1,"ground":5,"worked":4}

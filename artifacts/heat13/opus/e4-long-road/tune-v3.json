@@ -1,0 +1,2575 @@
+{
+  "version": 2,
+  "id": "agent-a5c13c96-d557c8f3-89df-498a-a1e1-c007bebba0f9",
+  "createdAt": 0,
+  "kept": true,
+  "contract": "e4-long-road",
+  "seed": "e4-long-road-01",
+  "difficulty": "trail",
+  "simVersion": 1,
+  "meta": {
+    "buildId": "a70f96a1d",
+    "engineHash": "09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4",
+    "era": 5,
+    "viewVersion": 2
+  },
+  "runStart": {
+    "meta": {
+      "version": 1,
+      "tracks": {
+        "territory": 0,
+        "science": 0,
+        "hero": 0,
+        "agent": 0
+      }
+    },
+    "research": {
+      "version": 1,
+      "epochId": "epoch-1-frontier",
+      "metaScienceCursor": 0,
+      "progress": {
+        "version": 1,
+        "tracks": {
+          "territory": 0,
+          "science": 0,
+          "hero": 0,
+          "agent": 0
+        }
+      },
+      "taken": [],
+      "proposalSalt": 0,
+      "pinnedTarget": null,
+      "unlocks": {}
+    }
+  },
+  "inputLog": {
+    "version": 1,
+    "name": "agent-a5c13c96",
+    "contractId": "e4-long-road",
+    "seed": "e4-long-road-01",
+    "difficultyPreset": "trail",
+    "stepSeconds": 0.03333333333333333,
+    "start": {
+      "x": -180,
+      "z": 0
+    },
+    "durationTicks": 12600,
+    "entries": [
+      {
+        "t": 0,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -188.5,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "GRADE"
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -188.5,
+                  "z": -1.5
+                }
+              },
+              {
+                "verb": "GRADE"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 51,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -12,
+                  "z": -8
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -12,
+                  "z": -7.3
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -12,
+                  "z": -8.7
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -12,
+                  "z": -7.3
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": -8
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": -7.3
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": -8.7
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": -7.3
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 12,
+                  "z": -8
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 12,
+                  "z": -7.3
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 12,
+                  "z": -8.7
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 12,
+                  "z": -7.3
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": -8
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": -3
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 1.2
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 188.7,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 191.1,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 208,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -12,
+                  "z": -8
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -12,
+                  "z": -7.3
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -12,
+                  "z": -8.7
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -12,
+                  "z": -7.3
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": -8
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": -7.3
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": -8.7
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": -7.3
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 12,
+                  "z": -8
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 12,
+                  "z": -7.3
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 12,
+                  "z": -8.7
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 12,
+                  "z": -7.3
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": -8
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": -3
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 1.2
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 188.7,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 191.1,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 900,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -12,
+                  "z": -8
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -12,
+                  "z": -7.3
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -12,
+                  "z": -8.7
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": -12,
+                  "z": -7.3
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": -8
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": -7.3
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": -8.7
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 0,
+                  "z": -7.3
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 12,
+                  "z": -8
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 12,
+                  "z": -7.3
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 12,
+                  "z": -8.7
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 12,
+                  "z": -7.3
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": -8
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": -3
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 1.2
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 188.7,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 191.1,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 1801,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": -8
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": -3
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 1.2
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 188.7,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 191.1,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 2346,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": -3
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 1.2
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 188.7,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 191.1,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 2348,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": -3
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 1.2
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 188.7,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 191.1,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 2352,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": -3
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 1.2
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 188.7,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 191.1,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 2359,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": -3
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 1.2
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 188.7,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 191.1,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 2701,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": -3
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 1.2
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 188.7,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 191.1,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 3601,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": -3
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 1.2
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 188.7,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 191.1,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 4501,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": -3
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 1.2
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 188.7,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 191.1,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 5401,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": -3
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 1.2
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 188.7,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 191.1,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 6024,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "prospectors_luck"
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": -3
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 1.2
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 188.7,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 191.1,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 6301,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": -3
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 1.2
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 188.7,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 191.1,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 6429,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "tinkers_plating"
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": -3
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 1.2
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 188.7,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 191.1,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 6804,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "long_resonator"
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": -3
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 1.2
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 188.7,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 191.1,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 7201,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": -3
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 1.2
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 188.7,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 191.1,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 7372,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "long_resonator"
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": -3
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 1.2
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 188.7,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 191.1,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 8101,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": -3
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 1.2
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 188.7,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 191.1,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 8121,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "pan_legend"
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": -3
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 1.2
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 188.7,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 191.1,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 9000,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": -3
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 1.2
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 188.7,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 191.1,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 9051,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "heavy_spark"
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": -3
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 1.2
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 188.7,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 191.1,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 9900,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": -3
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 1.2
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 188.7,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 191.1,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 9951,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "prospectors_luck"
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": -3
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 1.2
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 188.7,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 191.1,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 10800,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": -3
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 1.2
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 188.7,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 191.1,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 11181,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "spring_heels"
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": -3
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 1.2
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 188.7,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 191.1,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 11700,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": -3
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 1.2
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 188.7,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 191.1,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "MOVE_HERO",
+                "pos": {
+                  "x": 190,
+                  "z": 0
+                }
+              },
+              {
+                "verb": "HAUL"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "truncated": null,
+    "primarySlot": 0,
+    "streams": []
+  },
+  "eventLogHash": "fnv1a32:a7ee01ad",
+  "outcome": {
+    "reason": "death",
+    "secured": false,
+    "waves": 14,
+    "timeAlive": 420,
+    "gold": 0
+  }
+}

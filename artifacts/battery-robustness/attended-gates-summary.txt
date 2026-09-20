@@ -1,0 +1,12 @@
+npm ci (worktree) rc=0 vite=8.3.0
+tsc rc=0
+build rc=0
+e1 build rc=0
+payload rc=0 first-town payload: 34219619 bytes
+runner guards + era + assay rc=0 ℹ pass 26 ℹ fail 0 
+battery rc=1 ℹ tests 929 ℹ pass 922 ℹ fail 2 ℹ skipped 5 
+CONTENDED — 3 concurrent batteries
+✖ all 152 scripts/*.test.mjs fixture owners remove their temp directories (263110.609834ms)
+✖ contention is advisory, correctly counted, and absent when alone (6586.539958ms)
+✖ failing tests:
+BATTERY-GATES-READ

@@ -1,0 +1,186 @@
+{
+  "rig": "opus",
+  "contract": "e8-low-orbit",
+  "model": "claude-opus-5",
+  "sessionId": "6f44c4a7-f38d-4f97-adf4-e292226d0856",
+  "startedAt": "2026-09-05T18:42:29.863Z",
+  "endedAt": "2026-09-05T18:50:58.094Z",
+  "wallClockSeconds": 508,
+  "wallHit": false,
+  "exitCode": 0,
+  "signal": null,
+  "setupToFirstOutputSeconds": 75,
+  "arenaTrackedChanges": [],
+  "workspaceFiles": [
+    "attempt-1-tape.json",
+    "ctrl-v1.mjs",
+    "gauntlet-outcome.json",
+    "gauntlet-report.md",
+    "probe-idle-result.json",
+    "probe-idle-tape.json",
+    "probe-idle-views.jsonl",
+    "probe-idle.err",
+    "runner.mjs",
+    "runs-ledger.json",
+    "tune-1-result.json",
+    "tune-1-tape.json",
+    "tune-1-views.jsonl",
+    "tune-1.err"
+  ],
+  "outcome": {
+    "secured": true,
+    "waves": 20,
+    "timeMs": 600000,
+    "gold": 200,
+    "kills": 926,
+    "calls": 95,
+    "defaultedPicks": 0,
+    "defaultedSecure": 1,
+    "eventLogHash": "fnv1a32:8629a98e",
+    "tape": "/tmp/heat12-038cc280/artifacts/heat12/opus/e8-low-orbit/attempt-1-tape.json",
+    "scored": true,
+    "runsSoFar": 2,
+    "scoredAttempts": 1,
+    "worldModel": "sim-import",
+    "promotion": "ONE RIDE UNDER TWO FILENAMES. ctrl-v1 secured on its first ride, written by --tape as tune-1-tape.json; the rules stop the ride at the first SECURED outcome, so that tape is promoted as my scored attempt and copied byte-identically to attempt-1-tape.json. Both files verified equal. Submit either; the declaration above is the authority.",
+    "envelope": {
+      "durationTicks": 18000,
+      "clockTicksDeclared": 18000,
+      "ceilingTicks": 18002,
+      "lastEntryTick": 17563,
+      "entries": 95,
+      "bytes": 159993,
+      "maxTapeBytes": 576016,
+      "note": "Admissible on all three axes. twist.clockTicks is declared, so F-HEAT11-1's +2 slack applies (18002); the blank-line answer at now.pendingSecure recorded no entry, leaving the last accepted order 437 ticks inside the envelope and defaultedSecure: 1."
+    },
+    "meta": {
+      "buildId": "59a8a0ba7",
+      "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "era": 5,
+      "viewVersion": 2
+    },
+    "tapeHash": "fnv1a32:c69324de",
+    "hashNote": "tapeHash is the TAPE header's hash; eventLogHash above is the stdout outcome line's. They are different numbers by design — comparing the wrong pair reads as a false mismatch.",
+    "contract": "e8-low-orbit",
+    "seed": "e8-low-orbit-01",
+    "difficulty": "trail"
+  },
+  "outcomeError": null,
+  "promotedTapeName": "attempt-1-tape.json",
+  "scoredTapes": [
+    {
+      "file": "attempt-1-tape.json",
+      "id": "agent-6d2f797a-909e53e2-3dd6-4aa9-8160-2be17e6a78f7",
+      "contract": "e8-low-orbit",
+      "seed": "e8-low-orbit-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "59a8a0ba7",
+        "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 20,
+        "timeAlive": 600,
+        "gold": 200
+      },
+      "entries": 95,
+      "durationTicks": 18000,
+      "lastEntryTick": 17563,
+      "promotedByRig": true,
+      "discoveredBy": "outcome-file+filename"
+    }
+  ],
+  "otherTapes": [
+    {
+      "file": "probe-idle-tape.json",
+      "id": "agent-a84b8aa6-a9ebf5c8-f4a5-4d01-a696-18877114c2c5",
+      "contract": "e8-low-orbit",
+      "seed": "e8-low-orbit-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "59a8a0ba7",
+        "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 2,
+        "timeAlive": 78.333,
+        "gold": 0
+      },
+      "entries": 0,
+      "durationTicks": 2350,
+      "lastEntryTick": null
+    },
+    {
+      "file": "tune-1-tape.json",
+      "id": "agent-6d2f797a-909e53e2-3dd6-4aa9-8160-2be17e6a78f7",
+      "contract": "e8-low-orbit",
+      "seed": "e8-low-orbit-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "59a8a0ba7",
+        "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 20,
+        "timeAlive": 600,
+        "gold": 200
+      },
+      "entries": 95,
+      "durationTicks": 18000,
+      "lastEntryTick": 17563
+    }
+  ],
+  "otherSecuredTapes": [
+    {
+      "file": "tune-1-tape.json",
+      "id": "agent-6d2f797a-909e53e2-3dd6-4aa9-8160-2be17e6a78f7",
+      "contract": "e8-low-orbit",
+      "seed": "e8-low-orbit-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "59a8a0ba7",
+        "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 20,
+        "timeAlive": 600,
+        "gold": 200
+      },
+      "entries": 95,
+      "durationTicks": 18000,
+      "lastEntryTick": 17563
+    }
+  ],
+  "report": {
+    "outcome": "**SECURED.** waves **20** · timeAlive **600.000 s** · gold **200** · calls **95** · kills 926 ·\n`defaultedSecure: 1` · `eventLogHash fnv1a32:8629a98e`.\n\n- **2 sim runs** (one `--policy idle` probe, one controller ride) and **1 scored attempt**.\n- Tape put forward: `/tmp/heat12-038cc280/artifacts/heat12/opus/e8-low-orbit/attempt-1-tape.json`,\n  declared in `gauntlet-outcome.json`'s `tape` field. `ctrl-v1` secured on its **first ride**;\n  the rules stop the ride at the first SECURED outcome, so that tape (written by `--tape` as\n  `tune-1-tape.json`) is promoted as the scored attempt and copied byte-identically to the\n  `attempt-1` name. **One ride under two filenames**, verified equal.\n- Admissible on all three envelope axes: `durationTicks` **18000** against a ceiling of 18002\n  (`twist.clockTicks: 18000` is declared, so F-HEAT11-1's `+2` slack applies), last accepted order\n  at tick **17563** — 437 ticks inside — and **159,993 bytes** against a 576,016 ceiling (27.8%).\n- Receipt: `scripts/assay-replay-agent.mjs` reproduced the tape's own `fnv1a32:c69324de` and all\n  four outcome fields without riding anything. (That is the TAPE header's hash, not the stdout\n  outcome line's `8629a98e` — different numbers by design.)",
+    "whatTheMapAsked": "It asked me for **a walk to both ends of the station, and the honest finding is that the map's own\neconomy pays for it without being asked** — so E8's signature mechanic is now genuinely composed\nand genuinely gates the secure here, while being almost free to discharge. The ladder's line is\n\"low gravity, air as wall (transfer under changed physics)\". The *air* half is new and real: the\nsecure is latched on `now.air.crossing.complete`, which wants the Prospector to have stood in all\nthree of `west-scaffold-deck`, `claw-carcass-yard` and `east-scaffold-deck`. The claim at (0,12)\nsits inside the middle deck, so that one is credited at t=0 and the ask is the two outer decks at\n|x| ≥ 26 — about 111 units of round trip across the spine. The fields that carried it were\n`now.air.crossing.{zones,required,reached,breathlessEntries,complete}` and `now.air.suit.seconds/inDome/empty`.\nI wrote a deliberate two-leg `MOVE_TO` errand for it, gated behind two standing turrets because the\nidle floor (w2 / 78.3 s) says standing defence is the scarce resource — **and that branch never\nfired.** Two of the four authored `harvestAnchors` are (−38, 2) and (38, 2), which lie *inside* the\nwest and east decks, so the ordinary economy tail walked the Prospector into both: second deck at\nt = 9.13, **crossing complete at t = 25.23**, on the same tick the first turret went up. A rider\nthat simply pans this map's seams discharges the era gate without ever learning there was one.\n\nThe *gravity* half is live and, for the first time on this map, I made it fire. `now.gravity` is\n`free-fall`, `feelG 0`, `lobArcDistanceMultiplier`/`lobAirTimeMultiplier` **4.8**, `orbitalReturn: true`\n— so `BLAST_AT` reaches 48 m instead of 10. Generation 35 secured here with `returnsScheduled: 0`\nand called the mechanic \"structurally optional\"; this run threw lobs aimed *outward* from the claim\nat (0, 18) and measured **`returnsScheduled: 55`, `returnsDetonated: 54`, `debrisDamageDealt: 0`**.\nSo the returning-lob seam is real and does fire — and aiming outward is what makes it free, because\na return re-enters at `position + (position − origin)`, i.e. at (0, 24), outside the fort. The other\ntwo arms stayed at the zeros generation 35 recorded, for the reason it gave: `driftSteps: 0` and\n`debrisSteps: 0` because both key on `this.hero.group.position` and the hero is welded to a claim\nthat sits inside a scaffold zone. That half of my notebook still holds.\n\nEverything else was ordinary stationary survival in a generous pocket, read off `now.works.entries`\n(position, `tier`, `index`), `now.works.byKind`, `now.seams[].active/x/z`, `now.gold`,\n`now.hero.hp/maxHp/level`, `now.threats.alive` (peak 27 of a 60 cap), `now.orders[].status/reason`\nand `now.pendingOffer`. The roster is one id, `scrap_corsair`, with neither `wrecker` nor `thief`,\nso no work can be attacked and no gold stolen: **0 of 10 works wrecked, `goldStolen` 0** — which\ndeletes `REPAIR_UNDER` and palisades from the design. Orders used: `BUILD`, `HARVEST`,\n`PICK_UPGRADE`, `MOVE_TO`, `CONTEXT_ACTION upgrade`, `BLAST_AT`, `HOLD`, and one blank line.\n**Not one E8 verb, because E8 has none.**\n\n**Does it still play the way my notebook remembers?** Half. Same welded hero at (0,12), same\ngenerous 36×28 pocket, same four anchors, same free-fall gravity — but the map now carries a secure\ngate my generation-35 self reported as absent, and the lob seam it recorded as never firing fired\n54 times.",
+    "winnability": "Secured, and the margin was **wide in every direction at once**: the hero **never dropped below its\nrunning maximum across all 98 views** (minimum 100, finishing 167/175 at level 29), all ten works\nstood unwrecked with **every one of the four turrets at tier 2**, gold finished pinned at the 200\ncap off 1,470 panned, the era gate latched at t = 25.2 with the suit never once emptying, and the\nreel cleared every envelope axis with 437 ticks and 416 KB to spare.",
+    "lessons": "- **A notebook finding can expire in one half and hold in the other, and the halves need separate\n  verdicts.** Generation 35 wrote two things about this map: the air is absent (now false — a suit\n  and a three-deck crossing latch gate the secure) and the drift/debris arms key on the welded\n  hero's position so they cannot fire (still true, `driftSteps: 0` again). I nearly demoted the\n  whole entry on the era-pin's word. **Diff the notebook clause by clause against `now`, the same\n  way I already read `engineDependencies` clause by clause.**\n- **When the era system is small, read it end to end — sixth generation running this has paid.**\n  `E8SuitAirSystem`'s header names each sibling's derivation in prose (\"the three authored scaffold\n  decks are the only pressurised ground... crossing the spine to reach every one of them on suit\n  air is what opens the secure\"), and its `create()` comment numbers the three derivations so a\n  reader can check each against the contract JSON. Four minutes there produced the entire contract\n  before the idle probe finished.\n- **Read the ORDER of operations inside the update step, not just the predicate.** Generation 45\n  learned this on `usePlaybook`'s early returns; here the same move settles the whole difficulty:\n  shelters refill the suit *before* `noteCrossings` reads it, and on this map the crossings **are**\n  the shelters, so a breathless entry is unreachable by construction. The published `breathlessEntries`\n  counter can only ever read 0. An era gate can be fully composed, correctly published, genuinely\n  run-blocking — and still cost nothing but distance.\n- **Check whether the map's ordinary economy already discharges the era gate before building an\n  errand for it.** I wrote and shipped a two-leg `MOVE_TO` errand with a fort-first trigger, and it\n  never executed: two of four `harvestAnchors` sit inside the two crossing zones, so the HARVEST\n  tail crossed both decks by t = 25.2. The errand was dead code that cost nothing this time and\n  could have cost a run if it had fired at the wrong moment. **Intersect `harvestAnchors` (and every\n  other routine destination) with the objective's zones first** — the same `stakeMarkers × buildZones\n  × objectiveSites` move, solved for the *worker's existing commute* instead of for placement.\n- **Aim a returning lob OUTWARD and it is free damage.** `orbitalReturn` re-enters at\n  `position + (position − origin)`, so a throw from the claim at (0,12) toward (0,18) returns at\n  (0,24) — beyond the fort, never on it. 55 scheduled, 54 detonated, `debrisDamageDealt: 0`, zero\n  works wrecked. Generation 35 declined the lob entirely and reported the seam as never firing;\n  generation 29 measured `SET_WEAPON blast` as a five-wave *loss*. Both are consistent with the\n  right answer: keep the rig as the auto-weapon and spend the free `BLAST_AT` window on an outward\n  arc.\n- **The gen-6→47 skeleton secured this on its first ride, fourth contract running, with no tuning\n  at all.** `PICK_UPGRADE` first under replace semantics; a plan-time-affordable ladder with\n  *cumulative* gating (rung *i* gated at the sum of costs through *i*, so a cheap rung cannot steal\n  gold an expensive one is waiting for) interleaving turrets and beacons; more candidates than slots\n  with a refusal blacklist fed from `now.orders[].reason` and a patience budget; a plating-first\n  scorer; one seam drained in a block before walking; a terminal `HOLD` that cannot be filtered\n  away; a blank line at `pendingSecure`. Ten builds, zero refusals, maxHp 100 → 175, all four\n  turrets to tier 2. Stop re-deriving it; the heat's work is the one thing the board does\n  differently.\n- **The capped-purse sink is now standing equipment, and it is why this ride beat my own record on\n  the same map.** Generation 39 lost a run to it and generation 45 fixed it; here `ladderDone &&\n  gold >= 150` plus `MOVE_TO` in front of `CONTEXT_ACTION upgrade` (it does not travel) took all\n  four turrets to tier 2 and kept `goldPanned` climbing to 1,470. Generation 35 secured this exact\n  contract at 79/175; this one finished 167/175 having never dropped below its maximum. **The same\n  map, the same seed, and the difference was entirely a live gold sink.**\n- **`timeout` is not on macOS and shell redirection is refused in this arena — the node runner is the\n  answer to both.** Third generation running that the runner (spawn `gr-sim`, drive the controller,\n  log every view to JSONL, write `gauntlet-outcome.json` and the three envelope axes on every child\n  exit) made the intermediate-results law automatic and gave me the per-view table the analysis is\n  built on. Two commands cost me ~40 seconds to rediscover; the runner is worth writing first.\n- **Hand-write the final row.** Eighth generation where the best-so-far comparator cannot know which\n  run I have chosen to *call* my scored attempt, nor that the promoted tape lives under a second\n  filename. The brief is explicit that the operator reads the `tape` field, never the filename; I\n  wrote both, made the two files byte-identical, and said plainly in the outcome file that they are\n  one ride."
+  },
+  "usage": {
+    "transcript": "/Users/robin/.claude/projects/-private-tmp-heat12-038cc280/6f44c4a7-f38d-4f97-adf4-e292226d0856.jsonl",
+    "assistantTurns": 63,
+    "toolCalls": 32,
+    "tokensIn": 126,
+    "tokensOut": 118240,
+    "cacheReadTokens": 15588613,
+    "cacheWriteTokens": 872116,
+    "note": "tokensIn excludes cache reads/writes (reported separately); summed from the CLI session transcript, not self-reported by the rig"
+  }
+}

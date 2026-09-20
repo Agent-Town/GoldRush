@@ -1,0 +1,188 @@
+
+Running 46 tests using 1 worker
+
+[1/46] [desktop-chrome] › e2e/run3d-rail-elements.spec.ts:47:1 › flag-off boot keeps procedural rails and requests no rail-element GLB
+[2/46] [desktop-chrome] › e2e/run3d-rail-elements.spec.ts:58:1 › pilot loads once and instances one rail element per tie
+[3/46] [desktop-chrome] › e2e/run3d-rail-elements.spec.ts:83:1 › LITE keeps procedural rails and requests no rail-element GLB
+[4/46] [desktop-chrome] › e2e/run3d-rail-elements.spec.ts:94:1 › invalid bytes fail closed to procedural rails
+[5/46] [desktop-chrome] › e2e/run3d-rail-elements.spec.ts:103:1 › rail-element pilot stays within the 115% procedural frame budget
+[6/46] [desktop-chrome] › e2e/vp-02-sprite-animation.spec.ts:320:1 › hero test clip advances on sim time and holds during hit-pause
+  1) [desktop-chrome] › e2e/vp-02-sprite-animation.spec.ts:320:1 › hero test clip advances on sim time and holds during hit-pause 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+    Call Log:
+    - Timeout 5000ms exceeded while waiting on the predicate
+
+      355 |   await expect
+      356 |     .poll(async () => page.evaluate(() => (window as unknown as { __vp02Track: { sawPause: boolean } }).__vp02Track.sawPause))
+    > 357 |     .toBe(true);
+          |      ^
+      358 |   await page.keyboard.up('KeyW');
+      359 |
+      360 |   const pauseFrames = await page.evaluate(() => (window as unknown as { __vp02Track: { pauseFrames: string[] } }).__vp02Track.pauseFrames);
+        at /Users/robin/Claude/Projects/Gold Rush/gate-s1491/e2e/vp-02-sprite-animation.spec.ts:357:6
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/vp-02-sprite-animation-her-a4ec0--and-holds-during-hit-pause-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/vp-02-sprite-animation-her-a4ec0--and-holds-during-hit-pause-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/vp-02-sprite-animation-her-a4ec0--and-holds-during-hit-pause-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/vp-02-sprite-animation-her-a4ec0--and-holds-during-hit-pause-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[7/46] [desktop-chrome] › e2e/vp-02-sprite-animation.spec.ts:367:1 › missing sheet cells fall back to the existing one-frame billboard without drift
+[desktop-chrome] › e2e/vp-02-sprite-animation.spec.ts:367:1 › missing sheet cells fall back to the existing one-frame billboard without drift
+[fallback] abortedRotationCells=20
+
+[8/46] [desktop-chrome] › e2e/vp-02-sprite-animation.spec.ts:405:1 › warmed test clip swaps do not grow renderer memory or draw calls
+  2) [desktop-chrome] › e2e/vp-02-sprite-animation.spec.ts:405:1 › warmed test clip swaps do not grow renderer memory or draw calls 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 32
+    Received: 33
+
+      459 |   const afterTextures = await steadyRendererCount(page, 'textures');
+      460 |   const afterCalls = await steadyRendererCount(page, 'calls');
+    > 461 |   expect(afterTextures).toBe(baselineTextures);
+          |                         ^
+      462 |   expect(after?.geometries).toBe(baseline?.geometries);
+      463 |   // Draw calls are per-frame and carry 1-2 frame transients right after a swap at
+      464 |   // headless fps (s27 evidence: instantaneous 20 vs steady 19). The mandate is "no
+        at /Users/robin/Claude/Projects/Gold Rush/gate-s1491/e2e/vp-02-sprite-animation.spec.ts:461:25
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/vp-02-sprite-animation-war-569af-nderer-memory-or-draw-calls-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/vp-02-sprite-animation-war-569af-nderer-memory-or-draw-calls-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/vp-02-sprite-animation-war-569af-nderer-memory-or-draw-calls-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/vp-02-sprite-animation-war-569af-nderer-memory-or-draw-calls-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[9/46] [desktop-chrome] › e2e/vp-02-sprite-animation.spec.ts:472:1 › hero rotation contract fires both stride cells for all 8 headings
+[10/46] [desktop-chrome] › e2e/vp-02-sprite-animation.spec.ts:531:1 › hero walk frameKey alternates while each 8-way heading is held
+[11/46] [desktop-chrome] › e2e/vp-02-sprite-animation.spec.ts:566:1 › east heading uses explicit rotation2 files with unmirrored pixels
+  3) [desktop-chrome] › e2e/vp-02-sprite-animation.spec.ts:566:1 › east heading uses explicit rotation2 files with unmirrored pixels 
+
+    Error: Error: page.evaluate: Error: Timed out waiting for {"direction":"w","frameKey":"char-hero-sheet-rotation-f-r1c0.png","fadeActive":false}; observed=[{"direction":"w","frameKey":"char-hero-sheet-rotation2-f-r1c3.png","fadeActive":false}]; framesPolled=194
+        at eval (eval at evaluate (:303:30), <anonymous>:28:11)
+        at async <anonymous>:329:30
+
+    expect(received).not.toBeNull()
+
+    Received: null
+        at eval (eval at evaluate (:303:30), <anonymous>:28:11)
+        at async <anonymous>:329:30
+        at /Users/robin/Claude/Projects/Gold Rush/gate-s1491/e2e/vp-02-sprite-animation.spec.ts:599:66
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/vp-02-sprite-animation-eas-bf2d4-iles-with-unmirrored-pixels-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/vp-02-sprite-animation-eas-bf2d4-iles-with-unmirrored-pixels-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/vp-02-sprite-animation-eas-bf2d4-iles-with-unmirrored-pixels-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/vp-02-sprite-animation-eas-bf2d4-iles-with-unmirrored-pixels-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[12/46] [desktop-chrome] › e2e/vp-02-sprite-animation.spec.ts:619:1 › damped heading sweep visits every orientation in order
+[13/46] [desktop-chrome] › e2e/vp-02-sprite-animation.spec.ts:639:1 › 180-degree reversal crosses intermediate orientations
+[14/46] [desktop-chrome] › e2e/vp-02-sprite-animation.spec.ts:659:1 › small boundary wiggle does not oscillate orientation
+[15/46] [desktop-chrome] › e2e/vp-02-sprite-animation.spec.ts:678:1 › orientation swap crossfades once and adds no draw call at rest
+[16/46] [desktop-chrome] › e2e/vp-02-sprite-animation.spec.ts:732:1 › captures VP-02 desktop and narrow screenshots
+[17/46] [desktop-chrome] › e2e/vp-02b-rotation-resolver.spec.ts:113:1 › hero locomotion resolves all 8 contract directions
+[18/46] [desktop-chrome] › e2e/vp-02b-rotation-resolver.spec.ts:129:1 › resolver hysteresis holds across small boundary oscillation
+[19/46] [desktop-chrome] › e2e/vp-02b-rotation-resolver.spec.ts:150:1 › idle resolver keeps pure sides and snaps diagonals to hemispheres
+[20/46] [desktop-chrome] › e2e/vp-02b-rotation-resolver.spec.ts:165:1 › pure side idle stays side while diagonal idle snaps to a hemisphere
+[21/46] [desktop-chrome] › e2e/vp-02b-rotation-resolver.spec.ts:191:1 › east and west idle cells resolve explicitly while southeast stays south
+[22/46] [desktop-chrome] › e2e/vp-02b-rotation-resolver.spec.ts:233:1 › action clips stay on coarse orientation cells and jumper diagnostics stay old shape
+[23/46] [desktop-chrome] › e2e/vp-02b-rotation-resolver.spec.ts:292:1 › captures rotation scale-pulse review shots
+[24/46] [mobile-chrome] › e2e/run3d-rail-elements.spec.ts:47:1 › flag-off boot keeps procedural rails and requests no rail-element GLB
+[25/46] [mobile-chrome] › e2e/run3d-rail-elements.spec.ts:58:1 › pilot loads once and instances one rail element per tie
+[26/46] [mobile-chrome] › e2e/run3d-rail-elements.spec.ts:83:1 › LITE keeps procedural rails and requests no rail-element GLB
+[27/46] [mobile-chrome] › e2e/run3d-rail-elements.spec.ts:94:1 › invalid bytes fail closed to procedural rails
+[28/46] [mobile-chrome] › e2e/run3d-rail-elements.spec.ts:103:1 › rail-element pilot stays within the 115% procedural frame budget
+[29/46] [mobile-chrome] › e2e/vp-02-sprite-animation.spec.ts:320:1 › hero test clip advances on sim time and holds during hit-pause
+[30/46] [mobile-chrome] › e2e/vp-02-sprite-animation.spec.ts:367:1 › missing sheet cells fall back to the existing one-frame billboard without drift
+[mobile-chrome] › e2e/vp-02-sprite-animation.spec.ts:367:1 › missing sheet cells fall back to the existing one-frame billboard without drift
+[fallback] abortedRotationCells=20
+
+[31/46] [mobile-chrome] › e2e/vp-02-sprite-animation.spec.ts:405:1 › warmed test clip swaps do not grow renderer memory or draw calls
+  4) [mobile-chrome] › e2e/vp-02-sprite-animation.spec.ts:405:1 › warmed test clip swaps do not grow renderer memory or draw calls 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 28
+    Received: 29
+
+      459 |   const afterTextures = await steadyRendererCount(page, 'textures');
+      460 |   const afterCalls = await steadyRendererCount(page, 'calls');
+    > 461 |   expect(afterTextures).toBe(baselineTextures);
+          |                         ^
+      462 |   expect(after?.geometries).toBe(baseline?.geometries);
+      463 |   // Draw calls are per-frame and carry 1-2 frame transients right after a swap at
+      464 |   // headless fps (s27 evidence: instantaneous 20 vs steady 19). The mandate is "no
+        at /Users/robin/Claude/Projects/Gold Rush/gate-s1491/e2e/vp-02-sprite-animation.spec.ts:461:25
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/vp-02-sprite-animation-war-569af-nderer-memory-or-draw-calls-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/vp-02-sprite-animation-war-569af-nderer-memory-or-draw-calls-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/vp-02-sprite-animation-war-569af-nderer-memory-or-draw-calls-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/vp-02-sprite-animation-war-569af-nderer-memory-or-draw-calls-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[32/46] [mobile-chrome] › e2e/vp-02-sprite-animation.spec.ts:472:1 › hero rotation contract fires both stride cells for all 8 headings
+[33/46] [mobile-chrome] › e2e/vp-02-sprite-animation.spec.ts:531:1 › hero walk frameKey alternates while each 8-way heading is held
+[34/46] [mobile-chrome] › e2e/vp-02-sprite-animation.spec.ts:566:1 › east heading uses explicit rotation2 files with unmirrored pixels
+[mobile-chrome] › e2e/vp-02-sprite-animation.spec.ts:566:1 › east heading uses explicit rotation2 files with unmirrored pixels
+[mirror-pixels] heroCropDifference direct=0.0458 flipped=0.0231
+
+[35/46] [mobile-chrome] › e2e/vp-02-sprite-animation.spec.ts:619:1 › damped heading sweep visits every orientation in order
+[36/46] [mobile-chrome] › e2e/vp-02-sprite-animation.spec.ts:639:1 › 180-degree reversal crosses intermediate orientations
+[37/46] [mobile-chrome] › e2e/vp-02-sprite-animation.spec.ts:659:1 › small boundary wiggle does not oscillate orientation
+[38/46] [mobile-chrome] › e2e/vp-02-sprite-animation.spec.ts:678:1 › orientation swap crossfades once and adds no draw call at rest
+[39/46] [mobile-chrome] › e2e/vp-02-sprite-animation.spec.ts:732:1 › captures VP-02 desktop and narrow screenshots
+[40/46] [mobile-chrome] › e2e/vp-02b-rotation-resolver.spec.ts:113:1 › hero locomotion resolves all 8 contract directions
+[41/46] [mobile-chrome] › e2e/vp-02b-rotation-resolver.spec.ts:129:1 › resolver hysteresis holds across small boundary oscillation
+[42/46] [mobile-chrome] › e2e/vp-02b-rotation-resolver.spec.ts:150:1 › idle resolver keeps pure sides and snaps diagonals to hemispheres
+[43/46] [mobile-chrome] › e2e/vp-02b-rotation-resolver.spec.ts:165:1 › pure side idle stays side while diagonal idle snaps to a hemisphere
+[44/46] [mobile-chrome] › e2e/vp-02b-rotation-resolver.spec.ts:191:1 › east and west idle cells resolve explicitly while southeast stays south
+[45/46] [mobile-chrome] › e2e/vp-02b-rotation-resolver.spec.ts:233:1 › action clips stay on coarse orientation cells and jumper diagnostics stay old shape
+[46/46] [mobile-chrome] › e2e/vp-02b-rotation-resolver.spec.ts:292:1 › captures rotation scale-pulse review shots
+  4 failed
+    [desktop-chrome] › e2e/vp-02-sprite-animation.spec.ts:320:1 › hero test clip advances on sim time and holds during hit-pause 
+    [desktop-chrome] › e2e/vp-02-sprite-animation.spec.ts:405:1 › warmed test clip swaps do not grow renderer memory or draw calls 
+    [desktop-chrome] › e2e/vp-02-sprite-animation.spec.ts:566:1 › east heading uses explicit rotation2 files with unmirrored pixels 
+    [mobile-chrome] › e2e/vp-02-sprite-animation.spec.ts:405:1 › warmed test clip swaps do not grow renderer memory or draw calls 
+  42 passed (8.1m)

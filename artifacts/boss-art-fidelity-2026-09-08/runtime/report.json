@@ -1,0 +1,1708 @@
+{
+  "capturedAt": "2026-09-08T00:23:08.479Z",
+  "results": [
+    {
+      "id": "dredge-queen",
+      "epoch": "epoch-5-deepwater",
+      "contract": "e5-deepwater-claim",
+      "variant": "dredge_queen",
+      "flag": "dredgeQueen3d",
+      "errors": [],
+      "notes": [
+        "Debug harness spawns boss; production camera unchanged; manual simulation; full performance tier; 1440x1000 desktop."
+      ],
+      "parts": [
+        {
+          "x": 32.8,
+          "y": 0.31573084041755534,
+          "z": -20,
+          "id": 0,
+          "spreadOffset": -1.3479215058879743,
+          "hp": 80,
+          "maxHp": 80,
+          "speed": 2.7,
+          "contactDamage": 0,
+          "buildingDamage": 0,
+          "supportBuildingDamage": 0,
+          "heroPursuitRange": 0,
+          "hitRadius": 0.81,
+          "variantId": "dredge_queen",
+          "variantLabel": "The Dredge-Queen",
+          "boltDamageMult": 1,
+          "bossGroupId": "e5-deepwater-claim:dredge-queen-act1",
+          "bossGroupSize": 3,
+          "bossGroupTotalHp": 300,
+          "bossComponentId": "claw",
+          "bossComponentLabel": "CLAW",
+          "bossDegradeSpeedMult": 1,
+          "presentation": {
+            "mesh": false,
+            "visible": false,
+            "railY": 0.31573084041755534,
+            "railRotation": 1.5707963267948966,
+            "textureKey": "boss-railcar-claw",
+            "damaged": false,
+            "damageThreshold": 0.5,
+            "wreckerMarker": false,
+            "markerColor": "#a0522d",
+            "source": "billboard",
+            "mounted": false,
+            "morphInfluence": 0,
+            "bossBarY": 3.3214537059853244,
+            "bossBarScale": 1
+          },
+          "scale": 1.35,
+          "hasBanner": false,
+          "vx": 0,
+          "vz": 0,
+          "thief": false,
+          "wrecker": false,
+          "state": "none",
+          "wreckState": "none",
+          "carried": 0,
+          "edge": null,
+          "zone": "shallows",
+          "light": 1,
+          "nightSpeedMultiplier": 1,
+          "watchPainted": false,
+          "readState": "fevered",
+          "fevered": true,
+          "freed": false,
+          "feverAccent": {
+            "active": true,
+            "kind": "human",
+            "strength": 0.514,
+            "surged": false,
+            "channel": "watch-paint-instanced"
+          },
+          "terrain": {
+            "grounded": true,
+            "slope": {
+              "dx": 0,
+              "dz": 0
+            },
+            "traversable": true,
+            "speedMul": 1
+          }
+        },
+        {
+          "x": 35.7,
+          "y": 0.3464537059853239,
+          "z": -22.4,
+          "id": 1,
+          "spreadOffset": -0.8972326519566665,
+          "hp": 110.00000000000001,
+          "maxHp": 110.00000000000001,
+          "speed": 2.7,
+          "contactDamage": 0,
+          "buildingDamage": 0,
+          "supportBuildingDamage": 0,
+          "heroPursuitRange": 0,
+          "hitRadius": 0.81,
+          "variantId": "dredge_queen",
+          "variantLabel": "The Dredge-Queen",
+          "boltDamageMult": 1,
+          "bossGroupId": "e5-deepwater-claim:dredge-queen-act1",
+          "bossGroupSize": 3,
+          "bossGroupTotalHp": 300,
+          "bossComponentId": "paddle_port",
+          "bossComponentLabel": "PORT PADDLE",
+          "bossDegradeSpeedMult": 1,
+          "presentation": {
+            "mesh": false,
+            "visible": false,
+            "railY": 0.3464537059853239,
+            "railRotation": 1.570693972649911,
+            "textureKey": "boss-railcar-paddle_port",
+            "damaged": false,
+            "damageThreshold": 0.5,
+            "wreckerMarker": false,
+            "markerColor": "#a0522d",
+            "source": "billboard",
+            "mounted": false,
+            "morphInfluence": 0,
+            "bossBarY": 3.3214537059853244,
+            "bossBarScale": 1
+          },
+          "scale": 1.35,
+          "hasBanner": false,
+          "vx": 0,
+          "vz": 0,
+          "thief": false,
+          "wrecker": false,
+          "state": "none",
+          "wreckState": "none",
+          "carried": 0,
+          "edge": null,
+          "zone": "shallows",
+          "light": 1,
+          "nightSpeedMultiplier": 1,
+          "watchPainted": false,
+          "readState": "fevered",
+          "fevered": true,
+          "freed": false,
+          "feverAccent": {
+            "active": true,
+            "kind": "human",
+            "strength": 0.501,
+            "surged": false,
+            "channel": "watch-paint-instanced"
+          },
+          "terrain": {
+            "grounded": true,
+            "slope": {
+              "dx": 0,
+              "dz": 0
+            },
+            "traversable": true,
+            "speedMul": 1
+          }
+        },
+        {
+          "x": 35.7,
+          "y": 0.26560244479473405,
+          "z": -17.6,
+          "id": 2,
+          "spreadOffset": -0.5830506153383876,
+          "hp": 110.00000000000001,
+          "maxHp": 110.00000000000001,
+          "speed": 2.7,
+          "contactDamage": 0,
+          "buildingDamage": 0,
+          "supportBuildingDamage": 0,
+          "heroPursuitRange": 0,
+          "hitRadius": 0.81,
+          "variantId": "dredge_queen",
+          "variantLabel": "The Dredge-Queen",
+          "boltDamageMult": 1,
+          "bossGroupId": "e5-deepwater-claim:dredge-queen-act1",
+          "bossGroupSize": 3,
+          "bossGroupTotalHp": 300,
+          "bossComponentId": "paddle_starboard",
+          "bossComponentLabel": "STARBOARD PADDLE",
+          "bossDegradeSpeedMult": 1,
+          "presentation": {
+            "mesh": false,
+            "visible": false,
+            "railY": 0.26560244479473405,
+            "railRotation": 1.5705916185070714,
+            "textureKey": "boss-railcar-paddle_starboard",
+            "damaged": false,
+            "damageThreshold": 0.5,
+            "wreckerMarker": false,
+            "markerColor": "#a0522d",
+            "source": "billboard",
+            "mounted": false,
+            "morphInfluence": 0,
+            "bossBarY": 3.3214537059853244,
+            "bossBarScale": 1
+          },
+          "scale": 1.35,
+          "hasBanner": false,
+          "vx": 0,
+          "vz": 0,
+          "thief": false,
+          "wrecker": false,
+          "state": "none",
+          "wreckState": "none",
+          "carried": 0,
+          "edge": null,
+          "zone": "shallows",
+          "light": 1,
+          "nightSpeedMultiplier": 1,
+          "watchPainted": false,
+          "readState": "fevered",
+          "fevered": true,
+          "freed": false,
+          "feverAccent": {
+            "active": true,
+            "kind": "human",
+            "strength": 0.527,
+            "surged": false,
+            "channel": "watch-paint-instanced"
+          },
+          "terrain": {
+            "grounded": true,
+            "slope": {
+              "dx": 0,
+              "dz": 0
+            },
+            "traversable": true,
+            "speedMul": 1
+          }
+        }
+      ],
+      "center": {
+        "x": 34.733333333333334,
+        "z": -20
+      },
+      "dataset": {
+        "railcar3dState": "off",
+        "railcar3dSource": "billboard",
+        "railcar3dMounted": "false",
+        "railcar3dDamageStates": "{\"wheels\":\"intact\",\"boiler\":\"intact\",\"cabin\":\"intact\"}",
+        "crawler3dState": "off",
+        "crawler3dSource": "placeholder",
+        "crawler3dMounted": "false",
+        "crawler3dDamageStates": "{\"drain_mast\":\"intact\",\"tracks\":\"intact\",\"capacitor_bank\":\"intact\"}",
+        "dredgeQueen3dState": "ready",
+        "dredgeQueen3dSource": "glb",
+        "dredgeQueen3dMounted": "true",
+        "dredgeQueen3dPresentation": "fight",
+        "dredgeQueen3dDamageStates": "{\"claw\":\"intact\",\"paddle_port\":\"intact\",\"paddle_starboard\":\"intact\",\"hold\":\"intact\"}",
+        "salvageClaw3dState": "off",
+        "salvageClaw3dSource": "placeholder",
+        "salvageClaw3dMounted": "false",
+        "salvageClaw3dPresentation": "hidden",
+        "homemaker3dState": "off",
+        "homemaker3dSource": "placeholder",
+        "homemaker3dMounted": "false",
+        "homemaker3dPresentation": "hidden",
+        "homemaker3dDamageStates": "{\"vac\":\"intact\",\"rack\":\"intact\",\"core\":\"intact\"}",
+        "oldDigger3dState": "off",
+        "oldDigger3dSource": "placeholder",
+        "oldDigger3dMounted": "false",
+        "oldDigger3dPresentation": "hidden",
+        "terrain3dPilotState": "ready",
+        "terrain3dPilotRenderSource": "glb",
+        "run3dPilotState": "ready",
+        "cameraAspect": "1.44",
+        "run3dPilotMeshes": "0",
+        "run3dPilotTriangles": "0",
+        "terrain3dPilotContract": "e5-deepwater-claim",
+        "terrain3dPilotTerrainLoadState": "mounted",
+        "terrain3dPilotPanoramaLoadState": "mounted",
+        "terrain3dPilotLandmarkLoadState": "mounted",
+        "terrain3dPilotHeightSource": "baked-grid",
+        "terrain3dPilotMeshes": "1",
+        "terrain3dPilotTriangles": "32768",
+        "terrain3dPilotMaterials": "1",
+        "terrain3dPilotVertices": "16641",
+        "terrain3dPilotPanorama": "deepwater-claim-panorama",
+        "terrain3dPilotPanoramaMeshes": "1",
+        "terrain3dPilotPanoramaTriangles": "2704",
+        "terrain3dPilotPanoramaMaterials": "1",
+        "terrain3dPilotPanoramaVertices": "1868",
+        "terrain3dPilotNightPools": "off",
+        "terrain3dPilotNightPoolSources": "0",
+        "terrain3dPilotSpringPonds": "0",
+        "terrain3dPilotSpringPondWaterRadii": "[]",
+        "terrain3dPilotSpringPondDampGroundRadii": "[]",
+        "terrain3dPilotChannelWater": "0",
+        "terrain3dPilotFordWater": "0",
+        "terrain3dPilotChannelWaterHalfWidths": "[]",
+        "terrain3dPilotHiddenRelief": "3",
+        "terrain3dPilotHiddenGroundLayers": "TerrainVistaRing|TerrainReliefMesh|SpringPonds",
+        "terrain3dPilotContinuation": "panorama-owned-continuation",
+        "terrain3dPilotHorizonApron": "none",
+        "terrain3dPilotFarGroundProbe": "off",
+        "terrain3dPilotPanoramaFraming": "world-projected-horizon",
+        "terrain3dPilotSkirtBlend": "painted-underlay-alpha-rim",
+        "terrain3dPilotPanoramaFog": "excluded",
+        "terrain3dPilotPanoramaDepth": "screen-horizon-backdrop",
+        "terrain3dPilotLandmarkExpected": "4",
+        "terrain3dPilotLandmarkEmissive": "3",
+        "terrain3dPilotLandmarkSides": "{\"total\":{\"meshes\":0,\"closed\":0,\"open\":0,\"culled\":0,\"doubleSided\":0},\"mounts\":[]}",
+        "terrain3dPilotLandmarks": "0",
+        "terrain3dPilotLandmarkSkipped": "4",
+        "terrain3dPilotLandmarkDiagnostics": "drowned-claim-office: asset unavailable; drowned-chapel: asset unavailable; drowned-general-store: asset unavailable; drowned-stamp-mill: asset unavailable",
+        "terrain3dPilotLandmarkMounts": "[]",
+        "terrain3dPilotLandmarkMaterials": "[]"
+      },
+      "diagnostics": {
+        "camera": {
+          "scene": "run",
+          "distanceScale": 1,
+          "targetDistanceScale": 1,
+          "minDistanceScale": 0.7,
+          "maxDistanceScale": 1.6,
+          "baseDistance": 31.958254019892887,
+          "targetDistance": 31.958254019892887,
+          "actualDistance": 32.47284512223893,
+          "glanceActive": false
+        },
+        "contract": {
+          "activeId": "e5-deepwater-claim",
+          "requestedId": "e5-deepwater-claim",
+          "fallbackReason": null,
+          "stagedLaunchClear": null,
+          "warningSuppressed": false,
+          "epochId": "epoch-5-deepwater",
+          "epochResources": [],
+          "claimOffice": null,
+          "name": "The Deepwater Claim",
+          "tileParams": {
+            "tileId": "e5-deepwater-claim",
+            "biome": "deepwater-shelf-reefs",
+            "size": 128,
+            "dimensions": {
+              "width": 128,
+              "height": 128
+            },
+            "render": {
+              "terrainMesh": "off"
+            },
+            "river": false,
+            "ford": false,
+            "buildZones": [
+              {
+                "id": "claim-boat-deck-mask",
+                "bank": "north",
+                "minX": -5,
+                "maxX": 5,
+                "minZ": 26,
+                "maxZ": 34
+              }
+            ],
+            "stakeMarkers": [
+              {
+                "id": "claim-boat",
+                "x": 0,
+                "z": 30,
+                "heroStart": true
+              }
+            ],
+            "waterSources": [
+              {
+                "kind": "spring_pond",
+                "x": 0,
+                "z": 0,
+                "radius": 64
+              }
+            ],
+            "harvestAnchors": [
+              {
+                "x": -36,
+                "z": -24
+              },
+              {
+                "x": -18,
+                "z": -30
+              },
+              {
+                "x": 0,
+                "z": -22
+              },
+              {
+                "x": 20,
+                "z": -34
+              },
+              {
+                "x": 36,
+                "z": -20
+              }
+            ],
+            "water": {
+              "id": "deepwater-surface-placeholder",
+              "depths": {
+                "springPond": 0.2
+              },
+              "speedMul": {
+                "springPond": 1
+              }
+            },
+            "engineDependencies": [
+              {
+                "dep": "deepwater-claim-consumer",
+                "status": "missing",
+                "description": "Needs a headless Deepwater consumer for claim-boat anchoring and re-anchoring, deck-pad building, the storm and corsair scheduler, the depth ladder, the E5 arsenal, and Dredge-Queen resolution; these run browser-only through DeepwaterClaimTile, DeepwaterArsenal, and DredgeQueenBossSystem."
+              }
+            ],
+            "deepwater": {
+              "waterTile": {
+                "id": "e5-deepwater-claim",
+                "size": 128,
+                "regions": [
+                  {
+                    "id": "open-water",
+                    "minX": -64,
+                    "maxX": 64,
+                    "minZ": -64,
+                    "maxZ": 64,
+                    "depth": 0,
+                    "depthClass": "surface",
+                    "travel": [
+                      "swim",
+                      "boat"
+                    ]
+                  },
+                  {
+                    "id": "lagoon-shallows",
+                    "minX": -42,
+                    "maxX": 42,
+                    "minZ": 18,
+                    "maxZ": 44,
+                    "depth": -1,
+                    "depthClass": "shallows",
+                    "travel": [
+                      "swim",
+                      "boat"
+                    ]
+                  },
+                  {
+                    "id": "reef-ring",
+                    "minX": -48,
+                    "maxX": 48,
+                    "minZ": -8,
+                    "maxZ": 8,
+                    "depth": -2,
+                    "depthClass": "reef",
+                    "travel": [
+                      "depth"
+                    ]
+                  },
+                  {
+                    "id": "reef-gap",
+                    "minX": -5,
+                    "maxX": 5,
+                    "minZ": -8,
+                    "maxZ": 8,
+                    "depth": -2,
+                    "depthClass": "reef",
+                    "travel": [
+                      "boat",
+                      "depth"
+                    ]
+                  },
+                  {
+                    "id": "wreck-shelf",
+                    "minX": -48,
+                    "maxX": 48,
+                    "minZ": -42,
+                    "maxZ": -14,
+                    "depth": -4,
+                    "depthClass": "wreck",
+                    "travel": [
+                      "boat",
+                      "depth"
+                    ]
+                  },
+                  {
+                    "id": "trench-edge",
+                    "minX": -64,
+                    "maxX": 64,
+                    "minZ": -64,
+                    "maxZ": -50,
+                    "depth": -8,
+                    "depthClass": "trench",
+                    "travel": []
+                  }
+                ]
+              },
+              "claimBoat": {
+                "id": "claim-boat",
+                "initialAnchorId": "lagoon",
+                "anchors": [
+                  {
+                    "id": "lagoon",
+                    "x": 0,
+                    "z": 30
+                  },
+                  {
+                    "id": "open-water",
+                    "x": -24,
+                    "z": 12
+                  }
+                ],
+                "pads": [
+                  {
+                    "id": "bow",
+                    "x": 0,
+                    "z": -3
+                  },
+                  {
+                    "id": "port",
+                    "x": -3,
+                    "z": 1
+                  },
+                  {
+                    "id": "starboard",
+                    "x": 3,
+                    "z": 1
+                  }
+                ]
+              },
+              "stormTrack": {
+                "regionId": "open-water",
+                "westX": -64,
+                "eastX": 64
+              },
+              "corsairWaveSize": 3,
+              "wrecks": [
+                {
+                  "id": "w1-supply-barge",
+                  "era": "E1",
+                  "x": -36,
+                  "z": -24,
+                  "depthClass": "wreck"
+                },
+                {
+                  "id": "w2-locomotive",
+                  "era": "E2",
+                  "x": -18,
+                  "z": -30,
+                  "depthClass": "wreck"
+                },
+                {
+                  "id": "w3-pylon-barge",
+                  "era": "E3",
+                  "x": 0,
+                  "z": -22,
+                  "depthClass": "wreck"
+                },
+                {
+                  "id": "w4-land-yacht-sister",
+                  "era": "E4",
+                  "x": 20,
+                  "z": -34,
+                  "depthClass": "wreck"
+                },
+                {
+                  "id": "w5-mystery-hull",
+                  "era": "mystery",
+                  "x": 36,
+                  "z": -20,
+                  "depthClass": "wreck"
+                }
+              ]
+            },
+            "lanes": {
+              "spawnEdges": [
+                "west"
+              ],
+              "territoryRingBiasWaves": 0,
+              "territoryRingLaneBias": 0
+            }
+          },
+          "boardRow": {
+            "name": "The Deepwater Claim",
+            "ledgerBlurb": "Anchor the floating claim, read the storm glass, and keep the drowned eras below on the chart.",
+            "tags": [
+              "deepwater",
+              "claim-boat",
+              "storm"
+            ],
+            "unlock": "default"
+          },
+          "briefing": {
+            "goals": [
+              "Hold the Claim-Boat through wave 12.",
+              "Keep every workshop fastened to a numbered deck anchor."
+            ],
+            "rules": [
+              "Buildings fasten to Claim-Boat pads; the water itself takes no foundations.",
+              "Storm fronts carry corsair skiffs west to east.",
+              "The reef gap admits boats; the wreck shelf and trench obey the depth ladder."
+            ],
+            "geographyLine": "A 128 by 128 water claim: lagoon anchorage, reef ring, five drowned-era wrecks, and the sealed trench edge."
+          },
+          "seamYieldMult": 1,
+          "secureWave": 12,
+          "waveCadenceMult": 1,
+          "lightRamp": null,
+          "dayNightCycle": null,
+          "baron": {
+            "wave": 1,
+            "bossKind": "railcar",
+            "variantId": "dredge_queen",
+            "variantLabel": "The Dredge-Queen",
+            "hpScale": 1,
+            "speedScale": 1,
+            "scale": 1.5,
+            "contactDamageScale": 0,
+            "buildingDamageScale": 0,
+            "supportBuildingDamageScale": 0,
+            "pursuitRange": 0,
+            "escortCount": 0,
+            "tauntWaves": [],
+            "taunt": "A corsair flag rides inside the storm wall.",
+            "arrivalTitle": "THE DREDGE-QUEEN",
+            "defeatTitle": "THE CREW QUITS WARM",
+            "defeatLine": "The sea keeps the hulk and returns the hold.",
+            "ledgerLabel": "The Dredge-Queen",
+            "secureCallout": "THE HULK SETTLES",
+            "awardMedal": false,
+            "defeatBeat": "The crew rows clear while the cracked hold scatters every salvaged piece back across the wreck site.",
+            "medalBlurb": "Broke both paddles, cracked the hold, and made the Dredge-Queen another map.",
+            "sciencePayoutMult": 1,
+            "componentDegradeSpeedMult": 1,
+            "components": [
+              {
+                "id": "claw",
+                "label": "CLAW",
+                "hpScale": 1,
+                "xOffset": -3.2,
+                "zOffset": 0,
+                "tint": "#5b8a8a"
+              },
+              {
+                "id": "paddle_port",
+                "label": "PORT PADDLE",
+                "hpScale": 1,
+                "xOffset": -0.3,
+                "zOffset": -2.4,
+                "tint": "#c4883a"
+              },
+              {
+                "id": "paddle_starboard",
+                "label": "STARBOARD PADDLE",
+                "hpScale": 1,
+                "xOffset": -0.3,
+                "zOffset": 2.4,
+                "tint": "#c4883a"
+              },
+              {
+                "id": "hold",
+                "label": "HOLD",
+                "hpScale": 1,
+                "xOffset": 1.8,
+                "zOffset": 0,
+                "tint": "#7f2633"
+              }
+            ]
+          },
+          "medals": {
+            "version": 1,
+            "baronBeaten": false,
+            "rocketCartCaptured": false
+          }
+        },
+        "homemaker": null,
+        "digger": null,
+        "claw": null,
+        "dredge": {
+          "active": true,
+          "act": 1,
+          "stormFrontWave": 1,
+          "approaching": false,
+          "anchored": true,
+          "anchor": {
+            "x": 36,
+            "z": -20
+          },
+          "clawCycleProgress": 0.47,
+          "clawCycles": 0,
+          "clawInterrupts": 0,
+          "holdLoot": 0,
+          "livePaddles": 2,
+          "act2Locked": true,
+          "repositions": 0,
+          "swatTelegraphed": false,
+          "swats": 0,
+          "escortMultiplier": 1,
+          "escortSkiffs": 3,
+          "escortsExiting": false,
+          "escortsExited": 0,
+          "spillPickups": 0,
+          "crewQuit": false,
+          "hulkPresent": false,
+          "persistentWreck": false
+        },
+        "crawler": null,
+        "landYacht": null
+      },
+      "screenshot": "dredge-queen-runtime.png",
+      "ok": true
+    },
+    {
+      "id": "salvage-claw",
+      "epoch": "epoch-8-orbital",
+      "contract": "e8-mare-claim",
+      "variant": "salvage_claw",
+      "flag": "salvageClaw3d",
+      "errors": [],
+      "notes": [
+        "Debug harness spawns boss; production camera unchanged; manual simulation; full performance tier; 1440x1000 desktop.",
+        "Visible evidence limitation: orbit-phase model is mostly above the unchanged gameplay camera frame; only lower legs and grapple tethers enter image."
+      ],
+      "parts": [
+        {
+          "x": -5,
+          "y": 0.12546709191382882,
+          "z": 12,
+          "id": 0,
+          "spreadOffset": -1.3479215058879743,
+          "hp": 70,
+          "maxHp": 70,
+          "speed": 2.7,
+          "contactDamage": 0,
+          "buildingDamage": 0,
+          "supportBuildingDamage": 0,
+          "heroPursuitRange": 0,
+          "hitRadius": 0.75,
+          "variantId": "salvage_claw",
+          "variantLabel": "The Salvage King's Claw",
+          "boltDamageMult": 1,
+          "bossGroupId": "e8-mare-claim:salvage-claw-grapples",
+          "bossGroupSize": 2,
+          "bossGroupTotalHp": 140,
+          "bossComponentId": "grapple_port",
+          "bossComponentLabel": "GRAPPLE ANCHOR",
+          "bossDegradeSpeedMult": 1,
+          "presentation": {
+            "mesh": false,
+            "visible": false,
+            "railY": 0.12546709191382882,
+            "railRotation": 0,
+            "textureKey": "boss-railcar-grapple_port",
+            "damaged": false,
+            "damageThreshold": 0.5,
+            "wreckerMarker": false,
+            "markerColor": "#a0522d",
+            "source": "billboard",
+            "mounted": false,
+            "morphInfluence": 0,
+            "bossBarY": 2.950467091913829,
+            "bossBarScale": 1
+          },
+          "scale": 1.25,
+          "hasBanner": false,
+          "vx": 0,
+          "vz": 0,
+          "thief": false,
+          "wrecker": false,
+          "state": "none",
+          "wreckState": "none",
+          "carried": 0,
+          "edge": null,
+          "zone": "bank",
+          "light": 1,
+          "nightSpeedMultiplier": 1,
+          "watchPainted": false,
+          "readState": "fevered",
+          "fevered": true,
+          "freed": false,
+          "feverAccent": {
+            "active": true,
+            "kind": "human",
+            "strength": 0.654,
+            "surged": false,
+            "channel": "watch-paint-instanced"
+          },
+          "terrain": {
+            "grounded": true,
+            "slope": {
+              "dx": 0,
+              "dz": 0
+            },
+            "traversable": true,
+            "speedMul": 1
+          }
+        },
+        {
+          "x": 5,
+          "y": 0.11231524185390078,
+          "z": 12,
+          "id": 1,
+          "spreadOffset": -0.8972326519566665,
+          "hp": 70,
+          "maxHp": 70,
+          "speed": 2.7,
+          "contactDamage": 0,
+          "buildingDamage": 0,
+          "supportBuildingDamage": 0,
+          "heroPursuitRange": 0,
+          "hitRadius": 0.75,
+          "variantId": "salvage_claw",
+          "variantLabel": "The Salvage King's Claw",
+          "boltDamageMult": 1,
+          "bossGroupId": "e8-mare-claim:salvage-claw-grapples",
+          "bossGroupSize": 2,
+          "bossGroupTotalHp": 140,
+          "bossComponentId": "grapple_starboard",
+          "bossComponentLabel": "GRAPPLE ANCHOR",
+          "bossDegradeSpeedMult": 1,
+          "presentation": {
+            "mesh": false,
+            "visible": false,
+            "railY": 0.11231524185390078,
+            "railRotation": 0,
+            "textureKey": "boss-railcar-grapple_starboard",
+            "damaged": false,
+            "damageThreshold": 0.5,
+            "wreckerMarker": false,
+            "markerColor": "#a0522d",
+            "source": "billboard",
+            "mounted": false,
+            "morphInfluence": 0,
+            "bossBarY": 2.950467091913829,
+            "bossBarScale": 1
+          },
+          "scale": 1.25,
+          "hasBanner": false,
+          "vx": 0,
+          "vz": 0,
+          "thief": false,
+          "wrecker": false,
+          "state": "none",
+          "wreckState": "none",
+          "carried": 0,
+          "edge": null,
+          "zone": "bank",
+          "light": 1,
+          "nightSpeedMultiplier": 1,
+          "watchPainted": false,
+          "readState": "fevered",
+          "fevered": true,
+          "freed": false,
+          "feverAccent": {
+            "active": true,
+            "kind": "human",
+            "strength": 0.656,
+            "surged": false,
+            "channel": "watch-paint-instanced"
+          },
+          "terrain": {
+            "grounded": true,
+            "slope": {
+              "dx": 0,
+              "dz": 0
+            },
+            "traversable": true,
+            "speedMul": 1
+          }
+        }
+      ],
+      "center": {
+        "x": 0,
+        "z": 12
+      },
+      "dataset": {
+        "railcar3dState": "off",
+        "railcar3dSource": "billboard",
+        "railcar3dMounted": "false",
+        "railcar3dDamageStates": "{\"wheels\":\"intact\",\"boiler\":\"intact\",\"cabin\":\"intact\"}",
+        "crawler3dState": "off",
+        "crawler3dSource": "placeholder",
+        "crawler3dMounted": "false",
+        "crawler3dDamageStates": "{\"drain_mast\":\"intact\",\"tracks\":\"intact\",\"capacitor_bank\":\"intact\"}",
+        "dredgeQueen3dState": "off",
+        "dredgeQueen3dSource": "placeholder",
+        "dredgeQueen3dMounted": "false",
+        "dredgeQueen3dPresentation": "hidden",
+        "dredgeQueen3dDamageStates": "{\"claw\":\"intact\",\"paddle_port\":\"intact\",\"paddle_starboard\":\"intact\",\"hold\":\"intact\"}",
+        "salvageClaw3dState": "ready",
+        "salvageClaw3dSource": "glb",
+        "salvageClaw3dMounted": "true",
+        "salvageClaw3dPresentation": "orbit",
+        "homemaker3dState": "off",
+        "homemaker3dSource": "placeholder",
+        "homemaker3dMounted": "false",
+        "homemaker3dPresentation": "hidden",
+        "homemaker3dDamageStates": "{\"vac\":\"intact\",\"rack\":\"intact\",\"core\":\"intact\"}",
+        "oldDigger3dState": "off",
+        "oldDigger3dSource": "placeholder",
+        "oldDigger3dMounted": "false",
+        "oldDigger3dPresentation": "hidden",
+        "terrain3dPilotState": "ready",
+        "terrain3dPilotRenderSource": "glb",
+        "run3dPilotState": "ready",
+        "cameraAspect": "1.44",
+        "run3dPilotMeshes": "0",
+        "run3dPilotTriangles": "0",
+        "terrain3dPilotContract": "e8-mare-claim",
+        "terrain3dPilotTerrainLoadState": "mounted",
+        "terrain3dPilotPanoramaLoadState": "mounted",
+        "terrain3dPilotLandmarkLoadState": "mounted",
+        "terrain3dPilotHeightSource": "baked-grid",
+        "terrain3dPilotMeshes": "1",
+        "terrain3dPilotTriangles": "32768",
+        "terrain3dPilotMaterials": "1",
+        "terrain3dPilotVertices": "16641",
+        "terrain3dPilotPanorama": "mare-claim-panorama",
+        "terrain3dPilotPanoramaMeshes": "1",
+        "terrain3dPilotPanoramaTriangles": "3072",
+        "terrain3dPilotPanoramaMaterials": "1",
+        "terrain3dPilotPanoramaVertices": "2222",
+        "terrain3dPilotNightPools": "off",
+        "terrain3dPilotNightPoolSources": "0",
+        "terrain3dPilotSpringPonds": "0",
+        "terrain3dPilotSpringPondWaterRadii": "[]",
+        "terrain3dPilotSpringPondDampGroundRadii": "[]",
+        "terrain3dPilotChannelWater": "0",
+        "terrain3dPilotFordWater": "0",
+        "terrain3dPilotChannelWaterHalfWidths": "[]",
+        "terrain3dPilotHiddenRelief": "3",
+        "terrain3dPilotHiddenGroundLayers": "TerrainVistaRing|TerrainReliefMesh|SpringPonds",
+        "terrain3dPilotContinuation": "panorama-owned-continuation",
+        "terrain3dPilotHorizonApron": "none",
+        "terrain3dPilotFarGroundProbe": "off",
+        "terrain3dPilotPanoramaFraming": "world-projected-horizon",
+        "terrain3dPilotSkirtBlend": "painted-underlay-alpha-rim",
+        "terrain3dPilotPanoramaFog": "excluded",
+        "terrain3dPilotPanoramaDepth": "screen-horizon-backdrop",
+        "terrain3dPilotLandmarkExpected": "5",
+        "terrain3dPilotLandmarkEmissive": "3",
+        "terrain3dPilotLandmarkSides": "{\"total\":{\"meshes\":5,\"closed\":5,\"open\":0,\"culled\":5,\"doubleSided\":0},\"mounts\":[{\"id\":\"earthrise-listening-array\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":4.536,\"topY\":11.796},{\"id\":\"lava-tube-survey-gantry\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":6,\"topY\":12.99},{\"id\":\"regolith-core-yard\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0,\"topY\":7.1},{\"id\":\"west-rim-debris-catcher\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":4.462,\"topY\":11.332},{\"id\":\"east-rim-debris-catcher\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5.062,\"topY\":11.932}]}",
+        "terrain3dPilotLandmarks": "5",
+        "terrain3dPilotLandmarkSkipped": "0",
+        "terrain3dPilotLandmarkDiagnostics": "",
+        "terrain3dPilotLandmarkMounts": "[{\"id\":\"earthrise-listening-array\",\"x\":0,\"y\":4.5356597900390625,\"z\":56},{\"id\":\"lava-tube-survey-gantry\",\"x\":-42,\"y\":6,\"z\":28},{\"id\":\"regolith-core-yard\",\"x\":22,\"y\":0,\"z\":18},{\"id\":\"west-rim-debris-catcher\",\"x\":-56,\"y\":4.461697101593018,\"z\":20},{\"id\":\"east-rim-debris-catcher\",\"x\":56,\"y\":5.061962604522705,\"z\":20}]",
+        "terrain3dPilotLandmarkMaterials": "[{\"id\":\"earthrise-listening-array\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"lava-tube-survey-gantry\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"regolith-core-yard\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"west-rim-debris-catcher\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"east-rim-debris-catcher\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0}]"
+      },
+      "diagnostics": {
+        "camera": {
+          "scene": "run",
+          "distanceScale": 1,
+          "targetDistanceScale": 1,
+          "minDistanceScale": 0.7,
+          "maxDistanceScale": 1.6,
+          "baseDistance": 31.958254019892887,
+          "targetDistance": 31.958254019892887,
+          "actualDistance": 31.93631662291695,
+          "glanceActive": false
+        },
+        "contract": {
+          "activeId": "e8-mare-claim",
+          "requestedId": "e8-mare-claim",
+          "fallbackReason": null,
+          "stagedLaunchClear": null,
+          "warningSuppressed": false,
+          "epochId": "epoch-8-orbital",
+          "epochResources": [],
+          "claimOffice": null,
+          "name": "The Mare Claim",
+          "tileParams": {
+            "tileId": "e8-mare-claim",
+            "biome": "orbital-mare-claim",
+            "size": 128,
+            "dimensions": {
+              "width": 128,
+              "height": 128
+            },
+            "render": {
+              "terrainMesh": "preferred"
+            },
+            "river": false,
+            "ford": false,
+            "buildZones": [
+              {
+                "id": "rim-premium-pad-west",
+                "bank": "north",
+                "minX": -50,
+                "maxX": -38,
+                "minZ": 42,
+                "maxZ": 52
+              },
+              {
+                "id": "rim-premium-pad-east",
+                "bank": "north",
+                "minX": 38,
+                "maxX": 50,
+                "minZ": 42,
+                "maxZ": 52
+              },
+              {
+                "id": "dome-cluster-pad-west",
+                "bank": "north",
+                "minX": -24,
+                "maxX": -12,
+                "minZ": -6,
+                "maxZ": 6
+              },
+              {
+                "id": "dome-cluster-pad-center",
+                "bank": "north",
+                "minX": -6,
+                "maxX": 6,
+                "minZ": -6,
+                "maxZ": 6
+              },
+              {
+                "id": "dome-cluster-pad-east",
+                "bank": "north",
+                "minX": 12,
+                "maxX": 24,
+                "minZ": -6,
+                "maxZ": 6
+              },
+              {
+                "id": "launch-pad",
+                "bank": "south",
+                "minX": -40,
+                "maxX": -20,
+                "minZ": -40,
+                "maxZ": -22
+              },
+              {
+                "id": "mass-driver-rail-footing",
+                "bank": "south",
+                "minX": -8,
+                "maxX": 54,
+                "minZ": -40,
+                "maxZ": -28
+              }
+            ],
+            "stakeMarkers": [],
+            "rails": [
+              {
+                "style": "mass-driver",
+                "points": [
+                  {
+                    "x": -4,
+                    "z": -34
+                  },
+                  {
+                    "x": 16,
+                    "z": -34
+                  },
+                  {
+                    "x": 36,
+                    "z": -34
+                  },
+                  {
+                    "x": 54,
+                    "z": -34
+                  }
+                ]
+              }
+            ],
+            "waterSources": [],
+            "harvestAnchors": [
+              {
+                "x": -34,
+                "z": 12
+              },
+              {
+                "x": -22,
+                "z": 26
+              },
+              {
+                "x": -8,
+                "z": 20
+              },
+              {
+                "x": 16,
+                "z": 22
+              },
+              {
+                "x": 30,
+                "z": 30
+              },
+              {
+                "x": 34,
+                "z": 12
+              }
+            ],
+            "heightfield": {
+              "id": "mare-claim-rim-ring",
+              "mode": "visual"
+            },
+            "gravity": {
+              "feelG": 0.6,
+              "lobArcDistanceMultiplier": 2.4,
+              "movement": "floaty"
+            },
+            "atmosphere": {
+              "airIsWall": true,
+              "outsideDomes": "suit-timer"
+            },
+            "engineDependencies": [
+              {
+                "dep": "atmosphere-wall-consumer",
+                "status": "missing",
+                "description": "The headless door composes the atmosphere wall and, since 2026-09-07, the HUMAN suit: the hero drains outside a breathing dome, refills only inside one, and loses five hit points a second once it empties, through CombatSystem. The BROWSER still composes no atmosphere consumer at all, so a player there meets neither the suit nor the harm, and this dependency stays missing until Game.ts composes it."
+              }
+            ],
+            "lanes": {
+              "spawnEdges": [
+                "north",
+                "west",
+                "east"
+              ],
+              "territoryRingBiasWaves": 0,
+              "territoryRingLaneBias": 0,
+              "patrolRoutes": [
+                {
+                  "id": "debris-arc-rim",
+                  "points": [
+                    {
+                      "x": -50,
+                      "z": 46
+                    },
+                    {
+                      "x": -26,
+                      "z": 54
+                    },
+                    {
+                      "x": 0,
+                      "z": 48
+                    },
+                    {
+                      "x": 26,
+                      "z": 54
+                    },
+                    {
+                      "x": 50,
+                      "z": 46
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "boardRow": {
+            "name": "The Mare Claim",
+            "ledgerBlurb": "A high crater rim rings dome pads, regolith fields, and an eastbound mass-driver.",
+            "tags": [
+              "orbital",
+              "mare",
+              "air"
+            ],
+            "unlock": "default"
+          },
+          "briefing": {
+            "goals": [
+              "Build among the dome cluster and crater-rim pads.",
+              "Work the six regolith harvest grounds across the mare flat.",
+              "Watch the launch pad, lava-tube mouth, and eastbound mass-driver rail."
+            ],
+            "rules": [
+              "The crater rim stands at height six above the mare flat.",
+              "Seven surveyed build grounds span the rim and mare flat.",
+              "Waves enter from the north, west, and east.",
+              "The claim is not made until four of the six regolith grounds are worked with air still in the suit.",
+              "Only one ground counts in each four-wave window, so the run is made in trips; a ground worked while her suit is empty counts for nothing.",
+              "Outside the domes there is no air. The hero lands six paces north of the dome cluster with sixty seconds in her suit, and only a breathing dome fills it.",
+              "An empty suit costs her five hit points every second until she reaches air."
+            ],
+            "geographyLine": "A height-six crater rim rings a height-zero mare with dome pads, regolith fields, a lava-tube mouth, launch pad, and eastbound mass-driver rail."
+          },
+          "seamYieldMult": 1,
+          "secureWave": 20,
+          "waveCadenceMult": 1,
+          "lightRamp": null,
+          "dayNightCycle": null,
+          "baron": null,
+          "medals": {
+            "version": 1,
+            "baronBeaten": false,
+            "rocketCartCaptured": false
+          }
+        },
+        "homemaker": null,
+        "digger": null,
+        "claw": {
+          "active": true,
+          "act": 1,
+          "crown": "orbit",
+          "winch": "hidden",
+          "anchorFeet": "hidden",
+          "theftTicks": 0,
+          "stolenPickups": 0,
+          "stolenGold": 0,
+          "tagMarkers": 0,
+          "debrisTelegraphed": false,
+          "debrisImpacts": 0,
+          "grappleAnchors": 2,
+          "grappleLines": 2,
+          "corsairsRappelled": 3,
+          "lift": null,
+          "buildingsDropped": 0,
+          "lastDroppedHp": null,
+          "buildingsLiftedAway": 0,
+          "clawPlayerTargets": 0,
+          "crewDescending": false,
+          "crewDescended": 0,
+          "boltTaken": false,
+          "carcassPresent": false,
+          "persistentCarcass": false,
+          "ledgerEvents": []
+        },
+        "crawler": null,
+        "landYacht": null
+      },
+      "screenshot": "salvage-claw-runtime.png",
+      "ok": true
+    },
+    {
+      "id": "homemaker",
+      "epoch": "epoch-6-atomic",
+      "contract": "e6-glow-mesa",
+      "variant": "homemaker_9000",
+      "flag": "homemaker3d",
+      "errors": [],
+      "notes": [
+        "Debug harness spawns boss; production camera unchanged; manual simulation; full performance tier; 1440x1000 desktop.",
+        "Visible evidence limitation: terrain occludes lower model and existing pictogram overlaps upper body, even after arrival. No camera/model/terrain transforms overridden."
+      ],
+      "parts": [
+        {
+          "x": -19.02452151626927,
+          "y": -0.11368031557144397,
+          "z": -2.8232241488402225,
+          "id": 2,
+          "spreadOffset": -0.5830506153383876,
+          "hp": 100,
+          "maxHp": 100,
+          "speed": 3.1634803287061177,
+          "contactDamage": 0,
+          "buildingDamage": 0,
+          "supportBuildingDamage": 0,
+          "heroPursuitRange": 0,
+          "hitRadius": 0.8999999999999999,
+          "eliteKind": "railcar",
+          "variantId": "homemaker_9000",
+          "variantLabel": "The Homemaker-9000",
+          "boltDamageMult": 1,
+          "bossGroupId": "e6-glow-mesa:wave-8:component-boss",
+          "bossGroupSize": 2,
+          "bossGroupTotalHp": 190,
+          "bossComponentId": "vac",
+          "bossComponentLabel": "VAC",
+          "bossDegradeSpeedMult": 1,
+          "presentation": {
+            "mesh": true,
+            "visible": false,
+            "railY": -0.11368031557144397,
+            "railRotation": 1.2722973952087173,
+            "textureKey": "boss-railcar-vac",
+            "damaged": false,
+            "damageThreshold": 0.5,
+            "wreckerMarker": true,
+            "markerColor": "#a0522d",
+            "source": "billboard",
+            "mounted": false,
+            "morphInfluence": 0,
+            "bossBarY": 3.086319684428556,
+            "bossBarScale": 1.1099999999999999
+          },
+          "scale": 1.5,
+          "hasBanner": false,
+          "vx": 17.204022156995116,
+          "vz": -5.293545279075422,
+          "thief": false,
+          "wrecker": true,
+          "state": "none",
+          "wreckState": "seekBuilding",
+          "carried": 0,
+          "edge": "west",
+          "zone": "bank",
+          "light": 1,
+          "nightSpeedMultiplier": 1,
+          "watchPainted": false,
+          "readState": "unfevered",
+          "fevered": false,
+          "freed": false,
+          "feverAccent": {
+            "active": false,
+            "kind": "none",
+            "strength": 0,
+            "surged": false,
+            "channel": "none"
+          },
+          "terrain": {
+            "grounded": true,
+            "slope": {
+              "dx": 0,
+              "dz": 0
+            },
+            "traversable": true,
+            "speedMul": 1
+          }
+        },
+        {
+          "x": -14.624521516269272,
+          "y": -0.12719897935305952,
+          "z": -2.8232241488402225,
+          "id": 3,
+          "spreadOffset": -0.1019120371131953,
+          "hp": 90,
+          "maxHp": 90,
+          "speed": 3.1634803287061177,
+          "contactDamage": 0,
+          "buildingDamage": 0,
+          "supportBuildingDamage": 0,
+          "heroPursuitRange": 0,
+          "hitRadius": 0.8999999999999999,
+          "eliteKind": "railcar",
+          "variantId": "homemaker_9000",
+          "variantLabel": "The Homemaker-9000",
+          "boltDamageMult": 1,
+          "bossGroupId": "e6-glow-mesa:wave-8:component-boss",
+          "bossGroupSize": 2,
+          "bossGroupTotalHp": 190,
+          "bossComponentId": "rack",
+          "bossComponentLabel": "RACK",
+          "bossDegradeSpeedMult": 1,
+          "presentation": {
+            "mesh": true,
+            "visible": false,
+            "railY": -0.12719897935305952,
+            "railRotation": 1.2722973952087173,
+            "textureKey": "boss-railcar-rack",
+            "damaged": false,
+            "damageThreshold": 0.5,
+            "wreckerMarker": true,
+            "markerColor": "#a0522d",
+            "source": "billboard",
+            "mounted": false,
+            "morphInfluence": 0,
+            "bossBarY": 3.086319684428556,
+            "bossBarScale": 1.1099999999999999
+          },
+          "scale": 1.5,
+          "hasBanner": false,
+          "vx": 17.204022156995116,
+          "vz": -5.293545279075422,
+          "thief": false,
+          "wrecker": true,
+          "state": "none",
+          "wreckState": "seekBuilding",
+          "carried": 0,
+          "edge": "west",
+          "zone": "bank",
+          "light": 1,
+          "nightSpeedMultiplier": 1,
+          "watchPainted": false,
+          "readState": "unfevered",
+          "fevered": false,
+          "freed": false,
+          "feverAccent": {
+            "active": false,
+            "kind": "none",
+            "strength": 0,
+            "surged": false,
+            "channel": "none"
+          },
+          "terrain": {
+            "grounded": true,
+            "slope": {
+              "dx": 0,
+              "dz": 0
+            },
+            "traversable": true,
+            "speedMul": 1
+          }
+        }
+      ],
+      "center": {
+        "x": -16.82452151626927,
+        "z": -2.8232241488402225
+      },
+      "dataset": {
+        "railcar3dState": "off",
+        "railcar3dSource": "billboard",
+        "railcar3dMounted": "false",
+        "railcar3dDamageStates": "{\"wheels\":\"intact\",\"boiler\":\"intact\",\"cabin\":\"intact\"}",
+        "crawler3dState": "off",
+        "crawler3dSource": "placeholder",
+        "crawler3dMounted": "false",
+        "crawler3dDamageStates": "{\"drain_mast\":\"intact\",\"tracks\":\"intact\",\"capacitor_bank\":\"intact\"}",
+        "dredgeQueen3dState": "off",
+        "dredgeQueen3dSource": "placeholder",
+        "dredgeQueen3dMounted": "false",
+        "dredgeQueen3dPresentation": "hidden",
+        "dredgeQueen3dDamageStates": "{\"claw\":\"intact\",\"paddle_port\":\"intact\",\"paddle_starboard\":\"intact\",\"hold\":\"intact\"}",
+        "salvageClaw3dState": "off",
+        "salvageClaw3dSource": "placeholder",
+        "salvageClaw3dMounted": "false",
+        "salvageClaw3dPresentation": "hidden",
+        "homemaker3dState": "ready",
+        "homemaker3dSource": "glb",
+        "homemaker3dMounted": "true",
+        "homemaker3dPresentation": "act-1",
+        "homemaker3dDamageStates": "{\"vac\":\"intact\",\"rack\":\"intact\",\"core\":\"intact\"}",
+        "oldDigger3dState": "off",
+        "oldDigger3dSource": "placeholder",
+        "oldDigger3dMounted": "false",
+        "oldDigger3dPresentation": "hidden",
+        "terrain3dPilotState": "loading",
+        "terrain3dPilotRenderSource": "painted",
+        "run3dPilotState": "ready",
+        "cameraAspect": "1.44",
+        "run3dPilotMeshes": "0",
+        "run3dPilotTriangles": "0",
+        "terrain3dPilotContract": "e6-glow-mesa",
+        "terrain3dPilotTerrainLoadState": "mounted",
+        "terrain3dPilotPanoramaLoadState": "mounted",
+        "terrain3dPilotLandmarkLoadState": "pending",
+        "terrain3dPilotHeightSource": "painted",
+        "terrain3dPilotMeshes": "0",
+        "terrain3dPilotTriangles": "0",
+        "terrain3dPilotMaterials": "0",
+        "terrain3dPilotVertices": "0",
+        "terrain3dPilotPanorama": "off",
+        "terrain3dPilotPanoramaMeshes": "0",
+        "terrain3dPilotPanoramaTriangles": "0",
+        "terrain3dPilotPanoramaMaterials": "0",
+        "terrain3dPilotPanoramaVertices": "0",
+        "terrain3dPilotNightPools": "off",
+        "terrain3dPilotNightPoolSources": "0",
+        "terrain3dPilotSpringPonds": "0",
+        "terrain3dPilotSpringPondWaterRadii": "[]",
+        "terrain3dPilotSpringPondDampGroundRadii": "[]",
+        "terrain3dPilotChannelWater": "0",
+        "terrain3dPilotFordWater": "0",
+        "terrain3dPilotChannelWaterHalfWidths": "[]",
+        "terrain3dPilotHiddenRelief": "3",
+        "terrain3dPilotHiddenGroundLayers": "TerrainVistaRing|TerrainReliefMesh|SpringPonds",
+        "terrain3dPilotContinuation": "panorama-owned-continuation",
+        "terrain3dPilotHorizonApron": "none",
+        "terrain3dPilotFarGroundProbe": "off",
+        "terrain3dPilotPanoramaFraming": "world-projected-horizon",
+        "terrain3dPilotSkirtBlend": "painted-underlay-alpha-rim",
+        "terrain3dPilotPanoramaFog": "excluded",
+        "terrain3dPilotPanoramaDepth": "screen-horizon-backdrop",
+        "terrain3dPilotLandmarkExpected": "5"
+      },
+      "diagnostics": {
+        "camera": {
+          "scene": "run",
+          "distanceScale": 1,
+          "targetDistanceScale": 1,
+          "minDistanceScale": 0.7,
+          "maxDistanceScale": 1.6,
+          "baseDistance": 31.958254019892887,
+          "targetDistance": 31.958254019892887,
+          "actualDistance": 30.963449131893938,
+          "glanceActive": false
+        },
+        "contract": {
+          "activeId": "e6-glow-mesa",
+          "requestedId": "e6-glow-mesa",
+          "fallbackReason": null,
+          "stagedLaunchClear": null,
+          "warningSuppressed": false,
+          "epochId": "epoch-6-atomic",
+          "epochResources": [],
+          "claimOffice": null,
+          "name": "The Glow Mesa",
+          "tileParams": {
+            "tileId": "e6-glow-mesa",
+            "biome": "atomic-glow-mesa",
+            "size": 128,
+            "dimensions": {
+              "width": 128,
+              "height": 128
+            },
+            "render": {
+              "terrainMesh": "preferred"
+            },
+            "river": false,
+            "ford": false,
+            "buildZones": [
+              {
+                "id": "base-flat",
+                "bank": "south",
+                "minX": -52,
+                "maxX": 52,
+                "minZ": -54,
+                "maxZ": -10
+              },
+              {
+                "id": "decay-clock-site",
+                "bank": "south",
+                "minX": -46,
+                "maxX": -34,
+                "minZ": -48,
+                "maxZ": -38
+              },
+              {
+                "id": "warehouse-approach",
+                "bank": "north",
+                "minX": -50,
+                "maxX": -18,
+                "minZ": 40,
+                "maxZ": 54
+              },
+              {
+                "id": "calculating-house-site",
+                "bank": "north",
+                "minX": -16,
+                "maxX": -4,
+                "minZ": 12,
+                "maxZ": 22
+              },
+              {
+                "id": "reactor-dome-site",
+                "bank": "north",
+                "minX": 4,
+                "maxX": 16,
+                "minZ": 12,
+                "maxZ": 22
+              }
+            ],
+            "stakeMarkers": [
+              {
+                "id": "isotope-kitchen",
+                "x": 0,
+                "z": -32,
+                "heroStart": true
+              }
+            ],
+            "waterSources": [],
+            "harvestAnchors": [
+              {
+                "x": -24,
+                "z": 18
+              },
+              {
+                "x": -14,
+                "z": 34
+              },
+              {
+                "x": 4,
+                "z": 38
+              },
+              {
+                "x": 24,
+                "z": 30
+              },
+              {
+                "x": 26,
+                "z": 10
+              },
+              {
+                "x": 4,
+                "z": 2
+              }
+            ],
+            "heightfield": {
+              "id": "glow-mesa-two-level",
+              "mode": "visual"
+            },
+            "engineDependencies": [
+              {
+                "dep": "glow-mesa-contract-consumers",
+                "status": "missing",
+                "description": "Needs the declared timed decay-field walkability, six-vein night harvest, epoch-wide appliance wrangle, and Homemaker boss consumers; the browser composes E6TileConsumerSystem, WrangleSystem, and HomemakerBossSystem while the headless sim composes none."
+              }
+            ],
+            "lanes": {
+              "spawnEdges": [
+                "north",
+                "west",
+                "east"
+              ],
+              "territoryRingBiasWaves": 0,
+              "territoryRingLaneBias": 0
+            }
+          },
+          "boardRow": {
+            "name": "The Glow Mesa",
+            "ledgerBlurb": "Hold the kitchen, run the night veins, and wrangle the Combine's tired machines before the dials close.",
+            "tags": [
+              "atomic",
+              "decay",
+              "wrangle"
+            ],
+            "unlock": "default"
+          },
+          "briefing": {
+            "goals": [
+              "Defend the Isotope Kitchen.",
+              "Harvest the six-vein starstone ring after dark.",
+              "Wrangle appliances after they wind down."
+            ],
+            "rules": [
+              "Decay-puddle windows open and close on visible timers.",
+              "Lawn Shepherds drive appliance herds up the legal-grade scarp paths.",
+              "Feral appliances wind down when kited long enough and may then be captured alive."
+            ],
+            "geographyLine": "A two-level mesa: warehouse origin, legal-grade herd paths, a six-vein caprock ring, and a base flat broken by timed decay fields."
+          },
+          "seamYieldMult": 1,
+          "secureWave": 12,
+          "waveCadenceMult": 1,
+          "lightRamp": null,
+          "dayNightCycle": null,
+          "baron": {
+            "wave": 8,
+            "bossKind": "railcar",
+            "variantId": "homemaker_9000",
+            "variantLabel": "The Homemaker-9000",
+            "hpScale": 1,
+            "speedScale": 1,
+            "scale": 1.5,
+            "contactDamageScale": 0,
+            "buildingDamageScale": 0,
+            "supportBuildingDamageScale": 0,
+            "pursuitRange": 0,
+            "escortCount": 0,
+            "tauntWaves": [],
+            "taunt": "Your stockpile is alphabetized incorrectly.",
+            "arrivalTitle": "THE HOMEMAKER-9000",
+            "defeatTitle": "DONE",
+            "defeatLine": "The machine makes one chair and sits.",
+            "ledgerLabel": "The Homemaker-9000",
+            "secureCallout": "THE CHORE IS DONE",
+            "awardMedal": false,
+            "defeatBeat": "A DONE pictogram glows over one chair. The Homemaker powers down on warm ground, and the town keeps it.",
+            "medalBlurb": "Broke the VAC and CORE without ever becoming its target.",
+            "sciencePayoutMult": 1,
+            "componentDegradeSpeedMult": 1,
+            "components": [
+              {
+                "id": "vac",
+                "label": "VAC",
+                "hpScale": 1,
+                "xOffset": -2.2,
+                "zOffset": 0,
+                "tint": "#83ded7"
+              },
+              {
+                "id": "rack",
+                "label": "RACK",
+                "hpScale": 1,
+                "xOffset": 2.2,
+                "zOffset": 0,
+                "tint": "#c4883a"
+              }
+            ]
+          },
+          "medals": {
+            "version": 1,
+            "baronBeaten": false,
+            "rocketCartCaptured": false
+          }
+        },
+        "homemaker": {
+          "active": true,
+          "act": 1,
+          "position": {
+            "x": 0,
+            "z": -8
+          },
+          "tidiedMarkers": 2,
+          "liveComponents": [
+            "vac",
+            "rack"
+          ],
+          "unbuilds": 0,
+          "unbuildOrder": [],
+          "partsStackPickups": 0,
+          "rackArcs": 0,
+          "rackTelegraphed": false,
+          "structureDamageEvents": 0,
+          "playerDamageEvents": 0,
+          "pickupsCurated": 0,
+          "loosePickups": 0,
+          "pileCenters": [
+            {
+              "x": -1.5,
+              "z": -5.8
+            },
+            {
+              "x": 1.5,
+              "z": -5.8
+            }
+          ],
+          "pictogram": "sparkle",
+          "chairPlaced": false,
+          "poweredDown": false,
+          "nonHostile": false,
+          "kept": false,
+          "persistentKept": false
+        },
+        "digger": null,
+        "claw": null,
+        "crawler": null,
+        "landYacht": null
+      },
+      "screenshot": "homemaker-runtime.png",
+      "ok": true
+    }
+  ],
+  "resourceCleanup": "Owned Playwright browsers closed; private Vite port 5243 stopped after capture."
+}

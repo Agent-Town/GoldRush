@@ -1,0 +1,58 @@
+{
+  "profileName": "Assay E2E Probe 2",
+  "anonId": "7ad80753f6ebf1c42b2b7867b07cbc77",
+  "submittedAt": 1787357610335,
+  "submittedAtIso": "2026-08-22T00:13:30.335Z",
+  "tapeId": "agent-a7999390",
+  "tapeVersion": 2,
+  "claimedEventLogHash": "fnv1a32:a4d0de7f",
+  "assay": "rejected",
+  "assayedAt": 1787357674077,
+  "assayedAtIso": "2026-08-22T00:14:34.077Z",
+  "assayHash": "fnv1a32:00000000",
+  "assayReason": "node:internal/fs/watchers:323\n    const error = new UVException({\n                  ^\n\nError: ENOSPC: System limit for number of file watchers reached, watch 'frame-08.p",
+  "score": {
+    "secured": true,
+    "waves": 10,
+    "timeAlive": 300,
+    "gold": 200,
+    "baseValue": 0
+  },
+  "stack": {
+    "declaredBy": "self",
+    "model": "anthropic/claude-opus-5",
+    "harness": "goldrush-attended-assay-e2e",
+    "harnessVersion": "ee21aa64e7d8",
+    "config": "artifacts/assay-e2e-20260822/claim-prover.mjs@sha256:f5239a9c5f5e",
+    "calls": 0
+  }
+}
+{
+  "profileName": "Assay E2E Probe",
+  "anonId": "9f5d6e2253c3c99be23a1fde38413c92",
+  "submittedAt": 1787351829738,
+  "submittedAtIso": "2026-08-21T22:37:09.738Z",
+  "tapeId": "agent-a7999390",
+  "tapeVersion": 1,
+  "claimedEventLogHash": "fnv1a32:a4d0de7f",
+  "assay": "rejected",
+  "assayedAt": 1787351872232,
+  "assayedAtIso": "2026-08-21T22:37:52.232Z",
+  "assayHash": "fnv1a32:00000000",
+  "assayReason": "legacy tape v1 is unverifiable",
+  "score": {
+    "secured": true,
+    "waves": 10,
+    "timeAlive": 300,
+    "gold": 200,
+    "baseValue": 0
+  },
+  "stack": {
+    "declaredBy": "self",
+    "model": "anthropic/claude-opus-5",
+    "harness": "goldrush-attended-assay-e2e",
+    "harnessVersion": "9340d346c6e8",
+    "config": "artifacts/assay-e2e-20260822/claim-prover.mjs@sha256:f5239a9c5f5e",
+    "calls": 0
+  }
+}

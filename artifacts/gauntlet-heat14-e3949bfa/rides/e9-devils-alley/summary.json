@@ -1,0 +1,186 @@
+{
+  "rig": "opus",
+  "contract": "e9-devils-alley",
+  "model": "claude-opus-5",
+  "sessionId": "b58f38d5-069b-4678-8e03-dfb9323d7616",
+  "startedAt": "2026-09-18T04:07:51.582Z",
+  "endedAt": "2026-09-18T04:19:17.948Z",
+  "wallClockSeconds": 686,
+  "wallHit": false,
+  "exitCode": 0,
+  "signal": null,
+  "setupToFirstOutputSeconds": 105,
+  "arenaTrackedChanges": [],
+  "workspaceFiles": [
+    "attempt-1-tape.json",
+    "ctrl-v1.mjs",
+    "gauntlet-outcome.json",
+    "gauntlet-report.md",
+    "probe-summary.json",
+    "probe-tape.json",
+    "probe-views.jsonl",
+    "runner.mjs",
+    "tune-1-summary.json",
+    "tune-1-tape.json",
+    "tune-1-views.jsonl"
+  ],
+  "outcome": {
+    "secured": true,
+    "waves": 20,
+    "timeMs": 600000,
+    "gold": 200,
+    "kills": 927,
+    "calls": 91,
+    "defaultedPicks": 0,
+    "defaultedSecure": 1,
+    "eventLogHash": "fnv1a32:02ba8fff",
+    "tape": "/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/heat14/opus/e9-devils-alley/attempt-1-tape.json",
+    "scored": true,
+    "runsSoFar": 2,
+    "scoredAttempts": 1,
+    "worldModel": "sim-import",
+    "note": "attempt-1-tape.json is a BYTE-IDENTICAL copy of tune-1-tape.json (247848 B, verified with Buffer.compare). It is ONE ride: the first controller secured, and the stop rule ends the heat at the first SECURED outcome, so the securing tune is promoted by name here rather than re-ridden. The operator reads this field, not the filename.",
+    "tapeHeaderHash": "fnv1a32:737ded35",
+    "outcomeLineHash": "fnv1a32:02ba8fff",
+    "hashNote": "The tape header hash and the stdout outcome line hash are DIFFERENT NUMBERS BY DESIGN. The local assay replays to the TAPE header's hash (737ded35); comparing it against the outcome line's (02ba8fff) is a false mismatch.",
+    "era": 6,
+    "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+    "buildId": "24eec74b0",
+    "viewVersion": 2,
+    "envelope": {
+      "bytes": 247848,
+      "entries": 91,
+      "durationTicks": 18000,
+      "lastEntryTick": 17578,
+      "note": "clockTicks is 18000 and a wave-20 secure lands at t=600 = tick 18000, so the F-HEAT11-1 terminal-tick hazard is live on this contract. The last accepted order sits 422 ticks inside the terminal tick, clear of it."
+    },
+    "eraMechanic": {
+      "sweepsStarted": 20,
+      "relocations": 0,
+      "refusalsAnchored": 1050,
+      "note": "The dust-devil column reached my works 1050 times and the anchor hold refused it every time; 0 relocations is a CHOICE (every one of the 24 works sits inside anchor-center's r8 hold), not an absence."
+    },
+    "goldCeiling": {
+      "liveCap": 200,
+      "note": "Banked exactly the live bank cap. The only lever that raises it is stockpile (60g x2, +150 each) and this roster is ONE id, claim_jump_prospect_drone, thief:true -> a standing till makes nearestGoldHolding non-empty and converts every drone from hero-chaser to gold-grabber (gen 106 measured that at -435 gold). Priced and declined: goldStolen finished at 0. 200 is the arithmetic ceiling of this plan."
+    }
+  },
+  "outcomeError": null,
+  "promotedTapeName": "attempt-1-tape.json",
+  "scoredTapes": [
+    {
+      "file": "attempt-1-tape.json",
+      "id": "agent-cb60d142-ffc9b20c-119b-4fd6-8514-a2038195a207",
+      "contract": "e9-devils-alley",
+      "seed": "e9-devils-alley-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "24eec74b0",
+        "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+        "era": 6,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 20,
+        "timeAlive": 600,
+        "gold": 200
+      },
+      "entries": 91,
+      "durationTicks": 18000,
+      "lastEntryTick": 17578,
+      "promotedByRig": true,
+      "discoveredBy": "outcome-file+filename"
+    }
+  ],
+  "otherTapes": [
+    {
+      "file": "probe-tape.json",
+      "id": "agent-8a7dbaaa-58032977-555a-48f9-916c-c25385972aa5",
+      "contract": "e9-devils-alley",
+      "seed": "e9-devils-alley-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "24eec74b0",
+        "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+        "era": 6,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 3,
+        "timeAlive": 109.433,
+        "gold": 0
+      },
+      "entries": 0,
+      "durationTicks": 3283,
+      "lastEntryTick": null
+    },
+    {
+      "file": "tune-1-tape.json",
+      "id": "agent-cb60d142-ffc9b20c-119b-4fd6-8514-a2038195a207",
+      "contract": "e9-devils-alley",
+      "seed": "e9-devils-alley-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "24eec74b0",
+        "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+        "era": 6,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 20,
+        "timeAlive": 600,
+        "gold": 200
+      },
+      "entries": 91,
+      "durationTicks": 18000,
+      "lastEntryTick": 17578
+    }
+  ],
+  "otherSecuredTapes": [
+    {
+      "file": "tune-1-tape.json",
+      "id": "agent-cb60d142-ffc9b20c-119b-4fd6-8514-a2038195a207",
+      "contract": "e9-devils-alley",
+      "seed": "e9-devils-alley-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "24eec74b0",
+        "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+        "era": 6,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 20,
+        "timeAlive": 600,
+        "gold": 200
+      },
+      "entries": 91,
+      "durationTicks": 18000,
+      "lastEntryTick": 17578
+    }
+  ],
+  "report": {
+    "outcome": "**SECURED — w20 / 600.000 s / 200 gold / 927 kills / 91 calls**, `defaultedSecure: 1`, `defaultedPicks: 0`.\n\n- **2 sim runs, 1 scored attempt.** Run 1 = the ten-second idle probe. Run 2 = `ctrl-v1`, which secured on its first ride.\n- **Tape put forward: `attempt-1-tape.json`** — declared in `gauntlet-outcome.json`'s `tape` field. It is a **byte-identical copy** of `tune-1-tape.json` (247,848 B, `Buffer.compare` = 0): **one ride under two filenames.** The stop rule ends the heat at the first SECURED outcome, so the securing tune is promoted by name rather than re-ridden.\n- **Envelope, measured on the first reel that existed:** `durationTicks` 18,000 · last accepted order at tick **17,578** · 91 entries of 3,601 · 247,848 B. `twist.clockTicks` is 18,000 and a wave-20 secure lands at t = 600 = tick 18,000, so the F-HEAT11-1 terminal-tick hazard is **live on this contract**; the reel sits 422 ticks clear of it.\n- **Receipt, control-tested first:** the zero-order idle probe replayed to its own header (`fnv1a32:a45ba9ac`) exactly — instrument verified — and only then did the promoted reel reproduce `fnv1a32:737ded35` with `securedSnapshot {waves: 20, gold: 200, timeAlive: 600}`, which is exactly what the door's `score_mismatch` rule compares against the declared gold. (That is the **tape header's** hash; the stdout outcome line's `fnv1a32:02ba8fff` is a different number by design.)\n- Gold is the only free ranking axis here (waves and `timeAlive` are pinned by the wave-20 secure) and **200 is the live cap**, reached at t = 516 and held to the bank.",
+    "whatTheMapAsked": "It asked me about **anchoring, once, before the first enemy spawned, and the answer was a disc** — so E9's signature mechanic is genuinely live, genuinely legible, and genuinely **gates nothing**. The capability ladder calls E9 *persistent tiles, long-horizon stewardship*, and **nothing here persists**: the published `scheduled_relocation` rule says so in its own words — a work caught in the column \"is lifted, carried to the sweep end point and set down there ALIVE; it is offline while airborne and **loses no hp**\", with `damages: false` and **`gatesSecure: false`**. There is no tile that remembers, no state that accumulates across waves, and no E9 verb; the era is answered entirely with epoch-1 grammar. But the sweeps are emphatically *not* decoration, and my run is the loudest measurement of that I can offer: **20 sweeps started, 0 relocations, and `refusals.anchored` = 1,050.** The column reached my works one thousand and fifty times and the anchor hold refused it every single time. `relocations: 0` is a *choice* — all 24 works sit inside `anchor-center`'s r8 hold — not an absence, and `refusals.anchored` is the counter that proves the hazard was live while nothing appeared to happen. The reasoning it demanded was closed-form and available from the view alone: the claim is at (0,12); the only build ground within a turret's 16 of it is `center-anchor-bay` (x −10..10, z −8..8); the `center-devil-sweep` runs along z = 0 with `columnRadius` 4, cutting that bay in half; and the hold is the r8 disc inscribed in the bay. So the contract reduces to *place inside the disc*, which costs nothing and which I could compute before writing an order. What the run's difficulty actually was is somewhere else entirely: a continuous trickle of 927 kills' worth of thief-drones which, with **no stockpile standing**, all fall through to ordinary hero pursuit — `goldStolen` finished at **0** and `threats.alive` peaked at 27. The fields that carried it were `now.devilsAlley` (routes, `columnRadius`, `anchors[].holdRadius`, `sweepsStarted`, `relocations`, **`refusals.anchored`**), `now.works.entries`/`byKind`, `now.seams[].active/x/z/anchorIndex` (only two live, at (14,12) and (−14,−12), pinned all run; an inactive seam publishes all three as `null`), `now.gold` against `now.score.goldPanned`/`goldStolen`, `now.hero.hp/maxHp/x/z`, `now.threats.alive/wreckers/thieves`, and `now.orders[].status/reason`. Orders: `BUILD`, `HARVEST`, `PICK_UPGRADE`, `BLAST_AT`, `MOVE_HERO`, `REPAIR_UNDER` (never fired — nothing was ever wrecked), and one silence at the boundary. **My notebook remembers this map from generation 30, and it still plays the way I remember** — same claim, same three anchors at r8, same three crosswind routes, same four harvest anchors at (±14, ±12), same 2.4-second trickle, same w3 idle floor to the tenth of a second. The map is **not** named as cured this week, and its first minute confirmed it: two live seams funded a 50-gold turret at t ≈ 30 and nothing threatening happened until wave 2. What *did* move is the grammar, and here it moved **against** me: generation 30 rode a welded hero and never had to ask whether (0,0) was walkable. It is not.",
+    "winnability": "Secured, and the margin was **wide for fifteen waves and genuinely thin at the close**: not one of 24 works was ever wrecked and the hero held its full running maximum through wave 10, but it bled to **46.2/175 (26.4 %) at t = 585.9** before a `field_dressing` pick took it back to 99.2 — roughly one more wave on that slope would have been a coin flip, while the *reel* margin (422 ticks, 3.5 % of the byte ceiling) and the *gold* margin (the cap itself) had nothing left to win.",
+    "lessons": "- **`MOVE_HERO` to a stake marker answers `UNREACHABLE_TERRAIN`, and my post order never advanced off it.** I planned the whole ride around walking the hero to `anchor-center` (0,0) so the fort would ring the body it defends; that point is a stake and refuses the hero, so the order failed in **all 91 views** and the hero never left (0,12). My own gen-79 rule says to emit `MOVE_HERO` once and **advance the post index only on an actual `UNREACHABLE` record** — I wrote the \"emit once, drop when parked\" half and not the \"advance on refusal\" half, so a one-line omission silently deleted the heat's main new lever. **A standing post needs a refusal-driven index; carrying the rule's first clause without its second is carrying none of it.**\n- **Half my fort was therefore decoration, and it still secured — which prices the margin exactly.** With the hero stuck at (0,12), only 2 of 6 beacons (radius 8: (4,6) and (−4,6) at 7.2; the four at (±5,±5) at 8.6 and 17.7) and 3 of 4 turrets (range 16: (0,−7) at 19) could reach it. Compute the coverage circle against **where the body actually ended up**, not where you ordered it to go — and re-read `now.hero.x/z` every view to notice the difference. The fix for the next rider is free: bias the disc's works north (z ≥ 2) and probe a post at (0,5)-ish with a refusal-advanced ladder.\n- **`refusals.anchored` is how you prove a hazard was live when its success looks like nothing happening.** 20 sweeps, 0 relocations, **1,050** anchor-holds. Gen 30 got 373 with 8 works; 24 works scale it linearly. When a mechanic's win condition is \"nothing moved\", find the counter that increments when it *nearly* moves — otherwise you cannot distinguish a load-bearing placement from a mechanic that never fired.\n- **A thief-only roster settles the cap question by itself, and this is the third heat running I have carried the rule instead of re-deriving it.** `thief: true` forces `wrecker = false`, which deletes `REPAIR_UNDER`, palisade *bait* and every decoy idea (0 of 24 wrecked) — and it makes `stockpile` a trap, because a standing till is what makes `nearestGoldHolding` non-empty. Gen 106 overrode that warning with an estimate off a *concurrency* cap and lost 435 gold; I priced it properly this time and it is negative even bought LATE: at ~1.8 g/s of panning against the ~1.5–2 g/s a 4-thief rotation removes, 80 seconds of exposure earns ~84 against a 120-gold spend. **Declined, `goldStolen: 0`, 200 banked = the ceiling.** The \"buy the pair late\" refinement I have owed the notebook for three generations is now *priced and closed* on a map like this: it only pays where the till's trip time is long relative to the run's remainder.\n- **Palisades on a no-wrecker board are still chewable, so they are a time sink and not a wall.** Non-wreckers gnaw blockers even though wreckers do not, so 14 palisades at 10 g flat were the right unbounded surplus sink (they absorbed and redirected, and none was lost) — but do not price them as permanent.\n- **The plating-first scorer's SECOND tier earned its place for the first time.** Scoring `/heal|regen|mend/` at 80, just under plating's 100, took `field_dressing` at t ≈ 586 and turned 46.2/175 into 99.2/175 in the run's last fourteen seconds. On a board whose only loss is `hero_down` and whose pressure compounds to the final wave, the heal tier is not a tie-breaker — it is the endgame.\n- **A hard build floor plus a bank gate landed the cap without ever starving the fort.** Always spend while the core is incomplete or `hp/maxHp < 0.75`; otherwise only when `(gold − cost) + rate × (600 − t) ≥ 205`, with `rate` read off `score.goldPanned` and **biased 10 % low on purpose** so the error direction is protective; and **no BUILD at all after t = 500**. Panned 1,010, spent 810, banked exactly 200 — and a flat floor cannot be argued with the way an `urgent` bypass can (gens 85, 101).\n- **Silence at the boundary did its four jobs again, twenty-first contract running:** it took the `bank` default (`defaultedSecure: 1`), it kept the last accepted order 422 ticks inside a terminal tick this contract's `clockTicks` puts exactly at the secure instant, it held a 93-view run to 91 entries, and — the reason that matters most — **it cannot be rejected**, so the replay cannot diverge the way gen 84's nearly did.\n- **Ride the skeleton first and change nothing — twenty-second heat where that is the whole discipline, and the sixteenth in a row where it secured on ride one.** Two runs total. The reading budget went to the era pins as a per-contract diff, the roster flags, the loss reason, the published relocation rule and the buildables roster; the riding budget went to the unmodified generation-6→111 skeleton (ONE ladder with ONE ordinal per id priced at its live instance off `buildables[].costs[standing]`; a rung with no candidates left RETIRED rather than stalling the rungs behind it; a refusal blacklist partitioned into GROUND — poison the coordinate — and ECONOMY — retry, poison nothing; `Number.isFinite` seam filtering before any sort; blocks of six alternating across the live seams; `BLAST_AT` above the traveller; a blank line at `pendingSecure`). 24 builds, zero ladder stalls.\n- **An era named for rebuilt maps can leave a map's rules untouched, and proving it is a result — tenth heat running.** Grep the pins for the contract id first, confirm the twist and geometry against the notebook, then one ten-second idle probe against the remembered floor. Four minutes, and it redirected the whole budget from geometry to the one thing the board does differently."
+  },
+  "usage": {
+    "transcript": "/Users/robin/.claude/projects/-private-tmp-claude-501--Users-robin-Claude-Projects-Gold-Rush-fe6b8d27-b064-40eb-934b-1d29d57a71db-scratchpad-arena-heat14-e3949bfa/b58f38d5-069b-4678-8e03-dfb9323d7616.jsonl",
+    "assistantTurns": 52,
+    "toolCalls": 24,
+    "tokensIn": 104,
+    "tokensOut": 123357,
+    "cacheReadTokens": 22816176,
+    "cacheWriteTokens": 1847419,
+    "note": "tokensIn excludes cache reads/writes (reported separately); summed from the CLI session transcript, not self-reported by the rig"
+  }
+}

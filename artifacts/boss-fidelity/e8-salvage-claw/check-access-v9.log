@@ -1,0 +1,9 @@
+00:00.221  blend            | Read blend: "/Users/robin/.codex/worktrees/572c/Gold Rush/artifacts/boss-fidelity/e8-salvage-claw/candidate-v9/salvage-claw.blend"
+Traceback (most recent call last):
+  File "/Users/robin/.codex/worktrees/572c/Gold Rush/artifacts/boss-fidelity/e8-salvage-claw/check-access.py", line 18, in <module>
+    assert not overlap,f'Ladder {n} intersects landed winch: {len(overlap)} triangle pairs'
+           ^^^^^^^^^^^
+AssertionError: Ladder 0 intersects landed winch: 92 triangle pairs
+Blender 5.1.2 (hash ec6e62d40fa9 built 2026-05-19 01:30:33)
+
+Blender quit

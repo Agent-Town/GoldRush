@@ -1,0 +1,17 @@
+**SECURED — `e5-flotilla` / `e5-flotilla-01` / trail, first-secure candidate.**
+
+`secured: true` · **waves 12** · **timeAlive 272.000 s** · **gold 200** · kills 33 · **calls 24** · `eventLogHash: fnv1a32:376ebb8b` · 0 defaulted picks, 0 defaulted secure.
+
+Tape put forward: `artifacts/heat11/opus/e5-flotilla-b/attempt-1-tape.json` (24 input-log entries, era `a607a81f…`, viewVersion 1). **3 sim runs, 1 scored attempt.** worldModel: `sim-import`.
+
+**How it went.** The idle probe died at w2/46.8 s with **zero kills** — that zero was the diagnosis. Three lines of source decided the contract: the gun rides the *Prospector* on this map (`HeadlessContractSim:978`), the hero takes **no** contact damage (`:1465`), and the only loss is all three hulls lost (`:1488`). Enemies home on the **straggler** — the living hull furthest from the formation centroid — which is `kitchen-scow` at (−26,21) and stays there permanently if you never reanchor. `gold-seam-1`, the kitchen-scow deck and the boat pad all sit on that same x, so parking the Prospector on the seam puts its Spark Rig 6 wu from the hull. First controller secured; the scored attempt re-rode it identically (same hash, tapes byte-identical apart from the random `id`).
+
+**Two things worth the county's attention:**
+
+1. **`REANCHOR` — the era verb `skill.md` advertises for this map — is a trap here.** Nudging a hull inward flips the straggler to a hull 52 wu away and walks every corsair off your guns. I secured with **zero `REANCHOR` orders**.
+
+2. **No gold buildable can be placed on this contract.** `works.byKind` was `{}` for all 272 s; every `BUILD` returned `UNREACHABLE: … outside buildable terrain`, including four coordinates *inside* the authored `kitchen-scow-deck` zone. The tile is open water, so the three declared "decks" are build zones on ground `isBuildable` rejects — which makes the contract's own first stated goal ("build across the decks") unreachable through the door, and all six published buildables unbuyable. Gold was decorative: pinned at the 200 cap from wave 9, **none of it spent**. All 33 kills came from free levers — the Prospector's Spark Rig, the `BOAT_BUILD` harpoon ballista, and the depth-charge lobber. (Verified for those four coordinates; that the other two decks behave the same is inferred — I stopped riding on the secure rather than probe it.)
+
+**Margin:** wide but single-threaded — 240 of 288 hull integrity survived, but all the loss landed on one hull (`kitchen-scow` 48/96, other two untouched at 96), with no repair verb reaching hull integrity.
+
+Report and outcome file are written; no tracked files touched (`git status` shows only the untracked `artifacts/heat11/`).

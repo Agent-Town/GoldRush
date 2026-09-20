@@ -1,0 +1,50 @@
+{
+ "secured": false,
+ "waves": 13,
+ "timeMs": 391600,
+ "gold": 89,
+ "kills": 399,
+ "calls": 100,
+ "defaultedPicks": 0,
+ "defaultedSecure": 0,
+ "eventLogHash": "fnv1a32:82997d04",
+ "tape": "/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/heat14/opus/e2-hill-mine/tune-1-tape.json",
+ "scored": false,
+ "runsSoFar": 3,
+ "scoredAttempts": 1,
+ "worldModel": "sim-import",
+ "envelope": {
+  "durationTicks": 11748,
+  "lastEntryTick": 11700,
+  "entries": 100,
+  "bytes": 363332
+ },
+ "submit": false,
+ "submitNote": "NOT SECURED - nothing is put forward. Best of 3 runs is tune-1 (w13/391.600s/89g). The one scored attempt (attempt-1, w11/341.533s/0g) was a measured regression: the north-face timber shield held 13 works with 0 ever wrecked, and the same wall penned the hero in (UNREACHABLE_APPROACH on the kite leg).",
+ "runs": [
+  {
+   "label": "probe",
+   "secured": false,
+   "waves": 2,
+   "timeMs": 72467,
+   "note": "idle; reproduces null-floors.json byte for byte (fnv1a32:658e852a)"
+  },
+  {
+   "label": "tune-1",
+   "secured": false,
+   "waves": 13,
+   "timeMs": 391600,
+   "gold": 89,
+   "note": "BEST; skeleton; perfect fort to w11, 464->194 worksHp in w12"
+  },
+  {
+   "label": "attempt-1",
+   "secured": false,
+   "waves": 11,
+   "timeMs": 341533,
+   "gold": 0,
+   "scored": true,
+   "note": "timber shield: 13 standing / 0 wrecked, but walled the hero in"
+  }
+ ]
+}

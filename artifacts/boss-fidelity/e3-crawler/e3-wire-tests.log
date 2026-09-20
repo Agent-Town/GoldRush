@@ -1,0 +1,18 @@
+
+Running 6 tests using 1 worker
+
+
+(node:21733) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[1/6] [desktop-chrome] › e2e/wire-crawler-3d.spec.ts:115:1 › mounts the Crawler GLB, flips all three damage morphs, and disposes on kill
+[2/6] [desktop-chrome] › e2e/wire-crawler-3d.spec.ts:158:1 › LITE keeps the placeholder and never requests the Crawler GLB
+[3/6] [desktop-chrome] › e2e/wire-crawler-3d.spec.ts:174:1 › invalid Crawler GLB bytes keep the placeholder presentation
+
+(node:21953) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[4/6] [mobile-chrome] › e2e/wire-crawler-3d.spec.ts:115:1 › mounts the Crawler GLB, flips all three damage morphs, and disposes on kill
+[5/6] [mobile-chrome] › e2e/wire-crawler-3d.spec.ts:158:1 › LITE keeps the placeholder and never requests the Crawler GLB
+[6/6] [mobile-chrome] › e2e/wire-crawler-3d.spec.ts:174:1 › invalid Crawler GLB bytes keep the placeholder presentation
+  6 passed (30.8s)

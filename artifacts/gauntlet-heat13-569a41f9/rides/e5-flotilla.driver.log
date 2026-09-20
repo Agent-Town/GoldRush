@@ -1,0 +1,32 @@
+
+########## RIDE e5-flotilla · seed e5-flotilla-01 · gen 89 · stake never-claimed · wall 1500s ##########
+--- 1 charter ---
+{"rig":"opus","contract":"e5-flotilla","seed":"e5-flotilla-01","seedMode":"bench","stake":"never-claimed","generation":89,"wall":1500,"notebookSha256":"05e4bc78b23301ee193c73ee77f35453cc750ffff5d315559022c60f0f985ec8","charterSha256":"39c458c04b53dee039d7a4839c2dd6180bc9b323f06ed7eaa9e1aa3c8dd82599","bytes":734437,"out":"/private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/rides/e5-flotilla/charter.md"}
+--- 2 ride ---
+START opus claude-opus-5 pid=12277 session=2848c063-4cc6-42fe-a8cd-e4be63344283 at=2026-09-07T16:48:35.698Z
+END opus rc=1 signal=null wall=2s wallHit=false
+ride-wall rc=1 signal=-
+--- 3 land ---
+
+=== 1 finish-ride ===
+{"rig":"opus","contract":"e5-flotilla","wall":2,"wallHit":false,"rc":1,"tracked":[],"files":0,"outcome":null,"scoredTapes":[],"otherSecured":[],"reportSections":null,"usage":{"turns":1,"toolCalls":0,"tokensIn":0,"tokensOut":0}}
+
+=== NOT SECURED — nothing to submit ===
+{
+ "rig": "opus",
+ "contract": "e5-flotilla",
+ "wall": 2,
+ "wallHit": false,
+ "rc": 1,
+ "scoredTapes": [],
+ "outcomeNote": null
+}
+
+land rc=0
+--- 4 notebook ---
+{"notebook":"/Users/robin/Claude/Projects/goldrush-gauntlet/memories/claude__opus-5/NOTEBOOK.md","generation":89,"headerBytes":412,"entryBytes":882}
+--- 5 matrix ---
+| 29 | e5-flotilla | `e5-flotilla-01` | never-claimed | 89 | **not secured** | — | — | —s | 2s | —<br>— | — | gen 89 |
+{"contract":"e5-flotilla","secured":false,"tapesOnDisk":0,"scoredTapes":0,"otherSecured":0,"wallHit":false,"rc":1,"assay":null,"ranked":null,"winnability":null}
+########## END e5-flotilla ##########
+

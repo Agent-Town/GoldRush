@@ -1,0 +1,6200 @@
+{
+  "contract": "e8-low-orbit",
+  "policyAir": "plan-sorties",
+  "policy": {
+    "verbs": [
+      "HARVEST",
+      "BUILD",
+      "MOVE_TO",
+      "MOVE_HERO",
+      "HOLD",
+      "BLAST_AT",
+      "CONTEXT_ACTION",
+      "PICK_UPGRADE",
+      "SECURE_CHOICE"
+    ],
+    "home": {
+      "x": 0,
+      "z": 8
+    },
+    "errand": "crossing",
+    "airMargin": 10,
+    "panTailReserve": 2,
+    "fortProfile": "default",
+    "defenceFile": "artifacts/low-orbit-second-build-line/defence-apron.json",
+    "heroPost": {
+      "x": 0,
+      "z": 10
+    },
+    "defence": [
+      {
+        "what": "turret",
+        "where": {
+          "x": -12,
+          "z": 4
+        }
+      },
+      {
+        "what": "turret",
+        "where": {
+          "x": 12,
+          "z": 4
+        }
+      },
+      {
+        "what": "turret",
+        "where": {
+          "x": -14,
+          "z": 12
+        }
+      },
+      {
+        "what": "turret",
+        "where": {
+          "x": 0,
+          "z": 25
+        }
+      },
+      {
+        "what": "sentry_beacon",
+        "where": {
+          "x": -5,
+          "z": 14
+        }
+      },
+      {
+        "what": "sentry_beacon",
+        "where": {
+          "x": 5,
+          "z": 14
+        }
+      },
+      {
+        "what": "sentry_beacon",
+        "where": {
+          "x": -5,
+          "z": 8
+        }
+      },
+      {
+        "what": "sentry_beacon",
+        "where": {
+          "x": 5,
+          "z": 8
+        }
+      },
+      {
+        "what": "sentry_beacon",
+        "where": {
+          "x": -7,
+          "z": 12
+        }
+      },
+      {
+        "what": "sentry_beacon",
+        "where": {
+          "x": 7,
+          "z": 12
+        }
+      }
+    ]
+  },
+  "identical": false,
+  "secured": false,
+  "runs": [
+    {
+      "seed": "e8-low-orbit-01",
+      "exitCode": 0,
+      "turns": 98,
+      "picks": 30,
+      "outcome": {
+        "secured": false,
+        "waves": 22,
+        "timeMs": 660000,
+        "gold": 200,
+        "kills": 1056,
+        "calls": 97,
+        "defaultedPicks": 0,
+        "defaultedSecure": 0,
+        "eventLogHash": "fnv1a32:5da81706",
+        "endReason": "wave-ceiling"
+      },
+      "run": 1,
+      "tape": null,
+      "trace": [
+        {
+          "wave": 0,
+          "runSeconds": 0,
+          "gold": 0,
+          "suit": 60,
+          "inDome": null,
+          "window": 0,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "credited": 0,
+          "required": 4,
+          "reached": [],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {},
+          "tiers": [],
+          "heroHp": 100,
+          "heroAt": {
+            "x": 0,
+            "z": 12
+          },
+          "threats": 0,
+          "body": {
+            "x": -1.8,
+            "z": 10.9
+          },
+          "lastOrders": [],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 28,
+          "build": "turret@-12,4"
+        },
+        {
+          "wave": 0,
+          "runSeconds": 3.5,
+          "gold": 30,
+          "suit": 60,
+          "inDome": "claw-carcass-yard",
+          "window": 0,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "credited": 0,
+          "required": 4,
+          "reached": [],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {},
+          "tiers": [],
+          "heroHp": 100,
+          "heroAt": {
+            "x": 0,
+            "z": 12
+          },
+          "threats": 0,
+          "body": {
+            "x": 12,
+            "z": 4
+          },
+          "lastOrders": [
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "BUILD",
+              "pending",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 28,
+          "build": "turret@-12,4"
+        },
+        {
+          "wave": 0,
+          "runSeconds": 27.67,
+          "gold": 10,
+          "suit": 60,
+          "inDome": "claw-carcass-yard",
+          "window": 0,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "credited": 0,
+          "required": 4,
+          "reached": [],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {
+            "turret": 1
+          },
+          "tiers": [
+            1
+          ],
+          "heroHp": 100,
+          "heroAt": {
+            "x": 0,
+            "z": 12
+          },
+          "threats": 3,
+          "body": {
+            "x": 38,
+            "z": 2
+          },
+          "lastOrders": [
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "BUILD",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 28,
+          "build": "turret@12,4"
+        },
+        {
+          "wave": 1,
+          "runSeconds": 30,
+          "gold": 10,
+          "suit": 60,
+          "inDome": "claw-carcass-yard",
+          "window": 0,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "credited": 0,
+          "required": 4,
+          "reached": [],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {
+            "turret": 1
+          },
+          "tiers": [
+            1
+          ],
+          "heroHp": 100,
+          "heroAt": {
+            "x": 0,
+            "z": 12
+          },
+          "threats": 7,
+          "body": {
+            "x": 27,
+            "z": 2.4
+          },
+          "lastOrders": [
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "BUILD",
+              "pending",
+              null
+            ],
+            [
+              "HARVEST",
+              "active",
+              null
+            ],
+            [
+              "HARVEST",
+              "pending",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 29,
+          "build": "turret@12,4"
+        },
+        {
+          "wave": 1,
+          "runSeconds": 38.37,
+          "gold": 40,
+          "suit": 60,
+          "inDome": "claw-carcass-yard",
+          "window": 0,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "credited": 0,
+          "required": 4,
+          "reached": [],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {
+            "turret": 1
+          },
+          "tiers": [
+            1
+          ],
+          "heroHp": 100,
+          "heroAt": {
+            "x": 0,
+            "z": 12
+          },
+          "threats": 3,
+          "body": {
+            "x": -12,
+            "z": 4
+          },
+          "lastOrders": [
+            [
+              "BUILD",
+              "pending",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 28,
+          "build": "turret@12,4"
+        },
+        {
+          "wave": 1,
+          "runSeconds": 53.3,
+          "gold": 0,
+          "suit": 60,
+          "inDome": "claw-carcass-yard",
+          "window": 0,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "credited": 0,
+          "required": 4,
+          "reached": [],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {
+            "turret": 2
+          },
+          "tiers": [
+            1,
+            1
+          ],
+          "heroHp": 100,
+          "heroAt": {
+            "x": 0,
+            "z": 12
+          },
+          "threats": 4,
+          "body": {
+            "x": 6.4,
+            "z": 3.8
+          },
+          "lastOrders": [
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "BUILD",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 28,
+          "build": "turret@-14,12"
+        },
+        {
+          "wave": 2,
+          "runSeconds": 60.03,
+          "gold": 0,
+          "suit": 60,
+          "inDome": "claw-carcass-yard",
+          "window": 0,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "credited": 0,
+          "required": 4,
+          "reached": [],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {
+            "turret": 2
+          },
+          "tiers": [
+            1,
+            1
+          ],
+          "heroHp": 100,
+          "heroAt": {
+            "x": 0,
+            "z": 12
+          },
+          "threats": 6,
+          "body": {
+            "x": -25.5,
+            "z": 2.5
+          },
+          "lastOrders": [
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "BUILD",
+              "pending",
+              null
+            ],
+            [
+              "HARVEST",
+              "active",
+              null
+            ],
+            [
+              "HARVEST",
+              "pending",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 28,
+          "build": "turret@-14,12"
+        },
+        {
+          "wave": 2,
+          "runSeconds": 62.87,
+          "gold": 30,
+          "suit": 60,
+          "inDome": "claw-carcass-yard",
+          "window": 0,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "credited": 0,
+          "required": 4,
+          "reached": [],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {
+            "turret": 2
+          },
+          "tiers": [
+            1,
+            1
+          ],
+          "heroHp": 100,
+          "heroAt": {
+            "x": 0,
+            "z": 12
+          },
+          "threats": 0,
+          "body": {
+            "x": -38,
+            "z": 2
+          },
+          "lastOrders": [
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "BUILD",
+              "pending",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 28,
+          "build": "turret@-14,12"
+        },
+        {
+          "wave": 2,
+          "runSeconds": 73.57,
+          "gold": 60,
+          "suit": 60,
+          "inDome": "claw-carcass-yard",
+          "window": 0,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "credited": 0,
+          "required": 4,
+          "reached": [],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {
+            "turret": 2
+          },
+          "tiers": [
+            1,
+            1
+          ],
+          "heroHp": 100,
+          "heroAt": {
+            "x": 0,
+            "z": 12
+          },
+          "threats": 0,
+          "body": {
+            "x": 12,
+            "z": 4
+          },
+          "lastOrders": [
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "BUILD",
+              "pending",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 28,
+          "build": "turret@-14,12"
+        },
+        {
+          "wave": 2,
+          "runSeconds": 79.27,
+          "gold": 90,
+          "suit": 60,
+          "inDome": "claw-carcass-yard",
+          "window": 0,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "credited": 0,
+          "required": 4,
+          "reached": [],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {
+            "turret": 2
+          },
+          "tiers": [
+            1,
+            1
+          ],
+          "heroHp": 100,
+          "heroAt": {
+            "x": 0,
+            "z": 12
+          },
+          "threats": 0,
+          "body": {
+            "x": 38,
+            "z": 2
+          },
+          "lastOrders": [
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "BUILD",
+              "pending",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 0,
+          "build": "turret@-14,12"
+        },
+        {
+          "wave": 3,
+          "runSeconds": 90.03,
+          "gold": 90,
+          "suit": 60,
+          "inDome": "claw-carcass-yard",
+          "window": 0,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "credited": 0,
+          "required": 4,
+          "reached": [],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {
+            "turret": 2
+          },
+          "tiers": [
+            1,
+            1
+          ],
+          "heroHp": 100,
+          "heroAt": {
+            "x": 0,
+            "z": 12
+          },
+          "threats": 7,
+          "body": {
+            "x": 0,
+            "z": 8
+          },
+          "lastOrders": [
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "BUILD",
+              "pending",
+              null
+            ],
+            [
+              "MOVE_TO",
+              "done",
+              null
+            ],
+            [
+              "HOLD",
+              "active",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 28,
+          "build": "turret@-14,12"
+        },
+        {
+          "wave": 3,
+          "runSeconds": 114.87,
+          "gold": 0,
+          "suit": 60,
+          "inDome": "claw-carcass-yard",
+          "window": 0,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "credited": 0,
+          "required": 4,
+          "reached": [],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {
+            "turret": 3
+          },
+          "tiers": [
+            1,
+            1,
+            1
+          ],
+          "heroHp": 100,
+          "heroAt": {
+            "x": 0,
+            "z": 12
+          },
+          "threats": 0,
+          "body": {
+            "x": 24.2,
+            "z": 4.7
+          },
+          "lastOrders": [
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "BUILD",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "active",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 28,
+          "build": "turret@0,25"
+        },
+        {
+          "wave": 3,
+          "runSeconds": 118.03,
+          "gold": 25,
+          "suit": 60,
+          "inDome": "claw-carcass-yard",
+          "window": 0,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "credited": 0,
+          "required": 4,
+          "reached": [],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {
+            "turret": 3
+          },
+          "tiers": [
+            1,
+            1,
+            1
+          ],
+          "heroHp": 100,
+          "heroAt": {
+            "x": 0,
+            "z": 12
+          },
+          "threats": 1,
+          "body": {
+            "x": 38,
+            "z": 2
+          },
+          "lastOrders": [
+            [
+              "PICK_UPGRADE",
+              "done",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "BUILD",
+              "pending",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 28,
+          "build": "turret@0,25"
+        },
+        {
+          "wave": 4,
+          "runSeconds": 120.03,
+          "gold": 25,
+          "suit": 60,
+          "inDome": "claw-carcass-yard",
+          "window": 1,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "credited": 0,
+          "required": 4,
+          "reached": [],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {
+            "turret": 3
+          },
+          "tiers": [
+            1,
+            1,
+            1
+          ],
+          "heroHp": 100,
+          "heroAt": {
+            "x": 0,
+            "z": 12
+          },
+          "threats": 9,
+          "body": {
+            "x": 28.6,
+            "z": 2.4
+          },
+          "lastOrders": [
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "BUILD",
+              "pending",
+              null
+            ],
+            [
+              "HARVEST",
+              "active",
+              null
+            ],
+            [
+              "HARVEST",
+              "pending",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 29,
+          "build": "turret@0,25"
+        },
+        {
+          "wave": 4,
+          "runSeconds": 120.8,
+          "gold": 25,
+          "suit": 60,
+          "inDome": "claw-carcass-yard",
+          "window": 1,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "credited": 0,
+          "required": 4,
+          "reached": [],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {
+            "turret": 3
+          },
+          "tiers": [
+            1,
+            1,
+            1
+          ],
+          "heroHp": 100,
+          "heroAt": {
+            "x": 0,
+            "z": 12
+          },
+          "threats": 6,
+          "body": {
+            "x": 24.9,
+            "z": 2.5
+          },
+          "lastOrders": [
+            [
+              "BUILD",
+              "pending",
+              null
+            ],
+            [
+              "HARVEST",
+              "active",
+              null
+            ],
+            [
+              "HARVEST",
+              "pending",
+              null
+            ],
+            [
+              "HARVEST",
+              "pending",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 28,
+          "build": "turret@0,25"
+        },
+        {
+          "wave": 4,
+          "runSeconds": 128.63,
+          "gold": 45,
+          "suit": 60,
+          "inDome": "claw-carcass-yard",
+          "window": 1,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "credited": 0,
+          "required": 4,
+          "reached": [],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {
+            "turret": 3
+          },
+          "tiers": [
+            1,
+            1,
+            1
+          ],
+          "heroHp": 100,
+          "heroAt": {
+            "x": 0,
+            "z": 12
+          },
+          "threats": 6,
+          "body": {
+            "x": -12,
+            "z": 4
+          },
+          "lastOrders": [
+            [
+              "PICK_UPGRADE",
+              "done",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "BUILD",
+              "pending",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 28,
+          "build": "turret@0,25"
+        },
+        {
+          "wave": 4,
+          "runSeconds": 128.8,
+          "gold": 55,
+          "suit": 60,
+          "inDome": "claw-carcass-yard",
+          "window": 1,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "credited": 0,
+          "required": 4,
+          "reached": [],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {
+            "turret": 3
+          },
+          "tiers": [
+            1,
+            1,
+            1
+          ],
+          "heroHp": 100,
+          "heroAt": {
+            "x": 0,
+            "z": 12
+          },
+          "threats": 5,
+          "body": {
+            "x": -12,
+            "z": 4
+          },
+          "lastOrders": [
+            [
+              "PICK_UPGRADE",
+              "done",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "BUILD",
+              "pending",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 29,
+          "build": "turret@0,25"
+        },
+        {
+          "wave": 4,
+          "runSeconds": 133.7,
+          "gold": 55,
+          "suit": 60,
+          "inDome": "claw-carcass-yard",
+          "window": 1,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "credited": 0,
+          "required": 4,
+          "reached": [],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {
+            "turret": 3
+          },
+          "tiers": [
+            1,
+            1,
+            1
+          ],
+          "heroHp": 100,
+          "heroAt": {
+            "x": 0,
+            "z": 12
+          },
+          "threats": 0,
+          "body": {
+            "x": -35.5,
+            "z": 2.2
+          },
+          "lastOrders": [
+            [
+              "BUILD",
+              "pending",
+              null
+            ],
+            [
+              "HARVEST",
+              "active",
+              null
+            ],
+            [
+              "HARVEST",
+              "pending",
+              null
+            ],
+            [
+              "HARVEST",
+              "pending",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 28,
+          "build": "turret@0,25"
+        },
+        {
+          "wave": 4,
+          "runSeconds": 134.47,
+          "gold": 85,
+          "suit": 60,
+          "inDome": "claw-carcass-yard",
+          "window": 1,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "credited": 0,
+          "required": 4,
+          "reached": [],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {
+            "turret": 3
+          },
+          "tiers": [
+            1,
+            1,
+            1
+          ],
+          "heroHp": 100,
+          "heroAt": {
+            "x": 0,
+            "z": 12
+          },
+          "threats": 0,
+          "body": {
+            "x": -38,
+            "z": 2
+          },
+          "lastOrders": [
+            [
+              "PICK_UPGRADE",
+              "done",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "BUILD",
+              "pending",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 0,
+          "build": "turret@0,25"
+        },
+        {
+          "wave": 5,
+          "runSeconds": 150.03,
+          "gold": 85,
+          "suit": 60,
+          "inDome": "claw-carcass-yard",
+          "window": 1,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "credited": 0,
+          "required": 4,
+          "reached": [],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {
+            "turret": 3
+          },
+          "tiers": [
+            1,
+            1,
+            1
+          ],
+          "heroHp": 100,
+          "heroAt": {
+            "x": 0,
+            "z": 12
+          },
+          "threats": 10,
+          "body": {
+            "x": 0,
+            "z": 8
+          },
+          "lastOrders": [
+            [
+              "BUILD",
+              "pending",
+              null
+            ],
+            [
+              "MOVE_TO",
+              "done",
+              null
+            ],
+            [
+              "HOLD",
+              "active",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 28,
+          "build": "turret@0,25"
+        },
+        {
+          "wave": 5,
+          "runSeconds": 150.6,
+          "gold": 85,
+          "suit": 60,
+          "inDome": "claw-carcass-yard",
+          "window": 1,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "credited": 0,
+          "required": 4,
+          "reached": [],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {
+            "turret": 3
+          },
+          "tiers": [
+            1,
+            1,
+            1
+          ],
+          "heroHp": 100,
+          "heroAt": {
+            "x": 0,
+            "z": 12
+          },
+          "threats": 9,
+          "body": {
+            "x": -2.5,
+            "z": 7.3
+          },
+          "lastOrders": [
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "BUILD",
+              "pending",
+              null
+            ],
+            [
+              "HARVEST",
+              "active",
+              null
+            ],
+            [
+              "HARVEST",
+              "pending",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 29,
+          "build": "turret@0,25"
+        },
+        {
+          "wave": 5,
+          "runSeconds": 152.93,
+          "gold": 115,
+          "suit": 60,
+          "inDome": "claw-carcass-yard",
+          "window": 1,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "credited": 0,
+          "required": 4,
+          "reached": [],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {
+            "turret": 3
+          },
+          "tiers": [
+            1,
+            1,
+            1
+          ],
+          "heroHp": 100,
+          "heroAt": {
+            "x": 0,
+            "z": 12
+          },
+          "threats": 2,
+          "body": {
+            "x": -12,
+            "z": 4
+          },
+          "lastOrders": [
+            [
+              "PICK_UPGRADE",
+              "done",
+              null
+            ],
+            [
+              "BUILD",
+              "pending",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 28,
+          "build": "turret@0,25"
+        },
+        {
+          "wave": 5,
+          "runSeconds": 159.37,
+          "gold": 125,
+          "suit": 60,
+          "inDome": "claw-carcass-yard",
+          "window": 1,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "credited": 0,
+          "required": 4,
+          "reached": [],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {
+            "turret": 3
+          },
+          "tiers": [
+            1,
+            1,
+            1
+          ],
+          "heroHp": 100,
+          "heroAt": {
+            "x": 0,
+            "z": 12
+          },
+          "threats": 4,
+          "body": {
+            "x": -34.3,
+            "z": 4.2
+          },
+          "lastOrders": [
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "BUILD",
+              "active",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 28,
+          "build": "turret@0,25"
+        },
+        {
+          "wave": 5,
+          "runSeconds": 168.37,
+          "gold": 0,
+          "suit": 60,
+          "inDome": "claw-carcass-yard",
+          "window": 1,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "credited": 0,
+          "required": 4,
+          "reached": [],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {
+            "turret": 4
+          },
+          "tiers": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 100,
+          "heroAt": {
+            "x": 0,
+            "z": 12
+          },
+          "threats": 0,
+          "body": {
+            "x": -12.4,
+            "z": 17.5
+          },
+          "lastOrders": [
+            [
+              "PICK_UPGRADE",
+              "done",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "BUILD",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "active",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 28,
+          "build": "sentry_beacon@-5,14"
+        },
+        {
+          "wave": 5,
+          "runSeconds": 174.1,
+          "gold": 5,
+          "suit": 60,
+          "inDome": "claw-carcass-yard",
+          "window": 1,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "credited": 0,
+          "required": 4,
+          "reached": [],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {
+            "sentry_beacon": 1,
+            "turret": 4
+          },
+          "tiers": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 100,
+          "heroAt": {
+            "x": 0,
+            "z": 12
+          },
+          "threats": 0,
+          "body": {
+            "x": -12,
+            "z": 4
+          },
+          "lastOrders": [
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "BUILD",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 28,
+          "build": "sentry_beacon@5,14"
+        },
+        {
+          "wave": 5,
+          "runSeconds": 174.83,
+          "gold": 5,
+          "suit": 60,
+          "inDome": "claw-carcass-yard",
+          "window": 1,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "credited": 0,
+          "required": 4,
+          "reached": [],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {
+            "sentry_beacon": 1,
+            "turret": 4
+          },
+          "tiers": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 100,
+          "heroAt": {
+            "x": 0,
+            "z": 12
+          },
+          "threats": 1,
+          "body": {
+            "x": -8.6,
+            "z": 4
+          },
+          "lastOrders": [
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "BUILD",
+              "pending",
+              null
+            ],
+            [
+              "HARVEST",
+              "active",
+              null
+            ],
+            [
+              "HARVEST",
+              "pending",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 29,
+          "build": "sentry_beacon@5,14"
+        },
+        {
+          "wave": 5,
+          "runSeconds": 175.17,
+          "gold": 5,
+          "suit": 60,
+          "inDome": "claw-carcass-yard",
+          "window": 1,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "credited": 0,
+          "required": 4,
+          "reached": [],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {
+            "sentry_beacon": 1,
+            "turret": 4
+          },
+          "tiers": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 100,
+          "heroAt": {
+            "x": 0,
+            "z": 12
+          },
+          "threats": 0,
+          "body": {
+            "x": -7,
+            "z": 4
+          },
+          "lastOrders": [
+            [
+              "BUILD",
+              "pending",
+              null
+            ],
+            [
+              "HARVEST",
+              "active",
+              null
+            ],
+            [
+              "HARVEST",
+              "pending",
+              null
+            ],
+            [
+              "HARVEST",
+              "pending",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 29,
+          "build": "sentry_beacon@5,14"
+        },
+        {
+          "wave": 6,
+          "runSeconds": 180.03,
+          "gold": 35,
+          "suit": 60,
+          "inDome": "claw-carcass-yard",
+          "window": 1,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "credited": 0,
+          "required": 4,
+          "reached": [],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {
+            "sentry_beacon": 1,
+            "turret": 4
+          },
+          "tiers": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 100,
+          "heroAt": {
+            "x": 0,
+            "z": 12
+          },
+          "threats": 11,
+          "body": {
+            "x": 10.1,
+            "z": 6.8
+          },
+          "lastOrders": [
+            [
+              "PICK_UPGRADE",
+              "done",
+              null
+            ],
+            [
+              "BUILD",
+              "active",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 28,
+          "build": "sentry_beacon@5,14"
+        },
+        {
+          "wave": 6,
+          "runSeconds": 190.4,
+          "gold": 0,
+          "suit": 60,
+          "inDome": "claw-carcass-yard",
+          "window": 1,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "credited": 0,
+          "required": 4,
+          "reached": [],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {
+            "sentry_beacon": 2,
+            "turret": 4
+          },
+          "tiers": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 100,
+          "heroAt": {
+            "x": 0,
+            "z": 12
+          },
+          "threats": 8,
+          "body": {
+            "x": -37.8,
+            "z": 2
+          },
+          "lastOrders": [
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "BUILD",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "active",
+              null
+            ],
+            [
+              "HARVEST",
+              "pending",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 28,
+          "build": "sentry_beacon@-5,8"
+        },
+        {
+          "wave": 6,
+          "runSeconds": 190.63,
+          "gold": 20,
+          "suit": 60,
+          "inDome": "claw-carcass-yard",
+          "window": 1,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "credited": 0,
+          "required": 4,
+          "reached": [],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {
+            "sentry_beacon": 2,
+            "turret": 4
+          },
+          "tiers": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 125,
+          "heroAt": {
+            "x": 0,
+            "z": 12
+          },
+          "threats": 8,
+          "body": {
+            "x": -38,
+            "z": 2
+          },
+          "lastOrders": [
+            [
+              "PICK_UPGRADE",
+              "done",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "BUILD",
+              "pending",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 0,
+          "build": "sentry_beacon@-5,8"
+        },
+        {
+          "wave": 6,
+          "runSeconds": 206.77,
+          "gold": 20,
+          "suit": 60,
+          "inDome": "claw-carcass-yard",
+          "window": 1,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "credited": 0,
+          "required": 4,
+          "reached": [],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {
+            "sentry_beacon": 2,
+            "turret": 4
+          },
+          "tiers": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 125,
+          "heroAt": {
+            "x": 0,
+            "z": 12
+          },
+          "threats": 1,
+          "body": {
+            "x": 0,
+            "z": 8
+          },
+          "lastOrders": [
+            [
+              "BUILD",
+              "pending",
+              null
+            ],
+            [
+              "MOVE_TO",
+              "done",
+              null
+            ],
+            [
+              "HOLD",
+              "active",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 28,
+          "build": "sentry_beacon@-5,8"
+        },
+        {
+          "wave": 7,
+          "runSeconds": 210.03,
+          "gold": 45,
+          "suit": 60,
+          "inDome": "claw-carcass-yard",
+          "window": 1,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "credited": 0,
+          "required": 4,
+          "reached": [],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {
+            "sentry_beacon": 2,
+            "turret": 4
+          },
+          "tiers": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 125,
+          "heroAt": {
+            "x": 0,
+            "z": 12
+          },
+          "threats": 14,
+          "body": {
+            "x": -10.3,
+            "z": 5
+          },
+          "lastOrders": [
+            [
+              "PICK_UPGRADE",
+              "done",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "BUILD",
+              "active",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 28,
+          "build": "sentry_beacon@-5,8"
+        },
+        {
+          "wave": 7,
+          "runSeconds": 210.63,
+          "gold": 5,
+          "suit": 60,
+          "inDome": "claw-carcass-yard",
+          "window": 1,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "credited": 0,
+          "required": 4,
+          "reached": [],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {
+            "sentry_beacon": 3,
+            "turret": 4
+          },
+          "tiers": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 125,
+          "heroAt": {
+            "x": 0,
+            "z": 12
+          },
+          "threats": 13,
+          "body": {
+            "x": -12,
+            "z": 4
+          },
+          "lastOrders": [
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "BUILD",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "failed",
+              "INVALID_TARGET: gold-seam-1 is unavailable."
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 29,
+          "build": "sentry_beacon@5,8"
+        },
+        {
+          "wave": 7,
+          "runSeconds": 210.87,
+          "gold": 35,
+          "suit": 60,
+          "inDome": "claw-carcass-yard",
+          "window": 1,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "credited": 0,
+          "required": 4,
+          "reached": [],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {
+            "sentry_beacon": 3,
+            "turret": 4
+          },
+          "tiers": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 125,
+          "heroAt": {
+            "x": 0,
+            "z": 12
+          },
+          "threats": 13,
+          "body": {
+            "x": -12,
+            "z": 4
+          },
+          "lastOrders": [
+            [
+              "BUILD",
+              "pending",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 29,
+          "build": "sentry_beacon@5,8"
+        },
+        {
+          "wave": 7,
+          "runSeconds": 217.03,
+          "gold": 10,
+          "suit": 60,
+          "inDome": "claw-carcass-yard",
+          "window": 1,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "credited": 0,
+          "required": 4,
+          "reached": [],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {
+            "sentry_beacon": 4,
+            "turret": 4
+          },
+          "tiers": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 125,
+          "heroAt": {
+            "x": 0,
+            "z": 12
+          },
+          "threats": 0,
+          "body": {
+            "x": 12,
+            "z": 4
+          },
+          "lastOrders": [
+            [
+              "BUILD",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 0,
+          "build": "sentry_beacon@-7,12"
+        },
+        {
+          "wave": 7,
+          "runSeconds": 221.2,
+          "gold": 10,
+          "suit": 60,
+          "inDome": "claw-carcass-yard",
+          "window": 1,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "credited": 0,
+          "required": 4,
+          "reached": [],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {
+            "sentry_beacon": 4,
+            "turret": 4
+          },
+          "tiers": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 125,
+          "heroAt": {
+            "x": 0,
+            "z": 12
+          },
+          "threats": 9,
+          "body": {
+            "x": 0,
+            "z": 8
+          },
+          "lastOrders": [
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "BUILD",
+              "pending",
+              null
+            ],
+            [
+              "MOVE_TO",
+              "done",
+              null
+            ],
+            [
+              "HOLD",
+              "active",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 0,
+          "build": "sentry_beacon@-7,12"
+        },
+        {
+          "wave": 7,
+          "runSeconds": 239.93,
+          "gold": 10,
+          "suit": 60,
+          "inDome": "claw-carcass-yard",
+          "window": 1,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "credited": 0,
+          "required": 4,
+          "reached": [],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {
+            "sentry_beacon": 4,
+            "turret": 4
+          },
+          "tiers": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 150,
+          "heroAt": {
+            "x": 0,
+            "z": 12
+          },
+          "threats": 1,
+          "body": {
+            "x": 0,
+            "z": 8
+          },
+          "lastOrders": [
+            [
+              "PICK_UPGRADE",
+              "done",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "BUILD",
+              "pending",
+              null
+            ],
+            [
+              "MOVE_TO",
+              "done",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 28,
+          "build": "sentry_beacon@-7,12"
+        },
+        {
+          "wave": 8,
+          "runSeconds": 240.03,
+          "gold": 10,
+          "suit": 60,
+          "inDome": "claw-carcass-yard",
+          "window": 2,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "credited": 0,
+          "required": 4,
+          "reached": [],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {
+            "sentry_beacon": 4,
+            "turret": 4
+          },
+          "tiers": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": 12
+          },
+          "threats": 15,
+          "body": {
+            "x": 0.1,
+            "z": 8.1
+          },
+          "lastOrders": [
+            [
+              "PICK_UPGRADE",
+              "done",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "BUILD",
+              "pending",
+              null
+            ],
+            [
+              "HARVEST",
+              "active",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 29,
+          "build": "sentry_beacon@-7,12"
+        },
+        {
+          "wave": 8,
+          "runSeconds": 242.9,
+          "gold": 40,
+          "suit": 60,
+          "inDome": "claw-carcass-yard",
+          "window": 2,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "credited": 0,
+          "required": 4,
+          "reached": [],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {
+            "sentry_beacon": 4,
+            "turret": 4
+          },
+          "tiers": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": 12
+          },
+          "threats": 12,
+          "body": {
+            "x": 12,
+            "z": 4
+          },
+          "lastOrders": [
+            [
+              "BUILD",
+              "pending",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 28,
+          "build": "sentry_beacon@-7,12"
+        },
+        {
+          "wave": 8,
+          "runSeconds": 248.6,
+          "gold": 70,
+          "suit": 60,
+          "inDome": "claw-carcass-yard",
+          "window": 2,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "credited": 0,
+          "required": 4,
+          "reached": [],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {
+            "sentry_beacon": 4,
+            "turret": 4
+          },
+          "tiers": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": 12
+          },
+          "threats": 13,
+          "body": {
+            "x": 38,
+            "z": 2
+          },
+          "lastOrders": [
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "BUILD",
+              "pending",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 28,
+          "build": "sentry_beacon@-7,12"
+        },
+        {
+          "wave": 8,
+          "runSeconds": 253.47,
+          "gold": 70,
+          "suit": 60,
+          "inDome": "claw-carcass-yard",
+          "window": 2,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "credited": 0,
+          "required": 4,
+          "reached": [],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {
+            "sentry_beacon": 4,
+            "turret": 4
+          },
+          "tiers": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": 12
+          },
+          "threats": 7,
+          "body": {
+            "x": 14.8,
+            "z": 2
+          },
+          "lastOrders": [
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "BUILD",
+              "pending",
+              null
+            ],
+            [
+              "HARVEST",
+              "active",
+              null
+            ],
+            [
+              "HARVEST",
+              "pending",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 28,
+          "build": "sentry_beacon@-7,12"
+        },
+        {
+          "wave": 9,
+          "runSeconds": 270.03,
+          "gold": 75,
+          "suit": 60,
+          "inDome": "claw-carcass-yard",
+          "window": 2,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "credited": 0,
+          "required": 4,
+          "reached": [],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {
+            "sentry_beacon": 4,
+            "turret": 4
+          },
+          "tiers": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": 12
+          },
+          "threats": 17,
+          "body": {
+            "x": -12.9,
+            "z": 10.1
+          },
+          "lastOrders": [
+            [
+              "PICK_UPGRADE",
+              "done",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "BUILD",
+              "active",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 28,
+          "build": "sentry_beacon@-7,12"
+        },
+        {
+          "wave": 9,
+          "runSeconds": 271.7,
+          "gold": 30,
+          "suit": 60,
+          "inDome": "claw-carcass-yard",
+          "window": 2,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "credited": 0,
+          "required": 4,
+          "reached": [],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {
+            "sentry_beacon": 5,
+            "turret": 4
+          },
+          "tiers": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": 12
+          },
+          "threats": 17,
+          "body": {
+            "x": -12,
+            "z": 4
+          },
+          "lastOrders": [
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "BUILD",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 29,
+          "build": "sentry_beacon@7,12"
+        },
+        {
+          "wave": 9,
+          "runSeconds": 274.23,
+          "gold": 30,
+          "suit": 60,
+          "inDome": "claw-carcass-yard",
+          "window": 2,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "credited": 0,
+          "required": 4,
+          "reached": [],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {
+            "sentry_beacon": 5,
+            "turret": 4
+          },
+          "tiers": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": 12
+          },
+          "threats": 11,
+          "body": {
+            "x": -24.1,
+            "z": 3.1
+          },
+          "lastOrders": [
+            [
+              "BUILD",
+              "pending",
+              null
+            ],
+            [
+              "HARVEST",
+              "active",
+              null
+            ],
+            [
+              "HARVEST",
+              "pending",
+              null
+            ],
+            [
+              "HARVEST",
+              "pending",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 28,
+          "build": "sentry_beacon@7,12"
+        },
+        {
+          "wave": 9,
+          "runSeconds": 277.33,
+          "gold": 55,
+          "suit": 60,
+          "inDome": "claw-carcass-yard",
+          "window": 2,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "credited": 0,
+          "required": 4,
+          "reached": [],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {
+            "sentry_beacon": 5,
+            "turret": 4
+          },
+          "tiers": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": 12
+          },
+          "threats": 0,
+          "body": {
+            "x": -38,
+            "z": 2
+          },
+          "lastOrders": [
+            [
+              "PICK_UPGRADE",
+              "done",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "BUILD",
+              "pending",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 28,
+          "build": "sentry_beacon@7,12"
+        },
+        {
+          "wave": 9,
+          "runSeconds": 287.43,
+          "gold": 55,
+          "suit": 60,
+          "inDome": "claw-carcass-yard",
+          "window": 2,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "credited": 0,
+          "required": 4,
+          "reached": [],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {
+            "sentry_beacon": 5,
+            "turret": 4
+          },
+          "tiers": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": 12
+          },
+          "threats": 5,
+          "body": {
+            "x": 10.3,
+            "z": 2
+          },
+          "lastOrders": [
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "BUILD",
+              "pending",
+              null
+            ],
+            [
+              "HARVEST",
+              "active",
+              null
+            ],
+            [
+              "HARVEST",
+              "pending",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 28,
+          "build": "sentry_beacon@7,12"
+        },
+        {
+          "wave": 9,
+          "runSeconds": 293.47,
+          "gold": 85,
+          "suit": 60,
+          "inDome": "claw-carcass-yard",
+          "window": 2,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "credited": 0,
+          "required": 4,
+          "reached": [],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {
+            "sentry_beacon": 5,
+            "turret": 4
+          },
+          "tiers": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": 12
+          },
+          "threats": 3,
+          "body": {
+            "x": 38,
+            "z": 2
+          },
+          "lastOrders": [
+            [
+              "PICK_UPGRADE",
+              "done",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "BUILD",
+              "pending",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 28,
+          "build": "sentry_beacon@7,12"
+        },
+        {
+          "wave": 10,
+          "runSeconds": 300,
+          "gold": 0,
+          "suit": 60,
+          "inDome": "claw-carcass-yard",
+          "window": 2,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "credited": 0,
+          "required": 4,
+          "reached": [],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {
+            "sentry_beacon": 6,
+            "turret": 4
+          },
+          "tiers": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": 12
+          },
+          "threats": 20,
+          "body": {
+            "x": 10.6,
+            "z": 6.2
+          },
+          "lastOrders": [
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "BUILD",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 29,
+          "build": null
+        },
+        {
+          "wave": 10,
+          "runSeconds": 300.7,
+          "gold": 20,
+          "suit": 60,
+          "inDome": "claw-carcass-yard",
+          "window": 2,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "credited": 0,
+          "required": 4,
+          "reached": [],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {
+            "sentry_beacon": 6,
+            "turret": 4
+          },
+          "tiers": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": 12
+          },
+          "threats": 20,
+          "body": {
+            "x": 12,
+            "z": 4
+          },
+          "lastOrders": [
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 30,
+          "build": null
+        },
+        {
+          "wave": 10,
+          "runSeconds": 305.73,
+          "gold": 20,
+          "suit": 60,
+          "inDome": "claw-carcass-yard",
+          "window": 2,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "credited": 0,
+          "required": 4,
+          "reached": [],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {
+            "sentry_beacon": 6,
+            "turret": 4
+          },
+          "tiers": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": 12
+          },
+          "threats": 3,
+          "body": {
+            "x": 36.1,
+            "z": 2.1
+          },
+          "lastOrders": [
+            [
+              "HARVEST",
+              "active",
+              null
+            ],
+            [
+              "HARVEST",
+              "pending",
+              null
+            ],
+            [
+              "HARVEST",
+              "pending",
+              null
+            ],
+            [
+              "HARVEST",
+              "pending",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 29,
+          "build": null
+        },
+        {
+          "wave": 10,
+          "runSeconds": 306.37,
+          "gold": 50,
+          "suit": 60,
+          "inDome": "claw-carcass-yard",
+          "window": 2,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "credited": 0,
+          "required": 4,
+          "reached": [],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {
+            "sentry_beacon": 6,
+            "turret": 4
+          },
+          "tiers": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": 12
+          },
+          "threats": 1,
+          "body": {
+            "x": 38,
+            "z": 2
+          },
+          "lastOrders": [
+            [
+              "PICK_UPGRADE",
+              "done",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 0,
+          "build": null
+        },
+        {
+          "wave": 10,
+          "runSeconds": 324.93,
+          "gold": 50,
+          "suit": 60,
+          "inDome": "claw-carcass-yard",
+          "window": 2,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "credited": 0,
+          "required": 4,
+          "reached": [],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {
+            "sentry_beacon": 6,
+            "turret": 4
+          },
+          "tiers": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": 12
+          },
+          "threats": 3,
+          "body": {
+            "x": 0,
+            "z": 8
+          },
+          "lastOrders": [
+            [
+              "MOVE_TO",
+              "done",
+              null
+            ],
+            [
+              "HOLD",
+              "active",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 29,
+          "build": null
+        },
+        {
+          "wave": 10,
+          "runSeconds": 327.9,
+          "gold": 80,
+          "suit": 60,
+          "inDome": "claw-carcass-yard",
+          "window": 2,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "credited": 0,
+          "required": 4,
+          "reached": [],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {
+            "sentry_beacon": 6,
+            "turret": 4
+          },
+          "tiers": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": 12
+          },
+          "threats": 4,
+          "body": {
+            "x": 12,
+            "z": 4
+          },
+          "lastOrders": [
+            [
+              "PICK_UPGRADE",
+              "done",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 29,
+          "build": null
+        },
+        {
+          "wave": 11,
+          "runSeconds": 330,
+          "gold": 80,
+          "suit": 60,
+          "inDome": "claw-carcass-yard",
+          "window": 2,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "credited": 0,
+          "required": 4,
+          "reached": [],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {
+            "sentry_beacon": 6,
+            "turret": 4
+          },
+          "tiers": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": 12
+          },
+          "threats": 22,
+          "body": {
+            "x": 2.1,
+            "z": 4
+          },
+          "lastOrders": [
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "active",
+              null
+            ],
+            [
+              "HARVEST",
+              "pending",
+              null
+            ],
+            [
+              "HARVEST",
+              "pending",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 30,
+          "build": null
+        },
+        {
+          "wave": 11,
+          "runSeconds": 333.17,
+          "gold": 110,
+          "suit": 60,
+          "inDome": "claw-carcass-yard",
+          "window": 2,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "credited": 0,
+          "required": 4,
+          "reached": [],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {
+            "sentry_beacon": 6,
+            "turret": 4
+          },
+          "tiers": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": 12
+          },
+          "threats": 17,
+          "body": {
+            "x": -12,
+            "z": 4
+          },
+          "lastOrders": [
+            [
+              "HARVEST",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 29,
+          "build": null
+        },
+        {
+          "wave": 11,
+          "runSeconds": 342.47,
+          "gold": 110,
+          "suit": 60,
+          "inDome": "claw-carcass-yard",
+          "window": 2,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "credited": 0,
+          "required": 4,
+          "reached": [],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {
+            "sentry_beacon": 6,
+            "turret": 4
+          },
+          "tiers": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": 12
+          },
+          "threats": 14,
+          "body": {
+            "x": 32.4,
+            "z": 2.2
+          },
+          "lastOrders": [
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "active",
+              null
+            ],
+            [
+              "HARVEST",
+              "pending",
+              null
+            ],
+            [
+              "HARVEST",
+              "pending",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 29,
+          "build": null
+        },
+        {
+          "wave": 11,
+          "runSeconds": 343.87,
+          "gold": 140,
+          "suit": 60,
+          "inDome": "claw-carcass-yard",
+          "window": 2,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "credited": 0,
+          "required": 4,
+          "reached": [],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {
+            "sentry_beacon": 6,
+            "turret": 4
+          },
+          "tiers": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": 12
+          },
+          "threats": 6,
+          "body": {
+            "x": 38,
+            "z": 2
+          },
+          "lastOrders": [
+            [
+              "PICK_UPGRADE",
+              "done",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 0,
+          "build": null
+        },
+        {
+          "wave": 12,
+          "runSeconds": 360,
+          "gold": 140,
+          "suit": 60,
+          "inDome": "claw-carcass-yard",
+          "window": 3,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "credited": 0,
+          "required": 4,
+          "reached": [],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {
+            "sentry_beacon": 6,
+            "turret": 4
+          },
+          "tiers": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": 12
+          },
+          "threats": 24,
+          "body": {
+            "x": 0,
+            "z": 8
+          },
+          "lastOrders": [
+            [
+              "MOVE_TO",
+              "done",
+              null
+            ],
+            [
+              "HOLD",
+              "active",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 29,
+          "build": null
+        },
+        {
+          "wave": 12,
+          "runSeconds": 362.9,
+          "gold": 170,
+          "suit": 60,
+          "inDome": "claw-carcass-yard",
+          "window": 3,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "credited": 0,
+          "required": 4,
+          "reached": [],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {
+            "sentry_beacon": 6,
+            "turret": 4
+          },
+          "tiers": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": 12
+          },
+          "threats": 18,
+          "body": {
+            "x": -12,
+            "z": 4
+          },
+          "lastOrders": [
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 27,
+          "build": null
+        },
+        {
+          "wave": 12,
+          "runSeconds": 364.33,
+          "gold": 20,
+          "suit": 60,
+          "inDome": "claw-carcass-yard",
+          "window": 3,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "credited": 0,
+          "required": 4,
+          "reached": [],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {
+            "sentry_beacon": 6,
+            "turret": 4
+          },
+          "tiers": [
+            2,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": 12
+          },
+          "threats": 14,
+          "body": {
+            "x": -5.6,
+            "z": 3.7
+          },
+          "lastOrders": [
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "MOVE_TO",
+              "done",
+              null
+            ],
+            [
+              "CONTEXT_ACTION",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "active",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 30,
+          "build": null
+        },
+        {
+          "wave": 12,
+          "runSeconds": 366,
+          "gold": 50,
+          "suit": 60,
+          "inDome": "claw-carcass-yard",
+          "window": 3,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "credited": 0,
+          "required": 4,
+          "reached": [],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {
+            "sentry_beacon": 6,
+            "turret": 4
+          },
+          "tiers": [
+            2,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": 12
+          },
+          "threats": 5,
+          "body": {
+            "x": -12,
+            "z": 4
+          },
+          "lastOrders": [
+            [
+              "PICK_UPGRADE",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 29,
+          "build": null
+        },
+        {
+          "wave": 12,
+          "runSeconds": 376.7,
+          "gold": 80,
+          "suit": 60,
+          "inDome": "claw-carcass-yard",
+          "window": 3,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "credited": 0,
+          "required": 4,
+          "reached": [],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {
+            "sentry_beacon": 6,
+            "turret": 4
+          },
+          "tiers": [
+            2,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": 12
+          },
+          "threats": 6,
+          "body": {
+            "x": 38,
+            "z": 2
+          },
+          "lastOrders": [
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 0,
+          "build": null
+        },
+        {
+          "wave": 12,
+          "runSeconds": 377.43,
+          "gold": 80,
+          "suit": 60,
+          "inDome": "claw-carcass-yard",
+          "window": 3,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "credited": 0,
+          "required": 4,
+          "reached": [],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {
+            "sentry_beacon": 6,
+            "turret": 4
+          },
+          "tiers": [
+            2,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": 12
+          },
+          "threats": 5,
+          "body": {
+            "x": 34.7,
+            "z": 2.5
+          },
+          "lastOrders": [
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "MOVE_TO",
+              "active",
+              null
+            ],
+            [
+              "HOLD",
+              "pending",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 0,
+          "build": null
+        },
+        {
+          "wave": 13,
+          "runSeconds": 390,
+          "gold": 80,
+          "suit": 60,
+          "inDome": "claw-carcass-yard",
+          "window": 3,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "credited": 0,
+          "required": 4,
+          "reached": [],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {
+            "sentry_beacon": 6,
+            "turret": 4
+          },
+          "tiers": [
+            2,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": 12
+          },
+          "threats": 24,
+          "body": {
+            "x": 0,
+            "z": 8
+          },
+          "lastOrders": [
+            [
+              "PICK_UPGRADE",
+              "done",
+              null
+            ],
+            [
+              "MOVE_TO",
+              "done",
+              null
+            ],
+            [
+              "HOLD",
+              "active",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 29,
+          "build": null
+        },
+        {
+          "wave": 13,
+          "runSeconds": 392.93,
+          "gold": 110,
+          "suit": 60,
+          "inDome": "claw-carcass-yard",
+          "window": 3,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "credited": 0,
+          "required": 4,
+          "reached": [],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {
+            "sentry_beacon": 6,
+            "turret": 4
+          },
+          "tiers": [
+            2,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": 12
+          },
+          "threats": 19,
+          "body": {
+            "x": 12,
+            "z": 4
+          },
+          "lastOrders": [
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 29,
+          "build": null
+        },
+        {
+          "wave": 13,
+          "runSeconds": 400.03,
+          "gold": 110,
+          "suit": 60,
+          "inDome": "claw-carcass-yard",
+          "window": 3,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "credited": 0,
+          "required": 4,
+          "reached": [],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {
+            "sentry_beacon": 6,
+            "turret": 4
+          },
+          "tiers": [
+            2,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": 12
+          },
+          "threats": 18,
+          "body": {
+            "x": -21.9,
+            "z": 2.6
+          },
+          "lastOrders": [
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "active",
+              null
+            ],
+            [
+              "HARVEST",
+              "pending",
+              null
+            ],
+            [
+              "HARVEST",
+              "pending",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 29,
+          "build": null
+        },
+        {
+          "wave": 13,
+          "runSeconds": 403.63,
+          "gold": 140,
+          "suit": 60,
+          "inDome": "claw-carcass-yard",
+          "window": 3,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "credited": 0,
+          "required": 4,
+          "reached": [],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {
+            "sentry_beacon": 6,
+            "turret": 4
+          },
+          "tiers": [
+            2,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": 12
+          },
+          "threats": 13,
+          "body": {
+            "x": -38,
+            "z": 2
+          },
+          "lastOrders": [
+            [
+              "PICK_UPGRADE",
+              "done",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 29,
+          "build": null
+        },
+        {
+          "wave": 13,
+          "runSeconds": 414.33,
+          "gold": 170,
+          "suit": 60,
+          "inDome": "claw-carcass-yard",
+          "window": 3,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "credited": 0,
+          "required": 4,
+          "reached": [],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {
+            "sentry_beacon": 6,
+            "turret": 4
+          },
+          "tiers": [
+            2,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": 12
+          },
+          "threats": 7,
+          "body": {
+            "x": 12,
+            "z": 4
+          },
+          "lastOrders": [
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 27,
+          "build": null
+        },
+        {
+          "wave": 14,
+          "runSeconds": 420,
+          "gold": 40,
+          "suit": 60,
+          "inDome": "claw-carcass-yard",
+          "window": 3,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "credited": 0,
+          "required": 4,
+          "reached": [],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {
+            "sentry_beacon": 6,
+            "turret": 4
+          },
+          "tiers": [
+            2,
+            2,
+            1,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": 12
+          },
+          "threats": 25,
+          "body": {
+            "x": 38,
+            "z": 2
+          },
+          "lastOrders": [
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "MOVE_TO",
+              "done",
+              null
+            ],
+            [
+              "CONTEXT_ACTION",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 29,
+          "build": null
+        },
+        {
+          "wave": 14,
+          "runSeconds": 420.13,
+          "gold": 50,
+          "suit": 60,
+          "inDome": "claw-carcass-yard",
+          "window": 3,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "credited": 0,
+          "required": 4,
+          "reached": [],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {
+            "sentry_beacon": 6,
+            "turret": 4
+          },
+          "tiers": [
+            2,
+            2,
+            1,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": 12
+          },
+          "threats": 24,
+          "body": {
+            "x": 38,
+            "z": 2
+          },
+          "lastOrders": [
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "failed",
+              "INVALID_TARGET: gold-seam-1 is unavailable."
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 0,
+          "build": null
+        },
+        {
+          "wave": 14,
+          "runSeconds": 423.73,
+          "gold": 50,
+          "suit": 60,
+          "inDome": "claw-carcass-yard",
+          "window": 3,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "credited": 0,
+          "required": 4,
+          "reached": [],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {
+            "sentry_beacon": 6,
+            "turret": 4
+          },
+          "tiers": [
+            2,
+            2,
+            1,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": 12
+          },
+          "threats": 19,
+          "body": {
+            "x": 20.9,
+            "z": 4.7
+          },
+          "lastOrders": [
+            [
+              "MOVE_TO",
+              "active",
+              null
+            ],
+            [
+              "HOLD",
+              "pending",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 29,
+          "build": null
+        },
+        {
+          "wave": 14,
+          "runSeconds": 425.93,
+          "gold": 90,
+          "suit": 60,
+          "inDome": "claw-carcass-yard",
+          "window": 3,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "credited": 0,
+          "required": 4,
+          "reached": [],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {
+            "sentry_beacon": 6,
+            "turret": 4
+          },
+          "tiers": [
+            2,
+            2,
+            1,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": 12
+          },
+          "threats": 10,
+          "body": {
+            "x": 12,
+            "z": 4
+          },
+          "lastOrders": [
+            [
+              "PICK_UPGRADE",
+              "done",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 0,
+          "build": null
+        },
+        {
+          "wave": 14,
+          "runSeconds": 439.83,
+          "gold": 90,
+          "suit": 60,
+          "inDome": "claw-carcass-yard",
+          "window": 3,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "credited": 0,
+          "required": 4,
+          "reached": [],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {
+            "sentry_beacon": 6,
+            "turret": 4
+          },
+          "tiers": [
+            2,
+            2,
+            1,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": 12
+          },
+          "threats": 6,
+          "body": {
+            "x": 0,
+            "z": 8
+          },
+          "lastOrders": [
+            [
+              "MOVE_TO",
+              "done",
+              null
+            ],
+            [
+              "HOLD",
+              "active",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 29,
+          "build": null
+        },
+        {
+          "wave": 14,
+          "runSeconds": 442.83,
+          "gold": 130,
+          "suit": 60,
+          "inDome": "claw-carcass-yard",
+          "window": 3,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "credited": 0,
+          "required": 4,
+          "reached": [],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {
+            "sentry_beacon": 6,
+            "turret": 4
+          },
+          "tiers": [
+            2,
+            2,
+            1,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": 12
+          },
+          "threats": 6,
+          "body": {
+            "x": -12,
+            "z": 4
+          },
+          "lastOrders": [
+            [
+              "PICK_UPGRADE",
+              "done",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 29,
+          "build": null
+        },
+        {
+          "wave": 15,
+          "runSeconds": 450,
+          "gold": 165,
+          "suit": 60,
+          "inDome": "claw-carcass-yard",
+          "window": 3,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "credited": 0,
+          "required": 4,
+          "reached": [],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {
+            "sentry_beacon": 6,
+            "turret": 4
+          },
+          "tiers": [
+            2,
+            2,
+            1,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": 12
+          },
+          "threats": 25,
+          "body": {
+            "x": 2.9,
+            "z": 3.6
+          },
+          "lastOrders": [
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 27,
+          "build": null
+        },
+        {
+          "wave": 15,
+          "runSeconds": 459.7,
+          "gold": 20,
+          "suit": 60,
+          "inDome": "claw-carcass-yard",
+          "window": 3,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "credited": 0,
+          "required": 4,
+          "reached": [],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {
+            "sentry_beacon": 6,
+            "turret": 4
+          },
+          "tiers": [
+            2,
+            2,
+            2,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": 12
+          },
+          "threats": 18,
+          "body": {
+            "x": 12,
+            "z": 4
+          },
+          "lastOrders": [
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "MOVE_TO",
+              "done",
+              null
+            ],
+            [
+              "CONTEXT_ACTION",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 29,
+          "build": null
+        },
+        {
+          "wave": 15,
+          "runSeconds": 462.77,
+          "gold": 20,
+          "suit": 60,
+          "inDome": "claw-carcass-yard",
+          "window": 3,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "credited": 0,
+          "required": 4,
+          "reached": [],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {
+            "sentry_beacon": 6,
+            "turret": 4
+          },
+          "tiers": [
+            2,
+            2,
+            2,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": 12
+          },
+          "threats": 14,
+          "body": {
+            "x": 26.5,
+            "z": 2.9
+          },
+          "lastOrders": [
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "active",
+              null
+            ],
+            [
+              "HARVEST",
+              "pending",
+              null
+            ],
+            [
+              "HARVEST",
+              "pending",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 29,
+          "build": null
+        },
+        {
+          "wave": 16,
+          "runSeconds": 480,
+          "gold": 55,
+          "suit": 60,
+          "inDome": "claw-carcass-yard",
+          "window": 4,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "credited": 0,
+          "required": 4,
+          "reached": [],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {
+            "sentry_beacon": 6,
+            "turret": 4
+          },
+          "tiers": [
+            2,
+            2,
+            2,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": 12
+          },
+          "threats": 24,
+          "body": {
+            "x": -32.1,
+            "z": 2
+          },
+          "lastOrders": [
+            [
+              "PICK_UPGRADE",
+              "done",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 29,
+          "build": null
+        },
+        {
+          "wave": 16,
+          "runSeconds": 486.37,
+          "gold": 90,
+          "suit": 60,
+          "inDome": "claw-carcass-yard",
+          "window": 4,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "credited": 0,
+          "required": 4,
+          "reached": [],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {
+            "sentry_beacon": 6,
+            "turret": 4
+          },
+          "tiers": [
+            2,
+            2,
+            2,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": 12
+          },
+          "threats": 6,
+          "body": {
+            "x": -14.7,
+            "z": 3.8
+          },
+          "lastOrders": [
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 29,
+          "build": null
+        },
+        {
+          "wave": 16,
+          "runSeconds": 492.67,
+          "gold": 130,
+          "suit": 60,
+          "inDome": "claw-carcass-yard",
+          "window": 4,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "credited": 0,
+          "required": 4,
+          "reached": [],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {
+            "sentry_beacon": 6,
+            "turret": 4
+          },
+          "tiers": [
+            2,
+            2,
+            2,
+            1
+          ],
+          "heroHp": 167,
+          "heroAt": {
+            "x": 0,
+            "z": 12
+          },
+          "threats": 16,
+          "body": {
+            "x": -38,
+            "z": 2
+          },
+          "lastOrders": [
+            [
+              "PICK_UPGRADE",
+              "done",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 29,
+          "build": null
+        },
+        {
+          "wave": 16,
+          "runSeconds": 498.2,
+          "gold": 135,
+          "suit": 60,
+          "inDome": "claw-carcass-yard",
+          "window": 4,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "credited": 0,
+          "required": 4,
+          "reached": [],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {
+            "sentry_beacon": 6,
+            "turret": 4
+          },
+          "tiers": [
+            2,
+            2,
+            2,
+            1
+          ],
+          "heroHp": 167,
+          "heroAt": {
+            "x": 0,
+            "z": 12
+          },
+          "threats": 7,
+          "body": {
+            "x": -12,
+            "z": 4
+          },
+          "lastOrders": [
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "failed",
+              "INVALID_TARGET: gold-seam-1 is unavailable."
+            ],
+            [
+              "HARVEST",
+              "pending",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 29,
+          "build": null
+        },
+        {
+          "wave": 16,
+          "runSeconds": 508.73,
+          "gold": 140,
+          "suit": 60,
+          "inDome": "claw-carcass-yard",
+          "window": 4,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "credited": 0,
+          "required": 4,
+          "reached": [],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {
+            "sentry_beacon": 6,
+            "turret": 4
+          },
+          "tiers": [
+            2,
+            2,
+            2,
+            1
+          ],
+          "heroHp": 167,
+          "heroAt": {
+            "x": 0,
+            "z": 12
+          },
+          "threats": 6,
+          "body": {
+            "x": 38,
+            "z": 2
+          },
+          "lastOrders": [
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "failed",
+              "INVALID_TARGET: gold-seam-2 is unavailable."
+            ],
+            [
+              "HARVEST",
+              "pending",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 29,
+          "build": null
+        },
+        {
+          "wave": 17,
+          "runSeconds": 510,
+          "gold": 140,
+          "suit": 60,
+          "inDome": "claw-carcass-yard",
+          "window": 4,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "credited": 0,
+          "required": 4,
+          "reached": [],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {
+            "sentry_beacon": 6,
+            "turret": 4
+          },
+          "tiers": [
+            2,
+            2,
+            2,
+            1
+          ],
+          "heroHp": 167,
+          "heroAt": {
+            "x": 0,
+            "z": 12
+          },
+          "threats": 27,
+          "body": {
+            "x": 32.1,
+            "z": 2.5
+          },
+          "lastOrders": [
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "active",
+              null
+            ],
+            [
+              "HARVEST",
+              "pending",
+              null
+            ],
+            [
+              "HARVEST",
+              "pending",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 30,
+          "build": null
+        },
+        {
+          "wave": 17,
+          "runSeconds": 514.5,
+          "gold": 180,
+          "suit": 60,
+          "inDome": "claw-carcass-yard",
+          "window": 4,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "credited": 0,
+          "required": 4,
+          "reached": [],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {
+            "sentry_beacon": 6,
+            "turret": 4
+          },
+          "tiers": [
+            2,
+            2,
+            2,
+            1
+          ],
+          "heroHp": 167,
+          "heroAt": {
+            "x": 0,
+            "z": 12
+          },
+          "threats": 22,
+          "body": {
+            "x": 12,
+            "z": 4
+          },
+          "lastOrders": [
+            [
+              "HARVEST",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 29,
+          "build": null
+        },
+        {
+          "wave": 17,
+          "runSeconds": 514.67,
+          "gold": 180,
+          "suit": 60,
+          "inDome": "claw-carcass-yard",
+          "window": 4,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "credited": 0,
+          "required": 4,
+          "reached": [],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {
+            "sentry_beacon": 6,
+            "turret": 4
+          },
+          "tiers": [
+            2,
+            2,
+            2,
+            1
+          ],
+          "heroHp": 167,
+          "heroAt": {
+            "x": 0,
+            "z": 12
+          },
+          "threats": 20,
+          "body": {
+            "x": 11.4,
+            "z": 4
+          },
+          "lastOrders": [
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "active",
+              null
+            ],
+            [
+              "HARVEST",
+              "pending",
+              null
+            ],
+            [
+              "HARVEST",
+              "pending",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 30,
+          "build": null
+        },
+        {
+          "wave": 17,
+          "runSeconds": 525.13,
+          "gold": 200,
+          "suit": 60,
+          "inDome": "claw-carcass-yard",
+          "window": 4,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "credited": 0,
+          "required": 4,
+          "reached": [],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {
+            "sentry_beacon": 6,
+            "turret": 4
+          },
+          "tiers": [
+            2,
+            2,
+            2,
+            1
+          ],
+          "heroHp": 143,
+          "heroAt": {
+            "x": 0,
+            "z": 12
+          },
+          "threats": 10,
+          "body": {
+            "x": -38,
+            "z": 2
+          },
+          "lastOrders": [
+            [
+              "PICK_UPGRADE",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 29,
+          "build": null
+        },
+        {
+          "wave": 17,
+          "runSeconds": 535.43,
+          "gold": 200,
+          "suit": 60,
+          "inDome": "claw-carcass-yard",
+          "window": 4,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "credited": 0,
+          "required": 4,
+          "reached": [],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {
+            "sentry_beacon": 6,
+            "turret": 4
+          },
+          "tiers": [
+            2,
+            2,
+            2,
+            1
+          ],
+          "heroHp": 135,
+          "heroAt": {
+            "x": 0,
+            "z": 12
+          },
+          "threats": 6,
+          "body": {
+            "x": 10.1,
+            "z": 3.9
+          },
+          "lastOrders": [
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "failed",
+              "FAILED: HARVEST action was rejected."
+            ],
+            [
+              "HARVEST",
+              "failed",
+              "FAILED: HARVEST action was rejected."
+            ],
+            [
+              "HARVEST",
+              "failed",
+              "FAILED: HARVEST action was rejected."
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 29,
+          "build": null
+        },
+        {
+          "wave": 17,
+          "runSeconds": 535.87,
+          "gold": 200,
+          "suit": 60,
+          "inDome": "claw-carcass-yard",
+          "window": 4,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "credited": 0,
+          "required": 4,
+          "reached": [],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {
+            "sentry_beacon": 6,
+            "turret": 4
+          },
+          "tiers": [
+            2,
+            2,
+            2,
+            1
+          ],
+          "heroHp": 135,
+          "heroAt": {
+            "x": 0,
+            "z": 12
+          },
+          "threats": 7,
+          "body": {
+            "x": 11.9,
+            "z": 4
+          },
+          "lastOrders": [
+            [
+              "PICK_UPGRADE",
+              "done",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "failed",
+              "FAILED: HARVEST action was rejected."
+            ],
+            [
+              "HARVEST",
+              "pending",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 30,
+          "build": null
+        },
+        {
+          "wave": 18,
+          "runSeconds": 540,
+          "gold": 200,
+          "suit": 60,
+          "inDome": "claw-carcass-yard",
+          "window": 4,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "credited": 0,
+          "required": 4,
+          "reached": [],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {
+            "sentry_beacon": 6,
+            "turret": 4
+          },
+          "tiers": [
+            2,
+            2,
+            2,
+            1
+          ],
+          "heroHp": 135,
+          "heroAt": {
+            "x": 0,
+            "z": 12
+          },
+          "threats": 27,
+          "body": {
+            "x": -5.7,
+            "z": 4
+          },
+          "lastOrders": [
+            [
+              "HARVEST",
+              "failed",
+              "FAILED: HARVEST action was rejected."
+            ],
+            [
+              "HARVEST",
+              "failed",
+              "FAILED: HARVEST action was rejected."
+            ],
+            [
+              "HARVEST",
+              "failed",
+              "FAILED: HARVEST action was rejected."
+            ],
+            [
+              "HARVEST",
+              "failed",
+              "FAILED: HARVEST action was rejected."
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 29,
+          "build": null
+        },
+        {
+          "wave": 18,
+          "runSeconds": 541.37,
+          "gold": 200,
+          "suit": 60,
+          "inDome": "claw-carcass-yard",
+          "window": 4,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "credited": 0,
+          "required": 4,
+          "reached": [],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {
+            "sentry_beacon": 6,
+            "turret": 4
+          },
+          "tiers": [
+            2,
+            2,
+            2,
+            1
+          ],
+          "heroHp": 135,
+          "heroAt": {
+            "x": 0,
+            "z": 12
+          },
+          "threats": 25,
+          "body": {
+            "x": -11.9,
+            "z": 4
+          },
+          "lastOrders": [
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "failed",
+              "FAILED: HARVEST action was rejected."
+            ],
+            [
+              "HARVEST",
+              "pending",
+              null
+            ],
+            [
+              "HARVEST",
+              "pending",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 30,
+          "build": null
+        },
+        {
+          "wave": 18,
+          "runSeconds": 558.73,
+          "gold": 200,
+          "suit": 60,
+          "inDome": "claw-carcass-yard",
+          "window": 4,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "credited": 0,
+          "required": 4,
+          "reached": [],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {
+            "sentry_beacon": 6,
+            "turret": 4
+          },
+          "tiers": [
+            2,
+            2,
+            2,
+            1
+          ],
+          "heroHp": 103,
+          "heroAt": {
+            "x": 0,
+            "z": 12
+          },
+          "threats": 8,
+          "body": {
+            "x": -35,
+            "z": 2.2
+          },
+          "lastOrders": [
+            [
+              "HARVEST",
+              "failed",
+              "FAILED: HARVEST action was rejected."
+            ],
+            [
+              "HARVEST",
+              "failed",
+              "FAILED: HARVEST action was rejected."
+            ],
+            [
+              "HARVEST",
+              "failed",
+              "FAILED: HARVEST action was rejected."
+            ],
+            [
+              "HARVEST",
+              "failed",
+              "FAILED: HARVEST action was rejected."
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 29,
+          "build": null
+        },
+        {
+          "wave": 19,
+          "runSeconds": 570,
+          "gold": 200,
+          "suit": 60,
+          "inDome": "claw-carcass-yard",
+          "window": 4,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "credited": 0,
+          "required": 4,
+          "reached": [],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {
+            "sentry_beacon": 6,
+            "turret": 4
+          },
+          "tiers": [
+            2,
+            2,
+            2,
+            1
+          ],
+          "heroHp": 156,
+          "heroAt": {
+            "x": 0,
+            "z": 12
+          },
+          "threats": 27,
+          "body": {
+            "x": 8.2,
+            "z": 4
+          },
+          "lastOrders": [
+            [
+              "PICK_UPGRADE",
+              "done",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "failed",
+              "FAILED: HARVEST action was rejected."
+            ],
+            [
+              "HARVEST",
+              "failed",
+              "FAILED: HARVEST action was rejected."
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 29,
+          "build": null
+        },
+        {
+          "wave": 19,
+          "runSeconds": 586.03,
+          "gold": 200,
+          "suit": 60,
+          "inDome": "claw-carcass-yard",
+          "window": 4,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "credited": 0,
+          "required": 4,
+          "reached": [],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {
+            "sentry_beacon": 6,
+            "turret": 4
+          },
+          "tiers": [
+            2,
+            2,
+            2,
+            1
+          ],
+          "heroHp": 108,
+          "heroAt": {
+            "x": 0,
+            "z": 12
+          },
+          "threats": 13,
+          "body": {
+            "x": -21.3,
+            "z": 2.7
+          },
+          "lastOrders": [
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "failed",
+              "FAILED: HARVEST action was rejected."
+            ],
+            [
+              "HARVEST",
+              "failed",
+              "FAILED: HARVEST action was rejected."
+            ],
+            [
+              "HARVEST",
+              "failed",
+              "FAILED: HARVEST action was rejected."
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 29,
+          "build": null
+        },
+        {
+          "wave": 20,
+          "runSeconds": 600,
+          "gold": 200,
+          "suit": 60,
+          "inDome": "claw-carcass-yard",
+          "window": 5,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "credited": 0,
+          "required": 4,
+          "reached": [],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {
+            "sentry_beacon": 6,
+            "turret": 4
+          },
+          "tiers": [
+            2,
+            2,
+            2,
+            1
+          ],
+          "heroHp": 153,
+          "heroAt": {
+            "x": 0,
+            "z": 12
+          },
+          "threats": 28,
+          "body": {
+            "x": -10.7,
+            "z": 3.1
+          },
+          "lastOrders": [
+            [
+              "PICK_UPGRADE",
+              "done",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "failed",
+              "FAILED: HARVEST action was rejected."
+            ],
+            [
+              "HARVEST",
+              "failed",
+              "FAILED: HARVEST action was rejected."
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 29,
+          "build": null
+        },
+        {
+          "wave": 20,
+          "runSeconds": 615,
+          "gold": 200,
+          "suit": 60,
+          "inDome": "claw-carcass-yard",
+          "window": 5,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "credited": 0,
+          "required": 4,
+          "reached": [],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {
+            "sentry_beacon": 6,
+            "turret": 4
+          },
+          "tiers": [
+            2,
+            2,
+            2,
+            1
+          ],
+          "heroHp": 105,
+          "heroAt": {
+            "x": 0,
+            "z": 12
+          },
+          "threats": 17,
+          "body": {
+            "x": -30,
+            "z": 2.3
+          },
+          "lastOrders": [
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "failed",
+              "FAILED: HARVEST action was rejected."
+            ],
+            [
+              "HARVEST",
+              "failed",
+              "FAILED: HARVEST action was rejected."
+            ],
+            [
+              "HARVEST",
+              "failed",
+              "FAILED: HARVEST action was rejected."
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 29,
+          "build": null
+        },
+        {
+          "wave": 21,
+          "runSeconds": 630,
+          "gold": 200,
+          "suit": 60,
+          "inDome": "claw-carcass-yard",
+          "window": 5,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "credited": 0,
+          "required": 4,
+          "reached": [],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {
+            "sentry_beacon": 6,
+            "turret": 4
+          },
+          "tiers": [
+            2,
+            2,
+            2,
+            1
+          ],
+          "heroHp": 134,
+          "heroAt": {
+            "x": 0,
+            "z": 12
+          },
+          "threats": 27,
+          "body": {
+            "x": 4.4,
+            "z": 3.7
+          },
+          "lastOrders": [
+            [
+              "PICK_UPGRADE",
+              "done",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "failed",
+              "FAILED: HARVEST action was rejected."
+            ],
+            [
+              "HARVEST",
+              "failed",
+              "FAILED: HARVEST action was rejected."
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 29,
+          "build": null
+        },
+        {
+          "wave": 21,
+          "runSeconds": 644.57,
+          "gold": 200,
+          "suit": 60,
+          "inDome": "claw-carcass-yard",
+          "window": 5,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "credited": 0,
+          "required": 4,
+          "reached": [],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {
+            "sentry_beacon": 6,
+            "turret": 4
+          },
+          "tiers": [
+            2,
+            2,
+            2,
+            1
+          ],
+          "heroHp": 62,
+          "heroAt": {
+            "x": 0,
+            "z": 12
+          },
+          "threats": 21,
+          "body": {
+            "x": -32.5,
+            "z": 2.2
+          },
+          "lastOrders": [
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "failed",
+              "FAILED: HARVEST action was rejected."
+            ],
+            [
+              "HARVEST",
+              "failed",
+              "FAILED: HARVEST action was rejected."
+            ],
+            [
+              "HARVEST",
+              "failed",
+              "FAILED: HARVEST action was rejected."
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 29,
+          "build": null
+        },
+        {
+          "wave": 22,
+          "runSeconds": 660,
+          "gold": 200,
+          "suit": 60,
+          "inDome": "claw-carcass-yard",
+          "window": 5,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "credited": 0,
+          "required": 4,
+          "reached": [],
+          "held": 0,
+          "breathless": 0,
+          "complete": false,
+          "works": {
+            "sentry_beacon": 6,
+            "turret": 4
+          },
+          "tiers": [
+            2,
+            2,
+            2,
+            1
+          ],
+          "heroHp": 0,
+          "heroAt": {
+            "x": 0,
+            "z": 12
+          },
+          "threats": 28,
+          "body": {
+            "x": 0.4,
+            "z": 3.6
+          },
+          "lastOrders": [
+            [
+              "PICK_UPGRADE",
+              "done",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "failed",
+              "FAILED: HARVEST action was rejected."
+            ],
+            [
+              "HARVEST",
+              "failed",
+              "FAILED: HARVEST action was rejected."
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 29,
+          "build": null
+        }
+      ],
+      "stderrTail": [
+        "(node:81413) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.",
+        "(Use `node --trace-warnings ...` to show where the warning was created)",
+        "gr-sim speed: 0.31 waves/s"
+      ]
+    }
+  ],
+  "arm": {
+    "label": "apron-no-sortie",
+    "patch": {},
+    "tilePatch": {
+      "buildZones": [
+        {
+          "id": "claw-carcass-yard",
+          "bank": "north",
+          "minX": -18,
+          "maxX": 18,
+          "minZ": -14,
+          "maxZ": 14
+        },
+        {
+          "id": "west-scaffold-deck",
+          "bank": "north",
+          "minX": -48,
+          "maxX": -26,
+          "minZ": -10,
+          "maxZ": 10
+        },
+        {
+          "id": "east-scaffold-deck",
+          "bank": "north",
+          "minX": 26,
+          "maxX": 48,
+          "minZ": -10,
+          "maxZ": 10
+        },
+        {
+          "id": "claw-yard-north-apron",
+          "bank": "north",
+          "minX": -8,
+          "maxX": 8,
+          "minZ": 15,
+          "maxZ": 25
+        }
+      ]
+    },
+    "defence": null,
+    "defenceFile": "artifacts/low-orbit-second-build-line/defence-apron.json",
+    "contract": "e8-low-orbit",
+    "kite": "0,10",
+    "seconds": 73
+  }
+}

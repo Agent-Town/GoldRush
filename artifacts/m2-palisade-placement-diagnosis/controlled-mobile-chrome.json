@@ -1,0 +1,472 @@
+[
+  {
+    "label": "rejected-consumed-no-release-sample",
+    "frame": 28,
+    "tick": 35,
+    "build": {
+      "mode": true,
+      "selectedBuildable": "palisade",
+      "ghostValid": true,
+      "ghostLight": 1,
+      "ghostPos": {
+        "x": 0,
+        "z": 12
+      },
+      "ghostY": 0.3140899499257406,
+      "ghostVisible": true,
+      "ghostRotationSteps": 0,
+      "ghostFootprint": {
+        "w": 1,
+        "d": 3
+      },
+      "beacons": 0,
+      "palisades": 1,
+      "palisadeKitCredits": 0,
+      "sluices": 0,
+      "stockpiles": 0,
+      "boilerHouses": 0,
+      "turrets": 0,
+      "assayOffices": 0,
+      "lanternPosts": 0,
+      "capacitorBanks": 0,
+      "beaconPositions": [],
+      "palisadePositions": [
+        {
+          "x": 0,
+          "z": 9
+        }
+      ],
+      "sluicePositions": [],
+      "stockpilePositions": [],
+      "boilerHousePositions": [],
+      "turretPositions": [],
+      "assayOfficePositions": [],
+      "lanternPostPositions": [],
+      "capacitorBankPositions": [],
+      "lanternPostRotations": [],
+      "reservedFootprints": [],
+      "buildables": [
+        {
+          "id": "sentry_beacon",
+          "count": 0
+        },
+        {
+          "id": "palisade",
+          "count": 1
+        },
+        {
+          "id": "sluice",
+          "count": 0
+        },
+        {
+          "id": "stockpile",
+          "count": 0
+        },
+        {
+          "id": "boiler_house",
+          "count": 0
+        },
+        {
+          "id": "turret",
+          "count": 0
+        },
+        {
+          "id": "lantern_post",
+          "count": 0
+        },
+        {
+          "id": "decoy_shed",
+          "count": 0
+        },
+        {
+          "id": "capacitor_bank",
+          "count": 0
+        },
+        {
+          "id": "assay_office",
+          "count": 0
+        }
+      ],
+      "sluicesState": [],
+      "stockpilesState": [],
+      "pileStep": 0,
+      "nextCost": 10,
+      "hp": [
+        {
+          "id": "palisade",
+          "index": 0,
+          "tier": 1,
+          "hp": 60,
+          "maxHp": 60,
+          "wrecked": false,
+          "worn": false,
+          "repairProgress": 0,
+          "repairCost": 0,
+          "position": {
+            "x": 0,
+            "z": 9
+          }
+        }
+      ],
+      "ruins": 0,
+      "ruinDetails": [],
+      "hpBars": 0,
+      "hpBarsVisible": false,
+      "hpBarDetails": [],
+      "repair": {
+        "active": false,
+        "id": null,
+        "index": -1,
+        "progress": 0,
+        "blocked": false
+      },
+      "shooterRegistrations": 0,
+      "turretPulses": 0,
+      "activeTurretPulses": 0,
+      "breachSeals": 0,
+      "lensTurrets": 0,
+      "tierUpgrades": 0,
+      "repairs": 0,
+      "repairGold": 0,
+      "shells": {
+        "palisade": {
+          "active": 1,
+          "signs": 1,
+          "meshes": [
+            "PalisadePosts",
+            "PalisadeRails",
+            "PalisadeBraces",
+            "PalisadePortraitSigns"
+          ],
+          "lit": true
+        },
+        "sluice": {
+          "active": 0,
+          "signs": 0,
+          "meshes": [
+            "SluiceTroughs",
+            "SluiceWaterChannels",
+            "SluiceTimberRails",
+            "SluiceTimberLegs",
+            "SluiceWheelRims",
+            "SluiceWheelSpokesA",
+            "SluiceWheelSpokesB",
+            "SluicePortraitSigns"
+          ],
+          "lit": true,
+          "wheelPhase": 0
+        },
+        "stockpile": {
+          "active": 0,
+          "signs": 0,
+          "meshes": [
+            "StockpileTimberCribs",
+            "StockpileStrongboxes",
+            "StockpileGoldNuggets",
+            "StockpilePortraitSigns"
+          ],
+          "lit": true
+        },
+        "boiler_house": {
+          "active": 0,
+          "signs": 0,
+          "meshes": [
+            "BoilerHousePlaceholder",
+            "BoilerHouseBrassDrum",
+            "BoilerHouseStack",
+            "BoilerHouseSign"
+          ],
+          "lit": true
+        },
+        "turret": {
+          "active": 0,
+          "signs": 0,
+          "meshes": [
+            "TurretTimberBases",
+            "TurretTripodLegs",
+            "TurretSignalMasts",
+            "TurretPortraitSigns"
+          ],
+          "lit": true,
+          "variant": "signal",
+          "silhouetteHeight": 1.1
+        },
+        "assay_office": {
+          "active": 0,
+          "signs": 0,
+          "meshes": [
+            "AssayOfficeTimberShell",
+            "AssayOfficeBrassRoof",
+            "AssayOfficePlaqueFrame",
+            "AssayOfficeTimberLintel",
+            "AssayOfficePortraitSign"
+          ],
+          "lit": true
+        }
+      },
+      "killsByOwner": {},
+      "damageByOwner": {}
+    },
+    "confirm": {
+      "reason": "invalid_unknown",
+      "mode": true,
+      "valid": true,
+      "selectedBuildable": "palisade",
+      "ghostPos": {
+        "x": 0,
+        "z": 12
+      },
+      "playerPos": {
+        "x": 0,
+        "z": 14
+      },
+      "count": 1,
+      "maxCount": 48,
+      "gold": 40,
+      "cost": 10,
+      "economyOk": true,
+      "placementOk": true,
+      "rangeOk": true,
+      "overlapOk": true,
+      "distanceSq": 4,
+      "placeRadius": 6,
+      "deepwaterClaim": false
+    },
+    "gold": 40
+  },
+  {
+    "label": "consecutive-sample-enter-ignored",
+    "frame": 29,
+    "tick": 37,
+    "build": {
+      "mode": true,
+      "selectedBuildable": "palisade",
+      "ghostValid": true,
+      "ghostLight": 1,
+      "ghostPos": {
+        "x": 0,
+        "z": 12
+      },
+      "ghostY": 0.3140899499257406,
+      "ghostVisible": true,
+      "ghostRotationSteps": 0,
+      "ghostFootprint": {
+        "w": 1,
+        "d": 3
+      },
+      "beacons": 0,
+      "palisades": 1,
+      "palisadeKitCredits": 0,
+      "sluices": 0,
+      "stockpiles": 0,
+      "boilerHouses": 0,
+      "turrets": 0,
+      "assayOffices": 0,
+      "lanternPosts": 0,
+      "capacitorBanks": 0,
+      "beaconPositions": [],
+      "palisadePositions": [
+        {
+          "x": 0,
+          "z": 9
+        }
+      ],
+      "sluicePositions": [],
+      "stockpilePositions": [],
+      "boilerHousePositions": [],
+      "turretPositions": [],
+      "assayOfficePositions": [],
+      "lanternPostPositions": [],
+      "capacitorBankPositions": [],
+      "lanternPostRotations": [],
+      "reservedFootprints": [],
+      "buildables": [
+        {
+          "id": "sentry_beacon",
+          "count": 0
+        },
+        {
+          "id": "palisade",
+          "count": 1
+        },
+        {
+          "id": "sluice",
+          "count": 0
+        },
+        {
+          "id": "stockpile",
+          "count": 0
+        },
+        {
+          "id": "boiler_house",
+          "count": 0
+        },
+        {
+          "id": "turret",
+          "count": 0
+        },
+        {
+          "id": "lantern_post",
+          "count": 0
+        },
+        {
+          "id": "decoy_shed",
+          "count": 0
+        },
+        {
+          "id": "capacitor_bank",
+          "count": 0
+        },
+        {
+          "id": "assay_office",
+          "count": 0
+        }
+      ],
+      "sluicesState": [],
+      "stockpilesState": [],
+      "pileStep": 0,
+      "nextCost": 10,
+      "hp": [
+        {
+          "id": "palisade",
+          "index": 0,
+          "tier": 1,
+          "hp": 60,
+          "maxHp": 60,
+          "wrecked": false,
+          "worn": false,
+          "repairProgress": 0,
+          "repairCost": 0,
+          "position": {
+            "x": 0,
+            "z": 9
+          }
+        }
+      ],
+      "ruins": 0,
+      "ruinDetails": [],
+      "hpBars": 0,
+      "hpBarsVisible": false,
+      "hpBarDetails": [],
+      "repair": {
+        "active": false,
+        "id": null,
+        "index": -1,
+        "progress": 0,
+        "blocked": false
+      },
+      "shooterRegistrations": 0,
+      "turretPulses": 0,
+      "activeTurretPulses": 0,
+      "breachSeals": 0,
+      "lensTurrets": 0,
+      "tierUpgrades": 0,
+      "repairs": 0,
+      "repairGold": 0,
+      "shells": {
+        "palisade": {
+          "active": 1,
+          "signs": 1,
+          "meshes": [
+            "PalisadePosts",
+            "PalisadeRails",
+            "PalisadeBraces",
+            "PalisadePortraitSigns"
+          ],
+          "lit": true
+        },
+        "sluice": {
+          "active": 0,
+          "signs": 0,
+          "meshes": [
+            "SluiceTroughs",
+            "SluiceWaterChannels",
+            "SluiceTimberRails",
+            "SluiceTimberLegs",
+            "SluiceWheelRims",
+            "SluiceWheelSpokesA",
+            "SluiceWheelSpokesB",
+            "SluicePortraitSigns"
+          ],
+          "lit": true,
+          "wheelPhase": 0
+        },
+        "stockpile": {
+          "active": 0,
+          "signs": 0,
+          "meshes": [
+            "StockpileTimberCribs",
+            "StockpileStrongboxes",
+            "StockpileGoldNuggets",
+            "StockpilePortraitSigns"
+          ],
+          "lit": true
+        },
+        "boiler_house": {
+          "active": 0,
+          "signs": 0,
+          "meshes": [
+            "BoilerHousePlaceholder",
+            "BoilerHouseBrassDrum",
+            "BoilerHouseStack",
+            "BoilerHouseSign"
+          ],
+          "lit": true
+        },
+        "turret": {
+          "active": 0,
+          "signs": 0,
+          "meshes": [
+            "TurretTimberBases",
+            "TurretTripodLegs",
+            "TurretSignalMasts",
+            "TurretPortraitSigns"
+          ],
+          "lit": true,
+          "variant": "signal",
+          "silhouetteHeight": 1.1
+        },
+        "assay_office": {
+          "active": 0,
+          "signs": 0,
+          "meshes": [
+            "AssayOfficeTimberShell",
+            "AssayOfficeBrassRoof",
+            "AssayOfficePlaqueFrame",
+            "AssayOfficeTimberLintel",
+            "AssayOfficePortraitSign"
+          ],
+          "lit": true
+        }
+      },
+      "killsByOwner": {},
+      "damageByOwner": {}
+    },
+    "confirm": {
+      "reason": "invalid_unknown",
+      "mode": true,
+      "valid": true,
+      "selectedBuildable": "palisade",
+      "ghostPos": {
+        "x": 0,
+        "z": 12
+      },
+      "playerPos": {
+        "x": 0,
+        "z": 14
+      },
+      "count": 1,
+      "maxCount": 48,
+      "gold": 40,
+      "cost": 10,
+      "economyOk": true,
+      "placementOk": true,
+      "rangeOk": true,
+      "overlapOk": true,
+      "distanceSq": 4,
+      "placeRadius": 6,
+      "deepwaterClaim": false
+    },
+    "gold": 40
+  }
+]

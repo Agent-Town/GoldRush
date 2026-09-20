@@ -1,0 +1,19 @@
+
+Running 8 tests using 1 worker
+
+[1/8] [desktop-chrome] › e2e/e5-boss-dredge-queen.spec.ts:131:1 › rides the storm, gates Act 2 on both paddles, spills the hold, and persists W6 per profile
+[2/8] [desktop-chrome] › e2e/e5-boss-dredge-queen.spec.ts:192:1 › interrupts a mid-cycle claw hit without transferring loot
+[3/8] [desktop-chrome] › e2e/e5-boss-dredge-queen.spec.ts:215:1 › damages only inside the telegraphed defensive-claw arc
+[4/8] [desktop-chrome] › e2e/e5-boss-dredge-queen.spec.ts:237:1 › keeps the boss-run frame p95 within 15% of the non-boss tile
+[desktop-chrome] › e2e/e5-boss-dredge-queen.spec.ts:237:1 › keeps the boss-run frame p95 within 15% of the non-boss tile
+Dredge-Queen perf desktop-chrome: non-boss=9.3ms boss=9.4ms ratio=1.0108
+
+[5/8] [mobile-chrome] › e2e/e5-boss-dredge-queen.spec.ts:131:1 › rides the storm, gates Act 2 on both paddles, spills the hold, and persists W6 per profile
+[6/8] [mobile-chrome] › e2e/e5-boss-dredge-queen.spec.ts:192:1 › interrupts a mid-cycle claw hit without transferring loot
+[7/8] [mobile-chrome] › e2e/e5-boss-dredge-queen.spec.ts:215:1 › damages only inside the telegraphed defensive-claw arc
+[8/8] [mobile-chrome] › e2e/e5-boss-dredge-queen.spec.ts:237:1 › keeps the boss-run frame p95 within 15% of the non-boss tile
+[mobile-chrome] › e2e/e5-boss-dredge-queen.spec.ts:237:1 › keeps the boss-run frame p95 within 15% of the non-boss tile
+Dredge-Queen perf mobile-chrome: non-boss=9.2ms boss=9.3ms ratio=1.0109
+
+  8 passed (45.3s)
+rc=0

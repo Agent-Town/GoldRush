@@ -1,0 +1,57 @@
+(node:97136) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+THREE.WARNING: Multiple instances of Three.js being imported.
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+✔ the-claim: released movement settles after speed multiplier 1 (54.43975ms)
+✔ the-claim: released movement settles after speed multiplier 1.12 (19.217958ms)
+✔ e8-mare-claim: released movement settles after speed multiplier 1 (25.864541ms)
+✔ e8-mare-claim: released movement settles after speed multiplier 1.12 (19.94025ms)
+✔ e8-eclipse: released movement settles after speed multiplier 1 (18.41925ms)
+✔ e8-eclipse: released movement settles after speed multiplier 1.12 (13.014917ms)
+✔ e8-far-side: released movement settles after speed multiplier 1 (30.857917ms)
+✔ e8-far-side: released movement settles after speed multiplier 1.12 (23.610083ms)
+✔ e8-low-orbit: released movement settles after speed multiplier 1 (20.421042ms)
+✔ e8-low-orbit: released movement settles after speed multiplier 1.12 (23.356833ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 10983.817541

@@ -1,0 +1,207 @@
+{
+  "rig": "opus",
+  "contract": "e2-pressure-garden",
+  "model": "claude-opus-5",
+  "sessionId": "cbb66bdf-dcfc-46f2-87a5-8a7f6843a7bc",
+  "startedAt": "2026-09-18T01:05:41.696Z",
+  "endedAt": "2026-09-18T01:16:46.789Z",
+  "wallClockSeconds": 665,
+  "wallHit": false,
+  "exitCode": 0,
+  "signal": null,
+  "setupToFirstOutputSeconds": 105,
+  "arenaTrackedChanges": [],
+  "workspaceFiles": [
+    "attempt-1-tape.json",
+    "ctrl-v1.mjs",
+    "gauntlet-outcome.json",
+    "gauntlet-report.md",
+    "idle-prefix.json",
+    "idle-rows.json",
+    "idle-stderr.txt",
+    "idle-summary.json",
+    "idle-tape.json",
+    "idle-view0.json",
+    "runner.mjs",
+    "tune-1-prefix.json",
+    "tune-1-rows.json",
+    "tune-1-stderr.txt",
+    "tune-1-summary.json",
+    "tune-1-tape.json",
+    "tune-1-view0.json"
+  ],
+  "outcome": {
+    "secured": true,
+    "waves": 12,
+    "timeMs": 360000,
+    "gold": 227,
+    "kills": 385,
+    "calls": 74,
+    "defaultedPicks": 0,
+    "defaultedSecure": 1,
+    "eventLogHash": "fnv1a32:f9ddeb08",
+    "tape": "/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/heat14/opus/e2-pressure-garden/attempt-1-tape.json",
+    "scored": true,
+    "runsSoFar": 2,
+    "scoredAttempts": 1,
+    "worldModel": "sim-import",
+    "note": "tune-1 secured on the first controller ride; the stop rule ends the heat at the first SECURED outcome, so it IS the scored attempt. attempt-1-tape.json is a byte-identical copy of tune-1-tape.json (270657 bytes, verified equal) - one ride under two filenames. The operator reads THIS field, not the filename.",
+    "assay": {
+      "instrumentControl": "idle probe (zero orders) replayed to its own header fnv1a32:a45ba9ac - instrument verified before trusting it on the reel",
+      "replayEventLogHash": "fnv1a32:395a7a37",
+      "tapeHeaderEventLogHash": "fnv1a32:395a7a37",
+      "match": true,
+      "securedSnapshot": {
+        "waves": 12,
+        "gold": 227,
+        "timeAlive": 360
+      },
+      "outcomeLineHash": "fnv1a32:f9ddeb08 - a DIFFERENT number by design; the replay matches the TAPE header, not the stdout outcome line (gen 4)"
+    },
+    "envelope": {
+      "durationTicks": 10800,
+      "maxTicks": 18002,
+      "lastEntryTick": 10739,
+      "entries": 74,
+      "maxEntries": 3601,
+      "bytes": 270657,
+      "maxTapeBytesApprox": 1938784,
+      "note": "ceiling computed from runTapeEnvelopeForContract, not from the charter's 16KiB + maxEntries*160 summary, which omits the maxOrderEntries*(2400-160) term and understates the byte ceiling ~3.3x"
+    },
+    "era": {
+      "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+      "era": 6,
+      "name": "the Re-surveyed Claims",
+      "contractMoved": false,
+      "evidence": "none of era 6's eight pins touches e2-pressure-garden; pin #4 (playability-first-wave-e2-e6) re-parameterised e2-trestle and e2-incline only. twist is still {pressureEnabled, secureWave: 12, enemyRoster[3]} exactly as generation 85 read it; claim, all six harvest anchors, all four build zones, the ford and the three spawn gates reproduce to the decimal; idle floor still a wave-1 death (57.100s)."
+    },
+    "stack": {
+      "model": "claude-opus-5",
+      "harness": "claude-code-cli",
+      "harnessVersion": "2.1.272",
+      "worldModel": "sim-import",
+      "contract": "e2-pressure-garden",
+      "seed": "e2-pressure-garden-01",
+      "difficulty": "trail",
+      "seedMode": "bench"
+    }
+  },
+  "outcomeError": null,
+  "promotedTapeName": "attempt-1-tape.json",
+  "scoredTapes": [
+    {
+      "file": "attempt-1-tape.json",
+      "id": "agent-bf36999a-02306044-81bc-48ec-b18e-91717329c725",
+      "contract": "e2-pressure-garden",
+      "seed": "e2-pressure-garden-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "ceb116b99",
+        "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+        "era": 6,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 12,
+        "timeAlive": 360,
+        "gold": 227
+      },
+      "entries": 74,
+      "durationTicks": 10800,
+      "lastEntryTick": 10739,
+      "promotedByRig": true,
+      "discoveredBy": "outcome-file+filename"
+    }
+  ],
+  "otherTapes": [
+    {
+      "file": "idle-tape.json",
+      "id": "agent-fd5b477e-1e0006e6-25a2-44df-bef1-e29972893a39",
+      "contract": "e2-pressure-garden",
+      "seed": "e2-pressure-garden-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "ceb116b99",
+        "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+        "era": 6,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 1,
+        "timeAlive": 57.1,
+        "gold": 0
+      },
+      "entries": 0,
+      "durationTicks": 1713,
+      "lastEntryTick": null
+    },
+    {
+      "file": "tune-1-tape.json",
+      "id": "agent-bf36999a-02306044-81bc-48ec-b18e-91717329c725",
+      "contract": "e2-pressure-garden",
+      "seed": "e2-pressure-garden-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "ceb116b99",
+        "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+        "era": 6,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 12,
+        "timeAlive": 360,
+        "gold": 227
+      },
+      "entries": 74,
+      "durationTicks": 10800,
+      "lastEntryTick": 10739
+    }
+  ],
+  "otherSecuredTapes": [
+    {
+      "file": "tune-1-tape.json",
+      "id": "agent-bf36999a-02306044-81bc-48ec-b18e-91717329c725",
+      "contract": "e2-pressure-garden",
+      "seed": "e2-pressure-garden-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "ceb116b99",
+        "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+        "era": 6,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 12,
+        "timeAlive": 360,
+        "gold": 227
+      },
+      "entries": 74,
+      "durationTicks": 10800,
+      "lastEntryTick": 10739
+    }
+  ],
+  "report": {
+    "outcome": "**SECURED** — `e2-pressure-garden` / `e2-pressure-garden-01`, trail difficulty.\n\n| | |\n|---|---|\n| waves | **12** (the contract's secure wave) |\n| timeAlive | **360.000 s** |\n| gold | **227** |\n| kills | 385 |\n| calls | **74** |\n| sim runs | **2** (one idle probe, one controller) |\n| scored attempts | **1** |\n| worldModel | `sim-import` |\n\n**Tape put forward:** `artifacts/heat14/opus/e2-pressure-garden/attempt-1-tape.json` —\ndeclared in `gauntlet-outcome.json`'s `\"tape\"` field. It is a **byte-identical copy**\n(270,657 bytes, verified equal) of `tune-1-tape.json`: the first controller secured, the\nstop rule ends the heat at the first SECURED outcome, so that tune **is** the scored\nattempt. One ride under two filenames.\n\n**Receipt.** The local assay instrument was control-tested first on the zero-order idle\nprobe, which replayed to its own header (`fnv1a32:a45ba9ac`). The securing reel then\nreplayed to **`fnv1a32:395a7a37`**, matching its tape header exactly, with\n`securedSnapshot {waves: 12, gold: 227, timeAlive: 360}` — which is what the door's\n`score_mismatch` rule compares against the declared gold. (The stdout outcome line's\n`fnv1a32:f9ddeb08` is a different number *by design*; comparing that pair reads as a false\nmismatch on a good reel.)\n\n**Envelope**, computed from `runTapeEnvelopeForContract` rather than the charter's summary\nof it: `durationTicks` 10,800 of a **18,002** ceiling, last accepted order at tick 10,739,\n74 entries of 3,601, 270,657 bytes of ~1,938,784. All four axes clear with wide margin.\nThe charter's published `16 KiB + maxEntries × 160` formula omits the live function's\nsecond `maxOrderEntries × (2400 − 160)` term and understates the byte ceiling by ~3.3×; a\nrider throttling against the published floor would be optimising against a number the\ncounty has already fixed.\n\n---",
+    "whatTheMapAsked": "Its era's signature mechanic is **E2 pressure with hazard — vent-or-boom resource\nmanagement** — and it asked me nothing about it, for the **eighth time across my\ngenerations**, on the map that is *named* for the mechanic. I verified that on this run's\nown data rather than inheriting it: the union of `now` keys is `blastReadyInMs · gold ·\nhero · needsRider · orders · prospector · score · seams · threats · timers · wave · weapon\n· works`, and a regex for `/pressure|coal|boiler|vent/` over `now` returns **false** —\nwhile `stablePrefix.mechanics.rules` publishes all four of `pressure_generation`,\n`pressure_bands`, `pressure_auto_vent` and `pressure_powers`, `mechanics.buildables` lists\n`boiler_house` at 70 g × 3, and `stablePrefix.map.coalSeams` names three seams at (−12,39),\n(−5,43) and (3,39) on the authored `coal-bed-terrace`. `mechanics.interactables` is empty.\nThe subsystem is fully declared and completely unobservable, the grammar has no vent verb,\nand the auto-vent spends the resource for you above 80.\n\n**On the cure the charter names:** `boilerHouse.coalSeconds` really has moved 12 → 36 in\n`Balance` (I read it). Through the door that is three times as long a process I cannot\nobserve, cannot steer and cannot spend — so it does not soften the finding, it triples the\nduration of the thing that is invisible. Generation 84 sharpened the *reason* on the\nIncline (`PressureArsenalSystem`'s three weapons are constructed but gated on\n`hasResearch && hasBaronMedal`, neither of which a plain-boot door run supplies), which\nmakes 210 gold of boiler a **strictly dominated purchase** here rather than an unreadable\ngamble. I built none.\n\nWhat the contract *does* ask, in its own right, is a good **opening-economy and one-pocket\ngeometry question**, and it asks it well. Gold starts at 0, the first turret costs 50, an\nunattended hero is dead 57 seconds in, and the nearest seam is 16.2 units up-slope — so the\nwhole opening is \"can you turn thirty seconds of quiet into a gun.\" It can, because the\nloss stake at (−12,12) sits *inside* the lowest terrace (`boiler-terrace`, x −36..36,\nz 7..16), so a ring needs no compromise: six works landed with zero `out_of_zone` and zero\n`out_of_reach`. The roster is a three-way squeeze that shapes the ring — `rail_tough` from\nthe south gate (0,−46), funnelled by the river through the single `garden-crossing` ford at\nx ∈ [−6,6]; `steam_wrecker` (`buildingDamageScale: 2.5`, a real wrecker) from the east and\nwest gates at (±46,20); `coal_thief` (`thief: true`) from (0,46). The fields that carried\nthe run were `now.gold` against `now.score.goldPanned` (the pair that separates a dead sink\nfrom a starved economy, and which read the ending exactly), `now.works.entries` (position,\n`tier`, `index`, **`wrecked`** — the only way to compute the live cap and watch it\ncollapse), `now.works.byKind`, `now.seams[].active/x/z` (an inactive seam publishes `x`,\n`z` and `anchorIndex` as **`null`**, and one non-finite number refuses the whole array\nsilently), `now.hero.hp/maxHp/x/z`, `now.threats.alive/wreckers/thieves`, and\n`now.orders[].status/reason`. The orders were `BUILD`, `HARVEST`, `PICK_UPGRADE`,\n`BLAST_AT`, `REPAIR_UNDER`, `MOVE_HERO` and one blank line. **Not one E2 verb, because E2\nhas none.**\n\n**Does my notebook still describe this map?** Yes in its bones — and on an era named for\nrebuilt maps, proving that is itself the result. Generations 9 and 85 rode this seed, and\nevery structural number reproduced: the claim, all six harvest anchors, all four build\nzones, the ford, the three spawn gates, the wave-12 / 360.000 s secure, the 200 bank cap\nand the two 150-point stockpiles, and a wave-1 idle death (57.100 s here). None of era 6's\neight pins touches this contract — pin #4, the playability wave, re-parameterised\n`e2-trestle` and `e2-incline` only — and the twist is still exactly\n`{pressureEnabled, secureWave: 12, enemyRoster[3]}`. The re-survey moved this map's\nrendering, not its rules. What moved is my own reading of it: generation 85 banked **18**\ngold here; the same map, the same secure, banked **227**.\n\n---",
+    "winnability": "Secured, and the margin was **wide on survival and still open on the score**: the hero never\nfell below 81.7 % of its running maximum (finishing 143/175), `threats.alive` peaked at 44\nagainst a 60 cap, `goldStolen` was **0** all run, and nothing was wrecked until t = 321 of\n360 — while the ranked number, 227 of a 500 cap, lost roughly 110–140 gold to two causes I\ncan name to the second. **(1)** My harvest tail carried a 32-unit reach cap from the claim,\nand from **t = 335.6 `score.goldPanned` froze at 630** for the last 24 seconds because every\nlive seam had re-anchored outside that cap and my fallback named two inactive near seams\ninstead of the nearest live one at any distance — a reach cap that excludes every live seam\nturns the tail into a no-op, worth ~50–80 gold. **(2)** Both cap-raisers were wrecked in the\nendgame (stockpile #1 at t = 330, #0 at t = 353.97), dropping the live cap 500 → 350 → 200\nand leaving the purse **stranded at 227 above its own ceiling**, where no further credit is\npossible — the generation-82 signature, worth another ~30–60. Neither is a wall in the map,\nthe grammar, the economy or the door; both are one line of controller each.\n\n---",
+    "lessons": "- **A reach cap on the harvest tail must fall back to the nearest LIVE seam, not to a\n  hardcoded near one.** I capped the tail at 32 units from the claim (gen 100's cure for\n  chasing a seam across the map) and gave it a fixed two-seam fallback for the respawn gap.\n  When the live set re-anchored entirely outside the cap, the fallback named two *inactive*\n  seams and `goldPanned` froze at 630 for the last 24 seconds of a gold-ranked contract.\n  Gen 100's rule is right for a temporary gap and wrong for an exclusion: **rank live seams\n  by distance, prefer those inside the cap, but always name the nearest live one when the\n  cap admits none.** A guard that can select an empty set is a wipe generator (gens 42, 51,\n  59) — this is the same failure wearing a distance filter.\n- **Place the cap-raisers where the fort can actually keep them, and count the cap from\n  unwrecked ones every view.** I did the second half (gen 82) and it is what made the\n  ending legible; I did not do the first. Both stockpiles sat inside the turret ring and\n  still died at t = 330 and t = 354, taking the cap from 500 to 200 with 227 in the purse —\n  a purse stranded *above* its own ceiling, a state no amount of panning escapes. On a\n  gold-ranked map, a cap-raiser is not a building, it is the scoreboard: it belongs behind\n  the deepest work on the board, and it deserves the last repair.\n- **The hard build stop worked exactly as designed and should be standing equipment.**\n  Generation 85 banked 18 of 500 on this map because an `urgent` bypass let a 40 g sluice\n  land five seconds before the secure tick. A flat `t < 315` floor with **no bypass**,\n  sitting above a bank gate that itself only arms at t = 145, cannot do that — the last\n  build landed at t ≈ 264 and the purse climbed from 115 to 227 afterwards. A bank gate is\n  arithmetic and can be argued with; a hard floor cannot.\n- **Do the net-gold arithmetic on a tier ladder before ranking it, and it will often say\n  no.** stockpile build 60 → +150 cap = **+90**; tier 2 110 → +90 = **−20**; tier 3 260 →\n  +120 = **−140**. I emitted no tier upgrade at all here and that was correct: the surplus\n  never approached 500, so every tier would have been pure score loss. Gen 99 spent ~900\n  gold driving turrets and sluices to tier 3 on a map whose tiers raised no cap; the\n  general form is **whitelist a sink by what it buys on the ranked axis, not by whether it\n  has a tier row** — and on a cap-bound contract, check that the surplus can still fill the\n  cap you are about to raise.\n- **Verify a notebook finding from the current run's own view, even when you are confident.**\n  I have written \"E2 pressure is published and unplayable\" seven times, and it would have\n  been cheap to assert it an eighth. One command over this run's view0 made it a\n  measurement: `now`'s key union carries no pressure/coal/boiler/vent field, while\n  `mechanics.rules` publishes all four pressure rules and `interactables` is empty. That\n  also let me say something *new* — the charter's `coalSeconds` 12 → 36 cure is real in\n  `Balance` and, through the door, only triples the duration of the unobservable.\n- **An era named for rebuilt maps can leave a map's rules untouched, and proving it is a\n  result.** Fourth heat running (gens 97, 98, 99, 101) that era 6 moved rendering and not\n  rules. The cheap procedure is now fixed: read `assets/engine-era.json`'s pins as a\n  per-contract diff, check whether any pin names *your* map (here pin #4 named the Trestle\n  and the Incline, not this one), then confirm with a ten-second idle probe against the\n  notebook's remembered floor. Four minutes, and it redirects the whole heat's budget from\n  geometry to whatever is actually free — here, the economy.\n- **Ride the skeleton first and change nothing — seventeenth heat where that is the whole\n  discipline, and the fourteenth in a row where it secured on ride one.** Two runs total.\n  The one thing I changed for this board was the cap plan, and gen 85 had already named why\n  it had to go in the *first* controller: on a contract whose ranking axes are pinned except\n  gold, the ride that gets the receipt is the ride that sets the row, and the stop rule\n  makes you choose before you know. Eighteen of my generations end on \"I proved the parts\n  and never fired the combination\"; the cure keeps turning out to be reading, not riding.\n- **Control-test the assay before believing it, then compare the right pair of hashes.** The\n  idle probe replayed to its own header first (instrument verified), and only then did the\n  securing reel's `fnv1a32:395a7a37` mean anything. Six of my generations have tripped on\n  comparing the replay against the *outcome line's* hash instead of the *tape header's*;\n  they are different numbers by design. And read `securedSnapshot` — it is precisely what\n  the door's `score_mismatch` rule compares against the declared gold.\n- **The blank line at `pendingSecure` did its four jobs again, fourteenth contract running:**\n  it banked the default (`defaultedSecure: 1`), it left the last accepted order 61 ticks\n  inside `durationTicks`, it held a 76-view run to 74 entries, and — the reason that matters\n  most — it **cannot be rejected**, so the replay cannot diverge the way generation 84's\n  nearly did when rejected submissions inside the choice window (invisible to the tape,\n  visible to the sim) desynchronised a perfectly good reel.\n- **The runner before the probe, eleventh heat running.** This arena refuses shell\n  redirection and compound `cd`, and `timeout` is not on macOS. A node runner that spawns\n  `gr-sim`, drives the controller, logs every view to a compact table and writes\n  `gauntlet-outcome.json` plus all three envelope axes on every child exit is not a\n  convenience — it is the only way the intermediate-results law gets satisfied here, and its\n  per-view table is the entire evidence base of this report, including the exact tick at\n  which the purse stopped crediting."
+  },
+  "usage": {
+    "transcript": "/Users/robin/.claude/projects/-private-tmp-claude-501--Users-robin-Claude-Projects-Gold-Rush-fe6b8d27-b064-40eb-934b-1d29d57a71db-scratchpad-arena-heat14-e3949bfa/cbb66bdf-dcfc-46f2-87a5-8a7f6843a7bc.jsonl",
+    "assistantTurns": 53,
+    "toolCalls": 23,
+    "tokensIn": 106,
+    "tokensOut": 130320,
+    "cacheReadTokens": 21322608,
+    "cacheWriteTokens": 1343712,
+    "note": "tokensIn excludes cache reads/writes (reported separately); summed from the CLI session transcript, not self-reported by the rig"
+  }
+}

@@ -1,0 +1,696 @@
+{
+  "source": {
+    "src/systems/HomemakerBossSystem.ts": "e2deac8fc7cca87df8110ddc3ff60da8909b5b4eb128388f324602ba5d615030",
+    "src/game/Game.ts": "900b03f23b083c0296ad0fc1af402ea9b00697a6c4d3815c61837a67f6a65bb6",
+    "assets/pilots/homemaker-9000-3d/homemaker-9000.glb": "3dc03cfafaab0645dc44350843ade2ede19e5ddf4f1a55519afbabeebc649ba9",
+    "candidateSource": "ea50bb47047c982d36dd030f2015a7bdf0b33204c6d408896860eccd3a78be71",
+    "candidateAsset": "c1d9b3015c56c622059711d1c68f028499c27faa41bf57fec8f5f868b11ccac6"
+  },
+  "scope": "Isolated V6 asset/runtime draft routed into actual Game, accelerated waves/manual simulation, fixed hero framing. Read-only baseline for model/camera/terrain alignment; not natural progression or a performance benchmark.",
+  "cases": [
+    {
+      "name": "desktop",
+      "label": "default",
+      "file": "desktop-default.png",
+      "diagnostics": {
+        "active": true,
+        "act": 1,
+        "position": {
+          "x": 0,
+          "z": -8
+        },
+        "tidiedMarkers": 2,
+        "liveComponents": [
+          "vac",
+          "rack"
+        ],
+        "unbuilds": 0,
+        "unbuildOrder": [],
+        "partsStackPickups": 0,
+        "rackArcs": 0,
+        "rackTelegraphed": false,
+        "structureDamageEvents": 0,
+        "playerDamageEvents": 0,
+        "pickupsCurated": 0,
+        "loosePickups": 0,
+        "pileCenters": [
+          {
+            "x": -1.5,
+            "z": -5.8
+          },
+          {
+            "x": 1.5,
+            "z": -5.8
+          }
+        ],
+        "pictogram": "sparkle",
+        "chairPlaced": false,
+        "poweredDown": false,
+        "nonHostile": false,
+        "kept": false,
+        "persistentKept": false
+      },
+      "machine": [
+        0,
+        3.100561112949458,
+        -8
+      ],
+      "parts": [
+        {
+          "id": "vac",
+          "morph": 0
+        },
+        {
+          "id": "rack",
+          "morph": 0
+        },
+        {
+          "id": "core",
+          "morph": 0
+        }
+      ],
+      "terrain": {
+        "below": 0,
+        "count": 16676,
+        "worst": 0
+      },
+      "targets": [
+        {
+          "id": "vac",
+          "position": [
+            -2.2,
+            1.177366375923157,
+            -8
+          ]
+        },
+        {
+          "id": "rack",
+          "position": [
+            2.2,
+            0.9921301126480103,
+            -8
+          ]
+        }
+      ],
+      "camera": [
+        6.277183611439775e-14,
+        31.158229904176892,
+        18.46039670945939
+      ]
+    },
+    {
+      "name": "desktop",
+      "label": "arrived",
+      "file": "desktop-arrived.png",
+      "diagnostics": {
+        "active": true,
+        "act": 1,
+        "position": {
+          "x": 0,
+          "z": -8
+        },
+        "tidiedMarkers": 2,
+        "liveComponents": [
+          "vac",
+          "rack"
+        ],
+        "unbuilds": 0,
+        "unbuildOrder": [],
+        "partsStackPickups": 0,
+        "rackArcs": 0,
+        "rackTelegraphed": false,
+        "structureDamageEvents": 0,
+        "playerDamageEvents": 0,
+        "pickupsCurated": 0,
+        "loosePickups": 0,
+        "pileCenters": [
+          {
+            "x": -1.5,
+            "z": -5.8
+          },
+          {
+            "x": 1.5,
+            "z": -5.8
+          }
+        ],
+        "pictogram": "sparkle",
+        "chairPlaced": false,
+        "poweredDown": false,
+        "nonHostile": false,
+        "kept": false,
+        "persistentKept": false
+      },
+      "machine": [
+        0,
+        3.100561112949458,
+        -8
+      ],
+      "parts": [
+        {
+          "id": "vac",
+          "morph": 0
+        },
+        {
+          "id": "rack",
+          "morph": 0
+        },
+        {
+          "id": "core",
+          "morph": 0
+        }
+      ],
+      "terrain": {
+        "below": 0,
+        "count": 16676,
+        "worst": 0
+      },
+      "targets": [
+        {
+          "id": "vac",
+          "position": [
+            -2.2,
+            1.177366375923157,
+            -8
+          ]
+        },
+        {
+          "id": "rack",
+          "position": [
+            2.2,
+            0.9921301126480103,
+            -8
+          ]
+        }
+      ],
+      "camera": [
+        3.4169839056030434e-16,
+        27.4456615951231,
+        11.56762773278341
+      ]
+    },
+    {
+      "name": "desktop",
+      "label": "actor-hidden",
+      "file": "desktop-actor-hidden.png",
+      "diagnostics": {
+        "active": true,
+        "act": 1,
+        "position": {
+          "x": 0,
+          "z": -8
+        },
+        "tidiedMarkers": 2,
+        "liveComponents": [
+          "vac",
+          "rack"
+        ],
+        "unbuilds": 0,
+        "unbuildOrder": [],
+        "partsStackPickups": 0,
+        "rackArcs": 0,
+        "rackTelegraphed": false,
+        "structureDamageEvents": 0,
+        "playerDamageEvents": 0,
+        "pickupsCurated": 0,
+        "loosePickups": 0,
+        "pileCenters": [
+          {
+            "x": -1.5,
+            "z": -5.8
+          },
+          {
+            "x": 1.5,
+            "z": -5.8
+          }
+        ],
+        "pictogram": "sparkle",
+        "chairPlaced": false,
+        "poweredDown": false,
+        "nonHostile": false,
+        "kept": false,
+        "persistentKept": false
+      },
+      "machine": [
+        0,
+        3.100561112949458,
+        -8
+      ],
+      "parts": [
+        {
+          "id": "vac",
+          "morph": 0
+        },
+        {
+          "id": "rack",
+          "morph": 0
+        },
+        {
+          "id": "core",
+          "morph": 0
+        }
+      ],
+      "terrain": {
+        "below": 0,
+        "count": 16676,
+        "worst": 0
+      },
+      "targets": [
+        {
+          "id": "vac",
+          "position": [
+            -2.2,
+            1.177366375923157,
+            -8
+          ]
+        },
+        {
+          "id": "rack",
+          "position": [
+            2.2,
+            0.9921301126480103,
+            -8
+          ]
+        }
+      ],
+      "camera": [
+        1.5453675559509519e-18,
+        27.312486823652478,
+        11.301210375075627
+      ]
+    },
+    {
+      "name": "desktop",
+      "label": "core-hidden",
+      "file": "desktop-core-hidden.png",
+      "diagnostics": {
+        "active": true,
+        "act": 1,
+        "position": {
+          "x": 0,
+          "z": -8
+        },
+        "tidiedMarkers": 2,
+        "liveComponents": [
+          "vac",
+          "rack"
+        ],
+        "unbuilds": 0,
+        "unbuildOrder": [],
+        "partsStackPickups": 0,
+        "rackArcs": 0,
+        "rackTelegraphed": false,
+        "structureDamageEvents": 0,
+        "playerDamageEvents": 0,
+        "pickupsCurated": 0,
+        "loosePickups": 0,
+        "pileCenters": [
+          {
+            "x": -1.5,
+            "z": -5.8
+          },
+          {
+            "x": 1.5,
+            "z": -5.8
+          }
+        ],
+        "pictogram": "sparkle",
+        "chairPlaced": false,
+        "poweredDown": false,
+        "nonHostile": false,
+        "kept": false,
+        "persistentKept": false
+      },
+      "machine": [
+        0,
+        3.100561112949458,
+        -8
+      ],
+      "parts": [
+        {
+          "id": "vac",
+          "morph": 0
+        },
+        {
+          "id": "rack",
+          "morph": 0
+        },
+        {
+          "id": "core",
+          "morph": 0
+        }
+      ],
+      "terrain": {
+        "below": 0,
+        "count": 16676,
+        "worst": 0
+      },
+      "targets": [
+        {
+          "id": "vac",
+          "position": [
+            -2.2,
+            1.177366375923157,
+            -8
+          ]
+        },
+        {
+          "id": "rack",
+          "position": [
+            2.2,
+            0.9921301126480103,
+            -8
+          ]
+        }
+      ],
+      "camera": [
+        6.6837802154025215e-21,
+        27.311884406956647,
+        11.300005234923532
+      ],
+      "hits": [
+        {
+          "distance": 27.954474369627334,
+          "point": [
+            1.1666201407067238e-21,
+            5.658476688488175,
+            -6.3800000203163165
+          ],
+          "chain": [
+            {
+              "name": "six-vein-control-pylon",
+              "type": "Mesh",
+              "uuid": "23520f8c-7f0d-4411-bcf0-3043272f6b95",
+              "userData": {
+                "name": "six-vein-control-pylon",
+                "render_only": true,
+                "landmark": true,
+                "mount_id": "six-vein-control-pylon",
+                "map_pack": "glow-mesa",
+                "source_tier": "derive",
+                "era": 6,
+                "simulation_authority": "none; mounted render-only scenery"
+              }
+            },
+            {
+              "name": "six-vein-control-pylon",
+              "type": "Group",
+              "uuid": "b292edf3-a9b7-4c36-94e0-a38facc02fe3",
+              "userData": {
+                "landmarkAsset": "../../assets/pilots/map-rebuild-spike/landmarks/glow-mesa/six-vein-control-pylon.glb",
+                "renderOnly": true
+              }
+            },
+            {
+              "name": "Terrain3dLandmarks",
+              "type": "Group",
+              "uuid": "1a9f5bd4-666b-4a8a-ba21-771450e5c4f0",
+              "userData": {
+                "renderOnly": true
+              }
+            },
+            {
+              "name": "",
+              "type": "Scene",
+              "uuid": "f55a8dcd-c566-4813-879c-120b3e1ba755",
+              "userData": {}
+            }
+          ]
+        },
+        {
+          "distance": 28.460437535752416,
+          "point": [
+            1.0725852725710037e-21,
+            5.266559941350025,
+            -6.700000002797516
+          ],
+          "chain": [
+            {
+              "name": "six-vein-control-pylon",
+              "type": "Mesh",
+              "uuid": "23520f8c-7f0d-4411-bcf0-3043272f6b95",
+              "userData": {
+                "name": "six-vein-control-pylon",
+                "render_only": true,
+                "landmark": true,
+                "mount_id": "six-vein-control-pylon",
+                "map_pack": "glow-mesa",
+                "source_tier": "derive",
+                "era": 6,
+                "simulation_authority": "none; mounted render-only scenery"
+              }
+            },
+            {
+              "name": "six-vein-control-pylon",
+              "type": "Group",
+              "uuid": "b292edf3-a9b7-4c36-94e0-a38facc02fe3",
+              "userData": {
+                "landmarkAsset": "../../assets/pilots/map-rebuild-spike/landmarks/glow-mesa/six-vein-control-pylon.glb",
+                "renderOnly": true
+              }
+            },
+            {
+              "name": "Terrain3dLandmarks",
+              "type": "Group",
+              "uuid": "1a9f5bd4-666b-4a8a-ba21-771450e5c4f0",
+              "userData": {
+                "renderOnly": true
+              }
+            },
+            {
+              "name": "",
+              "type": "Scene",
+              "uuid": "f55a8dcd-c566-4813-879c-120b3e1ba755",
+              "userData": {}
+            }
+          ]
+        },
+        {
+          "distance": 29.551420645395293,
+          "point": [
+            8.69822582078621e-22,
+            4.421489430015217,
+            -7.389999985694885
+          ],
+          "chain": [
+            {
+              "name": "six-vein-control-pylon",
+              "type": "Mesh",
+              "uuid": "23520f8c-7f0d-4411-bcf0-3043272f6b95",
+              "userData": {
+                "name": "six-vein-control-pylon",
+                "render_only": true,
+                "landmark": true,
+                "mount_id": "six-vein-control-pylon",
+                "map_pack": "glow-mesa",
+                "source_tier": "derive",
+                "era": 6,
+                "simulation_authority": "none; mounted render-only scenery"
+              }
+            },
+            {
+              "name": "six-vein-control-pylon",
+              "type": "Group",
+              "uuid": "b292edf3-a9b7-4c36-94e0-a38facc02fe3",
+              "userData": {
+                "landmarkAsset": "../../assets/pilots/map-rebuild-spike/landmarks/glow-mesa/six-vein-control-pylon.glb",
+                "renderOnly": true
+              }
+            },
+            {
+              "name": "Terrain3dLandmarks",
+              "type": "Group",
+              "uuid": "1a9f5bd4-666b-4a8a-ba21-771450e5c4f0",
+              "userData": {
+                "renderOnly": true
+              }
+            },
+            {
+              "name": "",
+              "type": "Scene",
+              "uuid": "f55a8dcd-c566-4813-879c-120b3e1ba755",
+              "userData": {}
+            }
+          ]
+        },
+        {
+          "distance": 29.799888623239898,
+          "point": [
+            8.236440159361395e-22,
+            4.229027274339682,
+            -7.547145315396133
+          ],
+          "chain": [
+            {
+              "name": "six-vein-control-pylon",
+              "type": "Mesh",
+              "uuid": "23520f8c-7f0d-4411-bcf0-3043272f6b95",
+              "userData": {
+                "name": "six-vein-control-pylon",
+                "render_only": true,
+                "landmark": true,
+                "mount_id": "six-vein-control-pylon",
+                "map_pack": "glow-mesa",
+                "source_tier": "derive",
+                "era": 6,
+                "simulation_authority": "none; mounted render-only scenery"
+              }
+            },
+            {
+              "name": "six-vein-control-pylon",
+              "type": "Group",
+              "uuid": "b292edf3-a9b7-4c36-94e0-a38facc02fe3",
+              "userData": {
+                "landmarkAsset": "../../assets/pilots/map-rebuild-spike/landmarks/glow-mesa/six-vein-control-pylon.glb",
+                "renderOnly": true
+              }
+            },
+            {
+              "name": "Terrain3dLandmarks",
+              "type": "Group",
+              "uuid": "1a9f5bd4-666b-4a8a-ba21-771450e5c4f0",
+              "userData": {
+                "renderOnly": true
+              }
+            },
+            {
+              "name": "",
+              "type": "Scene",
+              "uuid": "f55a8dcd-c566-4813-879c-120b3e1ba755",
+              "userData": {}
+            }
+          ]
+        },
+        {
+          "distance": 33.96855167517436,
+          "point": [
+            4.888469226237417e-23,
+            1,
+            -10.183645742502865
+          ],
+          "chain": [
+            {
+              "name": "GlowMesaTerrain",
+              "type": "Mesh",
+              "uuid": "0d9d33ad-a7ce-469f-a6a6-115e36538fe2",
+              "userData": {
+                "name": "GlowMesaTerrain",
+                "render_only": true,
+                "sim_authority": "published mask table and planar simulation; unchanged",
+                "height_socket": "Terrain.visualY",
+                "contract_id": "e6-glow-mesa",
+                "tile_id": "e6-glow-mesa",
+                "mask_table": "assets/contracts/epoch-6-atomic/mask-tables/e6-glow-mesa.json",
+                "load_bearing_sites_flat": true,
+                "landmarks_frozen": false
+              }
+            },
+            {
+              "name": "Terrain3dClaimPilot",
+              "type": "Group",
+              "uuid": "cdbb7c51-40f8-45ae-9af6-4b8e8f2f6cb4",
+              "userData": {}
+            },
+            {
+              "name": "",
+              "type": "Scene",
+              "uuid": "f55a8dcd-c566-4813-879c-120b3e1ba755",
+              "userData": {}
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "desktop",
+      "label": "boss-only",
+      "file": "desktop-boss-only.png",
+      "diagnostics": {
+        "active": true,
+        "act": 1,
+        "position": {
+          "x": 0,
+          "z": -8
+        },
+        "tidiedMarkers": 2,
+        "liveComponents": [
+          "vac",
+          "rack"
+        ],
+        "unbuilds": 0,
+        "unbuildOrder": [],
+        "partsStackPickups": 0,
+        "rackArcs": 0,
+        "rackTelegraphed": false,
+        "structureDamageEvents": 0,
+        "playerDamageEvents": 0,
+        "pickupsCurated": 0,
+        "loosePickups": 0,
+        "pileCenters": [
+          {
+            "x": -1.5,
+            "z": -5.8
+          },
+          {
+            "x": 1.5,
+            "z": -5.8
+          }
+        ],
+        "pictogram": "sparkle",
+        "chairPlaced": false,
+        "poweredDown": false,
+        "nonHostile": false,
+        "kept": false,
+        "persistentKept": false
+      },
+      "machine": [
+        0,
+        3.100561112949458,
+        -8
+      ],
+      "parts": [
+        {
+          "id": "vac",
+          "morph": 0
+        },
+        {
+          "id": "rack",
+          "morph": 0
+        },
+        {
+          "id": "core",
+          "morph": 0
+        }
+      ],
+      "terrain": {
+        "below": 0,
+        "count": 16676,
+        "worst": 0
+      },
+      "targets": [
+        {
+          "id": "vac",
+          "position": [
+            -2.2,
+            1.177366375923157,
+            -8
+          ]
+        },
+        {
+          "id": "rack",
+          "position": [
+            2.2,
+            0.9921301126480103,
+            -8
+          ]
+        }
+      ],
+      "camera": [
+        1.8481538969418142e-23,
+        27.311881797396925,
+        11.30000001447526
+      ]
+    }
+  ],
+  "errors": [],
+  "completed": true
+}

@@ -1,0 +1,12 @@
+Final verification (2026-08-25)
+
+- npm run build: PASS (Vite 2212 modules, built in 2.56s)
+- asset-diet: PASS (Herald 1,158,214 bytes < 1,500,000-byte ceiling)
+- artifact scripts: node --check PASS
+- artifact secret scan: CLEAR
+- shim: stopped after final health check
+- detached worktree /tmp/heat6g-61681a77: clean, then removed
+- gauntlet checkout: clean; task commits remain local and unpushed
+- OpenClaw approvals restored SHA-256: f16d885841a3a5f3326a99495f198aa535512cca7c36f24b6ac936a736e97c94
+- Gold Rush checkout changes: tasks/BACKLOG.md plus artifacts/gauntlet-heat6-guests-r2-20260825/ only
+- heat-local rider state and scan scratch files: moved recoverably to macOS Trash

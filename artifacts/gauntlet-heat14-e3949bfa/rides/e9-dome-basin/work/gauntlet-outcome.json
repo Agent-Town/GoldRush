@@ -1,0 +1,48 @@
+{
+ "secured": true,
+ "waves": 20,
+ "timeMs": 600000,
+ "gold": 12,
+ "kills": 883,
+ "calls": 926,
+ "defaultedPicks": 0,
+ "defaultedSecure": 1,
+ "eventLogHash": "fnv1a32:bba2de00",
+ "tape": "/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/heat14/opus/e9-dome-basin/attempt-1-tape.json",
+ "scored": true,
+ "runsSoFar": 3,
+ "scoredAttempts": 1,
+ "worldModel": "sim-import",
+ "envelope": {
+  "durationTicks": 18000,
+  "lastEntryTick": 17999,
+  "entries": 926,
+  "bytes": 3230134,
+  "tapeHash": "fnv1a32:142981d1",
+  "maxTicks": 18002,
+  "maxEntries": 3601,
+  "maxTapeBytes": 1938784,
+  "ticksOk": true,
+  "entriesOk": true,
+  "bytesOk": false
+ },
+ "doorRisk": {
+  "expect": "reel_too_large",
+  "why": "runTapeEnvelopeForContract(e9-dome-basin) -> maxTapeBytes 1938784 B; this reel is 3230134 B (1.67x). Ticks and entries both pass (lastEntryTick 17999 < durationTicks 18000 <= 18002; entries 926 <= 3601). The breach is BYTES ONLY.",
+  "cause": "The board emits a surprise view about every 1.5 s once the harvest tail starts failing on depleted seams, and every one of those 926 views was answered with a fresh 32-order array at ~3.5 KB. The play is sound; the SUBMISSION RATE is what breaches.",
+  "cure": "Identical policy plus a submission floor: answer a view with a blank line (gr-sim records no entry) unless pendingOffer is live, a BUILD is emittable, or ~4 s of sim time has passed since the last accepted array. That cuts ~926 entries to ~340 and the reel to ~1.2 MB with no change to the orders themselves. NOT RIDDEN: the stop rule ends the heat at the first SECURED outcome, which this run is."
+ },
+ "assay": {
+  "instrumentControl": "probe-tape.json replayed to its own header fnv1a32:a45ba9ac (instrument verified before use)",
+  "replayHash": "fnv1a32:142981d1",
+  "tapeHeaderHash": "fnv1a32:142981d1",
+  "outcomeLineHash": "fnv1a32:bba2de00",
+  "note": "the replay matches the TAPE HEADER hash, not the stdout outcome line hash - different numbers by design",
+  "securedSnapshot": {
+   "waves": 20,
+   "gold": 12,
+   "timeAlive": 600
+  },
+  "verdict": "deterministic, self-consistent"
+ }
+}

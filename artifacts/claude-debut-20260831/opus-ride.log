@@ -1,0 +1,60 @@
+Ride complete. Here is the map I worked from, then the report.
+
+**The claim, as `Terrain.isBuildable` actually answers it** (probed, not assumed — `probe-terrain.mjs`; `.` buildable, `~` river, `f` ford, `-` shallows, `?` landmark blocker):
+
+```
+ z=24 .................................................
+ z=17 ...........??????????...........??????...........   working camp / claim house
+ z=12 ................................??????...........   ← the hero's stake is (0,12)
+ z= 7 .................................................
+ z= 6 -------------------------------------------------   shallows
+ z= 5 ~~~~~~~~~~~~~~~~~~~~~fffffff~~~~~~~~~~~~~~~~~~~~~   river z∈[-5,5], ford x∈[-3,3]
+ z=-6 -------------------------------------------------
+ z=-7 .................................................
+      x=-24                  x=0                  x=+24
+```
+
+## Outcomes
+
+| | attempt 1 | attempt 2 (repro) |
+|---|---|---|
+| `secured` | **true** | **true** |
+| waves / timeAlive | 10 / 300.0s | 10 / 300.0s |
+| gold | **680** | 680 |
+| kills · calls | 299 · 65 | 299 · 65 |
+| `defaultedPicks` / `defaultedSecure` | 0 / 0 | 0 / 0 |
+| outcome `eventLogHash` | `fnv1a32:a93d1bbc` | identical |
+
+Tapes: `artifacts/claude-opus-ride/attempt-{1,2}.tape.json` — both carry **era 5**, engine pin `c0a015ae…f237b`, build `4675cfd7b`. Both replay through `scripts/assay-replay-agent.mjs` to `fnv1a32:cc026656` with `{secured:true, waves:10, gold:680, timeAlive:300}` — the county's `verified` condition. Stripped of reel id/name/createdAt the two tapes are byte-identical (`sha256 b4baef5a…`), so the deterministic-player claim holds. No submission was ever rejected; the secure was answered explicitly, not defaulted. Hero HP never fell below its starting 100 (ended 175/175); zero works wrecked, zero claim damage.
+
+I used two of three attempts. The third is unspent: the controller and sim are deterministic, so a third run would be the same bytes, and I had no remaining hypothesis with upside (below).
+
+## Reasoning
+
+The idle probe died at wave 2, t=82s. Reading the sim rather than guessing gave three facts that set the whole plan:
+
+1. **The hero never moves** — it takes `IDLE_INTENTS` and every enemy targets it. The claim is a siege of a fixed stake at (0,12), not a chase. So the guns ring the hero, not the gold.
+2. **A turret beats a beacon per gold, outright**: 52 damage at 1.1/s over 16wu for 50g, versus 10+0.75/wave at 1.2/s over 8wu for 25g. My first ladder opened with cheap beacons and that *delayed* the first turret from t≈15 to t=47. Guns first was worth ~180g of final score.
+3. **The score is cap-bound, not income-bound.** Bank cap is 200. I panned 1,390g and could only bank 200 of it. Two Stockpile Yards (60g each) and a `CONTEXT_ACTION upgrade` on each to tier 2 (110g each) put the cap at 680 — and the run finished at exactly 680 with panning throughput of ~1,420g. That is the joint optimum: I tested tier 3 (cap 800) and it lost 490g, because reaching cap 800 costs 940g of spend and the ground cannot pay 1,740.
+
+The order array is a priority ladder exploiting "the first *actionable* order owns the tick": a `BUILD` whose `goldGte` is unmet is not actionable, so it falls through to panning, and the instant the price is met the same order walks the Prospector to the stake. Two published mechanics did the rest. `HARVEST` is one pan action per accepted order, so N orders take N bites out of a seam. And one order past a seam's remaining gold fails honestly — which raises the ordinary order-failure surprise, and a surprise is a fresh view. That gave the run a self-winding clock: drain the board, get woken, drain again, instead of sleeping to the next wave horn. I added one deliberately-refused `BUILD` aimed at the ford as a second wake-up wire; it places nothing and costs nothing.
+
+Things I tried that lost, so nobody pays for them twice: holding a seam back as a passive-income "reserve" (−340g), staggered clock tripwires above the drain line (−575g), leaving 10g in the nearest seam (−220g), stockpile tier 3 (−490g), beacons before turrets (−180g).
+
+## Did walking change my plan? Yes — three times.
+
+- **Builds are placed relative to the Prospector's body,** not the hero's: the headless sim binds `BuildSystem`'s origin to `prospector.position`, and `placeRadius` is 6wu. So every stake in the fort had to be ground the Prospector could stand on, and every build yanks it off the seams. That is exactly why the ladder is priced-ordered — pan until the price is met, then the same order does the walking.
+- **The river re-shaped the harvest order.** Three of six seam anchors sit south of an impassable band crossed only at the centre ford. The Prospector walks straight-line at 4.8wu/s, so the far seams are a real time cost; harvesting is ordered nearest-first from its live position each turn, not by seam id.
+- **The Stockpile Yards went in at t≈98, not late,** because raising them needs the Prospector inside 1.6wu — `CONTEXT_ACTION` carries no travel of its own, so I had to order the walk explicitly (`MOVE_TO`, then the action on the next tick). That walk is only affordable while the guns are quiet.
+
+## Era-5 acknowledgement
+
+This is the Replayed Board. Every board carries only current-era reels and all standings are re-earned this era, so the almanac's pre-era marks (codex gpt-5.6-sol w10/190g, human record rob w10/280g) are teaching artifacts, not a bar I inherited. Both my reels carry the current era, one of the era's recorded engine pins, and the build id, and I confirmed each replays before calling it eligible. I have not submitted anything — that is yours.
+
+## Lessons for the notebook (generation 2)
+
+- Generation 1 was a platform DNF, not a strategy failure. The CLI answers fine here; that entry can be closed.
+- Read the sim before riding. `--policy=idle` plus a terrain probe cost ~2 minutes and produced the whole plan; the almanac's "four-turret/six-beacon fort" is good but the six beacons are 330g the board does not need on this seed.
+- On `the-claim`, the ceiling is the 200g bank cap. Two yards raised to tier 2 is the whole gold game; anything past that is negative.
+- `HARVEST` is a per-order machine tick, and an order that fails honestly buys a decision point. Both are published, both are load-bearing.
+- Open-book: I read the sim source and the almanac. Declare `worldModel: sim-import` on any submission.

@@ -1,0 +1,42 @@
+✔ parseGlb rejects a non-GLB and reads the JSON + BIN chunks of a real one (0.791417ms)
+✔ metrics reproduce the runtime definitions: triangles, welded vertices, world bounds (1.063167ms)
+✔ bounds are TRANSFORMED bounds: a node translation moves them (F-ASTRA-8) (0.187541ms)
+✔ a node rotation is applied to the bounds, not ignored (0.169792ms)
+✔ non-finite positions are counted, not silently folded into the bounds (0.381166ms)
+✔ the grid probe accepts a complete lattice and rejects a punctured one (0.218917ms)
+✔ texture dimensions come from the real image header, and the family cap is enforced (0.262833ms)
+✔ external buffers and images are policy violations (0.113042ms)
+✔ an alpha mode outside the family policy is a violation; a permitted one is not (0.1745ms)
+✔ required extras are reported as ONE violation per asset, listing every missing key (0.157917ms)
+✔ the baseline key carries the detail, so a NEW violation on a baselined asset still reds (0.070916ms)
+✔ water metadata is required by the asset's own contract, never by blanket family rule (0.260833ms)
+✔ contract counts and bounds are compared against the sibling JSON the runtime reads (0.279458ms)
+
+| family            | assets | triangles | vertices  | materials | textures | max tex | cap   | 2-sided | anims | skins | extras | anchors |
+|-------------------|--------|-----------|-----------|-----------|----------|---------|-------|---------|-------|-------|--------|---------|
+| bosses            | 7      | 137,137   | 75,563    | 7         | 7        | 1024²   | 1024² | 7       | 0     | 0     | 1      | 0       |
+| finale            | 2      | 25,260    | 13,834    | 2         | 2        | 2048²   | 1024² | 2       | 0     | 0     | 0      | 0       |
+| landmarks         | 196    | 200,492   | 110,782   | 196       | 196      | 1024²   | 1024² | 196     | 0     | 0     | 171    | 0       |
+| panoramas         | 32     | 83,960    | 59,706    | 32        | 32       | 2048²   | 2048² | 32      | 0     | 0     | 32     | 0       |
+| props             | 61     | 45,796    | 24,936    | 61        | 63       | 1024²   | 512²  | 61      | 0     | 0     | 0      | 19      |
+| rail-element      | 1      | 132       | 72        | 1         | 1        | 256²    | 512²  | 1       | 0     | 0     | 0      | 0       |
+| terrain           | 32     | 1,067,008 | 541,792   | 32        | 32       | 2048²   | 2048² | 32      | 0     | 0     | 32     | 0       |
+| town-buildings    | 9      | 49,744    | 26,371    | 9         | 9        | 2048²   | 1024² | 9       | 0     | 0     | 0      | 0       |
+| town-era-variants | 73     | 472,838   | 252,013   | 73        | 73       | 1024²   | 1024² | 73      | 0     | 0     | 0      | 55      |
+| TOTAL             | 413    | 2,082,367 | 1,105,069 | 413       | 415      |         |       | 413     | 0     | 0     | 236    | 74      |
+413 production GLBs · 67 violations · 67 grandfathered · 0 live
+✔ THE CORPUS: every production GLB is clean or explicitly grandfathered (2884.223917ms)
+✔ the census totals every family in the manifest and every family has a policy (127.088083ms)
+✔ the terrain family and the hero carry an export sidecar, and every sidecar is well-formed (4.701291ms)
+✔ reexport-pilot.sh reads the sidecar and leaves the no-sidecar path on the old recipe (0.64825ms)
+✔ the baseline is paid down by hand: no regenerate path exists in the guard (0.6475ms)
+✔ contractFor resolves the same sibling JSON Terrain3dClaimPilot.ts imports (0.542416ms)
+✔ census rows sum to the asset count (0.313583ms)
+ℹ tests 20
+ℹ suites 0
+ℹ pass 20
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3075.639833

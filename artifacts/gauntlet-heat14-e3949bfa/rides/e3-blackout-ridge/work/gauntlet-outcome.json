@@ -1,0 +1,59 @@
+{
+  "secured": true,
+  "waves": 12,
+  "timeMs": 360000,
+  "gold": 499,
+  "kills": 69,
+  "calls": 149,
+  "defaultedPicks": 0,
+  "defaultedSecure": 1,
+  "eventLogHash": "fnv1a32:f31073d7",
+
+  "tape": "/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/heat14/opus/e3-blackout-ridge/attempt-1-tape.json",
+  "scored": true,
+  "runsSoFar": 2,
+  "scoredAttempts": 1,
+  "worldModel": "sim-import",
+
+  "note": "attempt-1-tape.json is byte-identical to tune-1-tape.json: ONE ride under two filenames. The first controller secured, and the stop rule ends the heat at the first SECURED outcome, so the securing tune is promoted by name rather than re-ridden.",
+
+  "contract": "e3-blackout-ridge",
+  "seed": "e3-blackout-ridge-01",
+  "difficulty": "trail",
+  "era": 6,
+  "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+  "buildId": "1a7790ba8",
+  "viewVersion": 2,
+
+  "tapeHeaderHash": "fnv1a32:88d63803",
+  "assayReplay": {
+    "instrumentControl": "probe-tape.json (zero-order idle) replayed to fnv1a32:a45ba9ac == its own tape header. Instrument verified BEFORE the securing reel was judged.",
+    "reel": "fnv1a32:88d63803 == the tape header's own hash (NOT the stdout outcome line's fnv1a32:f31073d7 — different numbers by design)",
+    "securedSnapshot": { "waves": 12, "gold": 499, "timeAlive": 360 },
+    "verdict": "determinism verified locally; securedSnapshot matches the declared gold, so the door's score_mismatch rule has nothing to catch"
+  },
+
+  "envelope": {
+    "durationTicks": 10800,
+    "lastEntryTick": 10124,
+    "entries": 149,
+    "bytes": 544767,
+    "ceilings": { "maxTicks": 18002, "maxEntries": 3601, "maxTapeBytes": 1938784 },
+    "ceilingSource": "runTapeEnvelopeForContract (src/playbook/PlaybookFormat.ts) read from source, NOT the charter's 16 KiB + maxEntries x 160 summary: the live function adds maxOrderEntries x (2400-160), so the real byte ceiling here is 1,938,784 and not 592,544",
+    "verdict": "admissible on all three axes with room (ticks 10124 < 10800 < 18002; entries 149/3601; bytes 544,767/1,938,784)"
+  },
+
+  "margin": {
+    "heroMinHp": 52,
+    "heroFinalHp": 52,
+    "heroMaxHp": 100,
+    "worksStandingAtBank": 23,
+    "worksWreckedAtBank": 0,
+    "peakWrecked": 2,
+    "threatsAlivePeak": 60,
+    "goldStolen": 0,
+    "goldPanned": 890,
+    "liveBankCap": 500,
+    "goldShortOfCap": 1
+  }
+}

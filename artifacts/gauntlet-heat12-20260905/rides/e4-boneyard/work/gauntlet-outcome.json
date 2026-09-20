@@ -1,0 +1,49 @@
+{
+  "secured": true,
+  "waves": 12,
+  "timeMs": 360000,
+  "gold": 200,
+  "kills": 325,
+  "calls": 45,
+  "defaultedPicks": 0,
+  "defaultedSecure": 1,
+  "eventLogHash": "fnv1a32:76da210d",
+  "motor": {
+    "graded": [],
+    "hauled": true,
+    "arrivedAt": 40.2,
+    "roadDistance": 0,
+    "distanceTravelled": 68.338,
+    "fuelDrawn": 25.929,
+    "tarHarvested": 9,
+    "convoyArrived": null,
+    "kind": "tow",
+    "towed": true
+  },
+
+  "tape": "/tmp/heat12-038cc280/artifacts/heat12/opus/e4-boneyard/attempt-1-tape.json",
+  "scored": true,
+  "runsSoFar": 2,
+  "scoredAttempts": 1,
+  "worldModel": "sim-import",
+
+  "note": "ONE RIDE UNDER TWO FILENAMES. ctrl-v1 secured on its first ride; the rules stop me at the first SECURED outcome, so that ride IS my scored attempt. tune-1-tape.json and attempt-1-tape.json are byte-identical (sha256 2fad96d2562d5a3087c0ce1c7faecd0ad7291a0cedf1ae68dfd4fced2b5bfae7, 155120 bytes). The 'tape' field above is the authority.",
+  "hashNote": "eventLogHash above is the gr-sim STDOUT outcome line's hash (fnv1a32:76da210d). The TAPE's own header hash is fnv1a32:49e829d4 - different numbers by design. The local assay (scripts/assay-replay-agent.mjs) reproduced fnv1a32:49e829d4 and all four outcome fields (secured true / waves 12 / gold 200 / timeAlive 360); a zero-order idle-probe control replayed correctly too, so the instrument is sound.",
+  "envelope": {
+    "durationTicks": 10800,
+    "lastEntryTick": 10689,
+    "tickSlack": 111,
+    "entries": 45,
+    "bytes": 155120,
+    "byteCeiling": 345616,
+    "verdict": "admissible on all three axes"
+  },
+  "era": {
+    "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+    "era": 5,
+    "viewVersion": 2,
+    "buildId": "9c4337e3b",
+    "matchesArena": true
+  },
+  "ceilingNote": "w12 / 360.000s / 200g is the MAXIMUM row this contract can produce: secureWave is 12 (360.000s pinned) and 200 is the bank cap, so gold cannot go higher."
+}

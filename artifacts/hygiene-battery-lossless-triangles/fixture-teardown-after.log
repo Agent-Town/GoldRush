@@ -1,0 +1,68 @@
+TAP version 13
+# Subtest: all 147 scripts/*.test.mjs fixture owners remove their temp directories
+not ok 1 - all 147 scripts/*.test.mjs fixture owners remove their temp directories
+  ---
+  duration_ms: 98684.90175
+  type: 'test'
+  location: '/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-hygiene/scripts/fixture-teardown.test.mjs:32:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    scripts/bench-seeds.test.mjs child failed:
+    ✖ rotation registry stays outside the engine identity corpus (62.425ms)
+    ✔ contract ids are globally unique across the ten epoch bundles (0.338833ms)
+    ✔ bench seed sets cover Frontier and contain only valid known-contract seeds (0.159875ms)
+    ✔ rotation mint is deterministic, week-sensitive, and requires a salt (120.006875ms)
+    ℹ tests 4
+    ℹ suites 0
+    ℹ pass 3
+    ℹ fail 1
+    ℹ cancelled 0
+    ℹ skipped 0
+    ℹ todo 0
+    ℹ duration_ms 276.543458
+    
+    ✖ failing tests:
+    
+    test at scripts/bench-seeds.test.mjs:47:1
+    ✖ rotation registry stays outside the engine identity corpus (62.425ms)
+      AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+      + actual - expected
+      
+      + 'c550564ff54d6eca57f45b9bfdf275f2ce724151443b79eb69c71a406d5b2ff9'
+      - '72f1e2f45a85c375998be632c44f26235c4b3123485ac16be3177a573aa03a41'
+      
+          at TestContext.<anonymous> (file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-hygiene/scripts/bench-seeds.test.mjs:55:10)
+          at async Test.run (node:internal/test_runner/test:1389:7)
+          at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+        generatedMessage: true,
+        code: 'ERR_ASSERTION',
+        actual: 'c550564ff54d6eca57f45b9bfdf275f2ce724151443b79eb69c71a406d5b2ff9',
+        expected: '72f1e2f45a85c375998be632c44f26235c4b3123485ac16be3177a573aa03a41',
+        operator: 'strictEqual',
+        diff: 'simple'
+      }
+    
+    
+    1 !== 0
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 0
+  actual: 1
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-hygiene/scripts/fixture-teardown.test.mjs:48:14)
+    Test.runInAsyncScope (node:async_hooks:226:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.start (node:internal/test_runner/test:1242:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 98730.691083

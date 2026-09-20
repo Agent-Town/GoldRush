@@ -1,0 +1,206 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.4.0/bin/node",
+      "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/node_modules/.bin/playwright",
+      "test",
+      "--config",
+      "artifacts/asset-diet-explicit-manifest-2/playwright.budget.config.ts",
+      "--project=desktop-chrome",
+      "--workers=1",
+      "e2e/asset-diet.spec.ts",
+      "-g",
+      "town byte budget reports normal and saveData arms by URL"
+    ],
+    "configFile": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/asset-diet-explicit-manifest-2/playwright.budget.config.ts",
+    "rootDir": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/e2e",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/scripts/external-server-guard.mjs",
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "revision": "8020915cac66e911f4ec78c799775bd4a0961774",
+      "dirty": true,
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/asset-diet-explicit-manifest-2/test-results/desktop-budget",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "revision": "8020915cac66e911f4ec78c799775bd4a0961774",
+          "dirty": true,
+          "actualWorkers": 1
+        },
+        "id": "desktop-chrome",
+        "name": "desktop-chrome",
+        "testDir": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/e2e",
+        "testIgnore": [
+          "**/*.rig.ts",
+          "**/release-build.spec.ts",
+          "**/release-base-path.spec.ts",
+          "**/accounts-sync.spec.ts"
+        ],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/asset-diet-explicit-manifest-2/test-results/desktop-budget",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "revision": "8020915cac66e911f4ec78c799775bd4a0961774",
+          "dirty": true,
+          "actualWorkers": 1
+        },
+        "id": "mobile-chrome",
+        "name": "mobile-chrome",
+        "testDir": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/e2e",
+        "testIgnore": [
+          "**/*.rig.ts",
+          "**/release-build.spec.ts",
+          "**/release-base-path.spec.ts",
+          "**/accounts-sync.spec.ts"
+        ],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/asset-diet-explicit-manifest-2/test-results/desktop-budget",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "revision": "8020915cac66e911f4ec78c799775bd4a0961774",
+          "dirty": true,
+          "actualWorkers": 1
+        },
+        "id": "desktop-webkit",
+        "name": "desktop-webkit",
+        "testDir": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/e2e",
+        "testIgnore": [
+          "**/*.rig.ts",
+          "**/release-build.spec.ts",
+          "**/release-base-path.spec.ts",
+          "**/accounts-sync.spec.ts"
+        ],
+        "testMatch": [
+          "/058-device-tiers\\.spec\\.ts/"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/asset-diet-explicit-manifest-2/desktop-budget-results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "none",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npx vite preview --host 127.0.0.1 --port 5196 --strictPort",
+      "cwd": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a",
+      "url": "http://127.0.0.1:5196",
+      "reuseExistingServer": false,
+      "timeout": 60000
+    }
+  },
+  "suites": [
+    {
+      "title": "asset-diet.spec.ts",
+      "file": "asset-diet.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "town byte budget reports normal and saveData arms by URL",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 144868,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "normal prefetchWait=false cacheDisabled=false watchErrors suppressed 0 known GLTFLoader blob error(s)\n"
+                    },
+                    {
+                      "text": "normal prefetchWait=false cacheDisabled=true watchErrors suppressed 0 known GLTFLoader blob error(s)\n"
+                    },
+                    {
+                      "text": "normal prefetchWait=true cacheDisabled=false watchErrors suppressed 0 known GLTFLoader blob error(s)\n"
+                    },
+                    {
+                      "text": "normal prefetchWait=true cacheDisabled=true watchErrors suppressed 0 known GLTFLoader blob error(s)\n"
+                    },
+                    {
+                      "text": "normal watchErrors suppressed 0 known GLTFLoader blob error(s)\n"
+                    },
+                    {
+                      "text": "saveData watchErrors suppressed 0 known GLTFLoader blob error(s)\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-05T05:22:36.727Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "575f0bedc7de4468fcc1-674acd2ac0906cb1428b",
+          "file": "asset-diet.spec.ts",
+          "line": 277,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-09-05T05:22:33.880Z",
+    "duration": 148593.862,
+    "expected": 1,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

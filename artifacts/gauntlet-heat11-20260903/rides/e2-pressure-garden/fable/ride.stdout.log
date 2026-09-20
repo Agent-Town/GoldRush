@@ -1,0 +1,12 @@
+**SECURED — first secure of the unclaimed `e2-pressure-garden`: wave 12 / 360.000s / 63g / 395 kills / 38 calls, zero defaulted picks or secure, `fnv1a32:17044e3b`, banked at the wave-12 boundary.** The scored attempt (`attempt-1-tape.json`, 38 accepted entries, trail, bench seed 01) is a deterministic re-run of the securing ride with an identical event-log hash — determinism proven. 5 sim runs total, 1 scored attempt, stopped on first secure. worldModel: sim-import.
+
+How it went:
+
+- **Recon first** (receipts, manifest, sim source): secureWave 12, 30s waves, idle null floor reproduced bit-for-bit (w1/57.1s). The era's pressure line is authored but every pressure shooter is research-gated at `PressureArsenalSystem.ts:116`, so a cold door boot can never spend pressure — I refused the boiler/coal trap outright.
+- **Two tunes died teaching the map's real shape.** Tune-1 died at the idle floor's exact second: a seam holds 30g, turret 1 costs 50, and no view arrives between seam depletion and the wave boundary. Tune-2 exposed the load-bearing fact: `now.hero` never moves from (-12,12) — every order drives the separate, untargetable Prospector. My fort was defending seams no enemy ever threatened.
+- **The winning ride**: fort ringing the fixed hero on the boiler terrace (3 turrets + 2 beacons was all the economy afforded), hero switched to blast (AoE against the 2.4s continuous trickle stacking on him), Prospector chasing all six seam anchors map-wide in safety, REPAIR_UNDER 65, 13 upgrade stacks taken with zero defaults. Hero hp never fell below 92 and rode the back half at 167/175.
+- **New lever worth the notebook**: gold-gated BUILDs at deliberately illegal dead-band sites act as alarm clocks — their `order_failure` surprise forces a mid-wave view at chosen gold milestones, turning the wave-boundary view cadence into self-paced replanning.
+
+One integrity note: `artifacts/heat11/opus/e2-pressure-garden/` exists in this worktree from another entrant's ride in this same heat; I did not read any of it — strategy came from my own probes and the repo source only.
+
+All deliverables are in `/private/tmp/heat11-5e7a7c0b/artifacts/heat11/fable/e2-pressure-garden/`: `gauntlet-outcome.json` (final, scored), `gauntlet-report.md` (with the four required sections), `controller.mjs`, `attempt-1-tape.json`, and every probe/tune tape and log. The report's Winnability line: winnable from the starting kit with visible margin — the wall in my first two rides was my own world model, not the map.

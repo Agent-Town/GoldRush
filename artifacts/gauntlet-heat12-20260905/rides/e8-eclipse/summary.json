@@ -1,0 +1,173 @@
+{
+  "rig": "opus",
+  "contract": "e8-eclipse",
+  "model": "claude-opus-5",
+  "sessionId": "572bceb9-5b7f-4e11-803d-36f740a0bd75",
+  "startedAt": "2026-09-05T18:53:03.687Z",
+  "endedAt": "2026-09-05T19:05:02.260Z",
+  "wallClockSeconds": 719,
+  "wallHit": false,
+  "exitCode": 0,
+  "signal": null,
+  "setupToFirstOutputSeconds": 45,
+  "arenaTrackedChanges": [],
+  "workspaceFiles": [
+    "attempt-1-stderr.txt",
+    "attempt-1-tape.json",
+    "attempt-1-views.json",
+    "controller.mjs",
+    "gauntlet-outcome.json",
+    "gauntlet-report.md",
+    "probe-idle.json",
+    "run.mjs",
+    "tune-1-stderr.txt",
+    "tune-1-tape.json",
+    "tune-1-views.json",
+    "tune-2-stderr.txt",
+    "tune-2-tape.json",
+    "tune-2-views.json"
+  ],
+  "outcome": {
+    "secured": false,
+    "waves": 19,
+    "timeMs": 585200,
+    "gold": 190,
+    "kills": 885,
+    "calls": 89,
+    "defaultedPicks": 0,
+    "defaultedSecure": 0,
+    "eventLogHash": "fnv1a32:a0a58077",
+    "tape": "/private/tmp/heat12-038cc280/artifacts/heat12/opus/e8-eclipse/attempt-1-tape.json",
+    "scored": true,
+    "runsSoFar": 4,
+    "scoredAttempts": 1,
+    "worldModel": "sim-import",
+    "envelope": {
+      "durationTicks": 17556,
+      "entries": 89,
+      "lastEntryTick": 17556,
+      "bytes": 243852,
+      "note": "inside every axis; the reel was never the constraint"
+    },
+    "submission": "DO NOT SUBMIT. Not secured (hero down at wave 19 of 20, 14.8 s short of the wave-20 gate). skill.md forbids submitting an unsecured run.",
+    "eraGate": "The E8 air gate was MET and was never the wall: now.air.regolith.worked was non-empty by wave 1 and now.air.eclipse.groundsWorkedAfter reached 73 against requiredAfter 1. The run died on ordinary survival.",
+    "note": "attempt-1 reproduced tune-2 bit for bit (same fnv1a32:a0a58077, same 89 entries): the tier-upgrade sink added between them never fired, because gold never stood at >=150 at a view instant."
+  },
+  "outcomeError": null,
+  "promotedTapeName": "attempt-1-tape.json",
+  "scoredTapes": [
+    {
+      "file": "attempt-1-tape.json",
+      "id": "agent-65c5a680-9ccd6077-0a9f-4a8c-b36e-f459397b7149",
+      "contract": "e8-eclipse",
+      "seed": "e8-eclipse-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "aa0426847",
+        "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 19,
+        "timeAlive": 585.2,
+        "gold": 190
+      },
+      "entries": 89,
+      "durationTicks": 17556,
+      "lastEntryTick": 17337,
+      "promotedByRig": true,
+      "discoveredBy": "outcome-file+filename"
+    }
+  ],
+  "otherTapes": [
+    {
+      "file": "probe-idle.json",
+      "id": "agent-de24e29e-67623726-b509-472b-a2b7-ce461d95e8e7",
+      "contract": "e8-eclipse",
+      "seed": "e8-eclipse-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "59a8a0ba7",
+        "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 2,
+        "timeAlive": 81.8,
+        "gold": 0
+      },
+      "entries": 0,
+      "durationTicks": 2454,
+      "lastEntryTick": null
+    },
+    {
+      "file": "tune-1-tape.json",
+      "id": "agent-31c78490-e07da8a7-d2f5-4e56-a618-764b2d275f93",
+      "contract": "e8-eclipse",
+      "seed": "e8-eclipse-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "aa0426847",
+        "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 19,
+        "timeAlive": 577.267,
+        "gold": 140
+      },
+      "entries": 74,
+      "durationTicks": 17318,
+      "lastEntryTick": 17100
+    },
+    {
+      "file": "tune-2-tape.json",
+      "id": "agent-65c5a680-276848fd-1132-4006-bbe7-72b058376409",
+      "contract": "e8-eclipse",
+      "seed": "e8-eclipse-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "aa0426847",
+        "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 19,
+        "timeAlive": 585.2,
+        "gold": 190
+      },
+      "entries": 89,
+      "durationTicks": 17556,
+      "lastEntryTick": 17337
+    }
+  ],
+  "otherSecuredTapes": [],
+  "report": {
+    "outcome": "**NOT SECURED.** Best and scored: **waves 19 · timeAlive 585.200 s · gold 190 · calls 89**\n(`kills` 885, `eventLogHash` `fnv1a32:a0a58077`). The hero went down 14.8 seconds short of the\nwave-20 secure gate. **4 sim runs, 1 scored attempt. Nothing is put forward** — the run is unsecured\nand `skill.md` forbids submitting a death. `gauntlet-outcome.json` names\n`attempt-1-tape.json` as the scored attempt for the record only.",
+    "whatTheMapAsked": "It asked me about **air as a route the eclipse takes away** — genuinely, legibly, and far more\ncheaply than the framing suggests; the county's old RESKIN reading of this contract is now out of\ndate, and my own notebook's reading of it is worse than out of date, it is inverted. Generation 36\nsecured this map and reported that `atmosphere.airIsWall: true` bought nothing because the view\npublished **no `now.air` at all**. That is now false twice over: `now.air` is live with a suit\n(60 s capacity, 1 s/s drain outside a dome, 4/s refill inside), a per-pad breach dial, a regolith\nlatch, **and** an `eclipse` block no other map has. The mechanic is real, it gates the secure at every\nwave, and it is the only E8 map where the era's lever changes state mid-run rather than being a\nstanding condition. The fields that carried it were `now.air.suit.seconds`/`inDome`,\n`now.air.regolith.worked/required`, and `now.air.eclipse.{arrived, arrivedAtWave, offline, reserve,\ngroundsWorkedAfter, requiredAfter}`; the orders were `HOLD` on the reserve pad and `HARVEST`. There is\nno E8 verb — the transfer is answered with epoch-1 grammar and one coordinate.\n\nThe honest qualifier is that the gate is **cheap and I paid it without difficulty**. `required` and\n`requiredAfter` are both 1, so the whole air wall costs two credited pans in a 600-second run:\n`worked` was non-empty by wave 1 (the opening `HARVEST` lands with the suit near full), and after the\nshadow arrived at wave 10 my one-wave charge at `dome-cluster-pad-center` (0, 3.5) carried the suit to\n51 s, from which the ordinary economy tail credited `groundsWorkedAfter` **73** times against a\nrequirement of 1. The transfer the teaching intent is named for — \"reserves are love letters to your\nfuture self\" — is a real decision that costs exactly one wave of panning, made once, at a wave the\nview refuses to announce. Between the pans the suit sits empty for hundreds of seconds and 189\nbreathless pans cost nothing: the consumer damages nothing and mints nothing by design (the Same Laws\nlaw), so `emptySeconds` is a diagnostic, not a threat. **What actually killed all three rides was\nordinary stationary survival** on the inherited Mare Claim geometry: a hero welded at (0, 12) that no\nbuildable can come within 6 wu of, against a continuous 2.4-second trickle that put 38 live threats on\nthe board by wave 19.",
+    "winnability": "**Yes — winnable, and what stopped me was my own budget, not a wall:** the era gate is met by wave 11\nwith 72 credited pans to spare, the fort takes zero damage all run (`works.wrecked` 0 of 10), and the\ncurve is 577.3 s → 585.2 s across two controllers, i.e. **14.8 seconds** short of a 600-second gate my\nown generation 36 already banked on this seed — with the one lever that closes it, ~600 gold of turret\ntier-2 upgrades, provably never spent (`CONTEXT_ACTION` orders emitted: **0** in 89 arrays, because I\ngated the sink on a `gold >= 150` instant that a 200-cap purse being drained by a ten-rung ladder never\npresents at a view boundary; the fix is to gate on `works.entries[].tier < 2` and re-issue the pair\nevery view instead of on a gold instant).",
+    "lessons": "- **`airIsWall: true` did nothing on this map in generation 36 and gates the secure now — and the\n  block that carries it is one no sibling publishes.** I rode `e8-far-side` and `e8-low-orbit` in this\n  same heat and both ride `crossing`; the Eclipse authors no crossing zones, so it falls through to\n  the regolith latch **plus** an `eclipse` after-gate. Three maps, one consumer, three different\n  objectives, and the branch is chosen by which rectangles the contract happens to author\n  (`E8SuitAirSystem.create:186-219`). **Read the create() derivation, not the sibling you rode an hour\n  ago.**\n- **A mid-run era event whose arrival wave is unpublished is still computable from the source.**\n  `atWave = ceil(secureWave / 2)` and `secureWave` falls through to `Balance.run.secureWave = 20`, so\n  the shadow lands at wave 10 — derivable before the first order, on a map that deliberately publishes\n  no countdown because `firstRunWarning: false`. **When a view withholds a clock on purpose, the\n  constant that sets it is usually one `??` away.**\n- **Gate a spend on a STATE, never on a gold instant.** `pending.length === 0 && now.gold >= 150`\n  looks equivalent to \"spend the surplus\" and is not: with a 200 bank cap and a ladder draining the\n  purse, gold was never ≥ 150 at any of 89 view boundaries, so my scored attempt reproduced its\n  predecessor **bit for bit** and I spent a run learning nothing. The correct shape is the one that\n  won generations 45 and 48: find the first `works.entries[]` whose `tier < 2`, emit\n  `MOVE_TO` + `CONTEXT_ACTION upgrade` **every view**, and let the order's own affordability rule\n  decide — a re-issued order that waits is free; an order that is never emitted is 600 gold.\n- **Verify a new order actually appeared in the tape, not just that you wrote the branch.** One line\n  — count `CONTEXT_ACTION` orders across `inputLog.entries` — would have caught this on tune-2 and\n  given me a real third run. An identical `eventLogHash` between two runs whose controllers differ is\n  a *loud* signal that the diff never executed; I should read the hash equality as a bug report,\n  not as determinism.\n- **`HARVEST` slots are the income cap, and ten of them is half a wave.** One `HARVEST` is one 1.5 s\n  pan tick, so ten orders is fifteen seconds of work against a thirty-second wave — exactly the\n  60 g/wave plateau tune-1 sat on for twelve straight waves. Filling the array to 31 took panning to\n  1 460 g. **Size the tail against the view gap in seconds, not by taste.**\n- **The idle floor is now the cheapest proof that an era consumer is inert or live.** Idle here shows\n  suit 60 → 30 → 0 on a perfect 1 s/s line and then *nothing happening for twenty seconds of death*:\n  the air wall measures and never damages. That told me before I wrote an order that the suit is a\n  gate on credit, not a threat to survive, and that the whole air problem is two pans.\n- **Three runs is not a heat, and I front-loaded the wrong third again.** The source read was worth\n  every minute (it produced the entire contract), but I then spent two runs on the economy — which was\n  never the binding constraint — and reached the sink bug only on the run I had to call my attempt.\n  Generation 32 wrote \"reserve the last third for the run that combines what the earlier runs proved\";\n  this is the third heat running I have proved the parts and not fired the combination.\n- **A standing in my own name on the door list dates the reel, not the contract — fourth heat\n  running.** `e8-eclipse` is listed as first secured by me on 2026-09-04, and the map that carries\n  that row no longer exists."
+  },
+  "usage": {
+    "transcript": "/Users/robin/.claude/projects/-private-tmp-heat12-038cc280/572bceb9-5b7f-4e11-803d-36f740a0bd75.jsonl",
+    "assistantTurns": 63,
+    "toolCalls": 38,
+    "tokensIn": 126,
+    "tokensOut": 91033,
+    "cacheReadTokens": 16309378,
+    "cacheWriteTokens": 817943,
+    "note": "tokensIn excludes cache reads/writes (reported separately); summed from the CLI session transcript, not self-reported by the rig"
+  }
+}

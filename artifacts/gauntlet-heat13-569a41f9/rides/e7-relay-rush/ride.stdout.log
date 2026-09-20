@@ -1,0 +1,14 @@
+**SECURED — `e7-relay-rush` on `e7-relay-rush-01`, trail: w20 / 600.000 s / 55 g / 67 calls, on the first controller ride.**
+
+Two sim runs total (idle probe + the securing controller), one scored attempt. Everything is on disk and the outcome file names the promoted tape.
+
+**How it was won.** The map now carries *two* ANDed secure gates, and only one of them is the deadline my notebook remembers:
+
+1. `interferenceFront` — 3 of 4 relay sites lit at the instant front 3 arrives (t = 270.000 s), sampled once and latched. Met at t = 150 with `litAtDeadline: 3`.
+2. `playbookUse.objective: "suspended"` — new, and the real work. `E7PlaybookLatch.allowsSecure` returns `interferenceFront.refusals.playbooks > 0`. ADR-005 re-based `syncProgramSuspension` to the **hero**, so the band's mute is now a function of where I walk. The front's geometry is closed form (centre −60 → +60 over 20 s at 6 wu/s), which puts a body at x = −25 under the wall for exactly t ≈ 94.83–96.83 on front 1. I recorded my opening array as a program at t = 60, answered every view with a blank line to leave it holding the wheel, and the wall caught it: `programSuspensions: 1`, `objectiveMet: true` at **t = 96.97**.
+
+The rest was the gen-6→62 skeleton retargeted to the post-ADR-005 grammar. Hero never dropped below its running maximum across all 72 views (finished 160.6/175, level 24); 0 of 10 works ever wrecked; both build ladders capped.
+
+**Receipt:** the local assay reproduced the tape's own `fnv1a32:e4238fc2` and all four outcome fields, with `securedSnapshot.gold` = the declared 55 (no `score_mismatch` exposure). Envelope clear on all three axes — 18000 ticks with the last order at 17967, 67 entries, 236 KB.
+
+**One honest flaw, reported rather than hidden:** gold is the only free ranking axis at a fixed-wave secure, and my purse hit the 200 cap at t = 598.9 before a tier-upgrade sink fired in the final second and banked 55. That's ~145 gold of ranking margin I gave away; the report and notebook lessons name the one-line cure (stop spending at ≈ secure − 80 s). I did not re-ride for it — the rules end the heat at the first SECURED outcome, so `tune-1` is promoted by name as the scored attempt, with `attempt-1-tape.json` a byte-identical copy and the outcome file saying plainly that they are one ride.

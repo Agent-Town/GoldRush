@@ -1,0 +1,119 @@
+{
+  "tile": {
+    "id": "shelf-reefs-dev",
+    "size": 128,
+    "regions": [
+      {
+        "regionId": "open-water",
+        "depth": 0,
+        "depthClass": "surface",
+        "travelClass": "boat",
+        "passable": true
+      },
+      {
+        "regionId": "lagoon-shallows",
+        "depth": -1,
+        "depthClass": "shallows",
+        "travelClass": "swim",
+        "passable": true
+      },
+      {
+        "regionId": "reef-ring",
+        "depth": -2,
+        "depthClass": "reef",
+        "travelClass": "boat",
+        "passable": false
+      },
+      {
+        "regionId": "reef-gap",
+        "depth": -2,
+        "depthClass": "reef",
+        "travelClass": "boat",
+        "passable": true
+      },
+      {
+        "regionId": "wreck-shelf",
+        "depth": -4,
+        "depthClass": "wreck",
+        "travelClass": "depth",
+        "passable": true
+      },
+      {
+        "regionId": "trench-edge",
+        "depth": -8,
+        "depthClass": "trench",
+        "travelClass": "depth",
+        "passable": false
+      }
+    ]
+  },
+  "boat": {
+    "id": "claim-boat",
+    "anchor": {
+      "id": "lagoon",
+      "x": 0,
+      "z": 30
+    },
+    "pads": [
+      {
+        "id": "bow",
+        "x": 0,
+        "z": -3,
+        "occupied": false
+      },
+      {
+        "id": "port",
+        "x": -3,
+        "z": 1,
+        "occupied": false
+      },
+      {
+        "id": "starboard",
+        "x": 3,
+        "z": 1,
+        "occupied": false
+      }
+    ],
+    "buildings": []
+  },
+  "storm": {
+    "time": 32,
+    "weather": {
+      "era": 5,
+      "contractId": "shelf-reefs-dev",
+      "phase": "storm",
+      "phaseProgress": 0,
+      "cycle": 1,
+      "simTime": 32,
+      "movementMultiplier": 0.72,
+      "visibilityMultiplier": 0.58,
+      "hazeColor": "#335f64",
+      "hazeStrength": 0.28,
+      "warning": false
+    },
+    "frontX": -64,
+    "waves": [
+      {
+        "wave": 1,
+        "cycle": 0,
+        "scheduledAt": 8,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64
+      },
+      {
+        "wave": 2,
+        "cycle": 1,
+        "scheduledAt": 32,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64
+      }
+    ]
+  },
+  "log": [
+    "wave:1:storm-0:west-to-east@8",
+    "wave:2:storm-1:west-to-east@32"
+  ],
+  "hash": "fnv1a32:ef1f5c9b"
+}

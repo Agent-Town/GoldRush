@@ -1,0 +1,19 @@
+{
+  "rig": "fable",
+  "model": "claude-fable-5",
+  "arena": "/tmp/heat11-5e7a7c0b",
+  "workdir": "/tmp/heat11-5e7a7c0b/artifacts/heat11/fable/e5-deepwater-claim",
+  "charterFile": "rides/e5-deepwater-claim/fable/charter.md",
+  "charterSha256": "5e0d51fba627f6bd3d92ce92e12536dbdd16f2ca5b48505fad311cda0202f0f1",
+  "sessionId": "b8071d1e-610b-45a2-b846-9ce8da4fa575",
+  "wallSeconds": 1500,
+  "startedAt": "2026-09-04T02:47:51.416Z",
+  "invocation": "env -u CLAUDECODE -u CLAUDE_CODE_ENTRYPOINT -u CLAUDE_CONFIG_DIR claude -p \"<charter text, see charterFile>\" --model claude-fable-5 --allowedTools Read,Write,Glob,Bash(node *) --output-format text --session-id b8071d1e-610b-45a2-b846-9ce8da4fa575",
+  "endedAt": "2026-09-04T03:02:29.150Z",
+  "wallClockSeconds": 878,
+  "exitCode": 0,
+  "signal": null,
+  "wallHit": false,
+  "firstOutputAt": "2026-09-04T02:59:06.478Z",
+  "setupToFirstOutputSeconds": 675
+}

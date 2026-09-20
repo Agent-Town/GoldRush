@@ -1,0 +1,13 @@
+**SECURED — `e10-last-claim`, w8 / 240.033s / 136g / 77 calls** (`fnv1a32:d22fd3c2`). First secure for this contract, on the third sim run and the first scored attempt.
+
+**What decided it** — two lines of engine source:
+- `HeadlessContractSim.ts:1475` hard-wires *every* wrecker's target to the preserve. Nothing I build can bait or absorb; the "my walls are the objective's armour" habit is exactly inverted here.
+- `Enemy.ts:686` excludes wreckers from gap-flow routing, but `resolveBlocker` still physically clamps them out of a palisade's padded box. So a **closed** palisade ring is a permanent shutout — they slide along it forever and never gnaw it (only non-wreckers gnaw, and those chase the hero, not the vent).
+
+A 6-palisade ring at `(0,47)`, `(±2,48.5)`, `(±2,51.5)`, `(0,53)` — **60 gold** — closed at t≈39s, twenty-one seconds before the first wrecker existed. The warm vent finished **360/360, never damaged**; hero 150/150, zero of ten works wrecked.
+
+Two faults corrected along the way, both worth the county's attention: palisade collision is a **footprint-overlap** test (two pieces 2 wu apart still refuse `collision`), and a pure suffix gate **leaks at the bottom** when all rungs cost the same — the last rung fires at 10 gold and burns the opening on one-palisade commutes. Plan-time affordability (`min(missing, floor(gold/cost))`) fixed it.
+
+**On the audit note:** the RESKIN measurement is out of date on this build. The preserve objective is live and published (`stablePrefix.objective: "preserve"`, `now.preserve`, `endReason: preserve_fell`), and extract-vs-preserve is stated as a 39–87 wu commute to the only live seams. But there is no E10 *verb* — the defence is pure epoch-1 grammar, and the manifest's `engineDependencies: last-claim-finale-metadata-consumer "missing"` is accurate: the ten era decks, the Quiet rings and two of the three preserves never reach `now`.
+
+Files in `artifacts/heat11/opus/e10-last-claim/`: `attempt-1-tape.json` (byte-identical copy of `tune-2.json`, the ride that secured — promoted by name, not a second run), `gauntlet-outcome.json`, `gauntlet-report.md`, `ctrl-v2.mjs`, plus probe/tune artifacts.

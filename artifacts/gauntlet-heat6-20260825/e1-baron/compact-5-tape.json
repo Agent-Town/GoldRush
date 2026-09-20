@@ -1,0 +1,6378 @@
+{
+  "version": 2,
+  "id": "agent-74440f7c-0793ac83-6c7a-479f-9cee-ff53cd620bc6",
+  "createdAt": 0,
+  "kept": true,
+  "contract": "e1-baron",
+  "seed": "e1-baron-01",
+  "difficulty": "trail",
+  "simVersion": 1,
+  "meta": {
+    "buildId": "61681a776",
+    "engineHash": "d48987df2d50c643e854a2bf8a23b7f34b81c3de1cfd2e54999129b5660f7494"
+  },
+  "runStart": {
+    "meta": {
+      "version": 1,
+      "tracks": {
+        "territory": 0,
+        "science": 0,
+        "hero": 0,
+        "agent": 0
+      }
+    },
+    "research": {
+      "version": 1,
+      "epochId": "epoch-1-frontier",
+      "metaScienceCursor": 0,
+      "progress": {
+        "version": 1,
+        "tracks": {
+          "territory": 0,
+          "science": 0,
+          "hero": 0,
+          "agent": 0
+        }
+      },
+      "taken": [],
+      "proposalSalt": 0,
+      "pinnedTarget": null,
+      "unlocks": {}
+    }
+  },
+  "inputLog": {
+    "version": 1,
+    "name": "agent-74440f7c",
+    "contractId": "e1-baron",
+    "seed": "e1-baron-01",
+    "difficultyPreset": "trail",
+    "stepSeconds": 0.03333333333333333,
+    "start": {
+      "x": 0,
+      "z": 12
+    },
+    "durationTicks": 16049,
+    "entries": [
+      {
+        "t": 0,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 60,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 162,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -10,
+                  "z": 7
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sluice",
+                "where": {
+                  "x": -10,
+                  "z": 7
+                },
+                "when": {
+                  "goldGte": 40
+                }
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 783,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 0,
+                  "z": 15
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 15
+                },
+                "when": {
+                  "goldGte": 25
+                }
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -5,
+                  "z": 9
+                }
+              },
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 99,
+                  "z": 99
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 864,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 1046,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 1151,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -6,
+                  "z": 7
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sluice",
+                "where": {
+                  "x": -6,
+                  "z": 7
+                },
+                "when": {
+                  "goldGte": 40
+                }
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -5,
+                  "z": 9
+                }
+              },
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 99,
+                  "z": 99
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 1363,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 1516,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -2,
+                  "z": 7
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sluice",
+                "where": {
+                  "x": -2,
+                  "z": 7
+                },
+                "when": {
+                  "goldGte": 40
+                }
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -5,
+                  "z": 9
+                }
+              },
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 99,
+                  "z": 99
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 1566,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -2,
+                  "z": 7
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sluice",
+                "where": {
+                  "x": -2,
+                  "z": 7
+                },
+                "when": {
+                  "goldGte": 40
+                }
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -5,
+                  "z": 9
+                }
+              },
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 99,
+                  "z": 99
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 1695,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 1782,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -6,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": -6,
+                  "z": 12
+                },
+                "when": {
+                  "goldGte": 50
+                }
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -5,
+                  "z": 9
+                }
+              },
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 99,
+                  "z": 99
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 1898,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 2004,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -5,
+                  "z": 9
+                }
+              },
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 99,
+                  "z": 99
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 2348,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -2,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": -2,
+                  "z": 12
+                },
+                "when": {
+                  "goldGte": 70
+                }
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -5,
+                  "z": 9
+                }
+              },
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 99,
+                  "z": 99
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 3131,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 3189,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 3386,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 2,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 2,
+                  "z": 12
+                },
+                "when": {
+                  "goldGte": 95
+                }
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -5,
+                  "z": 9
+                }
+              },
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 99,
+                  "z": 99
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 3458,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "heavy_spark"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 2,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 2,
+                  "z": 12
+                },
+                "when": {
+                  "goldGte": 95
+                }
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -5,
+                  "z": 9
+                }
+              },
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 99,
+                  "z": 99
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 3544,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "heavy_spark"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 3700,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -5,
+                  "z": 9
+                }
+              },
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 99,
+                  "z": 99
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 3799,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "heavy_spark"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 3914,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 3920,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 6,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 6,
+                  "z": 12
+                },
+                "when": {
+                  "goldGte": 125
+                }
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -5,
+                  "z": 9
+                }
+              },
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 99,
+                  "z": 99
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 4002,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "beacon_dynamo"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 6,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 6,
+                  "z": 12
+                },
+                "when": {
+                  "goldGte": 125
+                }
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -5,
+                  "z": 9
+                }
+              },
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 99,
+                  "z": 99
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 4239,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "beacon_dynamo"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 4354,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 4490,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -10,
+                  "z": 14
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "stockpile",
+                "where": {
+                  "x": -10,
+                  "z": 14
+                },
+                "when": {
+                  "goldGte": 60
+                }
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -5,
+                  "z": 9
+                }
+              },
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 99,
+                  "z": 99
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 4696,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 4756,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "split_spark"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 4888,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -5,
+                  "z": 9
+                }
+              },
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 99,
+                  "z": 99
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 5032,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "split_spark"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 5179,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -10,
+                  "z": 7
+                }
+              },
+              {
+                "verb": "CONTEXT_ACTION",
+                "action": "upgrade",
+                "target": {
+                  "id": "sluice",
+                  "index": 0
+                }
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -5,
+                  "z": 9
+                }
+              },
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 99,
+                  "z": 99
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 5479,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 5537,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "tinkers_plating"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 5658,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 5772,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -5,
+                  "z": 9
+                }
+              },
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 99,
+                  "z": 99
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 5818,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "tinkers_plating"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 5980,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -5,
+                  "z": 9
+                }
+              },
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 99,
+                  "z": 99
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 6261,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 6356,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "double_tap_coil"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 6438,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 6631,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -10,
+                  "z": 7
+                }
+              },
+              {
+                "verb": "CONTEXT_ACTION",
+                "action": "upgrade",
+                "target": {
+                  "id": "sluice",
+                  "index": 0
+                }
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -5,
+                  "z": 9
+                }
+              },
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 99,
+                  "z": 99
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 6634,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -10,
+                  "z": 7
+                }
+              },
+              {
+                "verb": "CONTEXT_ACTION",
+                "action": "upgrade",
+                "target": {
+                  "id": "sluice",
+                  "index": 0
+                }
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -5,
+                  "z": 9
+                }
+              },
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 99,
+                  "z": 99
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 6661,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -10,
+                  "z": 7
+                }
+              },
+              {
+                "verb": "CONTEXT_ACTION",
+                "action": "upgrade",
+                "target": {
+                  "id": "sluice",
+                  "index": 0
+                }
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -5,
+                  "z": 9
+                }
+              },
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 99,
+                  "z": 99
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 6688,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -10,
+                  "z": 7
+                }
+              },
+              {
+                "verb": "CONTEXT_ACTION",
+                "action": "upgrade",
+                "target": {
+                  "id": "sluice",
+                  "index": 0
+                }
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -5,
+                  "z": 9
+                }
+              },
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 99,
+                  "z": 99
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 6696,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "powder_charge"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -10,
+                  "z": 7
+                }
+              },
+              {
+                "verb": "CONTEXT_ACTION",
+                "action": "upgrade",
+                "target": {
+                  "id": "sluice",
+                  "index": 0
+                }
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -5,
+                  "z": 9
+                }
+              },
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 99,
+                  "z": 99
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 7044,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 7216,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 7234,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "long_resonator"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 7413,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -6,
+                  "z": 7
+                }
+              },
+              {
+                "verb": "CONTEXT_ACTION",
+                "action": "upgrade",
+                "target": {
+                  "id": "sluice",
+                  "index": 1
+                }
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -5,
+                  "z": 9
+                }
+              },
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 99,
+                  "z": 99
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 7417,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -6,
+                  "z": 7
+                }
+              },
+              {
+                "verb": "CONTEXT_ACTION",
+                "action": "upgrade",
+                "target": {
+                  "id": "sluice",
+                  "index": 1
+                }
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -5,
+                  "z": 9
+                }
+              },
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 99,
+                  "z": 99
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 7444,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 7626,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -5,
+                  "z": 9
+                }
+              },
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 99,
+                  "z": 99
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 7659,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "tinkers_plating"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -5,
+                  "z": 9
+                }
+              },
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 99,
+                  "z": 99
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 7827,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 1
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -5,
+                  "z": 9
+                }
+              },
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 99,
+                  "z": 99
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 8154,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "long_resonator"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 8190,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 8217,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 8244,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 8271,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 8293,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 8399,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 8501,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -5,
+                  "z": 9
+                }
+              },
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 99,
+                  "z": 99
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 8609,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -5,
+                  "z": 9
+                }
+              },
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 99,
+                  "z": 99
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 8716,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "double_tap_coil"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -6,
+                  "z": 7
+                }
+              },
+              {
+                "verb": "CONTEXT_ACTION",
+                "action": "upgrade",
+                "target": {
+                  "id": "sluice",
+                  "index": 1
+                }
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -5,
+                  "z": 9
+                }
+              },
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 99,
+                  "z": 99
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 8993,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 9058,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 9085,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 9108,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 1
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -5,
+                  "z": 9
+                }
+              },
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 99,
+                  "z": 99
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 9112,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 1
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -5,
+                  "z": 9
+                }
+              },
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 99,
+                  "z": 99
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 9113,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "double_tap_coil"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 1
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -5,
+                  "z": 9
+                }
+              },
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 99,
+                  "z": 99
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 9392,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 9570,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -2,
+                  "z": 7
+                }
+              },
+              {
+                "verb": "CONTEXT_ACTION",
+                "action": "upgrade",
+                "target": {
+                  "id": "sluice",
+                  "index": 2
+                }
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -5,
+                  "z": 9
+                }
+              },
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 99,
+                  "z": 99
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 9678,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "powder_charge"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -2,
+                  "z": 7
+                }
+              },
+              {
+                "verb": "CONTEXT_ACTION",
+                "action": "upgrade",
+                "target": {
+                  "id": "sluice",
+                  "index": 2
+                }
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -5,
+                  "z": 9
+                }
+              },
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 99,
+                  "z": 99
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 9754,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 9774,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 9781,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 9801,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 9808,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 9832,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 10042,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 1
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -5,
+                  "z": 9
+                }
+              },
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 99,
+                  "z": 99
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 10174,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 10270,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "wide_ring"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 10365,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -5,
+                  "z": 9
+                }
+              },
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 99,
+                  "z": 99
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 10537,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 10552,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 10564,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 10579,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 10591,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 1
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -5,
+                  "z": 9
+                }
+              },
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 99,
+                  "z": 99
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 10826,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "quick_fuse"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 10957,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 11005,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 11225,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 11394,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "quick_fuse"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -2,
+                  "z": 7
+                }
+              },
+              {
+                "verb": "CONTEXT_ACTION",
+                "action": "upgrade",
+                "target": {
+                  "id": "sluice",
+                  "index": 2
+                }
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -5,
+                  "z": 9
+                }
+              },
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 99,
+                  "z": 99
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 11740,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -6,
+                  "z": 14
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": -6,
+                  "z": 14
+                },
+                "when": {
+                  "goldGte": 35
+                }
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -5,
+                  "z": 9
+                }
+              },
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 99,
+                  "z": 99
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 11986,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "wide_ring"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -4,
+                  "z": 15
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": -4,
+                  "z": 15
+                },
+                "when": {
+                  "goldGte": 45
+                }
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -5,
+                  "z": 9
+                }
+              },
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 99,
+                  "z": 99
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 12124,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -6,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "CONTEXT_ACTION",
+                "action": "upgrade",
+                "target": {
+                  "id": "turret",
+                  "index": 0
+                }
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -5,
+                  "z": 9
+                }
+              },
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 99,
+                  "z": 99
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 12151,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -6,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "CONTEXT_ACTION",
+                "action": "upgrade",
+                "target": {
+                  "id": "turret",
+                  "index": 0
+                }
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -5,
+                  "z": 9
+                }
+              },
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 99,
+                  "z": 99
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 12168,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 12178,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 12195,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 12205,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 12232,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 12324,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 12522,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 1
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -5,
+                  "z": 9
+                }
+              },
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 99,
+                  "z": 99
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 12652,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "prospectors_luck"
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 1
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -5,
+                  "z": 9
+                }
+              },
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 99,
+                  "z": 99
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 12701,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 12740,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 12931,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -2,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "CONTEXT_ACTION",
+                "action": "upgrade",
+                "target": {
+                  "id": "turret",
+                  "index": 1
+                }
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -5,
+                  "z": 9
+                }
+              },
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 99,
+                  "z": 99
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 12958,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -2,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "CONTEXT_ACTION",
+                "action": "upgrade",
+                "target": {
+                  "id": "turret",
+                  "index": 1
+                }
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -5,
+                  "z": 9
+                }
+              },
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 99,
+                  "z": 99
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 12985,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -2,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "CONTEXT_ACTION",
+                "action": "upgrade",
+                "target": {
+                  "id": "turret",
+                  "index": 1
+                }
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -5,
+                  "z": 9
+                }
+              },
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 99,
+                  "z": 99
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 13012,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -2,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "CONTEXT_ACTION",
+                "action": "upgrade",
+                "target": {
+                  "id": "turret",
+                  "index": 1
+                }
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -5,
+                  "z": 9
+                }
+              },
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 99,
+                  "z": 99
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 13134,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 13239,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "prospectors_luck"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 2,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "CONTEXT_ACTION",
+                "action": "upgrade",
+                "target": {
+                  "id": "turret",
+                  "index": 2
+                }
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -5,
+                  "z": 9
+                }
+              },
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 99,
+                  "z": 99
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 13305,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 2,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "CONTEXT_ACTION",
+                "action": "upgrade",
+                "target": {
+                  "id": "turret",
+                  "index": 2
+                }
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -5,
+                  "z": 9
+                }
+              },
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 99,
+                  "z": 99
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 13732,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 1
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -5,
+                  "z": 9
+                }
+              },
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 99,
+                  "z": 99
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 13909,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "sharpen"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 6,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "CONTEXT_ACTION",
+                "action": "upgrade",
+                "target": {
+                  "id": "turret",
+                  "index": 3
+                }
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -5,
+                  "z": 9
+                }
+              },
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 99,
+                  "z": 99
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 14087,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 14200,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 14310,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 14425,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -6,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "CONTEXT_ACTION",
+                "action": "upgrade",
+                "target": {
+                  "id": "turret",
+                  "index": 0
+                }
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -5,
+                  "z": 9
+                }
+              },
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 99,
+                  "z": 99
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 14451,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -6,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "CONTEXT_ACTION",
+                "action": "upgrade",
+                "target": {
+                  "id": "turret",
+                  "index": 0
+                }
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -5,
+                  "z": 9
+                }
+              },
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 99,
+                  "z": 99
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 14461,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -6,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "CONTEXT_ACTION",
+                "action": "upgrade",
+                "target": {
+                  "id": "turret",
+                  "index": 0
+                }
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -5,
+                  "z": 9
+                }
+              },
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 99,
+                  "z": 99
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 14475,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "pan_legend"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -6,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "CONTEXT_ACTION",
+                "action": "upgrade",
+                "target": {
+                  "id": "turret",
+                  "index": 0
+                }
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -5,
+                  "z": 9
+                }
+              },
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 99,
+                  "z": 99
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 14478,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -6,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "CONTEXT_ACTION",
+                "action": "upgrade",
+                "target": {
+                  "id": "turret",
+                  "index": 0
+                }
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -5,
+                  "z": 9
+                }
+              },
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 99,
+                  "z": 99
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 14505,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -6,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "CONTEXT_ACTION",
+                "action": "upgrade",
+                "target": {
+                  "id": "turret",
+                  "index": 0
+                }
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -5,
+                  "z": 9
+                }
+              },
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 99,
+                  "z": 99
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 14532,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -6,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "CONTEXT_ACTION",
+                "action": "upgrade",
+                "target": {
+                  "id": "turret",
+                  "index": 0
+                }
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -5,
+                  "z": 9
+                }
+              },
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 99,
+                  "z": 99
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 14559,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 1
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -5,
+                  "z": 9
+                }
+              },
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 99,
+                  "z": 99
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 14870,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 0,
+                  "z": 11
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 0,
+                  "z": 11
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -5,
+                  "z": 9
+                }
+              },
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 99,
+                  "z": 99
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 15292,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "sharpen"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -10,
+                  "z": 11
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -10,
+                  "z": 11
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -5,
+                  "z": 9
+                }
+              },
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 99,
+                  "z": 99
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 15319,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -10,
+                  "z": 11
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -10,
+                  "z": 11
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -5,
+                  "z": 9
+                }
+              },
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 99,
+                  "z": 99
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 15346,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -10,
+                  "z": 11
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -10,
+                  "z": 11
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -5,
+                  "z": 9
+                }
+              },
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 99,
+                  "z": 99
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 15373,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 10,
+                  "z": 11
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 10,
+                  "z": 11
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -5,
+                  "z": 9
+                }
+              },
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 99,
+                  "z": 99
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 15400,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 10,
+                  "z": 11
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 10,
+                  "z": 11
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -5,
+                  "z": 9
+                }
+              },
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 99,
+                  "z": 99
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 15653,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -6,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "CONTEXT_ACTION",
+                "action": "upgrade",
+                "target": {
+                  "id": "turret",
+                  "index": 0
+                }
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -5,
+                  "z": 9
+                }
+              },
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 99,
+                  "z": 99
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 15722,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 15902,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 31
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -5,
+                  "z": 9
+                }
+              },
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 99,
+                  "z": 99
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 15929,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 31
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -5,
+                  "z": 9
+                }
+              },
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 99,
+                  "z": 99
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 16020,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 31
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -5,
+                  "z": 9
+                }
+              },
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 99,
+                  "z": 99
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 16027,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 31
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -5,
+                  "z": 9
+                }
+              },
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 99,
+                  "z": 99
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 16030,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 31
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -5,
+                  "z": 9
+                }
+              },
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 99,
+                  "z": 99
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 16031,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 31
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -5,
+                  "z": 9
+                }
+              },
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 99,
+                  "z": 99
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 16047,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 31
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "blast"
+              },
+              {
+                "verb": "SET_WEAPON",
+                "weapon": "rig"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -5,
+                  "z": 9
+                }
+              },
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 99,
+                  "z": 99
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "truncated": null,
+    "primarySlot": 0,
+    "streams": []
+  },
+  "eventLogHash": "fnv1a32:22d94e37",
+  "outcome": {
+    "reason": "death",
+    "secured": false,
+    "waves": 20,
+    "timeAlive": 534.967,
+    "gold": 290
+  }
+}

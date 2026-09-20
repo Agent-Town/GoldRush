@@ -1,0 +1,54 @@
+{
+ "secured": true,
+ "waves": 20,
+ "timeMs": 600000,
+ "gold": 70,
+ "kills": 885,
+ "calls": 60,
+ "defaultedPicks": 0,
+ "defaultedSecure": 1,
+ "eventLogHash": "fnv1a32:9163b781",
+ "outcomeLine": {
+  "secured": true,
+  "waves": 20,
+  "timeMs": 600000,
+  "gold": 70,
+  "kills": 885,
+  "calls": 60,
+  "defaultedPicks": 0,
+  "defaultedSecure": 1,
+  "eventLogHash": "fnv1a32:9163b781"
+ },
+ "tape": "/private/tmp/heat13-569a41f9/artifacts/heat13/opus/e8-mare-claim/attempt-1-tape.json",
+ "scored": true,
+ "runsSoFar": 3,
+ "scoredAttempts": 1,
+ "worldModel": "sim-import",
+ "envelope": {
+  "bytes": 155762,
+  "byteCeiling": 592384,
+  "durationTicks": 18000,
+  "tickCeiling": 18002,
+  "entries": 60,
+  "entryCeiling": 3601,
+  "lastEntryTick": 17681,
+  "tapeEventLogHash": "fnv1a32:5ace32f2",
+  "admissible": true
+ },
+ "assay": {
+  "tool": "scripts/assay-replay-agent.mjs",
+  "reproducedEventLogHash": "fnv1a32:5ace32f2",
+  "reproducedOutcome": {
+   "secured": true,
+   "waves": 20,
+   "gold": 70,
+   "timeAlive": 600
+  },
+  "note": "matches the TAPE header hash, not the stdout outcome line hash fnv1a32:9163b781 — different numbers by design"
+ },
+ "era": {
+  "engineHash": "09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4",
+  "era": 5,
+  "viewVersion": 2
+ }
+}

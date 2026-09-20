@@ -1,0 +1,217 @@
+
+Running 8 tests using 1 worker
+
+[1/8] [desktop-chrome] › e2e/ss-01-beats.spec.ts:103:1 › founding, first contract, and Prospector XP beats fire once with portraits
+  1) [desktop-chrome] › e2e/ss-01-beats.spec.ts:103:1 › founding, first contract, and Prospector XP beats fire once with portraits 
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  getByTestId('story-beat-card')
+    Expected: "founding-welcome"
+    Received: "ledger-page:the_claim"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveAttribute" with timeout 5000ms
+      - waiting for getByTestId('story-beat-card')
+        14 × locator resolved to <article role="status" data-art-key="" aria-live="polite" data-speaker="clerk" data-ceremony-step="" data-testid="story-beat-card" data-beat-id="ledger-page:the_claim" class="story-beat-card story-beat-card--visible">…</article>
+           - unexpected value "ledger-page:the_claim"
+
+
+      86 |   await expect(card).toBeVisible({ timeout: 8_000 });
+      87 |   await expect(card).toHaveClass(/story-beat-card--visible/);
+    > 88 |   await expect(card).toHaveAttribute('data-beat-id', id);
+         |                      ^
+      89 |   await expect(card).toHaveAttribute('data-speaker', speaker);
+      90 |   await expect(page.getByTestId('story-beat-portrait')).toHaveAttribute('src', new RegExp(portraitNeedle));
+      91 | }
+        at expectBeat (/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-a8/e2e/ss-01-beats.spec.ts:88:22)
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-a8/e2e/ss-01-beats.spec.ts:113:3
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ss-01-beats-founding-first-d6d9b-ts-fire-once-with-portraits-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/ss-01-beats-founding-first-d6d9b-ts-fire-once-with-portraits-desktop-chrome/error-context.md
+
+
+[2/8] [desktop-chrome] › e2e/ss-01-beats.spec.ts:150:1 › Tales setting silences story beats at queue level
+[3/8] [desktop-chrome] › e2e/ss-01-beats.spec.ts:169:1 › pointer glow clears on first interaction
+  2) [desktop-chrome] › e2e/ss-01-beats.spec.ts:169:1 › pointer glow clears on first interaction ───
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  getByTestId('story-beat-card')
+    Expected: "deputy-hello"
+    Received: "first-boot"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveAttribute" with timeout 5000ms
+      - waiting for getByTestId('story-beat-card')
+        14 × locator resolved to <article role="status" data-art-key="" aria-live="polite" data-ceremony-step="" data-beat-id="first-boot" data-speaker="tavernkeeper" data-testid="story-beat-card" class="story-beat-card story-beat-card--visible">…</article>
+           - unexpected value "first-boot"
+
+
+      86 |   await expect(card).toBeVisible({ timeout: 8_000 });
+      87 |   await expect(card).toHaveClass(/story-beat-card--visible/);
+    > 88 |   await expect(card).toHaveAttribute('data-beat-id', id);
+         |                      ^
+      89 |   await expect(card).toHaveAttribute('data-speaker', speaker);
+      90 |   await expect(page.getByTestId('story-beat-portrait')).toHaveAttribute('src', new RegExp(portraitNeedle));
+      91 | }
+        at expectBeat (/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-a8/e2e/ss-01-beats.spec.ts:88:22)
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-a8/e2e/ss-01-beats.spec.ts:177:3
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ss-01-beats-pointer-glow-clears-on-first-interaction-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/ss-01-beats-pointer-glow-clears-on-first-interaction-desktop-chrome/error-context.md
+
+
+[4/8] [desktop-chrome] › e2e/ss-01-beats.spec.ts:187:1 › story card waits until wave banner clears when both fire same tick
+  3) [desktop-chrome] › e2e/ss-01-beats.spec.ts:187:1 › story card waits until wave banner clears when both fire same tick 
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  getByTestId('story-beat-card')
+    Expected: "first-loss"
+    Received: "first-boot"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveAttribute" with timeout 5000ms
+      - waiting for getByTestId('story-beat-card')
+        14 × locator resolved to <article role="status" data-art-key="" aria-live="polite" data-ceremony-step="" data-beat-id="first-boot" data-speaker="tavernkeeper" data-testid="story-beat-card" class="story-beat-card story-beat-card--visible">…</article>
+           - unexpected value "first-boot"
+
+
+      86 |   await expect(card).toBeVisible({ timeout: 8_000 });
+      87 |   await expect(card).toHaveClass(/story-beat-card--visible/);
+    > 88 |   await expect(card).toHaveAttribute('data-beat-id', id);
+         |                      ^
+      89 |   await expect(card).toHaveAttribute('data-speaker', speaker);
+      90 |   await expect(page.getByTestId('story-beat-portrait')).toHaveAttribute('src', new RegExp(portraitNeedle));
+      91 | }
+        at expectBeat (/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-a8/e2e/ss-01-beats.spec.ts:88:22)
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-a8/e2e/ss-01-beats.spec.ts:202:3
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ss-01-beats-story-card-wai-5a8b3-rs-when-both-fire-same-tick-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/ss-01-beats-story-card-wai-5a8b3-rs-when-both-fire-same-tick-desktop-chrome/error-context.md
+
+
+[5/8] [mobile-chrome] › e2e/ss-01-beats.spec.ts:103:1 › founding, first contract, and Prospector XP beats fire once with portraits
+  4) [mobile-chrome] › e2e/ss-01-beats.spec.ts:103:1 › founding, first contract, and Prospector XP beats fire once with portraits 
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  getByTestId('story-beat-card')
+    Expected: "founding-welcome"
+    Received: "ledger-page:the_claim"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveAttribute" with timeout 5000ms
+      - waiting for getByTestId('story-beat-card')
+        14 × locator resolved to <article role="status" data-art-key="" aria-live="polite" data-speaker="clerk" data-ceremony-step="" data-testid="story-beat-card" data-beat-id="ledger-page:the_claim" class="story-beat-card story-beat-card--visible">…</article>
+           - unexpected value "ledger-page:the_claim"
+
+
+      86 |   await expect(card).toBeVisible({ timeout: 8_000 });
+      87 |   await expect(card).toHaveClass(/story-beat-card--visible/);
+    > 88 |   await expect(card).toHaveAttribute('data-beat-id', id);
+         |                      ^
+      89 |   await expect(card).toHaveAttribute('data-speaker', speaker);
+      90 |   await expect(page.getByTestId('story-beat-portrait')).toHaveAttribute('src', new RegExp(portraitNeedle));
+      91 | }
+        at expectBeat (/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-a8/e2e/ss-01-beats.spec.ts:88:22)
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-a8/e2e/ss-01-beats.spec.ts:113:3
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ss-01-beats-founding-first-d6d9b-ts-fire-once-with-portraits-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/ss-01-beats-founding-first-d6d9b-ts-fire-once-with-portraits-mobile-chrome/error-context.md
+
+
+[6/8] [mobile-chrome] › e2e/ss-01-beats.spec.ts:150:1 › Tales setting silences story beats at queue level
+[7/8] [mobile-chrome] › e2e/ss-01-beats.spec.ts:169:1 › pointer glow clears on first interaction
+  5) [mobile-chrome] › e2e/ss-01-beats.spec.ts:169:1 › pointer glow clears on first interaction ────
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  getByTestId('story-beat-card')
+    Expected: "deputy-hello"
+    Received: "first-boot"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveAttribute" with timeout 5000ms
+      - waiting for getByTestId('story-beat-card')
+        14 × locator resolved to <article role="status" data-art-key="" aria-live="polite" data-ceremony-step="" data-beat-id="first-boot" data-speaker="tavernkeeper" data-testid="story-beat-card" class="story-beat-card story-beat-card--visible">…</article>
+           - unexpected value "first-boot"
+
+
+      86 |   await expect(card).toBeVisible({ timeout: 8_000 });
+      87 |   await expect(card).toHaveClass(/story-beat-card--visible/);
+    > 88 |   await expect(card).toHaveAttribute('data-beat-id', id);
+         |                      ^
+      89 |   await expect(card).toHaveAttribute('data-speaker', speaker);
+      90 |   await expect(page.getByTestId('story-beat-portrait')).toHaveAttribute('src', new RegExp(portraitNeedle));
+      91 | }
+        at expectBeat (/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-a8/e2e/ss-01-beats.spec.ts:88:22)
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-a8/e2e/ss-01-beats.spec.ts:177:3
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ss-01-beats-pointer-glow-clears-on-first-interaction-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/ss-01-beats-pointer-glow-clears-on-first-interaction-mobile-chrome/error-context.md
+
+
+[8/8] [mobile-chrome] › e2e/ss-01-beats.spec.ts:187:1 › story card waits until wave banner clears when both fire same tick
+  6) [mobile-chrome] › e2e/ss-01-beats.spec.ts:187:1 › story card waits until wave banner clears when both fire same tick 
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  getByTestId('story-beat-card')
+    Expected: "first-loss"
+    Received: "first-boot"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveAttribute" with timeout 5000ms
+      - waiting for getByTestId('story-beat-card')
+        14 × locator resolved to <article role="status" data-art-key="" aria-live="polite" data-ceremony-step="" data-beat-id="first-boot" data-speaker="tavernkeeper" data-testid="story-beat-card" class="story-beat-card story-beat-card--visible">…</article>
+           - unexpected value "first-boot"
+
+
+      86 |   await expect(card).toBeVisible({ timeout: 8_000 });
+      87 |   await expect(card).toHaveClass(/story-beat-card--visible/);
+    > 88 |   await expect(card).toHaveAttribute('data-beat-id', id);
+         |                      ^
+      89 |   await expect(card).toHaveAttribute('data-speaker', speaker);
+      90 |   await expect(page.getByTestId('story-beat-portrait')).toHaveAttribute('src', new RegExp(portraitNeedle));
+      91 | }
+        at expectBeat (/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-a8/e2e/ss-01-beats.spec.ts:88:22)
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-a8/e2e/ss-01-beats.spec.ts:202:3
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ss-01-beats-story-card-wai-5a8b3-rs-when-both-fire-same-tick-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/ss-01-beats-story-card-wai-5a8b3-rs-when-both-fire-same-tick-mobile-chrome/error-context.md
+
+
+  6 failed
+    [desktop-chrome] › e2e/ss-01-beats.spec.ts:103:1 › founding, first contract, and Prospector XP beats fire once with portraits 
+    [desktop-chrome] › e2e/ss-01-beats.spec.ts:169:1 › pointer glow clears on first interaction ────
+    [desktop-chrome] › e2e/ss-01-beats.spec.ts:187:1 › story card waits until wave banner clears when both fire same tick 
+    [mobile-chrome] › e2e/ss-01-beats.spec.ts:103:1 › founding, first contract, and Prospector XP beats fire once with portraits 
+    [mobile-chrome] › e2e/ss-01-beats.spec.ts:169:1 › pointer glow clears on first interaction ─────
+    [mobile-chrome] › e2e/ss-01-beats.spec.ts:187:1 › story card waits until wave banner clears when both fire same tick 
+  2 passed (1.3m)

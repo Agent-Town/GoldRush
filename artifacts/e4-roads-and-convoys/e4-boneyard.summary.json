@@ -1,0 +1,262 @@
+{
+  "contract": "e4-boneyard",
+  "seed": "e4-boneyard-01",
+  "policy": "floor",
+  "variant": "rig",
+  "views": 10,
+  "outcome": {
+    "secured": false,
+    "waves": 4,
+    "timeMs": 122333,
+    "gold": 0,
+    "kills": 33,
+    "calls": 9,
+    "defaultedPicks": 0,
+    "defaultedSecure": 0,
+    "eventLogHash": "fnv1a32:e84450a1",
+    "motor": {
+      "graded": [
+        "gate-to-west-rows"
+      ],
+      "hauled": true,
+      "arrivedAt": 71.967,
+      "roadDistance": 11.069,
+      "distanceTravelled": 71.492,
+      "fuelDrawn": 21.508,
+      "tarHarvested": 9,
+      "convoyArrived": null,
+      "kind": "tow",
+      "towed": true
+    }
+  },
+  "motorEventKinds": [
+    "motor_haul_arrived",
+    "motor_haul_dispatched",
+    "motor_road_graded",
+    "motor_tar_harvested",
+    "motor_tow_delivered",
+    "motor_tow_hitched",
+    "motor_weather"
+  ],
+  "motorEventCount": 22,
+  "terminalMotor": {
+    "contractId": "e4-boneyard",
+    "objective": {
+      "kind": "tow",
+      "corridorId": "gate-to-west-rows",
+      "label": "the Gate Camp",
+      "stop": {
+        "x": -8,
+        "z": -38
+      },
+      "stopReach": 2.5,
+      "arrived": true,
+      "arrivedAt": 71.967,
+      "roadDistanceAtArrival": 11.069,
+      "securableAtWave": 12,
+      "hulk": {
+        "id": "spent-boiler-west",
+        "kind": "boiler",
+        "x": -18,
+        "z": -8
+      },
+      "hitched": true,
+      "hitchedAt": 31.533
+    },
+    "weather": {
+      "era": 4,
+      "contractId": "e4-boneyard",
+      "phase": "clear",
+      "phaseProgress": 0.233,
+      "cycle": 3,
+      "simTime": 122.333,
+      "movementMultiplier": 1,
+      "visibilityMultiplier": 1,
+      "hazeColor": "#b9895a",
+      "hazeStrength": 0,
+      "warning": false,
+      "nextPhaseInSeconds": 7.667
+    },
+    "roads": {
+      "segments": 1,
+      "length": 42.802,
+      "friendlySpeedMultiplier": 2.5,
+      "friendlyFuelMultiplier": 0.4,
+      "enemyRouteCostMultiplier": 0.25,
+      "gradeReach": 2.5,
+      "graded": [
+        "gate-to-west-rows"
+      ],
+      "corridors": [
+        {
+          "id": "gate-to-west-rows",
+          "start": {
+            "x": -8,
+            "z": -38
+          },
+          "end": {
+            "x": -34,
+            "z": -4
+          },
+          "graded": true
+        },
+        {
+          "id": "gate-to-east-rows",
+          "start": {
+            "x": 8,
+            "z": -38
+          },
+          "end": {
+            "x": 34,
+            "z": -4
+          },
+          "graded": false
+        }
+      ]
+    },
+    "fuel": {
+      "active": true,
+      "tar": 0,
+      "stored": 14.492,
+      "capacity": 24,
+      "harvestedNodes": 3,
+      "refinedTar": 9,
+      "drawn": 21.508,
+      "nodes": [
+        {
+          "x": -12,
+          "z": -8,
+          "harvested": true,
+          "progress": 1
+        },
+        {
+          "x": 0,
+          "z": -8,
+          "harvested": true,
+          "progress": 1
+        },
+        {
+          "x": 12,
+          "z": -8,
+          "harvested": true,
+          "progress": 1
+        }
+      ]
+    },
+    "vehicle": {
+      "active": true,
+      "kind": "hauler",
+      "state": "arrived",
+      "x": -8,
+      "z": -38,
+      "target": null,
+      "speed": 9,
+      "burnPerSecond": 3,
+      "distanceTravelled": 71.492,
+      "onRoad": true,
+      "roadDistance": 11.069,
+      "dispatch": {
+        "x": -8,
+        "z": -38
+      }
+    },
+    "convoy": null,
+    "events": [
+      {
+        "type": "motor_haul_dispatched",
+        "at": 28.367,
+        "target": {
+          "x": -18,
+          "z": -8
+        },
+        "stored": 20.894,
+        "tar": 3
+      },
+      {
+        "type": "motor_haul_arrived",
+        "at": 31.533,
+        "x": -18,
+        "z": -8,
+        "atStop": false,
+        "roadDistance": 6.746,
+        "distanceTravelled": 39.869,
+        "fuelDrawn": 12.177
+      },
+      {
+        "type": "motor_tow_hitched",
+        "at": 31.533,
+        "hulkId": "spent-boiler-west",
+        "x": -18,
+        "z": -8,
+        "fuelDrawn": 12.177
+      },
+      {
+        "type": "motor_weather",
+        "at": 50.033,
+        "phase": "telegraph",
+        "cycle": 1
+      },
+      {
+        "type": "motor_weather",
+        "at": 54.033,
+        "phase": "storm",
+        "cycle": 1
+      },
+      {
+        "type": "motor_weather",
+        "at": 66.033,
+        "phase": "clear",
+        "cycle": 1
+      },
+      {
+        "type": "motor_haul_dispatched",
+        "at": 68.733,
+        "target": {
+          "x": -8,
+          "z": -38
+        },
+        "stored": 23.823,
+        "tar": 0
+      },
+      {
+        "type": "motor_haul_arrived",
+        "at": 71.967,
+        "x": -8,
+        "z": -38,
+        "atStop": false,
+        "roadDistance": 11.069,
+        "distanceTravelled": 71.492,
+        "fuelDrawn": 21.508
+      },
+      {
+        "type": "motor_tow_delivered",
+        "at": 71.967,
+        "hulkId": "spent-boiler-west",
+        "x": -8,
+        "z": -38,
+        "distanceTravelled": 71.492,
+        "fuelDrawn": 21.508
+      },
+      {
+        "type": "motor_weather",
+        "at": 90.033,
+        "phase": "telegraph",
+        "cycle": 2
+      },
+      {
+        "type": "motor_weather",
+        "at": 94.033,
+        "phase": "storm",
+        "cycle": 2
+      },
+      {
+        "type": "motor_weather",
+        "at": 106.033,
+        "phase": "clear",
+        "cycle": 2
+      }
+    ],
+    "eventCount": 22
+  },
+  "speedLine": "gr-sim speed: 2.21 waves/s"
+}

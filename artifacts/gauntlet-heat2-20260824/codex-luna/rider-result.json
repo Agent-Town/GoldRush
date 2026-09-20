@@ -1,0 +1,90 @@
+{
+  "model": "gpt-5.6-luna",
+  "harness": "codex-luna rider-auto.mjs invoking scripts/gr-sim.mjs",
+  "harnessVersion": "Node v26.4.0; deployed commit b42c0fbcc; rider-auto.mjs unversioned",
+  "rows": [
+    {
+      "contract": "the-claim",
+      "seed": "e1-the-claim-01",
+      "attempts": 3,
+      "secured": false,
+      "winningTape": null,
+      "terminalOutcomes": [
+        { "status": "aborted", "reason": "PTY session ended before terminal outcome; no tape written" },
+        { "status": "aborted", "reason": "child received SIGINT before terminal outcome; no tape written" },
+        { "status": "aborted", "reason": "driver stdin ended while simulator awaited orders; no tape written" }
+      ],
+      "approxWallSeconds": [10, 19, 2],
+      "doorFindings": "Initial wall strategy reached live views, but all three rider transport attempts ended without a simulator terminal outcome or tape."
+    },
+    {
+      "contract": "e1-dry-gulch",
+      "seed": "e1-dry-gulch-01",
+      "attempts": 2,
+      "secured": true,
+      "winningTape": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-d/artifacts/gauntlet-heat2-20260824/codex-luna/e1-dry-gulch-e1-dry-gulch-01-attempt-2.tape.json",
+      "terminalOutcomes": [
+        { "secured": false, "waves": 18, "timeMs": 545000, "gold": 151, "kills": 382, "calls": 60, "eventLogHash": "fnv1a32:328366c4" },
+        { "secured": true, "waves": 20, "timeMs": 600000, "gold": 13, "kills": 364, "calls": 39, "eventLogHash": "fnv1a32:bdef8587" }
+      ],
+      "approxWallSeconds": [61, 26],
+      "doorFindings": "The claim-side north point accepted a sentry; the south-side (-6,12) wall point was out of zone. A claim sluice funded the later turret and secured wave 20."
+    },
+    {
+      "contract": "e1-night-shift",
+      "seed": "e1-night-shift-01",
+      "attempts": 3,
+      "secured": false,
+      "winningTape": null,
+      "terminalOutcomes": [
+        { "secured": false, "waves": 15, "timeMs": 460067, "gold": 120, "kills": 622, "calls": 83, "eventLogHash": "fnv1a32:48682ef9" },
+        { "secured": false, "waves": 5, "timeMs": 169500, "gold": 140, "kills": 117, "calls": 15, "eventLogHash": "fnv1a32:9b50ad80" },
+        { "secured": false, "waves": 14, "timeMs": 435333, "gold": 81, "kills": 575, "calls": 72, "eventLogHash": "fnv1a32:ec03683b" }
+      ],
+      "approxWallSeconds": [41, 26, 59],
+      "doorFindings": "Seven preplaced lantern posts begin wrecked; CONTEXT_ACTION upgrade on them was rejected as not legal. New lantern posts and turrets did not reach wave-25 dawn."
+    },
+    {
+      "contract": "e1-twin-banks",
+      "seed": "e1-twin-banks-01",
+      "attempts": 3,
+      "secured": false,
+      "winningTape": null,
+      "terminalOutcomes": [
+        { "secured": false, "waves": 5, "timeMs": 160400, "gold": 55, "kills": 92, "calls": 13, "eventLogHash": "fnv1a32:6b19af55" },
+        { "secured": false, "waves": 4, "timeMs": 140767, "gold": 55, "kills": 73, "calls": 9, "eventLogHash": "fnv1a32:8aa4ebf8" },
+        { "secured": false, "waves": 16, "timeMs": 496867, "gold": 196, "kills": 702, "calls": 89, "eventLogHash": "fnv1a32:ea45561b" }
+      ],
+      "approxWallSeconds": [10, 5, 31],
+      "doorFindings": "North and south build zones are separate. The third run established both-bank works and reached wave 16, but the hero fell before wave 20."
+    },
+    {
+      "contract": "e1-baron",
+      "seed": "e1-baron-01",
+      "attempts": 3,
+      "secured": false,
+      "winningTape": null,
+      "terminalOutcomes": [
+        { "secured": false, "waves": 16, "timeMs": 426267, "gold": 198, "kills": 604, "calls": 85, "eventLogHash": "fnv1a32:c99795d1" },
+        { "secured": false, "waves": 15, "timeMs": 413767, "gold": 200, "kills": 575, "calls": 70, "eventLogHash": "fnv1a32:b8710ef7" },
+        { "secured": false, "waves": 15, "timeMs": 407600, "gold": 199, "kills": 571, "calls": 86, "eventLogHash": "fnv1a32:d4c16e5e" }
+      ],
+      "approxWallSeconds": [15, 19, 30],
+      "doorFindings": "Rocket Cart is scheduled at wave 20 with hpScale 240. Two turrets plus explicit and automatic blast modes still lost the hero by wave 15."
+    },
+    {
+      "contract": "e2-hill-mine",
+      "seed": "e2-hill-mine-01",
+      "attempts": 3,
+      "secured": false,
+      "winningTape": null,
+      "terminalOutcomes": [
+        { "secured": false, "waves": 2, "timeMs": 89933, "gold": 37, "kills": 25, "calls": 11, "eventLogHash": "fnv1a32:7cc45ca2" },
+        { "secured": false, "waves": 2, "timeMs": 85500, "gold": 80, "kills": 26, "calls": 9, "eventLogHash": "fnv1a32:c130c321" },
+        { "secured": false, "waves": 3, "timeMs": 90233, "gold": 70, "kills": 24, "calls": 9, "eventLogHash": "fnv1a32:00f7729c" }
+      ],
+      "approxWallSeconds": [4, 3, 4],
+      "doorFindings": "Boiler site is (0,12); coal IDs in stablePrefix.map.coalSeams were rejected as HARVEST targets. Without a legal coal order, the pressure line was not established before hero death."
+    }
+  ]
+}

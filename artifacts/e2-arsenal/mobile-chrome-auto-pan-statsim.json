@@ -1,0 +1,56 @@
+{
+  "itemId": "e2_auto_pan",
+  "status": "within-tolerance",
+  "tolerance": 1.25,
+  "seed": "m5-03:e2_auto_pan",
+  "contract": {
+    "tier": 1,
+    "rarityBudget": 5,
+    "declaredBudget": 2,
+    "budgetOk": true
+  },
+  "baseline": {
+    "dps": 24.267,
+    "survivalTime": 18.033,
+    "goldRate": 1.889
+  },
+  "measured": {
+    "dps": 24.267,
+    "survivalTime": 18.033,
+    "goldRate": 2.528
+  },
+  "deltas": {
+    "dps": 0,
+    "survivalTime": 0,
+    "goldRate": 0.3383
+  },
+  "measuredBudget": 1.015,
+  "hash": "fnv1a32:edcd7276",
+  "verdict": {
+    "ok": true,
+    "status": "within-tolerance",
+    "tolerance": 1.25,
+    "declaredBudget": 2,
+    "measuredBudget": 1.015,
+    "measurements": {
+      "baseline": {
+        "dps": 24.267,
+        "survivalTime": 18.033,
+        "goldRate": 1.889
+      },
+      "measured": {
+        "dps": 24.267,
+        "survivalTime": 18.033,
+        "goldRate": 2.528
+      },
+      "deltas": {
+        "dps": 0,
+        "survivalTime": 0,
+        "goldRate": 0.3383
+      }
+    },
+    "hash": "fnv1a32:edcd7276",
+    "reasons": [],
+    "summary": "M5-03 stat sim within tolerance: measured 1.015 <= declared 2 x 1.25."
+  }
+}

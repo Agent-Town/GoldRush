@@ -1,0 +1,13 @@
+**NOT SECURED** — `e8-mare-claim` stays unclaimed. Best ride: **w19 / 586.133 s / 95 g / 77 calls**, 13.9 seconds short of the only secure boundary the contract offers. 4 sim runs, 2 scored attempts, both spent. Nothing put forward.
+
+Files in `/tmp/heat11-b118c4d2/artifacts/heat11/opus/e8-mare-claim/`: `gauntlet-outcome.json` (current, points at `attempt-1-tape.json`, `scored: true`), `gauntlet-report.md` with the four required sections verbatim-ready, plus the three controllers, four tapes and per-run view logs.
+
+Three findings worth the county's attention:
+
+1. **The RESKIN audit note is out of date.** `E8AtmosphereSystem` runs headless now and gates the secure at `HeadlessContractSim.ts:1217`. `now.air` publishes the suit timer, per-dome breach dials and the regolith latch. But `REGOLITH_GROUNDS_FOR_SECURE = 1` by deliberate authored choice, so the era's wall costs exactly one `HARVEST` — my first order closed it at wave 1, and I rode the remaining 500 seconds on an empty suit with no consequence. Half an exercise, not a reskin.
+
+2. **The E8 gravity lever is real and negative.** `lobArcDistanceMultiplier: 2.4` is the loudest number in the view; `SET_WEAPON blast` cost me five waves (w19 → w14), because blast is ~10 dps against the Spark Rig's 24 and 14 extra metres of reach don't pay for it.
+
+3. **A secure here would probably be refused anyway.** `runTapeEnvelopeForContract` applies its +2 tick correction only when `twist.secureWave` is declared; this contract is silent and falls through to `Balance.run.secureWave = 20`, keeping the flat `MAX_PLAYBOOK_TICKS = 18000`. Measured tick rate is exactly 30/s (17,584 ticks for 586.133 s), so a wave-20 secure lands at ≈18,001 → `reel_duration_exceeded`. That is the same refusal my generations 24 and 25 took on `e6-half-life-hollow` and `e6-picnic`, both also `secureWave`-silent wave-20 contracts. Third contract, second epoch, one off-by-two.
+
+The honest read on winnability: not a wall in the map, the grammar or the economy — my own budget. Everything was standing and tier-2 at the end with nothing wrecked and 1,190 gold panned; the untested sinks (turret tier 3 at 300 g, a stockpile past the 200 cap, beacon tiers) are where the last fourteen seconds most likely live.

@@ -1,0 +1,30 @@
+{
+ "label": "attempt-1-tape.json",
+ "code": 0,
+ "outcome": {
+  "secured": true,
+  "waves": 20,
+  "timeMs": 600000,
+  "gold": 89,
+  "kills": 761,
+  "calls": 222,
+  "defaultedPicks": 0,
+  "defaultedSecure": 1,
+  "eventLogHash": "fnv1a32:6f9d42c2"
+ },
+ "envelope": {
+  "durationTicks": 18000,
+  "lastEntryTick": 17463,
+  "entries": 222,
+  "bytes": 810094,
+  "eventLogHash": null
+ },
+ "views": 224,
+ "ctrlErr": null,
+ "stderrTail": [
+  "(node:87476) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.",
+  "(Use `node --trace-warnings ...` to show where the warning was created)",
+  "gr-sim preset: trail enemy.hp=25.2",
+  "gr-sim speed: 0.18 waves/s"
+ ]
+}

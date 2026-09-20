@@ -1,0 +1,27 @@
+{
+  "secured": true,
+  "waves": 20,
+  "timeMs": 600000,
+  "gold": 335,
+  "kills": 928,
+  "calls": 82,
+  "defaultedPicks": 0,
+  "defaultedSecure": 1,
+  "eventLogHash": "fnv1a32:7048ee41",
+  "tape": "/private/tmp/heat13-569a41f9/artifacts/heat13/opus/e7-dead-band/attempt-1-tape.json",
+  "scored": true,
+  "runsSoFar": 3,
+  "scoredAttempts": 1,
+  "worldModel": "sim-import",
+  "assay": {
+    "eventLogHash": "fnv1a32:b3234ac0",
+    "note": "local assay-replay-agent reproduced the TAPE header hash and all four outcome fields; the stdout outcome line hash fnv1a32:7048ee41 is a different number by design"
+  },
+  "envelope": {
+    "durationTicks": 18000,
+    "lastEntryTick": 17594,
+    "entries": 82,
+    "bytes": 150576
+  },
+  "note": "attempt-1-tape.json IS the scored attempt (one ride). Secured w20/600.000s/335g/82 calls."
+}

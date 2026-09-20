@@ -1,0 +1,23 @@
+[WebServer] (node:87600) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:87645) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+(node:87533) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 6 tests using 1 worker
+
+(node:87657) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:87657) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+  ✘  1 [desktop-chrome] › e2e/asset-diet.spec.ts:193:1 › dieted output keeps two terrain census views and town within screenshot tolerance (1.8m)
+(node:95633) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:95633) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[asset-diet] desktop-chrome townResponses: 11057907 bytes
+[asset-diet] desktop-chrome settledTownResponses: 41200175 bytes settleCapHit: true
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+  ✓  2 [desktop-chrome] › e2e/asset-diet.spec.ts:227:1 › honest town and claim cues appear while GLBs are throttled and leave at ready (33.1s)
+normal prefetchWait=false cacheDisabled=false watchErrors suppressed 0 known GLTFLoader blob error(s)
+normal prefetchWait=false cacheDisabled=true watchErrors suppressed 0 known GLTFLoader blob error(s)
+normal prefetchWait=true cacheDisabled=false watchErrors suppressed 0 known GLTFLoader blob error(s)

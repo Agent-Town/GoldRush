@@ -1,0 +1,62 @@
+
+########## RIDE e4-gusher-county · seed e4-gusher-county-01 · gen 73 · stake re-ride · wall 1500s ##########
+--- 1 charter ---
+{"rig":"opus","contract":"e4-gusher-county","seed":"e4-gusher-county-01","seedMode":"bench","stake":"re-ride","generation":73,"wall":1500,"notebookSha256":"5f74fe0b3c8c05909662cecc5e40c66cada1f4dfa127fe75da424bdb83c615cf","charterSha256":"bc8c4c95d7fdff4668c220107e5079d00f7435a3388de3f6d7690caed7f66bc9","bytes":592817,"out":"/private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/rides/e4-gusher-county/charter.md"}
+--- 2 ride ---
+START opus claude-opus-5 pid=29944 session=d87bdd64-0b02-4b3b-90c5-25f3b8a388ab at=2026-09-07T13:02:14.312Z
+FIRST-OUTPUT opus +195s
+OUTCOME opus secured=false waves=5 gold=0 runsSoFar=1 scored=0 +195s
+OUTCOME opus secured=true waves=12 gold=170 runsSoFar=2 scored=0 +735s
+OUTCOME opus secured=true waves=12 gold=170 runsSoFar=2 scored=1 +765s
+END opus rc=0 signal=null wall=897s wallHit=false
+ride-wall rc=0 signal=-
+--- 3 land ---
+
+=== 1 finish-ride ===
+{"rig":"opus","contract":"e4-gusher-county","wall":897,"wallHit":false,"rc":0,"tracked":[],"files":11,"outcome":{"secured":true,"waves":12,"gold":170,"runsSoFar":2,"scoredAttempts":1,"tape":"/private/tmp/heat13-569a41f9/artifacts/heat13/opus/e4-gusher-county/attempt-1-tape.json","worldModel":"sim-import"},"scoredTapes":[{"file":"attempt-1-tape.json","id":"agent-5b4b48cd-74050fa2-e26f-4d95-82ba-cd9104ca9947","secured":true,"waves":12,"gold":170,"durationTicks":10800,"lastEntryTick":10780,"promotedByRig":true,"discoveredBy":"outcome-file+filename"}],"otherSecured":[{"file":"tune-1-tape.json","id":"agent-5b4b48cd-74050fa2-e26f-4d95-82ba-cd9104ca9947","waves":12,"gold":170}],"reportSections":{"outcome":1323,"whatTheMapAsked":3900,"winnability":598,"lessons":6418},"usage":{"turns":43,"toolCalls":23,"tokensIn":86,"tokensOut":163893}}
+tape chosen: attempt-1-tape.json (id agent-5b4b48cd-74050fa2-e26f-4d95-82ba-cd9104ca9947, promotedByRig=true, discoveredBy=outcome-file+filename)
+
+=== 2 freeze notebook header ===
+{"headerOnly":true,"headerBytes":434}
+
+=== 3 harnessDigest ===
+1412d039d07624e32659b907af89ce6cf6bfd7847582347bbd15fb09856674c9
+
+=== 4 build-submission ===
+{"tapeId":"agent-5b4b48cd-74050fa2-e26f-4d95-82ba-cd9104ca9947","contract":"e4-gusher-county","epochId":"epoch-4-motor","seed":"e4-gusher-county-01","seedMode":"bench","score":{"secured":true,"waves":12,"timeAlive":360,"gold":170,"baseValue":0},"papers":{"buildId":"fc4553675","engineHash":"09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4","era":5,"viewVersion":2},"durationTicks":10800,"lastEntryTick":10780,"stack":{"model":"claude-opus-5","harness":"heat13-operator","harnessVersion":"2.1.257","harnessDigest":"1412d039d07624e32659b907af89ce6cf6bfd7847582347bbd15fb09856674c9","worldModel":"sim-import","config":"attended-hosted headless `claude -p` ride (heat 13, the 1:1-grammar re-ride) on Claude Code CLI 2.1.257; charter + door manual + own notebook (self-memory); own controller authored in-ride","calls":49,"tokensIn":14469806,"tokensOut":163893}}
+
+=== 5 publish (POST → poll → WATCH) ===
+{"rank":1,"tapeId":"agent-5b4b48cd-74050fa2-e26f-4d95-82ba-cd9104ca9947","assay":"verified","assayHash":"fnv1a32:0e24753e","papers":{"buildId":"fc4553675","engineHash":"09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4","era":5,"viewVersion":2}}
+
+=== LANDED ===
+{
+ "rig": "opus",
+ "contract": "e4-gusher-county",
+ "tapeFile": "attempt-1-tape.json",
+ "tapeId": "agent-5b4b48cd-74050fa2-e26f-4d95-82ba-cd9104ca9947",
+ "assay": "verified",
+ "assayHash": "fnv1a32:0e24753e",
+ "ranked": true,
+ "rank": 1,
+ "waves": 12,
+ "gold": 170,
+ "calls": 49,
+ "eventLogHash": "fnv1a32:1c64ed8e",
+ "wall": 897,
+ "harnessDigest": "1412d039d07624e32659b907af89ce6cf6bfd7847582347bbd15fb09856674c9",
+ "usage": {
+  "turns": 43,
+  "toolCalls": 23,
+  "tokensIn": 14469806,
+  "tokensOut": 163893
+ }
+}
+
+land rc=0
+--- 4 notebook ---
+{"notebook":"/Users/robin/Claude/Projects/goldrush-gauntlet/memories/claude__opus-5/NOTEBOOK.md","generation":73,"headerBytes":434,"entryBytes":11784}
+--- 5 matrix ---
+| 13 | e4-gusher-county | `e4-gusher-county-01` | re-ride | 73 | **SECURED** | 12 | 170 | 360s | 897s | `attempt-1-tape.json` · `agent-5b4b48cd-74050fa2-e26f-4d95-82ba-cd9104ca9947`<br>fnv1a32:1c64ed8e | verified `fnv1a32:0e24753e` rank 1 | gen 73<br>slip `agent-5b4b48cd-74050fa2-e26f-4d95-82ba-cd9104ca9947` |
+{"contract":"e4-gusher-county","secured":true,"tapesOnDisk":6,"scoredTapes":1,"otherSecured":1,"runs":2,"scoredAttempts":1,"wallHit":false,"rc":0,"assay":"verified","ranked":true,"winnability":"Secured, and the margin was **wide on survival, comfortable on the clock, and effectively nil on fuel**: nothing was ever wrecked, `threats.alive` peaked at 26 against a hero that finished 117/175 (its worst moment was 62/100 at wave 3, before the plating picks landed), and the errand latched with 300 seconds to spare against the wave-12 gate — but the Hauler drew **36 of 36 fuel** and ran dry at t = 70.5, so the tank had about four fuel left at the instant the third lease landed, and one closed-road dispatch would have stranded the objective and made the run unsecurable at every later wave."}
+########## END e4-gusher-county ##########
+

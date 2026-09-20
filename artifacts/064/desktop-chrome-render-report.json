@@ -1,0 +1,189 @@
+{
+  "project": "desktop-chrome",
+  "terrainMeshOff": {
+    "vista": {
+      "present": true,
+      "segments": 12,
+      "radius": 90,
+      "vertices": 4004,
+      "seamMaxDelta": 0,
+      "seam": [
+        {
+          "x": -32,
+          "z": -24,
+          "clamped": 1.100000023841858,
+          "unclamped": 1.100000023841858,
+          "delta": 0
+        },
+        {
+          "x": 32,
+          "z": -12,
+          "clamped": 1.100000023841858,
+          "unclamped": 1.100000023841858,
+          "delta": 0
+        },
+        {
+          "x": -18,
+          "z": -32,
+          "clamped": 1.100000023841858,
+          "unclamped": 1.100000023841858,
+          "delta": 0
+        },
+        {
+          "x": 0,
+          "z": 32,
+          "clamped": 1.100000023841858,
+          "unclamped": 1.100000023841858,
+          "delta": 0
+        },
+        {
+          "x": 18,
+          "z": 32,
+          "clamped": 1.100000023841858,
+          "unclamped": 1.100000023841858,
+          "delta": 0
+        },
+        {
+          "x": 32,
+          "z": 4,
+          "clamped": -0.28999999165534973,
+          "unclamped": -0.28999999165534973,
+          "delta": 0
+        }
+      ],
+      "river": {
+        "present": true,
+        "drawCalls": 1,
+        "radius": 90,
+        "vertices": 445,
+        "visualHalfWidth": 6.25,
+        "fadeStart": 78,
+        "westEdgeCenterZ": 0,
+        "eastEdgeCenterZ": 0,
+        "westFarCenterZ": 0.732,
+        "eastFarCenterZ": -0.732,
+        "meanderAmplitude": 2.788
+      }
+    },
+    "water": {
+      "material": "LivingWaterShader",
+      "riverPresent": true,
+      "fordPresent": true,
+      "riverTime": 1.274,
+      "fordTime": 1.274,
+      "quality": 1,
+      "mobile": false,
+      "foam": true,
+      "glints": 6,
+      "fordStones": 7,
+      "gravelBars": 0,
+      "visualHalfWidth": 6.25,
+      "springPonds": 0,
+      "waterPhaseVariance": 0.43,
+      "depth": {
+        "river": 1.25,
+        "ford": 0.35,
+        "wade": 0.35,
+        "deep": 1
+      }
+    },
+    "rendererCalls": 86,
+    "frameMsP95": 16.699999999999818
+  },
+  "terrainMeshOn": {
+    "vista": {
+      "present": true,
+      "segments": 12,
+      "radius": 90,
+      "vertices": 4004,
+      "seamMaxDelta": 0,
+      "seam": [
+        {
+          "x": -32,
+          "z": -24,
+          "clamped": 1.100000023841858,
+          "unclamped": 1.100000023841858,
+          "delta": 0
+        },
+        {
+          "x": 32,
+          "z": -12,
+          "clamped": 1.100000023841858,
+          "unclamped": 1.100000023841858,
+          "delta": 0
+        },
+        {
+          "x": -18,
+          "z": -32,
+          "clamped": 1.100000023841858,
+          "unclamped": 1.100000023841858,
+          "delta": 0
+        },
+        {
+          "x": 0,
+          "z": 32,
+          "clamped": 1.100000023841858,
+          "unclamped": 1.100000023841858,
+          "delta": 0
+        },
+        {
+          "x": 18,
+          "z": 32,
+          "clamped": 1.100000023841858,
+          "unclamped": 1.100000023841858,
+          "delta": 0
+        },
+        {
+          "x": 32,
+          "z": 4,
+          "clamped": -0.28999999165534973,
+          "unclamped": -0.28999999165534973,
+          "delta": 0
+        }
+      ],
+      "river": {
+        "present": true,
+        "drawCalls": 1,
+        "radius": 90,
+        "vertices": 445,
+        "visualHalfWidth": 6.25,
+        "fadeStart": 78,
+        "westEdgeCenterZ": 0,
+        "eastEdgeCenterZ": 0,
+        "westFarCenterZ": 0.732,
+        "eastFarCenterZ": -0.732,
+        "meanderAmplitude": 2.788
+      }
+    },
+    "water": {
+      "material": "LivingWaterShader",
+      "riverPresent": true,
+      "fordPresent": true,
+      "riverTime": 1.182,
+      "fordTime": 1.182,
+      "quality": 1,
+      "mobile": false,
+      "foam": true,
+      "glints": 6,
+      "fordStones": 7,
+      "gravelBars": 0,
+      "visualHalfWidth": 6.25,
+      "springPonds": 0,
+      "waterPhaseVariance": 0.43,
+      "depth": {
+        "river": 1.25,
+        "ford": 0.35,
+        "wade": 0.35,
+        "deep": 1
+      }
+    },
+    "rendererCalls": 85,
+    "frameMsP95": 9.900000000000091
+  },
+  "rendererCallDeltaFlagOnMinusOff": -1,
+  "shots": [
+    "/Users/robin/.codex/worktrees/5b60/Gold Rush/artifacts/064/desktop-west-river-end.png",
+    "/Users/robin/.codex/worktrees/5b60/Gold Rush/artifacts/064/desktop-east-river-end.png",
+    "/Users/robin/.codex/worktrees/5b60/Gold Rush/artifacts/064/desktop-wide-river-vista.png"
+  ]
+}

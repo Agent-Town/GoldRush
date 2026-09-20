@@ -1,0 +1,446 @@
+{
+ "schema": "goldrush.view.v1",
+ "viewVersion": 1,
+ "stablePrefix": {
+  "seed": "e3-blackout-ridge-01",
+  "contract": {
+   "id": "e3-blackout-ridge",
+   "name": "Blackout Ridge",
+   "briefing": {
+    "geography": "An 80 by 96 ridge: the trunk enters from the southwest glow and climbs to the switch house in the northeast.",
+    "goals": [
+     "Bank current at the capacitor sites and survive through wave 12."
+    ],
+    "rules": [
+     "The off-map trunk brings 36 W; each bank stores 0.05 Wh from surplus current.",
+     "A charged bank returns up to 12 W while a cut separates the ridge from its unseen source.",
+     "Trunk Saboteurs attack the three pre-authored frames; repair a frame to restore current and recharge."
+    ]
+   }
+  },
+  "mechanics": {
+   "schema": "goldrush.mechanics.v1",
+   "contractId": "e3-blackout-ridge",
+   "buildables": [
+    {
+     "id": "sentry_beacon",
+     "operation": "BUILD",
+     "meaning": "Lights the dark and slows what it touches; radius 8wu.",
+     "cost": 25,
+     "costs": [
+      25,
+      35,
+      45,
+      55,
+      75,
+      95
+     ],
+     "costRule": "ceil-to-5",
+     "maxCount": 6,
+     "source": "buildables.registry"
+    },
+    {
+     "id": "palisade",
+     "operation": "BUILD",
+     "meaning": "Timber that holds. Bandits break it before you.",
+     "cost": 10,
+     "costs": [
+      10,
+      10,
+      10,
+      10,
+      10,
+      10
+     ],
+     "maxCount": 48,
+     "source": "buildables.registry"
+    },
+    {
+     "id": "sluice",
+     "operation": "BUILD",
+     "meaning": "Works the river for you: 3g per cycle beside water.",
+     "cost": 40,
+     "costs": [
+      40,
+      40,
+      40
+     ],
+     "maxCount": 3,
+     "source": "buildables.registry"
+    },
+    {
+     "id": "stockpile",
+     "operation": "BUILD",
+     "meaning": "Holds +150 gold above the pan cap.",
+     "cost": 60,
+     "costs": [
+      60,
+      60
+     ],
+     "maxCount": 2,
+     "source": "buildables.registry"
+    },
+    {
+     "id": "assay_office",
+     "operation": "BUILD",
+     "meaning": "Write orders; the town's craftsmen answer. One per claim.",
+     "cost": 80,
+     "costs": [
+      80
+     ],
+     "maxCount": 1,
+     "source": "buildables.registry"
+    },
+    {
+     "id": "capacitor_bank",
+     "operation": "BUILD",
+     "meaning": "Stores 0.05 Wh and returns up to 12 W when the trunk is cut.",
+     "cost": 75,
+     "costs": [
+      75,
+      75,
+      75,
+      75
+     ],
+     "maxCount": 4,
+     "source": "twist.powerGrid"
+    }
+   ],
+   "interactables": [
+    {
+     "id": "lantern_post",
+     "count": 2,
+     "operations": [],
+     "source": "tileParams.prePlacedBuildables"
+    },
+    {
+     "id": "sentry_beacon",
+     "count": 3,
+     "operations": [],
+     "source": "tileParams.prePlacedBuildables"
+    }
+   ],
+   "rules": [
+    {
+     "id": "build_zones",
+     "source": "tileParams.buildZones",
+     "data": {
+      "count": 3,
+      "banks": [
+       "north",
+       "south"
+      ]
+     }
+    },
+    {
+     "id": "current_allocation",
+     "source": "PowerGraphSystem.step",
+     "data": {
+      "producers": [
+       "off-map-current:36W"
+      ],
+      "consumers": [
+       "lamp-ridge:lamp:6W:priority10",
+       "lamp-yard:lamp:6W:priority10"
+      ],
+      "connectedBy": "intact-wires-between-online-nodes",
+      "allocationOrder": "ascending-priority",
+      "nodeStates": [
+       "powered",
+       "browned-out",
+       "dark"
+      ]
+     }
+    },
+    {
+     "id": "current_construction",
+     "source": "Game.syncContractPowerGrid",
+     "data": {
+      "relayBuildable": "sentry_beacon",
+      "pylonSites": [
+       "trunk-middle",
+       "trunk-ridge",
+       "trunk-west"
+      ],
+      "repairOperation": "REPAIR_UNDER",
+      "storageBuildable": "capacitor_bank",
+      "capacitorSites": [
+       "breath-bank-east",
+       "breath-bank-west"
+      ]
+     }
+    },
+    {
+     "id": "current_storage",
+     "source": "PowerGraphSystem.step",
+     "data": {
+      "stores": [
+       "capacitor-east:0.05Wh:charge18W:discharge12W",
+       "capacitor-west:0.05Wh:charge18W:discharge12W"
+      ]
+     }
+    },
+    {
+     "id": "locked_night",
+     "source": "DayNightCycle.sample",
+     "data": {
+      "periodSeconds": 24,
+      "duskRampSeconds": 2,
+      "dawnRampSeconds": 2,
+      "nightDepth": 0.86,
+      "minimumDarkness": 0.645,
+      "phases": [
+       "dusk",
+       "dark",
+       "dawn"
+      ],
+      "fullLight": false
+     }
+    }
+   ],
+   "modes": [],
+   "posting": {
+    "waves": [
+     {
+      "event": "secure",
+      "wave": 12,
+      "source": "twist.secureWave"
+     }
+    ],
+    "spawnEdges": [
+     "east",
+     "north",
+     "west"
+    ],
+    "lossStakes": [
+     {
+      "id": "ridge-switch-house",
+      "x": 24,
+      "z": 30,
+      "source": "tileParams.stakeMarkers"
+     }
+    ]
+   }
+  },
+  "map": {
+   "claim": {
+    "x": 24,
+    "z": 30
+   },
+   "seams": [
+    {
+     "id": "gold-seam-1",
+     "x": 8,
+     "z": 30
+    },
+    {
+     "id": "gold-seam-2",
+     "x": 18,
+     "z": 34
+    },
+    {
+     "id": "gold-seam-3",
+     "x": 30,
+     "z": 26
+    }
+   ],
+   "coalSeams": [],
+   "water": {
+    "river": false,
+    "ford": false,
+    "sources": 0,
+    "descriptor": null
+   },
+   "spawnGates": [
+    {
+     "edge": "west",
+     "x": -39,
+     "z": -18
+    },
+    {
+     "edge": "east",
+     "x": 39,
+     "z": -18
+    }
+   ]
+  },
+  "orders": []
+ },
+ "appendLog": [],
+ "now": {
+  "wave": 0,
+  "blastReadyInMs": 0,
+  "weapon": "rig",
+  "timers": {
+   "runSeconds": 0,
+   "nextWaveInSeconds": 30
+  },
+  "gold": 0,
+  "hero": {
+   "hp": 100,
+   "maxHp": 100,
+   "x": 24,
+   "z": 30,
+   "level": 1,
+   "upgradesTaken": {},
+   "upgradeChoiceRule": "first-offer"
+  },
+  "prospector": {
+   "x": 22.2,
+   "z": 28.93
+  },
+  "works": {
+   "hp": 190,
+   "maxHp": 190,
+   "standing": 5,
+   "wrecked": 0,
+   "byKind": {
+    "sentry_beacon": 3,
+    "lantern_post": 2
+   },
+   "entries": [
+    {
+     "id": "sentry_beacon",
+     "index": 0,
+     "tier": 1,
+     "hp": 40,
+     "maxHp": 40,
+     "wrecked": false,
+     "position": {
+      "x": -30,
+      "z": -30
+     }
+    },
+    {
+     "id": "sentry_beacon",
+     "index": 1,
+     "tier": 1,
+     "hp": 40,
+     "maxHp": 40,
+     "wrecked": false,
+     "position": {
+      "x": -18,
+      "z": -18
+     }
+    },
+    {
+     "id": "sentry_beacon",
+     "index": 2,
+     "tier": 1,
+     "hp": 40,
+     "maxHp": 40,
+     "wrecked": false,
+     "position": {
+      "x": -6,
+      "z": -6
+     }
+    },
+    {
+     "id": "lantern_post",
+     "index": 0,
+     "tier": 1,
+     "hp": 35,
+     "maxHp": 35,
+     "wrecked": false,
+     "position": {
+      "x": 12,
+      "z": 20
+     }
+    },
+    {
+     "id": "lantern_post",
+     "index": 1,
+     "tier": 1,
+     "hp": 35,
+     "maxHp": 35,
+     "wrecked": false,
+     "position": {
+      "x": 24,
+      "z": 30
+     }
+    }
+   ]
+  },
+  "threats": {
+   "alive": 0,
+   "state": "quiet",
+   "edge": null,
+   "thieves": 0,
+   "wreckers": 0,
+   "spawnedTotal": 0,
+   "defeatedTotal": 0,
+   "defeatedBasis": "all enemies, including continuous tricklers"
+  },
+  "orders": [],
+  "needsRider": false,
+  "seams": [
+   {
+    "id": "gold-seam-1",
+    "active": true,
+    "remaining": 30,
+    "x": 8,
+    "z": 30,
+    "anchorIndex": 0
+   },
+   {
+    "id": "gold-seam-2",
+    "active": true,
+    "remaining": 30,
+    "x": 30,
+    "z": 26,
+    "anchorIndex": 2
+   },
+   {
+    "id": "gold-seam-3",
+    "active": true,
+    "remaining": 30,
+    "x": 18,
+    "z": 34,
+    "anchorIndex": 1
+   }
+  ],
+  "score": {
+   "wavesSurvived": 0,
+   "goldPanned": 0,
+   "goldPannedByProspector": 0,
+   "goldStolen": 0,
+   "goldReclaimed": 0,
+   "goldReclaimedByProspector": 0,
+   "buildingsBuilt": 0
+  }
+ },
+ "almanac": {
+  "label": "the Almanac reckons",
+  "estimate": true,
+  "nextWave": {
+   "wave": 1,
+   "arrivalInSeconds": 30,
+   "basis": "estimated-from-wave-schedule",
+   "composition": [
+    {
+     "id": "fevered_saboteur",
+     "label": "Trunk Saboteur",
+     "count": 2
+    },
+    {
+     "id": "night_runner",
+     "label": "Fevered Runner",
+     "count": 4
+    }
+   ],
+   "compositionScope": "wave-horn packs only; continuous tricklers are additional",
+   "continuousTrickle": {
+    "currentIntervalSeconds": 2.4,
+    "includedInComposition": false,
+    "includedInDefeatedTotal": true
+   }
+  },
+  "projection": {
+   "expectedLeaks": 0,
+   "expectedWorksDamage": 0,
+   "expectedGold": 56.67,
+   "currentWorks": 5,
+   "harnessHash": "fnv1a32:c5bb9f99"
+  }
+ }
+}

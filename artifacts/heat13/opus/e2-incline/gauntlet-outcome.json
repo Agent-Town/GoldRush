@@ -1,0 +1,46 @@
+{
+  "secured": true,
+  "waves": 12,
+  "timeMs": 495900,
+  "gold": 200,
+  "kills": 504,
+  "calls": 80,
+  "defaultedPicks": 0,
+  "defaultedSecure": 0,
+  "eventLogHash": "fnv1a32:67f359fe",
+  "tape": "/private/tmp/heat13-569a41f9/artifacts/heat13/opus/e2-incline/attempt-1-tape.json",
+  "scored": true,
+  "runsSoFar": 3,
+  "scoredAttempts": 1,
+  "worldModel": "sim-import",
+  "contract": "e2-incline",
+  "seed": "e2-incline-01",
+  "difficulty": "trail",
+  "note": "SECURED by killing the wave-12 railcar. tune-1 secured first with the identical policy but its reel is NOT submittable: it answered the secure window with full order arrays, which the door refuses (SECURE_CHOICE_ONLY) 600 times while the choice clock ran down, and the assay replay came back fnv1a32:831ab506 against a recorded header of fnv1a32:470e04ef (ticks 15476 vs durationTicks 14878). attempt-1 is the same controller with ONE change - answer now.pendingSecure with a single SECURE_CHOICE - and it replays bit for bit. PUT ATTEMPT-1 FORWARD.",
+  "assay": {
+    "instrument": "scripts/assay-replay-agent.mjs",
+    "controlRun": "probe-idle-tape.json replays to its own header fnv1a32:a45ba9ac (instrument sound in this build)",
+    "replayEventLogHash": "fnv1a32:a489588e",
+    "tapeEventLogHash": "fnv1a32:a489588e",
+    "match": true,
+    "replayOutcome": { "secured": true, "waves": 12, "gold": 200, "timeAlive": 495.9 },
+    "securedSnapshot": { "waves": 12, "gold": 200, "timeAlive": 495.9 },
+    "replayTicks": 14878
+  },
+  "envelope": {
+    "durationTicks": 14878,
+    "maxTicks": 21602,
+    "lastEntryTick": 14877,
+    "entries": 80,
+    "maxEntries": 4321,
+    "bytes": 288524,
+    "maxTapeBytes": 2322784,
+    "allAxesPass": true
+  },
+  "era": {
+    "engineHash": "09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4",
+    "era": 5,
+    "viewVersion": 2,
+    "buildId": "6a549b811"
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "baseSha": "51319bf7ebceaaad9df4fdc4da0dcf96033b91e1",
+  "rule": "all boards rendered from current GLBs on the freshly pulled base; no prior PNG is an input",
+  "stateBoundary": "canal dry/wet/flowing and Ark stages 2/3 are banked siblings; only static props and Ark stage 1 mount without progression state",
+  "productionAssets": {
+    "assets/pilots/basin-rim-3d/basin-rim-plate.glb": "89f23f703d96c5f519c820a7efca16c00ff5cb985923e9113cb1b480de81212e",
+    "assets/pilots/plaza-props-3d/pan_monument.glb": "e86e7cdabd1039434bf7a206487a8bc4f68bc2b19a4d9b255f01476e4929f5c2",
+    "assets/pilots/water-ledger-office-3d/water-ledger-office.glb": "b48a558d61565e94aaa9e351b8ee8ec42a178b3842b5ec89955b227fd8f51a27",
+    "assets/pilots/greenkeeper-3d/greenkeeper.glb": "0960984123806992e2c11889ce4b4c864bf1ff599438b32b36a69e79c75c28f2",
+    "assets/pilots/ice-quarry-head-3d/ice-quarry-head.glb": "cadd77d7873ed1466054162427795e0a2bdfab16bf094921f46d6e608b269b4b",
+    "assets/pilots/weather-warden-spire-3d/weather-warden-spire.glb": "65554c98d3afa2dc354d6e39b02e7361f678dd3485b3b4d71954ae7957075fc6",
+    "assets/pilots/canal-packet-boat-3d/canal-packet-boat.glb": "0ed40957e0943f4b1e4dcfbf1466531c4ce3f8aa037dca8a0a925d9323cf401b",
+    "assets/pilots/plaza-props-3d/canal-segment-dry.e9.glb": "f2eed930dbad83b348fc5e66cb3db5d91245c2638302ceff32e04c64786be9fc",
+    "assets/pilots/plaza-props-3d/canal-segment-wet.e9.glb": "f620766598cac72db625bb607c1b2e77060161e58fe8199c2a4527e29478da10",
+    "assets/pilots/plaza-props-3d/canal-segment-flowing.e9.glb": "35153a362e56548f37eec48b4ba3a4472dc143e31ed6d424473e7bf3e3f2899b",
+    "assets/pilots/plaza-props-3d/ice-blocks.e9.glb": "f705096b7ba8e28163f3fc280740397b1d0be18fc4af99c4b8d330f55dab28fc",
+    "assets/pilots/plaza-props-3d/survey-cairn.e9.glb": "e0530bb9062d3727006b73269105712f02fdb3db8c0fca6ed6c8ac0efb34b18b",
+    "assets/pilots/plaza-props-3d/ark-scaffold-stage-1.e9.glb": "87a8bd2d8f2df1a8c205390f00c8b10fe165f78340e08a36296f690c5fa4fc1e",
+    "assets/pilots/plaza-props-3d/ark-scaffold-stage-2.e9.glb": "d2804691e8e73aed3c6bdc27bfd06e06348c590941c5274075f51b85cb68b077",
+    "assets/pilots/plaza-props-3d/ark-scaffold-stage-3.e9.glb": "3e559ac3879a680a37020bfb9aa1fee012cfaf972b4a729fa647b7435b524806",
+    "assets/pilots/plaza-props-3d/era-props-e9-atlas.png": "c78664fc8037234ec61467fea3e8772eba2a748cbd31872e4ec4b47a6d5a2f32",
+    "assets/pilots/plaza-props-3d/era-props.e9.json": "24c969e7802e3cce3b2933bd12afdb331ac3ec01a8c7d184cb0e13b80624c9cb"
+  },
+  "evidenceOnly": [
+    "lights",
+    "cameras",
+    "audit floor",
+    "clearance curves",
+    "banked progression sibling pack layout"
+  ],
+  "renders": [
+    "artifacts/basin-redfields-era-props/renders/basin-e9-redfields-props-ab.png",
+    "artifacts/basin-redfields-era-props/renders/basin-e9-redfields-props-turntable.png",
+    "artifacts/basin-redfields-era-props/renders/basin-e9-redfields-props-clearance.png",
+    "artifacts/basin-redfields-era-props/renders/e9-redfields-props-pack.png",
+    "artifacts/basin-redfields-era-props/renders/fresh-main-reference-and-e9.png",
+    "artifacts/basin-redfields-era-props/renders/basin-e9-before-props.png",
+    "artifacts/basin-redfields-era-props/renders/basin-e9-with-redfields-props.png",
+    "artifacts/basin-redfields-era-props/renders/basin-e9-props-angle-1.png",
+    "artifacts/basin-redfields-era-props/renders/basin-e9-props-angle-2.png",
+    "artifacts/basin-redfields-era-props/renders/basin-e9-props-angle-3.png",
+    "artifacts/basin-redfields-era-props/renders/basin-e9-props-angle-4.png"
+  ]
+}

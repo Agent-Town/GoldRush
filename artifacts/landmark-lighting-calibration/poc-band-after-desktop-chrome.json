@@ -1,0 +1,782 @@
+[
+  {
+    "scene": "e3-blackout-ridge",
+    "contract": "e3-blackout-ridge",
+    "project": "desktop-chrome",
+    "phase": "poc-band-after",
+    "query": "",
+    "focusMount": "ridge-switch-house",
+    "standoff": [
+      0,
+      9
+    ],
+    "frameMedianLuminance": 0.068,
+    "terrainMedianLuminance": 0.068,
+    "landmarkMedianLuminance": 0.1018,
+    "landmarkAllMountsMedian": 0.1018,
+    "heroLuminance": 0.0942,
+    "landmarkOverTerrain": 1.497,
+    "emissiveIntensity": [
+      {
+        "id": "off-map-current-receiver",
+        "range": [
+          0.6,
+          0.6
+        ]
+      },
+      {
+        "id": "trunk-line-breaker-shelter",
+        "range": [
+          0.6,
+          0.6
+        ]
+      },
+      {
+        "id": "breath-bank-service-rack",
+        "range": [
+          0.6,
+          0.6
+        ]
+      },
+      {
+        "id": "ridge-switch-house",
+        "range": [
+          0.6,
+          0.6
+        ]
+      },
+      {
+        "id": "blackout-watch-lamp",
+        "range": [
+          0.6,
+          0.6
+        ]
+      }
+    ],
+    "sideCensus": "{\"total\":{\"meshes\":5,\"closed\":5,\"open\":0,\"culled\":5,\"doubleSided\":0},\"mounts\":[{\"id\":\"off-map-current-receiver\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.019,\"topY\":8.219},{\"id\":\"trunk-line-breaker-shelter\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":-0.009,\"topY\":7.091},{\"id\":\"breath-bank-service-rack\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":4.73,\"topY\":8.98},{\"id\":\"ridge-switch-house\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5.961,\"topY\":13.361},{\"id\":\"blackout-watch-lamp\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":4.05,\"topY\":12.97}]}",
+    "p95Ms": 10.2,
+    "screenshot": "artifacts/landmark-lighting-calibration/poc-band-after-e3-blackout-ridge-desktop-chrome.png",
+    "probes": [
+      {
+        "id": "off-map-current-receiver@0.30h",
+        "family": "landmark",
+        "x": -215.6,
+        "y": -261.8,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "off-map-current-receiver@0.42h",
+        "family": "landmark",
+        "x": -223,
+        "y": -275.1,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "off-map-current-receiver@0.55h",
+        "family": "landmark",
+        "x": -231.1,
+        "y": -289.8,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "off-map-current-receiver@0.68h",
+        "family": "landmark",
+        "x": -239.5,
+        "y": -304.7,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "trunk-line-breaker-shelter@0.30h",
+        "family": "landmark",
+        "x": -412.3,
+        "y": -120.3,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "trunk-line-breaker-shelter@0.42h",
+        "family": "landmark",
+        "x": -422,
+        "y": -133.2,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "trunk-line-breaker-shelter@0.55h",
+        "family": "landmark",
+        "x": -432.7,
+        "y": -147.4,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "trunk-line-breaker-shelter@0.68h",
+        "family": "landmark",
+        "x": -443.7,
+        "y": -161.9,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "breath-bank-service-rack@0.30h",
+        "family": "landmark",
+        "x": 562.5,
+        "y": -9.9,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "breath-bank-service-rack@0.42h",
+        "family": "landmark",
+        "x": 561.9,
+        "y": -19.2,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "breath-bank-service-rack@0.55h",
+        "family": "landmark",
+        "x": 561.3,
+        "y": -29.4,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "breath-bank-service-rack@0.68h",
+        "family": "landmark",
+        "x": 560.7,
+        "y": -39.8,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "ridge-switch-house@0.30h",
+        "family": "landmark",
+        "x": 639.8,
+        "y": 277.1,
+        "inView": true,
+        "luminance": 0.1303
+      },
+      {
+        "id": "ridge-switch-house@0.42h",
+        "family": "landmark",
+        "x": 639.8,
+        "y": 258.5,
+        "inView": true,
+        "luminance": 0.0617
+      },
+      {
+        "id": "ridge-switch-house@0.55h",
+        "family": "landmark",
+        "x": 639.8,
+        "y": 237.6,
+        "inView": true,
+        "luminance": 0.0726
+      },
+      {
+        "id": "ridge-switch-house@0.68h",
+        "family": "landmark",
+        "x": 639.8,
+        "y": 215.8,
+        "inView": true,
+        "luminance": 0.1018
+      },
+      {
+        "id": "blackout-watch-lamp@0.30h",
+        "family": "landmark",
+        "x": -700,
+        "y": 729,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "blackout-watch-lamp@0.42h",
+        "family": "landmark",
+        "x": -740.5,
+        "y": 712.6,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "blackout-watch-lamp@0.55h",
+        "family": "landmark",
+        "x": -787.1,
+        "y": 693.5,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "blackout-watch-lamp@0.68h",
+        "family": "landmark",
+        "x": -837,
+        "y": 673.2,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "ground5_5",
+        "family": "terrain",
+        "x": 786,
+        "y": 425.3,
+        "inView": true,
+        "luminance": 0.068
+      },
+      {
+        "id": "ground-5_5",
+        "family": "terrain",
+        "x": 493.9,
+        "y": 425.6,
+        "inView": true,
+        "luminance": 0.0398
+      },
+      {
+        "id": "ground0_6",
+        "family": "terrain",
+        "x": 640,
+        "y": 448.7,
+        "inView": true,
+        "luminance": 0.1205
+      },
+      {
+        "id": "ground5_-5",
+        "family": "terrain",
+        "x": 763.4,
+        "y": 232,
+        "inView": true,
+        "luminance": 0.0678
+      },
+      {
+        "id": "hero",
+        "family": "hero",
+        "x": 640.1,
+        "y": 476.2,
+        "inView": true,
+        "luminance": 0.0942
+      }
+    ]
+  },
+  {
+    "scene": "e3-fairground",
+    "contract": "e3-fairground",
+    "project": "desktop-chrome",
+    "phase": "poc-band-after",
+    "query": "",
+    "focusMount": "north-crowd-counting-rostrum",
+    "standoff": [
+      0,
+      9
+    ],
+    "frameMedianLuminance": 0.1268,
+    "terrainMedianLuminance": 0.1086,
+    "landmarkMedianLuminance": 0.1057,
+    "landmarkAllMountsMedian": 0.1114,
+    "heroLuminance": 0.0939,
+    "landmarkOverTerrain": 0.973,
+    "emissiveIntensity": [
+      {
+        "id": "south-midway-admission-arch",
+        "range": [
+          0.45,
+          0.45
+        ]
+      },
+      {
+        "id": "west-current-calliope-wagon",
+        "range": [
+          0.45,
+          0.45
+        ]
+      },
+      {
+        "id": "east-mothglass-prize-cage",
+        "range": [
+          0.45,
+          0.45
+        ]
+      },
+      {
+        "id": "north-crowd-counting-rostrum",
+        "range": [
+          0.45,
+          0.45
+        ]
+      },
+      {
+        "id": "fair-bell-battery-kiosk",
+        "range": [
+          0.45,
+          0.45
+        ]
+      }
+    ],
+    "sideCensus": "{\"total\":{\"meshes\":5,\"closed\":4,\"open\":1,\"culled\":4,\"doubleSided\":1},\"mounts\":[{\"id\":\"south-midway-admission-arch\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":2.303,\"topY\":8.683},{\"id\":\"west-current-calliope-wagon\",\"meshes\":1,\"closed\":0,\"open\":1,\"culled\":0,\"doubleSided\":1,\"reasons\":{\"open-edges\":1},\"baseY\":3.224,\"topY\":8.764},{\"id\":\"east-mothglass-prize-cage\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":4.019,\"topY\":9.412},{\"id\":\"north-crowd-counting-rostrum\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":1.862,\"topY\":7.152},{\"id\":\"fair-bell-battery-kiosk\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":2.308,\"topY\":8.513}]}",
+    "p95Ms": 10.2,
+    "screenshot": "artifacts/landmark-lighting-calibration/poc-band-after-e3-fairground-desktop-chrome.png",
+    "probes": [
+      {
+        "id": "south-midway-admission-arch@0.30h",
+        "family": "landmark",
+        "x": 640,
+        "y": -386.4,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "south-midway-admission-arch@0.42h",
+        "family": "landmark",
+        "x": 640,
+        "y": -398,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "south-midway-admission-arch@0.55h",
+        "family": "landmark",
+        "x": 640,
+        "y": -410.8,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "south-midway-admission-arch@0.68h",
+        "family": "landmark",
+        "x": 640,
+        "y": -423.7,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "west-current-calliope-wagon@0.30h",
+        "family": "landmark",
+        "x": -223.3,
+        "y": -99.3,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "west-current-calliope-wagon@0.42h",
+        "family": "landmark",
+        "x": -232.1,
+        "y": -113.2,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "west-current-calliope-wagon@0.55h",
+        "family": "landmark",
+        "x": -241.8,
+        "y": -128.6,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "west-current-calliope-wagon@0.68h",
+        "family": "landmark",
+        "x": -251.7,
+        "y": -144.4,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "east-mothglass-prize-cage@0.30h",
+        "family": "landmark",
+        "x": 1513.2,
+        "y": -115,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "east-mothglass-prize-cage@0.42h",
+        "family": "landmark",
+        "x": 1522,
+        "y": -128.9,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "east-mothglass-prize-cage@0.55h",
+        "family": "landmark",
+        "x": 1531.6,
+        "y": -144.2,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "east-mothglass-prize-cage@0.68h",
+        "family": "landmark",
+        "x": 1541.5,
+        "y": -159.9,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "north-crowd-counting-rostrum@0.30h",
+        "family": "landmark",
+        "x": 640,
+        "y": 258.6,
+        "inView": true,
+        "luminance": 0.0732
+      },
+      {
+        "id": "north-crowd-counting-rostrum@0.42h",
+        "family": "landmark",
+        "x": 640,
+        "y": 244.9,
+        "inView": true,
+        "luminance": 0.1057
+      },
+      {
+        "id": "north-crowd-counting-rostrum@0.55h",
+        "family": "landmark",
+        "x": 640,
+        "y": 229.6,
+        "inView": true,
+        "luminance": 0.2038
+      },
+      {
+        "id": "north-crowd-counting-rostrum@0.68h",
+        "family": "landmark",
+        "x": 640,
+        "y": 213.9,
+        "inView": true,
+        "luminance": 0.0887
+      },
+      {
+        "id": "fair-bell-battery-kiosk@0.30h",
+        "family": "landmark",
+        "x": 872.4,
+        "y": 243,
+        "inView": true,
+        "luminance": 0.0912
+      },
+      {
+        "id": "fair-bell-battery-kiosk@0.42h",
+        "family": "landmark",
+        "x": 876.2,
+        "y": 226.4,
+        "inView": true,
+        "luminance": 0.1187
+      },
+      {
+        "id": "fair-bell-battery-kiosk@0.55h",
+        "family": "landmark",
+        "x": 880.4,
+        "y": 207.8,
+        "inView": true,
+        "luminance": 0.1114
+      },
+      {
+        "id": "fair-bell-battery-kiosk@0.68h",
+        "family": "landmark",
+        "x": 884.7,
+        "y": 188.5,
+        "inView": true,
+        "luminance": 0.1546
+      },
+      {
+        "id": "ground5_5",
+        "family": "terrain",
+        "x": 791.3,
+        "y": 397.4,
+        "inView": true,
+        "luminance": 0.1086
+      },
+      {
+        "id": "ground-5_5",
+        "family": "terrain",
+        "x": 488.7,
+        "y": 397.4,
+        "inView": true,
+        "luminance": 0.08
+      },
+      {
+        "id": "ground0_6",
+        "family": "terrain",
+        "x": 640,
+        "y": 421,
+        "inView": true,
+        "luminance": 0.0761
+      },
+      {
+        "id": "ground5_-5",
+        "family": "terrain",
+        "x": 767.6,
+        "y": 201.9,
+        "inView": true,
+        "luminance": 0.3243
+      },
+      {
+        "id": "hero",
+        "family": "hero",
+        "x": 640,
+        "y": 476.7,
+        "inView": true,
+        "luminance": 0.0939
+      }
+    ]
+  },
+  {
+    "scene": "e1-night-shift",
+    "contract": "e1-night-shift",
+    "project": "desktop-chrome",
+    "phase": "poc-band-after",
+    "query": "",
+    "focusMount": "seven_lantern_terraces",
+    "standoff": [
+      0,
+      9
+    ],
+    "frameMedianLuminance": 0.0602,
+    "terrainMedianLuminance": 0.0644,
+    "landmarkMedianLuminance": 0.0479,
+    "landmarkAllMountsMedian": 0.0479,
+    "heroLuminance": 0.217,
+    "landmarkOverTerrain": 0.744,
+    "emissiveIntensity": [
+      {
+        "id": "seven_lantern_terraces",
+        "range": [
+          1,
+          1
+        ]
+      },
+      {
+        "id": "lampworks_yard",
+        "range": [
+          1,
+          1
+        ]
+      },
+      {
+        "id": "dark_rock_shoulders",
+        "range": [
+          1,
+          1
+        ]
+      },
+      {
+        "id": "central_ford",
+        "range": [
+          1,
+          1
+        ]
+      },
+      {
+        "id": "night_work_road",
+        "range": [
+          1,
+          1
+        ]
+      }
+    ],
+    "sideCensus": "{\"total\":{\"meshes\":5,\"closed\":5,\"open\":0,\"culled\":5,\"doubleSided\":0},\"mounts\":[{\"id\":\"seven_lantern_terraces\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.477,\"topY\":1.906},{\"id\":\"lampworks_yard\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.622,\"topY\":6.422},{\"id\":\"dark_rock_shoulders\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.384,\"topY\":6.676},{\"id\":\"central_ford\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":-0.183,\"topY\":0.178},{\"id\":\"night_work_road\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.352,\"topY\":3.021}]}",
+    "p95Ms": 10,
+    "screenshot": "artifacts/landmark-lighting-calibration/poc-band-after-e1-night-shift-desktop-chrome.png",
+    "probes": [
+      {
+        "id": "seven_lantern_terraces@0.30h",
+        "family": "landmark",
+        "x": 640,
+        "y": 279.3,
+        "inView": true,
+        "luminance": 0.0479
+      },
+      {
+        "id": "seven_lantern_terraces@0.42h",
+        "family": "landmark",
+        "x": 640,
+        "y": 275.8,
+        "inView": true,
+        "luminance": 0.0479
+      },
+      {
+        "id": "seven_lantern_terraces@0.55h",
+        "family": "landmark",
+        "x": 640,
+        "y": 272,
+        "inView": true,
+        "luminance": 0.0479
+      },
+      {
+        "id": "seven_lantern_terraces@0.68h",
+        "family": "landmark",
+        "x": 640,
+        "y": 268.1,
+        "inView": true,
+        "luminance": 0.0479
+      },
+      {
+        "id": "lampworks_yard@0.30h",
+        "family": "landmark",
+        "x": 979,
+        "y": 761.1,
+        "inView": true,
+        "luminance": 0.026
+      },
+      {
+        "id": "lampworks_yard@0.42h",
+        "family": "landmark",
+        "x": 986.5,
+        "y": 749.6,
+        "inView": true,
+        "luminance": 0.026
+      },
+      {
+        "id": "lampworks_yard@0.55h",
+        "family": "landmark",
+        "x": 995,
+        "y": 736.7,
+        "inView": true,
+        "luminance": 0.026
+      },
+      {
+        "id": "lampworks_yard@0.68h",
+        "family": "landmark",
+        "x": 1004,
+        "y": 723.1,
+        "inView": true,
+        "luminance": 0.0299
+      },
+      {
+        "id": "dark_rock_shoulders@0.30h",
+        "family": "landmark",
+        "x": 640,
+        "y": 250.6,
+        "inView": true,
+        "luminance": 0.0518
+      },
+      {
+        "id": "dark_rock_shoulders@0.42h",
+        "family": "landmark",
+        "x": 640,
+        "y": 234,
+        "inView": true,
+        "luminance": 0.0521
+      },
+      {
+        "id": "dark_rock_shoulders@0.55h",
+        "family": "landmark",
+        "x": 640,
+        "y": 215.3,
+        "inView": true,
+        "luminance": 0.0566
+      },
+      {
+        "id": "dark_rock_shoulders@0.68h",
+        "family": "landmark",
+        "x": 640,
+        "y": 196,
+        "inView": true,
+        "luminance": 0.0644
+      },
+      {
+        "id": "central_ford@0.30h",
+        "family": "landmark",
+        "x": 640,
+        "y": 299,
+        "inView": true,
+        "luminance": 0.044
+      },
+      {
+        "id": "central_ford@0.42h",
+        "family": "landmark",
+        "x": 640,
+        "y": 298.2,
+        "inView": true,
+        "luminance": 0.044
+      },
+      {
+        "id": "central_ford@0.55h",
+        "family": "landmark",
+        "x": 640,
+        "y": 297.2,
+        "inView": true,
+        "luminance": 0.044
+      },
+      {
+        "id": "central_ford@0.68h",
+        "family": "landmark",
+        "x": 640,
+        "y": 296.3,
+        "inView": true,
+        "luminance": 0.044
+      },
+      {
+        "id": "night_work_road@0.30h",
+        "family": "landmark",
+        "x": 640,
+        "y": 274.3,
+        "inView": true,
+        "luminance": 0.0479
+      },
+      {
+        "id": "night_work_road@0.42h",
+        "family": "landmark",
+        "x": 640,
+        "y": 267.6,
+        "inView": true,
+        "luminance": 0.0479
+      },
+      {
+        "id": "night_work_road@0.55h",
+        "family": "landmark",
+        "x": 640,
+        "y": 260.3,
+        "inView": true,
+        "luminance": 0.0487
+      },
+      {
+        "id": "night_work_road@0.68h",
+        "family": "landmark",
+        "x": 640,
+        "y": 252.8,
+        "inView": true,
+        "luminance": 0.0515
+      },
+      {
+        "id": "ground5_5",
+        "family": "terrain",
+        "x": 789.5,
+        "y": 404.7,
+        "inView": true,
+        "luminance": 0.0398
+      },
+      {
+        "id": "ground-5_5",
+        "family": "terrain",
+        "x": 490.5,
+        "y": 404.7,
+        "inView": true,
+        "luminance": 0.0398
+      },
+      {
+        "id": "ground0_6",
+        "family": "terrain",
+        "x": 640,
+        "y": 428.1,
+        "inView": true,
+        "luminance": 0.1576
+      },
+      {
+        "id": "ground5_-5",
+        "family": "terrain",
+        "x": 766.2,
+        "y": 210.8,
+        "inView": true,
+        "luminance": 0.0644
+      },
+      {
+        "id": "hero",
+        "family": "hero",
+        "x": 640,
+        "y": 476.1,
+        "inView": true,
+        "luminance": 0.217
+      }
+    ]
+  }
+]

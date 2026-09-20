@@ -1,0 +1,15 @@
+import {readFile,writeFile} from 'node:fs/promises';
+import {createHash} from 'node:crypto';
+import assert from 'node:assert/strict';
+import {parseGlb,inspect,auditAsset} from '../../../scripts/glb-contract-guard.mjs';
+const path='assets/pilots/dredge-queen-3d/dredge-queen-detail-opus5.glb';
+const bytes=await readFile(new URL('./candidate-package/assets/pilots/dredge-queen-3d/dredge-queen-detail-opus5.glb',import.meta.url));
+const record=inspect(parseGlb(bytes));
+const violations=auditAsset({path,family:'bosses',record,contract:null});
+const baseline=JSON.parse(await readFile('scripts/glb-contract-guard.baseline.json','utf8'));
+const old=baseline.grandfathered.filter(key=>key.startsWith(path+'::'));
+assert.equal(old.length,1);assert(old[0].includes('texture-over-cap'));
+const report={assetSha256:createHash('sha256').update(bytes).digest('hex'),violations,record,baselineEntriesToRemoveOnAdoption:old,scope:'Existing production GLB guard against the isolated raw candidate; no production assets or guard baseline changed.'};
+await writeFile(new URL('./candidate-validation/production-guard.json',import.meta.url),JSON.stringify(report,null,2)+'\n');
+console.log(JSON.stringify({violations,baselineEntriesToRemoveOnAdoption:old}));
+assert.deepEqual(violations,[]);

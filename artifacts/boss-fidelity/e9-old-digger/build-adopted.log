@@ -1,0 +1,46 @@
+Info: Saved as "old-digger.blend"
+INFO Draco mesh compression is available, use library at /Applications/Blender.app/Contents/Resources/5.1/scripts/addons_core/io_scene_gltf2/libextern_draco.dylib
+13:23:50 | INFO: Starting glTF 2.0 export
+13:23:50 | INFO: Extracting primitive: bucket_wheelsMesh
+13:23:50 | INFO: Primitives created: 1
+13:23:50 | INFO: Extracting primitive: gantryMesh
+13:23:50 | INFO: Primitives created: 1
+13:23:50 | INFO: Extracting primitive: tape_deckMesh
+13:23:50 | INFO: Primitives created: 1
+13:23:50 | INFO: Finished glTF 2.0 export in 0.0243990421295166 s
+
+{
+  "blend": "/Users/robin/.codex/worktrees/572c/Gold Rush/assets/pilots/old-digger-3d/old-digger.blend",
+  "glb": "/Users/robin/.codex/worktrees/572c/Gold Rush/assets/pilots/old-digger-3d/old-digger.glb",
+  "sha256": "d6a81f17c5c49f016c9046391fb3eacb9ecd920717b0770b0349cab3e3d6b7b4",
+  "sourcePlates": {
+    "assets/raw/boss-old-digger.png": "a6f9ffadd3280fe97daab2a419bfabe163a6b5dbfe76e6891dc1cdd2d197156a",
+    "assets/raw/boss-old-digger-gentle.png": "09e1f06185a46dfaf28a55421250acad0e2331eeec11ad9409ce62879430bb77"
+  },
+  "components": [
+    "bucket_wheels",
+    "gantry",
+    "tape_deck"
+  ],
+  "redemptionMorphs": [
+    "Redemption_GentleBuckets",
+    "Redemption_SafeGantry",
+    "Redemption_TealTapeDeck"
+  ],
+  "triangles": 16104,
+  "boundsBlender": {
+    "min": [
+      -6.2,
+      -1.779522,
+      0.0
+    ],
+    "max": [
+      6.2,
+      1.779522,
+      5.787864
+    ]
+  }
+}
+Blender 5.1.2 (hash ec6e62d40fa9 built 2026-05-19 01:30:33)
+
+Blender quit

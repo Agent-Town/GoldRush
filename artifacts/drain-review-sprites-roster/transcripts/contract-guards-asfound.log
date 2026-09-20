@@ -1,0 +1,48 @@
+✔ contract direction files exist under assets/processed (1.471625ms)
+✔ contract direction aliases do not overwrite explicit directions (0.194083ms)
+✔ deploy fails closed: payload over the budget (694.455333ms)
+✔ deploy fails closed: payload exactly ON the budget (the comparison is less-than) (700.749666ms)
+✔ deploy fails closed: a declared family the build does not emit (694.141417ms)
+✔ deploy fails closed: the probe tripwire over its ceiling (690.577083ms)
+✔ the deploy survives a broken tripwire and says so: the probe exits nonzero (695.801ms)
+✔ the deploy survives a broken tripwire and says so: the probe measures nothing (556.2025ms)
+✔ the deploy survives a broken tripwire and says so: the per-file report is unreadable (617.970083ms)
+✔ the deploy survives a broken tripwire and says so: mobile never reported (662.783334ms)
+✔ the deploy survives a broken tripwire and says so: the same project reported twice (742.72025ms)
+✔ the verdict block names which number gates and which only trips (740.610417ms)
+✔ the budget and the ceiling in the block are the constants deploy.sh holds (1.074875ms)
+✔ --allow-over-budget waives both numbers at once, and says which failed (681.952625ms)
+✔ under-budget dry run passes; an existing owner verdict is reported without interpreting it (680.431542ms)
+✔ allowance reaches the publisher; strict still governs deploy errors (960.323958ms)
+✔ build failure prints a verdict and preserves strict=false (408.478083ms)
+✔ build failure prints a verdict and preserves strict=true (397.924958ms)
+✔ lock refusal prints the release verdict before any build (213.609667ms)
+✔ deploy.sh falls back to the probe only when the payload script is genuinely absent (1237.707958ms)
+✔ the fallback is unreachable in this repo: the payload script and its declaration are here (0.139292ms)
+✔ the payload table is deterministic: three runs, byte-identical (948.086208ms)
+✔ the declared set is non-empty, sorted, disjoint, and every row carries its reason (0.285041ms)
+✔ the declaration cannot drift from the town's own sources (1.554ms)
+✔ the cross-check bites: a cast member dropped from the declaration is named (0.921375ms)
+✔ the cross-check bites: re-declaring a deferred hero clip group is refused (0.862792ms)
+✔ a corpus family the declaration does not name is reported, never counted (743.463875ms)
+✔ the family derivation is a verbatim copy of the request-family guard's (0.355209ms)
+✔ the payload computed here is the payload the block prints (704.238708ms)
+✔ the pinned family lists are sorted, deduped and disjoint (0.828459ms)
+✔ the family derivation survives a rebuild (0.684791ms)
+✔ every first-town request belongs to a pinned family (4.685125ms)
+✔ no second map is warmed inside the first town window (2.079042ms)
+✔ the group table is read from the contract by the runtime (0.486625ms)
+✔ the derivation matches the runtime on a synthetic slot (0.537167ms)
+✔ every clip of every slot belongs to exactly one group (1.000708ms)
+✔ every clip named in a clipGroups block is a clip the slot really has (0.18925ms)
+✔ walk-sheet clips stay in the slot default group (0.162291ms)
+✔ every group a scene declares exists in the contract (0.336916ms)
+✔ the hero defers its claim animations and nothing the town plays (0.095166ms)
+ℹ tests 40
+ℹ suites 0
+ℹ pass 40
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 13833.875042

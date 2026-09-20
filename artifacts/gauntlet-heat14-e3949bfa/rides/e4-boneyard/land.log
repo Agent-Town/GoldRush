@@ -1,0 +1,66 @@
+
+=== 1 finish-ride ===
+{"rig":"opus","contract":"e4-boneyard","wall":704,"wallHit":false,"rc":0,"tracked":[],"files":11,"outcome":{"secured":true,"waves":12,"gold":200,"runsSoFar":2,"scoredAttempts":1,"tape":"/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/heat14/opus/e4-boneyard/attempt-1-tape.json","worldModel":"sim-import"},"scoredTapes":[{"file":"attempt-1-tape.json","id":"agent-90aa867f-daf1bdbd-7d8c-41ff-9edb-ce0ff1ee99a6","secured":true,"waves":12,"gold":200,"durationTicks":10800,"lastEntryTick":10539,"promotedByRig":true,"discoveredBy":"outcome-file+filename"}],"otherSecured":[{"file":"tune-1-tape.json","id":"agent-90aa867f-daf1bdbd-7d8c-41ff-9edb-ce0ff1ee99a6","waves":12,"gold":200}],"reportSections":{"outcome":505,"whatTheMapAsked":3316,"winnability":994,"lessons":5202},"usage":{"turns":62,"toolCalls":30,"tokensIn":124,"tokensOut":134403}}
+tape chosen: attempt-1-tape.json (id agent-90aa867f-daf1bdbd-7d8c-41ff-9edb-ce0ff1ee99a6, promotedByRig=true, discoveredBy=outcome-file+filename)
+
+=== 2 freeze notebook header ===
+{"headerOnly":true,"headerBytes":431}
+
+=== 3 harnessDigest ===
+f2b1e5f61e245941c1925abd0f8dbc9b7d700a3b64fa932bbcef0489969f57ac
+
+=== 4 build-submission ===
+{"tapeId":"agent-90aa867f-daf1bdbd-7d8c-41ff-9edb-ce0ff1ee99a6","contract":"e4-boneyard","epochId":"epoch-4-motor","seed":"e4-boneyard-01","seedMode":"bench","score":{"secured":true,"waves":12,"timeAlive":360,"gold":200,"baseValue":0},"papers":{"buildId":"0648b57e7","engineHash":"540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068","era":6,"viewVersion":2},"durationTicks":10800,"lastEntryTick":10539,"stack":{"model":"claude-opus-5","harness":"heat14-operator","harnessVersion":"2.1.272","harnessDigest":"f2b1e5f61e245941c1925abd0f8dbc9b7d700a3b64fa932bbcef0489969f57ac","worldModel":"sim-import","config":"attended-hosted headless `claude -p` ride (heat 14, the era-6 re-ride) on Claude Code CLI 2.1.272; charter + door manual + own notebook (self-memory); own controller authored in-ride","calls":40,"tokensIn":31306859,"tokensOut":134403}}
+
+=== 5 publish (POST → poll → WATCH) ===
+FAILED: file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/gauntlet-heat14-e3949bfa/publish-submission.mjs:37
+if (slip?.assay !== 'verified') throw new Error(`assay ${slip?.assay ?? 'missing'}: ${slip?.assayReason ?? 'no reason'}`);
+                                      ^
+
+Error: assay pending: no reason
+    at file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/gauntlet-heat14-e3949bfa/publish-submission.mjs:37:39
+
+Node.js v26.4.0
+
+POST ok; assay still pending at the 120 s mark — resuming with the poll-only shim (no re-POST)
+
+=== 6 poll-verdict (no re-POST) ===
+FAILED: file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/gauntlet-heat14-e3949bfa/poll-verdict.mjs:26
+if (slip?.assay !== 'verified') throw new Error(`assay ${slip?.assay ?? 'missing'}: ${slip?.assayReason ?? 'no reason'}`);
+                                      ^
+
+Error: assay missing: no reason
+    at file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/gauntlet-heat14-e3949bfa/poll-verdict.mjs:26:39
+
+Node.js v26.4.0
+
+file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/gauntlet-heat14-e3949bfa/publish-submission.mjs:37
+if (slip?.assay !== 'verified') throw new Error(`assay ${slip?.assay ?? 'missing'}: ${slip?.assayReason ?? 'no reason'}`);
+                                      ^
+
+Error: assay pending: no reason
+    at file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/gauntlet-heat14-e3949bfa/publish-submission.mjs:37:39
+
+Node.js v26.4.0
+file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/gauntlet-heat14-e3949bfa/poll-verdict.mjs:26
+if (slip?.assay !== 'verified') throw new Error(`assay ${slip?.assay ?? 'missing'}: ${slip?.assayReason ?? 'no reason'}`);
+                                      ^
+
+Error: assay missing: no reason
+    at file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/gauntlet-heat14-e3949bfa/poll-verdict.mjs:26:39
+
+Node.js v26.4.0
+file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/gauntlet-heat14-e3949bfa/land-ride.mjs:31
+const step = (name, fn) => { process.stdout.write(`\n=== ${name} ===\n`); try { return fn(); } catch (error) { process.stdout.write(`FAILED: ${(error.stdout ?? '') + (error.stderr ?? error.message)}\n`); throw Object.assign(new Error(name), { step: name }); } };
+                                                                                                                                                                                                                                ^
+
+Error: 6 poll-verdict (no re-POST)
+    at step (file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/gauntlet-heat14-e3949bfa/land-ride.mjs:31:225)
+    at file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/gauntlet-heat14-e3949bfa/land-ride.mjs:68:3
+    at ModuleJob.run (node:internal/modules/esm/module_job:447:25)
+    at async node:internal/modules/esm/loader:646:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+  step: '6 poll-verdict (no re-POST)'
+}
+
+Node.js v26.4.0

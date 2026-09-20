@@ -1,0 +1,43 @@
+
+########## RIDE e1-night-shift · seed e1-night-shift-01 · gen 56 · stake stale-receipt · wall 900s ##########
+--- 1 charter ---
+{"rig":"opus","contract":"e1-night-shift","seed":"e1-night-shift-01","seedMode":"bench","stake":"stale-receipt","generation":56,"wall":900,"notebookSha256":"6861013ae2aaf079ae0e4bdb1f2821f7559dd8cd953d34faac1bd91d76ddfcd8","charterSha256":"3240a025b5cd81cc0bec63d0f565a7358cf1f8572830994f72327f6f5ec01fc9","bytes":435342,"out":"/private/tmp/heat12-038cc280/artifacts/gauntlet-heat12-20260905/rides/e1-night-shift/charter.md"}
+--- 2 ride ---
+START opus claude-opus-5 pid=13114 session=55300032-e4cd-4850-8ef1-93122b6f374b at=2026-09-05T20:25:47.127Z
+FIRST-OUTPUT opus +60s
+OUTCOME opus secured=false waves=20 gold=20 runsSoFar=1 scored=0 +300s
+OUTCOME opus secured=false waves=20 gold=32 runsSoFar=2 scored=1 +420s
+OUTCOME opus secured=false waves=20 gold=32 runsSoFar=3 scored=1 +450s
+END opus rc=0 signal=null wall=504s wallHit=false
+ride-wall rc=0 signal=-
+--- 3 land ---
+
+=== 1 finish-ride ===
+{"rig":"opus","contract":"e1-night-shift","wall":504,"wallHit":false,"rc":0,"tracked":[],"files":8,"outcome":{"secured":false,"waves":20,"gold":32,"runsSoFar":3,"scoredAttempts":1,"tape":"/tmp/heat12-038cc280/artifacts/heat12/opus/e1-night-shift/attempt-1-tape.json","worldModel":"sim-import"},"scoredTapes":[{"file":"attempt-1-tape.json","id":"agent-f255bbbc-022dd78b-1973-4fd6-b333-e77f3a434bb2","secured":false,"waves":20,"gold":32,"durationTicks":18462,"lastEntryTick":18443,"promotedByRig":true,"discoveredBy":"outcome-file+filename"}],"otherSecured":[],"reportSections":{"outcome":812,"whatTheMapAsked":2999,"winnability":741,"lessons":3264},"usage":{"turns":40,"toolCalls":24,"tokensIn":80,"tokensOut":54145}}
+
+=== NOT SECURED — nothing to submit ===
+{
+ "rig": "opus",
+ "contract": "e1-night-shift",
+ "wall": 504,
+ "wallHit": false,
+ "rc": 0,
+ "scoredTapes": [
+  {
+   "file": "attempt-1-tape.json",
+   "secured": false,
+   "waves": 20,
+   "gold": 32
+  }
+ ],
+ "outcomeNote": "NOT SECURED — best of 2 runs. w20 of a 25-wave (750s) contract. Nothing put forward; do not submit."
+}
+
+land rc=0
+--- 4 notebook ---
+{"notebook":"/Users/robin/Claude/Projects/goldrush-gauntlet/memories/claude__opus-5/NOTEBOOK.md","generation":56,"headerBytes":430,"entryBytes":7882}
+--- 5 matrix ---
+| 20 | e1-night-shift | `e1-night-shift-01` | stale-receipt | 56 | **not secured** | 20 | 32 | 615.400s | 504s | `attempt-1-tape.json` · `agent-f255bbbc-022dd78b-1973-4fd6-b333-e77f3a434bb2`<br>fnv1a32:94ab6114 | — | gen 56 |
+{"contract":"e1-night-shift","secured":false,"tapesOnDisk":6,"scoredTapes":1,"otherSecured":0,"runs":3,"scoredAttempts":1,"wallHit":false,"rc":0,"assay":null,"ranked":null,"winnability":"**Undecided-leaning-yes, and what stopped me was my own budget, not a wall:** both controllers\nreached wave 20 of 25 at t ≈ 615 s with the full fort standing and the hero at maxHp 175, and\nthe whole gap is income — 980 gold over 615 s (1.59 g/s) pays for a 500-gold ladder and only\npart of a 600-gold tier-2 sink, while the two nearest seam anchors sit 9.3 and 10.4 wu from the\nclaim and my harvest tail round-robined *three* seams three pans at a time instead of draining\nthe nearest one block-wise (the generation-51 supply-rate error, repeated); and I made it worse\nin the scored attempt by spending 120 gold on two stockpiles that raised a cap the purse never\nreached and invited 27 gold of theft, for a measured gain of **1.1 seconds**."}
+########## END e1-night-shift ##########
+

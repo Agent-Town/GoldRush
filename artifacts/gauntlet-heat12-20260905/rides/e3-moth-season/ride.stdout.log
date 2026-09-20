@@ -1,0 +1,20 @@
+**SECURED** on the first scored attempt — stopping here per the rules.
+
+**Result:** `e3-moth-season` / `e3-moth-season-01`, trail — **w12 / 360.000 s / 200 g / 320 kills / 54 calls**, `eventLogHash fnv1a32:b98efd5e`. 4 sim runs, 1 scored attempt, `worldModel: sim-import`.
+
+Tape put forward: `artifacts/heat12/opus/e3-moth-season/attempt-1-tape.json` — declared in `gauntlet-outcome.json`'s `"tape"` field. It is a byte-identical copy of `tune-3-tape.json`: one ride under two filenames, not two rides.
+
+**Admissibility, measured off the tape before I called it an attempt** (all three axes clear): 10,801 / 18,002 ticks · 54 / 3,601 entries · 136,159 / 576,176 bytes. Local assay replay reproduced the tape's own `fnv1a32:ed3974ff` plus all four outcome fields.
+
+**What the drain actually did.** The pin prose says "contract data, zero src/ edits," and that is true — but the `src/` that *reads* that data is where the change landed, in three ways:
+1. `twist.powerGrid.connect` made the grid the **secure gate** — no wave secures until the corridor gallery carries current.
+2. `MechanicsManifest.ts:828` filters `turret` out for any powerGrid contract, and that filtered set is handed to the sim's own build gate (`HeadlessContractSim:1030`). **My generation-14 ride won this map with four turrets; they cannot be built now.** I traced this rather than inheriting the assumption my gens 11/13 recorded but never tested.
+3. A `fevered_saboteur` wrecker from wave 4. Idle now dies at w4/122.5s.
+
+The era mechanic is genuinely load-bearing but **cheap**: one `sentry_beacon` at the pylon site (0,−14) latched `canyonConnect.complete` at t=30 for 25 gold, one-way — I watched `powered` fall back to 0 when that beacon was wrecked at t=131 while `complete` stayed true. The real difficulty is the halved arsenal.
+
+**Two things cost me runs, both mine, both worth flagging:**
+- tune-1 measured **437,836 bytes at wave 8** against a 576,176 ceiling — a wave-12 ride on that policy is refused `reel_too_large` (the hazard you published). The blank-line rule cut it 25× to 136,159 for a *longer* ride.
+- tune-2 hit the door's bolded REPLACE warning: a seam filter (`d ≤ 24`) went empty when all three live anchors re-anchored past 24wu, so the array went empty and **`[]` wiped every order** — `now.orders: {}`, Prospector frozen 200s.
+
+Margin: hero never below its running maximum, finished 119/175 at level 16 — but all six beacons were wrecked at the bank with 63 alive, so the fort was gone and the last wave rode on the hero alone.

@@ -1,0 +1,155 @@
+{
+  "rig": "opus",
+  "contract": "e7-dead-band",
+  "model": "claude-opus-5",
+  "sessionId": "1eb1d615-f70b-43ff-9383-8c162d0497c3",
+  "startedAt": "2026-09-07T10:40:02.416Z",
+  "endedAt": "2026-09-07T10:50:33.516Z",
+  "wallClockSeconds": 631,
+  "wallHit": false,
+  "exitCode": 0,
+  "signal": null,
+  "setupToFirstOutputSeconds": 135,
+  "arenaTrackedChanges": [],
+  "workspaceFiles": [
+    ".best.json",
+    "attempt-1-summary.json",
+    "attempt-1-table.txt",
+    "attempt-1-tape.json",
+    "attempt-1-views.jsonl",
+    "ctrl-v1.mjs",
+    "ctrl-v2.mjs",
+    "gauntlet-outcome.json",
+    "gauntlet-report.md",
+    "probe-idle-summary.json",
+    "probe-idle-table.txt",
+    "probe-idle-tape.json",
+    "probe-idle-views.jsonl",
+    "runner.mjs",
+    "tune-1-summary.json",
+    "tune-1-table.txt",
+    "tune-1-tape.json",
+    "tune-1-views.jsonl"
+  ],
+  "outcome": {
+    "secured": true,
+    "waves": 20,
+    "timeMs": 600000,
+    "gold": 335,
+    "kills": 928,
+    "calls": 82,
+    "defaultedPicks": 0,
+    "defaultedSecure": 1,
+    "eventLogHash": "fnv1a32:7048ee41",
+    "tape": "/private/tmp/heat13-569a41f9/artifacts/heat13/opus/e7-dead-band/attempt-1-tape.json",
+    "scored": true,
+    "runsSoFar": 3,
+    "scoredAttempts": 1,
+    "worldModel": "sim-import",
+    "assay": {
+      "eventLogHash": "fnv1a32:b3234ac0",
+      "note": "local assay-replay-agent reproduced the TAPE header hash and all four outcome fields; the stdout outcome line hash fnv1a32:7048ee41 is a different number by design"
+    },
+    "envelope": {
+      "durationTicks": 18000,
+      "lastEntryTick": 17594,
+      "entries": 82,
+      "bytes": 150576
+    },
+    "note": "attempt-1-tape.json IS the scored attempt (one ride). Secured w20/600.000s/335g/82 calls."
+  },
+  "outcomeError": null,
+  "promotedTapeName": "attempt-1-tape.json",
+  "scoredTapes": [
+    {
+      "file": "attempt-1-tape.json",
+      "id": "agent-b9d92a82-48465cff-c503-46ee-ac7c-ab0820d31b06",
+      "contract": "e7-dead-band",
+      "seed": "e7-dead-band-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "f3cf4fb52",
+        "engineHash": "09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 20,
+        "timeAlive": 600,
+        "gold": 335
+      },
+      "entries": 82,
+      "durationTicks": 18000,
+      "lastEntryTick": 17594,
+      "promotedByRig": true,
+      "discoveredBy": "outcome-file+filename"
+    }
+  ],
+  "otherTapes": [
+    {
+      "file": "probe-idle-tape.json",
+      "id": "agent-a5489e0e-55574931-7b78-473e-81f2-21a26ff4f994",
+      "contract": "e7-dead-band",
+      "seed": "e7-dead-band-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "a6bea866f",
+        "engineHash": "09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 4,
+        "timeAlive": 128.1,
+        "gold": 0
+      },
+      "entries": 0,
+      "durationTicks": 3843,
+      "lastEntryTick": null
+    },
+    {
+      "file": "tune-1-tape.json",
+      "id": "agent-199f094f-12179b88-c2c7-4a1d-b293-e390ea500c79",
+      "contract": "e7-dead-band",
+      "seed": "e7-dead-band-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "f3cf4fb52",
+        "engineHash": "09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 19,
+        "timeAlive": 578.8,
+        "gold": 285
+      },
+      "entries": 80,
+      "durationTicks": 17364,
+      "lastEntryTick": 17100
+    }
+  ],
+  "otherSecuredTapes": [],
+  "report": {
+    "outcome": "**SECURED.** `w20 / timeAlive 600.000 s / gold 335 / calls 82`, kills 928, `defaultedSecure: 1`.\nTape put forward: **`/private/tmp/heat13-569a41f9/artifacts/heat13/opus/e7-dead-band/attempt-1-tape.json`**\n(declared in `gauntlet-outcome.json`'s `tape` field; it is one ride, not a copy of another).\n**3 sim runs** (probe-idle, tune-1, attempt-1), **1 scored attempt**. `worldModel: sim-import`.\n\nEnvelope measured off the reel: `durationTicks` **18000**, last accepted order at tick **17594**\n(406 ticks of slack — the blank line at `pendingSecure` again), **82 entries**, **150,576 bytes**.\nLocal receipt: `scripts/assay-replay-agent.mjs` reproduced the tape's own header hash\n`fnv1a32:b3234ac0` and all four outcome fields, and `securedSnapshot.gold` (335) equals the\ndeclared gold, so the door's `score_mismatch` rule is satisfied. (The stdout outcome line's\n`fnv1a32:7048ee41` is a different number by design; comparing the wrong pair reads as a false\nmismatch on a good reel.)",
+    "whatTheMapAsked": "It asked for **its era's signature mechanic in exactly one order, and then for 599.97 seconds of\nordinary stationary survival** — so E7's playbooks are load-bearing here in the strictest sense\n(no wave count secures this claim without them) and cheap in every other sense. The Dead Band's\nproof is `refusal`: `now.playbookUse.objective` reads `\"refusal\"`, `E7PlaybookLatch.allowsSecure`\nreturns `suppressedUses > 0`, and `HeadlessContractSim.usePlaybook:3138` asks\n`signalSuppression.refuse('playbooks')` **before** the interference front and before the\n`NOTHING_RECORDED` branch at `:3153` — so the refusal counts on the way through with nothing yet\ndemonstrated. One `PLAYBOOK_USE` in the opening array latched it at **t = 0.033 s**\n(`refusals.suppressed: 1`, `objectiveMet: true` from view 2 on, never touched again). This is the\nonly map where failing the verb is passing the contract, and the view carries all of it —\n`now.playbookUse.{objective, objectiveMet, uses, refusals, last}` beside `now.signalSuppression`\n`{declared, drones, playbooks, relayChains, refusals}` — so a rider working from the view alone\ncan both play it and check it. The Echo itself is genuinely absent rather than hidden: no drone\nbody, no relay graph, and the suppression row publishes that fact instead of staying silent.\nEverything else was the plainest survival, carried by `now.works.entries` (position, `tier`,\n`index`), `now.works.byKind`, `now.seams[].active/x/z/anchorIndex`, `now.gold` against\n`now.score.goldPanned`, `now.hero.hp/maxHp/x/z`, `now.threats.alive` (peak 27), and\n`now.orders[].status/reason`. Orders: `PLAYBOOK_USE`, `PICK_UPGRADE`, `BUILD`, `HARVEST`,\n`BLAST_AT`, `MOVE_HERO`, `CONTEXT_ACTION upgrade`, and one blank line.\n\n**Does my notebook still describe this map?** Its bones yes, its controls no. Generation 45 rode\nthis exact seed and every structural number reproduced — claim (0, 12), `dead-band-yard`\nz ≤ 12 so the fort rings the body that must live, four anchors at (±14, −6) and (±34, 37), a\nroster of one `data_rustler` whose `thief: true` forces `wrecker = false` (0 of 10 works wrecked\nacross 83 views, `goldStolen` 0, so `REPAIR_UNDER` and palisade chaff are dead weight), and the\nsame wave-20 default from a `secureWave`-silent manifest. What moved is the grammar: gen 45 rode\n`MOVE_TO`/`HOLD`, and gen 27 before it reported `now.signalSuppression` as a permanent row of\nzeros with \"no playbook verb in the grammar.\" Both are dead. The 1:1 ruling cost me nothing on a\nboard where the hero wants to stand still — the hero has no drift, so silence *is* a hold — and\nit handed me something: `MOVE_HERO` is what walks the hero into `CONTEXT_ACTION`'s 1.6-unit\ninteract radius, which is the entire difference between my two rides.",
+    "winnability": "Secured, and the margin was **wide by the end and entirely self-inflicted in the middle**: the\nhero finished **123.8/175** with all ten works standing unwrecked and `threats.alive` down to 6,\nbut the identical policy with one 1.71-unit positioning error died at w19 / 578.8 s — the gap\nbetween the two rides is 21 seconds of clock and 255 gold of income a pinned purse refused to\ncredit.",
+    "lessons": "- **`CONTEXT_ACTION`'s reach is `Balance.demolish.interactRadius` = 1.6, and `MOVE_HERO`'s own\n  arrival radius eats 0.5 of it.** tune-1 parked the hero at `p + (claim − p) × 0.18`, which for a\n  turret at (−9, 9) is **1.71 units out**, and every upgrade answered\n  `REJECTED: upgrade turret:0 is not legal here`. I read \"not legal here\" as \"this contract has no\n  tier row\" (gen 55's `e1-baron` finding) and nearly wrote the sink off as absent —\n  `Balance.tiers.turret` is `[0, 150, 300]` and it was there all along. **Normalise the offset to a\n  fixed 0.7 along the claim-ward unit vector, not a fraction of a distance that varies per work**,\n  and read \"not legal *here*\" as a claim about the body's position before believing it is a claim\n  about the contract.\n- **A refused sink and an absent sink have the same economic signature, and the tell is the\n  ladder.** `goldPanned` frozen at 870 while `gold` pinned at 200 is my sixth sighting of the\n  dead-sink pair — but the new sharpening is that the sink LOOKED emitted: the order was in the\n  array in all 20 views. **Count the SUCCESSFUL executions, not the emissions.** One line —\n  `works.entries.filter(e => e.tier > 1).length` — separates \"I never ordered it\" from \"I ordered\n  it 20 times and it was refused 20 times\", and gen 49 lost a whole ride to the first of those.\n- **A hero that walks for an errand must be told to walk back, and the return order cannot sit\n  behind a draining worklist.** tune-1's `MOVE_HERO` home was the array's terminal anchor, so the\n  eight-deep `HARVEST` chain in front of it owned every tick and the hero stood **7.6 units outside\n  its own beacon ring for 200 seconds** — beacon radius is 8, so most of the fort covered empty\n  ground while the scrum ate the hero. Under the new grammar the hero's position is a resource I\n  can lose by accident; **put \"come home\" ABOVE the tail and gate it on `dist(hero, home) > 0.6`**,\n  where it completes, falls through, and costs nothing thereafter.\n- **`MOVE_HERO` blocks while walking and falls through on arrival, so its position in the array is\n  a policy choice.** It returns `{heroMovement}` (truthy, owns the tick) until the hero's body\n  covers the point, then `{}`. Above the tail it is a correction; below the tail it is decoration.\n- **The Dead Band's gate is one order and it should be view-0 business.** Suppression is asked\n  before `NOTHING_RECORDED`, so the cheapest legal moment to satisfy this map is the first array,\n  with nothing recorded. Gen 45 found this and it reproduced exactly; **the early-return ORDER\n  inside the verb is now the sixth contract this has decided** (gens 45, 61, 63, 64 and this one).\n- **Ride the skeleton first, change exactly one interpretable thing — and when the log names three\n  faults with one cause, fixing all three is still one diff.** tune-1 → attempt-1 changed the\n  upgrade offset, the come-home order and an overflow sink, and all three descend from the same\n  root (the hero was in the wrong place and the purse was therefore dead). The result is a\n  measurement, not a guess: w19 → w20, pan 870 → 1125, hero 0/175 → 123.8/175, turret tiers 0 → 2.\n- **My own generation-45 row is the thing that expired, not the map.** I am the listed\n  first-securer of `e7-dead-band` from 2026-09-04 and that row was retired because the grammar\n  moved underneath it. Ninth heat running: read `assets/engine-era.json` and the contract JSON as\n  a **diff against the notebook**, and grade the notebook clause by clause — here every geometry\n  clause held and every control clause was dead.\n- **The blank line is standing equipment, eighth contract running.** It banked the wave-20 secure\n  for free (`defaultedSecure: 1`), left the last accepted order 406 ticks inside an 18,000-tick\n  envelope, and held an 84-view run to 82 entries and 150 KB.\n- **The runner before the probe.** Shell redirection is refused in this arena (fifth heat running,\n  and it refused my report append too), so a node runner that spawns `gr-sim`, drives the\n  controller, logs every view to JSONL and writes `gauntlet-outcome.json` plus all three envelope\n  axes on every child exit is not a convenience — it made the intermediate-results law automatic\n  (a truthful row existed from the idle probe onward, and for the first time in ten generations the\n  comparator promoted the scored tape with **no hand edit**) and its per-view table located all\n  three faults in one read."
+  },
+  "usage": {
+    "transcript": "/Users/robin/.claude/projects/-private-tmp-heat13-569a41f9/1eb1d615-f70b-43ff-9383-8c162d0497c3.jsonl",
+    "assistantTurns": 59,
+    "toolCalls": 31,
+    "tokensIn": 118,
+    "tokensOut": 91555,
+    "cacheReadTokens": 18284749,
+    "cacheWriteTokens": 966453,
+    "note": "tokensIn excludes cache reads/writes (reported separately); summed from the CLI session transcript, not self-reported by the rig"
+  }
+}

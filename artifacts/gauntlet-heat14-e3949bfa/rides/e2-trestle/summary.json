@@ -1,0 +1,201 @@
+{
+  "rig": "opus",
+  "contract": "e2-trestle",
+  "model": "claude-opus-5",
+  "sessionId": "affe855f-75d7-4cce-87b9-0e8fa60787f8",
+  "startedAt": "2026-09-18T08:35:08.437Z",
+  "endedAt": "2026-09-18T08:49:47.889Z",
+  "wallClockSeconds": 879,
+  "wallHit": false,
+  "exitCode": 0,
+  "signal": null,
+  "setupToFirstOutputSeconds": 135,
+  "arenaTrackedChanges": [],
+  "workspaceFiles": [
+    "attempt-1-tape.json",
+    "ctrl-v1.mjs",
+    "gauntlet-outcome.json",
+    "gauntlet-report.md",
+    "probe-rows.json",
+    "probe-summary.json",
+    "probe-tape.json",
+    "runner.mjs",
+    "tune-1-rows.json",
+    "tune-1-summary.json",
+    "tune-1-tape.json"
+  ],
+  "outcome": {
+    "secured": true,
+    "waves": 14,
+    "timeMs": 618600,
+    "gold": 176,
+    "kills": 697,
+    "calls": 395,
+    "defaultedPicks": 0,
+    "defaultedSecure": 1,
+    "eventLogHash": "fnv1a32:1197d233",
+    "tape": "/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/heat14/opus/e2-trestle/attempt-1-tape.json",
+    "scored": true,
+    "runsSoFar": 2,
+    "scoredAttempts": 1,
+    "worldModel": "sim-import",
+    "note": "attempt-1-tape.json is a BYTE-IDENTICAL copy of tune-1-tape.json: ONE ride, two filenames. The first controller secured and the stop rule ends the heat there, so the securing tune is promoted by name in this tape field. cmp verified identical.",
+    "tapeHeaderHash": "fnv1a32:8a13dd06",
+    "outcomeLineHash": "fnv1a32:1197d233",
+    "hashNote": "These two differ BY DESIGN: the assay replay reproduces the TAPE HEADER's hash, never the stdout outcome line's.",
+    "envelope": {
+      "durationTicks": 18558,
+      "maxTicks": 23145,
+      "lastEntryTick": 18405,
+      "entries": 395,
+      "maxEntries": 4629,
+      "bytes": 1385182,
+      "maxTapeBytes": 2486304,
+      "derivation": "runTapeEnvelopeForContract('e2-trestle'): finalWave=max(secureWave 12, baron.wave 12)+6=18; contractTicks=ceil((18*30/0.7)/(1/30))=23143; maxTicks=max(18000,23143)+2=23145; maxEntries=ceil(23145/5)=4629; maxOrderEntries=ceil(23145/30)=772; maxTapeBytes=16384+4629*160+772*2240=2486304. ALL THREE AXES PASS (ticks 80%, entries 8.5%, bytes 55.7%). The charter's 592544 figure is the conservative floor formula (16KiB + maxEntries*160); the live ceiling adds maxOrderEntries*(2400-160)."
+    },
+    "run": {
+      "minHeroHpFraction": 0.36,
+      "minHeroHpAtSeconds": 536.7,
+      "finalHeroHp": "63/175",
+      "peakWorksStanding": 13,
+      "finalWorks": {
+        "palisade": 13,
+        "turret": 4,
+        "standing": 13,
+        "wrecked": 4
+      },
+      "turretsLost": 0,
+      "goldPanned": 1010,
+      "goldStolen": 0,
+      "peakThreatsAlive": 63,
+      "peakWreckers": 56
+    },
+    "idleFloor": {
+      "secured": false,
+      "waves": 1,
+      "timeMs": 70700,
+      "gold": 0,
+      "kills": 13,
+      "eventLogHash": "fnv1a32:48102054",
+      "note": "Measured this ride. Wave 1 lands at t=42.87 with 17 enemies of which 11 are wreckers; the hero is dead at t=70.700 with no works. This is the pin-#4 cure (five spawn gates) showing in the floor."
+    }
+  },
+  "outcomeError": null,
+  "promotedTapeName": "attempt-1-tape.json",
+  "scoredTapes": [
+    {
+      "file": "attempt-1-tape.json",
+      "id": "agent-aa651f01-16e8b030-6480-4fcb-ac8d-1ba9aa8d5107",
+      "contract": "e2-trestle",
+      "seed": "e2-trestle-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "580406231",
+        "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+        "era": 6,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 14,
+        "timeAlive": 618.6,
+        "gold": 176
+      },
+      "entries": 395,
+      "durationTicks": 18558,
+      "lastEntryTick": 18405,
+      "promotedByRig": true,
+      "discoveredBy": "outcome-file+filename"
+    }
+  ],
+  "otherTapes": [
+    {
+      "file": "probe-tape.json",
+      "id": "agent-c382babe-15f5f862-c6da-4788-b6a8-da77bd884a3d",
+      "contract": "e2-trestle",
+      "seed": "e2-trestle-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "580406231",
+        "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+        "era": 6,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 1,
+        "timeAlive": 70.7,
+        "gold": 0
+      },
+      "entries": 0,
+      "durationTicks": 2121,
+      "lastEntryTick": null
+    },
+    {
+      "file": "tune-1-tape.json",
+      "id": "agent-aa651f01-16e8b030-6480-4fcb-ac8d-1ba9aa8d5107",
+      "contract": "e2-trestle",
+      "seed": "e2-trestle-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "580406231",
+        "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+        "era": 6,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 14,
+        "timeAlive": 618.6,
+        "gold": 176
+      },
+      "entries": 395,
+      "durationTicks": 18558,
+      "lastEntryTick": 18405
+    }
+  ],
+  "otherSecuredTapes": [
+    {
+      "file": "tune-1-tape.json",
+      "id": "agent-aa651f01-16e8b030-6480-4fcb-ac8d-1ba9aa8d5107",
+      "contract": "e2-trestle",
+      "seed": "e2-trestle-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "580406231",
+        "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+        "era": 6,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 14,
+        "timeAlive": 618.6,
+        "gold": 176
+      },
+      "entries": 395,
+      "durationTicks": 18558,
+      "lastEntryTick": 18405
+    }
+  ],
+  "report": {
+    "outcome": "**SECURED** — `secured: true`, **waves 14**, `timeMs` **618,600** (618.600 s), **gold 176**, kills 697, **calls 395**, `defaultedPicks: 0`, `defaultedSecure: 1`.\n\n- Tape put forward: **`attempt-1-tape.json`**, declared in `gauntlet-outcome.json`'s `tape` field. It is a **byte-identical copy** of `tune-1-tape.json` (`cmp` verified) — **one ride under two filenames**. The first controller secured and the stop rule ends the heat there, so the securing tune is promoted by name.\n- **2 sim runs** (one `--policy idle` probe, one controller), **1 scored attempt**.\n- **Envelope, computed from `runTapeEnvelopeForContract` rather than the charter's summary**: `finalWave = max(12,12)+6 = 18` → `contractTicks = ceil((18×30/0.7)/(1/30)) = 23,143` → **maxTicks 23,145**, **maxEntries 4,629**, **maxTapeBytes 2,486,304**. The reel measures **ticks 18,558** (last accepted order at 18,405), **entries 395**, **bytes 1,385,182** — 80 % / 8.5 % / **55.7 %** of ceiling. All three axes pass. The charter's 592,544 B figure is the conservative floor formula; the live ceiling adds `maxOrderEntries × (2400−160)` and is 4.2× larger.\n- **Assay, control-tested first**: the zero-order idle probe replayed and reproduced its own outcome (instrument sound); the securing reel then replayed to **`fnv1a32:8a13dd06`**, which is the **tape header's** hash — not the stdout outcome line's `fnv1a32:1197d233`, a different number by design.\n- **One thing the operator must read before declaring**: the replay's `securedSnapshot` is `{waves: 12, gold: 176, timeAlive: 618.6}`. **Gold agrees** (176 = 176), which is the field `score_mismatch` names. **Waves does not**: the tape declares 14 and the secure-tick snapshot says **12**, because the secure opened at the wave-12 boss gate while the kill banked during wave 14. I have not traced which number the clerk compares, so I am reporting both rather than guessing; `securedSnapshot`'s 12 is the safer declaration.",
+    "whatTheMapAsked": "Its era's signature mechanic is **E2 pressure with hazard — vent-or-boom resource management** — and it asked me nothing about it, for the **tenth time across my generations**. I measured that on this run's own data rather than inheriting it: the union of `now` keys across all 397 views is `blastReadyInMs · expiresAtSimMs · gold · hero · needsRider · orders · pendingOffer · pendingSecure · prospector · score · seams · threats · timers · wave · weapon · works` — **no pressure value, no band, no coal count, no boiler fuel** — while `twist.pressureEnabled` is true, `boiler_house` is on the roster, and `twist.coalSeams` authors three seams at (−16,−20), (−20,−16), (−12,−24), ~11 units from the stake, exactly as the door document promises. The grammar has no vent verb. On the cure the charter names: `boilerHouse.coalSeconds` really has moved 12 → 36, and through the door that only **triples the duration of a process I cannot observe, cannot steer and cannot spend**. Generation 84 sharpened the reason on the Incline (the pressure weapons are constructed but gated on `hasResearch && hasBaronMedal`, neither of which a plain-boot door run supplies), which makes 210 gold of boiler a **strictly dominated purchase**. I built none.\n\nWhat the contract asks instead is two real questions, and the cure sharpened both. The **spatial** one the boss gate makes mandatory: the railcar rides a fixed polyline with `pursuitRange: 0`, so every gold decision is priced in *seconds of fire on the rail* — and because `riverBlocksEnemies` leaves exactly one ford at x ∈ [−3,3], **the boss's track and the swarm's only northern door are the same coordinates**. Four turrets at x = ±5 bought both jobs with one purchase. The **attrition** one that beat my three previous generations here: `steam_wrecker` at `buildingDamageScale: 2.5` now pours from two fixed gates, and wave 1 alone lands **11 wreckers**. The fields that carried it were `now.works.entries`/`byKind`/`standing`/`wrecked`, `now.seams[].active/x/z` (an inactive seam publishes `x`/`z` as `null`, and one non-finite number refuses the whole array silently), `now.gold` against `now.score.goldPanned`/`goldStolen`, `now.hero.hp/maxHp/x/z`, `now.threats.alive/wreckers/thieves`, `now.orders[].status/reason`. Orders: `BUILD`, `HARVEST`, `PICK_UPGRADE`, `BLAST_AT`, `REPAIR_UNDER`, `MOVE_HERO`, and one blank line. **Not one E2 verb, because E2 has none.**\n\nMy notebook remembers this map from generations 10 and 83, and **it does not play the way either remembers — this map was cured this week, and the cure is the first minute.** Both prior generations rode a ring-shaped spawn with wreckers arriving gradually. **What its first minute actually did**: nothing at all for 42.87 seconds (`waveCadenceMult: 0.7` stretches the wave clock), then wave 1 landed **17 enemies of which 11 were wreckers**, all from five fixed points. The idle floor is now **w1 / 70.700 s** — an orderless hero is dead inside twenty-eight seconds of the first wave, with no works on the board. That quiet 42.87-second opening is exactly enough to pan 90 gold and stand three palisades plus the first turret, and the whole contract turns on spending that window on **timber rather than guns**.",
+    "winnability": "Secured, and the margin was **wide on the objective and honestly thin on the hero**: all four turrets stood unwrecked through the entire boss window and the fort finished 13 standing with 1,010 panned and `goldStolen` 0, but the hero bottomed at **63/175 (36.0 %) at t = 536.7** against 63 live threats and 56 wreckers, so roughly one more wave on that slope would have been a coin flip — while the timber it was buying (13 palisades for 130 gold, absorbing everything the two wrecker gates sent) is what kept those four guns alive to kill a 3,130-HP railcar.",
+    "lessons": "- **Generation 124's un-ridden synthesis was right, and it secured this map on its first ride.** It ended: *\"tune-1's ladder plus a timber line, every gold past 400 into tier upgrades.\"* The half that mattered was the timber. `palisade` is 10 g for 60 hp +8/wave to a 5× cap — **10.8 hp/gold at wave 12 against a turret's 0.8–2.0** — and `maxCount` is 48. Generations 10, 57, 77 and 83 all bought turret-and-beacon forts on the two Steamworks boss maps and all four watched the fort dissolve before the railcar arrived. **Price a defence in hp-per-gold before dps-per-gold whenever the thing that is dying is the fort**; buy the guns you need for the objective and spend everything else on timber.\n- **Put the timber rungs FIRST in the ladder, not after the first gun.** The opening window here is 42.87 s of quiet worth ~90 gold, and wave 1 is 11 wreckers. Three palisades (30 g) landed before the first turret and the turret was still up by t = 71. A turret bought first would have been the nearest building to eleven wreckers with nothing in front of it.\n- **When `riverBlocksEnemies` is true, count the fords — the funnel may already be the objective.** One ford at x ∈ [−3,3] and a rail at x = 0 means \"cover the boss\" and \"cover the swarm's only door\" are the same four coordinates. Two greps (`riverBlocksEnemies`, `fords`) turned a two-problem map into a one-pocket map. **Read the pathing flag before choosing a fort shape** — generation 122 lost `e1-baron` to a ring whose southern arc was water, and this is the same question answered in my favour.\n- **Read the roster's `spawnGates`, not just its `spawnEdges`, on a cured map.** Pin #4's cure is literally five `spawnGates` entries in the contract JSON. An edge is a side of the board; a gate is a point, and a point is something you can compute a corridor from. The whole plan fell out of listing the five.\n- **Post the hero where the mend sweep covers the fort, then let the fort follow the hero.** `REPAIR_UNDER` searches within `sparkRig.range` 10 of the **Prospector**, which drifts to the hero. (4,−16) holds all four turret spots inside 10 **and** sits 4 units off the rail, so the hero's own rig (24 dps, range 10) adds ~9.7 s of fire per boss pass for free. Compute the post from `mendRadius ∩ fort ∩ weaponRange(objective)` before choosing coordinates.\n- **The scripted-route boss REVERSES at its endpoints** (generation 100's finding on the Incline, now paid on the Trestle): passes are unlimited inside the grace window, so the damage budget is *per traverse against the window*, not a single shot. That is the difference between designing for a gamble and designing for a certainty — and it is why four turrets at 3,660 per pass against 3,130 HP is comfortable rather than tight.\n- **Measure the envelope from `runTapeEnvelopeForContract`, never the charter's summary — sixth generation saying it, and the charter is again the stale document.** The brief warned about 592,544 B and heat 12's 621,674 B casualty. This contract's live ceiling is **2,486,304 B**, because `waveCadenceMult: 0.7` stretches `contractTicks` to 23,143 *and* order-bearing entries are billed at 2,400. My 1,385,182-byte reel would have read as a catastrophe against the published floor, and a rider throttling its own decision rate against that number is optimising against something the county already fixed.\n- **`securedSnapshot` is a third number to read, and on a boss map it can disagree with the tape's `waves`.** Tape says 14, snapshot says 12, gold agrees at 176. Report the discrepancy rather than declaring a number I have not traced — a guessed declaration is exactly what `score_mismatch` is for. (Generation 117 hit this on Glow Mesa and handled it the same way; two sightings make it a boss-map pattern.)\n- **E2 pressure is unplayable through the door — now measured on a tenth contract-ride**, and I measured it from *this* run's `now`-key union rather than inheriting it. Stop re-deriving it per contract: dump the union once, note that `coalSeconds 12 → 36` only lengthens the unobservable, and spend the minutes on what the map actually asks.\n- **Ride the skeleton first and change nothing — twenty-fourth heat where that is the whole discipline, and the twentieth in a row where it secured on ride one.** Two runs total. The reading budget went to the era pins as a per-contract diff, the contract JSON, the pathing flag, the boss arithmetic and the wreck-hp table; the riding budget went to the unmodified generation-6→124 skeleton plus the one thing this board does differently. **The heat's real work is reading the contract, not riding it.**\n- **`timeout` is still not on macOS and a relative controller path resolves against the runner's own directory, not the cwd** — two small self-inflicted restarts. The node runner remains the answer to a shell that refuses redirection: it made the intermediate-results law automatic (a truthful row existed on disk from the idle probe onward) and its per-view table is the entire evidence base of this report."
+  },
+  "usage": {
+    "transcript": "/Users/robin/.claude/projects/-private-tmp-claude-501--Users-robin-Claude-Projects-Gold-Rush-fe6b8d27-b064-40eb-934b-1d29d57a71db-scratchpad-arena-heat14-e3949bfa/affe855f-75d7-4cce-87b9-0e8fa60787f8.jsonl",
+    "assistantTurns": 53,
+    "toolCalls": 27,
+    "tokensIn": 106,
+    "tokensOut": 116630,
+    "cacheReadTokens": 26036926,
+    "cacheWriteTokens": 1561194,
+    "note": "tokensIn excludes cache reads/writes (reported separately); summed from the CLI session transcript, not self-reported by the rig"
+  }
+}

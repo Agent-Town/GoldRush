@@ -1,0 +1,819 @@
+{
+  "baseSha": "00200c722be8ec618a156b775f2f35f035bc5158",
+  "bundleRequirement": "crater rim set + lander legs + eight pictogram-only journey crests",
+  "siteReset": "E8 floodReset:true; no E5 harbor accessories survive into Dome Commons",
+  "sharedAtlas": {
+    "path": "assets/pilots/plaza-props-3d/era-props-e8-atlas.png",
+    "sha256": "d1979bfa2b57c98800eece1add024f74c84e76b86c3d19efc062dd575a6849c5",
+    "size": [
+      1024,
+      1024
+    ]
+  },
+  "assets": {
+    "crater-rim-set.e8": {
+      "checked": {
+        "sha256": "9a6648363a35b8f0f238672d6d144ad1b0ec967c5982078c80b0e1833d27777f",
+        "bytes": 1527012,
+        "nodes": [
+          "CraterRimSetE8"
+        ],
+        "nodeCount": 1,
+        "bindings": [
+          {
+            "node": "CraterRimSetE8",
+            "mesh": "CraterRimSetE8Mesh",
+            "targets": [],
+            "defaultWeights": []
+          }
+        ],
+        "nodeTransforms": {
+          "CraterRimSetE8": {
+            "translation": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "matrix": null
+          }
+        },
+        "meshes": 1,
+        "meshNames": [
+          "CraterRimSetE8Mesh"
+        ],
+        "primitives": 1,
+        "primitiveMaterials": [
+          0
+        ],
+        "triangles": 484,
+        "morphTargets": {
+          "CraterRimSetE8Mesh": []
+        },
+        "targetCounts": {
+          "CraterRimSetE8Mesh": 0
+        },
+        "materials": 1,
+        "materialTextureBindings": [
+          {
+            "material": 0,
+            "baseColorTexture": 0,
+            "image": 0
+          }
+        ],
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.8999999761581421,
+            "doubleSided": true,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          }
+        ],
+        "textureSources": [
+          0
+        ],
+        "images": 1,
+        "embeddedImages": 1,
+        "imageDimensions": [
+          [
+            1024,
+            1024
+          ]
+        ],
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -1.35,
+            -0.0,
+            -1.12996
+          ],
+          "max": [
+            1.35,
+            0.92,
+            1.180201
+          ],
+          "size": [
+            2.7,
+            0.92,
+            2.310161
+          ],
+          "center": [
+            0.0,
+            0.46,
+            0.025121
+          ]
+        }
+      },
+      "reexported": {
+        "sha256": "9a6648363a35b8f0f238672d6d144ad1b0ec967c5982078c80b0e1833d27777f",
+        "bytes": 1527012,
+        "nodes": [
+          "CraterRimSetE8"
+        ],
+        "nodeCount": 1,
+        "bindings": [
+          {
+            "node": "CraterRimSetE8",
+            "mesh": "CraterRimSetE8Mesh",
+            "targets": [],
+            "defaultWeights": []
+          }
+        ],
+        "nodeTransforms": {
+          "CraterRimSetE8": {
+            "translation": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "matrix": null
+          }
+        },
+        "meshes": 1,
+        "meshNames": [
+          "CraterRimSetE8Mesh"
+        ],
+        "primitives": 1,
+        "primitiveMaterials": [
+          0
+        ],
+        "triangles": 484,
+        "morphTargets": {
+          "CraterRimSetE8Mesh": []
+        },
+        "targetCounts": {
+          "CraterRimSetE8Mesh": 0
+        },
+        "materials": 1,
+        "materialTextureBindings": [
+          {
+            "material": 0,
+            "baseColorTexture": 0,
+            "image": 0
+          }
+        ],
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.8999999761581421,
+            "doubleSided": true,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          }
+        ],
+        "textureSources": [
+          0
+        ],
+        "images": 1,
+        "embeddedImages": 1,
+        "imageDimensions": [
+          [
+            1024,
+            1024
+          ]
+        ],
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -1.35,
+            -0.0,
+            -1.12996
+          ],
+          "max": [
+            1.35,
+            0.92,
+            1.180201
+          ],
+          "size": [
+            2.7,
+            0.92,
+            2.310161
+          ],
+          "center": [
+            0.0,
+            0.46,
+            0.025121
+          ]
+        }
+      },
+      "byteIdentical": true,
+      "semanticIdentical": {
+        "nodes": true,
+        "nodeCount": true,
+        "bindings": true,
+        "nodeTransforms": true,
+        "meshes": true,
+        "meshNames": true,
+        "primitives": true,
+        "primitiveMaterials": true,
+        "triangles": true,
+        "morphTargets": true,
+        "targetCounts": true,
+        "materials": true,
+        "materialTextureBindings": true,
+        "materialContract": true,
+        "textureSources": true,
+        "images": true,
+        "embeddedImages": true,
+        "imageDimensions": true,
+        "cameras": true,
+        "lights": true,
+        "animations": true,
+        "bounds": true
+      },
+      "embeddedAtlasSha256": "d1979bfa2b57c98800eece1add024f74c84e76b86c3d19efc062dd575a6849c5"
+    },
+    "lander-legs.e8": {
+      "checked": {
+        "sha256": "46e858c249c6d5d5baeed5e6030d3326270b6d9f5e7ba456d2e5dc0e3317f29a",
+        "bytes": 1532196,
+        "nodes": [
+          "LanderLegsE8"
+        ],
+        "nodeCount": 1,
+        "bindings": [
+          {
+            "node": "LanderLegsE8",
+            "mesh": "LanderLegsE8Mesh",
+            "targets": [],
+            "defaultWeights": []
+          }
+        ],
+        "nodeTransforms": {
+          "LanderLegsE8": {
+            "translation": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "matrix": null
+          }
+        },
+        "meshes": 1,
+        "meshNames": [
+          "LanderLegsE8Mesh"
+        ],
+        "primitives": 1,
+        "primitiveMaterials": [
+          0
+        ],
+        "triangles": 648,
+        "morphTargets": {
+          "LanderLegsE8Mesh": []
+        },
+        "targetCounts": {
+          "LanderLegsE8Mesh": 0
+        },
+        "materials": 1,
+        "materialTextureBindings": [
+          {
+            "material": 0,
+            "baseColorTexture": 0,
+            "image": 0
+          }
+        ],
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.8999999761581421,
+            "doubleSided": true,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          }
+        ],
+        "textureSources": [
+          0
+        ],
+        "images": 1,
+        "embeddedImages": 1,
+        "imageDimensions": [
+          [
+            1024,
+            1024
+          ]
+        ],
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -1.347077,
+            0,
+            -1.44
+          ],
+          "max": [
+            1.347077,
+            1.53,
+            0.893205
+          ],
+          "size": [
+            2.694153,
+            1.53,
+            2.333205
+          ],
+          "center": [
+            0.0,
+            0.765,
+            -0.273397
+          ]
+        }
+      },
+      "reexported": {
+        "sha256": "46e858c249c6d5d5baeed5e6030d3326270b6d9f5e7ba456d2e5dc0e3317f29a",
+        "bytes": 1532196,
+        "nodes": [
+          "LanderLegsE8"
+        ],
+        "nodeCount": 1,
+        "bindings": [
+          {
+            "node": "LanderLegsE8",
+            "mesh": "LanderLegsE8Mesh",
+            "targets": [],
+            "defaultWeights": []
+          }
+        ],
+        "nodeTransforms": {
+          "LanderLegsE8": {
+            "translation": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "matrix": null
+          }
+        },
+        "meshes": 1,
+        "meshNames": [
+          "LanderLegsE8Mesh"
+        ],
+        "primitives": 1,
+        "primitiveMaterials": [
+          0
+        ],
+        "triangles": 648,
+        "morphTargets": {
+          "LanderLegsE8Mesh": []
+        },
+        "targetCounts": {
+          "LanderLegsE8Mesh": 0
+        },
+        "materials": 1,
+        "materialTextureBindings": [
+          {
+            "material": 0,
+            "baseColorTexture": 0,
+            "image": 0
+          }
+        ],
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.8999999761581421,
+            "doubleSided": true,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          }
+        ],
+        "textureSources": [
+          0
+        ],
+        "images": 1,
+        "embeddedImages": 1,
+        "imageDimensions": [
+          [
+            1024,
+            1024
+          ]
+        ],
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -1.347077,
+            0,
+            -1.44
+          ],
+          "max": [
+            1.347077,
+            1.53,
+            0.893205
+          ],
+          "size": [
+            2.694153,
+            1.53,
+            2.333205
+          ],
+          "center": [
+            0.0,
+            0.765,
+            -0.273397
+          ]
+        }
+      },
+      "byteIdentical": true,
+      "semanticIdentical": {
+        "nodes": true,
+        "nodeCount": true,
+        "bindings": true,
+        "nodeTransforms": true,
+        "meshes": true,
+        "meshNames": true,
+        "primitives": true,
+        "primitiveMaterials": true,
+        "triangles": true,
+        "morphTargets": true,
+        "targetCounts": true,
+        "materials": true,
+        "materialTextureBindings": true,
+        "materialContract": true,
+        "textureSources": true,
+        "images": true,
+        "embeddedImages": true,
+        "imageDimensions": true,
+        "cameras": true,
+        "lights": true,
+        "animations": true,
+        "bounds": true
+      },
+      "embeddedAtlasSha256": "d1979bfa2b57c98800eece1add024f74c84e76b86c3d19efc062dd575a6849c5"
+    },
+    "journey-flag-line.e8": {
+      "checked": {
+        "sha256": "b793ff8938a8adbb93c4e7911bceb17b392a4c182fbc50e37e368f59c62e3332",
+        "bytes": 1558612,
+        "nodes": [
+          "JourneyFlagLineE8"
+        ],
+        "nodeCount": 1,
+        "bindings": [
+          {
+            "node": "JourneyFlagLineE8",
+            "mesh": "JourneyFlagLineE8Mesh",
+            "targets": [],
+            "defaultWeights": []
+          }
+        ],
+        "nodeTransforms": {
+          "JourneyFlagLineE8": {
+            "translation": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "matrix": null
+          }
+        },
+        "meshes": 1,
+        "meshNames": [
+          "JourneyFlagLineE8Mesh"
+        ],
+        "primitives": 1,
+        "primitiveMaterials": [
+          0
+        ],
+        "triangles": 996,
+        "morphTargets": {
+          "JourneyFlagLineE8Mesh": []
+        },
+        "targetCounts": {
+          "JourneyFlagLineE8Mesh": 0
+        },
+        "materials": 1,
+        "materialTextureBindings": [
+          {
+            "material": 0,
+            "baseColorTexture": 0,
+            "image": 0
+          }
+        ],
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.8999999761581421,
+            "doubleSided": true,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          }
+        ],
+        "textureSources": [
+          0
+        ],
+        "images": 1,
+        "embeddedImages": 1,
+        "imageDimensions": [
+          [
+            1024,
+            1024
+          ]
+        ],
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -2.38,
+            0,
+            -0.18
+          ],
+          "max": [
+            2.38,
+            2.32,
+            0.18
+          ],
+          "size": [
+            4.76,
+            2.32,
+            0.36
+          ],
+          "center": [
+            -0.0,
+            1.16,
+            0.0
+          ]
+        }
+      },
+      "reexported": {
+        "sha256": "b793ff8938a8adbb93c4e7911bceb17b392a4c182fbc50e37e368f59c62e3332",
+        "bytes": 1558612,
+        "nodes": [
+          "JourneyFlagLineE8"
+        ],
+        "nodeCount": 1,
+        "bindings": [
+          {
+            "node": "JourneyFlagLineE8",
+            "mesh": "JourneyFlagLineE8Mesh",
+            "targets": [],
+            "defaultWeights": []
+          }
+        ],
+        "nodeTransforms": {
+          "JourneyFlagLineE8": {
+            "translation": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "matrix": null
+          }
+        },
+        "meshes": 1,
+        "meshNames": [
+          "JourneyFlagLineE8Mesh"
+        ],
+        "primitives": 1,
+        "primitiveMaterials": [
+          0
+        ],
+        "triangles": 996,
+        "morphTargets": {
+          "JourneyFlagLineE8Mesh": []
+        },
+        "targetCounts": {
+          "JourneyFlagLineE8Mesh": 0
+        },
+        "materials": 1,
+        "materialTextureBindings": [
+          {
+            "material": 0,
+            "baseColorTexture": 0,
+            "image": 0
+          }
+        ],
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.8999999761581421,
+            "doubleSided": true,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          }
+        ],
+        "textureSources": [
+          0
+        ],
+        "images": 1,
+        "embeddedImages": 1,
+        "imageDimensions": [
+          [
+            1024,
+            1024
+          ]
+        ],
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -2.38,
+            0,
+            -0.18
+          ],
+          "max": [
+            2.38,
+            2.32,
+            0.18
+          ],
+          "size": [
+            4.76,
+            2.32,
+            0.36
+          ],
+          "center": [
+            -0.0,
+            1.16,
+            0.0
+          ]
+        }
+      },
+      "byteIdentical": true,
+      "semanticIdentical": {
+        "nodes": true,
+        "nodeCount": true,
+        "bindings": true,
+        "nodeTransforms": true,
+        "meshes": true,
+        "meshNames": true,
+        "primitives": true,
+        "primitiveMaterials": true,
+        "triangles": true,
+        "morphTargets": true,
+        "targetCounts": true,
+        "materials": true,
+        "materialTextureBindings": true,
+        "materialContract": true,
+        "textureSources": true,
+        "images": true,
+        "embeddedImages": true,
+        "imageDimensions": true,
+        "cameras": true,
+        "lights": true,
+        "animations": true,
+        "bounds": true
+      },
+      "embeddedAtlasSha256": "d1979bfa2b57c98800eece1add024f74c84e76b86c3d19efc062dd575a6849c5"
+    }
+  },
+  "placementClearance": {
+    "e8-journey-flag-line-port": {
+      "footprintRadius": 2.38,
+      "routeClearance": 7.709599,
+      "padClearance": 2.621743,
+      "plazaClearance": 10.92,
+      "domeEdgeMargin": 2.87
+    },
+    "e8-crater-rim-survey-northwest": {
+      "footprintRadius": 1.35,
+      "routeClearance": 10.583147,
+      "padClearance": 5.371291,
+      "plazaClearance": 13.885757,
+      "domeEdgeMargin": 1.964243
+    },
+    "e8-lander-legs-starboard": {
+      "footprintRadius": 1.347077,
+      "routeClearance": 9.630173,
+      "padClearance": 3.943871,
+      "plazaClearance": 13.315806,
+      "domeEdgeMargin": 2.540041
+    }
+  },
+  "manifest": {
+    "epoch": 8,
+    "floodReset": true,
+    "atlas": "era-props-e8-atlas.png",
+    "props": [
+      {
+        "id": "e8-journey-flag-line-port",
+        "glb": "journey-flag-line.e8.glb",
+        "position": {
+          "x": -16.4,
+          "z": 0.0
+        },
+        "rotation": 1.5708,
+        "scale": 1.0
+      },
+      {
+        "id": "e8-crater-rim-survey-northwest",
+        "glb": "crater-rim-set.e8.glb",
+        "position": {
+          "x": -14.2,
+          "z": 11.6
+        },
+        "rotation": 2.42,
+        "scale": 1.0
+      },
+      {
+        "id": "e8-lander-legs-starboard",
+        "glb": "lander-legs.e8.glb",
+        "position": {
+          "x": 14.4,
+          "z": -10.4
+        },
+        "rotation": -0.38,
+        "scale": 1.0
+      }
+    ]
+  }
+}

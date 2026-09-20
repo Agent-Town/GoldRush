@@ -1,0 +1,205 @@
+{
+  "rig": "opus",
+  "contract": "e7-echo-canyon",
+  "model": "claude-opus-5",
+  "sessionId": "c83539f3-4ce7-484d-a952-40950b106844",
+  "startedAt": "2026-09-18T02:54:19.417Z",
+  "endedAt": "2026-09-18T03:03:41.746Z",
+  "wallClockSeconds": 562,
+  "wallHit": false,
+  "exitCode": 0,
+  "signal": null,
+  "setupToFirstOutputSeconds": 120,
+  "arenaTrackedChanges": [],
+  "workspaceFiles": [
+    "attempt-1-tape.json",
+    "controller.mjs",
+    "gauntlet-outcome.json",
+    "gauntlet-report.md",
+    "runner.mjs",
+    "tune-1-rows.json",
+    "tune-1-summary.json",
+    "tune-1-tape.json",
+    "tune-1-views.jsonl"
+  ],
+  "outcome": {
+    "secured": true,
+    "waves": 20,
+    "timeMs": 600000,
+    "gold": 200,
+    "kills": 909,
+    "calls": 77,
+    "defaultedPicks": 0,
+    "defaultedSecure": 1,
+    "eventLogHash": "fnv1a32:54c9f02d",
+    "tape": "/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/heat14/opus/e7-echo-canyon/attempt-1-tape.json",
+    "scored": true,
+    "runsSoFar": 1,
+    "scoredAttempts": 1,
+    "worldModel": "sim-import",
+    "note": "ONE RIDE UNDER TWO FILENAMES. The first controller secured, and the stop rule ends the heat at the first SECURED outcome, so tune-1 is promoted by name as the scored attempt: attempt-1-tape.json is a BYTE-IDENTICAL copy of tune-1-tape.json (262,665 bytes, verified equal). No second ride was taken.",
+    "tapeHeader": {
+      "eventLogHash": "fnv1a32:6330e19a",
+      "era": 6,
+      "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+      "buildId": "bd0600a5f",
+      "viewVersion": 2,
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 20,
+        "timeAlive": 600,
+        "gold": 200
+      }
+    },
+    "localAssay": {
+      "verdict": "reproduced",
+      "replayEventLogHash": "fnv1a32:6330e19a",
+      "matches": "the TAPE HEADER's hash (not the stdout outcome line's fnv1a32:54c9f02d - different numbers by design)",
+      "securedSnapshot": {
+        "waves": 20,
+        "gold": 200,
+        "timeAlive": 600
+      },
+      "scoreMismatchRisk": "none - the run banked AT the secure tick (defaultedSecure: 1), so the declared gold equals the secure-tick purse"
+    },
+    "envelope": {
+      "durationTicks": 18000,
+      "lastEntryTick": 17877,
+      "tickHeadroom": 123,
+      "entries": 77,
+      "maxEntries": 3601,
+      "bytes": 262665,
+      "byteCeiling": 8658784,
+      "verdict": "clear on all three axes"
+    },
+    "eraGate": {
+      "objective": "mirror",
+      "latch": "E7PlaybookLatch.allowsSecure('mirror') === fieldedMirrors > 0",
+      "recordedAndUsedAt": 30.033,
+      "mirrorShape": {
+        "count": 2,
+        "wrecker": false,
+        "thief": true,
+        "roving": false,
+        "hunts": false,
+        "hpScale": 1,
+        "repeat": 0
+      },
+      "shapeNote": "MIN_SQUAD, thief not wrecker, no rove, no hunt, hpScale 1 - the cheapest legal shadow, bought by recording a BUILD-free, BLAST-free, motionless demonstration",
+      "fieldedAtWave": 2,
+      "objectiveMetAt": 60.03,
+      "uses": 1,
+      "refusals": {
+        "suppressed": 0,
+        "muted": 0,
+        "unrecorded": 0
+      }
+    },
+    "margin": {
+      "minHeroHpFraction": 1,
+      "heroFinal": "175/175 - never once below its running maximum across all 79 views",
+      "worksStanding": 10,
+      "worksEverWrecked": 0,
+      "maxWreckersOnBoard": 0,
+      "goldStolen": 0,
+      "goldPanned": 870,
+      "deadSink": "gold pinned at the 200 bank cap and score.goldPanned FROZE at 870 from t=390 - ~210 seconds of refused income, the whole margin left on the ranked axis"
+    }
+  },
+  "outcomeError": null,
+  "promotedTapeName": "attempt-1-tape.json",
+  "scoredTapes": [
+    {
+      "file": "attempt-1-tape.json",
+      "id": "agent-7bdf3b6a-2f9a4011-42aa-4669-9cf5-195dbbd3ce78",
+      "contract": "e7-echo-canyon",
+      "seed": "e7-echo-canyon-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "bd0600a5f",
+        "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+        "era": 6,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 20,
+        "timeAlive": 600,
+        "gold": 200
+      },
+      "entries": 77,
+      "durationTicks": 18000,
+      "lastEntryTick": 17877,
+      "promotedByRig": true,
+      "discoveredBy": "outcome-file+filename"
+    }
+  ],
+  "otherTapes": [
+    {
+      "file": "tune-1-tape.json",
+      "id": "agent-7bdf3b6a-2f9a4011-42aa-4669-9cf5-195dbbd3ce78",
+      "contract": "e7-echo-canyon",
+      "seed": "e7-echo-canyon-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "bd0600a5f",
+        "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+        "era": 6,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 20,
+        "timeAlive": 600,
+        "gold": 200
+      },
+      "entries": 77,
+      "durationTicks": 18000,
+      "lastEntryTick": 17877
+    }
+  ],
+  "otherSecuredTapes": [
+    {
+      "file": "tune-1-tape.json",
+      "id": "agent-7bdf3b6a-2f9a4011-42aa-4669-9cf5-195dbbd3ce78",
+      "contract": "e7-echo-canyon",
+      "seed": "e7-echo-canyon-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "bd0600a5f",
+        "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+        "era": 6,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 20,
+        "timeAlive": 600,
+        "gold": 200
+      },
+      "entries": 77,
+      "durationTicks": 18000,
+      "lastEntryTick": 17877
+    }
+  ],
+  "report": {
+    "outcome": "**SECURED** — waves **20**, timeAlive **600.000 s**, gold **200**, kills 909, calls **77**.\n\n- Tape put forward: **`attempt-1-tape.json`** (declared in `gauntlet-outcome.json`'s `\"tape\"` field).\n  It is a **byte-identical copy of `tune-1-tape.json`** (262,665 bytes, verified equal) — **one ride\n  under two filenames**, not two rides.\n- **Sim runs: 1. Scored attempts: 1.** No idle probe was spent; the reading budget replaced it.\n- Envelope, measured off the reel that exists: `durationTicks` 18,000 with the last accepted order at\n  tick **17,877** (123 ticks of headroom), **77 entries** of 3,601, **262,665 bytes** of a\n  1.9 MB+ ceiling. Clear on all three axes.\n- Local assay: replay reproduces the **tape header's** `fnv1a32:6330e19a` and\n  `securedSnapshot {waves 20, gold 200, timeAlive 600}`. That is the correct comparand — the stdout\n  outcome line's `fnv1a32:54c9f02d` is a different number by design. The run banked *at* the secure\n  tick (`defaultedSecure: 1`), so the declared gold equals the secure-tick purse: no `score_mismatch`.",
+    "whatTheMapAsked": "It asked for **its era's signature mechanic squarely, and the mechanic is a mirror of my own tape** —\nso this is not ordinary stationary survival wearing E7's name, and the reasoning it wants is genuinely\nof the era. `now.playbookUse.objective` reads `mirror`, and `E7PlaybookLatch.allowsSecure` returns\n`fieldedMirrors > 0`, which the sim ANDs into the secure gate: **no wave count secures this claim\nuntil a corrupted copy of my own tape has actually been fielded.** The loop is L1 ladder work and the\nview carries all of it — `now.broadcastMirror` publishes `recordedUses`, `distinctPlaybooks`,\n`maxRepeat`, `squadsFielded`, `bodiesFielded`, `capPerWave: 3`, `hpPerRepeat: 0.1`, and a `pending[]`\nthat shows the full shape of each queued shadow *before it lands*.\n\nWhat makes it reasoning rather than a toll is that **the shadow's shape is a function of the tape you\nhand it, and you choose the tape.** `BroadcastMirror.shapeOfTape` reads four facts off the\ndemonstration: a tape that placed works returns as a **wrecker**, otherwise a **thief**; a tape that\nbuilt turrets, threw `BLAST_AT` or set the blast weapon returns **hunting** from 18 wu; a tape that\nspends half its change-points moving returns **roving** at 1.15×; and body count is\n`2 + floor(acting/4)`, bounded 2–4. So I built the demonstration to be the cheapest legal shadow:\nview 1 was a **build-free, blast-free, motionless pan chain**, and view 2 was\n`[PLAYBOOK_USE \"echo-canyon-quiet-pan\", …the same pan chain]`. Measured straight off\n`now.broadcastMirror.pending` at t = 34.93:\n\n```\n{ count: 2, wrecker: false, thief: true, roving: false, hunts: false, hpScale: 1, repeat: 0 }\n```\n\n`MIN_SQUAD`, a thief rather than a wrecker, no speed bonus, no extended hunt, no repeat penalty.\nThat mattered **specifically** because this board's own roster contains no wrecker at all\n(`rogue_automaton` carries no flag; `data_rustler` is `thief: true`, and `Enemy` resolves thief before\nwrecker, forcing `wrecker = false`). A careless demonstration would have introduced the one enemy\nclass the map otherwise lacks, aimed at my own fort. It did not: **`threats.wreckers` read 0 in all 79\nviews, `works.wrecked` finished at 0 of 10, and `goldStolen` finished at 0** — with 18 thieves alive at\nthe bank. Recorded and used at t = 30.033, fielded at wave 2, `objectiveMet: true` from t = 60.03,\nand I never used the verb again — one use, one squad, `maxRepeat: 0`, so the +10 %-per-repeat penalty\nnever engaged. Variety is the cure, and abstinence after the first use is the cheapest variety there is.\n\nThe honest qualifier is that the gate is **front-loaded and cheap**: two orders inside the first\nthirty-five seconds of a 600-second contract, and the era never asks again. The other 565 seconds are\nordinary stationary survival in a generous pocket — the claim at (0, 12) sits 2 wu north of\n`canyon-floor-yard` (z ≤ 10), so turrets on the z = 9 line cover the claim and both canyon mouths\nwhile beacons at |x| ≤ 7 still reach the hero. Fields that carried that half: `now.works.entries` /\n`byKind`, `now.seams[].active/x/z` (an inactive seam publishes `x`/`z`/`anchorIndex` as `null`, and one\nnon-finite number refuses the whole array silently), `now.gold` against `now.score.goldPanned` and\n`now.score.goldStolen`, `now.hero.hp/maxHp/x/z`, `now.threats.alive/wreckers/thieves`, and\n`now.orders[].status/reason`. Orders used: `PLAYBOOK_USE`, `PICK_UPGRADE`, `BUILD`, `HARVEST`,\n`BLAST_AT`, `MOVE_HERO` (a displacement guard that never had to fire), and one blank line.\n\n**Does my notebook remember this map, and does it still play that way?** Generation 64 secured this\nseed on era 5, and on an era named *the Re-surveyed Claims* the answer is worth stating plainly: **its\nbones reproduced to the unit** — claim (0, 12); the four harvest anchors at (−14, −6), (14, −6),\n(−42, 8), (42, 8); `canyon-floor-yard` reaching z = 10; north/south spawn edges; `lossStakes: []`; the\nsame two-id roster; the same wave-20 default. **This map is not named as cured this week** — era 6's\npins name `e2-trestle` and `e2-incline` (pin #4) and the sprite-animation runtime (pin #3, whose one\nsim-visible fix is \"turretPosition now refuses ruins\"), not this contract. The re-survey moved this\nmap's rendering, not its rules, and my ten builds all landed first try on notebook coordinates.",
+    "winnability": "Secured, and the margin was **as wide as this contract measures on survival and exactly at the ceiling\non the ranked axis I chose to accept**: the hero **never once fell below its running maximum across all\n79 views** (finishing 175/175), zero of ten works were ever wrecked across 909 kills, `goldStolen` was\n0, and the era gate latched 540 seconds before the bank — while the banked purse landed on **200, the\ndefault `Balance.economy.bankCap`**, with `score.goldPanned` frozen at 870 from t = 390, i.e. ~210\nseconds of refused income. That freeze is the whole margin, and it was a **deliberate, named trade**:\n`stockpile` is on this roster at 60 g × 2 with `capBonus: 150`, so a 500 ceiling was purchasable — and\ngeneration 106 measured, one ride ago on `e7-dead-band`'s thief-only roster, that a stockpile is what\nmakes `nearestGoldHolding` non-empty and converts every thief from hero-chaser to gold-grabber, at a\ncost of **435 gold**. With 18 thieves alive here plus a mirrored thief squad, I declined it and banked\n`goldStolen: 0`. I did not test the refinement that could beat both: **a stockpile pair bought late**\n(after the ladder caps, ~t = 500), which raises the cap by 300 while exposing it to theft for only the\nclosing seconds. That is the one honest open question this ride leaves.",
+    "lessons": "- **When a mechanic reads my own tape, the tape is a design surface — and on THIS board it is also a\n  threat model.** `shapeOfTape` turns `wrecker` on for any BUILD in the demonstration, and neither\n  roster entry here is a wrecker. So a careless first array does not merely make the shadow stronger,\n  it **introduces an enemy class the map does not otherwise contain**, aimed at the fort. Generation 14\n  learned \"some named mechanics are opt-in threats and the winning move is not to opt in\"; generation\n  64 added \"when you must opt in, opt in with the smallest thing that counts\". **Generation 107 adds\n  the sharpest version: check what the shadow's shape can add that the ROSTER lacks, and record the\n  tape that cannot add it.** Measured: `threats.wreckers` 0 in all 79 views, `works.wrecked` 0 of 10.\n- **Cost the era objective in its own published constants before choosing when to fire it.**\n  `MIN_SQUAD 2`, `TICKS_PER_BODY 4`, `HP_PER_REPEAT 0.1`, `SQUAD_CAP 3` are all in source and three of\n  them in the view. One use, at the earliest legal moment, off a one-entry tape is provably the floor:\n  two bodies at `hpScale 1`, `repeat 0`. Firing later off a longer tape costs strictly more for the\n  identical latch. **The cheapest moment to satisfy a \"do it once\" gate is the first moment you legally\n  can, because the price grows with the evidence you have accumulated.**\n- **Read the latch in the file that OWNS it, not the one that publishes the counter.**\n  `BroadcastMirror.ts`'s own header says in bold that \"THE MIRROR IS PRESSURE, NOT AN OBJECTIVE — this\n  consumer never touches `autoSecureWaveForRun`\", and that is true *of that file* and false of the\n  system: `E7PlaybookLatch.allowsSecure` reads its `squadsFielded` and the sim ANDs that into the gate.\n  A correct, carefully-worded source comment can still be scoped to its own file. Generation 10 learned\n  \"read the value the gate reads, not just the gate\"; this is the same move across a file boundary.\n- **A \"no wrecker on the roster\" read is worth more than the orders it deletes — it also tells you what\n  your own tape must not become.** The flag check deleted `REPAIR_UNDER`, palisade chaff and every\n  decoy idea (twelfth contract running this has paid) *and* set the design constraint on the\n  demonstration. Read the roster for what it OMITS, then ask what could put the omission back.\n- **Declining a cap-raiser on a thief roster is now a carried rule, and I carried it this time.**\n  Generation 106 overrode its own notebook warning with an arithmetic estimate off a *concurrency* cap\n  and lost 435 gold. Here I took the warning at face value and banked `goldStolen: 0` with 18 thieves\n  alive. The refinement I still owe the next rider: **a cap-raiser bought AFTER the ladder caps** buys\n  ceiling without buying exposure, because theft integrates over the time the till stands.\n- **On a fixed-wave secure the dead-sink signature is still the report's most useful number.** `gold`\n  pinned at 200 while `goldPanned` froze at 870 from t = 390 names the margin to the second, and it is\n  the thing the next ride should attack. Tenth generation for this pair of columns.\n- **Ride the skeleton first and change nothing — nineteenth heat where that is the whole discipline,\n  and the thirteenth in a row where it secured on ride one.** One sim run, one scored attempt. The\n  reading budget went to the era pins as a per-contract diff, the contract JSON, the latch, the mirror's\n  shape function and the roster flags; the riding budget went to the unmodified generation-6→106\n  skeleton plus the one thing this board does differently. Twenty of my generations end on \"I proved the\n  parts and never fired the combination\"; the cure keeps turning out to be reading, not riding.\n- **An era named for rebuilt maps can leave a map's rules untouched, and proving it is a result —\n  seventh heat running.** The procedure is fixed and costs four minutes: read `engine-era.json`'s pins\n  as a per-contract diff, check whether any pin names *your* map (here they name the Trestle, the\n  Incline and the sprite runtime — not this contract), then confirm the geometry against the notebook\n  from view 0. All ten builds landed first try on generation 64's coordinates.\n- **Obey the stop rule, and promote by name.** The first controller secured, so I stopped, named\n  `attempt-1-tape.json` in the outcome file's `tape` field, made it byte-identical to `tune-1-tape.json`\n  and said plainly in the file that they are one ride. The gold I left behind is not a reason to break\n  the rule — it is the finding.\n- **Check which hash the assay is supposed to match before reading a mismatch as a defect.** Seventh\n  generation for this: the replay's `fnv1a32:6330e19a` is the TAPE HEADER's hash, not the stdout outcome\n  line's `fnv1a32:54c9f02d`. And read `securedSnapshot` — it is exactly what the door's `score_mismatch`\n  rule compares against the declared gold."
+  },
+  "usage": {
+    "transcript": "/Users/robin/.claude/projects/-private-tmp-claude-501--Users-robin-Claude-Projects-Gold-Rush-fe6b8d27-b064-40eb-934b-1d29d57a71db-scratchpad-arena-heat14-e3949bfa/c83539f3-4ce7-484d-a952-40950b106844.jsonl",
+    "assistantTurns": 45,
+    "toolCalls": 19,
+    "tokensIn": 90,
+    "tokensOut": 98881,
+    "cacheReadTokens": 18703471,
+    "cacheWriteTokens": 1397635,
+    "note": "tokensIn excludes cache reads/writes (reported separately); summed from the CLI session transcript, not self-reported by the rig"
+  }
+}

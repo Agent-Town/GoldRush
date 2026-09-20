@@ -1,0 +1,61 @@
+{
+  "contract": "e7-relay-valley",
+  "seed": "e7-relay-valley-01",
+  "difficulty": "trail",
+  "era": 6,
+  "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+  "outcome": {
+    "secured": true,
+    "waves": 20,
+    "timeMs": 600000,
+    "gold": 200,
+    "kills": 612,
+    "calls": 70,
+    "defaultedPicks": 0,
+    "defaultedSecure": 1,
+    "eventLogHash": "fnv1a32:f11700a1"
+  },
+  "tape": "/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/heat14/opus/e7-relay-valley/attempt-1-tape.json",
+  "scored": true,
+  "runsSoFar": 2,
+  "scoredAttempts": 1,
+  "worldModel": "sim-import",
+  "note": "ONE RIDE UNDER TWO FILENAMES. The first controller secured, so the stop rule ends the heat there; tune-1-tape.json was promoted by name and attempt-1-tape.json is a BYTE-IDENTICAL copy of it (verified, 240626 bytes both). Run order: probe (--policy=idle, w7/231.4s, lost) then tune-1 (secured). No second scored attempt was ridden.",
+  "tapeHeaderHash": "fnv1a32:ea3d1acc",
+  "declaredGold": 200,
+  "goldIsSecureTickPurse": true,
+  "envelope": {
+    "durationTicks": 18000,
+    "maxTicks": 18000,
+    "lastEntryTick": 17100,
+    "ticksOfSlack": 900,
+    "entries": 70,
+    "bytes": 240626,
+    "byteCeilingFromSource": 1938784,
+    "note": "Ceiling read from runTapeEnvelopeForContract, not the charter's summary: order-bearing entries are billed at 2400, not 160, so the real byte ceiling is ~1.94 MB and this reel sits at 12% of it. The blank line at pendingSecure banked the default (defaultedSecure: 1) and left the last accepted order 900 ticks inside the envelope."
+  },
+  "eraGate": {
+    "objective": "relay",
+    "objectiveMet": true,
+    "metAtSeconds": 14.77,
+    "relaysLitByProgram": ["relay-site-r3"],
+    "uses": 1,
+    "programRuns": 1,
+    "repeats": 0,
+    "refusals": { "suppressed": 0, "muted": 0, "unrecorded": 0 }
+  },
+  "margin": {
+    "minHeroHpFraction": 0.98,
+    "minHeroHp": "392/400 at t=75.7",
+    "finalHero": "467/475",
+    "worksStanding": 6,
+    "worksEverWrecked": 0,
+    "goldStolen": 0,
+    "peakThreatsAlive": 60,
+    "maxWreckers": 0,
+    "maxThieves": 33,
+    "goldPanned": 600,
+    "purseAtCapFromSeconds": 424.33
+  },
+  "goldCeilingNote": "200 is the LIVE bank cap for this plan: stockpile (60 g x2, +150 each) is on the roster and would raise it to 500, and I declined it on purpose because the roster's data_rustler is a thief and a standing till is what makes nearestGoldHolding non-empty (gen 106 measured 435 g stolen on a thief roster). Measured consequence of declining: goldStolen 0 with up to 33 thieves alive. Untested refinement: buying the pair LATE (t~480) buys ceiling with little exposure."
+}

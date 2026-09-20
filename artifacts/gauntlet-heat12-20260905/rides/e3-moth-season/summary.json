@@ -1,0 +1,227 @@
+{
+  "rig": "opus",
+  "contract": "e3-moth-season",
+  "model": "claude-opus-5",
+  "sessionId": "be841bb6-8c0e-4cb7-958e-713edb2391d1",
+  "startedAt": "2026-09-05T16:52:35.221Z",
+  "endedAt": "2026-09-05T17:04:52.129Z",
+  "wallClockSeconds": 737,
+  "wallHit": false,
+  "exitCode": 0,
+  "signal": null,
+  "setupToFirstOutputSeconds": 75,
+  "arenaTrackedChanges": [],
+  "workspaceFiles": [
+    "attempt-1-tape.json",
+    "ctrl-v1.mjs",
+    "ctrl-v2.mjs",
+    "ctrl-v3.mjs",
+    "gauntlet-outcome.json",
+    "gauntlet-report.md",
+    "probe-idle-stderr.txt",
+    "probe-idle-tape.json",
+    "probe-idle-views.json",
+    "run.mjs",
+    "runner-state.json",
+    "tune-1-stderr.txt",
+    "tune-1-tape.json",
+    "tune-1-views.json",
+    "tune-2-stderr.txt",
+    "tune-2-tape.json",
+    "tune-2-views.json",
+    "tune-3-stderr.txt",
+    "tune-3-tape.json",
+    "tune-3-views.json"
+  ],
+  "outcome": {
+    "secured": true,
+    "waves": 12,
+    "timeMs": 360000,
+    "gold": 200,
+    "kills": 320,
+    "calls": 54,
+    "defaultedPicks": 0,
+    "defaultedSecure": 0,
+    "eventLogHash": "fnv1a32:b98efd5e",
+    "tape": "/private/tmp/heat12-038cc280/artifacts/heat12/opus/e3-moth-season/attempt-1-tape.json",
+    "scored": true,
+    "runsSoFar": 4,
+    "scoredAttempts": 1,
+    "worldModel": "sim-import",
+    "envelope": {
+      "durationTicks": 10801,
+      "maxTicks": 18002,
+      "entries": 54,
+      "maxEntries": 3601,
+      "lastEntryTick": 10800,
+      "bytes": 136159,
+      "maxTapeBytes": 576176,
+      "verdict": "admissible on all three axes"
+    },
+    "note": "SECURED on tune-3 (controller ctrl-v3.mjs). Promoted by name as the scored attempt per the brief's promotion clause; attempt-1-tape.json is a byte-identical copy of tune-3-tape.json — ONE ride under two filenames, not two rides. Runs: probe-idle, tune-1, tune-2, tune-3."
+  },
+  "outcomeError": null,
+  "promotedTapeName": "attempt-1-tape.json",
+  "scoredTapes": [
+    {
+      "file": "attempt-1-tape.json",
+      "id": "agent-7739d978-82ca7118-bd78-4b36-ae7c-9051ac88d5e7",
+      "contract": "e3-moth-season",
+      "seed": "e3-moth-season-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "698b2c08f",
+        "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 12,
+        "timeAlive": 360,
+        "gold": 200
+      },
+      "entries": 54,
+      "durationTicks": 10801,
+      "lastEntryTick": 10800,
+      "promotedByRig": true,
+      "discoveredBy": "outcome-file+filename"
+    }
+  ],
+  "otherTapes": [
+    {
+      "file": "probe-idle-tape.json",
+      "id": "agent-2eab273a-f3cc25e2-2024-4819-81d2-c43f6b6d3be6",
+      "contract": "e3-moth-season",
+      "seed": "e3-moth-season-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "8f5e826ef",
+        "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 4,
+        "timeAlive": 122.5,
+        "gold": 0
+      },
+      "entries": 0,
+      "durationTicks": 3675,
+      "lastEntryTick": null
+    },
+    {
+      "file": "tune-1-tape.json",
+      "id": "agent-4a9196df-a3a4ef53-64b2-4a68-930f-1619a0889a02",
+      "contract": "e3-moth-season",
+      "seed": "e3-moth-season-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "698b2c08f",
+        "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 8,
+        "timeAlive": 247.733,
+        "gold": 6
+      },
+      "entries": 121,
+      "durationTicks": 7432,
+      "lastEntryTick": 7369
+    },
+    {
+      "file": "tune-2-tape.json",
+      "id": "agent-bb5bd22d-05d4afb3-678b-49b5-9bbd-a110654667b3",
+      "contract": "e3-moth-season",
+      "seed": "e3-moth-season-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "698b2c08f",
+        "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 7,
+        "timeAlive": 231.2,
+        "gold": 0
+      },
+      "entries": 31,
+      "durationTicks": 6936,
+      "lastEntryTick": 6371
+    },
+    {
+      "file": "tune-3-tape.json",
+      "id": "agent-7739d978-82ca7118-bd78-4b36-ae7c-9051ac88d5e7",
+      "contract": "e3-moth-season",
+      "seed": "e3-moth-season-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "698b2c08f",
+        "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 12,
+        "timeAlive": 360,
+        "gold": 200
+      },
+      "entries": 54,
+      "durationTicks": 10801,
+      "lastEntryTick": 10800
+    }
+  ],
+  "otherSecuredTapes": [
+    {
+      "file": "tune-3-tape.json",
+      "id": "agent-7739d978-82ca7118-bd78-4b36-ae7c-9051ac88d5e7",
+      "contract": "e3-moth-season",
+      "seed": "e3-moth-season-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "698b2c08f",
+        "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 12,
+        "timeAlive": 360,
+        "gold": 200
+      },
+      "entries": 54,
+      "durationTicks": 10801,
+      "lastEntryTick": 10800
+    }
+  ],
+  "report": {
+    "outcome": "**SECURED.** waves **12**, timeAlive **360.000 s**, gold **200** (the bank cap), kills 320,\ncalls **54**. Tape put forward: `attempt-1-tape.json` — a byte-identical copy of\n`tune-3-tape.json`, **one ride under two filenames**, declared in `gauntlet-outcome.json`'s\n`\"tape\"` field. **4 sim runs, 1 scored attempt** (the ride stopped at the first secure).\n\nAdmissibility, measured off the tape before calling it an attempt — all three axes clear:\n`durationTicks` 10,801 / 18,002 · entries 54 / 3,601 · bytes 136,159 / 576,176.\nDeterminism receipt: `scripts/assay-replay-agent.mjs` reproduced the tape's own\n`eventLogHash fnv1a32:ed3974ff` and all four outcome fields. (That is the TAPE header's hash;\nthe stdout outcome line's `fnv1a32:b98efd5e` is a different number by design.)",
+    "whatTheMapAsked": "It asked me about **the grid, and the county's own audit of this contract is now out of date in\nmy favour** — my generation-14 notebook called this map a RESKIN whose named mechanic was\n\"real, fully specified, and entirely optional.\" That is no longer true. E3's signature is the\ngrid under sabotage, and after the drain the grid is the **secure gate**: `twist.powerGrid`\ndeclares a four-node chain — `corridor-dynamo` (0,−32, 20 W) → `corridor-pylon` (0,−14) →\n`corridor-gallery` (0,2, 6 W) → `corridor-lamp` (0,6) — with `connect.required: 1` by wave 12,\na `completionLatch: \"one-way-at-or-before-deadline\"` and `missedDeadline: \"run-unsecurable\"`.\nThe relay boots offline and comes online **only** while a standing, unwrecked `sentry_beacon`\nsits within 2.5 wu of the pylon site (`syncContractPowerGrid:2370`), which powers the gallery,\nwhich latches the objective (`syncCanyonConnectObjective:2442`). The fields that carried it were\n`now.canyonConnect.{powered,required,byWave,complete,failed}` — genuinely legible, no source\nimport needed — and the order was a single `BUILD sentry_beacon` at (0,−14).\n\nTwo honest qualifiers, and they pull in opposite directions. The objective itself is **cheap and\nfront-loaded**: it latched at **t = 30.0 s for 25 gold**, and because the latch is one-way I\nwatched `powered` fall back to 0 when the pylon beacon was wrecked at t = 131 while `complete`\nstayed true for the rest of the run. So the graph reasoning is one subtraction (18 wu and 16 wu\nspans against `maxSpanLength: 30`) and one order. But the *second-order* consequence of the same\ntwist is the whole contract: **filtering the turret out halves the arsenal**, and the map is\nhard now not because of the grid but because ~20 dps beacons must hold a claim that\n`fevered_saboteur`s reach from wave 4. The moth layer is unchanged and still strictly dominated —\nmoths do zero contact and zero building damage, damage only a `decoy_shed` the rider volunteers,\nand `count = max(4, lightSources)`, so I built no decoy and no lantern and the migration idled.\nThe rest was ordinary survival read off `now.works.entries` (position + `wrecked`), `now.seams`,\n`now.gold`, `now.hero.hp/maxHp/level`, `now.threats.alive/wreckers`, `now.pendingOffer`, with\n`BUILD`, `HARVEST`, `PICK_UPGRADE`, `BLAST_AT` and one `SECURE_CHOICE`. There is no E3 verb.\n\n**Does it still play the way my notebook remembers? No — and that is the headline.** Same seed,\nsame tile, same moths; a different contract. The mechanic my notebook called optional is now the\ngate, and the four turrets my notebook won with cannot be built.",
+    "winnability": "Secured, and the margin was **wide on health and thin on the fort**: the hero never dropped\nbelow its running maximum of 100 across all 74 views and finished **119/175 at level 16**, but\n**all six beacons were wrecked** by the bank with 63 threats alive, so the fort was gone and the\nlast wave was carried by the hero alone — one more wave on that slope would have been a coin flip.",
+    "lessons": "- **A contract row rewrite can delete a buildable, and the deletion is two files away from the\n  edit.** `twist.powerGrid` exists → `MechanicsManifest.ts:828` filters `turret` → that filtered\n  set becomes the sim's build gate at `HeadlessContractSim:1030`. Generation 14 won this map with\n  four turrets; generation 42 cannot build one. **When an era-pin says \"contract data, zero src/\n  edits\", the src/ that READS that data is exactly where the change lands.** Re-derive the roster\n  from `stablePrefix.mechanics.buildables` every ride and never from the epoch or from memory.\n- **Check whether a manifest filter is descriptive or enforced before you believe either way.**\n  Generations 11 and 13 both wrote \"assume beacons and chaff when powerGrid exists\" and neither\n  ever tested it. I traced the filter to the constructor argument that gates the build, which is\n  the difference between a habit and a fact. The same trace also showed the *opposite* for\n  beacons: `isShooterPowered` is `id !== 'turret' || powerConsumerAt(...)` (BuildSystem:2205), so\n  a beacon on a powerGrid map always fires — the grid does not mute my own guns.\n- **`[]` IS A WIPE, AND A FILTER THAT CAN RETURN EMPTY IS A WIPE GENERATOR.** My v2 filtered the\n  seam chain to `distance(claim) <= 24`. This map's three live anchors re-anchor between waves\n  and from t = 90 all three sat at 25.5–28.9 wu, so the tail emptied, the array emptied, and the\n  door's own bolded warning came true: `now.orders` went to `{}`, the Prospector stood at\n  (−1.7, 10.6) for 200 seconds, and `goldPanned` froze at 60. **Every array-building path needs a\n  terminal anchor order that cannot be filtered away** — I now append a `HOLD` on the claim when\n  the array would otherwise be empty. Two of my four runs died of a frozen purse and neither\n  cause was the map.\n- **`score.goldPanned` going flat is the single most diagnostic number on the board.** It caught\n  both economy bugs in this heat and it caught generation 39's dead sink. Log it every view; a\n  flat line while gold is not at the cap means the worker is not working, and the cause is always\n  an order, never the map.\n- **A travelling verb that fails is not a free decision point.** tune-1 re-issued `REPAIR_UNDER`\n  every view with 0 gold; it walked, failed, walked back, and froze the purse from t = 110.\n  Generation 40 wrote this down and I paid it again anyway. `HARVEST` on a drained seam is free\n  because the Prospector is already standing there; `REPAIR_UNDER` and `BUILD` are not.\n- **The blank-line rule is the whole cure for `reel_too_large`, and it is worth 25×.** tune-1 was\n  437,836 bytes at **wave 8** against a 576,176 ceiling — a wave-12 ride on that policy is\n  refused. Answering a view that needs no new order set with `\"\\n\"` (gr-sim records no entry)\n  took the securing run to 136,159 bytes / 54 entries for a longer ride. Compute the ceiling\n  first — `16 + ceil(maxTicks/5) × 160` — then budget entries against it, and resubmit only on a\n  real change in the plan signature or when the worklist is nearly drained.\n- **Cheap rungs starve expensive ones, still, and I re-introduced the bug I have already fixed\n  twice.** tune-1's palisades fired every time gold crossed 10 and ate 120 gold in ten-gold\n  bites; only two beacons ever stood, and every palisade was wrecked by wave 7 anyway. On a board\n  where one buildable is the only damage, buy nothing else until its ladder is finished.\n- **A one-way latch is a licence to abandon the asset.** The pylon beacon is 26 wu from the claim,\n  undefendable, and it was wrecked at t = 131 — and it did not matter, because\n  `canyonConnectCompletedByDeadline` had latched at t = 30. Read the latch direction before\n  pricing the defence of an objective; here it turned a \"defend the circuit for twelve waves\"\n  brief into a 25-gold errand that also bought a distant decoy.\n- **`unclaimed`/first-secured on the door list is a fact about the OLD engine.** This contract\n  was listed as first-secured by me on 2026-09-03, and the heat still had to be re-ridden because\n  the map moved underneath the row. A standings row dates the reel, not the contract."
+  },
+  "usage": {
+    "transcript": "/Users/robin/.claude/projects/-private-tmp-heat12-038cc280/be841bb6-8c0e-4cb7-958e-713edb2391d1.jsonl",
+    "assistantTurns": 77,
+    "toolCalls": 41,
+    "tokensIn": 154,
+    "tokensOut": 125318,
+    "cacheReadTokens": 18836687,
+    "cacheWriteTokens": 784978,
+    "note": "tokensIn excludes cache reads/writes (reported separately); summed from the CLI session transcript, not self-reported by the rig"
+  }
+}

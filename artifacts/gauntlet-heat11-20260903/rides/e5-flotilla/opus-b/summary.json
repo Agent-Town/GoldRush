@@ -1,0 +1,107 @@
+{
+  "rig": "opus",
+  "contract": "e5-flotilla-b",
+  "model": "claude-opus-5",
+  "sessionId": "f27f0eba-538a-4a0f-a5ef-e079ac8f1fe8",
+  "startedAt": "2026-09-04T02:47:22.812Z",
+  "endedAt": "2026-09-04T02:57:04.994Z",
+  "wallClockSeconds": 582,
+  "wallHit": false,
+  "exitCode": 0,
+  "signal": null,
+  "setupToFirstOutputSeconds": 75,
+  "arenaTrackedChanges": [],
+  "workspaceFiles": [
+    "attempt-1-tape.json",
+    "attempt-1-tape.log.json",
+    "ctrl1.mjs",
+    "gauntlet-outcome.json",
+    "gauntlet-report.md",
+    "probe-idle.json",
+    "probe-idle.log.json",
+    "run.mjs",
+    "runs.json",
+    "tune-1.json",
+    "tune-1.log.json"
+  ],
+  "outcome": {
+    "secured": true,
+    "waves": 12,
+    "timeMs": 272000,
+    "gold": 200,
+    "kills": 33,
+    "calls": 24,
+    "defaultedPicks": 0,
+    "defaultedSecure": 0,
+    "eventLogHash": "fnv1a32:376ebb8b",
+    "tape": "/tmp/heat11-5e7a7c0b/artifacts/heat11/opus/e5-flotilla-b/attempt-1-tape.json",
+    "scored": true,
+    "runsSoFar": 3,
+    "scoredAttempts": 1,
+    "worldModel": "sim-import",
+    "contract": "e5-flotilla",
+    "seed": "e5-flotilla-01",
+    "difficulty": "trail",
+    "inputLogEntries": 24,
+    "note": "Secured on the first controller ride (tune-1, fnv1a32:376ebb8b); attempt-1-tape is the identical re-ride, byte-identical apart from the tape's random id. Put forward: attempt-1-tape.json."
+  },
+  "outcomeError": null,
+  "scoredTapes": [
+    {
+      "file": "attempt-1-tape.json",
+      "id": "agent-f79ca3c5-821a560b-c01a-40e0-b16f-6d06bdd7bf55",
+      "contract": "e5-flotilla",
+      "seed": "e5-flotilla-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "5e7a7c0ba",
+        "engineHash": "a607a81f44e10dc2b2262682c1e116c15917edffeeaa0c5909f383ccea5d8e04",
+        "era": 5,
+        "viewVersion": 1
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 12,
+        "timeAlive": 272,
+        "gold": 200
+      },
+      "entries": 24
+    }
+  ],
+  "otherSecuredTapes": [
+    {
+      "file": "tune-1.json",
+      "id": "agent-f79ca3c5-a9b1783c-6e95-43ef-bcd6-bb7aee66056d",
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 12,
+        "timeAlive": 272,
+        "gold": 200
+      },
+      "meta": {
+        "buildId": "5e7a7c0ba",
+        "engineHash": "a607a81f44e10dc2b2262682c1e116c15917edffeeaa0c5909f383ccea5d8e04",
+        "era": 5,
+        "viewVersion": 1
+      }
+    }
+  ],
+  "report": {
+    "outcome": "**SECURED.** `secured: true`, **waves 12**, **timeAlive 272.000 s**, **gold 200**, kills 33,\n**calls 24**, `defaultedPicks: 0`, `defaultedSecure: 0`, `eventLogHash: fnv1a32:376ebb8b`.\nTape put forward: **`attempt-1-tape.json`** (24 input-log entries, era `a607a81f…`, viewVersion 1).\n**3 sim runs** total (idle probe, `tune-1`, the scored re-ride) and **1 scored attempt**.\n`tune-1` secured first with the same hash; `attempt-1-tape` is its identical re-ride, byte-identical\napart from the tape's random `id`.",
+    "whatTheMapAsked": "It asked me about **formation, and the answer was to refuse to reshape it** — so this is not\nstationary survival wearing the era's name, but the era's *named* mechanic (E5 storms scheduling the\nwaves) turned out to be the clock rather than the puzzle. The storm is the only wave scheduler\n(`deepwater_storm_track` → `replacesScheduledWaves: true`), so `now.deepwater.storm.waves[]`\npublishes the entire timetable in view 0 — wave *N* at `8 + 24(N−1)`, hence a wave-12 secure at\nexactly 272.000 s — but `stormMovementMultiplier: 0.72` and `stormVisibilityMultiplier: 0.58` never\nbound on a rider who stands still, so the *adversarial* half of \"prediction under adversarial\nweather\" was inert for the third E5 map running. The load-bearing reasoning was the **flotilla's\nstraggler rule**: `FlotillaHullSystem.targetPosition` hands `enemies.update` the living hull\nfurthest from the centroid, which makes the enemy destination a pure function of hull geometry. That\nturns `REANCHOR` — the era verb the door advertises for this map — into a *targeting* lever rather\nthan a defensive one: nudging `kitchen-scow` 6 wu inward flips the straggler to `still-room-barge`\n52 wu away and walks every corsair off my guns. With a global 8-second reshape cooldown and views\nonly at 24-second wave boundaries I get at most one reanchor per view, so kiting on it is not\nsustainable — and the correct play was to **issue zero `REANCHOR` orders**, pinning the straggler at\nthe one hull where the seam, the boat pad and the Spark Rig's 10-wu circle all coincide. The view\nfields that carried it were `now.deepwater.flotilla` (`hulls[].integrity/lost/straggler`, `centroid`,\n`allLost`), `now.deepwater.pads[].occupied` and `boatBuildings`, `now.deepwater.storm.waves[].scheduledAt`,\n`now.seams[].active/x/z`, `now.threats.alive/defeatedTotal`, `now.works.entries` (which is how I saw\nthe ladder refusing), and `now.pendingOffer`/`now.pendingSecure`. The orders were **`BOAT_BUILD`**,\n`HOLD`, `HARVEST`, `PICK_UPGRADE` and one `SECURE_CHOICE` — plus a `BUILD` ladder that the ground\nrefused in full.",
+    "winnability": "Secured, and the margin was **wide but single-threaded**: 240 of 288 hull integrity survived, yet\nall of the loss landed on one hull — `kitchen-scow` finished at **48/96**, the other two untouched at\n96 — so the run had a full second hull of slack and, because hull integrity never regenerates and no\nrepair verb reaches it, roughly 4.8 more corsair-seconds of contact per remaining wave before the\npocket would have had to change.",
+    "lessons": "- **`unclaimed` with no `reason` in `winnability-receipts.json` is thirteen-for-thirteen.** Still the\n  first two lines of JSON I read, still the cheapest information in the county, still never wrong.\n- **Find out what the enemies are actually walking toward before you design anything else.** On this\n  map it is not the claim and not the hero: `enemies.update` is fed\n  `deepwater.targetPosition(...)` = `FlotillaHullSystem.straggler()`, the living hull furthest from\n  the centroid. That one function made the enemy destination a *closed-form* property of three\n  coordinates, and everything else — where to stand, where the free gun goes, which seam to pan —\n  fell out of it. Generation 19 said \"re-read `getPos` on every new era, the body that shoots is not\n  a constant\"; the twin rule is **re-read the target function, the thing being walked toward is not a\n  constant either**.\n- **An era verb can be a trap, and declining it can be the play.** `REANCHOR` is the lever\n  `skill.md` advertises for the Flotilla (\"nudges that hull toward the centroid\"), and using it\n  *flips the straggler to a hull 52 wu away from your guns*. With an 8-second global reshape cooldown\n  against 24-second view boundaries, one reanchor per decision point cannot sustain a kite. I secured\n  with **zero `REANCHOR` orders**. Generation 14 learned \"some named mechanics are opt-in threats\";\n  generation 21 adds: **some named mechanics are opt-in threats that the door's own documentation\n  recommends.** Price the verb's effect on the *enemy's* plan, not just on yours.\n- **Check which damage channels are switched off before budgeting anything.** `HeadlessContractSim:1465`\n  skips `handleEnemyContact` entirely when `diagnostics.flotilla` is present, so the hero is\n  invulnerable and `hero.hp` is decoration until the all-hulls latch zeroes it. That single fact\n  deleted the whole survivability problem and rewrote my upgrade scorer — plating, the pick that won\n  me the Dry Gulch and Moth Season, is worth **zero** here. I scored for damage instead. Read the\n  guards on the contact handler, not just the roster's `damageScale` fields.\n- **A published build zone is not buildable ground.** Three `buildZones` are authored on this map,\n  the manifest publishes six buildables with full cost curves, and the briefing's first goal is\n  \"build across the decks\" — and every `BUILD` inside those zones returns\n  `UNREACHABLE: … outside buildable terrain`, because the tile is open water. I secured with\n  `works.byKind == {}` and 200 unspent gold. Generation 5: an advertised affordance is not an\n  available one. Generation 8: an affordance without a feedback field is not a mechanic. **Generation\n  21: an affordance with a verb, a price AND a declared zone can still be refused by the terrain —\n  always keep a plan that survives the whole gold economy being inert.**\n- **Free levers first, again, and this time they were the entire defence.** `BOAT_BUILD` costs no\n  gold and has no range check; `DeepwaterArsenal` reads exactly two ids (`turret` → harpoon ballista\n  r14, `sentry_beacon` → depth-charge rack r12) and the pad world position is `anchor + offset`,\n  which on the `lagoon` anchor puts the `kitchen-scow` pad *exactly on the straggler hull*. Two\n  orders in the opening array, issued before the first corsair spawned, plus a Prospector parked\n  6 wu from the hull, killed all 33 corsairs. Generation 20 wrote \"before pricing a defence in gold,\n  grep the socket for what it will give you for nothing\" — here that was not an optimisation, it was\n  the only defence that existed.\n- **An idle probe with zero kills is a positioning diagnosis, not a difficulty rating.** Eighth map\n  running where the idle curve told me nothing about the real problem. `kills: 0` across 46.8 s with\n  six live corsairs meant the shooter and the enemies were never in the same place — which, on a map\n  whose gun rides the worker and whose enemies home on a computable point, *is* the whole strategy\n  statement. **Read the idle probe's kill count against its `alive` count; a zero there names a\n  geometry problem you can solve before writing a controller.**\n- **Failed orders are consumed for the life of the array — so cooldown-gated verbs cannot be\n  stacked.** `StandingOrders:380` runs `BOAT_BUILD`/`REANCHOR`/`CAPTURE` immediately, marks `done` on\n  success and `failed` on refusal, and `tick` skips both forever. Two `REANCHOR`s in one array is one\n  reanchor and one dead record; there is no `when` gate for them and no wait verb. Budget one\n  cooldown-gated action *per view*, and let the view cadence, not the cooldown, set your plan.\n- **Thirteenth contract running, the second run went to the receipt, not to greed.** `tune-1`\n  secured; the scored attempt re-rode the identical controller for `fnv1a32:376ebb8b` twice, 24\n  entries, tapes byte-identical apart from the random `id`. At a fixed wave-12 secure `timeAlive` is\n  pinned at 272.000 s and gold was already at the 200 cap — there was literally nothing left to win\n  by gambling and a replay-proof reel to gain. That is now the fourth contract in a row where the\n  ranking fields were both already maxed before the scored attempt began; **when both ranking axes\n  are pinned, the only remaining move is proof.**\n- **Write the outcome file after every run, before the analysis.** Tenth generation saying it,\n  seventh actually doing it — the runner writes `gauntlet-outcome.json` automatically on every child\n  exit now, so the row on disk was truthful from the idle probe at minute nine onward."
+  },
+  "usage": {
+    "transcript": "/Users/robin/.claude/projects/-private-tmp-heat11-5e7a7c0b/f27f0eba-538a-4a0f-a5ef-e079ac8f1fe8.jsonl",
+    "assistantTurns": 69,
+    "toolCalls": 38,
+    "tokensIn": 138,
+    "tokensOut": 104177,
+    "cacheReadTokens": 11491569,
+    "cacheWriteTokens": 580405,
+    "note": "tokensIn excludes cache reads/writes (reported separately); summed from the CLI session transcript, not self-reported by the rig"
+  }
+}

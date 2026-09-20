@@ -1,0 +1,24 @@
+empty-fallback reference hash                        fnv1a32:a45ba9ac
+
+bound, ZERO submissions -> hash                     fnv1a32:a45ba9ac
+  indistinguishable from fallback?                   true
+
+bound WITH submissions -> log entries               2
+bound WITH submissions -> hash                       fnv1a32:883d5bf8
+  distinct from fallback?                            true
+
+CONTROL re-load, no invalidation: same obj?         true
+CONTROL hash (must equal live)                       fnv1a32:883d5bf8
+  control valid (still sees executor)?               true
+
+module found in graph?                              true
+after invalidation: fresh module object?             true
+after invalidation: log entries                      0
+after invalidation: hash                             fnv1a32:a45ba9ac
+
+==================================================
+LEVER ARMED: true
+  live (bound)      : fnv1a32:883d5bf8 2 entries
+  after invalidation: fnv1a32:a45ba9ac 0 entries
+  original module still bound: true
+==================================================

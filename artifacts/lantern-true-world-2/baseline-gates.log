@@ -1,0 +1,110 @@
+fatal: not a git repository (or any of the parent directories): .git
+revision metadata could not be recorded: Error: Command failed: git rev-parse HEAD
+fatal: not a git repository (or any of the parent directories): .git
+
+(node:32740) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 6 tests using 1 worker
+
+(node:32769) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+fatal: not a git repository (or any of the parent directories): .git
+revision metadata could not be recorded: Error: Command failed: git rev-parse HEAD
+fatal: not a git repository (or any of the parent directories): .git
+
+(node:32769) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+  ✓  1 [desktop-chrome] › e2e/tape-02-lantern-show.spec.ts:10:1 › plain town WATCH replays a fresh tape read-only and refuses a mismatched reel (12.7s)
+  ✘  2 [desktop-chrome] › e2e/terrain3d-claim-pilot.spec.ts:76:1 › contract-valid GLB feeds every visualY consumer and keeps the water agreement (3.5s)
+(node:32890) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+fatal: not a git repository (or any of the parent directories): .git
+revision metadata could not be recorded: Error: Command failed: git rev-parse HEAD
+fatal: not a git repository (or any of the parent directories): .git
+
+  ✘  3 [desktop-chrome] › e2e/terrain3d-claim-pilot.spec.ts:166:1 › the mounted terrain stays inside the 115% p95 budget (1.0m)
+(node:34927) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+fatal: not a git repository (or any of the parent directories): .git
+revision metadata could not be recorded: Error: Command failed: git rev-parse HEAD
+fatal: not a git repository (or any of the parent directories): .git
+
+(node:34927) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+  ✓  4 [mobile-chrome] › e2e/tape-02-lantern-show.spec.ts:10:1 › plain town WATCH replays a fresh tape read-only and refuses a mismatched reel (14.6s)
+  ✓  5 [mobile-chrome] › e2e/terrain3d-claim-pilot.spec.ts:76:1 › contract-valid GLB feeds every visualY consumer and keeps the water agreement (3.3s)
+  ✘  6 [mobile-chrome] › e2e/terrain3d-claim-pilot.spec.ts:166:1 › the mounted terrain stays inside the 115% p95 budget (1.0m)
+
+
+  1) [desktop-chrome] › e2e/terrain3d-claim-pilot.spec.ts:76:1 › contract-valid GLB feeds every visualY consumer and keeps the water agreement 
+
+    Error: expect(received).toBeCloseTo(expected, precision)
+
+    Expected: 0.7964298105239869
+    Received: 0.8177936887741089
+
+    Expected precision:    2
+    Expected difference: < 0.005
+    Received difference:   0.02136387825012198
+
+       99 |       heroY: window.__THREE_GAME_DIAGNOSTICS__!.heroPos.y,
+      100 |     }), [x, z]);
+    > 101 |     expect(sample.heroY).toBeCloseTo(sample.height + 0.06, 2);
+          |                          ^
+      102 |     table.push({ x, z, ...sample });
+      103 |   }
+      104 |   expect(Math.max(...table.map((entry) => entry.height)) - Math.min(...table.map((entry) => entry.height))).toBeGreaterThan(0.35);
+        at /private/var/folders/cd/p02kvf6s5qgfn47w85hhtzjc0000gn/T/gold-rush-lantern-baseline-e6k2v50j/e2e/terrain3d-claim-pilot.spec.ts:101:26
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/terrain3d-claim-pilot-cont-43bda-d-keeps-the-water-agreement-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/terrain3d-claim-pilot-cont-43bda-d-keeps-the-water-agreement-desktop-chrome/error-context.md
+
+  2) [desktop-chrome] › e2e/terrain3d-claim-pilot.spec.ts:166:1 › the mounted terrain stays inside the 115% p95 budget 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: page.waitForFunction: Test timeout of 60000ms exceeded.
+
+      172 |   const paintedP95Ms = await p95(page);
+      173 |   await release!();
+    > 174 |   await page.waitForFunction(() => document.querySelector('canvas')?.dataset.terrain3dPilotState === 'ready');
+          |              ^
+      175 |   const pilotP95Ms = await p95(page);
+      176 |   const report = { paintedP95Ms, pilotP95Ms, ratio: pilotP95Ms / paintedP95Ms };
+      177 |   await mkdir(ARTIFACT_DIR, { recursive: true });
+        at /private/var/folders/cd/p02kvf6s5qgfn47w85hhtzjc0000gn/T/gold-rush-lantern-baseline-e6k2v50j/e2e/terrain3d-claim-pilot.spec.ts:174:14
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/terrain3d-claim-pilot-the--7f0b9-s-inside-the-115-p95-budget-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/terrain3d-claim-pilot-the--7f0b9-s-inside-the-115-p95-budget-desktop-chrome/error-context.md
+
+  3) [mobile-chrome] › e2e/terrain3d-claim-pilot.spec.ts:166:1 › the mounted terrain stays inside the 115% p95 budget 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: page.waitForFunction: Test timeout of 60000ms exceeded.
+
+      172 |   const paintedP95Ms = await p95(page);
+      173 |   await release!();
+    > 174 |   await page.waitForFunction(() => document.querySelector('canvas')?.dataset.terrain3dPilotState === 'ready');
+          |              ^
+      175 |   const pilotP95Ms = await p95(page);
+      176 |   const report = { paintedP95Ms, pilotP95Ms, ratio: pilotP95Ms / paintedP95Ms };
+      177 |   await mkdir(ARTIFACT_DIR, { recursive: true });
+        at /private/var/folders/cd/p02kvf6s5qgfn47w85hhtzjc0000gn/T/gold-rush-lantern-baseline-e6k2v50j/e2e/terrain3d-claim-pilot.spec.ts:174:14
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/terrain3d-claim-pilot-the--7f0b9-s-inside-the-115-p95-budget-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/terrain3d-claim-pilot-the--7f0b9-s-inside-the-115-p95-budget-mobile-chrome/error-context.md
+
+  3 failed
+    [desktop-chrome] › e2e/terrain3d-claim-pilot.spec.ts:76:1 › contract-valid GLB feeds every visualY consumer and keeps the water agreement 
+    [desktop-chrome] › e2e/terrain3d-claim-pilot.spec.ts:166:1 › the mounted terrain stays inside the 115% p95 budget 
+    [mobile-chrome] › e2e/terrain3d-claim-pilot.spec.ts:166:1 › the mounted terrain stays inside the 115% p95 budget 
+  3 passed (2.6m)

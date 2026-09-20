@@ -1,0 +1,19 @@
+{
+  "rig": "fable",
+  "model": "claude-fable-5",
+  "arena": "/tmp/heat11-5e7a7c0b",
+  "workdir": "/tmp/heat11-5e7a7c0b/artifacts/heat11/fable/e1-drill-yard",
+  "charterFile": "/Users/robin/Claude/Projects/Gold Rush/artifacts/gauntlet-heat11-20260903/rides/e1-drill-yard/fable/charter.md",
+  "charterSha256": "0be9f941b4a9d808bbd5b1133a2da8311bfa221cf080a923dd6f6c8aaa565c15",
+  "sessionId": "3f0b294b-327c-4240-93b7-61ef8aef8d7e",
+  "wallSeconds": 1500,
+  "startedAt": "2026-09-03T13:00:19.183Z",
+  "invocation": "env -u CLAUDECODE -u CLAUDE_CODE_ENTRYPOINT -u CLAUDE_CONFIG_DIR claude -p \"<charter text, see charterFile>\" --model claude-fable-5 --allowedTools Read,Write,Glob,Bash(node *) --output-format text --session-id 3f0b294b-327c-4240-93b7-61ef8aef8d7e",
+  "endedAt": "2026-09-03T13:07:30.631Z",
+  "wallClockSeconds": 431,
+  "exitCode": 0,
+  "signal": null,
+  "wallHit": false,
+  "firstOutputAt": "2026-09-03T13:01:19.192Z",
+  "setupToFirstOutputSeconds": 60
+}

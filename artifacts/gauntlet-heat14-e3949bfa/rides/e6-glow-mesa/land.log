@@ -1,0 +1,40 @@
+
+=== 1 finish-ride ===
+{"rig":"opus","contract":"e6-glow-mesa","wall":664,"wallHit":false,"rc":0,"tracked":[],"files":12,"outcome":{"secured":true,"waves":15,"gold":109,"runsSoFar":2,"scoredAttempts":1,"tape":"/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/heat14/opus/e6-glow-mesa/attempt-1-tape.json","worldModel":"sim-import"},"scoredTapes":[{"file":"attempt-1-tape.json","id":"agent-b3c94abf-7ab4831c-02a4-42ac-b4b9-806d94be84d9","secured":true,"waves":15,"gold":109,"durationTicks":13815,"lastEntryTick":13655,"promotedByRig":true,"discoveredBy":"outcome-file+filename"}],"otherSecured":[{"file":"tune-1-tape.json","id":"agent-b3c94abf-7ab4831c-02a4-42ac-b4b9-806d94be84d9","waves":15,"gold":109}],"reportSections":{"outcome":876,"whatTheMapAsked":2964,"winnability":529,"lessons":4584},"usage":{"turns":71,"toolCalls":31,"tokensIn":142,"tokensOut":135362}}
+tape chosen: attempt-1-tape.json (id agent-b3c94abf-7ab4831c-02a4-42ac-b4b9-806d94be84d9, promotedByRig=true, discoveredBy=outcome-file+filename)
+
+=== 2 freeze notebook header ===
+{"headerOnly":true,"headerBytes":432}
+
+=== 3 harnessDigest ===
+00e17aa99391a0d8699e7ba9b8fa50f7e55365919fc917c54234cbe01b880628
+
+=== 4 build-submission ===
+{"tapeId":"agent-b3c94abf-7ab4831c-02a4-42ac-b4b9-806d94be84d9","contract":"e6-glow-mesa","epochId":"epoch-6-atomic","seed":"e6-glow-mesa-01","seedMode":"bench","score":{"secured":true,"waves":15,"timeAlive":460.5,"gold":109,"baseValue":0},"papers":{"buildId":"30a42c890","engineHash":"540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068","era":6,"viewVersion":2},"durationTicks":13815,"lastEntryTick":13655,"stack":{"model":"claude-opus-5","harness":"heat14-operator","harnessVersion":"2.1.272","harnessDigest":"00e17aa99391a0d8699e7ba9b8fa50f7e55365919fc917c54234cbe01b880628","worldModel":"sim-import","config":"attended-hosted headless `claude -p` ride (heat 14, the era-6 re-ride) on Claude Code CLI 2.1.272; charter + door manual + own notebook (self-memory); own controller authored in-ride","calls":65,"tokensIn":33431599,"tokensOut":135362}}
+
+=== 5 publish (POST → poll → WATCH) ===
+{"rank":1,"tapeId":"agent-b3c94abf-7ab4831c-02a4-42ac-b4b9-806d94be84d9","assay":"verified","assayHash":"fnv1a32:b8a19332","papers":{"buildId":"30a42c890","engineHash":"540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068","era":6,"viewVersion":2}}
+
+=== LANDED ===
+{
+ "rig": "opus",
+ "contract": "e6-glow-mesa",
+ "tapeFile": "attempt-1-tape.json",
+ "tapeId": "agent-b3c94abf-7ab4831c-02a4-42ac-b4b9-806d94be84d9",
+ "assay": "verified",
+ "assayHash": "fnv1a32:b8a19332",
+ "ranked": true,
+ "rank": 1,
+ "waves": 15,
+ "gold": 109,
+ "calls": 65,
+ "eventLogHash": "fnv1a32:87bea4cc",
+ "wall": 664,
+ "harnessDigest": "00e17aa99391a0d8699e7ba9b8fa50f7e55365919fc917c54234cbe01b880628",
+ "usage": {
+  "turns": 71,
+  "toolCalls": 31,
+  "tokensIn": 33431599,
+  "tokensOut": 135362
+ }
+}

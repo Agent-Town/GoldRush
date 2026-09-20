@@ -1,0 +1,361 @@
+{
+  "version": 2,
+  "id": "agent-25733ed6-d81be155-9f5b-484a-8c1e-a9fb972ff971",
+  "createdAt": 0,
+  "kept": true,
+  "contract": "e5-stillwater",
+  "seed": "e5-stillwater-01",
+  "difficulty": "trail",
+  "simVersion": 1,
+  "meta": {
+    "buildId": "5e7a7c0ba",
+    "engineHash": "a607a81f44e10dc2b2262682c1e116c15917edffeeaa0c5909f383ccea5d8e04",
+    "era": 5,
+    "viewVersion": 1
+  },
+  "runStart": {
+    "meta": {
+      "version": 1,
+      "tracks": {
+        "territory": 0,
+        "science": 0,
+        "hero": 0,
+        "agent": 0
+      }
+    },
+    "research": {
+      "version": 1,
+      "epochId": "epoch-1-frontier",
+      "metaScienceCursor": 0,
+      "progress": {
+        "version": 1,
+        "tracks": {
+          "territory": 0,
+          "science": 0,
+          "hero": 0,
+          "agent": 0
+        }
+      },
+      "taken": [],
+      "proposalSalt": 0,
+      "pinnedTarget": null,
+      "unlocks": {}
+    }
+  },
+  "inputLog": {
+    "version": 1,
+    "name": "agent-25733ed6",
+    "contractId": "e5-stillwater",
+    "seed": "e5-stillwater-01",
+    "difficultyPreset": "trail",
+    "stepSeconds": 0.03333333333333333,
+    "start": {
+      "x": 0,
+      "z": 30
+    },
+    "durationTicks": 6202,
+    "entries": [
+      {
+        "t": 0,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "BOAT_BUILD",
+                "padId": "bow",
+                "buildingId": "turret"
+              },
+              {
+                "verb": "BOAT_BUILD",
+                "padId": "port",
+                "buildingId": "sentry_beacon"
+              },
+              {
+                "verb": "BOAT_BUILD",
+                "padId": "starboard",
+                "buildingId": "sentry_beacon"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -4,
+                  "z": 27
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 900,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "REANCHOR",
+                "anchorId": "shelf-watch"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -4,
+                  "z": 27
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 1801,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 36,
+                  "z": 20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 2701,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 36,
+                  "z": 20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 3601,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 36,
+                  "z": 20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 4222,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "double_tap_coil"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 36,
+                  "z": 20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 4384,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "tinkers_plating"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 36,
+                  "z": 20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 4501,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 36,
+                  "z": 20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 4684,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "split_spark"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 36,
+                  "z": 20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 4876,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "tinkers_plating"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 36,
+                  "z": 20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 5118,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "double_tap_coil"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 36,
+                  "z": 20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 5392,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "tinkers_plating"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 36,
+                  "z": 20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 5401,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 36,
+                  "z": 20
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "truncated": null,
+    "primarySlot": 0,
+    "streams": []
+  },
+  "eventLogHash": "fnv1a32:985fee66",
+  "outcome": {
+    "reason": "death",
+    "secured": false,
+    "waves": 6,
+    "timeAlive": 206.733,
+    "gold": 0
+  }
+}

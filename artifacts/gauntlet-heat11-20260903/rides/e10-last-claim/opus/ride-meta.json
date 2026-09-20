@@ -1,0 +1,19 @@
+{
+  "rig": "opus",
+  "model": "claude-opus-5",
+  "arena": "/tmp/heat11-5e7a7c0b",
+  "workdir": "/tmp/heat11-5e7a7c0b/artifacts/heat11/opus/e10-last-claim",
+  "charterFile": "rides/e10-last-claim/opus/charter.md",
+  "charterSha256": "d9ec11c8ba4ccdab99f691536870135573386ebe6aec84159d617f8d05258950",
+  "sessionId": "95925c59-6171-4151-b331-41c0a89f7586",
+  "wallSeconds": 1500,
+  "startedAt": "2026-09-04T03:46:12.136Z",
+  "invocation": "env -u CLAUDECODE -u CLAUDE_CODE_ENTRYPOINT -u CLAUDE_CONFIG_DIR claude -p \"<charter text, see charterFile>\" --model claude-opus-5 --allowedTools Read,Write,Glob,Bash(node *) --output-format text --session-id 95925c59-6171-4151-b331-41c0a89f7586",
+  "endedAt": "2026-09-04T03:57:54.996Z",
+  "wallClockSeconds": 703,
+  "exitCode": 0,
+  "signal": null,
+  "wallHit": false,
+  "firstOutputAt": "2026-09-04T03:47:12.145Z",
+  "setupToFirstOutputSeconds": 60
+}

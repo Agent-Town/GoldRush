@@ -1,0 +1,280 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.4.0/bin/node",
+      "/private/var/folders/cd/p02kvf6s5qgfn47w85hhtzjc0000gn/T/goldrush-manifest-control-kft4x06s/tree/node_modules/.bin/playwright",
+      "test",
+      "--config",
+      "playwright.manifest-control.config.ts",
+      "--project=desktop-chrome",
+      "--project=mobile-chrome",
+      "--workers=1",
+      "e2e/e6-boss-homemaker.spec.ts"
+    ],
+    "configFile": "/private/var/folders/cd/p02kvf6s5qgfn47w85hhtzjc0000gn/T/goldrush-manifest-control-kft4x06s/tree/playwright.manifest-control.config.ts",
+    "rootDir": "/private/var/folders/cd/p02kvf6s5qgfn47w85hhtzjc0000gn/T/goldrush-manifest-control-kft4x06s/tree/e2e",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": "/private/var/folders/cd/p02kvf6s5qgfn47w85hhtzjc0000gn/T/goldrush-manifest-control-kft4x06s/tree/scripts/external-server-guard.mjs",
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "revision": "eb79d0c127d9c525508a6c4878041a370945069b",
+      "dirty": false,
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/asset-diet-explicit-manifest-2/control-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "revision": "eb79d0c127d9c525508a6c4878041a370945069b",
+          "dirty": false,
+          "actualWorkers": 1
+        },
+        "id": "desktop-chrome",
+        "name": "desktop-chrome",
+        "testDir": "/private/var/folders/cd/p02kvf6s5qgfn47w85hhtzjc0000gn/T/goldrush-manifest-control-kft4x06s/tree/e2e",
+        "testIgnore": [
+          "**/*.rig.ts",
+          "**/release-build.spec.ts",
+          "**/release-base-path.spec.ts",
+          "**/accounts-sync.spec.ts"
+        ],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/asset-diet-explicit-manifest-2/control-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "revision": "eb79d0c127d9c525508a6c4878041a370945069b",
+          "dirty": false,
+          "actualWorkers": 1
+        },
+        "id": "mobile-chrome",
+        "name": "mobile-chrome",
+        "testDir": "/private/var/folders/cd/p02kvf6s5qgfn47w85hhtzjc0000gn/T/goldrush-manifest-control-kft4x06s/tree/e2e",
+        "testIgnore": [
+          "**/*.rig.ts",
+          "**/release-build.spec.ts",
+          "**/release-base-path.spec.ts",
+          "**/accounts-sync.spec.ts"
+        ],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/asset-diet-explicit-manifest-2/control-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "revision": "eb79d0c127d9c525508a6c4878041a370945069b",
+          "dirty": false,
+          "actualWorkers": 1
+        },
+        "id": "desktop-webkit",
+        "name": "desktop-webkit",
+        "testDir": "/private/var/folders/cd/p02kvf6s5qgfn47w85hhtzjc0000gn/T/goldrush-manifest-control-kft4x06s/tree/e2e",
+        "testIgnore": [
+          "**/*.rig.ts",
+          "**/release-build.spec.ts",
+          "**/release-base-path.spec.ts",
+          "**/accounts-sync.spec.ts"
+        ],
+        "testMatch": [
+          "/058-device-tiers\\.spec\\.ts/"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/asset-diet-explicit-manifest-2/control-results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "none",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npx vite --config vite.manifest-control.config.ts --host 127.0.0.1 --port 5198 --strictPort",
+      "cwd": "/private/var/folders/cd/p02kvf6s5qgfn47w85hhtzjc0000gn/T/goldrush-manifest-control-kft4x06s/tree",
+      "url": "http://127.0.0.1:5198",
+      "reuseExistingServer": false,
+      "timeout": 60000
+    }
+  },
+  "suites": [
+    {
+      "title": "e6-boss-homemaker.spec.ts",
+      "file": "e6-boss-homemaker.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "unbuilds, tidies, makes one chair, and remains kept without ever hurting the player",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "timedOut",
+                  "duration": 166103,
+                  "error": {
+                    "message": "\u001b[31mTest timeout of 90000ms exceeded.\u001b[39m",
+                    "stack": "\u001b[31mTest timeout of 90000ms exceeded.\u001b[39m"
+                  },
+                  "errors": [
+                    {
+                      "message": "\u001b[31mTest timeout of 90000ms exceeded.\u001b[39m"
+                    },
+                    {
+                      "location": {
+                        "file": "/private/var/folders/cd/p02kvf6s5qgfn47w85hhtzjc0000gn/T/goldrush-manifest-control-kft4x06s/tree/e2e/e6-boss-homemaker.spec.ts",
+                        "column": 14,
+                        "line": 227
+                      },
+                      "message": "Error: page.waitForFunction: Test timeout of 90000ms exceeded.\n\n  225 |\n  226 |   await page.reload();\n> 227 |   await page.waitForFunction(() => window.__GR_TEST__ && window.__THREE_GAME_DIAGNOSTICS__?.contract.activeId === 'e6-glow-mesa');\n      |              ^\n  228 |   await dismissBriefing(page);\n  229 |   await expect.poll(() => homemaker(page)).toMatchObject({\n  230 |     active: false,\n    at /private/var/folders/cd/p02kvf6s5qgfn47w85hhtzjc0000gn/T/goldrush-manifest-control-kft4x06s/tree/e2e/e6-boss-homemaker.spec.ts:227:14"
+                    },
+                    {
+                      "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-05T05:16:04.267Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/asset-diet-explicit-manifest-2/control-results/e6-boss-homemaker-unbuilds-d39e8-out-ever-hurting-the-player-desktop-chrome/test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/asset-diet-explicit-manifest-2/control-results/e6-boss-homemaker-unbuilds-d39e8-out-ever-hurting-the-player-desktop-chrome/error-context.md"
+                    }
+                  ]
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "470763d169e18261450e-655e111f140a19e7d6ef",
+          "file": "e6-boss-homemaker.spec.ts",
+          "line": 126,
+          "column": 1
+        },
+        {
+          "title": "unbuilds, tidies, makes one chair, and remains kept without ever hurting the player",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "timedOut",
+                  "duration": 142462,
+                  "error": {
+                    "message": "\u001b[31mTest timeout of 90000ms exceeded.\u001b[39m",
+                    "stack": "\u001b[31mTest timeout of 90000ms exceeded.\u001b[39m"
+                  },
+                  "errors": [
+                    {
+                      "message": "\u001b[31mTest timeout of 90000ms exceeded.\u001b[39m"
+                    },
+                    {
+                      "location": {
+                        "file": "/private/var/folders/cd/p02kvf6s5qgfn47w85hhtzjc0000gn/T/goldrush-manifest-control-kft4x06s/tree/e2e/e6-boss-homemaker.spec.ts",
+                        "column": 14,
+                        "line": 227
+                      },
+                      "message": "Error: page.waitForFunction: Test timeout of 90000ms exceeded.\n\n  225 |\n  226 |   await page.reload();\n> 227 |   await page.waitForFunction(() => window.__GR_TEST__ && window.__THREE_GAME_DIAGNOSTICS__?.contract.activeId === 'e6-glow-mesa');\n      |              ^\n  228 |   await dismissBriefing(page);\n  229 |   await expect.poll(() => homemaker(page)).toMatchObject({\n  230 |     active: false,\n    at /private/var/folders/cd/p02kvf6s5qgfn47w85hhtzjc0000gn/T/goldrush-manifest-control-kft4x06s/tree/e2e/e6-boss-homemaker.spec.ts:227:14"
+                    },
+                    {
+                      "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-05T05:19:24.242Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/asset-diet-explicit-manifest-2/control-results/e6-boss-homemaker-unbuilds-d39e8-out-ever-hurting-the-player-mobile-chrome/test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/asset-diet-explicit-manifest-2/control-results/e6-boss-homemaker-unbuilds-d39e8-out-ever-hurting-the-player-mobile-chrome/error-context.md"
+                    }
+                  ]
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "470763d169e18261450e-c81e86a69f0052a4c3ed",
+          "file": "e6-boss-homemaker.spec.ts",
+          "line": 126,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-09-05T05:15:57.468Z",
+    "duration": 380912.814,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 2,
+    "flaky": 0
+  }
+}

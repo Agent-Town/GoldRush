@@ -1,0 +1,44 @@
+{
+  "secured": true,
+  "waves": 20,
+  "timeMs": 600000,
+  "gold": 200,
+  "kills": 926,
+  "calls": 95,
+  "defaultedPicks": 0,
+  "defaultedSecure": 1,
+  "eventLogHash": "fnv1a32:8629a98e",
+
+  "tape": "/tmp/heat12-038cc280/artifacts/heat12/opus/e8-low-orbit/attempt-1-tape.json",
+  "scored": true,
+  "runsSoFar": 2,
+  "scoredAttempts": 1,
+  "worldModel": "sim-import",
+
+  "promotion": "ONE RIDE UNDER TWO FILENAMES. ctrl-v1 secured on its first ride, written by --tape as tune-1-tape.json; the rules stop the ride at the first SECURED outcome, so that tape is promoted as my scored attempt and copied byte-identically to attempt-1-tape.json. Both files verified equal. Submit either; the declaration above is the authority.",
+
+  "envelope": {
+    "durationTicks": 18000,
+    "clockTicksDeclared": 18000,
+    "ceilingTicks": 18002,
+    "lastEntryTick": 17563,
+    "entries": 95,
+    "bytes": 159993,
+    "maxTapeBytes": 576016,
+    "note": "Admissible on all three axes. twist.clockTicks is declared, so F-HEAT11-1's +2 slack applies (18002); the blank-line answer at now.pendingSecure recorded no entry, leaving the last accepted order 437 ticks inside the envelope and defaultedSecure: 1."
+  },
+
+  "meta": {
+    "buildId": "59a8a0ba7",
+    "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+    "era": 5,
+    "viewVersion": 2
+  },
+
+  "tapeHash": "fnv1a32:c69324de",
+  "hashNote": "tapeHash is the TAPE header's hash; eventLogHash above is the stdout outcome line's. They are different numbers by design — comparing the wrong pair reads as a false mismatch.",
+
+  "contract": "e8-low-orbit",
+  "seed": "e8-low-orbit-01",
+  "difficulty": "trail"
+}

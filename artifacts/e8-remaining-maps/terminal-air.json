@@ -1,0 +1,195 @@
+{
+ "e8-far-side": {
+  "wall": "suit-only",
+  "suit": {
+   "body": "prospector",
+   "seconds": 60,
+   "capacity": 60,
+   "refillPerSecond": 4,
+   "inDome": "far-side-landing-yard",
+   "empty": false,
+   "drainedTotal": 0,
+   "emptySeconds": 0
+  },
+  "domes": [
+   {
+    "id": "far-side-landing-yard",
+    "air": 1,
+    "breached": false,
+    "breaches": 0,
+    "siegers": 0
+   }
+  ],
+  "regolith": {
+   "grounds": 4,
+   "required": 0,
+   "worked": [],
+   "runsOnAir": 0,
+   "breathlessPans": 0,
+   "complete": false
+  },
+  "crossing": {
+   "zones": [
+    "listening-probe-crater"
+   ],
+   "required": 1,
+   "reached": [],
+   "breathlessEntries": 0,
+   "complete": false
+  }
+ },
+ "e8-low-orbit": {
+  "wall": "suit-only",
+  "suit": {
+   "body": "prospector",
+   "seconds": 60,
+   "capacity": 60,
+   "refillPerSecond": 4,
+   "inDome": "claw-carcass-yard",
+   "empty": false,
+   "drainedTotal": 0,
+   "emptySeconds": 0
+  },
+  "domes": [
+   {
+    "id": "west-scaffold-deck",
+    "air": 1,
+    "breached": false,
+    "breaches": 0,
+    "siegers": 0
+   },
+   {
+    "id": "claw-carcass-yard",
+    "air": 1,
+    "breached": false,
+    "breaches": 0,
+    "siegers": 0
+   },
+   {
+    "id": "east-scaffold-deck",
+    "air": 1,
+    "breached": false,
+    "breaches": 0,
+    "siegers": 0
+   }
+  ],
+  "regolith": {
+   "grounds": 4,
+   "required": 0,
+   "worked": [],
+   "runsOnAir": 0,
+   "breathlessPans": 0,
+   "complete": false
+  },
+  "crossing": {
+   "zones": [
+    "west-scaffold-deck",
+    "claw-carcass-yard",
+    "east-scaffold-deck"
+   ],
+   "required": 3,
+   "reached": [
+    "claw-carcass-yard"
+   ],
+   "breathlessEntries": 0,
+   "complete": false
+  }
+ },
+ "e8-eclipse": {
+  "wall": "suit-timer",
+  "suit": {
+   "body": "prospector",
+   "seconds": 0,
+   "capacity": 60,
+   "refillPerSecond": 4,
+   "inDome": null,
+   "empty": true,
+   "drainedTotal": 60,
+   "emptySeconds": 21.8
+  },
+  "domes": [
+   {
+    "id": "dome-cluster-pad-west",
+    "air": 1,
+    "breached": false,
+    "breaches": 0,
+    "siegers": 0
+   },
+   {
+    "id": "dome-cluster-pad-center",
+    "air": 1,
+    "breached": false,
+    "breaches": 0,
+    "siegers": 0
+   },
+   {
+    "id": "dome-cluster-pad-east",
+    "air": 1,
+    "breached": false,
+    "breaches": 0,
+    "siegers": 0
+   }
+  ],
+  "regolith": {
+   "grounds": 6,
+   "required": 1,
+   "worked": [],
+   "runsOnAir": 0,
+   "breathlessPans": 0,
+   "complete": false
+  },
+  "eclipse": {
+   "arrived": false,
+   "arrivedAtWave": null,
+   "offline": [],
+   "reserve": "dome-cluster-pad-center",
+   "solar": "online",
+   "groundsWorkedAfter": 0,
+   "requiredAfter": 1
+  }
+ },
+ "e8-mare-claim": {
+  "wall": "suit-timer",
+  "suit": {
+   "body": "prospector",
+   "seconds": 0,
+   "capacity": 60,
+   "refillPerSecond": 4,
+   "inDome": null,
+   "empty": true,
+   "drainedTotal": 60,
+   "emptySeconds": 21.233
+  },
+  "domes": [
+   {
+    "id": "dome-cluster-pad-west",
+    "air": 1,
+    "breached": false,
+    "breaches": 0,
+    "siegers": 0
+   },
+   {
+    "id": "dome-cluster-pad-center",
+    "air": 1,
+    "breached": false,
+    "breaches": 0,
+    "siegers": 0
+   },
+   {
+    "id": "dome-cluster-pad-east",
+    "air": 1,
+    "breached": false,
+    "breaches": 0,
+    "siegers": 0
+   }
+  ],
+  "regolith": {
+   "grounds": 6,
+   "required": 1,
+   "worked": [],
+   "runsOnAir": 0,
+   "breathlessPans": 0,
+   "complete": false
+  }
+ }
+}

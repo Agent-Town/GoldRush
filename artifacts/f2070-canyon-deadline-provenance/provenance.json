@@ -1,0 +1,17 @@
+{
+  "measuredBy": "s2070 fire",
+  "subject": "F-E2S-4 premise: is canyon-works wave-6 CONNECT deadline walk-era-uncalibrated?",
+  "deadline_params": {
+    "connect": {
+      "required": 2,
+      "byWave": 6
+    },
+    "source": "assets/contracts/epoch-3-voltage/contracts.json"
+  },
+  "deadline_introduced": "dafe9b633fb17f78dab209f14a585b4c0da6a23f 2026-07-15T01:38:27+07:00 runner(lane-b): canyon-works-01.md",
+  "headless_sim_born": "b33afb04747206e714689f122f7f138633216904 2026-07-30T15:40:33+07:00 feat: GR-SIM, the headless contract runner (AP-07 prerequisite) — boots e1-dry-gulch sim-only, NDJSON views/orders, byte-identical determinism",
+  "fdoor5_walk_era": "3dd7790d64114f42ed66fa8cb5346f79e3c54f6c 2026-08-08T12:31:01+07:00 fix: f-door-5 — the harvest walks (owner-ruled parity cure: panning pays only where the prospector stands; a NEW BENCH ERA begins here)",
+  "fdoor5_files_touched": "e2e/front-door-parity.spec.ts  |  3 ++-\n public/skill.md                |  2 +-\n scripts/gr-sim.test.mjs        | 41 ++++++++++++++++++++++++++++++++++++++++-\n src/agent/StandingOrders.ts    |  5 +++++\n src/sim/HeadlessContractSim.ts | 12 ++++++++++--\n 5 files changed, 58 insertions(+), 5 deletions(-)",
+  "spec_origin": "specs/epoch-saga/e3-voltage-bundle.md:75 — \"connect (power N galleries by wave 6 — the era's teaching contract)\"",
+  "acceptance_test": "e2e/e3-canyon-works.spec.ts:6 QUERY includes nowaves&nospawn&nolevel&nopause — CONNECT timing never exercised"
+}

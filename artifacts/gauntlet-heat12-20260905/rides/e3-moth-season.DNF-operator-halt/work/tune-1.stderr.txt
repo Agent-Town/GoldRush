@@ -1,0 +1,15 @@
+node:internal/fs/promises:739
+      (await PromisePrototypeThen(
+       ^
+
+Error: ENOSPC: no space left on device, write
+    at async write (node:internal/fs/promises:739:8)
+    at async writeFileHandle (node:internal/fs/promises:496:7)
+    at async writeAgentTape (file:///private/tmp/heat12-038cc280/scripts/gr-sim.mjs:326:3)
+    at async file:///private/tmp/heat12-038cc280/scripts/gr-sim.mjs:141:19 {
+  errno: -28,
+  code: 'ENOSPC',
+  syscall: 'write'
+}
+
+Node.js v23.11.1

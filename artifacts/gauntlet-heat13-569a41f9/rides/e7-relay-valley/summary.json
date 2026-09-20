@@ -1,0 +1,209 @@
+{
+  "rig": "opus",
+  "contract": "e7-relay-valley",
+  "model": "claude-opus-5",
+  "sessionId": "8ed6ee91-4d66-4d80-8303-dd6aedbe666f",
+  "startedAt": "2026-09-07T14:18:33.268Z",
+  "endedAt": "2026-09-07T14:26:45.305Z",
+  "wallClockSeconds": 492,
+  "wallHit": false,
+  "exitCode": 0,
+  "signal": null,
+  "setupToFirstOutputSeconds": 75,
+  "arenaTrackedChanges": [],
+  "workspaceFiles": [
+    "attempt-1-tape.json",
+    "ctrl-v1.mjs",
+    "gauntlet-outcome.json",
+    "gauntlet-report.md",
+    "probe-stderr.txt",
+    "probe-summary.json",
+    "probe-table.json",
+    "probe-tape.json",
+    "probe-views.jsonl",
+    "runner.mjs",
+    "tune-1-stderr.txt",
+    "tune-1-summary.json",
+    "tune-1-table.json",
+    "tune-1-tape.json",
+    "tune-1-views.jsonl"
+  ],
+  "outcome": {
+    "secured": true,
+    "waves": 20,
+    "timeMs": 600000,
+    "gold": 110,
+    "kills": 903,
+    "calls": 75,
+    "defaultedPicks": 0,
+    "defaultedSecure": 1,
+    "eventLogHash": "fnv1a32:ea5b188c",
+    "tape": "/tmp/heat13-569a41f9/artifacts/heat13/opus/e7-relay-valley/attempt-1-tape.json",
+    "scored": true,
+    "runsSoFar": 2,
+    "scoredAttempts": 1,
+    "worldModel": "sim-import",
+    "note": "SECURED on the first controller ride (tune-1). attempt-1-tape.json is a byte-identical copy of tune-1-tape.json: ONE ride under two filenames, promoted by name per the brief. Stopped at the first secured outcome per the stop rule. Tape header eventLogHash is fnv1a32:41eea3b5 (the tape's own hash, different by design from the stdout outcome line's fnv1a32:ea5b188c; an assayer replay must match the TAPE's).",
+    "envelope": {
+      "durationTicks": 18000,
+      "lastEntryTick": 17915,
+      "entries": 75,
+      "bytes": 263853,
+      "clear": "all three axes inside their ceilings"
+    },
+    "eraPapers": {
+      "engineHash": "09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4",
+      "era": 5,
+      "viewVersion": 2,
+      "buildId": "1894581f2"
+    },
+    "eraGate": {
+      "objective": "relay",
+      "objectiveMet": true,
+      "latchedAtSeconds": 14.73,
+      "relaysLitByProgram": [
+        "relay-site-r3"
+      ],
+      "uses": 1,
+      "repeats": 0,
+      "programRuns": 1,
+      "refusals": {
+        "suppressed": 0,
+        "muted": 0,
+        "unrecorded": 0
+      }
+    },
+    "margin": {
+      "heroMinHp": 371,
+      "heroMinFraction": 0.781,
+      "heroFinal": "371/475 at level 28",
+      "worksEverWrecked": 0,
+      "goldStolen": 0,
+      "goldPanned": 780,
+      "peakThreatsAlive": 51,
+      "finalWorks": {
+        "turret": 4,
+        "sentry_beacon": 6
+      }
+    },
+    "localAssay": "not run: scripts/assay-replay-agent.mjs could not resolve its own vite root in this arena (ENOENT scripts/asset-diet.mjs). The reel carries current-era papers and clears all three envelope axes; determinism is unverified locally."
+  },
+  "outcomeError": null,
+  "promotedTapeName": "attempt-1-tape.json",
+  "scoredTapes": [
+    {
+      "file": "attempt-1-tape.json",
+      "id": "agent-a4d1c6f6-13c0ebe1-201f-4677-ab80-3b2bc18e43e0",
+      "contract": "e7-relay-valley",
+      "seed": "e7-relay-valley-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "1894581f2",
+        "engineHash": "09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 20,
+        "timeAlive": 600,
+        "gold": 110
+      },
+      "entries": 75,
+      "durationTicks": 18000,
+      "lastEntryTick": 17915,
+      "promotedByRig": true,
+      "discoveredBy": "outcome-file+filename"
+    }
+  ],
+  "otherTapes": [
+    {
+      "file": "probe-tape.json",
+      "id": "agent-684efa26-5dfe59d2-956c-4a3d-a2dc-ef91dbfa042e",
+      "contract": "e7-relay-valley",
+      "seed": "e7-relay-valley-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "1894581f2",
+        "engineHash": "09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 7,
+        "timeAlive": 231.4,
+        "gold": 0
+      },
+      "entries": 0,
+      "durationTicks": 6942,
+      "lastEntryTick": null
+    },
+    {
+      "file": "tune-1-tape.json",
+      "id": "agent-a4d1c6f6-13c0ebe1-201f-4677-ab80-3b2bc18e43e0",
+      "contract": "e7-relay-valley",
+      "seed": "e7-relay-valley-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "1894581f2",
+        "engineHash": "09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 20,
+        "timeAlive": 600,
+        "gold": 110
+      },
+      "entries": 75,
+      "durationTicks": 18000,
+      "lastEntryTick": 17915
+    }
+  ],
+  "otherSecuredTapes": [
+    {
+      "file": "tune-1-tape.json",
+      "id": "agent-a4d1c6f6-13c0ebe1-201f-4677-ab80-3b2bc18e43e0",
+      "contract": "e7-relay-valley",
+      "seed": "e7-relay-valley-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "1894581f2",
+        "engineHash": "09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 20,
+        "timeAlive": 600,
+        "gold": 110
+      },
+      "entries": 75,
+      "durationTicks": 18000,
+      "lastEntryTick": 17915
+    }
+  ],
+  "report": {
+    "outcome": "**SECURED** — waves **20**, timeAlive **600.000 s**, gold **110**, calls **75**\n(903 kills, `defaultedPicks: 0`, `defaultedSecure: 1`).\n\nTape put forward: **`attempt-1-tape.json`** (declared in `gauntlet-outcome.json`'s\n`tape` field). It is a byte-identical copy of `tune-1-tape.json` — **one ride\nunder two filenames**, promoted by name because the controller secured on its\nfirst ride and the stop rule ends the heat there.\n\n- **sim runs: 2** (one `--policy idle` probe, one controller ride)\n- **scored attempts: 1**\n\nEnvelope, measured off the reel: `durationTicks` 18000, last accepted order at\ntick **17915**, **75** entries, **263,853** bytes — clear on all three axes.\nPapers: engineHash `09838c35…`, era 5, viewVersion 2.\n\nTape header `eventLogHash` is `fnv1a32:41eea3b5`; the stdout outcome line's is\n`fnv1a32:ea5b188c`. Those differ by design — an assayer replay must reproduce\nthe **tape's**. I could not run the local assay as a receipt: this arena's\n`scripts/assay-replay-agent.mjs` fails to resolve its own vite root\n(`ENOENT … scripts/asset-diet.mjs`). Determinism is therefore **unverified\nlocally** and rests on the county's replay.",
+    "whatTheMapAsked": "It asked its era's signature mechanic **squarely, and for the first time on this\ncontract the mechanic is also the cheapest thing on the board**. E7 is playbooks\nand the Echo. `now.playbookUse.objective` reads `relay`, and\n`E7PlaybookLatch.allowsSecure` returns `lit.size > 0`, which the sim ANDs into\nthe secure gate — no wave count secures this claim until a relay site is lit **by\na running program**. `syncProgramRelays(running, works)` lights a site when a\nstanding, unwrecked work of `POWERED_RELAY_KINDS` (`turret`, `sentry_beacon`)\nsits inside an authored `relay-site` rectangle *while a program holds the wheel*.\nSo the loop is genuine L1 ladder work: submit the orders you want repeated (they\nare the demonstration), get a powered work standing in the zone, then\n`PLAYBOOK_USE` a fresh name, which records those arrays as a tape and re-installs\nthem so the sim runs your own demonstration. I answered the next view with a\nblank line so the program kept the wheel rather than being cleared by an accepted\nsubmission. Measured: recorded and used at **t = 14.73 s**, `programRuns: 1`,\n`relaysLitByProgram: [\"relay-site-r3\"]`, `uses: 1`, `repeats: 0`, all three\nrefusal counters 0. The fields that carried it were\n`now.playbookUse.{objective, objectiveMet, relaysLitByProgram, shelf, uses,\nrunningProgram, refusals}` and `now.works.entries[].{id, position, wrecked}`; the\norder was one `PLAYBOOK_USE`. The honest qualifier is that the gate is\n**front-loaded and cheap** — one 25-gold beacon and one order inside the first\nfifteen seconds of a 600-second contract, and the era never asks again. The other\n585 seconds are ordinary survival, carried by `now.hero.hp/maxHp/x/z`,\n`now.works.byKind`/`entries`, `now.seams[].active/x/z` (inactive seams publish\n`x`/`z`/`anchorIndex` as `null`), `now.gold` against `now.score.goldPanned`,\n`now.threats.alive` and `now.pendingOffer` — with `BUILD`, `HARVEST`,\n`PICK_UPGRADE`, `BLAST_AT`, `MOVE_HERO` and one blank line.\n\n**My notebook remembers this map from generations 26, 38 and 59, and it does not\nplay the way any of them remember.** The geography reproduced exactly — claim\n(0,12), four relay sites at z 36..46, four harvest anchors, the 31.24 wu\nsubtraction. Everything else moved. Generation 26 reported no relay, no playbook\nand no Echo in `now` and called it RESKIN: dead. Generations 38 and 59 rode a\n**welded 100-hp hero** and both concluded the run was a pure attrition race the\ndraft had to pay for; both of those sentences are now false. The hero has 400 hp\n*and* legs, so the unfortifiable claim is simply somewhere I do not have to\nstand.",
+    "winnability": "Secured, and the margin was **wide in every direction at once**: the hero never\nfell below **371/475 (78.1 %)**, finishing 371/475 at level 28; **zero of ten\nworks were ever wrecked** across 903 kills and `goldStolen` finished at **0**;\nthe full ladder (4 turrets, 6 beacons) stood; `threats.alive` peaked at 51; and\nthe era gate latched 585 seconds before the bank. The one number with real slack\nleft on it is **gold — 110 of 780 panned** — and since waves and `timeAlive` are\nboth pinned by the wave-20 secure, gold is the only free ranking axis; a bank\ngate that stopped spending ~90 s out would have banked far more. The stop rule\ncorrectly ends the heat at the first secure, so that margin stays on the table.",
+    "lessons": "- **A contract can be re-balanced, not just re-grammared, and the tell is a new\n  rule id in `stablePrefix.mechanics.rules`.** `contract_hero_grit`\n  (`twist.hero.maxHpBonus: 300`) quadruples the hero's hit points on the exact\n  map whose three prior failures I attributed to a 100-hp ceiling. Nine heats\n  running I have said \"grade the notebook clause by clause\"; the new clause is\n  that **`mechanics.rules` is where the county publishes a balance answer to a\n  finding I filed.** Diff the rules array against the notebook, not just the\n  view's key set — three rules here, and one of them was the whole heat.\n- **The briefing's `rules` prose named the fix and cited my own measurement.**\n  \"you stand up with 400 hit points, not the usual 100, because no relay site on\n  either ridge comes within 31wu of the claim.\" That is generation 26's\n  subtraction, quoted back at me as a design justification. **Read the briefing\n  for sentences that answer a prior generation's complaint** — when the county\n  fixes something a rider reported, it says so in the contract's own words.\n- **When a ruling retires a verb, ask what the replacement makes REACHABLE.**\n  Sixth heat running I have written that the 1:1 grammar change was free on a\n  stationary-hero board. Here it was not free, it was *decisive in my favour*:\n  `MOVE_HERO` deletes the sentence three of my generations opened from. The\n  unfortifiable claim stops mattering the moment the body that must survive can\n  leave it. This is now the second map (with `e8-mare-claim` and\n  `e4-gusher-county`) where the parity ruling turned an unfortifiable stake into\n  a fortifiable post.\n- **Read the roster for what it OMITS, then ask what that makes the loss\n  condition.** No wrecker on either entry means works are invulnerable *and* the\n  claim is not a loss condition — the idle log's `worksHp.max: 0` and its\n  `hero_down` surprise said both in one read. That deletes `REPAIR_UNDER`,\n  palisades and every decoy idea, makes the fort a monotone investment, and —\n  the part I nearly missed — **frees the hero to stand anywhere on the map.**\n  Eleventh contract running this read has paid, and it has never paid this much.\n- **Look for the purchase that is simultaneously the era gate and the defence.**\n  The cheapest `POWERED_RELAY_KIND` is a 25-gold `sentry_beacon`; putting the\n  fort's first rung inside a relay site made the objective free. Before pricing\n  an era gate as an errand, check whether a rung you were buying anyway can\n  stand where the gate is measured.\n- **After `PLAYBOOK_USE`, answer the next view with a blank line.** An accepted\n  submission clears `runningProgram`, and `syncProgramRelays` only lights a site\n  while a program holds the wheel. One `PLAYBOOK_USE` + one silent view latched\n  it on the first attempt with `repeats: 0` and zero refusals — and on a `relay`\n  map repeats buy nothing, so one use is the whole cost.\n- **Ride the skeleton first and change nothing — ninth heat where that is the\n  whole discipline, and the sixth in a row where it secured on ride one.** Two\n  runs total. The reading budget went to the contract JSON, `E7PlaybookLatch`,\n  `POWERED_RELAY_KINDS` and the roster; the riding budget went to the unmodified\n  generation-6→77 skeleton (draft first under replace semantics with a\n  plating-first scorer; a cumulatively-gated ladder; more candidate spots than\n  slots with a refusal blacklist partitioned into GROUND — poison the coordinate\n  — and ECONOMY — retry, poison nothing; `Number.isFinite` seam filtering before\n  any sort; one seam drained in a block before walking; a free `BLAST_AT` per\n  ready window; a blank line at `pendingSecure`) plus the one thing this board\n  does differently. Ten builds, zero stalls, zero wrecked.\n- **`BLAST_AT` above `MOVE_HERO`, always.** `MOVE_HERO` returns truthy and owns\n  the tick while walking, so anything under it is dead during travel; `BLAST_AT`\n  returns `{}` on success *and* failure, so it is safe anywhere and belongs above\n  the traveller.\n- **What I left on the table, named precisely: 670 gold.** I panned 780 and\n  banked 110, because the ladder kept buying to the end. On a fixed-wave secure\n  gold is the ONLY free ranking axis. The principled fix is generation 74's bank\n  gate — allow a rung of cost `C` only if\n  `(gold − C) + rate × (secureTime − t) ≥ cap + 5`, with `rate` measured live off\n  `score.goldPanned`. Eighth generation to name this and the fourth to lose most\n  of the axis to it; the gate is written and I keep not carrying it forward.\n- **Verify the receipt instrument before reporting its silence as a defect.**\n  `assay-replay-agent.mjs` failed on its own vite root here, not on my reel. Say\n  \"determinism unverified locally\" plainly rather than implying either a clean\n  or a dirty receipt."
+  },
+  "usage": {
+    "transcript": "/Users/robin/.claude/projects/-private-tmp-heat13-569a41f9/8ed6ee91-4d66-4d80-8303-dd6aedbe666f.jsonl",
+    "assistantTurns": 61,
+    "toolCalls": 31,
+    "tokensIn": 122,
+    "tokensOut": 81704,
+    "cacheReadTokens": 21207854,
+    "cacheWriteTokens": 1123937,
+    "note": "tokensIn excludes cache reads/writes (reported separately); summed from the CLI session transcript, not self-reported by the rig"
+  }
+}

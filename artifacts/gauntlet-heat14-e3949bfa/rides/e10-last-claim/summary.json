@@ -1,0 +1,190 @@
+{
+  "rig": "opus",
+  "contract": "e10-last-claim",
+  "model": "claude-opus-5",
+  "sessionId": "4e40b8d4-fb9f-49f6-be06-9ad010e295a4",
+  "startedAt": "2026-09-18T07:07:09.285Z",
+  "endedAt": "2026-09-18T07:20:01.969Z",
+  "wallClockSeconds": 773,
+  "wallHit": false,
+  "exitCode": 0,
+  "signal": null,
+  "setupToFirstOutputSeconds": 150,
+  "arenaTrackedChanges": [],
+  "workspaceFiles": [
+    "attempt-1-tape.json",
+    "ctrl-v1.mjs",
+    "gauntlet-outcome.json",
+    "gauntlet-report.md",
+    "probe-idle-rows.json",
+    "probe-idle-summary.json",
+    "probe-idle-tape.json",
+    "probe-idle-views.jsonl",
+    "runner.mjs",
+    "tune-1-rows.json",
+    "tune-1-summary.json",
+    "tune-1-tape.json",
+    "tune-1-views.jsonl"
+  ],
+  "outcome": {
+    "secured": true,
+    "waves": 8,
+    "timeMs": 240033,
+    "gold": 90,
+    "kills": 204,
+    "calls": 37,
+    "defaultedPicks": 0,
+    "defaultedSecure": 1,
+    "eventLogHash": "fnv1a32:ace5075d",
+    "tape": "/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/heat14/opus/e10-last-claim/attempt-1-tape.json",
+    "scored": true,
+    "runsSoFar": 2,
+    "scoredAttempts": 1,
+    "worldModel": "sim-import",
+    "note": "ONE RIDE UNDER TWO FILENAMES. tune-1-tape.json secured on the first controller; per the stop rule the heat ends there, so it was promoted by name. attempt-1-tape.json is a byte-identical copy (91290 bytes both). The operator reads THIS `tape` field, never the filename.",
+    "preserve": {
+      "hp": 360,
+      "maxHp": 360,
+      "minHpAcrossAllViews": 360,
+      "note": "The warm vent was never damaged: preserve.hp read 360 in all 39 views. This contract is ranked by preservation waves, then preservation health, then survival, never gold - so w8 / 360 of 360 / 240.033s is the arithmetic maximum on every ranked axis."
+    },
+    "envelope": {
+      "durationTicks": 7201,
+      "lastEntryTick": 7186,
+      "maxTicks": 18002,
+      "entries": 37,
+      "maxEntries": 3601,
+      "bytes": 91290,
+      "byteCeilingApprox": 1938784,
+      "note": "All three axes measured off the first reel that existed, from runTapeEnvelopeForContract, not the charter's summary of it."
+    },
+    "assay": {
+      "control": "probe-idle-tape.json replayed to its own header fnv1a32:a45ba9ac - instrument verified on a run I could not have influenced",
+      "reel": "attempt-1-tape.json replayed to fnv1a32:d7ecafcf, matching the TAPE HEADER's hash (the stdout outcome line's fnv1a32:ace5075d is a different number by design)",
+      "securedSnapshot": {
+        "waves": 8,
+        "gold": 90,
+        "timeAlive": 240.033
+      },
+      "verdict": "determinism verified locally; securedSnapshot.gold equals the declared gold, so no score_mismatch exposure"
+    }
+  },
+  "outcomeError": null,
+  "promotedTapeName": "attempt-1-tape.json",
+  "scoredTapes": [
+    {
+      "file": "attempt-1-tape.json",
+      "id": "agent-74ad77ce-0d18bc0d-17ef-4a44-8e03-827a06c4b5b3",
+      "contract": "e10-last-claim",
+      "seed": "gold-rush",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "4ef968a13",
+        "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+        "era": 6,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 8,
+        "timeAlive": 240.033,
+        "gold": 90
+      },
+      "entries": 37,
+      "durationTicks": 7201,
+      "lastEntryTick": 7186,
+      "promotedByRig": true,
+      "discoveredBy": "outcome-file+filename"
+    }
+  ],
+  "otherTapes": [
+    {
+      "file": "probe-idle-tape.json",
+      "id": "agent-9c43254b-d3dc6c12-53f3-47a0-bbf8-4fd1c7b9adfc",
+      "contract": "e10-last-claim",
+      "seed": "gold-rush",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "4ef968a13",
+        "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+        "era": 6,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 3,
+        "timeAlive": 92.533,
+        "gold": 0
+      },
+      "entries": 0,
+      "durationTicks": 2776,
+      "lastEntryTick": null
+    },
+    {
+      "file": "tune-1-tape.json",
+      "id": "agent-74ad77ce-0d18bc0d-17ef-4a44-8e03-827a06c4b5b3",
+      "contract": "e10-last-claim",
+      "seed": "gold-rush",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "4ef968a13",
+        "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+        "era": 6,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 8,
+        "timeAlive": 240.033,
+        "gold": 90
+      },
+      "entries": 37,
+      "durationTicks": 7201,
+      "lastEntryTick": 7186
+    }
+  ],
+  "otherSecuredTapes": [
+    {
+      "file": "tune-1-tape.json",
+      "id": "agent-74ad77ce-0d18bc0d-17ef-4a44-8e03-827a06c4b5b3",
+      "contract": "e10-last-claim",
+      "seed": "gold-rush",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "4ef968a13",
+        "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+        "era": 6,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 8,
+        "timeAlive": 240.033,
+        "gold": 90
+      },
+      "entries": 37,
+      "durationTicks": 7201,
+      "lastEntryTick": 7186
+    }
+  ],
+  "report": {
+    "outcome": "**SECURED.** w8 / 240.033 s / 90 gold / 204 kills / 37 calls, and — the number this contract actually ranks — the warm vent finished **360 of 360, never having taken a single point of damage**. Two sim runs (a ten-second idle probe and one controller), one scored attempt.\n\nThe tape I put forward is `attempt-1-tape.json`, declared in `gauntlet-outcome.json`'s `tape` field. It is a **byte-identical copy of `tune-1-tape.json`** (91,290 bytes both): the first controller secured, the stop rule ends the ride there, so the securing tune was promoted by name rather than re-ridden for a tidier filename. Local assay: the zero-order idle probe replayed to its own header `fnv1a32:a45ba9ac` first (instrument verified on a run I could not have influenced), then the promoted reel reproduced `fnv1a32:d7ecafcf` — the tape header's hash, not the stdout outcome line's `fnv1a32:ace5075d` — with `securedSnapshot {waves: 8, gold: 90, timeAlive: 240.033}` equal to the declared score.",
+    "whatTheMapAsked": "It asked for its era's signature mechanic **squarely, and the flip is total** — this is not stationary survival wearing E10's name. The capability ladder calls E10 *preserve, don't extract: a flipped objective over a trained habit*, and both halves are live here. `stablePrefix.objective` is `\"preserve\"`, `now.preserve {hp, maxHp, alive}` is a live field, the run ends `preserve_fell` the instant that 360-hp warm vent at (0, 50) reaches zero, and the secure is `wave >= 8` **and** `preserve.active` — no gold clause anywhere on the win side. The trained habit it flips is not merely \"extract\"; it is **bait**. `HeadlessContractSim.ts:2052` overrides `nearestBuilding` to return the preserve for as long as it is active, so every wrecker in the run walks the vent and *nothing a rider builds can decoy, absorb or distract*. Twelve of my generations have priced a fort by what it pulls; here that lever is switched off by one ternary. And the ranking flip is just as total: the county ranks this contract by preservation waves, then preservation health, then survival, **never gold** — so gold is fuel, and the correct play is to spend all of it.\n\nThe reasoning the map rewards is therefore geometric, and it is cheap once you read three things in the right order. The roster has two ids and only one of them matters: `static_mote` carries no `wrecker` flag, so it routes to the hero and can never reach the objective; `unraveled_machine` is `wrecker: true` at `buildingDamageScale: 0.45`, which against `Balance.wreck.damage 8 / hitCooldown 0.9` is exactly the 3.6-per-hit step I watched the idle probe take the vent down in. So the whole contract is *keep one enemy type more than 1.1 world units from one 2×2 box*. `Enemy.ts:687` excludes wreckers from `updateGapFlow` — they never gnaw timber — while `move()` still runs `resolveBlocker` on every palisade, so a **closed ring is a permanent shutout rather than a speed bump**. And the placement rule that makes the ring buildable is not the one the constant's name suggests: `BuildPlacement.ts:36` is a strict AABB half-extent test, and `overlapRadius` is consumed **only** for sentry-beacon-versus-sentry-beacon. With palisade `w 1 / d 3` and `avoidancePad 0.68`, a rot-1 piece blocks x ± 2.18 and z ± 1.18 while occupying only x ± 1.5 — so three rot-1 pieces at x = −3, 0, 3 sit exactly edge-to-edge (3 is not `< 3.0`) and their padded spans meet with room to spare. Eight pieces — rot-1 walls at z = 47 and z = 53, rot-0 flanks at x = ±3, z = 50 — are an airtight box for 80 gold, and all eight landed first try.\n\nThe second half is the grammar, and it paid. The east and west spawn edges put outlaws on the vent's own latitude (`spawnRingRadius` 26 around a claim at (−10, 50)), so the flanks matter as much as the south. I parked the hero **outside** the ring at (0, 44) with `MOVE_HERO`: the motes, being non-wreckers, chase the hero and gather south of the timber instead of gnawing it, while the Spark Rig's range-10 circle still covers the whole south wall, both flanks and the vent. That is why `works.wrecked` finished at 0 — the ring was never even attacked. View fields that carried the run: `now.preserve.hp` (the only scoreboard that matters), `now.works.entries`/`byKind` (which ring slots stand), `now.seams[].active/x/z` (an inactive seam publishes `x`, `z` and `anchorIndex` as `null`, and one non-finite number refuses the whole array silently), `now.gold` against `now.score.goldPanned`, `now.hero.x/z/hp`, `now.threats.alive/wreckers`, `now.orders[].status/reason`. Orders: `MOVE_HERO`, `BUILD`, `HARVEST`, `PICK_UPGRADE`, `BLAST_AT`, `REPAIR_UNDER`, and one blank line. **There is no E10 verb** — `stablePrefix.mechanics.interactables` is empty and the manifest's own `engineDependencies` says so (`last-claim-finale-metadata-consumer: \"missing\"`, accurate: the ten `eraDeckZones`, the stern-to-bow run, the Quiet's rings and two of the three preserves are all scenery). The era is answered with epoch-1 grammar plus the player's own legs.\n\nMy notebook remembers this map from generation 28, which secured it on era 5 at w8 / 240.033 s. **It still plays the way I remember, in every particular I checked** — same 360-hp vent at (0, 50), same three live seams at (−12, −36), (12, −12) and (−12, 12) with the vent's own deck anchor (12, 36) never activating, same secure wave, same targeting inversion, same wave-8 boundary at 240.033 s. This contract is **not** named as cured this week: none of era 6's eight pins mentions it (they name `e2-trestle`/`e2-incline`, the sprite runtime, the boss models, the sprite roster and the town cast). The re-survey moved this map's rendering, not its rules. What moved is the grammar — generation 28 rode a welded hero and had no way to put a gun on the vent's approach, and `MOVE_HERO` is what turned its \"insurance the vent never needed\" into an actual defence.",
+    "winnability": "Secured, and the margin was **as wide as this contract can be measured**: the preserve finished 360/360 having never been damaged in any of 39 views, no work was ever wrecked, no gold was stolen, the hero never fell below 94.4 % of its running maximum, and the ring closed at t = 45.9 against a first-damage clock the idle probe put at t = 65.4 — nineteen seconds of slack on the only deadline that could have lost it, and every ranked axis (waves 8, preservation 360/360, survival 240.033 s) at its arithmetic maximum.",
+    "lessons": "- **`overlapRadius` is a sentry-beacon constant, and reading the collision test rather than the constant's name is what made an 8-piece ring land first try.** `BuildPlacement.ts:36` is a strict AABB half-extent test (`|dx| < halfX_a + halfX_b && |dz| < halfZ_a + halfZ_b`); `overlapRadius` is consumed only in the beacon-vs-beacon branch above it. My generation 28 hit this map's placement rule the expensive way and recorded it as \"a footprint-overlap test, not a centre-distance test\", which is right but left the impression that `overlapRadius` pads the box. It does not. Because the test is strict `<`, **pieces may sit exactly edge-to-edge** — three rot-1 palisades at x = −3, 0, 3 have `|dx| = 3` against `halfX + halfX = 3.0` and all three place, while their padded spans (±2.18) overlap comfortably. Eight builds, zero ground refusals.\n- **Derive a blocker ring from the two DIFFERENT boxes the engine uses, and check that the tight one fits inside the loose one.** Placement uses the raw footprint; blocking uses the footprint plus `avoidancePad + hitRadius − touchRadius`. A ring is buildable-and-airtight only in the window `footprintSum ≤ spacing ≤ paddedSum`, which for palisades is `3.0 ≤ s ≤ 4.36` along the long axis and `1.0 ≤ s ≤ 2.36` along the short one. Mixing `rotationSteps` 0 and 1 is what lets the corners meet without colliding: a rot-0 flank at (3, 50) against a rot-1 wall piece at (3, 47) passes because `|dz| = 3` is not `< 2.0`.\n- **Measure the objective's damage CLOCK on the idle probe, not just its loss channel.** `preserve_fell` named the channel in ten seconds — but the number that sized the whole plan was *when* the first 3.6-point step landed (t = 65.4, wave 2), because that is the deadline the ring has to beat. It told me 80 gold was affordable in time and that a cheaper partial ring was unnecessary. **On any objective-with-hit-points map, find the first damage tick before designing the economy.**\n- **Equal-priced rungs cannot be suffix-gated, and plan-time affordability is the whole cure.** Gating eight 10-gold pieces at 80/70/60… fires the last one on the first ten gold (generation 28 measured exactly this leak). Gating them all at 80 deadlocks after the first build spends the purse. The shape that works: **hold the batch until `gold >= batchCost`, then emit every piece gated at ONE unit and let array order drain it in a single trip home.** One commute, eight pieces, t = 36 → 45.9.\n- **When a ruling retires a verb, ask what the replacement lets you put WHERE.** Generation 28 rode a welded hero and called its four turrets \"insurance the vent never needed\". `MOVE_HERO` does not merely re-word that — it lets the hero stand at (0, 44), three units south of the ring, where the Spark Rig's range-10 circle covers the south wall, both flanks and the vent at once. Fourteenth heat running that the 1:1 parity ruling was worth more than the verbs it took.\n- **On a map where nothing can be baited, the hero IS the decoy — and the right place for it is OUTSIDE the wall.** The targeting override sends every wrecker at the vent regardless, but `static_mote` is not a wrecker and routes to actors, so a hero parked south of the ring gathers the entire non-wrecker half of the board on open ground while the timber is never touched. Inside the ring it would have been the opposite: motes DO run `updateGapFlow`, and a closed ring trips their 3-second stuck watchdog into gnawing my own palisades at 2 damage a swing. **Ask which enemy classes your wall will make angry before deciding which side of it to stand on.**\n- **Read the roster's flags for what they EXCLUDE — fourteenth contract running, and here it was the entire design.** One wrecker id and one non-wrecker id, with `buildingDamageScale: 0.45` against `Balance.wreck.damage 8`, is the whole threat model: 3.6 per hit, one enemy type, one target. That single read turned \"survive eight waves\" into \"deny one 2×2 box to one enemy class\", which is an 80-gold problem.\n- **Where gold does not rank, stop protecting it and buy the insurance.** This is the one contract on the door whose ranking clause says \"never gold\", so every bank gate, hard build floor and stop-spending rule I have carried for six generations is *inert here* — and correctly so. I spent 420 of 510 panned on a ring plus four turrets that the vent never needed, and banked 90 without a thought. **Read the ranking clause before porting the economy half of the skeleton.**\n- **Ride the skeleton first and change nothing — twenty-third heat where that is the discipline, and the nineteenth in a row where it secured on ride one.** Two runs total. The reading budget went to the era pins as a per-contract diff (zero matches for this contract), `null-floors.json` (no row — this contract publishes no bench seeds, so the idle probe IS the floor), the contract JSON, the targeting override, the wrecker/gap-flow exclusion, `resolveBlocker` and `overlapsExisting`; the riding budget went to the unmodified generation-6→120 skeleton plus the one thing this board does differently. **The heat's real work is reading the contract, not riding it.**\n- **A contract with no published bench seed has no null floor, so budget ten seconds to mint your own.** `null-floors.json` carries `e10-ember-shore` and not `e10-last-claim`. My usual cheapest-expiry-check was unavailable, and the substitute — one `--policy idle` run compared against the notebook's remembered geometry — cost the same ten seconds and settled the same question.\n- **Silence at `pendingSecure` did its four jobs again, twenty-fifth contract running:** it banked the default (`defaultedSecure: 1`), left the last accepted order 15 ticks inside `durationTicks` and 10,816 inside `maxTicks`, held a 39-view run to 37 entries and 91 KB, and — the reason that matters most — **it cannot be rejected**, so the replay cannot diverge the way generation 84's nearly did when refused in-window submissions (invisible to the tape, visible to the sim) desynchronised a clean reel."
+  },
+  "usage": {
+    "transcript": "/Users/robin/.claude/projects/-private-tmp-claude-501--Users-robin-Claude-Projects-Gold-Rush-fe6b8d27-b064-40eb-934b-1d29d57a71db-scratchpad-arena-heat14-e3949bfa/4e40b8d4-fb9f-49f6-be06-9ad010e295a4.jsonl",
+    "assistantTurns": 67,
+    "toolCalls": 40,
+    "tokensIn": 134,
+    "tokensOut": 121742,
+    "cacheReadTokens": 32826933,
+    "cacheWriteTokens": 1573031,
+    "note": "tokensIn excludes cache reads/writes (reported separately); summed from the CLI session transcript, not self-reported by the rig"
+  }
+}

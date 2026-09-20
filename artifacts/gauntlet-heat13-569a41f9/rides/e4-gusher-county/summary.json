@@ -1,0 +1,188 @@
+{
+  "rig": "opus",
+  "contract": "e4-gusher-county",
+  "model": "claude-opus-5",
+  "sessionId": "d87bdd64-0b02-4b3b-90c5-25f3b8a388ab",
+  "startedAt": "2026-09-07T13:02:14.312Z",
+  "endedAt": "2026-09-07T13:17:11.373Z",
+  "wallClockSeconds": 897,
+  "wallHit": false,
+  "exitCode": 0,
+  "signal": null,
+  "setupToFirstOutputSeconds": 195,
+  "arenaTrackedChanges": [],
+  "workspaceFiles": [
+    "attempt-1-tape.json",
+    "ctrl.mjs",
+    "gauntlet-outcome.json",
+    "gauntlet-report.md",
+    "probe-summary.json",
+    "probe-tape.json",
+    "probe-views.jsonl",
+    "runner.mjs",
+    "tune-1-summary.json",
+    "tune-1-tape.json",
+    "tune-1-views.jsonl"
+  ],
+  "outcome": {
+    "secured": true,
+    "waves": 12,
+    "timeMs": 360000,
+    "gold": 170,
+    "kills": 414,
+    "calls": 49,
+    "defaultedPicks": 0,
+    "defaultedSecure": 1,
+    "eventLogHash": "fnv1a32:1c64ed8e",
+    "motor": {
+      "graded": [
+        "camp-to-east-lease",
+        "camp-to-north-lease",
+        "camp-to-west-lease"
+      ],
+      "hauled": true,
+      "arrivedAt": 60.467,
+      "roadDistance": 228.821,
+      "distanceTravelled": 290.141,
+      "fuelDrawn": 36,
+      "tarHarvested": 9,
+      "convoyArrived": null,
+      "kind": "deliveries",
+      "delivered": [
+        "camp-to-west-lease",
+        "camp-to-east-lease",
+        "camp-to-north-lease"
+      ]
+    },
+    "tape": "/private/tmp/heat13-569a41f9/artifacts/heat13/opus/e4-gusher-county/attempt-1-tape.json",
+    "scored": true,
+    "envelope": {
+      "durationTicks": 10800,
+      "lastEntryTick": 10780,
+      "entries": 49,
+      "bytes": 185778
+    },
+    "runsSoFar": 2,
+    "scoredAttempts": 1,
+    "worldModel": "sim-import",
+    "note": "ONE RIDE UNDER TWO FILENAMES: tune-1-tape.json secured on its first controller and is promoted by name as the scored attempt; attempt-1-tape.json is a byte-identical copy. Envelope: 10800 ticks, last accepted order at 10780, 49 entries, 185778 bytes."
+  },
+  "outcomeError": null,
+  "promotedTapeName": "attempt-1-tape.json",
+  "scoredTapes": [
+    {
+      "file": "attempt-1-tape.json",
+      "id": "agent-5b4b48cd-74050fa2-e26f-4d95-82ba-cd9104ca9947",
+      "contract": "e4-gusher-county",
+      "seed": "e4-gusher-county-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "fc4553675",
+        "engineHash": "09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 12,
+        "timeAlive": 360,
+        "gold": 170
+      },
+      "entries": 49,
+      "durationTicks": 10800,
+      "lastEntryTick": 10780,
+      "promotedByRig": true,
+      "discoveredBy": "outcome-file+filename"
+    }
+  ],
+  "otherTapes": [
+    {
+      "file": "probe-tape.json",
+      "id": "agent-ae933a5e-759ffafe-8f7f-451c-9145-0d1630a619d1",
+      "contract": "e4-gusher-county",
+      "seed": "e4-gusher-county-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "b25f5fedf",
+        "engineHash": "09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 5,
+        "timeAlive": 155.733,
+        "gold": 0
+      },
+      "entries": 0,
+      "durationTicks": 4672,
+      "lastEntryTick": null
+    },
+    {
+      "file": "tune-1-tape.json",
+      "id": "agent-5b4b48cd-74050fa2-e26f-4d95-82ba-cd9104ca9947",
+      "contract": "e4-gusher-county",
+      "seed": "e4-gusher-county-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "fc4553675",
+        "engineHash": "09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 12,
+        "timeAlive": 360,
+        "gold": 170
+      },
+      "entries": 49,
+      "durationTicks": 10800,
+      "lastEntryTick": 10780
+    }
+  ],
+  "otherSecuredTapes": [
+    {
+      "file": "tune-1-tape.json",
+      "id": "agent-5b4b48cd-74050fa2-e26f-4d95-82ba-cd9104ca9947",
+      "contract": "e4-gusher-county",
+      "seed": "e4-gusher-county-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "fc4553675",
+        "engineHash": "09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 12,
+        "timeAlive": 360,
+        "gold": 170
+      },
+      "entries": 49,
+      "durationTicks": 10800,
+      "lastEntryTick": 10780
+    }
+  ],
+  "report": {
+    "outcome": "**SECURED — waves 12 / timeAlive 360.000 s / gold 170 / calls 49.**\n414 kills, 4 turrets standing, **0 works ever wrecked**, `goldStolen` 0, `defaultedSecure` 1 (the blank line at the boundary).\n\n- Sim runs: **2** (one `--policy idle` probe, one controller ride).\n- Scored attempts: **1**.\n- Tape put forward: **`attempt-1-tape.json`**, declared in `gauntlet-outcome.json`'s `tape` field. It is a **byte-identical copy of `tune-1-tape.json`** — one ride under two filenames, promoted by name because it secured on its first controller and the stop rule ends the heat there.\n- Envelope, measured off the reel: `durationTicks` 10800, last accepted order at tick **10780**, **49** entries, **185,778** bytes. Clear on all three axes.\n- Local assay: `scripts/assay-replay-agent.mjs` reproduced the tape's own `eventLogHash` **`fnv1a32:0e24753e`** and all four outcome fields (`secured true, waves 12, gold 170, timeAlive 360`). Note the standing trap: the stdout outcome line reads `fnv1a32:1c64ed8e` — a different number by design; the replay matches the **tape header**, and it does.\n\nMotor terminal block: `arrivedAt 60.467`, all three leases delivered, all three corridors graded, `tarHarvested 9`, `fuelDrawn 36`, `roadDistance 228.821` of `distanceTravelled 290.141` — **79 % of the Hauler's whole run rode graded road.**",
+    "whatTheMapAsked": "It asked about **distance, roads and fuel — E4's signature mechanic, live, legible and gating the secure** — and then it went quiet for nine waves. This is not stationary survival wearing the era's name at the front end. `now.motor.objective.arrived` is ANDed into the secure at every wave, and `deliveries` means the Hauler at rest within `stopReach` 2.5 of the head of **all three** lease roads, each while that road was open. The leash is real arithmetic and it bound: 36 fuel total against a Hauler that burns 3/second **by the clock**, so a storm makes the same distance cost 1.43× and a closed lease strips the road bonus entirely — the 49.7-unit west road costs **2.65 fuel graded and ~23 driven closed-and-storming**. The whole contract is therefore a tour-ordering problem plus a clock. I priced all six orderings before writing an order: **W → N → E is 25.9 fuel** against 27.7 for W→E→N and 33.7 for N-first, because open country is six times graded road per unit, so the rule is *minimise open crossings between stakes and give the last lease no return leg*. The fields that carried it were `now.motor.objective` (`kind`, `stop`, `stopReach`, `remaining`, `delivered`, `arrived`), `now.motor.fuel.nodes[].harvested/progress` with `tar`/`stored`/`drawn`, `now.motor.roads.corridors[].start/end/graded/closed` with `gradeReach` and `closesNext`, `now.motor.vehicle.state/x/z/target`, and `now.motor.weather.phase/cycle/simTime`. The orders were **`MOVE_HERO`, `GRADE` and `HAUL`** — and nothing else, because **E4 has no verb of its own**; the whole era is answered with the player's controls, which is exactly what ADR-005 intended.\n\nTwo things made it a genuinely *spatial* question rather than a toll. First, the map hands you a gift if you look for it: `Balance.e4Fuel.nodePositions` puts the three tar nodes at (−12,−8), (0,−8), (12,−8), and **two of those are the west and east corridor stakes** — so the fuel tour and two of the three `GRADE`s are the same three stops, all graded inside the first twelve seconds for free. (The manifest's five authored `tarSeams` are decoration; the view's `fuel.nodes` is the truth, exactly as generation 17 learned.) Second, the errand parallelises: `HAUL` captures the hero's position **at dispatch**, so every haul is followed by a long hero walk that the Hauler's 2-second road drive hides inside. That is why the whole eleven-step errand fit in one self-draining array and latched at **t = 60.467** where my previous ride on this map took until t = 114.\n\nThe honest qualifier is the one every Motor map earns: the errand was done in the first sixth of a 360-second contract, and waves 3–12 were ordinary stationary survival on a map whose only three live seams sit 59–65 units from the camp.\n\n**Does my notebook still describe this map?** In its bones yes, in its controls no, and the control change was worth real ground. Generations 17 and 53 rode this seed and every structural number reproduced exactly: the same three tar nodes, the same 36-fuel leash, the same `closures: true` clock with the same `corridorIds[cycle % 3]` pick, the same 25.9-fuel optimal tour, the same w5/155.7 s idle floor. What moved is that the errand's cursor changed body — `GRADE` and `HAUL` now read the **hero's** ground where `MOVE_TO` used to aim the Prospector — and, far more usefully, **the sentence both of those generations opened from is gone**. They rode a welded hero and forted at the camp, 60 units from every seam, and banked 80 and 5 gold. `MOVE_HERO` lets the hero walk after the errand into the `west-lease` build zone (x −70…−30, z −60…−20), which **contains the west lease head and two of the three live seams** — I parked at (−46,−42), 10 units from both, built all four turrets around it, and panned 510 gold where my predecessors panned 370. The retired verbs cost me nothing; the verb that replaced them roughly tripled the ranked number.",
+    "winnability": "Secured, and the margin was **wide on survival, comfortable on the clock, and effectively nil on fuel**: nothing was ever wrecked, `threats.alive` peaked at 26 against a hero that finished 117/175 (its worst moment was 62/100 at wave 3, before the plating picks landed), and the errand latched with 300 seconds to spare against the wave-12 gate — but the Hauler drew **36 of 36 fuel** and ran dry at t = 70.5, so the tank had about four fuel left at the instant the third lease landed, and one closed-road dispatch would have stranded the objective and made the run unsecurable at every later wave.",
+    "lessons": "- **Read the latch's tolerance before deciding whether a grammar retirement is fatal — same epoch, same socket, opposite verdicts.** Generation 70 lost `e4-long-road` because `convoy` compares `leaderDistance >= total − 1e-6` and `MOVE_HERO` has no arrival snap. Gusher County's `deliveries` compares against `MOTOR_STOP_REACH` **2.5**, a radius, so the identical body aims it with 2 units to spare. `haul`, `tow` and `deliveries` all use the reach; only `convoy` uses the equality. **One grep of `settleX` decides whether a Motor map survived ADR-005.**\n- **When a ruling retires a verb, ask what the replacement DELETES.** Two of my generations opened from \"the hero is welded to the camp, 60 units from every seam.\" `MOVE_HERO` erases that sentence: the hero walks into the `west-lease` build zone, which contains two of the three live seams, so the fort rings the body it defends *and* the Prospector's commute drops from ~60 units to ~10. Panned 510 against my predecessors' 370, banked **170 against 80 and 5**. On a fixed-wave secure gold is the only free ranking axis, and the whole of it came from moving a body that used to be furniture.\n- **Check whether the seams re-anchor before betting the fort on them.** Nine views of the idle probe showed `gold-seam-1@anchor1`, `-2@anchor0`, `-3@anchor7` never moving across 156 seconds. That ten-second check is what made the west-lease relocation a calculation instead of a gamble — on maps where anchors *do* walk between waves (the Dry Gulch, the Hill Mine) the same move would have starved.\n- **A closed-form hazard schedule beats a sampled one, because a plan needs the FUTURE.** `roads.closed` tells you about now, and now is not when the drive happens. `cycle = floor(t/30)`, `storm = t mod 30 ∈ [10,22)`, `closed = corridorIds[cycle % 3]` lets a gate reason about a dispatch several seconds ahead and insert a stall. My predictive chain walked the hero 11 units back down the road and returned, pushing the west dispatch past the `[10,22)` washout; the delivery landed clean and the gate fired exactly once all run.\n- **A one-array errand self-times when each dispatch is followed by a long walk.** `HAUL` captures the hero's position at dispatch, and the hauler's road drives are 2 s against hero legs of 3–9 s, so `[MOVE_HERO(stake), GRADE, HAUL, MOVE_HERO(head), HAUL, MOVE_HERO(stake), HAUL, …]` drains in the right order with no view in between. Eleven steps, one array, latched at t = 60.5 against t = 114 the last time I rode this map with a per-view errand.\n- **Guard a re-plan against re-targeting an in-flight vehicle — and guard the STAGE step too, not just the dispatch.** I suppressed any `HAUL` whose destination matched `vehicle.target`, which protected the deliveries. I did not suppress the *stage* step of a lease whose delivery was already in flight, so the wave-2 re-plan walked the hero 52 units back to the east stake and dispatched a pointless haul that drained the last four fuel. It cost nothing here (the objective had already landed) and it would have cost the contract if the tank had needed those four. **The unit of suppression is the leg, not the order.**\n- **`GRADE` is the cheapest decisive order in the epoch and it should be bought at a stop you are already making.** The west and east corridor stakes *are* fuel nodes 1 and 3, so two of three grades cost zero extra travel; the third came free at the north staging stop. All three roads graded inside 12 s, and 79 % of the Hauler's 290 units rode graded ground. Intersect `fuel.nodes × roads.corridors[].start` before routing phase 0.\n- **Price every tour ordering before writing an order — on a Motor map the order IS the contract.** Six orderings, six numbers: 25.9 / 27.7 / 33.1 / 33.7 fuel against a 36-fuel tank with a ~1.2× storm tax. The gap between the best and the worst ordering is the gap between securing and stranding.\n- **Read the roster for what it OMITS — tenth contract running, and here it shaped the whole plan.** `threats.wreckers: 0` and `thieves: 0` in view 0 deleted `REPAIR_UNDER`, palisade chaff, the decoy idea *and* the stockpile question in one read, made the fort a monotone investment, and is why I could spend the first 60 seconds entirely on the errand with nothing standing.\n- **The dwell pattern survives the body change, resized.** `MOVE_HERO` arrives at radius 0.5 and the hero moves at 6.0, so a 0.5 s harvest needs a three-waypoint swing inside `harvestRange` 1.35: `node−1.25x → node−1.2z → node−1.25x`. Nine tar from three nodes, first try. The grammar still has no wait verb.\n- **Ride the skeleton first and change nothing — seventh heat where that is the whole discipline, and the fifth time in a row it secured on ride one.** Two runs total. The reading budget went to `settleDeliveries`, `FuelSystem.harvest` and `WeatherSystem.sample`; the riding budget went to the unmodified generation-6→72 skeleton (draft first under replace semantics with a plating-first scorer, maxHp 100 → 175; a cumulatively-gated ladder with more candidate spots than slots; a refusal blacklist partitioned into GROUND — poison the coordinate — and ECONOMY — `insufficient_gold`, retry and poison nothing; `Number.isFinite` filtering on seam coordinates before any sort; one seam drained in a block before walking; a free `BLAST_AT` per ready window; a blank line at `pendingSecure`) plus the one thing this board does differently. Four builds, zero stalls, zero wrecked. **Thirteen of my generations end on \"I proved the parts and never fired the combination\"; the cure keeps turning out to be reading, not riding.**\n- **What I still left on the table, named precisely: 30 gold and a fuel margin.** The purse finished at 170 of a 200 cap because `STOP_BUILDING_AT = 265` was a guess, not arithmetic — the principled form is `secureTime − bankCap / measured g/s`, read off `score.goldPanned` in the run itself (measured 1.4 g/s here, so stopping at ~217 s would have banked the cap). And the stage-step guard above is worth four fuel on a tank that had none.\n- **A standing in my own name dates the reel, not the map — twelfth heat running.** I am the listed first-securer of `e4-gusher-county` from 2026-09-03 and that row was retired because the *grammar* moved underneath it while the contract did not. Grade the notebook clause by clause: here every geometry clause held, every control clause was dead, and the dead ones were the profitable half."
+  },
+  "usage": {
+    "transcript": "/Users/robin/.claude/projects/-private-tmp-heat13-569a41f9/d87bdd64-0b02-4b3b-90c5-25f3b8a388ab.jsonl",
+    "assistantTurns": 43,
+    "toolCalls": 23,
+    "tokensIn": 86,
+    "tokensOut": 163893,
+    "cacheReadTokens": 14469720,
+    "cacheWriteTokens": 1156150,
+    "note": "tokensIn excludes cache reads/writes (reported separately); summed from the CLI session transcript, not self-reported by the rig"
+  }
+}

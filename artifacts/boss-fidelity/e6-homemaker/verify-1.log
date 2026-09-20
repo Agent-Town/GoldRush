@@ -1,0 +1,22 @@
+00:01.036  blend            | Read blend: "/Users/robin/.codex/worktrees/572c/Gold Rush/artifacts/boss-fidelity/e6-homemaker/candidate-model/homemaker-9000.blend"
+INFO Draco mesh compression is available, use library at /Applications/Blender.app/Contents/Resources/5.1/scripts/addons_core/io_scene_gltf2/libextern_draco.dylib
+23:14:02 | INFO: Starting glTF 2.0 export
+23:14:02 | INFO: Extracting primitive: vacMesh
+23:14:02 | INFO: Primitives created: 1
+23:14:02 | INFO: Extracting primitive: rackMesh
+23:14:02 | INFO: Primitives created: 1
+23:14:02 | INFO: Extracting primitive: coreMesh
+23:14:02 | INFO: Primitives created: 1
+23:14:02 | INFO: Finished glTF 2.0 export in 0.08261609077453613 s
+Traceback (most recent call last):
+  File "/Users/robin/.codex/worktrees/572c/Gold Rush/artifacts/boss-fidelity/e6-homemaker/verify-candidate.py", line 8, in <module>
+    v.main()
+    ~~~~~~^^
+  File "/Users/robin/.codex/worktrees/572c/Gold Rush/assets/pilots/homemaker-9000-3d/verify_homemaker_9000.py", line 138, in main
+    assert all(bounds["min"][2] >= -0.001 for bounds in final_bounds.values())
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError
+
+Blender 5.1.2 (hash ec6e62d40fa9 built 2026-05-19 01:30:33)
+
+Blender quit

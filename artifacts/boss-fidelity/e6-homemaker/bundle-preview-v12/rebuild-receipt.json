@@ -1,0 +1,13 @@
+{
+  "scope": "Rebuild using actual intended production atlas path in isolated project. Only the embedded image name changes; geometry/morph/UV/texture BIN bytes and other JSON are identical.",
+  "byteIdentical": false,
+  "candidateSha256": "d81454a11c49f963251563812a70883e84822092fd6f6482ef8d994ddd4d42d5",
+  "productionPathRebuildSha256": "ff2fe72dcc72bb9415de5afefacdf2794f0b81d02a16a051b3527ae53dbf5400",
+  "binarySha256": "35c8d0c5d1a5f49ceff16b422cc4ec6e2599cd4481dff13f4b19ea9d6aba0474",
+  "onlyJsonDifference": {
+    "path": "/images/0/name",
+    "before": "atlas-silver-v5",
+    "after": "homemaker-atlas-fidelity-e6"
+  },
+  "passed": true
+}

@@ -1,0 +1,9 @@
+{
+  "outcome": {"secured":false,"waves":2,"timeMs":60033,"gold":15,"kills":23,"calls":4,"defaultedPicks":0,"defaultedSecure":0,"eventLogHash":"fnv1a32:73780fba","endReason":"wave-ceiling"},
+  "tape": "/tmp/heat11-5e7a7c0b/artifacts/heat11/fable/e1-drill-yard/attempt-1-tape.json",
+  "scored": true,
+  "runsSoFar": 3,
+  "scoredAttempts": 1,
+  "worldModel": "sim-import",
+  "finding": "NOT WINNABLE THROUGH THE DOOR BY CONSTRUCTION: twist.secureWave=0 disables the secure latch (RunManager.maybeSecureRun early-returns on secureWave<=0), pendingSecure never opens, SECURE_CHOICE is refused ('SECURE_CHOICE requires a live secure window'), and the wave ceiling (secureWave+2=2) ends every ride at wave 2 unsecured. The county's own winnability-receipts.json already marks e1-drill-yard 'standings-disabled'. This is the tutorial practice yard: 'Nothing in the yard enters the county ledger.'"
+}

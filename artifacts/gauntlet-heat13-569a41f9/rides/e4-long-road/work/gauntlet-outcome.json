@@ -1,0 +1,61 @@
+{
+  "secured": false,
+  "waves": 14,
+  "timeMs": 420000,
+  "gold": 0,
+  "kills": 161,
+  "calls": 28,
+  "defaultedPicks": 0,
+  "defaultedSecure": 0,
+  "eventLogHash": "fnv1a32:bf54242b",
+  "endReason": "wave-ceiling",
+  "motor": {
+    "graded": [
+      "the-long-road"
+    ],
+    "hauled": false,
+    "arrivedAt": null,
+    "roadDistance": 371.079,
+    "distanceTravelled": 371.079,
+    "fuelDrawn": 21.099,
+    "tarHarvested": 9,
+    "convoyArrived": false,
+    "kind": "convoy"
+  },
+  "tape": "/private/tmp/heat13-569a41f9/artifacts/heat13/opus/e4-long-road/attempt-1-tape.json",
+  "scored": true,
+  "runsSoFar": 5,
+  "scoredAttempts": 1,
+  "worldModel": "sim-import",
+  "submit": false,
+  "submitReason": "unsecured (endReason wave-ceiling); skill.md forbids submitting a run that hits an external cap",
+  "note": "attempt-1-tape.json is a byte-identical copy of tune-v3.json, the same single ride, promoted by declaration.",
+  "finding": {
+    "id": "F-HEAT13-LONGROAD-1",
+    "verdict": "e4-long-road CANNOT be secured through the post-ADR-005 door, by any policy, on this seed.",
+    "chain": [
+      "Secure gate: HeadlessContractSim.ts:2354 ANDs `this.motor.objectiveAllowsSecure` into every wave, and :1493 refuses pendingSecure without it, so no wave count secures this claim until the convoy errand latches.",
+      "Convoy latch: MotorSocket.ts:345 wants `leader >= convoy.total - 1e-6` with total = 370; leaderDistance is round3()'d, so the real tolerance is bestRemaining <= 0.0005 wu from the stop at (190,0).",
+      "leaderDistance only ever gains `max(0, bestRemaining - hypot(hauler - stop))` (MotorSocket.ts:340-343), so the lead Hauler must physically come within 0.0005 wu of (190,0).",
+      "HAUL now drives the Hauler to the HERO's float position (HeadlessContractSim.ts:3107 -> MotorSocket.haulTo(this.hero.group.position)). Nothing else positions it.",
+      "MOVE_HERO refuses the stop as UNREACHABLE_TERRAIN. Measured this ride from a hero 8wu away: (190,0), (190,-3), (190,1.2) and (188.7,0) all refused; (191.1,0) accepted, hero came to rest at (191.070, -0.355).",
+      "Even on legal ground the hero cannot be placed exactly: MOVE_HERO marks its record `done` at HERO_ARRIVE_RADIUS 0.5, StandingOrders.tick clears heroSteer every tick, and Hero.update then decelerates asymptotically (velocity.lerp toward 0 at rate 28) with NO arrival snap.",
+      "The retired MOVE_TO/HOLD steered the PROSPECTOR, and Embodiment.stepTowardTarget:271-273 snaps `position.x = target.x; position.z = target.z` exactly on arrival. That exact snap is how generation 18 put the Hauler on (190,0) and secured this contract w12/360.000s (verified fnv1a32:e19c63ab, rank 1, 2026-09-03)."
+    ],
+    "measured": {
+      "bestLeaderDistance": 369.641,
+      "requiredLeaderDistance": 370,
+      "shortfallWu": 0.359,
+      "shortfallPctOfRoute": 0.097,
+      "heroRestPosition": [191.07, -0.355],
+      "haulerRestPosition": [191.07, -0.355],
+      "haulerDispatchTarget": { "x": 191.07, "z": -0.355 },
+      "fuelDrawn": 21.099,
+      "fuelRemaining": 14.901,
+      "roadDistance": 371.079,
+      "note": "0.354 of the 0.359 shortfall is the hero's residual z offset; the along-track sampling error was ~0.06. Both are orders of magnitude above the 0.0005 tolerance."
+    },
+    "publishedButUnused": "now.motor.objective.stopReach is 2.5 on this contract and reads like the tolerance; for kind 'convoy' nothing consumes it. MotorSocket.nearStop()/stopReach gate only kind 'haul' (line 309) and kind 'tow' (line 406). A rider that trusts the published field plans for 2.5wu and needs 1e-6.",
+    "cheapestFix": "Either latch the convoy on MOTOR_STOP_REACH like `haul` and `tow` already do, or make the railhead ground at (190,0) walkable so MOVE_HERO can stand on it. Neither is a balance change; both are one clause."
+  }
+}

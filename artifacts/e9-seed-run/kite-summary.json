@@ -1,0 +1,650 @@
+{
+  "generatedFor": "e9-seed-run",
+  "experiment": "kite-vs-stand",
+  "verdict": [
+    {
+      "seed": "e9-seed-run-01",
+      "stillWaves": 3,
+      "dragWaves": 3,
+      "hugWaves": 3,
+      "dragBlastWaves": 2,
+      "movementChangedTheRun": false,
+      "anyArmSecured": false
+    },
+    {
+      "seed": "e9-seed-run-02",
+      "stillWaves": 9,
+      "dragWaves": 9,
+      "hugWaves": 9,
+      "dragBlastWaves": 2,
+      "movementChangedTheRun": false,
+      "anyArmSecured": false
+    }
+  ],
+  "rows": [
+    {
+      "arm": "still",
+      "seed": "e9-seed-run-01",
+      "run": 1,
+      "secured": false,
+      "waves": 3,
+      "timeMs": 101233,
+      "gold": 0,
+      "kills": 43,
+      "calls": 6,
+      "defaultedPicks": 0,
+      "defaultedSecure": 0,
+      "eventLogHash": "fnv1a32:f3442b96",
+      "endReason": null,
+      "kite": {
+        "pattern": "still",
+        "blast": false,
+        "laps": 0,
+        "stations": 0,
+        "maxDistanceFromClaim": 2.1,
+        "maxDistanceFromHero": 2.1,
+        "minDistanceFromHero": 0,
+        "heroHpByWave": {
+          "0": 100,
+          "1": 100,
+          "2": 22,
+          "3": 0
+        }
+      },
+      "caravan": {
+        "state": "paused",
+        "hp": 240,
+        "maxHp": 240,
+        "arrived": false,
+        "planted": []
+      }
+    },
+    {
+      "arm": "still",
+      "seed": "e9-seed-run-01",
+      "run": 2,
+      "secured": false,
+      "waves": 3,
+      "timeMs": 101233,
+      "gold": 0,
+      "kills": 43,
+      "calls": 6,
+      "defaultedPicks": 0,
+      "defaultedSecure": 0,
+      "eventLogHash": "fnv1a32:f3442b96",
+      "endReason": null,
+      "kite": {
+        "pattern": "still",
+        "blast": false,
+        "laps": 0,
+        "stations": 0,
+        "maxDistanceFromClaim": 2.1,
+        "maxDistanceFromHero": 2.1,
+        "minDistanceFromHero": 0,
+        "heroHpByWave": {
+          "0": 100,
+          "1": 100,
+          "2": 22,
+          "3": 0
+        }
+      },
+      "caravan": {
+        "state": "paused",
+        "hp": 240,
+        "maxHp": 240,
+        "arrived": false,
+        "planted": []
+      }
+    },
+    {
+      "arm": "still",
+      "seed": "e9-seed-run-02",
+      "run": 1,
+      "secured": false,
+      "waves": 9,
+      "timeMs": 286300,
+      "gold": 0,
+      "kills": 267,
+      "calls": 23,
+      "defaultedPicks": 0,
+      "defaultedSecure": 0,
+      "eventLogHash": "fnv1a32:dfce88a1",
+      "endReason": null,
+      "kite": {
+        "pattern": "still",
+        "blast": false,
+        "laps": 0,
+        "stations": 0,
+        "maxDistanceFromClaim": 2.1,
+        "maxDistanceFromHero": 2.1,
+        "minDistanceFromHero": 0,
+        "heroHpByWave": {
+          "0": 100,
+          "1": 100,
+          "2": 89,
+          "3": 17,
+          "4": 20,
+          "5": 18,
+          "6": 32,
+          "7": 26,
+          "8": 26,
+          "9": 0
+        }
+      },
+      "caravan": {
+        "state": "arrived",
+        "hp": 222.2,
+        "maxHp": 240,
+        "arrived": true,
+        "planted": []
+      }
+    },
+    {
+      "arm": "still",
+      "seed": "e9-seed-run-02",
+      "run": 2,
+      "secured": false,
+      "waves": 9,
+      "timeMs": 286300,
+      "gold": 0,
+      "kills": 267,
+      "calls": 23,
+      "defaultedPicks": 0,
+      "defaultedSecure": 0,
+      "eventLogHash": "fnv1a32:dfce88a1",
+      "endReason": null,
+      "kite": {
+        "pattern": "still",
+        "blast": false,
+        "laps": 0,
+        "stations": 0,
+        "maxDistanceFromClaim": 2.1,
+        "maxDistanceFromHero": 2.1,
+        "minDistanceFromHero": 0,
+        "heroHpByWave": {
+          "0": 100,
+          "1": 100,
+          "2": 89,
+          "3": 17,
+          "4": 20,
+          "5": 18,
+          "6": 32,
+          "7": 26,
+          "8": 26,
+          "9": 0
+        }
+      },
+      "caravan": {
+        "state": "arrived",
+        "hp": 222.2,
+        "maxHp": 240,
+        "arrived": true,
+        "planted": []
+      }
+    },
+    {
+      "arm": "hug",
+      "seed": "e9-seed-run-01",
+      "run": 1,
+      "secured": false,
+      "waves": 3,
+      "timeMs": 101233,
+      "gold": 0,
+      "kills": 43,
+      "calls": 6,
+      "defaultedPicks": 0,
+      "defaultedSecure": 0,
+      "eventLogHash": "fnv1a32:fd10c152",
+      "endReason": null,
+      "kite": {
+        "pattern": "hug",
+        "blast": false,
+        "laps": 0,
+        "stations": 4,
+        "maxDistanceFromClaim": 5,
+        "maxDistanceFromHero": 5,
+        "minDistanceFromHero": 2.1,
+        "heroHpByWave": {
+          "0": 100,
+          "1": 100,
+          "2": 22,
+          "3": 0
+        }
+      },
+      "caravan": {
+        "state": "paused",
+        "hp": 240,
+        "maxHp": 240,
+        "arrived": false,
+        "planted": []
+      }
+    },
+    {
+      "arm": "hug",
+      "seed": "e9-seed-run-01",
+      "run": 2,
+      "secured": false,
+      "waves": 3,
+      "timeMs": 101233,
+      "gold": 0,
+      "kills": 43,
+      "calls": 6,
+      "defaultedPicks": 0,
+      "defaultedSecure": 0,
+      "eventLogHash": "fnv1a32:fd10c152",
+      "endReason": null,
+      "kite": {
+        "pattern": "hug",
+        "blast": false,
+        "laps": 0,
+        "stations": 4,
+        "maxDistanceFromClaim": 5,
+        "maxDistanceFromHero": 5,
+        "minDistanceFromHero": 2.1,
+        "heroHpByWave": {
+          "0": 100,
+          "1": 100,
+          "2": 22,
+          "3": 0
+        }
+      },
+      "caravan": {
+        "state": "paused",
+        "hp": 240,
+        "maxHp": 240,
+        "arrived": false,
+        "planted": []
+      }
+    },
+    {
+      "arm": "hug",
+      "seed": "e9-seed-run-02",
+      "run": 1,
+      "secured": false,
+      "waves": 9,
+      "timeMs": 286300,
+      "gold": 0,
+      "kills": 267,
+      "calls": 23,
+      "defaultedPicks": 0,
+      "defaultedSecure": 0,
+      "eventLogHash": "fnv1a32:0ccda1ab",
+      "endReason": null,
+      "kite": {
+        "pattern": "hug",
+        "blast": false,
+        "laps": 2,
+        "stations": 22,
+        "maxDistanceFromClaim": 5,
+        "maxDistanceFromHero": 5,
+        "minDistanceFromHero": 2.1,
+        "heroHpByWave": {
+          "0": 100,
+          "1": 100,
+          "2": 89,
+          "3": 17,
+          "4": 20,
+          "5": 18,
+          "6": 32,
+          "7": 26,
+          "8": 26,
+          "9": 0
+        }
+      },
+      "caravan": {
+        "state": "arrived",
+        "hp": 222.2,
+        "maxHp": 240,
+        "arrived": true,
+        "planted": []
+      }
+    },
+    {
+      "arm": "hug",
+      "seed": "e9-seed-run-02",
+      "run": 2,
+      "secured": false,
+      "waves": 9,
+      "timeMs": 286300,
+      "gold": 0,
+      "kills": 267,
+      "calls": 23,
+      "defaultedPicks": 0,
+      "defaultedSecure": 0,
+      "eventLogHash": "fnv1a32:0ccda1ab",
+      "endReason": null,
+      "kite": {
+        "pattern": "hug",
+        "blast": false,
+        "laps": 2,
+        "stations": 22,
+        "maxDistanceFromClaim": 5,
+        "maxDistanceFromHero": 5,
+        "minDistanceFromHero": 2.1,
+        "heroHpByWave": {
+          "0": 100,
+          "1": 100,
+          "2": 89,
+          "3": 17,
+          "4": 20,
+          "5": 18,
+          "6": 32,
+          "7": 26,
+          "8": 26,
+          "9": 0
+        }
+      },
+      "caravan": {
+        "state": "arrived",
+        "hp": 222.2,
+        "maxHp": 240,
+        "arrived": true,
+        "planted": []
+      }
+    },
+    {
+      "arm": "drag",
+      "seed": "e9-seed-run-01",
+      "run": 1,
+      "secured": false,
+      "waves": 3,
+      "timeMs": 101233,
+      "gold": 0,
+      "kills": 43,
+      "calls": 6,
+      "defaultedPicks": 0,
+      "defaultedSecure": 0,
+      "eventLogHash": "fnv1a32:fe19c9c0",
+      "endReason": null,
+      "kite": {
+        "pattern": "drag",
+        "blast": false,
+        "laps": 0,
+        "stations": 4,
+        "maxDistanceFromClaim": 61.4,
+        "maxDistanceFromHero": 61.4,
+        "minDistanceFromHero": 2.1,
+        "heroHpByWave": {
+          "0": 100,
+          "1": 100,
+          "2": 22,
+          "3": 0
+        }
+      },
+      "caravan": {
+        "state": "paused",
+        "hp": 240,
+        "maxHp": 240,
+        "arrived": false,
+        "planted": []
+      }
+    },
+    {
+      "arm": "drag",
+      "seed": "e9-seed-run-01",
+      "run": 2,
+      "secured": false,
+      "waves": 3,
+      "timeMs": 101233,
+      "gold": 0,
+      "kills": 43,
+      "calls": 6,
+      "defaultedPicks": 0,
+      "defaultedSecure": 0,
+      "eventLogHash": "fnv1a32:fe19c9c0",
+      "endReason": null,
+      "kite": {
+        "pattern": "drag",
+        "blast": false,
+        "laps": 0,
+        "stations": 4,
+        "maxDistanceFromClaim": 61.4,
+        "maxDistanceFromHero": 61.4,
+        "minDistanceFromHero": 2.1,
+        "heroHpByWave": {
+          "0": 100,
+          "1": 100,
+          "2": 22,
+          "3": 0
+        }
+      },
+      "caravan": {
+        "state": "paused",
+        "hp": 240,
+        "maxHp": 240,
+        "arrived": false,
+        "planted": []
+      }
+    },
+    {
+      "arm": "drag",
+      "seed": "e9-seed-run-02",
+      "run": 1,
+      "secured": false,
+      "waves": 9,
+      "timeMs": 286300,
+      "gold": 0,
+      "kills": 267,
+      "calls": 23,
+      "defaultedPicks": 0,
+      "defaultedSecure": 0,
+      "eventLogHash": "fnv1a32:7194799b",
+      "endReason": null,
+      "kite": {
+        "pattern": "drag",
+        "blast": false,
+        "laps": 2,
+        "stations": 17,
+        "maxDistanceFromClaim": 61.4,
+        "maxDistanceFromHero": 61.4,
+        "minDistanceFromHero": 2.1,
+        "heroHpByWave": {
+          "0": 100,
+          "1": 100,
+          "2": 89,
+          "3": 17,
+          "4": 20,
+          "5": 18,
+          "6": 32,
+          "7": 26,
+          "8": 26,
+          "9": 0
+        }
+      },
+      "caravan": {
+        "state": "arrived",
+        "hp": 222.2,
+        "maxHp": 240,
+        "arrived": true,
+        "planted": []
+      }
+    },
+    {
+      "arm": "drag",
+      "seed": "e9-seed-run-02",
+      "run": 2,
+      "secured": false,
+      "waves": 9,
+      "timeMs": 286300,
+      "gold": 0,
+      "kills": 267,
+      "calls": 23,
+      "defaultedPicks": 0,
+      "defaultedSecure": 0,
+      "eventLogHash": "fnv1a32:7194799b",
+      "endReason": null,
+      "kite": {
+        "pattern": "drag",
+        "blast": false,
+        "laps": 2,
+        "stations": 17,
+        "maxDistanceFromClaim": 61.4,
+        "maxDistanceFromHero": 61.4,
+        "minDistanceFromHero": 2.1,
+        "heroHpByWave": {
+          "0": 100,
+          "1": 100,
+          "2": 89,
+          "3": 17,
+          "4": 20,
+          "5": 18,
+          "6": 32,
+          "7": 26,
+          "8": 26,
+          "9": 0
+        }
+      },
+      "caravan": {
+        "state": "arrived",
+        "hp": 222.2,
+        "maxHp": 240,
+        "arrived": true,
+        "planted": []
+      }
+    },
+    {
+      "arm": "drag+blast",
+      "seed": "e9-seed-run-01",
+      "run": 1,
+      "secured": false,
+      "waves": 2,
+      "timeMs": 83867,
+      "gold": 0,
+      "kills": 33,
+      "calls": 6,
+      "defaultedPicks": 0,
+      "defaultedSecure": 0,
+      "eventLogHash": "fnv1a32:3b4e55a6",
+      "endReason": null,
+      "kite": {
+        "pattern": "drag",
+        "blast": true,
+        "laps": 0,
+        "stations": 4,
+        "maxDistanceFromClaim": 61.4,
+        "maxDistanceFromHero": 61.4,
+        "minDistanceFromHero": 2.1,
+        "heroHpByWave": {
+          "0": 100,
+          "1": 46,
+          "2": 0
+        }
+      },
+      "caravan": {
+        "state": "moving",
+        "hp": 240,
+        "maxHp": 240,
+        "arrived": false,
+        "planted": []
+      }
+    },
+    {
+      "arm": "drag+blast",
+      "seed": "e9-seed-run-01",
+      "run": 2,
+      "secured": false,
+      "waves": 2,
+      "timeMs": 83867,
+      "gold": 0,
+      "kills": 33,
+      "calls": 6,
+      "defaultedPicks": 0,
+      "defaultedSecure": 0,
+      "eventLogHash": "fnv1a32:3b4e55a6",
+      "endReason": null,
+      "kite": {
+        "pattern": "drag",
+        "blast": true,
+        "laps": 0,
+        "stations": 4,
+        "maxDistanceFromClaim": 61.4,
+        "maxDistanceFromHero": 61.4,
+        "minDistanceFromHero": 2.1,
+        "heroHpByWave": {
+          "0": 100,
+          "1": 46,
+          "2": 0
+        }
+      },
+      "caravan": {
+        "state": "moving",
+        "hp": 240,
+        "maxHp": 240,
+        "arrived": false,
+        "planted": []
+      }
+    },
+    {
+      "arm": "drag+blast",
+      "seed": "e9-seed-run-02",
+      "run": 1,
+      "secured": false,
+      "waves": 2,
+      "timeMs": 65067,
+      "gold": 0,
+      "kills": 24,
+      "calls": 5,
+      "defaultedPicks": 0,
+      "defaultedSecure": 0,
+      "eventLogHash": "fnv1a32:c07c1004",
+      "endReason": null,
+      "kite": {
+        "pattern": "drag",
+        "blast": true,
+        "laps": 0,
+        "stations": 3,
+        "maxDistanceFromClaim": 61.4,
+        "maxDistanceFromHero": 61.4,
+        "minDistanceFromHero": 2.1,
+        "heroHpByWave": {
+          "0": 100,
+          "1": 32,
+          "2": 0
+        }
+      },
+      "caravan": {
+        "state": "paused",
+        "hp": 240,
+        "maxHp": 240,
+        "arrived": false,
+        "planted": []
+      }
+    },
+    {
+      "arm": "drag+blast",
+      "seed": "e9-seed-run-02",
+      "run": 2,
+      "secured": false,
+      "waves": 2,
+      "timeMs": 65067,
+      "gold": 0,
+      "kills": 24,
+      "calls": 5,
+      "defaultedPicks": 0,
+      "defaultedSecure": 0,
+      "eventLogHash": "fnv1a32:c07c1004",
+      "endReason": null,
+      "kite": {
+        "pattern": "drag",
+        "blast": true,
+        "laps": 0,
+        "stations": 3,
+        "maxDistanceFromClaim": 61.4,
+        "maxDistanceFromHero": 61.4,
+        "minDistanceFromHero": 2.1,
+        "heroHpByWave": {
+          "0": 100,
+          "1": 32,
+          "2": 0
+        }
+      },
+      "caravan": {
+        "state": "paused",
+        "hp": 240,
+        "maxHp": 240,
+        "arrived": false,
+        "planted": []
+      }
+    }
+  ]
+}

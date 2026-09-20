@@ -1,0 +1,109 @@
+{
+  "rig": "opus",
+  "contract": "e10-last-claim",
+  "model": "claude-opus-5",
+  "sessionId": "95925c59-6171-4151-b331-41c0a89f7586",
+  "startedAt": "2026-09-04T03:46:12.136Z",
+  "endedAt": "2026-09-04T03:57:54.996Z",
+  "wallClockSeconds": 703,
+  "wallHit": false,
+  "exitCode": 0,
+  "signal": null,
+  "setupToFirstOutputSeconds": 60,
+  "arenaTrackedChanges": [],
+  "workspaceFiles": [
+    ".state.json",
+    "attempt-1-tape.json",
+    "ctrl-v1.mjs",
+    "ctrl-v2.mjs",
+    "gauntlet-outcome.json",
+    "gauntlet-report.md",
+    "probe-idle.json",
+    "probe-idle.log",
+    "probe-idle.views.jsonl",
+    "run.mjs",
+    "tune-1.json",
+    "tune-1.log",
+    "tune-1.views.jsonl",
+    "tune-2.json",
+    "tune-2.log",
+    "tune-2.views.jsonl"
+  ],
+  "outcome": {
+    "secured": true,
+    "waves": 8,
+    "timeMs": 240033,
+    "gold": 136,
+    "kills": 204,
+    "calls": 77,
+    "defaultedPicks": 0,
+    "defaultedSecure": 0,
+    "eventLogHash": "fnv1a32:d22fd3c2",
+    "tape": "/private/tmp/heat11-5e7a7c0b/artifacts/heat11/opus/e10-last-claim/attempt-1-tape.json",
+    "tapeAlias": "/private/tmp/heat11-5e7a7c0b/artifacts/heat11/opus/e10-last-claim/tune-2.json",
+    "note": "tune-2 secured on its first ride and is PROMOTED as the scored attempt; attempt-1-tape.json is a byte-identical copy of that same single ride, not a second run.",
+    "scored": true,
+    "runsSoFar": 3,
+    "scoredAttempts": 1,
+    "worldModel": "sim-import"
+  },
+  "outcomeError": null,
+  "scoredTapes": [
+    {
+      "file": "attempt-1-tape.json",
+      "id": "agent-d436e801-5aaba30b-26e6-4af8-8669-405da2fe1bba",
+      "contract": "e10-last-claim",
+      "seed": "gold-rush",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "5e7a7c0ba",
+        "engineHash": "a607a81f44e10dc2b2262682c1e116c15917edffeeaa0c5909f383ccea5d8e04",
+        "era": 5,
+        "viewVersion": 1
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 8,
+        "timeAlive": 240.033,
+        "gold": 136
+      },
+      "entries": 77
+    }
+  ],
+  "otherSecuredTapes": [
+    {
+      "file": "tune-2.json",
+      "id": "agent-d436e801-5aaba30b-26e6-4af8-8669-405da2fe1bba",
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 8,
+        "timeAlive": 240.033,
+        "gold": 136
+      },
+      "meta": {
+        "buildId": "5e7a7c0ba",
+        "engineHash": "a607a81f44e10dc2b2262682c1e116c15917edffeeaa0c5909f383ccea5d8e04",
+        "era": 5,
+        "viewVersion": 1
+      }
+    }
+  ],
+  "report": {
+    "outcome": "**SECURED.** Waves **8**, timeAlive **240.033 s**, gold **136**, calls **77**\n(`eventLogHash fnv1a32:d22fd3c2`, `defaultedPicks 0`, `defaultedSecure 0`, 204 kills of 208 spawned).\n\nTape put forward: `artifacts/heat11/opus/e10-last-claim/attempt-1-tape.json` — a byte-identical\ncopy of `tune-2.json`, the single ride that secured, promoted by name as the scored attempt (not a\nsecond run). 258,014 bytes, 77 input-log entries.\n\n**3 sim runs** (idle probe, tune-1, tune-2) and **1 scored attempt**.",
+    "whatTheMapAsked": "It asked me about its era's signature mechanic squarely, and the county's **RESKIN** measurement is\nout of date on this build: the flipped objective is real, it is published, and it is the whole\ncontract. `stablePrefix.objective` is `\"preserve\"`, `now.preserve {hp,maxHp,alive}` is a live field,\nand the run ends `preserve_fell` the instant that 360-hp warm vent at (0,50) reaches zero — no\ngold clause, no hero clause on the win side. What makes it E10 rather than \"survival with a second\nhealth bar\" is the *targeting inversion*: `HeadlessContractSim:1475` overrides `nearestBuilding` to\nreturn the preserve for as long as it is active, so every wrecker ignores my ten works and walks the\nvent, while `static_mote` — not a wrecker — chases the hero and can never harm the objective. Extract\nand preserve are pulled apart geographically too: the only three live seams on this seed sit at\n(-12,-36), (12,-12) and (-12,12), 39 to 87 wu from the thing I must keep alight, and the vent's own\ndeck (12,36) anchor never activates. So every gold decision is literally \"how long do I leave the\npreserve to go extract,\" which is the era's named tension stated as a commute. The answer the map\nrewards is to stop extracting early: I panned 540 gold all run, spent 60 of it on the six palisades\nthat ended the threat outright at t ≈ 39, and the remaining 340 on four turrets that were, honestly,\ninsurance the vent never needed. The view fields that carried it were `now.preserve.hp` (the only\nscoreboard that matters), `now.works.entries` — positions and `wrecked`, the only way to see which\nring slot had been refused, and the field that exposed tune-1's `collision` — `now.seams[].active/x/z`,\n`now.gold`, `now.threats.alive`, and `now.pendingOffer`. The orders were `BUILD` (six palisades, four\nturrets), `HARVEST`, `REPAIR_UNDER` and `PICK_UPGRADE`. Two honest qualifiers. First, there is no E10\n*verb* — the preserve is defended entirely with epoch-1 grammar, and the manifest's own\n`engineDependencies` says so: `last-claim-finale-metadata-consumer: \"missing\"`, \"the warm vent\nobjective is live; the remaining finale objective metadata still needs its broader consumer.\" That is\naccurate for once, and it shows: the ten authored `eraDeckZones`, the ordered stern-to-bow run, the\nQuiet's desaturation rings and the *three* preserves of the briefing are all absent from `now` —\none vent is served, and the other two sites (`last-lantern`, `last-portrait`) exist only as loss\nstakes. Second, once the ring closed the contract became a 200-second hold with nothing left to\ndecide; the reasoning is entirely front-loaded into the first forty seconds.",
+    "winnability": "Secured, and the margin was **as wide as this contract can be measured**: the preserve finished\n**360/360, never having taken a single point of damage**, the hero finished 150/150 at level 10\nhaving never dropped below its running maximum, zero of ten works were ever wrecked, and 4 of 208\nspawns were still alive at the bank — the whole run turned on being 21 seconds early with 60 gold.",
+    "lessons": "- **`nearestBuilding` is not a constant either, and E10 rewires it.** Generation 13 taught me \"your\n  own walls are somebody else's armour\"; `HeadlessContractSim:1475` hard-wires every wrecker to the\n  preserve, which *inverts* that lesson — nothing I build can bait, decoy, or absorb. Gen-19 said\n  re-read `getPos` because the body that shoots is not a constant. Gen-21 said re-read the target\n  function. Gen-28: **re-read the target function on every era, because an era can override it to a\n  single object and delete a whole class of play.**\n- **Read the objective's damage *whitelist* before designing a defence.** Two enemies on the roster;\n  only one is a `wrecker`, and only wreckers route through `hitBuilding`. That single boolean meant\n  the contract was not \"survive wave 8\" but \"keep exactly one enemy type more than 1.1 wu from one\n  point,\" which is a 60-gold problem instead of a 340-gold one.\n- **A blocker that the enemy cannot path around is a shutout, not a speed bump.** Wreckers are\n  excluded from `updateGapFlow` (`Enemy.ts:686`) yet still hit `resolveBlocker`, so they slide along\n  a closed ring forever and never gnaw it (only non-wreckers gnaw, and they were chasing the hero).\n  When a pathing exclusion and a collision rule disagree, the collision rule wins — and that gap is\n  where the cheapest win on the board lives.\n- **Palisade collision is a FOOTPRINT-OVERLAP test, not a centre-distance test.** `overlapRadius: 1`\n  reads like a radius and is not: two rot-0 palisades at `(4,49)` and `(4,51)` are 2 apart and still\n  refuse `collision`, because their 3-deep boxes overlap. Lay a ring out as **non-overlapping\n  footprints that overlap only after `avoidancePad` is added** — that is what makes a 6-piece ring\n  airtight where a 10-piece ring refused.\n- **Correct my own suffix-gate rule (gens 12/17): a suffix gate leaks at the bottom when the rungs\n  are all the same price.** Item *i* gated at `cost×(n−i)` means the LAST item is gated at one unit,\n  so it fires the moment you can afford one — and on a map with a 39 wu seam commute that is one\n  palisade per round trip. The fix that secured this contract is **plan-time affordability**: emit\n  `min(missing, floor(gold/cost))` rungs and suffix-gate only *that* batch, so one trip home lands\n  the whole affordable batch and nothing fires early.\n- **Count the decision points before designing the opening.** Views arrived at t = 0, 30 and 60 only,\n  until the vent started taking damage — then `claim_damage` surprises produced a view every 0.4 s.\n  The dense views are the *losing* state; the opening has three. Design the opening as three arrays,\n  not as a feedback loop. (Gen-13 learned this on the Fairground and I nearly re-learned it here.)\n- **An idle probe's most useful output is still the resource that piles up untouched — but read the\n  loss channel first.** Idle here banked 0 gold and 37 kills with the hero at 83/100 and still died:\n  the flat hero bar beside a falling `now.preserve.hp` named the loss channel in one ten-second run,\n  and `preserve` is the only bar the outcome cares about.\n- **`engineDependencies: \"missing\"` was RIGHT this time.** Score is now four wrong (E5 ×3, E6 ×1) to\n  two right (E4 long-road, E10 last-claim). It remains a hint to confirm against `now`'s keys in one\n  idle probe — but a \"missing\" that *matches* the view is genuinely useful: it told me the ten era\n  decks, the Quiet rings and the other two preserves were scenery before I wasted a run on them.\n- **Stop at the secure, and promote the tune by name.** Third generation running where a tune secured\n  and the rules end the ride there. Copying the securing tape to `attempt-1-tape.json` and saying\n  plainly in the outcome file that it is the same single ride is the honest way to satisfy both the\n  path convention and the stop rule; do not re-ride for a tidier filename."
+  },
+  "usage": {
+    "transcript": "/Users/robin/.claude/projects/-private-tmp-heat11-5e7a7c0b/95925c59-6171-4151-b331-41c0a89f7586.jsonl",
+    "assistantTurns": 63,
+    "toolCalls": 39,
+    "tokensIn": 126,
+    "tokensOut": 100349,
+    "cacheReadTokens": 11360813,
+    "cacheWriteTokens": 586574,
+    "note": "tokensIn excludes cache reads/writes (reported separately); summed from the CLI session transcript, not self-reported by the rig"
+  }
+}

@@ -1,0 +1,844 @@
+{
+  "status": "passed",
+  "checks": [
+    "the browser host opens the thin-seat room",
+    "the thin seat exits cleanly on the browser outcome",
+    "every thin-seat stdout view keeps the door schema",
+    "every thin-seat view carries rider-specific now.orders",
+    "an oversized valid order array is refused before the wire",
+    "three browser boundaries produced at least three views (5)",
+    "a BUILD from the thin seat stdin landed in the browser world",
+    "the thin seat observed CONTRACT SECURED",
+    "the browser reached its own secured end state",
+    "the thin ride produced zero desyncs",
+    "the thin-seat browser logged zero console errors",
+    "the thin-seat browser logged zero page errors",
+    "the browser host opens the scout room",
+    "the invited scout rides cleanly",
+    "the invited seat declares its result advisory",
+    "every scout turn declares itself advisory",
+    "the roster declares the scout",
+    "the scout sends no determinism hashes",
+    "the browser and scout rode at least 90 ticks (123)",
+    "the browser saw zero scout desyncs",
+    "the browser host opens the two-scout room",
+    "the first of two seats declares scout mode",
+    "the second of two seats declares scout mode",
+    "both scouts declare every turn advisory",
+    "both scouts' build acts landed in the browser world",
+    "the three-rider browser saw zero desyncs",
+    "the two-scout browser logged zero console errors",
+    "the two-scout browser logged zero page errors",
+    "the browser pair opens an agent-rider room",
+    "the agent rider is a visible hero in both browser worlds",
+    "MOVE_TO changes the agent hero position",
+    "both browsers place the agent hero identically",
+    "the agent rider BUILD lands once in the first browser",
+    "the agent rider BUILD lands once in the second browser",
+    "the embodied order channel runs at least 300 ticks",
+    "the first browser reports zero agent-rider desyncs",
+    "the second browser reports zero agent-rider desyncs",
+    "the browsers produced a shared post-order hash",
+    "the shared post-order hashes are present",
+    "both browsers agree at hash tick 600",
+    "an agent-rider browser logs zero console errors",
+    "an agent-rider browser logs zero page errors",
+    "an agent-rider browser logs zero console errors",
+    "an agent-rider browser logs zero page errors",
+    "the browser host opens the strict room",
+    "the strict mixed-engine seat refuses the room",
+    "the strict refusal explains the mixed-room boundary",
+    "the solo control run produced an event-log hash",
+    "the host opens a room",
+    "the room code is the 96-bit claim word",
+    "the ordered seat rode to the end",
+    "the idle seat rode to the end",
+    "the ordered seat never resigned",
+    "the idle seat never resigned",
+    "the ordered seat saw a table of two",
+    "the idle seat saw a table of two",
+    "both seats read the same roster in the same order",
+    "both seats reached a real outcome",
+    "both seats ended on the same event-log hash",
+    "both seats agree on every outcome field",
+    "PRECONDITION for the solo comparison: no wire act changed the world",
+    "a seated ride that changed nothing reproduces the solo headless run bit for bit",
+    "the seated outcome equals the solo control outcome",
+    "both seats applied the same acts",
+    "every ordered act reached the seat that never ordered it",
+    "no peer act was left unhonoured",
+    "the ordered seat held its pace (44.55 ticks/s)",
+    "the idle seat held its pace (44.95 ticks/s)",
+    "the unspeakable verb was refused in words the rider can act on",
+    "the idle seat was never asked for the impossible",
+    "the host opens a second room for the desync arm",
+    "the lying seat exits non-zero",
+    "the lying seat resigned rather than rode on",
+    "the lying seat named the desync",
+    "the lying seat claimed no outcome it did not earn",
+    "the lying seat named the engine it hashed with",
+    "the lying seat said so out loud",
+    "the honest seat exits non-zero",
+    "the honest seat resigned rather than rode on",
+    "the honest seat named the desync",
+    "the honest seat claimed no outcome it did not earn",
+    "the honest seat named the engine it hashed with",
+    "the honest seat said so out loud",
+    "the lie was caught at the tick it was told (30)",
+    "the honest seat caught it just as fast (30)",
+    "the host opens a third room for the bounded arm",
+    "the first bounded seat stopped cleanly",
+    "the first bounded seat rode exactly the ticks it was given",
+    "the first bounded seat did not resign",
+    "the first bounded seat named no verdict it did not earn",
+    "the first bounded seat still reports a determinism hash",
+    "the second bounded seat stopped cleanly",
+    "the second bounded seat rode exactly the ticks it was given",
+    "the second bounded seat did not resign",
+    "the second bounded seat named no verdict it did not earn",
+    "the second bounded seat still reports a determinism hash",
+    "both bounded seats agreed on the hash they stopped at",
+    "both bounded seats stopped at the same tick"
+  ],
+  "measured": {
+    "thin": {
+      "seat": {
+        "exitCode": 0,
+        "ticks": 311,
+        "ticksPerSecond": 38.02,
+        "wallClockSeconds": 8.18,
+        "roster": [
+          "Browser Host of Browser Camp",
+          "Thin Rig (scout) of Calculating House"
+        ],
+        "builds": {
+          "placed": 0,
+          "refused": 0
+        },
+        "unhonouredActions": {},
+        "lastHash": null,
+        "resigned": null,
+        "outcome": null,
+        "advisory": true
+      },
+      "browser": {
+        "tick": 311,
+        "desyncs": 0,
+        "roster": [
+          {
+            "playerId": "p1",
+            "name": "Browser Host",
+            "town": "Browser Camp",
+            "client": "browser"
+          },
+          {
+            "playerId": "p2",
+            "name": "Thin Rig (scout)",
+            "town": "Calculating House",
+            "client": "headless"
+          }
+        ],
+        "run": {
+          "secured": true,
+          "rush": false,
+          "lastRunEndedReason": null,
+          "meta": {
+            "version": 1,
+            "tracks": {
+              "territory": 1,
+              "science": 1,
+              "hero": 1,
+              "agent": 1
+            }
+          },
+          "victoryPayout": {
+            "territory": 1,
+            "science": 1,
+            "hero": 1,
+            "agent": 1
+          },
+          "secureWaveReached": 10,
+          "securedResultAt": 1786169648509,
+          "suspend": {
+            "hasSuspend": false,
+            "restored": false,
+            "restoredWave": null,
+            "lastWriteAt": 1786169648510,
+            "lastWriteMs": 0.1,
+            "sizeBytes": 6039
+          }
+        }
+      },
+      "views": 5,
+      "viewBytes": {
+        "min": 2805,
+        "max": 4074
+      }
+    },
+    "scout": {
+      "seat": {
+        "exitCode": 0,
+        "ticks": 120,
+        "ticksPerSecond": 44.63,
+        "wallClockSeconds": 2.689,
+        "roster": [
+          "Browser Host of Browser Camp",
+          "Rig Scout (scout) of Calculating House"
+        ],
+        "builds": {
+          "placed": 0,
+          "refused": 0
+        },
+        "unhonouredActions": {},
+        "lastHash": null,
+        "resigned": null,
+        "outcome": null,
+        "advisory": true
+      },
+      "browser": {
+        "tick": 123,
+        "desyncs": 0,
+        "roster": [
+          {
+            "playerId": "p1",
+            "name": "Browser Host",
+            "town": "Browser Camp",
+            "client": "browser"
+          },
+          {
+            "playerId": "p2",
+            "name": "Rig Scout (scout)",
+            "town": "Calculating House",
+            "client": "headless"
+          }
+        ]
+      }
+    },
+    "twoScouts": {
+      "a": {
+        "exitCode": 0,
+        "ticks": 900,
+        "ticksPerSecond": 32.48,
+        "wallClockSeconds": 27.713,
+        "roster": [
+          "Party Host of Browser Camp",
+          "Scout Two (scout) of Calculating House",
+          "Scout One (scout) of Calculating House"
+        ],
+        "builds": {
+          "placed": 0,
+          "refused": 0
+        },
+        "unhonouredActions": {},
+        "lastHash": null,
+        "resigned": null,
+        "outcome": null,
+        "advisory": true
+      },
+      "b": {
+        "exitCode": 0,
+        "ticks": 900,
+        "ticksPerSecond": 32.42,
+        "wallClockSeconds": 27.757,
+        "roster": [
+          "Party Host of Browser Camp",
+          "Scout Two (scout) of Calculating House",
+          "Scout One (scout) of Calculating House"
+        ],
+        "builds": {
+          "placed": 0,
+          "refused": 0
+        },
+        "unhonouredActions": {},
+        "lastHash": null,
+        "resigned": null,
+        "outcome": null,
+        "advisory": true
+      },
+      "browser": {
+        "tick": 293,
+        "desyncs": 0,
+        "roster": [
+          {
+            "playerId": "p1",
+            "name": "Party Host",
+            "town": "Browser Camp",
+            "client": "browser"
+          },
+          {
+            "playerId": "p2",
+            "name": "Scout Two (scout)",
+            "town": "Calculating House",
+            "client": "headless"
+          },
+          {
+            "playerId": "p3",
+            "name": "Scout One (scout)",
+            "town": "Calculating House",
+            "client": "headless"
+          }
+        ],
+        "palisades": 2
+      }
+    },
+    "agentOrders": {
+      "ticks": 302,
+      "commonTick": 600,
+      "left": {
+        "tick": 614,
+        "desyncs": 0,
+        "hashes": [
+          {
+            "tick": 0,
+            "hash": "fnv1a32:587d8476"
+          },
+          {
+            "tick": 30,
+            "hash": "fnv1a32:0ecfbeb1"
+          },
+          {
+            "tick": 60,
+            "hash": "fnv1a32:f28250a0"
+          },
+          {
+            "tick": 90,
+            "hash": "fnv1a32:5a701219"
+          },
+          {
+            "tick": 120,
+            "hash": "fnv1a32:fb656547"
+          },
+          {
+            "tick": 150,
+            "hash": "fnv1a32:532609d8"
+          },
+          {
+            "tick": 180,
+            "hash": "fnv1a32:310d17f1"
+          },
+          {
+            "tick": 210,
+            "hash": "fnv1a32:30e56c8e"
+          },
+          {
+            "tick": 240,
+            "hash": "fnv1a32:1975f59a"
+          },
+          {
+            "tick": 270,
+            "hash": "fnv1a32:2fffc3b1"
+          },
+          {
+            "tick": 300,
+            "hash": "fnv1a32:87bc0f2c"
+          },
+          {
+            "tick": 330,
+            "hash": "fnv1a32:1eeae840"
+          },
+          {
+            "tick": 360,
+            "hash": "fnv1a32:8f402a81"
+          },
+          {
+            "tick": 390,
+            "hash": "fnv1a32:57dbb415"
+          },
+          {
+            "tick": 420,
+            "hash": "fnv1a32:7b66f1da"
+          },
+          {
+            "tick": 450,
+            "hash": "fnv1a32:e7cb1eec"
+          },
+          {
+            "tick": 480,
+            "hash": "fnv1a32:31736c7c"
+          },
+          {
+            "tick": 510,
+            "hash": "fnv1a32:b913252f"
+          },
+          {
+            "tick": 540,
+            "hash": "fnv1a32:15dbc4f4"
+          },
+          {
+            "tick": 570,
+            "hash": "fnv1a32:ef43daad"
+          },
+          {
+            "tick": 600,
+            "hash": "fnv1a32:f0e22c89"
+          }
+        ],
+        "palisades": 1,
+        "rider": {
+          "playerId": "p3",
+          "submissionId": "browser-order-arm-1",
+          "needsRider": false,
+          "orders": [
+            {
+              "id": "orders-1-1",
+              "order": {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 0,
+                  "z": 10
+                },
+                "when": {
+                  "goldGte": 0
+                }
+              },
+              "status": "done"
+            },
+            {
+              "id": "orders-1-2",
+              "order": {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 8,
+                  "z": 8
+                }
+              },
+              "status": "done"
+            }
+          ],
+          "log": [
+            {
+              "seq": 1,
+              "at": 10.533333333333307,
+              "type": "orders_replaced",
+              "orders": [
+                {
+                  "id": "orders-1-1",
+                  "order": {
+                    "verb": "BUILD",
+                    "what": "palisade",
+                    "where": {
+                      "x": 0,
+                      "z": 10
+                    },
+                    "when": {
+                      "goldGte": 0
+                    }
+                  },
+                  "status": "pending"
+                },
+                {
+                  "id": "orders-1-2",
+                  "order": {
+                    "verb": "MOVE_TO",
+                    "pos": {
+                      "x": 8,
+                      "z": 8
+                    }
+                  },
+                  "status": "pending"
+                }
+              ]
+            },
+            {
+              "seq": 2,
+              "at": 10.533333333333307,
+              "type": "order_status",
+              "orderId": "orders-1-1",
+              "status": "active"
+            },
+            {
+              "seq": 3,
+              "at": 10.533333333333307,
+              "type": "order_status",
+              "orderId": "orders-1-1",
+              "status": "done"
+            },
+            {
+              "seq": 4,
+              "at": 10.56666666666664,
+              "type": "order_status",
+              "orderId": "orders-1-2",
+              "status": "active"
+            },
+            {
+              "seq": 5,
+              "at": 12.266666666666634,
+              "type": "order_status",
+              "orderId": "orders-1-2",
+              "status": "done"
+            }
+          ],
+          "position": {
+            "x": 7.978805935446205,
+            "z": 8.01078550846935
+          },
+          "visible": true
+        }
+      },
+      "right": {
+        "tick": 612,
+        "desyncs": 0,
+        "hashes": [
+          {
+            "tick": 0,
+            "hash": "fnv1a32:587d8476"
+          },
+          {
+            "tick": 30,
+            "hash": "fnv1a32:0ecfbeb1"
+          },
+          {
+            "tick": 60,
+            "hash": "fnv1a32:f28250a0"
+          },
+          {
+            "tick": 90,
+            "hash": "fnv1a32:5a701219"
+          },
+          {
+            "tick": 120,
+            "hash": "fnv1a32:fb656547"
+          },
+          {
+            "tick": 150,
+            "hash": "fnv1a32:532609d8"
+          },
+          {
+            "tick": 180,
+            "hash": "fnv1a32:310d17f1"
+          },
+          {
+            "tick": 210,
+            "hash": "fnv1a32:30e56c8e"
+          },
+          {
+            "tick": 240,
+            "hash": "fnv1a32:1975f59a"
+          },
+          {
+            "tick": 270,
+            "hash": "fnv1a32:2fffc3b1"
+          },
+          {
+            "tick": 300,
+            "hash": "fnv1a32:87bc0f2c"
+          },
+          {
+            "tick": 330,
+            "hash": "fnv1a32:1eeae840"
+          },
+          {
+            "tick": 360,
+            "hash": "fnv1a32:8f402a81"
+          },
+          {
+            "tick": 390,
+            "hash": "fnv1a32:57dbb415"
+          },
+          {
+            "tick": 420,
+            "hash": "fnv1a32:7b66f1da"
+          },
+          {
+            "tick": 450,
+            "hash": "fnv1a32:e7cb1eec"
+          },
+          {
+            "tick": 480,
+            "hash": "fnv1a32:31736c7c"
+          },
+          {
+            "tick": 510,
+            "hash": "fnv1a32:b913252f"
+          },
+          {
+            "tick": 540,
+            "hash": "fnv1a32:15dbc4f4"
+          },
+          {
+            "tick": 570,
+            "hash": "fnv1a32:ef43daad"
+          },
+          {
+            "tick": 600,
+            "hash": "fnv1a32:f0e22c89"
+          }
+        ],
+        "palisades": 1,
+        "rider": {
+          "playerId": "p3",
+          "submissionId": "browser-order-arm-1",
+          "needsRider": false,
+          "orders": [
+            {
+              "id": "orders-1-1",
+              "order": {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 0,
+                  "z": 10
+                },
+                "when": {
+                  "goldGte": 0
+                }
+              },
+              "status": "done"
+            },
+            {
+              "id": "orders-1-2",
+              "order": {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 8,
+                  "z": 8
+                }
+              },
+              "status": "done"
+            }
+          ],
+          "log": [
+            {
+              "seq": 1,
+              "at": 10.533333333333307,
+              "type": "orders_replaced",
+              "orders": [
+                {
+                  "id": "orders-1-1",
+                  "order": {
+                    "verb": "BUILD",
+                    "what": "palisade",
+                    "where": {
+                      "x": 0,
+                      "z": 10
+                    },
+                    "when": {
+                      "goldGte": 0
+                    }
+                  },
+                  "status": "pending"
+                },
+                {
+                  "id": "orders-1-2",
+                  "order": {
+                    "verb": "MOVE_TO",
+                    "pos": {
+                      "x": 8,
+                      "z": 8
+                    }
+                  },
+                  "status": "pending"
+                }
+              ]
+            },
+            {
+              "seq": 2,
+              "at": 10.533333333333307,
+              "type": "order_status",
+              "orderId": "orders-1-1",
+              "status": "active"
+            },
+            {
+              "seq": 3,
+              "at": 10.533333333333307,
+              "type": "order_status",
+              "orderId": "orders-1-1",
+              "status": "done"
+            },
+            {
+              "seq": 4,
+              "at": 10.56666666666664,
+              "type": "order_status",
+              "orderId": "orders-1-2",
+              "status": "active"
+            },
+            {
+              "seq": 5,
+              "at": 12.266666666666634,
+              "type": "order_status",
+              "orderId": "orders-1-2",
+              "status": "done"
+            }
+          ],
+          "position": {
+            "x": 7.978805935446205,
+            "z": 8.01078550846935
+          },
+          "visible": true
+        }
+      }
+    },
+    "strict": {
+      "exitCode": 1,
+      "stdout": "",
+      "stderr": "gr-sim refused room: --strict refuses browser rooms; omit it to ride the browser world as a thin seat\n"
+    },
+    "solo": {
+      "secured": false,
+      "waves": 2,
+      "timeMs": 73100,
+      "gold": 0,
+      "kills": 30,
+      "calls": 0,
+      "eventLogHash": "fnv1a32:27d33b38"
+    },
+    "seats": {
+      "a": {
+        "exitCode": 0,
+        "ticks": 2193,
+        "ticksPerSecond": 44.55,
+        "wallClockSeconds": 49.227,
+        "roster": [
+          "Rig A of Calculating House",
+          "Rig B of Calculating House"
+        ],
+        "builds": {
+          "placed": 0,
+          "refused": 2
+        },
+        "unhonouredActions": {},
+        "lastHash": {
+          "tick": 2190,
+          "hash": "fnv1a32:032a2383"
+        },
+        "resigned": null,
+        "outcome": {
+          "secured": false,
+          "waves": 2,
+          "timeMs": 73100,
+          "gold": 0,
+          "kills": 30,
+          "calls": 0,
+          "eventLogHash": "fnv1a32:27d33b38"
+        }
+      },
+      "b": {
+        "exitCode": 0,
+        "ticks": 2193,
+        "ticksPerSecond": 44.95,
+        "wallClockSeconds": 48.783,
+        "roster": [
+          "Rig A of Calculating House",
+          "Rig B of Calculating House"
+        ],
+        "builds": {
+          "placed": 0,
+          "refused": 2
+        },
+        "unhonouredActions": {},
+        "lastHash": {
+          "tick": 2190,
+          "hash": "fnv1a32:032a2383"
+        },
+        "resigned": null,
+        "outcome": {
+          "secured": false,
+          "waves": 2,
+          "timeMs": 73100,
+          "gold": 0,
+          "kills": 30,
+          "calls": 0,
+          "eventLogHash": "fnv1a32:27d33b38"
+        }
+      }
+    },
+    "desync": {
+      "liar": {
+        "exitCode": 3,
+        "ticks": 31,
+        "ticksPerSecond": 41.09,
+        "wallClockSeconds": 0.754,
+        "roster": [
+          "Rig Liar of Calculating House",
+          "Rig Honest of Calculating House"
+        ],
+        "builds": {
+          "placed": 0,
+          "refused": 0
+        },
+        "unhonouredActions": {},
+        "lastHash": {
+          "tick": 30,
+          "hash": "fnv1a32:7424b99b"
+        },
+        "resigned": {
+          "reason": "desync",
+          "tick": 30,
+          "detail": "a peer's determinism hash disagreed with this seat's at tick 30 (this engine is gr-sim.headless.v1; a browser rider hashes a run-suspend snapshot instead, so engine-crossed rooms disagree by construction)"
+        },
+        "outcome": null
+      },
+      "honest": {
+        "exitCode": 3,
+        "ticks": 31,
+        "ticksPerSecond": 42.31,
+        "wallClockSeconds": 0.733,
+        "roster": [
+          "Rig Liar of Calculating House",
+          "Rig Honest of Calculating House"
+        ],
+        "builds": {
+          "placed": 0,
+          "refused": 0
+        },
+        "unhonouredActions": {},
+        "lastHash": {
+          "tick": 30,
+          "hash": "fnv1a32:7424b99b"
+        },
+        "resigned": {
+          "reason": "desync",
+          "tick": 30,
+          "detail": "a peer's determinism hash disagreed with this seat's at tick 30 (this engine is gr-sim.headless.v1; a browser rider hashes a run-suspend snapshot instead, so engine-crossed rooms disagree by construction)"
+        },
+        "outcome": null
+      }
+    },
+    "bounded": {
+      "a": {
+        "exitCode": 0,
+        "ticks": 60,
+        "ticksPerSecond": 42.16,
+        "wallClockSeconds": 1.423,
+        "roster": [
+          "Rig Short A of Calculating House",
+          "Rig Short B of Calculating House"
+        ],
+        "builds": {
+          "placed": 0,
+          "refused": 0
+        },
+        "unhonouredActions": {},
+        "lastHash": {
+          "tick": 30,
+          "hash": "fnv1a32:7424b99b"
+        },
+        "resigned": null,
+        "outcome": null
+      },
+      "b": {
+        "exitCode": 0,
+        "ticks": 60,
+        "ticksPerSecond": 44.28,
+        "wallClockSeconds": 1.355,
+        "roster": [
+          "Rig Short A of Calculating House",
+          "Rig Short B of Calculating House"
+        ],
+        "builds": {
+          "placed": 0,
+          "refused": 0
+        },
+        "unhonouredActions": {},
+        "lastHash": {
+          "tick": 30,
+          "hash": "fnv1a32:7424b99b"
+        },
+        "resigned": null,
+        "outcome": null
+      }
+    }
+  },
+  "generatedAt": "2026-08-08T06:16:29.058Z"
+}

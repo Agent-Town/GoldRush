@@ -1,0 +1,70 @@
+F-1558-1 pre-fix samples
+Command: npx playwright test e2e/m4-06-embodiment.spec.ts --grep "permission-denied receipts" --repeat-each=30 --workers=1 --project=<project> --reporter=line
+
+mobile-chrome
+01 [m4-06-denied-line] immediate=no trust afterWait=no trust
+02 [m4-06-denied-line] immediate=no trust afterWait=no trust
+03 [m4-06-denied-line] immediate=no trust afterWait=no trust
+04 [m4-06-denied-line] immediate=no trust afterWait=no trust
+05 [m4-06-denied-line] immediate=no trust afterWait=no trust
+06 [m4-06-denied-line] immediate=no trust afterWait=no trust
+07 [m4-06-denied-line] immediate=no trust afterWait=no trust
+08 [m4-06-denied-line] immediate=no trust afterWait=no trust
+09 [m4-06-denied-line] immediate=no trust afterWait=no trust
+10 [m4-06-denied-line] immediate=no trust afterWait=no trust
+11 [m4-06-denied-line] immediate=no trust afterWait=no trust
+12 [m4-06-denied-line] immediate=no trust afterWait=no trust
+13 [m4-06-denied-line] immediate=no trust afterWait=no trust
+14 [m4-06-denied-line] immediate=no trust afterWait=no trust
+15 [m4-06-denied-line] immediate=no trust afterWait=no trust
+16 [m4-06-denied-line] immediate=no trust afterWait=no trust
+17 [m4-06-denied-line] immediate=no trust afterWait=no trust
+18 [m4-06-denied-line] immediate=no trust afterWait=no trust
+19 [m4-06-denied-line] immediate=no trust afterWait=no trust
+20 [m4-06-denied-line] immediate=no trust afterWait=no trust
+21 [m4-06-denied-line] immediate=no trust afterWait=no trust
+22 [m4-06-denied-line] immediate=no trust afterWait=no trust
+23 [m4-06-denied-line] immediate=no trust afterWait=no trust
+24 [m4-06-denied-line] immediate=no trust afterWait=no trust
+25 [m4-06-denied-line] immediate=no trust afterWait=no trust
+26 [m4-06-denied-line] immediate=no trust afterWait=no trust
+27 [m4-06-denied-line] immediate=no trust afterWait=no trust
+28 [m4-06-denied-line] immediate=no trust afterWait=no trust
+29 [m4-06-denied-line] immediate=no trust afterWait=no trust
+30 [m4-06-denied-line] immediate=no trust afterWait=no trust
+Counts: immediate refusal=30/30; afterWait refusal=30/30; afterWait survey=0; afterWait ledger=0; passed=30/30.
+
+desktop-chrome
+01 [m4-06-denied-line] immediate=no trust afterWait=no trust
+02 [m4-06-denied-line] immediate=no trust afterWait=no trust
+03 [m4-06-denied-line] immediate=no trust afterWait=no trust
+04 [m4-06-denied-line] immediate=no trust afterWait=no trust
+05 [m4-06-denied-line] immediate=no trust afterWait=no trust
+06 [m4-06-denied-line] immediate=no trust afterWait=no trust
+07 [m4-06-denied-line] immediate=no trust afterWait=no trust
+08 [m4-06-denied-line] immediate=no trust afterWait=no trust
+09 [m4-06-denied-line] immediate=no trust afterWait=no trust
+10 [m4-06-denied-line] immediate=no trust afterWait=no trust
+11 [m4-06-denied-line] immediate=no trust afterWait=no trust
+12 [m4-06-denied-line] immediate=no trust afterWait=no trust
+13 [m4-06-denied-line] immediate=no trust afterWait=no trust
+14 [m4-06-denied-line] immediate=no trust afterWait=no trust
+15 [m4-06-denied-line] immediate=no trust afterWait=no trust
+16 [m4-06-denied-line] immediate=no trust afterWait=ledger
+17 [m4-06-denied-line] immediate=no trust afterWait=no trust
+18 [m4-06-denied-line] immediate=no trust afterWait=no trust
+19 [m4-06-denied-line] immediate=no trust afterWait=no trust
+20 [m4-06-denied-line] immediate=no trust afterWait=no trust
+21 [m4-06-denied-line] immediate=no trust afterWait=no trust
+22 [m4-06-denied-line] immediate=no trust afterWait=no trust
+23 [m4-06-denied-line] immediate=no trust afterWait=no trust
+24 [m4-06-denied-line] immediate=no trust afterWait=no trust
+25 [m4-06-denied-line] immediate=no trust afterWait=no trust
+26 [m4-06-denied-line] immediate=no trust afterWait=no trust
+27 [m4-06-denied-line] immediate=no trust afterWait=no trust
+28 [m4-06-denied-line] immediate=no trust afterWait=ledger
+29 [m4-06-denied-line] immediate=no trust afterWait=no trust
+30 [m4-06-denied-line] immediate=no trust afterWait=no trust
+Counts: immediate refusal=30/30; afterWait refusal=28/30; afterWait survey=0; afterWait ledger=2; passed=28/30 (both failures were the original post-wait assertion).
+
+Combined: immediate refusal=60/60; afterWait survey/ledger=2/60 (ledger=2, survey=0).

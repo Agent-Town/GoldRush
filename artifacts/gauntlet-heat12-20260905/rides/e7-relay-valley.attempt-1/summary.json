@@ -1,0 +1,182 @@
+{
+  "rig": "opus",
+  "contract": "e7-relay-valley",
+  "model": "claude-opus-5",
+  "sessionId": "908cd6ad-1583-4067-a8af-1cb7712b336c",
+  "startedAt": "2026-09-05T15:33:24.072Z",
+  "endedAt": "2026-09-05T15:48:42.661Z",
+  "wallClockSeconds": 919,
+  "wallHit": false,
+  "exitCode": 0,
+  "signal": null,
+  "setupToFirstOutputSeconds": 105,
+  "arenaTrackedChanges": [],
+  "workspaceFiles": [
+    "ctrl-v1.mjs",
+    "ctrl-v2.mjs",
+    "ctrl-v3.mjs",
+    "gauntlet-outcome.json",
+    "gauntlet-report.md",
+    "probe-idle-result.json",
+    "probe-idle-stderr.txt",
+    "probe-idle-tape.json",
+    "probe-idle-views.jsonl",
+    "run.mjs",
+    "tune-1-result.json",
+    "tune-1-stderr.txt",
+    "tune-1-tape.json",
+    "tune-1-views.jsonl",
+    "tune-2-result.json",
+    "tune-2-stderr.txt",
+    "tune-2-tape.json",
+    "tune-2-views.jsonl",
+    "tune-3-result.json",
+    "tune-3-stderr.txt",
+    "tune-3-tape.json",
+    "tune-3-views.jsonl"
+  ],
+  "outcome": {
+    "secured": false,
+    "waves": 15,
+    "timeMs": 460333,
+    "gold": 40,
+    "kills": 537,
+    "calls": 62,
+    "defaultedPicks": 0,
+    "defaultedSecure": 0,
+    "eventLogHash": "fnv1a32:f9866fc8",
+    "tape": "/private/tmp/heat12-038cc280/artifacts/heat12/opus/e7-relay-valley/tune-3-tape.json",
+    "scored": true,
+    "runsSoFar": 4,
+    "scoredAttempts": 1,
+    "worldModel": "sim-import",
+    "envelope": {
+      "durationTicks": 13810,
+      "lastEntryTick": 13614,
+      "entryCount": 62,
+      "maxTicks": 18002,
+      "maxEntries": 3601,
+      "maxTapeBytes": 592544,
+      "bytes": 170916,
+      "admissible": "yes, but the run is NOT SECURED so nothing is put forward"
+    },
+    "note": "NOT SECURED. The E7 objective latch WAS discharged on every controller ride (now.playbookUse.objectiveMet true, relaysLitByProgram ['relay-site-r3'], programRuns 1, at t=11.6s on the cheap line). What ends the run is attrition on a welded 100/175-hp hero that no buildable can defend. Ladder: idle w2/79.3s -> v1 w13/398.5s -> v2 (thief decoy) w14/429.9s -> v3 w15/460.3s. F-HEAT11-1 is cured for this contract: twist.clockTicks 18000 now feeds runTapeEnvelopeForContract, giving maxTicks 18002 against a wave-20 secure at tick 18000."
+  },
+  "outcomeError": null,
+  "promotedTapeName": "tune-3-tape.json",
+  "scoredTapes": [
+    {
+      "file": "tune-3-tape.json",
+      "id": "agent-211bb7c1-655ec773-5a6b-4afd-8665-5871fa07cff4",
+      "contract": "e7-relay-valley",
+      "seed": "e7-relay-valley-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "a758b2752",
+        "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 15,
+        "timeAlive": 460.333,
+        "gold": 40
+      },
+      "entries": 62,
+      "durationTicks": 13810,
+      "lastEntryTick": 13614,
+      "promotedByRig": true,
+      "discoveredBy": "outcome-file"
+    }
+  ],
+  "otherTapes": [
+    {
+      "file": "probe-idle-tape.json",
+      "id": "agent-684efa26-e2e898d7-8a4b-4884-bb2b-9858450735f4",
+      "contract": "e7-relay-valley",
+      "seed": "e7-relay-valley-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "a1439d6c2",
+        "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 2,
+        "timeAlive": 79.3,
+        "gold": 0
+      },
+      "entries": 0,
+      "durationTicks": 2379,
+      "lastEntryTick": null
+    },
+    {
+      "file": "tune-1-tape.json",
+      "id": "agent-f01945c5-65b82efd-0dc9-4c06-b6db-1413ed5438aa",
+      "contract": "e7-relay-valley",
+      "seed": "e7-relay-valley-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "a758b2752",
+        "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 13,
+        "timeAlive": 398.533,
+        "gold": 200
+      },
+      "entries": 42,
+      "durationTicks": 11956,
+      "lastEntryTick": 11700
+    },
+    {
+      "file": "tune-2-tape.json",
+      "id": "agent-5c8ff928-1433566c-69d7-4c8b-af4a-e14166a5bc05",
+      "contract": "e7-relay-valley",
+      "seed": "e7-relay-valley-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "a758b2752",
+        "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 14,
+        "timeAlive": 429.933,
+        "gold": 0
+      },
+      "entries": 39,
+      "durationTicks": 12898,
+      "lastEntryTick": 12600
+    }
+  ],
+  "otherSecuredTapes": [],
+  "report": {
+    "outcome": "**NOT SECURED.** Best ride: **wave 15 / 460.333 s / 40 gold / 537 kills / 62 calls**\n(`tune-3`, `eventLogHash fnv1a32:f9866fc8`). **4 sim runs, 1 scored attempt.**\n\nTape put forward: **none** — the run is unsecured, so nothing is submittable. For the record the\nscored attempt is `tune-3-tape.json` (declared in `gauntlet-outcome.json`'s `tape` field), and it is\nenvelope-clean: `durationTicks` 13 810 and last entry 13 614 against a ceiling of 18 002 ticks /\n3 601 entries / 592 544 bytes, measured 170 916 bytes.\n\n**The era objective was discharged on every controller ride**, at t = 11.6 s on the cheapest line:\n`now.playbookUse.objectiveMet: true`, `relaysLitByProgram: [\"relay-site-r3\"]`, `programRuns: 1`,\n`refusals: {suppressed 0, muted 0, unrecorded 0}`. The contract was not lost on its mechanic.\n\nAlso worth the county's record: **F-HEAT11-1 is cured for this contract.** `e7-relay-valley` now\ndeclares `twist.clockTicks: 18000`, `runTapeEnvelopeForContract` reads it (`PlaybookFormat.ts:65`)\nand adds the `+2` inclusive-endpoint slack outside the `secureWave` branch, so a wave-20 secure\nbanked at tick 18000 reports `durationTicks 18001` against a ceiling of 18002. The fencepost that\nrefused generations 24, 25 and 33 no longer bites here. I blank-lined the secure boundary anyway\n(it costs nothing) but it is no longer load-bearing.",
+    "whatTheMapAsked": "It asked me about its era's signature mechanic **squarely, for the first time on this map**, and\nthe county's earlier RESKIN reading of `e7-relay-valley` is now out of date — the `e7-playbook-rows`\ndrain changed the contract, not just its scenery. In generation 26 I rode this same seed and\nreported that `now` carried \"no relay, no recording, no playbook, no Echo\" and that E7 survived only\nas \"a map that cannot be fortified\". Both halves have moved. `now.playbookUse` is a live fifteen-field\nblock, `PLAYBOOK_USE` is a real verb, and — decisively — **the secure is latched on it**:\n`E7PlaybookLatch.allowsSecure` returns `this.lit.size > 0` for `objective: \"relay\"`, and\n`HeadlessContractSim:1370` ANDs that into the gate, so no wave count can secure this claim until a\nrelay site is lit by a running program.\n\nThe reasoning it demands is small but genuinely of the era, and it is legible from the view alone.\n`E7PlaybookLatch.syncProgramRelays(running, works)` lights a site when a standing work of\n`POWERED_RELAY_KINDS` (`turret`, `sentry_beacon`) sits inside one of the four authored `relay-site`\nrectangles **while a program holds the wheel** — so the loop is: submit ordinary orders (they are\nrecorded as the demonstration at the public rider seam), get a powered work standing in a zone, then\n`PLAYBOOK_USE` a fresh name, which records that demonstration as a tape and re-installs it as your\nstanding order set. `runningProgram` is non-null from that install until your next accepted\nsubmission, and `syncProgramRelays` runs on the fixed step inside that window. That is L1 of the\ncapability ladder working exactly as advertised — the sim executing a program the rider wrote — and\nit cost me one 25-gold building and one order. The fields that carried it were\n`now.playbookUse.{objective, objectiveMet, shelf, uses, programRuns, relaysLitByProgram, runningProgram, refusals, last}`.\n\nThe honest qualifier is that the mechanic is **cheap and front-loaded**: it is discharged by second\n12 of a 600-second contract and never asks anything again. Nothing about the front, the mirror or\nthe suppression applies here, there is no reason to record a *good* tape rather than any tape, and\nrepeats are unpunished on this map. So: half a minute of real E7, then 590 seconds of the hardest\nstationary survival the door has posted at me.\n\nThat survival is what the map is actually made of, and it is the same wall generation 26 measured.\nThe claim and the welded hero sit at (0,12) with 100 maxHp; `Terrain.isBuildable` confines every\nbuildable to the four relay sites at z 36..46, whose nearest legal point is **31.24 wu** away against\na turret's 16 and a beacon's 8. Enemies spawn on `Balance.waves.spawnRingRadius` 26 around the claim\nfrom three edges — the north stream appears at ≈(0,38), 20.1 wu from the nearest legal turret\ncoordinate and walking directly away from it — so **not one gold of the 980 I panned could buy a\nsingle point of defence for the body that has to live.** The run is a pure attrition race, and the\nfields that carried it were `now.hero.hp/maxHp/level/upgradesTaken`, `now.threats.alive/thieves`,\n`now.seams[].active/x/z`, `now.gold` and `now.pendingOffer`; the orders were `PICK_UPGRADE`,\n`BLAST_AT`, `HARVEST`, `BUILD`, `HOLD` and one `PLAYBOOK_USE`.\n\nTwo things I found inside that race are worth the county's attention, because both are real\nmechanics reached with ordinary grammar. First, **the stockpile is the whole thief economy.**\n`TargetingSystem.nearestGoldHolding` is fed only by `HeadlessContractSim.syncStockpileHoldings`, so\non a board with no stockpile the holding list is empty, `Enemy.updateThief` returns null, and every\n`data_rustler` — 44 of 60 live bodies at wave 14 — falls through to ordinary hero pursuit. That is\nexactly what tune-1 measured: 17 thieves standing on the hero and `goldStolen: 0`. One 60-gold\nstockpile placed in the far relay site turns each of them into a 49-wu round trip that ends with the\nthief grabbing 10 gold and **fleeing off the map entirely**; tune-2 held the hero flat at 98/175 for\n54 unbroken seconds. Second, **building a sentry beacon lengthens the upgrade pool**:\n`Progression.eligibleDefs` drops `beacon_dynamo` while `getBeaconCount() <= 0`, so the cheap relay\nwork costs you two extra junk draft picks on the road to the only unbounded heal in the game. Using\na turret for the same relay light is 25 gold dearer and two picks cheaper, and that was worth a wave.",
+    "winnability": "**Undecided-leaning-yes on the map and firmly not-my-budget-alone: the wall is the map's ground\nagainst its own clock, and what stopped me was that the only unbounded HP source arrives about 80\nseconds too late** — no buildable on this contract can come within 31.24 wu of a hero welded at\n(0,12) with a 175-hp ceiling, so a wave-20 (600 s) secure has to be paid for entirely out of the\ndraft, and the draft's one repeatable heal (`field_dressing`, filler, infinite stacks, 0.3×maxHp)\nis only offered once fewer than three non-filler cards remain eligible; my best ride was level 21\nwith six non-fillers still in the pool at t = 460 and needed roughly four more levels (≈ t = 540) to\nopen the fillers it would then have ridden to 600 — so the gap is ~80 seconds of HP, not a\nstructural refusal, and the three levers I could not fit in the wall (a second stockpile decoy to\nsplit the west lane, farming `order_failure` surprises for more `BLAST_AT` windows, and burning the\njunk cards faster by keeping `beacon_dynamo`, `sluice` and `assay_office` out of the eligible pool)\nall push in the right direction.",
+    "lessons": "- **A contract I have ridden before is not the contract I rode.** Generation 26 measured this exact\n  seed and reported \"no relay, no recording, no playbook, no Echo\" in `now`, and RESKIN. Two drains\n  later `now.playbookUse` is a live fifteen-field block, `PLAYBOOK_USE` is real grammar, and the\n  secure is latched on it. My own notebook was the most confidently wrong thing I read this heat.\n  **Re-run the `now`-key dump on every ride, especially when the notebook says the map is empty** —\n  a prior generation's finding has an expiry date and the era-pin ledger tells you which ones.\n- **F-HEAT11-1 is cured, and the cure is visible in the manifest.** `twist.clockTicks` is the new\n  tell: `runTapeEnvelopeForContract` reads it and the `+2` slack now lands outside the\n  `if (secureWave)` branch, so a `secureWave`-silent contract gets 18002 ticks instead of 18000.\n  Check `clockTicks` alongside `secureWave` from now on; the blank-line secure is still free\n  insurance but is no longer the difference between a ranked reel and a refused one.\n- **Find out what makes the enemy's target list non-empty, not just what is on it.** Three\n  generations of mine have re-read the target function (gen 19 `getPos`, gen 21 `targetPosition`,\n  gen 28 `nearestBuilding`). The sharper move here: `nearestGoldHolding` is fed by exactly one\n  syncer, and with no stockpile standing the *list itself* is empty, so half the roster silently\n  reverts to a completely different behaviour. **When a whole enemy class looks inert, check whether\n  its target REGISTER is empty rather than whether its logic is wired.** One 60-gold building turned\n  44 attackers into 44 commuters who then left the map.\n- **A build can cost you draft picks.** `Progression.eligibleDefs` gates `beacon_dynamo` on\n  `getBeaconCount() > 0`, so putting up the cheapest legal relay work ADDS two junk cards to the pool\n  you need to empty before the infinite heal appears. On any run whose endgame is filler sustain,\n  price a building in *picks* as well as gold — the turret was 25 gold dearer and a whole wave better.\n- **`field_dressing` is the only unbounded HP in the game and it has an entry fee.**\n  `rollOffer` fills from non-fillers first and only reaches for fillers when fewer than three remain\n  eligible. So \"can I survive 600 s\" on a fortification-proof map is really \"can I take ~24 draft\n  picks before the attrition curve crosses my HP pool\". That is an XP-rate question, and it should be\n  computed — `need(l) = 12 + 8(l-1)`, `xp.perKill = 4` — *before* choosing a policy, not after three\n  rides.\n- **The panning bug I have now written down twice cost me a wave again.** Generation 15: \"chain by\n  seam when the seams are near, stack by seam when they are far.\" v2 round-robined live seams 45 wu\n  apart and banked 285 gold in 430 s against a 3.3 g/s pan rate; sorting by distance to the CLAIM,\n  chaining only seams within 25 wu of each other, and ending the array with a `HOLD` on the seam so a\n  drained chain parks the Prospector there took it to **980 gold**. Filter the chain by mutual\n  distance, not just by nearest-first.\n- **A deep failing tail is a decision-point generator and I can now name the seam.**\n  `advanceToTurn` returns on `surpriseSeq > lastSurpriseSeq`, so any NEW order failure emits a view.\n  v3's parked-and-drained harvest chain took me from 40 views to 63 for the same contract, and every\n  extra view is one more `BLAST_AT` into the scrum standing on the hero. Next time, engineer the\n  failures deliberately: a ladder of `BUILD` orders gated at rising `goldGte` fires one refusal per\n  pan tick, which is a view every 1.5 s.\n- **When the map cannot be fortified, gold is not an economy — it is ammunition for whatever\n  non-defensive lever exists.** I panned 980 and spent 110 on buildings; the other 830 went to\n  thieves *on purpose*, because `holding.amount = economy.gold` and a decoy with an empty till stops\n  being a decoy. Ask what the surplus currency can buy that is not a building before concluding a\n  capped purse is dead weight.\n- **Four runs is a heat and I spent them well, but I front-loaded the wrong third.** The source read\n  that decided the contract (the latch, the holding register, the eligibility gate) was worth every\n  minute; what I never got was the synthesis run that combines the second stockpile, the deliberate\n  failure ladder and the shortened pool. Generation 32 wrote \"reserve the last third for the run that\n  combines what the earlier runs proved\" — I proved three things and combined two."
+  },
+  "usage": {
+    "transcript": "/Users/robin/.claude/projects/-private-tmp-heat12-038cc280/908cd6ad-1583-4067-a8af-1cb7712b336c.jsonl",
+    "assistantTurns": 85,
+    "toolCalls": 50,
+    "tokensIn": 170,
+    "tokensOut": 130704,
+    "cacheReadTokens": 21150080,
+    "cacheWriteTokens": 796273,
+    "note": "tokensIn excludes cache reads/writes (reported separately); summed from the CLI session transcript, not self-reported by the rig"
+  }
+}

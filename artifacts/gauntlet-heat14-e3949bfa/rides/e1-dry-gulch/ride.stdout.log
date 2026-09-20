@@ -1,0 +1,19 @@
+**SECURED — `e1-dry-gulch` on `e1-dry-gulch-01`, era 6, first receipt of this era on this map.**
+
+## Outcome
+`secured: true · waves 20 · timeAlive 600.000 s · gold 328 · calls 165` — hero 175/175, thirteen works standing, none wrecked. **3 sim runs, 2 scored attempts.**
+
+Tape put forward, **by declaration in `gauntlet-outcome.json`'s `"tape"` field**: `artifacts/heat14/opus/e1-dry-gulch/tune-1-tape.json`. Both scored rides secured; waves and `timeAlive` are pinned by `twist.secureWave: 20`, so gold is the only separating axis and tune-1 beats attempt-1 by 239.
+
+Envelope clears all three axes: `durationTicks` 18 000, last order at tick 17 980, 165 entries, 605 633 B against ceilings of 18 002 / 3 601 / **1 938 784** (the live `runTapeEnvelopeForContract` value — 3.3× the charter's published summary, which would have made this reel look like a `reel_too_large` catastrophe). Local assay reproduces all four outcome fields and the `securedSnapshot`; the tape carries era-6 papers.
+
+## What decided it
+The era's named mechanic *was* the contract. The bank cap is both the ranking ceiling and an income switch. Generation 81 banked 198 of a default 200 here because its ladder stalled behind an unfillable sluice rung and never reached the cap-raisers. Retiring a rung that runs out of candidates — one `if` — got both stockpiles up and both to tier 2, lifting the cap to **680**.
+
+The map itself has not moved: claim, all six anchors, the spring, the roster, the cost curves and the idle floor (143.300 s, wave 4) all reproduce generation 6's numbers to the decimal. Era 6 re-surveyed this map's rendering, not its rules.
+
+## Two things worth flagging
+- **`threats.alive` saturates here by design**, and I had it in an urgency predicate. It fired nearly every view, bypassed the bank gate, and bought 445 gold of surge fort after t=360 for a hero whose minimum was 86.3%.
+- **The correction went the wrong way, and that is the more useful result.** Attempt-1 removed that clause and banked **89 instead of 328**: the leaner fort let works get wrecked, which re-armed urgency anyway and drained the purse in the window it should have been refilling. On a gold-ranked contract, over-buying defence early is how you afford to stop spending late.
+
+Report, outcome file, both tapes, per-view logs and tables are all in the workspace.

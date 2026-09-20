@@ -1,0 +1,15 @@
+# Land Yacht — rigid target fit is feasible, timing still matters
+
+2026-09-08. Offline measurement against candidate GLB `3b1d1f8d961eca86de34d37e9378c23da24314cb8552546bb9733fec80721a29`; no runtime source, route or collision changes.
+
+The proposed radius-24 rotating formation places the three target centers at body-chord coordinates wheels `(-3.487607, 0)`, crane `(0, +0.254756)`, wheelhouse `(+3.487607, 0)`. Positive local Z is outward from the orbit center. The script checks that sign against actual rotated orbit coordinates, avoiding a mirrored fit.
+
+`measure-candidate-fit.mjs` uses the installed glTF Transform reader, the exact indexed component triangles and each exported damage morph. It evaluates 1,257 deterministic samples in each radius-0.9 target disk, measuring the union of that component's projected XZ triangles. An enclosing-triangle positive check and displaced-disk negative check both pass. It explores 715 fixed scale/offset pairs; it does not change the model or targets.
+
+A **fixed uniform scale of 1.4** and a model-origin offset of **(+1.25, +0.15)** in body XZ from the wheels/wheelhouse midpoint cover every sampled point in all three disks, intact and damaged. This is a viable initial calibration for the browser, not a final runtime choice. The node called `wheels` includes the hull as well as the six wheels: coverage is component geometry coverage, not proof that every shot points at a tire center. Screen-space visibility and own-zone identity still need visual inspection.
+
+At the actual E4 speed of 12.5664 units/second and 30 Hz, one tick is about0.419 units. A forward/backward translation sensitivity check drops the scale1.4 candidate to **91.57% wheels** in one direction and **75.89% crane** in the other. This is not a curved-route replay, but it shows why a visually stale pose matters. Scale1.5 with offset(+1.5,+0.15) gives more margin (99.84% wheels and91.65% crane in those checks), yet enlarging the model should not be used as the default cure for a stale presentation pose.
+
+Current code provides a useful seam: `EnemyPool.renderPositionOf` returns interpolated actor positions. `Game.applyRenderInterpolation` calls the enemy interpolation before rendering, whereas `LandYachtBossSystem.update` currently runs before `EnemyPool.update` in the simulation tick. During `EnemyPool.applyRenderInterpolation`, positions are stored before `syncRenderInstances` invokes the boss-model-bounds callback; the original simulation positions are restored afterward. A bounded presentation sync can use that existing render-position seam and must keep the HP bar in the same pose. Do not change simulation positions from a rendering callback. Fully defeated wrecks still need a stable saved pose because they no longer have a live boss bar.
+
+Still unproved: polygon-edge contraction, actual entry/reversal timing, terrain tilt/support, camera visibility, live damage/death-order behavior, loader timing, saved formation adoption and fresh-page restore. The unchanged boss/census/story tests and actual browser target-fit checks remain required. Full evidence is in `candidate-validation/formation-fit-search.json`.

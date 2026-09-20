@@ -1,0 +1,51 @@
+{
+  "secured": true,
+  "waves": 20,
+  "timeMs": 600000,
+  "gold": 110,
+  "kills": 903,
+  "calls": 75,
+  "defaultedPicks": 0,
+  "defaultedSecure": 1,
+  "eventLogHash": "fnv1a32:ea5b188c",
+  "tape": "/tmp/heat13-569a41f9/artifacts/heat13/opus/e7-relay-valley/attempt-1-tape.json",
+  "scored": true,
+  "runsSoFar": 2,
+  "scoredAttempts": 1,
+  "worldModel": "sim-import",
+  "note": "SECURED on the first controller ride (tune-1). attempt-1-tape.json is a byte-identical copy of tune-1-tape.json: ONE ride under two filenames, promoted by name per the brief. Stopped at the first secured outcome per the stop rule. Tape header eventLogHash is fnv1a32:41eea3b5 (the tape's own hash, different by design from the stdout outcome line's fnv1a32:ea5b188c; an assayer replay must match the TAPE's).",
+  "envelope": {
+    "durationTicks": 18000,
+    "lastEntryTick": 17915,
+    "entries": 75,
+    "bytes": 263853,
+    "clear": "all three axes inside their ceilings"
+  },
+  "eraPapers": {
+    "engineHash": "09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4",
+    "era": 5,
+    "viewVersion": 2,
+    "buildId": "1894581f2"
+  },
+  "eraGate": {
+    "objective": "relay",
+    "objectiveMet": true,
+    "latchedAtSeconds": 14.73,
+    "relaysLitByProgram": ["relay-site-r3"],
+    "uses": 1,
+    "repeats": 0,
+    "programRuns": 1,
+    "refusals": { "suppressed": 0, "muted": 0, "unrecorded": 0 }
+  },
+  "margin": {
+    "heroMinHp": 371.0,
+    "heroMinFraction": 0.781,
+    "heroFinal": "371/475 at level 28",
+    "worksEverWrecked": 0,
+    "goldStolen": 0,
+    "goldPanned": 780,
+    "peakThreatsAlive": 51,
+    "finalWorks": { "turret": 4, "sentry_beacon": 6 }
+  },
+  "localAssay": "not run: scripts/assay-replay-agent.mjs could not resolve its own vite root in this arena (ENOENT scripts/asset-diet.mjs). The reel carries current-era papers and clears all three envelope axes; determinism is unverified locally."
+}

@@ -1,0 +1,21 @@
+**SECURED — `e4-gusher-county` on `e4-gusher-county-01`, trail, first ride of the scored attempt.**
+
+```
+{"secured":true,"waves":12,"timeMs":360000,"gold":80,"kills":416,"calls":30,
+ "eventLogHash":"fnv1a32:3f60a63c",
+ "motor":{"arrivedAt":107.133,"fuelDrawn":31.135,"roadDistance":223.179,
+          "delivered":["camp-to-west-lease","camp-to-east-lease","camp-to-north-lease"]}}
+```
+
+Tape: `artifacts/heat11/opus/e4-gusher-county/attempt-1-tape.json` — 30 entries, viewVersion 2, era `49c34f8b…`, contract/seed stamped correctly. **5 sim runs, 1 scored attempt.** Stopped on the first secure.
+
+**What decided it.** Two facts the manifest does not tell you:
+
+1. The county authors five `tarSeams`, but the fuel system uses `Balance.e4Fuel.nodePositions` — the *default* three on the camp line. The run holds **36 fuel, full stop**, and the view says so where the manifest misleads.
+2. `closures: true` is the contract. `MotorSocket.syncClosures` washes out `corridorIds[floor(t/30) % 3]` while `t mod 30 ∈ [10,22)`, and `movementAt` then strips the road bonus — so the 38 wu north lease costs **2.03 fuel graded and 18 driven closed**. Tunes 1 and 2 both ran the tank dry on exactly that leg. Gating every `HAUL` hard on the closure clock is what secured it, with 4.87 fuel to spare.
+
+One self-inflicted detour worth flagging: my first fix also refused to dispatch into a *storm*, using a guessed walking speed to predict arrival. The prediction was wrong whenever the Prospector was out at a seam, and the errand deadlocked for 170 seconds — that run reached wave 14 with the objective unmet. Soft gates only fire when the prediction is exact.
+
+**On the audit note:** the county measured this contract as RESKIN, "no E4 system composed headless." That is out of date on this build. `now.motor.objective.arrived` gates the secure, three graded corridors and a storm-driven closure schedule are live and readable, and the fuel leash forced real distance arithmetic before I wrote an order. The fair qualifier is that the errand latched at t=107 of a 360-second run; waves 4–12 were ordinary survival on a 55–65 wu seam commute.
+
+`gauntlet-outcome.json` and `gauntlet-report.md` are on disk with the four sections for you to copy verbatim. Report worth reading in full — the "What the map asked" paragraph is evidence for the reskin ladder either way.

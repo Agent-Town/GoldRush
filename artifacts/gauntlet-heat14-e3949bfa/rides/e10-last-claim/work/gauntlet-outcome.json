@@ -1,0 +1,39 @@
+{
+ "secured": true,
+ "waves": 8,
+ "timeMs": 240033,
+ "gold": 90,
+ "kills": 204,
+ "calls": 37,
+ "defaultedPicks": 0,
+ "defaultedSecure": 1,
+ "eventLogHash": "fnv1a32:ace5075d",
+ "tape": "/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/heat14/opus/e10-last-claim/attempt-1-tape.json",
+ "scored": true,
+ "runsSoFar": 2,
+ "scoredAttempts": 1,
+ "worldModel": "sim-import",
+ "note": "ONE RIDE UNDER TWO FILENAMES. tune-1-tape.json secured on the first controller; per the stop rule the heat ends there, so it was promoted by name. attempt-1-tape.json is a byte-identical copy (91290 bytes both). The operator reads THIS `tape` field, never the filename.",
+ "preserve": {
+  "hp": 360,
+  "maxHp": 360,
+  "minHpAcrossAllViews": 360,
+  "note": "The warm vent was never damaged: preserve.hp read 360 in all 39 views. This contract is ranked by preservation waves, then preservation health, then survival, never gold - so w8 / 360 of 360 / 240.033s is the arithmetic maximum on every ranked axis."
+ },
+ "envelope": {
+  "durationTicks": 7201,
+  "lastEntryTick": 7186,
+  "maxTicks": 18002,
+  "entries": 37,
+  "maxEntries": 3601,
+  "bytes": 91290,
+  "byteCeilingApprox": 1938784,
+  "note": "All three axes measured off the first reel that existed, from runTapeEnvelopeForContract, not the charter's summary of it."
+ },
+ "assay": {
+  "control": "probe-idle-tape.json replayed to its own header fnv1a32:a45ba9ac - instrument verified on a run I could not have influenced",
+  "reel": "attempt-1-tape.json replayed to fnv1a32:d7ecafcf, matching the TAPE HEADER's hash (the stdout outcome line's fnv1a32:ace5075d is a different number by design)",
+  "securedSnapshot": { "waves": 8, "gold": 90, "timeAlive": 240.033 },
+  "verdict": "determinism verified locally; securedSnapshot.gold equals the declared gold, so no score_mismatch exposure"
+ }
+}

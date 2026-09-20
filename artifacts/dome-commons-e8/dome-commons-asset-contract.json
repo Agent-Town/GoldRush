@@ -1,0 +1,276 @@
+{
+  "blender": "5.1.2",
+  "baseSha": "2736e176d69226d40603889ee3e1aa07db623784",
+  "checked": {
+    "sha256": "053bf554ed369ef35a532c1b5847d14469d4f661e27867678a3dc56f88fbe081",
+    "bytes": 1932620,
+    "nodes": [
+      "DomeCommonsPlate"
+    ],
+    "meshes": 1,
+    "primitives": 1,
+    "triangles": 13108,
+    "materials": 1,
+    "textures": 1,
+    "images": 1,
+    "embeddedImages": 1,
+    "imageDimensions": [
+      [
+        2048,
+        2048
+      ]
+    ],
+    "cameras": 0,
+    "lights": 0,
+    "animations": 0,
+    "bounds": {
+      "min": [
+        -24.784588,
+        -0.78,
+        -25.091667
+      ],
+      "max": [
+        24.89632,
+        13.22,
+        24.508331
+      ],
+      "size": [
+        49.680908,
+        14.0,
+        49.599998
+      ],
+      "center": [
+        0.055866,
+        6.22,
+        -0.291668
+      ]
+    },
+    "materialContract": [
+      {
+        "metallicFactor": 0,
+        "roughnessFactor": 0.8999999761581421,
+        "hasBaseColorTexture": true,
+        "hasEmissiveTexture": false,
+        "emissiveFactor": [
+          0,
+          0,
+          0
+        ],
+        "alphaMode": "MASK",
+        "alphaCutoff": 0.5,
+        "doubleSided": true
+      }
+    ]
+  },
+  "reexported": {
+    "sha256": "053bf554ed369ef35a532c1b5847d14469d4f661e27867678a3dc56f88fbe081",
+    "bytes": 1932620,
+    "nodes": [
+      "DomeCommonsPlate"
+    ],
+    "meshes": 1,
+    "primitives": 1,
+    "triangles": 13108,
+    "materials": 1,
+    "textures": 1,
+    "images": 1,
+    "embeddedImages": 1,
+    "imageDimensions": [
+      [
+        2048,
+        2048
+      ]
+    ],
+    "cameras": 0,
+    "lights": 0,
+    "animations": 0,
+    "bounds": {
+      "min": [
+        -24.784588,
+        -0.78,
+        -25.091667
+      ],
+      "max": [
+        24.89632,
+        13.22,
+        24.508331
+      ],
+      "size": [
+        49.680908,
+        14.0,
+        49.599998
+      ],
+      "center": [
+        0.055866,
+        6.22,
+        -0.291668
+      ]
+    },
+    "materialContract": [
+      {
+        "metallicFactor": 0,
+        "roughnessFactor": 0.8999999761581421,
+        "hasBaseColorTexture": true,
+        "hasEmissiveTexture": false,
+        "emissiveFactor": [
+          0,
+          0,
+          0
+        ],
+        "alphaMode": "MASK",
+        "alphaCutoff": 0.5,
+        "doubleSided": true
+      }
+    ]
+  },
+  "byteIdentical": true,
+  "semanticIdentical": {
+    "nodes": true,
+    "meshes": true,
+    "primitives": true,
+    "triangles": true,
+    "materials": true,
+    "textures": true,
+    "images": true,
+    "embeddedImages": true,
+    "imageDimensions": true,
+    "cameras": true,
+    "lights": true,
+    "animations": true,
+    "bounds": true,
+    "materialContract": true
+  },
+  "threeRuntimeMaterial": {
+    "transparent": false,
+    "depthWrite": true,
+    "alphaTest": 0.5,
+    "doubleSided": true
+  },
+  "realizedSurface": {
+    "surface": "saved dome-commons-plate.blend ground ray-cast from inside the air wall",
+    "routeSamples": 1061,
+    "routeMaxAbs": 0.03438630700111389,
+    "plazaSamples": 749,
+    "plazaMaxAbs": 0.03221386671066284,
+    "routes": {
+      "ring-road": {
+        "samples": 385,
+        "min": -0.006997019052505493,
+        "max": -0.00591278076171875,
+        "maxAbs": 0.006997019052505493
+      },
+      "tavern": {
+        "samples": 73,
+        "min": -0.00700002908706665,
+        "max": 0.02162832021713257,
+        "maxAbs": 0.02162832021713257
+      },
+      "claim_office": {
+        "samples": 73,
+        "min": -0.006999999284744263,
+        "max": 0.02162829041481018,
+        "maxAbs": 0.02162829041481018
+      },
+      "general_store": {
+        "samples": 79,
+        "min": -0.00700002908706665,
+        "max": 0.03103920817375183,
+        "maxAbs": 0.03103920817375183
+      },
+      "schoolhouse": {
+        "samples": 73,
+        "min": -0.006999999284744263,
+        "max": 0.020658791065216064,
+        "maxAbs": 0.020658791065216064
+      },
+      "assay_office": {
+        "samples": 73,
+        "min": -0.006999999284744263,
+        "max": 0.020658820867538452,
+        "maxAbs": 0.020658820867538452
+      },
+      "chapel": {
+        "samples": 75,
+        "min": -0.00700002908706665,
+        "max": 0.03438630700111389,
+        "maxAbs": 0.03438630700111389
+      },
+      "stamp-mill": {
+        "samples": 79,
+        "min": -0.006999999284744263,
+        "max": 0.025938838720321655,
+        "maxAbs": 0.025938838720321655
+      },
+      "gate": {
+        "samples": 151,
+        "min": -0.007000058889389038,
+        "max": 0.012000083923339844,
+        "maxAbs": 0.012000083923339844
+      }
+    },
+    "canonicalPads": {
+      "tavern": {
+        "samples": 99,
+        "min": -0.0018700659275054932,
+        "max": 0.0009537041187286377,
+        "maxAbs": 0.0018700659275054932
+      },
+      "claim_office": {
+        "samples": 99,
+        "min": -0.00032407045364379883,
+        "max": 0.0004177689552307129,
+        "maxAbs": 0.0004177689552307129
+      },
+      "general_store": {
+        "samples": 99,
+        "min": -0.0011657476425170898,
+        "max": 5.960464477539063e-08,
+        "maxAbs": 0.0011657476425170898
+      },
+      "schoolhouse": {
+        "samples": 99,
+        "min": -0.0028478503227233887,
+        "max": 0.0003978908061981201,
+        "maxAbs": 0.0028478503227233887
+      },
+      "assay_office": {
+        "samples": 99,
+        "min": -0.0040392279624938965,
+        "max": 0.0003033578395843506,
+        "maxAbs": 0.0040392279624938965
+      },
+      "chapel": {
+        "samples": 99,
+        "min": -0.003179103136062622,
+        "max": 0.0008403956890106201,
+        "maxAbs": 0.003179103136062622
+      },
+      "stamp-mill": {
+        "samples": 99,
+        "min": -0.0006250739097595215,
+        "max": 0.001269996166229248,
+        "maxAbs": 0.001269996166229248
+      },
+      "dynamo-hall": {
+        "samples": 99,
+        "min": -0.007154136896133423,
+        "max": 5.960464477539063e-08,
+        "maxAbs": 0.007154136896133423
+      }
+    },
+    "orbitalPads": {
+      "orbital-pad-port": {
+        "samples": 289,
+        "min": -5.960464477539063e-08,
+        "max": 0.022809624671936035,
+        "maxAbs": 0.022809624671936035
+      },
+      "orbital-pad-starboard": {
+        "samples": 197,
+        "min": -0.015589743852615356,
+        "max": 0.02650853991508484,
+        "maxAbs": 0.02650853991508484
+      }
+    }
+  }
+}

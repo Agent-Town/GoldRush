@@ -1,0 +1,265 @@
+{
+  "framing": "Hero at ship center +9Z, default camera and HUD.",
+  "base": "http://127.0.0.1:5246",
+  "source": {
+    "assets/pilots/dredge-queen-3d/dredge-queen-detail-opus5.glb": "f66ba8b7e03fd8997d4c94c18abc6630c9848c0a6d857c38c5ef0f6a594d7c42",
+    "src/systems/DredgeQueenBossSystem.ts": "35270986271af690a6c68956a268727f38c86313c34d586723a1df33a8bd0e32",
+    "vite.config.ts": "2b275b2f6d9c59fb2564ecd34886671dd2965ff4d74352955eae8c559fdfb832",
+    "src/game/Game.ts": "900b03f23b083c0296ad0fc1af402ea9b00697a6c4d3815c61837a67f6a65bb6"
+  },
+  "adoption": [
+    {
+      "production": "assets/pilots/dredge-queen-3d/dredge-queen-detail-opus5.glb",
+      "equal": true,
+      "candidateSha256": "f66ba8b7e03fd8997d4c94c18abc6630c9848c0a6d857c38c5ef0f6a594d7c42"
+    },
+    {
+      "production": "src/systems/DredgeQueenBossSystem.ts",
+      "equal": true,
+      "candidateSha256": "35270986271af690a6c68956a268727f38c86313c34d586723a1df33a8bd0e32"
+    },
+    {
+      "production": "vite.config.ts",
+      "equal": true,
+      "candidateSha256": "2b275b2f6d9c59fb2564ecd34886671dd2965ff4d74352955eae8c559fdfb832"
+    },
+    {
+      "production": "src/game/Game.ts",
+      "equal": true,
+      "candidateSha256": "900b03f23b083c0296ad0fc1af402ea9b00697a6c4d3815c61837a67f6a65bb6"
+    }
+  ],
+  "cases": [
+    {
+      "mode": "reset",
+      "before": {
+        "diagnostics": {
+          "active": true,
+          "act": 1,
+          "stormFrontWave": 1,
+          "approaching": false,
+          "anchored": true,
+          "anchor": {
+            "x": 36,
+            "z": -20
+          },
+          "clawCycleProgress": 0.17,
+          "clawCycles": 0,
+          "clawInterrupts": 0,
+          "holdLoot": 0,
+          "livePaddles": 2,
+          "act2Locked": true,
+          "repositions": 0,
+          "swatTelegraphed": false,
+          "swats": 0,
+          "escortMultiplier": 1,
+          "escortSkiffs": 3,
+          "escortsExiting": false,
+          "escortsExited": 0,
+          "spillPickups": 0,
+          "crewQuit": false,
+          "hulkPresent": false,
+          "persistentWreck": false
+        },
+        "serial": 1,
+        "state": "loading",
+        "model": false,
+        "meshes": 0,
+        "modelChildren": 0,
+        "primitiveVisible": true,
+        "morphs": {}
+      },
+      "after": {
+        "resetTrace": [
+          {
+            "before": "off",
+            "after": "off",
+            "started": true,
+            "serial": 2
+          },
+          {
+            "before": "off",
+            "after": "off",
+            "started": true,
+            "serial": 2
+          }
+        ],
+        "diagnostics": {
+          "active": false,
+          "act": 0,
+          "stormFrontWave": null,
+          "approaching": false,
+          "anchored": false,
+          "anchor": {
+            "x": 36,
+            "z": -20
+          },
+          "clawCycleProgress": 0,
+          "clawCycles": 0,
+          "clawInterrupts": 0,
+          "holdLoot": 0,
+          "livePaddles": 2,
+          "act2Locked": true,
+          "repositions": 0,
+          "swatTelegraphed": false,
+          "swats": 0,
+          "escortMultiplier": 1,
+          "escortSkiffs": 0,
+          "escortsExiting": false,
+          "escortsExited": 0,
+          "spillPickups": 0,
+          "crewQuit": false,
+          "hulkPresent": false,
+          "persistentWreck": false
+        },
+        "serial": 2,
+        "state": "off",
+        "model": false,
+        "meshes": 0,
+        "modelChildren": 0,
+        "primitiveVisible": false,
+        "morphs": {}
+      },
+      "requests": 1
+    },
+    {
+      "mode": "loaded-reset",
+      "before": {
+        "diagnostics": {
+          "active": true,
+          "act": 1,
+          "stormFrontWave": 1,
+          "approaching": false,
+          "anchored": true,
+          "anchor": {
+            "x": 36,
+            "z": -20
+          },
+          "clawCycleProgress": 0.17,
+          "clawCycles": 0,
+          "clawInterrupts": 0,
+          "holdLoot": 0,
+          "livePaddles": 2,
+          "act2Locked": true,
+          "repositions": 0,
+          "swatTelegraphed": false,
+          "swats": 0,
+          "escortMultiplier": 1,
+          "escortSkiffs": 3,
+          "escortsExiting": false,
+          "escortsExited": 0,
+          "spillPickups": 0,
+          "crewQuit": false,
+          "hulkPresent": false,
+          "persistentWreck": false
+        },
+        "serial": 1,
+        "state": "ready",
+        "model": true,
+        "meshes": 4,
+        "modelChildren": 1,
+        "primitiveVisible": false,
+        "morphs": {
+          "claw": 0,
+          "paddle_port": 0,
+          "paddle_starboard": 0,
+          "hold": 0
+        }
+      },
+      "after": {
+        "resetTrace": [
+          {
+            "before": "off",
+            "after": "off",
+            "started": true,
+            "serial": 2
+          },
+          {
+            "before": "off",
+            "after": "off",
+            "started": true,
+            "serial": 2
+          }
+        ],
+        "diagnostics": {
+          "active": false,
+          "act": 0,
+          "stormFrontWave": null,
+          "approaching": false,
+          "anchored": false,
+          "anchor": {
+            "x": 36,
+            "z": -20
+          },
+          "clawCycleProgress": 0,
+          "clawCycles": 0,
+          "clawInterrupts": 0,
+          "holdLoot": 0,
+          "livePaddles": 2,
+          "act2Locked": true,
+          "repositions": 0,
+          "swatTelegraphed": false,
+          "swats": 0,
+          "escortMultiplier": 1,
+          "escortSkiffs": 0,
+          "escortsExiting": false,
+          "escortsExited": 0,
+          "spillPickups": 0,
+          "crewQuit": false,
+          "hulkPresent": false,
+          "persistentWreck": false
+        },
+        "serial": 2,
+        "state": "off",
+        "model": false,
+        "meshes": 0,
+        "modelChildren": 0,
+        "primitiveVisible": false,
+        "morphs": {}
+      },
+      "disposals": [
+        {
+          "type": "geometry",
+          "count": 1
+        },
+        {
+          "type": "material",
+          "count": 1
+        },
+        {
+          "type": "texture",
+          "count": 8
+        },
+        {
+          "type": "geometry",
+          "count": 1
+        },
+        {
+          "type": "material",
+          "count": 1
+        },
+        {
+          "type": "geometry",
+          "count": 1
+        },
+        {
+          "type": "material",
+          "count": 1
+        },
+        {
+          "type": "geometry",
+          "count": 1
+        },
+        {
+          "type": "material",
+          "count": 1
+        }
+      ],
+      "requests": 1
+    }
+  ],
+  "errors": [],
+  "servedAssets": [],
+  "passed": true,
+  "scope": "Actual-game loader failure, delayed-load damage, reset cancellation and disposal checks. Not a performance benchmark or full save/resume equivalence."
+}

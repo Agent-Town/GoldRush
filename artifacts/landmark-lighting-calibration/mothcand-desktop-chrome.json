@@ -1,0 +1,262 @@
+[
+  {
+    "scene": "e3-moth-season",
+    "contract": "e3-moth-season",
+    "project": "desktop-chrome",
+    "phase": "mothcand",
+    "query": "",
+    "focusMount": "north-migration-watch-gate",
+    "standoff": [
+      0,
+      9
+    ],
+    "frameMedianLuminance": 0.0537,
+    "terrainMedianLuminance": 0.9323,
+    "landmarkMedianLuminance": 0.0924,
+    "landmarkAllMountsMedian": 0.0899,
+    "heroLuminance": 0.044,
+    "landmarkOverTerrain": 0.099,
+    "emissiveIntensity": [
+      {
+        "id": "north-migration-watch-gate",
+        "range": [
+          3,
+          3
+        ]
+      },
+      {
+        "id": "south-quiet-road-gate",
+        "range": [
+          3,
+          3
+        ]
+      },
+      {
+        "id": "west-lamplighter-refuge",
+        "range": [
+          3,
+          3
+        ]
+      },
+      {
+        "id": "east-tithe-bell-house",
+        "range": [
+          3,
+          3
+        ]
+      },
+      {
+        "id": "mothglass-counting-cage",
+        "range": [
+          3,
+          3
+        ]
+      }
+    ],
+    "sideCensus": "{\"total\":{\"meshes\":5,\"closed\":5,\"open\":0,\"culled\":5,\"doubleSided\":0},\"mounts\":[{\"id\":\"north-migration-watch-gate\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.625,\"topY\":8.545},{\"id\":\"south-quiet-road-gate\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.527,\"topY\":4.427},{\"id\":\"west-lamplighter-refuge\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":2.284,\"topY\":6.801},{\"id\":\"east-tithe-bell-house\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":2.748,\"topY\":9.898},{\"id\":\"mothglass-counting-cage\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.397,\"topY\":5.963}]}",
+    "p95Ms": 10.2,
+    "screenshot": "artifacts/landmark-lighting-calibration/mothcand-e3-moth-season-desktop-chrome.png",
+    "probes": [
+      {
+        "id": "north-migration-watch-gate@0.30h",
+        "family": "landmark",
+        "x": 640,
+        "y": 520.3,
+        "inView": true,
+        "luminance": 0.2401
+      },
+      {
+        "id": "north-migration-watch-gate@0.42h",
+        "family": "landmark",
+        "x": 640,
+        "y": 500.5,
+        "inView": true,
+        "luminance": 0.0445
+      },
+      {
+        "id": "north-migration-watch-gate@0.55h",
+        "family": "landmark",
+        "x": 640,
+        "y": 477.8,
+        "inView": true,
+        "luminance": 0.0434
+      },
+      {
+        "id": "north-migration-watch-gate@0.68h",
+        "family": "landmark",
+        "x": 640,
+        "y": 453.8,
+        "inView": true,
+        "luminance": 0.0924
+      },
+      {
+        "id": "south-quiet-road-gate@0.30h",
+        "family": "landmark",
+        "x": 640,
+        "y": -352.5,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "south-quiet-road-gate@0.42h",
+        "family": "landmark",
+        "x": 640,
+        "y": -359.5,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "south-quiet-road-gate@0.55h",
+        "family": "landmark",
+        "x": 640,
+        "y": -367.2,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "south-quiet-road-gate@0.68h",
+        "family": "landmark",
+        "x": 640,
+        "y": -374.9,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "west-lamplighter-refuge@0.30h",
+        "family": "landmark",
+        "x": -80.9,
+        "y": -156,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "west-lamplighter-refuge@0.42h",
+        "family": "landmark",
+        "x": -86.4,
+        "y": -166.9,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "west-lamplighter-refuge@0.55h",
+        "family": "landmark",
+        "x": -92.5,
+        "y": -178.8,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "west-lamplighter-refuge@0.68h",
+        "family": "landmark",
+        "x": -98.6,
+        "y": -191,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "east-tithe-bell-house@0.30h",
+        "family": "landmark",
+        "x": 1373.8,
+        "y": -181.4,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "east-tithe-bell-house@0.42h",
+        "family": "landmark",
+        "x": 1382.8,
+        "y": -199.4,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "east-tithe-bell-house@0.55h",
+        "family": "landmark",
+        "x": 1392.9,
+        "y": -219.3,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "east-tithe-bell-house@0.68h",
+        "family": "landmark",
+        "x": 1403.2,
+        "y": -239.8,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "mothglass-counting-cage@0.30h",
+        "family": "landmark",
+        "x": 640,
+        "y": 377.4,
+        "inView": true,
+        "luminance": 0.0504
+      },
+      {
+        "id": "mothglass-counting-cage@0.42h",
+        "family": "landmark",
+        "x": 640,
+        "y": 363.3,
+        "inView": true,
+        "luminance": 0.0555
+      },
+      {
+        "id": "mothglass-counting-cage@0.55h",
+        "family": "landmark",
+        "x": 640,
+        "y": 347.5,
+        "inView": true,
+        "luminance": 0.1069
+      },
+      {
+        "id": "mothglass-counting-cage@0.68h",
+        "family": "landmark",
+        "x": 640,
+        "y": 331.1,
+        "inView": true,
+        "luminance": 0.0899
+      },
+      {
+        "id": "ground5_5",
+        "family": "terrain",
+        "x": 832.8,
+        "y": 733.1,
+        "inView": true,
+        "luminance": 0.9175
+      },
+      {
+        "id": "ground-5_5",
+        "family": "terrain",
+        "x": 447.2,
+        "y": 733.1,
+        "inView": true,
+        "luminance": 0.9517
+      },
+      {
+        "id": "ground0_6",
+        "family": "terrain",
+        "x": 640,
+        "y": 771.5,
+        "inView": true,
+        "luminance": 0.9323
+      },
+      {
+        "id": "ground5_-5",
+        "family": "terrain",
+        "x": 795.7,
+        "y": 430.5,
+        "inView": true,
+        "luminance": 0.0835
+      },
+      {
+        "id": "hero",
+        "family": "hero",
+        "x": 640,
+        "y": 476.3,
+        "inView": true,
+        "luminance": 0.044
+      }
+    ]
+  }
+]

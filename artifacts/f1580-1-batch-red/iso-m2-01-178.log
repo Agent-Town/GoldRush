@@ -1,0 +1,92 @@
+=== iso-m2-01-178: e2e/m2-01-build-menu.spec.ts:178 [mobile-chrome] x10 ===
+
+Running 10 tests using 1 worker
+
+  ✓   1 [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining (2.7s)
+  ✓   2 [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining (2.8s)
+  ✘   3 [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining (18.9s)
+  ✓   4 [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining (2.7s)
+  ✓   5 [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining (2.7s)
+  ✓   6 [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining (2.8s)
+  ✓   7 [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining (2.8s)
+  ✘   8 [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining (18.7s)
+  ✓   9 [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining (2.8s)
+  ✓  10 [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining (2.7s)
+
+
+  1) [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+    Call Log:
+    - Timeout 5000ms exceeded while waiting on the predicate
+
+      82 |
+      83 | async function placeSelected(page: Page, id: BuildableId): Promise<void> {
+    > 84 |   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.ghostValid ?? false)).toBe(true);
+         |                                                                                                              ^
+      85 |   const before = await buildableCount(page, id);
+      86 |   await page.keyboard.press('Enter');
+      87 |   await expect.poll(() => buildableCount(page, id)).toBe(before + 1);
+        at placeSelected (/Users/robin/Claude/Projects/Gold Rush/gate-s1581/e2e/m2-01-build-menu.spec.ts:84:110)
+        at placeBuildableAt (/Users/robin/Claude/Projects/Gold Rush/gate-s1581/e2e/m2-01-build-menu.spec.ts:80:9)
+        at /Users/robin/Claude/Projects/Gold Rush/gate-s1581/e2e/m2-01-build-menu.spec.ts:191:3
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/m2-01-build-menu-palisade--49d2a-llowing-edge-touch-chaining-mobile-chrome-repeat2/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/m2-01-build-menu-palisade--49d2a-llowing-edge-touch-chaining-mobile-chrome-repeat2/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/m2-01-build-menu-palisade--49d2a-llowing-edge-touch-chaining-mobile-chrome-repeat2/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/m2-01-build-menu-palisade--49d2a-llowing-edge-touch-chaining-mobile-chrome-repeat2/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+    Call Log:
+    - Timeout 5000ms exceeded while waiting on the predicate
+
+      82 |
+      83 | async function placeSelected(page: Page, id: BuildableId): Promise<void> {
+    > 84 |   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.ghostValid ?? false)).toBe(true);
+         |                                                                                                              ^
+      85 |   const before = await buildableCount(page, id);
+      86 |   await page.keyboard.press('Enter');
+      87 |   await expect.poll(() => buildableCount(page, id)).toBe(before + 1);
+        at placeSelected (/Users/robin/Claude/Projects/Gold Rush/gate-s1581/e2e/m2-01-build-menu.spec.ts:84:110)
+        at placeBuildableAt (/Users/robin/Claude/Projects/Gold Rush/gate-s1581/e2e/m2-01-build-menu.spec.ts:80:9)
+        at /Users/robin/Claude/Projects/Gold Rush/gate-s1581/e2e/m2-01-build-menu.spec.ts:191:3
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/m2-01-build-menu-palisade--49d2a-llowing-edge-touch-chaining-mobile-chrome-repeat7/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/m2-01-build-menu-palisade--49d2a-llowing-edge-touch-chaining-mobile-chrome-repeat7/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/m2-01-build-menu-palisade--49d2a-llowing-edge-touch-chaining-mobile-chrome-repeat7/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/m2-01-build-menu-palisade--49d2a-llowing-edge-touch-chaining-mobile-chrome-repeat7/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining 
+    [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining 
+  8 passed (1.5m)
+
+=== rc=1 elapsed=91.4s ===

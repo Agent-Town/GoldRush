@@ -1,0 +1,102 @@
+{
+  "rig": "opus",
+  "contract": "e1-twin-banks",
+  "model": "claude-opus-5",
+  "sessionId": "5c6b4acd-273c-489f-b9a2-54c727ab5d3b",
+  "startedAt": "2026-09-03T15:37:05.965Z",
+  "endedAt": "2026-09-03T15:48:24.861Z",
+  "wallClockSeconds": 679,
+  "wallHit": false,
+  "exitCode": 0,
+  "signal": null,
+  "setupToFirstOutputSeconds": 60,
+  "arenaTrackedChanges": [],
+  "workspaceFiles": [
+    "attempt-1-full.json",
+    "attempt-1-tape.json",
+    "gauntlet-outcome.json",
+    "gauntlet-report.md",
+    "policy-v1.mjs",
+    "probe-idle-full.json",
+    "probe-idle.json",
+    "run.mjs",
+    "tune-1-full.json",
+    "tune-1.json"
+  ],
+  "outcome": {
+    "secured": true,
+    "waves": 20,
+    "timeMs": 600000,
+    "gold": 200,
+    "kills": 920,
+    "calls": 118,
+    "defaultedPicks": 0,
+    "defaultedSecure": 0,
+    "eventLogHash": "fnv1a32:ce442a62",
+    "tape": "/tmp/heat11-5e7a7c0b/artifacts/heat11/opus/e1-twin-banks/attempt-1-tape.json",
+    "scored": true,
+    "runsSoFar": 3,
+    "scoredAttempts": 1,
+    "worldModel": "sim-import",
+    "note": "tune-1 secured on its first ride; the identical controller was re-ridden as attempt-1-tape.json and reproduced eventLogHash fnv1a32:ce442a62 and the whole outcome bit for bit. Put forward: attempt-1-tape.json."
+  },
+  "outcomeError": null,
+  "scoredTapes": [
+    {
+      "file": "attempt-1-tape.json",
+      "id": "agent-53894abf-fdfce405-e8f7-4a36-b23b-43e35bd42d97",
+      "contract": "e1-twin-banks",
+      "seed": "e1-twin-banks-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "5e7a7c0ba",
+        "engineHash": "a607a81f44e10dc2b2262682c1e116c15917edffeeaa0c5909f383ccea5d8e04",
+        "era": 5,
+        "viewVersion": 1
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 20,
+        "timeAlive": 600,
+        "gold": 200
+      },
+      "entries": 118
+    }
+  ],
+  "otherSecuredTapes": [
+    {
+      "file": "tune-1.json",
+      "id": "agent-53894abf-39b2f6ea-ba61-4fd0-bb5f-7d3b663ca78d",
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 20,
+        "timeAlive": 600,
+        "gold": 200
+      },
+      "meta": {
+        "buildId": "5e7a7c0ba",
+        "engineHash": "a607a81f44e10dc2b2262682c1e116c15917edffeeaa0c5909f383ccea5d8e04",
+        "era": 5,
+        "viewVersion": 1
+      }
+    }
+  ],
+  "report": {
+    "outcome": "**SECURED.** `waves: 20 · timeAlive: 600.000 s · gold: 200 · kills: 920 · calls: 118 ·\ndefaultedPicks: 0 · defaultedSecure: 0 · eventLogHash: fnv1a32:ce442a62`.\n\nTape put forward: **`artifacts/heat11/opus/e1-twin-banks/attempt-1-tape.json`**.\n\n**3 sim runs** (1 idle probe, 1 tune that secured, 1 scored re-ride) and **1 scored attempt**. The\ntune (`tune-1.json`) and the scored attempt are the same controller and produced identical outcomes\nand identical `eventLogHash` — self-verified determinism before handover, as generation 4 required.",
+    "whatTheMapAsked": "It asked me about **the bank cap, and it was the only contract of mine so far where the era's named\nmechanic actually bound.** The E1 opening economy is exactly what this map is about, from two ends.\nOn the income side, `HARVEST` is a per-order machine tick worth 5 gold, and the map hands you a\nsecond, passive faucet the Dry Gulch did not have: `stablePrefix.mechanics.buildables` publishes\n`sluice` (40 g, 3 g per 5 s cycle, max 3) with the meaning \"works the river for you\", and the\nbraided river is the only reason it is placeable — the buildable-zone rule and the water-adjacency\npad intersect in a single line at `z = -7`. Three sluices bought at waves 2–5 turned the economy\nfrom hand-to-mouth into a surplus. On the spending side, the cap then bit: `now.gold` **pinned at\nexactly 200 from wave 9 through wave 20**, `score.goldPanned` finished at 690, and my ladder had\nrun out of things to buy at wave 8, so roughly a third of everything I earned evaporated against\n`Balance.economy.bankCap`. The counter-lever was published and I declined it — `stockpile`, 60 g,\n\"+150 gold above the pan cap\", two allowed — because by the time the cap bound I had all four\nturrets and all six beacons and nothing left worth banking for. That is the bank cap doing its\nauthored job: it is a *ceiling on stockpiling*, and the honest reading is that it made my last\neleven waves of panning worthless rather than that it stopped me. The other thing the map asked\nabout is its own geography, and here the audit answer is less flattering: `pathing.riverBlocksEnemies`\nplus two fords at x = ±16 ought to be a funnel, but because the hero is welded to the *south* stake\nand enemies spawn on all four edges, the north bank and its two crossings are scenery for a rider\nwho never leaves the south side. I built nothing north of the river and never crossed a ford. The\nview fields that carried the run were `now.seams[].active/x/z` (three live of six authored anchors,\nre-anchoring between waves), `now.gold` against the cap, `now.works.byKind` and `now.works.hp` (the\nladder's state and the repair trigger), and `now.pendingOffer`; the orders that carried it were\n`HARVEST`, `BUILD`, and `PICK_UPGRADE`.",
+    "winnability": "Secured, and the margin was **wide**: the hero never dropped below its full HP until wave 18 and\nfinished at 127/175, not a single one of the thirteen works was ever wrecked, and gold sat pinned at\nthe 200 cap for the last twelve waves — the run had spare capacity in health, in defence, and in\nmoney simultaneously.",
+    "lessons": "- **`unclaimed` with no `reason` in `winnability-receipts.json` is now a two-for-two green light.**\n  Generation 5 found the wall (`standings-disabled`), generation 6 found the green light, and this\n  ride confirms it: those two lines of JSON are the cheapest information in the county. Read them\n  before the idle probe, not after.\n- **A brutal idle probe is not a hard map.** Idle died at wave 3 here — worse than the Dry Gulch's\n  wave 4 — and the contract then secured on the *first* controller I wrote, at full health, with\n  nothing wrecked. The idle curve measures how fast an unattended hero dies, which is a statement\n  about the hero's stillness, not about the map's ceiling. Do not let it set your ambition.\n- **Find out which body the orders move before planning anything.** I had it half-wrong from\n  generation 6: `HeadlessContractSim:469` binds the *shooter* to the hero, but the *order actor* is\n  the Prospector (`Embodiment.ts:131`). On a non-deepwater map that means the hero is a fixed turret\n  on the loss stake that every enemy walks toward and that you cannot reposition, while the\n  Prospector is an untargeted worker that can pan anywhere for free. Both halves of that shape your\n  plan, and they point in opposite directions: defence is a fixed-point problem, economy is a\n  travelling-salesman one.\n- **Stack `HARVEST` orders — the array is the throughput.** One `HARVEST` order is one 1.5 s pan tick\n  (5 gold), the record then goes `done`, and the next order takes the following tick. Six orders\n  empty a 30-capacity seam almost instantly once you are standing on it, so a 32-order array with a\n  nearest-first seam chain is worth ~100 gold per wave where a single `HARVEST` is worth 5. In\n  generation 6 I panned about seven gold a wave and concluded the economy was starved; it was my\n  array that was starved, not the map.\n- **Derive placement from the intersection of the rules, not from the pretty coordinates.** The\n  sluice's legal line on this map is a single value of z, and it falls out of two independent\n  functions (`isWaterSourceAdjacent` pad 2, `isBuildable` zone+buildZone) that must both be true.\n  Five minutes reading `Terrain.ts` bought three sluices on the first try; guessing would have cost\n  a ride.\n- **Gate the ladder on one rung at a time.** Generation 6's bug — a cheap rung firing whenever gold\n  crossed its price and starving the expensive one — is fixed by emitting exactly *one* `BUILD` order\n  per array, chosen by reading `now.works.byKind` against an ordered ladder. The whole ladder landed\n  in order, all four turrets and all six beacons, with no starvation and no manual price arithmetic.\n- **Turrets are not beacons.** 52 damage at 1.1/s over 16 units (57 dps, 50 g) against 10+0.75/wave\n  at 1.2/s over 8 units (about 30 dps at wave 20, 25 g). Generation 6 secured with zero turrets by\n  accident and called it a bug that happened to win; with the ladder gated properly the turrets went\n  up first and the run never took a scratch. Read `Balance` for the dps-per-gold before you rank a\n  build ladder by price.\n- **When the cap binds, the answer is a stockpile or a shorter ladder — decide which, on purpose.**\n  I finished buying at wave 8 and then panned 400-odd gold straight into a 200-gold ceiling for\n  twelve waves. It cost me nothing this time because `timeAlive` is pinned at 600 s by a wave-20\n  secure and gold ranks below it, but on a contract where gold breaks the tie that is the whole\n  margin thrown away. Either buy the 60 g stockpile the moment the cap first pins, or stop panning\n  and spend the Prospector's feet on repairs.\n- **A tune that secures is the attempt, and the re-ride is the receipt.** Two runs, same bytes,\n  `fnv1a32:ce442a62` both times. In an era that replays every reel, spending the second run on\n  proving determinism is worth more than spending it chasing a richer number."
+  },
+  "usage": {
+    "transcript": "/Users/robin/.claude/projects/-private-tmp-heat11-5e7a7c0b/5c6b4acd-273c-489f-b9a2-54c727ab5d3b.jsonl",
+    "assistantTurns": 84,
+    "toolCalls": 50,
+    "tokensIn": 168,
+    "tokensOut": 82275,
+    "cacheReadTokens": 11042471,
+    "cacheWriteTokens": 423937,
+    "note": "tokensIn excludes cache reads/writes (reported separately); summed from the CLI session transcript, not self-reported by the rig"
+  }
+}

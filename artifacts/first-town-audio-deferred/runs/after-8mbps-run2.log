@@ -1,0 +1,28 @@
+
+Running 2 tests using 1 worker
+
+[1/2] [desktop-chrome] › e2e/first-town-audio-deferred.spec.ts:129:1 › music is fetched only after the first town is playable (8mbps)
+[desktop-chrome] › e2e/first-town-audio-deferred.spec.ts:129:1 › music is fetched only after the first town is playable (8mbps)
+[audio-defer] desktop-chrome/8mbps cue 156 responses 7690698 bytes; townReady observed 6439 ms, published 5830 ms; cue-window music 2; music before playable 0; after-ready music 0
+
+[audio-defer] desktop-chrome/8mbps music fetch era-e1-frontier-loop-CQyR4akc-diet-1408f6b4.mp3 at 5860 ms (scene the town ready)
+
+[audio-defer] desktop-chrome/8mbps cue-window mp3 /assets/menu-tap-DMz5CpTr-diet-1408f6b4.mp3 8821 B at 858 ms
+
+[audio-defer] desktop-chrome/8mbps cue-window mp3 /assets/era-e1-frontier-loop-CQyR4akc-diet-1408f6b4.mp3 1800881 B at 6052 ms
+
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[2/2] [mobile-chrome] › e2e/first-town-audio-deferred.spec.ts:129:1 › music is fetched only after the first town is playable (8mbps)
+[mobile-chrome] › e2e/first-town-audio-deferred.spec.ts:129:1 › music is fetched only after the first town is playable (8mbps)
+[audio-defer] mobile-chrome/8mbps cue 157 responses 7744455 bytes; townReady observed 6444 ms, published 5853 ms; cue-window music 2; music before playable 0; after-ready music 0
+
+[audio-defer] mobile-chrome/8mbps music fetch era-e1-frontier-loop-CQyR4akc-diet-1408f6b4.mp3 at 6047 ms (scene the town ready)
+
+[audio-defer] mobile-chrome/8mbps cue-window mp3 /assets/menu-tap-DMz5CpTr-diet-1408f6b4.mp3 8821 B at 863 ms
+
+[audio-defer] mobile-chrome/8mbps cue-window mp3 /assets/era-e1-frontier-loop-CQyR4akc-diet-1408f6b4.mp3 1800881 B at 6103 ms
+
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+  2 passed (35.2s)

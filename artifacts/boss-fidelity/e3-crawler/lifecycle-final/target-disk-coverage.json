@@ -1,0 +1,157 @@
+{
+  "method": "81x81 grid samples per live0.72-radius combat disk, union of own-component actual morphed GLB triangles in world XZ. Uses observed runtime model including actual one-tick lag, pitch, roll, yaw, scale and position; no forced sync. Records geometry coverage, not a substitute collision model.",
+  "samplesPerDisk": 5025,
+  "rows": [
+    {
+      "case": "route-0",
+      "coveragePercent": {
+        "drain_mast": 78.25,
+        "tracks": 100.0,
+        "capacitor_bank": 72.32
+      },
+      "minimumPercent": 72.32,
+      "centerError": 0.06479999999999947,
+      "support": {
+        "minGap": 0.025000000000000355,
+        "medianGap": 0.27940320813439534,
+        "maxGap": 0.5396908405942291,
+        "within10cm": 9
+      }
+    },
+    {
+      "case": "route-1",
+      "coveragePercent": {
+        "drain_mast": 89.69,
+        "tracks": 100.0,
+        "capacitor_bank": 66.87
+      },
+      "minimumPercent": 66.87,
+      "centerError": 0.0647999999999986,
+      "support": {
+        "minGap": 0.025000000000000355,
+        "medianGap": 0.4451466823175334,
+        "maxGap": 1.4294338610086328,
+        "within10cm": 15
+      }
+    },
+    {
+      "case": "route-2",
+      "coveragePercent": {
+        "drain_mast": 76.84,
+        "tracks": 100.0,
+        "capacitor_bank": 72.56
+      },
+      "minimumPercent": 72.56,
+      "centerError": 0.06480000000000029,
+      "support": {
+        "minGap": 0.025000000000000022,
+        "medianGap": 0.2247600335336558,
+        "maxGap": 0.5102921906661637,
+        "within10cm": 18
+      }
+    },
+    {
+      "case": "route-3",
+      "coveragePercent": {
+        "drain_mast": 76.18,
+        "tracks": 100.0,
+        "capacitor_bank": 76.38
+      },
+      "minimumPercent": 76.18,
+      "centerError": 0.06480000000000458,
+      "support": {
+        "minGap": 0.025000000000000022,
+        "medianGap": 0.4216229759667286,
+        "maxGap": 0.7633931332213837,
+        "within10cm": 6
+      }
+    },
+    {
+      "case": "route-4",
+      "coveragePercent": {
+        "drain_mast": 73.65,
+        "tracks": 100.0,
+        "capacitor_bank": 75.0
+      },
+      "minimumPercent": 73.65,
+      "centerError": 0.06480000000000175,
+      "support": {
+        "minGap": 0.025000000000000022,
+        "medianGap": 0.06635486579322247,
+        "maxGap": 0.2254630943012091,
+        "within10cm": 112
+      }
+    },
+    {
+      "case": "act2",
+      "coveragePercent": {
+        "tracks": 100.0,
+        "capacitor_bank": 75.12
+      },
+      "minimumPercent": 75.12,
+      "centerError": 0.06479999999999819,
+      "support": {
+        "minGap": 0.025000000000000022,
+        "medianGap": 0.026787341229311923,
+        "maxGap": 0.1864906306787374,
+        "within10cm": 112
+      }
+    },
+    {
+      "case": "pinned",
+      "coveragePercent": {
+        "capacitor_bank": 80.04
+      },
+      "minimumPercent": 80.04,
+      "centerError": 0,
+      "support": {
+        "minGap": 0.025000000000000022,
+        "medianGap": 0.026739321852264797,
+        "maxGap": 0.1864534041987933,
+        "within10cm": 112
+      }
+    },
+    {
+      "case": "late-drain_mast",
+      "coveragePercent": {
+        "drain_mast": 74.65
+      },
+      "minimumPercent": 74.65,
+      "centerError": 0.0600000000000018,
+      "support": {
+        "minGap": 0.025000000000000355,
+        "medianGap": 0.17124375206924292,
+        "maxGap": 0.36659100262200806,
+        "within10cm": 17
+      }
+    },
+    {
+      "case": "late-tracks",
+      "coveragePercent": {
+        "tracks": 100.0
+      },
+      "minimumPercent": 100.0,
+      "centerError": 0.0600000000000018,
+      "support": {
+        "minGap": 0.025000000000000355,
+        "medianGap": 0.17124375206924292,
+        "maxGap": 0.36659100262200806,
+        "within10cm": 17
+      }
+    },
+    {
+      "case": "late-capacitor_bank",
+      "coveragePercent": {
+        "capacitor_bank": 77.09
+      },
+      "minimumPercent": 77.09,
+      "centerError": 0,
+      "support": {
+        "minGap": 0.025000000000000355,
+        "medianGap": 0.26799645725109755,
+        "maxGap": 0.5109738041722842,
+        "within10cm": 10
+      }
+    }
+  ]
+}

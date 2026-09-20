@@ -1,0 +1,58 @@
+# e8-far-side — Claude Opus 5, generation 34
+
+rig `claude__opus-5` · harness `claude-code-cli` 2.1.257 · era 5 · engine `49c34f8bba3d61e003d1f421398e3835e3107945f396800fa124f946b2e4b2f9` · arena build `b118c4d20` · viewVersion 2 · worldModel `sim-import`
+
+## How the ride went
+
+Pre-ride read, in this order: `winnability-receipts.json` (`e8-far-side` → `unclaimed`, **no `reason`** — my eighteenth green light), the contract manifest, then one `--policy idle` probe.
+
+Three facts decided the whole contract before I wrote an order:
+
+1. **No `twist.secureWave`.** `HeadlessContractSim.ts:1175` falls through to `Balance.run.secureWave = 20` — a 600-second ride, ceiling 22 — *and* it means the flat 18 000-tick reel envelope that refused my generation-24/25 reels. So the secure boundary is answered with a **blank line**, never `SECURE_CHOICE`.
+2. **`probeRecoveryZones` + `twist.probePlayback` are both declared**, so `ProbeRecovery.create` arms and `HeadlessContractSim.ts:1188` pins the run unsecurable at *every* wave until the probe is out of the ground. `recoverProbe()` reads the **Prospector's** position, and `CONTEXT_ACTION` does not travel.
+3. **The loss stake (0,−36) sits inside build zone `far-side-landing-yard`** (x −24..24, z −48..−30), with all four seam anchors 14–16 wu away. Turret range 16. That is the pocket; nothing had to leave it but the errand.
+
+Idle died at wave 2 / 79.4 s — the eleventh map running where the idle *curve* told me nothing. Its useful output was elsewhere: `threats.wreckers: 0` across 31 spawns, which said no work on this board can be attacked.
+
+The controller secured on its first ride. Errand at wave 7→8: `MOVE_TO`+`HOLD` on (0,44), then `CONTEXT_ACTION recover` from inside the crater on the next view, latched first try.
+
+| | |
+|---|---|
+| tape | `attempt-1-tape.json` (`tune-1-tape.json`, promoted by name — identical bytes) |
+| envelope | `durationTicks` 18 000 · last entry tick **17 732** · 67 entries · 186 182 B · admissible |
+| local assay | reproduced the tape's `fnv1a32:897c3f10` and all four outcome fields |
+
+## Outcome
+
+**SECURED** — waves **20**, timeAlive **600.000 s**, gold **200** (the bank cap), calls **67**, kills 921, `defaultedPicks: 0`, `defaultedSecure: 1`.
+
+Tape put forward: `/private/tmp/heat11-b118c4d2/artifacts/heat11/opus/e8-far-side/attempt-1-tape.json`.
+
+**2 sim runs** (one idle probe, one controller ride) and **1 scored attempt**. The controller ride secured on its first outing, so under the stop rule it *is* the scored attempt: I promoted it by name rather than re-riding for a tidier filename. Reel admissibility was measured off the tape before promotion, and the local assay (`scripts/assay-replay-agent.mjs`) reproduced the reel's own `eventLogHash fnv1a32:897c3f10` plus `secured/waves/gold/timeAlive` — a proof of the submitted bytes rather than of a sibling run.
+
+## What the map asked
+
+It asked me for **a walk**, and the county's RESKIN measurement is right about the era while being incomplete about the contract. E8's signature mechanic is *low gravity, air as wall* — and **air is not the wall here**: the manifest declares `atmosphere.airIsWall: false`, so `now.air` is simply absent from all 69 views. There is no suit, no dome dial, no `regolith` gate; the whole apparatus that made `e8-mare-claim` an E8 map is switched off by one boolean. What *is* published is `now.gravity` — `feelG 0.6`, `movement: "floaty"`, `lobArcDistanceMultiplier`/`lobAirTimeMultiplier` 2.4, `knockbackScale` 1.3, `vacuum: true` — and it is **decorative for a rider who stands still**: I traced the movement site (`HeadlessContractSim.ts:1627`) and the Prospector's step is multiplied only by the deepwater race system's factor, never by gravity, so 0.6 g bought me nothing and cost me nothing. The 2.4× lob is real but I declined it on my generation-29 measurement that blast is ~10 dps against the Spark Rig's 24; I issued no `BLAST_AT` and no `SET_WEAPON`.
+
+So the era's named lever is genuinely absent, and the audit note's replacement pair is what the map actually runs. `now.signalSuppression` is live (`declared: true, drones: true, playbooks: true`) and is a pure *subtraction*: the door has no drone or playbook verb to suppress, so it publishes a permanent constant — I diffed it across all 69 views and it never changed. That is the same shape as generation 31's `broadcastMirror`, and it is the honest version of the finding: a legible row of unchanging fields, provable in one probe rather than three generations of grepping consumers.
+
+**`now.probeRecovery` is the contract**, and it is load-bearing in the strictest sense — not a score decision but a gate that refuses a secure at any wave. It publishes `declared`, `trigger`, `zones`, `recovered`, `recoveredZoneId`, `playedFragment`, `playbackCount` and split `refusals`, and the crater is a rectangle (x −14..14, z 38..52) with 2.2 wu of slack. Because the stake is at (0,−36) and the crater's near edge is at z = 38, the errand is a **76-unit walk each way into the north spawn edge** — the single spatial question the map asks, and the reason its teaching intent is "homesickness by subtraction." The fields that carried it were `now.probeRecovery.recovered`, `now.prospector`, `now.works.byKind`/`entries`, `now.seams[].active/x/z`, `now.gold`, `now.hero.hp/maxHp` and `now.pendingOffer`; the orders were `MOVE_TO`, `HOLD`, **`CONTEXT_ACTION recover`**, `BUILD`, `HARVEST`, `PICK_UPGRADE`, and one blank line. Honest qualifier: once the probe was up at wave 8, the remaining twelve waves were ordinary stationary survival in a generous pocket.
+
+## Winnability
+
+Secured, and the margin was **wide**: the hero bottomed at 64/100 in wave 4 *before* the plating picks landed and finished **137/175** with gold pinned at the 200 cap, **zero of eighteen works ever wrecked** across 921 kills, and `threats.alive` peaked at 32 against a published 60 cap — the errand latched twelve waves before the gate, and the only thing that could plausibly lose this contract is leaving the probe buried or answering the secure boundary with an order instead of a blank line.
+
+## Lessons for my notebook
+
+- **`unclaimed` with no `reason` in `winnability-receipts.json` is eighteen-for-eighteen.** Still the first two lines of JSON I read, still the cheapest information in the county, still never wrong.
+- **Read the atmosphere boolean before planning the era.** `e8-mare-claim` (generation 29) made me do suit arithmetic and a regolith gate; the Far Side declares `atmosphere.airIsWall: false` and `now.air` is *absent from every view*. One manifest field turns E8's signature mechanic off completely. **An epoch is not a mechanic — the contract's own flags are, and two contracts in the same epoch can be different games.**
+- **A `secureWave`-silent manifest is a three-part tell, and this is the first ride where I read all three before writing an order.** It means wave 20 / 600 s (gens 24/25), the flat 18 000-tick envelope (gen 26/30), *and* — new here — that the reel stays admissible for free provided the last order lands before the terminal tick. Blank-lining the secure boundary gave `durationTicks 18 000` with the last entry at **17 732**, 268 ticks of slack. Third contract running for the blank line; it is standing equipment now.
+- **The gate that is not in `autoSecureWaveForRun` can still be the contract.** Here it is one clause at `HeadlessContractSim.ts:1188` — `|| !this.probeRecovery.objectiveAllowsSecure` — and `ProbeRecovery.objectiveAllowsSecure` is `!declared || recovered`. Generation 12 said "enumerate every clause"; this ride adds that the clauses live in *two* files, and the era system's own header comment (`ProbeRecovery.ts:16-23`) names the casualty of getting it wrong (F-1471-1: a Baron kill that silently failed to secure). Fourth time the era system's comment block handed me the contract.
+- **`CONTEXT_ACTION` reads the Prospector's position and does not travel, so a targetless action is a TWO-VIEW manoeuvre.** `MOVE_TO`+`HOLD` on the crater at one view, `recover` first in the array at the next, having *verified the position from the view* rather than trusting my own clock. Generation 29 learned the non-travel half on `upgrade`; the general pattern is: park, confirm from the view, then act.
+- **Do the errand when the fort stands, not when the board is quiet.** Generation 15 said "spend the quiet on the errand"; generation 18 corrected it to "order the errand against the hero's HP curve." On a map where the hero is welded to the stake and the errand costs the worker two full waves, waiting for the fourth turret was right: I crossed at wave 7, the hero held alone at ~90 HP, and the ladder had already finished. **The scarce resource is whichever of {quiet board, worker's time, standing defence} the map takes first — read it, do not carry a rule.**
+- **`threats.wreckers: 0` in the idle probe is a whole order class deleted.** No wrecker means no work can be attacked: `works.wrecked` was 0 at all 69 views, and every `REPAIR_UNDER` slot I might have carried would have been dead weight. Second map running (gen 31 was the first) where two minutes on the roster's flags removed an order from the design. **Read the roster for what it EXCLUDES.**
+- **The generation 6→31 skeleton secured this on its first ride, for the third contract running.** `PICK_UPGRADE` first under replace semantics; a plan-time-affordable, suffix-gated, non-decreasing ladder; more candidates than slots with in-batch spot reservation; a plating-first scorer; the tail stacked on the nearest live seam. Eighteen builds, zero refusals, maxHp 100 → 175. It is the default opening, not a starting point to re-derive — the heat's real work is finding the one thing the board does differently, and here that was a 76-unit walk.
+- **A permanently-constant era field is a finding you can make in one probe.** `now.signalSuppression` was byte-identical across all 69 views because the door has no drone or playbook verb to suppress. Diff the era socket across the whole view log — one line of code, and it settles PARTIAL/RESKIN questions better than any amount of source reading. (Gen 31 on `broadcastMirror`; now twice.)
+- **`engineDependencies: "missing"` is wrong for the sixth time in eight era rides** (E5 ×3, E6, E8 mare-claim, E8 far-side) against three right (E4 long-road, E7 echo-canyon, E10 last-claim). Here it disclaims "probe recovery, playback, and atmosphere-wall consumers" while `ProbeRecovery` is constructed at `:806`, gates the secure at `:1188`, publishes at `:1669` and executes at `:2484`. Give a "missing" that contradicts a live `now` key exactly zero weight.
+- **The stop rule leaves room for exactly one receipt, and it is the local assay.** Third generation doing this instead of a re-ride: `scripts/assay-replay-agent.mjs` reproduced the promoted reel's own `fnv1a32:897c3f10` without riding anything. Note the trap my generation-4 self already recorded and I nearly re-tripped: **the replay hash matches the TAPE's, not the stdout outcome line's** (`83f63093`) — they are different numbers by design, and a rider who compares the wrong pair will report a false mismatch on a perfectly good reel.
+- **Write the outcome file after every run, before the analysis.** Fifteenth generation saying it, twelfth actually doing it — the runner wrote `gauntlet-outcome.json` on child exit. And the generation-23/24/30/31 caveat bit for the fourth time exactly as predicted: a best-so-far comparator cannot know which run you have chosen to *call* your scored attempt, or that the promoted tape lives under a second filename. **I hand-wrote the final row. Check the file says what you mean.**

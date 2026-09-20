@@ -1,0 +1,66 @@
+
+Running 12 tests using 1 worker
+
+[1/12] [desktop-chrome] › e2e/057-baron-rocket-cart.spec.ts:251:1 › kited Baron telegraphs and launches rockets that damage hero and buildings through CombatSystem
+  1) [desktop-chrome] › e2e/057-baron-rocket-cart.spec.ts:251:1 › kited Baron telegraphs and launches rockets that damage hero and buildings through CombatSystem 
+
+    Error: expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      255 |   const telegraph = await advanceUntil(page, () => rocketSnapshot(page), (snapshot) => snapshot.rocket.telegraphActive);
+      256 |   expect(telegraph.rocket.cartVisible).toBe(true);
+    > 257 |   expect(telegraph.audio.startedBySound['blast-charge-arm'] ?? 0).toBeGreaterThan(0);
+          |                                                                   ^
+      258 |
+      259 |   const midFlight = await advanceUntil(page, () => rocketSnapshot(page), (snapshot) => snapshot.blastsAlive >= 3);
+      260 |   expect(midFlight.rocket.lastOwnerId).toMatch(/^baron_rocket:/);
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-boss-control/e2e/057-baron-rocket-cart.spec.ts:257:67
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/057-baron-rocket-cart-kite-e68cc-ldings-through-CombatSystem-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/057-baron-rocket-cart-kite-e68cc-ldings-through-CombatSystem-desktop-chrome/error-context.md
+
+
+[2/12] [desktop-chrome] › e2e/057-baron-rocket-cart.spec.ts:275:1 › lethal Baron rocket stops the death tick before XP and gold collection
+[3/12] [desktop-chrome] › e2e/057-baron-rocket-cart.spec.ts:334:1 › melee range suppresses the Baron rocket volley
+[4/12] [desktop-chrome] › e2e/057-baron-rocket-cart.spec.ts:359:1 › defeating the Baron captures the cart, shows the medal line, and unlocks captured research
+[5/12] [desktop-chrome] › e2e/057-baron-rocket-cart.spec.ts:415:1 › Sky-Rocket Battery requires Baron capture and preserves veteran profiles
+[6/12] [desktop-chrome] › e2e/057-baron-rocket-cart.spec.ts:444:1 › Baron rocket volley targeting is deterministic for the same seed
+[7/12] [mobile-chrome] › e2e/057-baron-rocket-cart.spec.ts:251:1 › kited Baron telegraphs and launches rockets that damage hero and buildings through CombatSystem
+  2) [mobile-chrome] › e2e/057-baron-rocket-cart.spec.ts:251:1 › kited Baron telegraphs and launches rockets that damage hero and buildings through CombatSystem 
+
+    Error: expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      255 |   const telegraph = await advanceUntil(page, () => rocketSnapshot(page), (snapshot) => snapshot.rocket.telegraphActive);
+      256 |   expect(telegraph.rocket.cartVisible).toBe(true);
+    > 257 |   expect(telegraph.audio.startedBySound['blast-charge-arm'] ?? 0).toBeGreaterThan(0);
+          |                                                                   ^
+      258 |
+      259 |   const midFlight = await advanceUntil(page, () => rocketSnapshot(page), (snapshot) => snapshot.blastsAlive >= 3);
+      260 |   expect(midFlight.rocket.lastOwnerId).toMatch(/^baron_rocket:/);
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-boss-control/e2e/057-baron-rocket-cart.spec.ts:257:67
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/057-baron-rocket-cart-kite-e68cc-ldings-through-CombatSystem-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/057-baron-rocket-cart-kite-e68cc-ldings-through-CombatSystem-mobile-chrome/error-context.md
+
+
+[8/12] [mobile-chrome] › e2e/057-baron-rocket-cart.spec.ts:275:1 › lethal Baron rocket stops the death tick before XP and gold collection
+[9/12] [mobile-chrome] › e2e/057-baron-rocket-cart.spec.ts:334:1 › melee range suppresses the Baron rocket volley
+[10/12] [mobile-chrome] › e2e/057-baron-rocket-cart.spec.ts:359:1 › defeating the Baron captures the cart, shows the medal line, and unlocks captured research
+[11/12] [mobile-chrome] › e2e/057-baron-rocket-cart.spec.ts:415:1 › Sky-Rocket Battery requires Baron capture and preserves veteran profiles
+[12/12] [mobile-chrome] › e2e/057-baron-rocket-cart.spec.ts:444:1 › Baron rocket volley targeting is deterministic for the same seed
+  2 failed
+    [desktop-chrome] › e2e/057-baron-rocket-cart.spec.ts:251:1 › kited Baron telegraphs and launches rockets that damage hero and buildings through CombatSystem 
+    [mobile-chrome] › e2e/057-baron-rocket-cart.spec.ts:251:1 › kited Baron telegraphs and launches rockets that damage hero and buildings through CombatSystem 
+  10 passed (1.3m)
+rc=1

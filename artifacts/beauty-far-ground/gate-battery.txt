@@ -1,0 +1,528 @@
+
+Running 104 tests using 1 worker
+
+[1/104] [desktop-chrome] › e2e/beauty-far-ground.spec.ts:40:5 › the far ground › the-claim: the panorama's foot is above the top edge of the frame, and the apron is painted
+[2/104] [desktop-chrome] › e2e/beauty-far-ground.spec.ts:40:5 › the far ground › e1-dry-gulch: the panorama's foot is above the top edge of the frame, and the apron is painted
+
+[WebServer] 11:00:18 AM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[3/104] [desktop-chrome] › e2e/beauty-far-ground.spec.ts:40:5 › the far ground › e1-twin-banks: the panorama's foot is above the top edge of the frame, and the apron is painted
+[4/104] [desktop-chrome] › e2e/beauty-far-ground.spec.ts:40:5 › the far ground › e1-baron: the panorama's foot is above the top edge of the frame, and the apron is painted
+[5/104] [desktop-chrome] › e2e/beauty-far-ground.spec.ts:65:3 › the far ground › the apron costs zero draw calls, and ?horizonApron=off is a real A/B
+
+[WebServer] 11:00:34 AM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+
+[WebServer] 11:00:37 AM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[6/104] [desktop-chrome] › e2e/beauty-far-ground.spec.ts:88:3 › the far ground › the far band actually changes, at the pose where the apron is on camera
+
+[WebServer] 11:01:08 AM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+
+[WebServer] 11:01:12 AM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[7/104] [desktop-chrome] › e2e/beauty-far-ground.spec.ts:122:3 › the far ground › the far-ground probe still reports which surfaces it repainted
+[8/104] [desktop-chrome] › e2e/beauty-pools.spec.ts:160:1 › pool core transect at true dark
+[9/104] [desktop-chrome] › e2e/e1-baron.spec.ts:317:1 › default contract does not preload Baron art
+[10/104] [desktop-chrome] › e2e/e1-baron.spec.ts:343:1 › contract board requires science plus two secured claims and always shows an earned medal
+[11/104] [desktop-chrome] › e2e/e1-baron.spec.ts:389:1 › board launch uses the live Baron contract for cadence and wave 20 spawn
+[12/104] [desktop-chrome] › e2e/e1-baron.spec.ts:411:1 › Baron manifest loads and taunts fire at waves 5, 12, and 18
+[13/104] [desktop-chrome] › e2e/e1-baron.spec.ts:489:1 › wave 20 spawns the Baron with elite stats, banner, escorts, and stable seed data
+[14/104] [desktop-chrome] › e2e/e1-baron.spec.ts:526:1 › Baron damage visibly drains bar segments and the launcher stays carried
+[15/104] [desktop-chrome] › e2e/e1-baron.spec.ts:557:1 › standard rig damage defeats the Baron, doubles science, and persists the medal
+[16/104] [desktop-chrome] › e2e/e1-baron.spec.ts:607:1 › fast Baron kill preserves the queued arrival card before secure
+[17/104] [desktop-chrome] › e2e/e1-baron.spec.ts:644:1 › Baron art fallback keeps the placeholder path green when generated art fails
+[18/104] [desktop-chrome] › e2e/e1-baron.spec.ts:675:1 › same-frame overrun and Baron kill does not award the medal
+[19/104] [desktop-chrome] › e2e/e1-baron.spec.ts:704:1 › loss to the Baron contract remains the normal overrun ledger with no medal
+[20/104] [desktop-chrome] › e2e/e1-dry-gulch.spec.ts:79:1 › loads Dry Gulch via debug param and suppresses bad contract fallback to diagnostics
+
+[WebServer] 11:03:14 AM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[21/104] [desktop-chrome] › e2e/e1-dry-gulch.spec.ts:109:1 › removes river and ford collision while keeping the spring as the only water source
+
+[WebServer] 11:03:16 AM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[22/104] [desktop-chrome] › e2e/e1-dry-gulch.spec.ts:128:1 › sluice placement rejects away from the pond and accepts beside it
+
+[WebServer] 11:03:18 AM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[23/104] [desktop-chrome] › e2e/e1-dry-gulch.spec.ts:162:1 › Dry Gulch seam panning uses the +40% contract yield multiplier
+
+[WebServer] 11:03:23 AM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[24/104] [desktop-chrome] › e2e/e1-dry-gulch.spec.ts:189:1 › contract lane constants allow all four spawn edges
+
+[WebServer] 11:03:25 AM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[25/104] [desktop-chrome] › e2e/e1-dry-gulch.spec.ts:222:1 › seeded Dry Gulch diagnostics are stable
+
+[WebServer] 11:03:27 AM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+
+[WebServer] 11:03:28 AM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[26/104] [desktop-chrome] › e2e/e1-night-shift.spec.ts:271:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting
+  1) [desktop-chrome] › e2e/e1-night-shift.spec.ts:271:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "#34405a"
+    Received: "#44516b"
+
+      350 |   const heroRatio = darkHero / Math.max(dayHero, 0.001);
+      351 |   const darkTint = snapshot.registry?.twist.lightRamp?.keyframes?.find((keyframe) => keyframe.phase === 'dark')?.spriteTint;
+    > 352 |   expect(darkTint).toBe('#34405a');
+          |                    ^
+      353 |   const linear = (channel: number): number => {
+      354 |     const srgb = channel / 255;
+      355 |     return srgb <= 0.04045 ? srgb / 12.92 : ((srgb + 0.055) / 1.055) ** 2.4;
+        at /Users/robin/Claude/Projects/gr-task-beauty2-far-ground/e2e/e1-night-shift.spec.ts:352:20
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e1-night-shift-loads-Night-40c38-ull-dusk-dark-dawn-lighting-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e1-night-shift-loads-Night-40c38-ull-dusk-dark-dawn-lighting-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e1-night-shift-loads-Night-40c38-ull-dusk-dark-dawn-lighting-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e1-night-shift-loads-Night-40c38-ull-dusk-dark-dawn-lighting-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[27/104] [desktop-chrome] › e2e/e1-night-shift.spec.ts:372:1 › lantern post is Night Shift gated and relights a true-dark light ring
+  2) [desktop-chrome] › e2e/e1-night-shift.spec.ts:372:1 › lantern post is Night Shift gated and relights a true-dark light ring 
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.06
+    Received:    0.10811607843137255
+
+      403 |   expect(await enemyLightNear(page, outOfRadius)).toBeLessThanOrEqual(DARK_LIGHT);
+      404 |   expect(await enemyLightNear(page, inRadius)).toBeGreaterThanOrEqual(VISIBLE_LIGHT);
+    > 405 |   expect(await spriteLuminance(page, outOfRadius)).toBeLessThanOrEqual(DARK_LIGHT);
+          |                                                    ^
+      406 |   expect(await spriteLuminance(page, inRadius)).toBeGreaterThanOrEqual(VISIBLE_LIGHT);
+      407 |   expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.enemyDimming.sources)).toBeGreaterThanOrEqual(2);
+      408 |   await shot(page, testInfo, 'true-dark-lantern-ring');
+        at /Users/robin/Claude/Projects/gr-task-beauty2-far-ground/e2e/e1-night-shift.spec.ts:405:52
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e1-night-shift-lantern-pos-843df-ghts-a-true-dark-light-ring-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e1-night-shift-lantern-pos-843df-ghts-a-true-dark-light-ring-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e1-night-shift-lantern-pos-843df-ghts-a-true-dark-light-ring-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e1-night-shift-lantern-pos-843df-ghts-a-true-dark-light-ring-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[28/104] [desktop-chrome] › e2e/e1-night-shift.spec.ts:413:1 › lantern coverage is necessary for threat visibility
+[29/104] [desktop-chrome] › e2e/e1-night-shift.spec.ts:435:1 › a lantern pool makes only its build island readable at true dark
+  3) [desktop-chrome] › e2e/e1-night-shift.spec.ts:435:1 › a lantern pool makes only its build island readable at true dark 
+
+    Error: {"inside":0.16713960784313725,"outside":0.07644470588235293}
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 3
+    Received:    2.1864118111771167
+
+      448 |   ]);
+      449 |   const ratio = inside / Math.max(outside, 0.001);
+    > 450 |   expect(ratio, JSON.stringify({ inside, outside })).toBeGreaterThanOrEqual(3);
+          |                                                      ^
+      451 |   expect(outside).toBeLessThanOrEqual(0.06);
+      452 |
+      453 |   await teleport(page, lantern.x, lantern.z - 5);
+        at /Users/robin/Claude/Projects/gr-task-beauty2-far-ground/e2e/e1-night-shift.spec.ts:450:54
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e1-night-shift-a-lantern-p-0db8c-sland-readable-at-true-dark-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e1-night-shift-a-lantern-p-0db8c-sland-readable-at-true-dark-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e1-night-shift-a-lantern-p-0db8c-sland-readable-at-true-dark-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e1-night-shift-a-lantern-p-0db8c-sland-readable-at-true-dark-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[30/104] [desktop-chrome] › e2e/e1-night-shift.spec.ts:478:1 › cold lantern relight costs survive run suspend and continue
+[31/104] [desktop-chrome] › e2e/e1-night-shift.spec.ts:520:1 › pre-placed lanterns leave the full player build cap available
+[32/104] [desktop-chrome] › e2e/e1-night-shift.spec.ts:555:1 › render dimming does not stop turret acquisition or damage
+[33/104] [desktop-chrome] › e2e/e1-night-shift.spec.ts:582:1 › wave 25 secures the claim through the dawn victory path
+[34/104] [desktop-chrome] › e2e/e1-night-shift.spec.ts:611:1 › seeded Night Shift diagnostics and dark render budget are stable
+[35/104] [desktop-chrome] › e2e/e1-perf-pass.spec.ts:207:1 › E1 maps publish a pressure census and preserve pressure pixels
+
+[WebServer] 11:04:46 AM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+
+[WebServer] 11:05:13 AM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+
+[WebServer] 11:05:15 AM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[36/104] [desktop-chrome] › e2e/e1-twin-banks.spec.ts:64:1 › loads Twin Banks contract with two fords, two build zones, and one loss stake
+[37/104] [desktop-chrome] › e2e/e1-twin-banks.spec.ts:103:1 › builds sluices and stockpiles on both banks against one gold pool
+  4) [desktop-chrome] › e2e/e1-twin-banks.spec.ts:103:1 › builds sluices and stockpiles on both banks against one gold pool 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+    Call Log:
+    - Timeout 5000ms exceeded while waiting on the predicate
+
+      46 |   await teleport(page, x, z + 2);
+      47 |   await page.evaluate((buildableId) => window.__GR_TEST__?.selectBuildable(buildableId), id);
+    > 48 |   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.ghostValid ?? false)).toBe(true);
+         |                                                                                                              ^
+      49 |   await expect(page.evaluate(() => window.__GR_TEST__?.confirmBuild())).resolves.toBe(true);
+      50 | }
+      51 |
+        at placeBuildableAt (/Users/robin/Claude/Projects/gr-task-beauty2-far-ground/e2e/e1-twin-banks.spec.ts:48:110)
+        at /Users/robin/Claude/Projects/gr-task-beauty2-far-ground/e2e/e1-twin-banks.spec.ts:110:3
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e1-twin-banks-builds-sluic-7516b-banks-against-one-gold-pool-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e1-twin-banks-builds-sluic-7516b-banks-against-one-gold-pool-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e1-twin-banks-builds-sluic-7516b-banks-against-one-gold-pool-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e1-twin-banks-builds-sluic-7516b-banks-against-one-gold-pool-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[38/104] [desktop-chrome] › e2e/e1-twin-banks.spec.ts:122:1 › routes enemies through both west and east fords
+[39/104] [desktop-chrome] › e2e/e1-twin-banks.spec.ts:135:1 › north marker is not the run loss stake, south overrun still ends the run, and waves use four edges
+[40/104] [desktop-chrome] › e2e/e1-twin-banks.spec.ts:175:1 › seeded Twin Banks diagnostics are stable
+[41/104] [desktop-chrome] › e2e/map-beauty-dry-gulch.spec.ts:23:1 › Dry Gulch consumes its authored relief while the Claim keeps the flat fallback
+
+[WebServer] 11:06:10 AM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[42/104] [desktop-chrome] › e2e/map-beauty-dry-gulch.spec.ts:58:1 › Dry Gulch relief stays inside FULL and LITE render budgets
+
+[WebServer] 11:06:14 AM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[43/104] [desktop-chrome] › e2e/night-mode-truth.spec.ts:54:1 › hero pool brightens mesh terrain at the sim radius and lantern carriers read as figures
+[44/104] [desktop-chrome] › e2e/night-mode-truth.spec.ts:104:1 › the natural dark-wave wrecker assault reaches and damages the wall
+[45/104] [desktop-chrome] › e2e/night3d-perf.spec.ts:67:1 › daylight matrix and Night Shift pressure stay within the painted 115% p95 gate
+  5) [desktop-chrome] › e2e/night3d-perf.spec.ts:67:1 › daylight matrix and Night Shift pressure stay within the painted 115% p95 gate 
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 1.15
+    Received:    1.7127658937677894
+
+      86 |     }
+      87 |     const ratio = terrain3dP95Ms / paintedP95Ms;
+    > 88 |     expect(ratio).toBeLessThanOrEqual(1.15);
+         |                   ^
+      89 |     expect(terrain3dP95Ms).toBeLessThanOrEqual(Balance.render.night.frameBudgetMs * Balance.render.night.collapseRatio);
+      90 |     report.push({ contract, paintedP95Ms, terrain3dP95Ms, ratio, ...(uncappedP95Ms === undefined ? {} : { uncappedP95Ms }) });
+      91 |   }
+        at /Users/robin/Claude/Projects/gr-task-beauty2-far-ground/e2e/night3d-perf.spec.ts:88:19
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/night3d-perf-daylight-matr-36d8b-in-the-painted-115-p95-gate-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/night3d-perf-daylight-matr-36d8b-in-the-painted-115-p95-gate-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/night3d-perf-daylight-matr-36d8b-in-the-painted-115-p95-gate-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/night3d-perf-daylight-matr-36d8b-in-the-painted-115-p95-gate-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[46/104] [desktop-chrome] › e2e/night3d-perf.spec.ts:98:1 › Night Shift keeps its lantern read and auto-tiers one sticky step at a time
+
+[WebServer] 11:07:00 AM [vite] (client) [console.warn] [gold-rush] render demotion {"event":"render_demotion","reason":"runtime-tier-shed-1","contractId":"e1-night-shift","buildId":"dev","tier":"FULL","dataset":{"terrain3dPilotState":"ready","terrain3dPilotRenderSource":"glb","run3dPilotState":"ready","run3dPilotMeshes":"0","run3dPilotTriangles":"0","terrain3dPilotContract":"e1-night-shift","terrain3dPilotTerrainLoadState":"mounted","terrain3dPilotPanoramaLoadState":"mounted","terrain3dPilotLandmarkLoadState":"mounted","terrain3dPilotHeightSource":"baked-grid","terrain3dPilotMeshes":"1","terrain3dPilotTriangles":"32768","terrain3dPilotMaterials":"1","terrain3dPilotVertices":"16641","terrain3dPilotPanorama":"night-shift-panorama","terrain3dPilotPanoramaMeshes":"1","terrain3dPilotPanoramaTriangles":"1920","terrain3dPilotPanoramaMaterials":"1","terrain3dPilotPanoramaVertices":"1351","terrain3dPilotNightPools":"world-shader","terrain3dPilotNightPoolSources":"0","terrain3dPilotSpringPonds":"0","terrain3dPilotSpringPondWaterRadii":"[]","terrain3dPilotSpringPondDampGroundRadii":"[]","terrain3dPilotChannelWater":"0","terrain3dPilotFordWater":"0","terrain3dPilotChannelWaterHalfWidths":"[]","terrain3dPilotHiddenRelief":"6","terrain3dPilotHiddenGroundLayers":"TerrainVistaRing|TerrainReliefMesh|terrain.river|terrain.ford|FordSteppingStones|SpringPonds","terrain3dPilotContinuation":"sculpt-edge-continuation","terrain3dPilotHorizonApron":"plain","terrain3dPilotFarGroundProbe":"off","terrain3dPilotPanoramaFraming":"world-projected-horizon","terrain3dPilotSkirtBlend":"painted-underlay-alpha-rim","terrain3dPilotPanoramaFog":"excluded","terrain3dPilotPanoramaDepth":"screen-horizon-backdrop","terrain3dPilotLandmarkExpected":"5","terrain3dPilotLandmarkEmissive":"3","terrain3dPilotLandmarks":"5","terrain3dPilotLandmarkSkipped":"0","terrain3dPilotLandmarkDiagnostics":"","terrain3dPilotLandmarkMounts":"[{\"id\":\"seven_lantern_terraces\",\"x\":0,\"y\":0.5346500063705444,\"z\":0},{\"id\":\"lampworks_yard\",\"x\":8,\"y\":0.6566582322120667,\"z\":18},{\"id\":\"dark_rock_shoulders\",\"x\":0,\"y\":-1.4956779936294555,\"z\":0},{\"id\":\"central_ford\",\"x\":0,\"y\":-0.10067999362945557,\"z\":0},{\"id\":\"night_work_road\",\"x\":0,\"y\":-0.10190099362945557,\"z\":0}]","terrain3dPilotLandmarkMaterials":"[{\"id\":\"seven_lantern_terraces\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0},{\"id\":\"lampworks_yard\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0},{\"id\":\"dark_rock_shoulders\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0},{\"id\":\"central_ford\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0},{\"id\":\"night_work_road\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0}]"}}
+
+[WebServer] 11:07:01 AM [vite] (client) [console.warn] [gold-rush] render demotion {"event":"render_demotion","reason":"runtime-tier-shed-2","contractId":"e1-night-shift","buildId":"dev","tier":"FULL","dataset":{"terrain3dPilotState":"ready","terrain3dPilotRenderSource":"glb","run3dPilotState":"ready","run3dPilotMeshes":"0","run3dPilotTriangles":"0","terrain3dPilotContract":"e1-night-shift","terrain3dPilotTerrainLoadState":"mounted","terrain3dPilotPanoramaLoadState":"mounted","terrain3dPilotLandmarkLoadState":"mounted","terrain3dPilotHeightSource":"baked-grid","terrain3dPilotMeshes":"1","terrain3dPilotTriangles":"32768","terrain3dPilotMaterials":"1","terrain3dPilotVertices":"16641","terrain3dPilotPanorama":"night-shift-panorama","terrain3dPilotPanoramaMeshes":"1","terrain3dPilotPanoramaTriangles":"1920","terrain3dPilotPanoramaMaterials":"1","terrain3dPilotPanoramaVertices":"1351","terrain3dPilotNightPools":"world-shader","terrain3dPilotNightPoolSources":"0","terrain3dPilotSpringPonds":"0","terrain3dPilotSpringPondWaterRadii":"[]","terrain3dPilotSpringPondDampGroundRadii":"[]","terrain3dPilotChannelWater":"0","terrain3dPilotFordWater":"0","terrain3dPilotChannelWaterHalfWidths":"[]","terrain3dPilotHiddenRelief":"6","terrain3dPilotHiddenGroundLayers":"TerrainVistaRing|TerrainReliefMesh|terrain.river|terrain.ford|FordSteppingStones|SpringPonds","terrain3dPilotContinuation":"sculpt-edge-continuation","terrain3dPilotHorizonApron":"plain","terrain3dPilotFarGroundProbe":"off","terrain3dPilotPanoramaFraming":"world-projected-horizon","terrain3dPilotSkirtBlend":"painted-underlay-alpha-rim","terrain3dPilotPanoramaFog":"excluded","terrain3dPilotPanoramaDepth":"screen-horizon-backdrop","terrain3dPilotLandmarkExpected":"5","terrain3dPilotLandmarkEmissive":"3","terrain3dPilotLandmarks":"5","terrain3dPilotLandmarkSkipped":"0","terrain3dPilotLandmarkDiagnostics":"","terrain3dPilotLandmarkMounts":"[{\"id\":\"seven_lantern_terraces\",\"x\":0,\"y\":0.5346500063705444,\"z\":0},{\"id\":\"lampworks_yard\",\"x\":8,\"y\":0.6566582322120667,\"z\":18},{\"id\":\"dark_rock_shoulders\",\"x\":0,\"y\":-1.4956779936294555,\"z\":0},{\"id\":\"central_ford\",\"x\":0,\"y\":-0.10067999362945557,\"z\":0},{\"id\":\"night_work_road\",\"x\":0,\"y\":-0.10190099362945557,\"z\":0}]","terrain3dPilotLandmarkMaterials":"[{\"id\":\"seven_lantern_terraces\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0},{\"id\":\"lampworks_yard\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0},{\"id\":\"dark_rock_shoulders\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0},{\"id\":\"central_ford\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0},{\"id\":\"night_work_road\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0}]"}}
+
+[WebServer] 11:07:03 AM [vite] (client) [console.warn] [gold-rush] render demotion {"event":"render_demotion","reason":"runtime-tier-shed-3","contractId":"e1-night-shift","buildId":"dev","tier":"LITE","dataset":{"terrain3dPilotState":"lite","terrain3dPilotRenderSource":"painted","run3dPilotState":"lite","run3dPilotMeshes":"0","run3dPilotTriangles":"0","terrain3dPilotContract":"e1-night-shift","terrain3dPilotTerrainLoadState":"mounted","terrain3dPilotPanoramaLoadState":"mounted","terrain3dPilotLandmarkLoadState":"disposed","terrain3dPilotHeightSource":"baked-grid","terrain3dPilotMeshes":"1","terrain3dPilotTriangles":"32768","terrain3dPilotMaterials":"1","terrain3dPilotVertices":"16641","terrain3dPilotPanorama":"night-shift-panorama","terrain3dPilotPanoramaMeshes":"1","terrain3dPilotPanoramaTriangles":"1920","terrain3dPilotPanoramaMaterials":"1","terrain3dPilotPanoramaVertices":"1351","terrain3dPilotNightPools":"world-shader","terrain3dPilotNightPoolSources":"0","terrain3dPilotSpringPonds":"0","terrain3dPilotChannelWater":"0","terrain3dPilotFordWater":"0","terrain3dPilotHiddenRelief":"6","terrain3dPilotHiddenGroundLayers":"TerrainVistaRing|TerrainReliefMesh|terrain.river|terrain.ford|FordSteppingStones|SpringPonds","terrain3dPilotContinuation":"sculpt-edge-continuation","terrain3dPilotHorizonApron":"plain","terrain3dPilotFarGroundProbe":"off","terrain3dPilotPanoramaFraming":"world-projected-horizon","terrain3dPilotSkirtBlend":"painted-underlay-alpha-rim","terrain3dPilotPanoramaFog":"excluded","terrain3dPilotPanoramaDepth":"screen-horizon-backdrop","terrain3dPilotLandmarkExpected":"5","terrain3dPilotLandmarkEmissive":"3","terrain3dPilotLandmarks":"5","terrain3dPilotLandmarkSkipped":"0","terrain3dPilotLandmarkDiagnostics":"","terrain3dPilotLandmarkMounts":"[{\"id\":\"seven_lantern_terraces\",\"x\":0,\"y\":0.5346500063705444,\"z\":0},{\"id\":\"lampworks_yard\",\"x\":8,\"y\":0.6566582322120667,\"z\":18},{\"id\":\"dark_rock_shoulders\",\"x\":0,\"y\":-1.4956779936294555,\"z\":0},{\"id\":\"central_ford\",\"x\":0,\"y\":-0.10067999362945557,\"z\":0},{\"id\":\"night_work_road\",\"x\":0,\"y\":-0.10190099362945557,\"z\":0}]","terrain3dPilotLandmarkMaterials":"[{\"id\":\"seven_lantern_terraces\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0},{\"id\":\"lampworks_yard\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0},{\"id\":\"dark_rock_shoulders\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0},{\"id\":\"central_ford\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0},{\"id\":\"night_work_road\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0}]"}}
+[47/104] [desktop-chrome] › e2e/panorama-framing.spec.ts:18:3 › the-claim keeps its panorama in world framing across the wide aspect matrix
+[48/104] [desktop-chrome] › e2e/panorama-framing.spec.ts:18:3 › e1-night-shift keeps its panorama in world framing across the wide aspect matrix
+[49/104] [desktop-chrome] › e2e/panorama-framing.spec.ts:18:3 › e4-gusher-county keeps its panorama in world framing across the wide aspect matrix
+[50/104] [desktop-chrome] › e2e/panorama-framing.spec.ts:35:1 › legacy painted ground stays hidden while sculpt landmarks remain mounted
+
+[WebServer] 11:07:37 AM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[51/104] [desktop-chrome] › e2e/panorama-framing.spec.ts:53:1 › wide win return reaches a clean town frame
+[52/104] [desktop-chrome] › e2e/panorama-framing.spec.ts:67:1 › write the three 2000x1000 run-camera proof shots
+
+[WebServer] 11:07:47 AM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[53/104] [mobile-chrome] › e2e/beauty-far-ground.spec.ts:40:5 › the far ground › the-claim: the panorama's foot is above the top edge of the frame, and the apron is painted
+[54/104] [mobile-chrome] › e2e/beauty-far-ground.spec.ts:40:5 › the far ground › e1-dry-gulch: the panorama's foot is above the top edge of the frame, and the apron is painted
+
+[WebServer] 11:07:56 AM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[55/104] [mobile-chrome] › e2e/beauty-far-ground.spec.ts:40:5 › the far ground › e1-twin-banks: the panorama's foot is above the top edge of the frame, and the apron is painted
+[56/104] [mobile-chrome] › e2e/beauty-far-ground.spec.ts:40:5 › the far ground › e1-baron: the panorama's foot is above the top edge of the frame, and the apron is painted
+[57/104] [mobile-chrome] › e2e/beauty-far-ground.spec.ts:65:3 › the far ground › the apron costs zero draw calls, and ?horizonApron=off is a real A/B
+
+[WebServer] 11:08:11 AM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+
+[WebServer] 11:08:14 AM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[58/104] [mobile-chrome] › e2e/beauty-far-ground.spec.ts:88:3 › the far ground › the far band actually changes, at the pose where the apron is on camera
+
+[WebServer] 11:08:44 AM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+
+[WebServer] 11:08:49 AM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[59/104] [mobile-chrome] › e2e/beauty-far-ground.spec.ts:122:3 › the far ground › the far-ground probe still reports which surfaces it repainted
+[60/104] [mobile-chrome] › e2e/beauty-pools.spec.ts:160:1 › pool core transect at true dark
+[61/104] [mobile-chrome] › e2e/e1-baron.spec.ts:317:1 › default contract does not preload Baron art
+[62/104] [mobile-chrome] › e2e/e1-baron.spec.ts:343:1 › contract board requires science plus two secured claims and always shows an earned medal
+[63/104] [mobile-chrome] › e2e/e1-baron.spec.ts:389:1 › board launch uses the live Baron contract for cadence and wave 20 spawn
+[64/104] [mobile-chrome] › e2e/e1-baron.spec.ts:411:1 › Baron manifest loads and taunts fire at waves 5, 12, and 18
+[65/104] [mobile-chrome] › e2e/e1-baron.spec.ts:489:1 › wave 20 spawns the Baron with elite stats, banner, escorts, and stable seed data
+[66/104] [mobile-chrome] › e2e/e1-baron.spec.ts:526:1 › Baron damage visibly drains bar segments and the launcher stays carried
+[67/104] [mobile-chrome] › e2e/e1-baron.spec.ts:557:1 › standard rig damage defeats the Baron, doubles science, and persists the medal
+[68/104] [mobile-chrome] › e2e/e1-baron.spec.ts:607:1 › fast Baron kill preserves the queued arrival card before secure
+[69/104] [mobile-chrome] › e2e/e1-baron.spec.ts:644:1 › Baron art fallback keeps the placeholder path green when generated art fails
+[70/104] [mobile-chrome] › e2e/e1-baron.spec.ts:675:1 › same-frame overrun and Baron kill does not award the medal
+[71/104] [mobile-chrome] › e2e/e1-baron.spec.ts:704:1 › loss to the Baron contract remains the normal overrun ledger with no medal
+[72/104] [mobile-chrome] › e2e/e1-dry-gulch.spec.ts:79:1 › loads Dry Gulch via debug param and suppresses bad contract fallback to diagnostics
+
+[WebServer] 11:10:59 AM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[73/104] [mobile-chrome] › e2e/e1-dry-gulch.spec.ts:109:1 › removes river and ford collision while keeping the spring as the only water source
+
+[WebServer] 11:11:02 AM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[74/104] [mobile-chrome] › e2e/e1-dry-gulch.spec.ts:128:1 › sluice placement rejects away from the pond and accepts beside it
+
+[WebServer] 11:11:04 AM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[75/104] [mobile-chrome] › e2e/e1-dry-gulch.spec.ts:162:1 › Dry Gulch seam panning uses the +40% contract yield multiplier
+
+[WebServer] 11:11:10 AM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[76/104] [mobile-chrome] › e2e/e1-dry-gulch.spec.ts:189:1 › contract lane constants allow all four spawn edges
+
+[WebServer] 11:11:12 AM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[77/104] [mobile-chrome] › e2e/e1-dry-gulch.spec.ts:222:1 › seeded Dry Gulch diagnostics are stable
+
+[WebServer] 11:11:14 AM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+
+[WebServer] 11:11:16 AM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[78/104] [mobile-chrome] › e2e/e1-night-shift.spec.ts:271:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting
+  6) [mobile-chrome] › e2e/e1-night-shift.spec.ts:271:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "#34405a"
+    Received: "#44516b"
+
+      350 |   const heroRatio = darkHero / Math.max(dayHero, 0.001);
+      351 |   const darkTint = snapshot.registry?.twist.lightRamp?.keyframes?.find((keyframe) => keyframe.phase === 'dark')?.spriteTint;
+    > 352 |   expect(darkTint).toBe('#34405a');
+          |                    ^
+      353 |   const linear = (channel: number): number => {
+      354 |     const srgb = channel / 255;
+      355 |     return srgb <= 0.04045 ? srgb / 12.92 : ((srgb + 0.055) / 1.055) ** 2.4;
+        at /Users/robin/Claude/Projects/gr-task-beauty2-far-ground/e2e/e1-night-shift.spec.ts:352:20
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e1-night-shift-loads-Night-40c38-ull-dusk-dark-dawn-lighting-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e1-night-shift-loads-Night-40c38-ull-dusk-dark-dawn-lighting-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e1-night-shift-loads-Night-40c38-ull-dusk-dark-dawn-lighting-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e1-night-shift-loads-Night-40c38-ull-dusk-dark-dawn-lighting-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[79/104] [mobile-chrome] › e2e/e1-night-shift.spec.ts:372:1 › lantern post is Night Shift gated and relights a true-dark light ring
+  7) [mobile-chrome] › e2e/e1-night-shift.spec.ts:372:1 › lantern post is Night Shift gated and relights a true-dark light ring 
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.06
+    Received:    0.1235035294117647
+
+      403 |   expect(await enemyLightNear(page, outOfRadius)).toBeLessThanOrEqual(DARK_LIGHT);
+      404 |   expect(await enemyLightNear(page, inRadius)).toBeGreaterThanOrEqual(VISIBLE_LIGHT);
+    > 405 |   expect(await spriteLuminance(page, outOfRadius)).toBeLessThanOrEqual(DARK_LIGHT);
+          |                                                    ^
+      406 |   expect(await spriteLuminance(page, inRadius)).toBeGreaterThanOrEqual(VISIBLE_LIGHT);
+      407 |   expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.enemyDimming.sources)).toBeGreaterThanOrEqual(2);
+      408 |   await shot(page, testInfo, 'true-dark-lantern-ring');
+        at /Users/robin/Claude/Projects/gr-task-beauty2-far-ground/e2e/e1-night-shift.spec.ts:405:52
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e1-night-shift-lantern-pos-843df-ghts-a-true-dark-light-ring-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e1-night-shift-lantern-pos-843df-ghts-a-true-dark-light-ring-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e1-night-shift-lantern-pos-843df-ghts-a-true-dark-light-ring-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e1-night-shift-lantern-pos-843df-ghts-a-true-dark-light-ring-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[80/104] [mobile-chrome] › e2e/e1-night-shift.spec.ts:413:1 › lantern coverage is necessary for threat visibility
+[81/104] [mobile-chrome] › e2e/e1-night-shift.spec.ts:435:1 › a lantern pool makes only its build island readable at true dark
+  8) [mobile-chrome] › e2e/e1-night-shift.spec.ts:435:1 › a lantern pool makes only its build island readable at true dark 
+
+    Error: {"inside":0.15762901960784315,"outside":0.06523058823529412}
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 3
+    Received:    2.4164893169329917
+
+      448 |   ]);
+      449 |   const ratio = inside / Math.max(outside, 0.001);
+    > 450 |   expect(ratio, JSON.stringify({ inside, outside })).toBeGreaterThanOrEqual(3);
+          |                                                      ^
+      451 |   expect(outside).toBeLessThanOrEqual(0.06);
+      452 |
+      453 |   await teleport(page, lantern.x, lantern.z - 5);
+        at /Users/robin/Claude/Projects/gr-task-beauty2-far-ground/e2e/e1-night-shift.spec.ts:450:54
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e1-night-shift-a-lantern-p-0db8c-sland-readable-at-true-dark-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e1-night-shift-a-lantern-p-0db8c-sland-readable-at-true-dark-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e1-night-shift-a-lantern-p-0db8c-sland-readable-at-true-dark-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e1-night-shift-a-lantern-p-0db8c-sland-readable-at-true-dark-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[82/104] [mobile-chrome] › e2e/e1-night-shift.spec.ts:478:1 › cold lantern relight costs survive run suspend and continue
+[83/104] [mobile-chrome] › e2e/e1-night-shift.spec.ts:520:1 › pre-placed lanterns leave the full player build cap available
+[84/104] [mobile-chrome] › e2e/e1-night-shift.spec.ts:555:1 › render dimming does not stop turret acquisition or damage
+[85/104] [mobile-chrome] › e2e/e1-night-shift.spec.ts:582:1 › wave 25 secures the claim through the dawn victory path
+[86/104] [mobile-chrome] › e2e/e1-night-shift.spec.ts:611:1 › seeded Night Shift diagnostics and dark render budget are stable
+[87/104] [mobile-chrome] › e2e/e1-perf-pass.spec.ts:207:1 › E1 maps publish a pressure census and preserve pressure pixels
+
+[WebServer] 11:12:35 AM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+
+[WebServer] 11:13:01 AM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+
+[WebServer] 11:13:03 AM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[88/104] [mobile-chrome] › e2e/e1-twin-banks.spec.ts:64:1 › loads Twin Banks contract with two fords, two build zones, and one loss stake
+[89/104] [mobile-chrome] › e2e/e1-twin-banks.spec.ts:103:1 › builds sluices and stockpiles on both banks against one gold pool
+  9) [mobile-chrome] › e2e/e1-twin-banks.spec.ts:103:1 › builds sluices and stockpiles on both banks against one gold pool 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+    Call Log:
+    - Timeout 5000ms exceeded while waiting on the predicate
+
+      46 |   await teleport(page, x, z + 2);
+      47 |   await page.evaluate((buildableId) => window.__GR_TEST__?.selectBuildable(buildableId), id);
+    > 48 |   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.ghostValid ?? false)).toBe(true);
+         |                                                                                                              ^
+      49 |   await expect(page.evaluate(() => window.__GR_TEST__?.confirmBuild())).resolves.toBe(true);
+      50 | }
+      51 |
+        at placeBuildableAt (/Users/robin/Claude/Projects/gr-task-beauty2-far-ground/e2e/e1-twin-banks.spec.ts:48:110)
+        at /Users/robin/Claude/Projects/gr-task-beauty2-far-ground/e2e/e1-twin-banks.spec.ts:110:3
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e1-twin-banks-builds-sluic-7516b-banks-against-one-gold-pool-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e1-twin-banks-builds-sluic-7516b-banks-against-one-gold-pool-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e1-twin-banks-builds-sluic-7516b-banks-against-one-gold-pool-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e1-twin-banks-builds-sluic-7516b-banks-against-one-gold-pool-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[90/104] [mobile-chrome] › e2e/e1-twin-banks.spec.ts:122:1 › routes enemies through both west and east fords
+[91/104] [mobile-chrome] › e2e/e1-twin-banks.spec.ts:135:1 › north marker is not the run loss stake, south overrun still ends the run, and waves use four edges
+[92/104] [mobile-chrome] › e2e/e1-twin-banks.spec.ts:175:1 › seeded Twin Banks diagnostics are stable
+[93/104] [mobile-chrome] › e2e/map-beauty-dry-gulch.spec.ts:23:1 › Dry Gulch consumes its authored relief while the Claim keeps the flat fallback
+
+[WebServer] 11:13:57 AM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[94/104] [mobile-chrome] › e2e/map-beauty-dry-gulch.spec.ts:58:1 › Dry Gulch relief stays inside FULL and LITE render budgets
+
+[WebServer] 11:14:01 AM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[95/104] [mobile-chrome] › e2e/night-mode-truth.spec.ts:54:1 › hero pool brightens mesh terrain at the sim radius and lantern carriers read as figures
+[96/104] [mobile-chrome] › e2e/night-mode-truth.spec.ts:104:1 › the natural dark-wave wrecker assault reaches and damages the wall
+[97/104] [mobile-chrome] › e2e/night3d-perf.spec.ts:67:1 › daylight matrix and Night Shift pressure stay within the painted 115% p95 gate
+  10) [mobile-chrome] › e2e/night3d-perf.spec.ts:67:1 › daylight matrix and Night Shift pressure stay within the painted 115% p95 gate 
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 1.15
+    Received:    1.9893617625687685
+
+      86 |     }
+      87 |     const ratio = terrain3dP95Ms / paintedP95Ms;
+    > 88 |     expect(ratio).toBeLessThanOrEqual(1.15);
+         |                   ^
+      89 |     expect(terrain3dP95Ms).toBeLessThanOrEqual(Balance.render.night.frameBudgetMs * Balance.render.night.collapseRatio);
+      90 |     report.push({ contract, paintedP95Ms, terrain3dP95Ms, ratio, ...(uncappedP95Ms === undefined ? {} : { uncappedP95Ms }) });
+      91 |   }
+        at /Users/robin/Claude/Projects/gr-task-beauty2-far-ground/e2e/night3d-perf.spec.ts:88:19
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/night3d-perf-daylight-matr-36d8b-in-the-painted-115-p95-gate-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/night3d-perf-daylight-matr-36d8b-in-the-painted-115-p95-gate-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/night3d-perf-daylight-matr-36d8b-in-the-painted-115-p95-gate-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/night3d-perf-daylight-matr-36d8b-in-the-painted-115-p95-gate-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[98/104] [mobile-chrome] › e2e/night3d-perf.spec.ts:98:1 › Night Shift keeps its lantern read and auto-tiers one sticky step at a time
+
+[WebServer] 11:14:45 AM [vite] (client) [console.warn] [gold-rush] render demotion {"event":"render_demotion","reason":"runtime-tier-shed-1","contractId":"e1-night-shift","buildId":"dev","tier":"FULL","dataset":{"terrain3dPilotState":"ready","terrain3dPilotRenderSource":"glb","run3dPilotState":"ready","run3dPilotMeshes":"0","run3dPilotTriangles":"0","terrain3dPilotContract":"e1-night-shift","terrain3dPilotTerrainLoadState":"mounted","terrain3dPilotPanoramaLoadState":"mounted","terrain3dPilotLandmarkLoadState":"mounted","terrain3dPilotHeightSource":"baked-grid","terrain3dPilotMeshes":"1","terrain3dPilotTriangles":"32768","terrain3dPilotMaterials":"1","terrain3dPilotVertices":"16641","terrain3dPilotPanorama":"night-shift-panorama","terrain3dPilotPanoramaMeshes":"1","terrain3dPilotPanoramaTriangles":"1920","terrain3dPilotPanoramaMaterials":"1","terrain3dPilotPanoramaVertices":"1351","terrain3dPilotNightPools":"world-shader","terrain3dPilotNightPoolSources":"0","terrain3dPilotSpringPonds":"0","terrain3dPilotSpringPondWaterRadii":"[]","terrain3dPilotSpringPondDampGroundRadii":"[]","terrain3dPilotChannelWater":"0","terrain3dPilotFordWater":"0","terrain3dPilotChannelWaterHalfWidths":"[]","terrain3dPilotHiddenRelief":"6","terrain3dPilotHiddenGroundLayers":"TerrainVistaRing|TerrainReliefMesh|terrain.river|terrain.ford|FordSteppingStones|SpringPonds","terrain3dPilotContinuation":"sculpt-edge-continuation","terrain3dPilotHorizonApron":"plain","terrain3dPilotFarGroundProbe":"off","terrain3dPilotPanoramaFraming":"world-projected-horizon","terrain3dPilotSkirtBlend":"painted-underlay-alpha-rim","terrain3dPilotPanoramaFog":"excluded","terrain3dPilotPanoramaDepth":"screen-horizon-backdrop","terrain3dPilotLandmarkExpected":"5","terrain3dPilotLandmarkEmissive":"3","terrain3dPilotLandmarks":"5","terrain3dPilotLandmarkSkipped":"0","terrain3dPilotLandmarkDiagnostics":"","terrain3dPilotLandmarkMounts":"[{\"id\":\"seven_lantern_terraces\",\"x\":0,\"y\":0.5346500063705444,\"z\":0},{\"id\":\"lampworks_yard\",\"x\":8,\"y\":0.6566582322120667,\"z\":18},{\"id\":\"dark_rock_shoulders\",\"x\":0,\"y\":-1.4956779936294555,\"z\":0},{\"id\":\"central_ford\",\"x\":0,\"y\":-0.10067999362945557,\"z\":0},{\"id\":\"night_work_road\",\"x\":0,\"y\":-0.10190099362945557,\"z\":0}]","terrain3dPilotLandmarkMaterials":"[{\"id\":\"seven_lantern_terraces\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0},{\"id\":\"lampworks_yard\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0},{\"id\":\"dark_rock_shoulders\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0},{\"id\":\"central_ford\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0},{\"id\":\"night_work_road\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0}]"}}
+
+[WebServer] 11:14:47 AM [vite] (client) [console.warn] [gold-rush] render demotion {"event":"render_demotion","reason":"runtime-tier-shed-2","contractId":"e1-night-shift","buildId":"dev","tier":"FULL","dataset":{"terrain3dPilotState":"ready","terrain3dPilotRenderSource":"glb","run3dPilotState":"ready","run3dPilotMeshes":"0","run3dPilotTriangles":"0","terrain3dPilotContract":"e1-night-shift","terrain3dPilotTerrainLoadState":"mounted","terrain3dPilotPanoramaLoadState":"mounted","terrain3dPilotLandmarkLoadState":"mounted","terrain3dPilotHeightSource":"baked-grid","terrain3dPilotMeshes":"1","terrain3dPilotTriangles":"32768","terrain3dPilotMaterials":"1","terrain3dPilotVertices":"16641","terrain3dPilotPanorama":"night-shift-panorama","terrain3dPilotPanoramaMeshes":"1","terrain3dPilotPanoramaTriangles":"1920","terrain3dPilotPanoramaMaterials":"1","terrain3dPilotPanoramaVertices":"1351","terrain3dPilotNightPools":"world-shader","terrain3dPilotNightPoolSources":"0","terrain3dPilotSpringPonds":"0","terrain3dPilotSpringPondWaterRadii":"[]","terrain3dPilotSpringPondDampGroundRadii":"[]","terrain3dPilotChannelWater":"0","terrain3dPilotFordWater":"0","terrain3dPilotChannelWaterHalfWidths":"[]","terrain3dPilotHiddenRelief":"6","terrain3dPilotHiddenGroundLayers":"TerrainVistaRing|TerrainReliefMesh|terrain.river|terrain.ford|FordSteppingStones|SpringPonds","terrain3dPilotContinuation":"sculpt-edge-continuation","terrain3dPilotHorizonApron":"plain","terrain3dPilotFarGroundProbe":"off","terrain3dPilotPanoramaFraming":"world-projected-horizon","terrain3dPilotSkirtBlend":"painted-underlay-alpha-rim","terrain3dPilotPanoramaFog":"excluded","terrain3dPilotPanoramaDepth":"screen-horizon-backdrop","terrain3dPilotLandmarkExpected":"5","terrain3dPilotLandmarkEmissive":"3","terrain3dPilotLandmarks":"5","terrain3dPilotLandmarkSkipped":"0","terrain3dPilotLandmarkDiagnostics":"","terrain3dPilotLandmarkMounts":"[{\"id\":\"seven_lantern_terraces\",\"x\":0,\"y\":0.5346500063705444,\"z\":0},{\"id\":\"lampworks_yard\",\"x\":8,\"y\":0.6566582322120667,\"z\":18},{\"id\":\"dark_rock_shoulders\",\"x\":0,\"y\":-1.4956779936294555,\"z\":0},{\"id\":\"central_ford\",\"x\":0,\"y\":-0.10067999362945557,\"z\":0},{\"id\":\"night_work_road\",\"x\":0,\"y\":-0.10190099362945557,\"z\":0}]","terrain3dPilotLandmarkMaterials":"[{\"id\":\"seven_lantern_terraces\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0},{\"id\":\"lampworks_yard\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0},{\"id\":\"dark_rock_shoulders\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0},{\"id\":\"central_ford\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0},{\"id\":\"night_work_road\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0}]"}}
+
+[WebServer] 11:14:49 AM [vite] (client) [console.warn] [gold-rush] render demotion {"event":"render_demotion","reason":"runtime-tier-shed-3","contractId":"e1-night-shift","buildId":"dev","tier":"LITE","dataset":{"terrain3dPilotState":"lite","terrain3dPilotRenderSource":"painted","run3dPilotState":"lite","run3dPilotMeshes":"0","run3dPilotTriangles":"0","terrain3dPilotContract":"e1-night-shift","terrain3dPilotTerrainLoadState":"mounted","terrain3dPilotPanoramaLoadState":"mounted","terrain3dPilotLandmarkLoadState":"disposed","terrain3dPilotHeightSource":"baked-grid","terrain3dPilotMeshes":"1","terrain3dPilotTriangles":"32768","terrain3dPilotMaterials":"1","terrain3dPilotVertices":"16641","terrain3dPilotPanorama":"night-shift-panorama","terrain3dPilotPanoramaMeshes":"1","terrain3dPilotPanoramaTriangles":"1920","terrain3dPilotPanoramaMaterials":"1","terrain3dPilotPanoramaVertices":"1351","terrain3dPilotNightPools":"world-shader","terrain3dPilotNightPoolSources":"0","terrain3dPilotSpringPonds":"0","terrain3dPilotChannelWater":"0","terrain3dPilotFordWater":"0","terrain3dPilotHiddenRelief":"6","terrain3dPilotHiddenGroundLayers":"TerrainVistaRing|TerrainReliefMesh|terrain.river|terrain.ford|FordSteppingStones|SpringPonds","terrain3dPilotContinuation":"sculpt-edge-continuation","terrain3dPilotHorizonApron":"plain","terrain3dPilotFarGroundProbe":"off","terrain3dPilotPanoramaFraming":"world-projected-horizon","terrain3dPilotSkirtBlend":"painted-underlay-alpha-rim","terrain3dPilotPanoramaFog":"excluded","terrain3dPilotPanoramaDepth":"screen-horizon-backdrop","terrain3dPilotLandmarkExpected":"5","terrain3dPilotLandmarkEmissive":"3","terrain3dPilotLandmarks":"5","terrain3dPilotLandmarkSkipped":"0","terrain3dPilotLandmarkDiagnostics":"","terrain3dPilotLandmarkMounts":"[{\"id\":\"seven_lantern_terraces\",\"x\":0,\"y\":0.5346500063705444,\"z\":0},{\"id\":\"lampworks_yard\",\"x\":8,\"y\":0.6566582322120667,\"z\":18},{\"id\":\"dark_rock_shoulders\",\"x\":0,\"y\":-1.4956779936294555,\"z\":0},{\"id\":\"central_ford\",\"x\":0,\"y\":-0.10067999362945557,\"z\":0},{\"id\":\"night_work_road\",\"x\":0,\"y\":-0.10190099362945557,\"z\":0}]","terrain3dPilotLandmarkMaterials":"[{\"id\":\"seven_lantern_terraces\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0},{\"id\":\"lampworks_yard\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0},{\"id\":\"dark_rock_shoulders\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0},{\"id\":\"central_ford\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0},{\"id\":\"night_work_road\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0}]"}}
+[99/104] [mobile-chrome] › e2e/panorama-framing.spec.ts:18:3 › the-claim keeps its panorama in world framing across the wide aspect matrix
+[100/104] [mobile-chrome] › e2e/panorama-framing.spec.ts:18:3 › e1-night-shift keeps its panorama in world framing across the wide aspect matrix
+[101/104] [mobile-chrome] › e2e/panorama-framing.spec.ts:18:3 › e4-gusher-county keeps its panorama in world framing across the wide aspect matrix
+[102/104] [mobile-chrome] › e2e/panorama-framing.spec.ts:35:1 › legacy painted ground stays hidden while sculpt landmarks remain mounted
+
+[WebServer] 11:15:42 AM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[103/104] [mobile-chrome] › e2e/panorama-framing.spec.ts:53:1 › wide win return reaches a clean town frame
+[104/104] [mobile-chrome] › e2e/panorama-framing.spec.ts:67:1 › write the three 2000x1000 run-camera proof shots
+  10 failed
+    [desktop-chrome] › e2e/e1-night-shift.spec.ts:271:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting 
+    [desktop-chrome] › e2e/e1-night-shift.spec.ts:372:1 › lantern post is Night Shift gated and relights a true-dark light ring 
+    [desktop-chrome] › e2e/e1-night-shift.spec.ts:435:1 › a lantern pool makes only its build island readable at true dark 
+    [desktop-chrome] › e2e/e1-twin-banks.spec.ts:103:1 › builds sluices and stockpiles on both banks against one gold pool 
+    [desktop-chrome] › e2e/night3d-perf.spec.ts:67:1 › daylight matrix and Night Shift pressure stay within the painted 115% p95 gate 
+    [mobile-chrome] › e2e/e1-night-shift.spec.ts:271:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting 
+    [mobile-chrome] › e2e/e1-night-shift.spec.ts:372:1 › lantern post is Night Shift gated and relights a true-dark light ring 
+    [mobile-chrome] › e2e/e1-night-shift.spec.ts:435:1 › a lantern pool makes only its build island readable at true dark 
+    [mobile-chrome] › e2e/e1-twin-banks.spec.ts:103:1 › builds sluices and stockpiles on both banks against one gold pool 
+    [mobile-chrome] › e2e/night3d-perf.spec.ts:67:1 › daylight matrix and Night Shift pressure stay within the painted 115% p95 gate 
+  1 skipped
+  93 passed (15.7m)

@@ -1,0 +1,45 @@
+{
+  "secured": true,
+  "waves": 12,
+  "timeMs": 496333,
+  "gold": 129,
+  "kills": 451,
+  "calls": 69,
+  "defaultedPicks": 0,
+  "defaultedSecure": 1,
+  "eventLogHash": "fnv1a32:78fe88df",
+  "tape": "/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/heat14/opus/e2-incline/attempt-1-tape.json",
+  "scored": true,
+  "runsSoFar": 2,
+  "scoredAttempts": 1,
+  "worldModel": "sim-import",
+  "score": {
+    "secured": true,
+    "waves": 12,
+    "timeAlive": 496.333,
+    "gold": 129,
+    "baseValue": 0
+  },
+  "envelope": {
+    "durationTicks": 14890,
+    "lastEntryTick": 14832,
+    "entries": 69,
+    "bytes": 250577,
+    "note": "clear on all three axes; maxTicks floor is 18000"
+  },
+  "tapeMeta": {
+    "buildId": "c7b6eecc8",
+    "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+    "era": 6,
+    "viewVersion": 2
+  },
+  "localAssay": {
+    "verb": "node scripts/assay-replay-agent.mjs artifacts/heat14/opus/e2-incline/attempt-1-tape.json",
+    "eventLogHash": "fnv1a32:ccf9deef",
+    "matchesTapeHeader": true,
+    "outcome": { "secured": true, "waves": 12, "gold": 129, "timeAlive": 496.333 },
+    "securedSnapshot": { "waves": 12, "gold": 129, "timeAlive": 496.333 },
+    "note": "The replay reproduces the TAPE header's hash (ccf9deef), not the stdout outcome line's (78fe88df); they are different numbers by design. securedSnapshot.gold equals the declared gold, so no score_mismatch."
+  },
+  "note": "tune-1 secured on the FIRST controller ride and is PROMOTED as the scored attempt. attempt-1-tape.json is a byte-identical copy of tune-1-tape.json (both 250577 bytes) — they are ONE ride under two filenames, not two runs. 2 sim runs total: the --policy idle probe (died w2/119.333s) and this one."
+}

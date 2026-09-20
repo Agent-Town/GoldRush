@@ -1,0 +1,14 @@
+node:internal/modules/run_main:104
+    triggerUncaughtException(
+    ^
+
+page.evaluate: TypeError: Cannot read properties of undefined (reading 'x')
+    at eval (eval at evaluate (:303:30), <anonymous>:1:105)
+    at UtilityScript.evaluate (<anonymous>:305:16)
+    at UtilityScript.<anonymous> (<anonymous>:1:44)
+    at shot (/Users/robin/.codex/worktrees/572c/Gold Rush/artifacts/boss-fidelity/e8-salvage-claw/capture.mjs:16:38)
+    at /Users/robin/.codex/worktrees/572c/Gold Rush/artifacts/boss-fidelity/e8-salvage-claw/capture.mjs:17:8 {
+  log: []
+}
+
+Node.js v23.11.1

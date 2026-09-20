@@ -1,0 +1,147 @@
+{
+  "rig": "opus",
+  "contract": "e8-mare-claim",
+  "model": "claude-opus-5",
+  "sessionId": "b0462f8c-201e-4fad-8cab-c51383b10056",
+  "startedAt": "2026-09-18T03:56:08.834Z",
+  "endedAt": "2026-09-18T04:06:02.663Z",
+  "wallClockSeconds": 594,
+  "wallHit": false,
+  "exitCode": 0,
+  "signal": null,
+  "setupToFirstOutputSeconds": 105,
+  "arenaTrackedChanges": [],
+  "workspaceFiles": [
+    "attempt-1-summary.json",
+    "attempt-1-tape.json",
+    "attempt-1-view0.json",
+    "ctrl-v1.mjs",
+    "gauntlet-outcome.json",
+    "gauntlet-report.md",
+    "probe-summary.json",
+    "probe-tape.json",
+    "probe-view0.json",
+    "runner.mjs",
+    "tune-1-summary.json",
+    "tune-1-tape.json",
+    "tune-1-view0.json"
+  ],
+  "outcome": {
+    "secured": true,
+    "waves": 20,
+    "timeMs": 600000,
+    "gold": 260,
+    "kills": 922,
+    "calls": 89,
+    "defaultedPicks": 0,
+    "defaultedSecure": 1,
+    "eventLogHash": "fnv1a32:5a377f4a",
+    "tape": "/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/heat14/opus/e8-mare-claim/attempt-1-tape.json",
+    "scored": true,
+    "label": "attempt-1",
+    "envelope": {
+      "durationTicks": 18000,
+      "lastEntryTick": 17681,
+      "entries": 89,
+      "bytes": 142125,
+      "tapeHash": "fnv1a32:ddf3c5c6"
+    },
+    "runsSoFar": 3,
+    "scoredAttempts": 1,
+    "worldModel": "sim-import"
+  },
+  "outcomeError": null,
+  "promotedTapeName": "attempt-1-tape.json",
+  "scoredTapes": [
+    {
+      "file": "attempt-1-tape.json",
+      "id": "agent-c6bc2030-bbe3ee56-b54e-419f-b2e3-62e3752c2fde",
+      "contract": "e8-mare-claim",
+      "seed": "e8-mare-claim-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "f4cf8e92f",
+        "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+        "era": 6,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 20,
+        "timeAlive": 600,
+        "gold": 260
+      },
+      "entries": 89,
+      "durationTicks": 18000,
+      "lastEntryTick": 17681,
+      "promotedByRig": true,
+      "discoveredBy": "outcome-file+filename"
+    }
+  ],
+  "otherTapes": [
+    {
+      "file": "probe-tape.json",
+      "id": "agent-8aadbf92-3f0359a8-34df-488f-89fb-53492ea09329",
+      "contract": "e8-mare-claim",
+      "seed": "e8-mare-claim-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "011252b06",
+        "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+        "era": 6,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 2,
+        "timeAlive": 76.033,
+        "gold": 0
+      },
+      "entries": 0,
+      "durationTicks": 2281,
+      "lastEntryTick": null
+    },
+    {
+      "file": "tune-1-tape.json",
+      "id": "agent-4f4b8678-8082ae4d-528f-4f9a-a724-cc19e99b32e3",
+      "contract": "e8-mare-claim",
+      "seed": "e8-mare-claim-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "f4cf8e92f",
+        "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+        "era": 6,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 19,
+        "timeAlive": 587,
+        "gold": 470
+      },
+      "entries": 83,
+      "durationTicks": 17610,
+      "lastEntryTick": 17547
+    }
+  ],
+  "otherSecuredTapes": [],
+  "report": {
+    "outcome": "**SECURED — waves 20 / timeAlive 600.000 s / gold 260 / calls 89.** 922 kills, `defaultedSecure: 1`,\n`defaultedPicks: 0`, 0 of 11 works ever wrecked, `goldStolen` 0, `breathlessPans` 0.\n\nTape put forward: `attempt-1-tape.json` (declared in `gauntlet-outcome.json`'s `\"tape\"` field).\nEnvelope measured on the first reel that existed: `durationTicks` 18 000, last accepted order at\ntick **17 681**, 89 entries, 142 125 bytes — clear on all three axes.\n\nReceipt: the assay instrument was control-tested on the zero-order idle probe first (it replayed to\nits own header `fnv1a32:a45ba9ac`), then the scored reel reproduced **`fnv1a32:ddf3c5c6`** — the\nTAPE header's hash, not the stdout outcome line's `5a377f4a` — with\n`securedSnapshot {waves: 20, gold: 260, timeAlive: 600}` matching the declaration exactly, which is\nwhat the door's `score_mismatch` rule compares.\n\n**3 sim runs, 1 scored attempt** (idle probe → `tune-1` → `attempt-1`).",
+    "whatTheMapAsked": "It asked for **air as the wall, as a two-body problem with a window clock** — so this contract\ngenuinely exercises E8's signature mechanic (low gravity, air as wall, transfer under changed\nphysics) rather than wearing its name, and the *air* half is the whole of it. `now.air` publishes\n`suit` (`body: \"hero\"`, 60 s capacity, 4/s refill inside a dome, **5 hp/s** harm outside), a per-pad\n`domes` dial, and `regolith` (`grounds` 6, `required` 4, `windowWaves` 4, `worked`,\n`creditedThisWindow`, `windowHeldPans`, `breathlessPans`). No wave secures until four **distinct**\ngrounds are worked, at most one credited per 120-second window, each while **the hero's** suit holds\nair — while the body that pans is the Prospector, 20–35 units out in vacuum. That split is the\nstrategy: park her inside `dome-cluster-pad-center`'s breathing ellipse (the contract declares\n`pressurisedZoneShape: \"ellipse\"`, so the breathable region is the radius-6 disc inscribed in the\n12×12 rect, not the rect) and dispatch it out. `now.seams[].anchorIndex` is the direct handle that\nturns \"pan a *fresh* ground this window\" into a sort against `regolith.worked`. Measured: gate closed\nat **t = 371.9** with 228 seconds of slack, **zero** breathless pans, and the suit never below 44 of\n60. The *gravity* half (`feelG 0.6`, `floaty`, `knockbackScale 1.3`, `orbitalReturn: false`) is the\nhazard rather than a lever: under low gravity a scrum can throw the hero clean out of her own air,\nand the cure is to interleave re-arming `MOVE_HERO` records through the draining harvest chain —\na `done` record is skipped forever, so re-arming means *more records, not more submissions*.\nThere is **no E8 verb**: the era is answered entirely with `MOVE_HERO` and `HARVEST`, which is\nexactly what ADR-005 intended.\n\nMy notebook remembers this map from generations 29, 39 and 61, and **its rules did not move** — on\nan era named for rebuilt maps, proving that is itself the result. Claim (0,12), the three dome pads,\nthe six harvest anchors, `regolithRequired: 4` / `regolithWindowWaves: 4` / `harmPerSecond: 5`, the\ntwo-id roster and the wave-20 default all reproduced to the decimal, and the idle floor came back at\n**w2 / 76.033 s** against generation 61's 76.0 s. The map is not named as cured this week; its first\nminute did exactly what the briefing says — the hero lands six paces *north* of the only air on the\nmap with `inDome: null` and a suit falling 1 s/s, so the first order is a twelve-unit walk south onto\nthe pad, the first pan lands at t ≈ 20, and nothing threatening happens until wave 2.",
+    "winnability": "Secured, and the margin was **wide on survival and open on the score**: the hero never fell below\n**83.1 %** of its running maximum (finishing 145.4/175), all eleven works stood unwrecked through\n922 kills with `threats.alive` peaking near 32, and the era gate latched 228 seconds early with zero\nbreathless pans — while the banked purse, 260 of a live 350 cap, is the one number with anything\nleft on it, because `tune-1` had already spent my budget proving that hoarding it kills the run.",
+    "lessons": "- **A bank gate and a hard build floor can conspire to make the fort unreachable exactly when it is\n  needed, and the per-view table dates the conspiracy to the second.** `tune-1` died at w19/587 —\n  13.6 s short — with **470 gold idle**, because the last 270 gold of fort sat behind an `urgent`\n  latch that armed at t = 504 while my hard floor had shut at t = 500. Generation 85's \"a flat floor\n  cannot be argued with\" is right on a run you are winning and lethal on one you are losing.\n  **Give the floor exactly one bypass — a dying hero — and arm the survival latch on pressure that\n  predicts death, not on damage already taken.**\n- **A dead run banks nothing, so the contingency fort belongs in the CORE ladder whenever the map's\n  own income cannot fund both.** I have put the surplus fort behind a pressure latch for four\n  generations (gens 98, 104, 109) and banked it every time on comfortable boards. Here the board was\n  not comfortable: 990 panned against a 790-gold full ladder leaves ~200, and there is no version of\n  this contract that banks 500 *and* survives wave 19. **Do the subtraction — `panned − full ladder`\n  — before deciding whether the surplus is a contingency or the plan.**\n- **Read the door document's era paragraph against the era system's own header, because the door can\n  be stale on the one fact that decides the map.** `skill.md` says the suit is \"the Prospector's\n  air\"; the consumer says it moved to the hero on 2026-09-07 and names the measurement that forced it\n  (601 of 600 s outside pressurised ground on this map). Had I inherited the door's wording I would\n  have designed a round-trip errand for a body that does not breathe. Seventh contract where reading\n  the *consumer* rather than the publication decided the ride.\n- **A declared `pressurisedZoneShape` changes which of your own build coordinates you can walk to.**\n  The pad is a 12×12 rect and the air is the inscribed radius-6 *disc*, so a turret at (5,5) is legal\n  ground and **unbreathable** ground — 7.07 from centre. That killed the tier-2 `CONTEXT_ACTION`\n  sink before I wrote it (the verb does not travel, so it needs `MOVE_HERO` onto the work). **Check\n  the zone's SHAPE, not just its rectangle, before planning any errand into your own fort.**\n- **`now.seams[].anchorIndex` is the whole regolith objective, and `creditedThisWindow` is the\n  cadence.** Fresh-ground-first while `creditedThisWindow === 0`, nearest otherwise; drain the fresh\n  seam in a block of seven so the credit lands inside its window. Four credits across windows 0–3\n  with a spare window in hand, and a fifth ground worked harmlessly afterwards (`windowHeldPans`\n  refuses the credit and still pays the gold). Never infer the ground from coordinates when the view\n  names it — and filter `Number.isFinite` first, because an inactive seam publishes `x`, `z` and\n  `anchorIndex` all `null` and one non-finite number refuses the whole array silently.\n- **The interleaved `MOVE_HERO` re-arm cost nothing and I still cannot prove it was needed.** The\n  hero's z oscillated between −3 and +8.6 all run and `inDome` read `null` in perhaps a dozen of 91\n  views — she was being nudged out and walked back, suit never below 44. Carry it (it is free when\n  unneeded and the run when it is), but do not report untested insurance as a cause.\n- **Ride the skeleton first, then change exactly one CAUSE — and a cause wears several faces.**\n  `tune-1` → `attempt-1` changed the ladder's contents, the floor's bypass and the early-core window,\n  which looks like three variables and is one: *the fort was under-bought because the gold was being\n  saved for a scoreboard the run never reached.* The diff is a measurement, not a guess: w19 → w20,\n  works 8 → 11, minimum HP fraction 0.00 → 0.831, gold 470-at-death → 260-banked-and-secured.\n- **An era named for rebuilt maps can leave a map's rules untouched, and proving it is a result —\n  ninth heat running.** Grep the pins for the contract id first, confirm the twist and geometry\n  against the notebook, then one ten-second idle probe against the remembered floor. Four minutes,\n  and it redirects the whole budget from geometry to whatever is actually free.\n- **Silence at `pendingSecure` did its four jobs again, twentieth contract running:** it banked the\n  default (`defaultedSecure: 1`), left the last accepted order 319 ticks inside `durationTicks`, held\n  a 91-view run to 89 entries and 142 KB, and — the reason that matters most — **it cannot be\n  rejected**, so the replay cannot diverge the way generation 84's nearly did.\n- **The runner before the probe, thirteenth heat running.** This arena refuses shell redirection and\n  compound `cd`, and `timeout` is not on macOS. A node runner that spawns `gr-sim`, drives the\n  controller, logs every view to a compact table and writes `gauntlet-outcome.json` plus all three\n  envelope axes on every child exit made the intermediate-results law automatic — a truthful row\n  existed from the idle probe onward, the comparator promoted the scored tape with **no hand edit**,\n  and its per-view table is the entire evidence base of this report."
+  },
+  "usage": {
+    "transcript": "/Users/robin/.claude/projects/-private-tmp-claude-501--Users-robin-Claude-Projects-Gold-Rush-fe6b8d27-b064-40eb-934b-1d29d57a71db-scratchpad-arena-heat14-e3949bfa/b0462f8c-201e-4fad-8cab-c51383b10056.jsonl",
+    "assistantTurns": 44,
+    "toolCalls": 22,
+    "tokensIn": 88,
+    "tokensOut": 108442,
+    "cacheReadTokens": 18992413,
+    "cacheWriteTokens": 1439295,
+    "note": "tokensIn excludes cache reads/writes (reported separately); summed from the CLI session transcript, not self-reported by the rig"
+  }
+}

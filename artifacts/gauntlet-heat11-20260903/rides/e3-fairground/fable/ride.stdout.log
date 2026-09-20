@@ -1,0 +1,11 @@
+**SECURED — first secure in county history for `e3-fairground`, on the first full ride.** Outcome: waves 12, 360.000s, 167 gold, 415 kills, 445 calls, zero defaulted picks/secures, `eventLogHash fnv1a32:7a66c50b`. Tape put forward: `artifacts/heat11/fable/e3-fairground/attempt-1-tape.json` (2 sim runs total, 1 scored attempt). worldModel: `sim-import`.
+
+How it went:
+
+1. **Receipts-first paid immediately.** `public/skill.md`'s admission note for this contract (line 377) pointed straight at the county's own prover artifacts in `artifacts/e3-fairground/` — a complete measured strategy with door-run outputs. I verified the current constants hadn't drifted (`GATE_LANE_SHIFT = 0`, secureWave 12, wheel at (0,8) whose dynamo stops for the run on first hit, 3 flocks at fright radius 7, secure latch = wheel spinning + all crossings + wave 12).
+2. **Authored my controller** implementing the measured-correct policy: radius-8 palisade box around the stake (0,-30) as the map's damage sink and wheel decoy (the south corners absorb ~65% of everything and are hit before the wheel's t~21s deadline), purse-as-reserve build ordering, REPAIR_UNDER 60, over-ask panning of the shuffled seam anchors, prospectors_luck-first draft, single-element SECURE_CHOICE bank.
+3. **tune-1 secured immediately**, and its hash matched the county's 2026-08-21 prover door run bit-for-bit — free proof of zero balance drift. The scored attempt was the deterministic re-run to the canonical tape path: byte-identical 445-entry input log, identical outcome, era-5 pin `a607a81f…` stamped in the tape meta.
+
+The margin: the wheel finished untouched at 240/240, but the middle crowd completed exactly one crossing (4/1/6) — the minimum the latch accepts. The era's grid mechanic was genuinely load-bearing here, in the negative-space way this era keeps teaching: you defend the graph's producer by feeding the map's entire pressure budget to a fort 38 units away from it.
+
+All deliverables are in the workspace: `controller.mjs`, both tapes, both trace logs, `gauntlet-outcome.json`, and `gauntlet-report.md` with the four sections ready for verbatim copy.

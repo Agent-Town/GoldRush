@@ -1,0 +1,43 @@
+
+########## RIDE e2-hill-mine · seed e2-hill-mine-01 · gen 57 · stake stale-receipt · wall 900s ##########
+--- 1 charter ---
+{"rig":"opus","contract":"e2-hill-mine","seed":"e2-hill-mine-01","seedMode":"bench","stake":"stale-receipt","generation":57,"wall":900,"notebookSha256":"90e5245a27402b79025a4f9b74fa24291995677daf15dd72e8a3db87c6465f36","charterSha256":"4502296afc3157b5b457a5404da0de667da74f3dfc1a24cf38707786a1e6d68e","bytes":443203,"out":"/private/tmp/heat12-038cc280/artifacts/gauntlet-heat12-20260905/rides/e2-hill-mine/charter.md"}
+--- 2 ride ---
+START opus claude-opus-5 pid=25955 session=bec1d500-71a1-4823-b7a5-a15eafd10a1f at=2026-09-05T20:34:11.447Z
+FIRST-OUTPUT opus +165s
+OUTCOME opus secured=false waves=13 gold=23 runsSoFar=1 scored=0 +270s
+OUTCOME opus secured=false waves=13 gold=23 runsSoFar=2 scored=0 +390s
+OUTCOME opus secured=false waves=15 gold=48 runsSoFar=3 scored=1 +435s
+END opus rc=0 signal=null wall=568s wallHit=false
+ride-wall rc=0 signal=-
+--- 3 land ---
+
+=== 1 finish-ride ===
+{"rig":"opus","contract":"e2-hill-mine","wall":568,"wallHit":false,"rc":0,"tracked":[],"files":22,"outcome":{"secured":false,"waves":15,"gold":48,"runsSoFar":3,"scoredAttempts":1,"tape":"/tmp/heat12-038cc280/artifacts/heat12/opus/e2-hill-mine/attempt-1-tape.json","worldModel":"sim-import"},"scoredTapes":[{"file":"attempt-1-tape.json","id":"agent-79d13893-f57ad81f-41e7-452e-94ba-087d1bbffabb","secured":false,"waves":15,"gold":48,"durationTicks":14117,"lastEntryTick":13913,"promotedByRig":true,"discoveredBy":"outcome-file+filename"}],"otherSecured":[],"reportSections":{"outcome":768,"whatTheMapAsked":2885,"winnability":1171,"lessons":4369},"usage":{"turns":55,"toolCalls":30,"tokensIn":110,"tokensOut":99231}}
+
+=== NOT SECURED — nothing to submit ===
+{
+ "rig": "opus",
+ "contract": "e2-hill-mine",
+ "wall": 568,
+ "wallHit": false,
+ "rc": 0,
+ "scoredTapes": [
+  {
+   "file": "attempt-1-tape.json",
+   "secured": false,
+   "waves": 15,
+   "gold": 48
+  }
+ ],
+ "outcomeNote": null
+}
+
+land rc=0
+--- 4 notebook ---
+{"notebook":"/Users/robin/Claude/Projects/goldrush-gauntlet/memories/claude__opus-5/NOTEBOOK.md","generation":57,"headerBytes":430,"entryBytes":9361}
+--- 5 matrix ---
+| 21 | e2-hill-mine | `e2-hill-mine-01` | stale-receipt | 57 | **not secured** | 15 | 48 | 470.567s | 568s | `attempt-1-tape.json` · `agent-79d13893-f57ad81f-41e7-452e-94ba-087d1bbffabb`<br>fnv1a32:d00d8e69 | — | gen 57 |
+{"contract":"e2-hill-mine","secured":false,"tapesOnDisk":10,"scoredTapes":1,"otherSecured":0,"runs":3,"scoredAttempts":1,"wallHit":false,"rc":0,"assay":null,"ranked":null,"winnability":"**Winnable — my generation 3 secured this seed at w15/454.2 s and the gate arithmetic is unchanged —\nand what stopped me was my own budget, not a wall in the map, the grammar or the economy:** my\nscored ride reached the *same wave 15* gen 3 banked on and held 16 seconds longer (470.567 s), so\nthe run now dies inside the boss window rather than short of it, and the whole remaining gap is that\nfour turrets could not grind a 12.5×-scaled three-component railcar down before `steam_wrecker` at\n`buildingDamageScale: 2.5` took the fort apart (8 works → 3 by w12); the one lever I tested — a\ncheap palisade bait line on the north face — is a *measured loss* (w12, all eight wrecked, and it\ncost two beacons of gun), while the two the data points at went unridden for want of wall clock:\n`REPAIR_UNDER` re-issued hard enough to hold the turret row through waves 12–15 (mending is 25% of\ncost, so it is 4× the fort per gold that rebuilding is, and my single 65% order was plainly not\nkeeping up), and the 60-gold `stockpile` / 80-gold `assay_office` sinks I declined on generation 3's\n\"stockpiles are a net loss twice over here\" without ever re-measuring them on this engine."}
+########## END e2-hill-mine ##########
+

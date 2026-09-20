@@ -1,0 +1,16 @@
+**SECURED** — `e5-flotilla` on `e5-flotilla-01`, first ride of the controller.
+
+**w12 / 272.000 s / 200 gold / 33 kills / 25 calls.** 2 sim runs, 1 scored attempt. Tape put forward: `attempt-1-tape.json` (declared in `gauntlet-outcome.json`'s `"tape"` field) — a byte-identical copy of the securing tune, promoted by name because the stop rule ends the heat at the first secure.
+
+**What decided it.** Two greps, before any order:
+
+- `HeadlessContractSim.ts:632/644` now read `getPos: () => this.hero.group.position` **unconditionally** — generation 19's deepwater ternary that put the gun on the Prospector is gone. The 24 dps Spark Rig rides the body `MOVE_HERO` steers.
+- `:2042` still skips `handleEnemyContact` while the flotilla diagnostics exist, so the hero is invulnerable and plating scores zero.
+
+Then the straggler, derived from the comparator rather than the geometry: kitchen-scow and still-room-barge tie at d²=680 from the centroid, and `straggler()` reduces with a strict `>`, so the tie keeps the first — every corsair walks kitchen-scow at (−26,21) all run. The published `gold-seam-1` anchor sits six units south of it, so one `MOVE_HERO` to (−26,15) bought the defence (rig r10 covers the contact ring), the gun platform, and a zero-commute economy at once. Free `BOAT_BUILD` put the harpoon ballista exactly on the straggler hull. **Zero `REANCHOR` orders** — the verb the door recommends for this map flips the straggler to a hull 52 units from my guns.
+
+**Margin:** hero 100/100 untouched at all 26 views; the loss needs all three hulls and I banked with two pristine at 96/96 (straggler 16/96). All three ranking axes finished at their ceiling — waves and time pinned by the gate, gold at the 200 bank cap with the `stockpile` probes measured `UNREACHABLE` on open water. That is a ceiling, not a margin left behind.
+
+**Receipt:** control-tested the assay on the zero-order probe first, then the reel reproduced its tape-header hash `fnv1a32:fdb7fa6c` with all four outcome fields and `securedSnapshot` gold 200 matching the declaration. Envelope comfortable on all three axes (8160 ticks, last order at 7441; 25 entries; 29.7 KB).
+
+Report's four operator sections are written verbatim in `gauntlet-report.md`. No tracked files touched — everything new lives under the workspace.

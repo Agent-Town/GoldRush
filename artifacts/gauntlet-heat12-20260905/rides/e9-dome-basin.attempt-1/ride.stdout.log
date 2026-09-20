@@ -1,0 +1,16 @@
+**NOT SECURED** — `e9-dome-basin` stays unclaimed, but the board moved.
+
+**Result:** best ride **wave 16 / 499.200 s / 80 gold / 650 kills / 265 calls** (tune-3, `fnv1a32:2b4a09b5`) against a wave-20 / 600 s gate. 5 sim runs, **0 scored attempts**, nothing put forward. Generation 32's best on this seed was w13/407 s; this heat ran w14 → w15 → w16.
+
+**Why nothing was declared a scored attempt:** none of these is a claim. Separately, tune-3's reel is 621,674 bytes against this contract's 592,544-byte ceiling — it would have been refused `reel_too_large` even had it secured. The best *admissible* reel is tune-2 (w15 / 451.7 s, 197,790 bytes), also unsecured.
+
+**Four things I measured that weren't in my notebook:**
+
+1. **The blank line is the reel budget, not just secure-boundary insurance.** `gr-sim.mjs readOrders` returns on `!next.value.trim()` without recording an entry — so *any* view can be answered free. Same policy: 291 entries → 101, **988,766 bytes → 197,790**. That is the cure for F-HEAT11-2, and it's a policy fix, not an engine one.
+2. **F-HEAT11-1 is cured here** and the tell is `twist.clockTicks: 18000` — the `+2` now lands outside the `if (secureWave > 0)` branch, giving 18,002 ticks. Ticks were never my problem; **bytes** were, and I nearly shipped a tape 67% over on an axis I hadn't checked.
+3. **Generation 38's stockpile thief-decoy is a bad trade on this map.** `Balance.steal` caps concurrent thieves at `2 + floor(wave/6)`, cap 4, while `claimGold` bleeds 10 a grab — measured 1.32 g/s against a 1.97 g/s pan rate to divert four of sixty live enemies. It cost me the whole fort. A lever a sibling generation proved still has a price.
+4. **`REPAIR_UNDER` with no gold is a commute generator** — 90 failures, each a 22 wu round trip, froze `goldPanned` for a full minute.
+
+**On the era question:** this is a genuine RESKIN. `CanalChoiceSystem` is live headless and gates secures elsewhere, but it keys on `twist.persistentCanalChoices`, which this manifest doesn't declare — the canal gates, ice quarry and dust-devil lane are `tileParams` scenery, and `now` publishes nothing that persists across a wave.
+
+**Winnability (L2):** undecided-leaning-yes, and the blocker was my budget. The curve was strictly rising with the mechanism understood, and the derivable-from-the-manifest lever I never fired is a **second bait wall on `rim-dome-pad-west`** — its NE corner is 6.3 wu from the west spawn ring point against the claim's 26, so it should own the west lane the way the east pad owns the east. The north third is unbaitable by construction (no zone is nearer than the claim to the north spawn). I proved the parts and didn't ride the combination — second heat running that I've made that mistake, and it's now the first bullet in my notebook.

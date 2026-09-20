@@ -1,0 +1,57 @@
+spine-gantry | patch {} | tile @artifacts/low-orbit-second-build-line/tile-spine-gantry.json | defence artifacts/low-orbit-second-build-line/defence-spine-gantry.json | kite none | secured=false identical=false | 3s
+    e8-low-orbit-01#1 secured=false w2 t=82.367s gold=40 kills=39 tiers=[1] works={"turret":1} hash=fnv1a32:031a0281
+spine-gantry-4out | patch {} | tile @artifacts/low-orbit-second-build-line/tile-spine-gantry.json | defence artifacts/low-orbit-second-build-line/defence-spine-gantry-4out.json | kite none | secured=false identical=false | 3s
+    e8-low-orbit-01#1 secured=false w2 t=82.367s gold=40 kills=39 tiers=[1] works={"turret":1} hash=fnv1a32:031a0281
+north-apron | patch {} | tile @artifacts/low-orbit-second-build-line/tile-north-apron.json | defence artifacts/low-orbit-second-build-line/defence-north-apron.json | kite none | secured=false identical=false | 34s
+    e8-low-orbit-01#1 secured=false w16 t=480s gold=50 kills=661 tiers=[1,1,1,1] works={"sentry_beacon":4,"turret":4} hash=fnv1a32:f03eee36
+north-gantry | patch {} | tile @artifacts/low-orbit-second-build-line/tile-north-gantry.json | defence artifacts/low-orbit-second-build-line/defence-north-gantry.json | kite none | secured=false identical=false | 28s
+    e8-low-orbit-01#1 secured=false w14 t=424.067s gold=25 kills=544 tiers=[1,1,1,1] works={"sentry_beacon":3,"turret":4} hash=fnv1a32:bc3cea4a
+spine-gantry | patch {} | tile @artifacts/low-orbit-second-build-line/tile-spine-gantry.json | defence artifacts/low-orbit-second-build-line/defence-spine-gantry.json | kite 0,10 | secured=false identical=false | 47s
+    e8-low-orbit-01#1 secured=false w18 t=556.6s gold=70 kills=769 tiers=[1,1,1,1] works={"sentry_beacon":5,"turret":4} hash=fnv1a32:47f3e027
+spine-gantry-4out | patch {} | tile @artifacts/low-orbit-second-build-line/tile-spine-gantry.json | defence artifacts/low-orbit-second-build-line/defence-spine-gantry-4out.json | kite 0,10 | secured=false identical=false | 34s
+    e8-low-orbit-01#1 secured=false w15 t=459.6s gold=70 kills=606 tiers=[1,1,1,1] works={"sentry_beacon":4,"turret":4} hash=fnv1a32:185356e7
+north-apron | patch {} | tile @artifacts/low-orbit-second-build-line/tile-north-apron.json | defence artifacts/low-orbit-second-build-line/defence-north-apron.json | kite 0,10 | secured=false identical=false | 41s
+    e8-low-orbit-01#1 secured=false w17 t=512.533s gold=60 kills=723 tiers=[1,1,1,1] works={"sentry_beacon":4,"turret":4} hash=fnv1a32:3731056f
+north-gantry | patch {} | tile @artifacts/low-orbit-second-build-line/tile-north-gantry.json | defence artifacts/low-orbit-second-build-line/defence-north-gantry.json | kite 0,10 | secured=false identical=false | 45s
+    e8-low-orbit-01#1 secured=false w17 t=538.4s gold=55 kills=761 tiers=[1,1,1,1] works={"sentry_beacon":5,"turret":4} hash=fnv1a32:6a5a2143
+zone-only-spine | patch {} | tile @artifacts/low-orbit-second-build-line/tile-spine-gantry.json | defence default | kite 0,10 | secured=false identical=false | 56s
+    e8-low-orbit-01#1 secured=false w19 t=585.1s gold=15 kills=824 tiers=[1,1,1,1] works={"sentry_beacon":5,"turret":4} hash=fnv1a32:6e97b13b
+north-turret-1 | patch {} | tile @artifacts/low-orbit-second-build-line/tile-north-apron.json | defence artifacts/low-orbit-second-build-line/defence-north-turret-1.json | kite 0,10 | secured=false identical=false | 55s
+    e8-low-orbit-01#1 secured=false w19 t=590.533s gold=25 kills=842 tiers=[1,1,1,1] works={"sentry_beacon":4,"turret":4} hash=fnv1a32:419af75b
+north-turret-2 | patch {} | tile @artifacts/low-orbit-second-build-line/tile-north-apron.json | defence artifacts/low-orbit-second-build-line/defence-north-turret-2.json | kite 0,10 | secured=false identical=false | 47s
+    e8-low-orbit-01#1 secured=false w18 t=552.3s gold=0 kills=783 tiers=[1,1,1,1] works={"sentry_beacon":5,"turret":4} hash=fnv1a32:50d46750
+north-beacons-shallow | patch {} | tile @artifacts/low-orbit-second-build-line/tile-north-apron.json | defence artifacts/low-orbit-second-build-line/defence-north-beacons-shallow.json | kite 0,10 | secured=false identical=false | 46s
+    e8-low-orbit-01#1 secured=false w18 t=549.567s gold=70 kills=806 tiers=[1,1,1,1] works={"sentry_beacon":4,"turret":4} hash=fnv1a32:0ec1fd33
+spine-one-out | patch {} | tile @artifacts/low-orbit-second-build-line/tile-spine-gantry.json | defence artifacts/low-orbit-second-build-line/defence-spine-one-out.json | kite 0,10 | secured=false identical=false | 45s
+    e8-low-orbit-01#1 secured=false w18 t=544.167s gold=0 kills=797 tiers=[1,1,1,1] works={"sentry_beacon":6,"turret":4} hash=fnv1a32:81f6a4e9
+deck-turrets | NO ZONE | defence defence-deck-turrets.json | secured=false | {"secured":false,"waves":16,"timeMs":482500,"gold":70,"kills":670,"calls":58,"defaultedPicks":0,"defaultedSecure":0,"eventLogHash":"fnv1a32:5fe5a035"}
+deck-turrets-outer | NO ZONE | defence defence-deck-turrets-outer.json | secured=false | {"secured":false,"waves":17,"timeMs":530767,"gold":15,"kills":726,"calls":66,"defaultedPicks":0,"defaultedSecure":0,"eventLogHash":"fnv1a32:14e6b80e"}
+nt-z16 | patch {} | tile @artifacts/low-orbit-second-build-line/tile-north-apron.json | defence artifacts/low-orbit-second-build-line/defence-nt-z16.json | kite 0,10 | secured=false identical=false | 48s
+    e8-low-orbit-01#1 secured=false w19 t=571.833s gold=70 kills=792 tiers=[1,1,1,1] works={"sentry_beacon":4,"turret":4} hash=fnv1a32:dc79e587
+nt-z19 | patch {} | tile @artifacts/low-orbit-second-build-line/tile-north-apron.json | defence artifacts/low-orbit-second-build-line/defence-nt-z19.json | kite 0,10 | secured=false identical=false | 47s
+    e8-low-orbit-01#1 secured=false w18 t=556.133s gold=65 kills=776 tiers=[1,1,1,1] works={"sentry_beacon":5,"turret":4} hash=fnv1a32:5d2d6499
+nt-z25 | patch {} | tile @artifacts/low-orbit-second-build-line/tile-north-apron.json | defence artifacts/low-orbit-second-build-line/defence-nt-z25.json | kite 0,10 | secured=true identical=false | 55s
+    e8-low-orbit-01#1 secured=true w20 t=600s gold=40 kills=821 tiers=[1,1,1,1] works={"sentry_beacon":4,"turret":4} hash=fnv1a32:62d478a3
+nt-z22-west | patch {} | tile @artifacts/low-orbit-second-build-line/tile-north-apron.json | defence artifacts/low-orbit-second-build-line/defence-nt-z22-west.json | kite 0,10 | secured=false identical=false | 40s
+    e8-low-orbit-01#1 secured=false w17 t=515.6s gold=40 kills=722 tiers=[1,1,1,1] works={"sentry_beacon":4,"turret":4} hash=fnv1a32:bd4e0053
+apron-01-twice | patch {} | tile @artifacts/low-orbit-second-build-line/tile-north-apron.json | defence artifacts/low-orbit-second-build-line/defence-apron.json | kite 0,10 | secured=true identical=true | 114s
+    e8-low-orbit-01#1 secured=true w20 t=600s gold=40 kills=821 tiers=[1,1,1,1] works={"sentry_beacon":4,"turret":4} hash=fnv1a32:62d478a3
+    e8-low-orbit-01#2 secured=true w20 t=600s gold=40 kills=821 tiers=[1,1,1,1] works={"sentry_beacon":4,"turret":4} hash=fnv1a32:62d478a3
+apron-02-twice | patch {} | tile @artifacts/low-orbit-second-build-line/tile-north-apron.json | defence artifacts/low-orbit-second-build-line/defence-apron.json | kite 0,10 | secured=false identical=true | 35s
+    e8-low-orbit-02#1 secured=false w11 t=342.7s gold=0 kills=381 tiers=[1,1,1,1] works={"sentry_beacon":1,"turret":4} hash=fnv1a32:58d5ce4d
+    e8-low-orbit-02#2 secured=false w11 t=342.7s gold=0 kills=381 tiers=[1,1,1,1] works={"sentry_beacon":1,"turret":4} hash=fnv1a32:58d5ce4d
+apron-no-sortie | patch {} | tile @artifacts/low-orbit-second-build-line/tile-north-apron.json | defence artifacts/low-orbit-second-build-line/defence-apron.json | kite 0,10 | secured=false identical=false | 73s
+    e8-low-orbit-01#1 secured=false w22 t=660s gold=200 kills=1056 tiers=[2,2,2,1] works={"sentry_beacon":6,"turret":4} hash=fnv1a32:5da81706
+apron-no-zone | patch {} | tile {} | defence artifacts/low-orbit-second-build-line/defence-apron.json | kite 0,10 | secured=false identical=false | 33s
+    e8-low-orbit-01#1 secured=false w15 t=456.767s gold=145 kills=596 tiers=[2,2,1] works={"turret":3} hash=fnv1a32:14dc8a84
+nt-z24 | patch {} | tile @artifacts/low-orbit-second-build-line/tile-north-apron.json | defence artifacts/low-orbit-second-build-line/defence-nt-z24.json | kite 0,10 | secured=false identical=false | 29s
+    e8-low-orbit-01#1 secured=false w13 t=411.4s gold=60 kills=510 tiers=[1,1,1,1] works={"sentry_beacon":4,"turret":4} hash=fnv1a32:71a57ee6
+apron-turret-last | patch {} | tile @artifacts/low-orbit-second-build-line/tile-north-apron.json | defence artifacts/low-orbit-second-build-line/defence-apron-turret-last.json | kite 0,10 | secured=false identical=false | 49s
+    e8-low-orbit-01#1 secured=false w16 t=488.067s gold=95 kills=657 tiers=[1,1,1] works={"sentry_beacon":6,"turret":3} hash=fnv1a32:e5f6c431
+    e8-low-orbit-02#1 secured=false w10 t=306.933s gold=10 kills=309 tiers=[1,1,1] works={"sentry_beacon":3,"turret":3} hash=fnv1a32:828ebb70
+apron-beacon-north | patch {} | tile @artifacts/low-orbit-second-build-line/tile-north-apron.json | defence artifacts/low-orbit-second-build-line/defence-apron-beacon-north.json | kite 0,10 | secured=false identical=false | 71s
+    e8-low-orbit-01#1 secured=false w19 t=585.1s gold=15 kills=824 tiers=[1,1,1,1] works={"sentry_beacon":5,"turret":4} hash=fnv1a32:b127e5a1
+    e8-low-orbit-02#1 secured=false w12 t=366.233s gold=25 kills=435 tiers=[1,1,1,1] works={"sentry_beacon":1,"turret":4} hash=fnv1a32:e6c631fd
+zone-only-apron | patch {} | tile @artifacts/low-orbit-second-build-line/tile-north-apron.json | defence default | kite 0,10 | secured=false identical=false | 71s
+    e8-low-orbit-01#1 secured=false w19 t=585.1s gold=15 kills=824 tiers=[1,1,1,1] works={"sentry_beacon":5,"turret":4} hash=fnv1a32:6e97b13b
+    e8-low-orbit-02#1 secured=false w12 t=366.233s gold=25 kills=435 tiers=[1,1,1,1] works={"sentry_beacon":1,"turret":4} hash=fnv1a32:e6c631fd

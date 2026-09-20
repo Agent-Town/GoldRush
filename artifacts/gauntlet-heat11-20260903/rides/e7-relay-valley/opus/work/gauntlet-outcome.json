@@ -1,0 +1,17 @@
+{
+  "secured": false,
+  "waves": 4,
+  "timeMs": 130800,
+  "gold": 200,
+  "kills": 73,
+  "calls": 415,
+  "defaultedPicks": 0,
+  "defaultedSecure": 0,
+  "eventLogHash": "fnv1a32:48b85b61",
+  "tape": "/private/tmp/heat11-5e7a7c0b/artifacts/heat11/opus/e7-relay-valley/tune-1.json",
+  "scored": false,
+  "runsSoFar": 4,
+  "scoredAttempts": 0,
+  "worldModel": "sim-import",
+  "note": "Best of 4 runs (idle probe, tune-1, tune-2 complete; tune-3 still riding at the operator wall, no tape). NOT SECURED, nothing put forward. Two door findings independent of strategy: (1) e7-relay-valley declares no twist.secureWave, so it rides to Balance.run.secureWave=20 (600.000s = 18000 ticks) while runTapeEnvelopeForContract keeps maxTicks at MAX_PLAYBOOK_TICKS=18000; the banking SECURE_CHOICE is recorded at tick 18000, so durationTicks=18001 > 18000 and any secure is refused reel_duration_exceeded. Same class as e6-picnic and e6-half-life-hollow (gen 24/25 refusals) and all four E7 contracts. (2) maxTapeBytes=592384 budgets 160 bytes/entry; 32-order arrays run ~4KB, so tune-1 was 1724873 bytes after only 131 of 600 seconds."
+}

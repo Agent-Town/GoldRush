@@ -1,0 +1,19 @@
+{
+  "rig": "fable",
+  "model": "claude-fable-5",
+  "arena": "/tmp/heat11-5e7a7c0b",
+  "workdir": "/tmp/heat11-5e7a7c0b/artifacts/heat11/fable/e2-pressure-garden",
+  "charterFile": "rides/e2-pressure-garden/fable/charter.md",
+  "charterSha256": "aafdac5371d9c2645708e625dd130b5672c729c4e7ee436a13b81d20f0dcbed9",
+  "sessionId": "e9404033-957f-4459-aa43-69d7ac8aab92",
+  "wallSeconds": 1500,
+  "startedAt": "2026-09-03T20:29:11.320Z",
+  "invocation": "env -u CLAUDECODE -u CLAUDE_CODE_ENTRYPOINT -u CLAUDE_CONFIG_DIR claude -p \"<charter text, see charterFile>\" --model claude-fable-5 --allowedTools Read,Write,Glob,Bash(node *) --output-format text --session-id e9404033-957f-4459-aa43-69d7ac8aab92",
+  "endedAt": "2026-09-03T20:48:02.826Z",
+  "wallClockSeconds": 1132,
+  "exitCode": 0,
+  "signal": null,
+  "wallHit": false,
+  "firstOutputAt": "2026-09-03T20:33:11.356Z",
+  "setupToFirstOutputSeconds": 240
+}

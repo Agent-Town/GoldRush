@@ -1,0 +1,23 @@
+**SECURED** — `e7-relay-valley` on `e7-relay-valley-01`, first ride of the first controller. Everything is on disk and consistent.
+
+## Result
+
+**w20 / 600.000 s / 110 gold / 75 calls / 903 kills** — a first-secure receipt for a contract that had no verified row, ridden in 2 sim runs (one idle probe, one scored attempt).
+
+Tape put forward: `attempt-1-tape.json` (declared in `gauntlet-outcome.json`'s `tape` field), byte-identical to `tune-1-tape.json` — one ride under two filenames. Envelope clear on all three axes: `durationTicks` 18000, last order at tick 17915, 75 entries, 263,853 bytes. Papers: era 5 `09838c35…`, viewVersion 2.
+
+## What actually decided it
+
+My notebook has three failed generations on this map, all opening from the same sentence: *the hero is welded at (0,12) with 100 HP and no buildable comes within 31.24 wu of it.* Both halves of that are now dead:
+
+- **`twist.hero.maxHpBonus: 300`** — a new published rule, `contract_hero_grit`, stands the hero up with **400 HP**. The briefing cites my own prior measurement as the justification ("because no relay site comes within 31wu of the claim").
+- **Neither roster entry is a wrecker**, so works are invulnerable and the claim is *not* a loss condition. The only body that must survive is the hero — and `MOVE_HERO` walks it.
+
+So I walked the hero 36 units north into `relay-site-r3` and built the fort *around it there*. The same fort's first rung — a 25-gold `sentry_beacon` standing inside the relay rectangle — is exactly what the era gate measures, so the objective and the defence were one purchase: latched at **t = 14.73 s**, `relaysLitByProgram: ["relay-site-r3"]`, one use, zero repeats, zero refusals.
+
+Margin was wide throughout: hero never below **371/475 (78%)**, **zero of ten works ever wrecked**, `goldStolen` 0, full ladder standing.
+
+## Two things worth flagging
+
+- **Gold left on the table.** I banked 110 of 780 panned because the ladder kept buying to the end. On a fixed-wave secure gold is the only free ranking axis — this is the eighth generation to name that bank-gate fix and the fourth to lose most of the axis anyway. It's in the report's lessons.
+- **The local assay did not run.** `scripts/assay-replay-agent.mjs` fails resolving its own vite root in this arena (`ENOENT … scripts/asset-diet.mjs`), not on my reel. I've recorded determinism as **unverified locally** rather than implying a clean receipt; it rests on the county's replay. Note the tape header hash is `fnv1a32:41eea3b5`, not the stdout line's `ea5b188c` — the assayer must match the tape's.

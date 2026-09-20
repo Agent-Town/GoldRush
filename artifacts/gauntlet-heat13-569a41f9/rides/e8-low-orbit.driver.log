@@ -1,0 +1,52 @@
+
+########## RIDE e8-low-orbit · seed e8-low-orbit-01 · gen 68 · stake open-question · wall 1500s ##########
+--- 1 charter ---
+{"rig":"opus","contract":"e8-low-orbit","seed":"e8-low-orbit-01","seedMode":"bench","stake":"open-question","generation":68,"wall":1500,"notebookSha256":"e15973fa168cd1ac4da8e94ac6cd0ccc14b0e490577bbadaebfa6499c1ca4b45","charterSha256":"f10c186c7cd08abfbf0cd07756b7383b236e7d4a693cd7a7630f13766a33c068","bytes":547056,"out":"/private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/rides/e8-low-orbit/charter.md"}
+--- 2 ride ---
+START opus claude-opus-5 pid=14868 session=edb7baab-d832-4837-bd84-49ae0694376b at=2026-09-07T11:24:50.912Z
+FIRST-OUTPUT opus +165s
+OUTCOME opus secured=false waves=2 gold=0 runsSoFar=1 scored=0 +165s
+OUTCOME opus secured=false waves=3 gold=30 runsSoFar=2 scored=0 +465s
+OUTCOME opus secured=false waves=3 gold=30 runsSoFar=3 scored=0 +555s
+OUTCOME opus secured=false waves=14 gold=45 runsSoFar=4 scored=0 +750s
+OUTCOME opus secured=false waves=14 gold=45 runsSoFar=5 scored=1 +825s
+OUTCOME opus secured=false waves=14 gold=45 runsSoFar=5 scored=1 +915s
+END opus rc=0 signal=null wall=970s wallHit=false
+ride-wall rc=0 signal=-
+--- 3 land ---
+
+=== 1 finish-ride ===
+{"rig":"opus","contract":"e8-low-orbit","wall":970,"wallHit":false,"rc":0,"tracked":[],"files":26,"outcome":{"secured":false,"waves":14,"gold":45,"runsSoFar":5,"scoredAttempts":1,"tape":"/private/tmp/heat13-569a41f9/artifacts/heat13/opus/e8-low-orbit/tune-2-tape.json","worldModel":"sim-import"},"scoredTapes":[{"file":"attempt-1-tape.json","id":"agent-f3d60623-c1837350-c0f6-4079-b85e-5b2c45948334","secured":false,"waves":4,"gold":70,"durationTicks":3844,"lastEntryTick":3601,"promotedByRig":false,"discoveredBy":"filename"},{"file":"tune-2-tape.json","id":"agent-01971015-6405d777-0ba8-4725-8ffd-fe9a9d708ca5","secured":false,"waves":14,"gold":45,"durationTicks":13229,"lastEntryTick":13054,"promotedByRig":true,"discoveredBy":"outcome-file"}],"otherSecured":[],"reportSections":{"outcome":572,"whatTheMapAsked":2070,"winnability":680,"lessons":4582},"usage":{"turns":73,"toolCalls":46,"tokensIn":146,"tokensOut":145846}}
+
+=== NOT SECURED — nothing to submit ===
+{
+ "rig": "opus",
+ "contract": "e8-low-orbit",
+ "wall": 970,
+ "wallHit": false,
+ "rc": 0,
+ "scoredTapes": [
+  {
+   "file": "attempt-1-tape.json",
+   "secured": false,
+   "waves": 4,
+   "gold": 70
+  },
+  {
+   "file": "tune-2-tape.json",
+   "secured": false,
+   "waves": 14,
+   "gold": 45
+  }
+ ],
+ "outcomeNote": "NOT SECURED. Nothing is put forward. Best ride is tune-2 (w14/440.967s/45g); attempt-1 (ctrl-v3, w4/128.133s/70g, fnv1a32:b7254a26) was the scored attempt and regressed. The era gate was fully satisfied in tune-2 at t=368.4 (credited 4/4, reached 2, breathlessEntries 0); the run dies to hero momentum under feelG 0, not to the air."
+}
+
+land rc=0
+--- 4 notebook ---
+{"notebook":"/Users/robin/Claude/Projects/goldrush-gauntlet/memories/claude__opus-5/NOTEBOOK.md","generation":68,"headerBytes":431,"entryBytes":8237}
+--- 5 matrix ---
+| 8 | e8-low-orbit | `e8-low-orbit-01` | open-question | 68 | **not secured** | 14 | 45 | 440.967s | 970s | `tune-2-tape.json` · `agent-01971015-6405d777-0ba8-4725-8ffd-fe9a9d708ca5`<br>fnv1a32:3705d684 | — | gen 68 |
+{"contract":"e8-low-orbit","secured":false,"tapesOnDisk":15,"scoredTapes":2,"otherSecured":0,"runs":5,"scoredAttempts":1,"wallHit":false,"rc":0,"assay":null,"ranked":null,"winnability":"**Winnable, and what stopped me was my own budget against one un-modelled physics fact — not a wall\nin the map, the grammar or the economy:** the era gate discharges with 232 s to spare and zero\nbreathless entries, no work can ever be wrecked (the roster's one id carries neither `wrecker` nor\n`thief`), and the fort was still buying at wave 12 — the run dies only because under `feelG 0` the\nhero's steering is thrust rather than position, so it coasts forty to sixty units out of its own\nturret ring and every naive correction overshoots (measured: chasing it home cost ten waves, w14 →\nw4), and I ran out of wall clock before riding the controller that damps instead of chases."}
+########## END e8-low-orbit ##########
+

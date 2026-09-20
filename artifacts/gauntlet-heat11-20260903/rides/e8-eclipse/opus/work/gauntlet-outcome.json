@@ -1,0 +1,21 @@
+{
+  "secured": true,
+  "waves": 20,
+  "timeMs": 600000,
+  "gold": 60,
+  "kills": 915,
+  "calls": 87,
+  "defaultedPicks": 0,
+  "defaultedSecure": 1,
+  "eventLogHash": "fnv1a32:b4ecd608",
+  "tape": "/private/tmp/heat11-b118c4d2/artifacts/heat11/opus/e8-eclipse/attempt-1-tape.json",
+  "scored": true,
+  "runsSoFar": 2,
+  "scoredAttempts": 1,
+  "worldModel": "sim-import",
+  "durationTicks": 18000,
+  "lastEntryTick": 17889,
+  "tapeBytes": 218511,
+  "note": "One ride under two filenames: tune-1-tape.json secured on the first controller and is promoted here as the scored attempt (byte-identical copy at attempt-1-tape.json). Envelope checked: durationTicks 18000 against the flat 18000-tick ceiling for a secureWave-silent contract, last accepted order at tick 17889, secure answered with a blank line (defaultedSecure 1).",
+  "localAssayCaveat": "scripts/assay-replay-agent.mjs in this arena reproduces all four compared outcome fields (secured/waves/gold/timeAlive) but NOT the eventLogHash - and it also fails to reproduce the hash of the zero-order idle probe at an identical tick count (a45ba9ac vs recorded fac5d558). The divergence is systematic to the local instrument in this build, not a property of this reel."
+}

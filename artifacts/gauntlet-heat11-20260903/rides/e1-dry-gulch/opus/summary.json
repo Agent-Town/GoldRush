@@ -1,0 +1,125 @@
+{
+  "rig": "opus",
+  "contract": "e1-dry-gulch",
+  "model": "claude-opus-5",
+  "sessionId": "c0422d13-637f-48b4-92bb-73604aa62c11",
+  "startedAt": "2026-09-03T13:09:05.253Z",
+  "endedAt": "2026-09-03T13:16:47.811Z",
+  "wallClockSeconds": 463,
+  "wallHit": false,
+  "exitCode": 0,
+  "signal": null,
+  "setupToFirstOutputSeconds": 75,
+  "arenaTrackedChanges": [],
+  "workspaceFiles": [
+    "attempt-1-tape.json",
+    "attempt-1.err.txt",
+    "attempt-1.jsonl",
+    "controller.mjs",
+    "drive.mjs",
+    "gauntlet-outcome.json",
+    "gauntlet-report.md",
+    "probe-idle.err.txt",
+    "probe-idle.json",
+    "probe-idle.jsonl",
+    "probe1.mjs",
+    "run.mjs",
+    "tune-1-tape.json",
+    "tune-1.err.txt",
+    "tune-1.jsonl"
+  ],
+  "outcome": {
+    "secured": true,
+    "waves": 20,
+    "timeMs": 600000,
+    "gold": 12,
+    "kills": 205,
+    "calls": 48,
+    "defaultedPicks": 0,
+    "defaultedSecure": 0,
+    "eventLogHash": "fnv1a32:0c6075eb",
+    "tape": "/tmp/heat11-5e7a7c0b/artifacts/heat11/opus/e1-dry-gulch/attempt-1-tape.json",
+    "scored": true,
+    "runsSoFar": 3,
+    "scoredAttempts": 1,
+    "worldModel": "sim-import",
+    "contract": "e1-dry-gulch",
+    "seed": "e1-dry-gulch-01",
+    "seedMode": "bench",
+    "difficulty": "trail",
+    "epochId": "epoch-1-frontier",
+    "tapeEventLogHash": "fnv1a32:7d56d649",
+    "engineHash": "a607a81f44e10dc2b2262682c1e116c15917edffeeaa0c5909f383ccea5d8e04",
+    "era": 5,
+    "viewVersion": 1,
+    "determinismCheck": {
+      "note": "attempt-1 is a re-ride of the identical controller that first secured as tune-1; both tapes agree.",
+      "tapes": [
+        "/tmp/heat11-5e7a7c0b/artifacts/heat11/opus/e1-dry-gulch/tune-1-tape.json",
+        "/tmp/heat11-5e7a7c0b/artifacts/heat11/opus/e1-dry-gulch/attempt-1-tape.json"
+      ],
+      "eventLogHashMatch": true,
+      "inputLogIdentical": true,
+      "entries": 48
+    }
+  },
+  "outcomeError": null,
+  "scoredTapes": [
+    {
+      "file": "attempt-1-tape.json",
+      "id": "agent-58a67743-c518c284-3e88-49d1-8e4b-79763cd2142f",
+      "contract": "e1-dry-gulch",
+      "seed": "e1-dry-gulch-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "5e7a7c0ba",
+        "engineHash": "a607a81f44e10dc2b2262682c1e116c15917edffeeaa0c5909f383ccea5d8e04",
+        "era": 5,
+        "viewVersion": 1
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 20,
+        "timeAlive": 600,
+        "gold": 12
+      },
+      "entries": 48
+    }
+  ],
+  "otherSecuredTapes": [
+    {
+      "file": "tune-1-tape.json",
+      "id": "agent-58a67743-f6139254-c0e5-47bb-9410-9edb014ac76d",
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 20,
+        "timeAlive": 600,
+        "gold": 12
+      },
+      "meta": {
+        "buildId": "5e7a7c0ba",
+        "engineHash": "a607a81f44e10dc2b2262682c1e116c15917edffeeaa0c5909f383ccea5d8e04",
+        "era": 5,
+        "viewVersion": 1
+      }
+    }
+  ],
+  "report": {
+    "outcome": "**SECURED.** Waves **20**, timeAlive **600.000 s**, gold **12**, kills 205, calls **48**,\n`defaultedPicks: 0`, `defaultedSecure: 0`, `eventLogHash` `fnv1a32:0c6075eb`.\n\nTape put forward: `attempt-1-tape.json` — the determinism re-ride of the securing controller.\nVerified against `tune-1-tape.json`: identical tape `eventLogHash` `fnv1a32:7d56d649`, identical\n48-entry `inputLog`, identical `{secured, waves, timeAlive, gold}`. Tape `meta` stamps era 5 and the\narena pin `a607a81f…`. **3 sim runs total (1 idle probe + 2 rides); 1 scored attempt.** Stopped on\nthe first secure, as instructed.\n\nThis is a first-secure on a contract the door listed `unclaimed`, and it answers L2 for this map in\nthe affirmative.",
+    "whatTheMapAsked": "It asked me about **the commute**, and it never once asked me about the bank cap — so on the\naudit question, this contract is *not* its era's signature mechanic wearing its own name, but it is\nnot ordinary stationary survival either. The E1 bank cap is 200 (`Balance.economy.bankCap`) and my\ngold **peaked at 53** and ended at 12; the cap was never within reach, so the one lever the era is\nnamed for was inert here. What replaced it was distance. `now.seams[]` re-anchors live across six\nauthored anchors, and the seam the view offered me sat 9wu from the claim on a good wave and 29wu on\na bad one — I watched `gold-seam-1` walk anchor 4 → 2 → 3 → 5 between waves. Because the actor that\npans is the same body that builds, repairs and fights (`HeadlessContractSim.ts:469` binds the order\nactor to the hero on a non-deepwater map, with the Prospector trailing him), every pan is a round\ntrip that costs fighting time, and one 30-second wave buys exactly **one pan, ~7 gold**. Twenty waves\nof that is ~140 gold on a board whose first turret costs 50 and whose beacon ladder starts at 25.\nThe fields that carried the map were `now.seams[].active/x/z` (the commute), `now.threats.alive`\n(which saturates hard at **60** — 265 spawned, 205 defeated, 60 standing at the end, and that ceiling\nis why the map is survivable at all: pressure plateaus around wave 10 instead of compounding),\n`now.works.byKind` (the build ladder's state) and `now.pendingOffer`. The orders that carried it were\n`HARVEST` and `PICK_UPGRADE` — and the honest finding is that **`PICK_UPGRADE` carried it, not\n`BUILD`**. I finished with four sentry beacons, **zero turrets**, and a hero at level 11 holding\n`heavy_spark ×3`, `double_tap_coil ×3`, `tinkers_plating ×3`: maxHp 100 → 175. The draft, which costs\nno gold and is not an E1 economy mechanic at all, out-earned the entire gold game.",
+    "winnability": "Secured, and the margin was **thin once and then wide**: hero HP bottomed at 44/100 in wave 4 — the\nexact wave the idle probe dies on — and after three plating picks finished at 103/175 with the swarm\npinned at its 60-enemy ceiling and every one of my four works still standing, unwrecked.",
+    "lessons": "- **Read `winnability-receipts.json` for the *absence* of a `reason`, not just the presence of one.**\n  Generation 5 taught me to check it; the sharper reading is that `unclaimed` with no reason is a\n  green light, while `unclaimed` + `standings-disabled` is a wall. Two lines of JSON separated a\n  spent heat from a first-secure.\n- **The order actor is one body.** On a non-deepwater map `HeadlessContractSim.ts:469` binds the\n  standing-order actor to the *hero*, and the Prospector merely trails him. Panning, building,\n  repairing and holding all compete for the same feet, one movement per tick, and `for (const record\n  of this.records) { … if (result) return result; }` means the first actionable order owns the tick.\n  Array order is not a hint, it is the whole policy.\n- **Know which verbs fall through and which ones eat the tick.** `BUILD` with an unmet `when` returns\n  `null` and falls through; `REPAIR_UNDER` with no qualifying target falls through. `HARVEST`,\n  `HOLD`, `SET_WEAPON` and `BLAST_AT` always return, so nothing after `HARVEST` in the array ever\n  runs. Put every conditional order above the unconditional worker, and put the anchor last.\n- **A cheap rung starves an expensive one when both are affordable-in-principle.** My ladder\n  alternated turret/beacon by price; the 25g beacon fired every time gold crossed 25, so gold never\n  reached the 50g turret and I secured with *zero turrets*. That was a bug that happened to win. On a\n  starved economy, either gate the cheap rung behind the expensive one's price (`when.goldGte` of the\n  *turret*, not the beacon) or drop the cheap rung entirely.\n- **When the economy is starved, the free lever is the draft.** 140 gold across the whole run bought\n  four beacons; ten free `PICK_UPGRADE`s bought +75 maxHp and triple spark damage. Before optimising\n  a gold engine, check whether the map even lets the gold matter — here the bank cap sat at 200 and I\n  never saw 54.\n- **Check for a live-enemy ceiling before concluding a map is unsurvivable.** The idle probe's\n  10→22→36→50 curve reads like unbounded compounding and it is not: `threats.alive` saturates at 60.\n  A plateau you can out-heal is a completely different problem from a ramp you cannot. Read\n  `spawnedTotal` against `defeatedTotal` to find the plateau instead of extrapolating the first four\n  waves.\n- **The era's named mechanic is a hypothesis, not a promise.** The brief named \"E1 survival and the\n  bank cap\"; the map delivered survival and *commute distance*, and the bank cap never bound once.\n  Report what the map actually asked, with the numbers that show the named lever was inert.\n- **A tune that secures is the attempt.** I spent my one scored run re-riding the identical\n  controller rather than chasing gold, because era 5 replays every reel and a matching hash is worth\n  more than a richer unverified one. Generation 4 learned that `timeAlive` outranks gold; at a fixed\n  20-wave secure, `timeAlive` is already pinned at 600s, so there was nothing left to win by\n  gambling."
+  },
+  "usage": {
+    "transcript": "/Users/robin/.claude/projects/-private-tmp-heat11-5e7a7c0b/c0422d13-637f-48b4-92bb-73604aa62c11.jsonl",
+    "assistantTurns": 68,
+    "toolCalls": 37,
+    "tokensIn": 136,
+    "tokensOut": 79149,
+    "cacheReadTokens": 7781884,
+    "cacheWriteTokens": 388732,
+    "note": "tokensIn excludes cache reads/writes (reported separately); summed from the CLI session transcript, not self-reported by the rig"
+  }
+}

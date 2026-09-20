@@ -1,0 +1,164 @@
+{
+  "summary": {
+    "iterations": 16,
+    "armA": {
+      "n": 8,
+      "placedOk": 8,
+      "ghostValidImmediateTrue": 5,
+      "pollMsMean": 56.75,
+      "pollMsMax": 127,
+      "pollMsTotal": 454
+    },
+    "armB": {
+      "n": 8,
+      "placedOk": 8,
+      "ghostValidImmediateTrue": 3
+    }
+  },
+  "records": [
+    {
+      "i": 0,
+      "arm": "A-poll",
+      "x": -8,
+      "ghostValidImmediate": true,
+      "pollMs": 106,
+      "placed": true,
+      "countDelta": 1
+    },
+    {
+      "i": 1,
+      "arm": "B-nopoll",
+      "x": -7,
+      "ghostValidImmediate": true,
+      "pollMs": null,
+      "placed": true,
+      "countDelta": 1
+    },
+    {
+      "i": 2,
+      "arm": "A-poll",
+      "x": -6,
+      "ghostValidImmediate": true,
+      "pollMs": 25,
+      "placed": true,
+      "countDelta": 1
+    },
+    {
+      "i": 3,
+      "arm": "B-nopoll",
+      "x": -5,
+      "ghostValidImmediate": false,
+      "pollMs": null,
+      "placed": true,
+      "countDelta": 1
+    },
+    {
+      "i": 4,
+      "arm": "A-poll",
+      "x": -4,
+      "ghostValidImmediate": true,
+      "pollMs": 15,
+      "placed": true,
+      "countDelta": 1
+    },
+    {
+      "i": 5,
+      "arm": "B-nopoll",
+      "x": -3,
+      "ghostValidImmediate": false,
+      "pollMs": null,
+      "placed": true,
+      "countDelta": 1
+    },
+    {
+      "i": 6,
+      "arm": "A-poll",
+      "x": -2,
+      "ghostValidImmediate": true,
+      "pollMs": 25,
+      "placed": true,
+      "countDelta": 1
+    },
+    {
+      "i": 7,
+      "arm": "B-nopoll",
+      "x": -1,
+      "ghostValidImmediate": false,
+      "pollMs": null,
+      "placed": true,
+      "countDelta": 1
+    },
+    {
+      "i": 8,
+      "arm": "A-poll",
+      "x": 0,
+      "ghostValidImmediate": true,
+      "pollMs": 7,
+      "placed": true,
+      "countDelta": 1
+    },
+    {
+      "i": 9,
+      "arm": "B-nopoll",
+      "x": 1,
+      "ghostValidImmediate": false,
+      "pollMs": null,
+      "placed": true,
+      "countDelta": 1
+    },
+    {
+      "i": 10,
+      "arm": "A-poll",
+      "x": 2,
+      "ghostValidImmediate": false,
+      "pollMs": 77,
+      "placed": true,
+      "countDelta": 1
+    },
+    {
+      "i": 11,
+      "arm": "B-nopoll",
+      "x": 3,
+      "ghostValidImmediate": true,
+      "pollMs": null,
+      "placed": true,
+      "countDelta": 1
+    },
+    {
+      "i": 12,
+      "arm": "A-poll",
+      "x": 4,
+      "ghostValidImmediate": false,
+      "pollMs": 127,
+      "placed": true,
+      "countDelta": 1
+    },
+    {
+      "i": 13,
+      "arm": "B-nopoll",
+      "x": 5,
+      "ghostValidImmediate": false,
+      "pollMs": null,
+      "placed": true,
+      "countDelta": 1
+    },
+    {
+      "i": 14,
+      "arm": "A-poll",
+      "x": 6,
+      "ghostValidImmediate": false,
+      "pollMs": 72,
+      "placed": true,
+      "countDelta": 1
+    },
+    {
+      "i": 15,
+      "arm": "B-nopoll",
+      "x": 7,
+      "ghostValidImmediate": true,
+      "pollMs": null,
+      "placed": true,
+      "countDelta": 1
+    }
+  ]
+}

@@ -1,0 +1,269 @@
+{
+  "contract": "e4-dust-flats",
+  "seed": "e4-dust-flats-01",
+  "policy": "floor",
+  "variant": "rig",
+  "views": 9,
+  "outcome": {
+    "secured": false,
+    "waves": 3,
+    "timeMs": 99833,
+    "gold": 10,
+    "kills": 49,
+    "calls": 8,
+    "defaultedPicks": 0,
+    "defaultedSecure": 0,
+    "eventLogHash": "fnv1a32:5f0b5354",
+    "motor": {
+      "graded": [
+        "camp-to-railhead"
+      ],
+      "hauled": true,
+      "arrivedAt": 33.767,
+      "roadDistance": 61.254,
+      "distanceTravelled": 88.284,
+      "fuelDrawn": 15.367,
+      "tarHarvested": 9,
+      "convoyArrived": null
+    }
+  },
+  "motorEventKinds": [
+    "motor_haul_arrived",
+    "motor_haul_dispatched",
+    "motor_road_graded",
+    "motor_tar_harvested",
+    "motor_weather"
+  ],
+  "motorEventCount": 19,
+  "terminalMotor": {
+    "contractId": "e4-dust-flats",
+    "objective": {
+      "kind": "haul",
+      "corridorId": "camp-to-railhead",
+      "label": "the railhead",
+      "stop": {
+        "x": 0,
+        "z": 72
+      },
+      "stopReach": 2.5,
+      "arrived": true,
+      "arrivedAt": 33.767,
+      "roadDistanceAtArrival": 61.254,
+      "securableAtWave": 12
+    },
+    "weather": {
+      "era": 4,
+      "contractId": "e4-dust-flats",
+      "phase": "telegraph",
+      "phaseProgress": 0.958,
+      "cycle": 3,
+      "simTime": 99.833,
+      "movementMultiplier": 1,
+      "visibilityMultiplier": 1,
+      "hazeColor": "#c99052",
+      "hazeStrength": 0.192,
+      "warning": true,
+      "nextPhaseInSeconds": 0.167
+    },
+    "roads": {
+      "segments": 1,
+      "length": 60,
+      "friendlySpeedMultiplier": 2.5,
+      "friendlyFuelMultiplier": 0.4,
+      "enemyRouteCostMultiplier": 0.25,
+      "gradeReach": 2.5,
+      "graded": [
+        "camp-to-railhead"
+      ],
+      "corridors": [
+        {
+          "id": "camp-to-railhead",
+          "start": {
+            "x": 0,
+            "z": 12
+          },
+          "end": {
+            "x": 0,
+            "z": 72
+          },
+          "graded": true
+        },
+        {
+          "id": "camp-to-west-field",
+          "start": {
+            "x": -8,
+            "z": 4
+          },
+          "end": {
+            "x": -58,
+            "z": -46
+          },
+          "graded": false
+        },
+        {
+          "id": "camp-to-east-field",
+          "start": {
+            "x": 8,
+            "z": 4
+          },
+          "end": {
+            "x": 58,
+            "z": -46
+          },
+          "graded": false
+        },
+        {
+          "id": "west-boss-road",
+          "start": {
+            "x": -78,
+            "z": -12
+          },
+          "end": {
+            "x": -18,
+            "z": -4
+          },
+          "graded": false
+        }
+      ]
+    },
+    "fuel": {
+      "active": true,
+      "tar": 0,
+      "stored": 20.633,
+      "capacity": 24,
+      "harvestedNodes": 3,
+      "refinedTar": 9,
+      "drawn": 15.367,
+      "nodes": [
+        {
+          "x": -12,
+          "z": -8,
+          "harvested": true,
+          "progress": 1
+        },
+        {
+          "x": 0,
+          "z": -8,
+          "harvested": true,
+          "progress": 1
+        },
+        {
+          "x": 12,
+          "z": -8,
+          "harvested": true,
+          "progress": 1
+        }
+      ]
+    },
+    "vehicle": {
+      "active": true,
+      "kind": "hauler",
+      "state": "arrived",
+      "x": 0,
+      "z": 72,
+      "target": null,
+      "speed": 9,
+      "burnPerSecond": 3,
+      "distanceTravelled": 88.284,
+      "onRoad": true,
+      "roadDistance": 61.254,
+      "dispatch": {
+        "x": 0,
+        "z": 72
+      }
+    },
+    "convoy": null,
+    "events": [
+      {
+        "type": "motor_haul_dispatched",
+        "at": 18.533,
+        "target": {
+          "x": 0,
+          "z": 12
+        },
+        "stored": 24,
+        "tar": 3
+      },
+      {
+        "type": "motor_weather",
+        "at": 22,
+        "phase": "clear",
+        "cycle": 0
+      },
+      {
+        "type": "motor_haul_arrived",
+        "at": 22.633,
+        "x": 0,
+        "z": 12,
+        "atStop": false,
+        "roadDistance": 1.254,
+        "distanceTravelled": 28.284,
+        "fuelDrawn": 12.167
+      },
+      {
+        "type": "motor_haul_dispatched",
+        "at": 31.1,
+        "target": {
+          "x": 0,
+          "z": 72
+        },
+        "stored": 23.833,
+        "tar": 0
+      },
+      {
+        "type": "motor_haul_arrived",
+        "at": 33.767,
+        "x": 0,
+        "z": 72,
+        "atStop": true,
+        "roadDistance": 61.254,
+        "distanceTravelled": 88.284,
+        "fuelDrawn": 15.367
+      },
+      {
+        "type": "motor_weather",
+        "at": 36,
+        "phase": "telegraph",
+        "cycle": 1
+      },
+      {
+        "type": "motor_weather",
+        "at": 40,
+        "phase": "storm",
+        "cycle": 1
+      },
+      {
+        "type": "motor_weather",
+        "at": 52.033,
+        "phase": "clear",
+        "cycle": 1
+      },
+      {
+        "type": "motor_weather",
+        "at": 66.033,
+        "phase": "telegraph",
+        "cycle": 2
+      },
+      {
+        "type": "motor_weather",
+        "at": 70.033,
+        "phase": "storm",
+        "cycle": 2
+      },
+      {
+        "type": "motor_weather",
+        "at": 82.033,
+        "phase": "clear",
+        "cycle": 2
+      },
+      {
+        "type": "motor_weather",
+        "at": 96.033,
+        "phase": "telegraph",
+        "cycle": 3
+      }
+    ],
+    "eventCount": 19
+  },
+  "speedLine": "gr-sim speed: 2.10 waves/s"
+}

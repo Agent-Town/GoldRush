@@ -1,0 +1,64 @@
+
+########## RIDE e3-moth-season · seed e3-moth-season-01 · gen 42 · stake mechanic-changed · wall 1080s ##########
+--- 1 charter ---
+{"rig":"opus","contract":"e3-moth-season","seed":"e3-moth-season-01","seedMode":"bench","stake":"mechanic-changed","generation":42,"wall":1080,"notebookSha256":"eb1dd939f1def593835eb946450352f2c408cd94605ae0d50556f2221830342c","charterSha256":"d9968b507232a79adc7d370819874d4669e77aca1e38cf037f28880815987d7e","bytes":327045,"out":"/private/tmp/heat12-038cc280/artifacts/gauntlet-heat12-20260905/rides/e3-moth-season/charter.md"}
+--- 2 ride ---
+START opus claude-opus-5 pid=78908 session=be841bb6-8c0e-4cb7-958e-713edb2391d1 at=2026-09-05T16:52:35.221Z
+FIRST-OUTPUT opus +75s
+OUTCOME opus secured=false waves=4 gold=0 runsSoFar=1 scored=0 +75s
+OUTCOME opus secured=false waves=8 gold=6 runsSoFar=2 scored=0 +345s
+OUTCOME opus secured=false waves=8 gold=6 runsSoFar=3 scored=0 +510s
+OUTCOME opus secured=true waves=12 gold=200 runsSoFar=4 scored=0 +615s
+OUTCOME opus secured=true waves=12 gold=200 runsSoFar=4 scored=1 +630s
+END opus rc=0 signal=null wall=737s wallHit=false
+ride-wall rc=0 signal=-
+--- 3 land ---
+
+=== 1 finish-ride ===
+{"rig":"opus","contract":"e3-moth-season","wall":737,"wallHit":false,"rc":0,"tracked":[],"files":20,"outcome":{"secured":true,"waves":12,"gold":200,"runsSoFar":4,"scoredAttempts":1,"tape":"/private/tmp/heat12-038cc280/artifacts/heat12/opus/e3-moth-season/attempt-1-tape.json","worldModel":"sim-import"},"scoredTapes":[{"file":"attempt-1-tape.json","id":"agent-7739d978-82ca7118-bd78-4b36-ae7c-9051ac88d5e7","secured":true,"waves":12,"gold":200,"durationTicks":10801,"lastEntryTick":10800,"promotedByRig":true,"discoveredBy":"outcome-file+filename"}],"otherSecured":[{"file":"tune-3-tape.json","id":"agent-7739d978-82ca7118-bd78-4b36-ae7c-9051ac88d5e7","waves":12,"gold":200}],"reportSections":{"outcome":777,"whatTheMapAsked":2596,"winnability":382,"lessons":4146},"usage":{"turns":77,"toolCalls":41,"tokensIn":154,"tokensOut":125318}}
+tape chosen: attempt-1-tape.json (id agent-7739d978-82ca7118-bd78-4b36-ae7c-9051ac88d5e7, promotedByRig=true, discoveredBy=outcome-file+filename)
+
+=== 2 freeze notebook header ===
+{"headerOnly":true,"headerBytes":432}
+
+=== 3 harnessDigest ===
+a4a38c835a61946e3b91d9b5485f52424eb914e6e56810c4652dd32c98d3dc1a
+
+=== 4 build-submission ===
+{"tapeId":"agent-7739d978-82ca7118-bd78-4b36-ae7c-9051ac88d5e7","contract":"e3-moth-season","epochId":"epoch-3-voltage","seed":"e3-moth-season-01","seedMode":"bench","score":{"secured":true,"waves":12,"timeAlive":360,"gold":200,"baseValue":0},"papers":{"buildId":"698b2c08f","engineHash":"86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b","era":5,"viewVersion":2},"durationTicks":10801,"lastEntryTick":10800,"stack":{"model":"claude-opus-5","harness":"heat12-operator","harnessVersion":"2.1.257","harnessDigest":"a4a38c835a61946e3b91d9b5485f52424eb914e6e56810c4652dd32c98d3dc1a","worldModel":"sim-import","config":"attended-hosted headless `claude -p` ride (heat 12) on Claude Code CLI 2.1.257; charter + door manual + own notebook (self-memory); own controller authored in-ride","calls":54,"tokensIn":18836841,"tokensOut":125318}}
+
+=== 5 publish (POST → poll → WATCH) ===
+{"rank":2,"tapeId":"agent-7739d978-82ca7118-bd78-4b36-ae7c-9051ac88d5e7","assay":"verified","assayHash":"fnv1a32:ed3974ff","papers":{"buildId":"698b2c08f","engineHash":"86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b","era":5,"viewVersion":2}}
+
+=== LANDED ===
+{
+ "rig": "opus",
+ "contract": "e3-moth-season",
+ "tapeFile": "attempt-1-tape.json",
+ "tapeId": "agent-7739d978-82ca7118-bd78-4b36-ae7c-9051ac88d5e7",
+ "assay": "verified",
+ "assayHash": "fnv1a32:ed3974ff",
+ "ranked": true,
+ "rank": 2,
+ "waves": 12,
+ "gold": 200,
+ "calls": 54,
+ "eventLogHash": "fnv1a32:b98efd5e",
+ "wall": 737,
+ "harnessDigest": "a4a38c835a61946e3b91d9b5485f52424eb914e6e56810c4652dd32c98d3dc1a",
+ "usage": {
+  "turns": 77,
+  "toolCalls": 41,
+  "tokensIn": 18836841,
+  "tokensOut": 125318
+ }
+}
+
+land rc=0
+--- 4 notebook ---
+{"notebook":"/Users/robin/Claude/Projects/goldrush-gauntlet/memories/claude__opus-5/NOTEBOOK.md","generation":42,"headerBytes":432,"entryBytes":8012}
+--- 5 matrix ---
+| 6 | e3-moth-season | `e3-moth-season-01` | mechanic-changed | 42 | **SECURED** | 12 | 200 | 360s | 737s | `attempt-1-tape.json` · `agent-7739d978-82ca7118-bd78-4b36-ae7c-9051ac88d5e7`<br>fnv1a32:b98efd5e | verified `fnv1a32:ed3974ff` rank 2 | gen 42<br>slip `agent-7739d978-82ca7118-bd78-4b36-ae7c-9051ac88d5e7` |
+{"contract":"e3-moth-season","secured":true,"tapesOnDisk":11,"scoredTapes":1,"otherSecured":1,"runs":4,"scoredAttempts":1,"wallHit":false,"rc":0,"assay":"verified","ranked":true,"winnability":"Secured, and the margin was **wide on health and thin on the fort**: the hero never dropped\nbelow its running maximum of 100 across all 74 views and finished **119/175 at level 16**, but\n**all six beacons were wrecked** by the bank with 63 threats alive, so the fort was gone and the\nlast wave was carried by the hero alone — one more wave on that slope would have been a coin flip."}
+########## END e3-moth-season ##########
+

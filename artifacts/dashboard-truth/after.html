@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="refresh" content="30">
+<title>Gold Rush — Factory Ledger</title>
+<style>
+  body { background:#f5e6c8; color:#2b2119; font-family:Georgia,'Iowan Old Style',serif; margin:24px auto; max-width:1040px; }
+  h1 { font-size:26px; border-bottom:3px double #2b2119; padding-bottom:6px; }
+  h1 small { font-size:13px; color:#6b5b46; float:right; margin-top:12px; }
+  h2 { font-size:15px; text-transform:uppercase; letter-spacing:2px; color:#6b5b46; margin:22px 0 6px; }
+  .card { background:#fdf6e3; border:1px solid #c9b892; border-radius:6px; padding:10px 14px; box-shadow:2px 2px 0 #c9b892; }
+  pre { margin:0; font-family:'SF Mono',Menlo,monospace; font-size:12px; line-height:1.55; white-space:pre-wrap; word-break:break-word; }
+  .row { display:flex; gap:14px; flex-wrap:wrap; }
+  .row .card { flex:1; min-width:300px; }
+  .ok { color:#1a6b4a; font-weight:bold; } .bad { color:#a03020; font-weight:bold; } .dim { color:#6b5b46; }
+</style>
+</head>
+<body>
+<h1>⛏ Gold Rush — Factory Ledger <small>refreshed 2026-07-12 10:13:21 · auto-reloads every 30s</small></h1>
+
+<h2>What really happened (last 24h)</h2>
+<div class="card"><pre>cast-motion-wiring-e2e                     · started 07:35 ·  15 min · gpt-5.6-sol@medium              · MERGED e2298c5a
+e2-pressure-in-run                         · started 07:13 ·  47 min · gpt-5.6-sol@high                · MERGED cd82c106
+e2-escort-mode                             · started 07:13 ·  26 min · gpt-5.6-sol@high                · MERGED b085c8d6
+art-e2-completion-batch                    · started 07:13 ·  11 min · gpt-5.5@medium                  · MERGED c505e3f9
+research-inheritance-across-epochs         · started 07:06 ·  33 min · gpt-5.6-sol@high                · MERGED e0382c75
+raise-action-at-the-mill-site              · started 07:02 ·   9 min · gpt-5.6-sol@medium              · MERGED 0e506dd4
+map-beauty-dry-gulch                       · started 23:51 ·  17 min · gpt-5.6-sol@medium              · MERGED c505ee7a
+fix-dry-gulch-frozen-waves                 · started 23:51 ·  12 min · gpt-5.6-sol@medium              · MERGED 074618e6
+board-layout-full-picture                  · started 23:51 ·   9 min · gpt-5.6-sol@medium              · MERGED 87d1b052
+art-pose-library-01                        · started 20:36 ·   5 min · gpt-5.6-sol@medium              · FAILED
+art-arsenal-e9-e10                         · started 20:28 ·   8 min · gpt-5.6-sol@medium              · MERGED 925c5492
+art-saga-library-e10                       · started 17:49 ·  34 min · gpt-5.6-sol@medium              · MERGED 93cf18ef
+086-fixture-runtime-seams                  · started 16:35 ·  10 min · gpt-5.6-sol@medium              · MERGED e1375498
+085-four-rider-party-gate                  · started 13:36 ·  21 min · gpt-5.6-sol@medium              · done-moved awaiting drain
+084-walk8-flip                             · started 12:12 ·   1 min · gpt-5.6-sol@medium              · NO-OP
+mp-harvest-channels                        · started 11:48 ·  20 min · gpt-5.6-sol@high                · NO-OP
+083-four-rider-proof                       · started 10:27 ·  20 min · gpt-5.6-sol@medium              · NO-OP</pre></div>
+
+<div class="row">
+  <div class="card"><h2 style="margin-top:0">Machines</h2><pre>
+runner  <span class="ok">ALIVE</span>
+fires   <span class="ok">between fires</span> (every 5 min)
+pending crafting orders: 0</pre></div>
+  <div class="card"><h2 style="margin-top:0">Now building (Codex)</h2><pre>lane-a  e2-ss03-beats                                  [gpt-5.6-sol@medium] started 10:10   2 min in
+lane-b  dashboard-truth-pass                           [gpt-5.6-sol@medium] started 10:10   2 min in
+lane-c  e2-arsenal                                     [gpt-5.6-sol@high] started 10:10   2 min in
+lane-d  e2-t2-dynamo-ceremony                          [gpt-5.6-sol@high] started 10:10   2 min in</pre></div>
+</div>
+
+<h2>Waiting to merge (branches ahead of main — drain/salvage list)</h2>
+<div class="card"><pre>lane/m3                      [2 commit(s), newest 154 min ago]  runner(lane-a): research-inheritance-across-epochs.md  [gpt-5.6-sol@high]
+lane/m4                      [4 commit(s), newest 143 min ago]  runner(lane-b): cast-motion-wiring-e2e.md  [gpt-5.6-sol@medium]
+lane/perf                    [3 commit(s), newest 154 min ago]  runner(lane-d): e2-escort-mode.md  [gpt-5.6-sol@high]
+
+(+ 17 archived salvage branch(es) — superseded by shipped re-lands; reference only, NOT waiting)</pre></div>
+
+<h2>Merged, branch retirement pending</h2>
+<div class="card"><pre>(none)</pre></div>
+
+<h2>Recently merged into the game</h2>
+<div class="card"><pre>b300f176  3 minutes ago — tasks: E2 wave 2 queued all lanes (buildings-wiring, arsenal, SS-03 beats, T2 Dynamo ceremony)
+a26418fc  5 minutes ago — art: drain E2 completion batch from the art slot (depot/machine-shop/rail-elements/icons + her
+7f851d22  9 minutes ago — runner(lane-d): e2-escort-mode.md
+d1d30133  25 minutes ago — docs: SOL 3D sessions A+B queue files — territories, experiments, gates (owner: two parallel 
+cd82c106  30 minutes ago — feat(e2): Steamworks pressure mechanic in-run — boilers, coal, venting, PRESSURIZE objective
+e0382c75  2 hours ago — runner(lane-a): research-inheritance-across-epochs.md
+e2298c5a  2 hours ago — runner(lane-b): cast-motion-wiring-e2e.md</pre></div>
+
+<h2>Queues — what's waiting, since when</h2>
+<div class="card"><pre>main:
+  —
+lane-a:
+  —
+lane-b:
+  e2-buildings-wiring                                  queued 10:10  (3 min waiting)
+lane-c:
+  —
+lane-d:
+  —
+art:
+  —</pre></div>
+
+<h2>Waiting to start — blockers &amp; tracked block time</h2>
+<div class="card"><pre>0g. ✅ art-ts-02-facades — 6 E1 town facade plates FIRE-QA'd + RETRO-GATED s288 (review `reviews/art-
+    ⏳ blocked 1430 min (tracked since first sighting)
+📣 MKT LADDER (campaign RATIFIED 2026-07-07 ~16:45 — `specs/marketing/README.md`: Agent Town brand re
+    ⏳ blocked 6835 min (tracked since first sighting)
+WP-E3 Voltage: GATE: E2 transition shipped + played. Engine: power graph, day/night+light gameplay, 
+    ⏳ blocked 7139 min (tracked since first sighting)
+WP-E4 Motor: GATE: E3 shipped. Engine: vehicles+fuel, convoy AI, weather v1, ORBIT spawns, road-grad
+    ⏳ blocked 7139 min (tracked since first sighting)
+WP-E5 Deepwater: GATE: E4 shipped (THE BOAT megaproject is E4's exit). Engine: water volumes/boat ph
+    ⏳ blocked 7139 min (tracked since first sighting)
+WP-E6 Atomic: GATE: E5 shipped. TONE RATIFIED ✓ + ADR-003 lore keystone rides here (the Calculating 
+    ⏳ blocked 7139 min (tracked since first sighting)
+WP-E7 Signal: GATE: E6 shipped + decay-tick audit clean. Engine (the era IS engine): playbook record
+    ⏳ blocked 7139 min (tracked since first sighting)
+WP-E8 Orbital: GATE: E7 shipped (Starship = E7's exit). Engine: gravity/atmosphere tile params, brea
+    ⏳ blocked 7139 min (tracked since first sighting)
+WP-E9 Red Fields: GATE: E8 shipped. Engine: PERSISTENT TILE MUTATION + save-scale (spec it with GT-0
+    ⏳ blocked 7139 min (tracked since first sighting)
+WP-E10 Deep Sky: GATE: E9 shipped + Charter Press milestone (owner-ruled E4+ start, ships its Layer 
+    ⏳ blocked 7139 min (tracked since first sighting)</pre></div>
+
+<h2>Owner's desk — waiting on Robin</h2>
+<div class="card" style="border-color:#a03020"><pre>• science pacing — DATA POINT banked (5 steps, 1-to-Steamworks in one 35-wave run = threshold 6 fills in ~1   ⏳ 6984 min</pre></div>
+
+<div class="row">
+  <div class="card"><h2 style="margin-top:0">Watchdog alerts</h2><pre>(no alerts)</pre>
+  <h2>Failed (tail)</h2><pre>superseded-fable-authors-lane-d.md
+superseded-fable-authors-lane-b.md
+superseded-fable-authors-lane-a.md</pre></div>
+</div>
+
+<h2>Orchestrator lock (STATUS.md line 1)</h2>
+<div class="card"><pre class="dim">Last updated: 2026-07-12T10:06:00Z s414 handoff, lock CLEARED — **HELD, did NOT re-drain: lane-d e2-escort-mode was DRAINED BY THE LIVE ATTENDED WAVE as `7f851d22` (10:03:55 local) — landed on main MID-FIRE, committed on top of my bookkeeping commit `91e02082`.** I took the lock at 10:02 to RE-LAND </pre></div>
+
+<h2>Fire log (tail)</h2>
+<div class="card"><pre class="dim">
+**Housekeeping:** honest handoff committed (`b138ae80`), backup-pushed to origin (`a26418fc..b138ae80`), assayer pending empty, st
+[fire-runner] 10:11:10 FIRE END rc=0</pre></div>
+
+<p class="dim" style="margin-top:18px;font-size:12px">Read-only ledger view. Sources: git, tasks/, logs/. Generated by scripts/dashboard-gen.sh — no AI, no writes.</p>
+</body>
+</html>

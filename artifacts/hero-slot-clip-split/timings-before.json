@@ -1,0 +1,194 @@
+{
+ "label": "before",
+ "base": "http://127.0.0.1:5294",
+ "at": "2026-09-07T00:33:43.461Z",
+ "runs": 3,
+ "arms": {
+  "loopback": {
+   "town": [
+    {
+     "arm": "loopback",
+     "scenario": "town",
+     "errors": [],
+     "claimCellsInTownWindow": 0,
+     "townReadyMs": 2105,
+     "claimCellsInsideTownWindow": false,
+     "claimCellCount": 0,
+     "heroReadyMs": null,
+     "attackCellsFetchedInRun": null,
+     "attackCellsMs": null,
+     "panCellsMs": null,
+     "swingStallMs": null,
+     "groups": []
+    },
+    {
+     "arm": "loopback",
+     "scenario": "town",
+     "errors": [],
+     "claimCellsInTownWindow": 0,
+     "townReadyMs": 2092,
+     "claimCellsInsideTownWindow": false,
+     "claimCellCount": 0,
+     "heroReadyMs": null,
+     "attackCellsFetchedInRun": null,
+     "attackCellsMs": null,
+     "panCellsMs": null,
+     "swingStallMs": null,
+     "groups": []
+    },
+    {
+     "arm": "loopback",
+     "scenario": "town",
+     "errors": [],
+     "claimCellsInTownWindow": 0,
+     "townReadyMs": 2180,
+     "claimCellsInsideTownWindow": false,
+     "claimCellCount": 0,
+     "heroReadyMs": null,
+     "attackCellsFetchedInRun": null,
+     "attackCellsMs": null,
+     "panCellsMs": null,
+     "swingStallMs": null,
+     "groups": []
+    }
+   ],
+   "claim-cold": [
+    {
+     "arm": "loopback",
+     "scenario": "claim-cold",
+     "errors": [],
+     "townReadyMs": null,
+     "claimCellsInsideTownWindow": false,
+     "claimCellCount": 35,
+     "heroReadyMs": 21488,
+     "attackCellsFetchedInRun": 6,
+     "attackCellsMs": 21186,
+     "panCellsMs": 20873,
+     "swingStallMs": 0,
+     "groups": []
+    },
+    {
+     "arm": "loopback",
+     "scenario": "claim-cold",
+     "errors": [],
+     "townReadyMs": null,
+     "claimCellsInsideTownWindow": false,
+     "claimCellCount": 35,
+     "heroReadyMs": 20851,
+     "attackCellsFetchedInRun": 6,
+     "attackCellsMs": 20567,
+     "panCellsMs": 17865,
+     "swingStallMs": 0,
+     "groups": []
+    },
+    {
+     "arm": "loopback",
+     "scenario": "claim-cold",
+     "errors": [],
+     "townReadyMs": null,
+     "claimCellsInsideTownWindow": false,
+     "claimCellCount": 35,
+     "heroReadyMs": 20464,
+     "attackCellsFetchedInRun": 6,
+     "attackCellsMs": 17654,
+     "panCellsMs": 17496,
+     "swingStallMs": 0,
+     "groups": []
+    }
+   ]
+  },
+  "8mbps-100ms": {
+   "town": [
+    {
+     "arm": "8mbps-100ms",
+     "scenario": "town",
+     "errors": [],
+     "claimCellsInTownWindow": 0,
+     "townReadyMs": 6056,
+     "claimCellsInsideTownWindow": false,
+     "claimCellCount": 0,
+     "heroReadyMs": null,
+     "attackCellsFetchedInRun": null,
+     "attackCellsMs": null,
+     "panCellsMs": null,
+     "swingStallMs": null,
+     "groups": []
+    },
+    {
+     "arm": "8mbps-100ms",
+     "scenario": "town",
+     "errors": [],
+     "claimCellsInTownWindow": 0,
+     "townReadyMs": 5520,
+     "claimCellsInsideTownWindow": false,
+     "claimCellCount": 0,
+     "heroReadyMs": null,
+     "attackCellsFetchedInRun": null,
+     "attackCellsMs": null,
+     "panCellsMs": null,
+     "swingStallMs": null,
+     "groups": []
+    },
+    {
+     "arm": "8mbps-100ms",
+     "scenario": "town",
+     "errors": [],
+     "claimCellsInTownWindow": 0,
+     "townReadyMs": 5937,
+     "claimCellsInsideTownWindow": false,
+     "claimCellCount": 0,
+     "heroReadyMs": null,
+     "attackCellsFetchedInRun": null,
+     "attackCellsMs": null,
+     "panCellsMs": null,
+     "swingStallMs": null,
+     "groups": []
+    }
+   ],
+   "claim-cold": [
+    {
+     "arm": "8mbps-100ms",
+     "scenario": "claim-cold",
+     "errors": [],
+     "townReadyMs": null,
+     "claimCellsInsideTownWindow": false,
+     "claimCellCount": 35,
+     "heroReadyMs": 52006,
+     "attackCellsFetchedInRun": 6,
+     "attackCellsMs": 50909,
+     "panCellsMs": 50572,
+     "swingStallMs": 0,
+     "groups": []
+    },
+    {
+     "arm": "8mbps-100ms",
+     "scenario": "claim-cold",
+     "errors": [],
+     "townReadyMs": null,
+     "claimCellsInsideTownWindow": false,
+     "claimCellCount": 35,
+     "heroReadyMs": 51024,
+     "attackCellsFetchedInRun": 6,
+     "attackCellsMs": 49899,
+     "panCellsMs": 49568,
+     "swingStallMs": 0,
+     "groups": []
+    },
+    {
+     "arm": "8mbps-100ms",
+     "scenario": "claim-cold",
+     "errors": [],
+     "townReadyMs": null,
+     "claimCellsInsideTownWindow": false,
+     "claimCellCount": 35,
+     "heroReadyMs": 52226,
+     "attackCellsFetchedInRun": 6,
+     "attackCellsMs": 51175,
+     "panCellsMs": 50816,
+     "swingStallMs": 0,
+     "groups": []
+    }
+   ]
+  }
+ }
+}

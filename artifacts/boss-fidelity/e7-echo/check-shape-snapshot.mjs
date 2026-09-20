@@ -1,0 +1,24 @@
+import assert from 'node:assert/strict';
+import * as THREE from 'three';
+import ts from 'typescript';
+import {readFile,writeFile} from 'node:fs/promises';
+await writeFile('artifacts/boss-fidelity/e7-echo/shape-snapshot-check.bundle.mjs',ts.transpileModule(await readFile('src/utils/buildingShapeSnapshot.ts','utf8'),{compilerOptions:{module:ts.ModuleKind.ESNext,target:ts.ScriptTarget.ES2022}}).outputText);
+const {buildingShapeSnapshot}=await import('./shape-snapshot-check.bundle.mjs');
+const material=new THREE.MeshBasicMaterial(),signal=new THREE.MeshBasicMaterial();
+const geometry=new THREE.BoxGeometry(2,3,4),pool=new THREE.Group();
+const parts=new THREE.InstancedMesh(geometry,material,4);parts.name='PalisadePosts';pool.add(parts);
+const transform=new THREE.Matrix4();
+for(let i=0;i<4;i++){transform.makeRotationY(Math.PI/4);transform.setPosition(10+i*3,7,20);parts.setMatrixAt(i,transform);}
+const original=Array.from(geometry.attributes.position.array);
+const shape=buildingShapeSnapshot(pool,{x:10,z:20},signal,1,{PalisadePosts:2});
+assert.equal(shape.children.length,2);
+assert(shape.children.every(m=>m.geometry!==geometry&&m.material===signal));
+const box=new THREE.Box3().setFromObject(shape);assert(Math.abs(box.min.y)<1e-6);assert(box.min.x>3);assert(box.max.x>10);
+assert.deepEqual(Array.from(geometry.attributes.position.array),original);
+let sourceDisposed=0;geometry.addEventListener('dispose',()=>sourceDisposed++);
+shape.traverse(n=>{if(n.isMesh)n.geometry.dispose();});assert.equal(sourceDisposed,0);
+const source=new THREE.Group();source.position.set(12,5,25);source.rotation.y=.4;source.scale.set(2,3,1);const mesh=new THREE.Mesh(geometry,material);mesh.name='TurretSignalMast';mesh.position.y=1;source.add(mesh);
+const full=buildingShapeSnapshot(source,{x:12,z:25},signal);assert.equal(full.children.length,1);
+const expected=new THREE.Box3().setFromObject(source).getSize(new THREE.Vector3());const actual=new THREE.Box3().setFromObject(full).getSize(new THREE.Vector3());assert(expected.distanceTo(actual)<1e-5);
+geometry.dispose();assert(full.children[0].geometry.attributes.position.count>0);full.children[0].geometry.dispose();material.dispose();signal.dispose();
+console.log('PASS: selected multi-slot instances, baked transforms, grounded bounds, independent geometry, caller-owned material, source immutability.');

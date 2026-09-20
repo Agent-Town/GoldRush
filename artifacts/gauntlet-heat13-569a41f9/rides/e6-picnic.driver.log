@@ -1,0 +1,32 @@
+
+########## RIDE e6-picnic · seed e6-picnic-01 · gen 93 · stake never-claimed · wall 1500s ##########
+--- 1 charter ---
+{"rig":"opus","contract":"e6-picnic","seed":"e6-picnic-01","seedMode":"bench","stake":"never-claimed","generation":93,"wall":1500,"notebookSha256":"53286b637a38ef38e339e0d4ea0716315fb28d73d255c86d08e67c6ffdf6f706","charterSha256":"3f96c6952f1db0ddd4d8c93c396c7b1b0d9a717b0af1afadda9782ef75aebd56","bytes":737955,"out":"/private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/rides/e6-picnic/charter.md"}
+--- 2 ride ---
+START opus claude-opus-5 pid=13915 session=2f97cf00-c6dc-4469-878e-6c9b766a3092 at=2026-09-07T16:48:44.281Z
+END opus rc=1 signal=null wall=2s wallHit=false
+ride-wall rc=1 signal=-
+--- 3 land ---
+
+=== 1 finish-ride ===
+{"rig":"opus","contract":"e6-picnic","wall":2,"wallHit":false,"rc":1,"tracked":[],"files":0,"outcome":null,"scoredTapes":[],"otherSecured":[],"reportSections":null,"usage":{"turns":1,"toolCalls":0,"tokensIn":0,"tokensOut":0}}
+
+=== NOT SECURED — nothing to submit ===
+{
+ "rig": "opus",
+ "contract": "e6-picnic",
+ "wall": 2,
+ "wallHit": false,
+ "rc": 1,
+ "scoredTapes": [],
+ "outcomeNote": null
+}
+
+land rc=0
+--- 4 notebook ---
+{"notebook":"/Users/robin/Claude/Projects/goldrush-gauntlet/memories/claude__opus-5/NOTEBOOK.md","generation":93,"headerBytes":410,"entryBytes":878}
+--- 5 matrix ---
+| 33 | e6-picnic | `e6-picnic-01` | never-claimed | 93 | **not secured** | — | — | —s | 2s | —<br>— | — | gen 93 |
+{"contract":"e6-picnic","secured":false,"tapesOnDisk":0,"scoredTapes":0,"otherSecured":0,"wallHit":false,"rc":1,"assay":null,"ranked":null,"winnability":null}
+########## END e6-picnic ##########
+

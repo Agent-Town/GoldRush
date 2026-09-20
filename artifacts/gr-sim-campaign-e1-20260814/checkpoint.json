@@ -1,0 +1,249 @@
+{
+  "kind": "goldrush.profile.ledger",
+  "version": 1,
+  "exportedAt": "1970-01-01T00:00:00.000Z",
+  "profile": {
+    "id": "campaign",
+    "name": "Campaign",
+    "createdAt": 0,
+    "updatedAt": 0,
+    "difficultyPreset": "trail",
+    "hintsSeen": []
+  },
+  "data": {
+    "gr.meta.v1": {
+      "version": 1,
+      "tracks": {
+        "territory": 5,
+        "science": 16,
+        "hero": 5,
+        "agent": 5
+      }
+    },
+    "gr.medals.v1": {
+      "version": 1,
+      "baronBeaten": true,
+      "rocketCartCaptured": true
+    },
+    "gr.scores.v2": [
+      {
+        "waves": 25,
+        "kills": 0,
+        "gold": 0,
+        "timeAlive": 1,
+        "at": 0,
+        "secured": true,
+        "secureWave": 25,
+        "deepestWave": 25,
+        "contractId": "e1-night-shift",
+        "baseValue": 0,
+        "weaponSplit": {
+          "spark": 0,
+          "blast": 0
+        },
+        "profileName": "Campaign"
+      },
+      {
+        "waves": 20,
+        "kills": 0,
+        "gold": 0,
+        "timeAlive": 1,
+        "at": 0,
+        "secured": true,
+        "secureWave": 20,
+        "deepestWave": 20,
+        "contractId": "e1-baron",
+        "baseValue": 0,
+        "weaponSplit": {
+          "spark": 0,
+          "blast": 0
+        },
+        "profileName": "Campaign"
+      },
+      {
+        "waves": 20,
+        "kills": 0,
+        "gold": 0,
+        "timeAlive": 1,
+        "at": 0,
+        "secured": true,
+        "secureWave": 20,
+        "deepestWave": 20,
+        "contractId": "e1-twin-banks",
+        "baseValue": 0,
+        "weaponSplit": {
+          "spark": 0,
+          "blast": 0
+        },
+        "profileName": "Campaign"
+      },
+      {
+        "waves": 20,
+        "kills": 0,
+        "gold": 0,
+        "timeAlive": 1,
+        "at": 0,
+        "secured": true,
+        "secureWave": 20,
+        "deepestWave": 20,
+        "contractId": "e1-dry-gulch",
+        "baseValue": 0,
+        "weaponSplit": {
+          "spark": 0,
+          "blast": 0
+        },
+        "profileName": "Campaign"
+      },
+      {
+        "waves": 10,
+        "kills": 0,
+        "gold": 0,
+        "timeAlive": 1,
+        "at": 0,
+        "secured": true,
+        "secureWave": 10,
+        "deepestWave": 10,
+        "contractId": "the-claim",
+        "baseValue": 0,
+        "weaponSplit": {
+          "spark": 0,
+          "blast": 0
+        },
+        "profileName": "Robin"
+      }
+    ],
+    "gr.research.v1": {
+      "version": 1,
+      "steps": 16,
+      "taken": [
+        "chain_spark_primer",
+        "assay_grading",
+        "second_order_slot",
+        "beacon_cadence",
+        "refined_assay",
+        "pact_ledger",
+        "pattern_library",
+        "agent_schooling",
+        "sky_rocket_battery",
+        "continued_study:seam_yield:15:9:0"
+      ],
+      "proposalSalt": 10,
+      "pinnedTarget": null
+    },
+    "gr.difficultyPreset.v1": "trail",
+    "gr.research.epoch-1-frontier.v1": {
+      "version": 1,
+      "steps": 16,
+      "taken": [
+        "chain_spark_primer",
+        "assay_grading",
+        "second_order_slot",
+        "beacon_cadence",
+        "refined_assay",
+        "pact_ledger",
+        "pattern_library",
+        "agent_schooling",
+        "sky_rocket_battery",
+        "continued_study:seam_yield:15:9:0"
+      ],
+      "proposalSalt": 10,
+      "pinnedTarget": null
+    }
+  },
+  "campaign": {
+    "version": 1,
+    "hash": "fnv1a32:4f363fd5",
+    "legs": [
+      {
+        "contractId": "the-claim",
+        "seed": "e1-the-claim-01",
+        "startStateHash": "fnv1a32:b89f195c",
+        "stateHash": "fnv1a32:6b4bd1d8",
+        "eventLogHash": "fixture:the-claim:e1-the-claim-01",
+        "outcome": {
+          "secured": true,
+          "waves": 10,
+          "timeMs": 1000,
+          "gold": 0,
+          "kills": 0,
+          "calls": 0,
+          "defaultedPicks": 0,
+          "defaultedSecure": 0,
+          "eventLogHash": "fixture:the-claim:e1-the-claim-01"
+        }
+      },
+      {
+        "contractId": "e1-dry-gulch",
+        "seed": "e1-dry-gulch-01",
+        "startStateHash": "fnv1a32:6b4bd1d8",
+        "stateHash": "fnv1a32:45382a39",
+        "eventLogHash": "fixture:e1-dry-gulch:e1-dry-gulch-01",
+        "outcome": {
+          "secured": true,
+          "waves": 20,
+          "timeMs": 1000,
+          "gold": 0,
+          "kills": 0,
+          "calls": 0,
+          "defaultedPicks": 0,
+          "defaultedSecure": 0,
+          "eventLogHash": "fixture:e1-dry-gulch:e1-dry-gulch-01"
+        }
+      },
+      {
+        "contractId": "e1-night-shift",
+        "seed": "e1-night-shift-01",
+        "startStateHash": "fnv1a32:45382a39",
+        "stateHash": "fnv1a32:79a61371",
+        "eventLogHash": "fixture:e1-night-shift:e1-night-shift-01",
+        "outcome": {
+          "secured": true,
+          "waves": 25,
+          "timeMs": 1000,
+          "gold": 0,
+          "kills": 0,
+          "calls": 0,
+          "defaultedPicks": 0,
+          "defaultedSecure": 0,
+          "eventLogHash": "fixture:e1-night-shift:e1-night-shift-01"
+        }
+      },
+      {
+        "contractId": "e1-twin-banks",
+        "seed": "e1-twin-banks-01",
+        "startStateHash": "fnv1a32:79a61371",
+        "stateHash": "fnv1a32:c9c660c6",
+        "eventLogHash": "fixture:e1-twin-banks:e1-twin-banks-01",
+        "outcome": {
+          "secured": true,
+          "waves": 20,
+          "timeMs": 1000,
+          "gold": 0,
+          "kills": 0,
+          "calls": 0,
+          "defaultedPicks": 0,
+          "defaultedSecure": 0,
+          "eventLogHash": "fixture:e1-twin-banks:e1-twin-banks-01"
+        }
+      },
+      {
+        "contractId": "e1-baron",
+        "seed": "e1-baron-01",
+        "startStateHash": "fnv1a32:c9c660c6",
+        "stateHash": "fnv1a32:1c4e9c75",
+        "eventLogHash": "fixture:e1-baron:e1-baron-01",
+        "outcome": {
+          "secured": true,
+          "waves": 20,
+          "timeMs": 1000,
+          "gold": 0,
+          "kills": 0,
+          "calls": 0,
+          "defaultedPicks": 0,
+          "defaultedSecure": 0,
+          "eventLogHash": "fixture:e1-baron:e1-baron-01"
+        }
+      }
+    ]
+  }
+}

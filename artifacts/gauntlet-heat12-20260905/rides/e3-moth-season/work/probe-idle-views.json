@@ -1,0 +1,3697 @@
+[
+ {
+  "schema": "goldrush.view.v1",
+  "viewVersion": 2,
+  "stablePrefix": {
+   "seed": "e3-moth-season-01",
+   "contract": {
+    "id": "e3-moth-season",
+    "name": "Moth Season",
+    "briefing": {
+     "geography": "Two lit yards flank one unlit north-south corridor, wired dynamo to pylon to gallery lamp.",
+     "goals": [
+      "Hold through wave 12 while the decoy shed draws the migration.",
+      "CONNECT the corridor gallery to the dynamo by wave 12."
+     ],
+     "rules": [
+      "Moths choose light by radius; the Decoy Shed counts double and takes 6 damage per attached swarm each second.",
+      "Darkness is a road: non-moths move 12% faster outside light below 35% coverage.",
+      "The cycle stays at night, easing only through two-second dusks.",
+      "The corridor lamp runs on the dynamo's current: a Sentry Beacon raised on the CORRIDOR PYLON SITE closes the span, and a wrecked beacon cuts it and puts the lamp out.",
+      "REPAIR the beacon to relight the corridor; a corridor that never carried current by wave 12 cannot be secured at any wave."
+     ]
+    }
+   },
+   "mechanics": {
+    "schema": "goldrush.mechanics.v1",
+    "contractId": "e3-moth-season",
+    "buildables": [
+     {
+      "id": "sentry_beacon",
+      "operation": "BUILD",
+      "meaning": "Lights the dark and slows what it touches; radius 8wu.",
+      "cost": 25,
+      "costs": [
+       25,
+       35,
+       45,
+       55,
+       75,
+       95
+      ],
+      "costRule": "ceil-to-5",
+      "maxCount": 6,
+      "source": "buildables.registry"
+     },
+     {
+      "id": "palisade",
+      "operation": "BUILD",
+      "meaning": "Timber that holds. Bandits break it before you.",
+      "cost": 10,
+      "costs": [
+       10,
+       10,
+       10,
+       10,
+       10,
+       10
+      ],
+      "maxCount": 48,
+      "source": "buildables.registry"
+     },
+     {
+      "id": "sluice",
+      "operation": "BUILD",
+      "meaning": "Works the river for you: 3g per cycle beside water.",
+      "cost": 40,
+      "costs": [
+       40,
+       40,
+       40
+      ],
+      "maxCount": 3,
+      "source": "buildables.registry"
+     },
+     {
+      "id": "stockpile",
+      "operation": "BUILD",
+      "meaning": "Holds +150 gold above the pan cap.",
+      "cost": 60,
+      "costs": [
+       60,
+       60
+      ],
+      "maxCount": 2,
+      "source": "buildables.registry"
+     },
+     {
+      "id": "assay_office",
+      "operation": "BUILD",
+      "meaning": "Write orders; the town's craftsmen answer. One per claim.",
+      "cost": 80,
+      "costs": [
+       80
+      ],
+      "maxCount": 1,
+      "source": "buildables.registry"
+     },
+     {
+      "id": "decoy_shed",
+      "operation": "BUILD",
+      "meaning": "Light radius 11 with target weight 2; takes 6 damage per attached swarm each second.",
+      "cost": 20,
+      "costs": [
+       20,
+       20,
+       20
+      ],
+      "maxCount": 3,
+      "source": "twist.mothSeason"
+     }
+    ],
+    "interactables": [
+     {
+      "id": "lantern_post",
+      "count": 1,
+      "operations": [],
+      "source": "tileParams.prePlacedBuildables"
+     }
+    ],
+    "rules": [
+     {
+      "id": "build_zones",
+      "source": "tileParams.buildZones",
+      "data": {
+       "count": 3,
+       "banks": [
+        "north"
+       ]
+      }
+     },
+     {
+      "id": "connect_objective",
+      "source": "Game.syncCanyonConnectObjective",
+      "data": {
+       "consumerRole": "gallery",
+       "poweredState": "powered",
+       "required": 1,
+       "byWave": 12,
+       "completionLatch": "one-way-at-or-before-deadline",
+       "failureLatch": "one-way-after-deadline",
+       "missedDeadline": "run-unsecurable"
+      }
+     },
+     {
+      "id": "locked_night",
+      "source": "DayNightCycle.sample",
+      "data": {
+       "periodSeconds": 24,
+       "duskRampSeconds": 2,
+       "dawnRampSeconds": 2,
+       "nightDepth": 1,
+       "minimumDarkness": 0.75,
+       "phases": [
+        "dusk",
+        "dark",
+        "dawn"
+       ],
+       "fullLight": false
+      }
+     },
+     {
+      "id": "moth_attachment",
+      "source": "MothSwarm.update+dimSources",
+      "data": {
+       "damageTarget": "decoy_shed",
+       "damagePerAttachedPerSecond": 6,
+       "radiusLossPerAttached": 0.3,
+       "minimumRadiusMultiplier": 0.35
+      }
+     },
+     {
+      "id": "moth_targeting",
+      "source": "MothSwarm.update",
+      "data": {
+       "score": "coverageAt(source.x,source.z) * source.radius * radiusWeight * (source.targetWeight ?? 1)",
+       "radiusWeight": 1,
+       "defaultTargetWeight": 1,
+       "decoyTargetWeight": 2,
+       "selection": "highest-score",
+       "tieBreak": "ascending-source-id"
+      }
+     },
+     {
+      "id": "moth_wave",
+      "source": "Game.spawnMothSeasonWave",
+      "data": {
+       "lightKinds": [
+        "lantern",
+        "powered-lamp"
+       ],
+       "mothsBaselinePerWave": 4,
+       "mothsPerLightPerWave": 1,
+       "minimumDarkness": 0.5,
+       "count": "max(mothsBaselinePerWave,floor(lightSources)*mothsPerLightPerWave)"
+      }
+     }
+    ],
+    "modes": [],
+    "posting": {
+     "waves": [
+      {
+       "event": "secure",
+       "wave": 12,
+       "source": "twist.secureWave"
+      }
+     ],
+     "spawnEdges": [
+      "north",
+      "south"
+     ],
+     "lossStakes": []
+    }
+   },
+   "map": {
+    "claim": {
+     "x": 0,
+     "z": 12
+    },
+    "seams": [
+     {
+      "id": "gold-seam-1",
+      "x": -22,
+      "z": -6.8
+     },
+     {
+      "id": "gold-seam-2",
+      "x": -9,
+      "z": 6.7
+     },
+     {
+      "id": "gold-seam-3",
+      "x": -1.5,
+      "z": -6.4
+     },
+     {
+      "id": "gold-seam-4",
+      "x": 7.5,
+      "z": 6.5
+     },
+     {
+      "id": "gold-seam-5",
+      "x": 18,
+      "z": -7
+     },
+     {
+      "id": "gold-seam-6",
+      "x": 25,
+      "z": 6.9
+     }
+    ],
+    "coalSeams": [],
+    "water": {
+     "river": false,
+     "ford": false,
+     "sources": 0,
+     "descriptor": null
+    },
+    "spawnGates": [
+     {
+      "edge": "north"
+     },
+     {
+      "edge": "south"
+     }
+    ]
+   },
+   "orders": []
+  },
+  "appendLog": [],
+  "now": {
+   "wave": 0,
+   "blastReadyInMs": 0,
+   "weapon": "rig",
+   "timers": {
+    "runSeconds": 0,
+    "nextWaveInSeconds": 30
+   },
+   "gold": 0,
+   "hero": {
+    "hp": 100,
+    "maxHp": 100,
+    "x": 0,
+    "z": 12,
+    "level": 1,
+    "upgradesTaken": {},
+    "upgradeChoiceRule": "first-offer"
+   },
+   "prospector": {
+    "x": -1.8,
+    "z": 10.93
+   },
+   "works": {
+    "hp": 35,
+    "maxHp": 35,
+    "standing": 1,
+    "wrecked": 0,
+    "byKind": {
+     "lantern_post": 1
+    },
+    "entries": [
+     {
+      "id": "lantern_post",
+      "index": 0,
+      "tier": 1,
+      "hp": 35,
+      "maxHp": 35,
+      "wrecked": false,
+      "position": {
+       "x": 0,
+       "z": 6
+      }
+     }
+    ]
+   },
+   "threats": {
+    "alive": 0,
+    "state": "quiet",
+    "edge": null,
+    "thieves": 0,
+    "wreckers": 0,
+    "spawnedTotal": 0,
+    "defeatedTotal": 0,
+    "defeatedBasis": "all enemies, including continuous tricklers"
+   },
+   "orders": [],
+   "needsRider": false,
+   "seams": [
+    {
+     "id": "gold-seam-1",
+     "active": true,
+     "remaining": 30,
+     "x": -9,
+     "z": 6.7,
+     "anchorIndex": 1
+    },
+    {
+     "id": "gold-seam-2",
+     "active": true,
+     "remaining": 30,
+     "x": 18,
+     "z": -7,
+     "anchorIndex": 4
+    },
+    {
+     "id": "gold-seam-3",
+     "active": true,
+     "remaining": 30,
+     "x": 25,
+     "z": 6.9,
+     "anchorIndex": 5
+    },
+    {
+     "id": "gold-seam-4",
+     "active": false,
+     "remaining": 30,
+     "x": null,
+     "z": null,
+     "anchorIndex": null
+    },
+    {
+     "id": "gold-seam-5",
+     "active": false,
+     "remaining": 30,
+     "x": null,
+     "z": null,
+     "anchorIndex": null
+    },
+    {
+     "id": "gold-seam-6",
+     "active": false,
+     "remaining": 30,
+     "x": null,
+     "z": null,
+     "anchorIndex": null
+    }
+   ],
+   "score": {
+    "wavesSurvived": 0,
+    "goldPanned": 0,
+    "goldPannedByProspector": 0,
+    "goldStolen": 0,
+    "goldReclaimed": 0,
+    "goldReclaimedByProspector": 0,
+    "buildingsBuilt": 0
+   },
+   "canyonConnect": {
+    "powered": 0,
+    "required": 1,
+    "byWave": 12,
+    "complete": false,
+    "failed": false
+   }
+  },
+  "almanac": {
+   "label": "the Almanac reckons",
+   "estimate": true,
+   "nextWave": {
+    "wave": 1,
+    "arrivalInSeconds": 30,
+    "basis": "estimated-from-wave-schedule",
+    "composition": [
+     {
+      "id": "moth_swarm",
+      "label": "Fever Moths",
+      "count": 4
+     },
+     {
+      "id": "night_runner",
+      "label": "Fevered Runner",
+      "count": 2
+     }
+    ],
+    "compositionScope": "wave-horn packs only; continuous tricklers are additional",
+    "continuousTrickle": {
+     "currentIntervalSeconds": 2.4,
+     "includedInComposition": false,
+     "includedInDefeatedTotal": true
+    }
+   },
+   "projection": {
+    "expectedLeaks": 0,
+    "expectedWorksDamage": 0,
+    "expectedGold": 56.67,
+    "currentWorks": 1,
+    "harnessHash": "fnv1a32:a9a2bc7e"
+   }
+  }
+ },
+ {
+  "schema": "goldrush.view.v1",
+  "viewVersion": 2,
+  "stablePrefix": {
+   "seed": "e3-moth-season-01",
+   "contract": {
+    "id": "e3-moth-season",
+    "name": "Moth Season",
+    "briefing": {
+     "geography": "Two lit yards flank one unlit north-south corridor, wired dynamo to pylon to gallery lamp.",
+     "goals": [
+      "Hold through wave 12 while the decoy shed draws the migration.",
+      "CONNECT the corridor gallery to the dynamo by wave 12."
+     ],
+     "rules": [
+      "Moths choose light by radius; the Decoy Shed counts double and takes 6 damage per attached swarm each second.",
+      "Darkness is a road: non-moths move 12% faster outside light below 35% coverage.",
+      "The cycle stays at night, easing only through two-second dusks.",
+      "The corridor lamp runs on the dynamo's current: a Sentry Beacon raised on the CORRIDOR PYLON SITE closes the span, and a wrecked beacon cuts it and puts the lamp out.",
+      "REPAIR the beacon to relight the corridor; a corridor that never carried current by wave 12 cannot be secured at any wave."
+     ]
+    }
+   },
+   "mechanics": {
+    "schema": "goldrush.mechanics.v1",
+    "contractId": "e3-moth-season",
+    "buildables": [
+     {
+      "id": "sentry_beacon",
+      "operation": "BUILD",
+      "meaning": "Lights the dark and slows what it touches; radius 8wu.",
+      "cost": 25,
+      "costs": [
+       25,
+       35,
+       45,
+       55,
+       75,
+       95
+      ],
+      "costRule": "ceil-to-5",
+      "maxCount": 6,
+      "source": "buildables.registry"
+     },
+     {
+      "id": "palisade",
+      "operation": "BUILD",
+      "meaning": "Timber that holds. Bandits break it before you.",
+      "cost": 10,
+      "costs": [
+       10,
+       10,
+       10,
+       10,
+       10,
+       10
+      ],
+      "maxCount": 48,
+      "source": "buildables.registry"
+     },
+     {
+      "id": "sluice",
+      "operation": "BUILD",
+      "meaning": "Works the river for you: 3g per cycle beside water.",
+      "cost": 40,
+      "costs": [
+       40,
+       40,
+       40
+      ],
+      "maxCount": 3,
+      "source": "buildables.registry"
+     },
+     {
+      "id": "stockpile",
+      "operation": "BUILD",
+      "meaning": "Holds +150 gold above the pan cap.",
+      "cost": 60,
+      "costs": [
+       60,
+       60
+      ],
+      "maxCount": 2,
+      "source": "buildables.registry"
+     },
+     {
+      "id": "assay_office",
+      "operation": "BUILD",
+      "meaning": "Write orders; the town's craftsmen answer. One per claim.",
+      "cost": 80,
+      "costs": [
+       80
+      ],
+      "maxCount": 1,
+      "source": "buildables.registry"
+     },
+     {
+      "id": "decoy_shed",
+      "operation": "BUILD",
+      "meaning": "Light radius 11 with target weight 2; takes 6 damage per attached swarm each second.",
+      "cost": 20,
+      "costs": [
+       20,
+       20,
+       20
+      ],
+      "maxCount": 3,
+      "source": "twist.mothSeason"
+     }
+    ],
+    "interactables": [
+     {
+      "id": "lantern_post",
+      "count": 1,
+      "operations": [],
+      "source": "tileParams.prePlacedBuildables"
+     }
+    ],
+    "rules": [
+     {
+      "id": "build_zones",
+      "source": "tileParams.buildZones",
+      "data": {
+       "count": 3,
+       "banks": [
+        "north"
+       ]
+      }
+     },
+     {
+      "id": "connect_objective",
+      "source": "Game.syncCanyonConnectObjective",
+      "data": {
+       "consumerRole": "gallery",
+       "poweredState": "powered",
+       "required": 1,
+       "byWave": 12,
+       "completionLatch": "one-way-at-or-before-deadline",
+       "failureLatch": "one-way-after-deadline",
+       "missedDeadline": "run-unsecurable"
+      }
+     },
+     {
+      "id": "locked_night",
+      "source": "DayNightCycle.sample",
+      "data": {
+       "periodSeconds": 24,
+       "duskRampSeconds": 2,
+       "dawnRampSeconds": 2,
+       "nightDepth": 1,
+       "minimumDarkness": 0.75,
+       "phases": [
+        "dusk",
+        "dark",
+        "dawn"
+       ],
+       "fullLight": false
+      }
+     },
+     {
+      "id": "moth_attachment",
+      "source": "MothSwarm.update+dimSources",
+      "data": {
+       "damageTarget": "decoy_shed",
+       "damagePerAttachedPerSecond": 6,
+       "radiusLossPerAttached": 0.3,
+       "minimumRadiusMultiplier": 0.35
+      }
+     },
+     {
+      "id": "moth_targeting",
+      "source": "MothSwarm.update",
+      "data": {
+       "score": "coverageAt(source.x,source.z) * source.radius * radiusWeight * (source.targetWeight ?? 1)",
+       "radiusWeight": 1,
+       "defaultTargetWeight": 1,
+       "decoyTargetWeight": 2,
+       "selection": "highest-score",
+       "tieBreak": "ascending-source-id"
+      }
+     },
+     {
+      "id": "moth_wave",
+      "source": "Game.spawnMothSeasonWave",
+      "data": {
+       "lightKinds": [
+        "lantern",
+        "powered-lamp"
+       ],
+       "mothsBaselinePerWave": 4,
+       "mothsPerLightPerWave": 1,
+       "minimumDarkness": 0.5,
+       "count": "max(mothsBaselinePerWave,floor(lightSources)*mothsPerLightPerWave)"
+      }
+     }
+    ],
+    "modes": [],
+    "posting": {
+     "waves": [
+      {
+       "event": "secure",
+       "wave": 12,
+       "source": "twist.secureWave"
+      }
+     ],
+     "spawnEdges": [
+      "north",
+      "south"
+     ],
+     "lossStakes": []
+    }
+   },
+   "map": {
+    "claim": {
+     "x": 0,
+     "z": 12
+    },
+    "seams": [
+     {
+      "id": "gold-seam-1",
+      "x": -22,
+      "z": -6.8
+     },
+     {
+      "id": "gold-seam-2",
+      "x": -9,
+      "z": 6.7
+     },
+     {
+      "id": "gold-seam-3",
+      "x": -1.5,
+      "z": -6.4
+     },
+     {
+      "id": "gold-seam-4",
+      "x": 7.5,
+      "z": 6.5
+     },
+     {
+      "id": "gold-seam-5",
+      "x": 18,
+      "z": -7
+     },
+     {
+      "id": "gold-seam-6",
+      "x": 25,
+      "z": 6.9
+     }
+    ],
+    "coalSeams": [],
+    "water": {
+     "river": false,
+     "ford": false,
+     "sources": 0,
+     "descriptor": null
+    },
+    "spawnGates": [
+     {
+      "edge": "north"
+     },
+     {
+      "edge": "south"
+     }
+    ]
+   },
+   "orders": []
+  },
+  "appendLog": [],
+  "now": {
+   "wave": 1,
+   "blastReadyInMs": 0,
+   "weapon": "rig",
+   "timers": {
+    "runSeconds": 30,
+    "nextWaveInSeconds": 30
+   },
+   "gold": 0,
+   "hero": {
+    "hp": 100,
+    "maxHp": 100,
+    "x": 0,
+    "z": 12,
+    "level": 1,
+    "upgradesTaken": {},
+    "upgradeChoiceRule": "first-offer"
+   },
+   "prospector": {
+    "x": -1.98,
+    "z": 10.58
+   },
+   "works": {
+    "hp": 35,
+    "maxHp": 35,
+    "standing": 1,
+    "wrecked": 0,
+    "byKind": {
+     "lantern_post": 1
+    },
+    "entries": [
+     {
+      "id": "lantern_post",
+      "index": 0,
+      "tier": 1,
+      "hp": 35,
+      "maxHp": 35,
+      "wrecked": false,
+      "position": {
+       "x": 0,
+       "z": 6
+      }
+     }
+    ]
+   },
+   "threats": {
+    "alive": 14,
+    "state": "warning",
+    "edge": "north",
+    "thieves": 0,
+    "wreckers": 0,
+    "spawnedTotal": 14,
+    "defeatedTotal": 4,
+    "defeatedBasis": "all enemies, including continuous tricklers"
+   },
+   "orders": [],
+   "needsRider": false,
+   "seams": [
+    {
+     "id": "gold-seam-1",
+     "active": true,
+     "remaining": 30,
+     "x": -9,
+     "z": 6.7,
+     "anchorIndex": 1
+    },
+    {
+     "id": "gold-seam-2",
+     "active": true,
+     "remaining": 30,
+     "x": 18,
+     "z": -7,
+     "anchorIndex": 4
+    },
+    {
+     "id": "gold-seam-3",
+     "active": true,
+     "remaining": 30,
+     "x": 25,
+     "z": 6.9,
+     "anchorIndex": 5
+    },
+    {
+     "id": "gold-seam-4",
+     "active": false,
+     "remaining": 30,
+     "x": null,
+     "z": null,
+     "anchorIndex": null
+    },
+    {
+     "id": "gold-seam-5",
+     "active": false,
+     "remaining": 30,
+     "x": null,
+     "z": null,
+     "anchorIndex": null
+    },
+    {
+     "id": "gold-seam-6",
+     "active": false,
+     "remaining": 30,
+     "x": null,
+     "z": null,
+     "anchorIndex": null
+    }
+   ],
+   "score": {
+    "wavesSurvived": 1,
+    "goldPanned": 0,
+    "goldPannedByProspector": 0,
+    "goldStolen": 0,
+    "goldReclaimed": 0,
+    "goldReclaimedByProspector": 0,
+    "buildingsBuilt": 0
+   },
+   "canyonConnect": {
+    "powered": 0,
+    "required": 1,
+    "byWave": 12,
+    "complete": false,
+    "failed": false
+   }
+  },
+  "almanac": {
+   "label": "the Almanac reckons",
+   "estimate": true,
+   "nextWave": {
+    "wave": 2,
+    "arrivalInSeconds": 30,
+    "basis": "estimated-from-wave-schedule",
+    "composition": [
+     {
+      "id": "moth_swarm",
+      "label": "Fever Moths",
+      "count": 6
+     },
+     {
+      "id": "night_runner",
+      "label": "Fevered Runner",
+      "count": 3
+     }
+    ],
+    "compositionScope": "wave-horn packs only; continuous tricklers are additional",
+    "continuousTrickle": {
+     "currentIntervalSeconds": 2.258,
+     "includedInComposition": false,
+     "includedInDefeatedTotal": true
+    }
+   },
+   "projection": {
+    "expectedLeaks": 0,
+    "expectedWorksDamage": 0,
+    "expectedGold": 54.99,
+    "currentWorks": 1,
+    "harnessHash": "fnv1a32:5c414537"
+   }
+  }
+ },
+ {
+  "schema": "goldrush.view.v1",
+  "viewVersion": 2,
+  "stablePrefix": {
+   "seed": "e3-moth-season-01",
+   "contract": {
+    "id": "e3-moth-season",
+    "name": "Moth Season",
+    "briefing": {
+     "geography": "Two lit yards flank one unlit north-south corridor, wired dynamo to pylon to gallery lamp.",
+     "goals": [
+      "Hold through wave 12 while the decoy shed draws the migration.",
+      "CONNECT the corridor gallery to the dynamo by wave 12."
+     ],
+     "rules": [
+      "Moths choose light by radius; the Decoy Shed counts double and takes 6 damage per attached swarm each second.",
+      "Darkness is a road: non-moths move 12% faster outside light below 35% coverage.",
+      "The cycle stays at night, easing only through two-second dusks.",
+      "The corridor lamp runs on the dynamo's current: a Sentry Beacon raised on the CORRIDOR PYLON SITE closes the span, and a wrecked beacon cuts it and puts the lamp out.",
+      "REPAIR the beacon to relight the corridor; a corridor that never carried current by wave 12 cannot be secured at any wave."
+     ]
+    }
+   },
+   "mechanics": {
+    "schema": "goldrush.mechanics.v1",
+    "contractId": "e3-moth-season",
+    "buildables": [
+     {
+      "id": "sentry_beacon",
+      "operation": "BUILD",
+      "meaning": "Lights the dark and slows what it touches; radius 8wu.",
+      "cost": 25,
+      "costs": [
+       25,
+       35,
+       45,
+       55,
+       75,
+       95
+      ],
+      "costRule": "ceil-to-5",
+      "maxCount": 6,
+      "source": "buildables.registry"
+     },
+     {
+      "id": "palisade",
+      "operation": "BUILD",
+      "meaning": "Timber that holds. Bandits break it before you.",
+      "cost": 10,
+      "costs": [
+       10,
+       10,
+       10,
+       10,
+       10,
+       10
+      ],
+      "maxCount": 48,
+      "source": "buildables.registry"
+     },
+     {
+      "id": "sluice",
+      "operation": "BUILD",
+      "meaning": "Works the river for you: 3g per cycle beside water.",
+      "cost": 40,
+      "costs": [
+       40,
+       40,
+       40
+      ],
+      "maxCount": 3,
+      "source": "buildables.registry"
+     },
+     {
+      "id": "stockpile",
+      "operation": "BUILD",
+      "meaning": "Holds +150 gold above the pan cap.",
+      "cost": 60,
+      "costs": [
+       60,
+       60
+      ],
+      "maxCount": 2,
+      "source": "buildables.registry"
+     },
+     {
+      "id": "assay_office",
+      "operation": "BUILD",
+      "meaning": "Write orders; the town's craftsmen answer. One per claim.",
+      "cost": 80,
+      "costs": [
+       80
+      ],
+      "maxCount": 1,
+      "source": "buildables.registry"
+     },
+     {
+      "id": "decoy_shed",
+      "operation": "BUILD",
+      "meaning": "Light radius 11 with target weight 2; takes 6 damage per attached swarm each second.",
+      "cost": 20,
+      "costs": [
+       20,
+       20,
+       20
+      ],
+      "maxCount": 3,
+      "source": "twist.mothSeason"
+     }
+    ],
+    "interactables": [
+     {
+      "id": "lantern_post",
+      "count": 1,
+      "operations": [],
+      "source": "tileParams.prePlacedBuildables"
+     }
+    ],
+    "rules": [
+     {
+      "id": "build_zones",
+      "source": "tileParams.buildZones",
+      "data": {
+       "count": 3,
+       "banks": [
+        "north"
+       ]
+      }
+     },
+     {
+      "id": "connect_objective",
+      "source": "Game.syncCanyonConnectObjective",
+      "data": {
+       "consumerRole": "gallery",
+       "poweredState": "powered",
+       "required": 1,
+       "byWave": 12,
+       "completionLatch": "one-way-at-or-before-deadline",
+       "failureLatch": "one-way-after-deadline",
+       "missedDeadline": "run-unsecurable"
+      }
+     },
+     {
+      "id": "locked_night",
+      "source": "DayNightCycle.sample",
+      "data": {
+       "periodSeconds": 24,
+       "duskRampSeconds": 2,
+       "dawnRampSeconds": 2,
+       "nightDepth": 1,
+       "minimumDarkness": 0.75,
+       "phases": [
+        "dusk",
+        "dark",
+        "dawn"
+       ],
+       "fullLight": false
+      }
+     },
+     {
+      "id": "moth_attachment",
+      "source": "MothSwarm.update+dimSources",
+      "data": {
+       "damageTarget": "decoy_shed",
+       "damagePerAttachedPerSecond": 6,
+       "radiusLossPerAttached": 0.3,
+       "minimumRadiusMultiplier": 0.35
+      }
+     },
+     {
+      "id": "moth_targeting",
+      "source": "MothSwarm.update",
+      "data": {
+       "score": "coverageAt(source.x,source.z) * source.radius * radiusWeight * (source.targetWeight ?? 1)",
+       "radiusWeight": 1,
+       "defaultTargetWeight": 1,
+       "decoyTargetWeight": 2,
+       "selection": "highest-score",
+       "tieBreak": "ascending-source-id"
+      }
+     },
+     {
+      "id": "moth_wave",
+      "source": "Game.spawnMothSeasonWave",
+      "data": {
+       "lightKinds": [
+        "lantern",
+        "powered-lamp"
+       ],
+       "mothsBaselinePerWave": 4,
+       "mothsPerLightPerWave": 1,
+       "minimumDarkness": 0.5,
+       "count": "max(mothsBaselinePerWave,floor(lightSources)*mothsPerLightPerWave)"
+      }
+     }
+    ],
+    "modes": [],
+    "posting": {
+     "waves": [
+      {
+       "event": "secure",
+       "wave": 12,
+       "source": "twist.secureWave"
+      }
+     ],
+     "spawnEdges": [
+      "north",
+      "south"
+     ],
+     "lossStakes": []
+    }
+   },
+   "map": {
+    "claim": {
+     "x": 0,
+     "z": 12
+    },
+    "seams": [
+     {
+      "id": "gold-seam-1",
+      "x": -22,
+      "z": -6.8
+     },
+     {
+      "id": "gold-seam-2",
+      "x": -9,
+      "z": 6.7
+     },
+     {
+      "id": "gold-seam-3",
+      "x": -1.5,
+      "z": -6.4
+     },
+     {
+      "id": "gold-seam-4",
+      "x": 7.5,
+      "z": 6.5
+     },
+     {
+      "id": "gold-seam-5",
+      "x": 18,
+      "z": -7
+     },
+     {
+      "id": "gold-seam-6",
+      "x": 25,
+      "z": 6.9
+     }
+    ],
+    "coalSeams": [],
+    "water": {
+     "river": false,
+     "ford": false,
+     "sources": 0,
+     "descriptor": null
+    },
+    "spawnGates": [
+     {
+      "edge": "north"
+     },
+     {
+      "edge": "south"
+     }
+    ]
+   },
+   "orders": []
+  },
+  "appendLog": [
+   {
+    "wave": 1,
+    "outcome": "held",
+    "goldDelta": 0,
+    "worksHp": {
+     "current": 35,
+     "max": 35,
+     "delta": 0
+    },
+    "kills": 11,
+    "surprises": []
+   }
+  ],
+  "now": {
+   "wave": 2,
+   "blastReadyInMs": 0,
+   "weapon": "rig",
+   "timers": {
+    "runSeconds": 60.03,
+    "nextWaveInSeconds": 29.97
+   },
+   "gold": 0,
+   "hero": {
+    "hp": 100,
+    "maxHp": 100,
+    "x": 0,
+    "z": 12,
+    "level": 1,
+    "upgradesTaken": {},
+    "upgradeChoiceRule": "first-offer"
+   },
+   "prospector": {
+    "x": -1.68,
+    "z": 10.92
+   },
+   "works": {
+    "hp": 35,
+    "maxHp": 35,
+    "standing": 1,
+    "wrecked": 0,
+    "byKind": {
+     "lantern_post": 1
+    },
+    "entries": [
+     {
+      "id": "lantern_post",
+      "index": 0,
+      "tier": 1,
+      "hp": 35,
+      "maxHp": 35,
+      "wrecked": false,
+      "position": {
+       "x": 0,
+       "z": 6
+      }
+     }
+    ]
+   },
+   "threats": {
+    "alive": 24,
+    "state": "warning",
+    "edge": "south",
+    "thieves": 0,
+    "wreckers": 0,
+    "spawnedTotal": 31,
+    "defeatedTotal": 15,
+    "defeatedBasis": "all enemies, including continuous tricklers"
+   },
+   "orders": [],
+   "needsRider": false,
+   "seams": [
+    {
+     "id": "gold-seam-1",
+     "active": true,
+     "remaining": 30,
+     "x": -9,
+     "z": 6.7,
+     "anchorIndex": 1
+    },
+    {
+     "id": "gold-seam-2",
+     "active": true,
+     "remaining": 30,
+     "x": 18,
+     "z": -7,
+     "anchorIndex": 4
+    },
+    {
+     "id": "gold-seam-3",
+     "active": true,
+     "remaining": 30,
+     "x": 25,
+     "z": 6.9,
+     "anchorIndex": 5
+    },
+    {
+     "id": "gold-seam-4",
+     "active": false,
+     "remaining": 30,
+     "x": null,
+     "z": null,
+     "anchorIndex": null
+    },
+    {
+     "id": "gold-seam-5",
+     "active": false,
+     "remaining": 30,
+     "x": null,
+     "z": null,
+     "anchorIndex": null
+    },
+    {
+     "id": "gold-seam-6",
+     "active": false,
+     "remaining": 30,
+     "x": null,
+     "z": null,
+     "anchorIndex": null
+    }
+   ],
+   "score": {
+    "wavesSurvived": 2,
+    "goldPanned": 0,
+    "goldPannedByProspector": 0,
+    "goldStolen": 0,
+    "goldReclaimed": 0,
+    "goldReclaimedByProspector": 0,
+    "buildingsBuilt": 0
+   },
+   "canyonConnect": {
+    "powered": 0,
+    "required": 1,
+    "byWave": 12,
+    "complete": false,
+    "failed": false
+   }
+  },
+  "almanac": {
+   "label": "the Almanac reckons",
+   "estimate": true,
+   "nextWave": {
+    "wave": 3,
+    "arrivalInSeconds": 29.97,
+    "basis": "estimated-from-wave-schedule",
+    "composition": [
+     {
+      "id": "moth_swarm",
+      "label": "Fever Moths",
+      "count": 8
+     },
+     {
+      "id": "night_runner",
+      "label": "Fevered Runner",
+      "count": 4
+     }
+    ],
+    "compositionScope": "wave-horn packs only; continuous tricklers are additional",
+    "continuousTrickle": {
+     "currentIntervalSeconds": 2.061,
+     "includedInComposition": false,
+     "includedInDefeatedTotal": true
+    }
+   },
+   "projection": {
+    "expectedLeaks": 0,
+    "expectedWorksDamage": 0,
+    "expectedGold": 55.83,
+    "currentWorks": 1,
+    "harnessHash": "fnv1a32:d7bfc458"
+   }
+  }
+ },
+ {
+  "schema": "goldrush.view.v1",
+  "viewVersion": 2,
+  "stablePrefix": {
+   "seed": "e3-moth-season-01",
+   "contract": {
+    "id": "e3-moth-season",
+    "name": "Moth Season",
+    "briefing": {
+     "geography": "Two lit yards flank one unlit north-south corridor, wired dynamo to pylon to gallery lamp.",
+     "goals": [
+      "Hold through wave 12 while the decoy shed draws the migration.",
+      "CONNECT the corridor gallery to the dynamo by wave 12."
+     ],
+     "rules": [
+      "Moths choose light by radius; the Decoy Shed counts double and takes 6 damage per attached swarm each second.",
+      "Darkness is a road: non-moths move 12% faster outside light below 35% coverage.",
+      "The cycle stays at night, easing only through two-second dusks.",
+      "The corridor lamp runs on the dynamo's current: a Sentry Beacon raised on the CORRIDOR PYLON SITE closes the span, and a wrecked beacon cuts it and puts the lamp out.",
+      "REPAIR the beacon to relight the corridor; a corridor that never carried current by wave 12 cannot be secured at any wave."
+     ]
+    }
+   },
+   "mechanics": {
+    "schema": "goldrush.mechanics.v1",
+    "contractId": "e3-moth-season",
+    "buildables": [
+     {
+      "id": "sentry_beacon",
+      "operation": "BUILD",
+      "meaning": "Lights the dark and slows what it touches; radius 8wu.",
+      "cost": 25,
+      "costs": [
+       25,
+       35,
+       45,
+       55,
+       75,
+       95
+      ],
+      "costRule": "ceil-to-5",
+      "maxCount": 6,
+      "source": "buildables.registry"
+     },
+     {
+      "id": "palisade",
+      "operation": "BUILD",
+      "meaning": "Timber that holds. Bandits break it before you.",
+      "cost": 10,
+      "costs": [
+       10,
+       10,
+       10,
+       10,
+       10,
+       10
+      ],
+      "maxCount": 48,
+      "source": "buildables.registry"
+     },
+     {
+      "id": "sluice",
+      "operation": "BUILD",
+      "meaning": "Works the river for you: 3g per cycle beside water.",
+      "cost": 40,
+      "costs": [
+       40,
+       40,
+       40
+      ],
+      "maxCount": 3,
+      "source": "buildables.registry"
+     },
+     {
+      "id": "stockpile",
+      "operation": "BUILD",
+      "meaning": "Holds +150 gold above the pan cap.",
+      "cost": 60,
+      "costs": [
+       60,
+       60
+      ],
+      "maxCount": 2,
+      "source": "buildables.registry"
+     },
+     {
+      "id": "assay_office",
+      "operation": "BUILD",
+      "meaning": "Write orders; the town's craftsmen answer. One per claim.",
+      "cost": 80,
+      "costs": [
+       80
+      ],
+      "maxCount": 1,
+      "source": "buildables.registry"
+     },
+     {
+      "id": "decoy_shed",
+      "operation": "BUILD",
+      "meaning": "Light radius 11 with target weight 2; takes 6 damage per attached swarm each second.",
+      "cost": 20,
+      "costs": [
+       20,
+       20,
+       20
+      ],
+      "maxCount": 3,
+      "source": "twist.mothSeason"
+     }
+    ],
+    "interactables": [
+     {
+      "id": "lantern_post",
+      "count": 1,
+      "operations": [],
+      "source": "tileParams.prePlacedBuildables"
+     }
+    ],
+    "rules": [
+     {
+      "id": "build_zones",
+      "source": "tileParams.buildZones",
+      "data": {
+       "count": 3,
+       "banks": [
+        "north"
+       ]
+      }
+     },
+     {
+      "id": "connect_objective",
+      "source": "Game.syncCanyonConnectObjective",
+      "data": {
+       "consumerRole": "gallery",
+       "poweredState": "powered",
+       "required": 1,
+       "byWave": 12,
+       "completionLatch": "one-way-at-or-before-deadline",
+       "failureLatch": "one-way-after-deadline",
+       "missedDeadline": "run-unsecurable"
+      }
+     },
+     {
+      "id": "locked_night",
+      "source": "DayNightCycle.sample",
+      "data": {
+       "periodSeconds": 24,
+       "duskRampSeconds": 2,
+       "dawnRampSeconds": 2,
+       "nightDepth": 1,
+       "minimumDarkness": 0.75,
+       "phases": [
+        "dusk",
+        "dark",
+        "dawn"
+       ],
+       "fullLight": false
+      }
+     },
+     {
+      "id": "moth_attachment",
+      "source": "MothSwarm.update+dimSources",
+      "data": {
+       "damageTarget": "decoy_shed",
+       "damagePerAttachedPerSecond": 6,
+       "radiusLossPerAttached": 0.3,
+       "minimumRadiusMultiplier": 0.35
+      }
+     },
+     {
+      "id": "moth_targeting",
+      "source": "MothSwarm.update",
+      "data": {
+       "score": "coverageAt(source.x,source.z) * source.radius * radiusWeight * (source.targetWeight ?? 1)",
+       "radiusWeight": 1,
+       "defaultTargetWeight": 1,
+       "decoyTargetWeight": 2,
+       "selection": "highest-score",
+       "tieBreak": "ascending-source-id"
+      }
+     },
+     {
+      "id": "moth_wave",
+      "source": "Game.spawnMothSeasonWave",
+      "data": {
+       "lightKinds": [
+        "lantern",
+        "powered-lamp"
+       ],
+       "mothsBaselinePerWave": 4,
+       "mothsPerLightPerWave": 1,
+       "minimumDarkness": 0.5,
+       "count": "max(mothsBaselinePerWave,floor(lightSources)*mothsPerLightPerWave)"
+      }
+     }
+    ],
+    "modes": [],
+    "posting": {
+     "waves": [
+      {
+       "event": "secure",
+       "wave": 12,
+       "source": "twist.secureWave"
+      }
+     ],
+     "spawnEdges": [
+      "north",
+      "south"
+     ],
+     "lossStakes": []
+    }
+   },
+   "map": {
+    "claim": {
+     "x": 0,
+     "z": 12
+    },
+    "seams": [
+     {
+      "id": "gold-seam-1",
+      "x": -22,
+      "z": -6.8
+     },
+     {
+      "id": "gold-seam-2",
+      "x": -9,
+      "z": 6.7
+     },
+     {
+      "id": "gold-seam-3",
+      "x": -1.5,
+      "z": -6.4
+     },
+     {
+      "id": "gold-seam-4",
+      "x": 7.5,
+      "z": 6.5
+     },
+     {
+      "id": "gold-seam-5",
+      "x": 18,
+      "z": -7
+     },
+     {
+      "id": "gold-seam-6",
+      "x": 25,
+      "z": 6.9
+     }
+    ],
+    "coalSeams": [],
+    "water": {
+     "river": false,
+     "ford": false,
+     "sources": 0,
+     "descriptor": null
+    },
+    "spawnGates": [
+     {
+      "edge": "north"
+     },
+     {
+      "edge": "south"
+     }
+    ]
+   },
+   "orders": []
+  },
+  "appendLog": [
+   {
+    "wave": 1,
+    "outcome": "held",
+    "goldDelta": 0,
+    "worksHp": {
+     "current": 35,
+     "max": 35,
+     "delta": 0
+    },
+    "kills": 11,
+    "surprises": []
+   },
+   {
+    "wave": 2,
+    "outcome": "held",
+    "goldDelta": 0,
+    "worksHp": {
+     "current": 35,
+     "max": 35,
+     "delta": 0
+    },
+    "kills": 16,
+    "surprises": []
+   }
+  ],
+  "now": {
+   "wave": 3,
+   "blastReadyInMs": 0,
+   "weapon": "rig",
+   "timers": {
+    "runSeconds": 90.03,
+    "nextWaveInSeconds": 29.97
+   },
+   "gold": 0,
+   "hero": {
+    "hp": 84,
+    "maxHp": 100,
+    "x": 0,
+    "z": 12,
+    "level": 1,
+    "upgradesTaken": {},
+    "upgradeChoiceRule": "first-offer"
+   },
+   "prospector": {
+    "x": -1.61,
+    "z": 10.58
+   },
+   "works": {
+    "hp": 35,
+    "maxHp": 35,
+    "standing": 1,
+    "wrecked": 0,
+    "byKind": {
+     "lantern_post": 1
+    },
+    "entries": [
+     {
+      "id": "lantern_post",
+      "index": 0,
+      "tier": 1,
+      "hp": 35,
+      "maxHp": 35,
+      "wrecked": false,
+      "position": {
+       "x": 0,
+       "z": 6
+      }
+     }
+    ]
+   },
+   "threats": {
+    "alive": 33,
+    "state": "warning",
+    "edge": "south",
+    "thieves": 0,
+    "wreckers": 0,
+    "spawnedTotal": 52,
+    "defeatedTotal": 31,
+    "defeatedBasis": "all enemies, including continuous tricklers"
+   },
+   "orders": [],
+   "needsRider": false,
+   "seams": [
+    {
+     "id": "gold-seam-1",
+     "active": true,
+     "remaining": 30,
+     "x": -9,
+     "z": 6.7,
+     "anchorIndex": 1
+    },
+    {
+     "id": "gold-seam-2",
+     "active": true,
+     "remaining": 30,
+     "x": 18,
+     "z": -7,
+     "anchorIndex": 4
+    },
+    {
+     "id": "gold-seam-3",
+     "active": true,
+     "remaining": 30,
+     "x": 25,
+     "z": 6.9,
+     "anchorIndex": 5
+    },
+    {
+     "id": "gold-seam-4",
+     "active": false,
+     "remaining": 30,
+     "x": null,
+     "z": null,
+     "anchorIndex": null
+    },
+    {
+     "id": "gold-seam-5",
+     "active": false,
+     "remaining": 30,
+     "x": null,
+     "z": null,
+     "anchorIndex": null
+    },
+    {
+     "id": "gold-seam-6",
+     "active": false,
+     "remaining": 30,
+     "x": null,
+     "z": null,
+     "anchorIndex": null
+    }
+   ],
+   "score": {
+    "wavesSurvived": 3,
+    "goldPanned": 0,
+    "goldPannedByProspector": 0,
+    "goldStolen": 0,
+    "goldReclaimed": 0,
+    "goldReclaimedByProspector": 0,
+    "buildingsBuilt": 0
+   },
+   "canyonConnect": {
+    "powered": 0,
+    "required": 1,
+    "byWave": 12,
+    "complete": false,
+    "failed": false
+   }
+  },
+  "almanac": {
+   "label": "the Almanac reckons",
+   "estimate": true,
+   "nextWave": {
+    "wave": 4,
+    "arrivalInSeconds": 29.97,
+    "basis": "estimated-from-wave-schedule",
+    "composition": [
+     {
+      "id": "moth_swarm",
+      "label": "Fever Moths",
+      "count": 9
+     },
+     {
+      "id": "night_runner",
+      "label": "Fevered Runner",
+      "count": 3
+     },
+     {
+      "id": "fevered_saboteur",
+      "label": "Corridor Saboteur",
+      "count": 3
+     }
+    ],
+    "compositionScope": "wave-horn packs only; continuous tricklers are additional",
+    "continuousTrickle": {
+     "currentIntervalSeconds": 1.881,
+     "includedInComposition": false,
+     "includedInDefeatedTotal": true
+    }
+   },
+   "projection": {
+    "expectedLeaks": 0,
+    "expectedWorksDamage": 0,
+    "expectedGold": 55.83,
+    "currentWorks": 1,
+    "harnessHash": "fnv1a32:8da70331"
+   }
+  }
+ },
+ {
+  "schema": "goldrush.view.v1",
+  "viewVersion": 2,
+  "stablePrefix": {
+   "seed": "e3-moth-season-01",
+   "contract": {
+    "id": "e3-moth-season",
+    "name": "Moth Season",
+    "briefing": {
+     "geography": "Two lit yards flank one unlit north-south corridor, wired dynamo to pylon to gallery lamp.",
+     "goals": [
+      "Hold through wave 12 while the decoy shed draws the migration.",
+      "CONNECT the corridor gallery to the dynamo by wave 12."
+     ],
+     "rules": [
+      "Moths choose light by radius; the Decoy Shed counts double and takes 6 damage per attached swarm each second.",
+      "Darkness is a road: non-moths move 12% faster outside light below 35% coverage.",
+      "The cycle stays at night, easing only through two-second dusks.",
+      "The corridor lamp runs on the dynamo's current: a Sentry Beacon raised on the CORRIDOR PYLON SITE closes the span, and a wrecked beacon cuts it and puts the lamp out.",
+      "REPAIR the beacon to relight the corridor; a corridor that never carried current by wave 12 cannot be secured at any wave."
+     ]
+    }
+   },
+   "mechanics": {
+    "schema": "goldrush.mechanics.v1",
+    "contractId": "e3-moth-season",
+    "buildables": [
+     {
+      "id": "sentry_beacon",
+      "operation": "BUILD",
+      "meaning": "Lights the dark and slows what it touches; radius 8wu.",
+      "cost": 25,
+      "costs": [
+       25,
+       35,
+       45,
+       55,
+       75,
+       95
+      ],
+      "costRule": "ceil-to-5",
+      "maxCount": 6,
+      "source": "buildables.registry"
+     },
+     {
+      "id": "palisade",
+      "operation": "BUILD",
+      "meaning": "Timber that holds. Bandits break it before you.",
+      "cost": 10,
+      "costs": [
+       10,
+       10,
+       10,
+       10,
+       10,
+       10
+      ],
+      "maxCount": 48,
+      "source": "buildables.registry"
+     },
+     {
+      "id": "sluice",
+      "operation": "BUILD",
+      "meaning": "Works the river for you: 3g per cycle beside water.",
+      "cost": 40,
+      "costs": [
+       40,
+       40,
+       40
+      ],
+      "maxCount": 3,
+      "source": "buildables.registry"
+     },
+     {
+      "id": "stockpile",
+      "operation": "BUILD",
+      "meaning": "Holds +150 gold above the pan cap.",
+      "cost": 60,
+      "costs": [
+       60,
+       60
+      ],
+      "maxCount": 2,
+      "source": "buildables.registry"
+     },
+     {
+      "id": "assay_office",
+      "operation": "BUILD",
+      "meaning": "Write orders; the town's craftsmen answer. One per claim.",
+      "cost": 80,
+      "costs": [
+       80
+      ],
+      "maxCount": 1,
+      "source": "buildables.registry"
+     },
+     {
+      "id": "decoy_shed",
+      "operation": "BUILD",
+      "meaning": "Light radius 11 with target weight 2; takes 6 damage per attached swarm each second.",
+      "cost": 20,
+      "costs": [
+       20,
+       20,
+       20
+      ],
+      "maxCount": 3,
+      "source": "twist.mothSeason"
+     }
+    ],
+    "interactables": [
+     {
+      "id": "lantern_post",
+      "count": 1,
+      "operations": [],
+      "source": "tileParams.prePlacedBuildables"
+     }
+    ],
+    "rules": [
+     {
+      "id": "build_zones",
+      "source": "tileParams.buildZones",
+      "data": {
+       "count": 3,
+       "banks": [
+        "north"
+       ]
+      }
+     },
+     {
+      "id": "connect_objective",
+      "source": "Game.syncCanyonConnectObjective",
+      "data": {
+       "consumerRole": "gallery",
+       "poweredState": "powered",
+       "required": 1,
+       "byWave": 12,
+       "completionLatch": "one-way-at-or-before-deadline",
+       "failureLatch": "one-way-after-deadline",
+       "missedDeadline": "run-unsecurable"
+      }
+     },
+     {
+      "id": "locked_night",
+      "source": "DayNightCycle.sample",
+      "data": {
+       "periodSeconds": 24,
+       "duskRampSeconds": 2,
+       "dawnRampSeconds": 2,
+       "nightDepth": 1,
+       "minimumDarkness": 0.75,
+       "phases": [
+        "dusk",
+        "dark",
+        "dawn"
+       ],
+       "fullLight": false
+      }
+     },
+     {
+      "id": "moth_attachment",
+      "source": "MothSwarm.update+dimSources",
+      "data": {
+       "damageTarget": "decoy_shed",
+       "damagePerAttachedPerSecond": 6,
+       "radiusLossPerAttached": 0.3,
+       "minimumRadiusMultiplier": 0.35
+      }
+     },
+     {
+      "id": "moth_targeting",
+      "source": "MothSwarm.update",
+      "data": {
+       "score": "coverageAt(source.x,source.z) * source.radius * radiusWeight * (source.targetWeight ?? 1)",
+       "radiusWeight": 1,
+       "defaultTargetWeight": 1,
+       "decoyTargetWeight": 2,
+       "selection": "highest-score",
+       "tieBreak": "ascending-source-id"
+      }
+     },
+     {
+      "id": "moth_wave",
+      "source": "Game.spawnMothSeasonWave",
+      "data": {
+       "lightKinds": [
+        "lantern",
+        "powered-lamp"
+       ],
+       "mothsBaselinePerWave": 4,
+       "mothsPerLightPerWave": 1,
+       "minimumDarkness": 0.5,
+       "count": "max(mothsBaselinePerWave,floor(lightSources)*mothsPerLightPerWave)"
+      }
+     }
+    ],
+    "modes": [],
+    "posting": {
+     "waves": [
+      {
+       "event": "secure",
+       "wave": 12,
+       "source": "twist.secureWave"
+      }
+     ],
+     "spawnEdges": [
+      "north",
+      "south"
+     ],
+     "lossStakes": []
+    }
+   },
+   "map": {
+    "claim": {
+     "x": 0,
+     "z": 12
+    },
+    "seams": [
+     {
+      "id": "gold-seam-1",
+      "x": -22,
+      "z": -6.8
+     },
+     {
+      "id": "gold-seam-2",
+      "x": -9,
+      "z": 6.7
+     },
+     {
+      "id": "gold-seam-3",
+      "x": -1.5,
+      "z": -6.4
+     },
+     {
+      "id": "gold-seam-4",
+      "x": 7.5,
+      "z": 6.5
+     },
+     {
+      "id": "gold-seam-5",
+      "x": 18,
+      "z": -7
+     },
+     {
+      "id": "gold-seam-6",
+      "x": 25,
+      "z": 6.9
+     }
+    ],
+    "coalSeams": [],
+    "water": {
+     "river": false,
+     "ford": false,
+     "sources": 0,
+     "descriptor": null
+    },
+    "spawnGates": [
+     {
+      "edge": "north"
+     },
+     {
+      "edge": "south"
+     }
+    ]
+   },
+   "orders": []
+  },
+  "appendLog": [
+   {
+    "wave": 1,
+    "outcome": "held",
+    "goldDelta": 0,
+    "worksHp": {
+     "current": 35,
+     "max": 35,
+     "delta": 0
+    },
+    "kills": 11,
+    "surprises": []
+   },
+   {
+    "wave": 2,
+    "outcome": "held",
+    "goldDelta": 0,
+    "worksHp": {
+     "current": 35,
+     "max": 35,
+     "delta": 0
+    },
+    "kills": 16,
+    "surprises": []
+   }
+  ],
+  "now": {
+   "wave": 3,
+   "blastReadyInMs": 0,
+   "weapon": "rig",
+   "timers": {
+    "runSeconds": 93.1,
+    "nextWaveInSeconds": 26.9
+   },
+   "gold": 0,
+   "hero": {
+    "hp": 84,
+    "maxHp": 100,
+    "x": 0,
+    "z": 12,
+    "level": 2,
+    "upgradesTaken": {},
+    "upgradeChoiceRule": "first-offer"
+   },
+   "prospector": {
+    "x": -1.84,
+    "z": 10.68
+   },
+   "works": {
+    "hp": 35,
+    "maxHp": 35,
+    "standing": 1,
+    "wrecked": 0,
+    "byKind": {
+     "lantern_post": 1
+    },
+    "entries": [
+     {
+      "id": "lantern_post",
+      "index": 0,
+      "tier": 1,
+      "hp": 35,
+      "maxHp": 35,
+      "wrecked": false,
+      "position": {
+       "x": 0,
+       "z": 6
+      }
+     }
+    ]
+   },
+   "threats": {
+    "alive": 27,
+    "state": "active",
+    "edge": "south",
+    "thieves": 0,
+    "wreckers": 0,
+    "spawnedTotal": 52,
+    "defeatedTotal": 37,
+    "defeatedBasis": "all enemies, including continuous tricklers"
+   },
+   "orders": [],
+   "needsRider": false,
+   "seams": [
+    {
+     "id": "gold-seam-1",
+     "active": true,
+     "remaining": 30,
+     "x": -9,
+     "z": 6.7,
+     "anchorIndex": 1
+    },
+    {
+     "id": "gold-seam-2",
+     "active": true,
+     "remaining": 30,
+     "x": 18,
+     "z": -7,
+     "anchorIndex": 4
+    },
+    {
+     "id": "gold-seam-3",
+     "active": true,
+     "remaining": 30,
+     "x": 25,
+     "z": 6.9,
+     "anchorIndex": 5
+    },
+    {
+     "id": "gold-seam-4",
+     "active": false,
+     "remaining": 30,
+     "x": null,
+     "z": null,
+     "anchorIndex": null
+    },
+    {
+     "id": "gold-seam-5",
+     "active": false,
+     "remaining": 30,
+     "x": null,
+     "z": null,
+     "anchorIndex": null
+    },
+    {
+     "id": "gold-seam-6",
+     "active": false,
+     "remaining": 30,
+     "x": null,
+     "z": null,
+     "anchorIndex": null
+    }
+   ],
+   "score": {
+    "wavesSurvived": 3,
+    "goldPanned": 0,
+    "goldPannedByProspector": 0,
+    "goldStolen": 0,
+    "goldReclaimed": 0,
+    "goldReclaimedByProspector": 0,
+    "buildingsBuilt": 0
+   },
+   "canyonConnect": {
+    "powered": 0,
+    "required": 1,
+    "byWave": 12,
+    "complete": false,
+    "failed": false
+   },
+   "pendingOffer": [
+    {
+     "id": "double_tap_coil",
+     "name": "Double-Tap Coil",
+     "effectText": "+25% fire rate"
+    },
+    {
+     "id": "split_spark",
+     "name": "Split Spark",
+     "effectText": "+1 spark per volley"
+    },
+    {
+     "id": "heavy_spark",
+     "name": "Heavy Spark Charge",
+     "effectText": "+30% spark damage"
+    }
+   ],
+   "expiresAtSimMs": 113100
+  },
+  "almanac": {
+   "label": "the Almanac reckons",
+   "estimate": true,
+   "nextWave": {
+    "wave": 4,
+    "arrivalInSeconds": 26.9,
+    "basis": "estimated-from-wave-schedule",
+    "composition": [
+     {
+      "id": "moth_swarm",
+      "label": "Fever Moths",
+      "count": 9
+     },
+     {
+      "id": "night_runner",
+      "label": "Fevered Runner",
+      "count": 3
+     },
+     {
+      "id": "fevered_saboteur",
+      "label": "Corridor Saboteur",
+      "count": 3
+     }
+    ],
+    "compositionScope": "wave-horn packs only; continuous tricklers are additional",
+    "continuousTrickle": {
+     "currentIntervalSeconds": 1.881,
+     "includedInComposition": false,
+     "includedInDefeatedTotal": true
+    }
+   },
+   "projection": {
+    "expectedLeaks": 0,
+    "expectedWorksDamage": 0,
+    "expectedGold": 55.83,
+    "currentWorks": 1,
+    "harnessHash": "fnv1a32:8da70331"
+   }
+  }
+ },
+ {
+  "schema": "goldrush.view.v1",
+  "viewVersion": 2,
+  "stablePrefix": {
+   "seed": "e3-moth-season-01",
+   "contract": {
+    "id": "e3-moth-season",
+    "name": "Moth Season",
+    "briefing": {
+     "geography": "Two lit yards flank one unlit north-south corridor, wired dynamo to pylon to gallery lamp.",
+     "goals": [
+      "Hold through wave 12 while the decoy shed draws the migration.",
+      "CONNECT the corridor gallery to the dynamo by wave 12."
+     ],
+     "rules": [
+      "Moths choose light by radius; the Decoy Shed counts double and takes 6 damage per attached swarm each second.",
+      "Darkness is a road: non-moths move 12% faster outside light below 35% coverage.",
+      "The cycle stays at night, easing only through two-second dusks.",
+      "The corridor lamp runs on the dynamo's current: a Sentry Beacon raised on the CORRIDOR PYLON SITE closes the span, and a wrecked beacon cuts it and puts the lamp out.",
+      "REPAIR the beacon to relight the corridor; a corridor that never carried current by wave 12 cannot be secured at any wave."
+     ]
+    }
+   },
+   "mechanics": {
+    "schema": "goldrush.mechanics.v1",
+    "contractId": "e3-moth-season",
+    "buildables": [
+     {
+      "id": "sentry_beacon",
+      "operation": "BUILD",
+      "meaning": "Lights the dark and slows what it touches; radius 8wu.",
+      "cost": 25,
+      "costs": [
+       25,
+       35,
+       45,
+       55,
+       75,
+       95
+      ],
+      "costRule": "ceil-to-5",
+      "maxCount": 6,
+      "source": "buildables.registry"
+     },
+     {
+      "id": "palisade",
+      "operation": "BUILD",
+      "meaning": "Timber that holds. Bandits break it before you.",
+      "cost": 10,
+      "costs": [
+       10,
+       10,
+       10,
+       10,
+       10,
+       10
+      ],
+      "maxCount": 48,
+      "source": "buildables.registry"
+     },
+     {
+      "id": "sluice",
+      "operation": "BUILD",
+      "meaning": "Works the river for you: 3g per cycle beside water.",
+      "cost": 40,
+      "costs": [
+       40,
+       40,
+       40
+      ],
+      "maxCount": 3,
+      "source": "buildables.registry"
+     },
+     {
+      "id": "stockpile",
+      "operation": "BUILD",
+      "meaning": "Holds +150 gold above the pan cap.",
+      "cost": 60,
+      "costs": [
+       60,
+       60
+      ],
+      "maxCount": 2,
+      "source": "buildables.registry"
+     },
+     {
+      "id": "assay_office",
+      "operation": "BUILD",
+      "meaning": "Write orders; the town's craftsmen answer. One per claim.",
+      "cost": 80,
+      "costs": [
+       80
+      ],
+      "maxCount": 1,
+      "source": "buildables.registry"
+     },
+     {
+      "id": "decoy_shed",
+      "operation": "BUILD",
+      "meaning": "Light radius 11 with target weight 2; takes 6 damage per attached swarm each second.",
+      "cost": 20,
+      "costs": [
+       20,
+       20,
+       20
+      ],
+      "maxCount": 3,
+      "source": "twist.mothSeason"
+     }
+    ],
+    "interactables": [
+     {
+      "id": "lantern_post",
+      "count": 1,
+      "operations": [],
+      "source": "tileParams.prePlacedBuildables"
+     }
+    ],
+    "rules": [
+     {
+      "id": "build_zones",
+      "source": "tileParams.buildZones",
+      "data": {
+       "count": 3,
+       "banks": [
+        "north"
+       ]
+      }
+     },
+     {
+      "id": "connect_objective",
+      "source": "Game.syncCanyonConnectObjective",
+      "data": {
+       "consumerRole": "gallery",
+       "poweredState": "powered",
+       "required": 1,
+       "byWave": 12,
+       "completionLatch": "one-way-at-or-before-deadline",
+       "failureLatch": "one-way-after-deadline",
+       "missedDeadline": "run-unsecurable"
+      }
+     },
+     {
+      "id": "locked_night",
+      "source": "DayNightCycle.sample",
+      "data": {
+       "periodSeconds": 24,
+       "duskRampSeconds": 2,
+       "dawnRampSeconds": 2,
+       "nightDepth": 1,
+       "minimumDarkness": 0.75,
+       "phases": [
+        "dusk",
+        "dark",
+        "dawn"
+       ],
+       "fullLight": false
+      }
+     },
+     {
+      "id": "moth_attachment",
+      "source": "MothSwarm.update+dimSources",
+      "data": {
+       "damageTarget": "decoy_shed",
+       "damagePerAttachedPerSecond": 6,
+       "radiusLossPerAttached": 0.3,
+       "minimumRadiusMultiplier": 0.35
+      }
+     },
+     {
+      "id": "moth_targeting",
+      "source": "MothSwarm.update",
+      "data": {
+       "score": "coverageAt(source.x,source.z) * source.radius * radiusWeight * (source.targetWeight ?? 1)",
+       "radiusWeight": 1,
+       "defaultTargetWeight": 1,
+       "decoyTargetWeight": 2,
+       "selection": "highest-score",
+       "tieBreak": "ascending-source-id"
+      }
+     },
+     {
+      "id": "moth_wave",
+      "source": "Game.spawnMothSeasonWave",
+      "data": {
+       "lightKinds": [
+        "lantern",
+        "powered-lamp"
+       ],
+       "mothsBaselinePerWave": 4,
+       "mothsPerLightPerWave": 1,
+       "minimumDarkness": 0.5,
+       "count": "max(mothsBaselinePerWave,floor(lightSources)*mothsPerLightPerWave)"
+      }
+     }
+    ],
+    "modes": [],
+    "posting": {
+     "waves": [
+      {
+       "event": "secure",
+       "wave": 12,
+       "source": "twist.secureWave"
+      }
+     ],
+     "spawnEdges": [
+      "north",
+      "south"
+     ],
+     "lossStakes": []
+    }
+   },
+   "map": {
+    "claim": {
+     "x": 0,
+     "z": 12
+    },
+    "seams": [
+     {
+      "id": "gold-seam-1",
+      "x": -22,
+      "z": -6.8
+     },
+     {
+      "id": "gold-seam-2",
+      "x": -9,
+      "z": 6.7
+     },
+     {
+      "id": "gold-seam-3",
+      "x": -1.5,
+      "z": -6.4
+     },
+     {
+      "id": "gold-seam-4",
+      "x": 7.5,
+      "z": 6.5
+     },
+     {
+      "id": "gold-seam-5",
+      "x": 18,
+      "z": -7
+     },
+     {
+      "id": "gold-seam-6",
+      "x": 25,
+      "z": 6.9
+     }
+    ],
+    "coalSeams": [],
+    "water": {
+     "river": false,
+     "ford": false,
+     "sources": 0,
+     "descriptor": null
+    },
+    "spawnGates": [
+     {
+      "edge": "north"
+     },
+     {
+      "edge": "south"
+     }
+    ]
+   },
+   "orders": []
+  },
+  "appendLog": [
+   {
+    "wave": 1,
+    "outcome": "held",
+    "goldDelta": 0,
+    "worksHp": {
+     "current": 35,
+     "max": 35,
+     "delta": 0
+    },
+    "kills": 11,
+    "surprises": []
+   },
+   {
+    "wave": 2,
+    "outcome": "held",
+    "goldDelta": 0,
+    "worksHp": {
+     "current": 35,
+     "max": 35,
+     "delta": 0
+    },
+    "kills": 16,
+    "surprises": []
+   }
+  ],
+  "now": {
+   "wave": 3,
+   "blastReadyInMs": 0,
+   "weapon": "rig",
+   "timers": {
+    "runSeconds": 113.1,
+    "nextWaveInSeconds": 6.9
+   },
+   "gold": 0,
+   "hero": {
+    "hp": 20,
+    "maxHp": 100,
+    "x": 0,
+    "z": 12,
+    "level": 3,
+    "upgradesTaken": {
+     "double_tap_coil": 1
+    },
+    "upgradeChoiceRule": "first-offer"
+   },
+   "prospector": {
+    "x": -1.78,
+    "z": 10.65
+   },
+   "works": {
+    "hp": 35,
+    "maxHp": 35,
+    "standing": 1,
+    "wrecked": 0,
+    "byKind": {
+     "lantern_post": 1
+    },
+    "entries": [
+     {
+      "id": "lantern_post",
+      "index": 0,
+      "tier": 1,
+      "hp": 35,
+      "maxHp": 35,
+      "wrecked": false,
+      "position": {
+       "x": 0,
+       "z": 6
+      }
+     }
+    ]
+   },
+   "threats": {
+    "alive": 29,
+    "state": "active",
+    "edge": "south",
+    "thieves": 0,
+    "wreckers": 0,
+    "spawnedTotal": 66,
+    "defeatedTotal": 49,
+    "defeatedBasis": "all enemies, including continuous tricklers"
+   },
+   "orders": [],
+   "needsRider": false,
+   "seams": [
+    {
+     "id": "gold-seam-1",
+     "active": true,
+     "remaining": 30,
+     "x": -9,
+     "z": 6.7,
+     "anchorIndex": 1
+    },
+    {
+     "id": "gold-seam-2",
+     "active": true,
+     "remaining": 30,
+     "x": 18,
+     "z": -7,
+     "anchorIndex": 4
+    },
+    {
+     "id": "gold-seam-3",
+     "active": true,
+     "remaining": 30,
+     "x": 25,
+     "z": 6.9,
+     "anchorIndex": 5
+    },
+    {
+     "id": "gold-seam-4",
+     "active": false,
+     "remaining": 30,
+     "x": null,
+     "z": null,
+     "anchorIndex": null
+    },
+    {
+     "id": "gold-seam-5",
+     "active": false,
+     "remaining": 30,
+     "x": null,
+     "z": null,
+     "anchorIndex": null
+    },
+    {
+     "id": "gold-seam-6",
+     "active": false,
+     "remaining": 30,
+     "x": null,
+     "z": null,
+     "anchorIndex": null
+    }
+   ],
+   "score": {
+    "wavesSurvived": 3,
+    "goldPanned": 0,
+    "goldPannedByProspector": 0,
+    "goldStolen": 0,
+    "goldReclaimed": 0,
+    "goldReclaimedByProspector": 0,
+    "buildingsBuilt": 0
+   },
+   "canyonConnect": {
+    "powered": 0,
+    "required": 1,
+    "byWave": 12,
+    "complete": false,
+    "failed": false
+   },
+   "pendingOffer": [
+    {
+     "id": "prospectors_luck",
+     "name": "Prospector's Luck",
+     "effectText": "+10 gold per seam, -5s seam respawn"
+    },
+    {
+     "id": "spring_heels",
+     "name": "Spring Heels",
+     "effectText": "+12% move speed"
+    },
+    {
+     "id": "pan_legend",
+     "name": "Pan Like a Legend",
+     "effectText": "30% faster panning"
+    }
+   ],
+   "expiresAtSimMs": 133100
+  },
+  "almanac": {
+   "label": "the Almanac reckons",
+   "estimate": true,
+   "nextWave": {
+    "wave": 4,
+    "arrivalInSeconds": 6.9,
+    "basis": "estimated-from-wave-schedule",
+    "composition": [
+     {
+      "id": "moth_swarm",
+      "label": "Fever Moths",
+      "count": 9
+     },
+     {
+      "id": "night_runner",
+      "label": "Fevered Runner",
+      "count": 3
+     },
+     {
+      "id": "fevered_saboteur",
+      "label": "Corridor Saboteur",
+      "count": 3
+     }
+    ],
+    "compositionScope": "wave-horn packs only; continuous tricklers are additional",
+    "continuousTrickle": {
+     "currentIntervalSeconds": 1.77,
+     "includedInComposition": false,
+     "includedInDefeatedTotal": true
+    }
+   },
+   "projection": {
+    "expectedLeaks": 0,
+    "expectedWorksDamage": 0,
+    "expectedGold": 55.83,
+    "currentWorks": 1,
+    "harnessHash": "fnv1a32:65155e4d"
+   }
+  }
+ },
+ {
+  "schema": "goldrush.view.v1",
+  "viewVersion": 2,
+  "stablePrefix": {
+   "seed": "e3-moth-season-01",
+   "contract": {
+    "id": "e3-moth-season",
+    "name": "Moth Season",
+    "briefing": {
+     "geography": "Two lit yards flank one unlit north-south corridor, wired dynamo to pylon to gallery lamp.",
+     "goals": [
+      "Hold through wave 12 while the decoy shed draws the migration.",
+      "CONNECT the corridor gallery to the dynamo by wave 12."
+     ],
+     "rules": [
+      "Moths choose light by radius; the Decoy Shed counts double and takes 6 damage per attached swarm each second.",
+      "Darkness is a road: non-moths move 12% faster outside light below 35% coverage.",
+      "The cycle stays at night, easing only through two-second dusks.",
+      "The corridor lamp runs on the dynamo's current: a Sentry Beacon raised on the CORRIDOR PYLON SITE closes the span, and a wrecked beacon cuts it and puts the lamp out.",
+      "REPAIR the beacon to relight the corridor; a corridor that never carried current by wave 12 cannot be secured at any wave."
+     ]
+    }
+   },
+   "mechanics": {
+    "schema": "goldrush.mechanics.v1",
+    "contractId": "e3-moth-season",
+    "buildables": [
+     {
+      "id": "sentry_beacon",
+      "operation": "BUILD",
+      "meaning": "Lights the dark and slows what it touches; radius 8wu.",
+      "cost": 25,
+      "costs": [
+       25,
+       35,
+       45,
+       55,
+       75,
+       95
+      ],
+      "costRule": "ceil-to-5",
+      "maxCount": 6,
+      "source": "buildables.registry"
+     },
+     {
+      "id": "palisade",
+      "operation": "BUILD",
+      "meaning": "Timber that holds. Bandits break it before you.",
+      "cost": 10,
+      "costs": [
+       10,
+       10,
+       10,
+       10,
+       10,
+       10
+      ],
+      "maxCount": 48,
+      "source": "buildables.registry"
+     },
+     {
+      "id": "sluice",
+      "operation": "BUILD",
+      "meaning": "Works the river for you: 3g per cycle beside water.",
+      "cost": 40,
+      "costs": [
+       40,
+       40,
+       40
+      ],
+      "maxCount": 3,
+      "source": "buildables.registry"
+     },
+     {
+      "id": "stockpile",
+      "operation": "BUILD",
+      "meaning": "Holds +150 gold above the pan cap.",
+      "cost": 60,
+      "costs": [
+       60,
+       60
+      ],
+      "maxCount": 2,
+      "source": "buildables.registry"
+     },
+     {
+      "id": "assay_office",
+      "operation": "BUILD",
+      "meaning": "Write orders; the town's craftsmen answer. One per claim.",
+      "cost": 80,
+      "costs": [
+       80
+      ],
+      "maxCount": 1,
+      "source": "buildables.registry"
+     },
+     {
+      "id": "decoy_shed",
+      "operation": "BUILD",
+      "meaning": "Light radius 11 with target weight 2; takes 6 damage per attached swarm each second.",
+      "cost": 20,
+      "costs": [
+       20,
+       20,
+       20
+      ],
+      "maxCount": 3,
+      "source": "twist.mothSeason"
+     }
+    ],
+    "interactables": [
+     {
+      "id": "lantern_post",
+      "count": 1,
+      "operations": [],
+      "source": "tileParams.prePlacedBuildables"
+     }
+    ],
+    "rules": [
+     {
+      "id": "build_zones",
+      "source": "tileParams.buildZones",
+      "data": {
+       "count": 3,
+       "banks": [
+        "north"
+       ]
+      }
+     },
+     {
+      "id": "connect_objective",
+      "source": "Game.syncCanyonConnectObjective",
+      "data": {
+       "consumerRole": "gallery",
+       "poweredState": "powered",
+       "required": 1,
+       "byWave": 12,
+       "completionLatch": "one-way-at-or-before-deadline",
+       "failureLatch": "one-way-after-deadline",
+       "missedDeadline": "run-unsecurable"
+      }
+     },
+     {
+      "id": "locked_night",
+      "source": "DayNightCycle.sample",
+      "data": {
+       "periodSeconds": 24,
+       "duskRampSeconds": 2,
+       "dawnRampSeconds": 2,
+       "nightDepth": 1,
+       "minimumDarkness": 0.75,
+       "phases": [
+        "dusk",
+        "dark",
+        "dawn"
+       ],
+       "fullLight": false
+      }
+     },
+     {
+      "id": "moth_attachment",
+      "source": "MothSwarm.update+dimSources",
+      "data": {
+       "damageTarget": "decoy_shed",
+       "damagePerAttachedPerSecond": 6,
+       "radiusLossPerAttached": 0.3,
+       "minimumRadiusMultiplier": 0.35
+      }
+     },
+     {
+      "id": "moth_targeting",
+      "source": "MothSwarm.update",
+      "data": {
+       "score": "coverageAt(source.x,source.z) * source.radius * radiusWeight * (source.targetWeight ?? 1)",
+       "radiusWeight": 1,
+       "defaultTargetWeight": 1,
+       "decoyTargetWeight": 2,
+       "selection": "highest-score",
+       "tieBreak": "ascending-source-id"
+      }
+     },
+     {
+      "id": "moth_wave",
+      "source": "Game.spawnMothSeasonWave",
+      "data": {
+       "lightKinds": [
+        "lantern",
+        "powered-lamp"
+       ],
+       "mothsBaselinePerWave": 4,
+       "mothsPerLightPerWave": 1,
+       "minimumDarkness": 0.5,
+       "count": "max(mothsBaselinePerWave,floor(lightSources)*mothsPerLightPerWave)"
+      }
+     }
+    ],
+    "modes": [],
+    "posting": {
+     "waves": [
+      {
+       "event": "secure",
+       "wave": 12,
+       "source": "twist.secureWave"
+      }
+     ],
+     "spawnEdges": [
+      "north",
+      "south"
+     ],
+     "lossStakes": []
+    }
+   },
+   "map": {
+    "claim": {
+     "x": 0,
+     "z": 12
+    },
+    "seams": [
+     {
+      "id": "gold-seam-1",
+      "x": -22,
+      "z": -6.8
+     },
+     {
+      "id": "gold-seam-2",
+      "x": -9,
+      "z": 6.7
+     },
+     {
+      "id": "gold-seam-3",
+      "x": -1.5,
+      "z": -6.4
+     },
+     {
+      "id": "gold-seam-4",
+      "x": 7.5,
+      "z": 6.5
+     },
+     {
+      "id": "gold-seam-5",
+      "x": 18,
+      "z": -7
+     },
+     {
+      "id": "gold-seam-6",
+      "x": 25,
+      "z": 6.9
+     }
+    ],
+    "coalSeams": [],
+    "water": {
+     "river": false,
+     "ford": false,
+     "sources": 0,
+     "descriptor": null
+    },
+    "spawnGates": [
+     {
+      "edge": "north"
+     },
+     {
+      "edge": "south"
+     }
+    ]
+   },
+   "orders": []
+  },
+  "appendLog": [
+   {
+    "wave": 1,
+    "outcome": "held",
+    "goldDelta": 0,
+    "worksHp": {
+     "current": 35,
+     "max": 35,
+     "delta": 0
+    },
+    "kills": 11,
+    "surprises": []
+   },
+   {
+    "wave": 2,
+    "outcome": "held",
+    "goldDelta": 0,
+    "worksHp": {
+     "current": 35,
+     "max": 35,
+     "delta": 0
+    },
+    "kills": 16,
+    "surprises": []
+   },
+   {
+    "wave": 3,
+    "outcome": "held",
+    "goldDelta": 0,
+    "worksHp": {
+     "current": 35,
+     "max": 35,
+     "delta": 0
+    },
+    "kills": 21,
+    "surprises": []
+   }
+  ],
+  "now": {
+   "wave": 4,
+   "blastReadyInMs": 0,
+   "weapon": "rig",
+   "timers": {
+    "runSeconds": 120.03,
+    "nextWaveInSeconds": 29.97
+   },
+   "gold": 0,
+   "hero": {
+    "hp": 12,
+    "maxHp": 100,
+    "x": 0,
+    "z": 12,
+    "level": 3,
+    "upgradesTaken": {
+     "double_tap_coil": 1
+    },
+    "upgradeChoiceRule": "first-offer"
+   },
+   "prospector": {
+    "x": -1.98,
+    "z": 10.89
+   },
+   "works": {
+    "hp": 35,
+    "maxHp": 35,
+    "standing": 1,
+    "wrecked": 0,
+    "byKind": {
+     "lantern_post": 1
+    },
+    "entries": [
+     {
+      "id": "lantern_post",
+      "index": 0,
+      "tier": 1,
+      "hp": 35,
+      "maxHp": 35,
+      "wrecked": false,
+      "position": {
+       "x": 0,
+       "z": 6
+      }
+     }
+    ]
+   },
+   "threats": {
+    "alive": 42,
+    "state": "warning",
+    "edge": "north",
+    "thieves": 0,
+    "wreckers": 2,
+    "spawnedTotal": 78,
+    "defeatedTotal": 52,
+    "defeatedBasis": "all enemies, including continuous tricklers"
+   },
+   "orders": [],
+   "needsRider": false,
+   "seams": [
+    {
+     "id": "gold-seam-1",
+     "active": true,
+     "remaining": 30,
+     "x": -9,
+     "z": 6.7,
+     "anchorIndex": 1
+    },
+    {
+     "id": "gold-seam-2",
+     "active": true,
+     "remaining": 30,
+     "x": 18,
+     "z": -7,
+     "anchorIndex": 4
+    },
+    {
+     "id": "gold-seam-3",
+     "active": true,
+     "remaining": 30,
+     "x": 25,
+     "z": 6.9,
+     "anchorIndex": 5
+    },
+    {
+     "id": "gold-seam-4",
+     "active": false,
+     "remaining": 30,
+     "x": null,
+     "z": null,
+     "anchorIndex": null
+    },
+    {
+     "id": "gold-seam-5",
+     "active": false,
+     "remaining": 30,
+     "x": null,
+     "z": null,
+     "anchorIndex": null
+    },
+    {
+     "id": "gold-seam-6",
+     "active": false,
+     "remaining": 30,
+     "x": null,
+     "z": null,
+     "anchorIndex": null
+    }
+   ],
+   "score": {
+    "wavesSurvived": 4,
+    "goldPanned": 0,
+    "goldPannedByProspector": 0,
+    "goldStolen": 0,
+    "goldReclaimed": 0,
+    "goldReclaimedByProspector": 0,
+    "buildingsBuilt": 0
+   },
+   "canyonConnect": {
+    "powered": 0,
+    "required": 1,
+    "byWave": 12,
+    "complete": false,
+    "failed": false
+   },
+   "pendingOffer": [
+    {
+     "id": "prospectors_luck",
+     "name": "Prospector's Luck",
+     "effectText": "+10 gold per seam, -5s seam respawn"
+    },
+    {
+     "id": "spring_heels",
+     "name": "Spring Heels",
+     "effectText": "+12% move speed"
+    },
+    {
+     "id": "pan_legend",
+     "name": "Pan Like a Legend",
+     "effectText": "30% faster panning"
+    }
+   ],
+   "expiresAtSimMs": 133100
+  },
+  "almanac": {
+   "label": "the Almanac reckons",
+   "estimate": true,
+   "nextWave": {
+    "wave": 5,
+    "arrivalInSeconds": 29.97,
+    "basis": "estimated-from-wave-schedule",
+    "composition": [
+     {
+      "id": "moth_swarm",
+      "label": "Fever Moths",
+      "count": 11
+     },
+     {
+      "id": "night_runner",
+      "label": "Fevered Runner",
+      "count": 4
+     },
+     {
+      "id": "fevered_saboteur",
+      "label": "Corridor Saboteur",
+      "count": 3
+     }
+    ],
+    "compositionScope": "wave-horn packs only; continuous tricklers are additional",
+    "continuousTrickle": {
+     "currentIntervalSeconds": 1.717,
+     "includedInComposition": false,
+     "includedInDefeatedTotal": true
+    }
+   },
+   "projection": {
+    "expectedLeaks": 0,
+    "expectedWorksDamage": 0,
+    "expectedGold": 54.99,
+    "currentWorks": 1,
+    "harnessHash": "fnv1a32:18aea37f"
+   }
+  }
+ },
+ {
+  "schema": "goldrush.view.v1",
+  "viewVersion": 2,
+  "stablePrefix": {
+   "seed": "e3-moth-season-01",
+   "contract": {
+    "id": "e3-moth-season",
+    "name": "Moth Season",
+    "briefing": {
+     "geography": "Two lit yards flank one unlit north-south corridor, wired dynamo to pylon to gallery lamp.",
+     "goals": [
+      "Hold through wave 12 while the decoy shed draws the migration.",
+      "CONNECT the corridor gallery to the dynamo by wave 12."
+     ],
+     "rules": [
+      "Moths choose light by radius; the Decoy Shed counts double and takes 6 damage per attached swarm each second.",
+      "Darkness is a road: non-moths move 12% faster outside light below 35% coverage.",
+      "The cycle stays at night, easing only through two-second dusks.",
+      "The corridor lamp runs on the dynamo's current: a Sentry Beacon raised on the CORRIDOR PYLON SITE closes the span, and a wrecked beacon cuts it and puts the lamp out.",
+      "REPAIR the beacon to relight the corridor; a corridor that never carried current by wave 12 cannot be secured at any wave."
+     ]
+    }
+   },
+   "mechanics": {
+    "schema": "goldrush.mechanics.v1",
+    "contractId": "e3-moth-season",
+    "buildables": [
+     {
+      "id": "sentry_beacon",
+      "operation": "BUILD",
+      "meaning": "Lights the dark and slows what it touches; radius 8wu.",
+      "cost": 25,
+      "costs": [
+       25,
+       35,
+       45,
+       55,
+       75,
+       95
+      ],
+      "costRule": "ceil-to-5",
+      "maxCount": 6,
+      "source": "buildables.registry"
+     },
+     {
+      "id": "palisade",
+      "operation": "BUILD",
+      "meaning": "Timber that holds. Bandits break it before you.",
+      "cost": 10,
+      "costs": [
+       10,
+       10,
+       10,
+       10,
+       10,
+       10
+      ],
+      "maxCount": 48,
+      "source": "buildables.registry"
+     },
+     {
+      "id": "sluice",
+      "operation": "BUILD",
+      "meaning": "Works the river for you: 3g per cycle beside water.",
+      "cost": 40,
+      "costs": [
+       40,
+       40,
+       40
+      ],
+      "maxCount": 3,
+      "source": "buildables.registry"
+     },
+     {
+      "id": "stockpile",
+      "operation": "BUILD",
+      "meaning": "Holds +150 gold above the pan cap.",
+      "cost": 60,
+      "costs": [
+       60,
+       60
+      ],
+      "maxCount": 2,
+      "source": "buildables.registry"
+     },
+     {
+      "id": "assay_office",
+      "operation": "BUILD",
+      "meaning": "Write orders; the town's craftsmen answer. One per claim.",
+      "cost": 80,
+      "costs": [
+       80
+      ],
+      "maxCount": 1,
+      "source": "buildables.registry"
+     },
+     {
+      "id": "decoy_shed",
+      "operation": "BUILD",
+      "meaning": "Light radius 11 with target weight 2; takes 6 damage per attached swarm each second.",
+      "cost": 20,
+      "costs": [
+       20,
+       20,
+       20
+      ],
+      "maxCount": 3,
+      "source": "twist.mothSeason"
+     }
+    ],
+    "interactables": [
+     {
+      "id": "lantern_post",
+      "count": 1,
+      "operations": [],
+      "source": "tileParams.prePlacedBuildables"
+     }
+    ],
+    "rules": [
+     {
+      "id": "build_zones",
+      "source": "tileParams.buildZones",
+      "data": {
+       "count": 3,
+       "banks": [
+        "north"
+       ]
+      }
+     },
+     {
+      "id": "connect_objective",
+      "source": "Game.syncCanyonConnectObjective",
+      "data": {
+       "consumerRole": "gallery",
+       "poweredState": "powered",
+       "required": 1,
+       "byWave": 12,
+       "completionLatch": "one-way-at-or-before-deadline",
+       "failureLatch": "one-way-after-deadline",
+       "missedDeadline": "run-unsecurable"
+      }
+     },
+     {
+      "id": "locked_night",
+      "source": "DayNightCycle.sample",
+      "data": {
+       "periodSeconds": 24,
+       "duskRampSeconds": 2,
+       "dawnRampSeconds": 2,
+       "nightDepth": 1,
+       "minimumDarkness": 0.75,
+       "phases": [
+        "dusk",
+        "dark",
+        "dawn"
+       ],
+       "fullLight": false
+      }
+     },
+     {
+      "id": "moth_attachment",
+      "source": "MothSwarm.update+dimSources",
+      "data": {
+       "damageTarget": "decoy_shed",
+       "damagePerAttachedPerSecond": 6,
+       "radiusLossPerAttached": 0.3,
+       "minimumRadiusMultiplier": 0.35
+      }
+     },
+     {
+      "id": "moth_targeting",
+      "source": "MothSwarm.update",
+      "data": {
+       "score": "coverageAt(source.x,source.z) * source.radius * radiusWeight * (source.targetWeight ?? 1)",
+       "radiusWeight": 1,
+       "defaultTargetWeight": 1,
+       "decoyTargetWeight": 2,
+       "selection": "highest-score",
+       "tieBreak": "ascending-source-id"
+      }
+     },
+     {
+      "id": "moth_wave",
+      "source": "Game.spawnMothSeasonWave",
+      "data": {
+       "lightKinds": [
+        "lantern",
+        "powered-lamp"
+       ],
+       "mothsBaselinePerWave": 4,
+       "mothsPerLightPerWave": 1,
+       "minimumDarkness": 0.5,
+       "count": "max(mothsBaselinePerWave,floor(lightSources)*mothsPerLightPerWave)"
+      }
+     }
+    ],
+    "modes": [],
+    "posting": {
+     "waves": [
+      {
+       "event": "secure",
+       "wave": 12,
+       "source": "twist.secureWave"
+      }
+     ],
+     "spawnEdges": [
+      "north",
+      "south"
+     ],
+     "lossStakes": []
+    }
+   },
+   "map": {
+    "claim": {
+     "x": 0,
+     "z": 12
+    },
+    "seams": [
+     {
+      "id": "gold-seam-1",
+      "x": -22,
+      "z": -6.8
+     },
+     {
+      "id": "gold-seam-2",
+      "x": -9,
+      "z": 6.7
+     },
+     {
+      "id": "gold-seam-3",
+      "x": -1.5,
+      "z": -6.4
+     },
+     {
+      "id": "gold-seam-4",
+      "x": 7.5,
+      "z": 6.5
+     },
+     {
+      "id": "gold-seam-5",
+      "x": 18,
+      "z": -7
+     },
+     {
+      "id": "gold-seam-6",
+      "x": 25,
+      "z": 6.9
+     }
+    ],
+    "coalSeams": [],
+    "water": {
+     "river": false,
+     "ford": false,
+     "sources": 0,
+     "descriptor": null
+    },
+    "spawnGates": [
+     {
+      "edge": "north"
+     },
+     {
+      "edge": "south"
+     }
+    ]
+   },
+   "orders": []
+  },
+  "appendLog": [
+   {
+    "wave": 1,
+    "outcome": "held",
+    "goldDelta": 0,
+    "worksHp": {
+     "current": 35,
+     "max": 35,
+     "delta": 0
+    },
+    "kills": 11,
+    "surprises": []
+   },
+   {
+    "wave": 2,
+    "outcome": "held",
+    "goldDelta": 0,
+    "worksHp": {
+     "current": 35,
+     "max": 35,
+     "delta": 0
+    },
+    "kills": 16,
+    "surprises": []
+   },
+   {
+    "wave": 3,
+    "outcome": "held",
+    "goldDelta": 0,
+    "worksHp": {
+     "current": 35,
+     "max": 35,
+     "delta": 0
+    },
+    "kills": 21,
+    "surprises": []
+   },
+   {
+    "wave": 4,
+    "outcome": "rider-down",
+    "goldDelta": 0,
+    "worksHp": {
+     "current": 35,
+     "max": 35,
+     "delta": 0
+    },
+    "kills": 3,
+    "surprises": [
+     "hero_down"
+    ]
+   }
+  ],
+  "now": {
+   "wave": 4,
+   "blastReadyInMs": 0,
+   "weapon": "rig",
+   "timers": {
+    "runSeconds": 122.5,
+    "nextWaveInSeconds": 27.5
+   },
+   "gold": 0,
+   "hero": {
+    "hp": 0,
+    "maxHp": 100,
+    "x": 0,
+    "z": 12,
+    "level": 3,
+    "upgradesTaken": {
+     "double_tap_coil": 1
+    },
+    "upgradeChoiceRule": "first-offer"
+   },
+   "prospector": {
+    "x": -1.62,
+    "z": 10.89
+   },
+   "works": {
+    "hp": 35,
+    "maxHp": 35,
+    "standing": 1,
+    "wrecked": 0,
+    "byKind": {
+     "lantern_post": 1
+    },
+    "entries": [
+     {
+      "id": "lantern_post",
+      "index": 0,
+      "tier": 1,
+      "hp": 35,
+      "maxHp": 35,
+      "wrecked": false,
+      "position": {
+       "x": 0,
+       "z": 6
+      }
+     }
+    ]
+   },
+   "threats": {
+    "alive": 39,
+    "state": "active",
+    "edge": "north",
+    "thieves": 0,
+    "wreckers": 2,
+    "spawnedTotal": 78,
+    "defeatedTotal": 55,
+    "defeatedBasis": "all enemies, including continuous tricklers"
+   },
+   "orders": [],
+   "needsRider": true,
+   "seams": [
+    {
+     "id": "gold-seam-1",
+     "active": true,
+     "remaining": 30,
+     "x": -9,
+     "z": 6.7,
+     "anchorIndex": 1
+    },
+    {
+     "id": "gold-seam-2",
+     "active": true,
+     "remaining": 30,
+     "x": 18,
+     "z": -7,
+     "anchorIndex": 4
+    },
+    {
+     "id": "gold-seam-3",
+     "active": true,
+     "remaining": 30,
+     "x": 25,
+     "z": 6.9,
+     "anchorIndex": 5
+    },
+    {
+     "id": "gold-seam-4",
+     "active": false,
+     "remaining": 30,
+     "x": null,
+     "z": null,
+     "anchorIndex": null
+    },
+    {
+     "id": "gold-seam-5",
+     "active": false,
+     "remaining": 30,
+     "x": null,
+     "z": null,
+     "anchorIndex": null
+    },
+    {
+     "id": "gold-seam-6",
+     "active": false,
+     "remaining": 30,
+     "x": null,
+     "z": null,
+     "anchorIndex": null
+    }
+   ],
+   "score": {
+    "wavesSurvived": 4,
+    "goldPanned": 0,
+    "goldPannedByProspector": 0,
+    "goldStolen": 0,
+    "goldReclaimed": 0,
+    "goldReclaimedByProspector": 0,
+    "buildingsBuilt": 0
+   },
+   "canyonConnect": {
+    "powered": 0,
+    "required": 1,
+    "byWave": 12,
+    "complete": false,
+    "failed": false
+   },
+   "pendingOffer": [
+    {
+     "id": "prospectors_luck",
+     "name": "Prospector's Luck",
+     "effectText": "+10 gold per seam, -5s seam respawn"
+    },
+    {
+     "id": "spring_heels",
+     "name": "Spring Heels",
+     "effectText": "+12% move speed"
+    },
+    {
+     "id": "pan_legend",
+     "name": "Pan Like a Legend",
+     "effectText": "30% faster panning"
+    }
+   ],
+   "expiresAtSimMs": 133100
+  },
+  "almanac": {
+   "label": "the Almanac reckons",
+   "estimate": true,
+   "nextWave": {
+    "wave": 5,
+    "arrivalInSeconds": 27.5,
+    "basis": "estimated-from-wave-schedule",
+    "composition": [
+     {
+      "id": "moth_swarm",
+      "label": "Fever Moths",
+      "count": 11
+     },
+     {
+      "id": "night_runner",
+      "label": "Fevered Runner",
+      "count": 4
+     },
+     {
+      "id": "fevered_saboteur",
+      "label": "Corridor Saboteur",
+      "count": 3
+     }
+    ],
+    "compositionScope": "wave-horn packs only; continuous tricklers are additional",
+    "continuousTrickle": {
+     "currentIntervalSeconds": 1.717,
+     "includedInComposition": false,
+     "includedInDefeatedTotal": true
+    }
+   },
+   "projection": {
+    "expectedLeaks": 0,
+    "expectedWorksDamage": 0,
+    "expectedGold": 54.99,
+    "currentWorks": 1,
+    "harnessHash": "fnv1a32:18aea37f"
+   }
+  }
+ }
+]

@@ -1,0 +1,74 @@
+[WebServer] (node:45298) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 2 tests using 1 worker
+
+(node:45299) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[f1575-1-sweep] tickDelta=25 driftAbs=0.20359273071502354 gapClosed=0.17194550679238318
+[f1575-1-sweep] tickDelta=30 driftAbs=0.3319051069206375 gapClosed=0.3154255792991414
+[f1575-1-sweep] tickDelta=35 driftAbs=0.40261768465878334 gapClosed=0.39121221047789945
+[f1575-1-sweep] tickDelta=40 driftAbs=0.461322013348594 gapClosed=0.45310304792749534
+[f1575-1-sweep] tickDelta=42 driftAbs=0.461322013348594 gapClosed=0.45310304792749534
+[f1575-1-sweep] tickDelta=44 driftAbs=0.461322013348594 gapClosed=0.45310304792749534
+[f1575-1-sweep] tickDelta=46 driftAbs=0.461322013348594 gapClosed=0.45310304792749534
+[f1575-1-sweep] tickDelta=48 driftAbs=0.5188679986277817 gapClosed=0.5131417828300266
+[f1575-1-sweep] tickDelta=49 driftAbs=0.5188679986277817 gapClosed=0.5131417828300266
+[f1575-1-sweep] tickDelta=51 driftAbs=0.5188679986277817 gapClosed=0.5131417828300266
+[f1575-1-sweep] tickDelta=52 driftAbs=0.5188679986277817 gapClosed=0.5131417828300266
+[f1575-1-sweep] tickDelta=54 driftAbs=0.5188679986277817 gapClosed=0.5131417828300266
+[f1575-1-sweep] tickDelta=55 driftAbs=0.5188679986277817 gapClosed=0.5131417828300266
+[f1575-1-sweep] tickDelta=57 driftAbs=0.5188679986277817 gapClosed=0.5131417828300266
+[f1575-1-sweep] tickDelta=59 driftAbs=0.5188679986277817 gapClosed=0.5131417828300266
+[f1575-1-sweep] tickDelta=61 driftAbs=0.4966326610282496 gapClosed=0.49002120154370843
+[f1575-1-sweep] tickDelta=62 driftAbs=0.4966326610282496 gapClosed=0.49002120154370843
+[f1575-1-sweep] tickDelta=64 driftAbs=0.4387539173614295 gapClosed=0.429494725544167
+[f1575-1-sweep] tickDelta=66 driftAbs=0.4387539173614295 gapClosed=0.429494725544167
+[f1575-1-sweep] tickDelta=67 driftAbs=0.4387539173614295 gapClosed=0.429494725544167
+[f1575-1-sweep] tickDelta=68 driftAbs=0.4387539173614295 gapClosed=0.429494725544167
+[f1575-1-sweep] tickDelta=69 driftAbs=0.4387539173614295 gapClosed=0.429494725544167
+[f1575-1-sweep] tickDelta=71 driftAbs=0.37407619544686377 gapClosed=0.3608983899420153
+[f1575-1-sweep] tickDelta=75 driftAbs=0.3008920072052433 gapClosed=0.28151651752283513
+[f1575-1-sweep] tickDelta=76 driftAbs=0.3008920072052433 gapClosed=0.28151651752283513
+[f1575-1-sweep] tickDelta=78 driftAbs=0.3008920072052433 gapClosed=0.28151651752283513
+[f1575-1-sweep] tickDelta=79 driftAbs=0.3008920072052433 gapClosed=0.28151651752283513
+[f1575-1-sweep] tickDelta=83 driftAbs=0.23300643767930504 gapClosed=0.20554812585918825
+[f1575-1-sweep] tickDelta=85 driftAbs=0.16714065932620992 gapClosed=0.12844158867502742
+[f1575-1-sweep] tickDelta=86 driftAbs=0.16714065932620992 gapClosed=0.12844158867502742
+  ✓  1 [desktop-chrome] › e2e/f1575-1-drift-tick-budget.spec.ts:19:1 › maps denied-receipt drift against the actual simulation tick (2.9s)
+  ✘  2 [desktop-chrome] › e2e/f1575-1-drift-tick-budget.spec.ts:60:1 › maps denied-receipt drift at fixed start phases (3.4s)
+
+
+  1) [desktop-chrome] › e2e/f1575-1-drift-tick-budget.spec.ts:60:1 › maps denied-receipt drift at fixed start phases 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 3
+
+       98 |       const driftAbs = distance(sample.position, before.position);
+       99 |       const gapClosed = distance(before.position, node!.position) - distance(sample.position, node!.position);
+    > 100 |       expect(sample.simTick - before.simTick).toBe(tickDelta);
+          |                                               ^
+      101 |       console.log(`[f1577-3-sweep] tickBefore=${before.simTick} tickDelta=${tickDelta} driftAbs=${driftAbs} gapClosed=${gapClosed}`);
+      102 |     }
+      103 |   }
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/f1575-1-drift-tick-budget.spec.ts:100:47
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/f1575-1-drift-tick-budget--bed02-drift-at-fixed-start-phases-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/f1575-1-drift-tick-budget--bed02-drift-at-fixed-start-phases-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/f1575-1-drift-tick-budget--bed02-drift-at-fixed-start-phases-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/f1575-1-drift-tick-budget--bed02-drift-at-fixed-start-phases-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [desktop-chrome] › e2e/f1575-1-drift-tick-budget.spec.ts:60:1 › maps denied-receipt drift at fixed start phases 
+  1 passed (8.8s)

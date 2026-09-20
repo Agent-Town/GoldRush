@@ -1,0 +1,27 @@
+
+=== 1 finish-ride ===
+{"rig":"opus","contract":"e1-night-shift","wall":831,"wallHit":false,"rc":0,"tracked":[],"files":16,"outcome":{"secured":false,"waves":23,"gold":116,"runsSoFar":4,"scoredAttempts":1,"tape":"/tmp/heat13-569a41f9/artifacts/heat13/opus/e1-night-shift/tune-2-tape.json","worldModel":"sim-import"},"scoredTapes":[{"file":"attempt-1-tape.json","id":"agent-af1b6e7d-1e0bef05-1fd0-4ddc-803e-2ce83efe37e6","secured":false,"waves":23,"gold":14,"durationTicks":21022,"lastEntryTick":21011,"promotedByRig":false,"discoveredBy":"filename"},{"file":"tune-2-tape.json","id":"agent-98cd41c5-a116fdbf-342a-4bf8-a509-cbebd0d2e854","secured":false,"waves":23,"gold":116,"durationTicks":21133,"lastEntryTick":21132,"promotedByRig":true,"discoveredBy":"outcome-file"}],"otherSecured":[],"reportSections":{"outcome":831,"whatTheMapAsked":3126,"winnability":1607,"lessons":4505},"usage":{"turns":43,"toolCalls":24,"tokensIn":86,"tokensOut":93735}}
+
+=== NOT SECURED — nothing to submit ===
+{
+ "rig": "opus",
+ "contract": "e1-night-shift",
+ "wall": 831,
+ "wallHit": false,
+ "rc": 0,
+ "scoredTapes": [
+  {
+   "file": "attempt-1-tape.json",
+   "secured": false,
+   "waves": 23,
+   "gold": 14
+  },
+  {
+   "file": "tune-2-tape.json",
+   "secured": false,
+   "waves": 23,
+   "gold": 116
+  }
+ ],
+ "outcomeNote": "NOT SECURED - nothing is put forward. Best run of the heat is tune-2 (w23/704.433s), 45.6s short of the wave-25 dawn at t=750. The scored attempt (attempt-1-tape.json, w23/700.733s) is not secured either and is not promoted; the tape field names the BEST run, which is the honest row. No submission."
+}

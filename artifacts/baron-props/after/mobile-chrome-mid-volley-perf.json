@@ -1,0 +1,95 @@
+{
+  "stage": "../baron-props/after",
+  "viewport": {
+    "width": 390,
+    "height": 844
+  },
+  "p95Ms": 9.9,
+  "medianMs": 8.3,
+  "frames": 180,
+  "drawCalls": 77,
+  "peakDrawCalls": 81,
+  "triangles": 112090,
+  "volleys": 3,
+  "windows": [
+    17.6,
+    9.6,
+    9.9
+  ],
+  "volleyVfx": {
+    "airborne": {
+      "tracers": {
+        "active": 3,
+        "capacity": 16,
+        "spawned": 3
+      },
+      "rockets": {
+        "active": 3,
+        "capacity": 16,
+        "modelReady": true
+      },
+      "rings": {
+        "active": 0,
+        "capacity": 8,
+        "spawned": 0
+      },
+      "wisps": {
+        "active": 0,
+        "capacity": 8,
+        "spawned": 0
+      },
+      "detail": true
+    },
+    "landed": {
+      "tracers": {
+        "active": 0,
+        "capacity": 16,
+        "spawned": 3
+      },
+      "rockets": {
+        "active": 0,
+        "capacity": 16,
+        "modelReady": true
+      },
+      "rings": {
+        "active": 3,
+        "capacity": 8,
+        "spawned": 3
+      },
+      "wisps": {
+        "active": 8,
+        "capacity": 8,
+        "spawned": 9
+      },
+      "detail": true
+    },
+    "live": {
+      "tracers": {
+        "active": 3,
+        "capacity": 16,
+        "spawned": 12
+      },
+      "rockets": {
+        "active": 3,
+        "capacity": 16,
+        "modelReady": true
+      },
+      "rings": {
+        "active": 0,
+        "capacity": 8,
+        "spawned": 9
+      },
+      "wisps": {
+        "active": 8,
+        "capacity": 8,
+        "spawned": 27
+      },
+      "detail": true
+    }
+  },
+  "muzzleFlashPool": {
+    "live": 0,
+    "fired": 6,
+    "cap": 6
+  }
+}

@@ -1,0 +1,195 @@
+{
+  "contractId": "e5-deepwater-claim",
+  "tileId": "e5-deepwater-claim",
+  "size": 128,
+  "boat": {
+    "id": "claim-boat",
+    "anchor": {
+      "id": "open-water",
+      "x": -24,
+      "z": 12
+    },
+    "pads": [
+      {
+        "id": "bow",
+        "x": 0,
+        "z": -3,
+        "occupied": false
+      },
+      {
+        "id": "port",
+        "x": -3,
+        "z": 1,
+        "occupied": true
+      },
+      {
+        "id": "starboard",
+        "x": 3,
+        "z": 1,
+        "occupied": false
+      }
+    ],
+    "buildings": [
+      {
+        "buildingId": "turret",
+        "padId": "port",
+        "x": -27,
+        "z": 13
+      }
+    ]
+  },
+  "storm": {
+    "time": 32,
+    "weather": {
+      "era": 5,
+      "contractId": "e5-deepwater-claim",
+      "phase": "storm",
+      "phaseProgress": 0,
+      "cycle": 1,
+      "simTime": 32,
+      "movementMultiplier": 0.72,
+      "visibilityMultiplier": 0.58,
+      "hazeColor": "#335f64",
+      "hazeStrength": 0.28,
+      "warning": false
+    },
+    "frontX": -64,
+    "waves": [
+      {
+        "wave": 1,
+        "cycle": 0,
+        "scheduledAt": 8,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64
+      },
+      {
+        "wave": 2,
+        "cycle": 1,
+        "scheduledAt": 32,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64
+      }
+    ]
+  },
+  "corsairWaves": [
+    {
+      "wave": 1,
+      "cycle": 0,
+      "scheduledAt": 8,
+      "direction": "west-to-east",
+      "fromX": -64,
+      "toX": 64,
+      "enemies": [
+        {
+          "id": "corsair-skiff-1-1",
+          "unitClass": "vehicle",
+          "vehicleChassis": "e4-hauler",
+          "travelClass": "boat",
+          "art": "placeholder",
+          "waterRegionId": "open-water",
+          "x": -62,
+          "z": -6
+        },
+        {
+          "id": "corsair-skiff-1-2",
+          "unitClass": "vehicle",
+          "vehicleChassis": "e4-hauler",
+          "travelClass": "boat",
+          "art": "placeholder",
+          "waterRegionId": "open-water",
+          "x": -62,
+          "z": 0
+        },
+        {
+          "id": "corsair-skiff-1-3",
+          "unitClass": "vehicle",
+          "vehicleChassis": "e4-hauler",
+          "travelClass": "boat",
+          "art": "placeholder",
+          "waterRegionId": "open-water",
+          "x": -62,
+          "z": 6
+        }
+      ]
+    },
+    {
+      "wave": 2,
+      "cycle": 1,
+      "scheduledAt": 32,
+      "direction": "west-to-east",
+      "fromX": -64,
+      "toX": 64,
+      "enemies": [
+        {
+          "id": "corsair-skiff-2-1",
+          "unitClass": "vehicle",
+          "vehicleChassis": "e4-hauler",
+          "travelClass": "boat",
+          "art": "placeholder",
+          "waterRegionId": "open-water",
+          "x": -62,
+          "z": -6
+        },
+        {
+          "id": "corsair-skiff-2-2",
+          "unitClass": "vehicle",
+          "vehicleChassis": "e4-hauler",
+          "travelClass": "boat",
+          "art": "placeholder",
+          "waterRegionId": "open-water",
+          "x": -62,
+          "z": 0
+        },
+        {
+          "id": "corsair-skiff-2-3",
+          "unitClass": "vehicle",
+          "vehicleChassis": "e4-hauler",
+          "travelClass": "boat",
+          "art": "placeholder",
+          "waterRegionId": "open-water",
+          "x": -62,
+          "z": 6
+        }
+      ]
+    }
+  ],
+  "wrecks": [
+    {
+      "id": "w1-supply-barge",
+      "era": "E1",
+      "x": -36,
+      "z": -24,
+      "depthClass": "wreck"
+    },
+    {
+      "id": "w2-locomotive",
+      "era": "E2",
+      "x": -18,
+      "z": -30,
+      "depthClass": "wreck"
+    },
+    {
+      "id": "w3-pylon-barge",
+      "era": "E3",
+      "x": 0,
+      "z": -22,
+      "depthClass": "wreck"
+    },
+    {
+      "id": "w4-land-yacht-sister",
+      "era": "E4",
+      "x": 20,
+      "z": -34,
+      "depthClass": "wreck"
+    },
+    {
+      "id": "w5-mystery-hull",
+      "era": "mystery",
+      "x": 36,
+      "z": -20,
+      "depthClass": "wreck"
+    }
+  ]
+}

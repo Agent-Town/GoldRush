@@ -1,0 +1,13 @@
+{
+  "tool": "native image_gen.imagegen",
+  "date": "2026-09-08",
+  "source": "assets/raw/baron-props-atlas-fidelity-e1.png",
+  "sha256": "ad5b3f8796270420497aadf6c1b837350ad51ddc83e29003ac6b9f6a8939c23c",
+  "originalOutput": "/Users/robin/.codex/generated_images/01a07e5c-52c0-72b1-8b5a-5f3950eeca53/exec-7d3f38e1-f839-422b-acb2-c3b05a1c736e.png",
+  "references": [
+    "assets/pilots/baron-props-3d/baron-props-atlas.png (baseline colour atlas)",
+    "assets/raw/codex-baron-e1.png (style reference)"
+  ],
+  "instructionSummary": "Edit the existing flat five-strip texture atlas, with warm engraved storybook frontier materials matching the Baron illustration. Vertical walnut grain, aged engraved brass, blue-black worn iron, restrained teal glass and ember orange. Flat surface patterns only; no objects, captions or perspective. Replace repeated coarse diagonal pattern with material-specific details.",
+  "packingNote": "Native output was 1254 square and repositioned the strip boundaries. Builder UV regions were fitted inside the actual new strips, then output downsampled to 512. Geometry remains unchanged. Technical roughness/metalness and selective-emission maps are deterministic data derived from the same UV regions, not separately generated artwork. Final data maps pad UV boundaries by four pixels; emission includes a 12% illustrated shadow fill outside full-strength functional teal/ember regions. Existing front launcher-band UVs use teal so the warning remains visible after correcting the mount orientation."
+}

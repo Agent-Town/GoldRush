@@ -1,0 +1,38 @@
+{
+  "baseSha": "d7e429d16e24b88e4e65114752b3b12a96280e3b",
+  "rule": "all boards rendered from current GLBs on the freshly pulled base; no prior PNG is an input",
+  "stateBoundary": "engine idle/cruise/ward are banked siblings; ordinary era-prop manifest has no engine-state selector",
+  "productionAssets": {
+    "assets/pilots/ark-plaza-e10-3d/ark-plaza-e10.glb": "bc4195258c27cd38035eac1c90d495808a2548f63a5bb68b44cfcb0eabf7b720",
+    "assets/pilots/plaza-props-3d/pan_monument.glb": "e86e7cdabd1039434bf7a206487a8bc4f68bc2b19a4d9b255f01476e4929f5c2",
+    "assets/pilots/plaza-props-3d/bridge-school.e10.glb": "4e9eda614d4ec2aad25dbcb326e52e186631333fdc0c1026c4f6c7f109891d4f",
+    "assets/pilots/plaza-props-3d/charter-press.e10.glb": "085a27b10a7907641b1e541ed34dcb2b263aca960d2c453458ac2f653ab12324",
+    "assets/pilots/plaza-props-3d/preserve-rack.e10.glb": "b7c0e62ac2251d0e73dde2a99a28ce61a5f2c46a4daabd9f3aa517cb2c96330d",
+    "assets/pilots/plaza-props-3d/engine-glow-idle.e10.glb": "97efeeaff2c0e197d08ef142e01ced47931b9469b8075cb7b9d3060f57a2a4cc",
+    "assets/pilots/plaza-props-3d/engine-glow-cruise.e10.glb": "039e3dfaf9b5999616d4861f768576be44493f3de2b61aff79ce7bcd857a9446",
+    "assets/pilots/plaza-props-3d/engine-glow-ward.e10.glb": "da00e584ed2323bb3f29b6fd57dab7f5df6eb826f0a6ec4ff03b40ea9fb45ee6",
+    "assets/pilots/plaza-props-3d/era-props-e10-atlas.png": "836559becc44b86ade33c924d83630c8b959336e018482dcfaf3af2d5924f193",
+    "assets/pilots/plaza-props-3d/era-props.e10.json": "678bd51fec871603979f94db55518812cd97cbcef14300703fe0e7dffe7470e6"
+  },
+  "evidenceOnly": [
+    "starfield",
+    "lights",
+    "cameras",
+    "audit floor",
+    "clearance curves",
+    "banked engine-state pack layout"
+  ],
+  "renders": [
+    "artifacts/ark-era-props-e10/renders/ark-e10-functional-props-ab.png",
+    "artifacts/ark-era-props-e10/renders/ark-e10-functional-props-turntable.png",
+    "artifacts/ark-era-props-e10/renders/ark-e10-functional-props-clearance.png",
+    "artifacts/ark-era-props-e10/renders/e10-ark-functional-props-pack.png",
+    "artifacts/ark-era-props-e10/renders/fresh-main-reference-and-e10.png",
+    "artifacts/ark-era-props-e10/renders/ark-e10-before-props.png",
+    "artifacts/ark-era-props-e10/renders/ark-e10-with-functional-props.png",
+    "artifacts/ark-era-props-e10/renders/ark-e10-props-angle-1.png",
+    "artifacts/ark-era-props-e10/renders/ark-e10-props-angle-2.png",
+    "artifacts/ark-era-props-e10/renders/ark-e10-props-angle-3.png",
+    "artifacts/ark-era-props-e10/renders/ark-e10-props-angle-4.png"
+  ]
+}

@@ -1,0 +1,474 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.4.0/bin/node",
+      "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/node_modules/.bin/playwright",
+      "test",
+      "--config",
+      "artifacts/asset-diet-explicit-manifest-2/playwright.preview.config.ts",
+      "--project=desktop-chrome",
+      "--project=mobile-chrome",
+      "--workers=1",
+      "e2e/asset-diet.spec.ts"
+    ],
+    "configFile": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/asset-diet-explicit-manifest-2/playwright.preview.config.ts",
+    "rootDir": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/e2e",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/scripts/external-server-guard.mjs",
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "revision": "8020915cac66e911f4ec78c799775bd4a0961774",
+      "dirty": true,
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/asset-diet-explicit-manifest-2/preview-final-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "revision": "8020915cac66e911f4ec78c799775bd4a0961774",
+          "dirty": true,
+          "actualWorkers": 1
+        },
+        "id": "desktop-chrome",
+        "name": "desktop-chrome",
+        "testDir": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/e2e",
+        "testIgnore": [
+          "**/*.rig.ts",
+          "**/release-build.spec.ts",
+          "**/release-base-path.spec.ts",
+          "**/accounts-sync.spec.ts"
+        ],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/asset-diet-explicit-manifest-2/preview-final-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "revision": "8020915cac66e911f4ec78c799775bd4a0961774",
+          "dirty": true,
+          "actualWorkers": 1
+        },
+        "id": "mobile-chrome",
+        "name": "mobile-chrome",
+        "testDir": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/e2e",
+        "testIgnore": [
+          "**/*.rig.ts",
+          "**/release-build.spec.ts",
+          "**/release-base-path.spec.ts",
+          "**/accounts-sync.spec.ts"
+        ],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/asset-diet-explicit-manifest-2/preview-final-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "revision": "8020915cac66e911f4ec78c799775bd4a0961774",
+          "dirty": true,
+          "actualWorkers": 1
+        },
+        "id": "desktop-webkit",
+        "name": "desktop-webkit",
+        "testDir": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/e2e",
+        "testIgnore": [
+          "**/*.rig.ts",
+          "**/release-build.spec.ts",
+          "**/release-base-path.spec.ts",
+          "**/accounts-sync.spec.ts"
+        ],
+        "testMatch": [
+          "/058-device-tiers\\.spec\\.ts/"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/asset-diet-explicit-manifest-2/preview-final-results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "none",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npx vite preview --host 127.0.0.1 --port 5196 --strictPort",
+      "cwd": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a",
+      "url": "http://127.0.0.1:5196",
+      "reuseExistingServer": false,
+      "timeout": 60000
+    }
+  },
+  "suites": [
+    {
+      "title": "asset-diet.spec.ts",
+      "file": "asset-diet.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "dieted output keeps two terrain census views and town within screenshot tolerance",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 29679,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "watchErrors suppressed 0 known GLTFLoader blob error(s)\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-05T05:11:58.342Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "575f0bedc7de4468fcc1-50a5cfc31af02b4c659b",
+          "file": "asset-diet.spec.ts",
+          "line": 193,
+          "column": 1
+        },
+        {
+          "title": "honest town and claim cues appear while GLBs are throttled and leave at ready",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 31971,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "[asset-diet] desktop-chrome townResponses: 10488378 bytes\n"
+                    },
+                    {
+                      "text": "[asset-diet] desktop-chrome settledTownResponses: 39401027 bytes settleCapHit: true\n"
+                    },
+                    {
+                      "text": "watchErrors suppressed 0 known GLTFLoader blob error(s)\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-05T05:12:28.706Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "575f0bedc7de4468fcc1-bc1d1ff733c185addbd7",
+          "file": "asset-diet.spec.ts",
+          "line": 227,
+          "column": 1
+        },
+        {
+          "title": "town byte budget reports normal and saveData arms by URL",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "timedOut",
+                  "duration": 243229,
+                  "error": {
+                    "message": "\u001b[31mTest timeout of 240000ms exceeded.\u001b[39m",
+                    "stack": "\u001b[31mTest timeout of 240000ms exceeded.\u001b[39m"
+                  },
+                  "errors": [
+                    {
+                      "message": "\u001b[31mTest timeout of 240000ms exceeded.\u001b[39m"
+                    },
+                    {
+                      "message": "Error: End of central directory record signature not found. Either not a zip file, or file is truncated."
+                    }
+                  ],
+                  "stdout": [
+                    {
+                      "text": "normal prefetchWait=false cacheDisabled=false watchErrors suppressed 0 known GLTFLoader blob error(s)\n"
+                    },
+                    {
+                      "text": "normal prefetchWait=false cacheDisabled=true watchErrors suppressed 0 known GLTFLoader blob error(s)\n"
+                    },
+                    {
+                      "text": "normal prefetchWait=true cacheDisabled=false watchErrors suppressed 0 known GLTFLoader blob error(s)\n"
+                    },
+                    {
+                      "text": "normal prefetchWait=true cacheDisabled=true watchErrors suppressed 0 known GLTFLoader blob error(s)\n"
+                    },
+                    {
+                      "text": "normal watchErrors suppressed 0 known GLTFLoader blob error(s)\n"
+                    },
+                    {
+                      "text": "saveData watchErrors suppressed 0 known GLTFLoader blob error(s)\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-05T05:13:00.685Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/asset-diet-explicit-manifest-2/preview-final-results/asset-diet-town-byte-budge-360a8-al-and-saveData-arms-by-URL-desktop-chrome/test-failed-1.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/asset-diet-explicit-manifest-2/preview-final-results/asset-diet-town-byte-budge-360a8-al-and-saveData-arms-by-URL-desktop-chrome/test-failed-3.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/asset-diet-explicit-manifest-2/preview-final-results/asset-diet-town-byte-budge-360a8-al-and-saveData-arms-by-URL-desktop-chrome/test-failed-2.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/asset-diet-explicit-manifest-2/preview-final-results/asset-diet-town-byte-budge-360a8-al-and-saveData-arms-by-URL-desktop-chrome/test-failed-4.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/asset-diet-explicit-manifest-2/preview-final-results/asset-diet-town-byte-budge-360a8-al-and-saveData-arms-by-URL-desktop-chrome/test-failed-5.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/asset-diet-explicit-manifest-2/preview-final-results/asset-diet-town-byte-budge-360a8-al-and-saveData-arms-by-URL-desktop-chrome/test-failed-6.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/asset-diet-explicit-manifest-2/preview-final-results/asset-diet-town-byte-budge-360a8-al-and-saveData-arms-by-URL-desktop-chrome/test-failed-7.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/asset-diet-explicit-manifest-2/preview-final-results/asset-diet-town-byte-budge-360a8-al-and-saveData-arms-by-URL-desktop-chrome/error-context.md"
+                    }
+                  ]
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "575f0bedc7de4468fcc1-674acd2ac0906cb1428b",
+          "file": "asset-diet.spec.ts",
+          "line": 277,
+          "column": 1
+        },
+        {
+          "title": "dieted output keeps two terrain census views and town within screenshot tolerance",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 29052,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "watchErrors suppressed 0 known GLTFLoader blob error(s)\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-05T05:17:24.684Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "575f0bedc7de4468fcc1-ada7f76a237074fee5a7",
+          "file": "asset-diet.spec.ts",
+          "line": 193,
+          "column": 1
+        },
+        {
+          "title": "honest town and claim cues appear while GLBs are throttled and leave at ready",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 38359,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "[asset-diet] mobile-chrome townResponses: 13789335 bytes\n"
+                    },
+                    {
+                      "text": "[asset-diet] mobile-chrome settledTownResponses: 40940103 bytes settleCapHit: true\n"
+                    },
+                    {
+                      "text": "watchErrors suppressed 0 known GLTFLoader blob error(s)\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-05T05:17:54.747Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "575f0bedc7de4468fcc1-933feb7be41302f3b78d",
+          "file": "asset-diet.spec.ts",
+          "line": 227,
+          "column": 1
+        },
+        {
+          "title": "town byte budget reports normal and saveData arms by URL",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 207115,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "normal prefetchWait=false cacheDisabled=false watchErrors suppressed 0 known GLTFLoader blob error(s)\n"
+                    },
+                    {
+                      "text": "normal prefetchWait=false cacheDisabled=true watchErrors suppressed 0 known GLTFLoader blob error(s)\n"
+                    },
+                    {
+                      "text": "normal prefetchWait=true cacheDisabled=false watchErrors suppressed 0 known GLTFLoader blob error(s)\n"
+                    },
+                    {
+                      "text": "normal prefetchWait=true cacheDisabled=true watchErrors suppressed 0 known GLTFLoader blob error(s)\n"
+                    },
+                    {
+                      "text": "normal watchErrors suppressed 0 known GLTFLoader blob error(s)\n"
+                    },
+                    {
+                      "text": "saveData watchErrors suppressed 0 known GLTFLoader blob error(s)\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-05T05:18:33.172Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "575f0bedc7de4468fcc1-504defb5b8d8239a05e2",
+          "file": "asset-diet.spec.ts",
+          "line": 277,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-09-05T05:11:55.121Z",
+    "duration": 606294.9789999999,
+    "expected": 5,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  }
+}

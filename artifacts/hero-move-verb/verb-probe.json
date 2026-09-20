@@ -1,0 +1,197 @@
+{
+  "identical": true,
+  "runs": [
+    {
+      "seed": "the-claim-01",
+      "contract": "the-claim",
+      "exitCode": 0,
+      "outcome": {
+        "secured": false,
+        "waves": 1,
+        "timeMs": 54967,
+        "gold": 30,
+        "kills": 18,
+        "calls": 3,
+        "defaultedPicks": 0,
+        "defaultedSecure": 0,
+        "eventLogHash": "fnv1a32:124fbc50"
+      },
+      "trace": [
+        {
+          "turn": 0,
+          "runSeconds": 0,
+          "hero": {
+            "x": 0,
+            "z": 12
+          },
+          "prospector": {
+            "x": -1.8,
+            "z": 10.93
+          },
+          "moveHero": null,
+          "needsRider": false
+        },
+        {
+          "turn": 1,
+          "runSeconds": 30,
+          "hero": {
+            "x": 0,
+            "z": -5.7
+          },
+          "prospector": {
+            "x": -1.99,
+            "z": -7.12
+          },
+          "moveHero": {
+            "status": "done",
+            "reason": null,
+            "pos": {
+              "x": 0,
+              "z": -6
+            }
+          },
+          "needsRider": false
+        },
+        {
+          "turn": 2,
+          "runSeconds": 49.17,
+          "hero": {
+            "x": 7.85,
+            "z": 9.85
+          },
+          "prospector": {
+            "x": 6.18,
+            "z": 8.77
+          },
+          "moveHero": {
+            "status": "done",
+            "reason": null,
+            "pos": {
+              "x": 8,
+              "z": 10
+            }
+          },
+          "needsRider": false
+        },
+        {
+          "turn": 3,
+          "runSeconds": 54.97,
+          "hero": {
+            "x": 0.21,
+            "z": 11.94
+          },
+          "prospector": {
+            "x": -1.76,
+            "z": 10.53
+          },
+          "moveHero": {
+            "status": "done",
+            "reason": null,
+            "pos": {
+              "x": 0,
+              "z": 12
+            }
+          },
+          "needsRider": true
+        }
+      ],
+      "stderr": "(node:72607) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\ngr-sim speed: 1.86 waves/s\n"
+    },
+    {
+      "seed": "the-claim-01",
+      "contract": "the-claim",
+      "exitCode": 0,
+      "outcome": {
+        "secured": false,
+        "waves": 1,
+        "timeMs": 54967,
+        "gold": 30,
+        "kills": 18,
+        "calls": 3,
+        "defaultedPicks": 0,
+        "defaultedSecure": 0,
+        "eventLogHash": "fnv1a32:124fbc50"
+      },
+      "trace": [
+        {
+          "turn": 0,
+          "runSeconds": 0,
+          "hero": {
+            "x": 0,
+            "z": 12
+          },
+          "prospector": {
+            "x": -1.8,
+            "z": 10.93
+          },
+          "moveHero": null,
+          "needsRider": false
+        },
+        {
+          "turn": 1,
+          "runSeconds": 30,
+          "hero": {
+            "x": 0,
+            "z": -5.7
+          },
+          "prospector": {
+            "x": -1.99,
+            "z": -7.12
+          },
+          "moveHero": {
+            "status": "done",
+            "reason": null,
+            "pos": {
+              "x": 0,
+              "z": -6
+            }
+          },
+          "needsRider": false
+        },
+        {
+          "turn": 2,
+          "runSeconds": 49.17,
+          "hero": {
+            "x": 7.85,
+            "z": 9.85
+          },
+          "prospector": {
+            "x": 6.18,
+            "z": 8.77
+          },
+          "moveHero": {
+            "status": "done",
+            "reason": null,
+            "pos": {
+              "x": 8,
+              "z": 10
+            }
+          },
+          "needsRider": false
+        },
+        {
+          "turn": 3,
+          "runSeconds": 54.97,
+          "hero": {
+            "x": 0.21,
+            "z": 11.94
+          },
+          "prospector": {
+            "x": -1.76,
+            "z": 10.53
+          },
+          "moveHero": {
+            "status": "done",
+            "reason": null,
+            "pos": {
+              "x": 0,
+              "z": 12
+            }
+          },
+          "needsRider": true
+        }
+      ],
+      "stderr": "(node:72726) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\ngr-sim speed: 1.82 waves/s\n"
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+{
+ "secured": true,
+ "waves": 20,
+ "timeMs": 600000,
+ "gold": 328,
+ "kills": 877,
+ "calls": 165,
+ "defaultedPicks": 0,
+ "defaultedSecure": 1,
+ "eventLogHash": "fnv1a32:afadc88b",
+ "tape": "artifacts/heat14/opus/e1-dry-gulch/tune-1-tape.json",
+ "scored": true,
+ "runsSoFar": 3,
+ "scoredAttempts": 2,
+ "worldModel": "sim-import",
+ "contract": "e1-dry-gulch",
+ "seed": "e1-dry-gulch-01",
+ "difficulty": "trail",
+ "note": "PROMOTED BY DECLARATION: tune-1-tape.json is my scored attempt. It secured w20/600.000s/328g on the first controller. attempt-1-tape.json also secured (w20/600.000s/89g) but ranks BELOW it on gold, the only free axis here (waves and timeAlive are pinned by twist.secureWave=20). Submit tune-1.",
+ "envelope": {
+  "durationTicks": 18000,
+  "lastEntryTick": 17980,
+  "entries": 165,
+  "bytes": 605633,
+  "eventLogHash": null
+ },
+ "envelopeCeilings": {
+  "maxTicks": 18002,
+  "maxEntries": 3601,
+  "maxTapeBytes": 1938784
+ },
+ "alternate": {
+  "tape": "attempt-1-tape.json",
+  "outcome": {
+   "secured": true,
+   "waves": 20,
+   "timeMs": 600000,
+   "gold": 89,
+   "kills": 761,
+   "calls": 222,
+   "defaultedPicks": 0,
+   "defaultedSecure": 1,
+   "eventLogHash": "fnv1a32:6f9d42c2"
+  },
+  "envelope": {
+   "durationTicks": 18000,
+   "lastEntryTick": 17463,
+   "entries": 222,
+   "bytes": 810094,
+   "eventLogHash": null
+  }
+ }
+}

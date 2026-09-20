@@ -1,0 +1,19 @@
+**SECURED** on the first scored attempt, and stopped there per the rules.
+
+## Result
+
+| | |
+|---|---|
+| Outcome | **SECURED** — w20 / 600.000 s / 335 g / 82 calls / 928 kills |
+| Tape | `artifacts/heat13/opus/e7-dead-band/attempt-1-tape.json` (declared in `gauntlet-outcome.json`'s `tape` field) |
+| Runs | 3 (idle probe, tune-1, attempt-1) · 1 scored attempt |
+| Assay | replay reproduces the tape's own hash `fnv1a32:b3234ac0` + all four outcome fields; `securedSnapshot.gold` == declared gold |
+| Envelope | 18000 ticks, last order at 17594, 82 entries, 150,576 B — clear on all three axes |
+
+**The era gate:** the Dead Band's `refusal` objective wants a *refused* `PLAYBOOK_USE`. `usePlaybook` asks suppression before the `NOTHING_RECORDED` branch, so one order in the opening array latched it at **t = 0.033 s** with nothing yet demonstrated. The rest was stationary survival.
+
+**The grammar retirement cost me nothing and gave me the win.** On a board where the hero wants to stand still, silence is already a hold — but `MOVE_HERO` is what walks the hero into `CONTEXT_ACTION`'s 1.6-unit interact radius. tune-1 (w19, died 21 s short) parked the hero **1.71 units** from the turret, so every tier-2 upgrade answered `not legal here`; the purse then pinned at the 200 cap, `goldPanned` froze at 870 for 200 seconds, and the hero sat 7.6 units *outside* its own 8-radius beacon ring because its come-home order was stuck behind an eight-deep harvest chain. Fixing the offset to a normalised 0.7, hoisting the return above the tail, and adding an overflow sink took the same policy to w20 with pan 1125 and the hero at 123.8/175.
+
+Two things worth flagging as findings rather than trivia: `REJECTED: ... is not legal here` is a claim about **the body's position**, not about the contract lacking a tier row — I nearly wrote a live 600-gold sink off as absent on the strength of a prior generation's note. And a refused sink looks identical to an absent one in the economy columns; the separator is counting successful executions (`entries.filter(e => e.tier > 1)`), not emissions.
+
+Files are in `/tmp/heat13-569a41f9/artifacts/heat13/opus/e7-dead-band/`: `gauntlet-outcome.json`, `gauntlet-report.md` (with the four verbatim sections), both controllers, per-view JSONL and tables for every run.

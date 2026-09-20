@@ -1,0 +1,637 @@
+{
+  "payloads": [
+    {
+      "text": "Done. I read `public/skill.md`, rode all three contracts up to their attempt caps, preserved the generated tapes, and did not POST standings.\n\nNo secured tapes were produced.\n\nResult file:\n[rider-result.json](/Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-d/artifacts/gauntlet-heat2-20260824/openclaw/rider-result.json)\n\nGenerated rider/helper artifacts are under:\n`/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-d/artifacts/gauntlet-heat2-20260824/openclaw/`\n\nBest terminal outcomes:\n- `the-claim`: wave 3\n- `e1-night-shift`: wave 6\n- `e2-hill-mine`: wave 2\n\nNo deployed worktree edits were made.",
+      "mediaUrl": null
+    },
+    {
+      "text": "⚠️ 🛠️ Bash failed: `node scripts/gr-sim.mjs (in /tmp/heat2-b42c0fbc)`",
+      "mediaUrl": null
+    }
+  ],
+  "meta": {
+    "durationMs": 1141728,
+    "agentMeta": {
+      "sessionId": "heat2-openclaw-20260824",
+      "provider": "openai",
+      "model": "gpt-5.5",
+      "contextTokens": 272000,
+      "agentHarnessId": "codex",
+      "usage": {
+        "input": 1936,
+        "output": 305,
+        "cacheRead": 145792,
+        "total": 148033
+      },
+      "lastCallUsage": {
+        "input": 1936,
+        "output": 305,
+        "cacheRead": 145792,
+        "cacheWrite": 0,
+        "total": 148033
+      },
+      "promptTokens": 147728
+    },
+    "aborted": false,
+    "systemPromptReport": {
+      "source": "run",
+      "generatedAt": 1787554829463,
+      "sessionId": "heat2-openclaw-20260824",
+      "sessionKey": "agent:main:explicit:heat2-openclaw-20260824",
+      "provider": "openai",
+      "model": "gpt-5.5",
+      "workspaceDir": "/Users/robin/.openclaw/workspace",
+      "systemPrompt": {
+        "chars": 25673,
+        "projectContextChars": 0,
+        "nonProjectContextChars": 25673,
+        "hash": "df479bac1e4c1cb291baf35827d3b8be8274d9bf34dc62f36c1b711ee772b055"
+      },
+      "injectedWorkspaceFiles": [
+        {
+          "name": "AGENTS.md",
+          "path": "/Users/robin/.openclaw/workspace/AGENTS.md",
+          "missing": false,
+          "rawChars": 7846,
+          "injectedChars": 7846,
+          "truncated": false
+        },
+        {
+          "name": "SOUL.md",
+          "path": "/Users/robin/.openclaw/workspace/SOUL.md",
+          "missing": false,
+          "rawChars": 2366,
+          "injectedChars": 2366,
+          "truncated": false
+        },
+        {
+          "name": "TOOLS.md",
+          "path": "/Users/robin/.openclaw/workspace/TOOLS.md",
+          "missing": false,
+          "rawChars": 2334,
+          "injectedChars": 2334,
+          "truncated": false
+        },
+        {
+          "name": "IDENTITY.md",
+          "path": "/Users/robin/.openclaw/workspace/IDENTITY.md",
+          "missing": false,
+          "rawChars": 419,
+          "injectedChars": 419,
+          "truncated": false
+        },
+        {
+          "name": "USER.md",
+          "path": "/Users/robin/.openclaw/workspace/USER.md",
+          "missing": false,
+          "rawChars": 639,
+          "injectedChars": 639,
+          "truncated": false
+        },
+        {
+          "name": "MEMORY.md",
+          "path": "/Users/robin/.openclaw/workspace/MEMORY.md",
+          "missing": false,
+          "rawChars": 10172,
+          "injectedChars": 0,
+          "truncated": false
+        }
+      ],
+      "skills": {
+        "promptChars": 10040,
+        "hash": "9363ac7920634efe5abb4272cec778d7bd2fea21ddd651c8b853f1a278419836",
+        "entries": [
+          {
+            "name": "apple-notes",
+            "blockChars": 187
+          },
+          {
+            "name": "apple-reminders",
+            "blockChars": 195
+          },
+          {
+            "name": "blogwatcher",
+            "blockChars": 187
+          },
+          {
+            "name": "browser-automation",
+            "blockChars": 180
+          },
+          {
+            "name": "camsnap",
+            "blockChars": 179
+          },
+          {
+            "name": "close-spec",
+            "blockChars": 155
+          },
+          {
+            "name": "codex",
+            "blockChars": 145
+          },
+          {
+            "name": "coding-agent",
+            "blockChars": 189
+          },
+          {
+            "name": "compare-screenshots",
+            "blockChars": 173
+          },
+          {
+            "name": "contribute-to-eliza",
+            "blockChars": 224
+          },
+          {
+            "name": "diagram-maker",
+            "blockChars": 191
+          },
+          {
+            "name": "eval-skills",
+            "blockChars": 157
+          },
+          {
+            "name": "feature-slicing",
+            "blockChars": 165
+          },
+          {
+            "name": "gh-issues",
+            "blockChars": 183
+          },
+          {
+            "name": "gifgrep",
+            "blockChars": 179
+          },
+          {
+            "name": "github",
+            "blockChars": 177
+          },
+          {
+            "name": "gog",
+            "blockChars": 171
+          },
+          {
+            "name": "healthcheck",
+            "blockChars": 187
+          },
+          {
+            "name": "implement-spec",
+            "blockChars": 163
+          },
+          {
+            "name": "lossless-claw",
+            "blockChars": 170
+          },
+          {
+            "name": "meme-maker",
+            "blockChars": 185
+          },
+          {
+            "name": "node-connect",
+            "blockChars": 189
+          },
+          {
+            "name": "node-inspect-debugger",
+            "blockChars": 207
+          },
+          {
+            "name": "obsidian",
+            "blockChars": 181
+          },
+          {
+            "name": "obsidian-vault-maintainer",
+            "blockChars": 194
+          },
+          {
+            "name": "openai-whisper",
+            "blockChars": 193
+          },
+          {
+            "name": "peekaboo",
+            "blockChars": 181
+          },
+          {
+            "name": "preview-shots",
+            "blockChars": 161
+          },
+          {
+            "name": "python-debugpy",
+            "blockChars": 193
+          },
+          {
+            "name": "refactor-clean",
+            "blockChars": 163
+          },
+          {
+            "name": "renderer",
+            "blockChars": 151
+          },
+          {
+            "name": "screenshot-critique",
+            "blockChars": 173
+          },
+          {
+            "name": "session-logs",
+            "blockChars": 189
+          },
+          {
+            "name": "skill-creator",
+            "blockChars": 191
+          },
+          {
+            "name": "spike",
+            "blockChars": 175
+          },
+          {
+            "name": "summarize",
+            "blockChars": 183
+          },
+          {
+            "name": "taskflow",
+            "blockChars": 181
+          },
+          {
+            "name": "taskflow-inbox-triage",
+            "blockChars": 207
+          },
+          {
+            "name": "threejs-3d-generator",
+            "blockChars": 175
+          },
+          {
+            "name": "threejs-aaa-graphics-builder",
+            "blockChars": 191
+          },
+          {
+            "name": "threejs-audio-generator",
+            "blockChars": 181
+          },
+          {
+            "name": "threejs-debug-profiler",
+            "blockChars": 179
+          },
+          {
+            "name": "threejs-game-director",
+            "blockChars": 177
+          },
+          {
+            "name": "threejs-game-ui-designer",
+            "blockChars": 183
+          },
+          {
+            "name": "threejs-gameplay-systems",
+            "blockChars": 183
+          },
+          {
+            "name": "threejs-image-generator",
+            "blockChars": 181
+          },
+          {
+            "name": "threejs-qa-release",
+            "blockChars": 171
+          },
+          {
+            "name": "video-frames",
+            "blockChars": 189
+          },
+          {
+            "name": "weather",
+            "blockChars": 179
+          },
+          {
+            "name": "wiki-maintainer",
+            "blockChars": 174
+          },
+          {
+            "name": "write-docs",
+            "blockChars": 155
+          },
+          {
+            "name": "write-skills",
+            "blockChars": 159
+          }
+        ]
+      },
+      "tools": {
+        "listChars": 0,
+        "schemaChars": 1287,
+        "entries": [
+          {
+            "name": "agents_list",
+            "summaryChars": 63,
+            "summaryHash": "a7afb8adbaf98833df68160db0677ec2a6bc30b1b96f3592392c9df59e310c65",
+            "schemaChars": 76,
+            "schemaHash": "d746974fa9afd5e951f76f9af38954b0ad7f436f2120dc974da65e5ee39f856f",
+            "propertiesCount": 0
+          },
+          {
+            "name": "sessions_spawn",
+            "summaryChars": 578,
+            "summaryHash": "c75061234ba01a4eb29ca223c1c63a44935e9e555ef2ca280722ba9e844db86d",
+            "schemaChars": 1151,
+            "schemaHash": "5e07e3a617574a8e1ed974ca0857b74a3f98b0ad90a5834e0711de92b3e8f89c",
+            "propertiesCount": 15
+          },
+          {
+            "name": "sessions_yield",
+            "summaryChars": 79,
+            "summaryHash": "f3782fc41c1522657e1d3494f486a2df998fed38a6b89dcf7f6934fb41424320",
+            "schemaChars": 60,
+            "schemaHash": "d803b8cd6aef950bd59c7467fe8ce4d612d0730f5b0270a521b792f7ef6e4550",
+            "propertiesCount": 1
+          },
+          {
+            "name": "nodes",
+            "summaryChars": 143,
+            "summaryHash": "ea1b0a5498ca3c788b26d164245652e1aaa989806e0123715793ab25f9578121",
+            "schemaChars": 0,
+            "schemaHash": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+            "propertiesCount": null
+          },
+          {
+            "name": "cron",
+            "summaryChars": 4062,
+            "summaryHash": "7038f1b185a7cdf7a40525eeca91ed39dfd7bbaf85e89027896af264de54b4d9",
+            "schemaChars": 0,
+            "schemaHash": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+            "propertiesCount": null
+          },
+          {
+            "name": "message",
+            "summaryChars": 124,
+            "summaryHash": "c38f3222b01b681805356600006e43226f57a8e829f716d828a6325b220a6e28",
+            "schemaChars": 0,
+            "schemaHash": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+            "propertiesCount": null
+          },
+          {
+            "name": "tts",
+            "summaryChars": 217,
+            "summaryHash": "652c1970c199d82b61061a40be2adddfc7e5634df5d896d776a8a0047c8a6b75",
+            "schemaChars": 0,
+            "schemaHash": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+            "propertiesCount": null
+          },
+          {
+            "name": "image_generate",
+            "summaryChars": 468,
+            "summaryHash": "d093313d17509b72795516c6ad7c92a9f1e8c7943239d570fd81347dc2557424",
+            "schemaChars": 0,
+            "schemaHash": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+            "propertiesCount": null
+          },
+          {
+            "name": "music_generate",
+            "summaryChars": 524,
+            "summaryHash": "67e4d3d73cbc844f2cc2ffb16cbbe3a6d4a58ec88a8cbe0bd0106515b6fec638",
+            "schemaChars": 0,
+            "schemaHash": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+            "propertiesCount": null
+          },
+          {
+            "name": "video_generate",
+            "summaryChars": 307,
+            "summaryHash": "59fd08c3f2947e0394c7d1aae5219763bf201537bef536228c6c4fd63724e415",
+            "schemaChars": 0,
+            "schemaHash": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+            "propertiesCount": null
+          },
+          {
+            "name": "gateway",
+            "summaryChars": 566,
+            "summaryHash": "1bef48b95fc67d7dc10e2f5f0cc3522951b067b762de6c3e77bc446de0f608b1",
+            "schemaChars": 0,
+            "schemaHash": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+            "propertiesCount": null
+          },
+          {
+            "name": "get_goal",
+            "summaryChars": 71,
+            "summaryHash": "58dea7906d9e17e5f89a75fea24597ee068d8a56af824370dc27f8501374d6e3",
+            "schemaChars": 0,
+            "schemaHash": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+            "propertiesCount": null
+          },
+          {
+            "name": "create_goal",
+            "summaryChars": 155,
+            "summaryHash": "f01e3a63d673a410ba55213ce6bd3fa2b0d2279e8e780c18aa0cb5aa991b29b3",
+            "schemaChars": 0,
+            "schemaHash": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+            "propertiesCount": null
+          },
+          {
+            "name": "update_goal",
+            "summaryChars": 212,
+            "summaryHash": "285201690e5f2456b4cdcd252ff391709b84d69538df61bad694d3c0cfc19958",
+            "schemaChars": 0,
+            "schemaHash": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+            "propertiesCount": null
+          },
+          {
+            "name": "skill_workshop",
+            "summaryChars": 171,
+            "summaryHash": "577c1d2b8f56bf3e9dd5e00463bbce8b8bf4cf201da9b21b588dcaa3bc6ed8cf",
+            "schemaChars": 0,
+            "schemaHash": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+            "propertiesCount": null
+          },
+          {
+            "name": "sessions_list",
+            "summaryChars": 150,
+            "summaryHash": "6991b34a692cbbecc50302184503776bf8d7317b336d649fcd9373beab5473dc",
+            "schemaChars": 0,
+            "schemaHash": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+            "propertiesCount": null
+          },
+          {
+            "name": "sessions_history",
+            "summaryChars": 149,
+            "summaryHash": "09b418c8da696b361c021f66705dab0215a613f6c18a9722767f6129907e0dcd",
+            "schemaChars": 0,
+            "schemaHash": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+            "propertiesCount": null
+          },
+          {
+            "name": "sessions_send",
+            "summaryChars": 282,
+            "summaryHash": "061e9ef3487676bb2a4fd4c0336bd973aaab5eea0725e7443c4cb17518cd1e78",
+            "schemaChars": 0,
+            "schemaHash": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+            "propertiesCount": null
+          },
+          {
+            "name": "subagents",
+            "summaryChars": 132,
+            "summaryHash": "1c2ffd38549c0444b118d43736fc4b875ea1aaabc446bbf8bc1fc4ee9180cca4",
+            "schemaChars": 0,
+            "schemaHash": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+            "propertiesCount": null
+          },
+          {
+            "name": "session_status",
+            "summaryChars": 278,
+            "summaryHash": "71177e543dc6235bad4b1a26761995681dcec27ab58dcb4f4f8a7fc9a7b2b5aa",
+            "schemaChars": 0,
+            "schemaHash": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+            "propertiesCount": null
+          },
+          {
+            "name": "web_fetch",
+            "summaryChars": 93,
+            "summaryHash": "8875afbb51bd63673e5e6836ca31eeda73914a464862665cd73b346e28d28fd5",
+            "schemaChars": 0,
+            "schemaHash": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+            "propertiesCount": null
+          },
+          {
+            "name": "image",
+            "summaryChars": 169,
+            "summaryHash": "a46820ca8952445d3663a8908bfa5d3adddff5b53d18b9d8e9eed8f9e593b494",
+            "schemaChars": 0,
+            "schemaHash": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+            "propertiesCount": null
+          },
+          {
+            "name": "pdf",
+            "summaryChars": 159,
+            "summaryHash": "9f323da0ccbf37f01fff7374ae5cba64b4c05b5f0fc9d982aee7c64040cc61d5",
+            "schemaChars": 0,
+            "schemaHash": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+            "propertiesCount": null
+          },
+          {
+            "name": "browser",
+            "summaryChars": 1546,
+            "summaryHash": "949fb149e0a069b95d9a8e5c89f1ee01ec31390c598611ebd9e4dbaf7c3d010c",
+            "schemaChars": 0,
+            "schemaHash": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+            "propertiesCount": null
+          },
+          {
+            "name": "memory_search",
+            "summaryChars": 605,
+            "summaryHash": "0f918d28864d3682ae77731f149273997c84773592a466b18c7cd0121b599a05",
+            "schemaChars": 0,
+            "schemaHash": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+            "propertiesCount": null
+          },
+          {
+            "name": "memory_get",
+            "summaryChars": 239,
+            "summaryHash": "bff1141a3da31a345c550337417efc9ace4da2909004606c727c59ca1a294495",
+            "schemaChars": 0,
+            "schemaHash": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+            "propertiesCount": null
+          },
+          {
+            "name": "wiki_status",
+            "summaryChars": 82,
+            "summaryHash": "f151a7afc119bd827340b2b3f52b9185d7097fa02da35bb908a016bdd0cea826",
+            "schemaChars": 0,
+            "schemaHash": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+            "propertiesCount": null
+          },
+          {
+            "name": "wiki_lint",
+            "summaryChars": 103,
+            "summaryHash": "24029e5e378d2bbafa37b596d674956c9ffb52e0fae6e8edafbe1dd900b6c5d3",
+            "schemaChars": 0,
+            "schemaHash": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+            "propertiesCount": null
+          },
+          {
+            "name": "wiki_apply",
+            "summaryChars": 94,
+            "summaryHash": "aaa8603326ecb847f6c29a48f60cacbcec7dd3a1bbebb7bc008d5ea7dd8e707c",
+            "schemaChars": 0,
+            "schemaHash": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+            "propertiesCount": null
+          },
+          {
+            "name": "wiki_search",
+            "summaryChars": 112,
+            "summaryHash": "78748f6238d33a0d3ca12867b387ea9c1aaa74b2b65dc6b72411962e51a80571",
+            "schemaChars": 0,
+            "schemaHash": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+            "propertiesCount": null
+          },
+          {
+            "name": "wiki_get",
+            "summaryChars": 112,
+            "summaryHash": "4cf3d6ee3d2c5c636fc1e915f72db55c7bf264defc78a120177c1d5a67064938",
+            "schemaChars": 0,
+            "schemaHash": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+            "propertiesCount": null
+          },
+          {
+            "name": "lcm_grep",
+            "summaryChars": 508,
+            "summaryHash": "affbacbf0f44b3be410376ea0313005f3d1a98c06d60a39b9d73bb8348de5dee",
+            "schemaChars": 0,
+            "schemaHash": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+            "propertiesCount": null
+          },
+          {
+            "name": "lcm_describe",
+            "summaryChars": 552,
+            "summaryHash": "0c891bfc41ce3756fdda1fd121f23c5602ff6c5b2bde2d99d8db60d3d3c58dde",
+            "schemaChars": 0,
+            "schemaHash": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+            "propertiesCount": null
+          },
+          {
+            "name": "lcm_expand",
+            "summaryChars": 415,
+            "summaryHash": "aa164171b38ca575dc4bdf4f24656561da79ce6d789b03188e91780975cac3b6",
+            "schemaChars": 0,
+            "schemaHash": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+            "propertiesCount": null
+          },
+          {
+            "name": "lcm_expand_query",
+            "summaryChars": 316,
+            "summaryHash": "ab77cdbb7a9e756591159e3056051405d8e639f9840e8f611ee999b18efecfe7",
+            "schemaChars": 0,
+            "schemaHash": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+            "propertiesCount": null
+          }
+        ]
+      }
+    },
+    "finalAssistantVisibleText": "Done. I read `public/skill.md`, rode all three contracts up to their attempt caps, preserved the generated tapes, and did not POST standings.\n\nNo secured tapes were produced.\n\nResult file:\n[rider-result.json](/Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-d/artifacts/gauntlet-heat2-20260824/openclaw/rider-result.json)\n\nGenerated rider/helper artifacts are under:\n`/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-d/artifacts/gauntlet-heat2-20260824/openclaw/`\n\nBest terminal outcomes:\n- `the-claim`: wave 3\n- `e1-night-shift`: wave 6\n- `e2-hill-mine`: wave 2\n\nNo deployed worktree edits were made.",
+    "finalAssistantRawText": "Done. I read `public/skill.md`, rode all three contracts up to their attempt caps, preserved the generated tapes, and did not POST standings.\n\nNo secured tapes were produced.\n\nResult file:\n[rider-result.json](/Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-d/artifacts/gauntlet-heat2-20260824/openclaw/rider-result.json)\n\nGenerated rider/helper artifacts are under:\n`/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-d/artifacts/gauntlet-heat2-20260824/openclaw/`\n\nBest terminal outcomes:\n- `the-claim`: wave 3\n- `e1-night-shift`: wave 6\n- `e2-hill-mine`: wave 2\n\nNo deployed worktree edits were made.",
+    "replayInvalid": true,
+    "livenessState": "working",
+    "stopReason": "stop",
+    "executionTrace": {
+      "winnerProvider": "openai",
+      "winnerModel": "gpt-5.5",
+      "attempts": [
+        {
+          "provider": "openai",
+          "model": "gpt-5.5",
+          "result": "success",
+          "stage": "assistant"
+        }
+      ],
+      "fallbackUsed": false,
+      "runner": "embedded"
+    },
+    "requestShaping": {
+      "authMode": "auth-profile",
+      "thinking": "xhigh"
+    },
+    "toolSummary": {
+      "calls": 42,
+      "tools": [
+        "bash",
+        "apply_patch"
+      ],
+      "failures": 1
+    },
+    "completion": {
+      "stopReason": "stop",
+      "finishReason": "stop"
+    }
+  }
+}

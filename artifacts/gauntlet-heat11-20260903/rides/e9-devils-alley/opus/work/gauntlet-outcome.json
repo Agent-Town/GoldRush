@@ -1,0 +1,30 @@
+{
+  "secured": true,
+  "waves": 20,
+  "timeMs": 600000,
+  "gold": 200,
+  "kills": 927,
+  "calls": 53,
+  "defaultedPicks": 0,
+  "defaultedSecure": 1,
+  "eventLogHash": "fnv1a32:bcb9ed0f",
+  "tape": "/private/tmp/heat11-5e7a7c0b/artifacts/heat11/opus/e9-devils-alley/attempt-1-tape.json",
+  "tapeNote": "Byte-identical copy of tune-2.json, the single ride that secured under the silent-secure line. Not a re-ride: one run, two filenames.",
+  "scored": true,
+  "runsSoFar": 3,
+  "scoredAttempts": 1,
+  "worldModel": "sim-import",
+  "reelEnvelope": {
+    "durationTicks": 18000,
+    "maxTicks": 18000,
+    "entries": 53,
+    "maxEntries": 3600,
+    "bytes": 81971,
+    "maxTapeBytes": 592384,
+    "fits": true
+  },
+  "envelopeNote": "tune-1 was the same secure with an explicit SECURE_CHOICE and produced durationTicks 18001 against an 18000 envelope (reel_duration_exceeded). Answering the secure boundary with a blank line takes the bank default, records no entry at tick 18000, and lands durationTicks at exactly 18000.",
+  "tapeEventLogHash": "fnv1a32:687553f2",
+  "tapeId": "agent-9eeef40c-e3247787-f427-482a-be42-f6f11f1663e8",
+  "hashNote": "eventLogHash above is the sim outcome line verbatim; the TAPE carries fnv1a32:687553f2, and the assay replay matches the tape hash (gen-4 lesson)."
+}

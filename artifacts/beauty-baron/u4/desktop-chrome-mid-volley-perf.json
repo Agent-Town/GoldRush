@@ -1,0 +1,80 @@
+{
+  "stage": "u4",
+  "viewport": {
+    "width": 1280,
+    "height": 800
+  },
+  "p95Ms": 10.6,
+  "medianMs": 8.3,
+  "frames": 180,
+  "drawCalls": 107,
+  "peakDrawCalls": 110,
+  "triangles": 113102,
+  "volleys": 3,
+  "windows": [
+    17.7,
+    10.5,
+    10.6
+  ],
+  "volleyVfx": {
+    "airborne": {
+      "tracers": {
+        "active": 0,
+        "capacity": 16,
+        "spawned": 3
+      },
+      "rings": {
+        "active": 0,
+        "capacity": 8,
+        "spawned": 0
+      },
+      "wisps": {
+        "active": 0,
+        "capacity": 8,
+        "spawned": 0
+      },
+      "detail": true
+    },
+    "landed": {
+      "tracers": {
+        "active": 0,
+        "capacity": 16,
+        "spawned": 3
+      },
+      "rings": {
+        "active": 3,
+        "capacity": 8,
+        "spawned": 3
+      },
+      "wisps": {
+        "active": 8,
+        "capacity": 8,
+        "spawned": 9
+      },
+      "detail": true
+    },
+    "live": {
+      "tracers": {
+        "active": 3,
+        "capacity": 16,
+        "spawned": 12
+      },
+      "rings": {
+        "active": 0,
+        "capacity": 8,
+        "spawned": 9
+      },
+      "wisps": {
+        "active": 8,
+        "capacity": 8,
+        "spawned": 27
+      },
+      "detail": true
+    }
+  },
+  "muzzleFlashPool": {
+    "live": 0,
+    "fired": 6,
+    "cap": 6
+  }
+}

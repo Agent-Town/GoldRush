@@ -1,0 +1,35 @@
+{
+  "secured": true,
+  "waves": 20,
+  "timeMs": 600000,
+  "gold": 12,
+  "kills": 205,
+  "calls": 48,
+  "defaultedPicks": 0,
+  "defaultedSecure": 0,
+  "eventLogHash": "fnv1a32:0c6075eb",
+  "tape": "/tmp/heat11-5e7a7c0b/artifacts/heat11/opus/e1-dry-gulch/attempt-1-tape.json",
+  "scored": true,
+  "runsSoFar": 3,
+  "scoredAttempts": 1,
+  "worldModel": "sim-import",
+  "contract": "e1-dry-gulch",
+  "seed": "e1-dry-gulch-01",
+  "seedMode": "bench",
+  "difficulty": "trail",
+  "epochId": "epoch-1-frontier",
+  "tapeEventLogHash": "fnv1a32:7d56d649",
+  "engineHash": "a607a81f44e10dc2b2262682c1e116c15917edffeeaa0c5909f383ccea5d8e04",
+  "era": 5,
+  "viewVersion": 1,
+  "determinismCheck": {
+    "note": "attempt-1 is a re-ride of the identical controller that first secured as tune-1; both tapes agree.",
+    "tapes": [
+      "/tmp/heat11-5e7a7c0b/artifacts/heat11/opus/e1-dry-gulch/tune-1-tape.json",
+      "/tmp/heat11-5e7a7c0b/artifacts/heat11/opus/e1-dry-gulch/attempt-1-tape.json"
+    ],
+    "eventLogHashMatch": true,
+    "inputLogIdentical": true,
+    "entries": 48
+  }
+}

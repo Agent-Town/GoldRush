@@ -1,0 +1,33 @@
+
+> gold-rush@0.1.0 test:stats
+> node scripts/test-stats.mjs && node scripts/test-standings.mjs && node scripts/test-ledger-worker.mjs
+
+stats worker checks passed (87)
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: contract clock census is pinned
++ actual - expected
+
+  {
++   derived: 25,
++   explicit: 17,
+-   derived: 24,
+-   explicit: 18,
+    missing: 0,
+    total: 42
+  }
+
+    at equal (file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-maps/scripts/test-standings.mjs:1449:10)
+    at checkDoorEnvelopes (file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-maps/scripts/test-standings.mjs:693:3)
+    at file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-maps/scripts/test-standings.mjs:47:11 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: { total: 42, derived: 25, explicit: 17, missing: 0 },
+  expected: { total: 42, derived: 24, explicit: 18, missing: 0 },
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}
+
+Node.js v26.4.0

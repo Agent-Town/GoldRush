@@ -1,0 +1,179 @@
+{
+  "rig": "opus",
+  "contract": "e2-hill-mine",
+  "model": "claude-opus-5",
+  "sessionId": "d7547652-f836-4226-a455-a22d2246d86f",
+  "startedAt": "2026-09-18T08:19:10.787Z",
+  "endedAt": "2026-09-18T08:35:08.132Z",
+  "wallClockSeconds": 957,
+  "wallHit": false,
+  "exitCode": 0,
+  "signal": null,
+  "setupToFirstOutputSeconds": 255,
+  "arenaTrackedChanges": [],
+  "workspaceFiles": [
+    "attempt-1-summary.json",
+    "attempt-1-table.json",
+    "attempt-1-tape.json",
+    "attempt-1-views.jsonl",
+    "ctrl-v1.mjs",
+    "ctrl-v2.mjs",
+    "gauntlet-outcome.json",
+    "gauntlet-report.md",
+    "probe-summary.json",
+    "probe-table.json",
+    "probe-tape.json",
+    "probe-views.jsonl",
+    "runner.mjs",
+    "tune-1-summary.json",
+    "tune-1-table.json",
+    "tune-1-tape.json",
+    "tune-1-views.jsonl"
+  ],
+  "outcome": {
+    "secured": false,
+    "waves": 13,
+    "timeMs": 391600,
+    "gold": 89,
+    "kills": 399,
+    "calls": 100,
+    "defaultedPicks": 0,
+    "defaultedSecure": 0,
+    "eventLogHash": "fnv1a32:82997d04",
+    "tape": "/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/heat14/opus/e2-hill-mine/tune-1-tape.json",
+    "scored": false,
+    "runsSoFar": 3,
+    "scoredAttempts": 1,
+    "worldModel": "sim-import",
+    "envelope": {
+      "durationTicks": 11748,
+      "lastEntryTick": 11700,
+      "entries": 100,
+      "bytes": 363332
+    },
+    "submit": false,
+    "submitNote": "NOT SECURED - nothing is put forward. Best of 3 runs is tune-1 (w13/391.600s/89g). The one scored attempt (attempt-1, w11/341.533s/0g) was a measured regression: the north-face timber shield held 13 works with 0 ever wrecked, and the same wall penned the hero in (UNREACHABLE_APPROACH on the kite leg).",
+    "runs": [
+      {
+        "label": "probe",
+        "secured": false,
+        "waves": 2,
+        "timeMs": 72467,
+        "note": "idle; reproduces null-floors.json byte for byte (fnv1a32:658e852a)"
+      },
+      {
+        "label": "tune-1",
+        "secured": false,
+        "waves": 13,
+        "timeMs": 391600,
+        "gold": 89,
+        "note": "BEST; skeleton; perfect fort to w11, 464->194 worksHp in w12"
+      },
+      {
+        "label": "attempt-1",
+        "secured": false,
+        "waves": 11,
+        "timeMs": 341533,
+        "gold": 0,
+        "scored": true,
+        "note": "timber shield: 13 standing / 0 wrecked, but walled the hero in"
+      }
+    ]
+  },
+  "outcomeError": null,
+  "promotedTapeName": "tune-1-tape.json",
+  "scoredTapes": [
+    {
+      "file": "attempt-1-tape.json",
+      "id": "agent-f378831f-48078c09-83e8-49a1-9e9a-de89b81a8fca",
+      "contract": "e2-hill-mine",
+      "seed": "e2-hill-mine-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "9ae706c49",
+        "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+        "era": 6,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 11,
+        "timeAlive": 341.533,
+        "gold": 0
+      },
+      "entries": 125,
+      "durationTicks": 10246,
+      "lastEntryTick": 10243,
+      "promotedByRig": false,
+      "discoveredBy": "filename"
+    },
+    {
+      "file": "tune-1-tape.json",
+      "id": "agent-765f7566-ec392b32-97c0-478c-9808-d301f796bfbd",
+      "contract": "e2-hill-mine",
+      "seed": "e2-hill-mine-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "9ae706c49",
+        "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+        "era": 6,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 13,
+        "timeAlive": 391.6,
+        "gold": 89
+      },
+      "entries": 100,
+      "durationTicks": 11748,
+      "lastEntryTick": 11700,
+      "promotedByRig": true,
+      "discoveredBy": "outcome-file"
+    }
+  ],
+  "otherTapes": [
+    {
+      "file": "probe-tape.json",
+      "id": "agent-d8920c6a-ea9e3c8b-ceee-4869-8738-861ff33fcbf3",
+      "contract": "e2-hill-mine",
+      "seed": "e2-hill-mine-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "6b6a3a87b",
+        "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+        "era": 6,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 2,
+        "timeAlive": 72.467,
+        "gold": 0
+      },
+      "entries": 0,
+      "durationTicks": 2174,
+      "lastEntryTick": null
+    }
+  ],
+  "otherSecuredTapes": [],
+  "report": {
+    "outcome": "**NOT SECURED.** Best run `tune-1`: **waves 13 · timeAlive 391.600 s · gold 89 · calls 100 · kills 399**\n(`fnv1a32:82997d04`). **3 sim runs** (idle probe, tune-1, attempt-1); **1 scored attempt** (attempt-1,\nw11 / 341.533 s / 0 g — a measured regression, see below). **Nothing is put forward**: the run is\nunsecured, and an unsecured run must never be submitted as a standing.\n\nTape of the best run (named in `gauntlet-outcome.json`'s `tape` field):\n`artifacts/heat14/opus/e2-hill-mine/tune-1-tape.json`. Its envelope is comfortable on all three axes —\n`durationTicks` 11,748, last accepted order 11,700, 100 entries, 363,332 bytes.",
+    "whatTheMapAsked": "Its era's signature mechanic is **E2 pressure with hazard — vent-or-boom resource management** — and it\nasked me nothing about it, for the **ninth time across my generations**. I measured it on this run's own\ndata rather than inheriting it: the union of `now` keys across all 101 views of tune-1 is\n`blastReadyInMs · gold · hero · needsRider · orders · prospector · score · seams · threats · timers ·\nwave · weapon · works` — **no pressure value, no band, no coal count, no boiler fuel** — while\n`stablePrefix.mechanics.rules` publishes all four pressure rules (`pressure_generation`,\n`pressure_bands`, `pressure_auto_vent`, `pressure_powers`), `boiler_house` is on the roster at 70 g × 3,\nand `stablePrefix.map.coalSeams` names three seams at (−12,39), (−5,43), (3,39). `interactables` is `[]`.\n**On the cure the charter names**: `boilerHouse.coalSeconds` really has moved 12 → 36 — it is published\nright there in `mechanics.rules[5]`. Through the door that only triples the duration of a process I\ncannot observe, cannot steer and cannot spend; generation 84 sharpened the reason on the Incline\n(`PressureArsenalSystem`'s weapons are constructed but gated on `hasResearch && hasBaronMedal`, neither\nof which a plain-boot door run supplies), which makes 210 gold of boiler a **strictly dominated\npurchase**. I built none.\n\nWhat the contract asks instead is two real questions. The **spatial** one the boss gate makes mandatory:\nbecause the railcar rides a fixed polyline with `pursuitRange: 0`, every gold decision is priced in\n*seconds of fire on the rail*, and the only legal ground in reach is the `base-t1` strip (z 8..16) — from\nwhose z = 9 row four turrets cover 26.5 units of track each. The **attrition** one that beat me:\n`steam_wrecker` (`buildingDamageScale: 2.5`) pours out of a single north gate at (0,46), and by wave 12\nthe 60-alive cap is **40+ wreckers**. Fields that carried the run: `now.works.entries` (position, `hp`,\n`maxHp`, `tier`, `wrecked`), `now.works.byKind`/`standing`/`wrecked`, `now.seams[].active/x/z/anchorIndex`\n(an inactive seam publishes all three as **`null`**, and one non-finite number refuses the whole array\nsilently), `now.gold` against `now.score.goldPanned`, `now.hero.hp/maxHp/x/z`,\n`now.threats.alive/wreckers/thieves`, `now.orders[].status/reason`. Orders: `BUILD`, `HARVEST`,\n`PICK_UPGRADE`, `BLAST_AT`, `REPAIR_UNDER`, `MOVE_HERO`. **Not one E2 verb, because E2 has none.**\n\n**Does my notebook still describe this map?** Its bones yes, and one control clause is newly wrong.\nGenerations 3 (secured, w15, era 5), 57 (w15) and 77 (w14) rode this seed; the claim at (0,12), the five\nharvest anchors of which only two are ever live, the cliff at z 18–23 forcing the seam commute, the\nrailcar at `hpScale 12.5` on route 0, and the `secureWave: 12` gate all reproduced. **This map is not on\nthe cured list this week**, but its first minute is worth recording anyway: the hero depenetrates to\n(−3.94, 12) exactly as generation 3 measured, the first pan block funds a 50-gold turret at t ≈ 30, and\nwave 1 lands at t = 30 already carrying **4 wreckers**. What is newly wrong is generation 77's plan:\nit reported the hero walking to (0, 6–8) to reach the rail. On this tree **every** post at z 9–11 near\nthe claim answers `UNREACHABLE_TERRAIN`, and builds at (±2, 9) are refused too — a landmark blocks the\nground immediately south of the claim stake. The hero cannot get to the rail here.",
+    "winnability": "**Undecided-leaning-yes, and what stopped me was my own budget against a trade I only priced on the last\nride:** the boss damage provably closes (4 turrets on the z=9 row buy ~2,480 per patrol pass against\n3,129 HP, and the railcar reverses at its endpoint so passes are unlimited inside the wave-18 ceiling),\nand both halves of the survival problem are now *individually solved and measured* — `tune-1` held a\n**perfect fort to wave 11** (9 standing, 0 wrecked, hero 175/175) and died at w13 when 40+ wreckers took\n464 → 194 worksHp inside wave 12; `attempt-1` fixed exactly that with a 10-gold-per-piece timber line on\nthe north face and finished **13 standing, 0 wrecked, nothing ever lost** — but the same wall penned the\nhero in (`UNREACHABLE_APPROACH` on the kite's east leg), so it died at 15/175 at w11 instead. Neither a\nwall in the map, the grammar, the economy nor the door stopped me: I have the shield and I have the gun,\nand I ran out of wall clock before riding them with an escape corridor left open.",
+    "lessons": "- **Timber is 5–10× the hp per gold on this board, and I had never priced it.** `Balance.wreck.hp` is\n  turret 50 (`hpWaveScale` cap **3×**), beacon 40 (cap 4×), **palisade 60 +8/wave to a 5× cap — for TEN\n  GOLD**. At wave 12 that is 108 hp for 10 g against a turret's 98 for 50–125. Generations 3, 57 and 77\n  all bought turret-and-beacon forts here and all three watched the fort dissolve at wave 12. The shield\n  worked the moment I bought it: `attempt-1` finished **13 works standing and 0 ever wrecked** where\n  `tune-1` lost 5 of 9. **Price a defence in hp-per-gold before dps-per-gold whenever the thing that is\n  dying is the fort.**\n- **…and then the shield trapped the body it was protecting.** The kite's first leg completed and the\n  second answered `UNREACHABLE_APPROACH: target has no traversable approach` — 13 works spanning\n  x −15..15 across z 9..16 left the hero no corridor, and it died at 15/175 inside its own pen. **A wall\n  is a wall for you too. Leave a named gap in any ring you build, and verify the escape route with the\n  same `MOVE_HERO` ladder that probes the ground.**\n- **Check `status`, not just `reason`, before blaming tick ownership.** My first read of `attempt-1` was\n  that four ungated `REPAIR_UNDER` records above `MOVE_HERO` had monopolised every tick (an active mend\n  returns `{movement}`, which is truthy). The records say otherwise: **450 pending, 11 active, 34 done,\n  5 failed** — the mend was free almost always, exactly as `StandingOrders.ts:550` promises. The cause\n  was the wall. I nearly wrote a plausible, wrong lesson into this notebook; one count of order statuses\n  is what separated them.\n- **A hero post that refuses is not a hero post that is missing — read WHICH refusal.**\n  `UNREACHABLE_TERRAIN` (the ground is illegal) and `UNREACHABLE_APPROACH` (this body is walled off)\n  appeared in the same heat and mean opposite things: the first wants a different coordinate, the second\n  wants a different *route*. Generation 116 recorded the distinction; this is the first time both fired\n  in one ride, and only the second one was my own doing.\n- **Advance a hero-post index on a COORDINATE blacklist, never on a count of failed records.** v1\n  advanced `heroIdx` once per failed record it saw, and the view showed several at once: all five posts\n  burned in **0.4 seconds** and the hero never moved for the entire 391-second run. Keying the blacklist\n  on `x,z` — the same partition the build blacklist already uses — costs one line and cannot run off the\n  end of the list.\n- **The boss on this map is a damage problem I solved on paper and never got to spend.** 4 turrets at\n  z = 9 is 26.5 units of track each per pass, the route reverses, and the wave-18 ceiling gives ~3.7\n  traversals. Tier 2 (`[0,150,300]`, ×1.4 damage ×1.18 fire rate = **×1.65 dps**) would close it in one\n  pass — and it never fired in either ride, because income here is capped near **2.07 g/s** by\n  `capacity/(drain+respawn)` on the only two live seams, and a 670-gold turret-and-beacon ladder plus the\n  repair bill consumes all of it. **On a kill-gated map, budget the ladder against the tier sink from\n  view 0**; a cheaper shield is what buys the sink.\n- **Two live seams, both ~20 units out behind a cliff, is the economy — measure it before designing the\n  ladder.** `capacity 30 / (6 pans × 1.5 s + 20 s respawn)` ≈ 1.03 g/s per seam; I measured 1.9 g/s\n  against a 2.07 ceiling, so the economy was already near-optimal and no panning policy could have funded\n  a bigger fort. The lever was never income, it was **cost per hit point**.\n- **The synthesis I did not get to ride, named precisely for the next generation:** `tune-1`'s ladder\n  (4 turrets + 2 beacons) plus `attempt-1`'s north-face timber line **with x ∈ [−3, 3] deliberately left\n  open** as the hero's corridor, no kite before wave 12, and every gold past 400 into\n  `CONTEXT_ACTION upgrade` on the turrets. That fort is measured to survive wave 12 intact and those\n  turrets are measured to out-damage the railcar inside two passes."
+  },
+  "usage": {
+    "transcript": "/Users/robin/.claude/projects/-private-tmp-claude-501--Users-robin-Claude-Projects-Gold-Rush-fe6b8d27-b064-40eb-934b-1d29d57a71db-scratchpad-arena-heat14-e3949bfa/d7547652-f836-4226-a455-a22d2246d86f.jsonl",
+    "assistantTurns": 55,
+    "toolCalls": 24,
+    "tokensIn": 110,
+    "tokensOut": 179153,
+    "cacheReadTokens": 27135234,
+    "cacheWriteTokens": 1638544,
+    "note": "tokensIn excludes cache reads/writes (reported separately); summed from the CLI session transcript, not self-reported by the rig"
+  }
+}

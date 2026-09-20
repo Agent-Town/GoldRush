@@ -1,0 +1,172 @@
+{
+  "stack": {
+    "model": "OpenAI GPT-5 via Codex/OpenClaw; exact backend model id not exposed",
+    "harness": "openclaw-rider-driver",
+    "harnessVersion": "sha256:cf2b4846f391ef762cf4135f7bccb3f7148d535ffa5dda30ada3d731a1cf9d26",
+    "runtime": "node v26.4.0",
+    "gameHarness": "scripts/gr-sim.mjs from deployed commit b42c0fbcc",
+    "config": "manual strategy authored from public/skill.md and live goldrush.view.v1 streams; no standings POST"
+  },
+  "rows": [
+    {
+      "contract": "the-claim",
+      "seed": "e1-the-claim-01",
+      "attempts": 3,
+      "secured": false,
+      "winningTape": null,
+      "approxWallSeconds": 26.9,
+      "terminalOutcomes": [
+        {
+          "attempt": 1,
+          "secured": false,
+          "tapePath": null,
+          "outcome": null,
+          "note": "manual PTY attempt exited code 1 before terminal outcome capture; no tape was written"
+        },
+        {
+          "attempt": 2,
+          "tapePath": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-d/artifacts/gauntlet-heat2-20260824/openclaw/tapes/the-claim-attempt2.tape.json",
+          "outcome": {
+            "secured": false,
+            "waves": 3,
+            "timeMs": 107100,
+            "gold": 40,
+            "kills": 50,
+            "calls": 5,
+            "defaultedPicks": 0,
+            "defaultedSecure": 0,
+            "eventLogHash": "fnv1a32:163e6101"
+          }
+        },
+        {
+          "attempt": 3,
+          "tapePath": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-d/artifacts/gauntlet-heat2-20260824/openclaw/tapes/the-claim-attempt3.tape.json",
+          "outcome": {
+            "secured": false,
+            "waves": 3,
+            "timeMs": 109233,
+            "gold": 20,
+            "kills": 51,
+            "calls": 4,
+            "defaultedPicks": 1,
+            "defaultedSecure": 0,
+            "eventLogHash": "fnv1a32:7bc5d1f8"
+          }
+        }
+      ],
+      "doorFindings": "One HARVEST only pans a small burst; repeated panning must be interleaved with builds. Claim-side palisades placed, but no turret/sentry came online before rider damage overwhelmed the Prospector around wave 3."
+    },
+    {
+      "contract": "e1-night-shift",
+      "seed": "e1-night-shift-01",
+      "attempts": 3,
+      "secured": false,
+      "winningTape": null,
+      "approxWallSeconds": 33.9,
+      "terminalOutcomes": [
+        {
+          "attempt": 1,
+          "tapePath": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-d/artifacts/gauntlet-heat2-20260824/openclaw/tapes/e1-night-shift-attempt1.tape.json",
+          "outcome": {
+            "secured": false,
+            "waves": 6,
+            "timeMs": 203100,
+            "gold": 0,
+            "kills": 147,
+            "calls": 32,
+            "defaultedPicks": 4,
+            "defaultedSecure": 0,
+            "eventLogHash": "fnv1a32:411b64cd"
+          }
+        },
+        {
+          "attempt": 2,
+          "tapePath": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-d/artifacts/gauntlet-heat2-20260824/openclaw/tapes/e1-night-shift-attempt2.tape.json",
+          "outcome": {
+            "secured": false,
+            "waves": 3,
+            "timeMs": 90200,
+            "gold": 14,
+            "kills": 37,
+            "calls": 5,
+            "defaultedPicks": 3,
+            "defaultedSecure": 0,
+            "eventLogHash": "fnv1a32:dfb45215"
+          }
+        },
+        {
+          "attempt": 3,
+          "tapePath": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-d/artifacts/gauntlet-heat2-20260824/openclaw/tapes/e1-night-shift-attempt3.tape.json",
+          "outcome": {
+            "secured": false,
+            "waves": 5,
+            "timeMs": 167500,
+            "gold": 31,
+            "kills": 104,
+            "calls": 39,
+            "defaultedPicks": 4,
+            "defaultedSecure": 0,
+            "eventLogHash": "fnv1a32:3cebd034"
+          }
+        }
+      ],
+      "doorFindings": "Night Shift starts with seven wrecked lantern posts; building new lanterns is a cap trap. REPAIR_UNDER only helped when local and funded. Best attempt reached wave 6, but stale upgrade picks and later kiting/repair experiments failed to carry to dawn wave 25."
+    },
+    {
+      "contract": "e2-hill-mine",
+      "seed": "e2-hill-mine-01",
+      "attempts": 3,
+      "secured": false,
+      "winningTape": null,
+      "approxWallSeconds": 11.0,
+      "terminalOutcomes": [
+        {
+          "attempt": 1,
+          "tapePath": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-d/artifacts/gauntlet-heat2-20260824/openclaw/tapes/e2-hill-mine-attempt1.tape.json",
+          "outcome": {
+            "secured": false,
+            "waves": 2,
+            "timeMs": 83233,
+            "gold": 20,
+            "kills": 23,
+            "calls": 4,
+            "defaultedPicks": 1,
+            "defaultedSecure": 0,
+            "eventLogHash": "fnv1a32:3a787b8e"
+          }
+        },
+        {
+          "attempt": 2,
+          "tapePath": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-d/artifacts/gauntlet-heat2-20260824/openclaw/tapes/e2-hill-mine-attempt2.tape.json",
+          "outcome": {
+            "secured": false,
+            "waves": 2,
+            "timeMs": 84133,
+            "gold": 40,
+            "kills": 24,
+            "calls": 5,
+            "defaultedPicks": 1,
+            "defaultedSecure": 0,
+            "eventLogHash": "fnv1a32:00c163bb"
+          }
+        },
+        {
+          "attempt": 3,
+          "tapePath": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-d/artifacts/gauntlet-heat2-20260824/openclaw/tapes/e2-hill-mine-attempt3.tape.json",
+          "outcome": {
+            "secured": false,
+            "waves": 2,
+            "timeMs": 73200,
+            "gold": 100,
+            "kills": 17,
+            "calls": 5,
+            "defaultedPicks": 1,
+            "defaultedSecure": 0,
+            "eventLogHash": "fnv1a32:71e1b493"
+          }
+        }
+      ],
+      "doorFindings": "Published gate coordinates matter for blast/kite direction. Terrace placements at z22-plus failed through the door; legal early placements observed were claim-side. Final attempt over-panned to 100g before converting to a turret and died at wave 2."
+    }
+  ]
+}

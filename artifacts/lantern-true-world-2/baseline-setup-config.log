@@ -1,0 +1,44 @@
+fatal: not a git repository (or any of the parent directories): .git
+revision metadata could not be recorded: Error: Command failed: git rev-parse HEAD
+fatal: not a git repository (or any of the parent directories): .git
+
+(node:27044) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 6 tests using 1 worker
+
+(node:27063) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+fatal: not a git repository (or any of the parent directories): .git
+revision metadata could not be recorded: Error: Command failed: git rev-parse HEAD
+fatal: not a git repository (or any of the parent directories): .git
+
+(node:27063) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+  ✘  1 [desktop-chrome] › e2e/tape-02-lantern-show.spec.ts:10:1 › plain town WATCH replays a fresh tape read-only and refuses a mismatched reel (57.5s)
+
+
+  1) [desktop-chrome] › e2e/tape-02-lantern-show.spec.ts:10:1 › plain town WATCH replays a fresh tape read-only and refuses a mismatched reel 
+
+    Test was interrupted.
+
+    Error: page.waitForFunction: Test ended.
+
+      101 | async function recordTape(page: Page): Promise<RunTape> {
+      102 |   await page.goto('/?debug&seed=tape-02-proof');
+    > 103 |   await page.waitForFunction(() => window.__GR_TEST__ && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+          |              ^
+      104 |   await page.evaluate(() => window.__GR_TEST__!.setManualSim(true));
+      105 |   const script = [
+      106 |     { t: 0, mx: 0.2, my: 0, a: [] },
+        at recordTape (/private/var/folders/cd/p02kvf6s5qgfn47w85hhtzjc0000gn/T/gold-rush-lantern-baseline-e6k2v50j/e2e/tape-02-lantern-show.spec.ts:103:14)
+        at /private/var/folders/cd/p02kvf6s5qgfn47w85hhtzjc0000gn/T/gold-rush-lantern-baseline-e6k2v50j/e2e/tape-02-lantern-show.spec.ts:14:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/tape-02-lantern-show-plain-7c220-d-refuses-a-mismatched-reel-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/tape-02-lantern-show-plain-7c220-d-refuses-a-mismatched-reel-desktop-chrome/error-context.md
+
+  1 interrupted
+    [desktop-chrome] › e2e/tape-02-lantern-show.spec.ts:10:1 › plain town WATCH replays a fresh tape read-only and refuses a mismatched reel 
+  5 did not run

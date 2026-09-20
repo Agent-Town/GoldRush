@@ -1,0 +1,1094 @@
+{
+  "scope": "Supplemental restored-E5 diagnostic. Reuses exact existing snapshot helpers; compares their early output with settled-asset output. Original failed tests are unchanged and are not relabeled as passing. Queue case checks navigation/texture errors only.",
+  "cases": [
+    {
+      "file": "e1-dry-gulch.spec.ts",
+      "device": "Desktop Chrome",
+      "sourceSha256": "e5c9aa267f96ecb008f070d30da326405d440410890983f39dcf5fd9d0dc69c6",
+      "boots": [
+        {
+          "earlyState": {
+            "assetLoadingState": "loading",
+            "assetLoadingProgress": "9/29",
+            "terrain3dPilotState": "loading",
+            "terrain3dPilotHeightSource": "painted",
+            "run3dPilotState": "loading",
+            "dredgeQueen3dState": "off"
+          },
+          "early": {
+            "contract": "e1-dry-gulch",
+            "water": {
+              "material": "LivingWaterShader",
+              "riverPresent": false,
+              "fordPresent": false,
+              "riverTime": 0,
+              "fordTime": 0,
+              "quality": 1,
+              "mobile": false,
+              "foam": false,
+              "glints": 0,
+              "fordStones": 0,
+              "gravelBars": 0,
+              "visualHalfWidth": 0,
+              "springPonds": 1,
+              "waterPhaseVariance": 0,
+              "depth": {
+                "river": 0,
+                "ford": 0,
+                "wade": 0.35,
+                "deep": 1
+              }
+            },
+            "height": {
+              "heroStart": 0.03282685093848995,
+              "river": -0.11125009752425308,
+              "ford": -0.11627637291397969,
+              "nearBank": -0.18,
+              "farBank": 0.28454854437802024
+            },
+            "scatter": "-27.89,-8.78|23.95,30.47|-13.58,-8.52|17.19,28.28|-26.68,-18.24|22.07,5.06|20.45,-17.97|-16.85,26.19|12.41,-28.93|-10.10,-4.10|22.43,12.03|24.19,-14.81",
+            "harvest": [
+              {
+                "active": true,
+                "anchorIndex": 1,
+                "position": {
+                  "x": -9,
+                  "z": 6.7
+                },
+                "remaining": 30
+              },
+              {
+                "active": true,
+                "anchorIndex": 2,
+                "position": {
+                  "x": -1.5,
+                  "z": -6.4
+                },
+                "remaining": 30
+              },
+              {
+                "active": true,
+                "anchorIndex": 4,
+                "position": {
+                  "x": 18,
+                  "z": -7
+                },
+                "remaining": 30
+              },
+              {
+                "active": false,
+                "anchorIndex": -1,
+                "position": {
+                  "x": 0,
+                  "z": 0
+                },
+                "remaining": 30
+              },
+              {
+                "active": false,
+                "anchorIndex": -1,
+                "position": {
+                  "x": 0,
+                  "z": 0
+                },
+                "remaining": 30
+              },
+              {
+                "active": false,
+                "anchorIndex": -1,
+                "position": {
+                  "x": 0,
+                  "z": 0
+                },
+                "remaining": 30
+              }
+            ],
+            "samples": [
+              {
+                "walkable": true,
+                "speedMul": 1,
+                "zone": "bank"
+              },
+              {
+                "walkable": false,
+                "speedMul": 0,
+                "zone": "shallows",
+                "waterSource": "spring_pond",
+                "waterDepth": 0.2,
+                "waterClass": "wade"
+              },
+              {
+                "walkable": true,
+                "speedMul": 1,
+                "zone": "bank"
+              }
+            ]
+          },
+          "settledState": {
+            "assetLoadingState": "ready",
+            "assetLoadingProgress": "41/41",
+            "terrain3dPilotState": "ready",
+            "terrain3dPilotHeightSource": "baked-grid",
+            "run3dPilotState": "ready",
+            "dredgeQueen3dState": "off"
+          },
+          "settled": {
+            "contract": "e1-dry-gulch",
+            "water": {
+              "material": "LivingWaterShader",
+              "riverPresent": false,
+              "fordPresent": false,
+              "riverTime": 0,
+              "fordTime": 0,
+              "quality": 1,
+              "mobile": false,
+              "foam": false,
+              "glints": 0,
+              "fordStones": 0,
+              "gravelBars": 0,
+              "visualHalfWidth": 0,
+              "springPonds": 1,
+              "waterPhaseVariance": 0,
+              "depth": {
+                "river": 0,
+                "ford": 0,
+                "wade": 0.35,
+                "deep": 1
+              }
+            },
+            "height": {
+              "heroStart": 0.3227446377277374,
+              "river": 0.32766586542129517,
+              "ford": 0.3357805013656616,
+              "nearBank": 0.490425169467926,
+              "farBank": 0.4995045065879822
+            },
+            "scatter": "-27.89,-8.78|23.95,30.47|-13.58,-8.52|17.19,28.28|-26.68,-18.24|22.07,5.06|20.45,-17.97|-16.85,26.19|12.41,-28.93|-10.10,-4.10|22.43,12.03|24.19,-14.81",
+            "harvest": [
+              {
+                "active": true,
+                "anchorIndex": 1,
+                "position": {
+                  "x": -9,
+                  "z": 6.7
+                },
+                "remaining": 30
+              },
+              {
+                "active": true,
+                "anchorIndex": 2,
+                "position": {
+                  "x": -1.5,
+                  "z": -6.4
+                },
+                "remaining": 30
+              },
+              {
+                "active": true,
+                "anchorIndex": 4,
+                "position": {
+                  "x": 18,
+                  "z": -7
+                },
+                "remaining": 30
+              },
+              {
+                "active": false,
+                "anchorIndex": -1,
+                "position": {
+                  "x": 0,
+                  "z": 0
+                },
+                "remaining": 30
+              },
+              {
+                "active": false,
+                "anchorIndex": -1,
+                "position": {
+                  "x": 0,
+                  "z": 0
+                },
+                "remaining": 30
+              },
+              {
+                "active": false,
+                "anchorIndex": -1,
+                "position": {
+                  "x": 0,
+                  "z": 0
+                },
+                "remaining": 30
+              }
+            ],
+            "samples": [
+              {
+                "walkable": true,
+                "speedMul": 1,
+                "zone": "bank"
+              },
+              {
+                "walkable": false,
+                "speedMul": 0,
+                "zone": "shallows",
+                "waterSource": "spring_pond",
+                "waterDepth": 0.2,
+                "waterClass": "wade"
+              },
+              {
+                "walkable": true,
+                "speedMul": 1,
+                "zone": "bank"
+              }
+            ]
+          }
+        },
+        {
+          "earlyState": {
+            "assetLoadingState": "loading",
+            "assetLoadingProgress": "9/29",
+            "terrain3dPilotState": "loading",
+            "terrain3dPilotHeightSource": "painted",
+            "run3dPilotState": "loading",
+            "dredgeQueen3dState": "off"
+          },
+          "early": {
+            "contract": "e1-dry-gulch",
+            "water": {
+              "material": "LivingWaterShader",
+              "riverPresent": false,
+              "fordPresent": false,
+              "riverTime": 0,
+              "fordTime": 0,
+              "quality": 1,
+              "mobile": false,
+              "foam": false,
+              "glints": 0,
+              "fordStones": 0,
+              "gravelBars": 0,
+              "visualHalfWidth": 0,
+              "springPonds": 1,
+              "waterPhaseVariance": 0,
+              "depth": {
+                "river": 0,
+                "ford": 0,
+                "wade": 0.35,
+                "deep": 1
+              }
+            },
+            "height": {
+              "heroStart": 0.03282685093848995,
+              "river": -0.11125009752425308,
+              "ford": -0.11627637291397969,
+              "nearBank": -0.18,
+              "farBank": 0.28454854437802024
+            },
+            "scatter": "-27.89,-8.78|23.95,30.47|-13.58,-8.52|17.19,28.28|-26.68,-18.24|22.07,5.06|20.45,-17.97|-16.85,26.19|12.41,-28.93|-10.10,-4.10|22.43,12.03|24.19,-14.81",
+            "harvest": [
+              {
+                "active": true,
+                "anchorIndex": 1,
+                "position": {
+                  "x": -9,
+                  "z": 6.7
+                },
+                "remaining": 30
+              },
+              {
+                "active": true,
+                "anchorIndex": 2,
+                "position": {
+                  "x": -1.5,
+                  "z": -6.4
+                },
+                "remaining": 30
+              },
+              {
+                "active": true,
+                "anchorIndex": 4,
+                "position": {
+                  "x": 18,
+                  "z": -7
+                },
+                "remaining": 30
+              },
+              {
+                "active": false,
+                "anchorIndex": -1,
+                "position": {
+                  "x": 0,
+                  "z": 0
+                },
+                "remaining": 30
+              },
+              {
+                "active": false,
+                "anchorIndex": -1,
+                "position": {
+                  "x": 0,
+                  "z": 0
+                },
+                "remaining": 30
+              },
+              {
+                "active": false,
+                "anchorIndex": -1,
+                "position": {
+                  "x": 0,
+                  "z": 0
+                },
+                "remaining": 30
+              }
+            ],
+            "samples": [
+              {
+                "walkable": true,
+                "speedMul": 1,
+                "zone": "bank"
+              },
+              {
+                "walkable": false,
+                "speedMul": 0,
+                "zone": "shallows",
+                "waterSource": "spring_pond",
+                "waterDepth": 0.2,
+                "waterClass": "wade"
+              },
+              {
+                "walkable": true,
+                "speedMul": 1,
+                "zone": "bank"
+              }
+            ]
+          },
+          "settledState": {
+            "assetLoadingState": "ready",
+            "assetLoadingProgress": "41/41",
+            "terrain3dPilotState": "ready",
+            "terrain3dPilotHeightSource": "baked-grid",
+            "run3dPilotState": "ready",
+            "dredgeQueen3dState": "off"
+          },
+          "settled": {
+            "contract": "e1-dry-gulch",
+            "water": {
+              "material": "LivingWaterShader",
+              "riverPresent": false,
+              "fordPresent": false,
+              "riverTime": 0,
+              "fordTime": 0,
+              "quality": 1,
+              "mobile": false,
+              "foam": false,
+              "glints": 0,
+              "fordStones": 0,
+              "gravelBars": 0,
+              "visualHalfWidth": 0,
+              "springPonds": 1,
+              "waterPhaseVariance": 0,
+              "depth": {
+                "river": 0,
+                "ford": 0,
+                "wade": 0.35,
+                "deep": 1
+              }
+            },
+            "height": {
+              "heroStart": 0.3227446377277374,
+              "river": 0.32766586542129517,
+              "ford": 0.3357805013656616,
+              "nearBank": 0.490425169467926,
+              "farBank": 0.4995045065879822
+            },
+            "scatter": "-27.89,-8.78|23.95,30.47|-13.58,-8.52|17.19,28.28|-26.68,-18.24|22.07,5.06|20.45,-17.97|-16.85,26.19|12.41,-28.93|-10.10,-4.10|22.43,12.03|24.19,-14.81",
+            "harvest": [
+              {
+                "active": true,
+                "anchorIndex": 1,
+                "position": {
+                  "x": -9,
+                  "z": 6.7
+                },
+                "remaining": 30
+              },
+              {
+                "active": true,
+                "anchorIndex": 2,
+                "position": {
+                  "x": -1.5,
+                  "z": -6.4
+                },
+                "remaining": 30
+              },
+              {
+                "active": true,
+                "anchorIndex": 4,
+                "position": {
+                  "x": 18,
+                  "z": -7
+                },
+                "remaining": 30
+              },
+              {
+                "active": false,
+                "anchorIndex": -1,
+                "position": {
+                  "x": 0,
+                  "z": 0
+                },
+                "remaining": 30
+              },
+              {
+                "active": false,
+                "anchorIndex": -1,
+                "position": {
+                  "x": 0,
+                  "z": 0
+                },
+                "remaining": 30
+              },
+              {
+                "active": false,
+                "anchorIndex": -1,
+                "position": {
+                  "x": 0,
+                  "z": 0
+                },
+                "remaining": 30
+              }
+            ],
+            "samples": [
+              {
+                "walkable": true,
+                "speedMul": 1,
+                "zone": "bank"
+              },
+              {
+                "walkable": false,
+                "speedMul": 0,
+                "zone": "shallows",
+                "waterSource": "spring_pond",
+                "waterDepth": 0.2,
+                "waterClass": "wade"
+              },
+              {
+                "walkable": true,
+                "speedMul": 1,
+                "zone": "bank"
+              }
+            ]
+          }
+        }
+      ],
+      "settledEqual": true
+    },
+    {
+      "file": "e1-twin-banks.spec.ts",
+      "device": "Pixel 7",
+      "sourceSha256": "f59c04217bcdb042712dee6b3faae7ea3a1fb45c6f37632675d7387a26f518b5",
+      "boots": [
+        {
+          "earlyState": {
+            "assetLoadingState": "loading",
+            "assetLoadingProgress": "9/29",
+            "terrain3dPilotState": "loading",
+            "terrain3dPilotHeightSource": "painted",
+            "run3dPilotState": "loading",
+            "dredgeQueen3dState": "off"
+          },
+          "early": {
+            "contract": "e1-twin-banks",
+            "hero": {
+              "x": 0,
+              "y": 0.07178324562509593,
+              "z": -12
+            },
+            "water": {
+              "foam": true,
+              "fordPresent": true,
+              "fordStones": 14,
+              "glints": 6,
+              "material": "LivingWaterShader",
+              "mobile": true,
+              "quality": 0.55,
+              "riverPresent": true,
+              "springPonds": 0,
+              "waterPhaseVariance": 0.237
+            },
+            "scatter": "27.26,12.34|-7.44,-12.09|1.62,-26.89|27.75,16.19|24.90,30.71|-28.87,-10.86|10.26,-23.02|-2.70,27.04|-25.50,-23.03|-28.00,-19.72|-28.43,17.15|25.36,-25.08",
+            "stakes": [
+              {
+                "id": "south-claim-stake",
+                "x": 0,
+                "z": -12,
+                "heroStart": true
+              },
+              {
+                "id": "north-expansion-marker",
+                "x": 0,
+                "z": 12,
+                "heroStart": false
+              }
+            ],
+            "fords": [
+              {
+                "id": "west-ford",
+                "x": -16,
+                "halfWidth": 3
+              },
+              {
+                "id": "east-ford",
+                "x": 16,
+                "halfWidth": 3
+              }
+            ],
+            "harvest": [
+              {
+                "active": true,
+                "anchorIndex": 5,
+                "position": {
+                  "x": 25,
+                  "z": 6.9
+                },
+                "remaining": 30
+              },
+              {
+                "active": true,
+                "anchorIndex": 2,
+                "position": {
+                  "x": -1.5,
+                  "z": -6.4
+                },
+                "remaining": 30
+              },
+              {
+                "active": false,
+                "anchorIndex": -1,
+                "position": {
+                  "x": 0,
+                  "z": 0
+                },
+                "remaining": 30
+              },
+              {
+                "active": false,
+                "anchorIndex": -1,
+                "position": {
+                  "x": 0,
+                  "z": 0
+                },
+                "remaining": 30
+              },
+              {
+                "active": false,
+                "anchorIndex": -1,
+                "position": {
+                  "x": 0,
+                  "z": 0
+                },
+                "remaining": 30
+              },
+              {
+                "active": false,
+                "anchorIndex": -1,
+                "position": {
+                  "x": 0,
+                  "z": 0
+                },
+                "remaining": 30
+              }
+            ],
+            "samples": [
+              {
+                "walkable": true,
+                "speedMul": 0.85,
+                "zone": "ford",
+                "waterSource": "river",
+                "waterDepth": 0.35,
+                "waterClass": "wade"
+              },
+              {
+                "walkable": true,
+                "speedMul": 0.85,
+                "zone": "ford",
+                "waterSource": "river",
+                "waterDepth": 0.35,
+                "waterClass": "wade"
+              },
+              {
+                "walkable": true,
+                "speedMul": 1,
+                "zone": "bank"
+              },
+              {
+                "walkable": true,
+                "speedMul": 1,
+                "zone": "bank"
+              }
+            ]
+          },
+          "settledState": {
+            "assetLoadingState": "ready",
+            "assetLoadingProgress": "41/41",
+            "terrain3dPilotState": "ready",
+            "terrain3dPilotHeightSource": "baked-grid",
+            "run3dPilotState": "ready",
+            "dredgeQueen3dState": "off"
+          },
+          "settled": {
+            "contract": "e1-twin-banks",
+            "hero": {
+              "x": 0,
+              "y": 0.3672938919067383,
+              "z": -12
+            },
+            "water": {
+              "foam": true,
+              "fordPresent": true,
+              "fordStones": 14,
+              "glints": 6,
+              "material": "LivingWaterShader",
+              "mobile": true,
+              "quality": 0.55,
+              "riverPresent": true,
+              "springPonds": 0,
+              "waterPhaseVariance": 0.237
+            },
+            "scatter": "27.26,12.34|-7.44,-12.09|1.62,-26.89|27.75,16.19|24.90,30.71|-28.87,-10.86|10.26,-23.02|-2.70,27.04|-25.50,-23.03|-28.00,-19.72|-28.43,17.15|25.36,-25.08",
+            "stakes": [
+              {
+                "id": "south-claim-stake",
+                "x": 0,
+                "z": -12,
+                "heroStart": true
+              },
+              {
+                "id": "north-expansion-marker",
+                "x": 0,
+                "z": 12,
+                "heroStart": false
+              }
+            ],
+            "fords": [
+              {
+                "id": "west-ford",
+                "x": -16,
+                "halfWidth": 3
+              },
+              {
+                "id": "east-ford",
+                "x": 16,
+                "halfWidth": 3
+              }
+            ],
+            "harvest": [
+              {
+                "active": true,
+                "anchorIndex": 5,
+                "position": {
+                  "x": 25,
+                  "z": 6.9
+                },
+                "remaining": 30
+              },
+              {
+                "active": true,
+                "anchorIndex": 2,
+                "position": {
+                  "x": -1.5,
+                  "z": -6.4
+                },
+                "remaining": 30
+              },
+              {
+                "active": false,
+                "anchorIndex": -1,
+                "position": {
+                  "x": 0,
+                  "z": 0
+                },
+                "remaining": 30
+              },
+              {
+                "active": false,
+                "anchorIndex": -1,
+                "position": {
+                  "x": 0,
+                  "z": 0
+                },
+                "remaining": 30
+              },
+              {
+                "active": false,
+                "anchorIndex": -1,
+                "position": {
+                  "x": 0,
+                  "z": 0
+                },
+                "remaining": 30
+              },
+              {
+                "active": false,
+                "anchorIndex": -1,
+                "position": {
+                  "x": 0,
+                  "z": 0
+                },
+                "remaining": 30
+              }
+            ],
+            "samples": [
+              {
+                "walkable": true,
+                "speedMul": 0.85,
+                "zone": "ford",
+                "waterSource": "river",
+                "waterDepth": 0.35,
+                "waterClass": "wade"
+              },
+              {
+                "walkable": true,
+                "speedMul": 0.85,
+                "zone": "ford",
+                "waterSource": "river",
+                "waterDepth": 0.35,
+                "waterClass": "wade"
+              },
+              {
+                "walkable": true,
+                "speedMul": 1,
+                "zone": "bank"
+              },
+              {
+                "walkable": true,
+                "speedMul": 1,
+                "zone": "bank"
+              }
+            ]
+          }
+        },
+        {
+          "earlyState": {
+            "assetLoadingState": "loading",
+            "assetLoadingProgress": "6/26",
+            "terrain3dPilotState": "loading",
+            "terrain3dPilotHeightSource": "painted",
+            "run3dPilotState": "loading",
+            "dredgeQueen3dState": "off"
+          },
+          "early": {
+            "contract": "e1-twin-banks",
+            "hero": {
+              "x": 0,
+              "y": 0.07178324562509593,
+              "z": -12
+            },
+            "water": {
+              "foam": true,
+              "fordPresent": true,
+              "fordStones": 14,
+              "glints": 6,
+              "material": "LivingWaterShader",
+              "mobile": true,
+              "quality": 0.55,
+              "riverPresent": true,
+              "springPonds": 0,
+              "waterPhaseVariance": 0.237
+            },
+            "scatter": "27.26,12.34|-7.44,-12.09|1.62,-26.89|27.75,16.19|24.90,30.71|-28.87,-10.86|10.26,-23.02|-2.70,27.04|-25.50,-23.03|-28.00,-19.72|-28.43,17.15|25.36,-25.08",
+            "stakes": [
+              {
+                "id": "south-claim-stake",
+                "x": 0,
+                "z": -12,
+                "heroStart": true
+              },
+              {
+                "id": "north-expansion-marker",
+                "x": 0,
+                "z": 12,
+                "heroStart": false
+              }
+            ],
+            "fords": [
+              {
+                "id": "west-ford",
+                "x": -16,
+                "halfWidth": 3
+              },
+              {
+                "id": "east-ford",
+                "x": 16,
+                "halfWidth": 3
+              }
+            ],
+            "harvest": [
+              {
+                "active": true,
+                "anchorIndex": 5,
+                "position": {
+                  "x": 25,
+                  "z": 6.9
+                },
+                "remaining": 30
+              },
+              {
+                "active": true,
+                "anchorIndex": 2,
+                "position": {
+                  "x": -1.5,
+                  "z": -6.4
+                },
+                "remaining": 30
+              },
+              {
+                "active": false,
+                "anchorIndex": -1,
+                "position": {
+                  "x": 0,
+                  "z": 0
+                },
+                "remaining": 30
+              },
+              {
+                "active": false,
+                "anchorIndex": -1,
+                "position": {
+                  "x": 0,
+                  "z": 0
+                },
+                "remaining": 30
+              },
+              {
+                "active": false,
+                "anchorIndex": -1,
+                "position": {
+                  "x": 0,
+                  "z": 0
+                },
+                "remaining": 30
+              },
+              {
+                "active": false,
+                "anchorIndex": -1,
+                "position": {
+                  "x": 0,
+                  "z": 0
+                },
+                "remaining": 30
+              }
+            ],
+            "samples": [
+              {
+                "walkable": true,
+                "speedMul": 0.85,
+                "zone": "ford",
+                "waterSource": "river",
+                "waterDepth": 0.35,
+                "waterClass": "wade"
+              },
+              {
+                "walkable": true,
+                "speedMul": 0.85,
+                "zone": "ford",
+                "waterSource": "river",
+                "waterDepth": 0.35,
+                "waterClass": "wade"
+              },
+              {
+                "walkable": true,
+                "speedMul": 1,
+                "zone": "bank"
+              },
+              {
+                "walkable": true,
+                "speedMul": 1,
+                "zone": "bank"
+              }
+            ]
+          },
+          "settledState": {
+            "assetLoadingState": "ready",
+            "assetLoadingProgress": "41/41",
+            "terrain3dPilotState": "ready",
+            "terrain3dPilotHeightSource": "baked-grid",
+            "run3dPilotState": "ready",
+            "dredgeQueen3dState": "off"
+          },
+          "settled": {
+            "contract": "e1-twin-banks",
+            "hero": {
+              "x": 0,
+              "y": 0.3672938919067383,
+              "z": -12
+            },
+            "water": {
+              "foam": true,
+              "fordPresent": true,
+              "fordStones": 14,
+              "glints": 6,
+              "material": "LivingWaterShader",
+              "mobile": true,
+              "quality": 0.55,
+              "riverPresent": true,
+              "springPonds": 0,
+              "waterPhaseVariance": 0.237
+            },
+            "scatter": "27.26,12.34|-7.44,-12.09|1.62,-26.89|27.75,16.19|24.90,30.71|-28.87,-10.86|10.26,-23.02|-2.70,27.04|-25.50,-23.03|-28.00,-19.72|-28.43,17.15|25.36,-25.08",
+            "stakes": [
+              {
+                "id": "south-claim-stake",
+                "x": 0,
+                "z": -12,
+                "heroStart": true
+              },
+              {
+                "id": "north-expansion-marker",
+                "x": 0,
+                "z": 12,
+                "heroStart": false
+              }
+            ],
+            "fords": [
+              {
+                "id": "west-ford",
+                "x": -16,
+                "halfWidth": 3
+              },
+              {
+                "id": "east-ford",
+                "x": 16,
+                "halfWidth": 3
+              }
+            ],
+            "harvest": [
+              {
+                "active": true,
+                "anchorIndex": 5,
+                "position": {
+                  "x": 25,
+                  "z": 6.9
+                },
+                "remaining": 30
+              },
+              {
+                "active": true,
+                "anchorIndex": 2,
+                "position": {
+                  "x": -1.5,
+                  "z": -6.4
+                },
+                "remaining": 30
+              },
+              {
+                "active": false,
+                "anchorIndex": -1,
+                "position": {
+                  "x": 0,
+                  "z": 0
+                },
+                "remaining": 30
+              },
+              {
+                "active": false,
+                "anchorIndex": -1,
+                "position": {
+                  "x": 0,
+                  "z": 0
+                },
+                "remaining": 30
+              },
+              {
+                "active": false,
+                "anchorIndex": -1,
+                "position": {
+                  "x": 0,
+                  "z": 0
+                },
+                "remaining": 30
+              },
+              {
+                "active": false,
+                "anchorIndex": -1,
+                "position": {
+                  "x": 0,
+                  "z": 0
+                },
+                "remaining": 30
+              }
+            ],
+            "samples": [
+              {
+                "walkable": true,
+                "speedMul": 0.85,
+                "zone": "ford",
+                "waterSource": "river",
+                "waterDepth": 0.35,
+                "waterClass": "wade"
+              },
+              {
+                "walkable": true,
+                "speedMul": 0.85,
+                "zone": "ford",
+                "waterSource": "river",
+                "waterDepth": 0.35,
+                "waterClass": "wade"
+              },
+              {
+                "walkable": true,
+                "speedMul": 1,
+                "zone": "bank"
+              },
+              {
+                "walkable": true,
+                "speedMul": 1,
+                "zone": "bank"
+              }
+            ]
+          }
+        }
+      ],
+      "settledEqual": true
+    },
+    {
+      "kind": "queue-navigation-textures-only",
+      "boots": [
+        {
+          "query": "?debug&nowaves&nolevel",
+          "state": {
+            "assetLoadingState": "ready",
+            "assetLoadingProgress": "41/41",
+            "terrain3dPilotState": "ready",
+            "terrain3dPilotHeightSource": "baked-grid",
+            "run3dPilotState": "ready",
+            "dredgeQueen3dState": "off"
+          }
+        },
+        {
+          "query": "?nowaves&nolevel",
+          "state": {
+            "assetLoadingState": "ready",
+            "assetLoadingProgress": "41/41",
+            "terrain3dPilotState": "ready",
+            "terrain3dPilotHeightSource": "baked-grid",
+            "run3dPilotState": "ready",
+            "dredgeQueen3dState": "off"
+          }
+        },
+        {
+          "query": "?debug&nowaves&nolevel",
+          "state": {
+            "assetLoadingState": "ready",
+            "assetLoadingProgress": "41/41",
+            "terrain3dPilotState": "ready",
+            "terrain3dPilotHeightSource": "baked-grid",
+            "run3dPilotState": "ready",
+            "dredgeQueen3dState": "off"
+          }
+        }
+      ],
+      "errors": []
+    }
+  ],
+  "errors": [],
+  "completed": true
+}

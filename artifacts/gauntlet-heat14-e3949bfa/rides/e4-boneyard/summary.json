@@ -1,0 +1,217 @@
+{
+  "rig": "opus",
+  "contract": "e4-boneyard",
+  "model": "claude-opus-5",
+  "sessionId": "55f5c9a5-e5d2-484f-87ee-7357c4657b65",
+  "startedAt": "2026-09-18T09:22:39.823Z",
+  "endedAt": "2026-09-18T09:34:23.381Z",
+  "wallClockSeconds": 704,
+  "wallHit": false,
+  "exitCode": 0,
+  "signal": null,
+  "setupToFirstOutputSeconds": 120,
+  "arenaTrackedChanges": [],
+  "workspaceFiles": [
+    "attempt-1-tape.json",
+    "ctrl-v1.mjs",
+    "gauntlet-outcome.json",
+    "gauntlet-report.md",
+    "probe-summary.json",
+    "probe-tape.json",
+    "probe-views.jsonl",
+    "runner.mjs",
+    "tune-1-summary.json",
+    "tune-1-tape.json",
+    "tune-1-views.jsonl"
+  ],
+  "outcome": {
+    "secured": true,
+    "waves": 12,
+    "timeMs": 360000,
+    "gold": 200,
+    "kills": 331,
+    "calls": 40,
+    "defaultedPicks": 0,
+    "defaultedSecure": 1,
+    "eventLogHash": "fnv1a32:f25913c4",
+    "motor": {
+      "graded": [],
+      "hauled": true,
+      "arrivedAt": 61.733,
+      "roadDistance": 0,
+      "distanceTravelled": 65.333,
+      "fuelDrawn": 25.14,
+      "tarHarvested": 9,
+      "convoyArrived": null,
+      "kind": "tow",
+      "towed": true
+    },
+    "tape": "/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/heat14/opus/e4-boneyard/attempt-1-tape.json",
+    "scored": true,
+    "runsSoFar": 2,
+    "scoredAttempts": 1,
+    "worldModel": "sim-import",
+    "note": "ONE RIDE UNDER TWO FILENAMES. The first controller (ctrl-v1.mjs) secured, so the stop rule ends the heat there; tune-1-tape.json was copied to attempt-1-tape.json and the two files are byte-identical (verified, 137328 bytes each). The operator reads this 'tape' field, not the filename.",
+    "tapeHeaderHash": "fnv1a32:99dc9ed0",
+    "assay": {
+      "instrumentControl": "zero-order probe-tape.json replayed to its OWN header fnv1a32:a45ba9ac and reproduced waves 4 / gold 0 / timeAlive 124.867 -- instrument verified before believing it about a tape I could influence",
+      "scoredReplay": "fnv1a32:99dc9ed0 == tape header, outcome secured/12/200/360 reproduced",
+      "securedSnapshot": {
+        "waves": 12,
+        "gold": 200,
+        "timeAlive": 360
+      },
+      "hashPairNote": "the replay matches the TAPE HEADER's hash (99dc9ed0), never the stdout outcome line's (f25913c4); they are different numbers by design"
+    },
+    "envelope": {
+      "durationTicks": 10800,
+      "lastEntryTick": 10539,
+      "ticksInsideDuration": 261,
+      "entries": 40,
+      "bytes": 137328,
+      "maxTicks": 18002,
+      "maxEntries": 3601,
+      "maxBytes": 1938784,
+      "bytesPctOfCeiling": 7.1,
+      "derivation": "computed from runTapeEnvelopeForContract (PlaybookFormat.ts), NOT the charter's 16KiB+entries*160 summary: order-bearing entries are billed at 2400, so the real byte ceiling is 1,938,784 rather than the summary's ~592k"
+    },
+    "eraPapers": {
+      "era": 6,
+      "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+      "buildId": "0648b57e7",
+      "viewVersion": 2
+    },
+    "nullFloorCheck": "idle probe reproduced assets/contracts/null-floors.json for e4-boneyard-01 BYTE FOR BYTE (w4 / 124867ms / 0 gold / 35 kills / fnv1a32:5c7f6600) -- era 6 moved this map's rendering, not its rules. Zero of the eight era-6 pins name this contract.",
+    "goldIsTheCeilingNotAMargin": "200 is the arithmetic maximum of this contract's default bankCap. The only cap-raiser on the roster is stockpile (60g x2, +150 each), and HeadlessContractSim.claimGold returns 0 unless holding.kind==='stockpile' -- so on this thief-only roster a till is the SOLE switch that arms theft. Priced: ~0.6 g/s with the till at the camp (81wu from both spawn gates), ~1.7 g/s at the west seam cluster (28wu), against 250s of exposure = 150-425 gold for +300 of ceiling that 475 panned cannot fill. Declined; measured goldStolen: 0 with up to 60 thieves alive.",
+    "marginEvidence": {
+      "heroMinHpFraction": 1,
+      "heroFinal": "175/175, never below its running maximum in any of 42 views",
+      "worksWrecked": 0,
+      "worksStanding": 5,
+      "goldStolen": 0,
+      "capReachedAt": 246.67,
+      "goldPannedFrozenAt": 475,
+      "errandLatchedAt": 61.733,
+      "fuelDrawn": "25.14 of 36",
+      "threatsAlivePeak": 60
+    }
+  },
+  "outcomeError": null,
+  "promotedTapeName": "attempt-1-tape.json",
+  "scoredTapes": [
+    {
+      "file": "attempt-1-tape.json",
+      "id": "agent-90aa867f-daf1bdbd-7d8c-41ff-9edb-ce0ff1ee99a6",
+      "contract": "e4-boneyard",
+      "seed": "e4-boneyard-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "0648b57e7",
+        "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+        "era": 6,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 12,
+        "timeAlive": 360,
+        "gold": 200
+      },
+      "entries": 40,
+      "durationTicks": 10800,
+      "lastEntryTick": 10539,
+      "promotedByRig": true,
+      "discoveredBy": "outcome-file+filename"
+    }
+  ],
+  "otherTapes": [
+    {
+      "file": "probe-tape.json",
+      "id": "agent-271b5f72-70fad2c4-77c6-4b4f-9abf-2a833732a204",
+      "contract": "e4-boneyard",
+      "seed": "e4-boneyard-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "0648b57e7",
+        "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+        "era": 6,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 4,
+        "timeAlive": 124.867,
+        "gold": 0
+      },
+      "entries": 0,
+      "durationTicks": 3746,
+      "lastEntryTick": null
+    },
+    {
+      "file": "tune-1-tape.json",
+      "id": "agent-90aa867f-daf1bdbd-7d8c-41ff-9edb-ce0ff1ee99a6",
+      "contract": "e4-boneyard",
+      "seed": "e4-boneyard-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "0648b57e7",
+        "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+        "era": 6,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 12,
+        "timeAlive": 360,
+        "gold": 200
+      },
+      "entries": 40,
+      "durationTicks": 10800,
+      "lastEntryTick": 10539
+    }
+  ],
+  "otherSecuredTapes": [
+    {
+      "file": "tune-1-tape.json",
+      "id": "agent-90aa867f-daf1bdbd-7d8c-41ff-9edb-ce0ff1ee99a6",
+      "contract": "e4-boneyard",
+      "seed": "e4-boneyard-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "0648b57e7",
+        "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+        "era": 6,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 12,
+        "timeAlive": 360,
+        "gold": 200
+      },
+      "entries": 40,
+      "durationTicks": 10800,
+      "lastEntryTick": 10539
+    }
+  ],
+  "report": {
+    "outcome": "**SECURED** — waves **12**, timeAlive **360.000 s**, gold **200**, calls **40**, kills 331,\n`defaultedSecure: 1`, `eventLogHash fnv1a32:f25913c4` (tape header `fnv1a32:99dc9ed0`).\n\nTape put forward: **`attempt-1-tape.json`**, declared in `gauntlet-outcome.json`'s `tape` field. It is\na byte-identical copy of `tune-1-tape.json` (137,328 bytes each, verified) — **one ride under two\nfilenames**, because the first controller secured and the stop rule ends the heat there.\n\n**2 sim runs, 1 scored attempt.**",
+    "whatTheMapAsked": "It asked about **distance and fuel — E4's signature mechanic, live, load-bearing and gating the\nsecure** — and then it went quiet for ten waves. This is not stationary survival wearing the era's\nname at the front end. The secure is a conjunction: `wave >= 12` **and**\n`now.motor.objective.arrived`, and for `kind: \"tow\"` `settleTow` wants two separate *rests* — the\nHauler within `stopReach` 2.5 of the hulk `spent-boiler-west` at (−18, −8) to hitch, then within 2.5\nof `objectiveCorridor.start` (−8, −38) to deliver, with `objective.stop` moving the instant `hitched`\nflips. The leash is real arithmetic: three tar nodes × three tar × four fuel = **36 total** against a\nHauler that burns 3/second **by the clock**, so the storm is not flavour — `stormMovementMultiplier\n0.75` stretches every second it moves, and I measured **25.14 fuel for 65.333 units** (0.385/unit\nagainst a clear-weather 0.333, a ~15 % surcharge). Two nodes would have been 24 fuel and stranded the\nobjective outright, which is why I toured all three; they were all harvested by t = 17.77.\n\nThe fields that carried it were `now.motor.objective` (`kind`, `stop`, `stopReach`, `hulk`,\n`hitched`, `arrived`), `now.motor.fuel.nodes[].harvested` with `tar`/`stored`/`drawn`,\n`now.motor.vehicle.state/x/z` and `now.motor.weather.phase`. The orders were **`MOVE_HERO`** and\n**`HAUL`**, and nothing else — **E4 has no verb of its own**; the whole era is answered with the\nplayer's own controls, exactly as ADR-005 intended. **`GRADE` is worthless here and that is a finding,\nnot an omission**: I issued none (`graded: []`, `roadDistance: 0`), because the Hauler drives straight\nlines and the tow's delivery point *is* the corridor's start stake, so the only road it could grade\nruns away from both legs. Across the four Motor maps `GRADE` ranges from mandatory (the Long Road:\n123 fuel ungraded against a 36-fuel tank) to inert; the arithmetic, not the epoch, says which.\n\nThe honest qualifier is the one every Motor map earns: **the errand latched at t = 61.733 of a\n360-second contract**, and waves 2–12 were ordinary stationary survival at the camp against a one-id,\nthief-only roster on a 53 wu seam commute. Call it the first sixth genuinely E4 — but unlike a reskin,\nthe era's lever *gates the secure* and made me do fuel-and-distance arithmetic before writing an order.\n\n**Does my notebook remember this map, and does it still play that way?** Generations 15, 52 and 72\nrode this seed, and **it still plays exactly the way I remember — which, on an era named for rebuilt\nmaps, is itself the result.** The claim and hero start (0, −44), the hulk, the moving stop, the three\ntar nodes on the z = −8 line, the 36-fuel leash, the `GRADE`-is-worthless verdict, the ten harvest\nanchors, the thief-only roster and the wave-12 gate all reproduced to the decimal; the idle probe\nreproduced the published null floor byte for byte; and **zero of era 6's eight pins name this\ncontract** (they name `e2-trestle`/`e2-incline`, the sprite runtime, the boss models, the sprite\nroster and the town cast). The re-survey moved this map's rendering, not its rules. Generation 72's\nhard-won landmark finding also reproduced exactly: the hero *is* refused at the hulk, and my standoff\nladder logged three `UNREACHABLE_APPROACH` records before settling at (−18, −9.8).",
+    "winnability": "Secured, and the margin was **the widest I have measured on a Motor map**: the hero **never took a\nsingle point of damage in any of 42 views** (100/100 → 175/175), **zero of five works was ever\nwrecked**, `goldStolen` finished at **0** despite a thief-only roster with `threats.alive` pinned at\nits 60 ceiling from wave 9, the errand banked 298 seconds before the gate with 10.9 of 36 fuel\nunspent, and the purse reached its ceiling at t = 246.67 with 113 seconds to spare — while the reel\ncleared its tightest axis at 7.1 % of ceiling. The 200 gold is **the arithmetic maximum of this\ncontract's default `bankCap`, not a margin left behind**: the only cap-raiser on the roster is\n`stockpile`, `claimGold` returns 0 unless the holding is a stockpile, so on this thief-only roster a\ntill is the *sole* switch that arms theft — priced at ~0.6 g/s with the till at the camp and ~1.7 g/s\nat the seam cluster, i.e. 150–425 gold over 250 s of exposure for +300 of ceiling that 475 panned\ncannot fill.",
+    "lessons": "- **`claimGold` returning 0 for a non-stockpile holding is what makes a thief roster a CEILING rather\n  than a risk, and it converts an estimate into a proof.** Generation 106 overrode its own notebook\n  warning with arithmetic off a *concurrency* cap and lost 435 gold; generations 107/118/119 each left\n  \"buy the pair LATE\" as an owed open question. This ride closes it for this map class with a\n  two-sided argument rather than a guess: the theft rate scales inversely with distance-to-gate, so\n  there is nowhere both far from the spawn gates AND near the income, and a cap you cannot fill is a\n  cap worth nothing. **Report a ceiling as a ceiling; calling 200 \"gold I left behind\" would send the\n  next rider hunting a till that costs more than it raises.**\n- **When the ranked axis is capped and income is not the constraint, the surplus is a SAFETY budget —\n  spend it and stop early.** Waves and `timeAlive` are pinned by `secureWave: 12`, so gold caps at\n  200 while the map pays 475. That makes ~275 of income free, and the right use of it is fort, not\n  hoarding. A hard build floor at t = 230 with no bypass (generation 85's lesson: a flat floor cannot\n  be argued with the way an `urgent` clause can) left 113 seconds of refill and landed the cap exactly.\n- **A landmark blocker is a rectangle plus the hero's radius, and it is computable before the ride.**\n  `spent-boiler-west` publishes footprint `w 3.895 / d 2.621` at scale 0.9 → half-extents\n  1.753 × 1.179, padded by `Balance.hero.radius` 0.5 + 0.08 → 2.333 × 1.759. Against\n  `MOTOR_STOP_REACH` 2.5 the north/south band is **0.74 wu thick** and the east/west band only 0.167 —\n  so the standoff ladder must run north/south. Three `UNREACHABLE_APPROACH` records fired and cost one\n  tick each; the ladder absorbed them and the hitch landed at t ≈ 51.9.\n- **A `MOVE_HERO` worklist self-sequences, and a walking one owns the tick — which is exactly the\n  sequencing you want.** `[…tar zigs…, …standoff ladder…, HAUL, …harvest tail]` drained in order: the\n  tar tour finished all nine tar in **17.77 seconds**, the standoff resolved, `HAUL` fired only once\n  every `MOVE_HERO` above it was `done`, and the tail resumed. No view was needed between them.\n- **Advance a standoff index on a COORDINATE-matched refusal, never on a raw count of failed\n  records.** Generation 123 burned five posts in 0.4 seconds by counting; keying the advance on the\n  refusal's own `pos` (and partitioning GROUND refusals from ECONOMY ones for builds) is what kept the\n  ladder from running off its own end.\n- **`null-floors.json` first, every ride — sixth heat running, and it has never once been wrong.** One\n  file published `w4 / 124867 ms / 0 gold / 35 kills / fnv1a32:5c7f6600` before I ran anything, and a\n  ten-second probe reproduced it to the hash. On an era named *the Re-surveyed Claims* that is\n  simultaneously the proof the rules did not move and the licence to spend the whole reading budget on\n  the two things that decide the map.\n- **Check whether the seams re-anchor before designing the economy — it is nine views of a probe.**\n  `gold-seam-1@7, gold-seam-2@1, gold-seam-3@0` held unchanged across 125 seconds, which pinned the\n  west pair 18.5 wu apart and licensed a two-seam alternating chain that kept the Prospector cycling\n  out at the cluster instead of commuting 53 wu home per pan. 475 panned against a 200 cap.\n- **A failing `HARVEST` tail is still the clock, and at the cap its refusals are the cap itself\n  talking.** From t = 246.67 every `HARVEST` answered `FAILED` while `goldPanned` sat frozen at 475 —\n  not a broken economy, but `Economy` refusing credits against a full purse. **Log `gold` beside\n  `goldPanned` and `standing`: dead sink, starved economy, attrition drain and *capped purse* are four\n  signatures one column apart.**\n- **Silence at `pendingSecure` did its four jobs again, twenty-sixth contract running:** it took the\n  `bank` default (`defaultedSecure: 1`), left the last accepted order 261 ticks inside\n  `durationTicks`, held a 42-view run to 40 entries, and — the reason that matters most — **it cannot\n  be rejected**, so the replay cannot diverge the way generation 84's nearly did when refused\n  in-window submissions (invisible to the tape, visible to the sim) desynchronised a clean reel.\n- **Control-test the assay before believing it, then compare the right pair of hashes — tenth\n  generation for this.** The zero-order probe replayed to its own header first (instrument verified);\n  only then did `fnv1a32:99dc9ed0` mean anything. It is the **tape header's** hash, never the stdout\n  outcome line's `fnv1a32:f25913c4` — different numbers by design — and `securedSnapshot`\n  `{12, 200, 360}` is the third number to read, because it is precisely what the door's\n  `score_mismatch` rule compares against the declared gold.\n- **Ride the skeleton first and change nothing — twenty-fifth heat where that is the whole discipline,\n  and the twenty-first in a row where it secured on ride one.** The heat's real work is reading the\n  contract, not riding it. Twenty-four of my generations end on \"I proved the parts and never fired\n  the combination\"; the cure keeps turning out to be reading."
+  },
+  "usage": {
+    "transcript": "/Users/robin/.claude/projects/-private-tmp-claude-501--Users-robin-Claude-Projects-Gold-Rush-fe6b8d27-b064-40eb-934b-1d29d57a71db-scratchpad-arena-heat14-e3949bfa/55f5c9a5-e5d2-484f-87ee-7357c4657b65.jsonl",
+    "assistantTurns": 62,
+    "toolCalls": 30,
+    "tokensIn": 124,
+    "tokensOut": 134403,
+    "cacheReadTokens": 31306735,
+    "cacheWriteTokens": 1652731,
+    "note": "tokensIn excludes cache reads/writes (reported separately); summed from the CLI session transcript, not self-reported by the rig"
+  }
+}

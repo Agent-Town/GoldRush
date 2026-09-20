@@ -1,0 +1,59 @@
+{
+  "secured": true,
+  "waves": 20,
+  "timeMs": 600000,
+  "gold": 556,
+  "kills": 917,
+  "calls": 150,
+  "defaultedPicks": 0,
+  "defaultedSecure": 1,
+  "eventLogHash": "fnv1a32:ad57ab7f",
+
+  "tape": "/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/heat14/opus/e1-twin-banks/attempt-1-tape.json",
+  "scored": true,
+  "runsSoFar": 3,
+  "scoredAttempts": 1,
+  "worldModel": "sim-import",
+
+  "note": "attempt-1-tape.json is BYTE-IDENTICAL to tune-2-tape.json (verified, 450750 B both). It is ONE ride under two filenames: the tune secured, and the stop rule ends the heat at the first SECURED outcome, so the securing tune IS the scored attempt. The operator reads this `tape` field, not the filename.",
+
+  "tapeEventLogHash": "fnv1a32:3be42a34",
+  "hashNote": "The TAPE header's hash (3be42a34) and the stdout outcome line's hash (ad57ab7f) are different numbers by design. The assay reproduces the TAPE's.",
+
+  "localAssay": {
+    "instrumentControl": "idle probe tape replayed to its own header fnv1a32:a45ba9ac (w3/99.733s/0g) — instrument verified before use",
+    "verdict": "REPLAY-CLEAN",
+    "replayedEventLogHash": "fnv1a32:3be42a34",
+    "matchesTapeHeader": true,
+    "replayedOutcome": { "secured": true, "waves": 20, "gold": 556, "timeAlive": 600 },
+    "securedSnapshot": { "waves": 20, "gold": 556, "timeAlive": 600 },
+    "scoreMismatchCheck": "declared gold 556 == securedSnapshot gold 556 (run banked AT the secure tick, so the two are one instant)"
+  },
+
+  "envelope": {
+    "durationTicks": 18000,
+    "maxTicks": 18002,
+    "lastEntryTick": 17702,
+    "entries": 150,
+    "maxEntries": 3601,
+    "bytes": 450750,
+    "maxTapeBytes": 1922416,
+    "allFourAxesClear": true
+  },
+
+  "era": {
+    "era": 6,
+    "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+    "buildId": "f538fa71e",
+    "viewVersion": 2
+  },
+
+  "contract": "e1-twin-banks",
+  "seed": "e1-twin-banks-01",
+  "difficulty": "trail",
+  "runs": [
+    { "label": "probe", "policy": "idle", "result": "w3 / 99.733s / 0g — idle floor" },
+    { "label": "tune-1", "result": "NOT SECURED, w19 / 586.7s / 197g — the tier sink outranked the fort" },
+    { "label": "tune-2", "result": "SECURED, w20 / 600.000s / 556g — promoted as attempt-1" }
+  ]
+}

@@ -1,0 +1,23 @@
+**SECURED on ride one.** Everything is on disk and verified.
+
+## Result
+
+`e4-boneyard` / `e4-boneyard-01` / trail — **secured, wave 12, 360.000 s, 200 gold, 40 calls**, `eventLogHash fnv1a32:f25913c4`. Two sim runs (one idle probe, one controller), one scored attempt. The stop rule ended the heat at the first secure, so `attempt-1-tape.json` is a byte-identical copy of the securing tune, declared in `gauntlet-outcome.json`'s `tape` field.
+
+**Margin — the widest I've measured on a Motor map:** the hero took *zero damage across all 42 views* (100/100 → 175/175), 0 of 5 works ever wrecked, `goldStolen` 0 despite a thief-only roster with `threats.alive` pinned at its 60 ceiling, errand latched at t = 61.7 with 10.9 of 36 fuel unspent.
+
+## What the reading bought
+
+Three things decided it, and none of them needed a second ride:
+
+- **The null floor.** The idle probe reproduced `null-floors.json` byte for byte (`fnv1a32:5c7f6600`), and zero of era 6's eight pins name this contract — so the re-survey moved this map's rendering, not its rules. That retired the geometry question in ten seconds.
+- **`claimGold` returns 0 unless the holding is a stockpile.** On this thief-only roster a till is the *sole* switch that arms theft, priced at 0.6–1.7 g/s over 250 s against +300 of ceiling that 475 panned can't fill. So **200 is the arithmetic ceiling, not a margin I left behind** — worth stating precisely, because calling it a margin would send the next rider hunting a till that costs more than it raises. This closes an open question my notebook has carried since generation 107.
+- **The hulk's landmark blocker.** Footprint 3.895 × 2.621 at scale 0.9, padded by the hero's radius, leaves a 0.74-wu-thick walkable band north/south inside `MOTOR_STOP_REACH` — so the standoff ladder had to run north/south. Three `UNREACHABLE_APPROACH` records fired; the ladder absorbed them.
+
+Since gold caps at 200 while the map pays 475, ~275 of income was free — so it went into fort rather than hoarding, with a hard build floor at t = 230 that left 113 s of refill and landed the cap exactly.
+
+## Receipt
+
+Control-tested: the zero-order probe replayed to its own header first (instrument verified), then the scored reel reproduced **`fnv1a32:99dc9ed0`** — the *tape header's* hash, not the stdout outcome line's `f25913c4` — with `securedSnapshot {waves 12, gold 200, timeAlive 360}` matching the declared gold, which is what the door's `score_mismatch` rule compares. Envelope clear on all three axes: 10800/18002 ticks (last order 261 inside), 40/3601 entries, 137,328 / 1,938,784 bytes (7.1%) — the ceiling computed from `runTapeEnvelopeForContract`, not the charter's summary of it.
+
+The report's four sections (`## Outcome`, `## What the map asked`, `## Winnability`, `## Lessons for my notebook`) are in `gauntlet-report.md` for you to copy verbatim.

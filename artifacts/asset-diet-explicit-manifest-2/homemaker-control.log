@@ -1,0 +1,94 @@
+[WebServer] (node:38595) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:38639) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 2 tests using 1 worker
+
+(node:38669) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] 12:16:46 PM [vite] (client) [Unhandled rejection] TypeError: Cannot read properties of undefined (reading 'suppressBaronForRun')
+[WebServer]  > HomemakerBossSystem.suppressBossSpawn src/game/Game.ts:1107:45
+[WebServer]     1105 |      enabled: this.activeContract.twist.baron?.variantId === 'homemaker_9000',
+[WebServer]     1106 |      now: () => this.timeAlive,
+[WebServer]     1107 |      suppressBossSpawn: () => this.waveSystem.suppressBaronForRun(),
+[WebServer]          |                                               ^
+[WebServer]     1108 |    });
+[WebServer]     1109 |    private readonly echoBoss = new EchoBossSystem(
+[WebServer]  > HomemakerBossSystem.restorePersistentKept src/systems/HomemakerBossSystem.ts:490:9
+[WebServer]  > new HomemakerBossSystem src/systems/HomemakerBossSystem.ts:194:27
+[WebServer]  > createHomemakerBossSystem src/systems/HomemakerBossSystem.ts:88:9
+[WebServer]  > <instance_members_initializer> src/game/Game.ts:1095:35
+[WebServer]  > new Game src/game/Game.ts:1469:4
+[WebServer]  > startGame src/main.ts:135:9
+[WebServer] 
+  ✘  1 [desktop-chrome] › e2e/e6-boss-homemaker.spec.ts:126:1 › unbuilds, tidies, makes one chair, and remains kept without ever hurting the player (2.8m)
+(node:72942) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] 12:19:45 PM [vite] (client) [Unhandled rejection] TypeError: Cannot read properties of undefined (reading 'suppressBaronForRun')
+[WebServer]  > HomemakerBossSystem.suppressBossSpawn src/game/Game.ts:1107:45
+[WebServer]     1105 |      enabled: this.activeContract.twist.baron?.variantId === 'homemaker_9000',
+[WebServer]     1106 |      now: () => this.timeAlive,
+[WebServer]     1107 |      suppressBossSpawn: () => this.waveSystem.suppressBaronForRun(),
+[WebServer]          |                                               ^
+[WebServer]     1108 |    });
+[WebServer]     1109 |    private readonly echoBoss = new EchoBossSystem(
+[WebServer]  > HomemakerBossSystem.restorePersistentKept src/systems/HomemakerBossSystem.ts:490:9
+[WebServer]  > new HomemakerBossSystem src/systems/HomemakerBossSystem.ts:194:27
+[WebServer]  > createHomemakerBossSystem src/systems/HomemakerBossSystem.ts:88:9
+[WebServer]  > <instance_members_initializer> src/game/Game.ts:1095:35
+[WebServer]  > new Game src/game/Game.ts:1469:4
+[WebServer]  > startGame src/main.ts:135:9
+[WebServer] 
+  ✘  2 [mobile-chrome] › e2e/e6-boss-homemaker.spec.ts:126:1 › unbuilds, tidies, makes one chair, and remains kept without ever hurting the player (2.4m)
+
+
+  1) [desktop-chrome] › e2e/e6-boss-homemaker.spec.ts:126:1 › unbuilds, tidies, makes one chair, and remains kept without ever hurting the player 
+
+    Test timeout of 90000ms exceeded.
+
+    Error: page.waitForFunction: Test timeout of 90000ms exceeded.
+
+      225 |
+      226 |   await page.reload();
+    > 227 |   await page.waitForFunction(() => window.__GR_TEST__ && window.__THREE_GAME_DIAGNOSTICS__?.contract.activeId === 'e6-glow-mesa');
+          |              ^
+      228 |   await dismissBriefing(page);
+      229 |   await expect.poll(() => homemaker(page)).toMatchObject({
+      230 |     active: false,
+        at /private/var/folders/cd/p02kvf6s5qgfn47w85hhtzjc0000gn/T/goldrush-manifest-control-kft4x06s/tree/e2e/e6-boss-homemaker.spec.ts:227:14
+
+    Test timeout of 30000ms exceeded.
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../../../../Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/asset-diet-explicit-manifest-2/control-results/e6-boss-homemaker-unbuilds-d39e8-out-ever-hurting-the-player-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../../../../../Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/asset-diet-explicit-manifest-2/control-results/e6-boss-homemaker-unbuilds-d39e8-out-ever-hurting-the-player-desktop-chrome/error-context.md
+
+  2) [mobile-chrome] › e2e/e6-boss-homemaker.spec.ts:126:1 › unbuilds, tidies, makes one chair, and remains kept without ever hurting the player 
+
+    Test timeout of 90000ms exceeded.
+
+    Error: page.waitForFunction: Test timeout of 90000ms exceeded.
+
+      225 |
+      226 |   await page.reload();
+    > 227 |   await page.waitForFunction(() => window.__GR_TEST__ && window.__THREE_GAME_DIAGNOSTICS__?.contract.activeId === 'e6-glow-mesa');
+          |              ^
+      228 |   await dismissBriefing(page);
+      229 |   await expect.poll(() => homemaker(page)).toMatchObject({
+      230 |     active: false,
+        at /private/var/folders/cd/p02kvf6s5qgfn47w85hhtzjc0000gn/T/goldrush-manifest-control-kft4x06s/tree/e2e/e6-boss-homemaker.spec.ts:227:14
+
+    Test timeout of 30000ms exceeded.
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../../../../Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/asset-diet-explicit-manifest-2/control-results/e6-boss-homemaker-unbuilds-d39e8-out-ever-hurting-the-player-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../../../../../Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/asset-diet-explicit-manifest-2/control-results/e6-boss-homemaker-unbuilds-d39e8-out-ever-hurting-the-player-mobile-chrome/error-context.md
+
+  2 failed
+    [desktop-chrome] › e2e/e6-boss-homemaker.spec.ts:126:1 › unbuilds, tidies, makes one chair, and remains kept without ever hurting the player 
+    [mobile-chrome] › e2e/e6-boss-homemaker.spec.ts:126:1 › unbuilds, tidies, makes one chair, and remains kept without ever hurting the player 

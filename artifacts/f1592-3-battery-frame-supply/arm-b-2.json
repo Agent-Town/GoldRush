@@ -1,0 +1,122 @@
+{
+  "baseURL": "http://127.0.0.1:5253",
+  "startedAt": "2026-08-09T02:36:20.617Z",
+  "backgroundLoad": {
+    "kind": "factory-gate-battery",
+    "driver": "scripts/gate-battery.mjs",
+    "spec": "e2e/beauty-town.spec.ts",
+    "project": "desktop-chrome",
+    "workers": 1,
+    "batteryPid": 92735,
+    "serverPid": 92694,
+    "serverPort": 5234,
+    "liveAtProbeStart": true,
+    "liveAtProbeEnd": true
+  },
+  "lever": {
+    "kind": "cdp:Emulation.setCPUThrottlingRate",
+    "rate": 1,
+    "applied": false,
+    "error": null,
+    "busyLoopMs": 2.3999996185302734
+  },
+  "armed": false,
+  "samples": [
+    {
+      "wallMs": 4.084124999999858,
+      "frame": 16,
+      "elapsed": 0.2701959996185303
+    },
+    {
+      "wallMs": 255.46645799999988,
+      "frame": 45,
+      "elapsed": 0.5288959996185303
+    },
+    {
+      "wallMs": 505.993375,
+      "frame": 75,
+      "elapsed": 0.7777959996185305
+    },
+    {
+      "wallMs": 756.5561659999998,
+      "frame": 105,
+      "elapsed": 1.0289959996185305
+    },
+    {
+      "wallMs": 1008.0442079999998,
+      "frame": 135,
+      "elapsed": 1.2775959996185302
+    },
+    {
+      "wallMs": 1260.129625,
+      "frame": 165,
+      "elapsed": 1.5292959996185305
+    },
+    {
+      "wallMs": 1513.2878329999999,
+      "frame": 196,
+      "elapsed": 1.7876959996185309
+    },
+    {
+      "wallMs": 1764.807625,
+      "frame": 226,
+      "elapsed": 2.037595999618531
+    },
+    {
+      "wallMs": 2017.8992079999998,
+      "frame": 256,
+      "elapsed": 2.287395999618531
+    },
+    {
+      "wallMs": 2271.281208,
+      "frame": 287,
+      "elapsed": 2.5452959996185314
+    },
+    {
+      "wallMs": 2523.4255,
+      "frame": 317,
+      "elapsed": 2.7956959996185327
+    },
+    {
+      "wallMs": 2775.611666,
+      "frame": 347,
+      "elapsed": 3.0442959996185333
+    },
+    {
+      "wallMs": 3028.2321249999995,
+      "frame": 378,
+      "elapsed": 3.302495999618533
+    },
+    {
+      "wallMs": 3281.074958,
+      "frame": 408,
+      "elapsed": 3.5538959996185326
+    },
+    {
+      "wallMs": 3533.1102499999997,
+      "frame": 438,
+      "elapsed": 3.803995999618531
+    },
+    {
+      "wallMs": 3788.0094579999995,
+      "frame": 469,
+      "elapsed": 4.061395999618532
+    }
+  ],
+  "errors": [],
+  "summary": {
+    "startFrame": 16,
+    "startElapsed": 0.2701959996185303,
+    "endFrame": 469,
+    "endElapsed": 4.061395999618532,
+    "frames": 453,
+    "elapsed": 3.7912000000000017,
+    "wallMs": 3783.9253329999997,
+    "meanElapsedPerFrame": 0.00836909492273731,
+    "maxElapsedPerFrame": 0.008920689655172414,
+    "fps": 119.7169500278826,
+    "meanFrameIntervalMs": 8.353036055187637,
+    "predictedWallSeconds": 0.6765959204701986,
+    "timedOut": false
+  }
+}

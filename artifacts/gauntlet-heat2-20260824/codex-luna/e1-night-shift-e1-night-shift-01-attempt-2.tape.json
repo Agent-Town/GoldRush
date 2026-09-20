@@ -1,0 +1,2444 @@
+{
+  "version": 2,
+  "id": "agent-cbe9bb5c-9783d9d5-f88e-4098-952d-a45376160ec2",
+  "createdAt": 0,
+  "kept": true,
+  "contract": "e1-night-shift",
+  "seed": "e1-night-shift-01",
+  "difficulty": "trail",
+  "simVersion": 1,
+  "meta": {
+    "buildId": "b42c0fbcc"
+  },
+  "runStart": {
+    "meta": {
+      "version": 1,
+      "tracks": {
+        "territory": 0,
+        "science": 0,
+        "hero": 0,
+        "agent": 0
+      }
+    },
+    "research": {
+      "version": 1,
+      "epochId": "epoch-1-frontier",
+      "metaScienceCursor": 0,
+      "progress": {
+        "version": 1,
+        "tracks": {
+          "territory": 0,
+          "science": 0,
+          "hero": 0,
+          "agent": 0
+        }
+      },
+      "taken": [],
+      "proposalSalt": 0,
+      "pinnedTarget": null,
+      "unlocks": {}
+    }
+  },
+  "inputLog": {
+    "version": 1,
+    "name": "agent-cbe9bb5c",
+    "contractId": "e1-night-shift",
+    "seed": "e1-night-shift-01",
+    "difficultyPreset": "trail",
+    "stepSeconds": 0.03333333333333333,
+    "start": {
+      "x": 0,
+      "z": 12
+    },
+    "durationTicks": 5085,
+    "entries": [
+      {
+        "t": 0,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 0,
+                  "z": 16
+                }
+              },
+              {
+                "verb": "CONTEXT_ACTION",
+                "action": "upgrade",
+                "target": {
+                  "id": "lantern_post",
+                  "index": 0
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -16,
+                  "z": 18
+                }
+              },
+              {
+                "verb": "CONTEXT_ACTION",
+                "action": "upgrade",
+                "target": {
+                  "id": "lantern_post",
+                  "index": 1
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 16,
+                  "z": 18
+                }
+              },
+              {
+                "verb": "CONTEXT_ACTION",
+                "action": "upgrade",
+                "target": {
+                  "id": "lantern_post",
+                  "index": 2
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -22,
+                  "z": -12
+                }
+              },
+              {
+                "verb": "CONTEXT_ACTION",
+                "action": "upgrade",
+                "target": {
+                  "id": "lantern_post",
+                  "index": 3
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 22,
+                  "z": -12
+                }
+              },
+              {
+                "verb": "CONTEXT_ACTION",
+                "action": "upgrade",
+                "target": {
+                  "id": "lantern_post",
+                  "index": 4
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -10,
+                  "z": -24
+                }
+              },
+              {
+                "verb": "CONTEXT_ACTION",
+                "action": "upgrade",
+                "target": {
+                  "id": "lantern_post",
+                  "index": 5
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 10,
+                  "z": -24
+                }
+              },
+              {
+                "verb": "CONTEXT_ACTION",
+                "action": "upgrade",
+                "target": {
+                  "id": "lantern_post",
+                  "index": 6
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -10,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "lantern_post",
+                "where": {
+                  "x": -10,
+                  "z": 12
+                },
+                "when": {
+                  "goldGte": 15
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 10,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "lantern_post",
+                "where": {
+                  "x": 10,
+                  "z": 12
+                },
+                "when": {
+                  "goldGte": 15
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -6,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -6,
+                  "z": 12
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 6,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 6,
+                  "z": 12
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -4,
+                  "z": 8
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": -4,
+                  "z": 8
+                },
+                "when": {
+                  "goldGte": 50
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 4,
+                  "z": 8
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 4,
+                  "z": 8
+                },
+                "when": {
+                  "goldGte": 70
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 290,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 0,
+                  "z": 16
+                }
+              },
+              {
+                "verb": "CONTEXT_ACTION",
+                "action": "upgrade",
+                "target": {
+                  "id": "lantern_post",
+                  "index": 0
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -16,
+                  "z": 18
+                }
+              },
+              {
+                "verb": "CONTEXT_ACTION",
+                "action": "upgrade",
+                "target": {
+                  "id": "lantern_post",
+                  "index": 1
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 16,
+                  "z": 18
+                }
+              },
+              {
+                "verb": "CONTEXT_ACTION",
+                "action": "upgrade",
+                "target": {
+                  "id": "lantern_post",
+                  "index": 2
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -22,
+                  "z": -12
+                }
+              },
+              {
+                "verb": "CONTEXT_ACTION",
+                "action": "upgrade",
+                "target": {
+                  "id": "lantern_post",
+                  "index": 3
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 22,
+                  "z": -12
+                }
+              },
+              {
+                "verb": "CONTEXT_ACTION",
+                "action": "upgrade",
+                "target": {
+                  "id": "lantern_post",
+                  "index": 4
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -10,
+                  "z": -24
+                }
+              },
+              {
+                "verb": "CONTEXT_ACTION",
+                "action": "upgrade",
+                "target": {
+                  "id": "lantern_post",
+                  "index": 5
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 10,
+                  "z": -24
+                }
+              },
+              {
+                "verb": "CONTEXT_ACTION",
+                "action": "upgrade",
+                "target": {
+                  "id": "lantern_post",
+                  "index": 6
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -10,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "lantern_post",
+                "where": {
+                  "x": -10,
+                  "z": 12
+                },
+                "when": {
+                  "goldGte": 15
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 10,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "lantern_post",
+                "where": {
+                  "x": 10,
+                  "z": 12
+                },
+                "when": {
+                  "goldGte": 15
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -6,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -6,
+                  "z": 12
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 6,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 6,
+                  "z": 12
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -4,
+                  "z": 8
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": -4,
+                  "z": 8
+                },
+                "when": {
+                  "goldGte": 50
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 4,
+                  "z": 8
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 4,
+                  "z": 8
+                },
+                "when": {
+                  "goldGte": 70
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 713,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 0,
+                  "z": 16
+                }
+              },
+              {
+                "verb": "CONTEXT_ACTION",
+                "action": "upgrade",
+                "target": {
+                  "id": "lantern_post",
+                  "index": 0
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -16,
+                  "z": 18
+                }
+              },
+              {
+                "verb": "CONTEXT_ACTION",
+                "action": "upgrade",
+                "target": {
+                  "id": "lantern_post",
+                  "index": 1
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 16,
+                  "z": 18
+                }
+              },
+              {
+                "verb": "CONTEXT_ACTION",
+                "action": "upgrade",
+                "target": {
+                  "id": "lantern_post",
+                  "index": 2
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -22,
+                  "z": -12
+                }
+              },
+              {
+                "verb": "CONTEXT_ACTION",
+                "action": "upgrade",
+                "target": {
+                  "id": "lantern_post",
+                  "index": 3
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 22,
+                  "z": -12
+                }
+              },
+              {
+                "verb": "CONTEXT_ACTION",
+                "action": "upgrade",
+                "target": {
+                  "id": "lantern_post",
+                  "index": 4
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -10,
+                  "z": -24
+                }
+              },
+              {
+                "verb": "CONTEXT_ACTION",
+                "action": "upgrade",
+                "target": {
+                  "id": "lantern_post",
+                  "index": 5
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 10,
+                  "z": -24
+                }
+              },
+              {
+                "verb": "CONTEXT_ACTION",
+                "action": "upgrade",
+                "target": {
+                  "id": "lantern_post",
+                  "index": 6
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -10,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "lantern_post",
+                "where": {
+                  "x": -10,
+                  "z": 12
+                },
+                "when": {
+                  "goldGte": 15
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 10,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "lantern_post",
+                "where": {
+                  "x": 10,
+                  "z": 12
+                },
+                "when": {
+                  "goldGte": 15
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -6,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -6,
+                  "z": 12
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 6,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 6,
+                  "z": 12
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -4,
+                  "z": 8
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": -4,
+                  "z": 8
+                },
+                "when": {
+                  "goldGte": 50
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 4,
+                  "z": 8
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 4,
+                  "z": 8
+                },
+                "when": {
+                  "goldGte": 70
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 900,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 0,
+                  "z": 16
+                }
+              },
+              {
+                "verb": "CONTEXT_ACTION",
+                "action": "upgrade",
+                "target": {
+                  "id": "lantern_post",
+                  "index": 0
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -16,
+                  "z": 18
+                }
+              },
+              {
+                "verb": "CONTEXT_ACTION",
+                "action": "upgrade",
+                "target": {
+                  "id": "lantern_post",
+                  "index": 1
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 16,
+                  "z": 18
+                }
+              },
+              {
+                "verb": "CONTEXT_ACTION",
+                "action": "upgrade",
+                "target": {
+                  "id": "lantern_post",
+                  "index": 2
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -22,
+                  "z": -12
+                }
+              },
+              {
+                "verb": "CONTEXT_ACTION",
+                "action": "upgrade",
+                "target": {
+                  "id": "lantern_post",
+                  "index": 3
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 22,
+                  "z": -12
+                }
+              },
+              {
+                "verb": "CONTEXT_ACTION",
+                "action": "upgrade",
+                "target": {
+                  "id": "lantern_post",
+                  "index": 4
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -10,
+                  "z": -24
+                }
+              },
+              {
+                "verb": "CONTEXT_ACTION",
+                "action": "upgrade",
+                "target": {
+                  "id": "lantern_post",
+                  "index": 5
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 10,
+                  "z": -24
+                }
+              },
+              {
+                "verb": "CONTEXT_ACTION",
+                "action": "upgrade",
+                "target": {
+                  "id": "lantern_post",
+                  "index": 6
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -10,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "lantern_post",
+                "where": {
+                  "x": -10,
+                  "z": 12
+                },
+                "when": {
+                  "goldGte": 15
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 10,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "lantern_post",
+                "where": {
+                  "x": 10,
+                  "z": 12
+                },
+                "when": {
+                  "goldGte": 15
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -6,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -6,
+                  "z": 12
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 6,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 6,
+                  "z": 12
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -4,
+                  "z": 8
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": -4,
+                  "z": 8
+                },
+                "when": {
+                  "goldGte": 50
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 4,
+                  "z": 8
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 4,
+                  "z": 8
+                },
+                "when": {
+                  "goldGte": 70
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 1210,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "double_tap_coil"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 1801,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 0,
+                  "z": 16
+                }
+              },
+              {
+                "verb": "CONTEXT_ACTION",
+                "action": "upgrade",
+                "target": {
+                  "id": "lantern_post",
+                  "index": 0
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -16,
+                  "z": 18
+                }
+              },
+              {
+                "verb": "CONTEXT_ACTION",
+                "action": "upgrade",
+                "target": {
+                  "id": "lantern_post",
+                  "index": 1
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 16,
+                  "z": 18
+                }
+              },
+              {
+                "verb": "CONTEXT_ACTION",
+                "action": "upgrade",
+                "target": {
+                  "id": "lantern_post",
+                  "index": 2
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -22,
+                  "z": -12
+                }
+              },
+              {
+                "verb": "CONTEXT_ACTION",
+                "action": "upgrade",
+                "target": {
+                  "id": "lantern_post",
+                  "index": 3
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 22,
+                  "z": -12
+                }
+              },
+              {
+                "verb": "CONTEXT_ACTION",
+                "action": "upgrade",
+                "target": {
+                  "id": "lantern_post",
+                  "index": 4
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -10,
+                  "z": -24
+                }
+              },
+              {
+                "verb": "CONTEXT_ACTION",
+                "action": "upgrade",
+                "target": {
+                  "id": "lantern_post",
+                  "index": 5
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 10,
+                  "z": -24
+                }
+              },
+              {
+                "verb": "CONTEXT_ACTION",
+                "action": "upgrade",
+                "target": {
+                  "id": "lantern_post",
+                  "index": 6
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -10,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "lantern_post",
+                "where": {
+                  "x": -10,
+                  "z": 12
+                },
+                "when": {
+                  "goldGte": 15
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 10,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "lantern_post",
+                "where": {
+                  "x": 10,
+                  "z": 12
+                },
+                "when": {
+                  "goldGte": 15
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -6,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -6,
+                  "z": 12
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 6,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 6,
+                  "z": 12
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -4,
+                  "z": 8
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": -4,
+                  "z": 8
+                },
+                "when": {
+                  "goldGte": 50
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 4,
+                  "z": 8
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 4,
+                  "z": 8
+                },
+                "when": {
+                  "goldGte": 70
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 2479,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 0,
+                  "z": 16
+                }
+              },
+              {
+                "verb": "CONTEXT_ACTION",
+                "action": "upgrade",
+                "target": {
+                  "id": "lantern_post",
+                  "index": 0
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -16,
+                  "z": 18
+                }
+              },
+              {
+                "verb": "CONTEXT_ACTION",
+                "action": "upgrade",
+                "target": {
+                  "id": "lantern_post",
+                  "index": 1
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 16,
+                  "z": 18
+                }
+              },
+              {
+                "verb": "CONTEXT_ACTION",
+                "action": "upgrade",
+                "target": {
+                  "id": "lantern_post",
+                  "index": 2
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -22,
+                  "z": -12
+                }
+              },
+              {
+                "verb": "CONTEXT_ACTION",
+                "action": "upgrade",
+                "target": {
+                  "id": "lantern_post",
+                  "index": 3
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 22,
+                  "z": -12
+                }
+              },
+              {
+                "verb": "CONTEXT_ACTION",
+                "action": "upgrade",
+                "target": {
+                  "id": "lantern_post",
+                  "index": 4
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -10,
+                  "z": -24
+                }
+              },
+              {
+                "verb": "CONTEXT_ACTION",
+                "action": "upgrade",
+                "target": {
+                  "id": "lantern_post",
+                  "index": 5
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 10,
+                  "z": -24
+                }
+              },
+              {
+                "verb": "CONTEXT_ACTION",
+                "action": "upgrade",
+                "target": {
+                  "id": "lantern_post",
+                  "index": 6
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -10,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "lantern_post",
+                "where": {
+                  "x": -10,
+                  "z": 12
+                },
+                "when": {
+                  "goldGte": 15
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 10,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "lantern_post",
+                "where": {
+                  "x": 10,
+                  "z": 12
+                },
+                "when": {
+                  "goldGte": 15
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -6,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -6,
+                  "z": 12
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 6,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 6,
+                  "z": 12
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -4,
+                  "z": 8
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": -4,
+                  "z": 8
+                },
+                "when": {
+                  "goldGte": 50
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 4,
+                  "z": 8
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 4,
+                  "z": 8
+                },
+                "when": {
+                  "goldGte": 70
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 2701,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 0,
+                  "z": 16
+                }
+              },
+              {
+                "verb": "CONTEXT_ACTION",
+                "action": "upgrade",
+                "target": {
+                  "id": "lantern_post",
+                  "index": 0
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -16,
+                  "z": 18
+                }
+              },
+              {
+                "verb": "CONTEXT_ACTION",
+                "action": "upgrade",
+                "target": {
+                  "id": "lantern_post",
+                  "index": 1
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 16,
+                  "z": 18
+                }
+              },
+              {
+                "verb": "CONTEXT_ACTION",
+                "action": "upgrade",
+                "target": {
+                  "id": "lantern_post",
+                  "index": 2
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -22,
+                  "z": -12
+                }
+              },
+              {
+                "verb": "CONTEXT_ACTION",
+                "action": "upgrade",
+                "target": {
+                  "id": "lantern_post",
+                  "index": 3
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 22,
+                  "z": -12
+                }
+              },
+              {
+                "verb": "CONTEXT_ACTION",
+                "action": "upgrade",
+                "target": {
+                  "id": "lantern_post",
+                  "index": 4
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -10,
+                  "z": -24
+                }
+              },
+              {
+                "verb": "CONTEXT_ACTION",
+                "action": "upgrade",
+                "target": {
+                  "id": "lantern_post",
+                  "index": 5
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 10,
+                  "z": -24
+                }
+              },
+              {
+                "verb": "CONTEXT_ACTION",
+                "action": "upgrade",
+                "target": {
+                  "id": "lantern_post",
+                  "index": 6
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -10,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "lantern_post",
+                "where": {
+                  "x": -10,
+                  "z": 12
+                },
+                "when": {
+                  "goldGte": 15
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 10,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "lantern_post",
+                "where": {
+                  "x": 10,
+                  "z": 12
+                },
+                "when": {
+                  "goldGte": 15
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -6,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -6,
+                  "z": 12
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 6,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 6,
+                  "z": 12
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -4,
+                  "z": 8
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": -4,
+                  "z": 8
+                },
+                "when": {
+                  "goldGte": 50
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 4,
+                  "z": 8
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 4,
+                  "z": 8
+                },
+                "when": {
+                  "goldGte": 70
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 2962,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "heavy_spark"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 3223,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "long_resonator"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 3535,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "heavy_spark"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 3601,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 0,
+                  "z": 16
+                }
+              },
+              {
+                "verb": "CONTEXT_ACTION",
+                "action": "upgrade",
+                "target": {
+                  "id": "lantern_post",
+                  "index": 0
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -16,
+                  "z": 18
+                }
+              },
+              {
+                "verb": "CONTEXT_ACTION",
+                "action": "upgrade",
+                "target": {
+                  "id": "lantern_post",
+                  "index": 1
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 16,
+                  "z": 18
+                }
+              },
+              {
+                "verb": "CONTEXT_ACTION",
+                "action": "upgrade",
+                "target": {
+                  "id": "lantern_post",
+                  "index": 2
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -22,
+                  "z": -12
+                }
+              },
+              {
+                "verb": "CONTEXT_ACTION",
+                "action": "upgrade",
+                "target": {
+                  "id": "lantern_post",
+                  "index": 3
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 22,
+                  "z": -12
+                }
+              },
+              {
+                "verb": "CONTEXT_ACTION",
+                "action": "upgrade",
+                "target": {
+                  "id": "lantern_post",
+                  "index": 4
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -10,
+                  "z": -24
+                }
+              },
+              {
+                "verb": "CONTEXT_ACTION",
+                "action": "upgrade",
+                "target": {
+                  "id": "lantern_post",
+                  "index": 5
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 10,
+                  "z": -24
+                }
+              },
+              {
+                "verb": "CONTEXT_ACTION",
+                "action": "upgrade",
+                "target": {
+                  "id": "lantern_post",
+                  "index": 6
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -10,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "lantern_post",
+                "where": {
+                  "x": -10,
+                  "z": 12
+                },
+                "when": {
+                  "goldGte": 15
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 10,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "lantern_post",
+                "where": {
+                  "x": 10,
+                  "z": 12
+                },
+                "when": {
+                  "goldGte": 15
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -6,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -6,
+                  "z": 12
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 6,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 6,
+                  "z": 12
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -4,
+                  "z": 8
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": -4,
+                  "z": 8
+                },
+                "when": {
+                  "goldGte": 50
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 4,
+                  "z": 8
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 4,
+                  "z": 8
+                },
+                "when": {
+                  "goldGte": 70
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 4258,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "heavy_spark"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 4501,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 0,
+                  "z": 16
+                }
+              },
+              {
+                "verb": "CONTEXT_ACTION",
+                "action": "upgrade",
+                "target": {
+                  "id": "lantern_post",
+                  "index": 0
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -16,
+                  "z": 18
+                }
+              },
+              {
+                "verb": "CONTEXT_ACTION",
+                "action": "upgrade",
+                "target": {
+                  "id": "lantern_post",
+                  "index": 1
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 16,
+                  "z": 18
+                }
+              },
+              {
+                "verb": "CONTEXT_ACTION",
+                "action": "upgrade",
+                "target": {
+                  "id": "lantern_post",
+                  "index": 2
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -22,
+                  "z": -12
+                }
+              },
+              {
+                "verb": "CONTEXT_ACTION",
+                "action": "upgrade",
+                "target": {
+                  "id": "lantern_post",
+                  "index": 3
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 22,
+                  "z": -12
+                }
+              },
+              {
+                "verb": "CONTEXT_ACTION",
+                "action": "upgrade",
+                "target": {
+                  "id": "lantern_post",
+                  "index": 4
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -10,
+                  "z": -24
+                }
+              },
+              {
+                "verb": "CONTEXT_ACTION",
+                "action": "upgrade",
+                "target": {
+                  "id": "lantern_post",
+                  "index": 5
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 10,
+                  "z": -24
+                }
+              },
+              {
+                "verb": "CONTEXT_ACTION",
+                "action": "upgrade",
+                "target": {
+                  "id": "lantern_post",
+                  "index": 6
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -10,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "lantern_post",
+                "where": {
+                  "x": -10,
+                  "z": 12
+                },
+                "when": {
+                  "goldGte": 15
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 10,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "lantern_post",
+                "where": {
+                  "x": 10,
+                  "z": 12
+                },
+                "when": {
+                  "goldGte": 15
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -6,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": -6,
+                  "z": 12
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 6,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "palisade",
+                "where": {
+                  "x": 6,
+                  "z": 12
+                },
+                "when": {
+                  "goldGte": 10
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -4,
+                  "z": 8
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": -4,
+                  "z": 8
+                },
+                "when": {
+                  "goldGte": 50
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 4,
+                  "z": 8
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 4,
+                  "z": 8
+                },
+                "when": {
+                  "goldGte": 70
+                }
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 70
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 4836,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "long_resonator"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "truncated": null,
+    "primarySlot": 0,
+    "streams": []
+  },
+  "eventLogHash": "fnv1a32:d22b8d28",
+  "outcome": {
+    "reason": "death",
+    "secured": false,
+    "waves": 5,
+    "timeAlive": 169.5,
+    "gold": 140
+  }
+}

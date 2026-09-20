@@ -1,0 +1,60 @@
+{
+  "rig": "opus",
+  "contract": "e3-canyon-works",
+  "model": "claude-opus-5",
+  "sessionId": "5f7ce29c-88a9-4196-892a-70fd67ca5130",
+  "startedAt": "2026-09-03T21:18:47.130Z",
+  "endedAt": "2026-09-03T21:28:38.358Z",
+  "wallClockSeconds": 591,
+  "wallHit": false,
+  "exitCode": 0,
+  "signal": null,
+  "setupToFirstOutputSeconds": 75,
+  "arenaTrackedChanges": [],
+  "workspaceFiles": [
+    "gauntlet-outcome.json",
+    "gauntlet-report.md",
+    "probe-idle.json",
+    "ride.mjs",
+    "tune-1-log.json",
+    "tune-1.json",
+    "tune-2-log.json",
+    "tune-2.json"
+  ],
+  "outcome": {
+    "secured": false,
+    "waves": 3,
+    "timeMs": 102433,
+    "gold": 45,
+    "kills": 39,
+    "calls": 7,
+    "defaultedPicks": 0,
+    "defaultedSecure": 0,
+    "eventLogHash": "fnv1a32:6065ab6d",
+    "tape": "/tmp/heat11-5e7a7c0b/artifacts/heat11/opus/e3-canyon-works/tune-1.json",
+    "scored": false,
+    "runsSoFar": 3,
+    "scoredAttempts": 0,
+    "worldModel": "sim-import",
+    "note": "Not secured; nothing put forward. Best of 3 runs (idle probe + 2 controller tunes). All three died at wave 3, t=98-102s, hero HP 0."
+  },
+  "outcomeError": null,
+  "scoredTapes": [],
+  "otherSecuredTapes": [],
+  "report": {
+    "outcome": "**NOT SECURED.** Best run: **waves 3 · timeAlive 102.433s · gold 45 · calls 7 · kills 39 ·\n`eventLogHash fnv1a32:6065ab6d`** (tape `tune-1.json`).\n**3 sim runs · 0 scored attempts · no tape put forward** — an unsecured run must not be submitted,\nand I stopped riding when the arithmetic below became certain rather than spend the wall on a fourth\ndoomed ride.\n\n| run | tape | plan | result |\n|---|---|---|---|\n| 1 | `probe-idle.json` | `--policy=idle` | w3 / 98.267s / 0g / 0 calls |\n| 2 | `tune-1.json` | grid-first, suffix-sum-gated 4+2 beacon batches | w3 / 102.433s / 45g / 7 calls |\n| 3 | `tune-2.json` | palisades-first (survival), then the grid | w3 / 101.600s / 0g / 8 calls |\n\nAll three died at the same place: hero HP 0 in wave 3, between t=98s and t=102s.",
+    "whatTheMapAsked": "It asked a real graph question and I could read every part of it — this is **not** stationary\nsurvival wearing the era's name, and unlike E2's pressure the mechanic is fully published in the\nview. `now.canyonConnect: {powered, required: 2, byWave: 6, complete, failed}` is a live field, and\n`stablePrefix.mechanics.rules` names its own source (`connect_objective` /\n`Game.syncCanyonConnectObjective`) including `completionLatch: \"one-way-at-or-before-deadline\"` and\n`missedDeadline: \"run-unsecurable\"`. The map is a genuine directed network under sabotage: two\ndisjoint three-hop chains from one 26W producer, `fevered_saboteur` wreckers (`waveMin: 4`,\n`buildingDamageScale: 1.25`) spawning from gates at (±46,38) — i.e. **on top of the seams and the rim\npylons** — and a watt ledger that sheds by priority (galleries 10, tram 15, turrets 20, lamps 30)\nagainst 28W of demand on 26W of supply, so the two lamps shed and the galleries stay `powered`. The\ncrawler-drain nodes (18W each, priority 0) boot **offline** (`HeadlessContractSim:2479`,\n`online: node.role !== 'crawler-drain'`), which is the only reason the ledger balances at all.\n\nThe fields that carried it were `now.canyonConnect`, `now.works.entries` (position + `wrecked`, the\nonly way to see which pylon sites are actually covered), `now.seams[].active/x/z`, `now.gold`,\n`now.hero.hp`, and `now.threats.alive`. The orders were `BUILD` (suffix-sum gated), `HARVEST` and\n`PICK_UPGRADE`. The mechanic is load-bearing exactly as the county's audit note says — it is the\n*only* thing standing between this contract and an ordinary survival map. It is also, on this seed,\npriced past what the map's own economy can pay.",
+    "winnability": "**Undecided-leaning-no through the door, and the wall is the map's economy against its own deadline,\nnot the grammar and not my budget:** the connect latch demands 330 gold of beacons strung across six\nsites spanning 80wu of gorge while `wave <= 6` (t < 210s), but the map's only income is four gold\nseams at z≈30-34 — **~78wu north of the loss stake, across the river** — of which only two are ever\nlive, each capped at `capacity 30` on a `respawnSeconds 20` cycle (`Balance.goldSeam`), giving a\nhard ceiling near 3.0 g/s that no policy can exceed; 330 gold is therefore ≥110s of pure panning\nbefore a single step of the ~100s pylon tour or the 21s opening commute, which overruns t=210 even\nwith a perfect Prospector, and I measured only **0.44-0.69 g/s** actual because every build order\ndrags the one order-actor off the seams and back down the canyon. Underneath that sits a second,\nearlier wall I never got past: the hero is a fixed gun welded to the stake at (0,-44) while its only\nworker is 78wu away, and it died at wave 3 (t≈100s) in **all three** runs — idle, grid-first, and\npalisades-first alike — so on this seed the run ends four waves before the connect deadline it\ncannot afford anyway.\n\nTwo honest caveats on that verdict, because I did not get to test them: (a) I spent my wall on the\ngrid and never tried a pure fortress line — every gold into palisades and upgrades around the stake,\nconceding the connect latch — which would answer whether wave 12 survival is reachable at all, and\n(b) my BUILD gating misfired once (run 2 placed a beacon at 25 gold against a `goldGte: 160` suffix\ngate), so one of my two controller runs was not testing the policy I wrote. Neither caveat touches\nthe 330g/210s arithmetic, which is manifest-level and does not depend on my controller.",
+    "lessons": "- **`unclaimed` with no `reason` is a green light about the *standings*, not about the map.** Six\n  contracts running I have read that field as \"go\" and been right; here it was still correct — the\n  contract is not `standings-disabled` — but it told me nothing about whether the map can be paid\n  for. The receipt encodes an *authoring* wall (`secureWave: 0`, `training_ground`), never an\n  *economic* one. Add a second pre-ride check next to it: **price the objective in gold and divide by\n  the map's seam throughput before writing an order.** Two minutes of arithmetic\n  (`maxCount × costs` vs `capacity/respawnSeconds × liveSeams × deadline`) would have told me at\n  minute six what three rides told me at minute nineteen.\n- **Count the order-actor's feet as a budget, not a detail.** The Canyon Works is the first map I\n  have ridden where income and defence are at opposite ends of the board (78wu, across a river) and\n  the objective is strung *between* them. One body cannot pan, build a six-site network, and defend a\n  stake; every BUILD order is a round trip that costs ~15-40s of panning. On any map, measure\n  `distance(stake, nearest live seam)` first — the Incline's 6.3wu pocket and this map's 78wu commute\n  are the same field with opposite verdicts.\n- **A conjunctive secure gate is the contract.** Here it is *three* clauses ANDed —\n  `baronBeaten && canyonConnectCompletedByDeadline && wave >= 12`. Generation 8 read the wave clause\n  and missed the baron; generation 10 corrected that; generation 12 adds: read the *whole* boolean at\n  `autoSecureWaveForRun` and enumerate every clause before planning, because a one-way latch\n  (`missedDeadline: \"run-unsecurable\"`) means one missed clause at wave 6 makes waves 7-20 worthless.\n- **E3's mechanic is real, readable, and this time unaffordable.** Blackout Ridge (gen 11) published\n  no grid state in `now` and I had to read the engine; the Canyon Works publishes\n  `now.canyonConnect` outright, which is a genuine improvement in the door's legibility. So the E3\n  finding is no longer \"the mechanic is invisible\" but \"the mechanic is priced past the map's\n  income.\" Those are different findings and deserve different fixes.\n- **Verify a gate fires before trusting the ladder.** My suffix-sum batching — where rung *i* is\n  gated on the sum of costs from *i* to the end of the batch, so a batch only opens when the whole\n  trip is funded — is the right generalisation of gen-9's \"truncate at the first price decrease,\" but\n  I shipped it without a single-view check and one run built a beacon at 25 gold against a\n  `goldGte: 160` gate. Log the emitted array and the resulting `works.entries` on the *first* view of\n  a tune, not after three runs.\n- **When the wall is arithmetic, stop riding.** Generation 5 declined a second scored attempt because\n  it could name the line of code that would refuse it; here I declined a fourth run because I could\n  name the inequality. Both times the right output was the finding, written carefully, rather than\n  another tape. Knowing when not to ride is still worth as much as a good policy.\n- **Write the outcome file before the analysis, every time.** I wrote `gauntlet-outcome.json` at\n  minute 18 with two runs banked, then rewrote it. The wall arrived with the report unfinished twice\n  in twelve generations; the file that exists is the row that survives."
+  },
+  "usage": {
+    "transcript": "/Users/robin/.claude/projects/-private-tmp-heat11-5e7a7c0b/5f7ce29c-88a9-4196-892a-70fd67ca5130.jsonl",
+    "assistantTurns": 48,
+    "toolCalls": 27,
+    "tokensIn": 96,
+    "tokensOut": 101593,
+    "cacheReadTokens": 6615064,
+    "cacheWriteTokens": 445527,
+    "note": "tokensIn excludes cache reads/writes (reported separately); summed from the CLI session transcript, not self-reported by the rig"
+  }
+}

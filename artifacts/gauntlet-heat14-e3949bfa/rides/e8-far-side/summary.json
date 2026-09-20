@@ -1,0 +1,228 @@
+{
+  "rig": "opus",
+  "contract": "e8-far-side",
+  "model": "claude-opus-5",
+  "sessionId": "ba2025f6-a93c-4348-a3d1-bfd2e85b4878",
+  "startedAt": "2026-09-18T10:24:56.215Z",
+  "endedAt": "2026-09-18T10:42:17.245Z",
+  "wallClockSeconds": 1041,
+  "wallHit": false,
+  "exitCode": 0,
+  "signal": null,
+  "setupToFirstOutputSeconds": 210,
+  "arenaTrackedChanges": [],
+  "workspaceFiles": [
+    "attempt-1-stderr.txt",
+    "attempt-1-summary.json",
+    "attempt-1-table.txt",
+    "attempt-1-tape.json",
+    "attempt-1-views.jsonl",
+    "attempt-2-stderr.txt",
+    "attempt-2-summary.json",
+    "attempt-2-table.txt",
+    "attempt-2-tape.json",
+    "attempt-2-views.jsonl",
+    "ctrl-v1.mjs",
+    "ctrl-v2.mjs",
+    "ctrl-v3.mjs",
+    "ctrl-v4.mjs",
+    "gauntlet-outcome.json",
+    "gauntlet-report.md",
+    "probe-stderr.txt",
+    "probe-summary.json",
+    "probe-table.txt",
+    "probe-tape.json",
+    "probe-views.jsonl",
+    "runner.mjs",
+    "tune-1-stderr.txt",
+    "tune-1-summary.json",
+    "tune-1-table.txt",
+    "tune-1-tape.json",
+    "tune-1-views.jsonl",
+    "tune-2-stderr.txt",
+    "tune-2-summary.json",
+    "tune-2-table.txt",
+    "tune-2-tape.json",
+    "tune-2-views.jsonl"
+  ],
+  "outcome": {
+    "secured": true,
+    "waves": 20,
+    "timeMs": 600000,
+    "gold": 60,
+    "kills": 919,
+    "calls": 101,
+    "defaultedPicks": 0,
+    "defaultedSecure": 1,
+    "eventLogHash": "fnv1a32:64b3b447",
+    "tape": "/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/heat14/opus/e8-far-side/attempt-2-tape.json",
+    "scored": true,
+    "runsSoFar": 5,
+    "scoredAttempts": 2,
+    "worldModel": "sim-import",
+    "note": "SECURED on attempt-2. Runs: probe(idle), tune-1(w10), tune-2(w17), attempt-1(w19/592.5s), attempt-2(w20 SECURED). attempt-1 and attempt-2 are the two scored attempts.",
+    "envelope": {
+      "ticks": 18000,
+      "lastEntryTick": 17899,
+      "entries": 101,
+      "bytes": 332714,
+      "tapeHash": "fnv1a32:1795242e"
+    },
+    "assay": {
+      "instrumentControl": "probe-tape replayed to its own header fnv1a32:a45ba9ac",
+      "replayHash": "fnv1a32:1795242e (tape header; outcome line is fnv1a32:64b3b447 by design)",
+      "securedSnapshot": {
+        "waves": 20,
+        "gold": 60,
+        "timeAlive": 600
+      }
+    },
+    "envelopeCeilings": {
+      "maxTicks": 18002,
+      "maxEntries": 3601,
+      "maxTapeBytes": 1938784
+    }
+  },
+  "outcomeError": null,
+  "promotedTapeName": "attempt-2-tape.json",
+  "scoredTapes": [
+    {
+      "file": "attempt-1-tape.json",
+      "id": "agent-9b1d2404-d74a71d4-d1ba-4733-b65d-c561bc341636",
+      "contract": "e8-far-side",
+      "seed": "e8-far-side-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "d8bab75a8",
+        "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+        "era": 6,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 19,
+        "timeAlive": 592.5,
+        "gold": 100
+      },
+      "entries": 77,
+      "durationTicks": 17775,
+      "lastEntryTick": 17741,
+      "promotedByRig": false,
+      "discoveredBy": "filename"
+    },
+    {
+      "file": "attempt-2-tape.json",
+      "id": "agent-5d56eef3-05beaded-6d29-41b0-b691-5fe2e8125e0c",
+      "contract": "e8-far-side",
+      "seed": "e8-far-side-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "d8bab75a8",
+        "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+        "era": 6,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 20,
+        "timeAlive": 600,
+        "gold": 60
+      },
+      "entries": 101,
+      "durationTicks": 18000,
+      "lastEntryTick": 17899,
+      "promotedByRig": true,
+      "discoveredBy": "outcome-file+filename"
+    }
+  ],
+  "otherTapes": [
+    {
+      "file": "probe-tape.json",
+      "id": "agent-38b64882-f8f5fa05-62bf-4325-b8e9-73777271cf38",
+      "contract": "e8-far-side",
+      "seed": "e8-far-side-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "a8b06e3e6",
+        "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+        "era": 6,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 2,
+        "timeAlive": 79.4,
+        "gold": 0
+      },
+      "entries": 0,
+      "durationTicks": 2382,
+      "lastEntryTick": null
+    },
+    {
+      "file": "tune-1-tape.json",
+      "id": "agent-88ea33eb-b50d04e9-196e-4c08-90ce-0d7c0cdce124",
+      "contract": "e8-far-side",
+      "seed": "e8-far-side-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "d8bab75a8",
+        "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+        "era": 6,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 10,
+        "timeAlive": 300.4,
+        "gold": 0
+      },
+      "entries": 30,
+      "durationTicks": 9012,
+      "lastEntryTick": 9000
+    },
+    {
+      "file": "tune-2-tape.json",
+      "id": "agent-a89e0f6b-8983aa1b-1637-4313-b407-d7191a6dcab8",
+      "contract": "e8-far-side",
+      "seed": "e8-far-side-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "d8bab75a8",
+        "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+        "era": 6,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 17,
+        "timeAlive": 512.433,
+        "gold": 10
+      },
+      "entries": 57,
+      "durationTicks": 15373,
+      "lastEntryTick": 15300
+    }
+  ],
+  "otherSecuredTapes": [],
+  "report": {
+    "outcome": "**SECURED.** waves **20** · timeAlive **600.000 s** · gold **60** · kills 919 · calls **101**.\n\nTape put forward: `attempt-2-tape.json` (named in `gauntlet-outcome.json`'s `tape` field).\n**5 sim runs, 2 scored attempts.**\n\nReceipt, control-tested first: the zero-order idle probe replayed to its own header (`fnv1a32:a45ba9ac`) — instrument verified — and only then did the securing reel reproduce **`fnv1a32:1795242e`**, the TAPE HEADER's hash, not the stdout outcome line's `fnv1a32:64b3b447` (different numbers by design). `securedSnapshot {waves 20, gold 60, timeAlive 600}` matches the declared score, which is exactly what the door's `score_mismatch` rule compares.\n\nEnvelope, computed from `runTapeEnvelopeForContract` rather than the charter's summary of it (the true bytes ceiling here is **1,938,784**, 3.3× the published floor, because order-bearing entries are billed at 2,400):\n\n| axis | mine | ceiling |\n|---|---|---|\n| ticks | 18,000 | 18,002 |\n| last accepted order | tick **17,899** | must be < 18,000 (101 ticks of slack) |\n| entries | 101 | 3,601 |\n| bytes | 332,714 | 1,938,784 (17.2 %) |\n\nFinal state: hero **82.0 / 175**, minimum 11.0 % of running maximum at t = 567.5; **45 works standing, 0 ever wrecked**; `goldStolen` 0; `threats.alive` peaked at 46; 1,180 panned. Era gates: crossing credits at **t = 30.0, 150.0, 260.6, 390.0** (one per window, as authored), `breathlessEntries` **0**, `windowHeldEntries` **0**, minimum suit 40.6 of 60; probe recovered, `playbackCount 1`. Secure banked by silence (`defaultedSecure: 1`).",
+    "whatTheMapAsked": "It asked for **four separate crossings of sixty-eight paces of vacuum on a sixty-second tank, spread across the whole contract** — so this genuinely exercises E8's signature mechanic (low gravity, air as wall, transfer under changed physics), and the *air* half is the whole of it.\n\nThe view publishes the entire law, so a rider with no source import can play it: `now.air.suit` (`body: \"hero\"`, 60 s, refill 4/s, `harmPerSecond 5`, `inDome`), `now.air.domes[]`, and `now.air.crossing` (`zones`, `required: 4`, `reached`, `credited`, `windowWaves: 4`, `window`, `creditedThisWindow`, `windowHeldEntries`, `breathlessEntries`). `stablePrefix.mechanics.rules` states it outright in `air_wall_crossing` — `windowSeconds: 120`, `gatesSecure: true` — and `probe_recovery` publishes the second gate beside it. The reasoning it demands is genuine and it is a **schedule**, not a budget: the window is `floor(elapsed/120)` on the consumer's own run clock and `E8AirWindow.claim()` spends at most one credit per window, so four credits cannot be compressed. The trips are pinned to t ≈ 0, 120, 240, 360 and the errand necessarily spans waves 1 through 13. A round trip is 76 paces each way at hero speed 6.0 — ~25 s of a 60 s tank — so the air is never the constraint; the **calendar** is. Both gates ride the same walk, and `CONTEXT_ACTION recover` rides in the same self-draining array as the two `MOVE_HERO` legs.\n\nThe *gravity* half stayed decorative (`feelG 0.6`, `floaty`, `lobArcDistanceMultiplier 2.4`, `orbitalReturn: false`); I used the 2.4× lob only as free supplementary `BLAST_AT` damage and never took `SET_WEAPON blast`, on generation 29's measurement that the auto-lob is ~10 dps against the Spark Rig's 24. **There is no E8 verb** — the era is answered entirely with `MOVE_HERO`, `HARVEST` and the player's own confirm key, which is exactly what ADR-005 intended.\n\nThe honest qualifier is that the errand is discharged by t = 390 of a 600-second contract, and the other 210 seconds are ordinary stationary survival in a generous pocket — the landing yard is simultaneously the only air, the only southern build zone and the hero's home, so the fort rings the body it defends.\n\n**Does my notebook remember this map, and does it still play that way?** Generations 34, 47 and 67 rode it. **Its bones are exactly as generation 67 left them** — same claim (0,−36), same yard, same crater, same four harvest anchors, same one-id roster, same wave-20 default, same four-credit windowed crossing — and the null floor proves it to the hash. What moved is only my reading of it: generation 67 reached w14 and named the capped purse as the lever; the lever was actually two of my own gates.",
+    "winnability": "Secured, and the margin was **wide on both era gates and genuinely thin on the hero**: the crossing latched with a whole spare window and zero breathless entries, nothing was ever wrecked and nothing stolen — but the hero bottomed at **11.0 %** (19.2/175) at t = 567.5 and was saved by a draft heal, so one more wave on that slope would have been a coin flip, and the 60 gold banked of 1,180 panned is the axis I deliberately spent on staying alive.",
+    "lessons": "- **A survival gate can starve the economy that buys survival, and on this map I wrote it twice.** A walking `MOVE_HERO` returns truthy and owns the tick, so *nothing* beneath it pans or builds. tune-1's kite fired at wave 5 and froze `pan` at 180 with 4 works; tune-2's fired at t = 395 and froze it at 680 with 10. Both times the fort stalled and the hero died anyway. This is the same shape as generations 110/111/113/128 (a gate that makes the fort unreachable exactly when it is needed) with the sign flipped: here the *defensive* order was the one starving the defence. **Anything that owns the tick is an economy decision before it is a safety decision.**\n- **Kiting is not a shutout on a converging board — I measured it losing 3.5:1.** The hero outruns this roster 6.0 to 1.94 and I read that as free safety. Parked behind the fort she lost **0.23 hp/s**; running the same line she lost **0.82 hp/s**. A shuttle reverses into the pack it just outran, and enemies *converge on the hero*, so every leg is a head-on pass. Speed only buys escape on a one-way route, and this map has no one-way route that stays in air. **Price a kite by the direction of the threat, not by the speed ratio.**\n- **A gap left in a screen for your own errand is a funnel aimed at your own body.** I kept x ∈ (−6, 6) open at z = −31/−34 so the hero could walk north, and that corridor pointed the entire pack straight down the x = 0 line at a hero parked at (0,−40). Closing it the moment `credited >= required` (the path is dead weight after t = 390) was most of the last 7.5 seconds. Generation 124 learned that a wall traps the hero; the complement is that **a deliberate gap is a targeting decision, and it expires when the errand does.**\n- **A hard build floor sized against the bank tick is invalid on a run that is not reaching it.** Mine shut at t = 545 to let the purse refill; the run died at 592.5. Waves rank above gold and a dead run banks nothing. Lifting it to t = 592 bought the last three palisades. Generation 128 wrote this and I shipped the bug anyway — **compute the floor against the thing that ENDS the run, not the thing that scores it.**\n- **On a board where nothing can wreck works, timber is the endgame and it is unbounded.** `palisade` is 10 g flat with `maxCount: 48` and 60 + 8/wave hp; the roster carries no wrecker, so 33 of them stood at the bank with **0 wrecked**. The core ladder caps at 4 turrets + 6 beacons = 670 g, and the map pays 1,180 — the whole surplus has exactly one honest home. Check `maxCount` against what the map can pay before deciding a ladder is \"finished\".\n- **Read `works.entries` positions to know which candidate spots are taken, not the collision refusal.** Until I did, every rung wasted one Prospector round trip colliding into the spot the previous rung had just filled, then blacklisted it. Marking a spot occupied when any entry sits within 1.6 of it is four lines and it is real gold at 1.6 g/s.\n- **Two ladder rungs per view, cumulatively gated, is the right cadence on a compact map.** Views arrive every ~12–30 s; one build per view caps the fort at ~25 works. Gating rung *i* at the running sum keeps a cheap rung from stealing gold an expensive one is waiting for, and the commute is free here because every spot and every seam sits within ~20 units of home. Generation 126's \"a stack of gold-gated builds is a commute generator\" is a property of *distance*, not of stacking.\n- **`null-floors.json` first, every ride — ninth heat running, and it has never once been wrong.** One file plus one grep of the era pins for the contract id, then a ten-second probe against the remembered floor. Four minutes, and it retired the whole geometry question so the entire budget went to the two gates I had written myself.\n- **Silence at `pendingSecure` did its four jobs again, twenty-eighth contract running:** it took the `bank` default (`defaultedSecure: 1`), left the last accepted order **101 ticks** inside the terminal tick, held a 103-view run to 101 entries, and — the reason that matters most — **it cannot be rejected**, so the replay cannot diverge the way generation 84's nearly did.\n- **The ride that secures is the one that stopped protecting the score.** Attempt-2 banked 60 of 1,180 panned because every spare coin went into timber. On a map I had failed once and my predecessor had failed once, waves 20 and timeAlive 600.000 were worth more than any purse — and the two stockpiles that raise the cap to 500 are still standing, unused, for whoever rides it next with a fort that survives more cheaply."
+  },
+  "usage": {
+    "transcript": "/Users/robin/.claude/projects/-private-tmp-claude-501--Users-robin-Claude-Projects-Gold-Rush-fe6b8d27-b064-40eb-934b-1d29d57a71db-scratchpad-arena-heat14-e3949bfa/ba2025f6-a93c-4348-a3d1-bfd2e85b4878.jsonl",
+    "assistantTurns": 78,
+    "toolCalls": 37,
+    "tokensIn": 156,
+    "tokensOut": 150615,
+    "cacheReadTokens": 42622597,
+    "cacheWriteTokens": 1181069,
+    "note": "tokensIn excludes cache reads/writes (reported separately); summed from the CLI session transcript, not self-reported by the rig"
+  }
+}

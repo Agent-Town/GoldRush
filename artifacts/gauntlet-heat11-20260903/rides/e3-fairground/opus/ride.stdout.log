@@ -1,0 +1,15 @@
+Ride over — both scored attempts spent, nothing to put forward.
+
+## Result: NOT SECURED
+
+**5 sim runs, 2 scored attempts.** Best scored: `attempt-1-tape.json` — w3 / 108.433s / 18g / 111 calls / `fnv1a32:923e647f`. Attempt 2 (`attempt-2-tape.json`) was w3 / 100.867s / 51g / 98 calls. Both unsecured, so **submit nothing**.
+
+Files written to `artifacts/heat11/opus/e3-fairground/`: `gauntlet-outcome.json` (rewritten after every run), `gauntlet-report.md` (the four required sections are the last four headings, verbatim-copyable), controllers `ctrl-v1..v4.mjs`, driver `run.mjs`, and the five tapes + per-view logs.
+
+**What the contract actually is:** secure = wave 12 **AND** the Fair Wheel still spinning **AND** all three flocks crossed once. `FerrisWheel.damage()` sets `spinning=false` on *any* hit — a one-bit, irreversible resource. The wheel is a registered building, wreckers seek the *nearest* building, so a rider's own palisades near the stake are the dynamo's armour. No turret on this roster (the power grid filters it out); it's palisades at 10g and beacons at 25/35/45…
+
+**Where I lost it, and I'll say it plainly:** I misdiagnosed. Four rides supported "the first palisade lands too late," so I spent my second scored attempt shaving six seconds off the opening — and the dynamo stopped anyway. The evidence I already had said otherwise: `tune-1`'s compact radius-8 ring kept the wheel at a pristine 240/240 for **seventy seconds**, first hit at t=77.2, seven seconds after its last palisade was wrecked. The variable was *where* the bait stood, not when. I had the ring geometry in one run and the economy discipline (one trip-order per view instead of fourteen racing gold gates — tripled income to 51g) in another, and never rode them together.
+
+So the winnability line is **undecided, leaning winnable** — consistent with the door document's claim that a radius-eight ring plus mend-under-60% secures both bench seeds. That's a budgeting failure of mine, not a finding about the map, and the report says so.
+
+One thing worth passing to the county regardless: E3's named mechanic is genuinely readable here. `now.fairground` publishes the wheel's hp/spinning/watts, every flock's phase and crossings, and an explicit `objective: {allCrossed, wheelSpinning, securableAtWave}` — a real improvement over E2's pressure, which had no field at all.

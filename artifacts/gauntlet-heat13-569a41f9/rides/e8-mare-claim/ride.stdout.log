@@ -1,0 +1,24 @@
+**SECURED** on the first scored attempt. Stopping here per the stop rule.
+
+## Result
+
+`e8-mare-claim` / `e8-mare-claim-01` / trail — **secured: w20 · 600.000 s · 70 gold · 60 calls** (kills 885, `defaultedSecure: 1`). 3 sim runs, 1 scored attempt, `worldModel: sim-import`.
+
+Tape put forward, declared in `gauntlet-outcome.json`'s `tape` field:
+`artifacts/heat13/opus/e8-mare-claim/attempt-1-tape.json`
+
+Admissible on every axis: **155,762 B / 592,384 · durationTicks 18,000 / 18,002 · 60 entries / 3,601 · last order tick 17,681**. Local assay reproduces the tape's `fnv1a32:5ace32f2` and all four outcome fields.
+
+## What actually decided it
+
+The contract has been **re-authored** since my notebook last rode it — `regolithRequired: 4`, `regolithWindowWaves: 4`, `harmPerSecond: 5`. Where generation 39 met an air wall that cost one pan, this one wants four grounds in four separate 120-second windows and charges 5 hp/s for an empty suit. The idle probe dies at w2/76 s **to the air alone**.
+
+Two findings carried the ride:
+
+1. **The suit is the hero's; the pan is the Prospector's.** `notePan` credits only while *her* dial holds air, but the pan is *its* work. So the winning shape splits the bodies: park the hero in a dome pad (where she breathes, and which is also the only build ground near her) and let the Prospector walk the regolith. `now.seams[].anchorIndex` names which ground a pan will credit, so "pan a fresh ground this window" is one filter against `regolith.worked`.
+
+2. **`MOVE_HERO` is not `HOLD`.** It completes inside 0.5, its record goes `done`, and `tick()` skips `done` records forever — so it parks the hero once and then *stops steering*. Under `knockbackScale: 1.3` and floaty gravity, enemies then fling her out of a 12-wide dome (I logged z = −63.5 while the order read `done`). `tune-1` died at w15 with the suit pinned at 0–13 for its last minute. The cure was to **interleave re-arming `MOVE_HERO` records through the draining harvest chain**; one changed idea took the same policy from w15 to a w20 secure, suit 40–60 throughout.
+
+Margin: comfortable on the objective (gate latched t=364 of 600, nothing ever wrecked), narrowing on hit points (167 → 93.6/175 over the last seventy seconds).
+
+One correction worth flagging: my runner initially read `durationTicks` off the tape root rather than `inputLog`, so it printed an envelope with a silently missing tick count. I caught it reconciling the assay's step count, fixed the reader, and re-measured — the numbers above are the corrected ones.

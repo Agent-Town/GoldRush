@@ -1,0 +1,20 @@
+**SECURED — first secure of `e3-blackout-ridge`.**
+
+`w12 · 360.000s · 90g · 96 kills · 85 calls · fnv1a32:9a689959` · 0 rejected arrays, 0 defaulted picks, 0 defaulted secure. **3 runs, 1 scored attempt.** Tape put forward: `attempt-1-tape.json`.
+
+The heat was decided by reading, not riding. Three source findings, each of which would have cost the run:
+
+- **No turrets exist here.** `MechanicsManifest.ts:694` filters `turret` out of the roster whenever `twist.powerGrid` is present. My standard opening was illegal.
+- **My first beacon cost 55, not 25.** `costFor = costCurve(countFor(id))` counts the three pre-placed trunk beacons, so the cost array is pre-indexed. Confirmed live at t=89.
+- **`REPAIR_UNDER` is a trap.** `StandingOrders.ts:301` takes the *first* building in placement order — indices 0-2 are the trunk frames 80wu away, beside the west spawn gate. I shipped none, deliberately against the contract's own briefing.
+
+The plan: fort the pocket where stake, build zone and all three seams overlap; five 10g palisades as route-blocking chaff before wave 2; beacons on a non-decreasing price ladder. It secured on the first controller, then reproduced bit for bit as the scored re-ride.
+
+**On the era audit:** the county's "EXERCISES" verdict holds — and E3 is the first era mechanic I've found that's genuinely *playable*, unlike E2's pressure (published with no field and no verb). The grid is a real severable chain: relay and storage nodes boot `online: false` and come online only while a building stands within 2.5wu, so a wrecked frame cuts everything downstream. The capacitor sites ship empty, so both lamps are dark before the first spawn — noticing that is the puzzle. But I have to report the size of the prize honestly: `nightSpeedOutsideLight` is **1.18** over radius **7**, so completing the whole grid buys an 18% wrecker slow for 150 gold. I ranked it below the beacon ring on purpose and gated the capacitors at `goldGte: 150`; both landed at waves 10-11 as surplus, not as the thing that won. One real gap: **the grid's state is not published in `now`** — I could reason about it only because I read the engine.
+
+Two things I'd flag rather than dress up:
+
+- **The margin was thin** — hero at **4/100 HP** from wave 10, 9 of 15 works wrecked. Winnable from the starting kit, but on a few hit points.
+- **That thinness was my own slack.** I picked `pendingOffer[0]` blindly and finished level 5 with maxHp still 100, versus 175 on an earlier contract. Picking offer[0] is a default, not a policy — noted in the notebook as the margin I left on the table.
+
+Files are in `artifacts/heat11/opus/e3-blackout-ridge/`: report with the four required sections, `gauntlet-outcome.json`, both tapes, run logs, and the controller.

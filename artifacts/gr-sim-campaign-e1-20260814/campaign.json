@@ -1,0 +1,96 @@
+{
+  "schema": "goldrush.campaign.v1",
+  "campaignHash": "fnv1a32:4f363fd5",
+  "legs": [
+    {
+      "contractId": "the-claim",
+      "seed": "e1-the-claim-01",
+      "startStateHash": "fnv1a32:b89f195c",
+      "stateHash": "fnv1a32:6b4bd1d8",
+      "eventLogHash": "fixture:the-claim:e1-the-claim-01",
+      "outcome": {
+        "secured": true,
+        "waves": 10,
+        "timeMs": 1000,
+        "gold": 0,
+        "kills": 0,
+        "calls": 0,
+        "defaultedPicks": 0,
+        "defaultedSecure": 0,
+        "eventLogHash": "fixture:the-claim:e1-the-claim-01"
+      }
+    },
+    {
+      "contractId": "e1-dry-gulch",
+      "seed": "e1-dry-gulch-01",
+      "startStateHash": "fnv1a32:6b4bd1d8",
+      "stateHash": "fnv1a32:45382a39",
+      "eventLogHash": "fixture:e1-dry-gulch:e1-dry-gulch-01",
+      "outcome": {
+        "secured": true,
+        "waves": 20,
+        "timeMs": 1000,
+        "gold": 0,
+        "kills": 0,
+        "calls": 0,
+        "defaultedPicks": 0,
+        "defaultedSecure": 0,
+        "eventLogHash": "fixture:e1-dry-gulch:e1-dry-gulch-01"
+      }
+    },
+    {
+      "contractId": "e1-night-shift",
+      "seed": "e1-night-shift-01",
+      "startStateHash": "fnv1a32:45382a39",
+      "stateHash": "fnv1a32:79a61371",
+      "eventLogHash": "fixture:e1-night-shift:e1-night-shift-01",
+      "outcome": {
+        "secured": true,
+        "waves": 25,
+        "timeMs": 1000,
+        "gold": 0,
+        "kills": 0,
+        "calls": 0,
+        "defaultedPicks": 0,
+        "defaultedSecure": 0,
+        "eventLogHash": "fixture:e1-night-shift:e1-night-shift-01"
+      }
+    },
+    {
+      "contractId": "e1-twin-banks",
+      "seed": "e1-twin-banks-01",
+      "startStateHash": "fnv1a32:79a61371",
+      "stateHash": "fnv1a32:c9c660c6",
+      "eventLogHash": "fixture:e1-twin-banks:e1-twin-banks-01",
+      "outcome": {
+        "secured": true,
+        "waves": 20,
+        "timeMs": 1000,
+        "gold": 0,
+        "kills": 0,
+        "calls": 0,
+        "defaultedPicks": 0,
+        "defaultedSecure": 0,
+        "eventLogHash": "fixture:e1-twin-banks:e1-twin-banks-01"
+      }
+    },
+    {
+      "contractId": "e1-baron",
+      "seed": "e1-baron-01",
+      "startStateHash": "fnv1a32:c9c660c6",
+      "stateHash": "fnv1a32:1c4e9c75",
+      "eventLogHash": "fixture:e1-baron:e1-baron-01",
+      "outcome": {
+        "secured": true,
+        "waves": 20,
+        "timeMs": 1000,
+        "gold": 0,
+        "kills": 0,
+        "calls": 0,
+        "defaultedPicks": 0,
+        "defaultedSecure": 0,
+        "eventLogHash": "fixture:e1-baron:e1-baron-01"
+      }
+    }
+  ]
+}

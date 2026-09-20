@@ -1,0 +1,103 @@
+{
+  "rig": "fable",
+  "contract": "e5-deepwater-claim",
+  "model": "claude-fable-5",
+  "sessionId": "b8071d1e-610b-45a2-b846-9ce8da4fa575",
+  "startedAt": "2026-09-04T02:47:51.416Z",
+  "endedAt": "2026-09-04T03:02:29.150Z",
+  "wallClockSeconds": 878,
+  "wallHit": false,
+  "exitCode": 0,
+  "signal": null,
+  "setupToFirstOutputSeconds": 675,
+  "arenaTrackedChanges": [],
+  "workspaceFiles": [
+    "attempt-1-tape.json",
+    "attempt-1-tape.json.outcome.json",
+    "gauntlet-outcome.json",
+    "gauntlet-report.md",
+    "probe-idle.json",
+    "run-sim.mjs",
+    "tune-1-tape.json",
+    "tune-1-tape.json.outcome.json",
+    "tune-1-views.ndjson"
+  ],
+  "outcome": {
+    "outcome": {
+      "secured": true,
+      "waves": 12,
+      "timeMs": 272000,
+      "gold": 165,
+      "kills": 7,
+      "calls": 15,
+      "defaultedPicks": 0,
+      "defaultedSecure": 0,
+      "eventLogHash": "fnv1a32:8765735c"
+    },
+    "tape": "/private/tmp/heat11-5e7a7c0b/artifacts/heat11/fable/e5-deepwater-claim/attempt-1-tape.json",
+    "scored": true,
+    "runsSoFar": 3,
+    "scoredAttempts": 1,
+    "worldModel": "sim-import",
+    "determinism": "attempt-1 re-run byte-identical to tune-1: inputLog sha256 f29aacb363ad07d4…, eventLogHash fnv1a32:8765735c on both; idle null floor w18/416s/0g fnv1a32:9c344f09 (probe-idle.json)"
+  },
+  "outcomeError": null,
+  "scoredTapes": [
+    {
+      "file": "attempt-1-tape.json",
+      "id": "agent-c5afbddf-2fe91bad-56c8-41bb-a836-1a35ee89eb0d",
+      "contract": "e5-deepwater-claim",
+      "seed": "e5-deepwater-claim-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "5e7a7c0ba",
+        "engineHash": "a607a81f44e10dc2b2262682c1e116c15917edffeeaa0c5909f383ccea5d8e04",
+        "era": 5,
+        "viewVersion": 1
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 12,
+        "timeAlive": 272,
+        "gold": 165
+      },
+      "entries": 15
+    }
+  ],
+  "otherSecuredTapes": [
+    {
+      "file": "tune-1-tape.json",
+      "id": "agent-c5afbddf-808d9dd6-b2a4-4c18-8be2-f0a152b78947",
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 12,
+        "timeAlive": 272,
+        "gold": 165
+      },
+      "meta": {
+        "buildId": "5e7a7c0ba",
+        "engineHash": "a607a81f44e10dc2b2262682c1e116c15917edffeeaa0c5909f383ccea5d8e04",
+        "era": 5,
+        "viewVersion": 1
+      }
+    }
+  ],
+  "report": {
+    "outcome": "**SECURED, first full ride: wave 12 / 272.000s / 165g / 7 kills / 15 calls / zero defaulted picks\nand zero defaulted secures — eventLogHash `fnv1a32:8765735c`.** Tape put forward:\n`/private/tmp/heat11-5e7a7c0b/artifacts/heat11/fable/e5-deepwater-claim/attempt-1-tape.json`\n(15 input-log entries). 3 sim runs total: idle probe (null floor w18/416s/0g,\n`fnv1a32:9c344f09`), tune-1 (secured), attempt-1 (the scored deterministic re-run — input log\nsha256-identical to tune-1, same eventLogHash, so the pair is both the attempt tape and the\ndeterminism proof). 1 scored attempt; stopped on first secure. The 7 kills are exactly the boss\nchain: claw, both paddles, 3 act-2 escorts, hold — the boss was pinned at its FIRST anchor\n(36,−20) by claw-fire cycle-resets before its first reposition and died there by ~t45 of a t=272\ndeadline. Hero hp 100/100 at every view of the run.",
+    "whatTheMapAsked": "The era's signature mechanic is present and structurally load-bearing, but as a clock and a stage,\nnot as a decision the rider optimizes: `StormWaveScheduler` genuinely replaces the generic wave\nschedule (the storm cycle IS the wave counter — `currentRunWave()` reads\n`deepwater.diagnostics.corsairWaves`, and the era audit's \"18 storm waves\" is exactly the 24s\nweather cycle emitting the run's whole cadence), and the boss \"rides inside the storm wall\"\n(`DredgeQueenBossSystem.onStormWave` arms on wave 1's front). But nothing about the weather is a\nchoice: storms slow nothing headless for this rider (the movement multiplier hook is\nrace/regatta-only), corsairs cross on three fixed lanes and recycle unfought, and the E5 verbs the\nview sells — `BOAT_BUILD` (harpoon ballista, depth-charge rack), `REANCHOR` — are strategically\ninert because their weapon ranges (14/12) never intersect a single enemy trajectory and both\nanchors sit ~35+wu from every wreck. The fields that actually carried the ride:\n`now.deepwater.dredgeQueenBoss` (anchor/act/livePaddles — the whole hunt), `now.seams`\n(the five wreck-site seams), and `now.pendingSecure`; the orders that carried it: HOLD (the ambush\ngeometry is the entire strategy), HARVEST, and one SECURE_CHOICE. So: a boss-logistics map whose\nstorm scheduler is real but whose adversarial-weather \"prediction\" content is zero for a door\nrider — closer to RESKIN-with-a-real-clock than to an exercised mechanic; the audit's EXERCISES\nverdict is true of the scheduler's wiring, not of any decision I had to make about weather.",
+    "winnability": "Secured on the first full ride with an enormous margin: hero 100/100 at every view, boss dead by\n~t45 against a t=272 latch (and a t=416 ceiling), zero threats ever reached the hero — L2 holds;\nonce you know the Prospector carries the rig on deepwater (`HeadlessContractSim.ts:469`), the map\ncannot meaningfully be lost, and the only real wall is the world-model discovery itself.",
+    "lessons": "- e5-deepwater-claim FIRST SECURE (cold plain boot, w12/272.0s/165g/7 kills/15 calls, hash\n  fnv1a32:8765735c, zero defaults, determinism proven by sha256-identical input logs tune-1 vs\n  attempt-1): ambush at (boss.anchor.x − 6.5, boss.anchor.z) with a single HOLD; rig kills claw →\n  both paddles → 3 escorts → hold, all pinned at the first anchor (36,−20); then HARVEST chain +\n  HOLD at the wreck-shelf seams; single-element SECURE_CHOICE bank at the wave-12 boundary. Hero\n  never touched. Idle null floor w18/416s/0g fnv1a32:9c344f09 (no e5 entry exists in\n  null-floors.json — measure your own).\n- THE DEEPWATER GUN LAW: on E5 deepwater contracts the hero's spark rig fires from THE\n  PROSPECTOR'S POSITION (`HeadlessContractSim.ts:469` — raceCourse/flotilla read differently, so\n  check per contract). The untargetable walking body is the weapon platform: geometry, not\n  economy, is the whole game. The auto-blast shooter still reads the fixed hero — never\n  SET_WEAPON blast on these maps, and BLAST_AT (10m of the HERO) is dead weight.\n- THE CYCLE-RESET PIN: any boss whose dredge/loot cycle resets on damage to a named component\n  (`updateDredging`: claw hp drop → cycle restart) can be pinned in place by simply out-firing\n  the cycle clock (rig 2/s vs 2.5s cycles) — and killing that component FREEZES the boss forever\n  if repositioning lives inside the same update (and here also disables the act-2 swat:\n  `updateDefensiveClaw` returns if claw destroyed). Stand so the pin component is nearest under\n  sticky nearest-first targeting: claw offset (−3.2,0) → approach from the west.\n- A wave-1 baron on a storm-clock map is a GIFT, not a threat: `defeatRecordedBeforeSecureWave`\n  records an early dredge-queen kill and the ordinary latch fires at the secure boundary. Kill\n  it in the first minute; the remaining 80% of the ride is uncontested panning.\n- Ordinary BUILD can be refused on an ENTIRE map: `DeepwaterClaimTile.landPlacementAt` returns\n  `allowed: false` unconditionally, so the published deck-mask build zone and the whole\n  buildables board (turrets/stockpiles/sluices) are browser furniture here. Corollaries: the\n  stockpile cap-raise does not exist (200 pan cap is final), REPAIR_UNDER has nothing to select,\n  and any BUILD-based gold alarm still works as an instant-fail view source — but ONLY if placed\n  BEFORE the persistent HOLD (I re-learned my own gen-6 law by leaving the alarm after HOLD,\n  where it never owned a tick; the ride secured anyway on wave-boundary views alone).\n- BOAT_BUILD/REANCHOR are instant, positionless, zero-cost orders (`StandingOrders.ts:380`), but\n  on this contract the deck arsenal is decorative: harpoon range 14 / rack range 12 vs corsair\n  lanes 24wu away and wrecks 35+wu away, and the corsairs are scripted lane-crossers that recycle\n  at the east edge without ever fighting. Read the weapon ranges against the actual enemy\n  trajectories before spending calls on era verbs.\n- Storm-clock cadence maths: wave N starts at (clear+telegraph) + (N−1)·cycleSeconds — here 8 +\n  24(N−1), so w12 = t272, ceiling w18 = t416. Sim rides at ~8 waves/s wall (fastest map yet);\n  the full ride costs ~45s including tsx startup."
+  },
+  "usage": {
+    "transcript": "/Users/robin/.claude/projects/-private-tmp-heat11-5e7a7c0b/b8071d1e-610b-45a2-b846-9ce8da4fa575.jsonl",
+    "assistantTurns": 93,
+    "toolCalls": 48,
+    "tokensIn": 186,
+    "tokensOut": 199037,
+    "cacheReadTokens": 18060695,
+    "cacheWriteTokens": 941996,
+    "note": "tokensIn excludes cache reads/writes (reported separately); summed from the CLI session transcript, not self-reported by the rig"
+  }
+}

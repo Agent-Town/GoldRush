@@ -1,0 +1,11 @@
+SUBMIT_AT 2026-08-21T22:35:35Z
+{"ok":false,"error":"bad_payload","message":"Standing not accepted."}
+HTTP 400
+SUBMIT_AT 2026-08-21T22:37:08Z
+{"ok":true,"stored":true,"rank":1}
+HTTP 200
+2026-08-21T22:37:27Z POLL board=1 rejectedCount=0 row=rank 1 assay=pending
+2026-08-21T22:37:47Z POLL board=1 rejectedCount=0 row=rank 1 assay=pending
+2026-08-21T22:38:07Z POLL board=1 rejectedCount=0 row=rank 1 assay=pending
+2026-08-21T22:38:28Z POLL board=0 rejectedCount=1 row=ABSENT-FROM-RANKED-BOARD
+2026-08-21T22:38:28Z VERDICT rejected (row dropped from ranked board; rejectedCount=1)

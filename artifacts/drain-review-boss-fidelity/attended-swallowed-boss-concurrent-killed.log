@@ -1,0 +1,729 @@
+✔ e8-mare-claim: the standing's gold is the purse held at the secure tick (39467.612292ms)
+✔ e3-moth-season: the standing's gold is the purse held at the secure tick (12031.519459ms)
+✔ e7-relay-rush: the standing's gold is the purse held at the secure tick (38721.814292ms)
+✖ the browser door submits the purse held at the secure tick, not the run's lifetime panning (38.960625ms)
+
+Interrupted while running:
+
+⚠ scripts/board-tape-gold.test.mjs (scripts/board-tape-gold.test.mjs:1:1)
+⚠ scripts/contract-hero-grit-override.test.mjs (scripts/contract-hero-grit-override.test.mjs:1:1)
+⚠ scripts/e10-preserve-consumer.test.mjs (scripts/e10-preserve-consumer.test.mjs:1:1)
+⚠ scripts/e10-squall-scheduler.test.mjs (scripts/e10-squall-scheduler.test.mjs:1:1)
+⚠ scripts/e8-air-suit-human.test.mjs (scripts/e8-air-suit-human.test.mjs:1:1)
+⚠ scripts/e8-crossing-gate-override.test.mjs (scripts/e8-crossing-gate-override.test.mjs:1:1)
+⚠ scripts/e8-regolith-gate-override.test.mjs (scripts/e8-regolith-gate-override.test.mjs:1:1)
+⚠ scripts/eclipse-winnable.test.mjs (scripts/eclipse-winnable.test.mjs:1:1)
+⚠ scripts/first-town-request-families.test.mjs (scripts/first-town-request-families.test.mjs:1:1)
+⚠ scripts/gr-sim-resume-tape-safety.test.mjs (scripts/gr-sim-resume-tape-safety.test.mjs:1:1)
+⚠ scripts/hero-clip-groups.test.mjs (scripts/hero-clip-groups.test.mjs:1:1)
+⚠ scripts/hero-move-verb.test.mjs (scripts/hero-move-verb.test.mjs:1:1)
+⚠ scripts/profile-data-key-sweep.test.mjs (scripts/profile-data-key-sweep.test.mjs:1:1)
+⚠ scripts/relay-rush-reel.test.mjs (scripts/relay-rush-reel.test.mjs:1:1)
+⚠ scripts/repair-under-radius.test.mjs (scripts/repair-under-radius.test.mjs:1:1)
+⚠ scripts/rider-parity-context-press.test.mjs (scripts/rider-parity-context-press.test.mjs:1:1)
+⚠ scripts/rider-parity-reach.test.mjs (scripts/rider-parity-reach.test.mjs:1:1)
+⚠ scripts/rider-parity-retirement.test.mjs (scripts/rider-parity-retirement.test.mjs:1:1)
+⚠ scripts/run-tape-envelope-budget.test.mjs (scripts/run-tape-envelope-budget.test.mjs:1:1)
+⚠ scripts/sprite-cell-url-inlining.test.mjs (scripts/sprite-cell-url-inlining.test.mjs:1:1)
+✖ scripts/board-tape-gold.test.mjs (280358.796834ms)
+(node:24500) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+✔ one reader serves both engines, and the sim opens the run at the authored ceiling (9893.844583ms)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+✔ the grit does not ratchet as upgrades land, and upgrades still raise the ceiling (4964.424041ms)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+✔ a contract without the twist opens at exactly Balance.hero.maxHp and publishes no rule (2647.013083ms)
+✔ the published grit cannot drift from the authored one (971.707625ms)
+✔ the door refuses a grit that is not a positive whole number of hit points (593.669708ms)
+✔ both engines apply the same field through the same reader (1.16575ms)
+(node:24501) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+{"authored":{"stakeId":"last-warm-vent","position":{"x":3,"z":-10},"initialWarmth":100,"decayPerSecond":4,"goldCost":15,"warmthRestore":40,"radius":4,"squallsRequired":1},"sink":"stoke_last_warm_vent"}
+{"gutteredAtSeconds":25,"decayPerSecond":4}
+{"calmShare":0.25,"squallShare":0.5}
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+{"engine":"HeadlessContractSim","endReason":"vent_guttered","waves":3,"hash":"fnv1a32:81bb5eb3"}
+{"stokes":0,"refusals":{"undeclared":0,"guttered":0,"out-of-reach":0,"insufficient-gold":0,"already-warm":1}}
+✔ the corpus is not empty (0.449959ms)
+✔ the Ember Shore declares a whole preserve and the consumer arms on it (0.615667ms)
+✔ warmth falls only while the squall blows (0.904208ms)
+✔ an unstoked vent gutters inside one squall, and latches once (0.33ms)
+✔ a stoked vent survives the squall that would have taken it (0.432958ms)
+✔ the stoke is refused out of reach, refused when the purse is short, and never over-fills (0.328542ms)
+✔ the secure latch needs BOTH conditions, and each is proven alone (2.222083ms)
+✔ a half-declared preserve arms nothing (F-1471-1) (0.826875ms)
+✔ the E10S-2 mote pressure is APPLIED: a quarter of the field in the calm, half of it in the squall (0.376ms)
+✔ reset relights the vent exactly as a new run finds it (0.19525ms)
+✔ the headless engine runs the vent, publishes it, and ends the run on it (1758.063292ms)
+✔ the headless STOKE verb is reachable, spends the run purse, and refuses honestly (1372.35575ms)
+✔ no other board contract grows a vent (4.746709ms)
+✔ the browser engine runs the same consumer at the same point in its order (1.040583ms)
+✔ the consumer reaches no render code (F-A8-7) (0.239084ms)
+✔ the mechanics manifest publishes the vent rule with the numbers the engine enforces (0.144417ms)
+✔ the engine dependency says LANDED and names the slice that landed it (F-E10S2-1) (0.85075ms)
+(node:24502) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+{"phaseTable":[{"from":null,"to":"calm","tick":0,"atSeconds":0,"cycle":0},{"from":"calm","to":"telegraph","tick":1801,"atSeconds":60.033,"cycle":0},{"from":"telegraph","to":"squall","tick":2041,"atSeconds":68.033,"cycle":0},{"from":"squall","to":"recover","tick":2791,"atSeconds":93.033,"cycle":0},{"from":"recover","to":"calm","tick":3031,"atSeconds":101.033,"cycle":1},{"from":"calm","to":"telegraph","tick":4831,"atSeconds":161.033,"cycle":1},{"from":"telegraph","to":"squall","tick":5071,"atSeconds":169.033,"cycle":1},{"from":"squall","to":"recover","tick":5821,"atSeconds":194.033,"cycle":1},{"from":"recover","to":"calm","tick":6061,"atSeconds":202.033,"cycle":2}],"cadence":{"calmSeconds":60,"telegraphSeconds":8,"squallSeconds":25,"recoverSeconds":8,"cycleSeconds":101}}
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+{"engine":"HeadlessContractSim","tick":2100,"phase":"squall","transitions":[{"from":null,"to":"calm","tick":0,"atSeconds":0,"cycle":0},{"from":"calm","to":"telegraph","tick":1801,"atSeconds":60.033,"cycle":0},{"from":"telegraph","to":"squall","tick":2041,"atSeconds":68.033,"cycle":0}]}
+✔ the corpus is not empty (0.401167ms)
+✔ the Ember Shore declares a whole cadence and the scheduler arms on it (0.521583ms)
+✔ the phase machine changes phase at fixed ticks (0.867042ms)
+✔ the published phase agrees with the log at every sampled instant (0.534041ms)
+✔ two runs of the same cadence are byte-identical (0.265041ms)
+✔ a broken or absent cadence arms nothing (0.478708ms)
+✔ reset restores the run-start clock (0.1495ms)
+✔ the headless engine publishes the squall on the view, and only there (1504.463458ms)
+✔ no other board contract grows a squall (0.576125ms)
+✔ the browser engine ticks the same scheduler at the same point in its order (1.768ms)
+✔ the scheduler reaches no render code (F-A8-7) (0.545791ms)
+✔ the mechanics manifest publishes the squall rule, and says what it does not do (1.058084ms)
+(node:24503) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+✔ the body that breathes is the hero, on every Orbital map and on the view (9911.227083ms)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+✔ both consumers read twist.atmosphere.suitSeconds and harmPerSecond, and the view publishes them (4929.988458ms)
+✔ the consumer RETURNS its harm and never applies it, one whole second at a time (170.206959ms)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+✔ a hero left in vacuum loses hit points through CombatSystem, and one kept in air does not (3799.714667ms)
+✔ a contract that authors no suit numbers keeps the pre-directive behaviour exactly (560.0885ms)
+✔ no rectangle is both a crossing and a shelter, and Low Orbit names its cabin (329.835209ms)
+✔ the door refuses a suit number, a harm number or a pressurised list that would print a lie (504.141916ms)
+✔ the manifest publishes air_suit_human on every Orbital map, and it is the row that says damages (494.856042ms)
+✔ the dial is on the HUD a plain boot draws, and it is contract-scoped (0.872375ms)
+
+
+#
+# Fatal error in , line 0
+# Check failed: node->IsInUse().
+#
+#
+#
+#FailureMessage Object: 0x16fc799b8
+----- Native stack trace -----
+
+ 1: 0x105010044 node::NodePlatform::GetStackTracePrinter()::$_0::__invoke() [/opt/homebrew/Cellar/node/26.4.0/lib/libnode.147.dylib]
+ 2: 0x105d7d650 V8_Fatal(char const*, ...) [/opt/homebrew/Cellar/node/26.4.0/lib/libnode.147.dylib]
+ 3: 0x1062d9044 v8::internal::GlobalHandles::MakeWeak(unsigned long**) (.cold.1) [/opt/homebrew/Cellar/node/26.4.0/lib/libnode.147.dylib]
+ 4: 0x10529cabc v8::internal::GlobalHandles::NodeSpace<v8::internal::GlobalHandles::Node>::Release(v8::internal::GlobalHandles::Node*) [/opt/homebrew/Cellar/node/26.4.0/lib/libnode.147.dylib]
+ 5: 0x104f7690c v8impl::Reference::Finalize() [/opt/homebrew/Cellar/node/26.4.0/lib/libnode.147.dylib]
+ 6: 0x104f8ee10 napi_env__::DeleteMe() [/opt/homebrew/Cellar/node/26.4.0/lib/libnode.147.dylib]
+ 7: 0x104f91788 v8impl::(anonymous namespace)::ThreadSafeFunction::ReleaseResources() [/opt/homebrew/Cellar/node/26.4.0/lib/libnode.147.dylib]
+ 8: 0x106223974 void node::Environment::CloseHandle<uv_handle_s, v8impl::(anonymous namespace)::ThreadSafeFunction::CloseHandlesAndMaybeDelete(bool)::'lambda'(uv_handle_s*)>(uv_handle_s*, v8impl::(anonymous namespace)::ThreadSafeFunction::CloseHandlesAndMaybeDelete(bool)::'lambda'(uv_handle_s*))::'lambda'(uv_handle_s*)::__invoke(uv_handle_s*) [/opt/homebrew/Cellar/node/26.4.0/lib/libnode.147.dylib]
+ 9: 0x100202c6c uv_run [/opt/homebrew/Cellar/libuv/1.52.1/lib/libuv.1.0.0.dylib]
+10: 0x104f68e24 node::Environment::CleanupHandles() [/opt/homebrew/Cellar/node/26.4.0/lib/libnode.147.dylib]
+11: 0x104f69364 node::Environment::RunCleanup() [/opt/homebrew/Cellar/node/26.4.0/lib/libnode.147.dylib]
+12: 0x1061fed98 node::FreeEnvironment(node::Environment*) [/opt/homebrew/Cellar/node/26.4.0/lib/libnode.147.dylib]
+13: 0x104febe40 node::NodeMainInstance::Run() [/opt/homebrew/Cellar/node/26.4.0/lib/libnode.147.dylib]
+14: 0x104f8ce04 node::Start(int, char**) [/opt/homebrew/Cellar/node/26.4.0/lib/libnode.147.dylib]
+15: 0x1808904e4 start [/usr/lib/dyld]
+✖ scripts/e8-air-suit-human.test.mjs (21006.437875ms)
+(node:24504) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+✔ the gate and the window come from twist.atmosphere, and the view publishes both (9558.206792ms)
+✔ a contract that authors no crossing gate keeps the pre-ruling wall and gets no window (1490.046042ms)
+✔ the window credits at most one crossing per window, and holds the rest without paying them (694.036208ms)
+✔ the authored latch is strictly stricter: every zone still has to be stood in on air (1074.145459ms)
+✔ the published gate cannot drift from the authored one (984.696459ms)
+✔ the door refuses a crossing gate that no map could pay (747.096709ms)
+✔ one law, one definition: both consumers enforce the window from the same file (0.600209ms)
+(node:24506) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+✔ the gate and the window come from twist.atmosphere, and the view publishes both (9618.289542ms)
+✔ a contract that authors no atmosphere twist keeps the default gate and gets no window (1419.090334ms)
+✔ the window credits at most one ground per window, and holds the rest without paying them (611.95175ms)
+✔ the published gate cannot drift from the authored one (1526.751042ms)
+✔ the door refuses a regolith gate that is not a reachable whole number of grounds (893.29925ms)
+✔ one reader, and the browser composes the SURVIVAL half through the same resolver (8.436042ms)
+✔ the Eclipse row authors no balance lever, and its idle floors still lose (2658.257209ms)
+✔ the globals the measured arms would have raised are unmoved (226.090417ms)
+✔ the air wall the Eclipse ships is still the ruled one (1949.661291ms)
+(node:24507) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ the Eclipse publishes the verb its win rests on (1727.566333ms)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+✔ MOVE_HERO walks the Eclipse hero to the fort, and a hero told nothing stays put (6554.761208ms)
+✔ the pinned family lists are sorted, deduped and disjoint (0.752167ms)
+✔ the family derivation survives a rebuild (0.718667ms)
+✔ every first-town request belongs to a pinned family (13.165917ms)
+✔ no second map is warmed inside the first town window (2.563209ms)
+✔ a resume with no --tape writes a sibling and never over the recording it replays (24505.768333ms)
+✔ --help states the rule a caller has to be able to read (105.225417ms)
+✔ the group table is read from the contract by the runtime (0.415125ms)
+✔ the derivation matches the runtime on a synthetic slot (0.447125ms)
+✔ every clip of every slot belongs to exactly one group (0.66325ms)
+✔ every clip named in a clipGroups block is a clip the slot really has (0.120042ms)
+✔ walk-sheet clips stay in the slot default group (0.108125ms)
+✔ every group a scene declares exists in the contract (0.31525ms)
+✔ the hero defers its claim animations and nothing the town plays (0.08675ms)
+✔ the MOVE_HERO schema accepts one shape and refuses every near miss (1489.847208ms)
+(node:24516) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+✔ the headless engine walks the hero to the target and spends the order (8849.662625ms)
+✔ a rider's order never moves a human's hero (238.05675ms)
+✖ scripts/hero-move-verb.test.mjs (10820.359625ms)
+(node:24518) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ the corpus is not empty, and neither is the key set (0.459375ms)
+✔ every gr.* key src/story and src/game declare is registered for the profile sweep, or exempt with a reason (0.365708ms)
+✔ the exemption ledger cannot rot: no dead entries, no contradictions (0.0855ms)
+✔ no literal-keyed storage call — the constant sweep above IS the writer sweep (6.852417ms)
+✔ F-SSE-3: the once-per-profile first-boot marker is registered, and its two declarations agree (0.1845ms)
+✔ the profile-scoped key shape is what the sweep assumes (0.078459ms)
+✔ the E7 latch: Relay Rush is latched on a MUTED playbook, and nothing else is (3536.246209ms)
+✔ the two reels differ by exactly the verb the latch asks for (3.353417ms)
+✔ the reel envelope admits the retired tape: its length was never the reason (1278.725375ms)
+(node:24521) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✖ heat 12 still replays to its declared score through the assayer own seam (6484.942834ms)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+✔ the retired reel reaches wave 20 with its purse and still cannot secure (33804.702125ms)
+✔ REPAIR_UNDER ignores a work outside Balance.sparkRig.range, exactly as the human sweep does (3.832583ms)
+✔ REPAIR_UNDER takes the NEAREST match, not the first in the list (0.156583ms)
+✔ the radius is READ off Balance, never re-typed into the door (0.260917ms)
+✔ the four confirm-key interactions are declared in the door grammar (0.917041ms)
+✔ the human key and the rider order call the SAME method, each from its own body (0.654041ms)
+✔ GR-SIM composes none of the four and refuses them BY NAME rather than pretending (1.481958ms)
+✔ the menu is published on the view, derived from the consumers rather than re-typed (0.12775ms)
+✔ the guard BITES a rider branch re-pointed at another body (manufactured defect) (89.022667ms)
+✔ every guarded GR-SIM action reach reads the hero (ADR-005 stages 1 and 3) (0.997416ms)
+✔ the browser still acts from the acting hero, which is the shape stage 1 copied (1.254709ms)
+✔ harvest and repair stay Prospector chores on both sides (they were already 1:1) (0.242791ms)
+✔ program suspension reads the hero inside syncProgramSuspension (ADR-005 stage 3) (0.206125ms)
+✔ the Prospector reads that remain are exactly the ones that are meant to remain (2.022125ms)
+✔ the reach guard BITES a read moved back to the Prospector (manufactured defect) (103.868167ms)
+✔ the reach guard BITES the E8 hollow crossing moved back to the Prospector (125.5545ms)
+✔ the reach guard BITES program suspension moved back to the Prospector (387.77175ms)
+✔ the reach guard BITES an unexpected Prospector code read (649.573125ms)
+✖ scripts/rider-parity-retirement.test.mjs (1910.16075ms)
+✔ the door envelope prices two classes of entry and its arithmetic is pinned (2287.809625ms)
+✔ no reel that fitted the single-class budget can stop fitting (1198.820125ms)
+✖ both blocker fixtures are admitted, and they were always measured on the wrong artifact (1282.42025ms)
+✔ a reel padded past the byte ceiling is still refused on every axis that should refuse it (1923.779375ms)
+✔ the outer wall stays derived from, and above, the widest per-contract ceiling (1216.590292ms)
+✔ both sprite-cell globs are eager, so no per-cell module is ever emitted (1.955625ms)
+✔ an eager ?url glob inlines every cell URL and emits no cell module; a lazy one emits one per cell (584.074041ms)
+✔ the inlined table is the file set: a cell added appears, a cell removed disappears, and no URL is a 404 (84.514125ms)
+ℹ tests 122
+ℹ suites 0
+ℹ pass 115
+ℹ fail 6
+ℹ cancelled 1
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 280363.455333
+
+✖ failing tests:
+
+test at scripts/board-tape-gold.test.mjs:132:1
+✖ the browser door submits the purse held at the secure tick, not the run's lifetime panning (38.960625ms)
+  Error: Port 5173 is already in use
+      at httpServerStart (file:///Users/robin/Claude/Projects/Gold%20Rush/node_modules/vite/dist/node/chunks/node.js:10662:10)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async startServer (file:///Users/robin/Claude/Projects/Gold%20Rush/node_modules/vite/dist/node/chunks/node.js:26386:30)
+      at async Object.listen (file:///Users/robin/Claude/Projects/Gold%20Rush/node_modules/vite/dist/node/chunks/node.js:26203:4)
+      at async TestContext.<anonymous> (file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-boss/scripts/board-tape-gold.test.mjs:138:3)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+
+test at scripts/board-tape-gold.test.mjs:1:1
+✖ scripts/board-tape-gold.test.mjs (280358.796834ms)
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/e8-air-suit-human.test.mjs:1:1
+✖ scripts/e8-air-suit-human.test.mjs (21006.437875ms)
+  'test failed'
+
+test at scripts/hero-move-verb.test.mjs:1:1
+✖ scripts/hero-move-verb.test.mjs (10820.359625ms)
+  'test failed'
+
+test at scripts/relay-rush-reel.test.mjs:151:1
+✖ heat 12 still replays to its declared score through the assayer own seam (6484.942834ms)
+  Error: malformed tape
+      at new AgentTapeReplaySession (/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-boss/src/replay/AgentTapeReplay.ts:49:20)
+      at TestContext.<anonymous> (file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-boss/scripts/relay-rush-reel.test.mjs:155:21)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+
+test at scripts/rider-parity-retirement.test.mjs:1:1
+✖ scripts/rider-parity-retirement.test.mjs (1910.16075ms)
+  'test failed'
+
+test at scripts/run-tape-envelope-budget.test.mjs:88:1
+✖ both blocker fixtures are admitted, and they were always measured on the wrong artifact (1282.42025ms)
+  AssertionError [ERR_ASSERTION]: Dome Basin w16 (heat 12): the county door admits it
+      at file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-boss/scripts/run-tape-envelope-budget.test.mjs:105:14
+      at async withVite (file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-boss/scripts/run-tape-envelope-budget.test.mjs:46:12)
+      at async TestContext.<anonymous> (file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-boss/scripts/run-tape-envelope-budget.test.mjs:89:3)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: null,
+    operator: 'notStrictEqual',
+    diff: 'simple'
+  }
+rc=KILLED-HUNG (0% CPU after the board-tape-gold browser test collided with the concurrent control run on a fixed port; re-run serially after battery 3)
+rc=1

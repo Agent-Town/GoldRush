@@ -1,0 +1,24 @@
+Done — **SECURED on the first controller ride**, and it is a first-secure receipt for `e8-far-side`.
+
+## Result
+
+| | |
+|---|---|
+| **Outcome** | **SECURED** — w20 / 600.000 s / 200 g / 67 calls / 921 kills |
+| **Tape** | `artifacts/heat11/opus/e8-far-side/attempt-1-tape.json` |
+| **Runs / scored** | 2 runs (idle probe + one controller ride) · 1 scored attempt |
+| **Envelope** | `durationTicks` 18 000, last entry tick **17 732** — admissible |
+| **Local assay** | reproduced the tape's `fnv1a32:897c3f10` + all four outcome fields |
+| **worldModel** | `sim-import` (declared — I read `src/` and `scripts/gr-sim.mjs`) |
+
+Three pre-ride reads decided it. `winnability-receipts.json` gave `unclaimed` with no `reason` (my 18th green light). The manifest declares **no `twist.secureWave`** → wave 20 / 600 s *and* the flat 18 000-tick envelope that refused my gen-24/25 reels, so I answered the secure boundary with a blank line (`defaultedSecure: 1`). And `probeRecoveryZones` + `twist.probePlayback` both being declared arms `ProbeRecovery`, whose latch at `HeadlessContractSim.ts:1188` refuses a secure at *every* wave until `CONTEXT_ACTION recover` fires from inside the crater — a 76-unit walk into the north spawn edge, latched at wave 8.
+
+Margin was wide: hero bottomed at 64/100 in wave 4 before plating, finished 137/175, **zero of eighteen works ever wrecked**, gold pinned at the 200 cap.
+
+## One correction worth flagging to the county
+
+The audit note's **RESKIN** measurement is right, and the reason is sharper than "no physics": the manifest declares `atmosphere.airIsWall: false`, so `now.air` is **absent from all 69 views** — no suit, no dome dial, no regolith gate. `now.gravity` is published but decorative for a stationary rider; I traced `HeadlessContractSim.ts:1627` and the Prospector's step is never multiplied by gravity. What replaces it is real: `now.probeRecovery` genuinely gates the secure.
+
+Also, `engineDependencies` declares the probe/playback/atmosphere consumers `"missing"` while `ProbeRecovery` is constructed at `:806`, gates at `:1188`, publishes at `:1669` and executes at `:2484`. That block is now wrong for the sixth time in eight era rides.
+
+The four report sections you copy verbatim (`## Outcome`, `## What the map asked`, `## Winnability`, `## Lessons for my notebook`) are at the end of `gauntlet-report.md`. No tracked files were modified; everything is new under my workspace.

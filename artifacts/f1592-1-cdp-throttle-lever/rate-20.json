@@ -1,0 +1,110 @@
+{
+  "baseURL": "http://127.0.0.1:5253",
+  "startedAt": "2026-08-09T02:20:55.942Z",
+  "lever": {
+    "kind": "cdp:Emulation.setCPUThrottlingRate",
+    "rate": 20,
+    "applied": true,
+    "error": null,
+    "busyLoopMs": 41.09999942779541
+  },
+  "armed": true,
+  "samples": [
+    {
+      "wallMs": 156.82758300000023,
+      "frame": 23,
+      "elapsed": 1.1000000000000003
+    },
+    {
+      "wallMs": 655.737916,
+      "frame": 27,
+      "elapsed": 1.3000000000000005
+    },
+    {
+      "wallMs": 1052.7634159999998,
+      "frame": 30,
+      "elapsed": 1.4500000000000006
+    },
+    {
+      "wallMs": 1345.1002910000007,
+      "frame": 35,
+      "elapsed": 1.6998
+    },
+    {
+      "wallMs": 1606.9202079999995,
+      "frame": 41,
+      "elapsed": 1.9749000000000005
+    },
+    {
+      "wallMs": 1906.7862079999995,
+      "frame": 46,
+      "elapsed": 2.1581999999999995
+    },
+    {
+      "wallMs": 2247.0893749999996,
+      "frame": 51,
+      "elapsed": 2.3916000000000004
+    },
+    {
+      "wallMs": 2511.330833,
+      "frame": 55,
+      "elapsed": 2.5501
+    },
+    {
+      "wallMs": 2854.836875000001,
+      "frame": 61,
+      "elapsed": 2.8087000000000013
+    },
+    {
+      "wallMs": 3221.1644159999996,
+      "frame": 66,
+      "elapsed": 3.042
+    },
+    {
+      "wallMs": 3511.432041,
+      "frame": 71,
+      "elapsed": 3.2835999999999994
+    },
+    {
+      "wallMs": 3841.238666000001,
+      "frame": 75,
+      "elapsed": 3.4503999999999984
+    },
+    {
+      "wallMs": 4119.282458,
+      "frame": 79,
+      "elapsed": 3.6503999999999976
+    },
+    {
+      "wallMs": 4469.475875,
+      "frame": 81,
+      "elapsed": 3.7348999999999974
+    },
+    {
+      "wallMs": 4865.993166,
+      "frame": 85,
+      "elapsed": 3.9348999999999967
+    },
+    {
+      "wallMs": 5175.833208,
+      "frame": 89,
+      "elapsed": 4.109899999999997
+    }
+  ],
+  "errors": [],
+  "summary": {
+    "startFrame": 23,
+    "startElapsed": 1.1000000000000003,
+    "endFrame": 89,
+    "endElapsed": 4.109899999999997,
+    "frames": 66,
+    "elapsed": 3.0098999999999965,
+    "wallMs": 5019.005625,
+    "meanElapsedPerFrame": 0.0456045454545454,
+    "maxElapsedPerFrame": 0.050000000000000044,
+    "fps": 13.150015148668018,
+    "meanFrameIntervalMs": 76.04553977272728,
+    "predictedWallSeconds": 6.15968872159091,
+    "timedOut": false
+  }
+}

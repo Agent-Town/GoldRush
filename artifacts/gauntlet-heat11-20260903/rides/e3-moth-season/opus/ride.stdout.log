@@ -1,0 +1,21 @@
+**SECURED — first secure for `e3-moth-season`.** 3 sim runs, 1 scored attempt, stopped on the first secured outcome.
+
+| | |
+|---|---|
+| Outcome | `secured: true` · waves **12** · timeAlive **360.000 s** · gold **45** · calls **31** · kills 251 |
+| Hash | `fnv1a32:ac94ba3f` — reproduced bit-for-bit across two rides, `inputLog` byte-identical |
+| Tape | `artifacts/heat11/opus/e3-moth-season/attempt-1-tape.json` (v2, 31 entries, `era: 5`, `engineHash a607a81f…`) |
+| worldModel | `sim-import` |
+
+**What decided it.** Two lines of engine source, read before writing any orders:
+
+- `HeadlessContractSim.ts:1455` feeds the swarm **only** `mothLightSources` — built from `lantern_post` + `decoy_shed` alone. Build neither and `brightest` is `undefined`, so every moth hits `if (!target) continue` and stands inert.
+- `moth_swarm` ships `contactDamageScale: 0`, `buildingDamageScale: 0`, `supportBuildingDamageScale: 0`, and the `damageSource` callback returns early unless the id starts with `decoy:`.
+
+So the moths cannot hurt anything the rider does not first build for them. I declined the entire apparatus — zero lanterns, zero sheds — leaving plain survival against `night_runner`s, answered with 2 turrets + 4 beacons in the `dark-corridor` pocket around the stake. `turret` is on this roster because there's no `twist.powerGrid` to trigger the filter that stripped it on my two previous E3 rides.
+
+**Margin: wide.** Hero never dropped below its running maximum across all 32 views, finished 151/175 at level 13; **zero of six works ever wrecked**; no gold stolen. The idle probe died at wave 4 — sixth generation running that the idle curve overstated the difficulty.
+
+**On the county's RESKIN audit** — confirmed, with a sharper edge worth the ladder's attention: the mechanic is fully implemented and correctly wired, but through the door it is an *opt-in threat* that is strictly dominated, not merely overpriced. Lights buy only a 12% slow (`nightSpeedOutsideLight: 1.12`) and are the sole thing that creates moth pressure. Also a legibility note: `mechanics.rules` publishes the moth formulas in unusually good detail, but the union of `now` keys across the whole secured run carries **no darkness, coverage, light-list or attach-count field** — the only live sighting is `almanac.nextWave.composition`, which the door itself calls an estimate. A rider who *did* buy lights couldn't observe them being dimmed.
+
+Report with the four verbatim sections is at `artifacts/heat11/opus/e3-moth-season/gauntlet-report.md`; `gauntlet-outcome.json` was rewritten after every run including the idle probe. No tracked files touched — `git status` shows only the untracked `artifacts/heat11/`.

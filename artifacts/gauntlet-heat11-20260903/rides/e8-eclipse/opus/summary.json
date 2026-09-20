@@ -1,0 +1,107 @@
+{
+  "rig": "opus",
+  "contract": "e8-eclipse",
+  "model": "claude-opus-5",
+  "sessionId": "44145487-76b2-4b9a-b331-288150db7475",
+  "startedAt": "2026-09-04T04:41:48.765Z",
+  "endedAt": "2026-09-04T04:50:23.991Z",
+  "wallClockSeconds": 515,
+  "wallHit": false,
+  "exitCode": 0,
+  "signal": null,
+  "setupToFirstOutputSeconds": 75,
+  "arenaTrackedChanges": [],
+  "workspaceFiles": [
+    "attempt-1-tape.json",
+    "ctrl1.mjs",
+    "gauntlet-outcome.json",
+    "gauntlet-report.md",
+    "probe-idle-tape-stderr.txt",
+    "probe-idle-tape-views.json",
+    "probe-idle-tape.json",
+    "run.mjs",
+    "tune-1-tape-stderr.txt",
+    "tune-1-tape-views.json",
+    "tune-1-tape.json"
+  ],
+  "outcome": {
+    "secured": true,
+    "waves": 20,
+    "timeMs": 600000,
+    "gold": 60,
+    "kills": 915,
+    "calls": 87,
+    "defaultedPicks": 0,
+    "defaultedSecure": 1,
+    "eventLogHash": "fnv1a32:b4ecd608",
+    "tape": "/private/tmp/heat11-b118c4d2/artifacts/heat11/opus/e8-eclipse/attempt-1-tape.json",
+    "scored": true,
+    "runsSoFar": 2,
+    "scoredAttempts": 1,
+    "worldModel": "sim-import",
+    "durationTicks": 18000,
+    "lastEntryTick": 17889,
+    "tapeBytes": 218511,
+    "note": "One ride under two filenames: tune-1-tape.json secured on the first controller and is promoted here as the scored attempt (byte-identical copy at attempt-1-tape.json). Envelope checked: durationTicks 18000 against the flat 18000-tick ceiling for a secureWave-silent contract, last accepted order at tick 17889, secure answered with a blank line (defaultedSecure 1).",
+    "localAssayCaveat": "scripts/assay-replay-agent.mjs in this arena reproduces all four compared outcome fields (secured/waves/gold/timeAlive) but NOT the eventLogHash - and it also fails to reproduce the hash of the zero-order idle probe at an identical tick count (a45ba9ac vs recorded fac5d558). The divergence is systematic to the local instrument in this build, not a property of this reel."
+  },
+  "outcomeError": null,
+  "scoredTapes": [
+    {
+      "file": "attempt-1-tape.json",
+      "id": "agent-b0f19794-5e22174c-af87-4172-889d-ae5c72c17b5f",
+      "contract": "e8-eclipse",
+      "seed": "e8-eclipse-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "b118c4d20",
+        "engineHash": "49c34f8bba3d61e003d1f421398e3835e3107945f396800fa124f946b2e4b2f9",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 20,
+        "timeAlive": 600,
+        "gold": 60
+      },
+      "entries": 87
+    }
+  ],
+  "otherSecuredTapes": [
+    {
+      "file": "tune-1-tape.json",
+      "id": "agent-b0f19794-5e22174c-af87-4172-889d-ae5c72c17b5f",
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 20,
+        "timeAlive": 600,
+        "gold": 60
+      },
+      "meta": {
+        "buildId": "b118c4d20",
+        "engineHash": "49c34f8bba3d61e003d1f421398e3835e3107945f396800fa124f946b2e4b2f9",
+        "era": 5,
+        "viewVersion": 2
+      }
+    }
+  ],
+  "report": {
+    "outcome": "**SECURED.** Wave **20** · timeAlive **600.000 s** · gold **60** · kills 915 · **calls 87**.\nTape put forward: `attempt-1-tape.json` (`eventLogHash fnv1a32:b4ecd608`).\n\n**2 sim runs, 1 scored attempt.** The idle probe, then one controller that secured on its first ride;\nthat securing tune is promoted by name as the scored attempt, and `attempt-1-tape.json` is a\nbyte-identical copy of `tune-1-tape.json` — one ride under two filenames, not two rides.\n\nAdmissibility checked before calling it done: `durationTicks` **18 000** against the flat 18 000-tick\nceiling, last accepted order at tick **17 889**, `defaultedSecure: 1` (blank line at the boundary),\n87 entries, 218 511 bytes.\n\n**Caveat the operator should carry to the door:** this arena's `scripts/assay-replay-agent.mjs`\nreproduces all four compared outcome fields (`secured/waves/gold/timeAlive` = true/20/60/600) but\nreturns a different `eventLogHash` (`dbd020c7` vs the recorded `b4ecd608`). That is **not** a property\nof this reel: replaying my **zero-order idle probe** through the same instrument, at an identical tick\ncount (2 454), also reproduces its outcome exactly and also misses its hash (`a45ba9ac` vs recorded\n`fac5d558`). The divergence is systematic to the local instrument in this build. (The secured reel's\nextra 600 replay ticks are separately just the 20-second trail choice clock playing out.)",
+    "whatTheMapAsked": "It asked me **nothing about its era's signature mechanic, and the county's RESKIN measurement is\nexactly right — twice over, because on this contract even the E8 *air* wall is gone too.** The ladder\nnames E8 as \"low gravity, air as wall (transfer under changed physics)\". Air is not a wall here: the\nmanifest declares `tileParams.atmosphere.airIsWall: true` and `outsideDomes: \"suit-timer\"`, and the\nview publishes **no `now.air` at all** — I dumped the union of `now` keys across all 89 views of the\nsecured run and it is `wave · blastReadyInMs · weapon · gravity · timers · gold · hero · prospector ·\nworks · threats · orders · needsRider · seams · score` (+ `pendingOffer`/`expiresAtSimMs`/`pendingSecure`).\nNo suit, no domes, no regolith, so no secure gate and no reason to walk anyone to a dome pad. That is a\n*regression from its own sibling*: `e8-mare-claim` (generation 29) publishes the whole `now.air` block\nand refuses `pendingSecure` until `regolith.complete`. Same terrain, same tile id, and the atmosphere\nconsumer reaches one and not the other. The eclipse itself is inert in the same way, and honestly so:\n`twist.eclipseEvent` fully specifies a mid-run solar shutdown with `firstRunWarning: false` and a `dark`\nwave set, `tileParams.eclipseShadowZones` authors a shadow across the whole claim, and\n`stablePrefix.mechanics.rules` is **empty — zero keys** — while `engineDependencies` says outright that\nthe eclipse, shadow-zone, objective and atmosphere-wall consumers are all missing. Nothing dimmed, no\neconomy shut down, no dark wave arrived; the teaching intent (\"reserves are love letters to your future\nself\") has no clock to reserve against. The one era field that *is* live is `now.gravity`\n(`feelG 0.6`, `movement: \"floaty\"`, `lobArcDistanceMultiplier`/`lobAirTimeMultiplier` 2.4,\n`knockbackScale` 1.3, `vacuum: true`) — and after generation 29 measured the 24-metre lob *losing five\nwaves* as an auto-weapon on this same terrain, I used it only as free supplementary damage: one\n`BLAST_AT (0,16)` per view whenever `blastReadyInMs` was 0, never `SET_WEAPON blast`.\n\nWhat the contract actually asked was a **geometry-and-arithmetic question inherited from the Mare Claim**,\nand it is a good one. The hero is welded to the claim at (0,12); enemies enter from north, west and east\nand converge on it; and **every legal square of build ground lies south of it** — the dome-cluster pads\nend at `z = 6`. So nothing can be built within 6 wu of the body that must survive, and the whole design\nreduces to two range facts: a turret (range 16) on the `z = 6` line covers the approach out to `z ≈ 21`,\nwhile a beacon (range 8) only reaches the hero at all from `|x| ≤ 5.3` on that same line. I put four\nturrets at (±6,6) and (±2,6) and six beacons inside that narrow strip at (0,±4 / 6) — ten works, zero\n`out_of_zone`, zero refusals, **zero ever wrecked** (they cannot be). The rest was the free lever: with\nno wreckers to punish standing still, 1 330 gold panned off a seam 18.9 wu out funded the full ladder\n*and* all four turrets to tier 2 (150 g each, ×1.4 damage ×1.18 fire rate), paired with an explicit\n`MOVE_TO` because `CONTEXT_ACTION` does not travel. The fields that carried the run were the plainest\nones — `now.works.entries` (position, `tier`, `wrecked`), `now.works.byKind`, `now.seams[].active/x/z`,\n`now.gold`, `now.hero.hp/maxHp/level`, `now.threats.alive` (peaked at **37** against a 60 cap) and\n`now.pendingOffer`/`now.pendingSecure`. The orders were `BUILD`, `HARVEST`, `PICK_UPGRADE`,\n`CONTEXT_ACTION upgrade`, `MOVE_TO`, `BLAST_AT` and one blank line. Not one E8 verb, because E8 has none.",
+    "winnability": "Secured, and the margin was **wide**: the hero held its full running maximum until t ≈ 450 and bottomed\nat **77.4 / 175** in the last nine seconds, all ten works stood untouched at the bank, `threats.alive`\npeaked at 37 of a 60 cap, and 1 330 gold panned covered the entire ladder plus four tier-2 turrets —\nhealth, defence and money all had spare capacity at once, and the only thing that could plausibly lose\nthis contract is answering the secure boundary with an order instead of a blank line.",
+    "lessons": "- **A terrain variant is a different contract, and the differences are in the consumers, not the tiles.**\n  `e8-eclipse` and `e8-mare-claim` share a tile id, build zones, harvest anchors and claim — and one\n  publishes `now.air` with a secure gate while the other publishes none. Generation 29's map was strictly\n  harder for a reason that has nothing to do with the ground. **When a manifest names another map's\n  `tileId`, inherit the geometry and re-measure the sockets.**\n- **The `now`-key union is still the cheapest question in the county, and it now answers \"is the era\n  live\" in one probe.** `atmosphere.airIsWall: true` in the manifest, no `now.air` in any of 89 views.\n  Generation 8 taught me to grep the view builder; the faster move is to dump `now`'s keys off the idle\n  probe and treat the manifest as a wish list.\n- **`stablePrefix.mechanics.rules` with ZERO keys is a complete finding by itself.** Every contract I\n  have ridden that had a live era lever published it there. An empty rules object plus an\n  `engineDependencies: \"missing\"` that *matches* the view is the RESKIN verdict, made in ten seconds\n  without reading a line of engine source. (Running score on `\"missing\"`: right on E4 long-road, E10\n  last-claim and here; wrong on E5 ×3, E6 glow-mesa, E8 mare-claim. It is a comment to confirm, never a\n  fact to plan on — but a \"missing\" that agrees with `now` is genuinely load-bearing.)\n- **Read the roster for the flags it OMITS, before designing any defence.** Neither `scrap_corsair` nor\n  `sun_glare_shambler` is a `wrecker` or a `thief`, so no work could be attacked and no gold stolen:\n  `works.wrecked` was 0 at all 89 views and `goldStolen` finished at 0. That deletes `REPAIR_UNDER`,\n  deletes palisade chaff, deletes every decoy idea, and makes the fort a monotone investment. Two\n  minutes in `Balance.e8Roster` decided the whole shape of the array. Third contract running this has paid.\n- **The secure-wave-silent tell is now a three-part checklist and I ran all three before riding.**\n  No `twist.secureWave` means (1) wave 20 / 600 s, not the 12-wave shape I keep assuming, (2) a flat\n  18 000-tick envelope, and (3) therefore a **blank line** at `pendingSecure`. `durationTicks` came back\n  18 000 with the last order at 17 889. Generations 24 and 25 lost two real first-secures to this; it now\n  costs one `if`.\n- **Generation 29's negative result was worth more than a positive one.** It measured, on this exact\n  terrain, that `SET_WEAPON blast` costs five waves (≈10 dps against the Spark Rig's 24) and that the\n  capped purse's real sink is the tier upgrade. I spent zero time re-testing either and instead used the\n  lob only as free supplementary `BLAST_AT` damage while pouring 600 gold into four tier-2 turrets.\n  **A sibling generation's dead end is a shortcut; read the notebook for what NOT to ride.**\n- **Verify your receipt instrument against a control before trusting or fearing it.** The local\n  `assay-replay-agent.mjs` missed my secured reel's `eventLogHash` and I nearly reported that as a defect\n  in my own tape. Replaying the **zero-order idle probe** — a run I could not have influenced — showed the\n  same outcome-fields-match/hash-miss at an identical tick count, which localises the fault to the\n  instrument in this build. **When a verifier disagrees with you, run it on something that cannot be\n  wrong before you believe it about something that can.**\n- **A wave-2 idle death still means nothing.** Twelfth map running: idle died at 81.8 s and the first\n  controller rode the same seed to 600.000 s at 77/175 health. What the probe was actually good for was\n  the almanac line underneath it — a `continuousTrickle` of 2.061 s, which is the real pressure curve\n  and the reason `threats.alive` climbs at all.\n- **Stop at the secure, and promote the tune by name.** Fourth generation running where the first\n  controller secured and the rules end the ride there. Copy the securing tape to `attempt-1-tape.json`,\n  say plainly in the outcome file that it is one ride under two filenames, and spend the leftover minutes\n  on the envelope check and the report — not on a tidier filename."
+  },
+  "usage": {
+    "transcript": "/Users/robin/.claude/projects/-private-tmp-heat11-b118c4d2/44145487-76b2-4b9a-b331-288150db7475.jsonl",
+    "assistantTurns": 64,
+    "toolCalls": 36,
+    "tokensIn": 128,
+    "tokensOut": 85333,
+    "cacheReadTokens": 12206583,
+    "cacheWriteTokens": 600884,
+    "note": "tokensIn excludes cache reads/writes (reported separately); summed from the CLI session transcript, not self-reported by the rig"
+  }
+}

@@ -1,0 +1,250 @@
+{
+  "wreck": {
+    "wreckers": 0,
+    "swinging": 0,
+    "gnawing": 1,
+    "stuckWatchdogTrips": 1,
+    "ruins": 0,
+    "hitsResolved": 2,
+    "wrecked": 0,
+    "repairs": 0,
+    "repairGold": 0
+  },
+  "damaged": {
+    "id": "palisade",
+    "index": 2,
+    "tier": 1,
+    "hp": 56,
+    "maxHp": 60,
+    "wrecked": false,
+    "worn": false,
+    "repairProgress": 0,
+    "repairCost": 1,
+    "position": {
+      "x": 0,
+      "z": 8
+    }
+  },
+  "enemies": [
+    {
+      "x": -0.7921087953683646,
+      "y": 0.47530898852583964,
+      "z": 6.7700000000000005,
+      "id": 0,
+      "spreadOffset": -1.3479215058879743,
+      "hp": 25.2,
+      "maxHp": 25.2,
+      "speed": 2.7,
+      "contactDamage": 8,
+      "buildingDamage": 8,
+      "supportBuildingDamage": 8,
+      "heroPursuitRange": 0,
+      "hitRadius": 0.6,
+      "boltDamageMult": 1,
+      "bossGroupSize": 0,
+      "bossGroupTotalHp": 0,
+      "bossDegradeSpeedMult": 1,
+      "presentation": {
+        "mesh": false,
+        "visible": false,
+        "railY": 0.47530898852583964,
+        "railRotation": -2.778445643643617,
+        "textureKey": "boss-railcar-unknown",
+        "damaged": false,
+        "damageThreshold": 0.5,
+        "wreckerMarker": false,
+        "markerColor": "#a0522d",
+        "source": "billboard",
+        "mounted": false,
+        "morphInfluence": 0,
+        "bossBarY": 0,
+        "bossBarScale": 1
+      },
+      "scale": 1,
+      "hasBanner": false,
+      "vx": 0,
+      "vz": 0,
+      "thief": false,
+      "wrecker": false,
+      "state": "none",
+      "wreckState": "none",
+      "carried": 0,
+      "edge": null,
+      "zone": "bank",
+      "light": 1,
+      "nightSpeedMultiplier": 1,
+      "watchPainted": false,
+      "readState": "fevered",
+      "fevered": true,
+      "freed": false,
+      "feverAccent": {
+        "active": true,
+        "kind": "human",
+        "strength": 0.654,
+        "surged": false,
+        "channel": "watch-paint-instanced"
+      },
+      "terrain": {
+        "grounded": true,
+        "slope": {
+          "dx": 0,
+          "dz": 0
+        },
+        "traversable": true,
+        "speedMul": 1
+      }
+    }
+  ],
+  "palisades": [
+    {
+      "id": "palisade",
+      "index": 0,
+      "tier": 1,
+      "hp": 60,
+      "maxHp": 60,
+      "wrecked": false,
+      "worn": false,
+      "repairProgress": 0,
+      "repairCost": 0,
+      "position": {
+        "x": -3,
+        "z": 8
+      }
+    },
+    {
+      "id": "palisade",
+      "index": 1,
+      "tier": 1,
+      "hp": 60,
+      "maxHp": 60,
+      "wrecked": false,
+      "worn": false,
+      "repairProgress": 0,
+      "repairCost": 0,
+      "position": {
+        "x": -3,
+        "z": 16
+      }
+    },
+    {
+      "id": "palisade",
+      "index": 2,
+      "tier": 1,
+      "hp": 56,
+      "maxHp": 60,
+      "wrecked": false,
+      "worn": false,
+      "repairProgress": 0,
+      "repairCost": 1,
+      "position": {
+        "x": 0,
+        "z": 8
+      }
+    },
+    {
+      "id": "palisade",
+      "index": 3,
+      "tier": 1,
+      "hp": 60,
+      "maxHp": 60,
+      "wrecked": false,
+      "worn": false,
+      "repairProgress": 0,
+      "repairCost": 0,
+      "position": {
+        "x": 0,
+        "z": 16
+      }
+    },
+    {
+      "id": "palisade",
+      "index": 4,
+      "tier": 1,
+      "hp": 60,
+      "maxHp": 60,
+      "wrecked": false,
+      "worn": false,
+      "repairProgress": 0,
+      "repairCost": 0,
+      "position": {
+        "x": 3,
+        "z": 8
+      }
+    },
+    {
+      "id": "palisade",
+      "index": 5,
+      "tier": 1,
+      "hp": 60,
+      "maxHp": 60,
+      "wrecked": false,
+      "worn": false,
+      "repairProgress": 0,
+      "repairCost": 0,
+      "position": {
+        "x": 3,
+        "z": 16
+      }
+    },
+    {
+      "id": "palisade",
+      "index": 6,
+      "tier": 1,
+      "hp": 60,
+      "maxHp": 60,
+      "wrecked": false,
+      "worn": false,
+      "repairProgress": 0,
+      "repairCost": 0,
+      "position": {
+        "x": -5,
+        "z": 10
+      }
+    },
+    {
+      "id": "palisade",
+      "index": 7,
+      "tier": 1,
+      "hp": 60,
+      "maxHp": 60,
+      "wrecked": false,
+      "worn": false,
+      "repairProgress": 0,
+      "repairCost": 0,
+      "position": {
+        "x": 5,
+        "z": 10
+      }
+    },
+    {
+      "id": "palisade",
+      "index": 8,
+      "tier": 1,
+      "hp": 60,
+      "maxHp": 60,
+      "wrecked": false,
+      "worn": false,
+      "repairProgress": 0,
+      "repairCost": 0,
+      "position": {
+        "x": -5,
+        "z": 13
+      }
+    },
+    {
+      "id": "palisade",
+      "index": 9,
+      "tier": 1,
+      "hp": 60,
+      "maxHp": 60,
+      "wrecked": false,
+      "worn": false,
+      "repairProgress": 0,
+      "repairCost": 0,
+      "position": {
+        "x": 5,
+        "z": 13
+      }
+    }
+  ]
+}

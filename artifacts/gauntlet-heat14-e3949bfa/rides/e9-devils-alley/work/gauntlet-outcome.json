@@ -1,0 +1,41 @@
+{
+ "secured": true,
+ "waves": 20,
+ "timeMs": 600000,
+ "gold": 200,
+ "kills": 927,
+ "calls": 91,
+ "defaultedPicks": 0,
+ "defaultedSecure": 1,
+ "eventLogHash": "fnv1a32:02ba8fff",
+ "tape": "/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/heat14/opus/e9-devils-alley/attempt-1-tape.json",
+ "scored": true,
+ "runsSoFar": 2,
+ "scoredAttempts": 1,
+ "worldModel": "sim-import",
+ "note": "attempt-1-tape.json is a BYTE-IDENTICAL copy of tune-1-tape.json (247848 B, verified with Buffer.compare). It is ONE ride: the first controller secured, and the stop rule ends the heat at the first SECURED outcome, so the securing tune is promoted by name here rather than re-ridden. The operator reads this field, not the filename.",
+ "tapeHeaderHash": "fnv1a32:737ded35",
+ "outcomeLineHash": "fnv1a32:02ba8fff",
+ "hashNote": "The tape header hash and the stdout outcome line hash are DIFFERENT NUMBERS BY DESIGN. The local assay replays to the TAPE header's hash (737ded35); comparing it against the outcome line's (02ba8fff) is a false mismatch.",
+ "era": 6,
+ "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+ "buildId": "24eec74b0",
+ "viewVersion": 2,
+ "envelope": {
+  "bytes": 247848,
+  "entries": 91,
+  "durationTicks": 18000,
+  "lastEntryTick": 17578,
+  "note": "clockTicks is 18000 and a wave-20 secure lands at t=600 = tick 18000, so the F-HEAT11-1 terminal-tick hazard is live on this contract. The last accepted order sits 422 ticks inside the terminal tick, clear of it."
+ },
+ "eraMechanic": {
+  "sweepsStarted": 20,
+  "relocations": 0,
+  "refusalsAnchored": 1050,
+  "note": "The dust-devil column reached my works 1050 times and the anchor hold refused it every time; 0 relocations is a CHOICE (every one of the 24 works sits inside anchor-center's r8 hold), not an absence."
+ },
+ "goldCeiling": {
+  "liveCap": 200,
+  "note": "Banked exactly the live bank cap. The only lever that raises it is stockpile (60g x2, +150 each) and this roster is ONE id, claim_jump_prospect_drone, thief:true -> a standing till makes nearestGoldHolding non-empty and converts every drone from hero-chaser to gold-grabber (gen 106 measured that at -435 gold). Priced and declined: goldStolen finished at 0. 200 is the arithmetic ceiling of this plan."
+ }
+}

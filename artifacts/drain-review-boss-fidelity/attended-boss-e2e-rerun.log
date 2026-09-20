@@ -1,0 +1,122 @@
+
+Running 20 tests using 1 worker
+
+[1/20] [desktop-chrome] › e2e/057-baron-rocket-cart.spec.ts:251:1 › kited Baron telegraphs and launches rockets that damage hero and buildings through CombatSystem
+  1) [desktop-chrome] › e2e/057-baron-rocket-cart.spec.ts:251:1 › kited Baron telegraphs and launches rockets that damage hero and buildings through CombatSystem 
+
+    Error: expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      255 |   const telegraph = await advanceUntil(page, () => rocketSnapshot(page), (snapshot) => snapshot.rocket.telegraphActive);
+      256 |   expect(telegraph.rocket.cartVisible).toBe(true);
+    > 257 |   expect(telegraph.audio.startedBySound['blast-charge-arm'] ?? 0).toBeGreaterThan(0);
+          |                                                                   ^
+      258 |
+      259 |   const midFlight = await advanceUntil(page, () => rocketSnapshot(page), (snapshot) => snapshot.blastsAlive >= 3);
+      260 |   expect(midFlight.rocket.lastOwnerId).toMatch(/^baron_rocket:/);
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-boss/e2e/057-baron-rocket-cart.spec.ts:257:67
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/057-baron-rocket-cart-kite-e68cc-ldings-through-CombatSystem-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/057-baron-rocket-cart-kite-e68cc-ldings-through-CombatSystem-desktop-chrome/error-context.md
+
+
+[2/20] [desktop-chrome] › e2e/057-baron-rocket-cart.spec.ts:275:1 › lethal Baron rocket stops the death tick before XP and gold collection
+[3/20] [desktop-chrome] › e2e/057-baron-rocket-cart.spec.ts:334:1 › melee range suppresses the Baron rocket volley
+[4/20] [desktop-chrome] › e2e/057-baron-rocket-cart.spec.ts:359:1 › defeating the Baron captures the cart, shows the medal line, and unlocks captured research
+[5/20] [desktop-chrome] › e2e/057-baron-rocket-cart.spec.ts:415:1 › Sky-Rocket Battery requires Baron capture and preserves veteran profiles
+[6/20] [desktop-chrome] › e2e/057-baron-rocket-cart.spec.ts:444:1 › Baron rocket volley targeting is deterministic for the same seed
+[7/20] [desktop-chrome] › e2e/lane-baron-props-detail.spec.ts:7:1 › the detailed launcher and powder keg mount without the wrecker stone
+[8/20] [desktop-chrome] › e2e/wire-crawler-3d.spec.ts:115:1 › mounts the Crawler GLB, flips all three damage morphs, and disposes on kill
+  2) [desktop-chrome] › e2e/wire-crawler-3d.spec.ts:115:1 › mounts the Crawler GLB, flips all three damage morphs, and disposes on kill 
+
+    Error: renderer count mounted.triangles expected exact 157812, got 157592
+
+       at renderer-count-artifact.ts:37
+
+      35 |       if (typeof value !== 'number') throw new Error(`renderer count ${label} is missing`);
+      36 |       if (typeof expected === 'number') {
+    > 37 |         if (value !== expected) throw new Error(`renderer count ${label} expected exact ${expected}, got ${value}`);
+         |                                       ^
+      38 |       } else if (value < expected.tolerance[0] || value > expected.tolerance[1]) {
+      39 |         throw new Error(`renderer count ${label}=${value} outside band [${expected.tolerance.join(', ')}]`);
+      40 |       }
+        at verifyAndWriteRendererCounts (/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-boss/e2e/renderer-count-artifact.ts:37:39)
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-boss/e2e/wire-crawler-3d.spec.ts:147:3
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/wire-crawler-3d-mounts-the-e75eb-morphs-and-disposes-on-kill-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/wire-crawler-3d-mounts-the-e75eb-morphs-and-disposes-on-kill-desktop-chrome/error-context.md
+
+
+[9/20] [desktop-chrome] › e2e/wire-crawler-3d.spec.ts:158:1 › LITE keeps the placeholder and never requests the Crawler GLB
+[10/20] [desktop-chrome] › e2e/wire-crawler-3d.spec.ts:174:1 › invalid Crawler GLB bytes keep the placeholder presentation
+[11/20] [mobile-chrome] › e2e/057-baron-rocket-cart.spec.ts:251:1 › kited Baron telegraphs and launches rockets that damage hero and buildings through CombatSystem
+  3) [mobile-chrome] › e2e/057-baron-rocket-cart.spec.ts:251:1 › kited Baron telegraphs and launches rockets that damage hero and buildings through CombatSystem 
+
+    Error: expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      255 |   const telegraph = await advanceUntil(page, () => rocketSnapshot(page), (snapshot) => snapshot.rocket.telegraphActive);
+      256 |   expect(telegraph.rocket.cartVisible).toBe(true);
+    > 257 |   expect(telegraph.audio.startedBySound['blast-charge-arm'] ?? 0).toBeGreaterThan(0);
+          |                                                                   ^
+      258 |
+      259 |   const midFlight = await advanceUntil(page, () => rocketSnapshot(page), (snapshot) => snapshot.blastsAlive >= 3);
+      260 |   expect(midFlight.rocket.lastOwnerId).toMatch(/^baron_rocket:/);
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-boss/e2e/057-baron-rocket-cart.spec.ts:257:67
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/057-baron-rocket-cart-kite-e68cc-ldings-through-CombatSystem-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/057-baron-rocket-cart-kite-e68cc-ldings-through-CombatSystem-mobile-chrome/error-context.md
+
+
+[12/20] [mobile-chrome] › e2e/057-baron-rocket-cart.spec.ts:275:1 › lethal Baron rocket stops the death tick before XP and gold collection
+[13/20] [mobile-chrome] › e2e/057-baron-rocket-cart.spec.ts:334:1 › melee range suppresses the Baron rocket volley
+[14/20] [mobile-chrome] › e2e/057-baron-rocket-cart.spec.ts:359:1 › defeating the Baron captures the cart, shows the medal line, and unlocks captured research
+[15/20] [mobile-chrome] › e2e/057-baron-rocket-cart.spec.ts:415:1 › Sky-Rocket Battery requires Baron capture and preserves veteran profiles
+[16/20] [mobile-chrome] › e2e/057-baron-rocket-cart.spec.ts:444:1 › Baron rocket volley targeting is deterministic for the same seed
+[17/20] [mobile-chrome] › e2e/lane-baron-props-detail.spec.ts:7:1 › the detailed launcher and powder keg mount without the wrecker stone
+[18/20] [mobile-chrome] › e2e/wire-crawler-3d.spec.ts:115:1 › mounts the Crawler GLB, flips all three damage morphs, and disposes on kill
+  4) [mobile-chrome] › e2e/wire-crawler-3d.spec.ts:115:1 › mounts the Crawler GLB, flips all three damage morphs, and disposes on kill 
+
+    Error: renderer count mounted.triangles expected exact 154346, got 154126
+
+       at renderer-count-artifact.ts:37
+
+      35 |       if (typeof value !== 'number') throw new Error(`renderer count ${label} is missing`);
+      36 |       if (typeof expected === 'number') {
+    > 37 |         if (value !== expected) throw new Error(`renderer count ${label} expected exact ${expected}, got ${value}`);
+         |                                       ^
+      38 |       } else if (value < expected.tolerance[0] || value > expected.tolerance[1]) {
+      39 |         throw new Error(`renderer count ${label}=${value} outside band [${expected.tolerance.join(', ')}]`);
+      40 |       }
+        at verifyAndWriteRendererCounts (/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-boss/e2e/renderer-count-artifact.ts:37:39)
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-boss/e2e/wire-crawler-3d.spec.ts:147:3
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/wire-crawler-3d-mounts-the-e75eb-morphs-and-disposes-on-kill-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/wire-crawler-3d-mounts-the-e75eb-morphs-and-disposes-on-kill-mobile-chrome/error-context.md
+
+
+[19/20] [mobile-chrome] › e2e/wire-crawler-3d.spec.ts:158:1 › LITE keeps the placeholder and never requests the Crawler GLB
+[20/20] [mobile-chrome] › e2e/wire-crawler-3d.spec.ts:174:1 › invalid Crawler GLB bytes keep the placeholder presentation
+  4 failed
+    [desktop-chrome] › e2e/057-baron-rocket-cart.spec.ts:251:1 › kited Baron telegraphs and launches rockets that damage hero and buildings through CombatSystem 
+    [desktop-chrome] › e2e/wire-crawler-3d.spec.ts:115:1 › mounts the Crawler GLB, flips all three damage morphs, and disposes on kill 
+    [mobile-chrome] › e2e/057-baron-rocket-cart.spec.ts:251:1 › kited Baron telegraphs and launches rockets that damage hero and buildings through CombatSystem 
+    [mobile-chrome] › e2e/wire-crawler-3d.spec.ts:115:1 › mounts the Crawler GLB, flips all three damage morphs, and disposes on kill 
+  16 passed (2.3m)
+rc=1

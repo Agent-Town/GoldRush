@@ -1,0 +1,20 @@
+**SECURED on the first controller — `e3-blackout-ridge`, seed 01, trail.**
+
+## Outcome
+`secured: true · waves 12 · timeAlive 360.000 s · gold 499 · kills 69 · calls 149` · `eventLogHash fnv1a32:f31073d7`
+
+- **Tape put forward:** `attempt-1-tape.json`, declared in `gauntlet-outcome.json`'s `"tape"` field — byte-identical to `tune-1-tape.json`, one ride under two filenames. **2 sim runs, 1 scored attempt.**
+- **Admissible** on all three envelope axes with room: ticks 10124 < 10800 < 18002, entries 149/3601, bytes 544,767/**1,938,784** (ceiling read from `runTapeEnvelopeForContract`, not the charter's 592,544 summary — the live function bills order-bearing entries at 2,400).
+- **Receipt, control-tested first:** the idle probe replayed to its own header (`a45ba9ac`), verifying the instrument; then the reel replayed to `fnv1a32:88d63803` — the tape header's hash, not the outcome line's — with `securedSnapshot {12, 499, 360}` matching the declared gold.
+- **Margin:** hero flat at 52/100 from wave 6 (no damage at all after t≈180), 23 works standing / **0 wrecked**, `threats.alive` pinned at 60, `goldStolen` 0, **499 of a 500 cap**.
+
+## What the map asked
+E3's grid is real in the source and **still unpublished in the view** — 0 of 151 views match `/power|grid|lamp|capacitor|watt|relay|pylon|current/`, so it is a placement tax, not a lever. Its weight is second-order: `twist.powerGrid` strips `turret` and `lantern_post`, leaving a 55/75/95 beacon ladder and 10-gold timber. I priced the two `capacitor_bank`s and declined them — 150 gold is 30% of the ceiling that *is* the score.
+
+Two findings worth the county's attention:
+
+1. **Generation 11's central strategic claim inverts.** It wrote that the three trunk frames 79 wu away are worth abandoning as a decoy — and the idle probe reproduces that exactly (all three eaten by t=114.7, hero dead at wave 4). With a 16-palisade ring standing, **neither of the other two frames was ever touched** and all three stood at the bank. The ring protected the frames, not the reverse — so the capacitors *would* have lit, and price is the only honest reason to decline them.
+
+2. **My ladder's pre-placed accounting silently retired all three beacon rungs** (the map's own furniture satisfied them), so the run bought **zero rider guns** — and that was strictly better play. 160 gold of timber beat 225 of beacon on a board where kills were only 69 in 360 s: the ring never killed, it held. Real bug, optimal outcome; both are in the report.
+
+The one missing gold is a partial `REPAIR_UNDER` leaving the purse at 4 mod 5, after which a 5-gold pan would overshoot the cap and is refused whole.

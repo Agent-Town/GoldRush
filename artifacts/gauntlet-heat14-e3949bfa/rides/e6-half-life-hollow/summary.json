@@ -1,0 +1,199 @@
+{
+  "rig": "opus",
+  "contract": "e6-half-life-hollow",
+  "model": "claude-opus-5",
+  "sessionId": "f609b51b-a7d7-4d16-b0c3-a575e9015223",
+  "startedAt": "2026-09-18T06:05:22.818Z",
+  "endedAt": "2026-09-18T06:18:26.246Z",
+  "wallClockSeconds": 783,
+  "wallHit": false,
+  "exitCode": 0,
+  "signal": null,
+  "setupToFirstOutputSeconds": 285,
+  "arenaTrackedChanges": [],
+  "workspaceFiles": [
+    "attempt-1-tape.json",
+    "ctrl-v1.mjs",
+    "gauntlet-outcome.json",
+    "gauntlet-report.md",
+    "probe-rows.json",
+    "probe-summary.json",
+    "probe-tape.json",
+    "probe-view1.json",
+    "probe-view2.json",
+    "probe-views.jsonl",
+    "runner.mjs",
+    "tune-1-rows.json",
+    "tune-1-summary.json",
+    "tune-1-tape.json",
+    "tune-1-view1.json",
+    "tune-1-view2.json",
+    "tune-1-views.jsonl"
+  ],
+  "outcome": {
+    "secured": true,
+    "waves": 20,
+    "timeMs": 600000,
+    "gold": 200,
+    "kills": 884,
+    "calls": 90,
+    "defaultedPicks": 0,
+    "defaultedSecure": 1,
+    "eventLogHash": "fnv1a32:25b47509",
+    "tape": "/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/heat14/opus/e6-half-life-hollow/attempt-1-tape.json",
+    "scored": true,
+    "runsSoFar": 2,
+    "scoredAttempts": 1,
+    "worldModel": "sim-import",
+    "note": "ONE RIDE UNDER TWO FILENAMES. tune-1 secured on the first controller, so the stop rule ended the heat there; attempt-1-tape.json is a BYTE-IDENTICAL copy of tune-1-tape.json (241604 bytes, verified equal) promoted by name as the scored attempt, exactly as the brief's promotion clause intends. Runs: 1 idle probe + 1 controller.",
+    "envelope": {
+      "durationTicks": 18000,
+      "maxTicks": 18002,
+      "lastEntryTick": 17335,
+      "ticksOfSlack": 665,
+      "entries": 90,
+      "bytes": 241604,
+      "allThreeAxesClear": true,
+      "note": "clockTicks 18000 is declared, so runTapeEnvelopeForContract grants the +2 inclusive-endpoint slack (F-HEAT11-1 cure). The blank line at pendingSecure banked the default (defaultedSecure: 1) and kept the last accepted order 665 ticks inside."
+    },
+    "receipt": {
+      "assayControl": "probe-tape.json replayed to its own header fnv1a32:a45ba9ac (instrument verified on a zero-order run first)",
+      "assayReel": "attempt-1-tape.json replayed to fnv1a32:27469c92 = the TAPE HEADER hash, with outcome {secured:true,waves:20,gold:200,timeAlive:600}",
+      "securedSnapshot": {
+        "waves": 20,
+        "gold": 200,
+        "timeAlive": 600
+      },
+      "hashPairWarning": "The stdout outcome line reads fnv1a32:25b47509 and the tape header reads fnv1a32:27469c92. These are different numbers BY DESIGN; the replay matches the tape header. Comparing the wrong pair reads as a false mismatch on a clean reel.",
+      "engineEra": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068 (era 6, build abf2462ec) - current-era papers"
+    },
+    "goldCeiling": {
+      "banked": 200,
+      "liveCap": 200,
+      "verdict": "200 IS THE ARITHMETIC MAXIMUM OF THE PLAN I CHOSE, and the choice was deliberate. The only cap-raiser on this roster is stockpile (60g x2, +150 each -> 500). glowjack carries thief:true, and a standing stockpile is the switch that makes nearestGoldHolding non-empty, converting every thief from hero-chaser to gold-grabber (generation 106 measured that trade at 435 gold). I declined it and measured goldStolen: 0 with 8 thieves alive at the bank. Open question left for the next rider, named precisely: buy BOTH stockpiles LATE (t ~ 500-520) - theft integrates over the time the till stands, and with no wrecker on this roster there is no repair bill competing for the purse, so ~80s of exposure against +300 of ceiling is the one refinement I did not test."
+    },
+    "idleFloorCheck": {
+      "published": "null-floors.json e6-half-life-hollow-01: w17 / 521800ms / 0 gold / 449 kills / fnv1a32:5e7517ff",
+      "measured": "w17 / 521800ms / 0 gold / 449 kills / fnv1a32:5e7517ff",
+      "verdict": "BYTE-FOR-BYTE IDENTICAL - the era-6 re-survey did not move this map's rules."
+    }
+  },
+  "outcomeError": null,
+  "promotedTapeName": "attempt-1-tape.json",
+  "scoredTapes": [
+    {
+      "file": "attempt-1-tape.json",
+      "id": "agent-e145a6fc-a45e8254-4692-4b12-8bd0-211f9b231b5e",
+      "contract": "e6-half-life-hollow",
+      "seed": "e6-half-life-hollow-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "abf2462ec",
+        "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+        "era": 6,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 20,
+        "timeAlive": 600,
+        "gold": 200
+      },
+      "entries": 90,
+      "durationTicks": 18000,
+      "lastEntryTick": 17335,
+      "promotedByRig": true,
+      "discoveredBy": "outcome-file+filename"
+    }
+  ],
+  "otherTapes": [
+    {
+      "file": "probe-tape.json",
+      "id": "agent-85a4b27a-3e1e492f-fd8c-4319-806b-485d24bd3dcb",
+      "contract": "e6-half-life-hollow",
+      "seed": "e6-half-life-hollow-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "abf2462ec",
+        "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+        "era": 6,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 17,
+        "timeAlive": 521.8,
+        "gold": 0
+      },
+      "entries": 0,
+      "durationTicks": 15654,
+      "lastEntryTick": null
+    },
+    {
+      "file": "tune-1-tape.json",
+      "id": "agent-e145a6fc-a45e8254-4692-4b12-8bd0-211f9b231b5e",
+      "contract": "e6-half-life-hollow",
+      "seed": "e6-half-life-hollow-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "abf2462ec",
+        "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+        "era": 6,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 20,
+        "timeAlive": 600,
+        "gold": 200
+      },
+      "entries": 90,
+      "durationTicks": 18000,
+      "lastEntryTick": 17335
+    }
+  ],
+  "otherSecuredTapes": [
+    {
+      "file": "tune-1-tape.json",
+      "id": "agent-e145a6fc-a45e8254-4692-4b12-8bd0-211f9b231b5e",
+      "contract": "e6-half-life-hollow",
+      "seed": "e6-half-life-hollow-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "abf2462ec",
+        "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+        "era": 6,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 20,
+        "timeAlive": 600,
+        "gold": 200
+      },
+      "entries": 90,
+      "durationTicks": 18000,
+      "lastEntryTick": 17335
+    }
+  ],
+  "report": {
+    "outcome": "**SECURED — w20 / 600.000 s / 200 gold / 884 kills / 90 calls**, `defaultedPicks: 0`, `defaultedSecure: 1`.\n\n- Runs: **2** (one idle probe, one controller). Scored attempts: **1**.\n- Tape put forward: `attempt-1-tape.json` — a **byte-identical copy** of `tune-1-tape.json` (241,604 bytes,\n  verified equal). One ride under two filenames: the first controller secured, so the stop rule ended the heat\n  and the securing tune is promoted by name in `gauntlet-outcome.json`'s `tape` field.\n- Envelope, measured on the first reel that existed: `durationTicks` 18,000 against `maxTicks` 18,002; last\n  accepted order at tick **17,335** (665 ticks of slack); 90 entries; 241,604 bytes. All three axes clear.\n- Receipt: control-tested. The zero-order probe replayed to its own header `fnv1a32:a45ba9ac` first, then the\n  reel replayed to **`fnv1a32:27469c92`** — the tape header's hash, not the stdout outcome line's\n  `fnv1a32:25b47509` — with `securedSnapshot {waves: 20, gold: 200, timeAlive: 600}`.",
+    "whatTheMapAsked": "It asked me about **decay and patience**, and E6's signature mechanic is load-bearing in the strictest sense\n— but the sharper finding is that this map asks about decay **twice, in opposite directions**, and only one of\nthem is the objective.\n\nThe **first** is the ordinary E6 lever and it is the economy: a machine not struck for `windDownSeconds: 8`\n*exhausts* — harmless, undamageable, crawling at 0.2×, and exempt from the alive cap, so the board piles up.\nThe idle probe is the proof and it is the loudest number on this contract: **449 kills and `gold: 0` across\n521.8 seconds**, with machines exhausting in plain sight and no order collecting them. `now.atomic.wrangle`\npublishes `captureRadius: 2.2` and the pen (`goldPerMachine: 1`, `tickSeconds: 15`), and `CAPTURE` — targetless,\nfree, taken at **the hero** — is the only converter. Every penned machine pays for the rest of the run, so it is\nan opening move rather than a mid-game one. My pen reached **31 machines and granted 270 gold**.\n\nThe **second** is the one the idle probe asks without meaning to: the exhausted machines are also *armour*.\nThey are exempt from the cap precisely so they can accumulate, and they accumulate on the hero they were\nwalking toward. So `CAPTURE` is not a free lever — every machine banked is a body taken off your own shield —\nand the honest reason my run could afford to bank them is that the fort held `threats.alive` at a peak of 35\nagainst a 60 cap.\n\nThe **crossing**, by contrast, is not a decay question at all: it is a static, one-way geometry latch with no\nclock on it, and it gates the secure at every wave (`objectiveAllowsSecure` ANDed in at\n`HeadlessContractSim.ts:1472`). Cheap, front-loaded, discharged in the first 28 seconds — and unskippable.\n\nFields that carried the run: `now.hollowCrossing.stage/routeId/radiationDamageDealt` (the errand's whole state\nmachine), `now.atomic.wrangle.{active,pen}` and `now.atomic.exhausted` (the economy), `now.works.byKind`/\n`entries`, `now.seams[].active/x/z/anchorIndex` (an **inactive seam publishes all three as `null`**, and one\nnon-finite number refuses the whole array silently), `now.gold` against `now.score.goldPanned` and\n`goldStolen`, `now.hero.hp/maxHp/x/z`, `now.threats.alive/wreckers/thieves`, `now.orders[].status/reason`.\nOrders: **`MOVE_HERO`**, **`CAPTURE`**, `BUILD`, `HARVEST`, `PICK_UPGRADE`, `BLAST_AT`, and one blank line.\nThere is no E6 verb beyond `CAPTURE`.\n\n**Does my notebook still describe this map?** Its geometry, exactly; its controls, not at all — and this map is\n**not** named as cured this week, so the first-minute question answers itself from the floor. The idle probe\nreproduced `null-floors.json` **byte for byte** (`w17 / 521800 ms / 0 gold / 449 kills / fnv1a32:5e7517ff`),\nmatching my generation-24 memory of \"zero gold in 522 seconds\" to the tenth of a second. The claim at (0,12),\nthe four build zones, the four harvest anchors, the causeway and both glow bridges, the wave-20 default and the\n200 bank cap all reproduced. The era-6 re-survey moved this map's rendering, not its rules. What moved is the\nbody that walks the crossing — and that change paid, because the hero travels at 6.0 against the Prospector's\n4.8, so the same errand that took generation 24 until t = 29.87 landed at **t = 27.53** while also leaving the\nhero standing where I wanted it.",
+    "winnability": "Secured, and the margin was **wide on survival and at the deliberate ceiling on the score**: the hero never fell\nbelow **84.9 %** of its running maximum (148.6/175 at the bank), **0 of 10 works were ever wrecked** across 884\nkills, `goldStolen` finished at **0**, `threats.alive` peaked at 35 of a 60 cap, and the reel cleared all three\nenvelope axes with 665 ticks of slack — while the banked 200 is the arithmetic maximum of a plan that declined\nthe only cap-raiser on the board, because `glowjack` is `thief: true` and a standing stockpile is the switch that\nturns every thief from hero-chaser into gold-grabber.",
+    "lessons": "- **`null-floors.json` is the cheapest expiry check in the county and it should be the FIRST file I open —\n  second heat running it decided the budget.** One file published `w17 / 521800 ms / 0 gold / 449 kills /\n  fnv1a32:5e7517ff` before I ran anything, and the probe reproduced it to the hash. That single comparison\n  retired the whole geometry question on an era named for rebuilt maps and sent the entire reading budget to the\n  two things that had actually moved.\n- **Generation 24's control clause on this map is dead and the engine wrote the correction for me.**\n  `HeadlessContractSim.ts:2091` carries a six-line comment naming the finding (F-RPG-3), the two bodies it\n  confused, and the cure: *\"GR-SIM asked one body where it stood and hurt another.\"* When a notebook entry is\n  about WHICH BODY a mechanic measures, the call site is usually commented — grep the call site before planning\n  the errand, not after.\n- **Aim four units INSIDE a rectangle's edge, not at it.** `inside()` is `z >= minZ && z <= maxZ` and\n  `MOVE_HERO` has a 0.5 arrival radius, so a body resting at z = −39.97 fails a `z <= −40` launch test that\n  looked exactly satisfiable on paper. Aiming (0,−44) cost 1.3 seconds and removed a knife-edge that would have\n  silently never latched the gate. The complement of generation 116's \"aim inside the tolerance, off the\n  marker\": **aim inside the RECTANGLE, off its boundary.**\n- **Let the return leg satisfy the middle stage rather than gambling a single point on it.** Stages advance\n  sequentially inside one `update()`, so walking (0,−44) → (0,44) at x = 0 traverses the entire causeway and\n  the `crossing` stage is guaranteed by the path instead of by one coordinate. Design a multi-stage latch as a\n  PATH that cannot miss, not as a sequence of points that must each hit.\n- **Intersect the errand's TERMINUS with the build zones and the harvest anchors before choosing a post.**\n  I have intersected `stakeMarkers × buildZones × range` for a dozen generations and `harvestAnchors` since\n  generation 79; the missing term here was the objective's own end point. `north-extraction-shelf` contains the\n  extraction stake AND seam (24,47), so the errand delivered the hero into the pocket for free. It also inverted\n  the economy versus generation 24 — `goldPanned` 600 + pen 270 here against that ride's pen 870 and\n  `goldPanned` 0. **Same map, same total, opposite shape, one coordinate apart.**\n- **Check a post against the HAZARD rectangle as well as the build zone.** (21,46) is inside the shelf and at\n  x < 22 on purpose, clear of the east glow bridge's x[22,34]. The z-range would have excluded it anyway, but\n  relying on one of two conditions is how a run pays 1 hp/s for ten minutes.\n- **The thief flag settles the cap question by itself — fourth heat running I have carried the rule instead of\n  re-deriving it.** `glowjack` is `thief: true` and nothing is a wrecker, so: works are unattackable\n  (`REPAIR_UNDER` and palisade bait are dead weight, 0 of 10 wrecked) *and* the 60-gold stockpile is the switch\n  generation 106 measured at 435 gold. Declined; measured `goldStolen: 0` with 8 thieves alive at the bank. The\n  refinement I still owe the notebook, now narrowed: on a board with **no wrecker** there is no repair bill\n  competing for the purse, so the LATE stockpile pair (t ≈ 500–520, ~80 s of exposure against +300 of ceiling)\n  is live here in a way generation 112 correctly closed it on a continuous-repair map.\n- **A ceiling is a finding; a margin is a mistake. Report which one you have.** 200 is the arithmetic maximum of\n  the plan I chose, not gold I left lying about — calling it a margin would send the next rider hunting a\n  stockpile that costs more than it raises.\n- **Obey the stop rule and promote by name.** The first controller secured, so I stopped: copied the tape,\n  verified the two files byte-identical, named `attempt-1-tape.json` in the outcome file's `tape` field, said\n  plainly that they are one ride, and spent what was left on the envelope check, a control-tested assay and this\n  report. The operator reads the declaration, never the filename.\n- **Control-test the assay before believing it, then compare the right pair of hashes — ninth generation for\n  this.** The zero-order probe replayed to its own header first; only then did `fnv1a32:27469c92` mean anything.\n  The stdout outcome line's `fnv1a32:25b47509` is a different number by design, and `securedSnapshot` is the\n  third number to read, because it is precisely what the door's `score_mismatch` rule compares against the\n  declared gold.\n- **The runner before the probe, fifteenth heat running.** This arena refuses shell redirection and compound\n  `cd`, and `timeout` is not on macOS. A node runner that spawns `gr-sim`, drives the controller, logs every\n  view to a compact table and writes `gauntlet-outcome.json` plus all three envelope axes on every child exit\n  made the intermediate-results law automatic — a truthful row existed from the idle probe onward, and its\n  per-view table is the entire evidence base of this report.\n- **Seventeenth heat where reading, not riding, is the whole discipline — and the seventeenth in a row where\n  the unmodified skeleton secured on ride one.** Draft first under replace semantics with a plating-first\n  scorer (maxHp 100 → 175); ONE ladder with ONE ordinal per id priced at its live instance off\n  `buildables[].costs[standing]`; more candidate spots than slots with a refusal blacklist partitioned into\n  GROUND (poison the coordinate) and ECONOMY (`insufficient_gold` — retry, poison nothing); a rung with no\n  candidates left RETIRED rather than stalling the rungs behind it; `Number.isFinite` seam filtering before any\n  sort; `BLAST_AT` above the traveller; `MOVE_HERO` emitted once and dropped when parked, advancing only on a\n  real `UNREACHABLE` record; a hard build floor at t = 505 that cannot be argued with; and a blank line at\n  `pendingSecure`. Ten builds, zero ladder stalls."
+  },
+  "usage": {
+    "transcript": "/Users/robin/.claude/projects/-private-tmp-claude-501--Users-robin-Claude-Projects-Gold-Rush-fe6b8d27-b064-40eb-934b-1d29d57a71db-scratchpad-arena-heat14-e3949bfa/f609b51b-a7d7-4d16-b0c3-a575e9015223.jsonl",
+    "assistantTurns": 66,
+    "toolCalls": 30,
+    "tokensIn": 132,
+    "tokensOut": 132150,
+    "cacheReadTokens": 30675436,
+    "cacheWriteTokens": 1517802,
+    "note": "tokensIn excludes cache reads/writes (reported separately); summed from the CLI session transcript, not self-reported by the rig"
+  }
+}

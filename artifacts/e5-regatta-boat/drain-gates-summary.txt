@@ -1,0 +1,37 @@
+base main 9537a003d branch 34257a71c 00:05Z
+merged fd8f765e3
+engine hash merged: 5770c93e2457f264a74870d1da3b4d07f72ffe64afe61f884456159009a06a24
+tsc/build/e1: 0 / 0 / 0
+first-town payload: 34237118 bytes
+null floors: rc=0 83 of 83 null floors match assets/contracts/null-floors.json (295.2s).
+law-pointer: rc=1 law-pointer-guard — do the law surfaces still point at what they claim?
+halo: rc=0 halo re-extraction PASS: 315 cured, 0 held, 760 regenerated-and-cured, 2127 scanned; alpha
+guards: ℹ pass 68 ℹ fail 0 
+e2e start 00:17Z
+law-pointer: re-based in the chain (Game.ts:2671 -> :2692, +21; baseline re-banked)
+e2e: rc=1   8 failed   48 passed (4.0m)  00:21Z
+  1) [desktop-chrome] › e2e/e5-flotilla-hulls.spec.ts:6:1 › the Flotilla keeps three losable hulls and secures both bench seeds deterministi
+  2) [desktop-chrome] › e2e/e5-flotilla-hulls.spec.ts:118:1 › idle Flotilla runs lose all hulls ────
+  3) [desktop-chrome] › e2e/e5-regatta-race.spec.ts:35:1 › the Regatta runs its authored course and secures both bench seeds deterministical
+  4) [desktop-chrome] › e2e/e5-regatta-race.spec.ts:141:1 › idle Regatta runs lose because the course remains unfinished 
+  5) [mobile-chrome] › e2e/e5-flotilla-hulls.spec.ts:6:1 › the Flotilla keeps three losable hulls and secures both bench seeds deterministic
+  6) [mobile-chrome] › e2e/e5-flotilla-hulls.spec.ts:118:1 › idle Flotilla runs lose all hulls ─────
+  7) [mobile-chrome] › e2e/e5-regatta-race.spec.ts:35:1 › the Regatta runs its authored course and secures both bench seeds deterministicall
+  8) [mobile-chrome] › e2e/e5-regatta-race.spec.ts:141:1 › idle Regatta runs lose because the course remains unfinished 
+battery start 00:21Z
+battery: rc=1 ℹ tests 934 ℹ pass 922 ℹ fail 7 ℹ skipped 5  00:28Z
+✖ Claim Boat candidate preserves its pinned source, export and clear authored pad contract (7.481875ms)
+✖ Flotilla exports match three authored hull identities with compliant textures and clear pads (8.753292ms)
+✖ all 152 scripts/*.test.mjs fixture owners remove their temp directories (145782.822708ms)
+✖ failing tests:
+✖ published mask tables exactly track authored contract data (8.313292ms)
+✖ rotation registry stays outside the engine identity corpus (558.230583ms)
+✖ the landed registry names the live engine and stays outside its hash corpus (323.736666ms)
+✖ the live board is green under this guard (baseline is honest) (264.198625ms)
+dirt after battery: 0
+REGATTA-PREP-DONE
+engine hash after the cure: 8eb7e135ef6c707d1ac62414755c65237768332c9cdbda045871d2e3945aa71d
+cured guards re-run (claim-boat-asset, e3-mask-tables): pass 32 fail 0
+pin #17
+era: ℹ pass 9 ℹ fail 0 
+postpin: ℹ pass 41 ℹ fail 0 

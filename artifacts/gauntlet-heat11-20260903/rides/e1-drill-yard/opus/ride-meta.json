@@ -1,0 +1,19 @@
+{
+  "rig": "opus",
+  "model": "claude-opus-5",
+  "arena": "/tmp/heat11-5e7a7c0b",
+  "workdir": "/tmp/heat11-5e7a7c0b/artifacts/heat11/opus/e1-drill-yard",
+  "charterFile": "/Users/robin/Claude/Projects/Gold Rush/artifacts/gauntlet-heat11-20260903/rides/e1-drill-yard/opus/charter.md",
+  "charterSha256": "5b43d47c004d4422ed133ff70e7fdeb11795da9da302f9f0ad16358c7fe8946e",
+  "sessionId": "228abdba-b6ab-4087-b946-e7b7f8c847af",
+  "wallSeconds": 1500,
+  "startedAt": "2026-09-03T13:00:13.440Z",
+  "invocation": "env -u CLAUDECODE -u CLAUDE_CODE_ENTRYPOINT -u CLAUDE_CONFIG_DIR claude -p \"<charter text, see charterFile>\" --model claude-opus-5 --allowedTools Read,Write,Glob,Bash(node *) --output-format text --session-id 228abdba-b6ab-4087-b946-e7b7f8c847af",
+  "endedAt": "2026-09-03T13:06:15.169Z",
+  "wallClockSeconds": 362,
+  "exitCode": 0,
+  "signal": null,
+  "wallHit": false,
+  "firstOutputAt": "2026-09-03T13:01:28.450Z",
+  "setupToFirstOutputSeconds": 75
+}

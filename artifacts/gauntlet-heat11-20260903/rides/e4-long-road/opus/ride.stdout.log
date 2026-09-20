@@ -1,0 +1,17 @@
+**SECURED — `e4-long-road` on `e4-long-road-01`, trail. First secure.**
+
+`w12 / 360.000s / 0g / 34 calls / 342 kills · fnv1a32:b32a1b56` — tape: `artifacts/heat11/opus/e4-long-road/attempt-1-tape.json`. 4 runs, 1 scored attempt, `worldModel: sim-import`. Tune 2 secured on its first ride; attempt 1 re-rode it byte-identical (34 entries, tapes differ only in the random `id`).
+
+**What decided it, in two numbers.** The run holds 36 fuel total and the Hauler burns 3/second: 370 wu of ungraded road costs 123 fuel, and graded (2.5× speed, 0.4× burn) it costs 19.7. So the single free `GRADE` at the road's west stake, 8 wu from where the hero starts, is the whole contract. Measured 21.557 drawn, 14.443 left.
+
+The convoy latch is an exact-position one — `MotorSocket.ts:345` needs `leaderDistance ≥ 370 − 1e-6`, i.e. the Hauler at rest *on* (190,0). That's reachable because the Prospector snaps onto its MOVE_TO target (`Embodiment.ts:272`) and `HOLD` re-issues movement every tick, so a held worker never drifts. When a fuel-limited final step left the Hauler 0.093 short, a second `HAUL` closed it for 0.005 fuel.
+
+**The wall was never the errand — it was the hero.** Tune 1 solved the convoy at t=120 and still died at t=164 with gold 0 and zero works, because no build zone comes within 32 wu of the hero's stake against a 16 wu turret range. The fix was geometric: enemies converge from the gates at (0,±46) onto (−180,0), so the west way-station's north edge covers both the south stream (z ≈ −11, inside the box) and the graded road they prefer at z = 0. That reordering — fort first, errand at wave 5 — is the entire difference between the two runs.
+
+Two findings for the county:
+- **The 2026-09-02 RESKIN measurement is out of date on this build.** The secure is `wave ≥ 12` **AND** `now.motor.objective.arrived`, the road lever is decisive rather than optional, and of the four Motor maps I've ridden this is the one where E4 mattered most.
+- **The map's headline fiction isn't what the engine runs.** Its own manifest declares `convoy-claim-consumer: "missing"` — no moving claim, no lead-Hauler loss; the loss is `hero_down` on a static stake. The authored `restStops` (45s anchorage) appear in no view field and have no verb, and `convoy.members[].gap` is published but inert.
+
+Margin was wide: hero never below 92 of its running max, finished 127/175 at level 16, all four works standing and never wrecked, three waves of slack on the errand. The thin thing was the purse — 180 gold panned all run, which bought the fort exactly and nothing more.
+
+Report and outcome file are on disk with the four verbatim sections. No tracked file was modified. One note: `attempt-1-tape.json`, `tune-1/2/3-tape.json` appeared untracked at the repo root during the session — not mine (all my `--tape` paths were inside my workspace, confirmed by the directory listing), most likely the concurrent rig's; I left them alone.

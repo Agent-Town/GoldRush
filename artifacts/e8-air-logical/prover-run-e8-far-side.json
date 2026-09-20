@@ -1,0 +1,1147 @@
+{
+  "contract": "e8-far-side",
+  "policyAir": "plan-sorties",
+  "policy": {
+    "verbs": [
+      "HARVEST",
+      "BUILD",
+      "MOVE_TO",
+      "MOVE_HERO",
+      "HOLD",
+      "BLAST_AT",
+      "CONTEXT_ACTION",
+      "PICK_UPGRADE",
+      "SECURE_CHOICE"
+    ],
+    "home": {
+      "x": 0,
+      "z": -31
+    },
+    "errand": "crossing",
+    "airMargin": 10,
+    "panTailReserve": 2,
+    "fortProfile": "default",
+    "heroPost": {
+      "x": 0,
+      "z": -36
+    },
+    "defence": [
+      {
+        "what": "turret",
+        "where": {
+          "x": -12,
+          "z": -31
+        }
+      },
+      {
+        "what": "turret",
+        "where": {
+          "x": 12,
+          "z": -31
+        }
+      },
+      {
+        "what": "turret",
+        "where": {
+          "x": -12,
+          "z": -41
+        }
+      },
+      {
+        "what": "turret",
+        "where": {
+          "x": 12,
+          "z": -41
+        }
+      },
+      {
+        "what": "sentry_beacon",
+        "where": {
+          "x": -5,
+          "z": -33
+        }
+      },
+      {
+        "what": "sentry_beacon",
+        "where": {
+          "x": 5,
+          "z": -33
+        }
+      },
+      {
+        "what": "sentry_beacon",
+        "where": {
+          "x": -5,
+          "z": -39
+        }
+      },
+      {
+        "what": "sentry_beacon",
+        "where": {
+          "x": 5,
+          "z": -39
+        }
+      },
+      {
+        "what": "sentry_beacon",
+        "where": {
+          "x": 0,
+          "z": -31
+        }
+      },
+      {
+        "what": "sentry_beacon",
+        "where": {
+          "x": 0,
+          "z": -41
+        }
+      }
+    ]
+  },
+  "identical": true,
+  "secured": true,
+  "runs": [
+    {
+      "seed": "e8-far-side-01",
+      "exitCode": 0,
+      "turns": 79,
+      "picks": 28,
+      "outcome": {
+        "secured": true,
+        "waves": 20,
+        "timeMs": 600000,
+        "gold": 35,
+        "kills": 918,
+        "calls": 78,
+        "defaultedPicks": 0,
+        "defaultedSecure": 0,
+        "eventLogHash": "fnv1a32:9703e5ba"
+      },
+      "run": 1,
+      "tape": "artifacts/e8-air-logical/prover-e8-far-side-01.tape.json",
+      "trace": [
+        {
+          "wave": 18,
+          "runSeconds": 547.83,
+          "gold": 30,
+          "suit": 60,
+          "inDome": "far-side-landing-yard",
+          "window": 4,
+          "windowWaves": 4,
+          "creditedThisWindow": 1,
+          "credited": 4,
+          "required": 4,
+          "reached": [
+            "listening-probe-crater"
+          ],
+          "held": 0,
+          "breathless": 0,
+          "complete": true,
+          "works": {
+            "sentry_beacon": 6,
+            "turret": 4
+          },
+          "tiers": [
+            2,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 144.2,
+          "heroAt": {
+            "x": 0,
+            "z": -42.51
+          },
+          "threats": 18,
+          "body": {
+            "x": -9,
+            "z": -22
+          },
+          "lastOrders": [
+            [
+              "PICK_UPGRADE",
+              "done",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "MOVE_TO",
+              "done",
+              null
+            ],
+            [
+              "CONTEXT_ACTION",
+              "done",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 29,
+          "build": null
+        },
+        {
+          "wave": 18,
+          "runSeconds": 553.97,
+          "gold": 70,
+          "suit": 60,
+          "inDome": "far-side-landing-yard",
+          "window": 4,
+          "windowWaves": 4,
+          "creditedThisWindow": 1,
+          "credited": 4,
+          "required": 4,
+          "reached": [
+            "listening-probe-crater"
+          ],
+          "held": 0,
+          "breathless": 0,
+          "complete": true,
+          "works": {
+            "sentry_beacon": 6,
+            "turret": 4
+          },
+          "tiers": [
+            2,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 137,
+          "heroAt": {
+            "x": 0,
+            "z": -42.51
+          },
+          "threats": 27,
+          "body": {
+            "x": 16,
+            "z": -34
+          },
+          "lastOrders": [
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 0,
+          "build": null
+        },
+        {
+          "wave": 18,
+          "runSeconds": 565.63,
+          "gold": 70,
+          "suit": 60,
+          "inDome": "far-side-landing-yard",
+          "window": 4,
+          "windowWaves": 4,
+          "creditedThisWindow": 1,
+          "credited": 4,
+          "required": 4,
+          "reached": [
+            "listening-probe-crater"
+          ],
+          "held": 0,
+          "breathless": 0,
+          "complete": true,
+          "works": {
+            "sentry_beacon": 6,
+            "turret": 4
+          },
+          "tiers": [
+            2,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 137,
+          "heroAt": {
+            "x": 0,
+            "z": -42.51
+          },
+          "threats": 17,
+          "body": {
+            "x": 0,
+            "z": -31
+          },
+          "lastOrders": [
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "MOVE_TO",
+              "done",
+              null
+            ],
+            [
+              "HOLD",
+              "active",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 29,
+          "build": null
+        },
+        {
+          "wave": 18,
+          "runSeconds": 568.7,
+          "gold": 110,
+          "suit": 60,
+          "inDome": "far-side-landing-yard",
+          "window": 4,
+          "windowWaves": 4,
+          "creditedThisWindow": 1,
+          "credited": 4,
+          "required": 4,
+          "reached": [
+            "listening-probe-crater"
+          ],
+          "held": 0,
+          "breathless": 0,
+          "complete": true,
+          "works": {
+            "sentry_beacon": 6,
+            "turret": 4
+          },
+          "tiers": [
+            2,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": -42.51
+          },
+          "threats": 16,
+          "body": {
+            "x": 9,
+            "z": -22
+          },
+          "lastOrders": [
+            [
+              "PICK_UPGRADE",
+              "done",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 0,
+          "build": null
+        },
+        {
+          "wave": 19,
+          "runSeconds": 570,
+          "gold": 110,
+          "suit": 60,
+          "inDome": "far-side-landing-yard",
+          "window": 4,
+          "windowWaves": 4,
+          "creditedThisWindow": 1,
+          "credited": 4,
+          "required": 4,
+          "reached": [
+            "listening-probe-crater"
+          ],
+          "held": 0,
+          "breathless": 0,
+          "complete": true,
+          "works": {
+            "sentry_beacon": 6,
+            "turret": 4
+          },
+          "tiers": [
+            2,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": -42.51
+          },
+          "threats": 36,
+          "body": {
+            "x": 4.7,
+            "z": -26.3
+          },
+          "lastOrders": [
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "MOVE_TO",
+              "active",
+              null
+            ],
+            [
+              "HOLD",
+              "pending",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 30,
+          "build": null
+        },
+        {
+          "wave": 19,
+          "runSeconds": 571.6,
+          "gold": 150,
+          "suit": 60,
+          "inDome": "far-side-landing-yard",
+          "window": 4,
+          "windowWaves": 4,
+          "creditedThisWindow": 1,
+          "credited": 4,
+          "required": 4,
+          "reached": [
+            "listening-probe-crater"
+          ],
+          "held": 0,
+          "breathless": 0,
+          "complete": true,
+          "works": {
+            "sentry_beacon": 6,
+            "turret": 4
+          },
+          "tiers": [
+            2,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": -42.51
+          },
+          "threats": 34,
+          "body": {
+            "x": 9,
+            "z": -22
+          },
+          "lastOrders": [
+            [
+              "HARVEST",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 0,
+          "build": null
+        },
+        {
+          "wave": 19,
+          "runSeconds": 590.73,
+          "gold": 0,
+          "suit": 60,
+          "inDome": "far-side-landing-yard",
+          "window": 4,
+          "windowWaves": 4,
+          "creditedThisWindow": 1,
+          "credited": 4,
+          "required": 4,
+          "reached": [
+            "listening-probe-crater"
+          ],
+          "held": 0,
+          "breathless": 0,
+          "complete": true,
+          "works": {
+            "sentry_beacon": 6,
+            "turret": 4
+          },
+          "tiers": [
+            2,
+            2,
+            1,
+            1
+          ],
+          "heroHp": 103.00000000000006,
+          "heroAt": {
+            "x": 0,
+            "z": -42.51
+          },
+          "threats": 18,
+          "body": {
+            "x": 0,
+            "z": -31
+          },
+          "lastOrders": [
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "MOVE_TO",
+              "done",
+              null
+            ],
+            [
+              "CONTEXT_ACTION",
+              "done",
+              null
+            ],
+            [
+              "MOVE_TO",
+              "done",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 29,
+          "build": null
+        },
+        {
+          "wave": 20,
+          "runSeconds": 600,
+          "gold": 35,
+          "suit": 60,
+          "inDome": "far-side-landing-yard",
+          "window": 5,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "credited": 4,
+          "required": 4,
+          "reached": [
+            "listening-probe-crater"
+          ],
+          "held": 0,
+          "breathless": 0,
+          "complete": true,
+          "works": {
+            "sentry_beacon": 6,
+            "turret": 4
+          },
+          "tiers": [
+            2,
+            2,
+            1,
+            1
+          ],
+          "heroHp": 156.00000000000006,
+          "heroAt": {
+            "x": 0,
+            "z": -42.51
+          },
+          "threats": 16,
+          "body": {
+            "x": 10.7,
+            "z": -34
+          },
+          "lastOrders": [
+            [
+              "SECURE_CHOICE",
+              "done",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 29,
+          "build": null
+        }
+      ],
+      "stderrTail": [
+        "(node:93362) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.",
+        "(Use `node --trace-warnings ...` to show where the warning was created)",
+        "gr-sim speed: 0.53 waves/s"
+      ]
+    },
+    {
+      "seed": "e8-far-side-01",
+      "exitCode": 0,
+      "turns": 79,
+      "picks": 28,
+      "outcome": {
+        "secured": true,
+        "waves": 20,
+        "timeMs": 600000,
+        "gold": 35,
+        "kills": 918,
+        "calls": 78,
+        "defaultedPicks": 0,
+        "defaultedSecure": 0,
+        "eventLogHash": "fnv1a32:9703e5ba"
+      },
+      "run": 2,
+      "tape": null,
+      "trace": [
+        {
+          "wave": 18,
+          "runSeconds": 547.83,
+          "gold": 30,
+          "suit": 60,
+          "inDome": "far-side-landing-yard",
+          "window": 4,
+          "windowWaves": 4,
+          "creditedThisWindow": 1,
+          "credited": 4,
+          "required": 4,
+          "reached": [
+            "listening-probe-crater"
+          ],
+          "held": 0,
+          "breathless": 0,
+          "complete": true,
+          "works": {
+            "sentry_beacon": 6,
+            "turret": 4
+          },
+          "tiers": [
+            2,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 144.2,
+          "heroAt": {
+            "x": 0,
+            "z": -42.51
+          },
+          "threats": 18,
+          "body": {
+            "x": -9,
+            "z": -22
+          },
+          "lastOrders": [
+            [
+              "PICK_UPGRADE",
+              "done",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "MOVE_TO",
+              "done",
+              null
+            ],
+            [
+              "CONTEXT_ACTION",
+              "done",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 29,
+          "build": null
+        },
+        {
+          "wave": 18,
+          "runSeconds": 553.97,
+          "gold": 70,
+          "suit": 60,
+          "inDome": "far-side-landing-yard",
+          "window": 4,
+          "windowWaves": 4,
+          "creditedThisWindow": 1,
+          "credited": 4,
+          "required": 4,
+          "reached": [
+            "listening-probe-crater"
+          ],
+          "held": 0,
+          "breathless": 0,
+          "complete": true,
+          "works": {
+            "sentry_beacon": 6,
+            "turret": 4
+          },
+          "tiers": [
+            2,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 137,
+          "heroAt": {
+            "x": 0,
+            "z": -42.51
+          },
+          "threats": 27,
+          "body": {
+            "x": 16,
+            "z": -34
+          },
+          "lastOrders": [
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 0,
+          "build": null
+        },
+        {
+          "wave": 18,
+          "runSeconds": 565.63,
+          "gold": 70,
+          "suit": 60,
+          "inDome": "far-side-landing-yard",
+          "window": 4,
+          "windowWaves": 4,
+          "creditedThisWindow": 1,
+          "credited": 4,
+          "required": 4,
+          "reached": [
+            "listening-probe-crater"
+          ],
+          "held": 0,
+          "breathless": 0,
+          "complete": true,
+          "works": {
+            "sentry_beacon": 6,
+            "turret": 4
+          },
+          "tiers": [
+            2,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 137,
+          "heroAt": {
+            "x": 0,
+            "z": -42.51
+          },
+          "threats": 17,
+          "body": {
+            "x": 0,
+            "z": -31
+          },
+          "lastOrders": [
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "MOVE_TO",
+              "done",
+              null
+            ],
+            [
+              "HOLD",
+              "active",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 29,
+          "build": null
+        },
+        {
+          "wave": 18,
+          "runSeconds": 568.7,
+          "gold": 110,
+          "suit": 60,
+          "inDome": "far-side-landing-yard",
+          "window": 4,
+          "windowWaves": 4,
+          "creditedThisWindow": 1,
+          "credited": 4,
+          "required": 4,
+          "reached": [
+            "listening-probe-crater"
+          ],
+          "held": 0,
+          "breathless": 0,
+          "complete": true,
+          "works": {
+            "sentry_beacon": 6,
+            "turret": 4
+          },
+          "tiers": [
+            2,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": -42.51
+          },
+          "threats": 16,
+          "body": {
+            "x": 9,
+            "z": -22
+          },
+          "lastOrders": [
+            [
+              "PICK_UPGRADE",
+              "done",
+              null
+            ],
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 0,
+          "build": null
+        },
+        {
+          "wave": 19,
+          "runSeconds": 570,
+          "gold": 110,
+          "suit": 60,
+          "inDome": "far-side-landing-yard",
+          "window": 4,
+          "windowWaves": 4,
+          "creditedThisWindow": 1,
+          "credited": 4,
+          "required": 4,
+          "reached": [
+            "listening-probe-crater"
+          ],
+          "held": 0,
+          "breathless": 0,
+          "complete": true,
+          "works": {
+            "sentry_beacon": 6,
+            "turret": 4
+          },
+          "tiers": [
+            2,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": -42.51
+          },
+          "threats": 36,
+          "body": {
+            "x": 4.7,
+            "z": -26.3
+          },
+          "lastOrders": [
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "MOVE_TO",
+              "active",
+              null
+            ],
+            [
+              "HOLD",
+              "pending",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 30,
+          "build": null
+        },
+        {
+          "wave": 19,
+          "runSeconds": 571.6,
+          "gold": 150,
+          "suit": 60,
+          "inDome": "far-side-landing-yard",
+          "window": 4,
+          "windowWaves": 4,
+          "creditedThisWindow": 1,
+          "credited": 4,
+          "required": 4,
+          "reached": [
+            "listening-probe-crater"
+          ],
+          "held": 0,
+          "breathless": 0,
+          "complete": true,
+          "works": {
+            "sentry_beacon": 6,
+            "turret": 4
+          },
+          "tiers": [
+            2,
+            1,
+            1,
+            1
+          ],
+          "heroHp": 175,
+          "heroAt": {
+            "x": 0,
+            "z": -42.51
+          },
+          "threats": 34,
+          "body": {
+            "x": 9,
+            "z": -22
+          },
+          "lastOrders": [
+            [
+              "HARVEST",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ],
+            [
+              "HARVEST",
+              "done",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 0,
+          "build": null
+        },
+        {
+          "wave": 19,
+          "runSeconds": 590.73,
+          "gold": 0,
+          "suit": 60,
+          "inDome": "far-side-landing-yard",
+          "window": 4,
+          "windowWaves": 4,
+          "creditedThisWindow": 1,
+          "credited": 4,
+          "required": 4,
+          "reached": [
+            "listening-probe-crater"
+          ],
+          "held": 0,
+          "breathless": 0,
+          "complete": true,
+          "works": {
+            "sentry_beacon": 6,
+            "turret": 4
+          },
+          "tiers": [
+            2,
+            2,
+            1,
+            1
+          ],
+          "heroHp": 103.00000000000006,
+          "heroAt": {
+            "x": 0,
+            "z": -42.51
+          },
+          "threats": 18,
+          "body": {
+            "x": 0,
+            "z": -31
+          },
+          "lastOrders": [
+            [
+              "BLAST_AT",
+              "done",
+              null
+            ],
+            [
+              "MOVE_TO",
+              "done",
+              null
+            ],
+            [
+              "CONTEXT_ACTION",
+              "done",
+              null
+            ],
+            [
+              "MOVE_TO",
+              "done",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 29,
+          "build": null
+        },
+        {
+          "wave": 20,
+          "runSeconds": 600,
+          "gold": 35,
+          "suit": 60,
+          "inDome": "far-side-landing-yard",
+          "window": 5,
+          "windowWaves": 4,
+          "creditedThisWindow": 0,
+          "credited": 4,
+          "required": 4,
+          "reached": [
+            "listening-probe-crater"
+          ],
+          "held": 0,
+          "breathless": 0,
+          "complete": true,
+          "works": {
+            "sentry_beacon": 6,
+            "turret": 4
+          },
+          "tiers": [
+            2,
+            2,
+            1,
+            1
+          ],
+          "heroHp": 156.00000000000006,
+          "heroAt": {
+            "x": 0,
+            "z": -42.51
+          },
+          "threats": 16,
+          "body": {
+            "x": 10.7,
+            "z": -34
+          },
+          "lastOrders": [
+            [
+              "SECURE_CHOICE",
+              "done",
+              null
+            ]
+          ],
+          "plan": "breathe",
+          "target": null,
+          "sortieSeconds": null,
+          "pans": 29,
+          "build": null
+        }
+      ],
+      "stderrTail": [
+        "(node:94223) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.",
+        "(Use `node --trace-warnings ...` to show where the warning was created)",
+        "gr-sim speed: 0.52 waves/s"
+      ]
+    }
+  ]
+}

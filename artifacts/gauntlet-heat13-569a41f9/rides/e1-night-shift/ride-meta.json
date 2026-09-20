@@ -1,0 +1,19 @@
+{
+  "rig": "opus",
+  "model": "claude-opus-5",
+  "arena": "/tmp/heat13-569a41f9",
+  "workdir": "/tmp/heat13-569a41f9/artifacts/heat13/opus/e1-night-shift",
+  "charterFile": "/private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/rides/e1-night-shift/charter.md",
+  "charterSha256": "cc4089cd48774a1b3b84a5c3ab5f605f32397b5e0c17758848c779e931e61cc7",
+  "sessionId": "cd202c46-850f-4cea-a7eb-7108c556616c",
+  "wallSeconds": 1500,
+  "startedAt": "2026-09-07T13:54:58.563Z",
+  "invocation": "env -u CLAUDECODE -u CLAUDE_CODE_ENTRYPOINT -u CLAUDE_CONFIG_DIR claude -p \"<charter text, see charterFile>\" --model claude-opus-5 --allowedTools Read,Write,Glob,Bash(node *) --output-format text --session-id cd202c46-850f-4cea-a7eb-7108c556616c",
+  "endedAt": "2026-09-07T14:08:49.323Z",
+  "wallClockSeconds": 831,
+  "exitCode": 0,
+  "signal": null,
+  "wallHit": false,
+  "firstOutputAt": "2026-09-07T13:56:13.578Z",
+  "setupToFirstOutputSeconds": 75
+}

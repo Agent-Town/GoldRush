@@ -1,0 +1,35 @@
+{
+  "baseURL": "http://127.0.0.1:5253",
+  "startedAt": "2026-08-09T02:22:52.882Z",
+  "lever": {
+    "kind": "cdp:Emulation.setCPUThrottlingRate",
+    "rate": 100,
+    "applied": true,
+    "error": null,
+    "busyLoopMs": 310.4000005722046
+  },
+  "armed": false,
+  "samples": [
+    {
+      "wallMs": 1220.0609999999942,
+      "frame": 92,
+      "elapsed": 4.549999999999992
+    }
+  ],
+  "errors": [],
+  "summary": {
+    "startFrame": 92,
+    "startElapsed": 4.549999999999992,
+    "endFrame": 92,
+    "endElapsed": 4.549999999999992,
+    "frames": 0,
+    "elapsed": 0,
+    "wallMs": 0,
+    "meanElapsedPerFrame": null,
+    "maxElapsedPerFrame": null,
+    "fps": null,
+    "meanFrameIntervalMs": null,
+    "predictedWallSeconds": null,
+    "timedOut": false
+  }
+}

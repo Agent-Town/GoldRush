@@ -1,0 +1,52 @@
+{
+  "secured": true,
+  "waves": 12,
+  "timeMs": 360000,
+  "gold": 200,
+  "kills": 389,
+  "calls": 35,
+  "defaultedPicks": 0,
+  "defaultedSecure": 1,
+  "eventLogHash": "fnv1a32:1841b36d",
+
+  "tape": "/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/heat14/opus/e5-stillwater/attempt-1-tape.json",
+  "scored": true,
+  "runsSoFar": 2,
+  "scoredAttempts": 1,
+  "worldModel": "sim-import",
+
+  "note": "ONE RIDE UNDER TWO FILENAMES. The first controller (ctrl-v1.mjs) secured, and the stop rule ends the heat at the first SECURED outcome, so attempt-1-tape.json is a byte-identical copy of tune-1-tape.json (both 108517 bytes, verified with Buffer.compare). The operator reads this `tape` field, never the filename.",
+
+  "tapeHeaderHash": "fnv1a32:0373d807",
+  "outcomeLineHash": "fnv1a32:1841b36d",
+  "hashNote": "These are DIFFERENT NUMBERS BY DESIGN. A local assay replay must reproduce the TAPE HEADER's hash (0373d807); the stdout outcome line's hash (1841b36d) is a different quantity and comparing the wrong pair reads as a false mismatch on a clean reel.",
+
+  "era": 6,
+  "viewVersion": 2,
+  "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+
+  "envelope": {
+    "durationTicks": 10800,
+    "lastEntryTick": 10763,
+    "ticksOfSlack": 37,
+    "entries": 35,
+    "bytes": 108517,
+    "note": "All three axes measured off the first reel that existed. Silence at pendingSecure took the bank default (defaultedSecure: 1)."
+  },
+
+  "margin": {
+    "heroMinHpFraction": 1.0,
+    "heroFinal": "175/175",
+    "ballistaPadIntegrityAtBank": "starboard 78/96",
+    "strikesAbsorbedBySacrificialPads": "66 of 70",
+    "goldStolen": 0,
+    "ceilingNote": "200 is this contract's ARITHMETIC MAXIMUM, not a margin left behind: waves and timeAlive are pinned by twist.secureWave 12, and score.goldPanned froze at 200 (Balance.economy.bankCap) from t~200 with the purse refusing further credits. The only cap-raiser is `stockpile`, and this map's single build zone is the claim-boat deck mask over open water."
+  },
+
+  "floorCheck": {
+    "idleProbe": "w3 / 103500 ms / 0 gold / 40 kills / fnv1a32:11d72e7f",
+    "publishedNullFloor": "w3 / 103500 ms / 0 gold / 40 kills / fnv1a32:11d72e7f",
+    "match": "byte-for-byte, including the hash",
+    "note": "On an era named for rebuilt maps this is simultaneously the proof that this contract's RULES did not move and a verified instrument. None of era 6's eight pins names e5-stillwater; the three era-pin mentions of 'stillwater' are the 2026-09-05 e5-stillwater-front-crew-2 and e5-storm-predicate-split drains, which generation 66 already rode."
+  }
+}

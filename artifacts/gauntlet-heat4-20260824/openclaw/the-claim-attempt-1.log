@@ -1,0 +1,10 @@
+/private/tmp/heat4-4c5ca660/src/meta/ContractFamilies.ts:280
+	if (!contract) throw new Error(`Unknown contract: ${id}`);
+	                     ^
+
+Error: Unknown contract: e1-the-claim
+    at loadContract (/private/tmp/heat4-4c5ca660/src/meta/ContractFamilies.ts:280:23)
+    at new HeadlessContractSim (/private/tmp/heat4-4c5ca660/src/sim/HeadlessContractSim.ts:554:58)
+    at file:///private/tmp/heat4-4c5ca660/scripts/gr-sim.mjs:81:17
+
+Node.js v23.11.1

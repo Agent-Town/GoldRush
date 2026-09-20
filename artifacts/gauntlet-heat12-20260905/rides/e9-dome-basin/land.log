@@ -1,0 +1,27 @@
+
+=== 1 finish-ride ===
+{"rig":"opus","contract":"e9-dome-basin","wall":686,"wallHit":false,"rc":0,"tracked":[],"files":22,"outcome":{"secured":false,"waves":14,"gold":96,"runsSoFar":4,"scoredAttempts":1,"tape":"/tmp/heat12-038cc280/artifacts/heat12/opus/e9-dome-basin/tune-1-tape.json","worldModel":"sim-import"},"scoredTapes":[{"file":"attempt-1-tape.json","id":"agent-b5c95c01-f1f1dac0-418e-47dc-a535-8d9f69fec32a","secured":false,"waves":13,"gold":11,"durationTicks":12581,"lastEntryTick":12333,"promotedByRig":false,"discoveredBy":"filename"},{"file":"tune-1-tape.json","id":"agent-8e51d98b-58f6f224-e330-4e62-b071-e3d3d8d93ac2","secured":false,"waves":14,"gold":96,"durationTicks":13187,"lastEntryTick":12743,"promotedByRig":true,"discoveredBy":"outcome-file"}],"otherSecured":[],"reportSections":{"outcome":937,"whatTheMapAsked":2489,"winnability":1141,"lessons":4562},"usage":{"turns":59,"toolCalls":32,"tokensIn":118,"tokensOut":101711}}
+
+=== NOT SECURED — nothing to submit ===
+{
+ "rig": "opus",
+ "contract": "e9-dome-basin",
+ "wall": 686,
+ "wallHit": false,
+ "rc": 0,
+ "scoredTapes": [
+  {
+   "file": "attempt-1-tape.json",
+   "secured": false,
+   "waves": 13,
+   "gold": 11
+  },
+  {
+   "file": "tune-1-tape.json",
+   "secured": false,
+   "waves": 14,
+   "gold": 96
+  }
+ ],
+ "outcomeNote": "Best of 4 runs. tune-1 (two-sided bait, mend on) w14/439.567s beats attempt-1 (synthesis) w13/419.367s and tune-2 (economy-only) w13/402.267s. NOT SECURED: the contract needs w20/600s and declares no earlier window. attempt-1-tape.json is the scored attempt and is the WORSE run; this file names tune-1 as the best outcome, per the intermediate-results law. Neither is submittable."
+}

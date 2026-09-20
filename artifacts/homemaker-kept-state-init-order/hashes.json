@@ -1,0 +1,35 @@
+{
+  "note": "Determinism evidence for homemaker-kept-state-init-order. BEFORE = HEAD 3e32f3e09, AFTER = this lane tip. Every sim-relevant field is byte-identical; only the src-derived engineHash rotates.",
+  "nullFloorsIdle": {
+    "e6-glow-mesa/e6-glow-mesa-01": {
+      "pinned": "fnv1a32:0ae65b8e",
+      "before": "fnv1a32:0ae65b8e",
+      "after": "fnv1a32:0ae65b8e",
+      "outcome": { "secured": false, "waves": 15, "timeMs": 467633, "gold": 0, "kills": 290 }
+    },
+    "e6-glow-mesa/e6-glow-mesa-02": {
+      "pinned": "fnv1a32:004ae8d7",
+      "before": "fnv1a32:004ae8d7",
+      "after": "fnv1a32:004ae8d7",
+      "outcome": { "secured": false, "waves": 14, "timeMs": 436800, "gold": 0, "kills": 287 }
+    }
+  },
+  "playedTape": {
+    "contract": "e6-glow-mesa",
+    "seed": "e6-glow-mesa-01",
+    "inputLogEntries": 40,
+    "liveOutcomeEventLogHash": { "before": "fnv1a32:42cc6cdb", "after": "fnv1a32:42cc6cdb" },
+    "recordedTapeEventLogHash": { "before": "fnv1a32:fdce1d04", "after": "fnv1a32:fdce1d04" },
+    "assayReplayEventLogHash": { "before": "fnv1a32:fdce1d04", "after": "fnv1a32:fdce1d04" },
+    "tapeFieldsIdentical": ["version", "createdAt", "kept", "contract", "seed", "difficulty", "simVersion", "runStart", "inputLog", "eventLogHash", "outcome"],
+    "tapeFieldsThatDiffer": {
+      "id": "a fresh randomUUID per run, by design",
+      "meta.engineHash": "3c38c993fda488a95045297e012476484cbce9a62567a6ffbf0d9a524b7b4885 -> 6e27423b60157b3661a1d822d90e4ec47eb65952fe6568544dade163a17e223f (the src re-hash this slice pins)"
+    }
+  },
+  "engineHash": {
+    "before": "3c38c993fda488a95045297e012476484cbce9a62567a6ffbf0d9a524b7b4885",
+    "after": "6e27423b60157b3661a1d822d90e4ec47eb65952fe6568544dade163a17e223f",
+    "pinnedIn": "assets/engine-era.json (era 5, same-era pin per F-1441-3)"
+  }
+}

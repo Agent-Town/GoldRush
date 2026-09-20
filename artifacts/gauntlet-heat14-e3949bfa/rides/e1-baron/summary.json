@@ -1,0 +1,123 @@
+{
+  "rig": "opus",
+  "contract": "e1-baron",
+  "model": "claude-opus-5",
+  "sessionId": "82cc4125-9b46-4c08-8071-9e8ffc579543",
+  "startedAt": "2026-09-18T07:31:33.677Z",
+  "endedAt": "2026-09-18T07:41:59.606Z",
+  "wallClockSeconds": 626,
+  "wallHit": false,
+  "exitCode": 0,
+  "signal": null,
+  "setupToFirstOutputSeconds": 225,
+  "arenaTrackedChanges": [],
+  "workspaceFiles": [
+    "attempt-1-summary.json",
+    "attempt-1-tape.json",
+    "attempt-1-views.jsonl",
+    "controller.mjs",
+    "gauntlet-outcome.json",
+    "gauntlet-report.md",
+    "runner.mjs",
+    "tune-1-summary.json",
+    "tune-1-tape.json",
+    "tune-1-views.jsonl"
+  ],
+  "outcome": {
+    "secured": false,
+    "waves": 20,
+    "timeMs": 535933,
+    "gold": 166,
+    "kills": 858,
+    "calls": 215,
+    "defaultedPicks": 0,
+    "defaultedSecure": 0,
+    "eventLogHash": "fnv1a32:e465dcef",
+    "endReason": "hero_down",
+    "tape": "/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/heat14/opus/e1-baron/attempt-1-tape.json",
+    "scored": true,
+    "runsSoFar": 2,
+    "scoredAttempts": 1,
+    "worldModel": "sim-import",
+    "envelope": {
+      "durationTicks": 16078,
+      "lastEntryTick": 16036,
+      "entries": 215,
+      "bytes": 766675,
+      "tapeHash": "fnv1a32:7648b634"
+    },
+    "submit": "DO NOT SUBMIT — unsecured (endReason hero_down at wave 20). The secure on e1-baron is a KILL: autoSecureWaveForRun returns MAX_SAFE_INTEGER while (twist.baron && !baronBeaten), so no wave count secures this claim. Nothing is put forward.",
+    "note": "Best of 2 runs. tune-1 w20/536.8s/195g, attempt-1 w20/535.9s/166g — both died to Baron contact (40/hit) within 15s of the wave-20 horn."
+  },
+  "outcomeError": null,
+  "promotedTapeName": "attempt-1-tape.json",
+  "scoredTapes": [
+    {
+      "file": "attempt-1-tape.json",
+      "id": "agent-4ae40150-f4266f14-bb85-4978-be0b-e56f16720f68",
+      "contract": "e1-baron",
+      "seed": "e1-baron-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "00d405af0",
+        "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+        "era": 6,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 20,
+        "timeAlive": 535.933,
+        "gold": 166
+      },
+      "entries": 215,
+      "durationTicks": 16078,
+      "lastEntryTick": 16036,
+      "promotedByRig": true,
+      "discoveredBy": "outcome-file+filename"
+    }
+  ],
+  "otherTapes": [
+    {
+      "file": "tune-1-tape.json",
+      "id": "agent-463a377b-d6432f26-bd96-4f67-a833-31d82379bad4",
+      "contract": "e1-baron",
+      "seed": "e1-baron-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "750851956",
+        "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+        "era": 6,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 20,
+        "timeAlive": 536.767,
+        "gold": 195
+      },
+      "entries": 160,
+      "durationTicks": 16103,
+      "lastEntryTick": 16064
+    }
+  ],
+  "otherSecuredTapes": [],
+  "report": {
+    "outcome": "**NOT SECURED.** Best run `attempt-1`: waves **20**, timeAlive **535.933 s**, gold **166**, kills 858, calls 215, `endReason: hero_down`. **2 sim runs, 1 scored attempt.** No tape is put forward — the run is unsecured and `skill.md` forbids submitting an unsecured run. Nothing to the door.\n\n| run | waves | time | gold | works at horn | result |\n|---|---|---|---|---|---|\n| tune-1 | 20 | 536.8 s | 195 | 27 (20 palisade) | hero down, t=536.8 |\n| attempt-1 (scored) | 20 | 535.9 s | 166 | 51 (44 palisade) | hero down, t=535.9 |\n\nEnvelope measured off the first reel that existed, all three axes: `durationTicks` 16,078 / last entry 16,036 / 215 entries / 766,675 B. Comfortable on every axis; the reel was never the problem.",
+    "whatTheMapAsked": "It asked about **E1 survival and the bank cap** for nineteen waves and then about one fight, and the era's signature mechanic was live, binding, and *not* what beat me. The cap is 200 and `Economy` refuses credits against it, so a pinned purse switches panning off — which is exactly the signature tune-1 wrote: `gold` pinned at 196–200 from wave 19 with `score.goldPanned` **frozen at 1,485**, roughly 1,285 gold of income the map paid me and I had nowhere to put. The counter-levers are published (`stockpile` 60 g × 2 at +150 cap, `palisade` 10 g × 48, turret tiers at 150/300), and converting that surplus into timber is the whole design question. Fields that carried the run: `now.gold` against `now.score.goldPanned` and `goldStolen` (0 all run), `now.works.entries`/`byKind`/`wrecked`, `now.seams[].active/x/z`, `now.hero.hp/maxHp/x/z`, `now.threats.alive/wreckers`, `now.orders[].status/reason`. Orders: `BUILD`, `HARVEST`, `PICK_UPGRADE`, `BLAST_AT`, `REPAIR_UNDER`, `MOVE_HERO`, `CONTEXT_ACTION upgrade`. **There is no E1 verb.**\n\nMy notebook remembers this map from generations 4, 55 and 75, and **it still plays the way I remember** — same claim at (0, 12), same six anchors, same wave-20 horn at t ≈ 522, same 200 cap, same 175-maxHp ceiling after the plating picks. Generation 4's row (w22 / 394 g) remains arithmetically impossible against a 200 cap and is a dead hypothesis, not a record.\n\nTwo of generation 75's source findings **reproduced exactly and are worth keeping**, both re-verified in this engine rather than inherited:\n\n- `Enemy.chooseTarget` (`:962`): a wrecker inside `pursuitRange` attacks **only** a palisade that blocks its straight route to the hero (`wreckerContext.palisadeRoute(...).blocker`); otherwise `currentBuilding = null` and it walks the hero. So the Baron cannot be baited by a turret, only intercepted.\n- `baronRocketMeleeSuppressed`: rockets are suppressed whenever the Baron is within melee reach of the hero **or** within `Balance.wreck.reach (1.1) × visualScale (4) + 0.35 = 4.75` of the box of `nearestBuilding`. Dense timber genuinely silences the volley, and there is no line-of-sight term anywhere, so turrets fire through it.\n\nWhat did **not** reproduce is generation 75's conclusion that a ring converts those two clauses into a win. I built the ring it prescribed — 44 palisades, 47 works standing at the horn — and **only 5 were ever wrecked**, so the Baron was never leashed by it at all. It walked through.",
+    "winnability": "**Undecided-leaning-yes, and what stopped me was my own budget against a ring geometry I could not test: the map is a river claim (`water.centerZ 0, halfWidth 5`) with the hero at z = 12.1, so a radius-7-to-11 ring's southern arc lands in the water and refuses — leaving an open southern approach that 5 wreckers and 37 escorts walked straight through at 40 damage a contact hit, killing a 175-hp hero in seven seconds while the timber I did place went untouched (5 of 44 wrecked).** The fix is geometric and cheap, and I ran out of wall before riding it: a ring is the wrong shape on a river map — the correct object is a **short blocking arc across the northern land approach plus the ford at x = 0** (`fords: [{id:\"center-ford\", x:0, halfWidth:3}]` is the only crossing, so the river already does the southern half of the job for free), with the hero posted so the arc sits between it and the spawn side. Against that, the two verified clauses should still pay: intercepted timber means no contact damage and no rockets, while four turrets plus tier-2 (~377 dps, a 600-gold sink the pinned purse can trivially fund) grind a ~48,000-hp boss inside a 156-second grace window. Neither a wall in the map, the grammar, the economy nor the door stopped me — a mis-shaped ring and one silently-permanent gate did.",
+    "lessons": "- **A `needTier` gate built on `entries[].tier` is permanently true, and it will silently starve whatever sits behind it.** `(e.tier ?? 1) < 2` is true for every freshly built work, so my `tierOwed` flag never cleared, the tier upgrade never fired *and* it blocked the palisade ring for the whole run — 1,285 gold of income with nowhere to go. One boolean, two failures that look nothing alike. **Never gate a survival purchase behind a spend whose success you have not verified executes**; gen 49 and gen 110 each lost a ride to an unfired `CONTEXT_ACTION` and I re-built the same trap with a new face.\n- **A ring is the wrong primitive on a river map.** I generated candidates on circles of radius 7–11 around a hero at z = 12.1 with the river band at |z| < 5; the southern arc is water and refuses, so \"dense ring\" silently means \"northern half-ring with a 160° hole\". **Intersect the ring's candidate set with the walkable mask before calling it closed** — and on a map with exactly one ford, block the ford and let the water be the rest of the wall.\n- **Count what the enemy actually chewed, not what you built.** `palisade: 44` standing with **5 wrecked** is the proof that the leash never engaged; had I logged `works.wrecked` against palisade count as a ratio I would have known the ring was decorative two minutes earlier. Gen 112's `refusals.anchored` lesson generalises: when a mechanic's success looks like \"nothing happened\", find the counter that increments when it *nearly* happens, and here that counter is the timber's own death rate.\n- **Verify a predecessor's CONCLUSION separately from its CLAUSES.** Generation 75's two source findings (`chooseTarget`'s blocker branch, `baronRocketMeleeSuppressed`) reproduced exactly and are solid. Its strategic conclusion — \"a palisade ring outside the guns is the leash\" — did not survive contact, because it was inferred from a run that also lost. **A clause read from source is durable; a strategy inferred from a losing ride has the status of a hypothesis**, and I spent both of my runs on it.\n- **On a kill-gated boss map, budget the runs against the BOSS, not the run.** Both my rides spent ~520 seconds re-proving waves 1–19 that were never in doubt (175/175, full ladder, nothing wrecked) to buy 15 seconds of the only fight that decides the contract. The door publishes the cure and this is the **third** generation running (55, 75, 122) that I have failed to use it: `--resume <tape> --to-tick <n>` replays a reel to any recorded tick. Wave 19 is ~tick 15,600. One tape to the horn, then resume from it, would have bought a dozen boss experiments in the wall I spent on two approaches. **Next boss map: get one tape to the horn in run one, then never ride the approach again.**\n- **`goldPanned` frozen beside a purse pinned at the cap named the fault in one column, thirteenth generation running** — and this time it also named the *amount*: 1,285 gold. On a contract whose survival is bought with an unbounded 10-gold sink, a pinned purse is not a lost score, it is a lost defence.\n- **`timeout` is not on macOS and this arena refuses shell redirection — fourth and twelfth sighting.** The node runner (spawn `gr-sim`, drive the controller, log every view to a compact table, write `gauntlet-outcome.json` plus all three envelope axes on every child exit) made the intermediate-results law automatic: a truthful row existed on disk from the first ride onward, and its per-view table is the entire evidence base of this report."
+  },
+  "usage": {
+    "transcript": "/Users/robin/.claude/projects/-private-tmp-claude-501--Users-robin-Claude-Projects-Gold-Rush-fe6b8d27-b064-40eb-934b-1d29d57a71db-scratchpad-arena-heat14-e3949bfa/82cc4125-9b46-4c08-8071-9e8ffc579543.jsonl",
+    "assistantTurns": 56,
+    "toolCalls": 27,
+    "tokensIn": 112,
+    "tokensOut": 77588,
+    "cacheReadTokens": 26384386,
+    "cacheWriteTokens": 1530802,
+    "note": "tokensIn excludes cache reads/writes (reported separately); summed from the CLI session transcript, not self-reported by the rig"
+  }
+}

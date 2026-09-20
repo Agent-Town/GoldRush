@@ -1,0 +1,114 @@
+THE GATE-LANE-SHIFT TRIAL — owner ruling 2026-08-20, verbatim "ok, try that"
+(to the recommendation: shift the middle crowd's lane ~6wu off the stake/spawn line)
+
+Implemented as CrowdFlockSystem.GATE_LANE_SHIFT, applied only to a lane that would otherwise sit
+ON the loss stake. The flank lanes never move. The crossing target is unchanged (the wheel plaza),
+so the shifted crowd angles in.
+
+VERIFIED THE LANE ACTUALLY MOVED, both seeds:
+  flock-1@(-20,-30)->copper-pavilion   flock-2@(-6,-30)->ferris-wheel   flock-3@(20,-30)->silver-pavilion
+
+── THE A/B, ON ONE INSTRUMENT ──────────────────────────────────────────────────────────────────
+Identical free-standing fort (radius-8 palisade ring + 4 inner beacons, placed at t=0), identical
+1 gold/second repair stream at repair-under-60%, identical upgrade priority, both bench seeds,
+wave ceiling 14. The ONLY variable is the lane.
+
+  lane x =  0 (as ratified)   seed 01 crossings [5,3,7]   seed 02 crossings [4,4,3]   BOTH SECURE
+  lane x = -6 (ruled shift)   seed 01 crossings [5,0,7]   seed 02 crossings [4,0,5]   neither
+
+The flanks are unchanged in both columns (5/7 and 4/5), so the instrument is sound: the only crowd
+that moved is the only crowd that changed, and it went from three and four crossings to NONE.
+
+A second arm, with the rider's own west wall pushed out to x=-12 to give the shifted crowd its
+fright radius back, and six guns moved clear of its lane:
+  lane x = -6, wall -12       seed 01 crossings [2,0,5]   seed 02 crossings [4,0,6]   neither
+Still zero. Widening the fort did not buy the crossing back; it only cost construction.
+
+── WHY, MEASURED ───────────────────────────────────────────────────────────────────────────────
+1. THE OFFSET DECAYS EXACTLY WHERE IT IS NEEDED. The crowd still walks to the wheel at (0,8), so
+   its lane is a diagonal and its clearance from the runners' line is 6.0wu at the gate, 4.4 at
+   z=-20, 2.8 at z=-10 and 1.9 at the north spawn point itself — inside the fright radius of 7 for
+   the whole corridor. Scatter positions from the shifted run read the decay off directly:
+     t37  F2 at (-5,-26) by night_runner@(-12,-24) d=6.9
+     t63  F2 at (-4,-19) by night_runner@(-3,-13)  d=6.9
+     t110 F2 at (-5,-23) by night_runner@(-2,-17)  d=6.9
+     t207 F2 at (-4,-18) by night_runner@(-7,-11)  d=6.9
+     t373 F2 at (-6,-27) by night_runner@(-6,-21)  d=6.9
+2. THE STAKE IS ALSO THE SHIELD. Everything on this claim walks AT (0,-30) from all three spawn
+   edges, so everything the hero kills, it kills closing on that tile — and a crowd waiting there
+   sits inside the tightest part of that cover. Six units aside took the crowd out of the shield
+   without taking it out of the traffic. Two of the shifted run's scatters are saboteurs at
+   (-10,-22) and (-11,-22): the besiegers followed the crowd west, because the wall did.
+
+── VERDICT ─────────────────────────────────────────────────────────────────────────────────────
+The trial was run and the answer is NO. GATE_LANE_SHIFT ships at 0 — the lever stays implemented,
+documented and one number from live, and the pre-ruling geometry is unchanged, so no spec pin, no
+floor and no census number moves. The ruling covered ONE lane shift, not an iterative geometry
+search, so the measurement stops here. What it recommends instead is on the desk as F-E3CF-3.
+
+NEUTRALITY OF THE LANDED CHANGE, PROVEN BY REPRODUCTION rather than asserted: the prover that
+secured bench seed 01 before this work was re-run against the edited engine at GATE_LANE_SHIFT=0
+and returned fnv1a32:9f2740ab, secured=true, wave 12 — the same hash, to the digit.
+
+
+════════════════════════════════════════════════════════════════════════════════════════════════
+THE SECOND RULING — "move the spawn" (owner, 2026-08-20, verbatim)
+════════════════════════════════════════════════════════════════════════════════════════════════
+
+WHERE THE SPAWN LIVES. Engine-derived, not contract data:
+  src/systems/WaveSystem.ts:557   const radius = Balance.waves.spawnRingRadius;      (26)
+  src/systems/WaveSystem.ts:562   edge 'north' -> (center.x + lateral, center.z + radius)
+  src/systems/WaveSystem.ts:531   center = territoryRingSpawnCenter(wave) -> heroPosition (0,-30)
+  => north entry = (0 +- jitter, -4)   — matches the measured (0,-4.1) exactly.
+
+THE SEAM USED, and the one deliberately NOT used:
+  NOT `tileParams.noSpawnZones` — src/meta/ContractFamilies.ts:705 declares it
+      "Birth-loader output only (tile-persistence sim entries) — never authored in contract JSON",
+      and e2e/tp02-green-waypoint.spec.ts:200 guards that law. Authoring it would break it.
+  USED `ContractEnemyVariant.spawnGates` (ContractFamilies.ts:373/381), consumed by
+      WaveSystem.applyVariantSpawnGate:576 — authored per VARIANT and per EDGE, already carried by
+      16 entries across four epochs (two of them in this very epoch file). Fairground-only,
+      night_runner-only, no shared spawn code touched.
+
+THE DECAY TABLE that chose the offset. A runner entering at (X,-4) walks to the stake at (0,-30),
+so its clearance from the middle lane at height z is |X| x (z+30)/26:
+
+        z:      -4     -10    -14    -18    -22
+   X = -6:     6.0     4.6    3.7    2.8    1.8
+   X = -8:     8.0     6.2    4.9    3.7    2.5
+   X = -12:   12.0     9.2    7.4    5.5    3.7
+   X = -13:   13.0    10.0    8.0    6.0    4.0     (but only 7.0 from the flank lane at x=-20)
+
+-12 clears the fright radius down to z~-13.6 — the lane's swept length above where the fort's own
+guns reach — while still leaving 8wu to the flank crowd's lane at x=-20, so the fix does not move
+the problem onto a different crowd. -13 buys 0.6wu more and spends the flank's whole margin.
+
+MEASURED, same free-fort instrument as above (radius-8 ring + 4 beacons, 1 g/s repairs, both seeds):
+
+   gate (0,-4)   baseline    seed 01 [5,3,7]    seed 02 [4,4,3]    frights 29 / 33   both secure
+   gate (-12,-4)             seed 01 [4,10,7]   seed 02 [3,8,3]    frights 22 / 29   both secure
+   gate (+12,-4)             seed 01 [8,9,6]    seed 02 [5,6,1]    frights 20 / 35   both secure
+   gate (-8,-4)              seed 01 [8,7,7]    seed 02 [5,7,3]    frights 20 / 28   both secure
+   gate (+8,-4)              seed 01 [8,4,7]    seed 02 [6,4,3]    frights 24 / 31   both secure
+
+The middle crowd goes from 3 and 4 crossings to 10 and 8 at -12 — the best of the five — and total
+frights FALL on both seeds, which is the mechanism showing itself: the runner stream stopped
+sweeping the lane. -12 is landed. +12 is nearly as good on seed 01 but costs the east flank crowd
+(1 crossing on seed 02), so the west shoulder is the better shoulder.
+
+⚠️ AND THE PUBLIC-VERB PROVER REGRESSED ON IT — F-E3CF-6 CAME DUE, EXACTLY AS FLAGGED.
+   prover-v2 on the old gate: seed 01 SECURED w12 fnv1a32:9f2740ab · seed 02 w14 fnv1a32:afdd8c2a
+   prover-v2 on the new gate: seed 01 w5  fnv1a32:f0ec6b1e · seed 02 w4  fnv1a32:31392949
+   Income collapsed 800 -> 200 and 705 -> 175 gold panned; the wheel survived; the hero did not.
+   The middle crowd DID cross for the rider on seed 02 ([0,1,0]) — the escort half works.
+   Four re-tunes (beacons 4/6 x maxWorks 14/22 x minTrip 45/70) did not recover it; best was
+   seed 01 w14 [4,0,2] at 625 panned, still unsecured.
+   CAUSE, as predicted: the securing fort was ACCIDENT-SHAPED — two unplaceable beacon spots
+   capped construction at ~14 works and left the rest of the purse for upkeep. Moving the runners
+   off the lane changed which walls take the pressure, and an accidental shape does not travel.
+
+VERDICT: the MAP is better and the RIDER is not yet funded for it. The admission hold STANDS —
+both seeds must secure through the public door and today neither does. The map change is kept
+because the controlled instrument says it strictly improves the ratified objective, and nothing is
+claimed that is not proven: the exemption row, the census refusal, the door baseline and the floors
+are all untouched.

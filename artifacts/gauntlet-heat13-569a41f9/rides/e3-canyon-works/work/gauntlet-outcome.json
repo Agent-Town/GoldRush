@@ -1,0 +1,34 @@
+{
+  "secured": true,
+  "waves": 15,
+  "timeMs": 454833,
+  "gold": 270,
+  "kills": 167,
+  "calls": 49,
+  "defaultedPicks": 0,
+  "defaultedSecure": 1,
+  "eventLogHash": "fnv1a32:b6ceb31c",
+  "tape": "/private/tmp/heat13-569a41f9/artifacts/heat13/opus/e3-canyon-works/attempt-1-tape.json",
+  "scored": true,
+  "runsSoFar": 3,
+  "scoredAttempts": 1,
+  "worldModel": "sim-import",
+  "note": "tune-2 secured on its first ride; attempt-1-tape.json is a byte-identical copy of tune-2-tape.json — ONE ride under two filenames, promoted by declaration per the brief. Envelope clean: durationTicks 13645, lastEntryTick 13500, 49 entries, 198574 bytes against a 592544 conservative ceiling.",
+  "envelope": {
+    "durationTicks": 13645,
+    "lastEntryTick": 13500,
+    "entries": 49,
+    "bytes": 198574
+  },
+  "assay": {
+    "replayHash": "fnv1a32:21952647",
+    "tapeHeaderHash": "fnv1a32:21952647",
+    "match": true,
+    "securedSnapshot": {
+      "waves": 12,
+      "gold": 270,
+      "timeAlive": 454.833
+    },
+    "note": "local assay-replay-agent reproduced the TAPE header hash and all four outcome fields; the stdout outcome line hash fnv1a32:b6ceb31c is a different number by design."
+  }
+}

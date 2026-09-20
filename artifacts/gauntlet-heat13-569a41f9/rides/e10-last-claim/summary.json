@@ -1,0 +1,32 @@
+{
+  "rig": "opus",
+  "contract": "e10-last-claim",
+  "model": "claude-opus-5",
+  "sessionId": "24dcc713-529d-4af2-ab4f-996150cffcf5",
+  "startedAt": "2026-09-07T16:48:50.603Z",
+  "endedAt": "2026-09-07T16:48:52.454Z",
+  "wallClockSeconds": 2,
+  "wallHit": false,
+  "exitCode": 1,
+  "signal": null,
+  "setupToFirstOutputSeconds": null,
+  "arenaTrackedChanges": [],
+  "workspaceFiles": [],
+  "outcome": null,
+  "outcomeError": "ENOENT: no such file or directory, open '/tmp/heat13-569a41f9/artifacts/heat13/opus/e10-last-claim/gauntlet-outcome.json'",
+  "promotedTapeName": null,
+  "scoredTapes": [],
+  "otherTapes": [],
+  "otherSecuredTapes": [],
+  "report": null,
+  "usage": {
+    "transcript": "/Users/robin/.claude/projects/-private-tmp-heat13-569a41f9/24dcc713-529d-4af2-ab4f-996150cffcf5.jsonl",
+    "assistantTurns": 1,
+    "toolCalls": 0,
+    "tokensIn": 0,
+    "tokensOut": 0,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "note": "tokensIn excludes cache reads/writes (reported separately); summed from the CLI session transcript, not self-reported by the rig"
+  }
+}

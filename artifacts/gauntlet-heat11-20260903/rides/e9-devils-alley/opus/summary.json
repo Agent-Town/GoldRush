@@ -1,0 +1,136 @@
+{
+  "rig": "opus",
+  "contract": "e9-devils-alley",
+  "model": "claude-opus-5",
+  "sessionId": "dbb212ea-e240-492b-bd3c-ff8fee4a9b1a",
+  "startedAt": "2026-09-04T04:00:32.174Z",
+  "endedAt": "2026-09-04T04:08:33.541Z",
+  "wallClockSeconds": 481,
+  "wallHit": false,
+  "exitCode": 0,
+  "signal": null,
+  "setupToFirstOutputSeconds": 90,
+  "arenaTrackedChanges": [],
+  "workspaceFiles": [
+    "attempt-1-tape.json",
+    "ctrl-v1.mjs",
+    "gauntlet-outcome.json",
+    "gauntlet-report.md",
+    "probe-idle.json",
+    "probe-idle.outcome.json",
+    "probe-idle.views.jsonl",
+    "run.mjs",
+    "tune-1.json",
+    "tune-1.outcome.json",
+    "tune-1.views.jsonl",
+    "tune-2.json",
+    "tune-2.outcome.json",
+    "tune-2.views.jsonl"
+  ],
+  "outcome": {
+    "secured": true,
+    "waves": 20,
+    "timeMs": 600000,
+    "gold": 200,
+    "kills": 927,
+    "calls": 53,
+    "defaultedPicks": 0,
+    "defaultedSecure": 1,
+    "eventLogHash": "fnv1a32:bcb9ed0f",
+    "tape": "/private/tmp/heat11-5e7a7c0b/artifacts/heat11/opus/e9-devils-alley/attempt-1-tape.json",
+    "tapeNote": "Byte-identical copy of tune-2.json, the single ride that secured under the silent-secure line. Not a re-ride: one run, two filenames.",
+    "scored": true,
+    "runsSoFar": 3,
+    "scoredAttempts": 1,
+    "worldModel": "sim-import",
+    "reelEnvelope": {
+      "durationTicks": 18000,
+      "maxTicks": 18000,
+      "entries": 53,
+      "maxEntries": 3600,
+      "bytes": 81971,
+      "maxTapeBytes": 592384,
+      "fits": true
+    },
+    "envelopeNote": "tune-1 was the same secure with an explicit SECURE_CHOICE and produced durationTicks 18001 against an 18000 envelope (reel_duration_exceeded). Answering the secure boundary with a blank line takes the bank default, records no entry at tick 18000, and lands durationTicks at exactly 18000.",
+    "tapeEventLogHash": "fnv1a32:687553f2",
+    "tapeId": "agent-9eeef40c-e3247787-f427-482a-be42-f6f11f1663e8",
+    "hashNote": "eventLogHash above is the sim outcome line verbatim; the TAPE carries fnv1a32:687553f2, and the assay replay matches the tape hash (gen-4 lesson)."
+  },
+  "outcomeError": null,
+  "scoredTapes": [
+    {
+      "file": "attempt-1-tape.json",
+      "id": "agent-9eeef40c-e3247787-f427-482a-be42-f6f11f1663e8",
+      "contract": "e9-devils-alley",
+      "seed": "e9-devils-alley-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "5e7a7c0ba",
+        "engineHash": "a607a81f44e10dc2b2262682c1e116c15917edffeeaa0c5909f383ccea5d8e04",
+        "era": 5,
+        "viewVersion": 1
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 20,
+        "timeAlive": 600,
+        "gold": 200
+      },
+      "entries": 53
+    }
+  ],
+  "otherSecuredTapes": [
+    {
+      "file": "tune-1.json",
+      "id": "agent-180c7f8b-3a96eff6-5542-41b5-916e-9cb4f7a1210c",
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 20,
+        "timeAlive": 600,
+        "gold": 200
+      },
+      "meta": {
+        "buildId": "5e7a7c0ba",
+        "engineHash": "a607a81f44e10dc2b2262682c1e116c15917edffeeaa0c5909f383ccea5d8e04",
+        "era": 5,
+        "viewVersion": 1
+      }
+    },
+    {
+      "file": "tune-2.json",
+      "id": "agent-9eeef40c-e3247787-f427-482a-be42-f6f11f1663e8",
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 20,
+        "timeAlive": 600,
+        "gold": 200
+      },
+      "meta": {
+        "buildId": "5e7a7c0ba",
+        "engineHash": "a607a81f44e10dc2b2262682c1e116c15917edffeeaa0c5909f383ccea5d8e04",
+        "era": 5,
+        "viewVersion": 1
+      }
+    }
+  ],
+  "report": {
+    "outcome": "**SECURED.** Wave 20, `timeAlive` 600.000 s, 200 gold, 53 calls, 927 kills, `defaultedSecure: 1`,\n`eventLogHash` `fnv1a32:bcb9ed0f` on the outcome line (`fnv1a32:687553f2` on the tape, which is what the\nassay replay matches). The tape put forward is\n`artifacts/heat11/opus/e9-devils-alley/attempt-1-tape.json` — a byte-identical copy of `tune-2.json`,\nthe single ride that produced it; one run, two filenames, not a re-ride. **3 sim runs** (idle probe,\n`tune-1`, `tune-2`) and **1 scored attempt**. First secure in county history for `e9-devils-alley`.",
+    "whatTheMapAsked": "It asked me exactly one question, it asked it before the first enemy spawned, and the answer was a\ncircle — so on the audit question the county's **RESKIN** measurement is right about the era but wrong\nabout the contract's emptiness, and both halves of that deserve the county's attention. The E9 signature\non the capability ladder is *persistent tiles, long-horizon stewardship*, and **nothing here persists**:\n`ScheduledRelocationSystem` explicitly `damages: false`, a lifted work \"loses no hp\", it comes back\nonline in the same call that sets it down, and the published rule says `gatesSecure: false` in as many\nwords. There is no state that accumulates across waves, no tile that remembers, no stewardship — the\naudit's \"transient relocation sweeps, not persistence\" is exactly correct. But the sweeps are *not*\ndecoration, and the audit's supporting numbers (`sweepsStarted: 3, relocations: 0`) were measured on a\nride that built nothing and therefore could not have relocated anything. Mine ran **20 sweeps** and\nrefused **373 pickups** with `anchor-holds` — the column reached my works 373 times and the anchor\nrefused it every time. That is the mechanic firing at full volume, and it shaped every coordinate I\nwrote. The reasoning it demanded is genuinely spatial and genuinely legible from the view alone:\n`now.devilsAlley` publishes `routes` (three crosswind polylines at z = −26 / 0 / +26), `columnRadius: 4`,\n`sweepSeconds: 20`, `anchors` (`anchor-center@(0,0)r8` and its two siblings), `nextRouteId`, `progress`,\n`devil`, and — the field that actually decides the map — **`works[].anchored`, per building**. The claim\nsits at (0,12); the only build ground within a turret's 16 wu of it is `center-anchor-bay` (x −10..10,\nz −8..8); the centre corridor cuts that bay in half; and the anchor's hold is the circle of radius 8\ninscribed in the bay. So the whole contract reduces to *keep every coordinate inside x² + z² ≤ 64*, which\ncosts nothing and which I could compute from the published rule before writing an order. My eight works\nwent into that disc, the wind never took one, and the run's real difficulty turned out to be somewhere\nelse entirely — a 2.4-second continuous trickle that spawned 934 enemies and took an unattended hero down\nat wave 3. The fields that carried the actual survival were the ordinary ones: `now.works.entries`\n(position, `wrecked`), `now.works.byKind`, `now.seams[].active/x/z` (four anchors at (±14, ±12), 14 wu\nfrom the claim — a kind commute), `now.gold` against the 200 cap, `now.hero.hp/maxHp/level`,\n`now.threats.alive` and `now.pendingOffer`. The orders were `BUILD`, `HARVEST`, `REPAIR_UNDER`,\n`PICK_UPGRADE` — **not one E9 verb, because E9 has none**; the era's mechanic is something you read and\nplace around, never something you do. Honest summary: a live, well-published, correctly-composed hazard\nschedule that gates nothing, wearing the name of a stewardship epoch it does not implement.",
+    "winnability": "Secured, and the margin was **wide in the middle and genuinely thin at the close**: not one of eight\nworks was ever wrecked and the hero held full 175 from wave 7 to wave 12, but it bled from 169 to\n**23.8/175** across the last eight waves against a trickle that never stops, so roughly one more wave\nwould have ended it — while the *reel* margin was thinner still and had nothing to do with play, at\nexactly one tick over the admission envelope until I stopped answering the secure boundary.",
+    "lessons": "- **`unclaimed` with no `reason` in `winnability-receipts.json` is seventeen-for-seventeen.** Still the\n  first two lines of JSON I read, still never wrong.\n- **A missing `twist.secureWave` is a two-part tell, and I finally read both parts before riding.** It\n  means the wave-20 / 600 s default (gen 24/25), *and* it means the flat 18 000-tick envelope that\n  refuses the resulting reel. Generations 24 and 25 ate that refusal; generation 26 named the line;\n  this ride is the first to check it *before* choosing how to ride.\n- **The blank line is the fix, and it costs nothing.** `gr-sim.mjs:243` returns on an empty submission\n  without recording an entry, so answering the secure boundary with `\"\\n\"` lets the `bank` default fire\n  and drops `durationTicks` from 18 001 to exactly 18 000. Same waves, same seconds, same gold, one\n  fewer call, `defaultedSecure: 1`. **Measure the envelope on the tune, not on the attempt** — I had the\n  secure in hand at minute 15 and an *admissible* secure at minute 17 because I checked\n  `inputLog.durationTicks` the moment the first reel existed.\n- **`engineDependencies: \"missing\"` is now wrong five times in seven era rides** (E5 deepwater-claim, E5\n  regatta, E6 glow-mesa, E8 mare-claim, E9 devils-alley) against two right (E4 long-road, E10\n  last-claim). Here it disclaims a consumer that is constructed, stepped and published in three\n  consecutive, heavily-commented sites. One idle probe and a `now`-key dump settle it in ten seconds;\n  give a \"missing\" that contradicts a live `now` key zero weight.\n- **Read the era system's header comment — it may hand you the counter to its own mechanic.**\n  `ScheduledRelocationSystem`'s comment block derives, in prose, that the anchor hold is\n  `min(halfWidth, halfDepth)` of the bay = **8**, and states outright that the four corners of each bay\n  are all the wind may take. That is the whole contract, published, before any probe. Third time this\n  has paid (gen 22 `NOISE_HUNT_RULES`, gen 29 `E8PhysicsSystem`); it is now the first file I open once I\n  know which system runs the era.\n- **When a published rule says `gatesSecure: false`, believe it and price the mechanic as a tax.** I\n  spent zero gold and zero orders on the relocation and instead paid for it once, in geometry, by\n  constraining every build coordinate to one disc. Generation 21 declined an era verb by reading the\n  target function; this is the cheaper version — decline an era *hazard* by reading its immunity\n  predicate.\n- **An audit note measured on an idle probe measures the probe, not the contract.** The county recorded\n  `sweepsStarted: 3, relocations: 0` as evidence of a reskin; a ride that actually builds gets 20 sweeps\n  and 373 `anchor-holds` refusals. The reskin verdict happens to be right here for a *different* reason\n  (nothing persists, nothing gates), but the number that was cited could not have shown it. Gen-8's rule\n  — a published refusal measures somebody's policy — extends to published audits.\n- **Counting refusals is how you prove a hazard was live.** `refusals.anchored: 373` is the single most\n  informative field in this run: it says the column reached my works, that my placement was\n  load-bearing, and that `relocations: 0` was a choice rather than an absence. When a mechanic's success\n  looks like nothing happening, find the counter that increments when it *nearly* happens.\n- **Sixteenth contract, and the securing tune is the attempt.** Third generation running where a tune\n  secured and the rules end the ride there; copying the securing tape to `attempt-1-tape.json` and\n  saying plainly in the outcome file that it is one ride under two filenames is the honest way to satisfy\n  both the path convention and the stop rule. Do not re-ride for a tidier filename.\n- **Write the outcome file after every run, before the analysis.** Fourteenth generation saying it,\n  eleventh actually doing it — the runner writes `gauntlet-outcome.json` on every child exit, so a\n  truthful row existed from the idle probe onward, and the only hand edit was to name the promoted tape\n  and record the envelope measurement (exactly the check gen 23 warned about: the comparator does not\n  know which run you have chosen to *call* your scored attempt)."
+  },
+  "usage": {
+    "transcript": "/Users/robin/.claude/projects/-private-tmp-heat11-5e7a7c0b/dbb212ea-e240-492b-bd3c-ff8fee4a9b1a.jsonl",
+    "assistantTurns": 57,
+    "toolCalls": 32,
+    "tokensIn": 114,
+    "tokensOut": 68892,
+    "cacheReadTokens": 10596429,
+    "cacheWriteTokens": 604372,
+    "note": "tokensIn excludes cache reads/writes (reported separately); summed from the CLI session transcript, not self-reported by the rig"
+  }
+}

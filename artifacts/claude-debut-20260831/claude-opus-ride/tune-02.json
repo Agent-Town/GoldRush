@@ -1,0 +1,6433 @@
+{
+ "label": "tune-02-v2",
+ "contract": "the-claim",
+ "seed": "e1-the-claim-01",
+ "tape": null,
+ "exit": 0,
+ "outcome": {
+  "secured": true,
+  "waves": 10,
+  "timeMs": 300000,
+  "gold": 370,
+  "kills": 299,
+  "calls": 56,
+  "defaultedPicks": 0,
+  "defaultedSecure": 0,
+  "eventLogHash": "fnv1a32:a4ae765a"
+ },
+ "turns": 57,
+ "refused": [],
+ "stderr": [
+  "gr-sim speed: 0.93 waves/s"
+ ],
+ "log": [
+  {
+   "turn": 1,
+   "t": 0,
+   "wave": 0,
+   "gold": 0,
+   "hp": 100,
+   "maxHp": 100,
+   "works": {},
+   "standing": 0,
+   "threats": 0,
+   "seams": [
+    "gold-seam-1:30@18,-7",
+    "gold-seam-2:30@-9,6.7",
+    "gold-seam-3:30@7.5,6.5"
+   ],
+   "needsRider": false,
+   "score": {
+    "wavesSurvived": 0,
+    "goldPanned": 0,
+    "goldPannedByProspector": 0,
+    "goldStolen": 0,
+    "goldReclaimed": 0,
+    "goldReclaimedByProspector": 0,
+    "buildingsBuilt": 0
+   },
+   "failed": [],
+   "sent": [
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": 0,
+      "z": 8
+     },
+     "when": {
+      "goldGte": 50
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "sentry_beacon",
+     "where": {
+      "x": -3,
+      "z": 10
+     },
+     "when": {
+      "goldGte": 25
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "sentry_beacon",
+     "where": {
+      "x": 3,
+      "z": 10
+     },
+     "when": {
+      "goldGte": 35
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": 5,
+      "z": 13
+     },
+     "when": {
+      "goldGte": 70
+     }
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": -1.5,
+      "z": -6.4
+     }
+    }
+   ]
+  },
+  {
+   "turn": 2,
+   "t": 2.5,
+   "wave": 0,
+   "gold": 5,
+   "hp": 100,
+   "maxHp": 100,
+   "works": {
+    "sentry_beacon": 1
+   },
+   "standing": 1,
+   "threats": 0,
+   "seams": [
+    "gold-seam-1:30@18,-7",
+    "gold-seam-3:30@7.5,6.5"
+   ],
+   "needsRider": true,
+   "score": {
+    "wavesSurvived": 0,
+    "goldPanned": 30,
+    "goldPannedByProspector": 0,
+    "goldStolen": 0,
+    "goldReclaimed": 0,
+    "goldReclaimedByProspector": 0,
+    "buildingsBuilt": 1
+   },
+   "failed": [
+    "HARVEST:INVALID_TARGET: gold-seam-2 is unavailable."
+   ],
+   "sent": [
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": 0,
+      "z": 8
+     },
+     "when": {
+      "goldGte": 50
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "sentry_beacon",
+     "where": {
+      "x": 3,
+      "z": 10
+     },
+     "when": {
+      "goldGte": 35
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": 5,
+      "z": 13
+     },
+     "when": {
+      "goldGte": 70
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "sentry_beacon",
+     "where": {
+      "x": -3,
+      "z": 15
+     },
+     "when": {
+      "goldGte": 45
+     }
+    },
+    {
+     "verb": "REPAIR_UNDER",
+     "pct": 55
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": -9,
+      "z": 6.7
+     }
+    }
+   ]
+  },
+  {
+   "turn": 3,
+   "t": 6.23,
+   "wave": 0,
+   "gold": 0,
+   "hp": 100,
+   "maxHp": 100,
+   "works": {
+    "sentry_beacon": 2
+   },
+   "standing": 2,
+   "threats": 0,
+   "seams": [
+    "gold-seam-1:30@18,-7"
+   ],
+   "needsRider": true,
+   "score": {
+    "wavesSurvived": 0,
+    "goldPanned": 60,
+    "goldPannedByProspector": 0,
+    "goldStolen": 0,
+    "goldReclaimed": 0,
+    "goldReclaimedByProspector": 0,
+    "buildingsBuilt": 2
+   },
+   "failed": [
+    "HARVEST:INVALID_TARGET: gold-seam-3 is unavailable."
+   ],
+   "sent": [
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": 0,
+      "z": 8
+     },
+     "when": {
+      "goldGte": 50
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": 5,
+      "z": 13
+     },
+     "when": {
+      "goldGte": 70
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "sentry_beacon",
+     "where": {
+      "x": -3,
+      "z": 15
+     },
+     "when": {
+      "goldGte": 45
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": -5,
+      "z": 13
+     },
+     "when": {
+      "goldGte": 95
+     }
+    },
+    {
+     "verb": "REPAIR_UNDER",
+     "pct": 55
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 7.5,
+      "z": 6.5
+     }
+    }
+   ]
+  },
+  {
+   "turn": 4,
+   "t": 10.1,
+   "wave": 0,
+   "gold": 30,
+   "hp": 100,
+   "maxHp": 100,
+   "works": {
+    "sentry_beacon": 2
+   },
+   "standing": 2,
+   "threats": 2,
+   "seams": [],
+   "needsRider": true,
+   "score": {
+    "wavesSurvived": 0,
+    "goldPanned": 90,
+    "goldPannedByProspector": 0,
+    "goldStolen": 0,
+    "goldReclaimed": 0,
+    "goldReclaimedByProspector": 0,
+    "buildingsBuilt": 2
+   },
+   "failed": [
+    "HARVEST:INVALID_TARGET: gold-seam-1 is unavailable."
+   ],
+   "sent": [
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": 0,
+      "z": 8
+     },
+     "when": {
+      "goldGte": 50
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": 5,
+      "z": 13
+     },
+     "when": {
+      "goldGte": 70
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "sentry_beacon",
+     "where": {
+      "x": -3,
+      "z": 15
+     },
+     "when": {
+      "goldGte": 45
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": -5,
+      "z": 13
+     },
+     "when": {
+      "goldGte": 95
+     }
+    },
+    {
+     "verb": "REPAIR_UNDER",
+     "pct": 55
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 7.5,
+      "z": 6.5
+     }
+    }
+   ]
+  },
+  {
+   "turn": 5,
+   "t": 30,
+   "wave": 1,
+   "gold": 0,
+   "hp": 100,
+   "maxHp": 100,
+   "works": {
+    "sentry_beacon": 3
+   },
+   "standing": 3,
+   "threats": 7,
+   "seams": [
+    "gold-seam-2:15@7.5,6.5",
+    "gold-seam-3:30@-1.5,-6.4"
+   ],
+   "needsRider": false,
+   "score": {
+    "wavesSurvived": 1,
+    "goldPanned": 105,
+    "goldPannedByProspector": 0,
+    "goldStolen": 0,
+    "goldReclaimed": 0,
+    "goldReclaimedByProspector": 0,
+    "buildingsBuilt": 3
+   },
+   "failed": [],
+   "sent": [
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": 0,
+      "z": 8
+     },
+     "when": {
+      "goldGte": 50
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": 5,
+      "z": 13
+     },
+     "when": {
+      "goldGte": 70
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": -5,
+      "z": 13
+     },
+     "when": {
+      "goldGte": 95
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "sentry_beacon",
+     "where": {
+      "x": 3,
+      "z": 15
+     },
+     "when": {
+      "goldGte": 55
+     }
+    },
+    {
+     "verb": "REPAIR_UNDER",
+     "pct": 55
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": -9,
+      "z": 6.7
+     }
+    }
+   ]
+  },
+  {
+   "turn": 6,
+   "t": 30.23,
+   "wave": 1,
+   "gold": 15,
+   "hp": 100,
+   "maxHp": 100,
+   "works": {
+    "sentry_beacon": 3
+   },
+   "standing": 3,
+   "threats": 7,
+   "seams": [
+    "gold-seam-1:30@-22,-6.8",
+    "gold-seam-3:30@-1.5,-6.4"
+   ],
+   "needsRider": true,
+   "score": {
+    "wavesSurvived": 1,
+    "goldPanned": 120,
+    "goldPannedByProspector": 0,
+    "goldStolen": 0,
+    "goldReclaimed": 0,
+    "goldReclaimedByProspector": 0,
+    "buildingsBuilt": 3
+   },
+   "failed": [
+    "HARVEST:INVALID_TARGET: gold-seam-2 is unavailable."
+   ],
+   "sent": [
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": 0,
+      "z": 8
+     },
+     "when": {
+      "goldGte": 50
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": 5,
+      "z": 13
+     },
+     "when": {
+      "goldGte": 70
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": -5,
+      "z": 13
+     },
+     "when": {
+      "goldGte": 95
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "sentry_beacon",
+     "where": {
+      "x": 3,
+      "z": 15
+     },
+     "when": {
+      "goldGte": 55
+     }
+    },
+    {
+     "verb": "REPAIR_UNDER",
+     "pct": 55
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 7.5,
+      "z": 6.5
+     }
+    }
+   ]
+  },
+  {
+   "turn": 7,
+   "t": 33.77,
+   "wave": 1,
+   "gold": 45,
+   "hp": 100,
+   "maxHp": 100,
+   "works": {
+    "sentry_beacon": 3
+   },
+   "standing": 3,
+   "threats": 5,
+   "seams": [
+    "gold-seam-1:30@-22,-6.8"
+   ],
+   "needsRider": true,
+   "score": {
+    "wavesSurvived": 1,
+    "goldPanned": 150,
+    "goldPannedByProspector": 0,
+    "goldStolen": 0,
+    "goldReclaimed": 0,
+    "goldReclaimedByProspector": 0,
+    "buildingsBuilt": 3
+   },
+   "failed": [
+    "HARVEST:INVALID_TARGET: gold-seam-3 is unavailable."
+   ],
+   "sent": [
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": 0,
+      "z": 8
+     },
+     "when": {
+      "goldGte": 50
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": 5,
+      "z": 13
+     },
+     "when": {
+      "goldGte": 70
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": -5,
+      "z": 13
+     },
+     "when": {
+      "goldGte": 95
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "sentry_beacon",
+     "where": {
+      "x": 3,
+      "z": 15
+     },
+     "when": {
+      "goldGte": 55
+     }
+    },
+    {
+     "verb": "REPAIR_UNDER",
+     "pct": 55
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 7.5,
+      "z": 6.5
+     }
+    }
+   ]
+  },
+  {
+   "turn": 8,
+   "t": 47,
+   "wave": 1,
+   "gold": 25,
+   "hp": 100,
+   "maxHp": 100,
+   "works": {
+    "sentry_beacon": 3,
+    "turret": 1
+   },
+   "standing": 4,
+   "threats": 2,
+   "seams": [],
+   "needsRider": true,
+   "score": {
+    "wavesSurvived": 1,
+    "goldPanned": 180,
+    "goldPannedByProspector": 0,
+    "goldStolen": 0,
+    "goldReclaimed": 0,
+    "goldReclaimedByProspector": 0,
+    "buildingsBuilt": 4
+   },
+   "failed": [
+    "HARVEST:INVALID_TARGET: gold-seam-1 is unavailable."
+   ],
+   "sent": [
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": 5,
+      "z": 13
+     },
+     "when": {
+      "goldGte": 70
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": -5,
+      "z": 13
+     },
+     "when": {
+      "goldGte": 95
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "sentry_beacon",
+     "where": {
+      "x": 3,
+      "z": 15
+     },
+     "when": {
+      "goldGte": 55
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": 0,
+      "z": 17
+     },
+     "when": {
+      "goldGte": 125
+     }
+    },
+    {
+     "verb": "REPAIR_UNDER",
+     "pct": 55
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 7.5,
+      "z": 6.5
+     }
+    }
+   ]
+  },
+  {
+   "turn": 9,
+   "t": 60.03,
+   "wave": 2,
+   "gold": 25,
+   "hp": 100,
+   "maxHp": 100,
+   "works": {
+    "sentry_beacon": 3,
+    "turret": 1
+   },
+   "standing": 4,
+   "threats": 8,
+   "seams": [
+    "gold-seam-2:30@18,-7",
+    "gold-seam-3:30@-22,-6.8"
+   ],
+   "needsRider": false,
+   "score": {
+    "wavesSurvived": 2,
+    "goldPanned": 180,
+    "goldPannedByProspector": 0,
+    "goldStolen": 0,
+    "goldReclaimed": 0,
+    "goldReclaimedByProspector": 0,
+    "buildingsBuilt": 4
+   },
+   "failed": [],
+   "sent": [
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": 5,
+      "z": 13
+     },
+     "when": {
+      "goldGte": 70
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": -5,
+      "z": 13
+     },
+     "when": {
+      "goldGte": 95
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "sentry_beacon",
+     "where": {
+      "x": 3,
+      "z": 15
+     },
+     "when": {
+      "goldGte": 55
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": 0,
+      "z": 17
+     },
+     "when": {
+      "goldGte": 125
+     }
+    },
+    {
+     "verb": "REPAIR_UNDER",
+     "pct": 55
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 7.5,
+      "z": 6.5
+     }
+    }
+   ]
+  },
+  {
+   "turn": 10,
+   "t": 68.17,
+   "wave": 2,
+   "gold": 0,
+   "hp": 100,
+   "maxHp": 100,
+   "works": {
+    "sentry_beacon": 4,
+    "turret": 1
+   },
+   "standing": 5,
+   "threats": 4,
+   "seams": [
+    "gold-seam-1:30@25,6.9",
+    "gold-seam-3:30@-22,-6.8"
+   ],
+   "needsRider": true,
+   "score": {
+    "wavesSurvived": 2,
+    "goldPanned": 210,
+    "goldPannedByProspector": 0,
+    "goldStolen": 0,
+    "goldReclaimed": 0,
+    "goldReclaimedByProspector": 0,
+    "buildingsBuilt": 5
+   },
+   "failed": [
+    "HARVEST:INVALID_TARGET: gold-seam-2 is unavailable."
+   ],
+   "sent": [
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": 5,
+      "z": 13
+     },
+     "when": {
+      "goldGte": 70
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": -5,
+      "z": 13
+     },
+     "when": {
+      "goldGte": 95
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": 0,
+      "z": 17
+     },
+     "when": {
+      "goldGte": 125
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "stockpile",
+     "where": {
+      "x": -6,
+      "z": 9
+     },
+     "when": {
+      "goldGte": 85
+     }
+    },
+    {
+     "verb": "REPAIR_UNDER",
+     "pct": 55
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 7.5,
+      "z": 6.5
+     }
+    }
+   ]
+  },
+  {
+   "turn": 11,
+   "t": 72.4,
+   "wave": 2,
+   "gold": 30,
+   "hp": 100,
+   "maxHp": 100,
+   "works": {
+    "sentry_beacon": 4,
+    "turret": 1
+   },
+   "standing": 5,
+   "threats": 6,
+   "seams": [
+    "gold-seam-3:30@-22,-6.8"
+   ],
+   "needsRider": true,
+   "score": {
+    "wavesSurvived": 2,
+    "goldPanned": 240,
+    "goldPannedByProspector": 0,
+    "goldStolen": 0,
+    "goldReclaimed": 0,
+    "goldReclaimedByProspector": 0,
+    "buildingsBuilt": 5
+   },
+   "failed": [
+    "HARVEST:INVALID_TARGET: gold-seam-1 is unavailable."
+   ],
+   "sent": [
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": 5,
+      "z": 13
+     },
+     "when": {
+      "goldGte": 70
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": -5,
+      "z": 13
+     },
+     "when": {
+      "goldGte": 95
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": 0,
+      "z": 17
+     },
+     "when": {
+      "goldGte": 125
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "stockpile",
+     "where": {
+      "x": -6,
+      "z": 9
+     },
+     "when": {
+      "goldGte": 85
+     }
+    },
+    {
+     "verb": "REPAIR_UNDER",
+     "pct": 55
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 7.5,
+      "z": 6.5
+     }
+    }
+   ]
+  },
+  {
+   "turn": 12,
+   "t": 82.83,
+   "wave": 2,
+   "gold": 60,
+   "hp": 100,
+   "maxHp": 100,
+   "works": {
+    "sentry_beacon": 4,
+    "turret": 1
+   },
+   "standing": 5,
+   "threats": 2,
+   "seams": [],
+   "needsRider": true,
+   "score": {
+    "wavesSurvived": 2,
+    "goldPanned": 270,
+    "goldPannedByProspector": 0,
+    "goldStolen": 0,
+    "goldReclaimed": 0,
+    "goldReclaimedByProspector": 0,
+    "buildingsBuilt": 5
+   },
+   "failed": [
+    "HARVEST:INVALID_TARGET: gold-seam-3 is unavailable."
+   ],
+   "sent": [
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": 5,
+      "z": 13
+     },
+     "when": {
+      "goldGte": 70
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": -5,
+      "z": 13
+     },
+     "when": {
+      "goldGte": 95
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": 0,
+      "z": 17
+     },
+     "when": {
+      "goldGte": 125
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "stockpile",
+     "where": {
+      "x": -6,
+      "z": 9
+     },
+     "when": {
+      "goldGte": 85
+     }
+    },
+    {
+     "verb": "REPAIR_UNDER",
+     "pct": 55
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 7.5,
+      "z": 6.5
+     }
+    }
+   ]
+  },
+  {
+   "turn": 13,
+   "t": 90.03,
+   "wave": 3,
+   "gold": 60,
+   "hp": 100,
+   "maxHp": 100,
+   "works": {
+    "sentry_beacon": 4,
+    "turret": 1
+   },
+   "standing": 5,
+   "threats": 9,
+   "seams": [
+    "gold-seam-2:30@25,6.9"
+   ],
+   "needsRider": false,
+   "score": {
+    "wavesSurvived": 3,
+    "goldPanned": 270,
+    "goldPannedByProspector": 0,
+    "goldStolen": 0,
+    "goldReclaimed": 0,
+    "goldReclaimedByProspector": 0,
+    "buildingsBuilt": 5
+   },
+   "failed": [],
+   "sent": [
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": 5,
+      "z": 13
+     },
+     "when": {
+      "goldGte": 70
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": -5,
+      "z": 13
+     },
+     "when": {
+      "goldGte": 95
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": 0,
+      "z": 17
+     },
+     "when": {
+      "goldGte": 125
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "stockpile",
+     "where": {
+      "x": -6,
+      "z": 9
+     },
+     "when": {
+      "goldGte": 85
+     }
+    },
+    {
+     "verb": "REPAIR_UNDER",
+     "pct": 55
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 7.5,
+      "z": 6.5
+     }
+    }
+   ]
+  },
+  {
+   "turn": 14,
+   "t": 100.27,
+   "wave": 3,
+   "gold": 20,
+   "hp": 100,
+   "maxHp": 100,
+   "works": {
+    "sentry_beacon": 4,
+    "turret": 2
+   },
+   "standing": 6,
+   "threats": 6,
+   "seams": [
+    "gold-seam-1:30@7.5,6.5"
+   ],
+   "needsRider": true,
+   "score": {
+    "wavesSurvived": 3,
+    "goldPanned": 300,
+    "goldPannedByProspector": 0,
+    "goldStolen": 0,
+    "goldReclaimed": 0,
+    "goldReclaimedByProspector": 0,
+    "buildingsBuilt": 6
+   },
+   "failed": [
+    "HARVEST:INVALID_TARGET: gold-seam-2 is unavailable."
+   ],
+   "sent": [
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": -5,
+      "z": 13
+     },
+     "when": {
+      "goldGte": 95
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": 0,
+      "z": 17
+     },
+     "when": {
+      "goldGte": 125
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "stockpile",
+     "where": {
+      "x": -6,
+      "z": 9
+     },
+     "when": {
+      "goldGte": 85
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "stockpile",
+     "where": {
+      "x": 6,
+      "z": 7
+     },
+     "when": {
+      "goldGte": 85
+     }
+    },
+    {
+     "verb": "REPAIR_UNDER",
+     "pct": 55
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": -9,
+      "z": 6.7
+     }
+    }
+   ]
+  },
+  {
+   "turn": 15,
+   "t": 104.17,
+   "wave": 3,
+   "gold": 50,
+   "hp": 100,
+   "maxHp": 100,
+   "works": {
+    "sentry_beacon": 4,
+    "turret": 2
+   },
+   "standing": 6,
+   "threats": 3,
+   "seams": [
+    "gold-seam-3:30@-1.5,-6.4"
+   ],
+   "needsRider": true,
+   "score": {
+    "wavesSurvived": 3,
+    "goldPanned": 330,
+    "goldPannedByProspector": 0,
+    "goldStolen": 0,
+    "goldReclaimed": 0,
+    "goldReclaimedByProspector": 0,
+    "buildingsBuilt": 6
+   },
+   "failed": [
+    "HARVEST:INVALID_TARGET: gold-seam-1 is unavailable."
+   ],
+   "sent": [
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": -5,
+      "z": 13
+     },
+     "when": {
+      "goldGte": 95
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": 0,
+      "z": 17
+     },
+     "when": {
+      "goldGte": 125
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "stockpile",
+     "where": {
+      "x": -6,
+      "z": 9
+     },
+     "when": {
+      "goldGte": 85
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "stockpile",
+     "where": {
+      "x": 6,
+      "z": 7
+     },
+     "when": {
+      "goldGte": 85
+     }
+    },
+    {
+     "verb": "REPAIR_UNDER",
+     "pct": 55
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 7.5,
+      "z": 6.5
+     }
+    }
+   ]
+  },
+  {
+   "turn": 16,
+   "t": 107.7,
+   "wave": 3,
+   "gold": 80,
+   "hp": 100,
+   "maxHp": 100,
+   "works": {
+    "sentry_beacon": 4,
+    "turret": 2
+   },
+   "standing": 6,
+   "threats": 2,
+   "seams": [],
+   "needsRider": true,
+   "score": {
+    "wavesSurvived": 3,
+    "goldPanned": 360,
+    "goldPannedByProspector": 0,
+    "goldStolen": 0,
+    "goldReclaimed": 0,
+    "goldReclaimedByProspector": 0,
+    "buildingsBuilt": 6
+   },
+   "failed": [
+    "HARVEST:INVALID_TARGET: gold-seam-3 is unavailable."
+   ],
+   "sent": [
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": -5,
+      "z": 13
+     },
+     "when": {
+      "goldGte": 95
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": 0,
+      "z": 17
+     },
+     "when": {
+      "goldGte": 125
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "stockpile",
+     "where": {
+      "x": -6,
+      "z": 9
+     },
+     "when": {
+      "goldGte": 85
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "stockpile",
+     "where": {
+      "x": 6,
+      "z": 7
+     },
+     "when": {
+      "goldGte": 85
+     }
+    },
+    {
+     "verb": "REPAIR_UNDER",
+     "pct": 55
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 7.5,
+      "z": 6.5
+     }
+    }
+   ]
+  },
+  {
+   "turn": 17,
+   "t": 119.17,
+   "wave": 3,
+   "gold": 80,
+   "hp": 100,
+   "maxHp": 100,
+   "works": {
+    "sentry_beacon": 4,
+    "turret": 2
+   },
+   "standing": 6,
+   "threats": 2,
+   "seams": [],
+   "offer": [
+    "heavy_spark",
+    "double_tap_coil",
+    "split_spark"
+   ],
+   "needsRider": false,
+   "score": {
+    "wavesSurvived": 3,
+    "goldPanned": 360,
+    "goldPannedByProspector": 0,
+    "goldStolen": 0,
+    "goldReclaimed": 0,
+    "goldReclaimedByProspector": 0,
+    "buildingsBuilt": 6
+   },
+   "failed": [],
+   "sent": [
+    {
+     "verb": "PICK_UPGRADE",
+     "id": "split_spark"
+    },
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": -5,
+      "z": 13
+     },
+     "when": {
+      "goldGte": 95
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": 0,
+      "z": 17
+     },
+     "when": {
+      "goldGte": 125
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "stockpile",
+     "where": {
+      "x": -6,
+      "z": 9
+     },
+     "when": {
+      "goldGte": 85
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "stockpile",
+     "where": {
+      "x": 6,
+      "z": 7
+     },
+     "when": {
+      "goldGte": 85
+     }
+    },
+    {
+     "verb": "REPAIR_UNDER",
+     "pct": 55
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 7.5,
+      "z": 6.5
+     }
+    }
+   ]
+  },
+  {
+   "turn": 18,
+   "t": 120.03,
+   "wave": 4,
+   "gold": 80,
+   "hp": 100,
+   "maxHp": 100,
+   "works": {
+    "sentry_beacon": 4,
+    "turret": 2
+   },
+   "standing": 6,
+   "threats": 10,
+   "seams": [],
+   "needsRider": false,
+   "score": {
+    "wavesSurvived": 4,
+    "goldPanned": 360,
+    "goldPannedByProspector": 0,
+    "goldStolen": 0,
+    "goldReclaimed": 0,
+    "goldReclaimedByProspector": 0,
+    "buildingsBuilt": 6
+   },
+   "failed": [],
+   "sent": [
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": -5,
+      "z": 13
+     },
+     "when": {
+      "goldGte": 95
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": 0,
+      "z": 17
+     },
+     "when": {
+      "goldGte": 125
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "stockpile",
+     "where": {
+      "x": -6,
+      "z": 9
+     },
+     "when": {
+      "goldGte": 85
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "stockpile",
+     "where": {
+      "x": 6,
+      "z": 7
+     },
+     "when": {
+      "goldGte": 85
+     }
+    },
+    {
+     "verb": "REPAIR_UNDER",
+     "pct": 55
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 7.5,
+      "z": 6.5
+     }
+    }
+   ]
+  },
+  {
+   "turn": 19,
+   "t": 124.53,
+   "wave": 4,
+   "gold": 80,
+   "hp": 100,
+   "maxHp": 100,
+   "works": {
+    "sentry_beacon": 4,
+    "turret": 2
+   },
+   "standing": 6,
+   "threats": 6,
+   "seams": [
+    "gold-seam-1:30@-9,6.7",
+    "gold-seam-2:30@-22,-6.8"
+   ],
+   "offer": [
+    "long_resonator",
+    "spring_heels",
+    "tinkers_plating"
+   ],
+   "needsRider": false,
+   "score": {
+    "wavesSurvived": 4,
+    "goldPanned": 360,
+    "goldPannedByProspector": 0,
+    "goldStolen": 0,
+    "goldReclaimed": 0,
+    "goldReclaimedByProspector": 0,
+    "buildingsBuilt": 6
+   },
+   "failed": [],
+   "sent": [
+    {
+     "verb": "PICK_UPGRADE",
+     "id": "tinkers_plating"
+    },
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": -5,
+      "z": 13
+     },
+     "when": {
+      "goldGte": 95
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": 0,
+      "z": 17
+     },
+     "when": {
+      "goldGte": 125
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "stockpile",
+     "where": {
+      "x": -6,
+      "z": 9
+     },
+     "when": {
+      "goldGte": 85
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "stockpile",
+     "where": {
+      "x": 6,
+      "z": 7
+     },
+     "when": {
+      "goldGte": 85
+     }
+    },
+    {
+     "verb": "REPAIR_UNDER",
+     "pct": 55
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 7.5,
+      "z": 6.5
+     }
+    }
+   ]
+  },
+  {
+   "turn": 20,
+   "t": 128.33,
+   "wave": 4,
+   "gold": 50,
+   "hp": 125,
+   "maxHp": 125,
+   "works": {
+    "sentry_beacon": 4,
+    "stockpile": 1,
+    "turret": 2
+   },
+   "standing": 7,
+   "threats": 7,
+   "seams": [
+    "gold-seam-2:30@-22,-6.8",
+    "gold-seam-3:30@18,-7"
+   ],
+   "needsRider": true,
+   "score": {
+    "wavesSurvived": 4,
+    "goldPanned": 390,
+    "goldPannedByProspector": 0,
+    "goldStolen": 0,
+    "goldReclaimed": 0,
+    "goldReclaimedByProspector": 0,
+    "buildingsBuilt": 7
+   },
+   "failed": [
+    "HARVEST:INVALID_TARGET: gold-seam-1 is unavailable."
+   ],
+   "sent": [
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": -5,
+      "z": 13
+     },
+     "when": {
+      "goldGte": 95
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": 0,
+      "z": 17
+     },
+     "when": {
+      "goldGte": 125
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "stockpile",
+     "where": {
+      "x": 6,
+      "z": 7
+     },
+     "when": {
+      "goldGte": 85
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "sentry_beacon",
+     "where": {
+      "x": -8,
+      "z": 12
+     },
+     "when": {
+      "goldGte": 75
+     }
+    },
+    {
+     "verb": "REPAIR_UNDER",
+     "pct": 55
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 7.5,
+      "z": 6.5
+     }
+    }
+   ]
+  },
+  {
+   "turn": 21,
+   "t": 130.97,
+   "wave": 4,
+   "gold": 50,
+   "hp": 125,
+   "maxHp": 125,
+   "works": {
+    "sentry_beacon": 4,
+    "stockpile": 1,
+    "turret": 2
+   },
+   "standing": 7,
+   "threats": 7,
+   "seams": [
+    "gold-seam-2:30@-22,-6.8",
+    "gold-seam-3:30@18,-7"
+   ],
+   "offer": [
+    "spring_heels",
+    "heavy_spark",
+    "long_resonator"
+   ],
+   "needsRider": false,
+   "score": {
+    "wavesSurvived": 4,
+    "goldPanned": 390,
+    "goldPannedByProspector": 0,
+    "goldStolen": 0,
+    "goldReclaimed": 0,
+    "goldReclaimedByProspector": 0,
+    "buildingsBuilt": 7
+   },
+   "failed": [],
+   "sent": [
+    {
+     "verb": "PICK_UPGRADE",
+     "id": "heavy_spark"
+    },
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": -5,
+      "z": 13
+     },
+     "when": {
+      "goldGte": 95
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": 0,
+      "z": 17
+     },
+     "when": {
+      "goldGte": 125
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "stockpile",
+     "where": {
+      "x": 6,
+      "z": 7
+     },
+     "when": {
+      "goldGte": 85
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "sentry_beacon",
+     "where": {
+      "x": -8,
+      "z": 12
+     },
+     "when": {
+      "goldGte": 75
+     }
+    },
+    {
+     "verb": "REPAIR_UNDER",
+     "pct": 55
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 7.5,
+      "z": 6.5
+     }
+    }
+   ]
+  },
+  {
+   "turn": 22,
+   "t": 136.23,
+   "wave": 4,
+   "gold": 0,
+   "hp": 125,
+   "maxHp": 125,
+   "works": {
+    "sentry_beacon": 5,
+    "stockpile": 1,
+    "turret": 2
+   },
+   "standing": 8,
+   "threats": 1,
+   "seams": [
+    "gold-seam-2:5@-22,-6.8",
+    "gold-seam-3:30@18,-7"
+   ],
+   "offer": [
+    "pan_legend",
+    "spring_heels",
+    "quick_fuse"
+   ],
+   "needsRider": false,
+   "score": {
+    "wavesSurvived": 4,
+    "goldPanned": 415,
+    "goldPannedByProspector": 0,
+    "goldStolen": 0,
+    "goldReclaimed": 0,
+    "goldReclaimedByProspector": 0,
+    "buildingsBuilt": 8
+   },
+   "failed": [],
+   "sent": [
+    {
+     "verb": "PICK_UPGRADE",
+     "id": "pan_legend"
+    },
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": -5,
+      "z": 13
+     },
+     "when": {
+      "goldGte": 95
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": 0,
+      "z": 17
+     },
+     "when": {
+      "goldGte": 125
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "stockpile",
+     "where": {
+      "x": 6,
+      "z": 7
+     },
+     "when": {
+      "goldGte": 85
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "sentry_beacon",
+     "where": {
+      "x": 7,
+      "z": 10
+     },
+     "when": {
+      "goldGte": 95
+     }
+    },
+    {
+     "verb": "REPAIR_UNDER",
+     "pct": 55
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 7.5,
+      "z": 6.5
+     }
+    }
+   ]
+  },
+  {
+   "turn": 23,
+   "t": 139.93,
+   "wave": 4,
+   "gold": 5,
+   "hp": 125,
+   "maxHp": 125,
+   "works": {
+    "sentry_beacon": 5,
+    "stockpile": 1,
+    "turret": 2
+   },
+   "standing": 8,
+   "threats": 2,
+   "seams": [
+    "gold-seam-3:30@18,-7"
+   ],
+   "needsRider": true,
+   "score": {
+    "wavesSurvived": 4,
+    "goldPanned": 420,
+    "goldPannedByProspector": 0,
+    "goldStolen": 0,
+    "goldReclaimed": 0,
+    "goldReclaimedByProspector": 0,
+    "buildingsBuilt": 8
+   },
+   "failed": [
+    "HARVEST:INVALID_TARGET: gold-seam-2 is unavailable."
+   ],
+   "sent": [
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": -5,
+      "z": 13
+     },
+     "when": {
+      "goldGte": 95
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": 0,
+      "z": 17
+     },
+     "when": {
+      "goldGte": 125
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "stockpile",
+     "where": {
+      "x": 6,
+      "z": 7
+     },
+     "when": {
+      "goldGte": 85
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "sentry_beacon",
+     "where": {
+      "x": 7,
+      "z": 10
+     },
+     "when": {
+      "goldGte": 95
+     }
+    },
+    {
+     "verb": "REPAIR_UNDER",
+     "pct": 55
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 7.5,
+      "z": 6.5
+     }
+    }
+   ]
+  },
+  {
+   "turn": 24,
+   "t": 148.53,
+   "wave": 4,
+   "gold": 35,
+   "hp": 125,
+   "maxHp": 125,
+   "works": {
+    "sentry_beacon": 5,
+    "stockpile": 1,
+    "turret": 2
+   },
+   "standing": 8,
+   "threats": 3,
+   "seams": [
+    "gold-seam-1:30@7.5,6.5"
+   ],
+   "needsRider": true,
+   "score": {
+    "wavesSurvived": 4,
+    "goldPanned": 450,
+    "goldPannedByProspector": 0,
+    "goldStolen": 0,
+    "goldReclaimed": 0,
+    "goldReclaimedByProspector": 0,
+    "buildingsBuilt": 8
+   },
+   "failed": [
+    "HARVEST:INVALID_TARGET: gold-seam-3 is unavailable."
+   ],
+   "sent": [
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": -5,
+      "z": 13
+     },
+     "when": {
+      "goldGte": 95
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": 0,
+      "z": 17
+     },
+     "when": {
+      "goldGte": 125
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "stockpile",
+     "where": {
+      "x": 6,
+      "z": 7
+     },
+     "when": {
+      "goldGte": 85
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "sentry_beacon",
+     "where": {
+      "x": 7,
+      "z": 10
+     },
+     "when": {
+      "goldGte": 95
+     }
+    },
+    {
+     "verb": "REPAIR_UNDER",
+     "pct": 55
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": -9,
+      "z": 6.7
+     }
+    }
+   ]
+  },
+  {
+   "turn": 25,
+   "t": 150.03,
+   "wave": 5,
+   "gold": 35,
+   "hp": 125,
+   "maxHp": 125,
+   "works": {
+    "sentry_beacon": 5,
+    "stockpile": 1,
+    "turret": 2
+   },
+   "standing": 8,
+   "threats": 12,
+   "seams": [
+    "gold-seam-1:30@7.5,6.5"
+   ],
+   "needsRider": false,
+   "score": {
+    "wavesSurvived": 5,
+    "goldPanned": 450,
+    "goldPannedByProspector": 0,
+    "goldStolen": 0,
+    "goldReclaimed": 0,
+    "goldReclaimedByProspector": 0,
+    "buildingsBuilt": 8
+   },
+   "failed": [],
+   "sent": [
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": -5,
+      "z": 13
+     },
+     "when": {
+      "goldGte": 95
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": 0,
+      "z": 17
+     },
+     "when": {
+      "goldGte": 125
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "stockpile",
+     "where": {
+      "x": 6,
+      "z": 7
+     },
+     "when": {
+      "goldGte": 85
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "sentry_beacon",
+     "where": {
+      "x": 7,
+      "z": 10
+     },
+     "when": {
+      "goldGte": 95
+     }
+    },
+    {
+     "verb": "REPAIR_UNDER",
+     "pct": 55
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": -9,
+      "z": 6.7
+     }
+    }
+   ]
+  },
+  {
+   "turn": 26,
+   "t": 152.33,
+   "wave": 5,
+   "gold": 65,
+   "hp": 125,
+   "maxHp": 125,
+   "works": {
+    "sentry_beacon": 5,
+    "stockpile": 1,
+    "turret": 2
+   },
+   "standing": 8,
+   "threats": 11,
+   "seams": [],
+   "needsRider": true,
+   "score": {
+    "wavesSurvived": 5,
+    "goldPanned": 480,
+    "goldPannedByProspector": 0,
+    "goldStolen": 0,
+    "goldReclaimed": 0,
+    "goldReclaimedByProspector": 0,
+    "buildingsBuilt": 8
+   },
+   "failed": [
+    "HARVEST:INVALID_TARGET: gold-seam-1 is unavailable."
+   ],
+   "sent": [
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": -5,
+      "z": 13
+     },
+     "when": {
+      "goldGte": 95
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": 0,
+      "z": 17
+     },
+     "when": {
+      "goldGte": 125
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "stockpile",
+     "where": {
+      "x": 6,
+      "z": 7
+     },
+     "when": {
+      "goldGte": 85
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "sentry_beacon",
+     "where": {
+      "x": 7,
+      "z": 10
+     },
+     "when": {
+      "goldGte": 95
+     }
+    },
+    {
+     "verb": "REPAIR_UNDER",
+     "pct": 55
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 7.5,
+      "z": 6.5
+     }
+    }
+   ]
+  },
+  {
+   "turn": 27,
+   "t": 152.97,
+   "wave": 5,
+   "gold": 65,
+   "hp": 125,
+   "maxHp": 125,
+   "works": {
+    "sentry_beacon": 5,
+    "stockpile": 1,
+    "turret": 2
+   },
+   "standing": 8,
+   "threats": 9,
+   "seams": [],
+   "offer": [
+    "heavy_spark",
+    "prospectors_luck",
+    "wide_ring"
+   ],
+   "needsRider": false,
+   "score": {
+    "wavesSurvived": 5,
+    "goldPanned": 480,
+    "goldPannedByProspector": 0,
+    "goldStolen": 0,
+    "goldReclaimed": 0,
+    "goldReclaimedByProspector": 0,
+    "buildingsBuilt": 8
+   },
+   "failed": [],
+   "sent": [
+    {
+     "verb": "PICK_UPGRADE",
+     "id": "heavy_spark"
+    },
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": -5,
+      "z": 13
+     },
+     "when": {
+      "goldGte": 95
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": 0,
+      "z": 17
+     },
+     "when": {
+      "goldGte": 125
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "stockpile",
+     "where": {
+      "x": 6,
+      "z": 7
+     },
+     "when": {
+      "goldGte": 85
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "sentry_beacon",
+     "where": {
+      "x": 7,
+      "z": 10
+     },
+     "when": {
+      "goldGte": 95
+     }
+    },
+    {
+     "verb": "REPAIR_UNDER",
+     "pct": 55
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 7.5,
+      "z": 6.5
+     }
+    }
+   ]
+  },
+  {
+   "turn": 28,
+   "t": 162.7,
+   "wave": 5,
+   "gold": 65,
+   "hp": 125,
+   "maxHp": 125,
+   "works": {
+    "sentry_beacon": 5,
+    "stockpile": 1,
+    "turret": 2
+   },
+   "standing": 8,
+   "threats": 7,
+   "seams": [
+    "gold-seam-2:30@25,6.9"
+   ],
+   "offer": [
+    "powder_charge",
+    "spring_heels",
+    "prospectors_luck"
+   ],
+   "needsRider": false,
+   "score": {
+    "wavesSurvived": 5,
+    "goldPanned": 480,
+    "goldPannedByProspector": 0,
+    "goldStolen": 0,
+    "goldReclaimed": 0,
+    "goldReclaimedByProspector": 0,
+    "buildingsBuilt": 8
+   },
+   "failed": [],
+   "sent": [
+    {
+     "verb": "PICK_UPGRADE",
+     "id": "prospectors_luck"
+    },
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": -5,
+      "z": 13
+     },
+     "when": {
+      "goldGte": 95
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": 0,
+      "z": 17
+     },
+     "when": {
+      "goldGte": 125
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "stockpile",
+     "where": {
+      "x": 6,
+      "z": 7
+     },
+     "when": {
+      "goldGte": 85
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "sentry_beacon",
+     "where": {
+      "x": 7,
+      "z": 10
+     },
+     "when": {
+      "goldGte": 95
+     }
+    },
+    {
+     "verb": "REPAIR_UNDER",
+     "pct": 55
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 7.5,
+      "z": 6.5
+     }
+    }
+   ]
+  },
+  {
+   "turn": 29,
+   "t": 163.63,
+   "wave": 5,
+   "gold": 65,
+   "hp": 125,
+   "maxHp": 125,
+   "works": {
+    "sentry_beacon": 5,
+    "stockpile": 1,
+    "turret": 2
+   },
+   "standing": 8,
+   "threats": 5,
+   "seams": [
+    "gold-seam-2:40@25,6.9"
+   ],
+   "needsRider": true,
+   "score": {
+    "wavesSurvived": 5,
+    "goldPanned": 480,
+    "goldPannedByProspector": 0,
+    "goldStolen": 0,
+    "goldReclaimed": 0,
+    "goldReclaimedByProspector": 0,
+    "buildingsBuilt": 8
+   },
+   "failed": [],
+   "sent": [
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": -5,
+      "z": 13
+     },
+     "when": {
+      "goldGte": 95
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": 0,
+      "z": 17
+     },
+     "when": {
+      "goldGte": 125
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "stockpile",
+     "where": {
+      "x": 6,
+      "z": 7
+     },
+     "when": {
+      "goldGte": 85
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "sentry_beacon",
+     "where": {
+      "x": 7,
+      "z": 10
+     },
+     "when": {
+      "goldGte": 95
+     }
+    },
+    {
+     "verb": "REPAIR_UNDER",
+     "pct": 55
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 7.5,
+      "z": 6.5
+     }
+    }
+   ]
+  },
+  {
+   "turn": 30,
+   "t": 172.23,
+   "wave": 5,
+   "gold": 45,
+   "hp": 125,
+   "maxHp": 125,
+   "works": {
+    "sentry_beacon": 5,
+    "stockpile": 2,
+    "turret": 2
+   },
+   "standing": 9,
+   "threats": 3,
+   "seams": [
+    "gold-seam-3:40@-9,6.7"
+   ],
+   "needsRider": true,
+   "score": {
+    "wavesSurvived": 5,
+    "goldPanned": 520,
+    "goldPannedByProspector": 0,
+    "goldStolen": 0,
+    "goldReclaimed": 0,
+    "goldReclaimedByProspector": 0,
+    "buildingsBuilt": 9
+   },
+   "failed": [
+    "HARVEST:INVALID_TARGET: gold-seam-2 is unavailable."
+   ],
+   "sent": [
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": -5,
+      "z": 13
+     },
+     "when": {
+      "goldGte": 95
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": 0,
+      "z": 17
+     },
+     "when": {
+      "goldGte": 125
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "sentry_beacon",
+     "where": {
+      "x": 7,
+      "z": 10
+     },
+     "when": {
+      "goldGte": 95
+     }
+    },
+    {
+     "verb": "REPAIR_UNDER",
+     "pct": 55
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 7.5,
+      "z": 6.5
+     }
+    }
+   ]
+  },
+  {
+   "turn": 31,
+   "t": 177.57,
+   "wave": 5,
+   "gold": 45,
+   "hp": 125,
+   "maxHp": 125,
+   "works": {
+    "sentry_beacon": 5,
+    "stockpile": 2,
+    "turret": 2
+   },
+   "standing": 9,
+   "threats": 2,
+   "seams": [
+    "gold-seam-1:40@-22,-6.8",
+    "gold-seam-3:40@-9,6.7"
+   ],
+   "offer": [
+    "split_spark",
+    "prospectors_luck",
+    "long_resonator"
+   ],
+   "needsRider": false,
+   "score": {
+    "wavesSurvived": 5,
+    "goldPanned": 520,
+    "goldPannedByProspector": 0,
+    "goldStolen": 0,
+    "goldReclaimed": 0,
+    "goldReclaimedByProspector": 0,
+    "buildingsBuilt": 9
+   },
+   "failed": [],
+   "sent": [
+    {
+     "verb": "PICK_UPGRADE",
+     "id": "split_spark"
+    },
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": -5,
+      "z": 13
+     },
+     "when": {
+      "goldGte": 95
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": 0,
+      "z": 17
+     },
+     "when": {
+      "goldGte": 125
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "sentry_beacon",
+     "where": {
+      "x": 7,
+      "z": 10
+     },
+     "when": {
+      "goldGte": 95
+     }
+    },
+    {
+     "verb": "REPAIR_UNDER",
+     "pct": 55
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 7.5,
+      "z": 6.5
+     }
+    }
+   ]
+  },
+  {
+   "turn": 32,
+   "t": 179.63,
+   "wave": 5,
+   "gold": 85,
+   "hp": 125,
+   "maxHp": 125,
+   "works": {
+    "sentry_beacon": 5,
+    "stockpile": 2,
+    "turret": 2
+   },
+   "standing": 9,
+   "threats": 3,
+   "seams": [
+    "gold-seam-1:40@-22,-6.8"
+   ],
+   "needsRider": true,
+   "score": {
+    "wavesSurvived": 5,
+    "goldPanned": 560,
+    "goldPannedByProspector": 0,
+    "goldStolen": 0,
+    "goldReclaimed": 0,
+    "goldReclaimedByProspector": 0,
+    "buildingsBuilt": 9
+   },
+   "failed": [
+    "HARVEST:INVALID_TARGET: gold-seam-3 is unavailable."
+   ],
+   "sent": [
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": -5,
+      "z": 13
+     },
+     "when": {
+      "goldGte": 95
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": 0,
+      "z": 17
+     },
+     "when": {
+      "goldGte": 125
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "sentry_beacon",
+     "where": {
+      "x": 7,
+      "z": 10
+     },
+     "when": {
+      "goldGte": 95
+     }
+    },
+    {
+     "verb": "REPAIR_UNDER",
+     "pct": 55
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 7.5,
+      "z": 6.5
+     }
+    }
+   ]
+  },
+  {
+   "turn": 33,
+   "t": 180.03,
+   "wave": 6,
+   "gold": 85,
+   "hp": 125,
+   "maxHp": 125,
+   "works": {
+    "sentry_beacon": 5,
+    "stockpile": 2,
+    "turret": 2
+   },
+   "standing": 9,
+   "threats": 14,
+   "seams": [
+    "gold-seam-1:40@-22,-6.8"
+   ],
+   "needsRider": false,
+   "score": {
+    "wavesSurvived": 6,
+    "goldPanned": 560,
+    "goldPannedByProspector": 0,
+    "goldStolen": 0,
+    "goldReclaimed": 0,
+    "goldReclaimedByProspector": 0,
+    "buildingsBuilt": 9
+   },
+   "failed": [],
+   "sent": [
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": -5,
+      "z": 13
+     },
+     "when": {
+      "goldGte": 95
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": 0,
+      "z": 17
+     },
+     "when": {
+      "goldGte": 125
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "sentry_beacon",
+     "where": {
+      "x": 7,
+      "z": 10
+     },
+     "when": {
+      "goldGte": 95
+     }
+    },
+    {
+     "verb": "REPAIR_UNDER",
+     "pct": 55
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 7.5,
+      "z": 6.5
+     }
+    }
+   ]
+  },
+  {
+   "turn": 34,
+   "t": 191.2,
+   "wave": 6,
+   "gold": 0,
+   "hp": 125,
+   "maxHp": 125,
+   "works": {
+    "sentry_beacon": 5,
+    "stockpile": 2,
+    "turret": 3
+   },
+   "standing": 10,
+   "threats": 9,
+   "seams": [
+    "gold-seam-1:30@-22,-6.8",
+    "gold-seam-2:40@-9,6.7"
+   ],
+   "offer": [
+    "prospectors_luck",
+    "spring_heels",
+    "long_resonator"
+   ],
+   "needsRider": false,
+   "score": {
+    "wavesSurvived": 6,
+    "goldPanned": 570,
+    "goldPannedByProspector": 0,
+    "goldStolen": 0,
+    "goldReclaimed": 0,
+    "goldReclaimedByProspector": 0,
+    "buildingsBuilt": 10
+   },
+   "failed": [],
+   "sent": [
+    {
+     "verb": "PICK_UPGRADE",
+     "id": "prospectors_luck"
+    },
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": 0,
+      "z": 17
+     },
+     "when": {
+      "goldGte": 125
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "sentry_beacon",
+     "where": {
+      "x": 7,
+      "z": 10
+     },
+     "when": {
+      "goldGte": 95
+     }
+    },
+    {
+     "verb": "REPAIR_UNDER",
+     "pct": 55
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 7.5,
+      "z": 6.5
+     }
+    }
+   ]
+  },
+  {
+   "turn": 35,
+   "t": 208.77,
+   "wave": 6,
+   "gold": 80,
+   "hp": 125,
+   "maxHp": 125,
+   "works": {
+    "sentry_beacon": 5,
+    "stockpile": 2,
+    "turret": 3
+   },
+   "standing": 10,
+   "threats": 3,
+   "seams": [
+    "gold-seam-1:5@-22,-6.8",
+    "gold-seam-2:5@-9,6.7",
+    "gold-seam-3:50@25,6.9"
+   ],
+   "offer": [
+    "heavy_spark",
+    "quick_fuse",
+    "tinkers_plating"
+   ],
+   "needsRider": false,
+   "score": {
+    "wavesSurvived": 6,
+    "goldPanned": 650,
+    "goldPannedByProspector": 0,
+    "goldStolen": 0,
+    "goldReclaimed": 0,
+    "goldReclaimedByProspector": 0,
+    "buildingsBuilt": 10
+   },
+   "failed": [],
+   "sent": [
+    {
+     "verb": "PICK_UPGRADE",
+     "id": "tinkers_plating"
+    },
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": 0,
+      "z": 17
+     },
+     "when": {
+      "goldGte": 125
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "sentry_beacon",
+     "where": {
+      "x": 7,
+      "z": 10
+     },
+     "when": {
+      "goldGte": 95
+     }
+    },
+    {
+     "verb": "REPAIR_UNDER",
+     "pct": 55
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 7.5,
+      "z": 6.5
+     }
+    }
+   ]
+  },
+  {
+   "turn": 36,
+   "t": 210.03,
+   "wave": 7,
+   "gold": 80,
+   "hp": 150,
+   "maxHp": 150,
+   "works": {
+    "sentry_beacon": 5,
+    "stockpile": 2,
+    "turret": 3
+   },
+   "standing": 10,
+   "threats": 16,
+   "seams": [
+    "gold-seam-1:5@-22,-6.8",
+    "gold-seam-2:5@-9,6.7",
+    "gold-seam-3:50@25,6.9"
+   ],
+   "needsRider": false,
+   "score": {
+    "wavesSurvived": 7,
+    "goldPanned": 650,
+    "goldPannedByProspector": 0,
+    "goldStolen": 0,
+    "goldReclaimed": 0,
+    "goldReclaimedByProspector": 0,
+    "buildingsBuilt": 10
+   },
+   "failed": [],
+   "sent": [
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": 0,
+      "z": 17
+     },
+     "when": {
+      "goldGte": 125
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "sentry_beacon",
+     "where": {
+      "x": 7,
+      "z": 10
+     },
+     "when": {
+      "goldGte": 95
+     }
+    },
+    {
+     "verb": "REPAIR_UNDER",
+     "pct": 55
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 7.5,
+      "z": 6.5
+     }
+    }
+   ]
+  },
+  {
+   "turn": 37,
+   "t": 212.3,
+   "wave": 7,
+   "gold": 85,
+   "hp": 150,
+   "maxHp": 150,
+   "works": {
+    "sentry_beacon": 5,
+    "stockpile": 2,
+    "turret": 3
+   },
+   "standing": 10,
+   "threats": 13,
+   "seams": [
+    "gold-seam-1:5@-22,-6.8",
+    "gold-seam-3:50@25,6.9"
+   ],
+   "needsRider": true,
+   "score": {
+    "wavesSurvived": 7,
+    "goldPanned": 655,
+    "goldPannedByProspector": 0,
+    "goldStolen": 0,
+    "goldReclaimed": 0,
+    "goldReclaimedByProspector": 0,
+    "buildingsBuilt": 10
+   },
+   "failed": [
+    "HARVEST:INVALID_TARGET: gold-seam-2 is unavailable."
+   ],
+   "sent": [
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": 0,
+      "z": 17
+     },
+     "when": {
+      "goldGte": 125
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "sentry_beacon",
+     "where": {
+      "x": 7,
+      "z": 10
+     },
+     "when": {
+      "goldGte": 95
+     }
+    },
+    {
+     "verb": "REPAIR_UNDER",
+     "pct": 55
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 7.5,
+      "z": 6.5
+     }
+    }
+   ]
+  },
+  {
+   "turn": 38,
+   "t": 216.3,
+   "wave": 7,
+   "gold": 90,
+   "hp": 150,
+   "maxHp": 150,
+   "works": {
+    "sentry_beacon": 5,
+    "stockpile": 2,
+    "turret": 3
+   },
+   "standing": 10,
+   "threats": 4,
+   "seams": [
+    "gold-seam-3:50@25,6.9"
+   ],
+   "needsRider": true,
+   "score": {
+    "wavesSurvived": 7,
+    "goldPanned": 660,
+    "goldPannedByProspector": 0,
+    "goldStolen": 0,
+    "goldReclaimed": 0,
+    "goldReclaimedByProspector": 0,
+    "buildingsBuilt": 10
+   },
+   "failed": [
+    "HARVEST:INVALID_TARGET: gold-seam-1 is unavailable."
+   ],
+   "sent": [
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": 0,
+      "z": 17
+     },
+     "when": {
+      "goldGte": 125
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "sentry_beacon",
+     "where": {
+      "x": 7,
+      "z": 10
+     },
+     "when": {
+      "goldGte": 95
+     }
+    },
+    {
+     "verb": "REPAIR_UNDER",
+     "pct": 55
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 7.5,
+      "z": 6.5
+     }
+    }
+   ]
+  },
+  {
+   "turn": 39,
+   "t": 222.07,
+   "wave": 7,
+   "gold": 90,
+   "hp": 150,
+   "maxHp": 150,
+   "works": {
+    "sentry_beacon": 5,
+    "stockpile": 2,
+    "turret": 3
+   },
+   "standing": 10,
+   "threats": 9,
+   "seams": [
+    "gold-seam-3:50@25,6.9"
+   ],
+   "offer": [
+    "spring_heels",
+    "heavy_spark",
+    "long_resonator"
+   ],
+   "needsRider": false,
+   "score": {
+    "wavesSurvived": 7,
+    "goldPanned": 660,
+    "goldPannedByProspector": 0,
+    "goldStolen": 0,
+    "goldReclaimed": 0,
+    "goldReclaimedByProspector": 0,
+    "buildingsBuilt": 10
+   },
+   "failed": [],
+   "sent": [
+    {
+     "verb": "PICK_UPGRADE",
+     "id": "heavy_spark"
+    },
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": 0,
+      "z": 17
+     },
+     "when": {
+      "goldGte": 125
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "sentry_beacon",
+     "where": {
+      "x": 7,
+      "z": 10
+     },
+     "when": {
+      "goldGte": 95
+     }
+    },
+    {
+     "verb": "REPAIR_UNDER",
+     "pct": 55
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 7.5,
+      "z": 6.5
+     }
+    }
+   ]
+  },
+  {
+   "turn": 40,
+   "t": 232.1,
+   "wave": 7,
+   "gold": 45,
+   "hp": 150,
+   "maxHp": 150,
+   "works": {
+    "sentry_beacon": 6,
+    "stockpile": 2,
+    "turret": 3
+   },
+   "standing": 11,
+   "threats": 3,
+   "seams": [
+    "gold-seam-1:50@-9,6.7",
+    "gold-seam-2:50@-1.5,-6.4"
+   ],
+   "needsRider": true,
+   "score": {
+    "wavesSurvived": 7,
+    "goldPanned": 710,
+    "goldPannedByProspector": 0,
+    "goldStolen": 0,
+    "goldReclaimed": 0,
+    "goldReclaimedByProspector": 0,
+    "buildingsBuilt": 11
+   },
+   "failed": [
+    "HARVEST:INVALID_TARGET: gold-seam-3 is unavailable."
+   ],
+   "sent": [
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": 0,
+      "z": 17
+     },
+     "when": {
+      "goldGte": 125
+     }
+    },
+    {
+     "verb": "REPAIR_UNDER",
+     "pct": 55
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 7.5,
+      "z": 6.5
+     }
+    }
+   ]
+  },
+  {
+   "turn": 41,
+   "t": 238.67,
+   "wave": 7,
+   "gold": 95,
+   "hp": 150,
+   "maxHp": 150,
+   "works": {
+    "sentry_beacon": 6,
+    "stockpile": 2,
+    "turret": 3
+   },
+   "standing": 11,
+   "threats": 3,
+   "seams": [
+    "gold-seam-1:50@-9,6.7"
+   ],
+   "needsRider": true,
+   "score": {
+    "wavesSurvived": 7,
+    "goldPanned": 760,
+    "goldPannedByProspector": 0,
+    "goldStolen": 0,
+    "goldReclaimed": 0,
+    "goldReclaimedByProspector": 0,
+    "buildingsBuilt": 11
+   },
+   "failed": [
+    "HARVEST:INVALID_TARGET: gold-seam-2 is unavailable."
+   ],
+   "sent": [
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": 0,
+      "z": 17
+     },
+     "when": {
+      "goldGte": 125
+     }
+    },
+    {
+     "verb": "REPAIR_UNDER",
+     "pct": 55
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 7.5,
+      "z": 6.5
+     }
+    }
+   ]
+  },
+  {
+   "turn": 42,
+   "t": 240.03,
+   "wave": 8,
+   "gold": 95,
+   "hp": 150,
+   "maxHp": 150,
+   "works": {
+    "sentry_beacon": 6,
+    "stockpile": 2,
+    "turret": 3
+   },
+   "standing": 11,
+   "threats": 17,
+   "seams": [
+    "gold-seam-1:50@-9,6.7"
+   ],
+   "needsRider": false,
+   "score": {
+    "wavesSurvived": 8,
+    "goldPanned": 760,
+    "goldPannedByProspector": 0,
+    "goldStolen": 0,
+    "goldReclaimed": 0,
+    "goldReclaimedByProspector": 0,
+    "buildingsBuilt": 11
+   },
+   "failed": [],
+   "sent": [
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": 0,
+      "z": 17
+     },
+     "when": {
+      "goldGte": 125
+     }
+    },
+    {
+     "verb": "REPAIR_UNDER",
+     "pct": 55
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 7.5,
+      "z": 6.5
+     }
+    }
+   ]
+  },
+  {
+   "turn": 43,
+   "t": 242.57,
+   "wave": 8,
+   "gold": 125,
+   "hp": 150,
+   "maxHp": 150,
+   "works": {
+    "sentry_beacon": 6,
+    "stockpile": 2,
+    "turret": 3
+   },
+   "standing": 11,
+   "threats": 15,
+   "seams": [
+    "gold-seam-1:20@-9,6.7",
+    "gold-seam-3:50@-22,-6.8"
+   ],
+   "offer": [
+    "tinkers_plating",
+    "powder_charge",
+    "long_resonator"
+   ],
+   "needsRider": false,
+   "score": {
+    "wavesSurvived": 8,
+    "goldPanned": 790,
+    "goldPannedByProspector": 0,
+    "goldStolen": 0,
+    "goldReclaimed": 0,
+    "goldReclaimedByProspector": 0,
+    "buildingsBuilt": 11
+   },
+   "failed": [],
+   "sent": [
+    {
+     "verb": "PICK_UPGRADE",
+     "id": "tinkers_plating"
+    },
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": 0,
+      "z": 17
+     },
+     "when": {
+      "goldGte": 125
+     }
+    },
+    {
+     "verb": "REPAIR_UNDER",
+     "pct": 55
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 7.5,
+      "z": 6.5
+     }
+    }
+   ]
+  },
+  {
+   "turn": 44,
+   "t": 245.47,
+   "wave": 8,
+   "gold": 20,
+   "hp": 175,
+   "maxHp": 175,
+   "works": {
+    "sentry_beacon": 6,
+    "stockpile": 2,
+    "turret": 4
+   },
+   "standing": 12,
+   "threats": 4,
+   "seams": [
+    "gold-seam-3:50@-22,-6.8"
+   ],
+   "needsRider": true,
+   "score": {
+    "wavesSurvived": 8,
+    "goldPanned": 810,
+    "goldPannedByProspector": 0,
+    "goldStolen": 0,
+    "goldReclaimed": 0,
+    "goldReclaimedByProspector": 0,
+    "buildingsBuilt": 12
+   },
+   "failed": [
+    "HARVEST:INVALID_TARGET: gold-seam-1 is unavailable."
+   ],
+   "sent": [
+    {
+     "verb": "REPAIR_UNDER",
+     "pct": 55
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 7.5,
+      "z": 6.5
+     }
+    }
+   ]
+  },
+  {
+   "turn": 45,
+   "t": 249.77,
+   "wave": 8,
+   "gold": 70,
+   "hp": 175,
+   "maxHp": 175,
+   "works": {
+    "sentry_beacon": 6,
+    "stockpile": 2,
+    "turret": 4
+   },
+   "standing": 12,
+   "threats": 14,
+   "seams": [
+    "gold-seam-2:50@7.5,6.5"
+   ],
+   "needsRider": true,
+   "score": {
+    "wavesSurvived": 8,
+    "goldPanned": 860,
+    "goldPannedByProspector": 0,
+    "goldStolen": 0,
+    "goldReclaimed": 0,
+    "goldReclaimedByProspector": 0,
+    "buildingsBuilt": 12
+   },
+   "failed": [
+    "HARVEST:INVALID_TARGET: gold-seam-3 is unavailable."
+   ],
+   "sent": [
+    {
+     "verb": "REPAIR_UNDER",
+     "pct": 55
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": -9,
+      "z": 6.7
+     }
+    }
+   ]
+  },
+  {
+   "turn": 46,
+   "t": 253.73,
+   "wave": 8,
+   "gold": 70,
+   "hp": 175,
+   "maxHp": 175,
+   "works": {
+    "sentry_beacon": 6,
+    "stockpile": 2,
+    "turret": 4
+   },
+   "standing": 12,
+   "threats": 7,
+   "seams": [
+    "gold-seam-2:50@7.5,6.5"
+   ],
+   "offer": [
+    "double_tap_coil",
+    "long_resonator",
+    "beacon_dynamo"
+   ],
+   "needsRider": false,
+   "score": {
+    "wavesSurvived": 8,
+    "goldPanned": 860,
+    "goldPannedByProspector": 0,
+    "goldStolen": 0,
+    "goldReclaimed": 0,
+    "goldReclaimedByProspector": 0,
+    "buildingsBuilt": 12
+   },
+   "failed": [],
+   "sent": [
+    {
+     "verb": "PICK_UPGRADE",
+     "id": "double_tap_coil"
+    },
+    {
+     "verb": "REPAIR_UNDER",
+     "pct": 55
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": -9,
+      "z": 6.7
+     }
+    }
+   ]
+  },
+  {
+   "turn": 47,
+   "t": 256.9,
+   "wave": 8,
+   "gold": 120,
+   "hp": 175,
+   "maxHp": 175,
+   "works": {
+    "sentry_beacon": 6,
+    "stockpile": 2,
+    "turret": 4
+   },
+   "standing": 12,
+   "threats": 6,
+   "seams": [
+    "gold-seam-1:50@-22,-6.8"
+   ],
+   "needsRider": true,
+   "score": {
+    "wavesSurvived": 8,
+    "goldPanned": 910,
+    "goldPannedByProspector": 0,
+    "goldStolen": 0,
+    "goldReclaimed": 0,
+    "goldReclaimedByProspector": 0,
+    "buildingsBuilt": 12
+   },
+   "failed": [
+    "HARVEST:INVALID_TARGET: gold-seam-2 is unavailable."
+   ],
+   "sent": [
+    {
+     "verb": "REPAIR_UNDER",
+     "pct": 55
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 7.5,
+      "z": 6.5
+     }
+    }
+   ]
+  },
+  {
+   "turn": 48,
+   "t": 264.03,
+   "wave": 8,
+   "gold": 170,
+   "hp": 175,
+   "maxHp": 175,
+   "works": {
+    "sentry_beacon": 6,
+    "stockpile": 2,
+    "turret": 4
+   },
+   "standing": 12,
+   "threats": 5,
+   "seams": [
+    "gold-seam-3:50@-1.5,-6.4"
+   ],
+   "needsRider": true,
+   "score": {
+    "wavesSurvived": 8,
+    "goldPanned": 960,
+    "goldPannedByProspector": 0,
+    "goldStolen": 0,
+    "goldReclaimed": 0,
+    "goldReclaimedByProspector": 0,
+    "buildingsBuilt": 12
+   },
+   "failed": [
+    "HARVEST:INVALID_TARGET: gold-seam-1 is unavailable."
+   ],
+   "sent": [
+    {
+     "verb": "REPAIR_UNDER",
+     "pct": 55
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 7.5,
+      "z": 6.5
+     }
+    }
+   ]
+  },
+  {
+   "turn": 49,
+   "t": 268.7,
+   "wave": 8,
+   "gold": 220,
+   "hp": 175,
+   "maxHp": 175,
+   "works": {
+    "sentry_beacon": 6,
+    "stockpile": 2,
+    "turret": 4
+   },
+   "standing": 12,
+   "threats": 6,
+   "seams": [
+    "gold-seam-2:50@25,6.9"
+   ],
+   "needsRider": true,
+   "score": {
+    "wavesSurvived": 8,
+    "goldPanned": 1010,
+    "goldPannedByProspector": 0,
+    "goldStolen": 0,
+    "goldReclaimed": 0,
+    "goldReclaimedByProspector": 0,
+    "buildingsBuilt": 12
+   },
+   "failed": [
+    "HARVEST:INVALID_TARGET: gold-seam-3 is unavailable."
+   ],
+   "sent": [
+    {
+     "verb": "REPAIR_UNDER",
+     "pct": 55
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 7.5,
+      "z": 6.5
+     }
+    }
+   ]
+  },
+  {
+   "turn": 50,
+   "t": 270.03,
+   "wave": 9,
+   "gold": 220,
+   "hp": 175,
+   "maxHp": 175,
+   "works": {
+    "sentry_beacon": 6,
+    "stockpile": 2,
+    "turret": 4
+   },
+   "standing": 12,
+   "threats": 22,
+   "seams": [
+    "gold-seam-2:50@25,6.9"
+   ],
+   "needsRider": false,
+   "score": {
+    "wavesSurvived": 9,
+    "goldPanned": 1010,
+    "goldPannedByProspector": 0,
+    "goldStolen": 0,
+    "goldReclaimed": 0,
+    "goldReclaimedByProspector": 0,
+    "buildingsBuilt": 12
+   },
+   "failed": [],
+   "sent": [
+    {
+     "verb": "REPAIR_UNDER",
+     "pct": 55
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 7.5,
+      "z": 6.5
+     }
+    }
+   ]
+  },
+  {
+   "turn": 51,
+   "t": 275.27,
+   "wave": 9,
+   "gold": 270,
+   "hp": 175,
+   "maxHp": 175,
+   "works": {
+    "sentry_beacon": 6,
+    "stockpile": 2,
+    "turret": 4
+   },
+   "standing": 12,
+   "threats": 13,
+   "seams": [
+    "gold-seam-1:50@-9,6.7"
+   ],
+   "needsRider": true,
+   "score": {
+    "wavesSurvived": 9,
+    "goldPanned": 1060,
+    "goldPannedByProspector": 0,
+    "goldStolen": 0,
+    "goldReclaimed": 0,
+    "goldReclaimedByProspector": 0,
+    "buildingsBuilt": 12
+   },
+   "failed": [
+    "HARVEST:INVALID_TARGET: gold-seam-2 is unavailable."
+   ],
+   "sent": [
+    {
+     "verb": "REPAIR_UNDER",
+     "pct": 55
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 7.5,
+      "z": 6.5
+     }
+    }
+   ]
+  },
+  {
+   "turn": 52,
+   "t": 275.43,
+   "wave": 9,
+   "gold": 270,
+   "hp": 175,
+   "maxHp": 175,
+   "works": {
+    "sentry_beacon": 6,
+    "stockpile": 2,
+    "turret": 4
+   },
+   "standing": 12,
+   "threats": 11,
+   "seams": [
+    "gold-seam-1:50@-9,6.7"
+   ],
+   "offer": [
+    "beacon_dynamo",
+    "long_resonator",
+    "double_tap_coil"
+   ],
+   "needsRider": false,
+   "score": {
+    "wavesSurvived": 9,
+    "goldPanned": 1060,
+    "goldPannedByProspector": 0,
+    "goldStolen": 0,
+    "goldReclaimed": 0,
+    "goldReclaimedByProspector": 0,
+    "buildingsBuilt": 12
+   },
+   "failed": [],
+   "sent": [
+    {
+     "verb": "PICK_UPGRADE",
+     "id": "double_tap_coil"
+    },
+    {
+     "verb": "REPAIR_UNDER",
+     "pct": 55
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 7.5,
+      "z": 6.5
+     }
+    }
+   ]
+  },
+  {
+   "turn": 53,
+   "t": 282.73,
+   "wave": 9,
+   "gold": 320,
+   "hp": 175,
+   "maxHp": 175,
+   "works": {
+    "sentry_beacon": 6,
+    "stockpile": 2,
+    "turret": 4
+   },
+   "standing": 12,
+   "threats": 15,
+   "seams": [
+    "gold-seam-3:50@25,6.9"
+   ],
+   "needsRider": true,
+   "score": {
+    "wavesSurvived": 9,
+    "goldPanned": 1110,
+    "goldPannedByProspector": 0,
+    "goldStolen": 0,
+    "goldReclaimed": 0,
+    "goldReclaimedByProspector": 0,
+    "buildingsBuilt": 12
+   },
+   "failed": [
+    "HARVEST:INVALID_TARGET: gold-seam-1 is unavailable."
+   ],
+   "sent": [
+    {
+     "verb": "REPAIR_UNDER",
+     "pct": 55
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 7.5,
+      "z": 6.5
+     }
+    }
+   ]
+  },
+  {
+   "turn": 54,
+   "t": 288.47,
+   "wave": 9,
+   "gold": 320,
+   "hp": 175,
+   "maxHp": 175,
+   "works": {
+    "sentry_beacon": 6,
+    "stockpile": 2,
+    "turret": 4
+   },
+   "standing": 12,
+   "threats": 6,
+   "seams": [
+    "gold-seam-2:50@-22,-6.8",
+    "gold-seam-3:50@25,6.9"
+   ],
+   "offer": [
+    "spring_heels",
+    "double_tap_coil",
+    "beacon_dynamo"
+   ],
+   "needsRider": false,
+   "score": {
+    "wavesSurvived": 9,
+    "goldPanned": 1110,
+    "goldPannedByProspector": 0,
+    "goldStolen": 0,
+    "goldReclaimed": 0,
+    "goldReclaimedByProspector": 0,
+    "buildingsBuilt": 12
+   },
+   "failed": [],
+   "sent": [
+    {
+     "verb": "PICK_UPGRADE",
+     "id": "double_tap_coil"
+    },
+    {
+     "verb": "REPAIR_UNDER",
+     "pct": 55
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-3"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 7.5,
+      "z": 6.5
+     }
+    }
+   ]
+  },
+  {
+   "turn": 55,
+   "t": 290.2,
+   "wave": 9,
+   "gold": 370,
+   "hp": 175,
+   "maxHp": 175,
+   "works": {
+    "sentry_beacon": 6,
+    "stockpile": 2,
+    "turret": 4
+   },
+   "standing": 12,
+   "threats": 7,
+   "seams": [
+    "gold-seam-2:50@-22,-6.8"
+   ],
+   "needsRider": true,
+   "score": {
+    "wavesSurvived": 9,
+    "goldPanned": 1160,
+    "goldPannedByProspector": 0,
+    "goldStolen": 0,
+    "goldReclaimed": 0,
+    "goldReclaimedByProspector": 0,
+    "buildingsBuilt": 12
+   },
+   "failed": [
+    "HARVEST:INVALID_TARGET: gold-seam-3 is unavailable."
+   ],
+   "sent": [
+    {
+     "verb": "REPAIR_UNDER",
+     "pct": 55
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 7.5,
+      "z": 6.5
+     }
+    }
+   ]
+  },
+  {
+   "turn": 56,
+   "t": 300,
+   "wave": 10,
+   "gold": 370,
+   "hp": 175,
+   "maxHp": 175,
+   "works": {
+    "sentry_beacon": 6,
+    "stockpile": 2,
+    "turret": 4
+   },
+   "standing": 12,
+   "threats": 6,
+   "seams": [
+    "gold-seam-1:50@-1.5,-6.4",
+    "gold-seam-2:50@-22,-6.8"
+   ],
+   "needsRider": false,
+   "score": {
+    "wavesSurvived": 10,
+    "goldPanned": 1160,
+    "goldPannedByProspector": 0,
+    "goldStolen": 0,
+    "goldReclaimed": 0,
+    "goldReclaimedByProspector": 0,
+    "buildingsBuilt": 12
+   },
+   "failed": [],
+   "sent": [
+    {
+     "verb": "SECURE_CHOICE",
+     "choice": "bank"
+    }
+   ]
+  },
+  {
+   "turn": 57,
+   "t": 300,
+   "wave": 10,
+   "gold": 370,
+   "hp": 175,
+   "maxHp": 175,
+   "works": {
+    "sentry_beacon": 6,
+    "stockpile": 2,
+    "turret": 4
+   },
+   "standing": 12,
+   "threats": 6,
+   "seams": [
+    "gold-seam-1:50@-1.5,-6.4",
+    "gold-seam-2:50@-22,-6.8"
+   ],
+   "needsRider": false,
+   "score": {
+    "wavesSurvived": 10,
+    "goldPanned": 1160,
+    "goldPannedByProspector": 0,
+    "goldStolen": 0,
+    "goldReclaimed": 0,
+    "goldReclaimedByProspector": 0,
+    "buildingsBuilt": 12
+   },
+   "failed": [],
+   "sent": [
+    {
+     "verb": "REPAIR_UNDER",
+     "pct": 55
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 7.5,
+      "z": 6.5
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,33 @@
+{
+  "asset": "assets/pilots/crawler-3d/crawler.glb",
+  "assetSha256": "26112eaa095aa891d57c209e224e81a3a9fc89bc6f56614eb98ee6d5d5016eb6",
+  "candidateMatchesProduction": true,
+  "renderers": {
+    "assets/pilots/crawler-3d/render_crawler.py": "57a2b63b244ad23f6c301876f8d69c40656c272417c7121d5a81d3ad06630598",
+    "artifacts/boss-fidelity/e3-crawler/render-candidate.py": "27c4de90879431b07d6e362509cc43b974c39ff2a25002f959213c5dcadf03d6",
+    "artifacts/boss-fidelity/e3-crawler/render-full-damage.py": "02fcbaab49d685128baba1cb99672866d2bafd2fc7538d4b797c4fcee099bdc8"
+  },
+  "images": {
+    "candidate-neutral/crawler-canyon-run-camera.png": {
+      "sha256": "3e90f79ee4623545a3f3cbe94d52689a42cc59c1dc62d8cfb5f9668f6ae3823c",
+      "bytes": 2086572
+    },
+    "candidate-neutral/crawler-damage-states.png": {
+      "sha256": "6e25ef91600ffefb6d65e6e71e5fabc8497af2402c40b16e87c6b6a063c251bd",
+      "bytes": 1005989
+    },
+    "candidate-neutral/crawler-full-damage-states.png": {
+      "sha256": "f997248f7ffa1f721bfe34f887afda50c408120ddf19a37ba3918e7a822a9679",
+      "bytes": 1192654
+    },
+    "candidate-neutral/crawler-reference-ab.png": {
+      "sha256": "ca81beeba8e699390f657a904a38b31c1c1423168174caed0df5cc400810c6d2",
+      "bytes": 2520013
+    },
+    "candidate-neutral/crawler-turntable.png": {
+      "sha256": "b39d02bb1d8af2a5065f4b13eac740bad1c96ed04f737e910cb394a0ae2eae74",
+      "bytes": 2377101
+    }
+  },
+  "note": "Neutral review renders; final turntable, context and original-framing damage board rerendered from the current candidate, which matches the production GLB. Full damage board uses the same production GLB with a wider review camera. These are not game screenshots."
+}

@@ -1,0 +1,19 @@
+{
+  "rig": "fable",
+  "model": "claude-fable-5",
+  "arena": "/tmp/heat11-5e7a7c0b",
+  "workdir": "/tmp/heat11-5e7a7c0b/artifacts/heat11/fable/e1-twin-banks",
+  "charterFile": "rides/e1-twin-banks/fable/charter.md",
+  "charterSha256": "87bf7a76d5bc32eba5b38a1193d4fdf4ee6fccbd178000998ce0848ed35e9f71",
+  "sessionId": "f4e24ed3-2f36-40a8-891f-f21a5c7601cc",
+  "wallSeconds": 1500,
+  "startedAt": "2026-09-03T15:37:12.569Z",
+  "invocation": "env -u CLAUDECODE -u CLAUDE_CODE_ENTRYPOINT -u CLAUDE_CONFIG_DIR claude -p \"<charter text, see charterFile>\" --model claude-fable-5 --allowedTools Read,Write,Glob,Bash(node *) --output-format text --session-id f4e24ed3-2f36-40a8-891f-f21a5c7601cc",
+  "endedAt": "2026-09-03T15:51:38.937Z",
+  "wallClockSeconds": 866,
+  "exitCode": 1,
+  "signal": null,
+  "wallHit": false,
+  "firstOutputAt": "2026-09-03T15:38:57.584Z",
+  "setupToFirstOutputSeconds": 105
+}

@@ -1,0 +1,214 @@
+{
+  "rig": "opus",
+  "contract": "e3-canyon-works",
+  "model": "claude-opus-5",
+  "sessionId": "5bc62036-06d4-4c36-8736-f48a8b61c731",
+  "startedAt": "2026-09-18T01:36:41.154Z",
+  "endedAt": "2026-09-18T01:52:35.692Z",
+  "wallClockSeconds": 955,
+  "wallHit": false,
+  "exitCode": 0,
+  "signal": null,
+  "setupToFirstOutputSeconds": 135,
+  "arenaTrackedChanges": [],
+  "workspaceFiles": [
+    "attempt-1-stderr.txt",
+    "attempt-1-summary.json",
+    "attempt-1-table.txt",
+    "attempt-1-tape.json",
+    "attempt-1-views.jsonl",
+    "attempt-2-stderr.txt",
+    "attempt-2-summary.json",
+    "attempt-2-table.txt",
+    "attempt-2-tape.json",
+    "attempt-2-views.jsonl",
+    "ctrl-v1.mjs",
+    "ctrl-v2.mjs",
+    "ctrl-v3.mjs",
+    "ctrl-v4.mjs",
+    "gauntlet-outcome.json",
+    "gauntlet-report.md",
+    "probe-stderr.txt",
+    "probe-summary.json",
+    "probe-table.txt",
+    "probe-tape.json",
+    "probe-views.jsonl",
+    "run.mjs",
+    "tune-1-stderr.txt",
+    "tune-1-summary.json",
+    "tune-1-table.txt",
+    "tune-1-tape.json",
+    "tune-1-views.jsonl",
+    "tune-2-stderr.txt",
+    "tune-2-summary.json",
+    "tune-2-table.txt",
+    "tune-2-tape.json",
+    "tune-2-views.jsonl"
+  ],
+  "outcome": {
+    "secured": false,
+    "waves": 20,
+    "timeMs": 600000,
+    "gold": 21,
+    "kills": 99,
+    "calls": 147,
+    "defaultedPicks": 0,
+    "defaultedSecure": 0,
+    "eventLogHash": "fnv1a32:f8d2e209",
+    "endReason": "wave-ceiling",
+    "tape": "/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/heat14/opus/e3-canyon-works/attempt-2-tape.json",
+    "scored": true,
+    "runsSoFar": 4,
+    "scoredAttempts": 2,
+    "worldModel": "sim-import",
+    "submit": "DO NOT SUBMIT — not secured (endReason wave-ceiling). canyonConnect latched powered 2/2 at t=386.6 but failed:true, 146s past the wave-8 one-way deadline.",
+    "envelope": {
+      "durationTicks": 18000,
+      "lastEntryTick": 17100,
+      "entries": 147,
+      "bytes": 474792
+    }
+  },
+  "outcomeError": null,
+  "promotedTapeName": "attempt-2-tape.json",
+  "scoredTapes": [
+    {
+      "file": "attempt-1-tape.json",
+      "id": "agent-bac92ef6-44cfb039-851c-4f11-9e9b-ac1d480f5f92",
+      "contract": "e3-canyon-works",
+      "seed": "e3-canyon-works-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "babaec9dd",
+        "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+        "era": 6,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 5,
+        "timeAlive": 160.567,
+        "gold": 121
+      },
+      "entries": 89,
+      "durationTicks": 4817,
+      "lastEntryTick": 4809,
+      "promotedByRig": false,
+      "discoveredBy": "filename"
+    },
+    {
+      "file": "attempt-2-tape.json",
+      "id": "agent-d19426a9-b98df1a5-9941-4535-ac6d-c715dfeffe4d",
+      "contract": "e3-canyon-works",
+      "seed": "e3-canyon-works-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "babaec9dd",
+        "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+        "era": 6,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 20,
+        "timeAlive": 600,
+        "gold": 21
+      },
+      "entries": 147,
+      "durationTicks": 18000,
+      "lastEntryTick": 17100,
+      "promotedByRig": true,
+      "discoveredBy": "outcome-file+filename"
+    }
+  ],
+  "otherTapes": [
+    {
+      "file": "probe-tape.json",
+      "id": "agent-c4357fba-b352808b-1d7b-4eaa-9f9b-95b7da00ad4f",
+      "contract": "e3-canyon-works",
+      "seed": "e3-canyon-works-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "70b6a0465",
+        "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+        "era": 6,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 3,
+        "timeAlive": 98.267,
+        "gold": 0
+      },
+      "entries": 0,
+      "durationTicks": 2948,
+      "lastEntryTick": null
+    },
+    {
+      "file": "tune-1-tape.json",
+      "id": "agent-e86abcb9-9320c450-8aa9-4cbe-a0ed-315acfc3ef1a",
+      "contract": "e3-canyon-works",
+      "seed": "e3-canyon-works-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "70b6a0465",
+        "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+        "era": 6,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 5,
+        "timeAlive": 166.033,
+        "gold": 65
+      },
+      "entries": 23,
+      "durationTicks": 4981,
+      "lastEntryTick": 4501
+    },
+    {
+      "file": "tune-2-tape.json",
+      "id": "agent-73b572c3-5abe9c2e-5241-42c0-84ef-f739c22f19da",
+      "contract": "e3-canyon-works",
+      "seed": "e3-canyon-works-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "70b6a0465",
+        "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+        "era": 6,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 20,
+        "timeAlive": 600,
+        "gold": 0
+      },
+      "entries": 38,
+      "durationTicks": 18000,
+      "lastEntryTick": 17100
+    }
+  ],
+  "otherSecuredTapes": [],
+  "report": {
+    "outcome": "**NOT SECURED.** Best ride `attempt-2`: waves **20** (the wave-ceiling, six waves past the boss wave), timeAlive **600.000 s**, gold **21**, kills 99, calls **147**. 4 sim runs, 2 scored attempts. Nothing put forward — the run is unsecured and `skill.md` forbids submitting a run that hits an external cap.\n\nThe tape is `attempt-2-tape.json` (envelope clean on all three axes: 18,000 ticks with the last accepted order at 17,100; 147 entries of 3,601; 474,792 B of 1,938,784). It is named in `gauntlet-outcome.json`'s `tape` field for the record, with `submit: DO NOT SUBMIT` beside it.\n\nThe single number that decides the contract: **gold first reached 240 at t = 346.9 s (wave 11)**, and the connect deadline is wave 8 (t ≈ 240 s). `now.canyonConnect` read `powered 2/2` at t = 386.6 — both galleries lit, the whole six-beacon chain standing — **with `failed: true` already set.** The latch is one-way, so waves 9–20 were worthless before they were ridden.",
+    "whatTheMapAsked": "It asked a real graph question, and E3's signature mechanic — the grid under sabotage — **is the secure gate**, not a scoring flourish. This is not stationary survival wearing the era's name. The network is two disjoint three-hop chains from one 26 W producer (`sub-hall → base → switch → rim → gallery`, west and east); `maxSpanLength: 30` forbids every shortcut; a relay site comes online only while a standing unwrecked `sentry_beacon` sits within 2.5 wu; the watt ledger sheds the two lamps (priority 30) so 28 W of demand fits on 26 W of supply and both galleries hold. `now.canyonConnect {powered, required, byWave, complete, failed}` publishes the whole thing live, so the reasoning is legible from the view alone — and it is a genuine improvement on `e3-blackout-ridge`, which publishes no grid state at all. The sabotage half is real too: `fevered_saboteur` (`waveMin 4`, `buildingDamageScale 1.25`, the only wrecker on the roster) spawns at (±46, 38), on top of the seams and the rim pylons, and by wave 9 there were **25 wreckers alive** eating the chain as fast as it went up. Fields that carried the run: `now.canyonConnect`, `now.works.entries` (position + `wrecked`), `now.seams[].active/x/z/anchorIndex`, `now.gold` against `now.score.goldPanned`, `now.hero.hp/maxHp/x/z`, `now.prospector`, `now.threats.alive/wreckers`, `now.orders[].status/reason`. Orders: `BUILD`, `HARVEST`, `PICK_UPGRADE`, `BLAST_AT`, `MOVE_HERO`, `REPAIR_UNDER`. **There is no E3 verb** — the grid is something you read and place around.\n\nMy notebook remembers this map from generations 12, 37, 60 and 80, and **it still plays exactly the way I remember, which on an era named for rebuilt maps is itself the finding.** Every structural number reproduced to the unit: claim and hero start (0,−44); the six pylon sites; four harvest anchors at z = 30–34, ~78 wu north across the river, only two live at a time; the era-5 re-pricing intact (`bankCap` 360, `beaconLadder` 25+30+35+45+50+55 = 240, `connect.byWave` 8); the wave-14 railcar on `railRouteIndex 1`; and an idle floor of **w3 / 98.267 s** against my notebook's \"w3 / ≈100 s\". None of era 6's eight pins names this contract — pin #4, the playability wave, re-parameterised `e2-trestle` and `e2-incline` only. The re-survey moved this map's rendering, not its rules.",
+    "winnability": "**Undecided-leaning-yes, and what stopped me was my own budget against a three-way tension I only priced on the last ride, not a wall in the map, the grammar or the door:** survival is now solved outright (a kiting hero on the south riverbank held **109/125 to the wave-20 ceiling** under 60 live threats, where the same hero parked at the claim dies at wave 5), the economy is solved (475 panned, 1.5 g/s), and the full six-beacon chain went up and lit both galleries — the three just never happened *together* before wave 8, because gold reached 240 only at t = 347 when the deadline is t ≈ 240. The gap is ~110 seconds of income and I can name where it went: an ungated `REPAIR_UNDER` spent ~88 gold mending the two distant pre-placed lantern posts between t = 120 and t = 270 (at v115, `pan` 270 against `gold` 182 with nothing of mine yet built) *and* walked the Prospector off the seams to do it. Gate the mend on `chainDone`, start the kite at wave 4 rather than wave 0 so the opening minutes are pure panning, and 240 lands near t ≈ 250 — one more shove (hold the hero at the claim until wave 3, or take the three cheap west beacons as a first descent at 90 gold) closes it. That is the run I would ride first with another wall.",
+    "lessons": "- **The hero cannot cross this river, and that is now measured on era 6 rather than inherited.** `MOVE_HERO` to (0,10) answers `UNREACHABLE_APPROACH` at the ford's own x, confirming generation 80 exactly. The ford at x=0 halfWidth 4 is a **Prospector door and a hero wall** — the two bodies do not share a walkability answer, and on a river map you must ask each one's question separately.\n- **A PARKED hero dies and a MOVING hero is untouchable, on the same coordinate.** attempt-1 parked at (−26,−8) and died at wave 5; tune-2 and attempt-2 oscillated across 12 wu of that same riverbank and held **84/100 flat for 450 seconds** and **109/125 to the ceiling** under 60 enemies. Hero speed 6.0 against a roster at ~3.0 makes a short shuffle a shutout. Generation 87 measured a retreat circuit *costing* a wave on the Fairground and I nearly carried that as a law; the difference is the leg length — a 12 wu leg completes and falls through, a 40 wu circuit owns the array.\n- **tune-2's worst bug was its best measurement, and I nearly threw it away.** Its unreachable MOVE_HERO ladder stayed `active` and owned every tick, so `pan` read **0 for the entire 600-second run** — a catastrophic economy that also happened to prove the kite. When a run fails for one reason and succeeds wildly at something else, diff the two halves before discarding it; the discard is how gen 87 lost the Fairground's ring geometry.\n- **A suffix gate leaks at the bottom — and the cure is plan-time affordability, not a better gate.** Rung *i* gated at the suffix sum means the LAST rung is gated at its own price, so a 25-gold beacon fired at 60 gold and stranded one beacon on the wrong hill for a whole run. Emit the batch **only when `gold >= SUFFIX[nBeacon]`**, then let the descending gates self-sequence it. Generation 28 wrote this; generation 103 paid for it.\n- **`REPAIR_UNDER` is cheap in gold and ruinous in FEET and in a funding deadline.** Ungated, it mended two pre-placed lantern posts 70 wu from the gold for ~88 gold and walked the worker off the seams, on a map whose whole contract is \"have 240 gold by wave 8\". Generations 82 and 86 rightly made the mend ungated on an attackable board; the missing clause is **never mend while a funded deadline is still open**, and never mend a work you did not build and do not need.\n- **The Prospector has no park order since ADR-005, so an unemployed worker walks to the hero — and the hero's post is therefore an ECONOMIC decision.** With the hero at the claim, every seam-respawn gap cost a 78 wu round trip (0.54 g/s); moving the hero 36 wu north to the riverbank nearly tripled income (1.5 g/s) without a single extra order. On any map where the gold and the defended body are far apart, **`distance(hero post, seams)` is the income rate**.\n- **Read the idle floor as a diff against the notebook before believing an era moved the map.** Ten seconds of probe returned w3 / 98.267 s against a remembered \"w3 / ≈100 s\", and the manifest returned every pylon, anchor and price unchanged. That let me spend the whole reading budget on the economy instead of re-deriving geometry — fifth heat running that era 6 moved rendering and not rules on the map I was handed.\n- **Budget the heat in runs, and on a 600-second contract that is three runs, not four.** Each ride is ~90 s of wall and I spent two of them finding my own controller's faults (the gate leak, then the unreachable waypoints) rather than testing the board. The synthesis run — kite + gated mend + funded chain — was derivable after ride two and I fired only two-thirds of it. Twentieth generation ending on this sentence; the cure keeps being *ride the skeleton unmodified first and change exactly one interpretable thing*."
+  },
+  "usage": {
+    "transcript": "/Users/robin/.claude/projects/-private-tmp-claude-501--Users-robin-Claude-Projects-Gold-Rush-fe6b8d27-b064-40eb-934b-1d29d57a71db-scratchpad-arena-heat14-e3949bfa/5bc62036-06d4-4c36-8736-f48a8b61c731.jsonl",
+    "assistantTurns": 43,
+    "toolCalls": 22,
+    "tokensIn": 86,
+    "tokensOut": 139790,
+    "cacheReadTokens": 18694212,
+    "cacheWriteTokens": 1361478,
+    "note": "tokensIn excludes cache reads/writes (reported separately); summed from the CLI session transcript, not self-reported by the rig"
+  }
+}

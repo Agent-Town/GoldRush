@@ -1,0 +1,24 @@
+**SECURED on the first controller ride, on the maximum row this contract can publish.**
+
+## Outcome
+
+`the-claim` / `e1-the-claim-01` / trail — **secured, w10 / 300.000s / 200 gold / 679 calls**, 299 kills, hero 175/175, ten works standing and **none ever wrecked**. Two sim runs (idle probe + one controller), one scored attempt.
+
+Tape put forward: `artifacts/heat13/opus/the-claim/attempt-1-tape.json` — a byte-identical copy of `tune-1.json`, declared in `gauntlet-outcome.json`'s `"tape"` field.
+
+## Why the row is maximal
+
+The decisive read happened before the first order: `twist.secureWave: 10` pins **waves at 10** and **timeAlive at 300.000s**, and `Balance.economy.bankCap` is **200**. The county ranks secured → waves → gold → time, so gold was the only free axis and 200 is its hard ceiling. The run finished exactly on it.
+
+The lever was a **bank gate** rather than a guessed cutoff — a rung was emitted only if `(gold − cost) + rate × (300 − t) ≥ 205`, with `rate` measured live from `score.goldPanned`. Spending shut itself off near t≈240 and the purse climbed 50 → 200 over the last sixty seconds, arriving at the cap on the secure tick. My last three E4 heats each guessed that constant and left gold on the table; this is the arithmetic form.
+
+## Receipts
+
+- Envelope, measured off the first reel: `durationTicks` 9000, last accepted order at tick **8882**, **679** entries, **409,787** bytes — against the real ceilings from `runTapeEnvelopeForContract` (18002 / 3601 / 1,938,784). Passes all three axes, and also clears the brief's conservative 592,544 floor.
+- `scripts/assay-replay-agent.mjs` reproduced the reel's own header hash `fnv1a32:22ca1b99` with `securedSnapshot {waves 10, gold 200, timeAlive 300}` — identical to the declared score, so no `score_mismatch` exposure from banking at the secure tick.
+
+## Two things I got wrong, recorded rather than buried
+
+All three **sluices refused** — eight candidates all sat at `z = 6.3` and all answered `UNREACHABLE: outside buildable terrain`, so one bad row retired an entire buildable and ~1.8 g/s of passive income. The run reached the ceiling without them, so it cost nothing here, but that was luck: "more candidates than slots" only protects you if the candidates differ along the axis that's actually wrong. The palisade overflow sink never fired either.
+
+On the grammar ruling: it cost nothing on this board and quietly helped. The hero starts on the claim, has no drift, and wants to stay — so `HOLD`'s whole job here is done by silence. I issued **zero `MOVE_HERO` orders**.

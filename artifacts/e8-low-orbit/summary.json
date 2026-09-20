@@ -1,0 +1,99 @@
+{
+  "schema": "goldrush.a7-low-orbit-evidence.v1",
+  "contract": "e8-low-orbit",
+  "ratification": "specs/agent-play/door-completion-sheet.md:20 (A7, RATIFIED 2026-08-20)",
+  "laws": {
+    "secure": "the public-verb prover must SECURE both bench seeds, twice, with matching hashes",
+    "idle": "Law 2 — an idle run must NOT secure"
+  },
+  "rows": [
+    {
+      "kind": "secure",
+      "seed": "e8-low-orbit-01",
+      "run": 1,
+      "secured": true,
+      "waves": 20,
+      "timeMs": 600000,
+      "gold": 200,
+      "kills": 925,
+      "eventLogHash": "fnv1a32:d065c098"
+    },
+    {
+      "kind": "secure",
+      "seed": "e8-low-orbit-01",
+      "run": 2,
+      "secured": true,
+      "waves": 20,
+      "timeMs": 600000,
+      "gold": 200,
+      "kills": 925,
+      "eventLogHash": "fnv1a32:d065c098"
+    },
+    {
+      "kind": "secure",
+      "seed": "e8-low-orbit-02",
+      "run": 1,
+      "secured": true,
+      "waves": 20,
+      "timeMs": 600000,
+      "gold": 160,
+      "kills": 925,
+      "eventLogHash": "fnv1a32:126ec455"
+    },
+    {
+      "kind": "secure",
+      "seed": "e8-low-orbit-02",
+      "run": 2,
+      "secured": true,
+      "waves": 20,
+      "timeMs": 600000,
+      "gold": 160,
+      "kills": 925,
+      "eventLogHash": "fnv1a32:126ec455"
+    },
+    {
+      "kind": "idle",
+      "seed": "e8-low-orbit-01",
+      "run": 1,
+      "secured": false,
+      "waves": 2,
+      "timeMs": 78333,
+      "gold": 0,
+      "kills": 33,
+      "eventLogHash": "fnv1a32:d7423597"
+    },
+    {
+      "kind": "idle",
+      "seed": "e8-low-orbit-01",
+      "run": 2,
+      "secured": false,
+      "waves": 2,
+      "timeMs": 78333,
+      "gold": 0,
+      "kills": 33,
+      "eventLogHash": "fnv1a32:d7423597"
+    },
+    {
+      "kind": "idle",
+      "seed": "e8-low-orbit-02",
+      "run": 1,
+      "secured": false,
+      "waves": 2,
+      "timeMs": 79867,
+      "gold": 0,
+      "kills": 35,
+      "eventLogHash": "fnv1a32:006e19c8"
+    },
+    {
+      "kind": "idle",
+      "seed": "e8-low-orbit-02",
+      "run": 2,
+      "secured": false,
+      "waves": 2,
+      "timeMs": 79867,
+      "gold": 0,
+      "kills": 35,
+      "eventLogHash": "fnv1a32:006e19c8"
+    }
+  ]
+}

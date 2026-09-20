@@ -1,0 +1,99 @@
+
+########## RIDE e7-dead-band · seed e7-dead-band-01 · gen 45 · stake mechanic-changed · wall 1080s ##########
+--- 1 charter ---
+{"rig":"opus","contract":"e7-dead-band","seed":"e7-dead-band-01","seedMode":"bench","stake":"mechanic-changed","generation":45,"wall":1080,"notebookSha256":"08a92e42657e0489da47f1b4b03c9fe4557b4328780d0f5bb26508772c3d944e","charterSha256":"7b4b07e3518568a87158235c39c27ac5e7084da12ec1f56d6fa9a507c0302479","bytes":336792,"out":"/private/tmp/heat12-038cc280/artifacts/gauntlet-heat12-20260905/rides/e7-dead-band/charter.md"}
+--- 2 ride ---
+START opus claude-opus-5 pid=45276 session=41a1dbe6-028e-4e9d-95c1-d812e2600946 at=2026-09-05T17:58:08.996Z
+FIRST-OUTPUT opus +150s
+OUTCOME opus secured=false waves=4 gold=0 runsSoFar=1 scored=0 +165s
+OUTCOME opus secured=false waves=18 gold=200 runsSoFar=2 scored=0 +270s
+OUTCOME opus secured=true waves=20 gold=200 runsSoFar=3 scored=1 +450s
+OUTCOME opus secured=true waves=20 gold=200 runsSoFar=3 scored=1 +600s
+END opus rc=0 signal=null wall=609s wallHit=false
+ride-wall rc=0 signal=-
+--- 3 land ---
+
+=== 1 finish-ride ===
+{"rig":"opus","contract":"e7-dead-band","wall":609,"wallHit":false,"rc":0,"tracked":[],"files":12,"outcome":{"secured":true,"waves":20,"gold":200,"runsSoFar":3,"scoredAttempts":1,"tape":"/private/tmp/heat12-038cc280/artifacts/heat12/opus/e7-dead-band/attempt-1-tape.json","worldModel":"sim-import"},"scoredTapes":[{"file":"attempt-1-tape.json","id":"agent-c4c98518-9e45c5db-09d9-4386-b7bb-d2cd624ba982","secured":true,"waves":20,"gold":200,"durationTicks":18000,"lastEntryTick":17638,"promotedByRig":true,"discoveredBy":"outcome-file+filename"}],"otherSecured":[],"reportSections":{"outcome":647,"whatTheMapAsked":3186,"winnability":530,"lessons":5087},"usage":{"turns":63,"toolCalls":30,"tokensIn":126,"tokensOut":82810}}
+tape chosen: attempt-1-tape.json (id agent-c4c98518-9e45c5db-09d9-4386-b7bb-d2cd624ba982, promotedByRig=true, discoveredBy=outcome-file+filename)
+
+=== 2 freeze notebook header ===
+{"headerOnly":true,"headerBytes":430}
+
+=== 3 harnessDigest ===
+754e29f62ddd59989e7c29af5748b888c719f4a9ff1dcc29dcc83dd24b382ff1
+
+=== 4 build-submission ===
+{"tapeId":"agent-c4c98518-9e45c5db-09d9-4386-b7bb-d2cd624ba982","contract":"e7-dead-band","epochId":"epoch-7-signal","seed":"e7-dead-band-01","seedMode":"bench","score":{"secured":true,"waves":20,"timeAlive":600,"gold":200,"baseValue":0},"papers":{"buildId":"cd3545caa","engineHash":"86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b","era":5,"viewVersion":2},"durationTicks":18000,"lastEntryTick":17638,"stack":{"model":"claude-opus-5","harness":"heat12-operator","harnessVersion":"2.1.257","harnessDigest":"754e29f62ddd59989e7c29af5748b888c719f4a9ff1dcc29dcc83dd24b382ff1","worldModel":"sim-import","config":"attended-hosted headless `claude -p` ride (heat 12) on Claude Code CLI 2.1.257; charter + door manual + own notebook (self-memory); own controller authored in-ride","calls":83,"tokensIn":14733546,"tokensOut":82810}}
+
+=== 5 publish (POST → poll → WATCH) ===
+FAILED: node:internal/deps/undici/undici:13510
+      Error.captureStackTrace(err);
+            ^
+
+TypeError: fetch failed
+    at node:internal/deps/undici/undici:13510:13
+    at async file:///private/tmp/heat12-038cc280/artifacts/gauntlet-heat12-20260905/publish-submission.mjs:14:20 {
+  [cause]: Error: read ECONNRESET
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:216:20) {
+    errno: -54,
+    code: 'ECONNRESET',
+    syscall: 'read'
+  }
+}
+
+Node.js v23.11.1
+
+POST ok; assay still pending at the 120 s mark — resuming with the poll-only shim (no re-POST)
+
+=== 6 poll-verdict (no re-POST) ===
+{"tapeId":"agent-c4c98518-9e45c5db-09d9-4386-b7bb-d2cd624ba982","assay":"verified","assayHash":"fnv1a32:e181301c","ranked":true,"papers":{"buildId":"cd3545caa","engineHash":"86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b","era":5,"viewVersion":2}}
+
+=== LANDED ===
+{
+ "rig": "opus",
+ "contract": "e7-dead-band",
+ "tapeFile": "attempt-1-tape.json",
+ "tapeId": "agent-c4c98518-9e45c5db-09d9-4386-b7bb-d2cd624ba982",
+ "assay": "verified",
+ "assayHash": "fnv1a32:e181301c",
+ "ranked": true,
+ "rank": null,
+ "waves": 20,
+ "gold": 200,
+ "calls": 83,
+ "eventLogHash": "fnv1a32:297c535f",
+ "wall": 609,
+ "harnessDigest": "754e29f62ddd59989e7c29af5748b888c719f4a9ff1dcc29dcc83dd24b382ff1",
+ "usage": {
+  "turns": 63,
+  "toolCalls": 30,
+  "tokensIn": 14733546,
+  "tokensOut": 82810
+ }
+}
+node:internal/deps/undici/undici:13510
+      Error.captureStackTrace(err);
+            ^
+
+TypeError: fetch failed
+    at node:internal/deps/undici/undici:13510:13
+    at async file:///private/tmp/heat12-038cc280/artifacts/gauntlet-heat12-20260905/publish-submission.mjs:14:20 {
+  [cause]: Error: read ECONNRESET
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:216:20) {
+    errno: -54,
+    code: 'ECONNRESET',
+    syscall: 'read'
+  }
+}
+
+Node.js v23.11.1
+
+land rc=0
+--- 4 notebook ---
+{"notebook":"/Users/robin/Claude/Projects/goldrush-gauntlet/memories/claude__opus-5/NOTEBOOK.md","generation":45,"headerBytes":430,"entryBytes":9696}
+--- 5 matrix ---
+| 9 | e7-dead-band | `e7-dead-band-01` | mechanic-changed | 45 | **SECURED** | 20 | 200 | 600s | 609s | `attempt-1-tape.json` · `agent-c4c98518-9e45c5db-09d9-4386-b7bb-d2cd624ba982`<br>fnv1a32:297c535f | verified `fnv1a32:e181301c` | gen 45<br>slip `agent-c4c98518-9e45c5db-09d9-4386-b7bb-d2cd624ba982` |
+{"contract":"e7-dead-band","secured":true,"tapesOnDisk":7,"scoredTapes":1,"otherSecured":0,"runs":3,"scoredAttempts":1,"wallHit":false,"rc":0,"assay":"verified","ranked":true,"winnability":"Secured, and the margin was **wide in the middle and honestly thin at the close**: zero of ten works\nwere ever wrecked and the hero held its full running maximum through wave 12, but it bled from 175 to\na low of **47/175** in the last four waves and finished at 100/175 (level 29) against 28 live\nthreats — one more wave on that slope would have been a coin flip, and the wave-20 gate is what made\nit comfortable. The thing with real slack was the reel, not the play: 17638 against an 18000 tick\nceiling and 308 KB against 576 KB."}
+########## END e7-dead-band ##########
+

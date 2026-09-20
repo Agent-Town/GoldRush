@@ -1,0 +1,114 @@
+A7 — e8-low-orbit "momentum is commitment" — GATE RECORD
+Base commit: d931958b3 (main, 2026-08-20)
+Branch: worktree-agent-a7-low-orbit
+Node: 26.4.0 for the guard batteries; 23.11.1 is the worktree default and is named per row where used.
+
+================================================================================
+1. STATIC GATES
+================================================================================
+tsc --noEmit ................................. rc=0, clean
+npm run build ................................ rc=0 ("built in 1.68s", asset-diet clean)
+
+================================================================================
+2. PLAYWRIGHT — both projects (desktop-chrome 1280x800 + mobile-chrome 390x844)
+================================================================================
+e8-low-orbit-momentum.spec.ts (NEW)  5 x 2 = 10/10   the A7 mechanics guard
+e8-physics.spec.ts                   3 x 2 =  6/6    UNMODIFIED, its low-orbit profile probes
+                                                     (orbitalReturn:true, lobArc 4.8) stay green
+er01-e8-census.spec.ts               4 x 2 =  8/8    per-id rows, low-orbit only
+                                     ---------------
+                                     subtotal 24/24
+
+ap16-4-contract-admission.spec.ts    \
+skillmd-door.spec.ts                  |  36/36 both projects
+task-025-bandits-dont-swim.spec.ts    |  (ap16-4 + the adjacent trio + the skill.md door)
+m1-01-claim-jumpers-death.spec.ts     |
+m2-01-build-menu.spec.ts             /
+
+boot-probe.spec.ts (artifacts, scratch port 5237)  3 x 2 = 6/6
+  - default claim ............ resolves the-claim, zero console/page errors
+  - low orbit, LOCKED ........ resolves the-claim (F-E8LO-2 measurement)
+  - low orbit, UNLOCKED ...... resolves e8-low-orbit; briefing names "spine" + "debris";
+                               lowOrbit diagnostics live with NO ?debug anywhere
+
+PLAYWRIGHT TOTAL ............................. 66/66, zero console/page errors
+
+================================================================================
+3. NODE GUARDS
+================================================================================
+3a. TARGETED — every guard this slice can plausibly move, run on Node 26.4.0:
+    same-game-audit.test.mjs ................. PASS (counts updated by this slice)
+    same-game-report-guard.test.mjs .......... PASS
+    door-admission-ratchet.test.mjs .......... PASS (baseline +e8-low-orbit)
+    bench-seeds.test.mjs ..................... PASS (+2 seeds)
+    null-floor-anchors.test.mjs .............. PASS
+    skillmd-guard.test.mjs ................... PASS x5 incl. the manufactured-defect
+                                               positive control (the guard BITES)
+    cross-engine-skip.test.mjs ............... PASS
+    wave-scaling-cross-engine.test.mjs ....... PASS
+    ---- 20 tests, 20 pass, 0 fail, 116s ----
+    Includes the cross-engine hash-identity rows for e1-dry-gulch, the-claim and
+    e1-night-shift: all three IDENTICAL across installed Node engines, which is
+    additional blast-radius evidence for the CombatSystem/BlastChargePool edits.
+
+3b. FULL BATTERY — SOLO, on Node 26.4.0, on a verified-quiet board:
+    tests 469 · pass 467 · fail 0 · cancelled 0 · skipped 2 · GUARDS_EXIT=0
+    Full transcript: node-guards.txt in this directory. Its header records the
+    board state at start (0 other batteries, 0 playwright runs).
+
+    HOW THIS RUN WAS OBTAINED, because the first attempt was NOT solo and is worth
+    recording rather than hiding. Parallel door-completion agents held 4-5
+    concurrent batteries for ~40 minutes; a run started under that load reported
+    "CONTENDED — 3 concurrent batteries" and then STALLED — a nested `node --test`
+    spawn sat 20 minutes in sleep state with 0.04s of CPU, i.e. starved, not
+    computing. That run was killed (only its own PIDs), the board was re-checked
+    until quiet, and the battery was re-run from scratch. NOTHING is reported here
+    from the contended transcript.
+
+    For the record against the A4 precedent: A4 measured 469/465/2 with two reds it
+    proved inherited from `tasks/goals.json`. Those two were cured on main by
+    `91cb4ff3f` (F-2083-1) before this slice branched, which is why the same 469
+    tests now read 467 pass / 0 fail / 2 skipped.
+
+================================================================================
+4. BLAST RADIUS — mare-claim + eclipse (they share E8PhysicsSystem AND CombatSystem)
+================================================================================
+Method: re-run the SAME idle probes on this tree and compare to the floors committed
+at the base commit. A matching eventLogHash is a byte-level statement that the run
+was identical, event for event.
+
+  contract         seed                 committed at d931958b3   this tree      verdict
+  e8-mare-claim    e8-mare-claim-01     fnv1a32:ee2f7c14         ee2f7c14       IDENTICAL
+  e8-mare-claim    e8-mare-claim-02     fnv1a32:99623cc8         99623cc8       IDENTICAL
+  e8-eclipse       e8-eclipse-01        fnv1a32:fac5d558         fac5d558       IDENTICAL
+  e8-eclipse       e8-eclipse-02        fnv1a32:dcd53d40         dcd53d40       IDENTICAL
+  e2-hill-mine     e2-hill-mine-01      fnv1a32:4b3cd37b         4b3cd37b       IDENTICAL
+  the-claim        e1-the-claim-02      fnv1a32:fd85ecc2         fd85ecc2       IDENTICAL
+  e1-dry-gulch     e1-dry-gulch-01      fnv1a32:79712a38         79712a38       IDENTICAL
+
+Corroborated at the artifact level: `git diff assets/contracts/null-floors.json` is
+19 insertions / 1 deletion — the two NEW e8-low-orbit rows plus the mechanical
+eraStamp bump (0845944ca -> d931958b3). Every other contract's floor line is
+byte-unmoved. 55 pairs total, `--check` clean, 0 secured:true (Law 2).
+
+WHY IT IS INERT, mechanically: `CombatSystem.orbitalReturn` is null unless the
+contract declares "orbital-return", and every new field is spread-if-declared
+(`...(cond ? {x} : {})`), so absent keys serialise away and no other contract's
+hash input gains a byte.
+
+================================================================================
+5. AUDIT PINS — attributed by revert-and-reproduce, not asserted
+================================================================================
+Moved:   agent-lacks 341 -> 351 | equal 779 -> 809 | not-offered 14 -> 13 | rows 1134 -> 1173
+Probe:   emptied the four harvestAnchors, kept EVERY other line of this slice in
+         place (the LowOrbitSystem consumer, both engines' wiring, the return path
+         through CombatSystem + BlastChargePool, the manifest rule), regenerated.
+Result:  341 / 779 / 14 / 1134 — and the whole summary block came back BYTE-IDENTICAL
+         to the committed report.
+Verdict: the entire classification movement is the DOOR ADMISSION. The consumer moves
+         zero classifications, which is the expected shape — the audit's rows are
+         buildable/ability/choice/verb/economy surfaces and `zero_gravity` is a
+         mechanics RULE.
+Residual: the regenerated report also carries `file:line` citation shifts where this
+         slice added lines to HeadlessContractSim.ts, MechanicsManifest.ts and
+         Game.ts. Those are coordinates, not classifications.

@@ -1,0 +1,19 @@
+{
+  "rig": "opus",
+  "model": "claude-opus-5",
+  "arena": "/tmp/heat13-569a41f9",
+  "workdir": "/tmp/heat13-569a41f9/artifacts/heat13/opus/e4-dust-flats",
+  "charterFile": "/private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/rides/e4-dust-flats/charter.md",
+  "charterSha256": "f4e0a7f16b9fa4da9271a7e83317db90f3b39fee84b05ee5e3fe7b6dc36d63af",
+  "sessionId": "9a534b1a-b4cc-48bc-a72d-eebf7f98a874",
+  "wallSeconds": 1500,
+  "startedAt": "2026-09-07T12:10:33.050Z",
+  "invocation": "env -u CLAUDECODE -u CLAUDE_CODE_ENTRYPOINT -u CLAUDE_CONFIG_DIR claude -p \"<charter text, see charterFile>\" --model claude-opus-5 --allowedTools Read,Write,Glob,Bash(node *) --output-format text --session-id 9a534b1a-b4cc-48bc-a72d-eebf7f98a874",
+  "endedAt": "2026-09-07T12:21:52.619Z",
+  "wallClockSeconds": 680,
+  "exitCode": 0,
+  "signal": null,
+  "wallHit": false,
+  "firstOutputAt": "2026-09-07T12:14:03.078Z",
+  "setupToFirstOutputSeconds": 210
+}

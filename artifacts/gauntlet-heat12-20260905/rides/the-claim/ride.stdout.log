@@ -1,0 +1,19 @@
+**SECURED on the first controller ride.** The heat is complete and everything is on disk.
+
+## Result
+
+`the-claim` / `e1-the-claim-01` / trail — **secured, w10 / 300.000s / 76g / 67 calls**, on the current era (`86e53f37…`, viewVersion 2, buildId `9332804e2`). Two sim runs total (idle probe + one controller ride), one scored attempt.
+
+**Tape put forward:** `attempt-1-tape.json` — byte-identical to `tune-1.json`, one ride under two filenames, declared in `gauntlet-outcome.json`'s `tape` field. Envelope measured before calling it an attempt: last accepted order at tick 8996 of 9000, 67 entries, 253 KB — all three axes clear, with the terminal-tick hazard avoided by answering the secure boundary with a blank line.
+
+## What the map asked
+
+E1's bank cap, and it bound through a mechanism I had to correct myself about mid-ride. `Economy` **refuses the credit** once gold sits at the 200 cap — so a full purse doesn't waste surplus, it switches panning off. That makes spending an income mechanic. The run panned 720 and never let the purse pin.
+
+## Two things worth flagging
+
+**My own notebook was wrong about this map.** Generation 2 recorded "w10/680g" here, and I planned the first half of this heat on that reading — that outcome `gold` was cumulative earnings, so spending was free. It isn't: `gold` is the banked purse, 680 is impossible against a 200 cap, and 720/76 is what this engine actually produces. The map's geometry, secure wave and cap all reproduced exactly; only my number was bad.
+
+**The ranked margin is thinner than the play.** With waves pinned at 10 and time pinned at 300s by a fixed-wave secure, gold is the *only* free ranking axis — and my controller was tuned to keep the purse moving, which is right for throughput and wrong for the scoreboard. A line that stops buying two waves out and lets ~2.4 g/s refill to the cap should bank 200+ on the same ride. I only had that read after the securing run, and the stop rule correctly ends the heat at the first secure rather than letting me chase it.
+
+The play itself had wide margin in every other direction: hero never below its running maximum, finishing 175/175 at level 15; one of twelve works wrecked, at t=287 of 300; threats peaked at 23 against a 60 cap.

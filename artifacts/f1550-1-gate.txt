@@ -1,0 +1,188 @@
+gate battery transcript (append-only — see scripts/gate-battery.mjs)
+
+
+######## BATTERY 2026-08-08T04:28:55.087Z — f1550-1 suite-collection drain ########
+cwd=/Users/robin/Claude/Projects/Gold Rush/gate-s1551
+env+ GR_CAPTURE_BASE_URL=http://127.0.0.1:5234
+
+===== recovered spec + adjacents desktop =====
+$ npx playwright test e2e/task-026-prospector-collects-xp.spec.ts e2e/m2-01-build-menu.spec.ts e2e/agent-seat.spec.ts --project=desktop-chrome --workers=1
+rc=1 20.5s
+Error: Timed out waiting 20000ms from config.webServer.
+
+
+
+===== recovered spec + adjacents mobile =====
+$ npx playwright test e2e/task-026-prospector-collects-xp.spec.ts e2e/m2-01-build-menu.spec.ts e2e/agent-seat.spec.ts --project=mobile-chrome --workers=1
+rc=1 20.5s
+Error: Timed out waiting 20000ms from config.webServer.
+
+
+
+===== agent-seat node harness =====
+$ node scripts/agent-seat.test.mjs
+rc=0 3.2s
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+✔ a wire act crosses into the sim and changes it (983.97275ms)
+✔ agent_orders validates the standing-order grammar and wire bounds (123.742708ms)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+✔ two independently booted sims agree tick for tick (1036.303583ms)
+✔ the seat carries BUILD and refuses to stretch for the rest (36.506958ms)
+✔ the throttle ceiling is the relay rate limit, not a taste (824.601375ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3057.147833
+(node:93812) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+SUMMARY {"recovered spec + adjacents desktop":1,"recovered spec + adjacents mobile":1,"agent-seat node harness":0}
+OVERALL rc=1
+
+
+######## BATTERY 2026-08-08T04:30:05.261Z — f1550-1 suite-collection drain (rerun, correct instrument) ########
+cwd=/Users/robin/Claude/Projects/Gold Rush/gate-s1551
+
+===== recovered spec + adjacents desktop =====
+$ npx playwright test e2e/task-026-prospector-collects-xp.spec.ts e2e/m2-01-build-menu.spec.ts e2e/agent-seat.spec.ts --project=desktop-chrome --workers=1
+rc=0 60.9s
+
+Running 9 tests using 1 worker
+
+  ✓  1 [desktop-chrome] › e2e/agent-seat.spec.ts:70:1 › a rig takes the empty chair at a human host table and rides as a scout — zero desyncs (11.6s)
+  ✓  2 [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:111:1 › menu places a palisade and logs build_palisade spend (4.9s)
+  ✓  3 [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:136:1 › build menu shows six ready icons and Balance-backed blurbs (5.4s)
+  ✓  4 [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining (4.3s)
+  ✓  5 [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:198:1 › beacon cost curve stays intact through the menu (4.6s)
+  ✓  6 [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:220:1 › single enemy slides around a finite palisade line without passing through (6.9s)
+  ✓  7 [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:277:1 › 390px build menu is visible, tappable, and clear of HUD controls (9.3s)
+  ✓  8 [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:322:1 › stress draw calls stay under 200 with palisades and beacons (10.6s)
+  ✓  9 [desktop-chrome] › e2e/task-026-prospector-collects-xp.spec.ts:16:1 › collect_xp sweeps aged motes in batched receipts without entering deep water (3ms)
+
+  9 passed (1.0m)
+(node:95593) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:95763) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+===== recovered spec + adjacents mobile =====
+$ npx playwright test e2e/task-026-prospector-collects-xp.spec.ts e2e/m2-01-build-menu.spec.ts e2e/agent-seat.spec.ts --project=mobile-chrome --workers=1
+rc=0 59.1s
+
+Running 9 tests using 1 worker
+
+  -  1 [mobile-chrome] › e2e/agent-seat.spec.ts:70:1 › a rig takes the empty chair at a human host table and rides as a scout — zero desyncs
+  ✓  2 [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:111:1 › menu places a palisade and logs build_palisade spend (5.2s)
+  ✓  3 [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:136:1 › build menu shows six ready icons and Balance-backed blurbs (5.9s)
+  ✓  4 [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining (5.9s)
+  ✓  5 [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:198:1 › beacon cost curve stays intact through the menu (6.1s)
+  ✓  6 [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:220:1 › single enemy slides around a finite palisade line without passing through (9.7s)
+  ✓  7 [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:277:1 › 390px build menu is visible, tappable, and clear of HUD controls (11.0s)
+  ✓  8 [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:322:1 › stress draw calls stay under 200 with palisades and beacons (12.5s)
+  ✓  9 [mobile-chrome] › e2e/task-026-prospector-collects-xp.spec.ts:16:1 › collect_xp sweeps aged motes in batched receipts without entering deep water (11ms)
+
+  1 skipped
+  8 passed (58.5s)
+(node:97039) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:97088) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+SUMMARY {"recovered spec + adjacents desktop":0,"recovered spec + adjacents mobile":0}
+OVERALL rc=0
+
+
+######## BATTERY 2026-08-08T04:32:17.504Z — f1550-1 boot probe ########
+cwd=/Users/robin/Claude/Projects/Gold Rush/gate-s1551
+
+===== boot probe both projects =====
+$ npx playwright test e2e/_s106-prospector-boot-probe.spec.ts --workers=1
+rc=0 8.5s
+
+Running 2 tests using 1 worker
+
+  ✓  1 [desktop-chrome] › e2e/_s106-prospector-boot-probe.spec.ts:6:1 › s106 boot probe: zero errors + prospector visible (plain boot) (2.7s)
+  ✓  2 [mobile-chrome] › e2e/_s106-prospector-boot-probe.spec.ts:6:1 › s106 boot probe: zero errors + prospector visible (plain boot) (3.6s)
+
+  2 passed (8.0s)
+
+
+SUMMARY {"boot probe both projects":0}
+OVERALL rc=0

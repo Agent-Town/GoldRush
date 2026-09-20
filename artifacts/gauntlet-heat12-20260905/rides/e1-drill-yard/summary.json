@@ -1,0 +1,177 @@
+{
+  "rig": "opus",
+  "contract": "e1-drill-yard",
+  "model": "claude-opus-5",
+  "sessionId": "a67a6827-7363-4e5a-810d-63fad1d43def",
+  "startedAt": "2026-09-05T16:29:00.066Z",
+  "endedAt": "2026-09-05T16:39:00.435Z",
+  "wallClockSeconds": 600,
+  "wallHit": true,
+  "exitCode": 143,
+  "signal": null,
+  "setupToFirstOutputSeconds": 135,
+  "arenaTrackedChanges": [],
+  "workspaceFiles": [
+    "attempt-1-run.json",
+    "attempt-1-tape.json",
+    "attempt-1-views.jsonl",
+    "attempt-1.stderr.txt",
+    "ctrl-v1.mjs",
+    "ctrl-v2.mjs",
+    "gauntlet-outcome.json",
+    "probe-idle-run.json",
+    "probe-idle-tape.json",
+    "probe-idle-views.jsonl",
+    "probe-idle.stderr.txt",
+    "run.mjs",
+    "runner-state.json",
+    "tune-1-run.json",
+    "tune-1-tape.json",
+    "tune-1-views.jsonl",
+    "tune-1.stderr.txt",
+    "tune-2-run.json",
+    "tune-2-tape.json",
+    "tune-2-views.jsonl",
+    "tune-2.stderr.txt"
+  ],
+  "outcome": {
+    "secured": false,
+    "waves": 2,
+    "timeMs": 60033,
+    "gold": 180,
+    "kills": 23,
+    "calls": 6,
+    "defaultedPicks": 0,
+    "defaultedSecure": 0,
+    "eventLogHash": "fnv1a32:ff497859",
+    "endReason": "wave-ceiling",
+    "tape": "/private/tmp/heat12-038cc280/artifacts/heat12/opus/e1-drill-yard/attempt-1-tape.json",
+    "scored": true,
+    "runsSoFar": 4,
+    "scoredAttempts": 1,
+    "worldModel": "sim-import",
+    "envelope": {
+      "durationTicks": 1801,
+      "lastEntryTick": 1263,
+      "entryCount": 6,
+      "bytes": 13036
+    },
+    "submit": false,
+    "submitNote": "DO NOT SUBMIT. The run is unsecured (endReason wave-ceiling), and skill.md forbids submitting a run that hits an external cap. The contract is additionally refused by the county as `training_ground` (practice.standings=false; the board marks it data-training-ground=true and publishes no standings row). Nothing is put forward.",
+    "finding": "e1-drill-yard CANNOT BE SECURED through the door, by any policy, on any seed. twist.secureWave=0, so RunManager.maybeSecureRun (src/game/RunManager.ts:300, `secureWave <= 0` -> early return) never emits `run_secured`; HeadlessContractSim.ts:2033 sets secureChoice='pending' ONLY on that event, so now.pendingSecure never appears and SECURE_CHOICE is never accepted. The only other caller of secureRun is secureCurrentRun (RunManager.ts:226-230, ungated) reachable in the headless door solely via bossKillSecuresRun (HeadlessContractSim.ts:2058), and this contract declares no twist.baron. Independently the wave ceiling is secureWave+2 = 2 (gr-sim.mjs:111). Confirmed empirically: pendingSecure absent from all 24 views across 4 runs.",
+    "determinism": "attempt-1 re-rode ctrl-v1 and reproduced tune-1's eventLogHash fnv1a32:ff497859 bit for bit (same waves/time/gold/calls).",
+    "economyCeiling": "180 gold is the map's hard 60-second ceiling: exactly two seam generations x 3 live seams x 30 capacity. The E1 bank cap (200) is published and live but structurally unreachable here -- the wave-2 clock stops the run one seam generation (20 gold) short."
+  },
+  "outcomeError": null,
+  "promotedTapeName": "attempt-1-tape.json",
+  "scoredTapes": [
+    {
+      "file": "attempt-1-tape.json",
+      "id": "agent-c91b6e59-2514e50c-1b43-4f42-abae-6be06ccbb88d",
+      "contract": "e1-drill-yard",
+      "seed": "gold-rush",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "f12f0caf7",
+        "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 2,
+        "timeAlive": 60.033,
+        "gold": 180
+      },
+      "entries": 6,
+      "durationTicks": 1801,
+      "lastEntryTick": 1418,
+      "promotedByRig": true,
+      "discoveredBy": "outcome-file+filename"
+    }
+  ],
+  "otherTapes": [
+    {
+      "file": "probe-idle-tape.json",
+      "id": "agent-1af6ec3a-ff9fabb9-dda4-41ed-8b55-96b26ac64204",
+      "contract": "e1-drill-yard",
+      "seed": "gold-rush",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "f12f0caf7",
+        "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 2,
+        "timeAlive": 60.033,
+        "gold": 0
+      },
+      "entries": 0,
+      "durationTicks": 1801,
+      "lastEntryTick": null
+    },
+    {
+      "file": "tune-1-tape.json",
+      "id": "agent-c91b6e59-b672bd42-8f1f-41e7-972c-917587ac71c3",
+      "contract": "e1-drill-yard",
+      "seed": "gold-rush",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "f12f0caf7",
+        "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 2,
+        "timeAlive": 60.033,
+        "gold": 180
+      },
+      "entries": 6,
+      "durationTicks": 1801,
+      "lastEntryTick": 1418
+    },
+    {
+      "file": "tune-2-tape.json",
+      "id": "agent-626c997d-5b9c09f8-e8ee-4498-a96c-974411180493",
+      "contract": "e1-drill-yard",
+      "seed": "gold-rush",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "f12f0caf7",
+        "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 2,
+        "timeAlive": 60.033,
+        "gold": 180
+      },
+      "entries": 12,
+      "durationTicks": 1801,
+      "lastEntryTick": 1418
+    }
+  ],
+  "otherSecuredTapes": [],
+  "report": null,
+  "usage": {
+    "transcript": "/Users/robin/.claude/projects/-private-tmp-heat12-038cc280/a67a6827-7363-4e5a-810d-63fad1d43def.jsonl",
+    "assistantTurns": 79,
+    "toolCalls": 37,
+    "tokensIn": 158,
+    "tokensOut": 91684,
+    "cacheReadTokens": 18238625,
+    "cacheWriteTokens": 747579,
+    "note": "tokensIn excludes cache reads/writes (reported separately); summed from the CLI session transcript, not self-reported by the rig"
+  }
+}

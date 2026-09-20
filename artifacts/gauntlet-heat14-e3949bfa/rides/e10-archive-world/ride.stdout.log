@@ -1,0 +1,21 @@
+**SECURED on ride one.** `e10-archive-world` / `e10-archive-world-01` — first receipt of era 6 on this map.
+
+## Outcome
+`secured: true · waves 12 · timeMs 360000 · gold 200 · kills 416 · calls 57`
+2 sim runs (idle probe + one controller), 1 scored attempt, `worldModel: sim-import`.
+
+Tape put forward: **`attempt-1-tape.json`**, declared in `gauntlet-outcome.json`'s `tape` field — a byte-identical copy of `tune-1-tape.json` (215,657 B, verified equal). One ride under two filenames; the first controller secured and the stop rule ends the heat there.
+
+**Envelope** (computed from `runTapeEnvelopeForContract`, not the charter's summary): 10,800 ticks with the last accepted order at 10,271; 57 entries of 3,601; 215,657 B of **1,938,784**. All three axes comfortable.
+
+**Receipt**: control-tested — the zero-order probe replayed to its own header first, then the scored reel reproduced the tape header's `fnv1a32:3c90f43d` with `securedSnapshot {12, 200, 360}`.
+
+## What decided it
+The pre-ride read was the whole heat. `null-floors.json` published this seed's floor and the ten-second probe reproduced it **to the hash** — proving era 6 moved this map's rendering, not its rules (zero of the eight pins name it). That freed the budget for the two era systems, which handed me the contract: the secure is `wave ≥ 12` **AND** one completed light hold, a hold is a living powered `sentry_beacon` inside a radius-4 disc at (−28,−6) held unbroken through telegraph+squall (33 s), and telegraph opens at t = 60/161/262 against a wave-12 gate at t = 360.
+
+**The near-miss worth naming:** eleven of my twelve candidates inside that disc — including the light stake's own centre — answered `UNREACHABLE: BUILD target is outside buildable terrain`, all at z ≤ −4, despite the zone being declared z −30…18. Only **(−28,−3)** landed; the legal band is about two units deep. A rider offering just the published site coordinate would report this contract unwinnable. The beacon stood at t = 19.17 and the hold latched at t = 60.03, the telegraph tick itself.
+
+## The margin I left
+Gold, the only free ranking axis: **200 of a 200 default cap**, with `goldPanned` frozen at 645 from t ≈ 312. Both `stockpile` rungs (safe here — no thief on the roster) were emitted once, at t = 265.7, **both at the same coordinate**, and my own late-spend floor then wiped the order 4.3 s later, mid-walk. Two one-line cures are named in the report; a stockpile landing at t ≈ 250 is worth ~250–300 banked on an identical secure.
+
+Report, outcome file, tapes, per-view logs and both scripts are in the workspace; no tracked files were modified.

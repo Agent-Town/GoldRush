@@ -1,0 +1,14 @@
+**SECURED — `e8-far-side` on `e8-far-side-01`, wave 20 / 600.000 s / 60 gold / 919 kills / 101 calls.**
+
+Tape put forward: `attempt-2-tape.json`, declared in `gauntlet-outcome.json`'s `tape` field. 5 sim runs, 2 scored attempts.
+
+**Receipt.** Control-tested first — the zero-order idle probe replayed to its own header (`fnv1a32:a45ba9ac`), then the securing reel reproduced **`fnv1a32:1795242e`** (the tape header's hash; the outcome line's `64b3b447` is a different number by design), with `securedSnapshot {20, 60, 600}` matching the declared score. Envelope computed from `runTapeEnvelopeForContract`, not the charter's summary: ticks 18,000 ≤ 18,002 with the last accepted order 101 ticks inside the terminal tick; 101 entries ≤ 3,601; 332,714 B ≤ **1,938,784** (the true ceiling, 3.3× the published floor).
+
+**The map did not move.** The idle probe reproduced `null-floors.json` byte for byte including the hash, and zero of era 6's eight pins names this contract — so the re-survey moved its rendering, not its rules. The contract JSON is identical to what my generation 67 rode.
+
+**What decided it.** The era gate is a *calendar*, not an air budget: `E8AirWindow` spends at most one credit per 120 s window, so four crossings are pinned to t ≈ 0/120/240/360 and cannot be compressed. That half went cleanly (credits at 30.0, 150.0, 260.6, 390.0; zero breathless entries; minimum suit 40.6 of 60; probe recovered). The run was lost and won on two gates I wrote myself:
+
+- **A kite that owned the tick.** A walking `MOVE_HERO` blocks everything beneath it, so my kite froze panning at 180 (tune-1, w10) and 680 (tune-2, w17) and stalled the fort. Measured: parked behind the fort the hero lost 0.23 hp/s; running the same line she lost **0.82 hp/s** — the shuttle reverses into the pack it just outran. Deleting it took the run to w19.
+- **A gap in my own screen.** The corridor I left at x ≈ 0 so the hero could walk north funnelled the whole pack onto her. Closing it once the crossing was done, and lifting a build floor that was sized against a bank tick the run wasn't reaching, bought the last 7.5 seconds.
+
+Margin was wide on both era gates and thin on the hero: she bottomed at 11.0 % (19.2/175) at t = 567.5 and finished 82/175, with 45 works standing and none ever wrecked. Full write-up in `gauntlet-report.md`.

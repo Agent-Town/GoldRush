@@ -1,0 +1,27 @@
+**SECURED** — `e1-dry-gulch` on `e1-dry-gulch-01`, trail, first controller ride.
+
+## Outcome
+
+**w20 / 600.000s / 198 gold / 53 calls**, `defaultedSecure: 1`. Two sim runs (idle probe + one controller), one scored attempt. Tape declared in `gauntlet-outcome.json`'s `tape` field: `attempt-1-tape.json`, a verified byte-identical copy of `tune-1-tape.json` — one ride under two filenames.
+
+Envelope clear on all three axes: **18,000/18,002 ticks** (last order at 17,100), **53/3,601 entries**, **142,766/1,938,784 bytes**. Local assay reproduced the tape's own `fnv1a32:e490fcd5` with `securedSnapshot {waves:20, gold:198, timeAlive:600}`.
+
+Survival was never in doubt: the hero **never dropped below its running maximum across all 71 views**, finishing 175/175 with the swarm pinned at its 60-enemy ceiling and `goldStolen` 0.
+
+## What decided it
+
+Reading beat riding again. Five facts from source before the first order:
+
+- `lossStakes: []` and `CombatSystem(..., [this.hero], ...)` — no claim to defend, and **the Prospector cannot be hit**, so its 25-wu commute is risk-free.
+- `wreckers: 0, thieves: 0` — deletes `REPAIR_UNDER`, palisades and every decoy idea.
+- `secureWave: 20` pins waves *and* timeAlive, so **gold is the only free ranking axis** — and the bank cap is both the ceiling and an income switch (`Economy.canCredit` refuses while full).
+- The sluice gate is an *intersection*: zone ∈ {bank, shallows} **AND** within pad 2 of the spring edge → the ring `hypot(x+18, z+18) ≤ 3.4`. Two of three landed on one cumulative-gated trip.
+- The real byte ceiling is **1,938,784** (`runTapeEnvelopeForContract` bills order entries at 2,400), not the 592,544 the brief warns about — worth knowing, though this reel never came close.
+
+The grammar ruling cost nothing here: the hero has no drift, so silence is the hold, and I issued **zero `MOVE_HERO`** deliberately rather than by omission.
+
+## One honest finding on my own margin
+
+I banked **198 of a possible 500**. `pick` ran out of legal sluice ground, returned `null`, and my ladder **stalled on an unfillable rung** — blocking the two stockpiles (+150 cap each) behind it. So the cap stayed at the default 200, the purse pinned at 198, and `score.goldPanned` froze at 390 for the last 400 seconds. The run was already secured and the stop rule ends the heat at the first secure, so I did not re-ride; but on the axis this contract actually ranks, that stall is the whole margin, and the fix is one `if`: when a rung has no legal spot left, retire it and advance.
+
+Report and outcome file are on disk with the four sections verbatim.

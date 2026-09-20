@@ -1,0 +1,186 @@
+[
+  {
+    "contract": "e7-relay-valley",
+    "seed": "e7-relay-valley-01",
+    "ticks": 890,
+    "node": {
+      "objective": "relay",
+      "objectiveMet": true,
+      "uses": 1,
+      "repeats": 0,
+      "programRuns": 1,
+      "programSuspensions": 0,
+      "relaysLitByProgram": [
+        "relay-site-r1"
+      ],
+      "refusals": {
+        "suppressed": 0,
+        "muted": 0,
+        "unrecorded": 0
+      },
+      "shelfHashes": [
+        "light-the-relay:fnv1a32:4bf85018:1"
+      ],
+      "recordedUses": null,
+      "pendingMirrors": null,
+      "tickHash": "fnv1a32:0d9d07c9"
+    },
+    "browser": {
+      "objective": "relay",
+      "objectiveMet": true,
+      "uses": 1,
+      "repeats": 0,
+      "programRuns": 1,
+      "programSuspensions": 0,
+      "relaysLitByProgram": [
+        "relay-site-r1"
+      ],
+      "refusals": {
+        "suppressed": 0,
+        "muted": 0,
+        "unrecorded": 0
+      },
+      "shelfHashes": [
+        "light-the-relay:fnv1a32:4bf85018:1"
+      ],
+      "recordedUses": null,
+      "pendingMirrors": null,
+      "tickHash": "fnv1a32:0d9d07c9"
+    }
+  },
+  {
+    "contract": "e7-echo-canyon",
+    "seed": "e7-echo-canyon-01",
+    "ticks": 890,
+    "node": {
+      "objective": "mirror",
+      "objectiveMet": false,
+      "uses": 2,
+      "repeats": 1,
+      "programRuns": 2,
+      "programSuspensions": 0,
+      "relaysLitByProgram": [],
+      "refusals": {
+        "suppressed": 0,
+        "muted": 0,
+        "unrecorded": 0
+      },
+      "shelfHashes": [
+        "canyon-patrol:fnv1a32:197e1c74:2"
+      ],
+      "recordedUses": 2,
+      "pendingMirrors": 2,
+      "tickHash": "fnv1a32:becbba92"
+    },
+    "browser": {
+      "objective": "mirror",
+      "objectiveMet": false,
+      "uses": 2,
+      "repeats": 1,
+      "programRuns": 2,
+      "programSuspensions": 0,
+      "relaysLitByProgram": [],
+      "refusals": {
+        "suppressed": 0,
+        "muted": 0,
+        "unrecorded": 0
+      },
+      "shelfHashes": [
+        "canyon-patrol:fnv1a32:197e1c74:2"
+      ],
+      "recordedUses": 2,
+      "pendingMirrors": 2,
+      "tickHash": "fnv1a32:becbba92"
+    }
+  },
+  {
+    "contract": "e7-dead-band",
+    "seed": "e7-dead-band-01",
+    "ticks": 890,
+    "node": {
+      "objective": "refusal",
+      "objectiveMet": true,
+      "uses": 0,
+      "repeats": 0,
+      "programRuns": 0,
+      "programSuspensions": 0,
+      "relaysLitByProgram": [],
+      "refusals": {
+        "suppressed": 1,
+        "muted": 0,
+        "unrecorded": 0
+      },
+      "shelfHashes": [],
+      "recordedUses": null,
+      "pendingMirrors": null,
+      "tickHash": "fnv1a32:97bdab00"
+    },
+    "browser": {
+      "objective": "refusal",
+      "objectiveMet": true,
+      "uses": 0,
+      "repeats": 0,
+      "programRuns": 0,
+      "programSuspensions": 0,
+      "relaysLitByProgram": [],
+      "refusals": {
+        "suppressed": 1,
+        "muted": 0,
+        "unrecorded": 0
+      },
+      "shelfHashes": [],
+      "recordedUses": null,
+      "pendingMirrors": null,
+      "tickHash": "fnv1a32:97bdab00"
+    }
+  },
+  {
+    "contract": "e7-relay-rush",
+    "seed": "e7-relay-rush-01",
+    "ticks": 890,
+    "node": {
+      "objective": "suspended",
+      "objectiveMet": false,
+      "uses": 1,
+      "repeats": 0,
+      "programRuns": 1,
+      "programSuspensions": 0,
+      "relaysLitByProgram": [
+        "relay-site-r1"
+      ],
+      "refusals": {
+        "suppressed": 0,
+        "muted": 0,
+        "unrecorded": 0
+      },
+      "shelfHashes": [
+        "relay-program:fnv1a32:b44908f0:1"
+      ],
+      "recordedUses": null,
+      "pendingMirrors": null,
+      "tickHash": "fnv1a32:00793392"
+    },
+    "browser": {
+      "objective": "suspended",
+      "objectiveMet": false,
+      "uses": 1,
+      "repeats": 0,
+      "programRuns": 1,
+      "programSuspensions": 0,
+      "relaysLitByProgram": [
+        "relay-site-r1"
+      ],
+      "refusals": {
+        "suppressed": 0,
+        "muted": 0,
+        "unrecorded": 0
+      },
+      "shelfHashes": [
+        "relay-program:fnv1a32:b44908f0:1"
+      ],
+      "recordedUses": null,
+      "pendingMirrors": null,
+      "tickHash": "fnv1a32:00793392"
+    }
+  }
+]

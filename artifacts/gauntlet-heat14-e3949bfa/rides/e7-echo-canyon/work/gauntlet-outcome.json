@@ -1,0 +1,70 @@
+{
+ "secured": true,
+ "waves": 20,
+ "timeMs": 600000,
+ "gold": 200,
+ "kills": 909,
+ "calls": 77,
+ "defaultedPicks": 0,
+ "defaultedSecure": 1,
+ "eventLogHash": "fnv1a32:54c9f02d",
+
+ "tape": "/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/heat14/opus/e7-echo-canyon/attempt-1-tape.json",
+ "scored": true,
+ "runsSoFar": 1,
+ "scoredAttempts": 1,
+ "worldModel": "sim-import",
+
+ "note": "ONE RIDE UNDER TWO FILENAMES. The first controller secured, and the stop rule ends the heat at the first SECURED outcome, so tune-1 is promoted by name as the scored attempt: attempt-1-tape.json is a BYTE-IDENTICAL copy of tune-1-tape.json (262,665 bytes, verified equal). No second ride was taken.",
+
+ "tapeHeader": {
+  "eventLogHash": "fnv1a32:6330e19a",
+  "era": 6,
+  "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+  "buildId": "bd0600a5f",
+  "viewVersion": 2,
+  "outcome": { "reason": "secured", "secured": true, "waves": 20, "timeAlive": 600, "gold": 200 }
+ },
+
+ "localAssay": {
+  "verdict": "reproduced",
+  "replayEventLogHash": "fnv1a32:6330e19a",
+  "matches": "the TAPE HEADER's hash (not the stdout outcome line's fnv1a32:54c9f02d - different numbers by design)",
+  "securedSnapshot": { "waves": 20, "gold": 200, "timeAlive": 600 },
+  "scoreMismatchRisk": "none - the run banked AT the secure tick (defaultedSecure: 1), so the declared gold equals the secure-tick purse"
+ },
+
+ "envelope": {
+  "durationTicks": 18000,
+  "lastEntryTick": 17877,
+  "tickHeadroom": 123,
+  "entries": 77,
+  "maxEntries": 3601,
+  "bytes": 262665,
+  "byteCeiling": 8658784,
+  "verdict": "clear on all three axes"
+ },
+
+ "eraGate": {
+  "objective": "mirror",
+  "latch": "E7PlaybookLatch.allowsSecure('mirror') === fieldedMirrors > 0",
+  "recordedAndUsedAt": 30.033,
+  "mirrorShape": { "count": 2, "wrecker": false, "thief": true, "roving": false, "hunts": false, "hpScale": 1, "repeat": 0 },
+  "shapeNote": "MIN_SQUAD, thief not wrecker, no rove, no hunt, hpScale 1 - the cheapest legal shadow, bought by recording a BUILD-free, BLAST-free, motionless demonstration",
+  "fieldedAtWave": 2,
+  "objectiveMetAt": 60.03,
+  "uses": 1,
+  "refusals": { "suppressed": 0, "muted": 0, "unrecorded": 0 }
+ },
+
+ "margin": {
+  "minHeroHpFraction": 1.0,
+  "heroFinal": "175/175 - never once below its running maximum across all 79 views",
+  "worksStanding": 10,
+  "worksEverWrecked": 0,
+  "maxWreckersOnBoard": 0,
+  "goldStolen": 0,
+  "goldPanned": 870,
+  "deadSink": "gold pinned at the 200 bank cap and score.goldPanned FROZE at 870 from t=390 - ~210 seconds of refused income, the whole margin left on the ranked axis"
+ }
+}

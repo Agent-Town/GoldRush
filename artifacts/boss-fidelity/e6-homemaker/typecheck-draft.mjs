@@ -1,0 +1,23 @@
+// Typecheck the candidate at its intended production paths without changing the frozen checkout.
+import ts from 'typescript';
+import {readFile,writeFile} from 'node:fs/promises';
+import {resolve} from 'node:path';
+import {createHash} from 'node:crypto';
+const root='artifacts/boss-fidelity/e6-homemaker';
+const candidate=await readFile(`${root}/candidate-runtime/HomemakerBossSystem.ts`,'utf8');
+let game=await readFile('src/game/Game.ts','utf8');
+const sync='this.dredgeQueenBoss.syncRenderPresentation();',bounds='this.dredgeQueenBoss.modelBounds(groupId)';
+if(game.split(sync).length!==2||game.split(bounds).length!==2)throw Error('Game integration sites changed');
+game=game.replace(sync,sync+'\n    this.homemakerBoss.syncRenderPresentation();').replace(bounds,bounds+' ?? this.homemakerBoss.modelBounds(groupId)');
+const overrides=new Map([[resolve('src/systems/HomemakerBossSystem.ts'),candidate],[resolve('src/game/Game.ts'),game]]);
+const config=ts.readConfigFile('tsconfig.json',ts.sys.readFile);if(config.error)throw Error(ts.flattenDiagnosticMessageText(config.error.messageText,'\n'));
+const parsed=ts.parseJsonConfigFileContent(config.config,ts.sys,process.cwd());
+const options={...parsed.options,noEmit:true,incremental:false};
+const host=ts.createCompilerHost(options),original=host.getSourceFile.bind(host);
+host.getSourceFile=(file,version,onError,createNew)=>overrides.has(resolve(file))?ts.createSourceFile(file,overrides.get(resolve(file)),version,true):original(file,version,onError,createNew);
+const program=ts.createProgram(parsed.fileNames,options,host),errors=[...parsed.errors,...ts.getPreEmitDiagnostics(program)];
+const format={getCanonicalFileName:f=>f,getCurrentDirectory:ts.sys.getCurrentDirectory,getNewLine:()=> '\n'};
+const text=ts.formatDiagnostics(errors,format);if(text)process.stdout.write(text);
+const sha=s=>createHash('sha256').update(s).digest('hex');
+await writeFile(`${root}/typecheck-draft.json`,JSON.stringify({scope:'Virtual source replacement at the two intended production paths; no source mutation or emit.',typescript:ts.version,sourceHashes:Object.fromEntries([...overrides].map(([p,s])=>[p,sha(s)])),files:program.getSourceFiles().length,diagnosticCount:errors.length,diagnostics:text},null,2)+'\n');
+process.exitCode=errors.length?1:0;

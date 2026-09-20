@@ -1,0 +1,161 @@
+[
+ {
+  "id": "e8-far-side",
+  "gravity": {
+   "source": "gravity",
+   "movement": "floaty",
+   "feelG": 0.6,
+   "lobArcDistanceMultiplier": 2.4,
+   "lobAirTimeMultiplier": 2.4,
+   "knockbackScale": 1.3,
+   "orbitalReturn": false,
+   "vacuum": true
+  },
+  "air": null,
+  "lowOrbit": null,
+  "outcome": {
+   "secured": false,
+   "waves": 2,
+   "timeMs": 79400,
+   "gold": 0,
+   "kills": 30,
+   "calls": 0,
+   "defaultedPicks": 1,
+   "defaultedSecure": 0,
+   "eventLogHash": "fnv1a32:3fe83eca"
+  }
+ },
+ {
+  "id": "e8-low-orbit",
+  "gravity": {
+   "source": "zero-gravity",
+   "movement": "free-fall",
+   "feelG": 0,
+   "lobArcDistanceMultiplier": 4.8,
+   "lobAirTimeMultiplier": 4.8,
+   "knockbackScale": 1.75,
+   "orbitalReturn": true,
+   "vacuum": true
+  },
+  "air": null,
+  "lowOrbit": {
+   "declared": true,
+   "orbitalReturn": true,
+   "returnSeconds": 12,
+   "scaffoldZones": 3,
+   "debrisFields": 2,
+   "handholdSegments": 4,
+   "returnsScheduled": 0,
+   "returnsDetonated": 0,
+   "driftSteps": 0,
+   "debrisSteps": 0,
+   "debrisDamageDealt": 0
+  },
+  "outcome": {
+   "secured": false,
+   "waves": 2,
+   "timeMs": 78333,
+   "gold": 0,
+   "kills": 33,
+   "calls": 0,
+   "defaultedPicks": 0,
+   "defaultedSecure": 0,
+   "eventLogHash": "fnv1a32:d7423597"
+  }
+ },
+ {
+  "id": "e8-eclipse",
+  "gravity": {
+   "source": "gravity",
+   "movement": "floaty",
+   "feelG": 0.6,
+   "lobArcDistanceMultiplier": 2.4,
+   "lobAirTimeMultiplier": 2.4,
+   "knockbackScale": 1.3,
+   "orbitalReturn": false,
+   "vacuum": true
+  },
+  "air": null,
+  "lowOrbit": null,
+  "outcome": {
+   "secured": false,
+   "waves": 2,
+   "timeMs": 81800,
+   "gold": 0,
+   "kills": 32,
+   "calls": 0,
+   "defaultedPicks": 1,
+   "defaultedSecure": 0,
+   "eventLogHash": "fnv1a32:fac5d558"
+  }
+ },
+ {
+  "id": "e8-mare-claim",
+  "gravity": {
+   "source": "gravity",
+   "movement": "floaty",
+   "feelG": 0.6,
+   "lobArcDistanceMultiplier": 2.4,
+   "lobAirTimeMultiplier": 2.4,
+   "knockbackScale": 1.3,
+   "orbitalReturn": false,
+   "vacuum": true
+  },
+  "air": {
+   "wall": "suit-timer",
+   "suit": {
+    "body": "prospector",
+    "seconds": 60,
+    "capacity": 60,
+    "refillPerSecond": 4,
+    "inDome": null,
+    "empty": false,
+    "drainedTotal": 0,
+    "emptySeconds": 0
+   },
+   "domes": [
+    {
+     "id": "dome-cluster-pad-west",
+     "air": 1,
+     "breached": false,
+     "breaches": 0,
+     "siegers": 0
+    },
+    {
+     "id": "dome-cluster-pad-center",
+     "air": 1,
+     "breached": false,
+     "breaches": 0,
+     "siegers": 0
+    },
+    {
+     "id": "dome-cluster-pad-east",
+     "air": 1,
+     "breached": false,
+     "breaches": 0,
+     "siegers": 0
+    }
+   ],
+   "regolith": {
+    "grounds": 6,
+    "required": 1,
+    "worked": [],
+    "runsOnAir": 0,
+    "breathlessPans": 0,
+    "complete": false
+   }
+  },
+  "lowOrbit": null,
+  "outcome": {
+   "secured": false,
+   "waves": 2,
+   "timeMs": 81233,
+   "gold": 0,
+   "kills": 32,
+   "calls": 0,
+   "defaultedPicks": 0,
+   "defaultedSecure": 0,
+   "eventLogHash": "fnv1a32:1a62757f"
+  }
+ }
+]

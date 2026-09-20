@@ -1,0 +1,198 @@
+{
+  "rig": "opus",
+  "contract": "e4-gusher-county",
+  "model": "claude-opus-5",
+  "sessionId": "b19b65dd-72e0-4c09-809f-601101d2e7e3",
+  "startedAt": "2026-09-18T02:08:35.052Z",
+  "endedAt": "2026-09-18T02:21:21.103Z",
+  "wallClockSeconds": 766,
+  "wallHit": false,
+  "exitCode": 0,
+  "signal": null,
+  "setupToFirstOutputSeconds": 315,
+  "arenaTrackedChanges": [],
+  "workspaceFiles": [
+    "attempt-1-summary.json",
+    "attempt-1-tape.json",
+    "attempt-1-views.jsonl",
+    "ctrl-v1.mjs",
+    "gauntlet-outcome.json",
+    "gauntlet-report.md",
+    "probe-summary.json",
+    "probe-tape.json",
+    "probe-views.jsonl",
+    "runner.mjs",
+    "tune-1-summary.json",
+    "tune-1-tape.json",
+    "tune-1-views.jsonl"
+  ],
+  "outcome": {
+    "secured": true,
+    "waves": 12,
+    "timeMs": 360000,
+    "gold": 135,
+    "kills": 415,
+    "calls": 41,
+    "defaultedPicks": 0,
+    "defaultedSecure": 1,
+    "eventLogHash": "fnv1a32:a661a965",
+    "motor": {
+      "graded": [
+        "camp-to-east-lease",
+        "camp-to-north-lease",
+        "camp-to-west-lease"
+      ],
+      "hauled": true,
+      "arrivedAt": 81.033,
+      "roadDistance": 224.72,
+      "distanceTravelled": 259.28,
+      "fuelDrawn": 30.486,
+      "tarHarvested": 9,
+      "convoyArrived": null,
+      "kind": "deliveries",
+      "delivered": [
+        "camp-to-west-lease",
+        "camp-to-east-lease",
+        "camp-to-north-lease"
+      ]
+    },
+    "outcomeLine": {
+      "secured": true,
+      "waves": 12,
+      "timeMs": 360000,
+      "gold": 135,
+      "kills": 415,
+      "calls": 41,
+      "defaultedPicks": 0,
+      "defaultedSecure": 1,
+      "eventLogHash": "fnv1a32:a661a965",
+      "motor": {
+        "graded": [
+          "camp-to-east-lease",
+          "camp-to-north-lease",
+          "camp-to-west-lease"
+        ],
+        "hauled": true,
+        "arrivedAt": 81.033,
+        "roadDistance": 224.72,
+        "distanceTravelled": 259.28,
+        "fuelDrawn": 30.486,
+        "tarHarvested": 9,
+        "convoyArrived": null,
+        "kind": "deliveries",
+        "delivered": [
+          "camp-to-west-lease",
+          "camp-to-east-lease",
+          "camp-to-north-lease"
+        ]
+      }
+    },
+    "tape": "/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/heat14/opus/e4-gusher-county/attempt-1-tape.json",
+    "scored": true,
+    "runsSoFar": 3,
+    "scoredAttempts": 1,
+    "worldModel": "sim-import",
+    "envelope": {
+      "durationTicks": 10800,
+      "lastEntryTick": 10437,
+      "entries": 41,
+      "bytes": 115833,
+      "tapeHash": "fnv1a32:f86e6446"
+    },
+    "note": "promoted from run \"attempt-1\""
+  },
+  "outcomeError": null,
+  "promotedTapeName": "attempt-1-tape.json",
+  "scoredTapes": [
+    {
+      "file": "attempt-1-tape.json",
+      "id": "agent-da3e9a93-08353f54-babb-4851-98d6-017e8437c9e3",
+      "contract": "e4-gusher-county",
+      "seed": "e4-gusher-county-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "c18a85e5d",
+        "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+        "era": 6,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 12,
+        "timeAlive": 360,
+        "gold": 135
+      },
+      "entries": 41,
+      "durationTicks": 10800,
+      "lastEntryTick": 10437,
+      "promotedByRig": true,
+      "discoveredBy": "outcome-file+filename"
+    }
+  ],
+  "otherTapes": [
+    {
+      "file": "probe-tape.json",
+      "id": "agent-ae933a5e-339e66ed-f1ec-4643-8f55-dd9f5b7a753e",
+      "contract": "e4-gusher-county",
+      "seed": "e4-gusher-county-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "bc0e7f803",
+        "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+        "era": 6,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 5,
+        "timeAlive": 155.733,
+        "gold": 0
+      },
+      "entries": 0,
+      "durationTicks": 4672,
+      "lastEntryTick": null
+    },
+    {
+      "file": "tune-1-tape.json",
+      "id": "agent-3331dfc9-0a2b886e-166c-44af-810b-1778b8919d50",
+      "contract": "e4-gusher-county",
+      "seed": "e4-gusher-county-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "c18a85e5d",
+        "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+        "era": 6,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 9,
+        "timeAlive": 288.6,
+        "gold": 0
+      },
+      "entries": 25,
+      "durationTicks": 8658,
+      "lastEntryTick": 8325
+    }
+  ],
+  "otherSecuredTapes": [],
+  "report": {
+    "outcome": "**SECURED** — waves **12**, timeAlive **360.000 s**, gold **135**, calls **41**, kills 415.\n\n- Tape put forward: `attempt-1-tape.json` (declared in `gauntlet-outcome.json`'s `tape` field).\n- **3 sim runs** (idle probe, tune-1, attempt-1) · **1 scored attempt**.\n- Envelope measured off the reel: `durationTicks` 10 800, last accepted order at tick **10 437**\n  (363 inside), 41 entries, 115 833 bytes — comfortable on all three axes.\n- Motor: all three corridors graded, errand latched at **t = 81.033**, 30.486 of 36 fuel drawn\n  (5.5 left), 224.72 of 259.28 units driven on graded road.\n- Nothing wrecked all run (4 works standing: 3 turrets + 1 stockpile), `goldStolen` 0,\n  `threats.alive` peaked at 27.",
+    "whatTheMapAsked": "It asked about **distance, roads and fuel — E4's signature mechanic, live, legible and gating the\nsecure** — and then it went quiet for eight waves. This is not stationary survival wearing the\nera's name at the front end. `now.motor.objective.arrived` is ANDed into the secure at every wave,\nand `deliveries` means the Hauler at rest within `stopReach` 2.5 of the head of all three lease\nroads, each while that road was open. The leash is real arithmetic: 36 fuel total against a Hauler\nthat burns 3/second **by the clock**, so a storm stretches every second it moves and a closed lease\nstrips the road bonus outright. The whole contract is therefore a tour-ordering problem plus a\nclock, and I priced all six orderings before writing an order: **W → N → E is 25.87 fuel** clear,\nagainst 27.7 for W→E→N and 33.1–33.7 for anything starting north or east — because open country is\nsix times graded road per unit, and the Hauler starts 2 units from the west stake. The fields that\ncarried it were `now.motor.objective` (`kind`, `stop`, `stopReach`, `remaining`, `delivered`,\n`arrived`), `now.motor.fuel.nodes[].harvested` with `tar`/`stored`/`drawn`,\n`now.motor.roads.corridors[].start/end/graded/closed` with `gradeReach`, `now.motor.vehicle.x/z`,\nand `now.motor.weather.phase/cycle`. The orders were **`MOVE_HERO`, `GRADE` and `HAUL`** — and\nnothing else, because **E4 has no verb of its own**; the whole era is answered with the player's\nown controls, exactly as ADR-005 intended.\n\nThe map hands you one gift if you look for it: `Balance.e4Fuel.nodePositions` puts the three tar\nnodes on the camp line, and **two of them are the west and east corridor stakes**, so the fuel tour\nand two of the three `GRADE`s are the same three stops — all nine tar and all three roads inside\nthe first ~15 seconds, for free. The honest qualifier is the one every Motor map earns: the errand\nlatched at t = 81 of a 360-second contract, and waves 3–12 were ordinary stationary survival.\n\n**Does it still play the way my notebook remembers?** Yes in every structural particular — and on\nan era named for rebuilt maps, proving that is itself the result. What did *not* reproduce is my own\nreading of the economy: three prior generations of mine treated the ceiling as 200.",
+    "winnability": "Secured, and the margin was **wide on the objective and on survival, and thin only where it is\nscored**: the errand banked with 5.5 fuel spare and 279 seconds of slack against the wave-12 gate,\nnothing was ever wrecked, and the hero held a flat 69/175 from t = 191 to the bank (its worst moment\nwas 27/125 during the errand, before the plating picks landed) — while the ranked number, 135 of a\nlive 350 cap, is the whole margin I left behind: a third turret at 95 gold that the run never needed.",
+    "lessons": "- **\"Call it home along the road it is on before striking out\" is not flavour — it is 23 of 36\n  fuel.** My route arithmetic had that leg and my *code* dropped it: after the west delivery my\n  stage step sent the Hauler straight from the west head to the north stake, 69 units of open\n  country, and stranded the errand dry at t = 54 with two leases undelivered. The door document\n  states this in one sentence and I had priced it correctly in prose an hour earlier. **When the\n  door names a consequence, put the guard in the code, not in the plan.**\n- **Emit ONE delivery per array on a motor map.** Queueing the next lease behind the current one\n  lets a later `HAUL` re-target an in-flight Hauler (gen 15 named this and I re-broke it): my t=30\n  array queued the north *and* east blocks, so the hero walked away mid-crossing and re-dispatched.\n  The next view re-plans from the real world; that cadence is plenty.\n- **Never gate the fort behind the errand — and add the strand detector, not just the intent.**\n  Gen 72 taught me the lesson and tune-1 proved I had not implemented it: with the tank empty and\n  deliveries owed, the controller re-emitted errand steps for 230 seconds, never posted, never\n  panned, never built, and died at wave 9 with **0 gold and 0 works**. One boolean\n  (`nodes all harvested && tar 0 && stored < 1.5`) falls through to the fort and turns an\n  unrecoverable errand into an ordinary survival run.\n- **Correct generations 17, 53 and 73 on this map: the ceiling is 500, not 200.** `stockpile` is on\n  this roster at 60 g ×2 with `capBonus` 150. That makes a cap-raiser a **+90 net ranking\n  purchase**, not an economy decision. Fifth heat running that an inherited *strategic* clause was\n  the expensive one to overturn (gens 80, 82, 97, 99, 105).\n- **…and then check the arithmetic against what the map can actually pan.** I planned a core of\n  3 turrets + 2 stockpiles (335) against a projected 606 panned. The map paid **410**, because the\n  errand costs ~100 seconds in which nothing pans (a walking `MOVE_HERO` owns the tick and the\n  Prospector drifts to the hero). At 410 panned the optimum is 2 turrets + 1 stockpile → ~230\n  banked; I spent 275 and banked 135. **Derive the core's size from the measured pan rate of the\n  post-errand window, not from a whole-run estimate** — on a Motor map the first third earns nothing.\n- **A pinned seam set is worth ten seconds of probe.** Nine views showing `anchorIndex` 1/0/7\n  unchanged is what licensed posting 45 units from the camp in the `west-lease` with both live\n  seams ~9 u away. On maps where anchors walk between waves the same move starves.\n- **The hard build stop did its job and should stay unconditional.** `t < 320` refused a 60-gold\n  stockpile at t = 336 that could never have refilled its own +150 of cap in 24 seconds. A bank\n  gate is arithmetic and can be argued with; a flat floor cannot (gen 85).\n- **The dwell pattern survives, resized for the hero.** `MOVE_HERO` arrives at radius 0.5 and the\n  hero moves at 6.0, so a 0.5-second harvest needs three waypoints inside `harvestRange` 1.35:\n  `node → node−1.1z → node+1.0z`. Nine tar from three nodes on the first try, both rides.\n- **Silence at `pendingSecure` did its four jobs again, sixteenth contract running:**\n  `defaultedSecure: 1`, last accepted order 363 ticks inside `durationTicks`, 41 entries / 116 KB,\n  and it **cannot be rejected**, so the replay cannot diverge the way gen 84's nearly did.\n- **The runner before the probe, twelfth heat running.** This arena refuses shell redirection and\n  compound `cd`. A node runner that spawns `gr-sim`, drives the controller, logs every view to a\n  compact table and writes `gauntlet-outcome.json` plus all three envelope axes on every child exit\n  made the intermediate-results law automatic — a truthful row existed from the idle probe onward,\n  the comparator promoted the scored tape with **no hand edit** for only the second time in fifteen\n  generations, and its per-view table located tune-1's fuel strand in a single read."
+  },
+  "usage": {
+    "transcript": "/Users/robin/.claude/projects/-private-tmp-claude-501--Users-robin-Claude-Projects-Gold-Rush-fe6b8d27-b064-40eb-934b-1d29d57a71db-scratchpad-arena-heat14-e3949bfa/b19b65dd-72e0-4c09-809f-601101d2e7e3.jsonl",
+    "assistantTurns": 39,
+    "toolCalls": 17,
+    "tokensIn": 78,
+    "tokensOut": 163057,
+    "cacheReadTokens": 16592502,
+    "cacheWriteTokens": 1003997,
+    "note": "tokensIn excludes cache reads/writes (reported separately); summed from the CLI session transcript, not self-reported by the rig"
+  }
+}

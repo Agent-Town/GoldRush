@@ -1,0 +1,40 @@
+[WebServer] (node:16704) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:16705) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[f1575-1-sweep] tickDelta=29 driftAbs=0.1946586756350706 gapClosed=0.10904982028851862
+[f1575-1-sweep] tickDelta=35 driftAbs=0.29665131046398496 gapClosed=0.25086540909442334
+[f1575-1-sweep] tickDelta=37 driftAbs=0.3153870637803646 gapClosed=0.2744788022345883
+[f1575-1-sweep] tickDelta=42 driftAbs=0.42107006542854575 gapClosed=0.3966087634000388
+[f1575-1-sweep] tickDelta=45 driftAbs=0.42107006542854575 gapClosed=0.3966087634000388
+[f1575-1-sweep] tickDelta=49 driftAbs=0.47660885430298056 gapClosed=0.4580097105855785
+[f1575-1-sweep] tickDelta=51 driftAbs=0.47660885430298056 gapClosed=0.4580097105855785
+[f1575-1-sweep] tickDelta=54 driftAbs=0.47660885430298056 gapClosed=0.4580097105855785
+[f1575-1-sweep] tickDelta=55 driftAbs=0.47660885430298056 gapClosed=0.4580097105855785
+[f1575-1-sweep] tickDelta=56 driftAbs=0.47660885430298056 gapClosed=0.4580097105855785
+[f1575-1-sweep] tickDelta=58 driftAbs=0.47660885430298056 gapClosed=0.4580097105855785
+[f1575-1-sweep] tickDelta=59 driftAbs=0.47660885430298056 gapClosed=0.4580097105855785
+[f1575-1-sweep] tickDelta=61 driftAbs=0.47660885430298056 gapClosed=0.4580097105855785
+[f1575-1-sweep] tickDelta=62 driftAbs=0.47660885430298056 gapClosed=0.4580097105855785
+[f1575-1-sweep] tickDelta=64 driftAbs=0.47660885430298056 gapClosed=0.4580097105855785
+[f1575-1-sweep] tickDelta=66 driftAbs=0.47660885430298056 gapClosed=0.4580097105855785
+[f1575-1-sweep] tickDelta=68 driftAbs=0.4190047732425002 gapClosed=0.3943745865893007
+[f1575-1-sweep] tickDelta=70 driftAbs=0.4190047732425002 gapClosed=0.3943745865893007
+[f1575-1-sweep] tickDelta=71 driftAbs=0.4190047732425002 gapClosed=0.3943745865893007
+[f1575-1-sweep] tickDelta=73 driftAbs=0.3979547712994529 gapClosed=0.3707653812696794
+[f1575-1-sweep] tickDelta=74 driftAbs=0.3979547712994529 gapClosed=0.3707653812696794
+[f1575-1-sweep] tickDelta=75 driftAbs=0.3979547712994529 gapClosed=0.3707653812696794
+[f1575-1-sweep] tickDelta=77 driftAbs=0.3350462654619502 gapClosed=0.2976978691241161
+[f1575-1-sweep] tickDelta=78 driftAbs=0.3350462654619502 gapClosed=0.2976978691241161
+[f1575-1-sweep] tickDelta=83 driftAbs=0.2839806331424729 gapClosed=0.2352249715029533
+[f1575-1-sweep] tickDelta=84 driftAbs=0.26603007348794205 gapClosed=0.212005123596974
+[f1575-1-sweep] tickDelta=85 driftAbs=0.26603007348794205 gapClosed=0.212005123596974
+[f1575-1-sweep] tickDelta=87 driftAbs=0.21553885960540708 gapClosed=0.14177619608210534
+[f1575-1-sweep] tickDelta=88 driftAbs=0.21553885960540708 gapClosed=0.14177619608210534
+[f1575-1-sweep] tickDelta=92 driftAbs=0.16956709586473362 gapClosed=0.06234704441307137
+  ✓  1 [desktop-chrome] › e2e/f1575-1-drift-tick-budget.spec.ts:19:1 › maps denied-receipt drift against the actual simulation tick (3.0s)
+
+  1 passed (4.0s)

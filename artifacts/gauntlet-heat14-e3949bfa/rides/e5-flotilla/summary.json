@@ -1,0 +1,197 @@
+{
+  "rig": "opus",
+  "contract": "e5-flotilla",
+  "model": "claude-opus-5",
+  "sessionId": "710786f0-2600-42dc-86a7-3692c61d7161",
+  "startedAt": "2026-09-18T05:09:29.645Z",
+  "endedAt": "2026-09-18T05:18:13.450Z",
+  "wallClockSeconds": 524,
+  "wallHit": false,
+  "exitCode": 0,
+  "signal": null,
+  "setupToFirstOutputSeconds": 180,
+  "arenaTrackedChanges": [],
+  "workspaceFiles": [
+    "attempt-1-tape.json",
+    "ctrl-v1.mjs",
+    "gauntlet-outcome.json",
+    "gauntlet-report.md",
+    "probe-log.json",
+    "probe-outcome.json",
+    "probe-tape.json",
+    "probe-view0.json",
+    "probe-viewlast.json",
+    "runner.mjs",
+    "tune-1-log.json",
+    "tune-1-outcome.json",
+    "tune-1-tape.json",
+    "tune-1-view0.json",
+    "tune-1-viewlast.json"
+  ],
+  "outcome": {
+    "secured": true,
+    "waves": 12,
+    "timeMs": 272000,
+    "gold": 200,
+    "kills": 33,
+    "calls": 25,
+    "defaultedPicks": 0,
+    "defaultedSecure": 1,
+    "eventLogHash": "fnv1a32:0cca8f67",
+    "tape": "/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/heat14/opus/e5-flotilla/attempt-1-tape.json",
+    "scored": true,
+    "runsSoFar": 2,
+    "scoredAttempts": 1,
+    "worldModel": "sim-import",
+    "note": "ONE RIDE UNDER TWO FILENAMES. The first controller (ctrl-v1.mjs) secured on its first ride as tune-1; attempt-1-tape.json is a BYTE-IDENTICAL copy of tune-1-tape.json (29715 bytes, verified equal). The stop rule ends the heat at the first SECURED outcome, so it is promoted by name here rather than re-ridden.",
+    "contract": "e5-flotilla",
+    "seed": "e5-flotilla-01",
+    "difficulty": "trail",
+    "tapeHeaderEventLogHash": "fnv1a32:fdb7fa6c",
+    "outcomeLineEventLogHash": "fnv1a32:0cca8f67",
+    "hashNote": "These two are DIFFERENT BY DESIGN. The local assay reproduces the TAPE HEADER hash (fdb7fa6c), never the stdout outcome line's (0cca8f67); comparing the wrong pair reads as a false mismatch on a clean reel.",
+    "era": 6,
+    "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+    "buildId": "3ad2cb9e3",
+    "viewVersion": 2,
+    "envelope": {
+      "durationTicks": 8160,
+      "lastEntryTick": 7441,
+      "slackTicks": 719,
+      "entries": 25,
+      "bytes": 29715,
+      "verdict": "all three axes comfortable; the secure boundary was answered with SILENCE (defaultedSecure: 1), which cannot be rejected, so the replay cannot diverge on refused in-window submissions"
+    },
+    "rankingAxes": {
+      "waves": "12 — PINNED by twist.secureWave: 12",
+      "timeAlive": "272.000 s — PINNED; the storm scheduler replaces the wave clock, wave N at 8 + 24(N-1)",
+      "gold": "200 — the bank cap IS the arithmetic ceiling here: stockpile (60g x2, +150 cap each) is on the roster but every BUILD on the three published hull-deck zones answers UNREACHABLE (open water), measured this run. A ceiling, not a margin left behind."
+    },
+    "finalState": {
+      "heroHp": "100/100 at every one of 26 views — handleEnemyContact is skipped while deepwater.diagnostics.flotilla exists (HeadlessContractSim:2042), so the hero is invulnerable and hp is decoration",
+      "hulls": "kitchen-scow 16/96 (straggler, took every corsair all run), turret-raft 96/96 untouched, still-room-barge 96/96 untouched",
+      "lossCondition": "all THREE hulls lost; two pristine hulls of slack at the bank",
+      "corsairs": "36 spawned, 33 killed, 3 alive",
+      "harpoonBallistaFires": 50,
+      "goldStolen": 0
+    }
+  },
+  "outcomeError": null,
+  "promotedTapeName": "attempt-1-tape.json",
+  "scoredTapes": [
+    {
+      "file": "attempt-1-tape.json",
+      "id": "agent-a19570c5-0238d594-ea0d-4d23-99c7-895cee2cb6cc",
+      "contract": "e5-flotilla",
+      "seed": "e5-flotilla-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "3ad2cb9e3",
+        "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+        "era": 6,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 12,
+        "timeAlive": 272,
+        "gold": 200
+      },
+      "entries": 25,
+      "durationTicks": 8160,
+      "lastEntryTick": 7441,
+      "promotedByRig": true,
+      "discoveredBy": "outcome-file+filename"
+    }
+  ],
+  "otherTapes": [
+    {
+      "file": "probe-tape.json",
+      "id": "agent-6f690866-d5122d12-5c03-4c93-8d96-141c6e8ff0e6",
+      "contract": "e5-flotilla",
+      "seed": "e5-flotilla-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "3ad2cb9e3",
+        "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+        "era": 6,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 2,
+        "timeAlive": 46.8,
+        "gold": 0
+      },
+      "entries": 0,
+      "durationTicks": 1404,
+      "lastEntryTick": null
+    },
+    {
+      "file": "tune-1-tape.json",
+      "id": "agent-a19570c5-0238d594-ea0d-4d23-99c7-895cee2cb6cc",
+      "contract": "e5-flotilla",
+      "seed": "e5-flotilla-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "3ad2cb9e3",
+        "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+        "era": 6,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 12,
+        "timeAlive": 272,
+        "gold": 200
+      },
+      "entries": 25,
+      "durationTicks": 8160,
+      "lastEntryTick": 7441
+    }
+  ],
+  "otherSecuredTapes": [
+    {
+      "file": "tune-1-tape.json",
+      "id": "agent-a19570c5-0238d594-ea0d-4d23-99c7-895cee2cb6cc",
+      "contract": "e5-flotilla",
+      "seed": "e5-flotilla-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "3ad2cb9e3",
+        "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+        "era": 6,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 12,
+        "timeAlive": 272,
+        "gold": 200
+      },
+      "entries": 25,
+      "durationTicks": 8160,
+      "lastEntryTick": 7441
+    }
+  ],
+  "report": {
+    "outcome": "**SECURED.** w12 / timeAlive **272.000 s** / gold **200** / 33 kills / **25 calls**\n(`defaultedPicks: 0`, `defaultedSecure: 1`).\n\nTape put forward: `attempt-1-tape.json` — declared in `gauntlet-outcome.json`'s `\"tape\"` field.\nIt is a **byte-identical copy** of `tune-1-tape.json` (29,715 bytes, verified equal): the first\ncontroller secured on its first ride, and the stop rule ends the heat at the first SECURED\noutcome, so the securing tune is promoted by name rather than re-ridden. One ride, two filenames.\n\n**2 sim runs** (one idle probe, one controller) · **1 scored attempt**.\n\nAll three ranking axes finished at their ceiling: waves 12 and timeAlive 272.000 s are pinned by\n`twist.secureWave: 12` against a storm-driven wave clock, and gold 200 is the bank cap — the\n`stockpile` cap-raiser is on the roster but every BUILD on the three published hull-deck zones\nanswered `UNREACHABLE` this run, so 200 is an arithmetic ceiling and not a margin left behind.",
+    "whatTheMapAsked": "It asked me about **formation, and the answer was to refuse to reshape it** — so this is not\nstationary survival wearing E5's name, while the era's *named* mechanic is the clock rather than\nthe puzzle. The storm scheduler replaces the ordinary wave clock (wave N at 8 + 24(N−1), hence a\nwave-12 secure at exactly 272.000 s), so the whole timetable is computable from view 0; but\n`stormMovementMultiplier: 0.72` and `stormVisibilityMultiplier: 0.58` are inert for a rider who\nstands still, so \"prediction under **adversarial** weather\" never bound. What decides the contract\nis `FlotillaHullSystem.targetPosition`, which hands `enemies.update` the living hull furthest from\nthe centroid — the enemy destination is a **closed-form function of three coordinates**, and with\none enemy id on the roster a sustained straggler redirects the entire board. That makes `REANCHOR`\na *targeting* lever rather than a defensive one: nudging kitchen-scow inward flips the straggler to\nstill-room-barge 52 units from my guns, and with an 8-second reshape cooldown against 24-second\nview boundaries a kite is unsustainable. **I issued zero `REANCHOR` orders**, pinning the straggler\nat the one hull where the seam, the boat pad and the Spark Rig's circle all coincide. Fields that\ncarried it: `now.deepwater.flotilla.hulls[].integrity/straggler/lost` and `centroid`,\n`now.deepwater.pads[].occupied` and `boatBuildings`, `now.deepwater.arsenal.fires`,\n`now.seams[].active/x/z/anchorIndex`, `now.gold` against `now.score.goldPanned`, `now.hero.x/z/hp`,\n`now.threats.alive`, `now.orders[].status/reason`. Orders: **`BOAT_BUILD` ×2**, **`MOVE_HERO`**,\n`HARVEST`, `BLAST_AT`, two refused `BUILD` probes, and one blank line at the boundary — no\n`PICK_UPGRADE` ever fired, because the hero never levelled.\n\nMy notebook remembers this map from generation 21, and **its bones held while its central\narchitectural clause is dead.** Reproduced to the decimal: the three hulls, the tie-broken\nstraggler, pads at anchor+offset putting the kitchen-scow pad exactly on the straggler, `integrity\n96`, the wave-12 secure at 272.000 s, the hero's invulnerability, and the finding that every\npublished build zone is open water (`works.byKind` finished `{}` with the cap unraisable). What\nmoved is the body that shoots: generation 21 wrote \"the gun rides the worker\" and parked the\n**Prospector** 6 wu off the hull. ADR-005 deleted that ternary — the gun is now the hero, and the\nretired `HOLD` becomes a `MOVE_HERO` to the same coordinate, which makes the plan *simpler*, not\nharder. This contract is **not named as cured this week**; its first minute did what it has always\ndone — the hero walked 26 units to (−26,15), both deck weapons were placed by t = 7.4, the first\ncorsairs landed at t = 8, and the purse was already running.",
+    "winnability": "Secured, and the margin was **wide in every direction that can lose the run and exactly at the\nceiling on every direction that scores**: the hero finished 100/100 having been untouchable all\nrun, the loss needs **all three** hulls and I banked with two of them pristine at 96/96 (only the\nstraggler was ever hit, ending 16/96), and waves, timeAlive and gold were all pinned at their\nmaxima — so nothing remained to win by riding again.",
+    "lessons": "- **Generation 19's deepwater clause is now dead on a SECOND map, and taking my predecessor's own\n  instruction literally is what made this a first-ride secure.** Gen 19 wrote \"the gun rides the\n  worker — re-read `getPos` on every new era\"; gen 114 found the ternary gone on\n  `e5-deepwater-claim` this heat; it is gone here too (`:632`/`:644` read `hero.group.position`\n  unconditionally). Re-read the line, do not inherit the conclusion — and when a notebook clause\n  is dead, check whether its replacement makes the plan *simpler*: the retired `HOLD` at a\n  coordinate becomes `MOVE_HERO` to the identical coordinate, with the gun now on a body I place.\n- **Look for the single coordinate that serves three jobs at once.** (−26,15) is the published\n  `gold-seam-1` anchor, is 6 wu from the straggler hull (inside rig r10, outside the range-zero\n  volley deadlock), and is where the unemployed Prospector drifts — so one `MOVE_HERO` bought the\n  defence, the gun platform and a zero-commute economy. Intersect\n  `straggler × harvestAnchors × weaponRange` before choosing a post; on this map the intersection\n  is a single point and it is why the ride needed no tuning.\n- **Derive the straggler from the reduce's COMPARATOR, not from the geometry.** Two hulls tie at\n  d² = 680 from the centroid, and `straggler()` reduces with a strict `>`, so the tie keeps the\n  first-listed hull — kitchen-scow — for the whole run. A tie broken by array order is a fact you\n  can only get from the code, and the entire plan hangs on which of two hulls 52 units apart the\n  board walks toward.\n- **An era verb the door's own documentation recommends can be the trap — second time I have\n  declined `REANCHOR` here.** `skill.md` advertises it for the Flotilla; using it on a hull id\n  flips the straggler to the hull furthest from my guns. Price an era verb's effect on the\n  **enemy's** plan, not just on mine.\n- **Check which damage channels are switched OFF before scoring the draft.**\n  `HeadlessContractSim:2042` skips `handleEnemyContact` whenever `deepwater.diagnostics.flotilla`\n  exists, so the hero cannot be hit and plating — the pick that won me the Dry Gulch and Moth\n  Season — is worth exactly zero. I scored damage-first. (It never mattered: 33 kills was not\n  enough XP to open a single draft. Worth knowing for the re-ride.)\n- **A published build zone is still not buildable ground, and here that makes a CEILING rather\n  than a margin.** Three hull-deck zones, `stockpile` on the roster at 60 g × 2 with +150 cap\n  each — and every probe answered `UNREACHABLE` because the tile is open water, so `works.byKind`\n  finished `{}` and 200 is the arithmetic maximum. Two throwaway BUILD probes cost nothing (they\n  fail honestly and yield the tick) and converted an inherited belief into a measured one. Report\n  a ceiling as a ceiling; calling it a margin would mislead the next rider.\n- **Ride the skeleton first and change nothing — and the reading budget is what secures it.** Two\n  runs total: a ten-second probe and one controller. Four minutes on the era pins, the contract\n  JSON, a 141-line era system and two greps produced the entire plan before the first order. That\n  is the sixteenth heat in a row where the heat's real work turned out to be reading, not riding.\n- **Silence at the boundary did four jobs again, twenty-second contract running:** it banked the\n  default (`defaultedSecure: 1`), left the last accepted order 719 ticks inside `durationTicks`,\n  held a 26-view run to 25 entries and 29.7 KB, and — the reason that matters most — it **cannot\n  be rejected**, so the replay cannot diverge the way generation 84's nearly did when refused\n  in-window submissions (invisible to the tape, visible to the sim) desynchronised a clean reel.\n- **Control-test the assay before believing it, then compare the right pair of hashes.** The\n  zero-order probe replayed to its own header first (instrument verified); only then did the\n  reel's `fnv1a32:fdb7fa6c` mean anything — the TAPE HEADER's hash, never the outcome line's\n  `fnv1a32:0cca8f67`. Seven of my generations have tripped on that pair. And read\n  `securedSnapshot`: it is exactly what the door's `score_mismatch` rule compares against the\n  declared gold.\n- **An era named for rebuilt maps can leave a map's rules untouched, and proving it is a result —\n  twelfth heat running.** Grep the eight pins for the contract id (zero matches here), confirm the\n  twist and geometry against the notebook, then one ten-second idle probe. It redirected the whole\n  budget from geometry to the one thing that had genuinely moved: the body holding the gun."
+  },
+  "usage": {
+    "transcript": "/Users/robin/.claude/projects/-private-tmp-claude-501--Users-robin-Claude-Projects-Gold-Rush-fe6b8d27-b064-40eb-934b-1d29d57a71db-scratchpad-arena-heat14-e3949bfa/710786f0-2600-42dc-86a7-3692c61d7161.jsonl",
+    "assistantTurns": 47,
+    "toolCalls": 19,
+    "tokensIn": 94,
+    "tokensOut": 98178,
+    "cacheReadTokens": 21634364,
+    "cacheWriteTokens": 1032878,
+    "note": "tokensIn excludes cache reads/writes (reported separately); summed from the CLI session transcript, not self-reported by the rig"
+  }
+}

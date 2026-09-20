@@ -1,0 +1,203 @@
+{
+  "baseSha": "2736e176d69226d40603889ee3e1aa07db623784",
+  "siteChain": "E8 Dome Commons fresh orbital site",
+  "sources": {
+    "layout": "src/town/townLayout.ts",
+    "layoutSha256": "6d000feac3c0e2e14051f287205e5450b3b701bec4c44e513613a34ea39017d0",
+    "townBuilder": "assets/pilots/town-plate-3d/build_town_plate.py",
+    "townBuilderSha256": "32efe0602388462fae9a1fbe47e799552176eb7fa18bac3e2c56dd08a1c46cf0",
+    "townScene": "src/town/TownScene.ts",
+    "townSceneSha256": "88f0dcfd3daca9626883176b857fe6b7db289fd223908d0f13bf68803c885cd7",
+    "dynamoManifest": "assets/contracts/epoch-2-steamworks/manifest.json",
+    "dynamoManifestSha256": "5e0f6a5b4f850553e560fceac2ef325d47a71826b98bbb8ebbb4b6c1c17e6a20",
+    "e8Plate": "assets/raw/plate-e8-bld-set.png",
+    "e8PlateSha256": "4d2595ec304fc73e6317c0ec4ba46edc3a3af5e0b080b24b0ced43ed14ae81d5",
+    "e8Kit": "assets/raw/kit-era-8.png",
+    "e8KitSha256": "107b3929f13dc5dfee336eb2a4d605a0ceaedfd1db3c8edc3c5817a1a48f19de",
+    "e8Bundle": "specs/epoch-saga/e8-orbital-bundle.md",
+    "e8BundleSha256": "94cc1a3cdda50dfcf1dcb02d79c0f0d5b7a952fcb7f7793d730d16fc675ea9ba"
+  },
+  "production": {
+    "blend": "assets/pilots/dome-commons-3d/dome-commons-plate.blend",
+    "glb": "assets/pilots/dome-commons-3d/dome-commons-plate.glb",
+    "triangleBudget": 20000,
+    "atlas": [
+      2048,
+      2048
+    ],
+    "materialCount": 1,
+    "transparency": "depth-writing glTF MASK screen-door; opaque plate and ribs share the material safely",
+    "dome": {
+      "radius": 21.65,
+      "height": 12.6
+    }
+  },
+  "canonicalSlots": [
+    {
+      "id": "tavern",
+      "position": [
+        -7.1,
+        -7.1
+      ],
+      "approach": [
+        -4.9,
+        -4.9
+      ],
+      "footprint": [
+        5.2,
+        3.4
+      ],
+      "targetHeight": 0.0
+    },
+    {
+      "id": "claim_office",
+      "position": [
+        7.1,
+        -7.1
+      ],
+      "approach": [
+        4.9,
+        -4.9
+      ],
+      "footprint": [
+        4.4,
+        3.2
+      ],
+      "targetHeight": 0.0
+    },
+    {
+      "id": "general_store",
+      "position": [
+        0.0,
+        -10.2
+      ],
+      "approach": [
+        0.0,
+        -7.2
+      ],
+      "footprint": [
+        4.8,
+        3.3
+      ],
+      "targetHeight": 0.0
+    },
+    {
+      "id": "schoolhouse",
+      "position": [
+        -9.4,
+        3.4
+      ],
+      "approach": [
+        -6.6,
+        2.4
+      ],
+      "footprint": [
+        4.4,
+        3.4
+      ],
+      "targetHeight": 0.0
+    },
+    {
+      "id": "assay_office",
+      "position": [
+        9.4,
+        3.4
+      ],
+      "approach": [
+        6.6,
+        2.4
+      ],
+      "footprint": [
+        4.6,
+        3.4
+      ],
+      "targetHeight": 0.0
+    },
+    {
+      "id": "chapel",
+      "position": [
+        -4.8,
+        9.0
+      ],
+      "approach": [
+        -3.35,
+        6.35
+      ],
+      "footprint": [
+        4.2,
+        3.2
+      ],
+      "targetHeight": 0.0
+    },
+    {
+      "id": "stamp-mill",
+      "position": [
+        4.8,
+        9.0
+      ],
+      "approach": [
+        3.45,
+        6.5
+      ],
+      "footprint": [
+        6.2,
+        1.65
+      ],
+      "targetHeight": 0.0
+    },
+    {
+      "id": "dynamo-hall",
+      "position": [
+        10.0,
+        10.0
+      ],
+      "approach": [
+        10.0,
+        7.0
+      ],
+      "footprint": [
+        5.5,
+        3.5
+      ],
+      "targetHeight": 0.0
+    }
+  ],
+  "orbitalPads": [
+    {
+      "id": "orbital-pad-port",
+      "position": [
+        -7.4,
+        -16.6
+      ],
+      "shape": "rectangle",
+      "footprint": [
+        5.6,
+        3.8
+      ],
+      "targetHeight": 0.0,
+      "role": "E8 outer-work pad"
+    },
+    {
+      "id": "orbital-pad-starboard",
+      "position": [
+        7.0,
+        -16.7
+      ],
+      "shape": "circle",
+      "footprint": [
+        6.2,
+        6.2
+      ],
+      "targetHeight": 0.0,
+      "role": "E8 pressure-habitat pad"
+    }
+  ],
+  "laws": {
+    "canonicalFlatWalk": 0.05,
+    "plazaCenterOpen": 3.1,
+    "panMonument": "unchanged independent heritage GLB; reclaimed-water ring is flush plate geometry",
+    "earthCameo": "evidence/sky-rig only; not baked into the production GLB",
+    "freshSite": "no Mesa cliff, E7 relay hardware, drowned-square geometry, or prior-era buildings"
+  },
+  "mesh": "DomeCommonsPlate"
+}

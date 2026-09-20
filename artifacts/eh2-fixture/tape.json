@@ -1,0 +1,69 @@
+{
+  "version": 2,
+  "id": "agent-7d7f1c63-049d2af8-2eed-49d4-8b95-e280a59a4851",
+  "createdAt": 0,
+  "kept": true,
+  "contract": "the-claim",
+  "seed": "eh2-fixture",
+  "difficulty": "trail",
+  "simVersion": 1,
+  "meta": {
+    "buildId": "055bfb214",
+    "engineHash": "5712f638cd4ebf30d884f3b6fef4ca584697374e48d7e2980f1bb9bba3b2ccde",
+    "era": 3
+  },
+  "runStart": {
+    "meta": {
+      "version": 1,
+      "tracks": {
+        "territory": 0,
+        "science": 0,
+        "hero": 0,
+        "agent": 0
+      }
+    },
+    "research": {
+      "version": 1,
+      "epochId": "epoch-1-frontier",
+      "metaScienceCursor": 0,
+      "progress": {
+        "version": 1,
+        "tracks": {
+          "territory": 0,
+          "science": 0,
+          "hero": 0,
+          "agent": 0
+        }
+      },
+      "taken": [],
+      "proposalSalt": 0,
+      "pinnedTarget": null,
+      "unlocks": {}
+    }
+  },
+  "inputLog": {
+    "version": 1,
+    "name": "agent-7d7f1c63",
+    "contractId": "the-claim",
+    "seed": "eh2-fixture",
+    "difficultyPreset": "trail",
+    "stepSeconds": 0.03333333333333333,
+    "start": {
+      "x": 0,
+      "z": 12
+    },
+    "durationTicks": 2350,
+    "entries": [],
+    "truncated": null,
+    "primarySlot": 0,
+    "streams": []
+  },
+  "eventLogHash": "fnv1a32:a45ba9ac",
+  "outcome": {
+    "reason": "death",
+    "secured": false,
+    "waves": 2,
+    "timeAlive": 78.333,
+    "gold": 0
+  }
+}

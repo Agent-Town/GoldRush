@@ -1,0 +1,22 @@
+**SECURED — `e2-incline`, seed `e2-incline-01`, era 6.**
+
+| | |
+|---|---|
+| Outcome | `secured: true · waves 12 · timeAlive 496.333 s · gold 129 · kills 451 · calls 69` |
+| Tape (declared in `gauntlet-outcome.json`) | `attempt-1-tape.json` — byte-identical copy of `tune-1-tape.json`, one ride under two filenames |
+| Runs / scored attempts | 2 runs (idle probe + one controller) · 1 scored attempt |
+| Local assay | reproduces tape header `fnv1a32:ccf9deef`, `securedSnapshot` gold 129 = declared → no `score_mismatch` |
+| Envelope | 14,890 ticks (last order 14,832) · 69 entries · 250,577 B — clear on all three axes |
+| Papers | era 6, engine `540b49aff0…`, viewVersion 2 |
+
+**What decided it, from source rather than the door paragraph:**
+
+- The secure is the **kill**, not the clock — `autoSecureWaveForRun` pins `MAX_SAFE_INTEGER` until `baronBeaten`.
+- Boss = ~3,129 hp (25.2 × 1.115¹¹ × 12.5 × 3.0 components).
+- **The railcar patrols** — `Enemy.ts:1253-1256` reverses the scripted route at each end, so the 6-wave grace window buys ~3 passes, not one. That turned a tight damage budget into a comfortable one.
+- Turret at lateral offset *d* from the rail covers `2·√(256−d²)` units of track → four turrets at `x = -16` (d = 4), which is also inside 16 of the claim.
+- **The era-6 cure is real and it is the first minute.** South lane edge dropped, `coal_thief` north gate added; with `riverBlocksEnemies` every spawn is now north of the water and the only doors are the fords at `x = ±12` — and the west ford *is* the rail. One battery owns the swarm's door and the boss's track. `skill.md`'s "dies at wave 6 with two turrets standing" measures a map that no longer exists.
+
+E2's named mechanic stayed inert: `boiler_house` and all three coal seams are published, and the `now` key union carries no pressure/band/coal/boiler field — eighth contract running.
+
+Margin was wide on survival (hero 175/175, zero turrets wrecked through 451 kills) and thin only on **gold: 129 of a live 500 cap** — my harvest tail chased a seam across the river whenever `gold-seam-1` was between respawns, leaving the Prospector on the wrong bank. That is the one thing I'd fix first, and it's written into the report's lessons.

@@ -1,0 +1,120 @@
+
+Running 2 tests using 1 worker
+
+[1/2] [desktop-chrome] › e2e/first-town-audio-deferred.spec.ts:129:1 › music is fetched only after the first town is playable (loopback)
+[desktop-chrome] › e2e/first-town-audio-deferred.spec.ts:129:1 › music is fetched only after the first town is playable (loopback)
+[audio-defer] desktop-chrome/loopback cue 149 responses 11912664 bytes; townReady observed 589 ms, published 551 ms; cue-window music 4; music before playable 2; after-ready music 0
+
+[audio-defer] desktop-chrome/loopback music fetch title-theme-CXP4b20O-diet-1408f6b4.mp3 at 212 ms (scene - -)
+
+[audio-defer] desktop-chrome/loopback music fetch era-e1-frontier-loop-CQyR4akc-diet-1408f6b4.mp3 at 375 ms (scene the town ready)
+
+[audio-defer] desktop-chrome/loopback cue-window mp3 /assets/title-theme-CXP4b20O-diet-1408f6b4.mp3 1200587 B at 241 ms
+
+[audio-defer] desktop-chrome/loopback cue-window mp3 /assets/menu-tap-DMz5CpTr-diet-1408f6b4.mp3 8821 B at 364 ms
+
+[audio-defer] desktop-chrome/loopback cue-window mp3 /assets/era-e1-frontier-loop-CQyR4akc-diet-1408f6b4.mp3 1800881 B at 449 ms
+
+  1) [desktop-chrome] › e2e/first-town-audio-deferred.spec.ts:129:1 › music is fetched only after the first town is playable (loopback) 
+
+    Error: a music file was fetched before the town published itself playable
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 16
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "at": 212,
+    +     "label": "",
+    +     "progress": "",
+    +     "state": "",
+    +     "url": "http://127.0.0.1:5294/assets/title-theme-CXP4b20O-diet-1408f6b4.mp3",
+    +   },
+    +   Object {
+    +     "at": 375,
+    +     "label": "the town",
+    +     "progress": "0/0",
+    +     "state": "ready",
+    +     "url": "http://127.0.0.1:5294/assets/era-e1-frontier-loop-CQyR4akc-diet-1408f6b4.mp3",
+    +   },
+    + ]
+
+      207 |   expect(townPlayableAt, 'the town never published a ready phase after it started raising').toBeDefined();
+      208 |   expect(duringTheRaising, 'a music file was fetched while the town was still raising').toEqual([]);
+    > 209 |   expect(musicBeforePlayable, 'a music file was fetched before the town published itself playable').toEqual([]);
+          |                                                                                                     ^
+      210 |   expect(musicFetched.length, 'no music was fetched at all — the deferral muted the game').toBeGreaterThan(0);
+      211 |   await cdp?.detach();
+      212 |   expectNoConsoleErrors(watch);
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-audio/e2e/first-town-audio-deferred.spec.ts:209:101
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/first-town-audio-deferred--83595--town-is-playable-loopback--desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/first-town-audio-deferred--83595--town-is-playable-loopback--desktop-chrome/error-context.md
+
+
+[2/2] [mobile-chrome] › e2e/first-town-audio-deferred.spec.ts:129:1 › music is fetched only after the first town is playable (loopback)
+[mobile-chrome] › e2e/first-town-audio-deferred.spec.ts:129:1 › music is fetched only after the first town is playable (loopback)
+[audio-defer] mobile-chrome/loopback cue 149 responses 11912664 bytes; townReady observed 582 ms, published 540 ms; cue-window music 4; music before playable 2; after-ready music 0
+
+[audio-defer] mobile-chrome/loopback music fetch title-theme-CXP4b20O-diet-1408f6b4.mp3 at 212 ms (scene - -)
+
+[audio-defer] mobile-chrome/loopback music fetch era-e1-frontier-loop-CQyR4akc-diet-1408f6b4.mp3 at 380 ms (scene the town ready)
+
+[audio-defer] mobile-chrome/loopback cue-window mp3 /assets/title-theme-CXP4b20O-diet-1408f6b4.mp3 1200587 B at 242 ms
+
+[audio-defer] mobile-chrome/loopback cue-window mp3 /assets/menu-tap-DMz5CpTr-diet-1408f6b4.mp3 8821 B at 368 ms
+
+[audio-defer] mobile-chrome/loopback cue-window mp3 /assets/era-e1-frontier-loop-CQyR4akc-diet-1408f6b4.mp3 1800881 B at 452 ms
+
+  2) [mobile-chrome] › e2e/first-town-audio-deferred.spec.ts:129:1 › music is fetched only after the first town is playable (loopback) 
+
+    Error: a music file was fetched before the town published itself playable
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 16
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "at": 212,
+    +     "label": "",
+    +     "progress": "",
+    +     "state": "",
+    +     "url": "http://127.0.0.1:5294/assets/title-theme-CXP4b20O-diet-1408f6b4.mp3",
+    +   },
+    +   Object {
+    +     "at": 380,
+    +     "label": "the town",
+    +     "progress": "0/0",
+    +     "state": "ready",
+    +     "url": "http://127.0.0.1:5294/assets/era-e1-frontier-loop-CQyR4akc-diet-1408f6b4.mp3",
+    +   },
+    + ]
+
+      207 |   expect(townPlayableAt, 'the town never published a ready phase after it started raising').toBeDefined();
+      208 |   expect(duringTheRaising, 'a music file was fetched while the town was still raising').toEqual([]);
+    > 209 |   expect(musicBeforePlayable, 'a music file was fetched before the town published itself playable').toEqual([]);
+          |                                                                                                     ^
+      210 |   expect(musicFetched.length, 'no music was fetched at all — the deferral muted the game').toBeGreaterThan(0);
+      211 |   await cdp?.detach();
+      212 |   expectNoConsoleErrors(watch);
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-audio/e2e/first-town-audio-deferred.spec.ts:209:101
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/first-town-audio-deferred--83595--town-is-playable-loopback--mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/first-town-audio-deferred--83595--town-is-playable-loopback--mobile-chrome/error-context.md
+
+
+  2 failed
+    [desktop-chrome] › e2e/first-town-audio-deferred.spec.ts:129:1 › music is fetched only after the first town is playable (loopback) 
+    [mobile-chrome] › e2e/first-town-audio-deferred.spec.ts:129:1 › music is fetched only after the first town is playable (loopback) 

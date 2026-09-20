@@ -1,0 +1,116 @@
+{
+ "task": "tasks/first-town-transfer-bisect.md",
+ "measuredAt": "2026-09-06",
+ "base": "e5f3ac8209c4b296ab2bb850a9d42d76b0493d65",
+ "branch": "fix/first-town-transfer-bisect",
+ "instrument": "scripts/deploy.sh:95-:110 reproduced command-for-command on scratch preview ports 5298+ (GR_RELEASE=e1 release build; GR_ASSET_DIET_BUNDLE=1 GR_ASSET_DIET_REUSE_BUILD=1; playwright.preview.config.ts; e2e/asset-diet.spec.ts --grep 'town cue-window budget through player entry$'; both projects, --workers=1, --trace=off). scripts/deploy.sh itself was NOT run: it takes the deploy lock and port 5297.",
+
+ "bisect": {
+  "verdict": "NONE OF THE FOUR CANDIDATE MERGES MOVED THE NUMBER. The 'before' build 220886ab measures 21,609,438 bytes on both projects, not the 12.0 / 15.6 MB F-BUDGET-2 attributes to it. Normalised URL-by-URL, 220886ab and current main differ by exactly one response: townsfolk-assay-clerk.png (256,713 B) out, townsfolk-tavernkeeper.png (285,300 B) in - the town's random townsfolk pick. Net +28,587 B across all four merges.",
+  "rows": [
+   { "build": "220886ab", "what": "before (F-BUDGET-2's 12.0 / 15.6 MB build)", "desktopBytes": 21609438, "mobileBytes": 21609438, "desktopResponses": 482, "mobileResponses": 482, "extraRequestsVsBefore": "-" },
+   { "build": "b31adf7b1", "what": "merge e10-empty-harvest-anchors-unlaunchable", "desktopBytes": 21609438, "mobileBytes": 21609438, "desktopResponses": 482, "mobileResponses": 482, "extraRequestsVsBefore": "none" },
+   { "build": "1119a4e90", "what": "merge preview-unlock-all", "desktopBytes": 21609438, "mobileBytes": 21609438, "desktopResponses": 482, "mobileResponses": 482, "extraRequestsVsBefore": "none" },
+   { "build": "87abff832", "what": "merge e6-picnic-thirty-second-death", "desktopBytes": 21609438, "mobileBytes": 21560625, "desktopResponses": 482, "mobileResponses": 480, "extraRequestsVsBefore": "none" },
+   { "build": "85900872f", "what": "merge story-signal-emitters", "desktopBytes": 21560625, "mobileBytes": 21609438, "desktopResponses": 480, "mobileResponses": 482, "extraRequestsVsBefore": "none" },
+   { "build": "3691960c", "what": "after (F-BUDGET-2's 21.6 / 21.6 MB build)", "desktopBytes": 21609438, "mobileBytes": 21609438, "desktopResponses": 482, "mobileResponses": 482, "extraRequestsVsBefore": "none" },
+   { "build": "e5f3ac820", "what": "current main at task start", "desktopBytes": 21638025, "mobileBytes": 21638025, "desktopResponses": 482, "mobileResponses": 482, "extraRequestsVsBefore": "one townsfolk portrait swapped" },
+   { "build": "cure", "what": "main + the F-BUDGET-3 scene hold", "desktopBytes": 21638025, "mobileBytes": 21638025, "desktopResponses": 482, "mobileResponses": 482, "extraRequestsVsBefore": "none" }
+  ]
+ },
+
+ "whatActuallyMovesTheNumber": {
+  "finding": "The gated quantity tracks the HOST, not the payload. The cue window runs from navigation until data-asset-loading-state reaches 'ready', which tracks only the scene's GLTF LoadingManager (src/assets/AssetLoading.ts:19-37). The 208 character-sheet responses and the two mp3s race that signal: on a fast, quiet pipe more of them land inside the window.",
+  "threeRunsOneFixedBuild": [
+   { "run": 1, "desktopBytes": 21589212, "mobileBytes": 21124169 },
+   { "run": 2, "desktopBytes": 10540927, "mobileBytes": 21638025 },
+   { "run": 3, "desktopBytes": 21638025, "mobileBytes": 21638025 }
+  ],
+  "swing": "2.05x on an identical bundle (10,540,927 to 21,638,025 desktop). The low reading sits beside the 12.0 MB the deploy recorded at 220886ab.",
+  "sameBuildDifferentPipe": { "loopbackBytes": 21638025, "emulated8MbpsBytes": 6411798 },
+  "repoOwnEvidence": "The two 2026-08-10 revisions of artifacts/asset-diet/town-transfer-*.json read 15,557,580 / 16,638,442 B (39fce97d9) and 21,903,056 / 22,497,140 B (53b113b5d) - the full 'growth' F-BUDGET-2 attributes to four September merges, a month before any of them existed.",
+  "priorArt": "e2e/asset-diet.spec.ts:9-19 already records a 3.08x observed swing and calls the gate known-unreliable (F-1625-4, F-1627-2).",
+  "consequence": "F-BUDGET-2's premise is falsified: there was no unexplained growth to find. Its row at tasks/BACKLOG.md:62 names four innocent merges and should be struck by the drain (outside this task's firewall)."
+ },
+
+ "cure": {
+  "id": "F-BUDGET-3",
+  "file": "src/assets/AdvanceStream.ts",
+  "trigger": "In the town and run scenes advanceStreamPriority() makes a CONTRACT the priority-1 target (AdvanceStream.ts:147-153), so entering the town starts warming the next map while the town is still raising.",
+  "measuredLeak": { "urls": ["/assets/the-claim-terrain-*.glb", "/assets/the-claim-panorama-*.glb"], "bytes": 1052408, "requests": 2, "issuedAtMs": 1290, "townLoadingWindowMs": [434, 1649] },
+  "change": "While the CURRENT scene's own loader publishes assetLoadingState=loading, a contract target neither resolves nor fetches - it re-arms on the idle callback the stream already uses. The town target is never held (it IS the first town). Fail-open: an absent attribute or 'ready' never holds; the published state stays 'fetching', which already means 'scheduled on idle', so no new state was minted.",
+  "beforeAfter": {
+   "gatedCueWindowBytesDesktopMobile": { "main": [21638025, 21638025], "cure": [21638025, 21638025] },
+   "contractPrefetchIssuedWhileTownLoading": { "main": { "bytes": 1052408, "requests": 2 }, "cure": { "bytes": 0, "requests": 0 } },
+   "claimTerrainArrivalLoopbackMs": { "main": 1890, "cure": 2279, "townReadyMs": 1649 },
+   "contractPrefetchInsideWindowAt8Mbps": { "main": 0, "cure": 0 },
+   "townSceneToTownReadyMs": { "loopback": { "main": [1587, 1592, 1607], "cure": [1603, 1600, 1594] }, "at8Mbps": { "main": [5270, 5271, 5278], "cure": [5271, 4994, 5269] } }
+  },
+  "honestReading": "The gated byte number does not move and CANNOT: the probe's window ends on assetLoadingState=ready, the very signal the hold waits for, so the released stream's first responses arrive during the harness's ~630 ms poll lag and land back inside the window. The cure is an ORDERING guarantee, asserted as one.",
+  "proof": "e2e/asset-diet.spec.ts > 'the advance stream holds contract prefetch until the town is playable' reads the stream's published target at the moment each prefetch fetch() is issued. 2 passed on the cure, 2 FAILED on the uncured main build (naming the-claim-terrain.glb and the-claim-panorama.glb), so the assertion is discriminating.",
+  "honestLimit": "assetLoadingState covers the scene's GLTFs only, so the hold releases while ~12 MB of character sheets are still streaming. It buys the GLB half of the window."
+ },
+
+ "composition": {
+  "build": "cure",
+  "totalBytes": 21638025,
+  "responses": 482,
+  "uniqueUrls": 481,
+  "identicalOnBothProjects": true,
+  "groups": [
+   { "group": "PNG character sheets", "bytes": 12241854, "share": "56.6%", "responses": 208, "families": 20 },
+   { "group": "PNG plates, portraits and UI", "bytes": 3026133, "share": "14.0%", "responses": 14, "families": 13 },
+   { "group": "audio (mp3)", "bytes": 3010289, "share": "13.9%", "responses": 3, "families": 3 },
+   { "group": "GLB terrain + town plate", "bytes": 1844876, "share": "8.5%", "responses": 2, "families": 2 },
+   { "group": "GLB town details", "bytes": 1487316, "share": "6.9%", "responses": 10, "families": 10 },
+   { "group": "JS chunks", "bytes": 27557, "share": "0.1%", "responses": 241, "families": 53 },
+   { "group": "CSS / JSON / document", "bytes": 0, "share": "0.0%", "responses": 4, "families": 4 }
+  ],
+  "characterSheetBreakdown": {
+   "heroRuntimeSlot": { "bytes": 8901114, "responses": 141, "families": { "work8": 3552007, "walkdiag8": 1375134, "attack8": 758822, "rotation-f": 687147, "walk8": 547067, "front-f": 456261, "back-f": 443016, "side-actions-f": 381048, "rotation2-f": 372906, "side-f": 327706 } },
+   "prospectorHover8": { "bytes": 1448922, "responses": 32 },
+   "townsfolkWalkSheets": { "bytes": 1891818, "responses": 35 }
+  },
+  "notInTheWindow": { "BrowserAgentTapeWorker.js": { "builtBytes": 2134969, "inCueWindow": false } }
+ },
+
+ "recommendations": [
+  {
+   "rank": 1,
+   "item": "The hero's sprite runtime slot",
+   "bytes": 8901114,
+   "share": "41% of the transfer",
+   "requests": 141,
+   "where": "src/assets/SpriteAnimator.ts:772-830 (createRuntimeSlot loads every orientation, rotation, clip and walk sheet of a slot atomically)",
+   "whatACutWouldCost": "The town plays walking and idling; work8 (3,552,007 B) and attack8 (758,822 B) are claim animations the town never shows. Cutting them from the town's first paint means splitting a slot into clip groups with lazy per-clip loading - a real change to the character contract and its runtime, with a visible risk: the first swing or first shovel would stall if the group has not arrived. Needs a warm-on-idle path so the claim is never cold. Estimated first-town saving ~4.3 MB.",
+   "implemented": false
+  },
+  {
+   "rank": 2,
+   "item": "The two mp3s",
+   "bytes": 3010289,
+   "share": "13.9%",
+   "requests": 2,
+   "where": "era-e1-frontier-loop.mp3 1,800,881 B and title-theme.mp3 1,200,587 B",
+   "whatACutWouldCost": "Both are wanted; neither is needed before the town is playable. Deferring them to first playback (or the first user gesture, which audio autoplay policy already requires) costs the first bar or two of music on a cold slow link and nothing else - the cheapest 3 MB in the list. Re-encoding is the other half: measure the current bitrate first; a loop that audibly pumps is worse than a slow one.",
+   "implemented": false
+  },
+  {
+   "rank": 3,
+   "item": "241 JS requests for 27,557 bytes",
+   "bytes": 27557,
+   "requests": 241,
+   "where": "one ?url module per sprite cell, from import.meta.glob('../../assets/processed/char-*.png', { query: '?url' }) at src/assets/SpriteAnimator.ts:170 and src/assets/generated.ts:46",
+   "whatACutWouldCost": "Bytes are nothing; ROUND TRIPS are not - 241 of them on a link with 100 ms RTT is the shape of 'loads veerrry slowly' even when the payload is small. Emitting one manifest module per sheet family (or inlining the URL table) would replace 241 requests with about 20. Build-time change to how sheet URLs resolve; low behavioural risk, but it touches a glob two modules share.",
+   "implemented": false
+  }
+ ],
+
+ "guard": {
+  "file": "scripts/first-town-request-families.test.mjs",
+  "registeredIn": "package.json -> test:node-guards",
+  "what": "Pins the cue window's request FAMILIES (basename with the vite hash, the asset-diet content hash and any -r<row>c<col> sheet cell stripped) as a sorted allowlist, read from the live artifacts/asset-diet/town-transfer-<project>.json corpus the suite rewrites on every run. A byte total that swings 2.05x on the host cannot detect a new asset entering the first town; a request set can.",
+  "tests": ["the pinned family lists are sorted, deduped and disjoint", "the family derivation survives a rebuild (an eight-character NAME tail is not a hash: brand-new-hall.glb must not be filed as brand.glb)", "every first-town request belongs to a pinned family", "no second map is warmed inside the first town window"],
+  "provenToBite": "injecting e1-dry-gulch-terrain and a new hall into the corpus reds two of the four tests, naming both; the corpus was restored with git checkout --."
+ }
+}

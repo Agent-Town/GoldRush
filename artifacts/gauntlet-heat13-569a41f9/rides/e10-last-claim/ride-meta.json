@@ -1,0 +1,19 @@
+{
+  "rig": "opus",
+  "model": "claude-opus-5",
+  "arena": "/tmp/heat13-569a41f9",
+  "workdir": "/tmp/heat13-569a41f9/artifacts/heat13/opus/e10-last-claim",
+  "charterFile": "/private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/rides/e10-last-claim/charter.md",
+  "charterSha256": "99b67cf574356ec3b4ca4c3fdef3e6c8ba5bfe0d434a70408989a2ed77f7ef0c",
+  "sessionId": "24dcc713-529d-4af2-ab4f-996150cffcf5",
+  "wallSeconds": 1500,
+  "startedAt": "2026-09-07T16:48:50.603Z",
+  "invocation": "env -u CLAUDECODE -u CLAUDE_CODE_ENTRYPOINT -u CLAUDE_CONFIG_DIR claude -p \"<charter text, see charterFile>\" --model claude-opus-5 --allowedTools Read,Write,Glob,Bash(node *) --output-format text --session-id 24dcc713-529d-4af2-ab4f-996150cffcf5",
+  "endedAt": "2026-09-07T16:48:52.454Z",
+  "wallClockSeconds": 2,
+  "exitCode": 1,
+  "signal": null,
+  "wallHit": false,
+  "firstOutputAt": null,
+  "setupToFirstOutputSeconds": null
+}

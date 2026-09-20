@@ -1,0 +1,26 @@
+[WebServer] (node:15841) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 14 tests using 1 worker
+
+(node:15842) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 [desktop-chrome] › e2e/m4-07-prospector-panel.spec.ts:56:1 › G, Esc, chip, and outside tap control the panel without pausing the run (3.7s)
+  ✓   2 [desktop-chrome] › e2e/m4-07-prospector-panel.spec.ts:93:1 › ladder renders earned toggles, unearned hints, and current abilities (2.4s)
+  ✓   3 [desktop-chrome] › e2e/m4-07-prospector-panel.spec.ts:113:1 › auto-collect consent halts and resumes behavior, with stacked newest-first receipts (4.3s)
+  -   4 [desktop-chrome] › e2e/m4-07-prospector-panel.spec.ts:151:1 › mobile chip tap opens a full-width bottom sheet with a 44px close target
+  ✓   5 [desktop-chrome] › e2e/m4-08-agent-attribution.spec.ts:81:1 › actor tags add attribution without changing economy replay totals (1ms)
+  ✓   6 [desktop-chrome] › e2e/m4-08-agent-attribution.spec.ts:116:1 › death card shows seeded player and Prospector panned split on plain boot (2.2s)
+  ✓   7 [desktop-chrome] › e2e/m4-08-agent-attribution.spec.ts:140:1 › player-only death card keeps the single panned number on plain boot (2.2s)
+(node:15991) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   8 [mobile-chrome] › e2e/m4-07-prospector-panel.spec.ts:56:1 › G, Esc, chip, and outside tap control the panel without pausing the run (3.2s)
+  ✓   9 [mobile-chrome] › e2e/m4-07-prospector-panel.spec.ts:93:1 › ladder renders earned toggles, unearned hints, and current abilities (2.2s)
+  ✓  10 [mobile-chrome] › e2e/m4-07-prospector-panel.spec.ts:113:1 › auto-collect consent halts and resumes behavior, with stacked newest-first receipts (3.9s)
+  ✓  11 [mobile-chrome] › e2e/m4-07-prospector-panel.spec.ts:151:1 › mobile chip tap opens a full-width bottom sheet with a 44px close target (2.0s)
+  ✓  12 [mobile-chrome] › e2e/m4-08-agent-attribution.spec.ts:81:1 › actor tags add attribution without changing economy replay totals (1ms)
+  ✓  13 [mobile-chrome] › e2e/m4-08-agent-attribution.spec.ts:116:1 › death card shows seeded player and Prospector panned split on plain boot (2.2s)
+  ✓  14 [mobile-chrome] › e2e/m4-08-agent-attribution.spec.ts:140:1 › player-only death card keeps the single panned number on plain boot (1.9s)
+
+  1 skipped
+  13 passed (32.3s)

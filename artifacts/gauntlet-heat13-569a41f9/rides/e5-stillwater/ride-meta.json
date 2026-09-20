@@ -1,0 +1,19 @@
+{
+  "rig": "opus",
+  "model": "claude-opus-5",
+  "arena": "/tmp/heat13-569a41f9",
+  "workdir": "/tmp/heat13-569a41f9/artifacts/heat13/opus/e5-stillwater",
+  "charterFile": "/private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/rides/e5-stillwater/charter.md",
+  "charterSha256": "fcf2a7de30ad8ee4b1fd3bb2f186d91030fadbc1bb76cc3b907f263e4c2494a5",
+  "sessionId": "5cbbed52-fde2-4d8e-a33e-be8024b4badc",
+  "wallSeconds": 1500,
+  "startedAt": "2026-09-07T10:52:56.719Z",
+  "invocation": "env -u CLAUDECODE -u CLAUDE_CODE_ENTRYPOINT -u CLAUDE_CONFIG_DIR claude -p \"<charter text, see charterFile>\" --model claude-opus-5 --allowedTools Read,Write,Glob,Bash(node *) --output-format text --session-id 5cbbed52-fde2-4d8e-a33e-be8024b4badc",
+  "endedAt": "2026-09-07T11:01:43.155Z",
+  "wallClockSeconds": 526,
+  "exitCode": 0,
+  "signal": null,
+  "wallHit": false,
+  "firstOutputAt": "2026-09-07T10:53:56.728Z",
+  "setupToFirstOutputSeconds": 60
+}

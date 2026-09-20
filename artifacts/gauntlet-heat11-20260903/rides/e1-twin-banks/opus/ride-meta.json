@@ -1,0 +1,19 @@
+{
+  "rig": "opus",
+  "model": "claude-opus-5",
+  "arena": "/tmp/heat11-5e7a7c0b",
+  "workdir": "/tmp/heat11-5e7a7c0b/artifacts/heat11/opus/e1-twin-banks",
+  "charterFile": "rides/e1-twin-banks/opus/charter.md",
+  "charterSha256": "7652fa691d45d7d0f1d92149261214e1c81b3dad7c0c049aa64ceedb63c7ef68",
+  "sessionId": "5c6b4acd-273c-489f-b9a2-54c727ab5d3b",
+  "wallSeconds": 1500,
+  "startedAt": "2026-09-03T15:37:05.965Z",
+  "invocation": "env -u CLAUDECODE -u CLAUDE_CODE_ENTRYPOINT -u CLAUDE_CONFIG_DIR claude -p \"<charter text, see charterFile>\" --model claude-opus-5 --allowedTools Read,Write,Glob,Bash(node *) --output-format text --session-id 5c6b4acd-273c-489f-b9a2-54c727ab5d3b",
+  "endedAt": "2026-09-03T15:48:24.861Z",
+  "wallClockSeconds": 679,
+  "exitCode": 0,
+  "signal": null,
+  "wallHit": false,
+  "firstOutputAt": "2026-09-03T15:38:05.971Z",
+  "setupToFirstOutputSeconds": 60
+}

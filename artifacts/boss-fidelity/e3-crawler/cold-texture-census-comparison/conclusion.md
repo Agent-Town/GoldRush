@@ -1,0 +1,15 @@
+# Crawler cold-count mismatch comes from the hero atlas presentation state
+
+The full regression and unchanged serial Crawler test fail their absolute texture pins by one in both projects. Their model allocation/disposal deltas remain unchanged. The diagnostic below identifies the desktop extra allocation before any Crawler request; it does not turn the failed tests into passes.
+
+The current runtime reports 81 geometries and 33 textures at warm, 800 ms and a further two seconds. The independently materialized HEAD runtime (`d41ab98ce0d7fbc48bb01e8e87c92c61f148de2d`) reports 81/32 at those same samples, including an identical repeat after warming the server. The current hero uses a 256×2304 canvas atlas, while HEAD still presents `hero-homesteader-f.png`. The current runtime retains the original image's GPU allocation as well.
+
+After the three unchanged samples, an explicitly separate HEAD diagnostic advances exactly one 1/30-second simulation tick. HEAD then reports 81/33 and presents the same 256×2304 hero atlas. Mapped GPU texture counts grouped by source type, dimensions and URL match the current runtime. No Crawler model request or console/page error occurs in any of these runs. `resource-transition.json` records the assertions and evidence hashes.
+
+The served Hero, SpriteAnimator and generated-asset modules are identical after removing only dependency-cache paths/version hashes and source maps. The character contract, orientation resolver and hero-skin module are byte-identical. Their image import sets also match. This rules out a different hero asset registry in the compared servers.
+
+The unchanged `SpriteAnimator` constructor asynchronously sets its runtime-ready flag; it applies the loaded frame from `update`. `Hero.update` owns that call. The test freezes manual simulation after twelve render frames. Its `warmVfx`/`warmCombatPools` path waits for the bandit asset and freed walker, not for the hero's animated frame to have been presented. Consequently, the recorded cold state can contain either the original image alone or that image plus the hero atlas. The explicit HEAD tick demonstrates this existing state transition; it does not establish why the two initial runs reached different sides of it.
+
+The absolute count failures remain recorded. No production source, expected-count artifact or existing test was edited for this diagnosis. A future count-harness correction should first establish the same hero presentation state before comparing absolute allocations. Changing a numeric pin alone would preserve the timing dependency.
+
+Evidence is in the sibling `cold-texture-census-serial`, `cold-texture-census-head`, `cold-texture-census-head-hot` and `cold-texture-census-head-step` directories. The census instruments WebGL allocation/upload calls and reads actual renderer memory and scene texture ownership; it changes timing and is not an acceptance test. Desktop attribution is directly observed; mobile has the matching +1 failure pattern but was not separately instrumented.

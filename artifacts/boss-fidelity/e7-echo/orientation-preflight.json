@@ -1,0 +1,55 @@
+{
+  "scope": "Static algebra for the currently authored mirror-center transform, not runtime visual acceptance. Its X/Z linear part is -I, a 180-degree rotation. Building shape size stays constant while existing approach interpolates centers.",
+  "source": "src/systems/EchoBossSystem.ts",
+  "sourceSha256": "b76bf9b0a7ee46adddfff700bc7cb659f8cbc71f5d3835f22bc6af5294ca01e3",
+  "checks": [
+    {
+      "yaw": 0,
+      "localPoint": [
+        1,
+        2
+      ],
+      "maxError": 2.220446049250313e-16
+    },
+    {
+      "yaw": 0,
+      "localPoint": [
+        -0.4,
+        1.7
+      ],
+      "maxError": 2.220446049250313e-16
+    },
+    {
+      "yaw": 1.5707963267948966,
+      "localPoint": [
+        1,
+        2
+      ],
+      "maxError": 2.220446049250313e-16
+    },
+    {
+      "yaw": 1.5707963267948966,
+      "localPoint": [
+        -0.4,
+        1.7
+      ],
+      "maxError": 2.220446049250313e-16
+    },
+    {
+      "yaw": 0.37,
+      "localPoint": [
+        1,
+        2
+      ],
+      "maxError": 0.0
+    },
+    {
+      "yaw": 0.37,
+      "localPoint": [
+        -0.4,
+        1.7
+      ],
+      "maxError": 0.0
+    }
+  ]
+}

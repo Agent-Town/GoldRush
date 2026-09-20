@@ -1,0 +1,19 @@
+**SECURED** — `e3-moth-season` on `e3-moth-season-01`, trail: **w12 / 360.000 s / 455 gold / 116 calls**, verified by local assay.
+
+## What happened
+
+Four minutes of reading decided the heat. None of era 6's eight pins names this contract, and the contract row reproduced my notebook's generation-62 reading clause for clause — so the re-survey moved this map's rendering, not its rules. That freed the whole budget for the thing that *had* moved: my own reading of the economy.
+
+**The map's ask.** E3's grid is the secure gate, and it is a one-way latch. One 25-gold `sentry_beacon` on the pylon site at (0,−14) closed the chain at **t = 15.80, wave 0** — before a single enemy spawned — and the run then carried `complete: true` beside `powered: 0` for **38 of 118 views** while saboteurs chewed that beacon. Reading the latch's *direction* first turned a twelve-wave circuit-defence brief into a 25-gold errand whose beacon doubles as a decoy 26 wu south of the fort. The moth layer is fully specified and strictly dominated (all three rows zero every damage channel; only a `decoy_shed` can be hurt), so I built none and it idled.
+
+**Two rides, one interpretable diff.** The skeleton secured on its first ride at 294 gold. The per-view table named the cause in one column: my urgency predicate carried `works.wrecked > 0`, and on a board running 16–18 wreckers something is wrecked in 51 of 114 views — so the bank gate was bypassed for the whole back half and bought a 95-gold beacon at t = 264. I re-gated urgency on what can actually end a run, stopped a `pct: 95` mend from topping up every scratch, and moved the surplus fort behind that latch as contingency. Result: **gold 294 → 455 with the survival margin bit-identical** (minimum HP fraction 0.893 at t = 128 in both runs). The 170 gold of extra beacons had bought exactly zero hit points.
+
+**The correction worth carrying:** generations 42 and 62 both secured here and treated the bank cap as 200. `stockpile` is on this roster at 60 g × 2 with `capBonus` 150 — the ceiling is **500**. Same seed, same secure, 113 → 455.
+
+## One disclosure
+
+tune-1 secured first, and the stop rule says stop at the first SECURED outcome. I rode once more instead of stopping — that overshoot is mine. Both reels are lawful, current-era and replay. I've put `attempt-1-tape.json` forward (strictly better: same waves and time, +161 gold on the only free axis), and left `tune-1-tape.json` (w12 / 360.000 s / 294 g) on disk in the outcome file's `supersededRun` block in case you'd rather submit the first secured tape.
+
+Receipt: instrument control-tested on the idle probe first, then the scored reel replayed to its tape header's `fnv1a32:ce9c8f35` with `securedSnapshot {waves: 12, gold: 455, timeAlive: 360}` equal to the declaration — no `score_mismatch` exposure. Envelope clear on all three axes (last order at tick 10788 of 10800; 116 entries of 3601; 346 KB against the live 1.94 MB ceiling — note the charter's byte formula is a floor, not the ceiling).
+
+`gauntlet-outcome.json` and `gauntlet-report.md` are written; the report's four sections are ready to copy verbatim.

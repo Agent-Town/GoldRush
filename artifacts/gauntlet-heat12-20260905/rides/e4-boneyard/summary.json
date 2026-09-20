@@ -1,0 +1,192 @@
+{
+  "rig": "opus",
+  "contract": "e4-boneyard",
+  "model": "claude-opus-5",
+  "sessionId": "15af8112-4936-4ac8-b5af-f479be4d1039",
+  "startedAt": "2026-09-05T19:43:48.188Z",
+  "endedAt": "2026-09-05T19:54:42.989Z",
+  "wallClockSeconds": 655,
+  "wallHit": false,
+  "exitCode": 0,
+  "signal": null,
+  "setupToFirstOutputSeconds": 135,
+  "arenaTrackedChanges": [],
+  "workspaceFiles": [
+    "attempt-1-tape.json",
+    "ctrl-v1.mjs",
+    "gauntlet-outcome.json",
+    "gauntlet-report.md",
+    "probe-idle-result.json",
+    "probe-idle-tape.json",
+    "probe-idle-views.jsonl",
+    "run.mjs",
+    "tune-1-result.json",
+    "tune-1-tape.json",
+    "tune-1-views.jsonl"
+  ],
+  "outcome": {
+    "secured": true,
+    "waves": 12,
+    "timeMs": 360000,
+    "gold": 200,
+    "kills": 325,
+    "calls": 45,
+    "defaultedPicks": 0,
+    "defaultedSecure": 1,
+    "eventLogHash": "fnv1a32:76da210d",
+    "motor": {
+      "graded": [],
+      "hauled": true,
+      "arrivedAt": 40.2,
+      "roadDistance": 0,
+      "distanceTravelled": 68.338,
+      "fuelDrawn": 25.929,
+      "tarHarvested": 9,
+      "convoyArrived": null,
+      "kind": "tow",
+      "towed": true
+    },
+    "tape": "/tmp/heat12-038cc280/artifacts/heat12/opus/e4-boneyard/attempt-1-tape.json",
+    "scored": true,
+    "runsSoFar": 2,
+    "scoredAttempts": 1,
+    "worldModel": "sim-import",
+    "note": "ONE RIDE UNDER TWO FILENAMES. ctrl-v1 secured on its first ride; the rules stop me at the first SECURED outcome, so that ride IS my scored attempt. tune-1-tape.json and attempt-1-tape.json are byte-identical (sha256 2fad96d2562d5a3087c0ce1c7faecd0ad7291a0cedf1ae68dfd4fced2b5bfae7, 155120 bytes). The 'tape' field above is the authority.",
+    "hashNote": "eventLogHash above is the gr-sim STDOUT outcome line's hash (fnv1a32:76da210d). The TAPE's own header hash is fnv1a32:49e829d4 - different numbers by design. The local assay (scripts/assay-replay-agent.mjs) reproduced fnv1a32:49e829d4 and all four outcome fields (secured true / waves 12 / gold 200 / timeAlive 360); a zero-order idle-probe control replayed correctly too, so the instrument is sound.",
+    "envelope": {
+      "durationTicks": 10800,
+      "lastEntryTick": 10689,
+      "tickSlack": 111,
+      "entries": 45,
+      "bytes": 155120,
+      "byteCeiling": 345616,
+      "verdict": "admissible on all three axes"
+    },
+    "era": {
+      "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "era": 5,
+      "viewVersion": 2,
+      "buildId": "9c4337e3b",
+      "matchesArena": true
+    },
+    "ceilingNote": "w12 / 360.000s / 200g is the MAXIMUM row this contract can produce: secureWave is 12 (360.000s pinned) and 200 is the bank cap, so gold cannot go higher."
+  },
+  "outcomeError": null,
+  "promotedTapeName": "attempt-1-tape.json",
+  "scoredTapes": [
+    {
+      "file": "attempt-1-tape.json",
+      "id": "agent-3af455e5-52d1fd7c-5ddf-475e-84f1-1081e5f2caf0",
+      "contract": "e4-boneyard",
+      "seed": "e4-boneyard-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "9c4337e3b",
+        "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 12,
+        "timeAlive": 360,
+        "gold": 200
+      },
+      "entries": 45,
+      "durationTicks": 10800,
+      "lastEntryTick": 10689,
+      "promotedByRig": true,
+      "discoveredBy": "outcome-file+filename"
+    }
+  ],
+  "otherTapes": [
+    {
+      "file": "probe-idle-tape.json",
+      "id": "agent-271b5f72-e9f1cf72-3ff8-4f41-8024-bbfd9a10bd32",
+      "contract": "e4-boneyard",
+      "seed": "e4-boneyard-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "9c4337e3b",
+        "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 4,
+        "timeAlive": 124.867,
+        "gold": 0
+      },
+      "entries": 0,
+      "durationTicks": 3746,
+      "lastEntryTick": null
+    },
+    {
+      "file": "tune-1-tape.json",
+      "id": "agent-3af455e5-52d1fd7c-5ddf-475e-84f1-1081e5f2caf0",
+      "contract": "e4-boneyard",
+      "seed": "e4-boneyard-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "9c4337e3b",
+        "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 12,
+        "timeAlive": 360,
+        "gold": 200
+      },
+      "entries": 45,
+      "durationTicks": 10800,
+      "lastEntryTick": 10689
+    }
+  ],
+  "otherSecuredTapes": [
+    {
+      "file": "tune-1-tape.json",
+      "id": "agent-3af455e5-52d1fd7c-5ddf-475e-84f1-1081e5f2caf0",
+      "contract": "e4-boneyard",
+      "seed": "e4-boneyard-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "9c4337e3b",
+        "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 12,
+        "timeAlive": 360,
+        "gold": 200
+      },
+      "entries": 45,
+      "durationTicks": 10800,
+      "lastEntryTick": 10689
+    }
+  ],
+  "report": {
+    "outcome": "**SECURED.** w12 · timeAlive **360.000 s** · gold **200** · calls **45** · kills 325.\n\nTape put forward: `artifacts/heat12/opus/e4-boneyard/attempt-1-tape.json` (declared in\n`gauntlet-outcome.json`'s `tape` field; byte-identical to `tune-1-tape.json`, sha256\n`2fad96d2562d5a3087c0ce1c7faecd0ad7291a0cedf1ae68dfd4fced2b5bfae7`, one ride under two filenames).\n\n**2 sim runs, 1 scored attempt.** The first controller secured, and the rules end the ride at the\nfirst SECURED outcome, so that ride is the attempt.\n\nWorth stating plainly: **w12 / 360.000 s / 200 g is the maximum row this contract can produce.**\n`secureWave` is 12, so a secure pins `timeAlive` at 360.000 s, and 200 is the bank cap, so gold cannot\ngo higher. There was nothing left to win by riding again.",
+    "whatTheMapAsked": "It asked me about **distance and fuel — E4's signature mechanic, live, load-bearing, and gating the\nsecure** — and then it went quiet for nine waves. The secure is a conjunction: `wave >= 12` **and**\n`now.motor.objective.arrived`, which for `kind: \"tow\"` means two separate rests. Leg one: the Hauler\nstarts at (0, −40) and must come to rest within `objective.stopReach` 2.5 of the hulk\n`spent-boiler-west` at (−18, −8) — 36.7 wu of open country. Leg two: `objective.stop` **moves** the\ninstant `hitched` flips, to the gate end of `gate-to-west-rows` at (−8, −38) — another 31.6 wu. That\nis 68.3 wu measured (`distanceTravelled: 68.338`) at speed 9 and 3 fuel per second, against a run that\nholds exactly 36 fuel, and the door's promise about weather is measurable in the reel: 68.3 wu of clear\ndriving is 22.8 fuel and I drew **25.929**, a 13.8 % surcharge, because a storm was standing over part\nof the drive and `stormMovementMultiplier` 0.75 stretches every second the Hauler burns. I harvested\nall three tar nodes (`tarHarvested: 9`, the full 36) rather than the two the clear-weather arithmetic\nneeds, precisely for that surcharge; 10.071 fuel went unspent. The fields that carried it were\n`now.motor.objective` (`kind`, `stop`, `stopReach`, `hulk`, `hitched`, `arrived`, `securableAtWave`),\n`now.motor.fuel.nodes[].harvested/progress` with `stored`/`tar`/`drawn`, `now.motor.vehicle.state/x/z`\nand `now.motor.weather.phase`; the orders were `MOVE_TO` and **`HAUL`**, split across a wave boundary\nand branched on `objective.hitched` rather than on my own clock, because the stop is a one-way latch\nand a second `HAUL` fired before the first arrival would silently re-target the Hauler. Hitched at\nt = 26.9, delivered at t = 40.2.\n\n**`GRADE` is worthless here and that is a real finding, not an omission.** I issued none — `graded: []`,\n`roadDistance: 0` — because the Hauler drives straight lines and the tow's delivery point *is* the\ncorridor's start stake, so the road it could grade runs away from both legs. Across the four Motor maps\n`GRADE` ranges from mandatory (the Long Road: 123 fuel ungraded against a 36-fuel tank) to inert; the\narithmetic, not the epoch, tells you which.\n\nThe honest qualifier is the same one every Motor map has earned: **the errand latched at t = 40.2 of a\n360-second contract**, and waves 2–12 were ordinary stationary survival. Call it the first ninth of the\nrun genuinely E4 — but unlike a reskin, the era's lever *gates the secure*, and it made me do fuel and\ndistance arithmetic before writing a single order.\n\n**Does my notebook still describe this map?** Generation 15 rode this exact seed on engine `49c34f8b`\nand secured w12/360/200g. **It still plays the way I remember, in every particular I checked**: same\nwelded hero at (0, −44), same hulk, same moving stop, same 36-fuel leash, same three tar nodes on the\nz = −8 line, same `GRADE`-is-nearly-worthless verdict. On the week's named change I can be exact rather\nthan hopeful: `motorActions` is pushed only by `RunTape.recordMotorAction`, whose only callers are\n`Game.ts:9292/:9302` — the **browser** game — and consumed only by `Game.ts:7206` on the browser replay\npath. My reel carries two accepted `HAUL`s and **no `motorActions` key at all** (the field is omitted\nwhen empty). So the second drain's plain-boot composition is a browser-side change that the headless\ndoor does not see; what reached me is the first drain's `MotorSocket`, which generation 15 already rode.",
+    "winnability": "Secured, and the margin was **the widest I have measured on a Motor map**: the hero **never dropped\nbelow its running maximum across all 47 views** (minimum 100, finishing **175/175 at level 16**), **zero\nof five works were ever wrecked**, `goldStolen` finished at **0** despite a thief-only roster and\n`threats.alive` pinned at its 60-enemy ceiling from wave 10, and gold sat at the 200 cap from t = 315\nwith 475 panned — health, defence, objective and money all had spare capacity at the same instant.",
+    "lessons": "- **A notebook entry can be right about the map and still need its margin re-earned.** Generation 15\n  secured this contract at w12/360/200g but bottomed at 39.6/150 in wave 6 behind three turrets and\n  eight palisades. Same seed, same secure, and this ride never lost a hit point — because the roster\n  read (`thief: true` forces `wrecker = false`, so nothing can be attacked) deleted the palisades and\n  bought two sentry beacons with the same gold. **Inherit a predecessor's geometry; re-derive its\n  shopping list from the roster.**\n- **Read the era-pin's named drain down to its CALLERS before believing it moved your board.**\n  `motorActions` looked like a live change to the reel format; `grep recordMotorAction` returns two\n  call sites, both in `Game.ts`, and my two-`HAUL` reel carries no such key. Two minutes turned \"the\n  tape format changed under me\" into a verified \"the headless door never sees it.\" A pin's prose names\n  a commit, not a code path — follow the path.\n- **The bank cap is a RANKING target, not just a ceiling, and it should size the ladder.** Secured, more\n  waves, more gold: at a fixed `secureWave` the only free axis is gold, and it is capped at 200. So the\n  ladder must cost *income minus 200*, not \"as much defence as I can afford.\" I budgeted 275\n  (3 turrets + 2 beacons), spent it by t = 232, and the purse refilled to the cap by t = 315 off a\n  475-gold run. A fourth turret would have ranked me *lower*.\n- **On a far-seam map, stay out at the cluster and let the ladder pull you home in batches.** The two\n  nearest live seams sit 57–60 wu from the claim and 20 wu from each other; cycling between them beats\n  a round trip home per pan, because a 30-capacity seam refills in 20 s and the walk between them is\n  4 s. Suffix-gating the ladder (rung *i* gated on the cost of rungs *i*..end) then bought turrets 2 and\n  3 on **one** trip instead of two. Three build trips for five works across a 320-second economy.\n- **A two-leg errand with a moving stop is two views, not one array.** `MotorSocket.stop()` returns the\n  hulk while `hitched` is false and the corridor start afterwards, and `settleTow` only latches on\n  `vehicle.state === 'arrived'`. I dispatched leg one at t ≈ 20, held the Prospector at the hulk, and\n  branched on `objective.hitched` at the next wave boundary. Cheap insurance against a one-way latch;\n  the whole errand still closed at t = 40.2 of 360.\n- **The five-order dwell is still standing equipment.** `MOVE_TO` completes in one tick and the next\n  order walks you off, so a 0.5-second harvest needs `node → +0.9x → node → +0.9z → node` — 0.9 wu keeps\n  the body inside `harvestRange` 1.35 for the whole loop. Three tar nodes, three first-try harvests,\n  nine tar. The grammar has no wait verb.\n- **Measure the envelope off the first reel that exists.** Ticks 10800 / last entry 10689 / 45 entries /\n  155 KB against ~346 KB, all read before I called anything an attempt. The blank line at\n  `pendingSecure` did both its jobs again — kept the last accepted order 111 ticks inside the envelope\n  and cost one call.\n- **Check the assay instrument against a control before reading a mismatch as a defect.** The replay\n  returned `fnv1a32:49e829d4` where the stdout outcome line said `76da210d`; those are the tape's hash\n  and the outcome line's hash, different by design, and the tape's own header agreed with the replay.\n  Generation 4 wrote this down, generations 34/35 re-tripped on it, and I re-ran the zero-order idle\n  probe as a control rather than trust the memory. Two commands, no false alarm.\n- **`unclaimed`/first-secured on the door list dates the REEL, not the contract** — but on this map the\n  contract genuinely had not moved, and saying so plainly is as useful a result as finding that it had.\n  Fifth heat running where the era-pin ledger, read as a diff against the notebook, was the cheapest\n  document in the county."
+  },
+  "usage": {
+    "transcript": "/Users/robin/.claude/projects/-private-tmp-heat12-038cc280/15af8112-4936-4ac8-b5af-f479be4d1039.jsonl",
+    "assistantTurns": 57,
+    "toolCalls": 30,
+    "tokensIn": 114,
+    "tokensOut": 87191,
+    "cacheReadTokens": 14538503,
+    "cacheWriteTokens": 587258,
+    "note": "tokensIn excludes cache reads/writes (reported separately); summed from the CLI session transcript, not self-reported by the rig"
+  }
+}

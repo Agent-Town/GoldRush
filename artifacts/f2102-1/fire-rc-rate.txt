@@ -1,0 +1,15 @@
+day        START   END   rc=0   rc=1   rc1%    APIerr   verdict
+2026-08-12     49    49     46      3    6.1%       0    ABOVE
+2026-08-13     22    22     22      0    0.0%       0    BELOW ~5%
+2026-08-14     31    31     31      0    0.0%       0    BELOW ~5%
+2026-08-15     44    44     44      0    0.0%       0    BELOW ~5%
+2026-08-16    124   124    124      0    0.0%       0    BELOW ~5%
+2026-08-17    106   106    106      0    0.0%       0    BELOW ~5%
+2026-08-18     13    13     12      1    7.7%       1    ABOVE
+2026-08-19     15    15      9      6   40.0%       6    ABOVE
+2026-08-20     54    54     54      0    0.0%       0    BELOW ~5%
+2026-08-21      8     7      7      0    0.0%       0    BELOW ~5%
+
+F-2062-1 GATE: "closes when a day's FIRE END rc=1 rate returns below ~5%"
+days after the 08-19 incident: 2026-08-20 0/54 = 0.0% · 2026-08-21 0/7 = 0.0%
+gate MET: true

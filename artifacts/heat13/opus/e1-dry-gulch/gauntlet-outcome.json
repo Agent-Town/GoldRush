@@ -1,0 +1,48 @@
+{
+ "secured": true,
+ "waves": 20,
+ "timeMs": 600000,
+ "gold": 198,
+ "kills": 316,
+ "calls": 53,
+ "defaultedPicks": 0,
+ "defaultedSecure": 1,
+ "eventLogHash": "fnv1a32:5a6ea965",
+ "outcome": {
+  "secured": true,
+  "waves": 20,
+  "timeMs": 600000,
+  "gold": 198,
+  "kills": 316,
+  "calls": 53,
+  "defaultedPicks": 0,
+  "defaultedSecure": 1,
+  "eventLogHash": "fnv1a32:5a6ea965"
+ },
+ "tape": "/private/tmp/heat13-569a41f9/artifacts/heat13/opus/e1-dry-gulch/attempt-1-tape.json",
+ "scored": true,
+ "runsSoFar": 2,
+ "scoredAttempts": 1,
+ "worldModel": "sim-import",
+ "note": "tune-1 secured on the first controller ride; the stop rule ends the heat at the first SECURED outcome, so it IS the scored attempt. attempt-1-tape.json is a byte-identical copy of tune-1-tape.json (verified) — one ride under two filenames, not two rides.",
+ "difficulty": "trail",
+ "seed": "e1-dry-gulch-01",
+ "contract": "e1-dry-gulch",
+ "envelope": {
+  "durationTicks": 18000,
+  "maxTicks": 18002,
+  "lastEntryTick": 17100,
+  "entries": 53,
+  "maxEntries": 3601,
+  "bytes": 142766,
+  "maxTapeBytes": 1938784,
+  "note": "all three axes clear; maxTapeBytes read from runTapeEnvelopeForContract (16384 + 3601*160 + 601*2240), NOT the brief's conservative 16KiB+entries*160 floor"
+ },
+ "receipt": {
+  "localAssay": "scripts/assay-replay-agent.mjs reproduced the TAPE hash fnv1a32:e490fcd5 and securedSnapshot {waves:20,gold:198,timeAlive:600}",
+  "tapeHash": "fnv1a32:e490fcd5",
+  "outcomeLineHash": "fnv1a32:5a6ea965",
+  "hashNote": "these two differ BY DESIGN — the replay matches the tape header's hash, never the stdout outcome line's"
+ },
+ "marginLeftOnTable": "gold is the only free ranking axis here (waves and timeAlive are both pinned by twist.secureWave 20). I banked 198 of a possible 500: the ladder stalled behind a third sluice whose every candidate answered 'outside buildable terrain', which blocked the two stockpiles (+150 cap each) behind it, so the purse pinned at the DEFAULT 200 cap and Economy.canCredit refused every credit for the last 400 seconds (score.goldPanned frozen at 390 from t=201)."
+}

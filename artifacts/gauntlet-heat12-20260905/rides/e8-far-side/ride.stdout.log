@@ -1,0 +1,24 @@
+**SECURED on the first controller rewrite.** Stopping here per the rules (first secure).
+
+## Result
+
+`e8-far-side` / `e8-far-side-01` / trail — **secured, w20 / 600.000 s / 200 g / 83 calls / 923 kills**.
+3 sim runs, 1 scored attempt. Tape declared in `gauntlet-outcome.json`: `attempt-1-tape.json` (byte-identical copy of `tune-2-tape.json` — one ride, two filenames, no re-ride).
+
+Admissibility measured off the first reel, not at the door: `durationTicks` 18 000, last order at tick **17 637** (363 slack), 83 entries, 255 KB of a ~576 KB ceiling. Local assay reproduced the tape's `fnv1a32:a9448c78` and all four outcome fields.
+
+## The mechanic did change, and my notebook was wrong
+
+Gen 34 secured this map reporting `now.air` **absent from all 69 views**, because `atmosphere.airIsWall: false`. That inference has expired. `E8SuitAirSystem` now arms off an **id list**, not that boolean — `airIsWall` survives only as `breachable`. So there is now a **second secure gate**: the Prospector must *enter* the probe crater with suit air remaining (`noteCrossings` credits an entry, not a step; a breathless arrival is counted and refuses a secure at every wave).
+
+The idle floor came back `fnv1a32:5c30efd5` — the exact new value the era-pin quotes, which is the cheapest possible confirmation you're on the changed board.
+
+The trap isn't the walk (60 s of suit against ~15.6 s each way). It's that **half the harvest anchors sit inside the breathing dome and half outside** — pan at (±9,−22) long enough and you arrive breathless. I gated the seam sort on whether the crossing was still pending.
+
+## What actually cost the run
+
+Not the era gate — tune-1 cleared **both** gates at wave 9 and still died at w17. The wall was the economy: round-robin panning between two seams 26 units apart bought a 5.4 s walk per 5-gold tick → 670 gold at 1.29 g/s against a ~1 175-gold ladder, so the fort never finished. Two fixes: drain one seam in a block before walking, and interleave the ladder by dps-per-gold under **cumulative** gating (ascending per-rung gates would have re-introduced the cheap-rung starvation bug). Same policy otherwise → **1 470 gold**, full ladder, all four turrets at tier 2.
+
+Margin was wide: hero **never dropped below its running maximum** across 87 views, finished 139/175 at level 29, 0 of 10 works wrecked, `breathlessEntries: 0` with 31.2 s of suit still in hand.
+
+Report's four sections are in `gauntlet-report.md`, ready to copy verbatim.

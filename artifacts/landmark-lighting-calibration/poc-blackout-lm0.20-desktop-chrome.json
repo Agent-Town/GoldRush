@@ -1,0 +1,262 @@
+[
+  {
+    "scene": "e3-blackout-ridge",
+    "contract": "e3-blackout-ridge",
+    "project": "desktop-chrome",
+    "phase": "poc-blackout-lm0.20",
+    "query": "&lmemissive=0.20",
+    "focusMount": "ridge-switch-house",
+    "standoff": [
+      0,
+      9
+    ],
+    "frameMedianLuminance": 0.0667,
+    "terrainMedianLuminance": 0.068,
+    "landmarkMedianLuminance": 0.0642,
+    "landmarkAllMountsMedian": 0.0642,
+    "heroLuminance": 0.0938,
+    "landmarkOverTerrain": 0.944,
+    "emissiveIntensity": [
+      {
+        "id": "off-map-current-receiver",
+        "range": [
+          0.2,
+          0.2
+        ]
+      },
+      {
+        "id": "trunk-line-breaker-shelter",
+        "range": [
+          0.2,
+          0.2
+        ]
+      },
+      {
+        "id": "breath-bank-service-rack",
+        "range": [
+          0.2,
+          0.2
+        ]
+      },
+      {
+        "id": "ridge-switch-house",
+        "range": [
+          0.2,
+          0.2
+        ]
+      },
+      {
+        "id": "blackout-watch-lamp",
+        "range": [
+          0.2,
+          0.2
+        ]
+      }
+    ],
+    "sideCensus": "{\"total\":{\"meshes\":5,\"closed\":5,\"open\":0,\"culled\":5,\"doubleSided\":0},\"mounts\":[{\"id\":\"off-map-current-receiver\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.019,\"topY\":8.219},{\"id\":\"trunk-line-breaker-shelter\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":-0.009,\"topY\":7.091},{\"id\":\"breath-bank-service-rack\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":4.73,\"topY\":8.98},{\"id\":\"ridge-switch-house\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5.961,\"topY\":13.361},{\"id\":\"blackout-watch-lamp\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":4.05,\"topY\":12.97}]}",
+    "p95Ms": 10,
+    "screenshot": "artifacts/landmark-lighting-calibration/poc-blackout-lm0.20-e3-blackout-ridge-desktop-chrome.png",
+    "probes": [
+      {
+        "id": "off-map-current-receiver@0.30h",
+        "family": "landmark",
+        "x": -215.2,
+        "y": -261.8,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "off-map-current-receiver@0.42h",
+        "family": "landmark",
+        "x": -222.6,
+        "y": -275.1,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "off-map-current-receiver@0.55h",
+        "family": "landmark",
+        "x": -230.7,
+        "y": -289.7,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "off-map-current-receiver@0.68h",
+        "family": "landmark",
+        "x": -239,
+        "y": -304.7,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "trunk-line-breaker-shelter@0.30h",
+        "family": "landmark",
+        "x": -411.9,
+        "y": -120.4,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "trunk-line-breaker-shelter@0.42h",
+        "family": "landmark",
+        "x": -421.6,
+        "y": -133.2,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "trunk-line-breaker-shelter@0.55h",
+        "family": "landmark",
+        "x": -432.3,
+        "y": -147.5,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "trunk-line-breaker-shelter@0.68h",
+        "family": "landmark",
+        "x": -443.2,
+        "y": -162,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "breath-bank-service-rack@0.30h",
+        "family": "landmark",
+        "x": 562.6,
+        "y": -9.8,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "breath-bank-service-rack@0.42h",
+        "family": "landmark",
+        "x": 562.1,
+        "y": -19.1,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "breath-bank-service-rack@0.55h",
+        "family": "landmark",
+        "x": 561.5,
+        "y": -29.4,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "breath-bank-service-rack@0.68h",
+        "family": "landmark",
+        "x": 560.8,
+        "y": -39.8,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "ridge-switch-house@0.30h",
+        "family": "landmark",
+        "x": 639.8,
+        "y": 277.2,
+        "inView": true,
+        "luminance": 0.0651
+      },
+      {
+        "id": "ridge-switch-house@0.42h",
+        "family": "landmark",
+        "x": 639.8,
+        "y": 258.6,
+        "inView": true,
+        "luminance": 0.0448
+      },
+      {
+        "id": "ridge-switch-house@0.55h",
+        "family": "landmark",
+        "x": 639.8,
+        "y": 237.6,
+        "inView": true,
+        "luminance": 0.0481
+      },
+      {
+        "id": "ridge-switch-house@0.68h",
+        "family": "landmark",
+        "x": 639.8,
+        "y": 215.8,
+        "inView": true,
+        "luminance": 0.0642
+      },
+      {
+        "id": "blackout-watch-lamp@0.30h",
+        "family": "landmark",
+        "x": -699.7,
+        "y": 728.7,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "blackout-watch-lamp@0.42h",
+        "family": "landmark",
+        "x": -740.1,
+        "y": 712.2,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "blackout-watch-lamp@0.55h",
+        "family": "landmark",
+        "x": -786.7,
+        "y": 693.1,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "blackout-watch-lamp@0.68h",
+        "family": "landmark",
+        "x": -836.6,
+        "y": 672.8,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "ground5_5",
+        "family": "terrain",
+        "x": 786,
+        "y": 425.3,
+        "inView": true,
+        "luminance": 0.068
+      },
+      {
+        "id": "ground-5_5",
+        "family": "terrain",
+        "x": 493.9,
+        "y": 425.6,
+        "inView": true,
+        "luminance": 0.0398
+      },
+      {
+        "id": "ground0_6",
+        "family": "terrain",
+        "x": 640,
+        "y": 448.7,
+        "inView": true,
+        "luminance": 0.1205
+      },
+      {
+        "id": "ground5_-5",
+        "family": "terrain",
+        "x": 763.4,
+        "y": 232,
+        "inView": true,
+        "luminance": 0.0678
+      },
+      {
+        "id": "hero",
+        "family": "hero",
+        "x": 640.1,
+        "y": 476.2,
+        "inView": true,
+        "luminance": 0.0938
+      }
+    ]
+  }
+]

@@ -1,0 +1,49 @@
+[
+  {
+    "label": "probe-idle",
+    "code": 0,
+    "outcome": {
+      "secured": false,
+      "waves": 2,
+      "timeMs": 78333,
+      "gold": 0,
+      "kills": 33,
+      "calls": 0,
+      "defaultedPicks": 0,
+      "defaultedSecure": 0,
+      "eventLogHash": "fnv1a32:6e1931c2"
+    },
+    "envelope": {
+      "durationTicks": 2350,
+      "entries": 0,
+      "lastEntryTick": null,
+      "bytes": 1457,
+      "tapeHash": "fnv1a32:a45ba9ac"
+    },
+    "views": 5,
+    "at": "2026-09-05T18:43:45.469Z"
+  },
+  {
+    "label": "tune-1",
+    "code": 0,
+    "outcome": {
+      "secured": true,
+      "waves": 20,
+      "timeMs": 600000,
+      "gold": 200,
+      "kills": 926,
+      "calls": 95,
+      "defaultedPicks": 0,
+      "defaultedSecure": 1,
+      "eventLogHash": "fnv1a32:8629a98e"
+    },
+    "envelope": {
+      "durationTicks": 18000,
+      "entries": 95,
+      "bytes": 159993,
+      "tapeHash": "fnv1a32:c69324de"
+    },
+    "views": 98,
+    "at": "2026-09-05T18:48:02.279Z"
+  }
+]

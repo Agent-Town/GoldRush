@@ -1,0 +1,167 @@
+{
+  "invocations": 5,
+  "scenarios": 15,
+  "placementAttempts": 87,
+  "passedScenarios": 10,
+  "placementFailures": 5,
+  "placementFailureRate": 0.3333333333333333,
+  "palisadeX": {
+    "0": 1,
+    "1": 0,
+    "2": 0,
+    "-2": 0,
+    "-1": 0
+  },
+  "failures": [
+    {
+      "invocation": 2,
+      "title": "s1152b-2 trajectory run 2",
+      "id": "stockpile",
+      "x": 0,
+      "z": 13,
+      "reason": "invalid_overlap",
+      "mode": true,
+      "valid": false,
+      "selectedBuildable": "stockpile",
+      "ghostPos": {
+        "x": 2,
+        "z": 9
+      },
+      "playerPos": {
+        "x": 2,
+        "z": 11
+      },
+      "count": 0,
+      "maxCount": 2,
+      "gold": 0,
+      "cost": 0,
+      "economyOk": true,
+      "placementOk": true,
+      "rangeOk": true,
+      "overlapOk": false,
+      "distanceSq": 4,
+      "placeRadius": 6,
+      "deepwaterClaim": false
+    },
+    {
+      "invocation": 3,
+      "title": "s1152b-3 trajectory run 3",
+      "id": "palisade",
+      "x": 0,
+      "z": 9,
+      "reason": "invalid_overlap",
+      "mode": true,
+      "valid": false,
+      "selectedBuildable": "palisade",
+      "ghostPos": {
+        "x": -1,
+        "z": 9
+      },
+      "playerPos": {
+        "x": -1,
+        "z": 11
+      },
+      "count": 2,
+      "maxCount": 48,
+      "gold": 0,
+      "cost": 0,
+      "economyOk": true,
+      "placementOk": true,
+      "rangeOk": true,
+      "overlapOk": false,
+      "distanceSq": 4,
+      "placeRadius": 6,
+      "deepwaterClaim": false
+    },
+    {
+      "invocation": 4,
+      "title": "s1152b-4 trajectory run 2",
+      "id": "stockpile",
+      "x": 0,
+      "z": 13,
+      "reason": "invalid_overlap",
+      "mode": true,
+      "valid": false,
+      "selectedBuildable": "stockpile",
+      "ghostPos": {
+        "x": 2,
+        "z": 9
+      },
+      "playerPos": {
+        "x": 2,
+        "z": 11
+      },
+      "count": 0,
+      "maxCount": 2,
+      "gold": 0,
+      "cost": 0,
+      "economyOk": true,
+      "placementOk": true,
+      "rangeOk": true,
+      "overlapOk": false,
+      "distanceSq": 4,
+      "placeRadius": 6,
+      "deepwaterClaim": false
+    },
+    {
+      "invocation": 4,
+      "title": "s1152b-4 trajectory run 3",
+      "id": "stockpile",
+      "x": 0,
+      "z": 13,
+      "reason": "invalid_overlap",
+      "mode": true,
+      "valid": false,
+      "selectedBuildable": "stockpile",
+      "ghostPos": {
+        "x": 2,
+        "z": 9
+      },
+      "playerPos": {
+        "x": 2,
+        "z": 11
+      },
+      "count": 0,
+      "maxCount": 2,
+      "gold": 0,
+      "cost": 0,
+      "economyOk": true,
+      "placementOk": true,
+      "rangeOk": true,
+      "overlapOk": false,
+      "distanceSq": 4,
+      "placeRadius": 6,
+      "deepwaterClaim": false
+    },
+    {
+      "invocation": 5,
+      "title": "s1152b-5 trajectory run 1",
+      "id": "stockpile",
+      "x": 0,
+      "z": 13,
+      "reason": "invalid_overlap",
+      "mode": true,
+      "valid": false,
+      "selectedBuildable": "stockpile",
+      "ghostPos": {
+        "x": 2,
+        "z": 9
+      },
+      "playerPos": {
+        "x": 2,
+        "z": 11
+      },
+      "count": 0,
+      "maxCount": 2,
+      "gold": 0,
+      "cost": 0,
+      "economyOk": true,
+      "placementOk": true,
+      "rangeOk": true,
+      "overlapOk": false,
+      "distanceSq": 4,
+      "placeRadius": 6,
+      "deepwaterClaim": false
+    }
+  ]
+}

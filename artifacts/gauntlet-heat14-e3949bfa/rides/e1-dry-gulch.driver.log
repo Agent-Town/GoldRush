@@ -1,0 +1,94 @@
+
+########## RIDE e1-dry-gulch · seed e1-dry-gulch-01 · gen 98 · stake era-retired · wall 1500s ##########
+--- 1 charter ---
+{"rig":"opus","contract":"e1-dry-gulch","seed":"e1-dry-gulch-01","seedMode":"bench","stake":"era-retired","generation":98,"wall":1500,"notebookSha256":"0b5fd0572401a1927aafaa231efb0a2b86d0104310d02bc9fce550624913ac24","charterSha256":"1355bddc15db151415e25a9d3fc69eae5a2eb406104d501d4c30ac128b434731","bytes":752362,"out":"/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/gauntlet-heat14-e3949bfa/rides/e1-dry-gulch/charter.md"}
+--- 2 ride ---
+START opus claude-opus-5 pid=73680 session=f4d5381d-1301-4b57-87c2-e55d5db3d643 at=2026-09-17T23:57:00.949Z
+FIRST-OUTPUT opus +120s
+OUTCOME opus secured=true waves=20 gold=328 runsSoFar=2 scored=1 +555s
+OUTCOME opus secured=true waves=20 gold=328 runsSoFar=3 scored=2 +825s
+END opus rc=0 signal=null wall=995s wallHit=false
+ride-wall rc=0 signal=-
+--- 3 land ---
+
+=== 1 finish-ride ===
+{"rig":"opus","contract":"e1-dry-gulch","wall":995,"wallHit":false,"rc":0,"tracked":[],"files":17,"outcome":{"secured":true,"waves":20,"gold":328,"runsSoFar":3,"scoredAttempts":2,"tape":"artifacts/heat14/opus/e1-dry-gulch/tune-1-tape.json","worldModel":"sim-import"},"scoredTapes":[{"file":"attempt-1-tape.json","id":"agent-8e8f0aa3-9686e959-85cd-4828-9ad6-86c40aea18b4","secured":true,"waves":20,"gold":89,"durationTicks":18000,"lastEntryTick":17463,"promotedByRig":false,"discoveredBy":"filename"},{"file":"tune-1-tape.json","id":"agent-2b595776-71adb622-8219-40b7-b796-82897068638d","secured":true,"waves":20,"gold":328,"durationTicks":18000,"lastEntryTick":17980,"promotedByRig":true,"discoveredBy":"outcome-file"}],"otherSecured":[],"reportSections":{"outcome":335,"whatTheMapAsked":2687,"winnability":440,"lessons":5788},"usage":{"turns":66,"toolCalls":34,"tokensIn":132,"tokensOut":134331}}
+tape chosen: tune-1-tape.json (id agent-2b595776-71adb622-8219-40b7-b796-82897068638d, promotedByRig=true, discoveredBy=outcome-file)
+
+=== 2 freeze notebook header ===
+{"headerOnly":true,"headerBytes":431}
+
+=== 3 harnessDigest ===
+1471a6e84ac80be7554d75d064fcd4030dfb9674ab4a1944d051e039e9de4253
+
+=== 4 build-submission ===
+{"tapeId":"agent-2b595776-71adb622-8219-40b7-b796-82897068638d","contract":"e1-dry-gulch","epochId":"epoch-1-frontier","seed":"e1-dry-gulch-01","seedMode":"bench","score":{"secured":true,"waves":20,"timeAlive":600,"gold":328,"baseValue":0},"papers":{"buildId":"08589f815","engineHash":"540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068","era":6,"viewVersion":2},"durationTicks":18000,"lastEntryTick":17980,"stack":{"model":"claude-opus-5","harness":"heat14-operator","harnessVersion":"2.1.272","harnessDigest":"1471a6e84ac80be7554d75d064fcd4030dfb9674ab4a1944d051e039e9de4253","worldModel":"sim-import","config":"attended-hosted headless `claude -p` ride (heat 14, the era-6 re-ride) on Claude Code CLI 2.1.272; charter + door manual + own notebook (self-memory); own controller authored in-ride","calls":165,"tokensIn":26750953,"tokensOut":134331}}
+
+=== 5 publish (POST → poll → WATCH) ===
+FAILED: node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+[TypeError: fetch failed] {
+  [cause]: Error: read ECONNRESET
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:216:20) {
+    errno: -54,
+    code: 'ECONNRESET',
+    syscall: 'read'
+  }
+}
+
+Node.js v26.4.0
+
+POST ok; assay still pending at the 120 s mark — resuming with the poll-only shim (no re-POST)
+
+=== 6 poll-verdict (no re-POST) ===
+{"tapeId":"agent-2b595776-71adb622-8219-40b7-b796-82897068638d","assay":"verified","assayHash":"fnv1a32:314a9b3c","ranked":true,"papers":{"buildId":"08589f815","engineHash":"540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068","era":6,"viewVersion":2}}
+
+=== LANDED ===
+{
+ "rig": "opus",
+ "contract": "e1-dry-gulch",
+ "tapeFile": "tune-1-tape.json",
+ "tapeId": "agent-2b595776-71adb622-8219-40b7-b796-82897068638d",
+ "assay": "verified",
+ "assayHash": "fnv1a32:314a9b3c",
+ "ranked": true,
+ "rank": 1,
+ "waves": 20,
+ "gold": 328,
+ "calls": 165,
+ "eventLogHash": "fnv1a32:afadc88b",
+ "wall": 995,
+ "harnessDigest": "1471a6e84ac80be7554d75d064fcd4030dfb9674ab4a1944d051e039e9de4253",
+ "usage": {
+  "turns": 66,
+  "toolCalls": 34,
+  "tokensIn": 26750953,
+  "tokensOut": 134331
+ }
+}
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+[TypeError: fetch failed] {
+  [cause]: Error: read ECONNRESET
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:216:20) {
+    errno: -54,
+    code: 'ECONNRESET',
+    syscall: 'read'
+  }
+}
+
+Node.js v26.4.0
+fetch retry 1: ECONNRESET
+
+land rc=0
+--- 4 notebook ---
+{"notebook":"/Users/robin/Claude/Projects/goldrush-gauntlet/memories/claude__opus-5/NOTEBOOK.md","generation":98,"headerBytes":431,"entryBytes":9843}
+--- 5 matrix ---
+| 2 | e1-dry-gulch | `e1-dry-gulch-01` | era-retired | 98 | **SECURED** | 20 | 328 | 600s | 995s | `tune-1-tape.json` · `agent-2b595776-71adb622-8219-40b7-b796-82897068638d`<br>fnv1a32:afadc88b | verified `fnv1a32:314a9b3c` rank 1 | gen 98<br>slip `agent-2b595776-71adb622-8219-40b7-b796-82897068638d` |
+{"contract":"e1-dry-gulch","secured":true,"tapesOnDisk":7,"scoredTapes":2,"otherSecured":0,"runs":3,"scoredAttempts":2,"wallHit":false,"rc":0,"assay":"verified","ranked":true,"winnability":"Secured, and the margin was **enormous on survival and visibly open on the score**: the hero never fell below\n**86.3 %** of its running maximum across all 167 views and finished 175/175, thirteen works stood unwrecked at\nthe bank, and `threats.alive` sat pinned at its 60-enemy ceiling without ever threatening the run — while the\nbanked purse was still climbing at roughly 3.3 g/s when the clock ran out, 352 gold short of its own 680 cap."}
+########## END e1-dry-gulch ##########
+

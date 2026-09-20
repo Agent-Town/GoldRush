@@ -1,0 +1,294 @@
+{
+  "contract": "e4-long-road",
+  "seed": "e4-long-road-01",
+  "policy": "floor",
+  "variant": "rig",
+  "views": 7,
+  "outcome": {
+    "secured": false,
+    "waves": 4,
+    "timeMs": 134433,
+    "gold": 0,
+    "kills": 44,
+    "calls": 6,
+    "defaultedPicks": 0,
+    "defaultedSecure": 0,
+    "eventLogHash": "fnv1a32:90df0f8c",
+    "motor": {
+      "graded": [
+        "the-long-road"
+      ],
+      "hauled": true,
+      "arrivedAt": 98.367,
+      "roadDistance": 370,
+      "distanceTravelled": 370,
+      "fuelDrawn": 19.781,
+      "tarHarvested": 9,
+      "convoyArrived": true,
+      "kind": "convoy"
+    }
+  },
+  "motorEventKinds": [
+    "motor_convoy_arrived",
+    "motor_haul_arrived",
+    "motor_haul_dispatched",
+    "motor_road_graded",
+    "motor_tar_harvested",
+    "motor_weather"
+  ],
+  "motorEventCount": 22,
+  "terminalMotor": {
+    "contractId": "e4-long-road",
+    "objective": {
+      "kind": "convoy",
+      "corridorId": "the-long-road",
+      "label": "the far railhead",
+      "stop": {
+        "x": 190,
+        "z": 0
+      },
+      "stopReach": 2.5,
+      "arrived": true,
+      "arrivedAt": 98.367,
+      "roadDistanceAtArrival": 370,
+      "securableAtWave": 12
+    },
+    "weather": {
+      "era": 4,
+      "contractId": "e4-long-road",
+      "phase": "storm",
+      "phaseProgress": 0.369,
+      "cycle": 4,
+      "simTime": 134.433,
+      "movementMultiplier": 0.7,
+      "visibilityMultiplier": 0.55,
+      "hazeColor": "#c99052",
+      "hazeStrength": 0.2,
+      "warning": false,
+      "nextPhaseInSeconds": 7.567
+    },
+    "roads": {
+      "segments": 1,
+      "length": 380,
+      "friendlySpeedMultiplier": 2.5,
+      "friendlyFuelMultiplier": 0.4,
+      "enemyRouteCostMultiplier": 0.25,
+      "gradeReach": 2.5,
+      "graded": [
+        "the-long-road"
+      ],
+      "corridors": [
+        {
+          "id": "the-long-road",
+          "start": {
+            "x": -190,
+            "z": 0
+          },
+          "end": {
+            "x": 190,
+            "z": 0
+          },
+          "graded": true
+        },
+        {
+          "id": "west-way-station-spur",
+          "start": {
+            "x": -136,
+            "z": 0
+          },
+          "end": {
+            "x": -136,
+            "z": -14
+          },
+          "graded": false
+        },
+        {
+          "id": "middle-way-station-spur",
+          "start": {
+            "x": 0,
+            "z": 0
+          },
+          "end": {
+            "x": 0,
+            "z": 14
+          },
+          "graded": false
+        },
+        {
+          "id": "east-way-station-spur",
+          "start": {
+            "x": 136,
+            "z": 0
+          },
+          "end": {
+            "x": 136,
+            "z": -14
+          },
+          "graded": false
+        }
+      ]
+    },
+    "fuel": {
+      "active": true,
+      "tar": 0,
+      "stored": 16.219,
+      "capacity": 24,
+      "harvestedNodes": 3,
+      "refinedTar": 9,
+      "drawn": 19.781,
+      "nodes": [
+        {
+          "x": -12,
+          "z": -8,
+          "harvested": true,
+          "progress": 1
+        },
+        {
+          "x": 0,
+          "z": -8,
+          "harvested": true,
+          "progress": 1
+        },
+        {
+          "x": 12,
+          "z": -8,
+          "harvested": true,
+          "progress": 1
+        }
+      ]
+    },
+    "vehicle": {
+      "active": true,
+      "kind": "hauler",
+      "state": "arrived",
+      "x": 190,
+      "z": 0,
+      "target": null,
+      "speed": 9,
+      "burnPerSecond": 3,
+      "distanceTravelled": 370,
+      "onRoad": true,
+      "roadDistance": 370,
+      "dispatch": {
+        "x": 190,
+        "z": 0
+      }
+    },
+    "convoy": {
+      "routeId": "e4-long-road:convoy",
+      "reroutes": 0,
+      "leaderDistance": 370,
+      "members": [
+        {
+          "id": "e4-long-road:hauler-1",
+          "distance": 370,
+          "gap": 0,
+          "x": 190,
+          "z": 0
+        },
+        {
+          "id": "e4-long-road:hauler-2",
+          "distance": 367,
+          "gap": 3,
+          "x": 187,
+          "z": 0
+        },
+        {
+          "id": "e4-long-road:hauler-3",
+          "distance": 364,
+          "gap": 3,
+          "x": 184,
+          "z": 0
+        }
+      ],
+      "label": "the far railhead",
+      "total": 370,
+      "arrived": true,
+      "arrivedAt": 98.367
+    },
+    "events": [
+      {
+        "type": "motor_weather",
+        "at": 52.033,
+        "phase": "clear",
+        "cycle": 1
+      },
+      {
+        "type": "motor_weather",
+        "at": 66.033,
+        "phase": "telegraph",
+        "cycle": 2
+      },
+      {
+        "type": "motor_weather",
+        "at": 70.033,
+        "phase": "storm",
+        "cycle": 2
+      },
+      {
+        "type": "motor_haul_dispatched",
+        "at": 81.867,
+        "target": {
+          "x": 190,
+          "z": 0
+        },
+        "stored": 24,
+        "tar": 3
+      },
+      {
+        "type": "motor_weather",
+        "at": 82.033,
+        "phase": "clear",
+        "cycle": 2
+      },
+      {
+        "type": "motor_weather",
+        "at": 96.033,
+        "phase": "telegraph",
+        "cycle": 3
+      },
+      {
+        "type": "motor_haul_arrived",
+        "at": 98.367,
+        "x": 190,
+        "z": 0,
+        "atStop": false,
+        "roadDistance": 370,
+        "distanceTravelled": 370,
+        "fuelDrawn": 19.781
+      },
+      {
+        "type": "motor_convoy_arrived",
+        "at": 98.367,
+        "routeId": "e4-long-road:convoy",
+        "distance": 370
+      },
+      {
+        "type": "motor_weather",
+        "at": 100.033,
+        "phase": "storm",
+        "cycle": 3
+      },
+      {
+        "type": "motor_weather",
+        "at": 112.033,
+        "phase": "clear",
+        "cycle": 3
+      },
+      {
+        "type": "motor_weather",
+        "at": 126.033,
+        "phase": "telegraph",
+        "cycle": 4
+      },
+      {
+        "type": "motor_weather",
+        "at": 130.033,
+        "phase": "storm",
+        "cycle": 4
+      }
+    ],
+    "eventCount": 22
+  },
+  "speedLine": "gr-sim speed: 2.04 waves/s"
+}

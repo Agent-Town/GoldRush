@@ -1,0 +1,75 @@
+
+Running 6 tests using 1 worker
+
+[1/6] [desktop-chrome] › e2e/vp-02-sprite-animation.spec.ts:405:1 › warmed test clip swaps do not grow renderer memory or draw calls
+[2/6] [desktop-chrome] › e2e/vp-02-sprite-animation.spec.ts:405:1 › warmed test clip swaps do not grow renderer memory or draw calls
+  1) [desktop-chrome] › e2e/vp-02-sprite-animation.spec.ts:405:1 › warmed test clip swaps do not grow renderer memory or draw calls 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 84
+    Received: 85
+
+      465 |   // NEW draw calls AT REST" -- compare resting floors; a leaked persistent draw
+      466 |   // raises the floor and still fails.
+    > 467 |   expect(afterCalls).toBe(baselineCalls);
+          |                      ^
+      468 |   expect(errors.consoleErrors).toEqual([]);
+      469 |   expect(errors.pageErrors).toEqual([]);
+      470 | });
+        at /Users/robin/Claude/Projects/Gold Rush/gate-s1491/e2e/vp-02-sprite-animation.spec.ts:467:22
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/vp-02-sprite-animation-war-569af-nderer-memory-or-draw-calls-desktop-chrome-repeat1/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/vp-02-sprite-animation-war-569af-nderer-memory-or-draw-calls-desktop-chrome-repeat1/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/vp-02-sprite-animation-war-569af-nderer-memory-or-draw-calls-desktop-chrome-repeat1/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/vp-02-sprite-animation-war-569af-nderer-memory-or-draw-calls-desktop-chrome-repeat1/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[3/6] [desktop-chrome] › e2e/vp-02-sprite-animation.spec.ts:405:1 › warmed test clip swaps do not grow renderer memory or draw calls
+[4/6] [mobile-chrome] › e2e/vp-02-sprite-animation.spec.ts:405:1 › warmed test clip swaps do not grow renderer memory or draw calls
+[5/6] [mobile-chrome] › e2e/vp-02-sprite-animation.spec.ts:405:1 › warmed test clip swaps do not grow renderer memory or draw calls
+  2) [mobile-chrome] › e2e/vp-02-sprite-animation.spec.ts:405:1 › warmed test clip swaps do not grow renderer memory or draw calls 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 61
+    Received: 62
+
+      465 |   // NEW draw calls AT REST" -- compare resting floors; a leaked persistent draw
+      466 |   // raises the floor and still fails.
+    > 467 |   expect(afterCalls).toBe(baselineCalls);
+          |                      ^
+      468 |   expect(errors.consoleErrors).toEqual([]);
+      469 |   expect(errors.pageErrors).toEqual([]);
+      470 | });
+        at /Users/robin/Claude/Projects/Gold Rush/gate-s1491/e2e/vp-02-sprite-animation.spec.ts:467:22
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/vp-02-sprite-animation-war-569af-nderer-memory-or-draw-calls-mobile-chrome-repeat1/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/vp-02-sprite-animation-war-569af-nderer-memory-or-draw-calls-mobile-chrome-repeat1/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/vp-02-sprite-animation-war-569af-nderer-memory-or-draw-calls-mobile-chrome-repeat1/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/vp-02-sprite-animation-war-569af-nderer-memory-or-draw-calls-mobile-chrome-repeat1/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[6/6] [mobile-chrome] › e2e/vp-02-sprite-animation.spec.ts:405:1 › warmed test clip swaps do not grow renderer memory or draw calls
+  2 failed
+    [desktop-chrome] › e2e/vp-02-sprite-animation.spec.ts:405:1 › warmed test clip swaps do not grow renderer memory or draw calls 
+    [mobile-chrome] › e2e/vp-02-sprite-animation.spec.ts:405:1 › warmed test clip swaps do not grow renderer memory or draw calls 
+  4 passed (1.8m)

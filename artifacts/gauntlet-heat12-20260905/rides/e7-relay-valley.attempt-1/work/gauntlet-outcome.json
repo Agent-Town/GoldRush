@@ -1,0 +1,27 @@
+{
+  "secured": false,
+  "waves": 15,
+  "timeMs": 460333,
+  "gold": 40,
+  "kills": 537,
+  "calls": 62,
+  "defaultedPicks": 0,
+  "defaultedSecure": 0,
+  "eventLogHash": "fnv1a32:f9866fc8",
+  "tape": "/private/tmp/heat12-038cc280/artifacts/heat12/opus/e7-relay-valley/tune-3-tape.json",
+  "scored": true,
+  "runsSoFar": 4,
+  "scoredAttempts": 1,
+  "worldModel": "sim-import",
+  "envelope": {
+    "durationTicks": 13810,
+    "lastEntryTick": 13614,
+    "entryCount": 62,
+    "maxTicks": 18002,
+    "maxEntries": 3601,
+    "maxTapeBytes": 592544,
+    "bytes": 170916,
+    "admissible": "yes, but the run is NOT SECURED so nothing is put forward"
+  },
+  "note": "NOT SECURED. The E7 objective latch WAS discharged on every controller ride (now.playbookUse.objectiveMet true, relaysLitByProgram ['relay-site-r3'], programRuns 1, at t=11.6s on the cheap line). What ends the run is attrition on a welded 100/175-hp hero that no buildable can defend. Ladder: idle w2/79.3s -> v1 w13/398.5s -> v2 (thief decoy) w14/429.9s -> v3 w15/460.3s. F-HEAT11-1 is cured for this contract: twist.clockTicks 18000 now feeds runTapeEnvelopeForContract, giving maxTicks 18002 against a wave-20 secure at tick 18000."
+}

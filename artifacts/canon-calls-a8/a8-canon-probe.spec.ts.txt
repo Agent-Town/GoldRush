@@ -1,0 +1,139 @@
+import { mkdir } from 'node:fs/promises';
+import path from 'node:path';
+import { expect, test, type Page, type TestInfo } from '@playwright/test';
+import { META_PROGRESS_KEY } from '../src/game/MetaProgress';
+import { PROFILE_KEY, TOWN_NAME_KEY, profileDataKey, type ProfileState } from '../src/game/ProfileStorage';
+import { STORY_TALES_STORAGE_KEY } from '../src/story/settings';
+import { STORY_SPEAKERS } from '../src/story/speakers';
+
+// canon-calls-a8 SCRATCH PROBE (never committed as a spec; retained beside the evidence as .txt).
+// ss-01's own founding-beat test is 6/8 RED ON MAIN for a reason unrelated to portraits (a
+// `ledger-page` beat now heads the queue, so its positional expectation misses; proved by
+// revert-run), and that red would otherwise leave the owner's ruling unproven in a real browser.
+// This probe reaches the SAME card by draining the queue instead of assuming its position, and
+// asserts what the ruling is actually about: a PLAIN boot (no ?debug in the URL), the Elder's card
+// carrying the new woman's plate, DECODED, at 390 px and at 1280 px.
+
+const SHOTS = path.resolve('reviews/shots-canon-calls-a8');
+
+type ErrorBucket = { consoleErrors: string[]; pageErrors: string[] };
+
+function collectErrors(page: Page): ErrorBucket {
+  const bucket: ErrorBucket = { consoleErrors: [], pageErrors: [] };
+  page.on('console', (message) => {
+    if (message.type() === 'error') bucket.consoleErrors.push(message.text());
+  });
+  page.on('pageerror', (error) => bucket.pageErrors.push(error.message));
+  return bucket;
+}
+
+async function seedProfile(page: Page): Promise<void> {
+  await page.goto('/?debug&seed=a8-probe-seed');
+  await page.evaluate(
+    ({ profileKey, townKey, talesKey, metaKey }) => {
+      localStorage.clear();
+      sessionStorage.clear();
+      const state: ProfileState = {
+        version: 2,
+        activeId: 'robin',
+        profiles: [
+          { id: 'robin', name: 'Robin', createdAt: 1, updatedAt: 1, difficultyPreset: 'trail', hintsSeen: [] },
+        ],
+      };
+      localStorage.setItem(profileKey, JSON.stringify(state));
+      localStorage.setItem(talesKey, '1');
+      localStorage.setItem(metaKey, JSON.stringify({ version: 1, tracks: { territory: 0, science: 0, hero: 0, agent: 1 } }));
+    },
+    {
+      profileKey: PROFILE_KEY,
+      townKey: profileDataKey('robin', TOWN_NAME_KEY),
+      talesKey: profileDataKey('robin', STORY_TALES_STORAGE_KEY),
+      metaKey: profileDataKey('robin', META_PROGRESS_KEY),
+    },
+  );
+}
+
+test('PLAIN BOOT: the Elder card carries the woman plate, decoded, and every portrait resolves', async ({ page }, testInfo) => {
+  test.setTimeout(90_000);
+  await seedProfile(page);
+  const errors = collectErrors(page);
+
+  await page.goto('/');
+  expect(page.url(), 'the probe must assert on a PLAIN boot, no ?debug').not.toContain('debug');
+
+  await page.getByTestId('start-menu-enter-town').click();
+  await page.waitForFunction(() => (window.__GR_TOWN_DIAGNOSTICS__?.frame ?? 0) > 10);
+  await page.getByTestId('town-name-input').fill('Aurora Bend');
+  await page.getByTestId('town-name-submit').click();
+
+  // Drain the beat queue until the Elder's founding card is on top, recording what came before it
+  // so the report can name the beats that displaced it rather than guess at them.
+  const card = page.getByTestId('story-beat-card');
+  const seen: string[] = [];
+  for (let i = 0; i < 8; i++) {
+    await expect(card).toBeVisible({ timeout: 10_000 });
+    await expect(card).toHaveClass(/story-beat-card--visible/);
+    const id = await card.getAttribute('data-beat-id');
+    seen.push(id ?? '(null)');
+    if (id === 'founding-welcome') break;
+    await page.mouse.click(6, 6);
+    await expect(card).toHaveCount(0);
+  }
+  // eslint-disable-next-line no-console
+  console.log(`A8 PROBE beat queue (${testInfo.project.name}): ${seen.join(' -> ')}`);
+  expect(seen, 'founding-welcome must be reachable on a plain boot').toContain('founding-welcome');
+
+  await expect(card).toHaveAttribute('data-beat-id', 'founding-welcome');
+  await expect(card).toHaveAttribute('data-speaker', 'elder');
+  const portrait = page.getByTestId('story-beat-portrait');
+  await expect(portrait).toHaveAttribute('src', /townsfolk-elder/);
+  await expect(portrait).toHaveAttribute('style', /50% 44%/);
+
+  // DECODED, not merely addressed: a 404 still yields a src attribute.
+  const decoded = await portrait.evaluate((el) => {
+    const img = el as HTMLImageElement;
+    return { w: img.naturalWidth, h: img.naturalHeight, box: { w: img.clientWidth, h: img.clientHeight } };
+  });
+  expect(decoded.w, 'the Elder plate must decode').toBe(384);
+  expect(decoded.h).toBe(384);
+  // eslint-disable-next-line no-console
+  console.log(`A8 PROBE elder portrait (${testInfo.project.name}): natural ${decoded.w}x${decoded.h}, box ${decoded.box.w}x${decoded.box.h}`);
+
+  await mkdir(SHOTS, { recursive: true });
+  await page.waitForTimeout(240);
+  await page.screenshot({ path: path.join(SHOTS, `plain-boot-elder-card-${testInfo.project.name}.png`) });
+  await card.screenshot({ path: path.join(SHOTS, `plain-boot-elder-card-crop-${testInfo.project.name}.png`) });
+
+  // Every registered portrait decodes, the Old Digger's new one included. Registering a speaker
+  // whose plate 404s is the failure this asserts against. The roster is resolved INSIDE THE PAGE
+  // (the module's portraitUrl is built from `import.meta.url`, so importing it node-side yields
+  // file:// hrefs the browser cannot load - that is a probe bug, not a product one, and it is why
+  // this config boots a DEV server: only a dev server serves /src/*.ts to a runtime import).
+  const roster = await page.evaluate(async () => {
+    const mod = await import('/src/story/speakers.ts');
+    const entries = Object.values(mod.STORY_SPEAKERS as Record<string, { id: string; portraitUrl: string }>);
+    const bad: { id: string; url: string }[] = [];
+    const sizes: Record<string, [number, number]> = {};
+    await Promise.all(entries.map((entry) => new Promise<void>((resolve) => {
+      const img = new Image();
+      img.onload = () => {
+        sizes[entry.id] = [img.naturalWidth, img.naturalHeight];
+        if (!img.naturalWidth) bad.push({ id: entry.id, url: entry.portraitUrl });
+        resolve();
+      };
+      img.onerror = () => { bad.push({ id: entry.id, url: entry.portraitUrl }); resolve(); };
+      img.src = entry.portraitUrl;
+    })));
+    return { count: entries.length, bad, digger: sizes['old-digger'] ?? null, elder: sizes['elder'] ?? null, elderE2: sizes['elder-e2'] ?? null };
+  });
+  expect(roster.bad, 'every registered speaker portrait must decode').toEqual([]);
+  // eslint-disable-next-line no-console
+  console.log(`A8 PROBE roster (${testInfo.project.name}): ${roster.count} speakers, ${roster.bad.length} broken; old-digger ${JSON.stringify(roster.digger)}, elder ${JSON.stringify(roster.elder)}, elder-e2 ${JSON.stringify(roster.elderE2)}`);
+  expect(roster.count, 'the registered roster is 80 + the Old Digger').toBe(Object.keys(STORY_SPEAKERS).length);
+  expect(roster.digger, 'the Old Digger plate must decode at 384x384').toEqual([384, 384]);
+  expect(roster.elder, 'the new E1 Elder plate must decode at 384x384').toEqual([384, 384]);
+  expect(roster.elderE2, 'the new E2 Elder plate must decode at 384x384').toEqual([384, 384]);
+
+  expect(errors.consoleErrors).toEqual([]);
+  expect(errors.pageErrors).toEqual([]);
+});

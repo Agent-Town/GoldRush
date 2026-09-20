@@ -1,0 +1,53 @@
+{
+  "phase": "u2",
+  "project": "mobile-chrome",
+  "shot": "6b-mobile-lite",
+  "frameMs": {
+    "last": 7.300000190734863,
+    "avg": 8.328333332803513,
+    "p95": 10.299999713897705,
+    "sampleCount": 180
+  },
+  "renderMs": {
+    "last": 0.40000009536743164,
+    "avg": 0.7150000174840291,
+    "p95": 2.0999999046325684,
+    "sampleCount": 180
+  },
+  "renderer": {
+    "calls": 75,
+    "geometries": 52,
+    "textures": 51,
+    "triangles": 3588
+  },
+  "canvas": {
+    "width": 390,
+    "height": 844,
+    "dpr": 1
+  },
+  "zoom": 0.85,
+  "contact": {
+    "blobShadows": 11,
+    "skirts": 6,
+    "sunShadow": {
+      "enabled": true,
+      "mapSize": 1024,
+      "extent": 17
+    }
+  },
+  "lighting": {
+    "night": false,
+    "background": "#e9c98d",
+    "fog": "#e9c98d",
+    "fogNear": 34,
+    "fogFar": 76,
+    "sunIntensity": 1.85,
+    "fillIntensity": 1.15
+  },
+  "tier": "lite",
+  "buildings": 6,
+  "errors": {
+    "consoleErrors": [],
+    "pageErrors": []
+  }
+}

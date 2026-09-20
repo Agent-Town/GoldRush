@@ -1,0 +1,9 @@
+# Echo baseline: distinct buildings collapse to six boxes
+
+Current browser captures are in `baseline-varied/`. Both requested full/lite runs completed without console/page errors. Each contains six successfully preplaced bank-compatible building types (turret, rotated palisade, sentry beacon, boiler house, stockpile and lantern). Mirror-start and mirror-arrived each have exactly six BoxGeometry copies. Source meshes visibly differ; copied silhouettes do not. This confirms the source-level finding in the actual Game runtime.
+
+The first `baseline/` set is the empty-base case: all original placement coordinates were rejected, and copies are empty. It is not varied-base evidence. Relay Valley's central ground is walkable but not buildable; valid bank sites were found farther out. The varied fixture uses the existing preplaced option to bypass catalog unlocking while retaining placement/overlap validation. Sluice and assay office require river adjacency and were not placed; they need a separate fixture.
+
+Screenshots keep the normal game HUD and frame the source or copied centroid through the public teleport seam. Manual simulation accelerates arrival/adaptation. This is presentation evidence, not natural progression or performance measurement. The requested tier is recorded, but actual resolved tier/GLB readiness was not recorded yet, so these frames do not prove FULL loader readiness or FULL/LITE parity. Mobile, jar, delayed loading, demotion and upgraded-building cases remain pending.
+
+Next: expose narrow live-shape snapshots from the existing render owners; preserve internal transforms and use owned geometry/materials for Echo lifetime. Keep simulation counts, copied centers, progression and non-kill capture unchanged. Add signal contours and a readable kept jar, then verify actual tier/loading state and lifecycle alongside the visual comparison.

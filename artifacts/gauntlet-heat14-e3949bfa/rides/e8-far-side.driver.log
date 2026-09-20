@@ -1,0 +1,81 @@
+
+########## RIDE e8-far-side · seed e8-far-side-01 · gen 131 · stake era-retired · wall 1500s ##########
+--- 1 charter ---
+{"rig":"opus","contract":"e8-far-side","seed":"e8-far-side-01","seedMode":"bench","stake":"era-retired","generation":131,"wall":1500,"notebookSha256":"f365d83cb9557d20e958ada190b2988dbedd033d4109c979d1afef8d0879f558","charterSha256":"a2d405c9748669ef866562022af30ba9b82f55f01e892fdf1a1e8f2f085af25f","bytes":1074533,"out":"/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/gauntlet-heat14-e3949bfa/rides/e8-far-side/charter.md"}
+--- 2 ride ---
+START opus claude-opus-5 pid=17690 session=ba2025f6-a93c-4348-a3d1-bfd2e85b4878 at=2026-09-18T10:24:56.215Z
+FIRST-OUTPUT opus +210s
+OUTCOME opus secured=true waves=20 gold=60 runsSoFar=4 scored=2 +870s
+OUTCOME opus secured=true waves=20 gold=60 runsSoFar=5 scored=2 +1035s
+END opus rc=0 signal=null wall=1041s wallHit=false
+ride-wall rc=0 signal=-
+--- 3 land ---
+
+=== 1 finish-ride ===
+{"rig":"opus","contract":"e8-far-side","wall":1041,"wallHit":false,"rc":0,"tracked":[],"files":32,"outcome":{"secured":true,"waves":20,"gold":60,"runsSoFar":5,"scoredAttempts":2,"tape":"/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/heat14/opus/e8-far-side/attempt-2-tape.json","worldModel":"sim-import"},"scoredTapes":[{"file":"attempt-1-tape.json","id":"agent-9b1d2404-d74a71d4-d1ba-4733-b65d-c561bc341636","secured":false,"waves":19,"gold":100,"durationTicks":17775,"lastEntryTick":17741,"promotedByRig":false,"discoveredBy":"filename"},{"file":"attempt-2-tape.json","id":"agent-5d56eef3-05beaded-6d29-41b0-b691-5fe2e8125e0c","secured":true,"waves":20,"gold":60,"durationTicks":18000,"lastEntryTick":17899,"promotedByRig":true,"discoveredBy":"outcome-file+filename"}],"otherSecured":[],"reportSections":{"outcome":1550,"whatTheMapAsked":2687,"winnability":449,"lessons":4564},"usage":{"turns":78,"toolCalls":37,"tokensIn":156,"tokensOut":150615}}
+tape chosen: attempt-2-tape.json (id agent-5d56eef3-05beaded-6d29-41b0-b691-5fe2e8125e0c, promotedByRig=true, discoveredBy=outcome-file+filename)
+
+=== 2 freeze notebook header ===
+{"headerOnly":true,"headerBytes":432}
+
+=== 3 harnessDigest ===
+ec312528366db4e2e1e010e86b53171c5d55ddc9948f2ba6aa3e8c930919ea45
+
+=== 4 build-submission ===
+{"tapeId":"agent-5d56eef3-05beaded-6d29-41b0-b691-5fe2e8125e0c","contract":"e8-far-side","epochId":"epoch-8-orbital","seed":"e8-far-side-01","seedMode":"bench","score":{"secured":true,"waves":20,"timeAlive":600,"gold":60,"baseValue":0},"papers":{"buildId":"d8bab75a8","engineHash":"540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068","era":6,"viewVersion":2},"durationTicks":18000,"lastEntryTick":17899,"stack":{"model":"claude-opus-5","harness":"heat14-operator","harnessVersion":"2.1.272","harnessDigest":"ec312528366db4e2e1e010e86b53171c5d55ddc9948f2ba6aa3e8c930919ea45","worldModel":"sim-import","config":"attended-hosted headless `claude -p` ride (heat 14, the era-6 re-ride) on Claude Code CLI 2.1.272; charter + door manual + own notebook (self-memory); own controller authored in-ride","calls":101,"tokensIn":42622753,"tokensOut":150615}}
+
+=== 5 publish (POST → poll → WATCH) ===
+FAILED: file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/gauntlet-heat14-e3949bfa/publish-submission.mjs:37
+if (slip?.assay !== 'verified') throw new Error(`assay ${slip?.assay ?? 'missing'}: ${slip?.assayReason ?? 'no reason'}`);
+                                      ^
+
+Error: assay pending: no reason
+    at file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/gauntlet-heat14-e3949bfa/publish-submission.mjs:37:39
+
+Node.js v26.4.0
+
+POST ok; assay still pending at the 120 s mark — resuming with the poll-only shim (no re-POST)
+
+=== 6 poll-verdict (no re-POST) ===
+{"tapeId":"agent-5d56eef3-05beaded-6d29-41b0-b691-5fe2e8125e0c","assay":"verified","assayHash":"fnv1a32:1795242e","ranked":true,"papers":{"buildId":"d8bab75a8","engineHash":"540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068","era":6,"viewVersion":2}}
+
+=== LANDED ===
+{
+ "rig": "opus",
+ "contract": "e8-far-side",
+ "tapeFile": "attempt-2-tape.json",
+ "tapeId": "agent-5d56eef3-05beaded-6d29-41b0-b691-5fe2e8125e0c",
+ "assay": "verified",
+ "assayHash": "fnv1a32:1795242e",
+ "ranked": true,
+ "rank": 1,
+ "waves": 20,
+ "gold": 60,
+ "calls": 101,
+ "eventLogHash": "fnv1a32:64b3b447",
+ "wall": 1041,
+ "harnessDigest": "ec312528366db4e2e1e010e86b53171c5d55ddc9948f2ba6aa3e8c930919ea45",
+ "usage": {
+  "turns": 78,
+  "toolCalls": 37,
+  "tokensIn": 42622753,
+  "tokensOut": 150615
+ }
+}
+file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/gauntlet-heat14-e3949bfa/publish-submission.mjs:37
+if (slip?.assay !== 'verified') throw new Error(`assay ${slip?.assay ?? 'missing'}: ${slip?.assayReason ?? 'no reason'}`);
+                                      ^
+
+Error: assay pending: no reason
+    at file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/gauntlet-heat14-e3949bfa/publish-submission.mjs:37:39
+
+Node.js v26.4.0
+
+land rc=0
+--- 4 notebook ---
+{"notebook":"/Users/robin/Claude/Projects/goldrush-gauntlet/memories/claude__opus-5/NOTEBOOK.md","generation":131,"headerBytes":432,"entryBytes":8511}
+--- 5 matrix ---
+| 35 | e8-far-side | `e8-far-side-01` | era-retired | 131 | **SECURED** | 20 | 60 | 600s | 1041s | `attempt-2-tape.json` · `agent-5d56eef3-05beaded-6d29-41b0-b691-5fe2e8125e0c`<br>fnv1a32:64b3b447 | verified `fnv1a32:1795242e` rank 1 | gen 131<br>slip `agent-5d56eef3-05beaded-6d29-41b0-b691-5fe2e8125e0c` |
+{"contract":"e8-far-side","secured":true,"tapesOnDisk":11,"scoredTapes":2,"otherSecured":0,"runs":5,"scoredAttempts":2,"wallHit":false,"rc":0,"assay":"verified","ranked":true,"winnability":"Secured, and the margin was **wide on both era gates and genuinely thin on the hero**: the crossing latched with a whole spare window and zero breathless entries, nothing was ever wrecked and nothing stolen — but the hero bottomed at **11.0 %** (19.2/175) at t = 567.5 and was saved by a draft heal, so one more wave on that slope would have been a coin flip, and the 60 gold banked of 1,180 panned is the axis I deliberately spent on staying alive."}
+########## END e8-far-side ##########
+

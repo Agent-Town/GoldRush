@@ -1,0 +1,127 @@
+{
+  "rig": "fable",
+  "contract": "e4-gusher-county",
+  "model": "claude-fable-5",
+  "sessionId": "9a97b640-c085-444d-a5ce-93fc151d38a1",
+  "startedAt": "2026-09-03T23:20:16.520Z",
+  "endedAt": "2026-09-03T23:41:41.633Z",
+  "wallClockSeconds": 1285,
+  "wallHit": false,
+  "exitCode": 0,
+  "signal": null,
+  "setupToFirstOutputSeconds": 705,
+  "arenaTrackedChanges": [],
+  "workspaceFiles": [
+    "attempt-1-tape.json",
+    "attempt-1-tape.json.lastview.json",
+    "attempt-1-tape.json.viewlog",
+    "controller.mjs",
+    "gauntlet-outcome.json",
+    "gauntlet-report.md",
+    "runs.json",
+    "tune-1-tape.json",
+    "tune-1-tape.json.lastview.json",
+    "tune-1-tape.json.viewlog",
+    "tune-2-tape.json",
+    "tune-2-tape.json.lastview.json",
+    "tune-2-tape.json.viewlog",
+    "tune-3-tape.json",
+    "tune-3-tape.json.lastview.json",
+    "tune-3-tape.json.viewlog"
+  ],
+  "outcome": {
+    "secured": true,
+    "waves": 12,
+    "timeMs": 360000,
+    "gold": 0,
+    "kills": 415,
+    "calls": 49,
+    "defaultedPicks": 0,
+    "defaultedSecure": 0,
+    "eventLogHash": "fnv1a32:f01e0b98",
+    "motor": {
+      "graded": [
+        "camp-to-east-lease",
+        "camp-to-north-lease",
+        "camp-to-west-lease"
+      ],
+      "hauled": true,
+      "arrivedAt": 154.9,
+      "roadDistance": 230.5,
+      "distanceTravelled": 264.4,
+      "fuelDrawn": 24.729,
+      "tarHarvested": 9,
+      "convoyArrived": null,
+      "kind": "deliveries",
+      "delivered": [
+        "camp-to-west-lease",
+        "camp-to-east-lease",
+        "camp-to-north-lease"
+      ]
+    },
+    "tape": "/private/tmp/heat11-b118c4d2/artifacts/heat11/fable/e4-gusher-county/attempt-1-tape.json",
+    "scored": true,
+    "runsSoFar": 4,
+    "scoredAttempts": 1,
+    "worldModel": "sim-import"
+  },
+  "outcomeError": null,
+  "scoredTapes": [
+    {
+      "file": "attempt-1-tape.json",
+      "id": "agent-4ba94d08-88f537cc-9a9b-4912-a5c2-09fc6b43f74f",
+      "contract": "e4-gusher-county",
+      "seed": "e4-gusher-county-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "b118c4d20",
+        "engineHash": "49c34f8bba3d61e003d1f421398e3835e3107945f396800fa124f946b2e4b2f9",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 12,
+        "timeAlive": 360,
+        "gold": 0
+      },
+      "entries": 49
+    }
+  ],
+  "otherSecuredTapes": [
+    {
+      "file": "tune-3-tape.json",
+      "id": "agent-4ba94d08-840049f8-fdcb-486c-a5ce-84218e56fa4d",
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 12,
+        "timeAlive": 360,
+        "gold": 0
+      },
+      "meta": {
+        "buildId": "b118c4d20",
+        "engineHash": "49c34f8bba3d61e003d1f421398e3835e3107945f396800fa124f946b2e4b2f9",
+        "era": 5,
+        "viewVersion": 2
+      }
+    }
+  ],
+  "report": {
+    "outcome": "SECURED — waves 12, timeAlive 360.000s, gold 0, kills 415, calls 49, zero defaulted picks/secure. Tape put forward: `/private/tmp/heat11-b118c4d2/artifacts/heat11/fable/e4-gusher-county/attempt-1-tape.json` (eventLogHash `fnv1a32:f01e0b98`; motor: all three leases delivered — west/east/north — errand arrived t154.9, fuel drawn 24.73 of 36, roadDistance 230.5 of 264.4). 4 sim runs total, 1 scored attempt. worldModel: sim-import.",
+    "whatTheMapAsked": "The 2026-09-02 RESKIN verdict is stale for this arena, exactly as I found on e4-boneyard and e4-dust-flats: since the e4-roads-and-convoys merge, `autoSecureWaveForRun`'s motor clause holds the secure unreachable until `now.motor.objective.arrived`, and on this map the errand is the era's fullest expression yet — a three-stop **deliveries** tour (`objective.kind: \"deliveries\"`, one Hauler rest at the head of every lease road) threaded through a 30-second weather clock whose every storm **washes out one lease in rotation** (`roads.closed` / `closesNext`, no road bonus and no delivery while it blows). I had to reason about E4's named mechanic continuously and it punished me twice before yielding: my first two rides ran the 36-fuel tank dry (36.0 drawn, north/east undelivered) because multi-leg HAUL chains kept dispatching the 20wu off-road staging legs inside storm phases, where 0.7× movement stretches the same distance to ~1.43× the fuel. The fields that carried it: `now.motor.fuel` (3 tar nodes = 36 lifetime fuel, 24 tank), `roads.corridors/graded/closed`, `weather.phase`+`nextPhaseInSeconds` (the dispatch-timing clock), `vehicle.state/dispatch`, `objective.remaining/delivered`; the verbs: GRADE ×3, HAUL as a staged state machine (home along the old road → walk to the next stake → timed off-road stage leg → road leg out). The winning ride drew 24.7 of 36 fuel purely by dispatching off-road legs only in checked clear windows. That said, the errand was done at t154.9 of 360 — the back half is ordinary fixed-hero stationary survival (fort at the camp stake, seam-chasing economy across 30g-cap seams 40–70wu out, upgrade drafts) wearing the era's dust. Honest verdict for the reskin ladder: the E4 system is load-bearing and here it is finally *scheduling-hard* (fuel × storms × washout rotation is a real planning problem, not a prologue chore), but it still shares the ride with a survival game it doesn't touch.",
+    "winnability": "Winnable through the door from the starting kit, on the third full ride: the survival half is wide (hero never below 100/100 at any view, ended 155.8/175, all works untouched at 334/334, waves 9–12 all \"held\") but the errand half is genuinely thin — a naive router burns the 36-fuel lifetime tank ~8 fuel short (two honest rides proved it), and the map only opens once hauler legs are dispatched against the published weather clock, one leg per view, off-road staging only in clear windows.",
+    "lessons": "- e4-gusher-county FIRST SECURE (cold plain boot, w12/360.0s/0g/415 kills/49 calls, hash fnv1a32:f01e0b98, zero defaults, determinism proven by sha256-identical input logs tune-3 vs attempt-1): errand = jiggle-dwell tar (0,-8)→(-12,-8)→GRADE west→hop-HAUL→(12,-8)→GRADE east→(0,8)→GRADE north, then deliveries west→north→east as a ONE-LEG-PER-VIEW state machine; fort = turrets (-3,-6.6),(3,-6.6),(-3,-1) + beacons (0,-1),(-6,-4) at the fixed hero (0,-4); REPAIR_UNDER 55; rig weapon + explicit BLAST_AT at hero feet (threats≥4); 6-pan HARVEST chains scored d_prosp + 0.7×d_camp; errand arrived t154.9 on 24.7/36 fuel.\n- THE FUEL-SECONDS LAW, measured: the E4 tank is a LIFETIME 36 (3 nodes × 12), not a rechargeable resource, and storms multiply fuel per wu by ~1.43 (0.7× speed, burn by the second). Two rides died at exactly 36.0 drawn with one lease left. Off-road staging legs between road stakes (20–24wu = 6.7–9.5 fuel) are the whole budget risk: dispatch them ONLY in a checked window (`weather.phase==='clear' && nextPhaseInSeconds+4 > legTime+2.5`, prospector already standing at the stake so walk time is zero). Road legs are storm-tolerant (2.5×speed/0.4×burn makes the tax pennies) — chain those freely.\n- MULTI-LEG HAUL CHAINS ARE A FUEL TRAP: each HAUL dispatches at prospector-arrival time, which drifts into storms uncontrollably when three legs share one array. One hauler leg per view, with HOLD-at-the-next-stake as the wait state, made the errand deterministic-cheap (24.7 fuel vs 36.0 twice). The homing chain [HAUL home, mv nextStake, HOLD nextStake] is the exception — homing is a road leg and the pre-walk is free.\n- A DEAD ERRAND MUST BE DECLARED DEAD: my errand steps preceded harvest in the array, so when tune-1's hauler stranded dry (drawn=36, stored=0), the generator re-emitted lease walks forever and the prospector commuted instead of panning — income 0.2g/s, mid-game gone. Any errand generator needs a give-up valve (`fuel.drawn≥35.5 && stored<1` → skip errand permanently) even if you believe your fuel discipline.\n- The washout rotation (`roads.closed`, one lease per storm, in order) is handled entirely by target-selection at planning time: filter closed, keep a fixed staging-cheap order (west→north→east from the west vehicle spawn), NEVER pre-filter on `closesNext` — it is published even in clear weather and silently flips your route to the expensive staging order. A 12s closure wait costs nothing; 4 extra wu of off-road staging costs 1.3 fuel.\n- Deliveries settle themselves: a hauler resting at a washed-out head takes the delivery on reopen; and delivery arrival while the prospector pans 10wu away is fine — the dispatch coordinate is sampled at HAUL time. Pans woven before errand steps in the array (near-pans ≤18wu) turn the west leg into the opening economy (both 30g west seams sit 7–13wu off the west head).\n- Survival here is the EASY half (contrast dust-flats): same 1.18× streaming motor_gangs but with 0.4-hp tar sprites padding the packs — 3 turrets + 2 beacons + plating + rig held wave 14 ceiling twice with works at full hp. Don't over-invest in the fort on a deliveries map; invest in the tank."
+  },
+  "usage": {
+    "transcript": "/Users/robin/.claude/projects/-private-tmp-heat11-b118c4d2/9a97b640-c085-444d-a5ce-93fc151d38a1.jsonl",
+    "assistantTurns": 61,
+    "toolCalls": 25,
+    "tokensIn": 122,
+    "tokensOut": 262393,
+    "cacheReadTokens": 11086462,
+    "cacheWriteTokens": 913896,
+    "note": "tokensIn excludes cache reads/writes (reported separately); summed from the CLI session transcript, not self-reported by the rig"
+  }
+}

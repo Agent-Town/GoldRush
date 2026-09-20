@@ -1,0 +1,35 @@
+{
+ "secured": true,
+ "waves": 20,
+ "timeMs": 600000,
+ "gold": 191,
+ "kills": 883,
+ "calls": 366,
+ "defaultedPicks": 0,
+ "defaultedSecure": 1,
+ "eventLogHash": "fnv1a32:021c60e4",
+ "tape": "/private/tmp/heat13-569a41f9/artifacts/heat13/opus/e9-dome-basin/attempt-1-tape.json",
+ "scored": true,
+ "runsSoFar": 2,
+ "scoredAttempts": 1,
+ "worldModel": "sim-import",
+ "note": "attempt-1-tape.json is byte-identical to tune-1-tape.json: ONE ride, two filenames. The first controller of the heat secured, and the stop rule ends the ride at the first secure, so the securing tune is promoted by name as the scored attempt.",
+ "envelope": {
+  "durationTicks": 18000,
+  "maxTicks": 18002,
+  "lastEntryTick": 17966,
+  "entries": 366,
+  "maxEntries": 3601,
+  "bytes": 1097891,
+  "maxTapeBytes": 1938784,
+  "pass": "all three axes clear; the brief's 592,544 figure is the PRE-F-HEAT12-2 formula. runTapeEnvelopeForContract adds maxOrderEntries*(2400-160) = 601*2240 = 1,346,240 for order-bearing entries, which this contract's own probe corpus motivated."
+ },
+ "assay": {
+  "instrument": "scripts/assay-replay-agent.mjs",
+  "tapeHash": "fnv1a32:15d21e4a",
+  "replayHash": "fnv1a32:15d21e4a",
+  "securedSnapshot": { "waves": 20, "gold": 191, "timeAlive": 600 },
+  "note": "The replay reproduces the TAPE header's hash (15d21e4a), not the stdout outcome line's (021c60e4); they are different numbers by design. securedSnapshot equals the declared score, so there is no score_mismatch exposure."
+ },
+ "engineEra": "09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4"
+}

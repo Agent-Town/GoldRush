@@ -1,0 +1,66 @@
+{
+  "label": "u1b",
+  "project": "desktop-chrome",
+  "viewport": {
+    "width": 1280,
+    "height": 800
+  },
+  "dataset": {
+    "state": "ready",
+    "renderSource": "glb",
+    "landmarks": "5",
+    "landmarkSkipped": "0",
+    "landmarkExpected": "5",
+    "landmarkEmissive": "3",
+    "landmarkDiagnostics": "",
+    "sculptWater": "living-water-quad",
+    "sculptWaterY": "-0.0700",
+    "sculptWaterDeepest": "0.110",
+    "sculptWaterGlints": "3",
+    "hiddenGroundLayers": "TerrainVistaRing|TerrainContinuousGroundMesh|terrain.river|terrain.ford|FordSteppingStones|SpringPonds",
+    "meshes": "1",
+    "triangles": "32768",
+    "vertices": "16641",
+    "materials": "1"
+  },
+  "captured": [
+    {
+      "frame": "run-camera",
+      "hero": [
+        0,
+        12
+      ],
+      "file": "/Users/robin/Claude/Projects/gr-task-beauty2-e2-hill-mine/artifacts/beauty-e2-hill-mine/u1b/desktop-chrome-run-camera.png",
+      "render": {
+        "calls": 84,
+        "triangles": 116626,
+        "p95": 9.300000000000182,
+        "avg": 8.332777777777777,
+        "samples": 180,
+        "tier": null
+      }
+    },
+    {
+      "frame": "gallery-trestle",
+      "hero": [
+        0,
+        8
+      ],
+      "file": "/Users/robin/Claude/Projects/gr-task-beauty2-e2-hill-mine/artifacts/beauty-e2-hill-mine/u1b/desktop-chrome-gallery-trestle.png",
+      "render": {
+        "calls": 84,
+        "triangles": 116626,
+        "p95": 9.300000000000182,
+        "avg": 8.337777777777774,
+        "samples": 180,
+        "tier": null
+      }
+    }
+  ],
+  "consoleErrors": [],
+  "loadavg": [
+    11.49169921875,
+    23.2236328125,
+    21.58935546875
+  ]
+}

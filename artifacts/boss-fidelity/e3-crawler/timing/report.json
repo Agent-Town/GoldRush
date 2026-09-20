@@ -1,0 +1,398 @@
+{
+  "capturedAt": "2026-09-08T06:10:01.430Z",
+  "sharedGameSha256": "5d1ea4bf63df8f16882f2c60d5c6e3549657483ba3f466066492fd06800b5944",
+  "sharedPoolsSha256": "e9509ad20e647c302694a419494d621a32b910acf0b40eab90050c4461c6f2ee",
+  "method": "Small steady-state local headless Chromium comparison. Before uses banked pre-E3 Crawler source and GLB through request fulfillment, with only a no-op modelBounds callback shim. Both arms share current game, common bar pass, camera, hero placement and fixed simulation fixture. 10 s settling then 180 frames before reading the existing frameMs rolling window. Includes presentation/GPU footprint, excludes initial load and hull construction. Headless wall-frame telemetry is not real mobile GPU or release FPS.",
+  "rows": [
+    {
+      "name": "desktop",
+      "arm": "before",
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "gameUrl": "http://127.0.0.1:5246/src/game/Game.ts?t=1788847198076",
+      "moduleUrls": [
+        "http://127.0.0.1:5246/src/game/Game.ts?t=1788847198076"
+      ],
+      "sourceSha256": "178cd04ee46fa74f5100a322c76adcadbbd0fc57cf94305029276915b124b5c5",
+      "assetSha256": "a336f7574d42ae6e1d69d13310fd549411c442e93073fec6a64ea0128f4f75f9",
+      "servedAssets": [
+        {
+          "url": "http://127.0.0.1:5246/assets/pilots/crawler-3d/crawler.glb",
+          "status": 200,
+          "contentType": "model/gltf-binary",
+          "bytes": 2391052,
+          "sha256": "a336f7574d42ae6e1d69d13310fd549411c442e93073fec6a64ea0128f4f75f9"
+        }
+      ],
+      "parts": [
+        {
+          "id": "drain_mast",
+          "x": -45.66812840721394,
+          "y": 4.930298026743092,
+          "z": 43.60175408865672
+        },
+        {
+          "id": "tracks",
+          "x": -44.10356584583454,
+          "y": 4.506581144222738,
+          "z": 39.92043041482282
+        },
+        {
+          "id": "capacitor_bank",
+          "x": -42.53900328445513,
+          "y": 4.501401526071285,
+          "z": 36.23910674098892
+        }
+      ],
+      "frame": 1435,
+      "frameMs": {
+        "last": 8.300000000001091,
+        "avg": 8.333333333333334,
+        "p95": 9.099999999998545,
+        "sampleCount": 180
+      },
+      "renderer": {
+        "calls": 65,
+        "triangles": 157866,
+        "geometries": 87,
+        "textures": 24
+      },
+      "model": {
+        "position": [
+          -44.14504979493279,
+          4.4569815337981975,
+          39.97021115374073
+        ],
+        "rotation": [
+          0,
+          0.876058050598193,
+          0,
+          "XYZ"
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "camera": {
+        "position": [
+          -44.10356584583449,
+          30.850684647429876,
+          60.220430414822765
+        ],
+        "rotation": [
+          -0.8716812945302217,
+          1.4784487585032388e-15,
+          1.7584321261643627e-15,
+          "XYZ"
+        ]
+      },
+      "supportPointCount": 0,
+      "hullPointCounts": null,
+      "errors": [],
+      "failedRequests": []
+    },
+    {
+      "name": "desktop",
+      "arm": "after",
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "gameUrl": "http://127.0.0.1:5246/src/game/Game.ts?t=1788847198076",
+      "moduleUrls": [
+        "http://127.0.0.1:5246/src/game/Game.ts?t=1788847198076"
+      ],
+      "sourceSha256": "dd2d61dcc904af9bee6e08878c9f458a1c502109b9ef3bb6293f95350706ad7b",
+      "assetSha256": "26112eaa095aa891d57c209e224e81a3a9fc89bc6f56614eb98ee6d5d5016eb6",
+      "servedAssets": [
+        {
+          "url": "http://127.0.0.1:5246/assets/pilots/crawler-3d/crawler.glb",
+          "status": 200,
+          "contentType": "model/gltf-binary",
+          "bytes": 3205932,
+          "sha256": "26112eaa095aa891d57c209e224e81a3a9fc89bc6f56614eb98ee6d5d5016eb6"
+        }
+      ],
+      "parts": [
+        {
+          "id": "drain_mast",
+          "x": -45.66812840721394,
+          "y": 4.930298026743092,
+          "z": 43.60175408865672
+        },
+        {
+          "id": "tracks",
+          "x": -44.10356584583454,
+          "y": 4.506581144222738,
+          "z": 39.92043041482282
+        },
+        {
+          "id": "capacitor_bank",
+          "x": -42.53900328445513,
+          "y": 4.501401526071285,
+          "z": 36.23910674098892
+        }
+      ],
+      "frame": 1438,
+      "frameMs": {
+        "last": 8.300000000001091,
+        "avg": 8.33333333333333,
+        "p95": 8.600000000000364,
+        "sampleCount": 180
+      },
+      "renderer": {
+        "calls": 65,
+        "triangles": 157646,
+        "geometries": 87,
+        "textures": 24
+      },
+      "model": {
+        "position": [
+          -44.25177891859188,
+          4.851182346489796,
+          40.66146809555021
+        ],
+        "rotation": [
+          -0.12903104189882336,
+          1.1676141736874797,
+          0.05180876192596126,
+          "XYZ"
+        ],
+        "scale": [
+          3.1,
+          3.1,
+          3.1
+        ]
+      },
+      "camera": {
+        "position": [
+          -44.10356584583449,
+          30.850684647429876,
+          60.220430414822765
+        ],
+        "rotation": [
+          -0.8716812945302217,
+          1.4784487585032388e-15,
+          1.7584321261643627e-15,
+          "XYZ"
+        ]
+      },
+      "supportPointCount": 146,
+      "hullPointCounts": {
+        "drain_mast": [
+          52,
+          64
+        ],
+        "tracks": [
+          59,
+          74
+        ],
+        "capacitor_bank": [
+          140,
+          132
+        ]
+      },
+      "errors": [],
+      "failedRequests": []
+    },
+    {
+      "name": "mobile",
+      "arm": "before",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "gameUrl": "http://127.0.0.1:5246/src/game/Game.ts?t=1788847198076",
+      "moduleUrls": [
+        "http://127.0.0.1:5246/src/game/Game.ts?t=1788847198076"
+      ],
+      "sourceSha256": "178cd04ee46fa74f5100a322c76adcadbbd0fc57cf94305029276915b124b5c5",
+      "assetSha256": "a336f7574d42ae6e1d69d13310fd549411c442e93073fec6a64ea0128f4f75f9",
+      "servedAssets": [
+        {
+          "url": "http://127.0.0.1:5246/assets/pilots/crawler-3d/crawler.glb",
+          "status": 200,
+          "contentType": "model/gltf-binary",
+          "bytes": 2391052,
+          "sha256": "a336f7574d42ae6e1d69d13310fd549411c442e93073fec6a64ea0128f4f75f9"
+        }
+      ],
+      "parts": [
+        {
+          "id": "drain_mast",
+          "x": -45.66812840721394,
+          "y": 4.930298026743092,
+          "z": 43.60175408865672
+        },
+        {
+          "id": "tracks",
+          "x": -44.10356584583454,
+          "y": 4.506581144222738,
+          "z": 39.92043041482282
+        },
+        {
+          "id": "capacitor_bank",
+          "x": -42.53900328445513,
+          "y": 4.501401526071285,
+          "z": 36.23910674098892
+        }
+      ],
+      "frame": 1433,
+      "frameMs": {
+        "last": 8.299999999999272,
+        "avg": 8.333333333333334,
+        "p95": 8.400000000001455,
+        "sampleCount": 180
+      },
+      "renderer": {
+        "calls": 57,
+        "triangles": 154346,
+        "geometries": 78,
+        "textures": 23
+      },
+      "model": {
+        "position": [
+          -44.14504979493279,
+          4.4569815337981975,
+          39.97021115374073
+        ],
+        "rotation": [
+          0,
+          0.876058050598193,
+          0,
+          "XYZ"
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "camera": {
+        "position": [
+          -44.10356584583449,
+          30.850684647429876,
+          60.220430414822765
+        ],
+        "rotation": [
+          -0.8716812945302217,
+          1.4784487585032388e-15,
+          1.7584321261643627e-15,
+          "XYZ"
+        ]
+      },
+      "supportPointCount": 0,
+      "hullPointCounts": null,
+      "errors": [],
+      "failedRequests": []
+    },
+    {
+      "name": "mobile",
+      "arm": "after",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "gameUrl": "http://127.0.0.1:5246/src/game/Game.ts?t=1788847198076",
+      "moduleUrls": [
+        "http://127.0.0.1:5246/src/game/Game.ts?t=1788847198076"
+      ],
+      "sourceSha256": "dd2d61dcc904af9bee6e08878c9f458a1c502109b9ef3bb6293f95350706ad7b",
+      "assetSha256": "26112eaa095aa891d57c209e224e81a3a9fc89bc6f56614eb98ee6d5d5016eb6",
+      "servedAssets": [
+        {
+          "url": "http://127.0.0.1:5246/assets/pilots/crawler-3d/crawler.glb",
+          "status": 200,
+          "contentType": "model/gltf-binary",
+          "bytes": 3205932,
+          "sha256": "26112eaa095aa891d57c209e224e81a3a9fc89bc6f56614eb98ee6d5d5016eb6"
+        }
+      ],
+      "parts": [
+        {
+          "id": "drain_mast",
+          "x": -45.66812840721394,
+          "y": 4.930298026743092,
+          "z": 43.60175408865672
+        },
+        {
+          "id": "tracks",
+          "x": -44.10356584583454,
+          "y": 4.506581144222738,
+          "z": 39.92043041482282
+        },
+        {
+          "id": "capacitor_bank",
+          "x": -42.53900328445513,
+          "y": 4.501401526071285,
+          "z": 36.23910674098892
+        }
+      ],
+      "frame": 1434,
+      "frameMs": {
+        "last": 8.299999999999272,
+        "avg": 8.336666666666668,
+        "p95": 9.100000000000364,
+        "sampleCount": 180
+      },
+      "renderer": {
+        "calls": 57,
+        "triangles": 154126,
+        "geometries": 78,
+        "textures": 23
+      },
+      "model": {
+        "position": [
+          -44.25177891859188,
+          4.851182346489796,
+          40.66146809555021
+        ],
+        "rotation": [
+          -0.12903104189882336,
+          1.1676141736874797,
+          0.05180876192596126,
+          "XYZ"
+        ],
+        "scale": [
+          3.1,
+          3.1,
+          3.1
+        ]
+      },
+      "camera": {
+        "position": [
+          -44.10356584583449,
+          30.850684647429876,
+          60.220430414822765
+        ],
+        "rotation": [
+          -0.8716812945302217,
+          1.4784487585032388e-15,
+          1.7584321261643627e-15,
+          "XYZ"
+        ]
+      },
+      "supportPointCount": 146,
+      "hullPointCounts": {
+        "drain_mast": [
+          52,
+          64
+        ],
+        "tracks": [
+          59,
+          74
+        ],
+        "capacitor_bank": [
+          140,
+          132
+        ]
+      },
+      "errors": [],
+      "failedRequests": []
+    }
+  ]
+}

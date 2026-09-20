@@ -1,0 +1,210 @@
+{
+  "rig": "opus",
+  "contract": "e4-boneyard",
+  "model": "claude-opus-5",
+  "sessionId": "929e11a7-baf5-4149-9696-5937a5d2a768",
+  "startedAt": "2026-09-07T12:32:40.202Z",
+  "endedAt": "2026-09-07T12:49:03.476Z",
+  "wallClockSeconds": 983,
+  "wallHit": false,
+  "exitCode": 0,
+  "signal": null,
+  "setupToFirstOutputSeconds": 300,
+  "arenaTrackedChanges": [],
+  "workspaceFiles": [
+    "attempt-1-tape.json",
+    "ctrl-v1.mjs",
+    "ctrl-v2.mjs",
+    "gauntlet-outcome.json",
+    "gauntlet-report.md",
+    "probe-summary.json",
+    "probe-tape.json",
+    "probe-views.jsonl",
+    "runner.mjs",
+    "tune-1-summary.json",
+    "tune-1-table.json",
+    "tune-1-tape.json",
+    "tune-1-views.jsonl",
+    "tune-2-summary.json",
+    "tune-2-table.json",
+    "tune-2-tape.json",
+    "tune-2-views.jsonl"
+  ],
+  "outcome": {
+    "secured": true,
+    "waves": 12,
+    "timeMs": 360000,
+    "gold": 200,
+    "kills": 321,
+    "calls": 50,
+    "defaultedPicks": 0,
+    "defaultedSecure": 1,
+    "eventLogHash": "fnv1a32:2f7af13a",
+    "motor": {
+      "graded": [],
+      "hauled": true,
+      "arrivedAt": 59.667,
+      "roadDistance": 0,
+      "distanceTravelled": 69.469,
+      "fuelDrawn": 26.688,
+      "tarHarvested": 9,
+      "convoyArrived": null,
+      "kind": "tow",
+      "towed": true
+    },
+    "tape": "/private/tmp/heat13-569a41f9/artifacts/heat13/opus/e4-boneyard/attempt-1-tape.json",
+    "scored": true,
+    "runsSoFar": 3,
+    "scoredAttempts": 1,
+    "worldModel": "sim-import",
+    "note": "tune-2 SECURED on its first ride and is promoted BY NAME as the scored attempt; attempt-1-tape.json is a byte-identical copy of tune-2-tape.json. One ride, two filenames.",
+    "envelope": {
+      "bytes": 171351,
+      "entries": 50,
+      "durationTicks": 10800,
+      "lastEntryTick": 10763,
+      "eventLogHash": "fnv1a32:464d1a6b"
+    }
+  },
+  "outcomeError": null,
+  "promotedTapeName": "attempt-1-tape.json",
+  "scoredTapes": [
+    {
+      "file": "attempt-1-tape.json",
+      "id": "agent-24ca48ea-826315fa-35ef-4a40-ab60-ccdd7db6bb91",
+      "contract": "e4-boneyard",
+      "seed": "e4-boneyard-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "b25f5fedf",
+        "engineHash": "09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 12,
+        "timeAlive": 360,
+        "gold": 200
+      },
+      "entries": 50,
+      "durationTicks": 10800,
+      "lastEntryTick": 10763,
+      "promotedByRig": true,
+      "discoveredBy": "outcome-file+filename"
+    }
+  ],
+  "otherTapes": [
+    {
+      "file": "probe-tape.json",
+      "id": "agent-271b5f72-6497332d-28db-4b8b-ace6-be1171e7e7a9",
+      "contract": "e4-boneyard",
+      "seed": "e4-boneyard-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "b25f5fedf",
+        "engineHash": "09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 4,
+        "timeAlive": 124.867,
+        "gold": 0
+      },
+      "entries": 0,
+      "durationTicks": 3746,
+      "lastEntryTick": null
+    },
+    {
+      "file": "tune-1-tape.json",
+      "id": "agent-6839ef26-ab0ddcc5-2e39-44ad-b4c9-41ad4398d297",
+      "contract": "e4-boneyard",
+      "seed": "e4-boneyard-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "b25f5fedf",
+        "engineHash": "09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 4,
+        "timeAlive": 126.5,
+        "gold": 200
+      },
+      "entries": 13,
+      "durationTicks": 3795,
+      "lastEntryTick": 3634
+    },
+    {
+      "file": "tune-2-tape.json",
+      "id": "agent-24ca48ea-826315fa-35ef-4a40-ab60-ccdd7db6bb91",
+      "contract": "e4-boneyard",
+      "seed": "e4-boneyard-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "b25f5fedf",
+        "engineHash": "09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 12,
+        "timeAlive": 360,
+        "gold": 200
+      },
+      "entries": 50,
+      "durationTicks": 10800,
+      "lastEntryTick": 10763
+    }
+  ],
+  "otherSecuredTapes": [
+    {
+      "file": "tune-2-tape.json",
+      "id": "agent-24ca48ea-826315fa-35ef-4a40-ab60-ccdd7db6bb91",
+      "contract": "e4-boneyard",
+      "seed": "e4-boneyard-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "b25f5fedf",
+        "engineHash": "09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 12,
+        "timeAlive": 360,
+        "gold": 200
+      },
+      "entries": 50,
+      "durationTicks": 10800,
+      "lastEntryTick": 10763
+    }
+  ],
+  "report": {
+    "outcome": "**SECURED.** `waves 12 · timeAlive 360.000 s · gold 200 · kills 321 · calls 50 · defaultedSecure 1`,\n`motor: {towed: true, hauled: true, arrivedAt: 59.667, tarHarvested: 9, fuelDrawn: 26.688,\ndistanceTravelled: 69.469, graded: []}`.\n\nTape put forward: `artifacts/heat13/opus/e4-boneyard/attempt-1-tape.json` (declared in\n`gauntlet-outcome.json`'s `\"tape\"` field; byte-identical to `tune-2-tape.json`).\n\n**3 sim runs · 1 scored attempt.** The ride stopped at the first secure, as the rules require —\nand there was nothing left to win: a fixed wave-12 gate pins `waves` at 12 and `timeAlive` at\n360.000 s, and 200 is the bank cap, so both free ranking axes were already at their ceilings.\n\nRun shape: hero **never dropped below its running maximum across all 52 views** (100/100 → 125 →\n150 → finishing **175/175**), **0 of 7 works ever wrecked**, `goldStolen` 0, `threats.alive` pinned\nat its 60-enemy cap from wave 9, 645 gold panned against 445 spent.",
+    "whatTheMapAsked": "It asked about **distance and fuel — E4's signature mechanic, live, load-bearing and gating the\nsecure** — and then it went quiet for ten waves. This is not stationary survival wearing the era's\nname at the front end. The secure is a conjunction: `wave >= 12` **and**\n`now.motor.objective.arrived`, and for `kind: \"tow\"` that means two separate rests —\n`MotorSocket.settleTow` hitches when the Hauler comes to rest within `stopReach` 2.5 of\n`spent-boiler-west` at (−18,−8), and delivers when it rests again within 2.5 of the gate end of\n`gate-to-west-rows` at (−8,−38). `objective.stop` **moves** the instant `hitched` flips, so the\nerrand is two dispatches with a state flip between them and my controller branched on\n`objective.hitched` rather than on its own clock. The arithmetic is a real leash and it bound: the\nrun holds exactly 36 fuel (three nodes × three tar × four fuel), the Hauler burns **by the second**,\nand my tow measured **26.688 fuel for 69.469 units** — 0.384 fuel per unit against a clear-weather\n0.333, i.e. a **15 % storm surcharge** paid because `stormMovementMultiplier: 0.75` stretches every\nsecond the Hauler is moving. Two nodes would have been 24 fuel and would have stranded the objective\noutright, which is exactly why I toured all three. The fields that carried it were\n`now.motor.objective` (`kind`, `stop`, `stopReach`, `hulk`, `hitched`, `arrived`),\n`now.motor.fuel.nodes[].harvested/progress` with `stored`/`tar`/`drawn`, `now.motor.vehicle.state/x/z`\nand `now.motor.weather.phase`; the orders were **`MOVE_HERO`** and **`HAUL`**, and nothing else.\n**`GRADE` is worthless here and that is a finding, not an omission**: I issued none\n(`graded: []`, `roadDistance: 0`), because the Hauler drives straight lines and the tow's delivery\npoint *is* the corridor's start stake, so the only road it could grade runs away from both legs.\nAcross the four Motor maps `GRADE` ranges from mandatory (the Long Road: 123 fuel ungraded against a\n36-fuel tank) to inert; the arithmetic, not the epoch, says which.\n\nThe honest qualifier is the one every Motor map earns: **the errand latched at t = 59.667 of a\n360-second contract**, and waves 2–12 were ordinary stationary survival at the claim against a\none-id, thief-only roster on a 40–60 wu seam commute. Call it the first sixth of the run genuinely\nE4 — but unlike a reskin, the era's lever *gates the secure* and made me do fuel-and-distance\narithmetic before writing a single order.\n\n**Does my notebook still remember this map?** Its geometry, yes; its controls, no — and the control\nchange is the whole heat. Generations 15 and 52 both rode this seed and every structural number\nreproduced exactly: the same claim at (0,−44), the same hulk, the same moving stop, the same three\ntar nodes on the z = −8 line, the same 36-fuel leash, the same `GRADE`-is-worthless verdict, the same\nw4 idle floor. What moved is that **the errand's cursor changed body**. Generation 52 aimed `HAUL`\nwith the Prospector's `MOVE_TO`; that verb is gone, `HAUL` now reads the **hero's** ground\n(`HeadlessContractSim.motorVerb:3106`), and the hero — unlike the Prospector — is refused by\n`Terrain`'s landmark collision. `spent-boiler-west` carries a blocker of half-extents 1.753 × 1.179,\npadded by the hero's radius to **2.333 × 1.759**, so every point my predecessor could stand on is\nnow `UNREACHABLE_TERRAIN`, and the walkable ring that still fits inside `MOTOR_STOP_REACH` 2.5 is\nabout 0.7 wu thick. That one rectangle cost me a whole run.",
+    "winnability": "Secured, and the margin was **enormous on survival and genuinely thin on the purse**: the hero took\neffectively no damage across all 52 views and finished 175/175 with all seven works standing\nunwrecked, but gold reached the 200 cap only at **t = 340.1 of 360** — my last beacon spent the\npurse to 0 at t = 256.7 and it took 83 seconds of panning to climb back, so ~20 seconds of slack\nstood between a 200-gold row and a worse one.",
+    "lessons": "- **When a ruling retires a verb, re-derive the GROUND, not just the syntax — the retirement can\n  move a mechanic to a body the terrain treats differently.** Four heats running I have written that\n  the 1:1 grammar change was free on a stationary-hero board. Here it was not free at all:\n  `HAUL` moved from the Prospector's `MOVE_TO` to the hero's `MOVE_HERO`, and the hero is refused by\n  `LandmarkCollision` where the Prospector was not. Generation 52's exact standoff is now illegal\n  ground. **Ask which body a retired verb was aimed at, then ask what refuses that body.**\n- **A landmark blocker is a rectangle with the hero's radius added, and it is computable before you\n  ride.** `assets/pilots/map-rebuild-spike/landmark-collision-contract.json` publishes every mount's\n  footprint, rotation and scale; `Terrain.sample` pads by `Balance.hero.radius + 0.08`. For\n  `spent-boiler-west` that is a 2.333 × 1.759 half-extent rect, which leaves a walkable band of\n  z ∈ [−10.26, −9.76] inside a 2.5 stop reach. Two minutes of arithmetic replaced a run I had\n  already lost to guessing.\n- **Where an exact standoff is unknown, ship a LADDER of candidates and let the array pick.** An\n  unwalkable `MOVE_HERO` fails in a single tick and yields to the next order, so six ranked\n  standoffs cost at most six ticks and cannot leave the errand pinned on one bad coordinate. That is\n  generation 70's terrain probe turned into standing equipment.\n- **Never gate the fort behind the errand.** `tune-1` died at wave 4 holding **200 gold and zero\n  works** because my build ladder required `phase === 'fort'` and the errand never completed. The\n  errand's own orders already sit above the ladder in the array and block it while they run; a\n  second, explicit gate on top of that turns one failed order into a lost contract. **Let array\n  position do the sequencing; never also encode it as a condition.**\n- **`now.timers` publishes `runSeconds`, not `simTimeSeconds`.** My time-based build cutoff read\n  `undefined ?? 0` and sat at 0 for the entire run. A field name that reads as `0` looks exactly like\n  a clock that has not started — log the raw field once on view 0 rather than trusting the name.\n- **Chain a seam's neighbour only if it is actually next door.** Ten anchors re-anchor on depletion,\n  and a nearest-first sort across all live seams walked the Prospector from (−32,1) to (31,1) — 64 wu\n  for five gold. Capping the chain at two seams within 26 wu of each other took panning from\n  200 gold in 105 s to **645 gold in 360 s**. Generation 51 said measure the seam's supply rate;\n  the complement is **measure the chain's mutual distance and refuse to leave the cluster.**\n- **On a fixed-wave secure the ladder's TAIL is the score, and I nearly lost it again.** Waves and\n  `timeAlive` are pinned by the gate, so gold is the only free axis and it caps at 200. My\n  `STOP_BUILDING_AT = 255` was a guess that happened to leave 83 seconds of refill for a 20-second\n  margin. The principled version is arithmetic, not a constant: **stop spending at\n  `secureTime − (bankCap / measured g/s)`**, read off `score.goldPanned` in the run itself.\n- **The three-order zig is the post-ADR-005 dwell pattern, and it worked first try.** `MOVE_HERO`\n  completes inside 0.5 and the next order walks the hero off, so a 0.5-second `harvestSeconds` needs\n  `node → node±1.3x → node∓1.3x → node±1.3x`, every point inside `harvestRange` 1.35. Nine tar from\n  three nodes, first attempt, both times I ran it. The grammar still has no wait verb.\n- **Read the roster for what it OMITS — ninth contract running, and here it was half the design.**\n  One id, `pipeline_rustler`, `thief: true` — which forces `wrecker = false`, so `works.wrecked` was\n  0 at all 52 views. And with no `stockpile` standing, `nearestGoldHolding` is empty and every thief\n  falls through to ordinary hero pursuit, so `goldStolen` was 0 too. That deletes `REPAIR_UNDER`,\n  palisade chaff and every decoy idea, makes the fort a monotone investment, and is why the tail\n  could be pure `HARVEST`.\n- **Stop when both ranking axes are pinned.** Waves 12 by the gate, `timeAlive` 360.000 by the gate,\n  gold 200 by the cap. A second scored attempt could only have changed the reel's bytes, so the\n  remaining budget went to the envelope check and the local assay instead.\n- **Write the outcome file after every run, before the analysis — and I broke my own rule once\n  here.** The runner wrote a truthful `*-summary.json` on every child exit, but I did not promote it\n  into `gauntlet-outcome.json` until after the securing run. Two probes went by with no row on disk\n  that the operator could read. Wire the promotion into the runner's exit handler, not into my\n  intentions."
+  },
+  "usage": {
+    "transcript": "/Users/robin/.claude/projects/-private-tmp-heat13-569a41f9/929e11a7-baf5-4149-9696-5937a5d2a768.jsonl",
+    "assistantTurns": 74,
+    "toolCalls": 40,
+    "tokensIn": 148,
+    "tokensOut": 162232,
+    "cacheReadTokens": 26177804,
+    "cacheWriteTokens": 1107453,
+    "note": "tokensIn excludes cache reads/writes (reported separately); summed from the CLI session transcript, not self-reported by the rig"
+  }
+}

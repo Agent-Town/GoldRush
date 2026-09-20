@@ -1,0 +1,143 @@
+{
+  "metric": {
+    "groundTruth": "1024 keyed master at the same alphaTest tier",
+    "thinTexel": "foreground with background within 4 master texels on both sides of at least one horizontal, vertical, or diagonal axis",
+    "retention": "share of thin ground-truth texels whose mapped 384 texel survives the same alphaTest",
+    "survivorPredicate": "alpha / 255 >= alphaTest"
+  },
+  "rows": [
+    {
+      "subject": "baron-banner",
+      "arm": "one-step",
+      "tier": 0.35,
+      "survivingTexels": 60701,
+      "partialTexels": 121,
+      "thinGroundTruthTexels": 4034,
+      "retainedThinTexels": 3247,
+      "thinFeatureRetention": 0.8049082796232028,
+      "sha256": "236cb40dc34f02ebb9055c15211052feb2c0f9ccbf4242e3cf4d68eb23a40fbb"
+    },
+    {
+      "subject": "baron-banner",
+      "arm": "one-step",
+      "tier": 0.04,
+      "survivingTexels": 60731,
+      "partialTexels": 121,
+      "thinGroundTruthTexels": 4029,
+      "retainedThinTexels": 3239,
+      "thinFeatureRetention": 0.803921568627451,
+      "sha256": "236cb40dc34f02ebb9055c15211052feb2c0f9ccbf4242e3cf4d68eb23a40fbb"
+    },
+    {
+      "subject": "baron-banner",
+      "arm": "two-step",
+      "tier": 0.35,
+      "survivingTexels": 60904,
+      "partialTexels": 1845,
+      "thinGroundTruthTexels": 4034,
+      "retainedThinTexels": 3397,
+      "thinFeatureRetention": 0.8420922161626178,
+      "sha256": "29c7bfda0a292662c4e094d39aa5276e92898240feae75fd7cfae5213a1aafdb"
+    },
+    {
+      "subject": "baron-banner",
+      "arm": "two-step",
+      "tier": 0.04,
+      "survivingTexels": 61484,
+      "partialTexels": 1845,
+      "thinGroundTruthTexels": 4029,
+      "retainedThinTexels": 3755,
+      "thinFeatureRetention": 0.9319930503847108,
+      "sha256": "29c7bfda0a292662c4e094d39aa5276e92898240feae75fd7cfae5213a1aafdb"
+    },
+    {
+      "subject": "assay-table",
+      "arm": "one-step",
+      "tier": 0.35,
+      "survivingTexels": 58272,
+      "partialTexels": 75,
+      "thinGroundTruthTexels": 4699,
+      "retainedThinTexels": 3929,
+      "thinFeatureRetention": 0.8361353479463716,
+      "sha256": "41c8b80127cc37358959df4d9b1efc86d7d66849b109ba533c0b6c78748eef53"
+    },
+    {
+      "subject": "assay-table",
+      "arm": "one-step",
+      "tier": 0.04,
+      "survivingTexels": 58289,
+      "partialTexels": 75,
+      "thinGroundTruthTexels": 4695,
+      "retainedThinTexels": 3925,
+      "thinFeatureRetention": 0.8359957401490948,
+      "sha256": "41c8b80127cc37358959df4d9b1efc86d7d66849b109ba533c0b6c78748eef53"
+    },
+    {
+      "subject": "assay-table",
+      "arm": "two-step",
+      "tier": 0.35,
+      "survivingTexels": 58506,
+      "partialTexels": 1715,
+      "thinGroundTruthTexels": 4699,
+      "retainedThinTexels": 4145,
+      "thinFeatureRetention": 0.8821025750159608,
+      "sha256": "31946742aca89307cfe142ae82039cdc119bde47175094c84864dab61db5c3e4"
+    },
+    {
+      "subject": "assay-table",
+      "arm": "two-step",
+      "tier": 0.04,
+      "survivingTexels": 59062,
+      "partialTexels": 1715,
+      "thinGroundTruthTexels": 4695,
+      "retainedThinTexels": 4485,
+      "thinFeatureRetention": 0.9552715654952076,
+      "sha256": "31946742aca89307cfe142ae82039cdc119bde47175094c84864dab61db5c3e4"
+    },
+    {
+      "subject": "signal-turret",
+      "arm": "one-step",
+      "tier": 0.35,
+      "survivingTexels": 29555,
+      "partialTexels": 85,
+      "thinGroundTruthTexels": 749,
+      "retainedThinTexels": 612,
+      "thinFeatureRetention": 0.8170894526034713,
+      "sha256": "38914b8c0dcec723af549f0528070c1a3e9fe52a57baf3035862463b721b0a2e"
+    },
+    {
+      "subject": "signal-turret",
+      "arm": "one-step",
+      "tier": 0.04,
+      "survivingTexels": 29585,
+      "partialTexels": 85,
+      "thinGroundTruthTexels": 754,
+      "retainedThinTexels": 610,
+      "thinFeatureRetention": 0.8090185676392573,
+      "sha256": "38914b8c0dcec723af549f0528070c1a3e9fe52a57baf3035862463b721b0a2e"
+    },
+    {
+      "subject": "signal-turret",
+      "arm": "two-step",
+      "tier": 0.35,
+      "survivingTexels": 29488,
+      "partialTexels": 713,
+      "thinGroundTruthTexels": 749,
+      "retainedThinTexels": 621,
+      "thinFeatureRetention": 0.829105473965287,
+      "sha256": "8b346f9005e7dc049acd264ba2d59e6a6858afb87f41ce8a97c586dba04fefc5"
+    },
+    {
+      "subject": "signal-turret",
+      "arm": "two-step",
+      "tier": 0.04,
+      "survivingTexels": 29722,
+      "partialTexels": 713,
+      "thinGroundTruthTexels": 754,
+      "retainedThinTexels": 690,
+      "thinFeatureRetention": 0.9151193633952255,
+      "sha256": "8b346f9005e7dc049acd264ba2d59e6a6858afb87f41ce8a97c586dba04fefc5"
+    }
+  ],
+  "alphaProbe": "ARM                                size       transparent  partial   opaque    bbox                   keyRGBunderAlpha0\nbaron-banner one-step              384x384    86725        121       60610     [28,8,367,374]         0\nbaron-banner two-step              384x384    85900        1845      59711     [28,8,367,374]         0\nassay-table one-step               384x384    89167        75        58214     [25,22,362,366]        0\nassay-table two-step               384x384    88324        1715      57417     [25,22,362,366]        0\nsignal-turret one-step             384x384    117871       85        29500     [115,7,265,371]        0\nsignal-turret two-step             384x384    117692       713       29051     [114,7,265,372]        0\n[{\"label\":\"baron-banner one-step\",\"size\":\"384x384\",\"transparent\":86725,\"partial\":121,\"opaque\":60610,\"bbox\":[28,8,367,374],\"keyMagentaUnderTransparency\":0},{\"label\":\"baron-banner two-step\",\"size\":\"384x384\",\"transparent\":85900,\"partial\":1845,\"opaque\":59711,\"bbox\":[28,8,367,374],\"keyMagentaUnderTransparency\":0},{\"label\":\"assay-table one-step\",\"size\":\"384x384\",\"transparent\":89167,\"partial\":75,\"opaque\":58214,\"bbox\":[25,22,362,366],\"keyMagentaUnderTransparency\":0},{\"label\":\"assay-table two-step\",\"size\":\"384x384\",\"transparent\":88324,\"partial\":1715,\"opaque\":57417,\"bbox\":[25,22,362,366],\"keyMagentaUnderTransparency\":0},{\"label\":\"signal-turret one-step\",\"size\":\"384x384\",\"transparent\":117871,\"partial\":85,\"opaque\":29500,\"bbox\":[115,7,265,371],\"keyMagentaUnderTransparency\":0},{\"label\":\"signal-turret two-step\",\"size\":\"384x384\",\"transparent\":117692,\"partial\":713,\"opaque\":29051,\"bbox\":[114,7,265,372],\"keyMagentaUnderTransparency\":0}]\n"
+}

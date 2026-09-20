@@ -1,0 +1,45 @@
+{
+  "secured": true,
+  "waves": 20,
+  "timeMs": 600000,
+  "gold": 200,
+  "kills": 928,
+  "calls": 83,
+  "defaultedPicks": 0,
+  "defaultedSecure": 1,
+  "eventLogHash": "fnv1a32:297c535f",
+  "outcomeRaw": {
+    "secured": true,
+    "waves": 20,
+    "timeMs": 600000,
+    "gold": 200,
+    "kills": 928,
+    "calls": 83,
+    "defaultedPicks": 0,
+    "defaultedSecure": 1,
+    "eventLogHash": "fnv1a32:297c535f"
+  },
+  "tape": "/private/tmp/heat12-038cc280/artifacts/heat12/opus/e7-dead-band/attempt-1-tape.json",
+  "tapeInfo": {
+    "bytes": 308017,
+    "entries": 83,
+    "durationTicks": 18000,
+    "lastEntryTick": 17638
+  },
+  "scored": true,
+  "runsSoFar": 3,
+  "scoredAttempts": 1,
+  "worldModel": "sim-import",
+  "contract": "e7-dead-band",
+  "seed": "e7-dead-band-01",
+  "difficulty": "trail",
+  "assay": {
+    "verdict": "reproduced-locally",
+    "tapeEventLogHash": "fnv1a32:e181301c",
+    "replayEventLogHash": "fnv1a32:e181301c",
+    "outcomeLineHash": "fnv1a32:297c535f",
+    "note": "assay-replay-agent reproduced the TAPE header hash and all four outcome fields; the outcome-line hash is a different number by design."
+  },
+  "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+  "note": "SECURED w20/600.000s/200g/83 calls. Objective (E7 refusal) latched at t=0.033 off ONE refused PLAYBOOK_USE. attempt-1-tape.json is the scored attempt."
+}

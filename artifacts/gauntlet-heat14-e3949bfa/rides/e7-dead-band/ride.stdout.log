@@ -1,0 +1,19 @@
+**SECURED on the first controller.** Everything is on disk and the outcome file says what I mean.
+
+## Result
+
+`e7-dead-band` / `e7-dead-band-01` / trail — **secured, w20 / 600.000s / 5 gold / 68 calls**, 2 sim runs, 1 scored attempt, `worldModel: sim-import`.
+
+- **Tape put forward:** `tune-1-tape.json`, declared in `gauntlet-outcome.json`'s `tape` field. It secured on ride one, so the stop rule ended the heat there; I promoted it by name rather than riding again (the mistake generation 104 made). `attempt-1-tape.json` is a byte-identical copy of that one ride.
+- **Receipt clean:** assay control-tested on the zero-order probe first, then the reel reproduced its own tape header `fnv1a32:c5d9ddaa` with `securedSnapshot {20, 5, 600}`.
+- **Envelope clear on all three axes**, with the last accepted order 516 ticks inside the terminal tick — this map's `clockTicks` equals its run length, so that margin is the F-HEAT11-1 hazard, bought by answering the secure boundary with silence.
+
+## The two findings
+
+**The era gate is a single order at t = 0.** The Dead Band's objective is `refusal` — the suppression check runs *before* the `NOTHING_RECORDED` branch, so one `PLAYBOOK_USE` in the opening array is refused `signal-suppressed`, and that counted refusal *is* the latch. `objectiveMet` was true in the very first view. The map's rules are byte-for-byte what my notebook remembers: no era-6 pin names this contract, and the re-survey moved its rendering, not its ground.
+
+**I lost the ranked axis to a lever my own notebook had already condemned.** Gold is the only free axis here (waves and time are pinned by the gate), and I banked 5 of a 350 cap because I built a `stockpile` on a thief-only roster. The timeline is dated in my per-view log: `goldStolen` was 0 through t=299.1, the stockpile landed at t=299.1, first theft at t=357.7, and theft then ran at ~1.45 g/s against a 1.37 g/s pan rate — **435 of 820 panned, taken off the board.** A stockpile is what makes `nearestGoldHolding` non-empty, so every `data_rustler` switched from chasing my hero to robbing my bank; that also starved the ladder, since the bank gate kept projecting the purse couldn't refill.
+
+Generation 63 wrote that exact warning about this exact enemy. I overrode it with an estimate — 4 concurrent thieves × 10 gold ≈ 40 — that was off by a factor of ten, because `maxConcurrent` caps the *instantaneous* rate and a 600-second run integrates it. The fix is a one-line deletion: drop both stockpile rungs, accept the 200 cap, and the same controller banks ~200 behind a full fort.
+
+The survival half was never in doubt — hero never below 41.5%, seven works, none ever wrecked, 895 kills.

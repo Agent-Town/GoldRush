@@ -1,0 +1,44 @@
+
+########## RIDE e8-eclipse · seed e8-eclipse-01 · gen 110 · stake era-retired · wall 1500s ##########
+--- 1 charter ---
+{"rig":"opus","contract":"e8-eclipse","seed":"e8-eclipse-01","seedMode":"bench","stake":"era-retired","generation":110,"wall":1500,"notebookSha256":"466361175ea48b6b65e2d2de4efb12902847208f6cd1ecf5eb4dfa2ef4a502f6","charterSha256":"7dcadc1c31d50602c382fa3f40018a898974adf7ad46fe31bfc1853e58c060c7","bytes":872778,"out":"/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/gauntlet-heat14-e3949bfa/rides/e8-eclipse/charter.md"}
+--- 2 ride ---
+START opus claude-opus-5 pid=83651 session=d445cd7b-0b0d-445c-85d1-d2e4bf549465 at=2026-09-18T03:43:39.692Z
+FIRST-OUTPUT opus +105s
+OUTCOME opus secured=false waves=2 gold=0 runsSoFar=1 scored=0 +120s
+OUTCOME opus secured=false waves=18 gold=500 runsSoFar=2 scored=0 +375s
+OUTCOME opus secured=false waves=19 gold=500 runsSoFar=3 scored=1 +615s
+OUTCOME opus secured=false waves=19 gold=500 runsSoFar=3 scored=1 +735s
+END opus rc=0 signal=null wall=749s wallHit=false
+ride-wall rc=0 signal=-
+--- 3 land ---
+
+=== 1 finish-ride ===
+{"rig":"opus","contract":"e8-eclipse","wall":749,"wallHit":false,"rc":0,"tracked":[],"files":20,"outcome":{"secured":false,"waves":19,"gold":500,"runsSoFar":3,"scoredAttempts":1,"tape":"/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/heat14/opus/e8-eclipse/attempt-1-tape.json","worldModel":"sim-import"},"scoredTapes":[{"file":"attempt-1-tape.json","id":"agent-d5eaacbd-f0e5a21b-e187-42d3-ae8e-8e4ec83b10e4","secured":false,"waves":19,"gold":500,"durationTicks":17592,"lastEntryTick":17100,"promotedByRig":true,"discoveredBy":"outcome-file+filename"}],"otherSecured":[],"reportSections":{"outcome":881,"whatTheMapAsked":2549,"winnability":582,"lessons":4101},"usage":{"turns":80,"toolCalls":40,"tokensIn":160,"tokensOut":147613}}
+
+=== NOT SECURED — nothing to submit ===
+{
+ "rig": "opus",
+ "contract": "e8-eclipse",
+ "wall": 749,
+ "wallHit": false,
+ "rc": 0,
+ "scoredTapes": [
+  {
+   "file": "attempt-1-tape.json",
+   "secured": false,
+   "waves": 19,
+   "gold": 500
+  }
+ ],
+ "outcomeNote": "attempt-1-tape.json is the best reel on disk and the scored attempt; it is evidence, not a standing."
+}
+
+land rc=0
+--- 4 notebook ---
+{"notebook":"/Users/robin/Claude/Projects/goldrush-gauntlet/memories/claude__opus-5/NOTEBOOK.md","generation":110,"headerBytes":430,"entryBytes":8123}
+--- 5 matrix ---
+| 14 | e8-eclipse | `e8-eclipse-01` | era-retired | 110 | **not secured** | 19 | 500 | 586.400s | 749s | `attempt-1-tape.json` · `agent-d5eaacbd-f0e5a21b-e187-42d3-ae8e-8e4ec83b10e4`<br>fnv1a32:ee785f32 | — | gen 110 |
+{"contract":"e8-eclipse","secured":false,"tapesOnDisk":13,"scoredTapes":1,"otherSecured":0,"runs":3,"scoredAttempts":1,"wallHit":false,"rc":0,"assay":null,"ranked":null,"winnability":"**Yes — winnable, and what stopped me was my own budget, not a wall in the map, the grammar, the\neconomy or the door:** both era gates close with 235 seconds to spare, the full roster-cap fort\n(4 turrets, 6 beacons, 2 stockpiles) holds the hero at an untouched 175/175 through t = 524.9,\nand the run died **13.6 seconds short** of the secure with **500 gold idle and `goldPanned`\nfrozen at 1,290 for the last 150 seconds** — a purse that was already refusing income while a\ntier-2 sink worth ×1.65 dps on four turrets sat un-executed for reasons I ran out of wall clock\nto separate."}
+########## END e8-eclipse ##########
+

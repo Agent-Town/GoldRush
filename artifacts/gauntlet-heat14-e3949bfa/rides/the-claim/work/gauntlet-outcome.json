@@ -1,0 +1,43 @@
+{
+ "secured": true,
+ "waves": 10,
+ "timeMs": 300000,
+ "gold": 498,
+ "kills": 298,
+ "calls": 36,
+ "defaultedPicks": 0,
+ "defaultedSecure": 1,
+ "eventLogHash": "fnv1a32:6d830a40",
+ "tape": "/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/heat14/opus/the-claim/attempt-1-tape.json",
+ "scored": true,
+ "runsSoFar": 2,
+ "scoredAttempts": 1,
+ "worldModel": "sim-import",
+ "contract": "the-claim",
+ "seed": "e1-the-claim-01",
+ "difficulty": "trail",
+ "note": "ONE RIDE, TWO FILENAMES. tune-1-tape.json secured on the first controller of the heat; attempt-1-tape.json is a byte-identical copy of it, promoted by name as my scored attempt per the brief's promotion clause. The stop rule ends the heat at the first SECURED outcome. Nothing else was ridden.",
+ "tapeMeta": {
+  "era": 6,
+  "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+  "viewVersion": 2,
+  "tapeEventLogHash": "fnv1a32:79bb2437",
+  "tapeDeclaredOutcome": { "reason": "secured", "secured": true, "waves": 10, "timeAlive": 300, "gold": 498 }
+ },
+ "envelope": {
+  "durationTicks": 9000,
+  "maxTicks": 18002,
+  "lastEntryTick": 8770,
+  "entries": 36,
+  "maxEntries": 3601,
+  "bytes": 103604,
+  "maxTapeBytes": 1938784,
+  "verdict": "all four axes clear with large margin (ceilings computed from runTapeEnvelopeForContract, not the brief's summary formula)"
+ },
+ "localAssay": {
+  "instrumentControl": "the zero-order idle probe replays to its own header hash fnv1a32:a45ba9ac — instrument verified before trusting it about the reel",
+  "reelReplay": "fnv1a32:79bb2437 reproduced, equal to the tape header's hash",
+  "securedSnapshot": { "waves": 10, "gold": 498, "timeAlive": 300 },
+  "verdict": "clean; the secure-tick purse the county would normalise to equals the declared 498"
+ }
+}

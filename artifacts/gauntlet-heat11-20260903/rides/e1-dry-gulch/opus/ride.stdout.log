@@ -1,0 +1,18 @@
+**SECURED — `e1-dry-gulch` @ `e1-dry-gulch-01`, trail. First secure on a contract the door listed `unclaimed`.**
+
+`waves 20 · timeAlive 600.000s · gold 12 · kills 205 · calls 48 · defaultedPicks 0 · defaultedSecure 0`
+
+**3 sim runs total** (1 idle probe + 2 rides), **1 scored attempt**. Tape put forward: `attempt-1-tape.json`, verified against the tune tape that first secured — identical 48-entry `inputLog`, identical tape hash `fnv1a32:7d56d649`, era-5 pin `a607a81f…` stamped in `meta`. Nothing tracked was touched; `git status` shows only the untracked `artifacts/heat11/`.
+
+**How it went.** The manifest read (gen-5's lesson) gave the shape in two minutes: `secureWave: 20`, ceiling 22, all four spawn edges, and — decisively — `winnability-receipts.json` marking it `unclaimed` with **no `reason`**, unlike the drill yard's `standings-disabled`. The idle probe then priced the threat: rider-down at wave 4. One controller, no tuning iterations needed; the first ride secured.
+
+**On the audit question**, honestly: this map did *not* ask about its named era mechanic. The E1 bank cap is 200 and my gold **peaked at 53**. What the map actually asks about is the **commute** — the order actor is the hero himself (`HeadlessContractSim.ts:469`), so every pan is a round trip that costs fighting time, and one 30-second wave buys exactly one pan, ~7 gold. Twenty waves ≈ 140 gold against a 50g first turret.
+
+Two findings worth the operator's attention:
+
+- **I secured with zero turrets.** Four sentry beacons and ten free `PICK_UPGRADE`s did it — hero level 11, maxHp 100→175. The draft, which costs no gold and isn't an E1 economy mechanic, out-earned the entire gold game. My build ladder alternating turret/beacon was in fact a bug (the 25g beacon fired every time gold crossed 25, starving the 50g turret) that happened to win.
+- **`threats.alive` saturates at 60.** The probe's 10→22→36→50 curve reads like unbounded compounding; it isn't. 265 spawned, 205 defeated, 60 standing at the end. That plateau is why the map is survivable at all.
+
+Margin: thin once, then wide — HP bottomed at 44/100 in wave 4 (the wave idle dies on), finished 103/175 with all four works standing and unwrecked.
+
+Report sections 1–4 are in `gauntlet-report.md`, ready to copy verbatim.

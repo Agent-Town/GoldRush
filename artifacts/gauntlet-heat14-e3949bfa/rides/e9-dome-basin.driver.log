@@ -1,0 +1,85 @@
+
+########## RIDE e9-dome-basin · seed e9-dome-basin-01 · gen 113 · stake era-retired · wall 1500s ##########
+--- 1 charter ---
+{"rig":"opus","contract":"e9-dome-basin","seed":"e9-dome-basin-01","seedMode":"bench","stake":"era-retired","generation":113,"wall":1500,"notebookSha256":"9fbbeae8d29a419e83ff5753c94e8e8938cf86da91b074619e163a642c1484fb","charterSha256":"8c32aa5027575319605b4b07c28e8c71121a297ade39134e54bd46aebf3023f3","bytes":900083,"out":"/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/gauntlet-heat14-e3949bfa/rides/e9-dome-basin/charter.md"}
+--- 2 ride ---
+START opus claude-opus-5 pid=3720 session=d3309f90-6b22-4554-a707-42e6ad35c1ae at=2026-09-18T04:30:47.174Z
+FIRST-OUTPUT opus +180s
+OUTCOME opus secured=false waves=2 gold=0 runsSoFar=1 scored=0 +180s
+OUTCOME opus secured=false waves=18 gold=197 runsSoFar=2 scored=0 +510s
+OUTCOME opus secured=true waves=20 gold=12 runsSoFar=3 scored=1 +855s
+OUTCOME opus secured=true waves=20 gold=12 runsSoFar=3 scored=1 +960s
+OUTCOME opus secured=true waves=20 gold=12 runsSoFar=3 scored=1 +1260s
+END opus rc=0 signal=null wall=1271s wallHit=false
+ride-wall rc=0 signal=-
+--- 3 land ---
+
+=== 1 finish-ride ===
+{"rig":"opus","contract":"e9-dome-basin","wall":1271,"wallHit":false,"rc":0,"tracked":[],"files":26,"outcome":{"secured":true,"waves":20,"gold":12,"runsSoFar":3,"scoredAttempts":1,"tape":"/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/heat14/opus/e9-dome-basin/attempt-1-tape.json","worldModel":"sim-import"},"scoredTapes":[{"file":"attempt-1-tape.json","id":"agent-933cae82-8bacfafd-82dc-4bed-bb0e-acd019849888","secured":true,"waves":20,"gold":12,"durationTicks":18000,"lastEntryTick":17999,"promotedByRig":true,"discoveredBy":"outcome-file+filename"}],"otherSecured":[],"reportSections":{"outcome":2240,"whatTheMapAsked":2624,"winnability":628,"lessons":4131},"usage":{"turns":68,"toolCalls":34,"tokensIn":136,"tokensOut":126436}}
+tape chosen: attempt-1-tape.json (id agent-933cae82-8bacfafd-82dc-4bed-bb0e-acd019849888, promotedByRig=true, discoveredBy=outcome-file+filename)
+
+=== 2 freeze notebook header ===
+{"headerOnly":true,"headerBytes":434}
+
+=== 3 harnessDigest ===
+afbbcd5084867b231d525db7b5a457993bc9a8bf580232e8d9e1af197b10cc23
+
+=== 4 build-submission ===
+{"tapeId":"agent-933cae82-8bacfafd-82dc-4bed-bb0e-acd019849888","contract":"e9-dome-basin","epochId":"epoch-9-redfields","seed":"e9-dome-basin-01","seedMode":"bench","score":{"secured":true,"waves":20,"timeAlive":600,"gold":12,"baseValue":0},"papers":{"buildId":"5c57f01b2","engineHash":"540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068","era":6,"viewVersion":2},"durationTicks":18000,"lastEntryTick":17999,"stack":{"model":"claude-opus-5","harness":"heat14-operator","harnessVersion":"2.1.272","harnessDigest":"afbbcd5084867b231d525db7b5a457993bc9a8bf580232e8d9e1af197b10cc23","worldModel":"sim-import","config":"attended-hosted headless `claude -p` ride (heat 14, the era-6 re-ride) on Claude Code CLI 2.1.272; charter + door manual + own notebook (self-memory); own controller authored in-ride","calls":926,"tokensIn":31041943,"tokensOut":126436}}
+
+=== 5 publish (POST → poll → WATCH) ===
+FAILED: file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/gauntlet-heat14-e3949bfa/publish-submission.mjs:28
+if (!post.ok) throw new Error(`POST ${post.status}: ${postText}`);
+                    ^
+
+Error: POST 413: <html>
+<head><title>413 Request Entity Too Large</title></head>
+<body>
+<center><h1>413 Request Entity Too Large</h1></center>
+<hr><center>nginx/1.24.0 (Ubuntu)</center>
+</body>
+</html>
+
+    at file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/gauntlet-heat14-e3949bfa/publish-submission.mjs:28:21
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+Node.js v26.4.0
+
+file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/gauntlet-heat14-e3949bfa/publish-submission.mjs:28
+if (!post.ok) throw new Error(`POST ${post.status}: ${postText}`);
+                    ^
+
+Error: POST 413: <html>
+<head><title>413 Request Entity Too Large</title></head>
+<body>
+<center><h1>413 Request Entity Too Large</h1></center>
+<hr><center>nginx/1.24.0 (Ubuntu)</center>
+</body>
+</html>
+
+    at file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/gauntlet-heat14-e3949bfa/publish-submission.mjs:28:21
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+Node.js v26.4.0
+<anonymous_script>:1
+<html>
+^
+
+SyntaxError: Unexpected token '<', "<html>
+<h"... is not valid JSON
+    at JSON.parse (<anonymous>)
+    at file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/gauntlet-heat14-e3949bfa/land-ride.mjs:62:66
+    at ModuleJob.run (node:internal/modules/esm/module_job:447:25)
+    at async node:internal/modules/esm/loader:646:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v26.4.0
+
+land rc=1
+--- 4 notebook ---
+{"notebook":"/Users/robin/Claude/Projects/goldrush-gauntlet/memories/claude__opus-5/NOTEBOOK.md","generation":113,"headerBytes":434,"entryBytes":8311}
+--- 5 matrix ---
+| 17 | e9-dome-basin | `e9-dome-basin-01` | era-retired | 113 | **SECURED** | 20 | 12 | 600s | 1271s | `attempt-1-tape.json` · `agent-933cae82-8bacfafd-82dc-4bed-bb0e-acd019849888`<br>fnv1a32:bba2de00 | ⚠ not submitted | gen 113 |
+{"contract":"e9-dome-basin","secured":true,"tapesOnDisk":16,"scoredTapes":1,"otherSecured":0,"runs":3,"scoredAttempts":1,"wallHit":false,"rc":0,"assay":null,"ranked":null,"winnability":"Secured, and the margin was **wide on survival and nil on the score**: the hero never fell below\n**96.8 %** of its running maximum (finishing 169.4/175) and the pocket held `threats.alive` in the\n40–58 band for the last six waves — while the banked purse is **12**, because the aggressive mend that\n*is* the defence on this board spends the purse continuously, and the run that banks gold instead\n(`tune-1`, identical but for that one clause) **died at wave 18** with 197 gold in hand and 22 of 24\nworks wrecked. On this contract gold and survival are the same lever pointed in opposite directions,\nand only one of them secures."}
+########## END e9-dome-basin ##########
+

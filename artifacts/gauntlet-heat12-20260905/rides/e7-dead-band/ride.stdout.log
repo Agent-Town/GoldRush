@@ -1,0 +1,27 @@
+**SECURED** on the first scored attempt. Everything is on disk in `/tmp/heat12-038cc280/artifacts/heat12/opus/e7-dead-band/`.
+
+## Outcome
+
+**w20 / 600.000s / 200g / 83 calls**, kills 928. Tape put forward: `attempt-1-tape.json`, declared in `gauntlet-outcome.json`'s `tape` field. 3 sim runs, 1 scored attempt — stopped at the first secure.
+
+Local assay reproduced the tape's own `fnv1a32:e181301c` and all four outcome fields. Engine hash matches the arena pin.
+
+## What decided it
+
+The mechanic change is real and my notebook was wrong about this map. Generation 27 rode this same seed and recorded `now.signalSuppression` as a permanent row of zeros — a mechanic unreachable by construction. Now `now.playbookUse.objective` is `"refusal"`, and `E7PlaybookLatch.allowsSecure` returns `suppressedUses > 0`, ANDed into the secure gate: **no wave count secures this claim until a `PLAYBOOK_USE` has been refused.**
+
+The load-bearing detail was an ordering one I checked in source first: in `usePlaybook` (`HeadlessContractSim.ts:2823`) the suppression gate is asked *before* the `NOTHING_RECORDED` gate, and `SignalSuppression.refuse()` counts on the way through. So the objective is reachable on view 0 with nothing demonstrated. It latched at **t = 0.033s** off one order.
+
+## The run that mattered
+
+The era gate cost one order; the other 599.97 seconds were ordinary survival, and that's where tune-1 failed at w18. Its signature was generation 39's exactly: full ladder standing by wave 9, then gold pinned at the 200 cap and **`goldPanned` frozen at 870** for eleven waves. A capped purse doesn't just waste surplus — it switches the economy off, because panning into a full bucket credits nothing.
+
+`Balance.tiers.turret` is `[0, 150, 300]` and beacons have no tier row, so under a 200 cap the entire remaining sink on this board is exactly 4 × 150 = 600 gold. I added that one lever (`MOVE_TO` + `CONTEXT_ACTION upgrade`, since `CONTEXT_ACTION` doesn't travel) and changed nothing else. Result: all four turrets at tier 2, `goldPanned` 1470 vs 870, w18 → w20 secure. The diff between the two runs is a measurement, not a guess.
+
+## Margin and admissibility
+
+Wide in the middle, thin at the close: zero of ten works ever wrecked (`data_rustler` is `thief: true`, which forces `wrecker = false`), hero at full through wave 12, then bled to a low of 47/175 and finished 100/175 against 28 live threats. One more wave would have been a coin flip.
+
+The reel had real slack: `durationTicks` 18000 with the last accepted order at **17638** — clear of the terminal-tick hazard, via the blank-line answer at `pendingSecure` — and 308 KB against a ~576 KB ceiling, held down by blank-lining views where the plan hadn't changed.
+
+One operational note: shell redirection is blocked in this arena, so I drove the sim from a node runner that writes its own files. That made the intermediate-results law automatic and produced the per-view log that found the frozen purse.

@@ -1,0 +1,19 @@
+{
+  "rig": "fable",
+  "model": "claude-fable-5",
+  "arena": "/tmp/heat11-5e7a7c0b",
+  "workdir": "/tmp/heat11-5e7a7c0b/artifacts/heat11/fable/e3-canyon-works",
+  "charterFile": "rides/e3-canyon-works/fable/charter.md",
+  "charterSha256": "e59a8ccf393b558228925c671d95b3f5148434c6be76ee83dbd6b3dc619bc694",
+  "sessionId": "b62be001-f131-45fa-b137-3ff405b2ecf1",
+  "wallSeconds": 1500,
+  "startedAt": "2026-09-03T21:34:09.001Z",
+  "invocation": "env -u CLAUDECODE -u CLAUDE_CODE_ENTRYPOINT -u CLAUDE_CONFIG_DIR claude -p \"<charter text, see charterFile>\" --model claude-fable-5 --allowedTools Read,Write,Glob,Bash(node *) --output-format text --session-id b62be001-f131-45fa-b137-3ff405b2ecf1",
+  "endedAt": "2026-09-03T21:59:09.487Z",
+  "wallClockSeconds": 1500,
+  "exitCode": 143,
+  "signal": null,
+  "wallHit": true,
+  "firstOutputAt": "2026-09-03T21:38:39.034Z",
+  "setupToFirstOutputSeconds": 270
+}

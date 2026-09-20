@@ -1,0 +1,34 @@
+run-guards: 33 file(s) changed since 32524c8f6a03a9e9195c5798dc9e71020203aff9
+  base gate: test:node-guards, test:power-budget, test:task-guards, test:citations, test:gate-callers
+  (no path rule matched -- base gate only)
+
+FAIL  rc=1  444s  test:node-guards
+PASS  rc=0  0s  test:power-budget  p95=0.365ms
+PASS  rc=0  0s  test:task-guards
+PASS  rc=0  2s  test:citations
+PASS  rc=0  0s  test:gate-callers
+
+--- test:node-guards (rc=1) last 20 lines ---
+    diff: 'simple'
+  }
+
+test at scripts/node-guards-contention.test.mjs:124:1
+✖ contention is advisory, correctly counted, and absent when alone (6343.882ms)
+  AssertionError [ERR_ASSERTION]: node-guards board did not stay quiet for 300ms
+      at waitForQuietBoard (file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-regatta/scripts/node-guards-contention.test.mjs:65:10)
+      at async TestContext.<anonymous> (file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-regatta/scripts/node-guards-contention.test.mjs:166:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: undefined,
+    operator: 'fail',
+    diff: 'simple'
+  }
+CONTENDED — 2 concurrent batteries
+ℹ TAP-QUIET MAX: 90.0s of 2700s bound (F-POC-8 watchdog)
+CONTENDED — 2 concurrent batteries
+
+guards: 4/5 passed -- RED: test:node-guards
+guard-stats: appended 5 record(s) to /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-regatta/logs/guard-stats.jsonl

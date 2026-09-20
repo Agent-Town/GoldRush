@@ -1,0 +1,21 @@
+(node:33819) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+{"wave":0,"hp":100,"maxHp":100,"level":1,"gold":0,"threats":0,"worksHp":0,"works":{"lantern_post":7},"needsRider":false,"failures":[]}
+{"wave":0,"hp":100,"maxHp":100,"level":1,"gold":0,"threats":0,"worksHp":0,"works":{"lantern_post":7},"needsRider":true,"failures":["FAILED: REPAIR_UNDER action was rejected."]}
+{"wave":0,"hp":100,"maxHp":100,"level":1,"gold":30,"threats":0,"worksHp":0,"works":{"lantern_post":7},"needsRider":true,"failures":["FAILED: REPAIR_UNDER action was rejected.","INVALID_TARGET: gold-seam-2 is unavailable."]}
+{"wave":0,"hp":100,"maxHp":100,"level":1,"gold":52,"threats":2,"worksHp":35,"works":{"lantern_post":7},"needsRider":true,"failures":["INVALID_TARGET: gold-seam-1 is unavailable."]}
+{"wave":1,"hp":100,"maxHp":100,"level":1,"gold":44,"threats":7,"worksHp":70,"works":{"lantern_post":7},"needsRider":false,"failures":[]}
+{"wave":1,"hp":96.80000000000001,"maxHp":100,"level":1,"gold":66,"threats":3,"worksHp":105,"works":{"lantern_post":7},"needsRider":true,"failures":["INVALID_TARGET: gold-seam-2 is unavailable."]}
+file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-c/artifacts/gauntlet-heat5-20260824/rider.mjs:126
+function rank(id) { const i = (priorities[style] ?? priorities.damage).indexOf(id); return i < 0 ? 99 : i; }
+                              ^
+
+ReferenceError: Cannot access 'priorities' before initialization
+    at rank (file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-c/artifacts/gauntlet-heat5-20260824/rider.mjs:126:31)
+    at file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-c/artifacts/gauntlet-heat5-20260824/rider.mjs:53:55
+    at Array.sort (<anonymous>)
+    at ordersFor (file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-c/artifacts/gauntlet-heat5-20260824/rider.mjs:53:40)
+    at file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-c/artifacts/gauntlet-heat5-20260824/rider.mjs:37:39
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+Node.js v26.4.0

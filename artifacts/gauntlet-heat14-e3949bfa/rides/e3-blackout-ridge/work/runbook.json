@@ -1,0 +1,47 @@
+{
+  "runs": [
+    {
+      "label": "probe",
+      "outcome": {
+        "secured": false,
+        "waves": 4,
+        "timeMs": 134833,
+        "gold": 0,
+        "kills": 52,
+        "calls": 0,
+        "defaultedPicks": 1,
+        "defaultedSecure": 0,
+        "eventLogHash": "fnv1a32:928c3618"
+      },
+      "envelope": {
+        "durationTicks": 4045,
+        "lastEntryTick": 0,
+        "entries": 0,
+        "bytes": 1478,
+        "tapeHash": "fnv1a32:a45ba9ac"
+      }
+    },
+    {
+      "label": "tune-1",
+      "outcome": {
+        "secured": true,
+        "waves": 12,
+        "timeMs": 360000,
+        "gold": 499,
+        "kills": 69,
+        "calls": 149,
+        "defaultedPicks": 0,
+        "defaultedSecure": 1,
+        "eventLogHash": "fnv1a32:f31073d7"
+      },
+      "envelope": {
+        "durationTicks": 10800,
+        "lastEntryTick": 10124,
+        "entries": 149,
+        "bytes": 544767,
+        "tapeHash": "fnv1a32:88d63803"
+      }
+    }
+  ],
+  "scored": []
+}

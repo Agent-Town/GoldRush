@@ -1,0 +1,150 @@
+[
+  {
+    "contractId": "the-claim",
+    "seed": "e1-the-claim-01",
+    "attempts": 3,
+    "secured": false,
+    "winningTape": null,
+    "attemptTapes": [
+      null,
+      null,
+      "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-d/artifacts/gauntlet-heat2-20260824/hermes/the-claim-attempt-3.json"
+    ],
+    "terminalOutcomes": [
+      {
+        "attempt": 1,
+        "terminal": false,
+        "reason": "stdin-ended-before-orders; no tape written"
+      },
+      {
+        "attempt": 2,
+        "terminal": false,
+        "reason": "transport session ended after wave-1 view; no tape written"
+      },
+      {
+        "attempt": 3,
+        "terminal": true,
+        "reason": "death",
+        "secured": false,
+        "waves": 4,
+        "timeMs": 130700,
+        "gold": 45,
+        "kills": 75,
+        "calls": 8,
+        "eventLogHash": "fnv1a32:d038ca8a"
+      }
+    ],
+    "approximateWallSeconds": 10.249,
+    "doorFindings": "Three active seams paid 5g per accepted HARVEST. A 25g beacon was affordable by wave 2, but the late 50g turret line never came online; the lone slow field left the rider down at wave 4. Two earlier invocations ended at the stdin transport without terminal outcomes or tapes.",
+    "model": "openai-codex/gpt-5.6-sol",
+    "harness": "Hermes Agent CLI with rider_driver.py strategy adapter",
+    "harnessVersion": "Hermes Agent v0.20.0 (2026.8.3)",
+    "deployedCommit": "b42c0fbcc8c1b0813e57bc114a811e93d235e76c"
+  },
+  {
+    "contractId": "e1-night-shift",
+    "seed": "e1-night-shift-01",
+    "attempts": 3,
+    "secured": false,
+    "winningTape": null,
+    "attemptTapes": [
+      "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-d/artifacts/gauntlet-heat2-20260824/hermes/e1-night-shift-attempt-1.json",
+      "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-d/artifacts/gauntlet-heat2-20260824/hermes/e1-night-shift-attempt-2.json",
+      "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-d/artifacts/gauntlet-heat2-20260824/hermes/e1-night-shift-attempt-3.json"
+    ],
+    "terminalOutcomes": [
+      {
+        "attempt": 1,
+        "reason": "death",
+        "secured": false,
+        "waves": 3,
+        "timeMs": 100967,
+        "gold": 32,
+        "kills": 44,
+        "calls": 10,
+        "eventLogHash": "fnv1a32:2e681fdc"
+      },
+      {
+        "attempt": 2,
+        "reason": "death",
+        "secured": false,
+        "waves": 8,
+        "timeMs": 249533,
+        "gold": 87,
+        "kills": 211,
+        "calls": 76,
+        "eventLogHash": "fnv1a32:89f65d1e"
+      },
+      {
+        "attempt": 3,
+        "reason": "death",
+        "secured": false,
+        "waves": 7,
+        "timeMs": 224567,
+        "gold": 16,
+        "kills": 176,
+        "calls": 60,
+        "eventLogHash": "fnv1a32:d098bf06"
+      }
+    ],
+    "approximateWallSeconds": 72.22,
+    "doorFindings": "The board opens with seven wrecked lantern posts and two live gold seams. REPAIR_UNDER can relight a wreck, while four correctly spaced palisades held hero HP near full through wave 4 and extended survival to wave 8. Repeated claim-damage escalations, depleted seams, and delayed turret deployment overwhelmed the works far short of dawn at wave 25.",
+    "model": "openai-codex/gpt-5.6-sol",
+    "harness": "Hermes Agent CLI with rider_driver.py strategy adapter",
+    "harnessVersion": "Hermes Agent v0.20.0 (2026.8.3)",
+    "deployedCommit": "b42c0fbcc8c1b0813e57bc114a811e93d235e76c"
+  },
+  {
+    "contractId": "e2-hill-mine",
+    "seed": "e2-hill-mine-01",
+    "attempts": 3,
+    "secured": false,
+    "winningTape": null,
+    "attemptTapes": [
+      "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-d/artifacts/gauntlet-heat2-20260824/hermes/e2-hill-mine-attempt-1.json",
+      "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-d/artifacts/gauntlet-heat2-20260824/hermes/e2-hill-mine-attempt-2.json",
+      "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-d/artifacts/gauntlet-heat2-20260824/hermes/e2-hill-mine-attempt-3.json"
+    ],
+    "terminalOutcomes": [
+      {
+        "attempt": 1,
+        "reason": "death",
+        "secured": false,
+        "waves": 2,
+        "timeMs": 85500,
+        "gold": 30,
+        "kills": 26,
+        "calls": 4,
+        "eventLogHash": "fnv1a32:0e787936"
+      },
+      {
+        "attempt": 2,
+        "reason": "death",
+        "secured": false,
+        "waves": 2,
+        "timeMs": 84133,
+        "gold": 0,
+        "kills": 25,
+        "calls": 4,
+        "eventLogHash": "fnv1a32:901a3855"
+      },
+      {
+        "attempt": 3,
+        "reason": "death",
+        "secured": false,
+        "waves": 1,
+        "timeMs": 42133,
+        "gold": 0,
+        "kills": 5,
+        "calls": 3,
+        "eventLogHash": "fnv1a32:4e463bca"
+      }
+    ],
+    "approximateWallSeconds": 12.336,
+    "doorFindings": "Only two distant live gold seams were visible, paying 5g per HARVEST, so the 70g boiler could not arrive before the opening packs. Palisades were legal at (0,16), (-4,16), and (4,16), but north-terrace walls did not screen west pressure; dense wrecker packs dropped the rider by wave 2. Automatic blast mode performed worse, ending at wave 1.",
+    "model": "openai-codex/gpt-5.6-sol",
+    "harness": "Hermes Agent CLI with rider_driver.py strategy adapter",
+    "harnessVersion": "Hermes Agent v0.20.0 (2026.8.3)",
+    "deployedCommit": "b42c0fbcc8c1b0813e57bc114a811e93d235e76c"
+  }
+]

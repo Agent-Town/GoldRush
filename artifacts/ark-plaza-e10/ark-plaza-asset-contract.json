@@ -1,0 +1,196 @@
+{
+  "blender": "5.1.2",
+  "baseSha": "d944dc7ebd690141d52f363d38aa6dc1a83f4343",
+  "checked": {
+    "sha256": "bc4195258c27cd38035eac1c90d495808a2548f63a5bb68b44cfcb0eabf7b720",
+    "bytes": 6090936,
+    "nodes": [
+      "ArkPlazaE10"
+    ],
+    "meshes": 1,
+    "primitives": 1,
+    "triangles": 19676,
+    "materials": 1,
+    "textures": 1,
+    "images": 1,
+    "embeddedImages": 1,
+    "imageDimensions": [
+      [
+        2048,
+        2048
+      ]
+    ],
+    "cameras": 0,
+    "lights": 0,
+    "animations": 0,
+    "bounds": {
+      "min": [
+        -24.629999,
+        -0.52,
+        -24.530001
+      ],
+      "max": [
+        24.629999,
+        10.68,
+        23.07
+      ],
+      "size": [
+        49.259998,
+        11.2,
+        47.6
+      ],
+      "center": [
+        0.0,
+        5.08,
+        -0.73
+      ]
+    },
+    "materialContract": [
+      {
+        "metallicFactor": 0.05999999865889549,
+        "roughnessFactor": 0.8399999737739563,
+        "hasBaseColorTexture": true,
+        "alphaMode": "OPAQUE",
+        "doubleSided": true
+      }
+    ]
+  },
+  "reexported": {
+    "sha256": "bc4195258c27cd38035eac1c90d495808a2548f63a5bb68b44cfcb0eabf7b720",
+    "bytes": 6090936,
+    "nodes": [
+      "ArkPlazaE10"
+    ],
+    "meshes": 1,
+    "primitives": 1,
+    "triangles": 19676,
+    "materials": 1,
+    "textures": 1,
+    "images": 1,
+    "embeddedImages": 1,
+    "imageDimensions": [
+      [
+        2048,
+        2048
+      ]
+    ],
+    "cameras": 0,
+    "lights": 0,
+    "animations": 0,
+    "bounds": {
+      "min": [
+        -24.629999,
+        -0.52,
+        -24.530001
+      ],
+      "max": [
+        24.629999,
+        10.68,
+        23.07
+      ],
+      "size": [
+        49.259998,
+        11.2,
+        47.6
+      ],
+      "center": [
+        0.0,
+        5.08,
+        -0.73
+      ]
+    },
+    "materialContract": [
+      {
+        "metallicFactor": 0.05999999865889549,
+        "roughnessFactor": 0.8399999737739563,
+        "hasBaseColorTexture": true,
+        "alphaMode": "OPAQUE",
+        "doubleSided": true
+      }
+    ]
+  },
+  "byteIdentical": true,
+  "semanticIdentical": {
+    "nodes": true,
+    "meshes": true,
+    "primitives": true,
+    "triangles": true,
+    "materials": true,
+    "textures": true,
+    "images": true,
+    "embeddedImages": true,
+    "imageDimensions": true,
+    "cameras": true,
+    "lights": true,
+    "animations": true,
+    "bounds": true,
+    "materialContract": true
+  },
+  "realizedWalkSurface": {
+    "surface": "saved ark-plaza-e10.blend ray-cast across the inherited +/-0.45m actor corridor outside the Pan Monument footprint",
+    "panMonumentExclusionRadius": 0.92,
+    "actorCorridorOffsets": [
+      -0.45,
+      0.0,
+      0.45
+    ],
+    "routeSamples": 3124,
+    "routeMaxAbs": 0.04199382662773132,
+    "routes": {
+      "ring-road": {
+        "samples": 1200,
+        "minimum": -2.2351741790771484e-08,
+        "maximum": 0.034000277519226074,
+        "maxAbs": 0.034000277519226074
+      },
+      "tavern": {
+        "samples": 206,
+        "minimum": -2.2351741790771484e-08,
+        "maximum": 0.040279313921928406,
+        "maxAbs": 0.040279313921928406
+      },
+      "claim_office": {
+        "samples": 206,
+        "minimum": -2.2351741790771484e-08,
+        "maximum": 0.040279537439346313,
+        "maxAbs": 0.040279537439346313
+      },
+      "general_store": {
+        "samples": 224,
+        "minimum": -2.2351741790771484e-08,
+        "maximum": 0.04125455021858215,
+        "maxAbs": 0.04125455021858215
+      },
+      "schoolhouse": {
+        "samples": 206,
+        "minimum": -2.2351741790771484e-08,
+        "maximum": 0.04143012315034866,
+        "maxAbs": 0.04143012315034866
+      },
+      "assay_office": {
+        "samples": 206,
+        "minimum": -2.2351741790771484e-08,
+        "maximum": 0.04143001139163971,
+        "maxAbs": 0.04143001139163971
+      },
+      "chapel": {
+        "samples": 212,
+        "minimum": -2.2351741790771484e-08,
+        "maximum": 0.04199382662773132,
+        "maxAbs": 0.04199382662773132
+      },
+      "stamp-mill": {
+        "samples": 224,
+        "minimum": -2.9802322387695312e-08,
+        "maximum": 0.037613898515701294,
+        "maxAbs": 0.037613898515701294
+      },
+      "gate": {
+        "samples": 440,
+        "minimum": -2.2351741790771484e-08,
+        "maximum": 0.028387755155563354,
+        "maxAbs": 0.028387755155563354
+      }
+    }
+  }
+}

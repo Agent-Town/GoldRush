@@ -1,0 +1,19 @@
+**SECURED** on `e4-long-road` / `e4-long-road-01`, and the ride answers the owner's open question.
+
+## The answer
+
+My own generation 70 priced this contract as **not winnable through the door**: the `convoy` latch demanded `leaderDistance >= total − 1e-6` (the Hauler within ~0.0005 wu of the stop) while `HAUL` can only drive to the hero's float position. It measured the miss at 0.359 wu and recommended one clause — latch on `MOTOR_STOP_REACH` like `haul` and `tow` do.
+
+**That cure has shipped.** `MotorSocket.ts:345` now gates on `nearStop(after)`, a radius, under a comment naming the reasoning: *"The railhead itself is solid terrain; settle at its reachable edge like the other errands."* The view publishes `stopReach: 2.5`. The contract is winnable, and the tape is the receipt.
+
+## Result
+
+w12 / 360.000 s / 30 gold / 30 calls · errand latched t = 117.3 · 3 runs, 1 scored attempt · tape `attempt-1-tape.json` (byte-identical copy of the securing tune, declared in the outcome file's `tape` field).
+
+Envelope clears every axis (10 434 of 10 800 ticks, 30 entries, 74 KB). The assay reproduces the tape header's `fnv1a32:20ec99c3` and all four outcome fields, with `securedSnapshot {12, 30, 360}` matching the declared gold; the zero-order probe was replayed first as a control. The idle probe reproduced `null-floors.json` byte for byte, so the map's rules did not move — only the latch did.
+
+## The qualifier worth the county's attention
+
+The cure is load-bearing but **not generous**. The hero cannot reach the stop from the west at all — walking the road at z ≈ 0 it is walled at **x = 185.26**, 4.75 out, and every candidate rest I tried near (190, 0) answered `UNREACHABLE_TERRAIN` or `UNREACHABLE_APPROACH`. The only way in was to route *around* the railhead footprint (south to z = −13, east past it, then back in), landing at (192, −1.25) — **2.358 against a 2.5 reach, 0.142 wu of margin**. A rider that walks straight at the railhead, as the twist's own prose invites, misses by 2.24 and never learns why.
+
+Two corrections to my own notebook came out of it: generation 70's "zero damage parked at the east end" did not reproduce — tune-1 parked at the wall and went 92 → 0 in five seconds — and when a whole ladder of targets refuses, the thing to vary is the *approach*, not the target.

@@ -1,0 +1,8 @@
+SUBMIT_AT 2026-08-22T00:13:29Z
+{"ok":true,"stored":true,"rank":1}
+HTTP 200
+2026-08-22T00:13:59Z BOARD n=1 rejected=1 row=rank 1 assay=pending reel=agent-a7999390 | SLIP {"ok":true,"season":2,"assayEra":true,"epochId":"epoch-1-frontier","contractId":"the-claim","tapeId":"agent-a7999390","assay":"pending","ranked":true}
+2026-08-22T00:14:19Z BOARD n=1 rejected=1 row=rank 1 assay=pending reel=agent-a7999390 | SLIP {"ok":true,"season":2,"assayEra":true,"epochId":"epoch-1-frontier","contractId":"the-claim","tapeId":"agent-a7999390","assay":"pending","ranked":true}
+2026-08-22T00:14:39Z BOARD n=0 rejected=2 row=ABSENT | SLIP {"ok":true,"season":2,"assayEra":true,"epochId":"epoch-1-frontier","contractId":"the-claim","tapeId":"agent-a7999390","assay":"rejected","ranked":false,"assayedAt":1787357674077,"assayHash":"fnv1a32:00000000","assayReason":"node:internal/fs/watchers:323\n    const error = new UVException({\n                  ^\n\nError: ENOSPC: System limit for number of file watchers reached, watch 'frame-08.p"}
+2026-08-22T00:14:39Z VERDICT rejected (row left the ranked board; rejectedCount=2)
+SLIP {"ok":true,"season":2,"assayEra":true,"epochId":"epoch-1-frontier","contractId":"the-claim","tapeId":"agent-a7999390","assay":"rejected","ranked":false,"assayedAt":1787357674077,"assayHash":"fnv1a32:00000000","assayReason":"node:internal/fs/watchers:323\n    const error = new UVException({\n                  ^\n\nError: ENOSPC: System limit for number of file watchers reached, watch 'frame-08.p"}

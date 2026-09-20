@@ -1,0 +1,9 @@
+[state-migrations] Legacy state migration notes:
+- Left plugin install index in place because shared SQLite state has conflicting plugin install metadata for: acpx, codex, lossless-claw
+[agent/embedded] codex app-server context-engine projection decision
+[agent/embedded] codex app-server wrote context-engine thread binding
+[agent/embedded] [context-engine] deferred turn maintenance queued taskId=649be060-9b5b-422c-8ad5-fff06d412a11 sessionKey=agent:main:explicit:heat2-openclaw-20260824 lane=context-engine-turn-maintenance:agent:main:explicit:heat2-openclaw-20260824
+[agent/embedded] codex app-server one-shot cleanup retired shared client
+[agent/embedded] skipping codex app-server compaction for non-manual trigger
+[agents/cli-compaction] CLI transcript compaction skipped for openai/gpt-5.5: already under target
+[agents/agent-command] [agent] run 3e11c165-3e54-4871-aea2-1e8b9644849b ended with stopReason=stop

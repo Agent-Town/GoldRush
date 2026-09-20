@@ -1,0 +1,63 @@
+
+########## RIDE e8-mare-claim · seed e8-mare-claim-01 · gen 61 · stake re-ride · wall 1500s ##########
+--- 1 charter ---
+{"rig":"opus","contract":"e8-mare-claim","seed":"e8-mare-claim-01","seedMode":"bench","stake":"re-ride","generation":61,"wall":1500,"notebookSha256":"b162e31d9407f5707fbf7cbabab0cfcfcc219826b1b8fe5991d30fee5a32ffd7","charterSha256":"c05778c90840ed71a68830a10bff2c443810c379b564cc6f13c178cf96352478","bytes":479655,"out":"/private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/rides/e8-mare-claim/charter.md"}
+--- 2 ride ---
+START opus claude-opus-5 pid=70698 session=387495a1-7add-433f-961e-bc4230e3248e at=2026-09-07T09:44:23.138Z
+FIRST-OUTPUT opus +90s
+OUTCOME opus secured=false waves=2 gold=0 runsSoFar=1 scored=0 +105s
+OUTCOME opus secured=false waves=15 gold=65 runsSoFar=2 scored=0 +360s
+OUTCOME opus secured=true waves=20 gold=70 runsSoFar=3 scored=1 +555s
+OUTCOME opus secured=true waves=20 gold=70 runsSoFar=3 scored=1 +705s
+END opus rc=0 signal=null wall=793s wallHit=false
+ride-wall rc=0 signal=-
+--- 3 land ---
+
+=== 1 finish-ride ===
+{"rig":"opus","contract":"e8-mare-claim","wall":793,"wallHit":false,"rc":0,"tracked":[],"files":13,"outcome":{"secured":true,"waves":20,"gold":70,"runsSoFar":3,"scoredAttempts":1,"tape":"/private/tmp/heat13-569a41f9/artifacts/heat13/opus/e8-mare-claim/attempt-1-tape.json","worldModel":"sim-import"},"scoredTapes":[{"file":"attempt-1-tape.json","id":"agent-71e56661-87597c87-7b75-4e89-a421-3f6e7b80b635","secured":true,"waves":20,"gold":70,"durationTicks":18000,"lastEntryTick":17681,"promotedByRig":true,"discoveredBy":"outcome-file+filename"}],"otherSecured":[],"reportSections":{"outcome":1349,"whatTheMapAsked":3829,"winnability":509,"lessons":5997},"usage":{"turns":111,"toolCalls":58,"tokensIn":222,"tokensOut":139134}}
+tape chosen: attempt-1-tape.json (id agent-71e56661-87597c87-7b75-4e89-a421-3f6e7b80b635, promotedByRig=true, discoveredBy=outcome-file+filename)
+
+=== 2 freeze notebook header ===
+{"headerOnly":true,"headerBytes":432}
+
+=== 3 harnessDigest ===
+c2f986a93da8aa4982463cd4f421ff48c16fe6928ae2b2076ba19d37e3331e03
+
+=== 4 build-submission ===
+{"tapeId":"agent-71e56661-87597c87-7b75-4e89-a421-3f6e7b80b635","contract":"e8-mare-claim","epochId":"epoch-8-orbital","seed":"e8-mare-claim-01","seedMode":"bench","score":{"secured":true,"waves":20,"timeAlive":600,"gold":70,"baseValue":0},"papers":{"buildId":"4e7d98930","engineHash":"09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4","era":5,"viewVersion":2},"durationTicks":18000,"lastEntryTick":17681,"stack":{"model":"claude-opus-5","harness":"heat13-operator","harnessVersion":"2.1.257","harnessDigest":"c2f986a93da8aa4982463cd4f421ff48c16fe6928ae2b2076ba19d37e3331e03","worldModel":"sim-import","config":"attended-hosted headless `claude -p` ride (heat 13, the 1:1-grammar re-ride) on Claude Code CLI 2.1.257; charter + door manual + own notebook (self-memory); own controller authored in-ride","calls":60,"tokensIn":36197181,"tokensOut":139134}}
+
+=== 5 publish (POST → poll → WATCH) ===
+{"rank":1,"tapeId":"agent-71e56661-87597c87-7b75-4e89-a421-3f6e7b80b635","assay":"verified","assayHash":"fnv1a32:5ace32f2","papers":{"buildId":"4e7d98930","engineHash":"09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4","era":5,"viewVersion":2}}
+
+=== LANDED ===
+{
+ "rig": "opus",
+ "contract": "e8-mare-claim",
+ "tapeFile": "attempt-1-tape.json",
+ "tapeId": "agent-71e56661-87597c87-7b75-4e89-a421-3f6e7b80b635",
+ "assay": "verified",
+ "assayHash": "fnv1a32:5ace32f2",
+ "ranked": true,
+ "rank": 1,
+ "waves": 20,
+ "gold": 70,
+ "calls": 60,
+ "eventLogHash": "fnv1a32:9163b781",
+ "wall": 793,
+ "harnessDigest": "c2f986a93da8aa4982463cd4f421ff48c16fe6928ae2b2076ba19d37e3331e03",
+ "usage": {
+  "turns": 111,
+  "toolCalls": 58,
+  "tokensIn": 36197181,
+  "tokensOut": 139134
+ }
+}
+
+land rc=0
+--- 4 notebook ---
+{"notebook":"/Users/robin/Claude/Projects/goldrush-gauntlet/memories/claude__opus-5/NOTEBOOK.md","generation":61,"headerBytes":432,"entryBytes":11284}
+--- 5 matrix ---
+| 1 | e8-mare-claim | `e8-mare-claim-01` | re-ride | 61 | **SECURED** | 20 | 70 | 600s | 793s | `attempt-1-tape.json` · `agent-71e56661-87597c87-7b75-4e89-a421-3f6e7b80b635`<br>fnv1a32:9163b781 | verified `fnv1a32:5ace32f2` rank 1 | gen 61<br>slip `agent-71e56661-87597c87-7b75-4e89-a421-3f6e7b80b635` |
+{"contract":"e8-mare-claim","secured":true,"tapesOnDisk":10,"scoredTapes":1,"otherSecured":0,"runs":3,"scoredAttempts":1,"wallHit":false,"rc":0,"assay":"verified","ranked":true,"winnability":"Secured, and the margin was **comfortable on the objective and honestly narrowing on hit points**:\nthe era gate latched at t = 364.4 s with 235 seconds of slack, none of the eight works was ever\nwrecked (neither roster entry carries `wrecker` or `thief`), and the suit held 40–60 of 60 for the\nwhole back half — but the hero came down from 167/175 to **93.6/175** over the last seventy seconds\nagainst 36–59 live threats, so a wave-22 gate on this line would have been a real question rather\nthan a formality."}
+########## END e8-mare-claim ##########
+

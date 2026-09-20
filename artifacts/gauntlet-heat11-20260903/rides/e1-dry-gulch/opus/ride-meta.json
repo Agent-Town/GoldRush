@@ -1,0 +1,19 @@
+{
+  "rig": "opus",
+  "model": "claude-opus-5",
+  "arena": "/tmp/heat11-5e7a7c0b",
+  "workdir": "/tmp/heat11-5e7a7c0b/artifacts/heat11/opus/e1-dry-gulch",
+  "charterFile": "/Users/robin/Claude/Projects/Gold Rush/artifacts/gauntlet-heat11-20260903/rides/e1-dry-gulch/opus/charter.md",
+  "charterSha256": "8f724b07a045bf9439ec857d1577082e8a02f7f06f5bf793d1df702ab4e6377d",
+  "sessionId": "c0422d13-637f-48b4-92bb-73604aa62c11",
+  "wallSeconds": 1500,
+  "startedAt": "2026-09-03T13:09:05.253Z",
+  "invocation": "env -u CLAUDECODE -u CLAUDE_CODE_ENTRYPOINT -u CLAUDE_CONFIG_DIR claude -p \"<charter text, see charterFile>\" --model claude-opus-5 --allowedTools Read,Write,Glob,Bash(node *) --output-format text --session-id c0422d13-637f-48b4-92bb-73604aa62c11",
+  "endedAt": "2026-09-03T13:16:47.811Z",
+  "wallClockSeconds": 463,
+  "exitCode": 0,
+  "signal": null,
+  "wallHit": false,
+  "firstOutputAt": "2026-09-03T13:10:20.267Z",
+  "setupToFirstOutputSeconds": 75
+}

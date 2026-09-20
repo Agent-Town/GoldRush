@@ -1,0 +1,46 @@
+Info: Saved as "railcar.blend"
+INFO Draco mesh compression is available, use library at /Applications/Blender.app/Contents/Resources/5.1/scripts/addons_core/io_scene_gltf2/libextern_draco.dylib
+11:23:09 | INFO: Starting glTF 2.0 export
+11:23:09 | INFO: Extracting primitive: Railcar_WheelsMesh
+11:23:09 | INFO: Primitives created: 1
+11:23:09 | INFO: Extracting primitive: Railcar_BoilerMesh
+11:23:09 | INFO: Primitives created: 1
+11:23:09 | INFO: Extracting primitive: Railcar_CabinMesh
+11:23:09 | INFO: Primitives created: 1
+11:23:09 | INFO: Finished glTF 2.0 export in 0.018861055374145508 s
+
+{
+  "blend": "/Users/robin/.codex/worktrees/572c/Gold Rush/artifacts/boss-fidelity/e2-railcar/candidate/railcar.blend",
+  "glb": "/Users/robin/.codex/worktrees/572c/Gold Rush/artifacts/boss-fidelity/e2-railcar/candidate/railcar.glb",
+  "sha256": "56e4bf245051ef723e9a11cea07a4282c1b4597b993324dea01d8833ba064b95",
+  "sourcePlateSha256": "410a4cb77c24b40fbda47ef148f33e5655c7d9d8fe793c97ccac844eb5b5e536",
+  "surfaceSource": "assets/raw/railcar-atlas-fidelity-e2.png",
+  "surfaceSha256": "448ae3819f1d611d2b1edcefe3a353cf075b90a556dc3080b419cb175b479532",
+  "objects": [
+    "Railcar_Wheels",
+    "Railcar_Boiler",
+    "Railcar_Cabin"
+  ],
+  "damageMorphs": [
+    "Damage_BentWheels",
+    "Damage_VentingBoiler",
+    "Damage_CrackedCabin"
+  ],
+  "triangles": 11936,
+  "boundsBlender": {
+    "min": [
+      -1.65,
+      -0.62414,
+      0.0
+    ],
+    "max": [
+      1.65,
+      0.62414,
+      1.242
+    ]
+  },
+  "lengthGaugeRatio": 4.2308
+}
+Blender 5.1.2 (hash ec6e62d40fa9 built 2026-05-19 01:30:33)
+
+Blender quit

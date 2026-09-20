@@ -1,0 +1,17 @@
+**SECURED — `e8-low-orbit` on `e8-low-orbit-01`, first secure.**
+
+| | |
+|---|---|
+| Outcome | secured · **w20 / 600.000 s / 200 g / 94 calls** · 925 kills |
+| Tape | `artifacts/heat11/opus/e8-low-orbit/attempt-1-tape.json` (byte-identical promotion of the securing ride, launched as `tune-2`) |
+| Runs | 3 sim runs (idle probe, tune-1, tune-2→attempt-1) · 1 scored attempt |
+| Admissibility | `durationTicks` 18 000 / cap 18 000, last entry tick 17 587, 94 entries / 3 600, 267 683 B / 592 384 B; secure answered with a blank line (`defaultedSecure: 1`) |
+| Determinism | `scripts/assay-replay-agent.mjs` reproduces the tape's `eventLogHash` `fnv1a32:51619722` and all four outcome fields |
+
+**How it turned.** `tune-1` (the standard skeleton) reached wave 18 with the build ladder finished at wave 10 and gold pinned at the 200 cap for 21 straight views while the hero bled out. The one order pair that closed the gap was `MOVE_TO` + `CONTEXT_ACTION upgrade` — turret tier 2 at 150 g (×1.65 dps) — plus a refusal blacklist, after `(0,2)` turned out to be inside the declared build zone but outside buildable terrain and parked the sixth beacon there for eight waves.
+
+**The era finding (verified, not inferred).** All five `now.lowOrbit` counters — `returnsScheduled`, `returnsDetonated`, `driftSteps`, `debrisSteps`, `debrisDamageDealt` — finished at **0 in every one of the 96 views**. The mechanic is fully composed and fully published; it is *structurally optional*. Handhold drift and the debris chip both read `this.hero.group.position` (`HeadlessContractSim:615, 634`), and the hero is welded to a claim that sits inside `claw-carcass-yard`, one of the declared scaffold zones — so those two arms cannot fire for any rider on any policy. Orbital return is opt-in via `BLAST_AT`, and even then the return lands at twice the throw distance outward, away from every work. That sharpens the county's PARTIAL: not partially implemented, but wholly avoidable, because the map's geography puts the claim, the hero, all four seam anchors and every legal build coordinate inside the exempt regions.
+
+Also worth the county's attention: the manifest's `engineDependencies` is stale in *half* a sentence — the scaffold, debris and handhold consumers it calls "missing" are live and published; the objective and atmosphere-wall consumers genuinely are not.
+
+The four sections you copy verbatim are at the end of `artifacts/heat11/opus/e8-low-orbit/gauntlet-report.md`; `gauntlet-outcome.json` names the promoted tape and was kept current after every run.

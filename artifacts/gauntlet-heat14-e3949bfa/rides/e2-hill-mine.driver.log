@@ -1,0 +1,50 @@
+
+########## RIDE e2-hill-mine · seed e2-hill-mine-01 · gen 124 · stake era-retired · wall 1500s ##########
+--- 1 charter ---
+{"rig":"opus","contract":"e2-hill-mine","seed":"e2-hill-mine-01","seedMode":"bench","stake":"era-retired","generation":124,"wall":1500,"notebookSha256":"6e095391b8197020fd187429a0ad9604bf1524789ec5c36dc8a17eebe9a786db","charterSha256":"a3284fc92ae39a62a996c31a4ed19a37c56ed8f0f3c269db54f015e6322b3196","bytes":1008373,"out":"/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/gauntlet-heat14-e3949bfa/rides/e2-hill-mine/charter.md"}
+--- 2 ride ---
+START opus claude-opus-5 pid=16780 session=d7547652-f836-4226-a455-a22d2246d86f at=2026-09-18T08:19:10.787Z
+FIRST-OUTPUT opus +255s
+OUTCOME opus secured=false waves=2 gold=0 runsSoFar=1 scored=0 +255s
+OUTCOME opus secured=false waves=13 gold=89 runsSoFar=2 scored=0 +495s
+OUTCOME opus secured=false waves=13 gold=89 runsSoFar=3 scored=1 +825s
+OUTCOME opus secured=false waves=13 gold=89 runsSoFar=3 scored=1 +945s
+END opus rc=0 signal=null wall=957s wallHit=false
+ride-wall rc=0 signal=-
+--- 3 land ---
+
+=== 1 finish-ride ===
+{"rig":"opus","contract":"e2-hill-mine","wall":957,"wallHit":false,"rc":0,"tracked":[],"files":17,"outcome":{"secured":false,"waves":13,"gold":89,"runsSoFar":3,"scoredAttempts":1,"tape":"/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/heat14/opus/e2-hill-mine/tune-1-tape.json","worldModel":"sim-import"},"scoredTapes":[{"file":"attempt-1-tape.json","id":"agent-f378831f-48078c09-83e8-49a1-9e9a-de89b81a8fca","secured":false,"waves":11,"gold":0,"durationTicks":10246,"lastEntryTick":10243,"promotedByRig":false,"discoveredBy":"filename"},{"file":"tune-1-tape.json","id":"agent-765f7566-ec392b32-97c0-478c-9808-d301f796bfbd","secured":false,"waves":13,"gold":89,"durationTicks":11748,"lastEntryTick":11700,"promotedByRig":true,"discoveredBy":"outcome-file"}],"otherSecured":[],"reportSections":{"outcome":632,"whatTheMapAsked":3429,"winnability":1016,"lessons":4044},"usage":{"turns":55,"toolCalls":24,"tokensIn":110,"tokensOut":179153}}
+
+=== NOT SECURED — nothing to submit ===
+{
+ "rig": "opus",
+ "contract": "e2-hill-mine",
+ "wall": 957,
+ "wallHit": false,
+ "rc": 0,
+ "scoredTapes": [
+  {
+   "file": "attempt-1-tape.json",
+   "secured": false,
+   "waves": 11,
+   "gold": 0
+  },
+  {
+   "file": "tune-1-tape.json",
+   "secured": false,
+   "waves": 13,
+   "gold": 89
+  }
+ ],
+ "outcomeNote": null
+}
+
+land rc=0
+--- 4 notebook ---
+{"notebook":"/Users/robin/Claude/Projects/goldrush-gauntlet/memories/claude__opus-5/NOTEBOOK.md","generation":124,"headerBytes":432,"entryBytes":9423}
+--- 5 matrix ---
+| 28 | e2-hill-mine | `e2-hill-mine-01` | era-retired | 124 | **not secured** | 13 | 89 | 391.600s | 957s | `tune-1-tape.json` · `agent-765f7566-ec392b32-97c0-478c-9808-d301f796bfbd`<br>fnv1a32:82997d04 | — | gen 124 |
+{"contract":"e2-hill-mine","secured":false,"tapesOnDisk":10,"scoredTapes":2,"otherSecured":0,"runs":3,"scoredAttempts":1,"wallHit":false,"rc":0,"assay":null,"ranked":null,"winnability":"**Undecided-leaning-yes, and what stopped me was my own budget against a trade I only priced on the last\nride:** the boss damage provably closes (4 turrets on the z=9 row buy ~2,480 per patrol pass against\n3,129 HP, and the railcar reverses at its endpoint so passes are unlimited inside the wave-18 ceiling),\nand both halves of the survival problem are now *individually solved and measured* — `tune-1` held a\n**perfect fort to wave 11** (9 standing, 0 wrecked, hero 175/175) and died at w13 when 40+ wreckers took\n464 → 194 worksHp inside wave 12; `attempt-1` fixed exactly that with a 10-gold-per-piece timber line on\nthe north face and finished **13 standing, 0 wrecked, nothing ever lost** — but the same wall penned the\nhero in (`UNREACHABLE_APPROACH` on the kite's east leg), so it died at 15/175 at w11 instead. Neither a\nwall in the map, the grammar, the economy nor the door stopped me: I have the shield and I have the gun,\nand I ran out of wall clock before riding them with an escape corridor left open."}
+########## END e2-hill-mine ##########
+

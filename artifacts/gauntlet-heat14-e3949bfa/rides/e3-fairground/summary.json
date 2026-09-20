@@ -1,0 +1,169 @@
+{
+  "rig": "opus",
+  "contract": "e3-fairground",
+  "model": "claude-opus-5",
+  "sessionId": "3f7d4227-1d0d-4bff-b9af-ae3063a61060",
+  "startedAt": "2026-09-18T09:01:49.725Z",
+  "endedAt": "2026-09-18T09:17:42.669Z",
+  "wallClockSeconds": 953,
+  "wallHit": false,
+  "exitCode": 0,
+  "signal": null,
+  "setupToFirstOutputSeconds": 375,
+  "arenaTrackedChanges": [],
+  "workspaceFiles": [
+    "attempt-1-summary.json",
+    "attempt-1-tape.json",
+    "attempt-1-views.jsonl",
+    "attempt-2-summary.json",
+    "attempt-2-tape.json",
+    "attempt-2-views.jsonl",
+    "ctrl-v1.mjs",
+    "ctrl-v2.mjs",
+    "ctrl-v3.mjs",
+    "gauntlet-outcome.json",
+    "gauntlet-report.md",
+    "probe-summary.json",
+    "probe-tape.json",
+    "probe-views.jsonl",
+    "runner.mjs",
+    "tune-1-summary.json",
+    "tune-1-tape.json",
+    "tune-1-views.jsonl"
+  ],
+  "outcome": {
+    "secured": true,
+    "waves": 12,
+    "timeMs": 360000,
+    "gold": 62,
+    "kills": 415,
+    "calls": 269,
+    "defaultedPicks": 0,
+    "defaultedSecure": 1,
+    "eventLogHash": "fnv1a32:f9983ffb",
+    "tape": "artifacts/heat14/opus/e3-fairground/attempt-2-tape.json",
+    "scored": true,
+    "runsSoFar": 4,
+    "scoredAttempts": 2,
+    "worldModel": "sim-import"
+  },
+  "outcomeError": null,
+  "promotedTapeName": "attempt-2-tape.json",
+  "scoredTapes": [
+    {
+      "file": "attempt-1-tape.json",
+      "id": "agent-d8d56848-8c4b9cea-0827-44d5-b82c-acf576d08f6e",
+      "contract": "e3-fairground",
+      "seed": "e3-fairground-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "0648b57e7",
+        "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+        "era": 6,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 4,
+        "timeAlive": 136.033,
+        "gold": 5
+      },
+      "entries": 89,
+      "durationTicks": 4081,
+      "lastEntryTick": 4073,
+      "promotedByRig": false,
+      "discoveredBy": "filename"
+    },
+    {
+      "file": "attempt-2-tape.json",
+      "id": "agent-beea931a-f98a26f6-98b4-4190-a93c-38e583719e11",
+      "contract": "e3-fairground",
+      "seed": "e3-fairground-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "0648b57e7",
+        "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+        "era": 6,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 12,
+        "timeAlive": 360,
+        "gold": 62
+      },
+      "entries": 269,
+      "durationTicks": 10800,
+      "lastEntryTick": 10782,
+      "promotedByRig": true,
+      "discoveredBy": "outcome-file+filename"
+    }
+  ],
+  "otherTapes": [
+    {
+      "file": "probe-tape.json",
+      "id": "agent-495c007e-8da42fbd-5672-4177-b9fb-c129f674131a",
+      "contract": "e3-fairground",
+      "seed": "e3-fairground-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "0648b57e7",
+        "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+        "era": 6,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 1,
+        "timeAlive": 48.8,
+        "gold": 0
+      },
+      "entries": 0,
+      "durationTicks": 1464,
+      "lastEntryTick": null
+    },
+    {
+      "file": "tune-1-tape.json",
+      "id": "agent-9afa9e5c-3adb8f69-95ee-415b-8119-fbdd24f489d0",
+      "contract": "e3-fairground",
+      "seed": "e3-fairground-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "0648b57e7",
+        "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+        "era": 6,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 5,
+        "timeAlive": 168,
+        "gold": 0
+      },
+      "entries": 137,
+      "durationTicks": 5040,
+      "lastEntryTick": 5005
+    }
+  ],
+  "otherSecuredTapes": [],
+  "report": {
+    "outcome": "**SECURED** — waves **12**, timeAlive **360.000 s**, gold **62**, kills 415, calls **269**.\nThe hero finished **175/175**, twenty works stood with two wrecked, and the Fair Wheel banked\n**untouched at 240/240 hp, still spinning**. Tape put forward:\n`artifacts/heat14/opus/e3-fairground/attempt-2-tape.json` (declared in `gauntlet-outcome.json`'s\n`tape` field). **4 sim runs, 2 scored attempts.** This is the first secure of `e3-fairground` in\nmy notebook's history — generations 13 and 87 both failed it.",
+    "whatTheMapAsked": "It asked a real **E3 graph question — the grid under sabotage — and the graph here is a\n*targeting* graph rather than a power graph**, so this is emphatically not stationary survival\nwearing the era's name. `twist.powerGrid` is declared (wheel dynamo 24 W → two pavilion lamps)\nand is inert as a lever: no node state is published and there is no E3 verb. Its weight is\nsecond-order and large — the roster filter strips **`turret` and `lantern_post`**, so the whole\narsenal is six `sentry_beacon`s, 48 ten-gold `palisade`s, two `stockpile`s and an `assay_office`.\nWhat *is* load-bearing is that **the graph's root is a damageable building registered in the\ntargeting system**: `FerrisWheel.damage()` sets `spinning = false` on any hit at all and the\ndynamo never restarts, so the secure gate\n(`twist.fairground && ferrisWheel.spinning === false`) is a **one-hit, irreversible latch**. The\nsecond clause, `crowdFlocks.allCrossed`, is its opposite: fifteen retries.\n\nThe reasoning the map rewards is a geometry I could compute before writing an order, and the\nconsumer publishes every number. The three flock lanes are **vertical at x = −20, 0, +20**, home\nat z = −30, walking to copper-pavilion / ferris-wheel / silver-pavilion; fright radius 7; a\nscattered flock earns nothing, and **a flock's z is never below −30**, so anything at z ≤ −37.1\nis safe from every flock at any x. The north runner gate is (−12, −4). Those two facts choose the\nwhole plan: **post the hero at (−10, −37)** and keep phase A's entire footprint on the x = −10\ncolumn, so besiegers stay inside |x| ∈ [7, 13] — ≥ 7.3 from both neighbouring lanes — while every\napproach path crosses the lanes deep south where the flocks are not.\n\nThe idle probe showed exactly what that fixes: **with no player works, every wrecker walks to the\nwheel at (0, 8) and crosses the lanes at their middle**, z ≈ −21. Flocks 2 and 3 were frightened\ninside ten seconds, flock 1 lost its return leg at t = 31.4, and the wheel died at t = 32.3. One\ncheap column of timber redirects all of it southward and does **both** jobs at once. Measured:\nthe wheel was never touched in any of my three controller rides, and all three flocks had crossed\nby **t ≈ 90 (wave 3)** — after which the latch is permanent and the lanes stop mattering, which is\nwhat let phase B build a wide fort with no escort cost at all.\n\nFields that carried it: `now.fairground.wheel.hp/spinning`, `now.fairground.flocks.flocks[]`\n(`phase`, `x`, `z`, `crossings`, `frights`), `now.fairground.objective.allCrossed`,\n`now.works.byKind`/`standing`/`wrecked`, `now.seams[].active/x/z/anchorIndex` (an inactive seam\npublishes all three as `null`), `now.gold` against `now.score.goldPanned`, `now.hero.hp/maxHp/x/z`,\n`now.threats.alive/wreckers`, `now.orders[].status/reason`. Orders: `BUILD`, `HARVEST`,\n`PICK_UPGRADE`, `BLAST_AT`, `REPAIR_UNDER`, `MOVE_HERO`, and one blank line. **There is no E3 verb.**\n\nMy notebook remembers this map from generations 13 and 87, and **it still plays the way I\nremember** — same claim at (0, −30), same wheel, same six anchors, same 22-second blind opening,\nsame starved economy. The idle floor reproduced `null-floors.json` to the hash, and none of era\n6's eight pins names this contract, so the re-survey moved its rendering and not its rules. The\none thing that *had* moved since generation 13 is the grammar, and here it was decisive: the hero\nis no longer welded to the stake, and the stake is exactly where flock-2 lives.",
+    "winnability": "Secured, and the margin was **wide on both clauses and thin only on the purse**: the objective was\ndischarged by wave 3 with twelve waves of slack, the wheel never took a single point of damage,\nand the hero finished at its full running maximum with twenty works standing — while the banked\n62 of a 200 cap is the whole margin left behind, because the ladder kept buying ten-gold timber to\nthe end and neither stockpile (+150 cap each, and this roster has **no thief**) was ever reached.",
+    "lessons": "- **A ladder of cheap rungs is a tick thief, and `goldPanned` freezing at the SAME number twice is\n  how it signs itself.** `tune-1` and `attempt-1` both froze at exactly **pan = 210**. I read the\n  first freeze as an empty-purse mend (generation 87's lesson) and gated the mend — which made the\n  run *worse*, because the mend was the only thing keeping the fort alive. The true cause was that\n  27 ten-gold rungs are affordable the instant a coin lands, so the purse never fills, the\n  Prospector never completes a pan block, and the mend can never afford. **One build per view,\n  emitted only when `gold >= cost + reserve`, took pan from 210 to 600 and w5 → w12.** Generation\n  13 wrote this exact sentence about this exact map (\"a stack of gold-gated BUILD orders is a\n  commute generator\") and I shipped the bug anyway.\n- **Two identical failure numbers across two different controllers means the variable I changed was\n  not the cause.** That is a stronger signal than either run alone, and it is free — it only needs\n  the one column I already log.\n- **An irreversible latch and a fifteen-retry latch want opposite policies, and the retries want\n  the OPENING.** The wheel clause is bought with permanent structure; the escort clause is bought\n  early, while the board is thin (6–15 alive), and once `allCrossed` latches it is permanent. That\n  splits the run cleanly: phase A keeps a minimal footprint in a lane corridor, phase B ignores the\n  flocks entirely and spends everything on the fort. Classify every clause of a conjunctive gate as\n  *recoverable* or *unrecoverable* before designing anything — the unrecoverable one sets the floor\n  and the recoverable one sets the **schedule**.\n- **Read the objective consumer's coordinate derivation, not just its rule.** `CrowdFlockSystem`\n  derives each lane from its landmark's x and the stake's z, so the lanes are three vertical lines\n  I can write down exactly — and `advance()` never takes a flock below z = −30, which turns \"keep\n  the lanes clear\" into the far cheaper \"stay south of z = −37\". One inequality chose the post, the\n  fort column and the build spots.\n- **The north spawn gate's x is a free gift on any map where runners chase the hero.** The gate is\n  (−12, −4); a hero at x = −10 keeps every runner inside the corridor for its whole walk, while the\n  mirror-image post at x = +10 drags them straight across lane 2. The asymmetry is not aesthetic —\n  it falls out of one published coordinate.\n- **A bait that is also the fort is the cheapest possible answer to a damageable objective.** Any\n  standing work in the south midway is nearer to both saboteur spawns than the wheel is at 46\n  units, so the same timber that defends the hero keeps the dynamo turning. Look for the purchase\n  that discharges the era gate and the defence at once before pricing either separately.\n- **Silence at `pendingSecure` did its four jobs again:** it took the `bank` default\n  (`defaultedSecure: 1`), left the last accepted order 18 ticks inside `durationTicks`, held a\n  271-view run to 269 entries, and — the reason that matters most — **it cannot be rejected**, so\n  the replay cannot diverge the way generation 84's nearly did.\n- **`null-floors.json` first, every ride — fifth heat running.** One file published this seed's\n  losing floor before I ran anything and a ten-second probe reproduced it to the hash, which\n  retired the whole geometry question on an era named for rebuilt maps and sent the entire reading\n  budget to the two things that actually decided the contract.\n- **What I left on the table, named precisely: the purse.** 600 panned, 62 banked, cap 200 and no\n  thief on the roster — so two 60-gold stockpiles (+300 of ceiling, +90 net each) and a hard build\n  stop around t = 300 are worth a few hundred points on an identical secure. My ladder had both\n  stockpile rungs but buried them behind sixteen palisades that the run never finished buying."
+  },
+  "usage": {
+    "transcript": "/Users/robin/.claude/projects/-private-tmp-claude-501--Users-robin-Claude-Projects-Gold-Rush-fe6b8d27-b064-40eb-934b-1d29d57a71db-scratchpad-arena-heat14-e3949bfa/3f7d4227-1d0d-4bff-b9af-ae3063a61060.jsonl",
+    "assistantTurns": 62,
+    "toolCalls": 26,
+    "tokensIn": 124,
+    "tokensOut": 178540,
+    "cacheReadTokens": 32101967,
+    "cacheWriteTokens": 1161073,
+    "note": "tokensIn excludes cache reads/writes (reported separately); summed from the CLI session transcript, not self-reported by the rig"
+  }
+}

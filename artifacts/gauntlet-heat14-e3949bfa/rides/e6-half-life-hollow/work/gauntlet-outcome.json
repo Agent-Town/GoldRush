@@ -1,0 +1,44 @@
+{
+ "secured": true,
+ "waves": 20,
+ "timeMs": 600000,
+ "gold": 200,
+ "kills": 884,
+ "calls": 90,
+ "defaultedPicks": 0,
+ "defaultedSecure": 1,
+ "eventLogHash": "fnv1a32:25b47509",
+ "tape": "/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/heat14/opus/e6-half-life-hollow/attempt-1-tape.json",
+ "scored": true,
+ "runsSoFar": 2,
+ "scoredAttempts": 1,
+ "worldModel": "sim-import",
+ "note": "ONE RIDE UNDER TWO FILENAMES. tune-1 secured on the first controller, so the stop rule ended the heat there; attempt-1-tape.json is a BYTE-IDENTICAL copy of tune-1-tape.json (241604 bytes, verified equal) promoted by name as the scored attempt, exactly as the brief's promotion clause intends. Runs: 1 idle probe + 1 controller.",
+ "envelope": {
+  "durationTicks": 18000,
+  "maxTicks": 18002,
+  "lastEntryTick": 17335,
+  "ticksOfSlack": 665,
+  "entries": 90,
+  "bytes": 241604,
+  "allThreeAxesClear": true,
+  "note": "clockTicks 18000 is declared, so runTapeEnvelopeForContract grants the +2 inclusive-endpoint slack (F-HEAT11-1 cure). The blank line at pendingSecure banked the default (defaultedSecure: 1) and kept the last accepted order 665 ticks inside."
+ },
+ "receipt": {
+  "assayControl": "probe-tape.json replayed to its own header fnv1a32:a45ba9ac (instrument verified on a zero-order run first)",
+  "assayReel": "attempt-1-tape.json replayed to fnv1a32:27469c92 = the TAPE HEADER hash, with outcome {secured:true,waves:20,gold:200,timeAlive:600}",
+  "securedSnapshot": { "waves": 20, "gold": 200, "timeAlive": 600 },
+  "hashPairWarning": "The stdout outcome line reads fnv1a32:25b47509 and the tape header reads fnv1a32:27469c92. These are different numbers BY DESIGN; the replay matches the tape header. Comparing the wrong pair reads as a false mismatch on a clean reel.",
+  "engineEra": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068 (era 6, build abf2462ec) - current-era papers"
+ },
+ "goldCeiling": {
+  "banked": 200,
+  "liveCap": 200,
+  "verdict": "200 IS THE ARITHMETIC MAXIMUM OF THE PLAN I CHOSE, and the choice was deliberate. The only cap-raiser on this roster is stockpile (60g x2, +150 each -> 500). glowjack carries thief:true, and a standing stockpile is the switch that makes nearestGoldHolding non-empty, converting every thief from hero-chaser to gold-grabber (generation 106 measured that trade at 435 gold). I declined it and measured goldStolen: 0 with 8 thieves alive at the bank. Open question left for the next rider, named precisely: buy BOTH stockpiles LATE (t ~ 500-520) - theft integrates over the time the till stands, and with no wrecker on this roster there is no repair bill competing for the purse, so ~80s of exposure against +300 of ceiling is the one refinement I did not test."
+ },
+ "idleFloorCheck": {
+  "published": "null-floors.json e6-half-life-hollow-01: w17 / 521800ms / 0 gold / 449 kills / fnv1a32:5e7517ff",
+  "measured": "w17 / 521800ms / 0 gold / 449 kills / fnv1a32:5e7517ff",
+  "verdict": "BYTE-FOR-BYTE IDENTICAL - the era-6 re-survey did not move this map's rules."
+ }
+}

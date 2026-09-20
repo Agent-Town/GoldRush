@@ -1,0 +1,19 @@
+{
+  "rig": "opus",
+  "model": "claude-opus-5",
+  "arena": "/tmp/heat13-569a41f9",
+  "workdir": "/tmp/heat13-569a41f9/artifacts/heat13/opus/e3-moth-season",
+  "charterFile": "/private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/rides/e3-moth-season/charter.md",
+  "charterSha256": "d3327d1576dce2b83dc04381639c5707bd17ad0101be609af33749c6df02f15d",
+  "sessionId": "277a606d-21a8-4764-bac4-a93b8e4153e0",
+  "wallSeconds": 1500,
+  "startedAt": "2026-09-07T09:59:31.845Z",
+  "invocation": "env -u CLAUDECODE -u CLAUDE_CODE_ENTRYPOINT -u CLAUDE_CONFIG_DIR claude -p \"<charter text, see charterFile>\" --model claude-opus-5 --allowedTools Read,Write,Glob,Bash(node *) --output-format text --session-id 277a606d-21a8-4764-bac4-a93b8e4153e0",
+  "endedAt": "2026-09-07T10:09:52.003Z",
+  "wallClockSeconds": 620,
+  "exitCode": 0,
+  "signal": null,
+  "wallHit": false,
+  "firstOutputAt": "2026-09-07T10:01:01.856Z",
+  "setupToFirstOutputSeconds": 90
+}

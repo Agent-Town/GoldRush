@@ -1,0 +1,83 @@
+{
+  "project": "mobile-chrome",
+  "link": "loopback",
+  "bundle": false,
+  "navigatedAtMs": 324,
+  "clickedAtMs": 795,
+  "townReadyAtMs": 1392,
+  "cueWindow": {
+    "responses": 1812,
+    "bytes": 53631690,
+    "mp3": [
+      {
+        "url": "/assets/audio/raw/menu-tap.mp3?import&url",
+        "bytes": 414,
+        "at": 711
+      },
+      {
+        "url": "/assets/audio/raw/menu-tap.mp3",
+        "bytes": 8821,
+        "at": 754
+      },
+      {
+        "url": "/assets/audio/raw/era-e1-frontier-loop.mp3?import&url",
+        "bytes": 486,
+        "at": 1342
+      },
+      {
+        "url": "/assets/audio/raw/era-e1-frontier-loop.mp3",
+        "bytes": 1800881,
+        "at": 1342
+      }
+    ]
+  },
+  "townRaisingAtMs": 1071,
+  "townPlayableAtMs": 1312,
+  "afterTownReady": {
+    "music": []
+  },
+  "musicFetchedWhileTownRaising": [],
+  "musicFetchedBeforeTownPlayable": [],
+  "audioFetches": [
+    {
+      "url": "/assets/audio/raw/menu-tap.mp3",
+      "at": 669,
+      "label": "",
+      "state": "",
+      "progress": ""
+    },
+    {
+      "url": "/assets/audio/raw/era-e1-frontier-loop.mp3",
+      "at": 1339,
+      "label": "the town",
+      "state": "ready",
+      "progress": "20/20"
+    }
+  ],
+  "loadingPhases": [
+    {
+      "at": 43,
+      "label": "",
+      "state": "",
+      "progress": ""
+    },
+    {
+      "at": 839,
+      "label": "the town",
+      "state": "ready",
+      "progress": "0/0"
+    },
+    {
+      "at": 1071,
+      "label": "the town",
+      "state": "loading",
+      "progress": "0/20"
+    },
+    {
+      "at": 1312,
+      "label": "the town",
+      "state": "ready",
+      "progress": "20/20"
+    }
+  ]
+}

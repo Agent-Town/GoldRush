@@ -1,0 +1,23 @@
+
+Running 14 tests using 1 worker
+
+(node:3397) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 [desktop-chrome] › e2e/e2-enemies.spec.ts:135:1 › armored railcar arrives as three rail-bound boss components and degrades as parts fail (3.9s)
+  ✓   2 [desktop-chrome] › e2e/fix-e2-railcar-read.spec.ts:18:1 › armored railcar enters on its wheels as rolling stock (5.4s)
+  ✓   3 [desktop-chrome] › e2e/fix-e2-railcar-read.spec.ts:119:1 › railcar component swaps to its damaged painted state after a hit (3.0s)
+  ✓   4 [desktop-chrome] › e2e/wire-railcar-3d.spec.ts:63:1 › GLB rides the rail, exposes all three damage morphs, preserves wreckage, and disposes (10.5s)
+  ✓   5 [desktop-chrome] › e2e/wire-railcar-3d.spec.ts:163:1 › LITE keeps the painted billboard and never requests the GLB (2.1s)
+  ✓   6 [desktop-chrome] › e2e/wire-railcar-3d.spec.ts:175:1 › a component destroyed during model loading mounts as broken (4.1s)
+  ✓   7 [desktop-chrome] › e2e/wire-railcar-3d.spec.ts:200:1 › invalid GLB bytes fall back to the painted billboard (2.7s)
+(node:4683) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   8 [mobile-chrome] › e2e/e2-enemies.spec.ts:135:1 › armored railcar arrives as three rail-bound boss components and degrades as parts fail (4.2s)
+  ✓   9 [mobile-chrome] › e2e/fix-e2-railcar-read.spec.ts:18:1 › armored railcar enters on its wheels as rolling stock (6.5s)
+  ✓  10 [mobile-chrome] › e2e/fix-e2-railcar-read.spec.ts:119:1 › railcar component swaps to its damaged painted state after a hit (3.4s)
+  ✓  11 [mobile-chrome] › e2e/wire-railcar-3d.spec.ts:63:1 › GLB rides the rail, exposes all three damage morphs, preserves wreckage, and disposes (11.3s)
+  ✓  12 [mobile-chrome] › e2e/wire-railcar-3d.spec.ts:163:1 › LITE keeps the painted billboard and never requests the GLB (2.0s)
+  ✓  13 [mobile-chrome] › e2e/wire-railcar-3d.spec.ts:175:1 › a component destroyed during model loading mounts as broken (3.9s)
+  ✓  14 [mobile-chrome] › e2e/wire-railcar-3d.spec.ts:200:1 › invalid GLB bytes fall back to the painted billboard (2.6s)
+
+  14 passed (1.1m)

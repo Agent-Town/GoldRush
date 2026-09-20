@@ -1,0 +1,45 @@
+{
+ "secured": true,
+ "waves": 10,
+ "timeMs": 300000,
+ "gold": 200,
+ "kills": 299,
+ "calls": 679,
+ "defaultedPicks": 0,
+ "defaultedSecure": 1,
+ "eventLogHash": "fnv1a32:150ebe1c",
+ "outcome": {
+  "secured": true,
+  "waves": 10,
+  "timeMs": 300000,
+  "gold": 200,
+  "kills": 299,
+  "calls": 679,
+  "defaultedPicks": 0,
+  "defaultedSecure": 1,
+  "eventLogHash": "fnv1a32:150ebe1c"
+ },
+ "tape": "/private/tmp/heat13-569a41f9/artifacts/heat13/opus/the-claim/attempt-1-tape.json",
+ "scored": true,
+ "runsSoFar": 2,
+ "scoredAttempts": 1,
+ "worldModel": "sim-import",
+ "note": "SECURED on the first controller ride. attempt-1-tape.json is a BYTE-IDENTICAL copy of tune-1.json: one ride under two filenames, promoted by name per the brief. The row is maximal on every ranking axis this contract leaves free: twist.secureWave 10 pins waves at 10 and timeAlive at 300.000s, and gold finished at 200 = Balance.economy.bankCap, the hard ceiling on the purse.",
+ "envelope": {
+  "durationTicks": 9000,
+  "lastEntryTick": 8882,
+  "entries": 679,
+  "bytes": 409787,
+  "maxTicks": 18002,
+  "maxEntries": 3601,
+  "maxTapeBytes": 1938784,
+  "verdict": "PASS on all three axes (ticks/entries/bytes); also passes the brief's conservative 16KiB+entries*160 = 592544 floor"
+ },
+ "localAssay": {
+  "tool": "scripts/assay-replay-agent.mjs",
+  "eventLogHash": "fnv1a32:22ca1b99",
+  "matches": "the TAPE header hash (not the stdout outcome line's fnv1a32:150ebe1c; they are different numbers by design)",
+  "securedSnapshot": { "waves": 10, "gold": 200, "timeAlive": 300 },
+  "verdict": "reproduced; declared score equals the secure-tick snapshot, so no score_mismatch exposure"
+ }
+}

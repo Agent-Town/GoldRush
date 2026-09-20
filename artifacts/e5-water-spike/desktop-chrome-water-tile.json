@@ -1,0 +1,99 @@
+{
+  "tile": {
+    "id": "shelf-reefs-dev",
+    "size": 128,
+    "regions": [
+      {
+        "regionId": "open-water",
+        "depth": 0,
+        "depthClass": "surface",
+        "travelClass": "boat",
+        "passable": true
+      },
+      {
+        "regionId": "lagoon-shallows",
+        "depth": -1,
+        "depthClass": "shallows",
+        "travelClass": "swim",
+        "passable": true
+      },
+      {
+        "regionId": "reef-ring",
+        "depth": -2,
+        "depthClass": "reef",
+        "travelClass": "boat",
+        "passable": false
+      },
+      {
+        "regionId": "reef-gap",
+        "depth": -2,
+        "depthClass": "reef",
+        "travelClass": "boat",
+        "passable": true
+      },
+      {
+        "regionId": "wreck-shelf",
+        "depth": -4,
+        "depthClass": "wreck",
+        "travelClass": "depth",
+        "passable": true
+      },
+      {
+        "regionId": "trench-edge",
+        "depth": -8,
+        "depthClass": "trench",
+        "travelClass": "depth",
+        "passable": false
+      }
+    ]
+  },
+  "boat": {
+    "id": "claim-boat",
+    "anchor": {
+      "id": "lagoon",
+      "x": 0,
+      "z": 30
+    },
+    "pads": [
+      {
+        "id": "bow",
+        "x": 0,
+        "z": -3,
+        "occupied": false
+      },
+      {
+        "id": "port",
+        "x": -3,
+        "z": 1,
+        "occupied": false
+      },
+      {
+        "id": "starboard",
+        "x": 3,
+        "z": 1,
+        "occupied": false
+      }
+    ],
+    "buildings": []
+  },
+  "storm": {
+    "time": 0,
+    "weather": {
+      "era": 5,
+      "contractId": "shelf-reefs-dev",
+      "phase": "clear",
+      "phaseProgress": 0,
+      "cycle": 0,
+      "simTime": 0,
+      "movementMultiplier": 1,
+      "visibilityMultiplier": 1,
+      "hazeColor": "#335f64",
+      "hazeStrength": 0,
+      "warning": false
+    },
+    "frontX": null,
+    "waves": []
+  },
+  "log": [],
+  "hash": "fnv1a32:84318b72"
+}

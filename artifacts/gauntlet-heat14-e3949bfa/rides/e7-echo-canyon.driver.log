@@ -1,0 +1,99 @@
+
+########## RIDE e7-echo-canyon · seed e7-echo-canyon-01 · gen 107 · stake era-retired · wall 1500s ##########
+--- 1 charter ---
+{"rig":"opus","contract":"e7-echo-canyon","seed":"e7-echo-canyon-01","seedMode":"bench","stake":"era-retired","generation":107,"wall":1500,"notebookSha256":"9a1a2f3cc92751a91078b9278416949e26c65da0ae27ee16342a4106b9af002f","charterSha256":"327d1f749e59388151052d2573db3b2f95979ca933a76583839ed8304cb9ccd3","bytes":841246,"out":"/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/gauntlet-heat14-e3949bfa/rides/e7-echo-canyon/charter.md"}
+--- 2 ride ---
+START opus claude-opus-5 pid=24244 session=c83539f3-4ce7-484d-a952-40950b106844 at=2026-09-18T02:54:19.417Z
+FIRST-OUTPUT opus +120s
+OUTCOME opus secured=true waves=20 gold=200 runsSoFar=1 scored=0 +330s
+OUTCOME opus secured=true waves=20 gold=200 runsSoFar=1 scored=1 +435s
+END opus rc=0 signal=null wall=562s wallHit=false
+ride-wall rc=0 signal=-
+--- 3 land ---
+
+=== 1 finish-ride ===
+{"rig":"opus","contract":"e7-echo-canyon","wall":562,"wallHit":false,"rc":0,"tracked":[],"files":9,"outcome":{"secured":true,"waves":20,"gold":200,"runsSoFar":1,"scoredAttempts":1,"tape":"/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/heat14/opus/e7-echo-canyon/attempt-1-tape.json","worldModel":"sim-import"},"scoredTapes":[{"file":"attempt-1-tape.json","id":"agent-7bdf3b6a-2f9a4011-42aa-4669-9cf5-195dbbd3ce78","secured":true,"waves":20,"gold":200,"durationTicks":18000,"lastEntryTick":17877,"promotedByRig":true,"discoveredBy":"outcome-file+filename"}],"otherSecured":[{"file":"tune-1-tape.json","id":"agent-7bdf3b6a-2f9a4011-42aa-4669-9cf5-195dbbd3ce78","waves":20,"gold":200}],"reportSections":{"outcome":1049,"whatTheMapAsked":4327,"winnability":1298,"lessons":4934},"usage":{"turns":45,"toolCalls":19,"tokensIn":90,"tokensOut":98881}}
+tape chosen: attempt-1-tape.json (id agent-7bdf3b6a-2f9a4011-42aa-4669-9cf5-195dbbd3ce78, promotedByRig=true, discoveredBy=outcome-file+filename)
+
+=== 2 freeze notebook header ===
+{"headerOnly":true,"headerBytes":432}
+
+=== 3 harnessDigest ===
+468b43a9992e377aeed304ab32b8e9071de33c6b3b5fe9070b108c762bc80684
+
+=== 4 build-submission ===
+{"tapeId":"agent-7bdf3b6a-2f9a4011-42aa-4669-9cf5-195dbbd3ce78","contract":"e7-echo-canyon","epochId":"epoch-7-signal","seed":"e7-echo-canyon-01","seedMode":"bench","score":{"secured":true,"waves":20,"timeAlive":600,"gold":200,"baseValue":0},"papers":{"buildId":"bd0600a5f","engineHash":"540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068","era":6,"viewVersion":2},"durationTicks":18000,"lastEntryTick":17877,"stack":{"model":"claude-opus-5","harness":"heat14-operator","harnessVersion":"2.1.272","harnessDigest":"468b43a9992e377aeed304ab32b8e9071de33c6b3b5fe9070b108c762bc80684","worldModel":"sim-import","config":"attended-hosted headless `claude -p` ride (heat 14, the era-6 re-ride) on Claude Code CLI 2.1.272; charter + door manual + own notebook (self-memory); own controller authored in-ride","calls":77,"tokensIn":18703561,"tokensOut":98881}}
+
+=== 5 publish (POST → poll → WATCH) ===
+FAILED: node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+[TypeError: fetch failed] {
+  [cause]: Error: read ECONNRESET
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:216:20) {
+    errno: -54,
+    code: 'ECONNRESET',
+    syscall: 'read'
+  }
+}
+
+Node.js v26.4.0
+
+POST ok; assay still pending at the 120 s mark — resuming with the poll-only shim (no re-POST)
+
+=== 6 poll-verdict (no re-POST) ===
+FAILED: file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/gauntlet-heat14-e3949bfa/poll-verdict.mjs:26
+if (slip?.assay !== 'verified') throw new Error(`assay ${slip?.assay ?? 'missing'}: ${slip?.assayReason ?? 'no reason'}`);
+                                      ^
+
+Error: assay pending: no reason
+    at file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/gauntlet-heat14-e3949bfa/poll-verdict.mjs:26:39
+
+Node.js v26.4.0
+
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+[TypeError: fetch failed] {
+  [cause]: Error: read ECONNRESET
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:216:20) {
+    errno: -54,
+    code: 'ECONNRESET',
+    syscall: 'read'
+  }
+}
+
+Node.js v26.4.0
+file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/gauntlet-heat14-e3949bfa/poll-verdict.mjs:26
+if (slip?.assay !== 'verified') throw new Error(`assay ${slip?.assay ?? 'missing'}: ${slip?.assayReason ?? 'no reason'}`);
+                                      ^
+
+Error: assay pending: no reason
+    at file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/gauntlet-heat14-e3949bfa/poll-verdict.mjs:26:39
+
+Node.js v26.4.0
+file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/gauntlet-heat14-e3949bfa/land-ride.mjs:31
+const step = (name, fn) => { process.stdout.write(`\n=== ${name} ===\n`); try { return fn(); } catch (error) { process.stdout.write(`FAILED: ${(error.stdout ?? '') + (error.stderr ?? error.message)}\n`); throw Object.assign(new Error(name), { step: name }); } };
+                                                                                                                                                                                                                                ^
+
+Error: 6 poll-verdict (no re-POST)
+    at step (file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/gauntlet-heat14-e3949bfa/land-ride.mjs:31:225)
+    at file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/gauntlet-heat14-e3949bfa/land-ride.mjs:68:3
+    at ModuleJob.run (node:internal/modules/esm/module_job:447:25)
+    at async node:internal/modules/esm/loader:646:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+  step: '6 poll-verdict (no re-POST)'
+}
+
+Node.js v26.4.0
+
+land rc=1
+--- 4 notebook ---
+{"notebook":"/Users/robin/Claude/Projects/goldrush-gauntlet/memories/claude__opus-5/NOTEBOOK.md","generation":107,"headerBytes":432,"entryBytes":11436}
+--- 5 matrix ---
+| 11 | e7-echo-canyon | `e7-echo-canyon-01` | era-retired | 107 | **SECURED** | 20 | 200 | 600s | 562s | `attempt-1-tape.json` · `agent-7bdf3b6a-2f9a4011-42aa-4669-9cf5-195dbbd3ce78`<br>fnv1a32:54c9f02d | pending rank 1 | gen 107<br>slip `agent-7bdf3b6a-2f9a4011-42aa-4669-9cf5-195dbbd3ce78` |
+{"contract":"e7-echo-canyon","secured":true,"tapesOnDisk":5,"scoredTapes":1,"otherSecured":1,"runs":1,"scoredAttempts":1,"wallHit":false,"rc":0,"assay":"pending","ranked":true,"winnability":"Secured, and the margin was **as wide as this contract measures on survival and exactly at the ceiling\non the ranked axis I chose to accept**: the hero **never once fell below its running maximum across all\n79 views** (finishing 175/175), zero of ten works were ever wrecked across 909 kills, `goldStolen` was\n0, and the era gate latched 540 seconds before the bank — while the banked purse landed on **200, the\ndefault `Balance.economy.bankCap`**, with `score.goldPanned` frozen at 870 from t = 390, i.e. ~210\nseconds of refused income. That freeze is the whole margin, and it was a **deliberate, named trade**:\n`stockpile` is on this roster at 60 g × 2 with `capBonus: 150`, so a 500 ceiling was purchasable — and\ngeneration 106 measured, one ride ago on `e7-dead-band`'s thief-only roster, that a stockpile is what\nmakes `nearestGoldHolding` non-empty and converts every thief from hero-chaser to gold-grabber, at a\ncost of **435 gold**. With 18 thieves alive here plus a mirrored thief squad, I declined it and banked\n`goldStolen: 0`. I did not test the refinement that could beat both: **a stockpile pair bought late**\n(after the ladder caps, ~t = 500), which raises the cap by 300 while exposing it to theft for only the\nclosing seconds. That is the one honest open question this ride leaves."}
+########## END e7-echo-canyon ##########
+

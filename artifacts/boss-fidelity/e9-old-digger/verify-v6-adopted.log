@@ -1,0 +1,439 @@
+00:00.266  blend            | Read blend: "/Users/robin/.codex/worktrees/572c/Gold Rush/assets/pilots/old-digger-3d/old-digger.blend"
+INFO Draco mesh compression is available, use library at /Applications/Blender.app/Contents/Resources/5.1/scripts/addons_core/io_scene_gltf2/libextern_draco.dylib
+13:34:20 | INFO: Starting glTF 2.0 export
+13:34:20 | INFO: Extracting primitive: bucket_wheelsMesh
+13:34:20 | INFO: Primitives created: 1
+13:34:20 | INFO: Extracting primitive: gantryMesh
+13:34:20 | INFO: Primitives created: 1
+13:34:20 | INFO: Extracting primitive: tape_deckMesh
+13:34:20 | INFO: Primitives created: 1
+13:34:21 | INFO: Finished glTF 2.0 export in 0.04745197296142578 s
+
+{
+  "baseSha": "d41ab98ce0d7fbc48bb01e8e87c92c61f148de2d",
+  "blender": "5.1.2",
+  "sourcePlates": {
+    "assets/raw/boss-old-digger.png": "a6f9ffadd3280fe97daab2a419bfabe163a6b5dbfe76e6891dc1cdd2d197156a",
+    "assets/raw/boss-old-digger-gentle.png": "09e1f06185a46dfaf28a55421250acad0e2331eeec11ad9409ce62879430bb77"
+  },
+  "componentContract": {
+    "bucket_wheels": "Redemption_GentleBuckets",
+    "gantry": "Redemption_SafeGantry",
+    "tape_deck": "Redemption_TealTapeDeck"
+  },
+  "stateLaw": "working machine to intact gentle reprogramming; no damage or kill morph exists",
+  "sourceScene": {
+    "meshObjects": [
+      "bucket_wheels",
+      "gantry",
+      "tape_deck"
+    ],
+    "cameras": [],
+    "lights": [],
+    "actions": []
+  },
+  "checked": {
+    "sha256": "86b3df8a8bc27321957e038a8261303f003ca0b5cae4a658534d9b6c1b5c58b3",
+    "bytes": 3548152,
+    "nodes": [
+      "bucket_wheels",
+      "gantry",
+      "tape_deck"
+    ],
+    "nodeCount": 3,
+    "bindings": [
+      {
+        "node": "bucket_wheels",
+        "mesh": "bucket_wheelsMesh",
+        "targets": [
+          "Redemption_GentleBuckets"
+        ],
+        "defaultWeights": [
+          0
+        ]
+      },
+      {
+        "node": "gantry",
+        "mesh": "gantryMesh",
+        "targets": [
+          "Redemption_SafeGantry"
+        ],
+        "defaultWeights": [
+          0
+        ]
+      },
+      {
+        "node": "tape_deck",
+        "mesh": "tape_deckMesh",
+        "targets": [
+          "Redemption_TealTapeDeck"
+        ],
+        "defaultWeights": [
+          0
+        ]
+      }
+    ],
+    "nodeTransforms": {
+      "bucket_wheels": {
+        "translation": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "matrix": null
+      },
+      "gantry": {
+        "translation": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "matrix": null
+      },
+      "tape_deck": {
+        "translation": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "matrix": null
+      }
+    },
+    "meshes": 3,
+    "meshNames": [
+      "bucket_wheelsMesh",
+      "gantryMesh",
+      "tape_deckMesh"
+    ],
+    "primitives": 3,
+    "primitiveMaterials": [
+      0,
+      0,
+      0
+    ],
+    "triangles": 16104,
+    "morphTargets": {
+      "bucket_wheelsMesh": [
+        "Redemption_GentleBuckets"
+      ],
+      "gantryMesh": [
+        "Redemption_SafeGantry"
+      ],
+      "tape_deckMesh": [
+        "Redemption_TealTapeDeck"
+      ]
+    },
+    "targetCounts": {
+      "bucket_wheelsMesh": 1,
+      "gantryMesh": 1,
+      "tape_deckMesh": 1
+    },
+    "materials": 1,
+    "materialTextureBindings": [
+      {
+        "material": 0,
+        "baseColorTexture": 0,
+        "image": 0
+      }
+    ],
+    "materialContract": [
+      {
+        "metallicFactor": 0,
+        "roughnessFactor": 0.8999999761581421,
+        "doubleSided": true,
+        "hasBaseColorTexture": true,
+        "hasEmissiveTexture": false,
+        "emissiveFactor": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    ],
+    "textureSources": [
+      0
+    ],
+    "images": 1,
+    "embeddedImages": 1,
+    "imageDimensions": [
+      [
+        1024,
+        1024
+      ]
+    ],
+    "cameras": 0,
+    "lights": 0,
+    "animations": 0,
+    "bounds": {
+      "min": [
+        -6.2,
+        0,
+        -1.779522
+      ],
+      "max": [
+        6.2,
+        5.787864,
+        1.779522
+      ],
+      "size": [
+        12.4,
+        5.787864,
+        3.559043
+      ],
+      "center": [
+        0.0,
+        2.893932,
+        0.0
+      ]
+    }
+  },
+  "reexported": {
+    "sha256": "86b3df8a8bc27321957e038a8261303f003ca0b5cae4a658534d9b6c1b5c58b3",
+    "bytes": 3548152,
+    "nodes": [
+      "bucket_wheels",
+      "gantry",
+      "tape_deck"
+    ],
+    "nodeCount": 3,
+    "bindings": [
+      {
+        "node": "bucket_wheels",
+        "mesh": "bucket_wheelsMesh",
+        "targets": [
+          "Redemption_GentleBuckets"
+        ],
+        "defaultWeights": [
+          0
+        ]
+      },
+      {
+        "node": "gantry",
+        "mesh": "gantryMesh",
+        "targets": [
+          "Redemption_SafeGantry"
+        ],
+        "defaultWeights": [
+          0
+        ]
+      },
+      {
+        "node": "tape_deck",
+        "mesh": "tape_deckMesh",
+        "targets": [
+          "Redemption_TealTapeDeck"
+        ],
+        "defaultWeights": [
+          0
+        ]
+      }
+    ],
+    "nodeTransforms": {
+      "bucket_wheels": {
+        "translation": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "matrix": null
+      },
+      "gantry": {
+        "translation": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "matrix": null
+      },
+      "tape_deck": {
+        "translation": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "matrix": null
+      }
+    },
+    "meshes": 3,
+    "meshNames": [
+      "bucket_wheelsMesh",
+      "gantryMesh",
+      "tape_deckMesh"
+    ],
+    "primitives": 3,
+    "primitiveMaterials": [
+      0,
+      0,
+      0
+    ],
+    "triangles": 16104,
+    "morphTargets": {
+      "bucket_wheelsMesh": [
+        "Redemption_GentleBuckets"
+      ],
+      "gantryMesh": [
+        "Redemption_SafeGantry"
+      ],
+      "tape_deckMesh": [
+        "Redemption_TealTapeDeck"
+      ]
+    },
+    "targetCounts": {
+      "bucket_wheelsMesh": 1,
+      "gantryMesh": 1,
+      "tape_deckMesh": 1
+    },
+    "materials": 1,
+    "materialTextureBindings": [
+      {
+        "material": 0,
+        "baseColorTexture": 0,
+        "image": 0
+      }
+    ],
+    "materialContract": [
+      {
+        "metallicFactor": 0,
+        "roughnessFactor": 0.8999999761581421,
+        "doubleSided": true,
+        "hasBaseColorTexture": true,
+        "hasEmissiveTexture": false,
+        "emissiveFactor": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    ],
+    "textureSources": [
+      0
+    ],
+    "images": 1,
+    "embeddedImages": 1,
+    "imageDimensions": [
+      [
+        1024,
+        1024
+      ]
+    ],
+    "cameras": 0,
+    "lights": 0,
+    "animations": 0,
+    "bounds": {
+      "min": [
+        -6.2,
+        0,
+        -1.779522
+      ],
+      "max": [
+        6.2,
+        5.787864,
+        1.779522
+      ],
+      "size": [
+        12.4,
+        5.787864,
+        3.559043
+      ],
+      "center": [
+        0.0,
+        2.893932,
+        0.0
+      ]
+    }
+  },
+  "byteIdentical": true,
+  "semanticIdentical": {
+    "nodes": true,
+    "nodeCount": true,
+    "bindings": true,
+    "nodeTransforms": true,
+    "meshes": true,
+    "meshNames": true,
+    "primitives": true,
+    "primitiveMaterials": true,
+    "triangles": true,
+    "morphTargets": true,
+    "targetCounts": true,
+    "materials": true,
+    "materialTextureBindings": true,
+    "materialContract": true,
+    "textureSources": true,
+    "images": true,
+    "embeddedImages": true,
+    "imageDimensions": true,
+    "cameras": true,
+    "lights": true,
+    "animations": true,
+    "bounds": true
+  }
+}
+Blender 5.1.2 (hash ec6e62d40fa9 built 2026-05-19 01:30:33)
+
+Blender quit

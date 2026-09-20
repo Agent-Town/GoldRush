@@ -1,0 +1,10 @@
+**NOT SECURED.** Files are on disk at `artifacts/heat13/opus/e8-low-orbit/`: `gauntlet-outcome.json` (best row = tune-2, `scored: false`, nothing put forward) and `gauntlet-report.md` with the four required sections.
+
+What the ride found:
+
+- **The map grew a secure gate my notebook doesn't have.** `twist.atmosphere` now reads `crossingRequired: 4`, `crossingWindowWaves: 4`, `pressurisedZoneIds: ["claw-carcass-yard"]` — only the carcass yard holds air, both scaffold decks are vacuum, and the latch needs both decks stood in on air *plus* four credited entries at one per 120 s window, measured against **the hero**.
+- **I solved that gate.** tune-2 banked `credited 4/4`, `reached 2`, `breathlessEntries: 0` at t = 368.4 of 600, with 232 seconds of slack. The suit was never the problem.
+- **The run dies to free-fall momentum instead.** Under `feelG 0` / `knockbackScale 1.75`, the hero coasts 40–60 units out of its own turret ring between views. tune-2 reached **w14 / 440.967 s**; the scored `attempt-1`, which corrected by re-issuing "come home" first every array, **regressed to w4 / 128.133 s** with the body ping-ponging (40.6,−3) → (−31.9, 23.8) → (26.3, 2.3) → (−33.6, 24.5). `MOVE_HERO` in free fall is a thrust order, so chasing a drift amplifies it.
+- **A published route hazard, priced:** the tile carries a static obstacle across z≈2 between x ≈ −14 and +4. `MOVE_HERO {x:-14,z:2}` answers `UNREACHABLE_APPROACH` and pinned tune-1's hero at (3.6, 2) for a whole run — the hero has no pathfinder. The two diagonals (0,12)↔(±27,2) are clear both ways at 4.8 u/s, and one out-and-back pair banks both crossing zones in thirty seconds.
+
+L2 answer in one line: winnable — the wall is my own budget against one un-modelled physics fact, not the map, the grammar or the economy; the fix is a *damped* hero correction rather than a chase, one edit from tune-2, and I ran out of wall clock before riding it.

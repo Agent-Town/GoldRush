@@ -1,0 +1,43 @@
+
+> gold-rush@0.1.0 test:deploy-contract
+> bash scripts/test-deploy-contract.sh
+
+PASS strict-skip (rc=2, 1s)
+PASS strict-build-red (rc=3, 0s)
+PASS strict-deploy-red (rc=4, 0s)
+PASS strict-success (rc=0, 0s)
+PASS default-skip (rc=0, 1s)
+PASS default-build-red (rc=0, 0s)
+PASS default-deploy-red (rc=0, 0s)
+PASS alias-current (rc=0, 1s)
+[deploy] 2026-09-12 13:08:36 VERIFIED published test-build at http://127.0.0.1:62471
+PASS alias-late-promotion (rc=0, 0s)
+[deploy] 2026-09-12 13:08:37 VERIFY attempt 5/7: http://127.0.0.1:62471/version.json says test-build
+[deploy] 2026-09-12 13:08:37 VERIFIED published test-build at http://127.0.0.1:62471
+PASS alias-stale (rc=7, 1s)
+[deploy] 2026-09-12 13:08:38 UNVERIFIED after 7 attempts over ~0s: uploaded test-build, alias still reports old-build. This is either a slow alias promotion or a genuinely stale alias — re-probe the alias and run 'wrangler pages deployment list' before treating it as a failure.
+[deploy] 2026-09-12 13:08:38 VERIFY attempt 1/7: http://127.0.0.1:62471/version.json says old-build
+[deploy] 2026-09-12 13:08:38 VERIFY attempt 2/7: http://127.0.0.1:62471/version.json says old-build
+[deploy] 2026-09-12 13:08:38 VERIFY attempt 3/7: http://127.0.0.1:62471/version.json says old-build
+[deploy] 2026-09-12 13:08:38 VERIFY attempt 4/7: http://127.0.0.1:62471/version.json says old-build
+[deploy] 2026-09-12 13:08:38 VERIFY attempt 5/7: http://127.0.0.1:62471/version.json says old-build
+[deploy] 2026-09-12 13:08:38 VERIFY attempt 6/7: http://127.0.0.1:62471/version.json says old-build
+[deploy] 2026-09-12 13:08:38 VERIFY attempt 7/7: http://127.0.0.1:62471/version.json says old-build
+PASS alias-http-500 (rc=7, 1s)
+[deploy] 2026-09-12 13:08:39 UNVERIFIED after 7 attempts over ~0s: uploaded test-build, alias still reports unreachable. This is either a slow alias promotion or a genuinely stale alias — re-probe the alias and run 'wrangler pages deployment list' before treating it as a failure.
+[deploy] 2026-09-12 13:08:39 VERIFY attempt 1/7: http://127.0.0.1:62471/version.json says unreachable
+[deploy] 2026-09-12 13:08:39 VERIFY attempt 2/7: http://127.0.0.1:62471/version.json says unreachable
+[deploy] 2026-09-12 13:08:39 VERIFY attempt 3/7: http://127.0.0.1:62471/version.json says unreachable
+[deploy] 2026-09-12 13:08:39 VERIFY attempt 4/7: http://127.0.0.1:62471/version.json says unreachable
+[deploy] 2026-09-12 13:08:39 VERIFY attempt 5/7: http://127.0.0.1:62471/version.json says unreachable
+[deploy] 2026-09-12 13:08:39 VERIFY attempt 6/7: http://127.0.0.1:62471/version.json says unreachable
+[deploy] 2026-09-12 13:08:39 VERIFY attempt 7/7: http://127.0.0.1:62471/version.json says unreachable
+PASS alias-retry (rc=0, 1s)
+[deploy] 2026-09-12 13:08:39 VERIFY attempt 1/7: http://127.0.0.1:62471/version.json says old-build
+[deploy] 2026-09-12 13:08:39 VERIFY attempt 2/7: http://127.0.0.1:62471/version.json says test-build
+[deploy] 2026-09-12 13:08:39 VERIFIED published test-build at http://127.0.0.1:62471
+PASS wrangler-no-url (rc=4, 0s)
+[deploy] 2026-09-12 13:08:40 FAILED: pages deploy — wrangler exited 0 but published no URL — see logs/deploy.log
+PASS alias-whitespace-sleeps (rc=0, 0s)
+PASS default verify schedule (7 attempts; sleeps 10/15/20/30/45/60; ~180s)
+deploy contract PASS (production alias current/stale/500/retry/late-promotion/whitespace-sleeps/no-url; strict 0/2/3/4/7; default failures return 0)

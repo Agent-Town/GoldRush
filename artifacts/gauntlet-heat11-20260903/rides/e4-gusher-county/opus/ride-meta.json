@@ -1,0 +1,19 @@
+{
+  "rig": "opus",
+  "model": "claude-opus-5",
+  "arena": "/tmp/heat11-b118c4d2",
+  "workdir": "/tmp/heat11-b118c4d2/artifacts/heat11/opus/e4-gusher-county",
+  "charterFile": "rides/e4-gusher-county/opus/charter.md",
+  "charterSha256": "4ce509e7577eb7357d96dd67622abe9a9fb36fb2ab3d37f7038f87697f85084c",
+  "sessionId": "df0f449f-d99d-4eee-974f-5543b7b6637c",
+  "wallSeconds": 1500,
+  "startedAt": "2026-09-03T22:39:41.356Z",
+  "invocation": "env -u CLAUDECODE -u CLAUDE_CODE_ENTRYPOINT -u CLAUDE_CONFIG_DIR claude -p \"<charter text, see charterFile>\" --model claude-opus-5 --allowedTools Read,Write,Glob,Bash(node *) --output-format text --session-id df0f449f-d99d-4eee-974f-5543b7b6637c",
+  "endedAt": "2026-09-03T22:57:01.020Z",
+  "wallClockSeconds": 1040,
+  "exitCode": 0,
+  "signal": null,
+  "wallHit": false,
+  "firstOutputAt": "2026-09-03T22:41:26.374Z",
+  "setupToFirstOutputSeconds": 105
+}

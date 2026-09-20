@@ -1,0 +1,974 @@
+[
+ {
+  "t": 0,
+  "hp": 100,
+  "h": [
+   -180,
+   0
+  ],
+  "v": [
+   -180,
+   0,
+   "idle"
+  ],
+  "lead": 0,
+  "arrived": false,
+  "f": [
+   0,
+   0,
+   0
+  ],
+  "n": "0.000.000.00",
+  "g": "",
+  "disp": null,
+  "alive": 0,
+  "fail": []
+ },
+ {
+  "t": 1.7,
+  "hp": 100,
+  "h": [
+   -188.48,
+   -1.26
+  ],
+  "v": [
+   -180,
+   0,
+   "idle"
+  ],
+  "lead": 0,
+  "arrived": false,
+  "f": [
+   0,
+   0,
+   0
+  ],
+  "n": "0.000.000.00",
+  "g": "the-long-road",
+  "disp": null,
+  "alive": 0,
+  "fail": [
+   "GRADE(,) OUT_OF_REACH: GRADE needs "
+  ]
+ },
+ {
+  "t": 6.93,
+  "hp": 100,
+  "h": [
+   -182,
+   -2.43
+  ],
+  "v": [
+   -180,
+   0,
+   "idle"
+  ],
+  "lead": 0,
+  "arrived": false,
+  "f": [
+   0,
+   0,
+   0
+  ],
+  "n": "0.000.000.00",
+  "g": "the-long-road",
+  "disp": null,
+  "alive": 0,
+  "fail": [
+   "MOVE_HERO(-12,-8) UNREACHABLE_APPROACH: MOVE"
+  ]
+ },
+ {
+  "t": 30,
+  "hp": 100,
+  "h": [
+   -90.83,
+   -5.62
+  ],
+  "v": [
+   -180,
+   0,
+   "idle"
+  ],
+  "lead": 0,
+  "arrived": false,
+  "f": [
+   0,
+   0,
+   0
+  ],
+  "n": "0.000.000.00",
+  "g": "the-long-road",
+  "disp": null,
+  "alive": 13,
+  "fail": [
+   "MOVE_HERO(-12,-8) UNREACHABLE_APPROACH: MOVE"
+  ]
+ },
+ {
+  "t": 60.03,
+  "hp": 100,
+  "h": [
+   80.79,
+   -7.79
+  ],
+  "v": [
+   -180,
+   0,
+   "idle"
+  ],
+  "lead": 0,
+  "arrived": false,
+  "f": [
+   24,
+   3,
+   0
+  ],
+  "n": "HHH",
+  "g": "the-long-road",
+  "disp": null,
+  "alive": 27,
+  "fail": []
+ },
+ {
+  "t": 78.2,
+  "hp": 100,
+  "h": [
+   189.66,
+   -8
+  ],
+  "v": [
+   -180,
+   0,
+   "idle"
+  ],
+  "lead": 0,
+  "arrived": false,
+  "f": [
+   24,
+   3,
+   0
+  ],
+  "n": "HHH",
+  "g": "the-long-road",
+  "disp": null,
+  "alive": 36,
+  "fail": [
+   "MOVE_HERO(190,-3) UNREACHABLE_TERRAIN: MOVE_"
+  ]
+ },
+ {
+  "t": 78.27,
+  "hp": 100,
+  "h": [
+   189.71,
+   -8
+  ],
+  "v": [
+   -180,
+   0,
+   "idle"
+  ],
+  "lead": 0,
+  "arrived": false,
+  "f": [
+   24,
+   3,
+   0
+  ],
+  "n": "HHH",
+  "g": "the-long-road",
+  "disp": null,
+  "alive": 36,
+  "fail": [
+   "MOVE_HERO(190,-3) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,0) UNREACHABLE_TERRAIN: MOVE_"
+  ]
+ },
+ {
+  "t": 78.4,
+  "hp": 100,
+  "h": [
+   189.71,
+   -8
+  ],
+  "v": [
+   -179.475,
+   -0.011,
+   "moving"
+  ],
+  "lead": 0.525,
+  "arrived": false,
+  "f": [
+   23.96,
+   3,
+   0.04
+  ],
+  "n": "HHH",
+  "g": "the-long-road",
+  "disp": {
+   "x": 189.714,
+   "z": -7.999
+  },
+  "alive": 36,
+  "fail": [
+   "MOVE_HERO(190,-3) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,0) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,1.2) UNREACHABLE_TERRAIN: MOVE_"
+  ]
+ },
+ {
+  "t": 78.63,
+  "hp": 100,
+  "h": [
+   189.71,
+   -8
+  ],
+  "v": [
+   -175.801,
+   -0.091,
+   "moving"
+  ],
+  "lead": 4.199,
+  "arrived": false,
+  "f": [
+   23.68,
+   3,
+   0.32
+  ],
+  "n": "HHH",
+  "g": "the-long-road",
+  "disp": {
+   "x": 189.714,
+   "z": -7.999
+  },
+  "alive": 36,
+  "fail": [
+   "MOVE_HERO(190,-3) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,0) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,1.2) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,0) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(188.7,0) UNREACHABLE_TERRAIN: MOVE_"
+  ]
+ },
+ {
+  "t": 90.03,
+  "hp": 100,
+  "h": [
+   191.07,
+   -0.35
+  ],
+  "v": [
+   57.966,
+   -0.566,
+   "moving"
+  ],
+  "lead": 237.964,
+  "arrived": false,
+  "f": [
+   22,
+   0,
+   14
+  ],
+  "n": "HHH",
+  "g": "the-long-road",
+  "disp": {
+   "x": 191.068,
+   "z": -0.375
+  },
+  "alive": 47,
+  "fail": [
+   "MOVE_HERO(190,-3) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,0) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,1.2) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,0) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(188.7,0) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,0) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,0) UNREACHABLE_TERRAIN: MOVE_"
+  ]
+ },
+ {
+  "t": 120.03,
+  "hp": 100,
+  "h": [
+   191.07,
+   -0.35
+  ],
+  "v": [
+   191.07,
+   -0.355,
+   "arrived"
+  ],
+  "lead": 369.641,
+  "arrived": false,
+  "f": [
+   14.901,
+   0,
+   21.099
+  ],
+  "n": "HHH",
+  "g": "the-long-road",
+  "disp": {
+   "x": 191.07,
+   "z": -0.355
+  },
+  "alive": 59,
+  "fail": [
+   "MOVE_HERO(190,-3) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,0) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,1.2) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,0) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(188.7,0) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,0) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,0) UNREACHABLE_TERRAIN: MOVE_"
+  ]
+ },
+ {
+  "t": 150.03,
+  "hp": 100,
+  "h": [
+   191.07,
+   -0.35
+  ],
+  "v": [
+   191.07,
+   -0.355,
+   "arrived"
+  ],
+  "lead": 369.641,
+  "arrived": false,
+  "f": [
+   14.901,
+   0,
+   21.099
+  ],
+  "n": "HHH",
+  "g": "the-long-road",
+  "disp": {
+   "x": 191.07,
+   "z": -0.355
+  },
+  "alive": 60,
+  "fail": [
+   "MOVE_HERO(190,-3) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,0) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,1.2) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,0) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(188.7,0) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,0) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,0) UNREACHABLE_TERRAIN: MOVE_"
+  ]
+ },
+ {
+  "t": 180.03,
+  "hp": 100,
+  "h": [
+   191.07,
+   -0.35
+  ],
+  "v": [
+   191.07,
+   -0.355,
+   "arrived"
+  ],
+  "lead": 369.641,
+  "arrived": false,
+  "f": [
+   14.901,
+   0,
+   21.099
+  ],
+  "n": "HHH",
+  "g": "the-long-road",
+  "disp": {
+   "x": 191.07,
+   "z": -0.355
+  },
+  "alive": 60,
+  "fail": [
+   "MOVE_HERO(190,-3) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,0) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,1.2) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,0) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(188.7,0) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,0) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,0) UNREACHABLE_TERRAIN: MOVE_"
+  ]
+ },
+ {
+  "t": 200.8,
+  "hp": 100,
+  "h": [
+   191.07,
+   -0.35
+  ],
+  "v": [
+   191.07,
+   -0.355,
+   "arrived"
+  ],
+  "lead": 369.641,
+  "arrived": false,
+  "f": [
+   14.901,
+   0,
+   21.099
+  ],
+  "n": "HHH",
+  "g": "the-long-road",
+  "disp": {
+   "x": 191.07,
+   "z": -0.355
+  },
+  "alive": 59,
+  "fail": [
+   "MOVE_HERO(190,-3) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,0) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,1.2) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,0) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(188.7,0) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,0) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,0) UNREACHABLE_TERRAIN: MOVE_"
+  ]
+ },
+ {
+  "t": 210.03,
+  "hp": 100,
+  "h": [
+   191.07,
+   -0.35
+  ],
+  "v": [
+   191.07,
+   -0.355,
+   "arrived"
+  ],
+  "lead": 369.641,
+  "arrived": false,
+  "f": [
+   14.901,
+   0,
+   21.099
+  ],
+  "n": "HHH",
+  "g": "the-long-road",
+  "disp": {
+   "x": 191.07,
+   "z": -0.355
+  },
+  "alive": 60,
+  "fail": [
+   "MOVE_HERO(190,-3) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,0) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,1.2) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,0) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(188.7,0) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,0) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,0) UNREACHABLE_TERRAIN: MOVE_"
+  ]
+ },
+ {
+  "t": 214.3,
+  "hp": 100,
+  "h": [
+   191.07,
+   -0.35
+  ],
+  "v": [
+   191.07,
+   -0.355,
+   "arrived"
+  ],
+  "lead": 369.641,
+  "arrived": false,
+  "f": [
+   14.901,
+   0,
+   21.099
+  ],
+  "n": "HHH",
+  "g": "the-long-road",
+  "disp": {
+   "x": 191.07,
+   "z": -0.355
+  },
+  "alive": 58,
+  "fail": [
+   "MOVE_HERO(190,-3) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,0) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,1.2) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,0) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(188.7,0) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,0) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,0) UNREACHABLE_TERRAIN: MOVE_"
+  ]
+ },
+ {
+  "t": 226.8,
+  "hp": 125,
+  "h": [
+   191.07,
+   -0.35
+  ],
+  "v": [
+   191.07,
+   -0.355,
+   "arrived"
+  ],
+  "lead": 369.641,
+  "arrived": false,
+  "f": [
+   14.901,
+   0,
+   21.099
+  ],
+  "n": "HHH",
+  "g": "the-long-road",
+  "disp": {
+   "x": 191.07,
+   "z": -0.355
+  },
+  "alive": 59,
+  "fail": [
+   "MOVE_HERO(190,-3) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,0) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,1.2) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,0) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(188.7,0) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,0) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,0) UNREACHABLE_TERRAIN: MOVE_"
+  ]
+ },
+ {
+  "t": 240.03,
+  "hp": 125,
+  "h": [
+   191.07,
+   -0.35
+  ],
+  "v": [
+   191.07,
+   -0.355,
+   "arrived"
+  ],
+  "lead": 369.641,
+  "arrived": false,
+  "f": [
+   14.901,
+   0,
+   21.099
+  ],
+  "n": "HHH",
+  "g": "the-long-road",
+  "disp": {
+   "x": 191.07,
+   "z": -0.355
+  },
+  "alive": 60,
+  "fail": [
+   "MOVE_HERO(190,-3) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,0) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,1.2) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,0) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(188.7,0) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,0) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,0) UNREACHABLE_TERRAIN: MOVE_"
+  ]
+ },
+ {
+  "t": 245.73,
+  "hp": 125,
+  "h": [
+   191.07,
+   -0.35
+  ],
+  "v": [
+   191.07,
+   -0.355,
+   "arrived"
+  ],
+  "lead": 369.641,
+  "arrived": false,
+  "f": [
+   14.901,
+   0,
+   21.099
+  ],
+  "n": "HHH",
+  "g": "the-long-road",
+  "disp": {
+   "x": 191.07,
+   "z": -0.355
+  },
+  "alive": 56,
+  "fail": [
+   "MOVE_HERO(190,-3) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,0) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,1.2) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,0) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(188.7,0) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,0) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,0) UNREACHABLE_TERRAIN: MOVE_"
+  ]
+ },
+ {
+  "t": 270.03,
+  "hp": 125,
+  "h": [
+   191.07,
+   -0.35
+  ],
+  "v": [
+   191.07,
+   -0.355,
+   "arrived"
+  ],
+  "lead": 369.641,
+  "arrived": false,
+  "f": [
+   14.901,
+   0,
+   21.099
+  ],
+  "n": "HHH",
+  "g": "the-long-road",
+  "disp": {
+   "x": 191.07,
+   "z": -0.355
+  },
+  "alive": 60,
+  "fail": [
+   "MOVE_HERO(190,-3) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,0) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,1.2) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,0) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(188.7,0) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,0) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,0) UNREACHABLE_TERRAIN: MOVE_"
+  ]
+ },
+ {
+  "t": 270.7,
+  "hp": 125,
+  "h": [
+   191.07,
+   -0.35
+  ],
+  "v": [
+   191.07,
+   -0.355,
+   "arrived"
+  ],
+  "lead": 369.641,
+  "arrived": false,
+  "f": [
+   14.901,
+   0,
+   21.099
+  ],
+  "n": "HHH",
+  "g": "the-long-road",
+  "disp": {
+   "x": 191.07,
+   "z": -0.355
+  },
+  "alive": 59,
+  "fail": [
+   "MOVE_HERO(190,-3) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,0) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,1.2) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,0) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(188.7,0) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,0) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,0) UNREACHABLE_TERRAIN: MOVE_"
+  ]
+ },
+ {
+  "t": 300,
+  "hp": 125,
+  "h": [
+   191.07,
+   -0.35
+  ],
+  "v": [
+   191.07,
+   -0.355,
+   "arrived"
+  ],
+  "lead": 369.641,
+  "arrived": false,
+  "f": [
+   14.901,
+   0,
+   21.099
+  ],
+  "n": "HHH",
+  "g": "the-long-road",
+  "disp": {
+   "x": 191.07,
+   "z": -0.355
+  },
+  "alive": 60,
+  "fail": [
+   "MOVE_HERO(190,-3) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,0) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,1.2) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,0) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(188.7,0) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,0) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,0) UNREACHABLE_TERRAIN: MOVE_"
+  ]
+ },
+ {
+  "t": 301.7,
+  "hp": 125,
+  "h": [
+   191.07,
+   -0.35
+  ],
+  "v": [
+   191.07,
+   -0.355,
+   "arrived"
+  ],
+  "lead": 369.641,
+  "arrived": false,
+  "f": [
+   14.901,
+   0,
+   21.099
+  ],
+  "n": "HHH",
+  "g": "the-long-road",
+  "disp": {
+   "x": 191.07,
+   "z": -0.355
+  },
+  "alive": 59,
+  "fail": [
+   "MOVE_HERO(190,-3) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,0) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,1.2) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,0) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(188.7,0) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,0) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,0) UNREACHABLE_TERRAIN: MOVE_"
+  ]
+ },
+ {
+  "t": 330,
+  "hp": 125,
+  "h": [
+   191.07,
+   -0.35
+  ],
+  "v": [
+   191.07,
+   -0.355,
+   "arrived"
+  ],
+  "lead": 369.641,
+  "arrived": false,
+  "f": [
+   14.901,
+   0,
+   21.099
+  ],
+  "n": "HHH",
+  "g": "the-long-road",
+  "disp": {
+   "x": 191.07,
+   "z": -0.355
+  },
+  "alive": 60,
+  "fail": [
+   "MOVE_HERO(190,-3) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,0) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,1.2) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,0) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(188.7,0) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,0) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,0) UNREACHABLE_TERRAIN: MOVE_"
+  ]
+ },
+ {
+  "t": 331.7,
+  "hp": 125,
+  "h": [
+   191.07,
+   -0.35
+  ],
+  "v": [
+   191.07,
+   -0.355,
+   "arrived"
+  ],
+  "lead": 369.641,
+  "arrived": false,
+  "f": [
+   14.901,
+   0,
+   21.099
+  ],
+  "n": "HHH",
+  "g": "the-long-road",
+  "disp": {
+   "x": 191.07,
+   "z": -0.355
+  },
+  "alive": 58,
+  "fail": [
+   "MOVE_HERO(190,-3) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,0) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,1.2) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,0) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(188.7,0) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,0) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,0) UNREACHABLE_TERRAIN: MOVE_"
+  ]
+ },
+ {
+  "t": 360,
+  "hp": 125,
+  "h": [
+   191.07,
+   -0.35
+  ],
+  "v": [
+   191.07,
+   -0.355,
+   "arrived"
+  ],
+  "lead": 369.641,
+  "arrived": false,
+  "f": [
+   14.901,
+   0,
+   21.099
+  ],
+  "n": "HHH",
+  "g": "the-long-road",
+  "disp": {
+   "x": 191.07,
+   "z": -0.355
+  },
+  "alive": 60,
+  "fail": [
+   "MOVE_HERO(190,-3) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,0) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,1.2) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,0) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(188.7,0) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,0) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,0) UNREACHABLE_TERRAIN: MOVE_"
+  ]
+ },
+ {
+  "t": 372.7,
+  "hp": 125,
+  "h": [
+   191.07,
+   -0.35
+  ],
+  "v": [
+   191.07,
+   -0.355,
+   "arrived"
+  ],
+  "lead": 369.641,
+  "arrived": false,
+  "f": [
+   14.901,
+   0,
+   21.099
+  ],
+  "n": "HHH",
+  "g": "the-long-road",
+  "disp": {
+   "x": 191.07,
+   "z": -0.355
+  },
+  "alive": 59,
+  "fail": [
+   "MOVE_HERO(190,-3) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,0) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,1.2) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,0) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(188.7,0) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,0) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,0) UNREACHABLE_TERRAIN: MOVE_"
+  ]
+ },
+ {
+  "t": 390,
+  "hp": 125,
+  "h": [
+   191.07,
+   -0.35
+  ],
+  "v": [
+   191.07,
+   -0.355,
+   "arrived"
+  ],
+  "lead": 369.641,
+  "arrived": false,
+  "f": [
+   14.901,
+   0,
+   21.099
+  ],
+  "n": "HHH",
+  "g": "the-long-road",
+  "disp": {
+   "x": 191.07,
+   "z": -0.355
+  },
+  "alive": 60,
+  "fail": [
+   "MOVE_HERO(190,-3) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,0) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,1.2) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,0) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(188.7,0) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,0) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,0) UNREACHABLE_TERRAIN: MOVE_"
+  ]
+ },
+ {
+  "t": 420,
+  "hp": 0,
+  "h": [
+   191.07,
+   -0.35
+  ],
+  "v": [
+   191.07,
+   -0.355,
+   "arrived"
+  ],
+  "lead": 369.641,
+  "arrived": false,
+  "f": [
+   14.901,
+   0,
+   21.099
+  ],
+  "n": "HHH",
+  "g": "the-long-road",
+  "disp": {
+   "x": 191.07,
+   "z": -0.355
+  },
+  "alive": 60,
+  "fail": [
+   "MOVE_HERO(190,-3) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,0) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,1.2) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,0) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(188.7,0) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,0) UNREACHABLE_TERRAIN: MOVE_",
+   "MOVE_HERO(190,0) UNREACHABLE_TERRAIN: MOVE_"
+  ]
+ }
+]

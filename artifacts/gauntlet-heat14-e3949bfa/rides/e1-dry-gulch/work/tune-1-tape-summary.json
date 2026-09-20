@@ -1,0 +1,30 @@
+{
+ "label": "tune-1-tape.json",
+ "code": 0,
+ "outcome": {
+  "secured": true,
+  "waves": 20,
+  "timeMs": 600000,
+  "gold": 328,
+  "kills": 877,
+  "calls": 165,
+  "defaultedPicks": 0,
+  "defaultedSecure": 1,
+  "eventLogHash": "fnv1a32:afadc88b"
+ },
+ "envelope": {
+  "durationTicks": 18000,
+  "lastEntryTick": 17980,
+  "entries": 165,
+  "bytes": 605633,
+  "eventLogHash": null
+ },
+ "views": 167,
+ "ctrlErr": null,
+ "stderrTail": [
+  "(node:82689) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.",
+  "(Use `node --trace-warnings ...` to show where the warning was created)",
+  "gr-sim preset: trail enemy.hp=25.2",
+  "gr-sim speed: 0.21 waves/s"
+ ]
+}

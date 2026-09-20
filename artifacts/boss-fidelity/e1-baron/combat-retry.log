@@ -1,0 +1,42 @@
+
+Running 1 test using 1 worker
+
+
+(node:78427) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[1/1] [mobile-chrome] › e2e/057-baron-rocket-cart.spec.ts:251:1 › kited Baron telegraphs and launches rockets that damage hero and buildings through CombatSystem
+  1) [mobile-chrome] › e2e/057-baron-rocket-cart.spec.ts:251:1 › kited Baron telegraphs and launches rockets that damage hero and buildings through CombatSystem 
+
+    Error: expect(received).resolves.toBe()
+
+    Received promise rejected instead of resolved
+    Rejected to value: [Error: page.evaluate: Execution context was destroyed, most likely because of a navigation]
+
+      151 |   const errors = await openGame(page, seed);
+      152 |   if (unlock) await unlockAudio(page);
+    > 153 |   await expect(page.evaluate(() => window.__GR_TEST__?.setManualSim(true))).resolves.toBe(true);
+          |                                                                                      ^
+      154 |   await page.evaluate(() => window.__GR_TEST__?.resetRun());
+      155 |   await setBalance(page, 'sparkRig.damage', 0);
+      156 |   await setBalance(page, 'sparkRig.range', 0);
+        at prepareKitedBaron (/Users/robin/.codex/worktrees/572c/Gold Rush/e2e/057-baron-rocket-cart.spec.ts:153:86)
+        at /Users/robin/.codex/worktrees/572c/Gold Rush/e2e/057-baron-rocket-cart.spec.ts:252:18
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/057-baron-rocket-cart-kite-e68cc-ldings-through-CombatSystem-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/057-baron-rocket-cart-kite-e68cc-ldings-through-CombatSystem-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/057-baron-rocket-cart-kite-e68cc-ldings-through-CombatSystem-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/057-baron-rocket-cart-kite-e68cc-ldings-through-CombatSystem-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  1 failed
+    [mobile-chrome] › e2e/057-baron-rocket-cart.spec.ts:251:1 › kited Baron telegraphs and launches rockets that damage hero and buildings through CombatSystem 

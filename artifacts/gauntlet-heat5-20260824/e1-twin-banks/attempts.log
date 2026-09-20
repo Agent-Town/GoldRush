@@ -1,0 +1,32 @@
+(node:33823) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+{"wave":0,"hp":100,"maxHp":100,"level":1,"gold":0,"threats":0,"worksHp":0,"works":{},"needsRider":false,"failures":[]}
+{"wave":0,"hp":100,"maxHp":100,"level":1,"gold":30,"threats":0,"worksHp":0,"works":{},"needsRider":true,"failures":["INVALID_TARGET: gold-seam-3 is unavailable."]}
+{"wave":0,"hp":100,"maxHp":100,"level":1,"gold":60,"threats":3,"worksHp":0,"works":{},"needsRider":true,"failures":["INVALID_TARGET: gold-seam-2 is unavailable."]}
+{"wave":0,"hp":100,"maxHp":100,"level":1,"gold":40,"threats":4,"worksHp":50,"works":{"turret":1},"needsRider":true,"failures":["INVALID_TARGET: gold-seam-1 is unavailable."]}
+{"wave":1,"hp":100,"maxHp":100,"level":1,"gold":40,"threats":8,"worksHp":50,"works":{"turret":1},"needsRider":false,"failures":[]}
+{"wave":1,"hp":100,"maxHp":100,"level":1,"gold":70,"threats":4,"worksHp":50,"works":{"turret":1},"needsRider":true,"failures":["INVALID_TARGET: gold-seam-3 is unavailable."]}
+{"wave":1,"hp":100,"maxHp":100,"level":1,"gold":30,"threats":6,"worksHp":100,"works":{"turret":2},"needsRider":true,"failures":["INVALID_TARGET: gold-seam-2 is unavailable."]}
+{"wave":1,"hp":100,"maxHp":100,"level":1,"gold":60,"threats":8,"worksHp":100,"works":{"turret":2},"needsRider":true,"failures":["INVALID_TARGET: gold-seam-1 is unavailable."]}
+{"wave":2,"hp":100,"maxHp":100,"level":1,"gold":60,"threats":14,"worksHp":100,"works":{"turret":2},"needsRider":false,"failures":[]}
+{"wave":2,"hp":100,"maxHp":100,"level":1,"gold":90,"threats":11,"worksHp":100,"works":{"turret":2},"needsRider":true,"failures":["INVALID_TARGET: gold-seam-3 is unavailable."]}
+{"wave":3,"hp":100,"maxHp":100,"level":1,"gold":90,"threats":14,"worksHp":100,"works":{"turret":2},"needsRider":false,"failures":[]}
+{"wave":3,"hp":100,"maxHp":100,"level":1,"gold":120,"threats":10,"worksHp":100,"works":{"turret":2},"needsRider":true,"failures":["INVALID_TARGET: gold-seam-3 is unavailable."]}
+{"wave":3,"hp":100,"maxHp":100,"level":1,"gold":55,"threats":14,"worksHp":150,"works":{"turret":3},"needsRider":true,"failures":["INVALID_TARGET: gold-seam-2 is unavailable."]}
+{"wave":3,"hp":100,"maxHp":100,"level":1,"gold":85,"threats":13,"worksHp":150,"works":{"turret":3},"needsRider":true,"failures":["INVALID_TARGET: gold-seam-1 is unavailable."]}
+{"wave":4,"hp":100,"maxHp":100,"level":1,"gold":85,"threats":21,"worksHp":150,"works":{"turret":3},"needsRider":false,"failures":[]}
+{"wave":4,"hp":100,"maxHp":100,"level":1,"gold":115,"threats":21,"worksHp":150,"works":{"turret":3},"needsRider":true,"failures":["INVALID_TARGET: gold-seam-3 is unavailable."]}
+{"wave":4,"hp":100,"maxHp":100,"level":1,"gold":145,"threats":15,"worksHp":150,"works":{"turret":3},"needsRider":true,"failures":["INVALID_TARGET: gold-seam-2 is unavailable."]}
+file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-c/artifacts/gauntlet-heat5-20260824/rider.mjs:126
+function rank(id) { const i = (priorities[style] ?? priorities.damage).indexOf(id); return i < 0 ? 99 : i; }
+                              ^
+
+ReferenceError: Cannot access 'priorities' before initialization
+    at rank (file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-c/artifacts/gauntlet-heat5-20260824/rider.mjs:126:31)
+    at file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-c/artifacts/gauntlet-heat5-20260824/rider.mjs:53:55
+    at Array.sort (<anonymous>)
+    at ordersFor (file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-c/artifacts/gauntlet-heat5-20260824/rider.mjs:53:40)
+    at file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-c/artifacts/gauntlet-heat5-20260824/rider.mjs:37:39
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+Node.js v26.4.0

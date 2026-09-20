@@ -1,0 +1,27 @@
+
+=== 1 finish-ride ===
+{"rig":"opus","contract":"e8-far-side","wall":684,"wallHit":false,"rc":0,"tracked":[],"files":20,"outcome":{"secured":false,"waves":14,"gold":25,"runsSoFar":4,"scoredAttempts":1,"tape":"/private/tmp/heat13-569a41f9/artifacts/heat13/opus/e8-far-side/tune-1-tape.json","worldModel":"sim-import"},"scoredTapes":[{"file":"attempt-1-tape.json","id":"agent-27648e03-0bd7e797-de71-4bc3-a5fb-5e9fa2a311c3","secured":false,"waves":12,"gold":70,"durationTicks":11106,"lastEntryTick":10938,"promotedByRig":false,"discoveredBy":"filename"},{"file":"tune-1-tape.json","id":"agent-33706bb2-45f14875-1e95-4827-91e9-75d29cbe46f3","secured":false,"waves":14,"gold":25,"durationTicks":13293,"lastEntryTick":13072,"promotedByRig":true,"discoveredBy":"outcome-file"}],"otherSecured":[],"reportSections":{"outcome":1406,"whatTheMapAsked":2246,"winnability":723,"lessons":5060},"usage":{"turns":78,"toolCalls":44,"tokensIn":156,"tokensOut":129529}}
+
+=== NOT SECURED — nothing to submit ===
+{
+ "rig": "opus",
+ "contract": "e8-far-side",
+ "wall": 684,
+ "wallHit": false,
+ "rc": 0,
+ "scoredTapes": [
+  {
+   "file": "attempt-1-tape.json",
+   "secured": false,
+   "waves": 12,
+   "gold": 70
+  },
+  {
+   "file": "tune-1-tape.json",
+   "secured": false,
+   "waves": 14,
+   "gold": 25
+  }
+ ],
+ "outcomeNote": "NOT SECURED - do not submit. Best of 4 runs is tune-1 (w14/443.100s/25g/55 calls). The scored attempt (attempt-1-tape.json, w12/370.200s/70g) ranks BELOW it; the tape named above is the best run on disk, not a standing. Both era gates were met in tune-1 (crossing.credited 4/4 at t~380, probeRecovery.recovered at t~91); the run died of ordinary survival at wave 14 of 20."
+}

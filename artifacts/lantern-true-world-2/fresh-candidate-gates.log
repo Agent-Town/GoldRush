@@ -1,0 +1,70 @@
+
+Running 4 tests using 1 worker
+
+(node:37503) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  1 [desktop-chrome] › e2e/tape-02-lantern-show.spec.ts:10:1 › plain town WATCH replays a fresh tape read-only and refuses a mismatched reel (14.7s)
+(node:38648) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  2 [desktop-chrome] › e2e/terrain3d-claim-pilot.spec.ts:76:1 › contract-valid GLB feeds every visualY consumer and keeps the water agreement (1.0m)
+(node:40571) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  3 [mobile-chrome] › e2e/tape-02-lantern-show.spec.ts:10:1 › plain town WATCH replays a fresh tape read-only and refuses a mismatched reel (12.2s)
+  ✓  4 [mobile-chrome] › e2e/terrain3d-claim-pilot.spec.ts:76:1 › contract-valid GLB feeds every visualY consumer and keeps the water agreement (4.1s)
+
+
+  1) [desktop-chrome] › e2e/tape-02-lantern-show.spec.ts:10:1 › plain town WATCH replays a fresh tape read-only and refuses a mismatched reel 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 3
+
+      Object {
+    -   "console": Array [],
+    +   "console": Array [
+    +     "THREE.GLTFLoader: Couldn't load texture blob:http://127.0.0.1:5189/04073b9f-1f15-443c-8325-46eb3e757e20",
+    +   ],
+        "page": Array [],
+      }
+
+      74 |   await expect(page.getByTestId('tape-shelf')).toContainText(/wave 0.*KEPT/s);
+      75 |   await shot(page, testInfo, 'version-refusal');
+    > 76 |   expect(errors).toEqual({ console: [], page: [] });
+         |                  ^
+      77 | });
+      78 |
+      79 | async function seedProfile(page: Page): Promise<void> {
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/tape-02-lantern-show.spec.ts:76:18
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/tape-02-lantern-show-plain-7c220-d-refuses-a-mismatched-reel-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/tape-02-lantern-show-plain-7c220-d-refuses-a-mismatched-reel-desktop-chrome/error-context.md
+
+  2) [desktop-chrome] › e2e/terrain3d-claim-pilot.spec.ts:76:1 › contract-valid GLB feeds every visualY consumer and keeps the water agreement 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: page.waitForFunction: Test timeout of 60000ms exceeded.
+
+      90 |   for (const [x, z] of samplePoints) {
+      91 |     await page.evaluate(([px, pz]) => window.__GR_TEST__?.teleport(px, pz), [x, z]);
+    > 92 |     await page.waitForFunction(([px, pz]) => {
+         |                ^
+      93 |       const hero = window.__THREE_GAME_DIAGNOSTICS__?.heroPos;
+      94 |       return hero != null && Math.abs(hero.x - px) < 0.01 && Math.abs(hero.z - pz) < 0.01;
+      95 |     }, [x, z]);
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/terrain3d-claim-pilot.spec.ts:92:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/terrain3d-claim-pilot-cont-43bda-d-keeps-the-water-agreement-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/terrain3d-claim-pilot-cont-43bda-d-keeps-the-water-agreement-desktop-chrome/error-context.md
+
+  2 failed
+    [desktop-chrome] › e2e/tape-02-lantern-show.spec.ts:10:1 › plain town WATCH replays a fresh tape read-only and refuses a mismatched reel 
+    [desktop-chrome] › e2e/terrain3d-claim-pilot.spec.ts:76:1 › contract-valid GLB feeds every visualY consumer and keeps the water agreement 
+  2 passed (1.6m)

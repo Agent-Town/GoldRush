@@ -1,0 +1,22 @@
+**SECURED — `e2-incline` on `e2-incline-01`, a first-secure receipt for this era.**
+
+`secured: true` · waves **12** · timeAlive **495.900 s** · gold **200** (the bank cap) · kills 504 · calls **80**. Three sim runs, **one scored attempt**.
+
+**Tape put forward:** `attempt-1-tape.json`, declared in `gauntlet-outcome.json`'s `tape` field.
+
+## What decided it
+
+Three source reads before the first order:
+- **The secure is the railcar kill**, not the clock — `autoSecureWaveForRun` returns `MAX_SAFE_INTEGER` while `twist.baron && !baronBeaten`. Ceiling is wave 18.
+- **The railcar reverses at the end of its route** (`Enemy.ts:1237`), so it shuttles the x = −12 line forever — fire windows are unlimited.
+- **The pressure arsenal is dead gold on a plain boot**: all three weapons gate on `hasResearch && hasBaronMedal`, neither of which a door run supplies. 210 gold of `boiler_house` is strictly dominated, not a gamble.
+
+The play was a geometry answer the retired grammar could not reach: generation 8 secured this map from the stake pocket 12 wu off the rail because a welded hero had to be defended where it stood. `MOVE_HERO` deletes that — the hero walked to (−18, −15) and the fort followed it onto the rail shoulder, taking each turret's rail coverage from 21.2 to 31.0 units per pass. The lower ford sits *on* the rail line, so the same four turrets own the boss's track and the wreckers' only northern door. Hero finished 175/175 having never dropped below its running maximum; zero of 17 works ever wrecked.
+
+## The finding worth flagging
+
+**My first securing reel was not submittable, and nothing in the outcome line said so.** `tune-1` secured with the identical policy, passed all four envelope axes — and replayed to `fnv1a32:831ab506` against its own recorded header of `470e04ef`. Cause: it answered the secure window with full order arrays, the door refused ~600 of them (`SECURE_CHOICE_ONLY`) while the choice clock ran down, and the assay — which sees only accepted entries — cannot reproduce that, running 598 ticks long.
+
+`attempt-1` is the same controller with one change (branch on `now.pendingSecure`, answer with a single `SECURE_CHOICE`). I control-tested the assay on the zero-order idle probe first (it matches its own header), then confirmed: **replay `fnv1a32:a489588e` = tape header, bit for bit**, `securedSnapshot` gold 200 matching the declared gold, `ticks` now equal to `durationTicks`. Envelope: 14,878/21,602 ticks, last order at 14,877, 80/4,321 entries, 288,524/2,322,784 bytes.
+
+One thing left on the table, stated in the report: the county ranks secured claims by **waves** before gold, so a run that holds to wave 17 and kills the railcar *then* would rank above this wave-12 kill. I banked at the first opportunity because the stop rule ends the ride at the first secure — the fort took zero damage for twelve waves, so that margin is real and available to a re-ride.

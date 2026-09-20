@@ -1,0 +1,121 @@
+[
+  {
+    "id": "e10-ember-shore",
+    "benchSeeds": [
+      "e10-ember-shore-01",
+      "e10-ember-shore-02"
+    ],
+    "harvestAnchors": 4,
+    "engineDependencies": [
+      {
+        "dep": "ember-shore-preserve-consumers",
+        "status": "landed",
+        "landedBy": "E10S-3"
+      }
+    ],
+    "buildables": [
+      "sentry_beacon",
+      "palisade",
+      "sluice",
+      "stockpile",
+      "turret",
+      "assay_office"
+    ],
+    "interactables": [],
+    "rules": [
+      "build_zones",
+      "preserve_vent",
+      "static_squall"
+    ],
+    "lossStakes": 1,
+    "sim": [
+      "constructs",
+      "constructs"
+    ]
+  },
+  {
+    "id": "e10-archive-world",
+    "benchSeeds": null,
+    "harvestAnchors": 0,
+    "engineDependencies": [
+      {
+        "dep": "archive-world-consumers",
+        "status": "missing"
+      }
+    ],
+    "buildables": [
+      "sentry_beacon",
+      "palisade",
+      "sluice",
+      "stockpile",
+      "turret",
+      "assay_office"
+    ],
+    "interactables": [],
+    "rules": [
+      "build_zones"
+    ],
+    "lossStakes": 0,
+    "sim": [
+      "throws: AP-07 supports only e1-dry-gulch, the-claim, e1-night-shift, e1-twin-banks, e1-baron and the current derived door (the-claim, e1-drill-yard, e1-dry-gulch, e1-night-shift, e1-twin-banks, e1-baron, e2-hill-mine, e2-trestle, e2-pressure-garden, e2-incline, e3-blackout-ridge, e3-moth-season, e3-canyon-works, e3-fairground, e4-dust-flats, e4-long-road, e4-gusher-county, e4-boneyard, e5-deepwater-claim, e5-regatta, e5-stillwater, e5-flotilla, e6-glow-mesa, e6-half-life-hollow, e6-picnic, e7-relay-valley, e7-echo-canyon, e7-dead-band, e7-relay-rush, e8-mare-claim, e8-far-side, e8-low-orbit, e8-eclipse, e9-dome-basin, e9-devils-alley, e10-ember-shore, e10-last-claim); received e10-archive-world.",
+      "throws: AP-07 supports only e1-dry-gulch, the-claim, e1-night-shift, e1-twin-banks, e1-baron and the current derived door (the-claim, e1-drill-yard, e1-dry-gulch, e1-night-shift, e1-twin-banks, e1-baron, e2-hill-mine, e2-trestle, e2-pressure-garden, e2-incline, e3-blackout-ridge, e3-moth-season, e3-canyon-works, e3-fairground, e4-dust-flats, e4-long-road, e4-gusher-county, e4-boneyard, e5-deepwater-claim, e5-regatta, e5-stillwater, e5-flotilla, e6-glow-mesa, e6-half-life-hollow, e6-picnic, e7-relay-valley, e7-echo-canyon, e7-dead-band, e7-relay-rush, e8-mare-claim, e8-far-side, e8-low-orbit, e8-eclipse, e9-dome-basin, e9-devils-alley, e10-ember-shore, e10-last-claim); received e10-archive-world."
+    ]
+  },
+  {
+    "id": "e10-last-claim",
+    "benchSeeds": null,
+    "harvestAnchors": 4,
+    "engineDependencies": [
+      {
+        "dep": "last-claim-finale-metadata-consumer",
+        "status": "missing"
+      }
+    ],
+    "buildables": [
+      "sentry_beacon",
+      "palisade",
+      "sluice",
+      "stockpile",
+      "turret",
+      "assay_office"
+    ],
+    "interactables": [],
+    "rules": [
+      "build_zones"
+    ],
+    "lossStakes": 3,
+    "sim": [
+      "constructs",
+      "constructs"
+    ]
+  },
+  {
+    "id": "e10-river",
+    "benchSeeds": null,
+    "harvestAnchors": 0,
+    "engineDependencies": [
+      {
+        "dep": "credits-river-consumer",
+        "status": "missing"
+      }
+    ],
+    "buildables": [
+      "sentry_beacon",
+      "palisade",
+      "sluice",
+      "stockpile",
+      "turret",
+      "assay_office"
+    ],
+    "interactables": [],
+    "rules": [
+      "river",
+      "water_crossings"
+    ],
+    "lossStakes": 0,
+    "sim": [
+      "throws: AP-07 supports only e1-dry-gulch, the-claim, e1-night-shift, e1-twin-banks, e1-baron and the current derived door (the-claim, e1-drill-yard, e1-dry-gulch, e1-night-shift, e1-twin-banks, e1-baron, e2-hill-mine, e2-trestle, e2-pressure-garden, e2-incline, e3-blackout-ridge, e3-moth-season, e3-canyon-works, e3-fairground, e4-dust-flats, e4-long-road, e4-gusher-county, e4-boneyard, e5-deepwater-claim, e5-regatta, e5-stillwater, e5-flotilla, e6-glow-mesa, e6-half-life-hollow, e6-picnic, e7-relay-valley, e7-echo-canyon, e7-dead-band, e7-relay-rush, e8-mare-claim, e8-far-side, e8-low-orbit, e8-eclipse, e9-dome-basin, e9-devils-alley, e10-ember-shore, e10-last-claim); received e10-river.",
+      "throws: AP-07 supports only e1-dry-gulch, the-claim, e1-night-shift, e1-twin-banks, e1-baron and the current derived door (the-claim, e1-drill-yard, e1-dry-gulch, e1-night-shift, e1-twin-banks, e1-baron, e2-hill-mine, e2-trestle, e2-pressure-garden, e2-incline, e3-blackout-ridge, e3-moth-season, e3-canyon-works, e3-fairground, e4-dust-flats, e4-long-road, e4-gusher-county, e4-boneyard, e5-deepwater-claim, e5-regatta, e5-stillwater, e5-flotilla, e6-glow-mesa, e6-half-life-hollow, e6-picnic, e7-relay-valley, e7-echo-canyon, e7-dead-band, e7-relay-rush, e8-mare-claim, e8-far-side, e8-low-orbit, e8-eclipse, e9-dome-basin, e9-devils-alley, e10-ember-shore, e10-last-claim); received e10-river."
+    ]
+  }
+]

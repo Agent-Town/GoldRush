@@ -1,0 +1,12 @@
+file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-maps/rehearsal/base-url.mjs:25
+    throw new Error(`${envVarName} is unset. Start a server from ${root} and pass ${envVarName}=http://127.0.0.1:<port>.`);
+          ^
+
+Error: PROBE_BASE is unset. Start a server from /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-maps and pass PROBE_BASE=http://127.0.0.1:<port>.
+    at resolveBase (file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-maps/rehearsal/base-url.mjs:25:11)
+    at file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-maps/scripts/map-landmark-repeat-check.mjs:6:14
+    at ModuleJob.run (node:internal/modules/esm/module_job:447:25)
+    at async node:internal/modules/esm/loader:646:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v26.4.0

@@ -1,0 +1,18 @@
+Heat 4 terminal shim failure, observed 2026-08-24 about 20:00 Asia/Bangkok:
+
+node:events:487
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: write EPIPE
+    at WriteWrap.onWriteComplete [as oncomplete] (node:internal/stream_base_commons:87:19)
+Emitted 'error' event on Socket instance
+errno: -32
+code: EPIPE
+syscall: write
+Node.js v26.4.0
+
+The shim process exited 1. The next OpenClaw request made three attempts to
+127.0.0.1:8899 and received ECONNREFUSED. OMP, Hermes, and Prime surfaced the
+same loss as `Unable to connect` / `Connection error`. No shim patch or restart
+was made mid-heat.

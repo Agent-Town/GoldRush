@@ -1,0 +1,37 @@
+{
+  "secured": true,
+  "waves": 12,
+  "timeMs": 360000,
+  "gold": 200,
+  "kills": 56,
+  "calls": 19,
+  "defaultedPicks": 0,
+  "defaultedSecure": 1,
+  "eventLogHash": "fnv1a32:165d5ab9",
+  "tape": "/private/tmp/heat13-569a41f9/artifacts/heat13/opus/e5-stillwater/attempt-1-tape.json",
+  "scored": true,
+  "runsSoFar": 2,
+  "scoredAttempts": 1,
+  "worldModel": "sim-import",
+  "note": "The securing ride was tune-1 (ctrl-v1, the first controller of the heat). Per the brief's promotion clause it is my scored attempt: attempt-1-tape.json is a BYTE-IDENTICAL copy of tune-1-tape.json (27,323 bytes, verified). One ride under two filenames; the operator should submit the tape named in this field.",
+  "envelope": {
+    "durationTicks": 10800,
+    "maxTicks": 18002,
+    "lastEntryTick": 9900,
+    "entries": 19,
+    "maxEntries": 3601,
+    "bytes": 27323,
+    "tapeEventLogHash": "fnv1a32:ca1df167",
+    "note": "All three axes measured off the first reel that existed. lastEntryTick 9900 < durationTicks 10800, so no terminal-tick (F-HEAT11-1) exposure; bytes are ~2% of the permitted ceiling."
+  },
+  "assay": {
+    "tool": "scripts/assay-replay-agent.mjs",
+    "eventLogHash": "fnv1a32:ca1df167",
+    "outcome": { "secured": true, "waves": 12, "gold": 200, "timeAlive": 360 },
+    "note": "Local replay of the PROMOTED tape reproduces the tape header's own hash and all four outcome fields. This is the tape hash, not the stdout outcome line's fnv1a32:165d5ab9 - different numbers by design."
+  },
+  "runs": [
+    { "label": "probe-idle", "tape": "probe-idle-tape.json", "secured": false, "waves": 3, "timeMs": 104433, "gold": 0, "scored": false },
+    { "label": "tune-1", "tape": "tune-1-tape.json", "secured": true, "waves": 12, "timeMs": 360000, "gold": 200, "scored": true, "promoted": true }
+  ]
+}

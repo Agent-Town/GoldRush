@@ -1,0 +1,606 @@
+{
+  "cases": [
+    {
+      "device": "desktop",
+      "state": "approach",
+      "boss": {
+        "enabled": true,
+        "active": true,
+        "act": 1,
+        "appetite": "meaning",
+        "arrivalCount": 1,
+        "aura": 0.117,
+        "musicGain": 0.897,
+        "pressureSeconds": 0,
+        "sites": [
+          {
+            "id": "last-lantern",
+            "kind": "light",
+            "verb": "relight",
+            "meaning": 1,
+            "held": false,
+            "protectedFor": 0,
+            "interactions": 0
+          },
+          {
+            "id": "pan-theme-song",
+            "kind": "song",
+            "verb": "keep-playing",
+            "meaning": 1,
+            "held": false,
+            "protectedFor": 0,
+            "interactions": 0
+          },
+          {
+            "id": "last-portrait",
+            "kind": "memory",
+            "verb": "re-ink",
+            "meaning": 1,
+            "held": false,
+            "protectedFor": 0,
+            "interactions": 0
+          }
+        ],
+        "allPreserved": false,
+        "recessionProgress": 0,
+        "victory": null,
+        "jarredMote": false,
+        "damageAccepted": 0,
+        "killPath": false
+      },
+      "finale": {
+        "enabled": true,
+        "ark": {
+          "sceneClass": "deepsky-ark-deck",
+          "tileId": "ark-plaza-e10",
+          "deckCount": 10,
+          "loadState": "ready",
+          "models": [
+            "E10ArkPlaza",
+            "E10ArkDeckDressing"
+          ],
+          "renderOnly": true,
+          "visualY": true
+        },
+        "reink": {
+          "state": "idle",
+          "progress": 0,
+          "renderOnly": true
+        },
+        "riverOffer": {
+          "offered": false,
+          "charterName": "The River",
+          "launchTemplate": "the-claim"
+        }
+      },
+      "filter": "grayscale(0.107)"
+    },
+    {
+      "device": "desktop",
+      "state": "pressure",
+      "boss": {
+        "enabled": true,
+        "active": true,
+        "act": 2,
+        "appetite": "meaning",
+        "arrivalCount": 1,
+        "aura": 1,
+        "musicGain": 0.12,
+        "pressureSeconds": 0.467,
+        "sites": [
+          {
+            "id": "last-lantern",
+            "kind": "light",
+            "verb": "relight",
+            "meaning": 0.944,
+            "held": false,
+            "protectedFor": 0,
+            "interactions": 0
+          },
+          {
+            "id": "pan-theme-song",
+            "kind": "song",
+            "verb": "keep-playing",
+            "meaning": 0.944,
+            "held": false,
+            "protectedFor": 0,
+            "interactions": 0
+          },
+          {
+            "id": "last-portrait",
+            "kind": "memory",
+            "verb": "re-ink",
+            "meaning": 0.944,
+            "held": false,
+            "protectedFor": 0,
+            "interactions": 0
+          }
+        ],
+        "allPreserved": false,
+        "recessionProgress": 0,
+        "victory": null,
+        "jarredMote": false,
+        "damageAccepted": 0,
+        "killPath": false
+      },
+      "finale": {
+        "enabled": true,
+        "ark": {
+          "sceneClass": "deepsky-ark-deck",
+          "tileId": "ark-plaza-e10",
+          "deckCount": 10,
+          "loadState": "ready",
+          "models": [
+            "E10ArkPlaza",
+            "E10ArkDeckDressing"
+          ],
+          "renderOnly": true,
+          "visualY": true
+        },
+        "reink": {
+          "state": "idle",
+          "progress": 0,
+          "renderOnly": true
+        },
+        "riverOffer": {
+          "offered": false,
+          "charterName": "The River",
+          "launchTemplate": "the-claim"
+        }
+      },
+      "filter": "grayscale(0.92)"
+    },
+    {
+      "device": "desktop",
+      "state": "recession",
+      "boss": {
+        "enabled": true,
+        "active": true,
+        "act": 2,
+        "appetite": "meaning",
+        "arrivalCount": 1,
+        "aura": 0.5,
+        "musicGain": 0.56,
+        "pressureSeconds": 0.467,
+        "sites": [
+          {
+            "id": "last-lantern",
+            "kind": "light",
+            "verb": "relight",
+            "meaning": 1,
+            "held": true,
+            "protectedFor": 18.5,
+            "interactions": 1
+          },
+          {
+            "id": "pan-theme-song",
+            "kind": "song",
+            "verb": "keep-playing",
+            "meaning": 1,
+            "held": true,
+            "protectedFor": 18.5,
+            "interactions": 1
+          },
+          {
+            "id": "last-portrait",
+            "kind": "memory",
+            "verb": "re-ink",
+            "meaning": 1,
+            "held": true,
+            "protectedFor": 18.5,
+            "interactions": 1
+          }
+        ],
+        "allPreserved": true,
+        "recessionProgress": 0.5,
+        "victory": null,
+        "jarredMote": false,
+        "damageAccepted": 0,
+        "killPath": false
+      },
+      "finale": {
+        "enabled": true,
+        "ark": {
+          "sceneClass": "deepsky-ark-deck",
+          "tileId": "ark-plaza-e10",
+          "deckCount": 10,
+          "loadState": "ready",
+          "models": [
+            "E10ArkPlaza",
+            "E10ArkDeckDressing"
+          ],
+          "renderOnly": true,
+          "visualY": true
+        },
+        "reink": {
+          "state": "idle",
+          "progress": 0,
+          "renderOnly": true
+        },
+        "riverOffer": {
+          "offered": false,
+          "charterName": "The River",
+          "launchTemplate": "the-claim"
+        }
+      },
+      "filter": "grayscale(0.46)"
+    },
+    {
+      "device": "desktop",
+      "state": "receded",
+      "boss": {
+        "enabled": true,
+        "active": false,
+        "act": 3,
+        "appetite": "meaning",
+        "arrivalCount": 1,
+        "aura": 0,
+        "musicGain": 1,
+        "pressureSeconds": 0.467,
+        "sites": [
+          {
+            "id": "last-lantern",
+            "kind": "light",
+            "verb": "relight",
+            "meaning": 1,
+            "held": true,
+            "protectedFor": 16.967,
+            "interactions": 1
+          },
+          {
+            "id": "pan-theme-song",
+            "kind": "song",
+            "verb": "keep-playing",
+            "meaning": 1,
+            "held": true,
+            "protectedFor": 16.967,
+            "interactions": 1
+          },
+          {
+            "id": "last-portrait",
+            "kind": "memory",
+            "verb": "re-ink",
+            "meaning": 1,
+            "held": true,
+            "protectedFor": 16.967,
+            "interactions": 1
+          }
+        ],
+        "allPreserved": true,
+        "recessionProgress": 1,
+        "victory": "receded",
+        "jarredMote": true,
+        "damageAccepted": 0,
+        "killPath": false
+      },
+      "finale": {
+        "enabled": true,
+        "ark": {
+          "sceneClass": "deepsky-ark-deck",
+          "tileId": "ark-plaza-e10",
+          "deckCount": 10,
+          "loadState": "ready",
+          "models": [
+            "E10ArkPlaza",
+            "E10ArkDeckDressing"
+          ],
+          "renderOnly": true,
+          "visualY": true
+        },
+        "reink": {
+          "state": "idle",
+          "progress": 0,
+          "renderOnly": true
+        },
+        "riverOffer": {
+          "offered": false,
+          "charterName": "The River",
+          "launchTemplate": "the-claim"
+        }
+      },
+      "filter": "grayscale(0)"
+    },
+    {
+      "device": "mobile",
+      "state": "approach",
+      "boss": {
+        "enabled": true,
+        "active": true,
+        "act": 1,
+        "appetite": "meaning",
+        "arrivalCount": 1,
+        "aura": 0.117,
+        "musicGain": 0.897,
+        "pressureSeconds": 0,
+        "sites": [
+          {
+            "id": "last-lantern",
+            "kind": "light",
+            "verb": "relight",
+            "meaning": 1,
+            "held": false,
+            "protectedFor": 0,
+            "interactions": 0
+          },
+          {
+            "id": "pan-theme-song",
+            "kind": "song",
+            "verb": "keep-playing",
+            "meaning": 1,
+            "held": false,
+            "protectedFor": 0,
+            "interactions": 0
+          },
+          {
+            "id": "last-portrait",
+            "kind": "memory",
+            "verb": "re-ink",
+            "meaning": 1,
+            "held": false,
+            "protectedFor": 0,
+            "interactions": 0
+          }
+        ],
+        "allPreserved": false,
+        "recessionProgress": 0,
+        "victory": null,
+        "jarredMote": false,
+        "damageAccepted": 0,
+        "killPath": false
+      },
+      "finale": {
+        "enabled": true,
+        "ark": {
+          "sceneClass": "deepsky-ark-deck",
+          "tileId": "ark-plaza-e10",
+          "deckCount": 10,
+          "loadState": "ready",
+          "models": [
+            "E10ArkPlaza",
+            "E10ArkDeckDressing"
+          ],
+          "renderOnly": true,
+          "visualY": true
+        },
+        "reink": {
+          "state": "idle",
+          "progress": 0,
+          "renderOnly": true
+        },
+        "riverOffer": {
+          "offered": false,
+          "charterName": "The River",
+          "launchTemplate": "the-claim"
+        }
+      },
+      "filter": "grayscale(0.107)"
+    },
+    {
+      "device": "mobile",
+      "state": "pressure",
+      "boss": {
+        "enabled": true,
+        "active": true,
+        "act": 2,
+        "appetite": "meaning",
+        "arrivalCount": 1,
+        "aura": 1,
+        "musicGain": 0.12,
+        "pressureSeconds": 0.467,
+        "sites": [
+          {
+            "id": "last-lantern",
+            "kind": "light",
+            "verb": "relight",
+            "meaning": 0.944,
+            "held": false,
+            "protectedFor": 0,
+            "interactions": 0
+          },
+          {
+            "id": "pan-theme-song",
+            "kind": "song",
+            "verb": "keep-playing",
+            "meaning": 0.944,
+            "held": false,
+            "protectedFor": 0,
+            "interactions": 0
+          },
+          {
+            "id": "last-portrait",
+            "kind": "memory",
+            "verb": "re-ink",
+            "meaning": 0.944,
+            "held": false,
+            "protectedFor": 0,
+            "interactions": 0
+          }
+        ],
+        "allPreserved": false,
+        "recessionProgress": 0,
+        "victory": null,
+        "jarredMote": false,
+        "damageAccepted": 0,
+        "killPath": false
+      },
+      "finale": {
+        "enabled": true,
+        "ark": {
+          "sceneClass": "deepsky-ark-deck",
+          "tileId": "ark-plaza-e10",
+          "deckCount": 10,
+          "loadState": "ready",
+          "models": [
+            "E10ArkPlaza",
+            "E10ArkDeckDressing"
+          ],
+          "renderOnly": true,
+          "visualY": true
+        },
+        "reink": {
+          "state": "idle",
+          "progress": 0,
+          "renderOnly": true
+        },
+        "riverOffer": {
+          "offered": false,
+          "charterName": "The River",
+          "launchTemplate": "the-claim"
+        }
+      },
+      "filter": "grayscale(0.92)"
+    },
+    {
+      "device": "mobile",
+      "state": "recession",
+      "boss": {
+        "enabled": true,
+        "active": true,
+        "act": 2,
+        "appetite": "meaning",
+        "arrivalCount": 1,
+        "aura": 0.5,
+        "musicGain": 0.56,
+        "pressureSeconds": 0.467,
+        "sites": [
+          {
+            "id": "last-lantern",
+            "kind": "light",
+            "verb": "relight",
+            "meaning": 1,
+            "held": true,
+            "protectedFor": 18.5,
+            "interactions": 1
+          },
+          {
+            "id": "pan-theme-song",
+            "kind": "song",
+            "verb": "keep-playing",
+            "meaning": 1,
+            "held": true,
+            "protectedFor": 18.5,
+            "interactions": 1
+          },
+          {
+            "id": "last-portrait",
+            "kind": "memory",
+            "verb": "re-ink",
+            "meaning": 1,
+            "held": true,
+            "protectedFor": 18.5,
+            "interactions": 1
+          }
+        ],
+        "allPreserved": true,
+        "recessionProgress": 0.5,
+        "victory": null,
+        "jarredMote": false,
+        "damageAccepted": 0,
+        "killPath": false
+      },
+      "finale": {
+        "enabled": true,
+        "ark": {
+          "sceneClass": "deepsky-ark-deck",
+          "tileId": "ark-plaza-e10",
+          "deckCount": 10,
+          "loadState": "ready",
+          "models": [
+            "E10ArkPlaza",
+            "E10ArkDeckDressing"
+          ],
+          "renderOnly": true,
+          "visualY": true
+        },
+        "reink": {
+          "state": "idle",
+          "progress": 0,
+          "renderOnly": true
+        },
+        "riverOffer": {
+          "offered": false,
+          "charterName": "The River",
+          "launchTemplate": "the-claim"
+        }
+      },
+      "filter": "grayscale(0.46)"
+    },
+    {
+      "device": "mobile",
+      "state": "receded",
+      "boss": {
+        "enabled": true,
+        "active": false,
+        "act": 3,
+        "appetite": "meaning",
+        "arrivalCount": 1,
+        "aura": 0,
+        "musicGain": 1,
+        "pressureSeconds": 0.467,
+        "sites": [
+          {
+            "id": "last-lantern",
+            "kind": "light",
+            "verb": "relight",
+            "meaning": 1,
+            "held": true,
+            "protectedFor": 16.967,
+            "interactions": 1
+          },
+          {
+            "id": "pan-theme-song",
+            "kind": "song",
+            "verb": "keep-playing",
+            "meaning": 1,
+            "held": true,
+            "protectedFor": 16.967,
+            "interactions": 1
+          },
+          {
+            "id": "last-portrait",
+            "kind": "memory",
+            "verb": "re-ink",
+            "meaning": 1,
+            "held": true,
+            "protectedFor": 16.967,
+            "interactions": 1
+          }
+        ],
+        "allPreserved": true,
+        "recessionProgress": 1,
+        "victory": "receded",
+        "jarredMote": true,
+        "damageAccepted": 0,
+        "killPath": false
+      },
+      "finale": {
+        "enabled": true,
+        "ark": {
+          "sceneClass": "deepsky-ark-deck",
+          "tileId": "ark-plaza-e10",
+          "deckCount": 10,
+          "loadState": "ready",
+          "models": [
+            "E10ArkPlaza",
+            "E10ArkDeckDressing"
+          ],
+          "renderOnly": true,
+          "visualY": true
+        },
+        "reink": {
+          "state": "idle",
+          "progress": 0,
+          "renderOnly": true
+        },
+        "riverOffer": {
+          "offered": false,
+          "charterName": "The River",
+          "launchTemplate": "the-claim"
+        }
+      },
+      "filter": "grayscale(0)"
+    }
+  ],
+  "errors": [],
+  "completed": true
+}

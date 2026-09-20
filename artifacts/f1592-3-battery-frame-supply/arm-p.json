@@ -1,0 +1,96 @@
+{
+  "baseURL": "http://127.0.0.1:5253",
+  "startedAt": "2026-08-09T02:35:47.080Z",
+  "backgroundLoad": null,
+  "lever": {
+    "kind": "cdp:Emulation.setCPUThrottlingRate",
+    "rate": 60,
+    "applied": true,
+    "error": null,
+    "busyLoopMs": 140.80000019073486
+  },
+  "armed": true,
+  "samples": [
+    {
+      "wallMs": 776.1142499999987,
+      "frame": 61,
+      "elapsed": 2.9999999999999973
+    },
+    {
+      "wallMs": 1291.4090829999986,
+      "frame": 63,
+      "elapsed": 3.099999999999997
+    },
+    {
+      "wallMs": 2149.888875000004,
+      "frame": 66,
+      "elapsed": 3.2499999999999964
+    },
+    {
+      "wallMs": 2729.673708000002,
+      "frame": 67,
+      "elapsed": 3.2999999999999963
+    },
+    {
+      "wallMs": 3141.923208,
+      "frame": 69,
+      "elapsed": 3.399999999999996
+    },
+    {
+      "wallMs": 3621.021166999999,
+      "frame": 71,
+      "elapsed": 3.4999999999999956
+    },
+    {
+      "wallMs": 4188.135208,
+      "frame": 73,
+      "elapsed": 3.599999999999995
+    },
+    {
+      "wallMs": 4752.294083000001,
+      "frame": 75,
+      "elapsed": 3.699999999999995
+    },
+    {
+      "wallMs": 5233.048625000003,
+      "frame": 77,
+      "elapsed": 3.7999999999999945
+    },
+    {
+      "wallMs": 5592.351625000003,
+      "frame": 78,
+      "elapsed": 3.8499999999999943
+    },
+    {
+      "wallMs": 6127.966417000003,
+      "frame": 80,
+      "elapsed": 3.949999999999994
+    },
+    {
+      "wallMs": 6477.082291999999,
+      "frame": 81,
+      "elapsed": 3.999999999999994
+    },
+    {
+      "wallMs": 7114.939582999999,
+      "frame": 84,
+      "elapsed": 4.149999999999993
+    }
+  ],
+  "errors": [],
+  "summary": {
+    "startFrame": 61,
+    "startElapsed": 2.9999999999999973,
+    "endFrame": 84,
+    "endElapsed": 4.149999999999993,
+    "frames": 23,
+    "elapsed": 1.149999999999996,
+    "wallMs": 6338.825333000001,
+    "meanElapsedPerFrame": 0.04999999999999982,
+    "maxElapsedPerFrame": 0.04999999999999982,
+    "fps": 3.6284325236509867,
+    "meanFrameIntervalMs": 275.60110143478266,
+    "predictedWallSeconds": 22.323689216217396,
+    "timedOut": false
+  }
+}

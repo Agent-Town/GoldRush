@@ -1,0 +1,1038 @@
+[
+  {
+    "scene": "The Claim",
+    "contract": "the-claim",
+    "project": "desktop-chrome",
+    "phase": "sweep-e030",
+    "query": "&lmemissive=0.3",
+    "focusMount": "maintained_claim_house",
+    "standoff": [
+      0,
+      9
+    ],
+    "frameMedianLuminance": 0.2966,
+    "terrainMedianLuminance": 0.3126,
+    "landmarkMedianLuminance": 0.2073,
+    "heroLuminance": 0.292,
+    "landmarkOverTerrain": 0.663,
+    "emissiveIntensity": [
+      {
+        "id": "active_headframe",
+        "range": [
+          0.3,
+          0.3
+        ]
+      },
+      {
+        "id": "maintained_claim_house",
+        "range": [
+          0.3,
+          0.3
+        ]
+      },
+      {
+        "id": "working_camp",
+        "range": [
+          0.3,
+          0.3
+        ]
+      },
+      {
+        "id": "claim_stake",
+        "range": [
+          0.3,
+          0.3
+        ]
+      },
+      {
+        "id": "riparian_dressing_pack",
+        "range": [
+          0.3,
+          0.3
+        ]
+      }
+    ],
+    "sideCensus": "{\"total\":{\"meshes\":5,\"closed\":5,\"open\":0,\"culled\":5,\"doubleSided\":0},\"mounts\":[{\"id\":\"active_headframe\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.167,\"topY\":7.16},{\"id\":\"maintained_claim_house\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.879,\"topY\":5.17},{\"id\":\"working_camp\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.178,\"topY\":2.964},{\"id\":\"claim_stake\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.503,\"topY\":2.414},{\"id\":\"riparian_dressing_pack\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.176,\"topY\":1.743}]}",
+    "p95Ms": 9.5,
+    "screenshot": "artifacts/landmark-lighting-calibration/sweep-e030-the-claim-desktop-chrome.png",
+    "probes": [
+      {
+        "id": "active_headframe@0.30h",
+        "family": "landmark",
+        "x": 167.2,
+        "y": -52.3,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "active_headframe@0.42h",
+        "family": "landmark",
+        "x": 161.3,
+        "y": -69,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "active_headframe@0.55h",
+        "family": "landmark",
+        "x": 154.7,
+        "y": -87.5,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "active_headframe@0.68h",
+        "family": "landmark",
+        "x": 147.9,
+        "y": -106.6,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "maintained_claim_house@0.30h",
+        "family": "landmark",
+        "x": 639.9,
+        "y": 270,
+        "inView": true,
+        "luminance": 0.0721
+      },
+      {
+        "id": "maintained_claim_house@0.42h",
+        "family": "landmark",
+        "x": 639.9,
+        "y": 259.1,
+        "inView": true,
+        "luminance": 0.0807
+      },
+      {
+        "id": "maintained_claim_house@0.55h",
+        "family": "landmark",
+        "x": 639.9,
+        "y": 247.1,
+        "inView": true,
+        "luminance": 0.0908
+      },
+      {
+        "id": "maintained_claim_house@0.68h",
+        "family": "landmark",
+        "x": 639.9,
+        "y": 234.8,
+        "inView": true,
+        "luminance": 0.1023
+      },
+      {
+        "id": "working_camp@0.30h",
+        "family": "landmark",
+        "x": 97.8,
+        "y": 333.6,
+        "inView": true,
+        "luminance": 0.19
+      },
+      {
+        "id": "working_camp@0.42h",
+        "family": "landmark",
+        "x": 94,
+        "y": 327,
+        "inView": true,
+        "luminance": 0.2
+      },
+      {
+        "id": "working_camp@0.55h",
+        "family": "landmark",
+        "x": 89.7,
+        "y": 319.7,
+        "inView": true,
+        "luminance": 0.2112
+      },
+      {
+        "id": "working_camp@0.68h",
+        "family": "landmark",
+        "x": 85.5,
+        "y": 312.2,
+        "inView": true,
+        "luminance": 0.2073
+      },
+      {
+        "id": "claim_stake@0.30h",
+        "family": "landmark",
+        "x": 536.5,
+        "y": 220,
+        "inView": true,
+        "luminance": 0.3008
+      },
+      {
+        "id": "claim_stake@0.42h",
+        "family": "landmark",
+        "x": 536.1,
+        "y": 215.4,
+        "inView": true,
+        "luminance": 0.2913
+      },
+      {
+        "id": "claim_stake@0.55h",
+        "family": "landmark",
+        "x": 535.6,
+        "y": 210.3,
+        "inView": true,
+        "luminance": 0.1985
+      },
+      {
+        "id": "claim_stake@0.68h",
+        "family": "landmark",
+        "x": 535.1,
+        "y": 205.3,
+        "inView": true,
+        "luminance": 0.1784
+      },
+      {
+        "id": "riparian_dressing_pack@0.30h",
+        "family": "landmark",
+        "x": 409,
+        "y": 76.4,
+        "inView": true,
+        "luminance": 0.2536
+      },
+      {
+        "id": "riparian_dressing_pack@0.42h",
+        "family": "landmark",
+        "x": 408.3,
+        "y": 72.7,
+        "inView": true,
+        "luminance": 0.2536
+      },
+      {
+        "id": "riparian_dressing_pack@0.55h",
+        "family": "landmark",
+        "x": 407.5,
+        "y": 68.7,
+        "inView": true,
+        "luminance": 0.2533
+      },
+      {
+        "id": "riparian_dressing_pack@0.68h",
+        "family": "landmark",
+        "x": 406.7,
+        "y": 64.7,
+        "inView": true,
+        "luminance": 0.2371
+      },
+      {
+        "id": "ground5_5",
+        "family": "terrain",
+        "x": 790.1,
+        "y": 401.4,
+        "inView": true,
+        "luminance": 0.3005
+      },
+      {
+        "id": "ground-5_5",
+        "family": "terrain",
+        "x": 489.8,
+        "y": 401.5,
+        "inView": true,
+        "luminance": 0.3873
+      },
+      {
+        "id": "ground0_6",
+        "family": "terrain",
+        "x": 640,
+        "y": 424.9,
+        "inView": true,
+        "luminance": 0.2563
+      },
+      {
+        "id": "ground5_-5",
+        "family": "terrain",
+        "x": 766.5,
+        "y": 207.2,
+        "inView": true,
+        "luminance": 0.3126
+      },
+      {
+        "id": "hero",
+        "family": "hero",
+        "x": 640.1,
+        "y": 476.2,
+        "inView": true,
+        "luminance": 0.292
+      }
+    ]
+  },
+  {
+    "scene": "Hill Mine",
+    "contract": "e2-hill-mine",
+    "project": "desktop-chrome",
+    "phase": "sweep-e030",
+    "query": "&lmemissive=0.3",
+    "focusMount": "boiler-house-site",
+    "standoff": [
+      0,
+      9
+    ],
+    "frameMedianLuminance": 0.1879,
+    "terrainMedianLuminance": 0.238,
+    "landmarkMedianLuminance": 0.1419,
+    "heroLuminance": 0.2724,
+    "landmarkOverTerrain": 0.596,
+    "emissiveIntensity": [
+      {
+        "id": "mine-mouth-and-ruined-headframe",
+        "range": [
+          0.3,
+          0.3
+        ]
+      },
+      {
+        "id": "boiler-house-site",
+        "range": [
+          0.3,
+          0.3
+        ]
+      },
+      {
+        "id": "flooded-gallery",
+        "range": [
+          0.3,
+          0.3
+        ]
+      },
+      {
+        "id": "switchback-rail-kit",
+        "range": [
+          0.3,
+          0.3
+        ]
+      },
+      {
+        "id": "tailings-and-scree-pack",
+        "range": [
+          0.3,
+          0.3
+        ]
+      }
+    ],
+    "sideCensus": "{\"total\":{\"meshes\":5,\"closed\":5,\"open\":0,\"culled\":5,\"doubleSided\":0},\"mounts\":[{\"id\":\"mine-mouth-and-ruined-headframe\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":4.732,\"topY\":14.324},{\"id\":\"boiler-house-site\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":1.318,\"topY\":9.043},{\"id\":\"flooded-gallery\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":-0.18,\"topY\":3.672},{\"id\":\"switchback-rail-kit\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":2.921,\"topY\":4.858},{\"id\":\"tailings-and-scree-pack\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":2.471,\"topY\":6.422}]}",
+    "p95Ms": 9.5,
+    "screenshot": "artifacts/landmark-lighting-calibration/sweep-e030-e2-hill-mine-desktop-chrome.png",
+    "probes": [
+      {
+        "id": "mine-mouth-and-ruined-headframe@0.30h",
+        "family": "landmark",
+        "x": 281,
+        "y": 1160,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "mine-mouth-and-ruined-headframe@0.42h",
+        "family": "landmark",
+        "x": 261.8,
+        "y": 1154,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "mine-mouth-and-ruined-headframe@0.55h",
+        "family": "landmark",
+        "x": 238.6,
+        "y": 1146.8,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "mine-mouth-and-ruined-headframe@0.68h",
+        "family": "landmark",
+        "x": 212.3,
+        "y": 1138.6,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "boiler-house-site@0.30h",
+        "family": "landmark",
+        "x": 639.9,
+        "y": 213.1,
+        "inView": true,
+        "luminance": 0.0478
+      },
+      {
+        "id": "boiler-house-site@0.42h",
+        "family": "landmark",
+        "x": 639.9,
+        "y": 193.5,
+        "inView": true,
+        "luminance": 0.0691
+      },
+      {
+        "id": "boiler-house-site@0.55h",
+        "family": "landmark",
+        "x": 639.9,
+        "y": 171.4,
+        "inView": true,
+        "luminance": 0.0766
+      },
+      {
+        "id": "boiler-house-site@0.68h",
+        "family": "landmark",
+        "x": 639.9,
+        "y": 148.4,
+        "inView": true,
+        "luminance": 0.0836
+      },
+      {
+        "id": "flooded-gallery@0.30h",
+        "family": "landmark",
+        "x": 639.9,
+        "y": 90.3,
+        "inView": true,
+        "luminance": 0.1419
+      },
+      {
+        "id": "flooded-gallery@0.42h",
+        "family": "landmark",
+        "x": 639.9,
+        "y": 81.7,
+        "inView": true,
+        "luminance": 0.1436
+      },
+      {
+        "id": "flooded-gallery@0.55h",
+        "family": "landmark",
+        "x": 639.9,
+        "y": 72.2,
+        "inView": true,
+        "luminance": 0.1436
+      },
+      {
+        "id": "flooded-gallery@0.68h",
+        "family": "landmark",
+        "x": 639.9,
+        "y": 62.5,
+        "inView": true,
+        "luminance": 0.9284
+      },
+      {
+        "id": "switchback-rail-kit@0.30h",
+        "family": "landmark",
+        "x": 640,
+        "y": 503.2,
+        "inView": true,
+        "luminance": 0.1235
+      },
+      {
+        "id": "switchback-rail-kit@0.42h",
+        "family": "landmark",
+        "x": 640,
+        "y": 498.7,
+        "inView": true,
+        "luminance": 0.1307
+      },
+      {
+        "id": "switchback-rail-kit@0.55h",
+        "family": "landmark",
+        "x": 640,
+        "y": 493.8,
+        "inView": true,
+        "luminance": 0.1446
+      },
+      {
+        "id": "switchback-rail-kit@0.68h",
+        "family": "landmark",
+        "x": 640,
+        "y": 488.9,
+        "inView": true,
+        "luminance": 0.159
+      },
+      {
+        "id": "tailings-and-scree-pack@0.30h",
+        "family": "landmark",
+        "x": 2103.1,
+        "y": 811.6,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "tailings-and-scree-pack@0.42h",
+        "family": "landmark",
+        "x": 2124.8,
+        "y": 804.8,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "tailings-and-scree-pack@0.55h",
+        "family": "landmark",
+        "x": 2149,
+        "y": 797.2,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "tailings-and-scree-pack@0.68h",
+        "family": "landmark",
+        "x": 2174,
+        "y": 789.4,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "ground5_5",
+        "family": "terrain",
+        "x": 778.4,
+        "y": 353.4,
+        "inView": true,
+        "luminance": 0.238
+      },
+      {
+        "id": "ground-5_5",
+        "family": "terrain",
+        "x": 501.5,
+        "y": 353.4,
+        "inView": true,
+        "luminance": 0.2447
+      },
+      {
+        "id": "ground0_6",
+        "family": "terrain",
+        "x": 640,
+        "y": 374.2,
+        "inView": true,
+        "luminance": 0.2243
+      },
+      {
+        "id": "ground5_-5",
+        "family": "terrain",
+        "x": 758.2,
+        "y": 178.7,
+        "inView": true,
+        "luminance": 0.1512
+      },
+      {
+        "id": "hero",
+        "family": "hero",
+        "x": 640,
+        "y": 476.3,
+        "inView": true,
+        "luminance": 0.2724
+      }
+    ]
+  },
+  {
+    "scene": "Mare Claim",
+    "contract": "e8-mare-claim",
+    "project": "desktop-chrome",
+    "phase": "sweep-e030",
+    "query": "&lmemissive=0.3",
+    "focusMount": "earthrise-listening-array",
+    "standoff": [
+      0,
+      9
+    ],
+    "frameMedianLuminance": 0.1629,
+    "terrainMedianLuminance": 0.1103,
+    "landmarkMedianLuminance": 0.1924,
+    "heroLuminance": 0.2724,
+    "landmarkOverTerrain": 1.744,
+    "emissiveIntensity": [
+      {
+        "id": "earthrise-listening-array",
+        "range": [
+          0.3,
+          0.3
+        ]
+      },
+      {
+        "id": "lava-tube-survey-gantry",
+        "range": [
+          0.3,
+          0.3
+        ]
+      },
+      {
+        "id": "regolith-core-yard",
+        "range": [
+          0.3,
+          0.3
+        ]
+      },
+      {
+        "id": "west-rim-debris-catcher",
+        "range": [
+          0.3,
+          0.3
+        ]
+      },
+      {
+        "id": "east-rim-debris-catcher",
+        "range": [
+          0.3,
+          0.3
+        ]
+      }
+    ],
+    "sideCensus": "{\"total\":{\"meshes\":5,\"closed\":5,\"open\":0,\"culled\":5,\"doubleSided\":0},\"mounts\":[{\"id\":\"earthrise-listening-array\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":4.536,\"topY\":11.796},{\"id\":\"lava-tube-survey-gantry\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":6,\"topY\":12.99},{\"id\":\"regolith-core-yard\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0,\"topY\":7.1},{\"id\":\"west-rim-debris-catcher\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":4.462,\"topY\":11.332},{\"id\":\"east-rim-debris-catcher\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5.062,\"topY\":11.932}]}",
+    "p95Ms": 9.3,
+    "screenshot": "artifacts/landmark-lighting-calibration/sweep-e030-e8-mare-claim-desktop-chrome.png",
+    "probes": [
+      {
+        "id": "earthrise-listening-array@0.30h",
+        "family": "landmark",
+        "x": 640,
+        "y": 166,
+        "inView": true,
+        "luminance": 0.1924
+      },
+      {
+        "id": "earthrise-listening-array@0.42h",
+        "family": "landmark",
+        "x": 640,
+        "y": 142.1,
+        "inView": true,
+        "luminance": 0.1817
+      },
+      {
+        "id": "earthrise-listening-array@0.55h",
+        "family": "landmark",
+        "x": 640,
+        "y": 115,
+        "inView": true,
+        "luminance": 0.2196
+      },
+      {
+        "id": "earthrise-listening-array@0.68h",
+        "family": "landmark",
+        "x": 640,
+        "y": 86.5,
+        "inView": true,
+        "luminance": 0.1728
+      },
+      {
+        "id": "lava-tube-survey-gantry@0.30h",
+        "family": "landmark",
+        "x": -262.4,
+        "y": -232.7,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "lava-tube-survey-gantry@0.42h",
+        "family": "landmark",
+        "x": -274.5,
+        "y": -252.9,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "lava-tube-survey-gantry@0.55h",
+        "family": "landmark",
+        "x": -288,
+        "y": -275.5,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "lava-tube-survey-gantry@0.68h",
+        "family": "landmark",
+        "x": -302,
+        "y": -298.7,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "regolith-core-yard@0.30h",
+        "family": "landmark",
+        "x": 1025.3,
+        "y": -183,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "regolith-core-yard@0.42h",
+        "family": "landmark",
+        "x": 1029.6,
+        "y": -199.1,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "regolith-core-yard@0.55h",
+        "family": "landmark",
+        "x": 1034.4,
+        "y": -217,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "regolith-core-yard@0.68h",
+        "family": "landmark",
+        "x": 1039.2,
+        "y": -235.4,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "west-rim-debris-catcher@0.30h",
+        "family": "landmark",
+        "x": -424,
+        "y": -256.9,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "west-rim-debris-catcher@0.42h",
+        "family": "landmark",
+        "x": -436.5,
+        "y": -274.7,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "west-rim-debris-catcher@0.55h",
+        "family": "landmark",
+        "x": -450.2,
+        "y": -294.5,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "west-rim-debris-catcher@0.68h",
+        "family": "landmark",
+        "x": -464.4,
+        "y": -314.8,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "east-rim-debris-catcher@0.30h",
+        "family": "landmark",
+        "x": 1713,
+        "y": -269.8,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "east-rim-debris-catcher@0.42h",
+        "family": "landmark",
+        "x": 1725.7,
+        "y": -287.9,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "east-rim-debris-catcher@0.55h",
+        "family": "landmark",
+        "x": 1739.7,
+        "y": -308.1,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "east-rim-debris-catcher@0.68h",
+        "family": "landmark",
+        "x": 1754,
+        "y": -328.7,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "ground5_5",
+        "family": "terrain",
+        "x": 813.4,
+        "y": 335.5,
+        "inView": true,
+        "luminance": 0.1024
+      },
+      {
+        "id": "ground-5_5",
+        "family": "terrain",
+        "x": 466.6,
+        "y": 335.5,
+        "inView": true,
+        "luminance": 0.1103
+      },
+      {
+        "id": "ground0_6",
+        "family": "terrain",
+        "x": 640,
+        "y": 361.2,
+        "inView": true,
+        "luminance": 0.1038
+      },
+      {
+        "id": "ground5_-5",
+        "family": "terrain",
+        "x": 782.9,
+        "y": 127.7,
+        "inView": true,
+        "luminance": 0.185
+      },
+      {
+        "id": "hero",
+        "family": "hero",
+        "x": 640,
+        "y": 476.4,
+        "inView": true,
+        "luminance": 0.2724
+      }
+    ]
+  },
+  {
+    "scene": "Night Shift",
+    "contract": "e1-night-shift",
+    "project": "desktop-chrome",
+    "phase": "sweep-e030",
+    "query": "&lmemissive=0.3",
+    "focusMount": "seven_lantern_terraces",
+    "standoff": [
+      0,
+      9
+    ],
+    "frameMedianLuminance": 0.1118,
+    "terrainMedianLuminance": 0.1244,
+    "landmarkMedianLuminance": 0.112,
+    "heroLuminance": 0.0899,
+    "landmarkOverTerrain": 0.9,
+    "emissiveIntensity": [
+      {
+        "id": "seven_lantern_terraces",
+        "range": [
+          1,
+          1
+        ]
+      },
+      {
+        "id": "lampworks_yard",
+        "range": [
+          1,
+          1
+        ]
+      },
+      {
+        "id": "dark_rock_shoulders",
+        "range": [
+          1,
+          1
+        ]
+      },
+      {
+        "id": "central_ford",
+        "range": [
+          1,
+          1
+        ]
+      },
+      {
+        "id": "night_work_road",
+        "range": [
+          1,
+          1
+        ]
+      }
+    ],
+    "sideCensus": "{\"total\":{\"meshes\":5,\"closed\":5,\"open\":0,\"culled\":5,\"doubleSided\":0},\"mounts\":[{\"id\":\"seven_lantern_terraces\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":1.112,\"topY\":4.708},{\"id\":\"lampworks_yard\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.622,\"topY\":6.422},{\"id\":\"dark_rock_shoulders\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":-1.011,\"topY\":5.281},{\"id\":\"central_ford\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":-0.183,\"topY\":0.178},{\"id\":\"night_work_road\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.351,\"topY\":3.02}]}",
+    "p95Ms": 9.6,
+    "screenshot": "artifacts/landmark-lighting-calibration/sweep-e030-e1-night-shift-desktop-chrome.png",
+    "probes": [
+      {
+        "id": "seven_lantern_terraces@0.30h",
+        "family": "landmark",
+        "x": 640,
+        "y": 252.3,
+        "inView": true,
+        "luminance": 0.112
+      },
+      {
+        "id": "seven_lantern_terraces@0.42h",
+        "family": "landmark",
+        "x": 640,
+        "y": 242.9,
+        "inView": true,
+        "luminance": 0.1157
+      },
+      {
+        "id": "seven_lantern_terraces@0.55h",
+        "family": "landmark",
+        "x": 640,
+        "y": 232.5,
+        "inView": true,
+        "luminance": 0.116
+      },
+      {
+        "id": "seven_lantern_terraces@0.68h",
+        "family": "landmark",
+        "x": 640,
+        "y": 221.9,
+        "inView": true,
+        "luminance": 0.116
+      },
+      {
+        "id": "lampworks_yard@0.30h",
+        "family": "landmark",
+        "x": 979,
+        "y": 761.1,
+        "inView": true,
+        "luminance": 0.0339
+      },
+      {
+        "id": "lampworks_yard@0.42h",
+        "family": "landmark",
+        "x": 986.5,
+        "y": 749.7,
+        "inView": true,
+        "luminance": 0.0339
+      },
+      {
+        "id": "lampworks_yard@0.55h",
+        "family": "landmark",
+        "x": 995.1,
+        "y": 736.8,
+        "inView": true,
+        "luminance": 0.0341
+      },
+      {
+        "id": "lampworks_yard@0.68h",
+        "family": "landmark",
+        "x": 1004,
+        "y": 723.2,
+        "inView": true,
+        "luminance": 0.0341
+      },
+      {
+        "id": "dark_rock_shoulders@0.30h",
+        "family": "landmark",
+        "x": 640,
+        "y": 279.9,
+        "inView": true,
+        "luminance": 0.112
+      },
+      {
+        "id": "dark_rock_shoulders@0.42h",
+        "family": "landmark",
+        "x": 640,
+        "y": 264.2,
+        "inView": true,
+        "luminance": 0.112
+      },
+      {
+        "id": "dark_rock_shoulders@0.55h",
+        "family": "landmark",
+        "x": 640,
+        "y": 246.7,
+        "inView": true,
+        "luminance": 0.112
+      },
+      {
+        "id": "dark_rock_shoulders@0.68h",
+        "family": "landmark",
+        "x": 640,
+        "y": 228.5,
+        "inView": true,
+        "luminance": 0.116
+      },
+      {
+        "id": "central_ford@0.30h",
+        "family": "landmark",
+        "x": 640,
+        "y": 299,
+        "inView": true,
+        "luminance": 0.1081
+      },
+      {
+        "id": "central_ford@0.42h",
+        "family": "landmark",
+        "x": 640,
+        "y": 298.1,
+        "inView": true,
+        "luminance": 0.1081
+      },
+      {
+        "id": "central_ford@0.55h",
+        "family": "landmark",
+        "x": 640,
+        "y": 297.2,
+        "inView": true,
+        "luminance": 0.1081
+      },
+      {
+        "id": "central_ford@0.68h",
+        "family": "landmark",
+        "x": 640,
+        "y": 296.3,
+        "inView": true,
+        "luminance": 0.1081
+      },
+      {
+        "id": "night_work_road@0.30h",
+        "family": "landmark",
+        "x": 640,
+        "y": 274.3,
+        "inView": true,
+        "luminance": 0.112
+      },
+      {
+        "id": "night_work_road@0.42h",
+        "family": "landmark",
+        "x": 640,
+        "y": 267.6,
+        "inView": true,
+        "luminance": 0.112
+      },
+      {
+        "id": "night_work_road@0.55h",
+        "family": "landmark",
+        "x": 640,
+        "y": 260.3,
+        "inView": true,
+        "luminance": 0.112
+      },
+      {
+        "id": "night_work_road@0.68h",
+        "family": "landmark",
+        "x": 640,
+        "y": 252.9,
+        "inView": true,
+        "luminance": 0.112
+      },
+      {
+        "id": "ground5_5",
+        "family": "terrain",
+        "x": 791.7,
+        "y": 392.3,
+        "inView": true,
+        "luminance": 0.1
+      },
+      {
+        "id": "ground-5_5",
+        "family": "terrain",
+        "x": 488.3,
+        "y": 392.3,
+        "inView": true,
+        "luminance": 0.1
+      },
+      {
+        "id": "ground0_6",
+        "family": "terrain",
+        "x": 640,
+        "y": 415.8,
+        "inView": true,
+        "luminance": 0.2435
+      },
+      {
+        "id": "ground5_-5",
+        "family": "terrain",
+        "x": 767.7,
+        "y": 198,
+        "inView": true,
+        "luminance": 0.1244
+      },
+      {
+        "id": "hero",
+        "family": "hero",
+        "x": 640,
+        "y": 476.1,
+        "inView": true,
+        "luminance": 0.0899
+      }
+    ]
+  }
+]

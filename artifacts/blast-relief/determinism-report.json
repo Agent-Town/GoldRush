@@ -1,0 +1,71 @@
+{
+  "hashA": "3c5fc5a318eb206cbf078dd211f492e3cb15010c50d42bdb0f8bd2e1849be707",
+  "hashB": "3c5fc5a318eb206cbf078dd211f492e3cb15010c50d42bdb0f8bd2e1849be707",
+  "payload": {
+    "enemiesAlive": 0,
+    "killsByOwner": {
+      "hero_blast": 1
+    },
+    "detonation": {
+      "x": 23,
+      "z": -20
+    },
+    "detonations": 1,
+    "terrainSim": {
+      "flat": true,
+      "tile": "frontier-river-claim",
+      "balance": {
+        "uphillMin": 0.6,
+        "downhillMax": 1.1,
+        "slopeMax": 0.35,
+        "wadeDepth": 0.35,
+        "deepDepth": 1
+      },
+      "gt": {
+        "highGroundRangeBonus": 1.5
+      },
+      "lastLos": {
+        "flat": true,
+        "clear": true,
+        "samples": 0,
+        "from": {
+          "x": 0,
+          "z": 0,
+          "h": 0
+        },
+        "to": {
+          "x": 0,
+          "z": 0,
+          "h": 0
+        },
+        "blockedAt": null
+      },
+      "probes": {
+        "heroStart": {
+          "height": 0,
+          "slope": {
+            "dx": 0,
+            "dz": 0
+          },
+          "traversable": true
+        },
+        "ford": {
+          "height": 0,
+          "slope": {
+            "dx": 0,
+            "dz": 0
+          },
+          "traversable": true
+        },
+        "farBank": {
+          "height": 0,
+          "slope": {
+            "dx": 0,
+            "dz": 0
+          },
+          "traversable": true
+        }
+      }
+    }
+  }
+}

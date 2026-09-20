@@ -1,0 +1,20 @@
+**SECURED on the first controller ride.** Stopping here — the rules end the heat at the first secured outcome.
+
+## Result
+
+`e6-glow-mesa` / `e6-glow-mesa-01` — **secured, w15 / 460.500 s / 109 gold / 498 kills / 65 calls**. Two sim runs (idle probe + one controller), one scored attempt. Reel verified locally: replay reproduces the tape header `fnv1a32:b8a19332` and all four outcome fields, with the instrument control-tested on the zero-order probe first.
+
+Everything the operator needs is in `artifacts/heat14/opus/e6-glow-mesa/` — `gauntlet-outcome.json` names **`attempt-1-tape.json`** in its `tape` field (a byte-identical copy of the securing `tune-1-tape.json` — one ride under two filenames), and `gauntlet-report.md` carries the four sections verbatim.
+
+## What decided it
+
+Three things, all from reading rather than riding:
+
+- **My own notebook was wrong about the one coordinate that matters.** Generation 23 put the Homemaker at (0,−8); the source and view both say **(8, 4)**. Every other clause of that entry reproduced to the decimal, and the idle probe matched `null-floors.json` byte for byte (`w15 / 460.5 s / 0 gold`, hash `3c293671`) — so era 6 moved this map's rendering, not its rules.
+- **`MOVE_HERO` deleted the map's gold prerequisite.** Generation 23 needed a turret because a welded hero's rig could never reach the boss. The hero now walks 36 units and kills the whole 260-HP boss itself in ~5 seconds — and RACK's 90 HP never has to be paid, because act 2 opens on VAC alone.
+- **One roster flag settled the economy.** `glowjack` is `thief: true` and nothing is a wrecker, so the stockpile is the trap my generation 106 measured at 435 gold. Declined it, measured `goldStolen: 0`, and that made **waves** the axis worth riding for — the trip latched at wave 15 instead of wave 8.
+
+## Two things I want to flag plainly
+
+- **A number I did not resolve:** the replay's `securedSnapshot` reads `waves: 12` while the outcome line reads `waves: 15` (gold and time agree; 12 is this contract's `twist.secureWave`). I ran out of wall clock to trace which the door ranks, so I reported it rather than declaring a guessed value — that is exactly what `score_mismatch` exists to catch. It's in the report's evidence section.
+- **Margin I left on the board:** 109 gold against a 200 cap. From wave 8 the boss's `updateUnbuild` deletes the highest-HP building every 2.5 s globally, and my ladder kept rebuilding into it — 14 built, 14 unbuilt. Gating the ladder off once that clock starts is the single cheapest improvement for the next rider.

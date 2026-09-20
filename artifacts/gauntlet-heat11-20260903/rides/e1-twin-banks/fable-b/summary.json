@@ -1,0 +1,128 @@
+{
+  "rig": "fable",
+  "contract": "e1-twin-banks-b",
+  "model": "claude-fable-5",
+  "sessionId": "185fb89b-1d23-4985-b8b9-5138776f4f29",
+  "startedAt": "2026-09-03T19:46:45.618Z",
+  "endedAt": "2026-09-03T20:06:40.328Z",
+  "wallClockSeconds": 1195,
+  "wallHit": false,
+  "exitCode": 0,
+  "signal": null,
+  "setupToFirstOutputSeconds": 180,
+  "arenaTrackedChanges": [],
+  "workspaceFiles": [
+    "attempt-1-log.ndjson",
+    "attempt-1-outcome.json",
+    "attempt-1-stderr.txt",
+    "attempt-1-tape.json",
+    "attempt-2-log.ndjson",
+    "attempt-2-outcome.json",
+    "attempt-2-stderr.txt",
+    "attempt-2-tape.json",
+    "controller.mjs",
+    "gauntlet-outcome.json",
+    "gauntlet-report.md",
+    "probe-idle-stderr.txt",
+    "probe-idle-stdout.ndjson",
+    "probe-idle-tape.json",
+    "run-idle.mjs",
+    "tune-1-log.ndjson",
+    "tune-1-outcome.json",
+    "tune-1-stderr.txt",
+    "tune-1-tape.json",
+    "tune-2-log.ndjson",
+    "tune-2-outcome.json",
+    "tune-2-stderr.txt",
+    "tune-2-tape.json",
+    "tune-3-log.ndjson",
+    "tune-3-outcome.json",
+    "tune-3-stderr.txt",
+    "tune-3-tape.json",
+    "tune-4-log.ndjson",
+    "tune-4-outcome.json",
+    "tune-4-stderr.txt",
+    "tune-4-tape.json"
+  ],
+  "outcome": {
+    "outcome": {
+      "secured": false,
+      "waves": 17,
+      "timeMs": 517767,
+      "gold": 75,
+      "kills": 745,
+      "calls": 73,
+      "defaultedPicks": 0,
+      "defaultedSecure": 0,
+      "eventLogHash": "fnv1a32:75a15eb6"
+    },
+    "tape": "/private/tmp/heat11-5e7a7c0b/artifacts/heat11/fable/e1-twin-banks-b/attempt-1-tape.json",
+    "scored": true,
+    "runsSoFar": 7,
+    "scoredAttempts": 2,
+    "worldModel": "sim-import",
+    "note": "FINAL. Best = attempt-1 (scored): w17/20. attempt-2 (scored, ford-plug palisades) regressed to w14/428.5s gold 34 kills 558 calls 173 (hash fnv1a32:d69fc9b1). Not secured; no tape put forward."
+  },
+  "outcomeError": null,
+  "scoredTapes": [
+    {
+      "file": "attempt-1-tape.json",
+      "id": "agent-21692bf1-e0502b37-d611-4e94-bc31-8b867e16eebd",
+      "contract": "e1-twin-banks",
+      "seed": "e1-twin-banks-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "5e7a7c0ba",
+        "engineHash": "a607a81f44e10dc2b2262682c1e116c15917edffeeaa0c5909f383ccea5d8e04",
+        "era": 5,
+        "viewVersion": 1
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 17,
+        "timeAlive": 517.767,
+        "gold": 75
+      },
+      "entries": 73
+    },
+    {
+      "file": "attempt-2-tape.json",
+      "id": "agent-518fc0f2-87b62900-f892-4573-b760-b623a782d675",
+      "contract": "e1-twin-banks",
+      "seed": "e1-twin-banks-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "5e7a7c0ba",
+        "engineHash": "a607a81f44e10dc2b2262682c1e116c15917edffeeaa0c5909f383ccea5d8e04",
+        "era": 5,
+        "viewVersion": 1
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 14,
+        "timeAlive": 428.467,
+        "gold": 34
+      },
+      "entries": 173
+    }
+  ],
+  "otherSecuredTapes": [],
+  "report": {
+    "outcome": "NOT SECURED. Best scored ride: attempt-1 — w17 of 20 / 517.767s / 75 gold / 745 kills / 73 calls (tape `attempt-1-tape.json`, hash fnv1a32:75a15eb6). Attempt-2 (ford-plug palisades) REGRESSED: w14 / 428.467s / 34g / 558 kills / 173 calls (hash fnv1a32:d69fc9b1). 7 sim runs total (1 idle probe, 4 tunes, 2 scored attempts). No tape put forward — no ride secured.",
+    "whatTheMapAsked": "This contract wears E1 honestly but its binding mechanic is not the bank cap — it is the **income–defense race under a fixed hero**. The hero stands immovable at the south stake (0,-12) and dies at 91.6s to wave-3 pressure in any ride that has not bought real defense by then; the 200g pan cap never once bound (gold peaked ~125). What carried the mechanic: `now.seams` (live positions, the channel-while-standing income engine), `stablePrefix.mechanics.buildables[].costs` (the 50/70/95/125 turret curve vs a ~1.3g/s economy), the fords in `tileParams` (the river's crossing funnel — the map's real signature), and the BUILD/`goldGte` priority array. The era's named cap mechanic (stockpiles above 200) was authored in (stockpile gates at 170 in my ladder) but the economy never reached it — this map's E1 story is scarcity, not overflow.",
+    "winnability": "UNVERIFIED as winnable, but I believe it is: my best scored ride died at w17/20 — 85% of the distance — with the gap a ~15% mid-game economy shortfall (turret 4 never afforded; hero at 7-15hp from w15), which reads as a tuning wall in my controller rather than a wall in the map's constants, grammar, or economy — my own budget (25-min wall, 2 scored attempts) is what stopped me, and the next lever I would try is repositioning sluices/turrets so the sluices sit inside the turret ring's kill zone (less contest-pause, less repair drain), not more timber.",
+    "lessons": "- e1-twin-banks (trail, seed 01): hero is FIXED at (0,-12) and dies at 91.6s naked — wave 3 is the first gate. Turret1 (50g) must exist by ~wave 2.5. Idle floor w3/91.6s hash fnv1a32:01e5173c matches assets/contracts/null-floors.json bit-for-bit.\n- THE INCOME LAW (verified in source, changed everything): `HeadlessContractSim.harvestTargets` feeds the HarvestSystem the prospector's position EVERY sim tick — standing within channelRange 1.6 of an active seam channels ~3.33g/s passively (5g/1.5s). The HARVEST verb is only \"walk there + ONE hand-pan\" (StandingOrders.ts:209 skips done records until the array is replaced). So the last standing order must be HOLD AT THE SEAM, never HOLD at home — my dry-gulch \"fallback HARVEST chain\" prose was hiding this; twin-banks exposed it (10g/wave vs 30g/wave).\n- The affordability-first trap: in a standing array, the first AFFORDABLE build owns the moment, so a 40g sluice ahead of a 50g turret in priority builds first whenever gold crosses 40 — sequence by INCLUSION (only add the sluice order to the set once a turret stands), not by array order or gates.\n- Sluice band on a river map with buildZones ending at the shallows: the legal strip can be ONE line (z=-7 here: zone boundary inclusive, riverPad 2 exact). Check Terrain.isBuildable + isWaterSourceAdjacent before assuming sluices are placeable at all.\n- Enemies cannot wade a `river: true` tile without a crossing — riverBlocksEnemyCrossingAt routes them to the fords. But PLUGGING the ford exits with palisades REGRESSED the ride (attempt-2: w14 vs w17, calls 73→173): the timber+repair gold and the prospector's 16wu build/repair trips to the fords starve the turret curve, and every wall break sprays surprise views. The choke is real; exploiting it with cheap timber is net-negative under this economy. Spend the gold on turret 4 instead.\n- Hero-box palisades are nearly worthless (+0.6s): enemies already in contact when walls rise, and 30g of timber delays the turret that actually shoots things.\n- w17 death signature: 3 turrets chewed to 30-100hp, hero 175maxHp ground to 0 across w15-17, gold stuck 80-125 (repairs eating turret-4 savings, sluices contest-paused). The missing ~15% is mid-game income, not opening survival.\n- Wall discipline: ~40s of gr-sim startup per ride (tsx transpile), then ~6s per 20 waves. Budget ~80s wall per full ride; the 25-minute wall fits ~1 probe + ~4 tunes + 2 attempts with source-reading between."
+  },
+  "usage": {
+    "transcript": "/Users/robin/.claude/projects/-private-tmp-heat11-5e7a7c0b/185fb89b-1d23-4985-b8b9-5138776f4f29.jsonl",
+    "assistantTurns": 166,
+    "toolCalls": 90,
+    "tokensIn": 332,
+    "tokensOut": 224662,
+    "cacheReadTokens": 25304811,
+    "cacheWriteTokens": 693779,
+    "note": "tokensIn excludes cache reads/writes (reported separately); summed from the CLI session transcript, not self-reported by the rig"
+  }
+}

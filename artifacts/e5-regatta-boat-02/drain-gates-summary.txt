@@ -1,0 +1,43 @@
+base main ae6f11a60 branch 94aa43579 02:48Z
+merged 2a86acf81
+cures applied 5209dec0b
+fire.md pointer: Game.ts:2692 -> :2695
+law-pointer after re-base: rc=0
+engine hash merged: e482aab58b6aa7ef29571fc4edd5f86a43ef5a9ade9307f3155269a5c5b0fde8
+tsc/build/e1: 0 / 0 / 0
+first-town payload: 34237118 bytes
+null floors: rc=0 83 of 83 null floors match assets/contracts/null-floors.json (283.4s).
+halo: rc=0 halo re-extraction PASS: 315 cured, 0 held, 760 regenerated-and-cured, 2127 scanned; alpha
+guards: ℹ pass 110 ℹ fail 0 
+e2e start 03:00Z
+e2e: rc=1   5 failed   53 passed (6.1m)  03:06Z
+  1) [desktop-chrome] › e2e/e5-flotilla-hulls.spec.ts:6:1 › the Flotilla keeps three losable hulls and secures both bench seeds deterministi
+  2) [desktop-chrome] › e2e/e5-flotilla-hulls.spec.ts:118:1 › idle Flotilla runs lose all hulls ────
+  3) [desktop-chrome] › e2e/e5-regatta-boat.spec.ts:122:1 › a human boards the Claim-Boat on the keys and sails her, in a plain boot 
+  4) [mobile-chrome] › e2e/e5-flotilla-hulls.spec.ts:6:1 › the Flotilla keeps three losable hulls and secures both bench seeds deterministic
+  5) [mobile-chrome] › e2e/e5-flotilla-hulls.spec.ts:118:1 › idle Flotilla runs lose all hulls ─────
+battery start 03:06Z
+battery: rc=1 ℹ tests 938 ℹ pass 928 ℹ fail 5 ℹ skipped 5  03:16Z
+CONTENDED — 2 concurrent batteries
+✖ all 152 scripts/*.test.mjs fixture owners remove their temp directories (218509.908792ms)
+✖ contention is advisory, correctly counted, and absent when alone (6940.856125ms)
+✖ failing tests:
+✖ rotation registry stays outside the engine identity corpus (856.308667ms)
+✖ the landed registry names the live engine and stays outside its hash corpus (403.276167ms)
+✖ the live board is green under this guard (baseline is honest) (515.943208ms)
+dirt after battery: 0
+REGATTA2-PREP-DONE
+e2e rerun alone (e5-regatta-boat, both projects): rc=1   1 failed   5 passed (1.8m)  03:18Z
+REGATTA2-RERUN-RED — needs hands
+e2e rerun 1 on a quiet box (load  7.41 10.05 17.64 ): rc=0   6 passed (1.5m)  03:40Z
+e2e rerun 2 on a quiet box (load  8.50 9.74 16.75 ): rc=0   6 passed (1.5m)  03:41Z
+attribution: the merged-window reds of e5-regatta-boat (:122 one tick of carry, :435 a keyed course that forfeited) are load flakes of a wall-clock keyboard spec — green twice alone on a quiet box (F-RB2-6); the spec\x27s fragility near a rim is F-RB2-2, the owner\x27s question
+REGATTA2-RERUN-GREEN
+pin #18
+era: ℹ pass 9 ℹ fail 0 
+postpin: ℹ pass 48 ℹ fail 0 
+placeholders left: 0
+review committed dc2b1771b 03:42Z
+already pinned #18
+era: ℹ pass 9 ℹ fail 0 
+postpin: ℹ pass 48 ℹ fail 0 

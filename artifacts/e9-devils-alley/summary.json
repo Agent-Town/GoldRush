@@ -1,0 +1,288 @@
+{
+  "schema": "goldrush.a9-devils-alley-evidence.v1",
+  "contract": "e9-devils-alley",
+  "ratification": "specs/agent-play/door-completion-sheet.md:24 (A9, RATIFIED 2026-08-20)",
+  "laws": {
+    "secure": "the public-verb prover must SECURE both bench seeds, twice, with matching hashes",
+    "unanchored": "the control: the same works outside the anchor hold, to price what the hold buys",
+    "idle": "Law 2 — an idle run must NOT secure"
+  },
+  "rows": [
+    {
+      "kind": "secure",
+      "seed": "e9-devils-alley-01",
+      "run": 1,
+      "secured": true,
+      "waves": 20,
+      "timeMs": 600000,
+      "gold": 200,
+      "kills": 928,
+      "eventLogHash": "fnv1a32:947390e6",
+      "wind": {
+        "policy": "anchored",
+        "sweepsStarted": 20,
+        "sweepsCompleted": 19,
+        "relocations": 0,
+        "anchoredRefusals": 652,
+        "lastRelocation": null
+      }
+    },
+    {
+      "kind": "secure",
+      "seed": "e9-devils-alley-01",
+      "run": 2,
+      "secured": true,
+      "waves": 20,
+      "timeMs": 600000,
+      "gold": 200,
+      "kills": 928,
+      "eventLogHash": "fnv1a32:947390e6",
+      "wind": {
+        "policy": "anchored",
+        "sweepsStarted": 20,
+        "sweepsCompleted": 19,
+        "relocations": 0,
+        "anchoredRefusals": 652,
+        "lastRelocation": null
+      }
+    },
+    {
+      "kind": "secure",
+      "seed": "e9-devils-alley-02",
+      "run": 1,
+      "secured": true,
+      "waves": 20,
+      "timeMs": 600000,
+      "gold": 200,
+      "kills": 928,
+      "eventLogHash": "fnv1a32:a92b5ed1",
+      "wind": {
+        "policy": "anchored",
+        "sweepsStarted": 20,
+        "sweepsCompleted": 19,
+        "relocations": 0,
+        "anchoredRefusals": 652,
+        "lastRelocation": null
+      }
+    },
+    {
+      "kind": "secure",
+      "seed": "e9-devils-alley-02",
+      "run": 2,
+      "secured": true,
+      "waves": 20,
+      "timeMs": 600000,
+      "gold": 200,
+      "kills": 928,
+      "eventLogHash": "fnv1a32:a92b5ed1",
+      "wind": {
+        "policy": "anchored",
+        "sweepsStarted": 20,
+        "sweepsCompleted": 19,
+        "relocations": 0,
+        "anchoredRefusals": 652,
+        "lastRelocation": null
+      }
+    },
+    {
+      "kind": "unanchored",
+      "seed": "e9-devils-alley-01",
+      "run": 1,
+      "secured": false,
+      "waves": 17,
+      "timeMs": 524767,
+      "gold": 200,
+      "kills": 770,
+      "eventLogHash": "fnv1a32:2859b0c3",
+      "wind": {
+        "policy": "unanchored",
+        "sweepsStarted": 17,
+        "sweepsCompleted": 16,
+        "relocations": 4,
+        "anchoredRefusals": 0,
+        "lastRelocation": {
+          "family": "turret",
+          "index": 3,
+          "routeId": "center-devil-sweep",
+          "wave": 11,
+          "from": {
+            "x": 10,
+            "z": 0
+          },
+          "to": {
+            "x": -52,
+            "z": 0
+          }
+        }
+      }
+    },
+    {
+      "kind": "unanchored",
+      "seed": "e9-devils-alley-01",
+      "run": 2,
+      "secured": false,
+      "waves": 17,
+      "timeMs": 524767,
+      "gold": 200,
+      "kills": 770,
+      "eventLogHash": "fnv1a32:2859b0c3",
+      "wind": {
+        "policy": "unanchored",
+        "sweepsStarted": 17,
+        "sweepsCompleted": 16,
+        "relocations": 4,
+        "anchoredRefusals": 0,
+        "lastRelocation": {
+          "family": "turret",
+          "index": 3,
+          "routeId": "center-devil-sweep",
+          "wave": 11,
+          "from": {
+            "x": 10,
+            "z": 0
+          },
+          "to": {
+            "x": -52,
+            "z": 0
+          }
+        }
+      }
+    },
+    {
+      "kind": "unanchored",
+      "seed": "e9-devils-alley-02",
+      "run": 1,
+      "secured": false,
+      "waves": 19,
+      "timeMs": 579500,
+      "gold": 200,
+      "kills": 883,
+      "eventLogHash": "fnv1a32:62c9b358",
+      "wind": {
+        "policy": "unanchored",
+        "sweepsStarted": 19,
+        "sweepsCompleted": 18,
+        "relocations": 4,
+        "anchoredRefusals": 0,
+        "lastRelocation": {
+          "family": "turret",
+          "index": 3,
+          "routeId": "center-devil-sweep",
+          "wave": 11,
+          "from": {
+            "x": 10,
+            "z": 0
+          },
+          "to": {
+            "x": -52,
+            "z": 0
+          }
+        }
+      }
+    },
+    {
+      "kind": "unanchored",
+      "seed": "e9-devils-alley-02",
+      "run": 2,
+      "secured": false,
+      "waves": 19,
+      "timeMs": 579500,
+      "gold": 200,
+      "kills": 883,
+      "eventLogHash": "fnv1a32:62c9b358",
+      "wind": {
+        "policy": "unanchored",
+        "sweepsStarted": 19,
+        "sweepsCompleted": 18,
+        "relocations": 4,
+        "anchoredRefusals": 0,
+        "lastRelocation": {
+          "family": "turret",
+          "index": 3,
+          "routeId": "center-devil-sweep",
+          "wave": 11,
+          "from": {
+            "x": 10,
+            "z": 0
+          },
+          "to": {
+            "x": -52,
+            "z": 0
+          }
+        }
+      }
+    },
+    {
+      "kind": "idle",
+      "seed": "e9-devils-alley-01",
+      "run": 1,
+      "secured": false,
+      "waves": 3,
+      "timeMs": 109433,
+      "gold": 0,
+      "kills": 55,
+      "eventLogHash": "fnv1a32:1a15181a",
+      "wind": {
+        "sweepsStarted": 3,
+        "sweepsCompleted": 2,
+        "relocations": 0,
+        "anchoredRefusals": 0,
+        "lastRelocation": null
+      }
+    },
+    {
+      "kind": "idle",
+      "seed": "e9-devils-alley-01",
+      "run": 2,
+      "secured": false,
+      "waves": 3,
+      "timeMs": 109433,
+      "gold": 0,
+      "kills": 55,
+      "eventLogHash": "fnv1a32:1a15181a",
+      "wind": {
+        "sweepsStarted": 3,
+        "sweepsCompleted": 2,
+        "relocations": 0,
+        "anchoredRefusals": 0,
+        "lastRelocation": null
+      }
+    },
+    {
+      "kind": "idle",
+      "seed": "e9-devils-alley-02",
+      "run": 1,
+      "secured": false,
+      "waves": 3,
+      "timeMs": 109633,
+      "gold": 0,
+      "kills": 53,
+      "eventLogHash": "fnv1a32:aa33adf0",
+      "wind": {
+        "sweepsStarted": 3,
+        "sweepsCompleted": 2,
+        "relocations": 0,
+        "anchoredRefusals": 0,
+        "lastRelocation": null
+      }
+    },
+    {
+      "kind": "idle",
+      "seed": "e9-devils-alley-02",
+      "run": 2,
+      "secured": false,
+      "waves": 3,
+      "timeMs": 109633,
+      "gold": 0,
+      "kills": 53,
+      "eventLogHash": "fnv1a32:aa33adf0",
+      "wind": {
+        "sweepsStarted": 3,
+        "sweepsCompleted": 2,
+        "relocations": 0,
+        "anchoredRefusals": 0,
+        "lastRelocation": null
+      }
+    }
+  ]
+}

@@ -1,0 +1,59 @@
+Info: Saved as "salvage-claw.blend"
+INFO Draco mesh compression is available, use library at /Applications/Blender.app/Contents/Resources/5.1/scripts/addons_core/io_scene_gltf2/libextern_draco.dylib
+12:34:01 | INFO: Starting glTF 2.0 export
+12:34:01 | INFO: Extracting primitive: winchMesh
+12:34:01 | INFO: Primitives created: 1
+12:34:01 | INFO: Extracting primitive: anchor_feetMesh
+12:34:01 | INFO: Primitives created: 1
+12:34:01 | INFO: Extracting primitive: crownMesh
+12:34:01 | INFO: Primitives created: 1
+12:34:01 | INFO: Finished glTF 2.0 export in 0.037423133850097656 s
+
+{
+  "blend": "/Users/robin/.codex/worktrees/572c/Gold Rush/artifacts/boss-fidelity/e8-salvage-claw/candidate-v10/salvage-claw.blend",
+  "glb": "/Users/robin/.codex/worktrees/572c/Gold Rush/artifacts/boss-fidelity/e8-salvage-claw/candidate-v10/salvage-claw.glb",
+  "sha256": "3ae8420b44b79d4aa41d4c2305cc32da17e94cae397990671220d32f3a6b4826",
+  "sourcePlates": {
+    "assets/raw/boss-salvage-claw.png": "3f2736dd420ae624c5e9034dd337d82eeb01de32ff71f1290353ead656f1b4d4",
+    "assets/raw/boss-salvage-claw-damage.png": "6b4150d7edd23004a66a00940f5c0fe9dbadce52d66570d631337385d2c15a69"
+  },
+  "stateLaw": "intact descending body morphs to a landed civic-salvage state; no people are included",
+  "components": [
+    "winch",
+    "anchor_feet",
+    "crown"
+  ],
+  "landingMorphs": [
+    "Landing_SprungWinch",
+    "Landing_SettledAnchorFeet",
+    "Landing_DarkCrown"
+  ],
+  "atlas": 1024,
+  "parts": {
+    "winch": 58,
+    "anchor_feet": 140,
+    "crown": 432
+  },
+  "triangles": 30844,
+  "trianglesPerComponent": {
+    "winch": 4340,
+    "anchor_feet": 8224,
+    "crown": 18280
+  },
+  "triangleCeiling": 45000,
+  "boundsBlender": {
+    "min": [
+      -7.246606,
+      -7.246606,
+      0.0
+    ],
+    "max": [
+      7.246606,
+      7.246606,
+      12.042174
+    ]
+  }
+}
+Blender 5.1.2 (hash ec6e62d40fa9 built 2026-05-19 01:30:33)
+
+Blender quit

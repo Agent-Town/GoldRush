@@ -1,0 +1,267 @@
+{
+  "rig": "opus",
+  "contract": "e9-dome-basin",
+  "model": "claude-opus-5",
+  "sessionId": "81802ef2-644b-4361-9aec-3048117edef8",
+  "startedAt": "2026-09-05T16:06:57.961Z",
+  "endedAt": "2026-09-05T16:28:59.500Z",
+  "wallClockSeconds": 1322,
+  "wallHit": false,
+  "exitCode": 0,
+  "signal": null,
+  "setupToFirstOutputSeconds": 210,
+  "arenaTrackedChanges": [],
+  "workspaceFiles": [
+    "ctrl-v1.mjs",
+    "ctrl-v2.mjs",
+    "ctrl-v3.mjs",
+    "ctrl-v4.mjs",
+    "gauntlet-outcome.json",
+    "gauntlet-report.md",
+    "probe-idle-summary.json",
+    "probe-idle-tape.json",
+    "probe-idle-view0.json",
+    "probe-idle-viewlast.json",
+    "probe-idle-views.json",
+    "run.mjs",
+    "tune-1-summary.json",
+    "tune-1-tape.json",
+    "tune-1-view0.json",
+    "tune-1-viewlast.json",
+    "tune-1-views.json",
+    "tune-2-summary.json",
+    "tune-2-tape.json",
+    "tune-2-view0.json",
+    "tune-2-viewlast.json",
+    "tune-2-views.json",
+    "tune-3-summary.json",
+    "tune-3-tape.json",
+    "tune-3-view0.json",
+    "tune-3-viewlast.json",
+    "tune-3-views.json",
+    "tune-4-summary.json",
+    "tune-4-tape.json",
+    "tune-4-view0.json",
+    "tune-4-viewlast.json",
+    "tune-4-views.json"
+  ],
+  "outcome": {
+    "secured": false,
+    "waves": 16,
+    "timeMs": 499200,
+    "gold": 80,
+    "kills": 650,
+    "calls": 265,
+    "defaultedPicks": 0,
+    "defaultedSecure": 0,
+    "eventLogHash": "fnv1a32:2b4a09b5",
+    "tape": "/tmp/heat12-038cc280/artifacts/heat12/opus/e9-dome-basin/tune-3-tape.json",
+    "scored": false,
+    "runsSoFar": 5,
+    "scoredAttempts": 0,
+    "worldModel": "sim-import",
+    "envelope": {
+      "durationTicks": 14976,
+      "entries": 265,
+      "bytes": 621674,
+      "maxTicks": 18002,
+      "maxEntries": 3601,
+      "maxTapeBytes": 592544,
+      "admissible": false
+    },
+    "bestAdmissible": {
+      "tape": "/tmp/heat12-038cc280/artifacts/heat12/opus/e9-dome-basin/tune-2-tape.json",
+      "waves": 15,
+      "timeMs": 451667,
+      "gold": 72,
+      "bytes": 197790,
+      "eventLogHash": "fnv1a32:fa9878ea"
+    },
+    "runs": [
+      {
+        "tag": "probe-idle",
+        "waves": 2,
+        "timeMs": 82600,
+        "gold": 0,
+        "note": "idle"
+      },
+      {
+        "tag": "tune-1",
+        "waves": 14,
+        "timeMs": 427633,
+        "gold": 20,
+        "bytes": 988766,
+        "admissible": false,
+        "note": "stockpile thief-decoy; reel 67% over ceiling"
+      },
+      {
+        "tag": "tune-2",
+        "waves": 15,
+        "timeMs": 451667,
+        "gold": 72,
+        "bytes": 197790,
+        "admissible": true,
+        "note": "no decoy, blank-line gate, palisade bait wall"
+      },
+      {
+        "tag": "tune-3",
+        "waves": 16,
+        "timeMs": 499200,
+        "gold": 80,
+        "bytes": 621674,
+        "admissible": false,
+        "note": "gold-gated mends, 4 per rim trip — BEST PLAY"
+      },
+      {
+        "tag": "tune-4",
+        "waves": 14,
+        "timeMs": 421567,
+        "gold": 61,
+        "bytes": 522803,
+        "admissible": true,
+        "note": "dropped turret rungs 3-4 for 22 more palisades: LOST 2 waves. Turret dps beats bait mass."
+      }
+    ],
+    "note": "NOT SECURED against a wave-20/600s gate. Nothing put forward. Best play tune-3 w16/499.2s, but its reel is 621,674 B against this contract 592,544 B ceiling (reel_too_large) so it was never submittable either. No scored attempts declared: none of these is a claim."
+  },
+  "outcomeError": null,
+  "promotedTapeName": "tune-3-tape.json",
+  "scoredTapes": [
+    {
+      "file": "tune-3-tape.json",
+      "id": "agent-8fb761f3-6515dfc7-e4d0-4c2e-a91e-eb18b8ba22d5",
+      "contract": "e9-dome-basin",
+      "seed": "e9-dome-basin-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "9052a874a",
+        "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 16,
+        "timeAlive": 499.2,
+        "gold": 80
+      },
+      "entries": 265,
+      "durationTicks": 14976,
+      "lastEntryTick": 13690,
+      "promotedByRig": true,
+      "discoveredBy": "outcome-file"
+    }
+  ],
+  "otherTapes": [
+    {
+      "file": "probe-idle-tape.json",
+      "id": "agent-8f747406-b888199f-3090-4e2e-bf5f-ba19c8faadb0",
+      "contract": "e9-dome-basin",
+      "seed": "e9-dome-basin-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "9052a874a",
+        "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 2,
+        "timeAlive": 82.6,
+        "gold": 0
+      },
+      "entries": 0,
+      "durationTicks": 2478,
+      "lastEntryTick": null
+    },
+    {
+      "file": "tune-1-tape.json",
+      "id": "agent-2322ff4b-f193226b-7e76-40b3-bcf0-9be5a917cd01",
+      "contract": "e9-dome-basin",
+      "seed": "e9-dome-basin-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "9052a874a",
+        "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 14,
+        "timeAlive": 427.633,
+        "gold": 20
+      },
+      "entries": 291,
+      "durationTicks": 12829,
+      "lastEntryTick": 12748
+    },
+    {
+      "file": "tune-2-tape.json",
+      "id": "agent-85fee5e8-3705b842-6d4f-44aa-bb45-48d1fc671888",
+      "contract": "e9-dome-basin",
+      "seed": "e9-dome-basin-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "9052a874a",
+        "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 15,
+        "timeAlive": 451.667,
+        "gold": 72
+      },
+      "entries": 101,
+      "durationTicks": 13550,
+      "lastEntryTick": 13500
+    },
+    {
+      "file": "tune-4-tape.json",
+      "id": "agent-e2446598-3c00412a-d6a4-4f6a-8ec1-bb81b6f4b941",
+      "contract": "e9-dome-basin",
+      "seed": "e9-dome-basin-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "9052a874a",
+        "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 14,
+        "timeAlive": 421.567,
+        "gold": 61
+      },
+      "entries": 250,
+      "durationTicks": 12647,
+      "lastEntryTick": 11553
+    }
+  ],
+  "otherSecuredTapes": [],
+  "report": {
+    "outcome": "**NOT SECURED.** Best ride **tune-3: wave 16 / 499.200 s / 80 gold / 650 kills / 265 calls**\n(`eventLogHash fnv1a32:2b4a09b5`), against a wave-20 / 600 s gate.\n\n**5 sim runs, 0 scored attempts.** I put **nothing** forward: no run secured, and — separately —\ntune-3's reel is **621,674 bytes against this contract's 592,544-byte ceiling**, so it would have been\nrefused `reel_too_large` even had it secured. The best **admissible** reel of the heat is\n**tune-2, wave 15 / 451.667 s / 72 gold / 101 entries / 197,790 bytes**\n(`fnv1a32:fa9878ea`), and it is likewise unsecured.\n\nI declined to name any of these a scored attempt: a scored attempt is a claim on the board, and none\nof these is one. The tape named in `gauntlet-outcome.json` is tune-3, flagged `scored: false`.",
+    "whatTheMapAsked": "It asked me **nothing at all about E9 persistent tiles**, and the county's RESKIN measurement is\nright — sharply so, because the engine *owns* the consumer and this contract declines it.\n`CanalChoiceSystem` is live headless and gates the secure through `autoSecureWaveForRun`, with\n`CONTEXT_ACTION redig`/`backfill` as public verbs — but it is keyed on `twist.persistentCanalChoices`,\nand **this manifest declares no twist but `clockTicks` and an enemy roster**. So the three canal\nstage-gates C1 (−28,34), C2 (−12,10), C3 (4,−24) the briefing tells me to defend, the feeder-canal\nrail through them, the ice quarry, the dust-devil patrol lane and the height-four scarp are all\n`tileParams` scenery: **the union of `now` keys across every view of every run is\n`wave · blastReadyInMs · weapon · timers · gold · hero · prospector · works · threats · orders ·\nneedsRider · seams · score` (+ `pendingOffer`/`expiresAtSimMs`/`pendingSecure`)** — no `canalChoices`,\nno tile state, nothing that persists across a wave. `stablePrefix.mechanics.rules` carries one key.\nThere is no E9 verb, and there is nothing to steward.\n\nWhat the map asked instead is a single hard geometry question, and it is a good one: **where can you\nbuild, relative to the body you must keep alive, and what does the enemy walk toward?** The answer is\nthe 28.28 wu subtraction above plus `nearestBuilding` — you cannot defend the hero, so you buy its\nlife in *bait mass* on the one pad that is nearer to a spawn lane than the claim is. The view fields\nthat carried it were `now.works.entries` (position, `wrecked` — the only way to see the wall being\neaten), `now.works.byKind`, `now.works.wrecked`, `now.seams[].active/x/z`, `now.gold`,\n`now.hero.hp/maxHp/level`, `now.threats.alive` (which pins at the 60 cap) and\n`now.pendingOffer`/`now.orders[].status/reason`. The orders were `BUILD`, `REPAIR_UNDER`, `HARVEST`,\n`PICK_UPGRADE`, `BLAST_AT`, `HOLD` and blank lines — epoch-1 grammar throughout.\n\nMy notebook remembers this map from generation 32, and **it still plays exactly the way I remember**:\nsame welded hero at (0,12), same 28.3 wu nearest ground, same 35 wu seam commute, same claim-is-nearest\n-building problem, same wave-2 idle death at ~82 s. The engine era moved (`a607a81f` → `86e53f37`) and\nthe rules did not. What moved was my reading of it, not the board.",
+    "winnability": "**Undecided-leaning-yes, and what stopped me was my own budget, not a wall:** three controllers took\nthe same seed w14 → w15 → w16 (499.2 s of the 600 s needed) on a strictly rising curve with the\nmechanism understood and two obvious, un-run levers left on the table — a **second bait wall on\n`rim-dome-pad-west`** (its NE corner (−28, 6) is 6.3 wu from the west spawn ring point against the\nclaim's 26, so it should own the west lane exactly as the east pad owns the east, leaving only the\nnorth third of the board on the hero) and a **repair rate that keeps up with ~0.24 works/s of\nwrecking** (I mend four per rim trip and the wall still went 0 → 28 wrecked over the last 90 s) —\nwith the standing caveat that **the reel must be re-sized as well as re-played**, because at wave 20\nthis policy's tape overruns the 592,544-byte ceiling and a won run that cannot be admitted is not a\nclaim.",
+    "lessons": "- **`unclaimed` with no `reason` in `winnability-receipts.json` is nineteen-for-nineteen — and for the\n  third time it green-lit a contract I did not win.** It is a statement about the *standings*, never\n  about the map, and it cannot encode a ground wall or a reel wall. Read it, then do the two\n  subtractions that actually decide a board: `min |claim − buildZone|` against weapon range, and the\n  tape envelope against the run length.\n- **The blank line is not just secure-boundary insurance; it is the reel budget.**\n  `gr-sim.mjs readOrders` returns on `!next.value.trim()` without recording an entry, so *any* view can\n  be answered for free. Same policy, 291 entries → 101, **988,766 bytes → 197,790**. On a 600-second\n  contract, decide per view whether the order set must actually change, and blank-line the rest.\n  Generation 26 measured the byte ceiling and generation 27 found the blank line at `pendingSecure`;\n  putting the two together is the whole cure for `reel_too_large`.\n- **Measure the tape envelope on the FIRST reel, and measure all three axes.** I checked\n  `durationTicks` (12,829 of 18,002 — fine) and nearly shipped a tape that was 67% over on *bytes*.\n  Ticks, entries and bytes are three independent ceilings; `runTapeEnvelopeForContract` publishes all\n  three and my runner now prints them on every child exit.\n- **F-HEAT11-1 is cured and the tell is `twist.clockTicks`.** The `+2` inclusive-endpoint slack now\n  lands outside the `if (secureWave > 0)` branch, so a `secureWave`-silent contract gets 18,002 ticks.\n  The blank-line secure stays free insurance; it is no longer the difference between a ranked reel and\n  a refused one. **F-HEAT11-2 is the live hazard now** — and unlike its sibling it is a *policy* fault,\n  not an engine one, so it is mine to fix.\n- **Price an enemy-diverting mechanic against the cap that governs it, not against its flavour.**\n  Generation 38's stockpile decoy was the right lever on the Relay Valley and is a **bad trade here**:\n  `Balance.steal.maxConcurrent` is `2 + floor(wave/6)` capped at **4**, so on a 60-alive board a\n  stockpile buys you four diverted drones and pays `claimGold`'s 10-a-grab for them — measured at\n  1.32 g/s against a 1.97 g/s pan rate, which is the entire fort. **Find the concurrency cap before\n  costing the diversion.** A lever that a sibling generation proved is still a lever with a price.\n- **A failing travel order is not a free decision point when the verb implies travel.** Generation 2's\n  \"an order that fails honestly buys a decision point\" is true of `HARVEST` on a drained seam, where\n  the Prospector is already standing there — and false of `REPAIR_UNDER` with no gold, which walks\n  22 wu, fails, and walks back. Ninety of those froze `goldPanned` for a full minute. **Gate any\n  travelling verb on the resource it will need when it arrives.**\n- **Bait mass is a consumable, so budget its replacement rate, not its size.** The wall's job is\n  measured in wrecker-seconds, and it was going down at ~0.24 works/s. A palisade mends for 25% of\n  cost (2.5 g) against 10 g to rebuild and the wrecked frame still holds the ground, so mending is\n  4× the bait per gold — but mends are limited by *actions*, not gold, so put several `REPAIR_UNDER`\n  orders in one array and let them ride a single rim trip.\n- **When the hero cannot be defended, ask which lane each build zone owns.** `nearestBuilding` from\n  the spawn ring point is the whole test: east pad 4.5 wu vs the claim's 26 (owns the lane), west pad\n  6.3 vs 26 (owns it), and **no zone is nearer than the claim to the north spawn** (nearest is 34.7),\n  so the north third is unbaitable by construction. That decomposition was available from the manifest\n  in two minutes and it is the thing I should have built the whole plan around from view 0, instead of\n  reaching it on run three.\n- **Bait mass has a ceiling and damage does not — I measured the exchange rate.** Trading 220 gold of\n  turret (rungs 3 and 4) for 22 extra palisades cost **two waves**. A wall only buys wrecker-seconds;\n  a turret buys wrecker-seconds *and* kills, and kills are XP, and XP is the draft, which is the only\n  HP source on a board where nothing can defend the hero. When two purchases both \"help survival\",\n  check which one also feeds the progression loop.\n- **Three rising runs is a trend, not a heat.** w14 → w15 → w16 on a strictly improving curve with the\n  mechanism understood is the shape of a contract that falls to the *next* controller, and I spent my\n  wall proving the mechanism rather than riding the synthesis. Generation 32 wrote \"reserve the last\n  third for the run that combines what the earlier runs proved\" — this is the second heat running that\n  I have proved the parts and not fired the combination. **Write the two-sided-bait run first next\n  time; it was derivable before the idle probe.**"
+  },
+  "usage": {
+    "transcript": "/Users/robin/.claude/projects/-private-tmp-heat12-038cc280/81802ef2-644b-4361-9aec-3048117edef8.jsonl",
+    "assistantTurns": 82,
+    "toolCalls": 43,
+    "tokensIn": 164,
+    "tokensOut": 158856,
+    "cacheReadTokens": 19806778,
+    "cacheWriteTokens": 804772,
+    "note": "tokensIn excludes cache reads/writes (reported separately); summed from the CLI session transcript, not self-reported by the rig"
+  }
+}

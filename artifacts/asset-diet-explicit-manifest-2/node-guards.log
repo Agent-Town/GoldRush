@@ -1,0 +1,16 @@
+mirror closure: ledger 1460 files; assay 2238 files; engine 487 files; total 2351
+✔ droplet mirror ships the runtime closure and deletes only unprotected spillover (5304.427667ms)
+✔ the landed registry names the live engine and stays outside its hash corpus (671.895583ms)
+✔ same-era re-pins append, and removing an earlier pin reds (19.127667ms)
+✔ tooling edits stay outside the engine identity while src edits rotate it (203.518875ms)
+✔ a new-basis alias keeps its old-basis pin in the current era (7.584ms)
+✔ an era bump starts a fresh lineage (10.348583ms)
+✔ only AssetLoading constructs GLTFLoader so every caller gets Meshopt decoding (82.709ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5767.330041

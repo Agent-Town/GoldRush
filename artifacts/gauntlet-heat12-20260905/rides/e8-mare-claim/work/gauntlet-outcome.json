@@ -1,0 +1,27 @@
+{
+ "secured": true,
+ "waves": 20,
+ "timeMs": 600000,
+ "gold": 60,
+ "kills": 916,
+ "calls": 77,
+ "defaultedPicks": 0,
+ "defaultedSecure": 1,
+ "eventLogHash": "fnv1a32:e06bda53",
+ "tape": "/private/tmp/heat12-038cc280/artifacts/heat12/opus/e8-mare-claim/attempt-1-tape.json",
+ "scored": true,
+ "runsSoFar": 4,
+ "scoredAttempts": 1,
+ "worldModel": "sim-import",
+ "promotion": "tune-3 secured on its first ride; the rules stop the ride at the first SECURED outcome, so that securing tape IS the scored attempt. It is byte-identical under two filenames: tune-3-tape.json and attempt-1-tape.json. Submit attempt-1-tape.json.",
+ "tapeStats": {
+  "durationTicks": 18000,
+  "entries": 77,
+  "lastEntryTick": 17946,
+  "bytes": 221274,
+  "envelopeNote": "e8-mare-claim declares no twist.secureWave, so it gets the flat 18000-tick envelope. The secure boundary was answered with a BLANK LINE (defaultedSecure: 1), which keeps the last recorded entry at tick 17946 and durationTicks at exactly 18000 - inside the ceiling, not one tick over it (F-HEAT11-1)."
+ },
+ "tapeEventLogHash": "fnv1a32:f84d1d2b",
+ "localAssay": "scripts/assay-replay-agent.mjs reproduced the tape's own eventLogHash fnv1a32:f84d1d2b and all four outcome fields (secured true / waves 20 / gold 60 / timeAlive 600) without riding anything.",
+ "note": "FIRST SECURE candidate for e8-mare-claim. Generation 29 rode this contract to w19/586.1s and did not secure; see runs-ledger.json for this heat's four runs."
+}

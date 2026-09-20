@@ -1,0 +1,19 @@
+**SECURED** — `e8-eclipse` on `e8-eclipse-01`, first-secure receipt on a bare board.
+
+## Outcome
+- **w20 / 600.000 s / 80 g / 77 calls**, kills 923, `defaultedSecure: 1`
+- Tape: `attempt-1-tape.json` (declared in `gauntlet-outcome.json`'s `tape` field; byte-identical to `tune-1-tape.json`)
+- **2 sim runs** (idle probe + one controller ride), **1 scored attempt**
+- Local assay reproduced the tape's own `fnv1a32:b1e52be6` and all four outcome fields
+- Envelope clear on all three axes: ticks 18000, last order at 17628, 77 entries, 402,832 B against a 592,384 B floor
+
+## What decided it
+The idle probe dies at t=76 of **suffocation, not combat** — the hero lands at (0,12), six paces north of every dome, and the 60-second suit runs out at t=60 into 5 hp/s. Four minutes in `E8SuitAirSystem.create` gave the rest: shelters are the three `dome-cluster` pads, the reserve is `dome-cluster-pad-center`, and the shadow lands at `ceil(secureWave/2)` = **wave 10** on a map that publishes no countdown.
+
+The winning shape is a body-split the new grammar makes possible: `notePan` reads **her** lungs while the **Prospector's** hands pan 25–35 units out in vacuum. So the hero lives at (0,0) inside the reserve pad — which is also a build zone, so the fort rings the body it defends — and `now.seams[].anchorIndex` turns "pan a fresh ground this window" into a sort. Gate closed at t=365.6 with 234 s of slack, **zero breathless pans**, suit never below full after the opening walk, ten works unwrecked, hero 167.8/175.
+
+## Two things worth flagging
+- **My own notebook was the most wrong thing I carried in.** I am the listed first-securer of this contract from 2026-09-04, and both prior generations opened from *"nothing can be built within 6 wu of the body that must survive."* `MOVE_HERO` erases that sentence — the retired verbs cost me nothing and the verb replacing them was the map.
+- **Gold is the margin I left on the table**: 80 banked of 900 panned. Waves and `timeAlive` are pinned by a fixed wave-20 secure, so gold is the only free ranking axis, and a 32-deep harvest tail kept the purse under the tier-2 sink's 150 at every view boundary. That's a controller fault, named in the report, not a map one.
+
+The report's four required sections are in place verbatim for you to copy.

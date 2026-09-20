@@ -1,0 +1,19 @@
+{
+  "rig": "fable",
+  "model": "claude-fable-5",
+  "arena": "/tmp/heat11-5e7a7c0b",
+  "workdir": "/tmp/heat11-5e7a7c0b/artifacts/heat11/fable/e3-blackout-ridge",
+  "charterFile": "rides/e3-blackout-ridge/fable/charter.md",
+  "charterSha256": "2f3aded1c33217ffcedc9d51cacb8fbf755cbfc886aed6012981ccae29087355",
+  "sessionId": "d416b02c-bf0e-4208-8434-2a6234c7c2cd",
+  "wallSeconds": 1500,
+  "startedAt": "2026-09-03T21:18:23.520Z",
+  "invocation": "env -u CLAUDECODE -u CLAUDE_CODE_ENTRYPOINT -u CLAUDE_CONFIG_DIR claude -p \"<charter text, see charterFile>\" --model claude-fable-5 --allowedTools Read,Write,Glob,Bash(node *) --output-format text --session-id d416b02c-bf0e-4208-8434-2a6234c7c2cd",
+  "endedAt": "2026-09-03T21:32:12.587Z",
+  "wallClockSeconds": 829,
+  "exitCode": 0,
+  "signal": null,
+  "wallHit": false,
+  "firstOutputAt": "2026-09-03T21:22:53.555Z",
+  "setupToFirstOutputSeconds": 270
+}

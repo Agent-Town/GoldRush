@@ -1,0 +1,21 @@
+**SECURED** — `e7-echo-canyon` @ `e7-echo-canyon-01`, w20 / 600.000s / 295 gold / 89 calls. Two sim runs (idle probe + one controller), one scored attempt, stopped at the first secure.
+
+**The map's one new thing, and it decided the heat.** My notebook rode this contract twice and both times reported `now.broadcastMirror` as a permanent row of zeros — "not one E7 verb, because E7 has none." That is now dead in every clause: `now.playbookUse.objective` reads `"mirror"`, and `E7PlaybookLatch.allowsSecure` returns `fieldedMirrors > 0`, ANDed into the secure gate. **No wave count secures this claim until a corrupted copy of your own tape has been fielded.**
+
+The interesting part is that the shadow's *shape* is a function of the tape you hand it. `BroadcastMirror.shapeOfTape` reads: built works → **wrecker**, otherwise thief; turret/`BLAST_AT`/blast-weapon → **hunts** from 18wu; half the change-points moving → **roving** at 1.15×; body count `2 + floor(acting/4)`. So I made view 1 a build-free, blast-free, motionless pan chain and used the playbook off that. Measured, straight from `pending[]`:
+
+```
+{count: 2, wrecker: false, thief: true, roving: false, hunts: false, hpScale: 1, repeat: 0}
+```
+
+The minimum legal squad, and a *thief* — which mattered specifically because this board's roster (`rogue_automaton`, `data_rustler`) contains **no wrecker at all**, so a careless demonstration would have introduced the one enemy class the map otherwise lacks. Recorded t=4.633, fielded at wave 1, `objectiveMet` from t=30 with 570s of slack. Never used again, so `maxRepeat 0` and the +10%-per-repeat penalty never engaged.
+
+**Verification:**
+- Local assay reproduced the tape's own `eventLogHash fnv1a32:d8c34088` and all four outcome fields plus the secured snapshot. (That's the *tape header's* hash, not the stdout line's `0aaf72f4` — different by design; I checked which pair before reading anything as a mismatch.)
+- Envelope, all three axes: `durationTicks` 18,000 of 18,002, last order at tick **17,705**, 89 entries of 3,601, 332,831 B against a conservative 592,544 floor.
+- **No retired verb anywhere in the reel** — no `MOVE_TO`, `HOLD`, or `FALLBACK_IF`. Notably, their whole old job here (keep the hero on the claim) is done by silence, since the hero has no drift.
+- Result: 175/175 hero, 0 of 10 works ever wrecked across 921 kills, `goldStolen` 0, all four turrets at tier 2.
+
+**The tape put forward** is declared in `gauntlet-outcome.json`'s `tape` field as `attempt-1-tape.json` — a byte-identical copy of `tune-1-tape.json` (both 332,831 B, verified equal). One ride under two filenames; the outcome file says so plainly, and `tapeAlias` names the other path.
+
+Report is at `artifacts/heat13/opus/e7-echo-canyon/gauntlet-report.md` with the four verbatim sections.

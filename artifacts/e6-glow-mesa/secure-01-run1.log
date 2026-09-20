@@ -1,0 +1,38 @@
+# artifacts/e6-glow-mesa/prover.mjs --seed e6-glow-mesa-01
+# rc=0
+(node:4633) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+t0 w0 gold=0 hp=100 pros=(-1.8,-33.1) works={} alive=0 pen=0 boss=act0/[]/unbuilds0/down0
+t1 w0 gold=30 hp=100 pros=(-24.0,18.0) works={} alive=2 pen=0 boss=act0/[]/unbuilds0/down0
+t2 w0 gold=64 hp=100 pros=(-14.0,34.0) works={} alive=4 pen=0 boss=act0/[]/unbuilds0/down0
+t3 w1 gold=68 hp=100 pros=(0.0,-13.5) works={} alive=10 pen=0 boss=act0/[]/unbuilds0/down0
+t4 w2 gold=18 hp=100 pros=(0.0,-13.5) works={"turret":1} alive=11 pen=0 boss=act0/[]/unbuilds0/down0
+t5 w2 gold=18 hp=100 pros=(-0.0,-13.6) works={"turret":1} alive=11 pen=0 boss=act0/[]/unbuilds0/down0
+t6 w3 gold=18 hp=100 pros=(0.0,-30.0) works={"turret":1} alive=20 pen=0 boss=act0/[]/unbuilds0/down0
+t7 w4 gold=19 hp=100 pros=(0.0,-30.0) works={"turret":1} alive=28 pen=1 boss=act0/[]/unbuilds0/down0
+t8 w4 gold=23 hp=87 pros=(0.0,-30.0) works={"turret":1} alive=26 pen=2 boss=act0/[]/unbuilds0/down0
+t9 w5 gold=23 hp=87 pros=(0.0,-30.0) works={"turret":1} alive=37 pen=3 boss=act0/[]/unbuilds0/down0
+t10 w5 gold=27 hp=87 pros=(0.0,-30.0) works={"turret":1} alive=36 pen=4 boss=act0/[]/unbuilds0/down0
+t11 w5 gold=32 hp=87 pros=(0.0,-30.0) works={"turret":1} alive=29 pen=5 boss=act0/[]/unbuilds0/down0
+t12 w6 gold=32 hp=87 pros=(0.0,-30.0) works={"turret":1} alive=39 pen=6 boss=act0/[]/unbuilds0/down0
+t13 w6 gold=46 hp=87 pros=(0.0,-30.0) works={"turret":1} alive=41 pen=7 boss=act0/[]/unbuilds0/down0
+t14 w7 gold=46 hp=87 pros=(0.0,-30.0) works={"turret":1} alive=55 pen=8 boss=act0/[]/unbuilds0/down0
+t15 w7 gold=55 hp=87 pros=(0.0,-30.0) works={"turret":1} alive=56 pen=9 boss=act0/[]/unbuilds0/down0
+t16 w7 gold=65 hp=87 pros=(0.0,-30.0) works={"turret":1} alive=58 pen=10 boss=act0/[]/unbuilds0/down0
+t17 w8 gold=65 hp=87 pros=(0.0,-30.0) works={"turret":1} alive=62 pen=11 boss=act1/[vac,rack]/unbuilds0/down0
+t18 w8 gold=89 hp=87 pros=(0.0,-30.0) works={} alive=60 pen=12 boss=act1/[vac,rack]/unbuilds1/down0
+t19 w9 gold=89 hp=87 pros=(0.0,-13.5) works={} alive=60 pen=12 boss=act1/[vac,rack]/unbuilds1/down0
+t20 w9 gold=51 hp=87 pros=(0.0,-13.5) works={} alive=60 pen=12 boss=act1/[vac,rack]/unbuilds2/down0
+t21 w10 gold=112 hp=112 pros=(13.8,5.1) works={} alive=60 pen=12 boss=act1/[vac,rack]/unbuilds2/down0
+t22 w11 gold=136 hp=112 pros=(0.0,-13.5) works={} alive=60 pen=12 boss=act1/[vac,rack]/unbuilds2/down0
+t23 w12 gold=110 hp=112 pros=(0.0,-13.5) works={} alive=60 pen=12 boss=act2/[core,rack]/unbuilds3/down0
+t24 w12 gold=72 hp=112 pros=(0.0,-13.5) works={"turret":1} alive=60 pen=12 boss=act2/[core,rack]/unbuilds3/down0
+t25 w12 gold=72 hp=112 pros=(-0.0,-13.6) works={"turret":1} alive=60 pen=12 boss=act2/[core,rack]/unbuilds3/down0
+t26 w12 gold=72 hp=112 pros=(-0.0,-23.1) works={"turret":1} alive=60 pen=12 boss=act2/[core,rack]/unbuilds3/down0
+t27 w12 gold=72 hp=112 pros=(-0.0,-23.8) works={"turret":1} alive=58 pen=12 boss=act3/[]/unbuilds3/down1
+t28 w12 gold=72 hp=112 pros=(-0.0,-23.8) works={"turret":1} alive=58 pen=12 boss=act3/[]/unbuilds3/down1
+gr-sim speed: 2.59 waves/s
+prover: 29 turns, gr-sim rc=0
+
+---- stdout (last line = outcome) ----
+{"secured":true,"waves":12,"timeMs":362933,"gold":72,"kills":154,"calls":28,"defaultedPicks":8,"defaultedSecure":0,"eventLogHash":"fnv1a32:e66807f6"}

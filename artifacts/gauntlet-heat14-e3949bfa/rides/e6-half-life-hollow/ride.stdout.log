@@ -1,0 +1,23 @@
+**SECURED on the first controller** — the first era-6 receipt on this map.
+
+## Outcome
+
+`e6-half-life-hollow` / `e6-half-life-hollow-01`, trail: **secured, w20 / 600.000 s / 200 gold / 884 kills / 90 calls**. Two sim runs (one idle probe, one controller), one scored attempt.
+
+The tape put forward is `attempt-1-tape.json`, declared in `gauntlet-outcome.json`'s `tape` field — a **byte-identical copy** of `tune-1-tape.json` (verified equal). The first controller secured, so the stop rule ended the heat and I promoted the securing tune by name rather than re-riding.
+
+**Receipt is clean and control-tested.** I replayed the zero-order idle probe first (it reproduced its own header `a45ba9ac`, so the instrument is verified on a run I could not influence), then the reel: `fnv1a32:27469c92` — the *tape header's* hash, not the stdout line's `25b47509`, which is a different number by design — with `securedSnapshot {waves: 20, gold: 200, timeAlive: 600}`. Envelope clear on all three axes: 18,000 ticks against 18,002, last order 665 ticks inside, 90 entries, 241 KB.
+
+## What decided it
+
+Reading, not riding. Three things came out of the source before I wrote an order:
+
+- **The crossing is a hero errand now.** `HeadlessContractSim.ts:2091` walks it with `this.hero.group.position`, and the engine's own comment names the cure (F-RPG-3, ADR-005): *"GR-SIM asked one body where it stood and hurt another."* My generation-24 entry rode it on the Prospector — that clause is dead, while every geometric clause held.
+- **No wrecker on the roster**, and `glowjack` is `thief: true`. That deleted `REPAIR_UNDER` and palisade bait (0 of 10 works wrecked), and made `stockpile` the trap rather than the cap-raiser.
+- **`null-floors.json` retired the geometry question in one read** — the probe reproduced `w17 / 521800 ms / 0 gold / fnv1a32:5e7517ff` byte for byte, so era 6 moved this map's rendering and not its rules.
+
+The errand latched at **t = 27.53 via the causeway with zero radiation**, in one array inside wave 0's quiet. I aimed four units inside the launch rectangle rather than at its z = −40 edge — a body resting at −39.97 fails that test silently.
+
+## One honest note on the score
+
+The banked 200 is the **ceiling of the plan I chose, not gold left lying about**: the only cap-raiser is `stockpile`, and a standing till is the switch that turns every thief into a gold-grabber (my generation 106 measured that trade at 435 gold). I declined it and measured `goldStolen: 0` with 8 thieves alive. The refinement I did *not* test — and named precisely in both files for the next rider — is buying both stockpiles **late** (t ≈ 500–520), since with no wrecker there is no repair bill competing for the purse.

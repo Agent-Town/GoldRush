@@ -1,0 +1,161 @@
+{
+  "rig": "opus",
+  "contract": "e7-relay-rush",
+  "model": "claude-opus-5",
+  "sessionId": "9a798026-b702-4327-8150-2d85bbf13fe7",
+  "startedAt": "2026-09-05T17:06:38.911Z",
+  "endedAt": "2026-09-05T17:24:39.434Z",
+  "wallClockSeconds": 1081,
+  "wallHit": true,
+  "exitCode": 143,
+  "signal": null,
+  "setupToFirstOutputSeconds": 210,
+  "arenaTrackedChanges": [],
+  "workspaceFiles": [
+    "attempt-1-log.json",
+    "attempt-1-tape.json",
+    "ctrl-v1.mjs",
+    "ctrl-v2.mjs",
+    "gauntlet-outcome.json",
+    "gauntlet-report.md",
+    "probe-idle.json",
+    "tune-1-log.json",
+    "tune-1-tape.json",
+    "tune-2-log.json",
+    "tune-2-tape.json"
+  ],
+  "outcome": {
+    "secured": true,
+    "waves": 20,
+    "timeMs": 600000,
+    "gold": 200,
+    "kills": 650,
+    "calls": 68,
+    "defaultedPicks": 0,
+    "defaultedSecure": 1,
+    "eventLogHash": "fnv1a32:ed5dc794",
+    "tape": "artifacts/heat12/opus/e7-relay-rush/attempt-1-tape.json",
+    "scored": true,
+    "runsSoFar": 4,
+    "scoredAttempts": 1,
+    "worldModel": "sim-import",
+    "note": "SECURED. Both era gates discharged: interferenceFront.objectiveMet true (litAtDeadline 4 of 4 at front 3, t=270) AND playbookUse.objectiveMet true via the wall suspending a running program (programSuspensions 1, refusals.playbooks 1). Secure boundary answered with a blank line (defaultedSecure 1), so the last accepted order sits well before the terminal tick."
+  },
+  "outcomeError": null,
+  "promotedTapeName": "attempt-1-tape.json",
+  "scoredTapes": [
+    {
+      "file": "attempt-1-tape.json",
+      "id": "agent-e8c4f218-4307b4e1-08a4-457f-92ae-70f84329c564",
+      "contract": "e7-relay-rush",
+      "seed": "e7-relay-rush-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "10345a5ee",
+        "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 20,
+        "timeAlive": 600,
+        "gold": 200
+      },
+      "entries": 68,
+      "durationTicks": 18000,
+      "lastEntryTick": 17100,
+      "promotedByRig": true,
+      "discoveredBy": "outcome-file+filename"
+    }
+  ],
+  "otherTapes": [
+    {
+      "file": "probe-idle.json",
+      "id": "agent-65ae7ac6-af5b3543-6cbc-498d-b9fc-dc9150bf131f",
+      "contract": "e7-relay-rush",
+      "seed": "e7-relay-rush-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "10345a5ee",
+        "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 2,
+        "timeAlive": 81.333,
+        "gold": 0
+      },
+      "entries": 0,
+      "durationTicks": 2440,
+      "lastEntryTick": null
+    },
+    {
+      "file": "tune-1-tape.json",
+      "id": "agent-31cee0a4-a7e4d31a-14a2-496e-85cb-51d9a41bc0cf",
+      "contract": "e7-relay-rush",
+      "seed": "e7-relay-rush-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "10345a5ee",
+        "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 6,
+        "timeAlive": 194.133,
+        "gold": 60
+      },
+      "entries": 7,
+      "durationTicks": 5824,
+      "lastEntryTick": 1801
+    },
+    {
+      "file": "tune-2-tape.json",
+      "id": "agent-9f0c9542-7911c443-d439-4abc-afda-a82c2ee7147a",
+      "contract": "e7-relay-rush",
+      "seed": "e7-relay-rush-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "10345a5ee",
+        "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 13,
+        "timeAlive": 398.133,
+        "gold": 70
+      },
+      "entries": 33,
+      "durationTicks": 11944,
+      "lastEntryTick": 11840
+    }
+  ],
+  "otherSecuredTapes": [],
+  "report": {
+    "outcome": "",
+    "whatTheMapAsked": "",
+    "winnability": "",
+    "lessons": ""
+  },
+  "usage": {
+    "transcript": "/Users/robin/.claude/projects/-private-tmp-heat12-038cc280/9a798026-b702-4327-8150-2d85bbf13fe7.jsonl",
+    "assistantTurns": 83,
+    "toolCalls": 46,
+    "tokensIn": 166,
+    "tokensOut": 123538,
+    "cacheReadTokens": 21093067,
+    "cacheWriteTokens": 855761,
+    "note": "tokensIn excludes cache reads/writes (reported separately); summed from the CLI session transcript, not self-reported by the rig"
+  }
+}

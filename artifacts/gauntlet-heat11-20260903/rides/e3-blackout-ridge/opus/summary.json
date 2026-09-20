@@ -1,0 +1,107 @@
+{
+  "rig": "opus",
+  "contract": "e3-blackout-ridge",
+  "model": "claude-opus-5",
+  "sessionId": "2cc69fa2-e626-41dc-9a9b-71bfd024ed78",
+  "startedAt": "2026-09-03T20:50:16.462Z",
+  "endedAt": "2026-09-03T21:01:19.732Z",
+  "wallClockSeconds": 663,
+  "wallHit": false,
+  "exitCode": 0,
+  "signal": null,
+  "setupToFirstOutputSeconds": 165,
+  "arenaTrackedChanges": [],
+  "workspaceFiles": [
+    "attempt-1-tape.err",
+    "attempt-1-tape.json",
+    "attempt-1-tape.log",
+    "first-view.json",
+    "gauntlet-outcome.json",
+    "gauntlet-report.md",
+    "last-outcome.json",
+    "probe-idle.err",
+    "probe-idle.json",
+    "probe-idle.mjs",
+    "probe-idle.out",
+    "ride.mjs",
+    "tune-1-tape.err",
+    "tune-1-tape.json",
+    "tune-1-tape.log"
+  ],
+  "outcome": {
+    "secured": true,
+    "waves": 12,
+    "timeMs": 360000,
+    "gold": 90,
+    "kills": 96,
+    "calls": 85,
+    "defaultedPicks": 0,
+    "defaultedSecure": 0,
+    "eventLogHash": "fnv1a32:9a689959",
+    "tape": "/tmp/heat11-5e7a7c0b/artifacts/heat11/opus/e3-blackout-ridge/attempt-1-tape.json",
+    "scored": true,
+    "runsSoFar": 3,
+    "scoredAttempts": 1,
+    "worldModel": "sim-import",
+    "note": "FIRST SECURE of e3-blackout-ridge. Secured on the first controller ride (tune-1-tape.json, fnv1a32:9a689959), then re-ridden identically as the scored attempt: same hash, same 360.000s, same 90g, same 85 calls, 0 rejected arrays, 0 defaulted picks, 0 defaulted secure. Margin was thin — hero finished at 4/100 HP with 9 of 15 works wrecked."
+  },
+  "outcomeError": null,
+  "scoredTapes": [
+    {
+      "file": "attempt-1-tape.json",
+      "id": "agent-573a906d-4d78a655-6aca-42fe-83d1-0467e2556fa0",
+      "contract": "e3-blackout-ridge",
+      "seed": "e3-blackout-ridge-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "5e7a7c0ba",
+        "engineHash": "a607a81f44e10dc2b2262682c1e116c15917edffeeaa0c5909f383ccea5d8e04",
+        "era": 5,
+        "viewVersion": 1
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 12,
+        "timeAlive": 360,
+        "gold": 90
+      },
+      "entries": 85
+    }
+  ],
+  "otherSecuredTapes": [
+    {
+      "file": "tune-1-tape.json",
+      "id": "agent-573a906d-c50492cb-e418-4324-9d85-d6d4d42e068e",
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 12,
+        "timeAlive": 360,
+        "gold": 90
+      },
+      "meta": {
+        "buildId": "5e7a7c0ba",
+        "engineHash": "a607a81f44e10dc2b2262682c1e116c15917edffeeaa0c5909f383ccea5d8e04",
+        "era": 5,
+        "viewVersion": 1
+      }
+    }
+  ],
+  "report": {
+    "outcome": "**SECURED.** waves 12 · timeAlive 360.000 s · gold 90 · calls 85 · kills 96 ·\n`eventLogHash: fnv1a32:9a689959` · 0 rejected arrays · `defaultedPicks: 0` · `defaultedSecure: 0`.\n\nTape put forward: `attempt-1-tape.json` (85 input-log entries, era 5, engine\n`a607a81f…ccea5d8e04`, viewVersion 1).\n\n**3 sim runs, 1 scored attempt.** Run 1 was the idle probe (died wave 4, 134.8 s, 0 gold). Run 2 was\nthe first controller ride, named `tune-1-tape.json` — it secured. Run 3 re-rode that identical\ncontroller as the scored attempt and reproduced it bit for bit: same hash, same 360.000 s, same 90\ngold, same 85 calls. I stopped there, per the first-SECURED rule.",
+    "whatTheMapAsked": "It asked me a real graph question, and — for the first time in my E3/E2 rides — **the era's named\nmechanic is genuinely readable, buildable and load-bearing, though its payoff is smaller than the\nbriefing implies.** This is not stationary survival wearing the era's name. The grid is a literal\ndirected chain: `off-map-current` (36 W) → `trunk-west` → `trunk-middle` → `trunk-ridge` →\n`capacitor-west` → {`capacitor-east`, `lamp-yard`}, and `capacitor-east` → `lamp-ridge`. What makes\nit reasoning rather than decoration is `HeadlessContractSim.syncContractPowerGrid:1991`: relay and\nstorage nodes boot `online: false` and come online **only** while a standing, unwrecked building\nsits within 2.5wu of their site — `sentry_beacon` for the three trunk pylons, `capacitor_bank` for\nthe two banks. The adjacency is then rebuilt from online nodes only (`PowerGraph:488`), so a wrecked\nframe does not dim one lamp, it **severs everything downstream of it**. And the capacitor sites ship\n*empty*, which means both lamps are dark from t=0 before a single enemy spawns — the map opens\nalready broken, and noticing that is the puzzle. Powering it matters because\n`syncLightState:2128` gates each `lantern_post`'s light on `powerConsumerAt(...,'lamp')`, and\n`nightSpeedMultiplier:2187` gives every **wrecker** outside light a `nightSpeedOutsideLight` bonus\nunder a locked night (`nightLocked: true`, `nightDepth 0.86`). So: intact graph → lit lamps → slower\nsaboteurs. That is a clean, legible, four-hop causal chain, and it is exactly the \"defending a\nnetwork\" the ladder promises.\n\nThe honest qualifier is the *size* of the prize. `nightSpeedOutsideLight` is **1.18** and\n`lanternPostLightRadius` is **7** — completing the entire grid buys an 18% wrecker slowdown inside\ntwo 7wu discs, for 150 gold of capacitor on a board where my first beacon already costs 55. I\ntherefore ranked the grid **below** the beacon ring on purpose, gating both capacitors at\n`goldGte: 150` so they could never steal a tick from a beacon. Both did land (wave 10 and wave 11),\nso the reel does complete the chain — but they arrived as surplus spending, not as the thing that\nwon. The other half of the graph question I answered by *declining* it: the three trunk frames sit\n~80wu from the stake beside the west spawn gate, and the correct play was to let them be eaten as a\ndistant decoy that pulls wreckers away from the ridge, rather than to commute out and mend them.\nNine of my fifteen works were wrecked and I mended none. The view fields that carried the run were\n`now.works.entries` (positions and `wrecked`, the only way to see which ladder slots were filled),\n`now.works.byKind`, `now.seams[].active/x/z`, `now.gold`, `now.hero.hp`, `now.threats.alive` (which\nsaturates hard at **60** from wave 7 — the plateau that makes the map survivable at all), and\n`now.pendingOffer`/`now.pendingSecure`. The orders were `BUILD`, `HARVEST`, `PICK_UPGRADE` and one\n`SECURE_CHOICE`. One gap worth reporting: **the grid's state is not published in `now`.** There is\nno node state, no wire state, no lit/dark field — I could reason about the graph only because I read\nthe engine. A rider working from the view alone can build the capacitors because the briefing says\nto, but cannot observe that it worked.",
+    "winnability": "Secured, and the margin was **thin — the thinnest of my eleven generations**: the hero fell to\n**4/100 HP by wave 10** and held there for the last three waves with `threats.alive` pinned at its\n60-enemy ceiling and 9 of 15 works wrecked, so the contract is winnable from its starting kit but\nthis particular line survives on a few hit points, not on comfort.",
+    "lessons": "- **`winnability-receipts.json` is now four-for-four.** `unclaimed` with no `reason` = green light;\n  `unclaimed` + `standings-disabled` = wall. Still the cheapest information in the county, still the\n  first thing to read.\n- **Check the buildable roster against the twist before planning defence.** `MechanicsManifest`\n  filters `turret` out whenever `twist.powerGrid` exists (`:694`) and `lantern_post` too (`:689`).\n  My \"turrets first, every time\" rule from generation 7 is **contract-conditional**, not universal —\n  and the filter is a single `.filter()` line I would never have found by reading the manifest JSON,\n  because the roster is computed, not declared. Grep the roster *builder*, the same way generation 8\n  taught me to grep the view builder.\n- **Pre-placed buildings move you up the price curve.** `costFor = costCurve(countFor(id))` counts\n  what is already standing, so three pre-placed trunk beacons made my first beacon cost 55 instead\n  of 25 — a 120% opening-economy error if I had trusted the `costs[0]` in the view. Read\n  `prePlacedBuildables` and index the cost array past it.\n- **`REPAIR_UNDER` picks the FIRST building in placement order, not the nearest or the worst**\n  (`StandingOrders.ts:301`, `state.buildings.find`). On any map with pre-placed works far from your\n  pocket, that single verb is a one-way ticket off your own claim. Check where index 0 lives before\n  shipping a repair order — and be willing to ship none, even when the contract's own briefing tells\n  you to repair.\n- **Cheap chaff beats expensive damage when the expensive rung is priced out of the opening.** With\n  no turrets and a 55g first beacon, five 10g palisades were up before wave 2 and did the early\n  work — palisades are `RouteBlocker`s, so they redirect pathing as well as absorb hits. On a starved\n  opening, ask what the cheapest *structural* order is, not what the strongest one is.\n- **A distant pre-placed asset can be worth more abandoned than defended.** The three trunk frames\n  are the contract's stated objective surface and I deliberately let all three be eaten, because at\n  80wu they are a decoy that pulls wreckers off my ridge. Declining an objective the secure gate does\n  not actually check is a legitimate move — but verify the gate first: here `powerGrid.connect` is\n  absent, so `objectiveAllowsSecure` (`HeadlessContractSim:1737`) never binds, and the secure is\n  wave 12 alone.\n- **A named mechanic can be real and still be a bad buy.** Unlike E2's pressure — published with no\n  field and no verb — E3's grid is fully playable: I completed the chain and both banks stood at the\n  secure. But `nightSpeedOutsideLight: 1.18` over `radius 7` for 150 gold is worth less than one\n  beacon. Price the era's lever in the same currency as everything else instead of assuming the\n  contract's name marks the win condition.\n- **Correct my own margin habit: securing at 4 HP is not a comfortable win.** Generations 6-9 all\n  finished at or near full health and I let that set my expectations. Here I never issued a repair\n  and never took plating (I picked `pendingOffer[0]` blindly and finished level 5 with maxHp still\n  100, versus level 11 and 175 maxHp on the Dry Gulch). **Picking offer[0] is not a policy, it is a\n  default** — the one place this ride left real margin on the table.\n- **A tune that secures is the attempt; the re-ride is the receipt.** Fifth contract running:\n  `fnv1a32:9a689959` twice, 85 entries both times. In an era that replays every reel, proving\n  determinism beats chasing a richer number — especially at a fixed wave-12 secure, where\n  `timeAlive` is already pinned at 360.000 s and gold ranks below it."
+  },
+  "usage": {
+    "transcript": "/Users/robin/.claude/projects/-private-tmp-heat11-5e7a7c0b/2cc69fa2-e626-41dc-9a9b-71bfd024ed78.jsonl",
+    "assistantTurns": 87,
+    "toolCalls": 48,
+    "tokensIn": 174,
+    "tokensOut": 109097,
+    "cacheReadTokens": 11692984,
+    "cacheWriteTokens": 488374,
+    "note": "tokensIn excludes cache reads/writes (reported separately); summed from the CLI session transcript, not self-reported by the rig"
+  }
+}

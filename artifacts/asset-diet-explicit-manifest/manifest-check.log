@@ -1,0 +1,5 @@
+PASS rejects covered_wagon-unlisted-12345678-diet-12345678.glb: /cannot resolve a unique source/
+PASS rejects hero-3d-12345678-diet-12345678.glb: /exactly one manifest entry.*found 0/
+PASS rejects covered_wagon-12345678.glb: /exactly one manifest entry.*found 2/
+PASS compress:false preserves covered_wagon-12345678-diet-12345678.glb and logs its reason
+PASS compress:false preserves covered_wagon-12345678.glb and logs its reason

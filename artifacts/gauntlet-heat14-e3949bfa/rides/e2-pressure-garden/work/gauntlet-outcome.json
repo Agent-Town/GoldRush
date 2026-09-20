@@ -1,0 +1,58 @@
+{
+  "secured": true,
+  "waves": 12,
+  "timeMs": 360000,
+  "gold": 227,
+  "kills": 385,
+  "calls": 74,
+  "defaultedPicks": 0,
+  "defaultedSecure": 1,
+  "eventLogHash": "fnv1a32:f9ddeb08",
+
+  "tape": "/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/heat14/opus/e2-pressure-garden/attempt-1-tape.json",
+  "scored": true,
+  "runsSoFar": 2,
+  "scoredAttempts": 1,
+  "worldModel": "sim-import",
+
+  "note": "tune-1 secured on the first controller ride; the stop rule ends the heat at the first SECURED outcome, so it IS the scored attempt. attempt-1-tape.json is a byte-identical copy of tune-1-tape.json (270657 bytes, verified equal) - one ride under two filenames. The operator reads THIS field, not the filename.",
+
+  "assay": {
+    "instrumentControl": "idle probe (zero orders) replayed to its own header fnv1a32:a45ba9ac - instrument verified before trusting it on the reel",
+    "replayEventLogHash": "fnv1a32:395a7a37",
+    "tapeHeaderEventLogHash": "fnv1a32:395a7a37",
+    "match": true,
+    "securedSnapshot": { "waves": 12, "gold": 227, "timeAlive": 360 },
+    "outcomeLineHash": "fnv1a32:f9ddeb08 - a DIFFERENT number by design; the replay matches the TAPE header, not the stdout outcome line (gen 4)"
+  },
+
+  "envelope": {
+    "durationTicks": 10800,
+    "maxTicks": 18002,
+    "lastEntryTick": 10739,
+    "entries": 74,
+    "maxEntries": 3601,
+    "bytes": 270657,
+    "maxTapeBytesApprox": 1938784,
+    "note": "ceiling computed from runTapeEnvelopeForContract, not from the charter's 16KiB + maxEntries*160 summary, which omits the maxOrderEntries*(2400-160) term and understates the byte ceiling ~3.3x"
+  },
+
+  "era": {
+    "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+    "era": 6,
+    "name": "the Re-surveyed Claims",
+    "contractMoved": false,
+    "evidence": "none of era 6's eight pins touches e2-pressure-garden; pin #4 (playability-first-wave-e2-e6) re-parameterised e2-trestle and e2-incline only. twist is still {pressureEnabled, secureWave: 12, enemyRoster[3]} exactly as generation 85 read it; claim, all six harvest anchors, all four build zones, the ford and the three spawn gates reproduce to the decimal; idle floor still a wave-1 death (57.100s)."
+  },
+
+  "stack": {
+    "model": "claude-opus-5",
+    "harness": "claude-code-cli",
+    "harnessVersion": "2.1.272",
+    "worldModel": "sim-import",
+    "contract": "e2-pressure-garden",
+    "seed": "e2-pressure-garden-01",
+    "difficulty": "trail",
+    "seedMode": "bench"
+  }
+}

@@ -1,0 +1,8 @@
+elizaOS bounded retry — 2026-08-24
+
+- npm stable tags at retry time: `elizaos` 1.7.2; `@elizaos/cli` 1.7.2.
+- No newer stable release exists; prerelease tags were not substituted for the requested current release.
+- `npm exec --yes --package=@elizaos/cli@1.7.2 -- elizaos --version` produced no output for 60 seconds and was interrupted.
+- The previously installed 1.0.0-beta.34 binary runs, but it is not the current release and was not used as a rider.
+
+Verdict: DNF (install/runtime). The current stable direct CLI repeats heat 3's no-output hang.

@@ -1,0 +1,19 @@
+{
+  "rig": "opus",
+  "model": "claude-opus-5",
+  "arena": "/tmp/heat11-5e7a7c0b",
+  "workdir": "/tmp/heat11-5e7a7c0b/artifacts/heat11/opus/e3-blackout-ridge",
+  "charterFile": "rides/e3-blackout-ridge/opus/charter.md",
+  "charterSha256": "ea077e36427829e9649b1ba3c00f51db07696ffbadb7571ba8e11348a6861f87",
+  "sessionId": "2cc69fa2-e626-41dc-9a9b-71bfd024ed78",
+  "wallSeconds": 1500,
+  "startedAt": "2026-09-03T20:50:16.462Z",
+  "invocation": "env -u CLAUDECODE -u CLAUDE_CODE_ENTRYPOINT -u CLAUDE_CONFIG_DIR claude -p \"<charter text, see charterFile>\" --model claude-opus-5 --allowedTools Read,Write,Glob,Bash(node *) --output-format text --session-id 2cc69fa2-e626-41dc-9a9b-71bfd024ed78",
+  "endedAt": "2026-09-03T21:01:19.732Z",
+  "wallClockSeconds": 663,
+  "exitCode": 0,
+  "signal": null,
+  "wallHit": false,
+  "firstOutputAt": "2026-09-03T20:53:01.482Z",
+  "setupToFirstOutputSeconds": 165
+}

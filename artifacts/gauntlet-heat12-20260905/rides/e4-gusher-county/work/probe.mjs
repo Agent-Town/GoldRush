@@ -1,0 +1,13 @@
+import { ride } from './runner.mjs';
+const r = await ride({ name: 'probe-idle', controller: null, policyIdle: true });
+console.log(JSON.stringify(r.outcome));
+console.log('env', JSON.stringify(r.env));
+const v0 = r.viewsArr[0];
+console.log('viewVersion', v0.viewVersion);
+console.log('nowKeys', Object.keys(v0.now).sort().join(' '));
+console.log('MOTOR', JSON.stringify(v0.now.motor, null, 1));
+console.log('SP.map', JSON.stringify(v0.stablePrefix.map));
+console.log('SP.mechkeys', Object.keys(v0.stablePrefix.mechanics || {}));
+console.log('buildables', JSON.stringify((v0.stablePrefix.mechanics?.buildables||[]).map(b=>({id:b.id,costs:b.costs,max:b.maxCount}))));
+console.log('rules', JSON.stringify(v0.stablePrefix.mechanics?.rules, null, 1).slice(0, 4000));
+console.log('briefing', JSON.stringify(v0.stablePrefix.briefing).slice(0,2000));

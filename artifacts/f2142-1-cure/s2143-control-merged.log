@@ -1,0 +1,46 @@
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+--STDERR--
+file:///Users/robin/Claude/Projects/Gold%20Rush/gate-s2143/scripts/gr-sim-campaign.mjs:113
+    if (!outcome.secured) throw new Error(`${contract.id} ended unsecured at wave ${outcome.waves}.`);
+                                ^
+
+Error: e3-canyon-works ended unsecured at wave 8.
+    at file:///Users/robin/Claude/Projects/Gold%20Rush/gate-s2143/scripts/gr-sim-campaign.mjs:113:33
+
+Node.js v26.4.0

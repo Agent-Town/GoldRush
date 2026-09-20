@@ -1,0 +1,19 @@
+desktop-chrome run 1 rc=1     Error: renderer count disposed.triangles expected exact 148452, got 148672       35 |       if (typeof value !== 'number') throw new Error(`renderer count ${label} is missing`); 
+desktop-chrome run 2 rc=1     test-results/wire-crawler-3d-mounts-the-e75eb-morphs-and-disposes-on-kill-desktop-chrome/test-failed-1.png   1 failed 
+desktop-chrome run 3 rc=1     test-results/wire-crawler-3d-mounts-the-e75eb-morphs-and-disposes-on-kill-desktop-chrome/test-failed-1.png   1 failed 
+mobile-chrome run 1 rc=1     Error: renderer count disposed.triangles expected exact 143086, got 143306       35 |       if (typeof value !== 'number') throw new Error(`renderer count ${label} is missing`); 
+mobile-chrome run 2 rc=1     Error: renderer count disposed.triangles expected exact 143086, got 143306       35 |       if (typeof value !== 'number') throw new Error(`renderer count ${label} is missing`); 
+mobile-chrome run 3 rc=1     Error: renderer count disposed.triangles expected exact 143086, got 143306       35 |       if (typeof value !== 'number') throw new Error(`renderer count ${label} is missing`); 
+DONE
+--- re-record attempt 2 (disposed restored) 06:37Z
+desktop-chrome run 1 rc=0   3 passed (12.4s) 
+desktop-chrome run 2 rc=0   3 passed (12.3s) 
+desktop-chrome run 3 rc=0   3 passed (12.2s) 
+mobile-chrome run 1 rc=0   3 passed (13.7s) 
+mobile-chrome run 2 rc=0   3 passed (13.9s) 
+mobile-chrome run 3 rc=1     test-results/wire-crawler-3d-mounts-the-e75eb-morphs-and-disposes-on-kill-mobile-chrome/test-failed-1.png   1 failed 
+DONE
+--- mobile confirming runs 4-5 (quiet box, after the control dredge-queen run) 06:41Z
+mobile-chrome run 4 rc=0   3 passed (13.6s) 
+mobile-chrome run 5 rc=0   3 passed (13.6s) 
+DONE2

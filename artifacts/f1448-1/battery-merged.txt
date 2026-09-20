@@ -1,0 +1,386 @@
+$ npx playwright test --workers=1 e2e/task-025-bandits-dont-swim.spec.ts e2e/064-river-continues.spec.ts e2e/e1-dry-gulch.spec.ts e2e/e1-night-shift.spec.ts e2e/gt-05-water-depth.spec.ts e2e/lane-crossing-armed.spec.ts --reporter=list
+
+Running 58 tests using 1 worker
+
+  ✓   1 [desktop-chrome] › e2e/064-river-continues.spec.ts:59:1 › river continues through the vista in both terrain render paths (7.4s)
+  ✘   2 [desktop-chrome] › e2e/064-river-continues.spec.ts:104:1 › river-zone, panning, and sluice sim contracts stay unchanged (4.8s)
+  ✓   3 [desktop-chrome] › e2e/e1-dry-gulch.spec.ts:79:1 › loads Dry Gulch via debug param and suppresses bad contract fallback to diagnostics (4.7s)
+  ✓   4 [desktop-chrome] › e2e/e1-dry-gulch.spec.ts:109:1 › removes river and ford collision while keeping the spring as the only water source (2.0s)
+  ✓   5 [desktop-chrome] › e2e/e1-dry-gulch.spec.ts:128:1 › sluice placement rejects away from the pond and accepts beside it (6.3s)
+  ✓   6 [desktop-chrome] › e2e/e1-dry-gulch.spec.ts:162:1 › Dry Gulch seam panning uses the +40% contract yield multiplier (2.0s)
+  ✓   7 [desktop-chrome] › e2e/e1-dry-gulch.spec.ts:189:1 › contract lane constants allow all four spawn edges (2.2s)
+  ✓   8 [desktop-chrome] › e2e/e1-dry-gulch.spec.ts:222:1 › seeded Dry Gulch diagnostics are stable (3.1s)
+  ✘   9 [desktop-chrome] › e2e/e1-night-shift.spec.ts:271:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting (8.3s)
+  ✘  10 [desktop-chrome] › e2e/e1-night-shift.spec.ts:372:1 › lantern post is Night Shift gated and relights a true-dark light ring (8.5s)
+  ✓  11 [desktop-chrome] › e2e/e1-night-shift.spec.ts:413:1 › lantern coverage is necessary for threat visibility (2.9s)
+  ✘  12 [desktop-chrome] › e2e/e1-night-shift.spec.ts:435:1 › a lantern pool makes only its build island readable at true dark (6.6s)
+  ✓  13 [desktop-chrome] › e2e/e1-night-shift.spec.ts:478:1 › cold lantern relight costs survive run suspend and continue (4.7s)
+  ✓  14 [desktop-chrome] › e2e/e1-night-shift.spec.ts:520:1 › pre-placed lanterns leave the full player build cap available (2.4s)
+  ✓  15 [desktop-chrome] › e2e/e1-night-shift.spec.ts:555:1 › render dimming does not stop turret acquisition or damage (2.6s)
+  ✓  16 [desktop-chrome] › e2e/e1-night-shift.spec.ts:582:1 › wave 25 secures the claim through the dawn victory path (2.7s)
+  ✓  17 [desktop-chrome] › e2e/e1-night-shift.spec.ts:611:1 › seeded Night Shift diagnostics and dark render budget are stable (7.7s)
+  ✓  18 [desktop-chrome] › e2e/gt-05-water-depth.spec.ts:143:1 › depth data declares deep river, wade ford, and measurable ford slowdown (6.6s)
+  ✓  19 [desktop-chrome] › e2e/gt-05-water-depth.spec.ts:181:1 › deep water blocks hero and enemy through the shared resolver (4.3s)
+  ✓  20 [desktop-chrome] › e2e/gt-05-water-depth.spec.ts:249:1 › wadeable river depth lets enemies cross without ford routing (1.7s)
+  ✓  21 [desktop-chrome] › e2e/gt-05-water-depth.spec.ts:292:1 › flat wadeable river applies enemy water speed (1.7s)
+  ✓  22 [desktop-chrome] › e2e/gt-05-water-depth.spec.ts:333:1 › classic claim keeps deep water impassable while carrying equivalent depth data (13.2s)
+  ✓  23 [desktop-chrome] › e2e/gt-05-water-depth.spec.ts:391:1 › GT water depth simulation is deterministic (6.8s)
+  ✓  24 [desktop-chrome] › e2e/lane-crossing-armed.spec.ts:7:1 › Twin Banks crossings stay armed while open deep water disarms readably (4.5s)
+  ✓  25 [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:105:1 › enemy crossing the river reaches the hero through the ford only (3.6s)
+  ✓  26 [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:123:1 › scheduled waves never place enemies in deep river over three waves (6.6s)
+  ✓  27 [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:139:1 › hero stops in the shallows and keeps weapons armed at the deep channel (3.9s)
+  ✓  28 [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:181:1 › xp from a residual deep-water death is auto-banked with no mote (3.2s)
+  ✓  29 [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:202:1 › far-bank sluice stays untouched when the river flank is open (4.5s)
+  ✓  30 [mobile-chrome] › e2e/064-river-continues.spec.ts:59:1 › river continues through the vista in both terrain render paths (11.7s)
+  ✘  31 [mobile-chrome] › e2e/064-river-continues.spec.ts:104:1 › river-zone, panning, and sluice sim contracts stay unchanged (9.5s)
+  ✓  32 [mobile-chrome] › e2e/e1-dry-gulch.spec.ts:79:1 › loads Dry Gulch via debug param and suppresses bad contract fallback to diagnostics (8.8s)
+  ✓  33 [mobile-chrome] › e2e/e1-dry-gulch.spec.ts:109:1 › removes river and ford collision while keeping the spring as the only water source (2.9s)
+  ✓  34 [mobile-chrome] › e2e/e1-dry-gulch.spec.ts:128:1 › sluice placement rejects away from the pond and accepts beside it (7.6s)
+  ✓  35 [mobile-chrome] › e2e/e1-dry-gulch.spec.ts:162:1 › Dry Gulch seam panning uses the +40% contract yield multiplier (3.2s)
+  ✓  36 [mobile-chrome] › e2e/e1-dry-gulch.spec.ts:189:1 › contract lane constants allow all four spawn edges (3.6s)
+  ✓  37 [mobile-chrome] › e2e/e1-dry-gulch.spec.ts:222:1 › seeded Dry Gulch diagnostics are stable (4.8s)
+  ✘  38 [mobile-chrome] › e2e/e1-night-shift.spec.ts:271:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting (13.3s)
+  ✘  39 [mobile-chrome] › e2e/e1-night-shift.spec.ts:372:1 › lantern post is Night Shift gated and relights a true-dark light ring (15.2s)
+  ✓  40 [mobile-chrome] › e2e/e1-night-shift.spec.ts:413:1 › lantern coverage is necessary for threat visibility (5.4s)
+  ✘  41 [mobile-chrome] › e2e/e1-night-shift.spec.ts:435:1 › a lantern pool makes only its build island readable at true dark (13.0s)
+  ✓  42 [mobile-chrome] › e2e/e1-night-shift.spec.ts:478:1 › cold lantern relight costs survive run suspend and continue (7.3s)
+  ✓  43 [mobile-chrome] › e2e/e1-night-shift.spec.ts:520:1 › pre-placed lanterns leave the full player build cap available (4.1s)
+  ✓  44 [mobile-chrome] › e2e/e1-night-shift.spec.ts:555:1 › render dimming does not stop turret acquisition or damage (3.5s)
+  ✓  45 [mobile-chrome] › e2e/e1-night-shift.spec.ts:582:1 › wave 25 secures the claim through the dawn victory path (3.4s)
+  ✓  46 [mobile-chrome] › e2e/e1-night-shift.spec.ts:611:1 › seeded Night Shift diagnostics and dark render budget are stable (9.5s)
+  ✓  47 [mobile-chrome] › e2e/gt-05-water-depth.spec.ts:143:1 › depth data declares deep river, wade ford, and measurable ford slowdown (7.1s)
+  ✓  48 [mobile-chrome] › e2e/gt-05-water-depth.spec.ts:181:1 › deep water blocks hero and enemy through the shared resolver (5.3s)
+  ✓  49 [mobile-chrome] › e2e/gt-05-water-depth.spec.ts:249:1 › wadeable river depth lets enemies cross without ford routing (2.2s)
+  ✓  50 [mobile-chrome] › e2e/gt-05-water-depth.spec.ts:292:1 › flat wadeable river applies enemy water speed (2.2s)
+  ✓  51 [mobile-chrome] › e2e/gt-05-water-depth.spec.ts:333:1 › classic claim keeps deep water impassable while carrying equivalent depth data (18.1s)
+  -  52 [mobile-chrome] › e2e/gt-05-water-depth.spec.ts:391:1 › GT water depth simulation is deterministic
+  ✓  53 [mobile-chrome] › e2e/lane-crossing-armed.spec.ts:7:1 › Twin Banks crossings stay armed while open deep water disarms readably (4.4s)
+  ✓  54 [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:105:1 › enemy crossing the river reaches the hero through the ford only (3.7s)
+  ✓  55 [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:123:1 › scheduled waves never place enemies in deep river over three waves (6.6s)
+  ✓  56 [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:139:1 › hero stops in the shallows and keeps weapons armed at the deep channel (3.6s)
+  ✓  57 [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:181:1 › xp from a residual deep-water death is auto-banked with no mote (2.3s)
+  ✓  58 [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:202:1 › far-bank sluice stays untouched when the river flank is open (3.5s)
+
+
+  1) [desktop-chrome] › e2e/064-river-continues.spec.ts:104:1 › river-zone, panning, and sluice sim contracts stay unchanged 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 2
+    + Received  + 2
+
+      Object {
+    -   "speedMul": 0.55,
+    -   "walkable": true,
+    +   "speedMul": 0,
+    +   "walkable": false,
+        "waterClass": "deep",
+        "waterDepth": 1.25,
+        "waterSource": "river",
+        "zone": "river",
+      }
+
+      119 |   expect(zones.bank).toEqual({ walkable: true, speedMul: 1, zone: 'bank' });
+      120 |   expect(zones.shallows).toEqual({ walkable: true, speedMul: 0.8, zone: 'shallows', waterSource: 'river', waterDepth: 0.2, waterClass: 'wade' });
+    > 121 |   expect(zones.river).toEqual({ walkable: true, speedMul: 0.55, zone: 'river', waterSource: 'river', waterDepth: 1.25, waterClass: 'deep' });
+          |                       ^
+      122 |   expect(zones.ford).toEqual({ walkable: true, speedMul: 0.85, zone: 'ford', waterSource: 'river', waterDepth: 0.35, waterClass: 'wade' });
+      123 |   expect(zones.out).toEqual({ walkable: false, speedMul: 0, zone: 'out' });
+      124 |   expect(zones.activePanAnchors.length).toBeGreaterThanOrEqual(2);
+        at /Users/robin/Claude/Projects/Gold Rush/e2e/064-river-continues.spec.ts:121:23
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/064-river-continues-river--896ed-im-contracts-stay-unchanged-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/064-river-continues-river--896ed-im-contracts-stay-unchanged-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/064-river-continues-river--896ed-im-contracts-stay-unchanged-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/064-river-continues-river--896ed-im-contracts-stay-unchanged-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [desktop-chrome] › e2e/e1-night-shift.spec.ts:271:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "#34405a"
+    Received: "#44516b"
+
+      350 |   const heroRatio = darkHero / Math.max(dayHero, 0.001);
+      351 |   const darkTint = snapshot.registry?.twist.lightRamp?.keyframes?.find((keyframe) => keyframe.phase === 'dark')?.spriteTint;
+    > 352 |   expect(darkTint).toBe('#34405a');
+          |                    ^
+      353 |   const linear = (channel: number): number => {
+      354 |     const srgb = channel / 255;
+      355 |     return srgb <= 0.04045 ? srgb / 12.92 : ((srgb + 0.055) / 1.055) ** 2.4;
+        at /Users/robin/Claude/Projects/Gold Rush/e2e/e1-night-shift.spec.ts:352:20
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e1-night-shift-loads-Night-40c38-ull-dusk-dark-dawn-lighting-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e1-night-shift-loads-Night-40c38-ull-dusk-dark-dawn-lighting-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e1-night-shift-loads-Night-40c38-ull-dusk-dark-dawn-lighting-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e1-night-shift-loads-Night-40c38-ull-dusk-dark-dawn-lighting-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [desktop-chrome] › e2e/e1-night-shift.spec.ts:372:1 › lantern post is Night Shift gated and relights a true-dark light ring 
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.06
+    Received:    0.10783294117647059
+
+      403 |   expect(await enemyLightNear(page, outOfRadius)).toBeLessThanOrEqual(DARK_LIGHT);
+      404 |   expect(await enemyLightNear(page, inRadius)).toBeGreaterThanOrEqual(VISIBLE_LIGHT);
+    > 405 |   expect(await spriteLuminance(page, outOfRadius)).toBeLessThanOrEqual(DARK_LIGHT);
+          |                                                    ^
+      406 |   expect(await spriteLuminance(page, inRadius)).toBeGreaterThanOrEqual(VISIBLE_LIGHT);
+      407 |   expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.enemyDimming.sources)).toBeGreaterThanOrEqual(2);
+      408 |   await shot(page, testInfo, 'true-dark-lantern-ring');
+        at /Users/robin/Claude/Projects/Gold Rush/e2e/e1-night-shift.spec.ts:405:52
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e1-night-shift-lantern-pos-843df-ghts-a-true-dark-light-ring-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e1-night-shift-lantern-pos-843df-ghts-a-true-dark-light-ring-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e1-night-shift-lantern-pos-843df-ghts-a-true-dark-light-ring-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e1-night-shift-lantern-pos-843df-ghts-a-true-dark-light-ring-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [desktop-chrome] › e2e/e1-night-shift.spec.ts:435:1 › a lantern pool makes only its build island readable at true dark 
+
+    Error: {"inside":0.16797333333333334,"outside":0.07644470588235293}
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 3
+    Received:    2.1973180666276795
+
+      448 |   ]);
+      449 |   const ratio = inside / Math.max(outside, 0.001);
+    > 450 |   expect(ratio, JSON.stringify({ inside, outside })).toBeGreaterThanOrEqual(3);
+          |                                                      ^
+      451 |   expect(outside).toBeLessThanOrEqual(0.06);
+      452 |
+      453 |   await teleport(page, lantern.x, lantern.z - 5);
+        at /Users/robin/Claude/Projects/Gold Rush/e2e/e1-night-shift.spec.ts:450:54
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e1-night-shift-a-lantern-p-0db8c-sland-readable-at-true-dark-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e1-night-shift-a-lantern-p-0db8c-sland-readable-at-true-dark-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e1-night-shift-a-lantern-p-0db8c-sland-readable-at-true-dark-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e1-night-shift-a-lantern-p-0db8c-sland-readable-at-true-dark-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  5) [mobile-chrome] › e2e/064-river-continues.spec.ts:104:1 › river-zone, panning, and sluice sim contracts stay unchanged 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 2
+    + Received  + 2
+
+      Object {
+    -   "speedMul": 0.55,
+    -   "walkable": true,
+    +   "speedMul": 0,
+    +   "walkable": false,
+        "waterClass": "deep",
+        "waterDepth": 1.25,
+        "waterSource": "river",
+        "zone": "river",
+      }
+
+      119 |   expect(zones.bank).toEqual({ walkable: true, speedMul: 1, zone: 'bank' });
+      120 |   expect(zones.shallows).toEqual({ walkable: true, speedMul: 0.8, zone: 'shallows', waterSource: 'river', waterDepth: 0.2, waterClass: 'wade' });
+    > 121 |   expect(zones.river).toEqual({ walkable: true, speedMul: 0.55, zone: 'river', waterSource: 'river', waterDepth: 1.25, waterClass: 'deep' });
+          |                       ^
+      122 |   expect(zones.ford).toEqual({ walkable: true, speedMul: 0.85, zone: 'ford', waterSource: 'river', waterDepth: 0.35, waterClass: 'wade' });
+      123 |   expect(zones.out).toEqual({ walkable: false, speedMul: 0, zone: 'out' });
+      124 |   expect(zones.activePanAnchors.length).toBeGreaterThanOrEqual(2);
+        at /Users/robin/Claude/Projects/Gold Rush/e2e/064-river-continues.spec.ts:121:23
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/064-river-continues-river--896ed-im-contracts-stay-unchanged-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/064-river-continues-river--896ed-im-contracts-stay-unchanged-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/064-river-continues-river--896ed-im-contracts-stay-unchanged-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/064-river-continues-river--896ed-im-contracts-stay-unchanged-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  6) [mobile-chrome] › e2e/e1-night-shift.spec.ts:271:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "#34405a"
+    Received: "#44516b"
+
+      350 |   const heroRatio = darkHero / Math.max(dayHero, 0.001);
+      351 |   const darkTint = snapshot.registry?.twist.lightRamp?.keyframes?.find((keyframe) => keyframe.phase === 'dark')?.spriteTint;
+    > 352 |   expect(darkTint).toBe('#34405a');
+          |                    ^
+      353 |   const linear = (channel: number): number => {
+      354 |     const srgb = channel / 255;
+      355 |     return srgb <= 0.04045 ? srgb / 12.92 : ((srgb + 0.055) / 1.055) ** 2.4;
+        at /Users/robin/Claude/Projects/Gold Rush/e2e/e1-night-shift.spec.ts:352:20
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e1-night-shift-loads-Night-40c38-ull-dusk-dark-dawn-lighting-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e1-night-shift-loads-Night-40c38-ull-dusk-dark-dawn-lighting-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e1-night-shift-loads-Night-40c38-ull-dusk-dark-dawn-lighting-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e1-night-shift-loads-Night-40c38-ull-dusk-dark-dawn-lighting-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  7) [mobile-chrome] › e2e/e1-night-shift.spec.ts:372:1 › lantern post is Night Shift gated and relights a true-dark light ring 
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.06
+    Received:    0.12069882352941178
+
+      403 |   expect(await enemyLightNear(page, outOfRadius)).toBeLessThanOrEqual(DARK_LIGHT);
+      404 |   expect(await enemyLightNear(page, inRadius)).toBeGreaterThanOrEqual(VISIBLE_LIGHT);
+    > 405 |   expect(await spriteLuminance(page, outOfRadius)).toBeLessThanOrEqual(DARK_LIGHT);
+          |                                                    ^
+      406 |   expect(await spriteLuminance(page, inRadius)).toBeGreaterThanOrEqual(VISIBLE_LIGHT);
+      407 |   expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.enemyDimming.sources)).toBeGreaterThanOrEqual(2);
+      408 |   await shot(page, testInfo, 'true-dark-lantern-ring');
+        at /Users/robin/Claude/Projects/Gold Rush/e2e/e1-night-shift.spec.ts:405:52
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e1-night-shift-lantern-pos-843df-ghts-a-true-dark-light-ring-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e1-night-shift-lantern-pos-843df-ghts-a-true-dark-light-ring-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e1-night-shift-lantern-pos-843df-ghts-a-true-dark-light-ring-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e1-night-shift-lantern-pos-843df-ghts-a-true-dark-light-ring-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  8) [mobile-chrome] › e2e/e1-night-shift.spec.ts:435:1 › a lantern pool makes only its build island readable at true dark 
+
+    Error: {"inside":0.1579121568627451,"outside":0.0660643137254902}
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 3
+    Received:    2.3902792287966568
+
+      448 |   ]);
+      449 |   const ratio = inside / Math.max(outside, 0.001);
+    > 450 |   expect(ratio, JSON.stringify({ inside, outside })).toBeGreaterThanOrEqual(3);
+          |                                                      ^
+      451 |   expect(outside).toBeLessThanOrEqual(0.06);
+      452 |
+      453 |   await teleport(page, lantern.x, lantern.z - 5);
+        at /Users/robin/Claude/Projects/Gold Rush/e2e/e1-night-shift.spec.ts:450:54
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e1-night-shift-a-lantern-p-0db8c-sland-readable-at-true-dark-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e1-night-shift-a-lantern-p-0db8c-sland-readable-at-true-dark-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e1-night-shift-a-lantern-p-0db8c-sland-readable-at-true-dark-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e1-night-shift-a-lantern-p-0db8c-sland-readable-at-true-dark-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  8 failed
+    [desktop-chrome] › e2e/064-river-continues.spec.ts:104:1 › river-zone, panning, and sluice sim contracts stay unchanged 
+    [desktop-chrome] › e2e/e1-night-shift.spec.ts:271:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting 
+    [desktop-chrome] › e2e/e1-night-shift.spec.ts:372:1 › lantern post is Night Shift gated and relights a true-dark light ring 
+    [desktop-chrome] › e2e/e1-night-shift.spec.ts:435:1 › a lantern pool makes only its build island readable at true dark 
+    [mobile-chrome] › e2e/064-river-continues.spec.ts:104:1 › river-zone, panning, and sluice sim contracts stay unchanged 
+    [mobile-chrome] › e2e/e1-night-shift.spec.ts:271:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting 
+    [mobile-chrome] › e2e/e1-night-shift.spec.ts:372:1 › lantern post is Night Shift gated and relights a true-dark light ring 
+    [mobile-chrome] › e2e/e1-night-shift.spec.ts:435:1 › a lantern pool makes only its build island readable at true dark 
+  1 skipped
+  49 passed (6.0m)
+
+(node:36117) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] 4:16:48 AM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 4:16:50 AM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 4:16:52 AM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 4:16:58 AM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 4:17:00 AM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 4:17:03 AM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 4:17:04 AM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+(node:37507) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:38038) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:38100) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:38153) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] 4:18:03 AM [vite] (client) [console.warn] [gold-rush] render demotion {"event":"render_demotion","reason":"pilot-contract-unavailable","contractId":"the-claim","buildId":"dev","tier":"FULL","dataset":{"terrain3dPilotState":"failed","terrain3dPilotRenderSource":"painted","run3dPilotState":"loading","run3dPilotMeshes":"0","run3dPilotTriangles":"0","terrain3dPilotContract":"the-claim","terrain3dPilotLandmarkLoadState":"off","terrain3dPilotHeightSource":"painted","terrain3dPilotMeshes":"0","terrain3dPilotTriangles":"0","terrain3dPilotMaterials":"0","terrain3dPilotVertices":"0","terrain3dPilotPanorama":"off","terrain3dPilotPanoramaMeshes":"0","terrain3dPilotPanoramaTriangles":"0","terrain3dPilotPanoramaMaterials":"0","terrain3dPilotPanoramaVertices":"0"}}
+[WebServer] 4:18:10 AM [vite] (client) [console.warn] [gold-rush] render demotion {"event":"render_demotion","reason":"pilot-contract-unavailable","contractId":"the-claim","buildId":"dev","tier":"FULL","dataset":{"terrain3dPilotState":"failed","terrain3dPilotRenderSource":"painted","run3dPilotState":"loading","run3dPilotMeshes":"0","run3dPilotTriangles":"0","terrain3dPilotContract":"the-claim","terrain3dPilotLandmarkLoadState":"off","terrain3dPilotHeightSource":"painted","terrain3dPilotMeshes":"0","terrain3dPilotTriangles":"0","terrain3dPilotMaterials":"0","terrain3dPilotVertices":"0","terrain3dPilotPanorama":"off","terrain3dPilotPanoramaMeshes":"0","terrain3dPilotPanoramaTriangles":"0","terrain3dPilotPanoramaMaterials":"0","terrain3dPilotPanoramaVertices":"0"}}
+[WebServer] 4:18:14 AM [vite] (client) [console.warn] [gold-rush] render demotion {"event":"render_demotion","reason":"pilot-contract-unavailable","contractId":"the-claim","buildId":"dev","tier":"FULL","dataset":{"terrain3dPilotState":"failed","terrain3dPilotRenderSource":"painted","run3dPilotState":"loading","run3dPilotMeshes":"0","run3dPilotTriangles":"0","terrain3dPilotContract":"the-claim","terrain3dPilotLandmarkLoadState":"off","terrain3dPilotHeightSource":"painted","terrain3dPilotMeshes":"0","terrain3dPilotTriangles":"0","terrain3dPilotMaterials":"0","terrain3dPilotVertices":"0","terrain3dPilotPanorama":"off","terrain3dPilotPanoramaMeshes":"0","terrain3dPilotPanoramaTriangles":"0","terrain3dPilotPanoramaMaterials":"0","terrain3dPilotPanoramaVertices":"0"}}
+[WebServer] 4:18:16 AM [vite] (client) [console.warn] [gold-rush] render demotion {"event":"render_demotion","reason":"pilot-contract-unavailable","contractId":"the-claim","buildId":"dev","tier":"FULL","dataset":{"terrain3dPilotState":"failed","terrain3dPilotRenderSource":"painted","run3dPilotState":"loading","run3dPilotMeshes":"0","run3dPilotTriangles":"0","terrain3dPilotContract":"the-claim","terrain3dPilotLandmarkLoadState":"off","terrain3dPilotHeightSource":"painted","terrain3dPilotMeshes":"0","terrain3dPilotTriangles":"0","terrain3dPilotMaterials":"0","terrain3dPilotVertices":"0","terrain3dPilotPanorama":"off","terrain3dPilotPanoramaMeshes":"0","terrain3dPilotPanoramaTriangles":"0","terrain3dPilotPanoramaMaterials":"0","terrain3dPilotPanoramaVertices":"0"}}
+[WebServer] 4:18:31 AM [vite] (client) [console.warn] [gold-rush] render demotion {"event":"render_demotion","reason":"pilot-contract-unavailable","contractId":"the-claim","buildId":"dev","tier":"FULL","dataset":{"terrain3dPilotState":"failed","terrain3dPilotRenderSource":"painted","run3dPilotState":"loading","run3dPilotMeshes":"0","run3dPilotTriangles":"0","terrain3dPilotContract":"the-claim","terrain3dPilotLandmarkLoadState":"off","terrain3dPilotHeightSource":"painted","terrain3dPilotMeshes":"0","terrain3dPilotTriangles":"0","terrain3dPilotMaterials":"0","terrain3dPilotVertices":"0","terrain3dPilotPanorama":"off","terrain3dPilotPanoramaMeshes":"0","terrain3dPilotPanoramaTriangles":"0","terrain3dPilotPanoramaMaterials":"0","terrain3dPilotPanoramaVertices":"0"}}
+[WebServer] 4:18:34 AM [vite] (client) [console.warn] [gold-rush] render demotion {"event":"render_demotion","reason":"pilot-contract-unavailable","contractId":"the-claim","buildId":"dev","tier":"FULL","dataset":{"terrain3dPilotState":"failed","terrain3dPilotRenderSource":"painted","run3dPilotState":"loading","run3dPilotMeshes":"0","run3dPilotTriangles":"0","terrain3dPilotContract":"the-claim","terrain3dPilotLandmarkLoadState":"off","terrain3dPilotHeightSource":"painted","terrain3dPilotMeshes":"0","terrain3dPilotTriangles":"0","terrain3dPilotMaterials":"0","terrain3dPilotVertices":"0","terrain3dPilotPanorama":"off","terrain3dPilotPanoramaMeshes":"0","terrain3dPilotPanoramaTriangles":"0","terrain3dPilotPanoramaMaterials":"0","terrain3dPilotPanoramaVertices":"0"}}
+[WebServer] 4:19:37 AM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 4:19:40 AM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 4:19:43 AM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 4:19:51 AM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 4:19:54 AM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 4:19:59 AM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+(node:41845) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:42246) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:42433) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:44194) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] 4:21:32 AM [vite] (client) [console.warn] [gold-rush] render demotion {"event":"render_demotion","reason":"pilot-contract-unavailable","contractId":"the-claim","buildId":"dev","tier":"FULL","dataset":{"terrain3dPilotState":"failed","terrain3dPilotRenderSource":"painted","run3dPilotState":"loading","run3dPilotMeshes":"0","run3dPilotTriangles":"0","terrain3dPilotContract":"the-claim","terrain3dPilotLandmarkLoadState":"off","terrain3dPilotHeightSource":"painted","terrain3dPilotMeshes":"0","terrain3dPilotTriangles":"0","terrain3dPilotMaterials":"0","terrain3dPilotVertices":"0","terrain3dPilotPanorama":"off","terrain3dPilotPanoramaMeshes":"0","terrain3dPilotPanoramaTriangles":"0","terrain3dPilotPanoramaMaterials":"0","terrain3dPilotPanoramaVertices":"0"}}
+[WebServer] 4:21:39 AM [vite] (client) [console.warn] [gold-rush] render demotion {"event":"render_demotion","reason":"pilot-contract-unavailable","contractId":"the-claim","buildId":"dev","tier":"FULL","dataset":{"terrain3dPilotState":"failed","terrain3dPilotRenderSource":"painted","run3dPilotState":"loading","run3dPilotMeshes":"0","run3dPilotTriangles":"0","terrain3dPilotContract":"the-claim","terrain3dPilotLandmarkLoadState":"off","terrain3dPilotHeightSource":"painted","terrain3dPilotMeshes":"0","terrain3dPilotTriangles":"0","terrain3dPilotMaterials":"0","terrain3dPilotVertices":"0","terrain3dPilotPanorama":"off","terrain3dPilotPanoramaMeshes":"0","terrain3dPilotPanoramaTriangles":"0","terrain3dPilotPanoramaMaterials":"0","terrain3dPilotPanoramaVertices":"0"}}
+[WebServer] 4:21:44 AM [vite] (client) [console.warn] [gold-rush] render demotion {"event":"render_demotion","reason":"pilot-contract-unavailable","contractId":"the-claim","buildId":"dev","tier":"FULL","dataset":{"terrain3dPilotState":"failed","terrain3dPilotRenderSource":"painted","run3dPilotState":"loading","run3dPilotMeshes":"0","run3dPilotTriangles":"0","terrain3dPilotContract":"the-claim","terrain3dPilotLandmarkLoadState":"off","terrain3dPilotHeightSource":"painted","terrain3dPilotMeshes":"0","terrain3dPilotTriangles":"0","terrain3dPilotMaterials":"0","terrain3dPilotVertices":"0","terrain3dPilotPanorama":"off","terrain3dPilotPanoramaMeshes":"0","terrain3dPilotPanoramaTriangles":"0","terrain3dPilotPanoramaMaterials":"0","terrain3dPilotPanoramaVertices":"0"}}
+[WebServer] 4:21:46 AM [vite] (client) [console.warn] [gold-rush] render demotion {"event":"render_demotion","reason":"pilot-contract-unavailable","contractId":"the-claim","buildId":"dev","tier":"FULL","dataset":{"terrain3dPilotState":"failed","terrain3dPilotRenderSource":"painted","run3dPilotState":"loading","run3dPilotMeshes":"0","run3dPilotTriangles":"0","terrain3dPilotContract":"the-claim","terrain3dPilotLandmarkLoadState":"off","terrain3dPilotHeightSource":"painted","terrain3dPilotMeshes":"0","terrain3dPilotTriangles":"0","terrain3dPilotMaterials":"0","terrain3dPilotVertices":"0","terrain3dPilotPanorama":"off","terrain3dPilotPanoramaMeshes":"0","terrain3dPilotPanoramaTriangles":"0","terrain3dPilotPanoramaMaterials":"0","terrain3dPilotPanoramaVertices":"0"}}
+
+EXIT=1
+WALL=362.0s

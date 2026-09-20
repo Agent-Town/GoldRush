@@ -1,0 +1,220 @@
+gate battery transcript (append-only — see scripts/gate-battery.mjs)
+
+
+######## BATTERY 2026-09-02T20:15:38.650Z — human-tape-true-reel-stamp drain ########
+cwd=/Users/robin/Claude/Projects/Gold Rush/gate-s2461
+
+===== own+adjacent tape/order specs =====
+$ npx playwright test e2e/tape-01-run-tape.spec.ts e2e/c7-standing-order-replay.spec.ts e2e/tape-02-lantern-show.spec.ts e2e/same-laws-harvest-parity.spec.ts --reporter=line --workers=1
+rc=1 91.5s
+
+Running 18 tests using 1 worker
+
+
+[1/18] [desktop-chrome] › e2e/c7-standing-order-replay.spec.ts:8:1 › a fresh browser standing-order tape watches to its own hash while an unstamped tape uses the tape show
+  1) [desktop-chrome] › e2e/c7-standing-order-replay.spec.ts:8:1 › a fresh browser standing-order tape watches to its own hash while an unstamped tape uses the tape show 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 0
+    + Received  + 1
+
+      Object {
+        "buildId": "dev",
+        "engineHash": "cb321d83cc39b86c3cc80633e5d7ca9331b24188b88a6983cd1cbeb69729437b",
+        "era": 5,
+    +   "viewVersion": 1,
+      }
+
+      13 |   page.on('pageerror', (error) => errors.push(error.message));
+      14 |   const tape = await recordStandingTape(page);
+    > 15 |   expect(tape.meta).toEqual({ buildId: 'dev', engineHash: engineEra.engineHash, era: engineEra.era });
+         |                     ^
+      16 |
+      17 |   await page.goto('/');
+      18 |   await page.getByTestId('start-menu-enter-town').click();
+        at /Users/robin/Claude/Projects/Gold Rush/gate-s2461/e2e/c7-standing-order-replay.spec.ts:15:21
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/c7-standing-order-replay-a-e24a3-ped-tape-uses-the-tape-show-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/c7-standing-order-replay-a-e24a3-ped-tape-uses-the-tape-show-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/c7-standing-order-replay-a-e24a3-ped-tape-uses-the-tape-show-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/c7-standing-order-replay-a-e24a3-ped-tape-uses-the-tape-show-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[2/18] [desktop-chrome] › e2e/same-laws-harvest-parity.spec.ts:110:1 › mouse and touch dispatch travel, then grant one rider-rate tick per command
+[desktop-chrome] › e2e/same-laws-harvest-parity.spec.ts:110:1 › mouse and touch dispatch travel, then grant one rider-rate tick per command
+same-laws parity [desktop-chrome] seam=gold-seam-1
+| tick | player dispatch (s after command) | rider HARVEST (s after order) | gold | cumulative |
+|---|---|---|---|---|
+| 1 | 1.867 | 1.867 | 5 | 5 / 5 |
+| 2 | 1.900 | 1.900 | 5 | 10 / 10 |
+
+SAME_LAWS_ASSAY_SLIP {"eventLogHash":"fnv1a32:a6c04f80","outcome":{"secured":false,"waves":0,"gold":10,"timeAlive":20.033333},"ticks":601,"wallMs":3083}
+
+[3/18] [desktop-chrome] › e2e/same-laws-harvest-parity.spec.ts:203:1 › plain boot: the command is reachable without ?debug and the boot is clean
+[4/18] [desktop-chrome] › e2e/tape-01-run-tape.spec.ts:75:1 › the profile tape ring keeps the latest ten plus older marked runs
+[5/18] [desktop-chrome] › e2e/tape-01-run-tape.spec.ts:90:1 › the keep result stays false when profile storage rejects the write
+[6/18] [desktop-chrome] › e2e/tape-01-run-tape.spec.ts:102:1 › the recorder deduplicates routed actions and freezes the hash at its input ceiling
+
+[7/18] [desktop-chrome] › e2e/tape-01-run-tape.spec.ts:123:1 › a resumed recording keeps the engine stamp captured by the original build
+
+[8/18] [desktop-chrome] › e2e/tape-01-run-tape.spec.ts:140:1 › every ended run writes a keepable tape whose replay reproduces its event hash
+[9/18] [desktop-chrome] › e2e/tape-02-lantern-show.spec.ts:10:1 › plain town WATCH replays a fresh tape read-only and refuses a mismatched reel
+
+[10/18] [mobile-chrome] › e2e/c7-standing-order-replay.spec.ts:8:1 › a fresh browser standing-order tape watches to its own hash while an unstamped tape uses the tape show
+  2) [mobile-chrome] › e2e/c7-standing-order-replay.spec.ts:8:1 › a fresh browser standing-order tape watches to its own hash while an unstamped tape uses the tape show 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 0
+    + Received  + 1
+
+      Object {
+        "buildId": "dev",
+        "engineHash": "cb321d83cc39b86c3cc80633e5d7ca9331b24188b88a6983cd1cbeb69729437b",
+        "era": 5,
+    +   "viewVersion": 1,
+      }
+
+      13 |   page.on('pageerror', (error) => errors.push(error.message));
+      14 |   const tape = await recordStandingTape(page);
+    > 15 |   expect(tape.meta).toEqual({ buildId: 'dev', engineHash: engineEra.engineHash, era: engineEra.era });
+         |                     ^
+      16 |
+      17 |   await page.goto('/');
+      18 |   await page.getByTestId('start-menu-enter-town').click();
+        at /Users/robin/Claude/Projects/Gold Rush/gate-s2461/e2e/c7-standing-order-replay.spec.ts:15:21
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/c7-standing-order-replay-a-e24a3-ped-tape-uses-the-tape-show-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/c7-standing-order-replay-a-e24a3-ped-tape-uses-the-tape-show-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/c7-standing-order-replay-a-e24a3-ped-tape-uses-the-tape-show-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/c7-standing-order-replay-a-e24a3-ped-tape-uses-the-tape-show-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[11/18] [mobile-chrome] › e2e/same-laws-harvest-parity.spec.ts:110:1 › mouse and touch dispatch travel, then grant one rider-rate tick per command
+[mobile-chrome] › e2e/same-laws-harvest-parity.spec.ts:110:1 › mouse and touch dispatch travel, then grant one rider-rate tick per command
+same-laws parity [mobile-chrome] seam=gold-seam-1
+| tick | player dispatch (s after command) | rider HARVEST (s after order) | gold | cumulative |
+|---|---|---|---|---|
+| 1 | 1.867 | 1.867 | 5 | 5 / 5 |
+| 2 | 1.900 | 1.900 | 5 | 10 / 10 |
+
+SAME_LAWS_ASSAY_SLIP {"eventLogHash":"fnv1a32:a6c04f80","outcome":{"secured":false,"waves":0,"gold":10,"timeAlive":20.033333},"ticks":601,"wallMs":2126}
+
+[12/18] [mobile-chrome] › e2e/same-laws-harvest-parity.spec.ts:203:1 › plain boot: the command is reachable without ?debug and the boot is clean
+[13/18] [mobile-chrome] › e2e/tape-01-run-tape.spec.ts:75:1 › the profile tape ring keeps the latest ten plus older marked runs
+[14/18] [mobile-chrome] › e2e/tape-01-run-tape.spec.ts:90:1 › the keep result stays false when profile storage rejects the write
+[15/18] [mobile-chrome] › e2e/tape-01-run-tape.spec.ts:102:1 › the recorder deduplicates routed actions and freezes the hash at its input ceiling
+
+[16/18] [mobile-chrome] › e2e/tape-01-run-tape.spec.ts:123:1 › a resumed recording keeps the engine stamp captured by the original build
+
+[17/18] [mobile-chrome] › e2e/tape-01-run-tape.spec.ts:140:1 › every ended run writes a keepable tape whose replay reproduces its event hash
+[18/18] [mobile-chrome] › e2e/tape-02-lantern-show.spec.ts:10:1 › plain town WATCH replays a fresh tape read-only and refuses a mismatched reel
+  2 failed
+    [desktop-chrome] › e2e/c7-standing-order-replay.spec.ts:8:1 › a fresh browser standing-order tape watches to its own hash while an unstamped tape uses the tape show 
+    [mobile-chrome] › e2e/c7-standing-order-replay.spec.ts:8:1 › a fresh browser standing-order tape watches to its own hash while an unstamped tape uses the tape show 
+  16 passed (1.5m)
+(node:7404) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:7498) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[desktop-chrome] › e2e/tape-01-run-tape.spec.ts:102:1 › the recorder deduplicates routed actions and freezes the hash at its input ceiling
+[run-tape] recording truncated: max-ticks at tick 18000
+[desktop-chrome] › e2e/tape-01-run-tape.spec.ts:123:1 › a resumed recording keeps the engine stamp captured by the original build
+(node:7700) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:14235) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[mobile-chrome] › e2e/tape-01-run-tape.spec.ts:102:1 › the recorder deduplicates routed actions and freezes the hash at its input ceiling
+[run-tape] recording truncated: max-ticks at tick 18000
+[mobile-chrome] › e2e/tape-01-run-tape.spec.ts:123:1 › a resumed recording keeps the engine stamp captured by the original build
+(node:15674) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+SUMMARY {"own+adjacent tape/order specs":1}
+OVERALL rc=1
+
+
+######## BATTERY 2026-09-02T20:22:12.181Z — human-tape-true-reel-stamp drain (re-gate) ########
+cwd=/Users/robin/Claude/Projects/Gold Rush/gate-s2461
+
+===== re-gate own+adjacent after viewVersion reconciliation =====
+$ npx playwright test e2e/tape-01-run-tape.spec.ts e2e/c7-standing-order-replay.spec.ts e2e/tape-02-lantern-show.spec.ts e2e/same-laws-harvest-parity.spec.ts --reporter=line --workers=1
+rc=0 142.9s
+
+Running 18 tests using 1 worker
+
+
+[1/18] [desktop-chrome] › e2e/c7-standing-order-replay.spec.ts:8:1 › a fresh browser standing-order tape watches to its own hash while an unstamped tape uses the tape show
+[2/18] [desktop-chrome] › e2e/same-laws-harvest-parity.spec.ts:110:1 › mouse and touch dispatch travel, then grant one rider-rate tick per command
+[desktop-chrome] › e2e/same-laws-harvest-parity.spec.ts:110:1 › mouse and touch dispatch travel, then grant one rider-rate tick per command
+same-laws parity [desktop-chrome] seam=gold-seam-1
+| tick | player dispatch (s after command) | rider HARVEST (s after order) | gold | cumulative |
+|---|---|---|---|---|
+| 1 | 1.867 | 1.867 | 5 | 5 / 5 |
+| 2 | 1.900 | 1.900 | 5 | 10 / 10 |
+
+SAME_LAWS_ASSAY_SLIP {"eventLogHash":"fnv1a32:a6c04f80","outcome":{"secured":false,"waves":0,"gold":10,"timeAlive":20.033333},"ticks":601,"wallMs":2296}
+
+[3/18] [desktop-chrome] › e2e/same-laws-harvest-parity.spec.ts:203:1 › plain boot: the command is reachable without ?debug and the boot is clean
+[4/18] [desktop-chrome] › e2e/tape-01-run-tape.spec.ts:75:1 › the profile tape ring keeps the latest ten plus older marked runs
+[5/18] [desktop-chrome] › e2e/tape-01-run-tape.spec.ts:90:1 › the keep result stays false when profile storage rejects the write
+[6/18] [desktop-chrome] › e2e/tape-01-run-tape.spec.ts:102:1 › the recorder deduplicates routed actions and freezes the hash at its input ceiling
+
+[7/18] [desktop-chrome] › e2e/tape-01-run-tape.spec.ts:123:1 › a resumed recording keeps the engine stamp captured by the original build
+[8/18] [desktop-chrome] › e2e/tape-01-run-tape.spec.ts:140:1 › every ended run writes a keepable tape whose replay reproduces its event hash
+[9/18] [desktop-chrome] › e2e/tape-02-lantern-show.spec.ts:10:1 › plain town WATCH replays a fresh tape read-only and refuses a mismatched reel
+
+[10/18] [mobile-chrome] › e2e/c7-standing-order-replay.spec.ts:8:1 › a fresh browser standing-order tape watches to its own hash while an unstamped tape uses the tape show
+[11/18] [mobile-chrome] › e2e/same-laws-harvest-parity.spec.ts:110:1 › mouse and touch dispatch travel, then grant one rider-rate tick per command
+[mobile-chrome] › e2e/same-laws-harvest-parity.spec.ts:110:1 › mouse and touch dispatch travel, then grant one rider-rate tick per command
+same-laws parity [mobile-chrome] seam=gold-seam-1
+| tick | player dispatch (s after command) | rider HARVEST (s after order) | gold | cumulative |
+|---|---|---|---|---|
+| 1 | 1.867 | 1.867 | 5 | 5 / 5 |
+| 2 | 1.900 | 1.900 | 5 | 10 / 10 |
+
+SAME_LAWS_ASSAY_SLIP {"eventLogHash":"fnv1a32:a6c04f80","outcome":{"secured":false,"waves":0,"gold":10,"timeAlive":20.033333},"ticks":601,"wallMs":3468}
+
+[12/18] [mobile-chrome] › e2e/same-laws-harvest-parity.spec.ts:203:1 › plain boot: the command is reachable without ?debug and the boot is clean
+[13/18] [mobile-chrome] › e2e/tape-01-run-tape.spec.ts:75:1 › the profile tape ring keeps the latest ten plus older marked runs
+[14/18] [mobile-chrome] › e2e/tape-01-run-tape.spec.ts:90:1 › the keep result stays false when profile storage rejects the write
+[15/18] [mobile-chrome] › e2e/tape-01-run-tape.spec.ts:102:1 › the recorder deduplicates routed actions and freezes the hash at its input ceiling
+
+[16/18] [mobile-chrome] › e2e/tape-01-run-tape.spec.ts:123:1 › a resumed recording keeps the engine stamp captured by the original build
+[17/18] [mobile-chrome] › e2e/tape-01-run-tape.spec.ts:140:1 › every ended run writes a keepable tape whose replay reproduces its event hash
+[18/18] [mobile-chrome] › e2e/tape-02-lantern-show.spec.ts:10:1 › plain town WATCH replays a fresh tape read-only and refuses a mismatched reel
+  18 passed (2.4m)
+(node:33896) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:33952) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[desktop-chrome] › e2e/tape-01-run-tape.spec.ts:102:1 › the recorder deduplicates routed actions and freezes the hash at its input ceiling
+[run-tape] recording truncated: max-ticks at tick 18000
+(node:35185) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[mobile-chrome] › e2e/tape-01-run-tape.spec.ts:102:1 › the recorder deduplicates routed actions and freezes the hash at its input ceiling
+[run-tape] recording truncated: max-ticks at tick 18000
+
+
+SUMMARY {"re-gate own+adjacent after viewVersion reconciliation":0}
+OVERALL rc=0

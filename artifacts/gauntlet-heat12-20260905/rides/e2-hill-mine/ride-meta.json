@@ -1,0 +1,19 @@
+{
+  "rig": "opus",
+  "model": "claude-opus-5",
+  "arena": "/tmp/heat12-038cc280",
+  "workdir": "/tmp/heat12-038cc280/artifacts/heat12/opus/e2-hill-mine",
+  "charterFile": "/private/tmp/heat12-038cc280/artifacts/gauntlet-heat12-20260905/rides/e2-hill-mine/charter.md",
+  "charterSha256": "4502296afc3157b5b457a5404da0de667da74f3dfc1a24cf38707786a1e6d68e",
+  "sessionId": "bec1d500-71a1-4823-b7a5-a15eafd10a1f",
+  "wallSeconds": 900,
+  "startedAt": "2026-09-05T20:34:11.447Z",
+  "invocation": "env -u CLAUDECODE -u CLAUDE_CODE_ENTRYPOINT -u CLAUDE_CONFIG_DIR claude -p \"<charter text, see charterFile>\" --model claude-opus-5 --allowedTools Read,Write,Glob,Bash(node *) --output-format text --session-id bec1d500-71a1-4823-b7a5-a15eafd10a1f",
+  "endedAt": "2026-09-05T20:43:39.091Z",
+  "wallClockSeconds": 568,
+  "exitCode": 0,
+  "signal": null,
+  "wallHit": false,
+  "firstOutputAt": "2026-09-05T20:36:56.473Z",
+  "setupToFirstOutputSeconds": 165
+}

@@ -1,0 +1,46 @@
+{
+ "secured": true,
+ "waves": 12,
+ "timeMs": 360000,
+ "gold": 200,
+ "kills": 416,
+ "calls": 57,
+ "defaultedPicks": 0,
+ "defaultedSecure": 1,
+ "eventLogHash": "fnv1a32:d05bd4b5",
+ "tape": "/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/heat14/opus/e10-archive-world/attempt-1-tape.json",
+ "scored": true,
+ "runsSoFar": 2,
+ "scoredAttempts": 1,
+ "worldModel": "sim-import",
+ "note": "attempt-1-tape.json is a byte-identical copy of tune-1-tape.json (215657 bytes, verified equal): ONE ride under two filenames. The first controller secured and the stop rule ends the heat there.",
+ "contract": "e10-archive-world",
+ "seed": "e10-archive-world-01",
+ "difficulty": "trail",
+ "envelope": {
+  "durationTicks": 10800,
+  "lastEntryTick": 10271,
+  "entries": 57,
+  "bytes": 215657,
+  "maxTicks": 18002,
+  "maxEntries": 3601,
+  "maxTapeBytes": 1938784,
+  "source": "runTapeEnvelopeForContract"
+ },
+ "assay": {
+  "tool": "scripts/assay-replay-agent.mjs",
+  "tapeHeaderHash": "fnv1a32:3c90f43d",
+  "replayHash": "fnv1a32:3c90f43d",
+  "match": true,
+  "securedSnapshot": {
+   "waves": 12,
+   "gold": 200,
+   "timeAlive": 360
+  },
+  "control": "probe-tape.json replayed to its own header fnv1a32:a45ba9ac first (instrument verified)"
+ },
+ "nullFloor": {
+  "published": "w2 / 80967ms / 0g / 35 kills / fnv1a32:cb3e3f9d",
+  "probeReproduced": true
+ }
+}

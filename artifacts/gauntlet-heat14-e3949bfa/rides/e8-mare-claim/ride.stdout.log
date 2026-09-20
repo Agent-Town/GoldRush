@@ -1,0 +1,11 @@
+**SECURED** on the first scored attempt — `e8-mare-claim` / `e8-mare-claim-01`, **w20 / 600.000s / 260g / 89 calls**, verified locally against a control-tested assay.
+
+**What decided it:** the door document says the E8 suit is "the Prospector's air." It isn't — `E8PhysicsSystem`'s header records the 2026-09-07 owner directive that moved it to the hero, and `notePan(anchorIndex, actorId = 0)` reads *her* lungs while *its* hands pan. That body split is the whole strategy: park the hero inside the dome pad's breathing **ellipse** (radius-6 disc inscribed in the 12×12 rect — a turret at (5,5) is legal ground and unbreathable ground) and dispatch the Prospector 20–35 units out to fresh `anchorIndex` grounds. Gate closed at t=371.9 with 228 seconds of slack and **zero breathless pans**.
+
+**The one interpretable diff.** `tune-1` died at w19/587 — 13.6 seconds short — holding **470 gold idle**, because the last 270 gold of fort sat behind an `urgent` latch that armed at t=504 while my hard build floor had already shut at t=500. A bank gate that hoards gold for a score while the fort is short hoards it for a run that dies. Moving the whole ten-work fort into the core ladder and giving the floor exactly one bypass took the same seed to w20 at 145.4/175, never below 83.1% of maximum, 11 works, none wrecked.
+
+**Era-6 finding:** all eight pins grep to zero matches for this contract, and every remembered number reproduced — including the idle floor at w2/**76.033s** against my generation 61's 76.0s. The re-survey moved this map's rendering, not its rules.
+
+Files written to the workspace: `gauntlet-outcome.json` (declares `attempt-1-tape.json` as the scored tape), `gauntlet-report.md` with the four operator sections, plus the runner, controller, per-view summaries and view dumps. Envelope clear on all three axes — `durationTicks` 18,000, last order at tick 17,681, 89 entries, 142 KB.
+
+One caveat worth your attention when you submit: I stopped at the first secure per the rules, so the **260 gold is not the ceiling**. The live cap was 350 (one stockpile landed; the second never did) and the map pans ~990 against a 790-gold full ladder — a rider that survives on a leaner fort could bank more, but `tune-1` is my measured evidence that the leaner fort does not survive wave 19 on this seed.

@@ -1,0 +1,37 @@
+{
+  "at": "2026-09-08T10:53:00.897527+00:00",
+  "fullCollectionEntries": 3348,
+  "selectedRecoveryEntries": 345,
+  "matchedRecoveryEntries": 345,
+  "missingRecoveryEntries": [],
+  "additionalRecoveryEntries": [],
+  "rawFullStats": {
+    "startTime": "2026-09-08T06:59:59.522Z",
+    "duration": 10131011.086,
+    "expected": 2599,
+    "skipped": 198,
+    "unexpected": 551,
+    "flaky": 0
+  },
+  "rawRecoveryStats": {
+    "startTime": "2026-09-08T10:06:41.068Z",
+    "duration": 2720831.358,
+    "expected": 279,
+    "skipped": 45,
+    "unexpected": 21,
+    "flaky": 0
+  },
+  "transitionCounts": {
+    "expected -> expected": 59,
+    "unexpected -> expected": 220,
+    "unexpected -> unexpected": 21,
+    "skipped -> skipped": 45
+  },
+  "latestCompletedCoverageCounts": {
+    "expected": 2819,
+    "skipped": 198,
+    "unexpected": 331
+  },
+  "note": "Latest completed coverage combines the full run with the exact outage recovery only; it is not a single green full run. Separate focused serial and instrumented controls do not overwrite these verdicts.",
+  "sourceFreezeVerified": true
+}

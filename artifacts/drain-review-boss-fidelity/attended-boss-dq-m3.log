@@ -1,0 +1,37 @@
+
+Running 4 tests using 1 worker
+
+[1/4] [mobile-chrome] › e2e/e5-boss-dredge-queen.spec.ts:131:1 › rides the storm, gates Act 2 on both paddles, spills the hold, and persists W6 per profile
+[2/4] [mobile-chrome] › e2e/e5-boss-dredge-queen.spec.ts:192:1 › interrupts a mid-cycle claw hit without transferring loot
+[3/4] [mobile-chrome] › e2e/e5-boss-dredge-queen.spec.ts:215:1 › damages only inside the telegraphed defensive-claw arc
+[4/4] [mobile-chrome] › e2e/e5-boss-dredge-queen.spec.ts:237:1 › keeps the boss-run frame p95 within 15% of the non-boss tile
+[mobile-chrome] › e2e/e5-boss-dredge-queen.spec.ts:237:1 › keeps the boss-run frame p95 within 15% of the non-boss tile
+Dredge-Queen perf mobile-chrome: non-boss=9.2ms boss=16.6ms ratio=1.8043
+
+  1) [mobile-chrome] › e2e/e5-boss-dredge-queen.spec.ts:237:1 › keeps the boss-run frame p95 within 15% of the non-boss tile 
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 10.579999999999998
+    Received:    16.6
+
+      257 |
+      258 |   console.log(`Dredge-Queen perf ${testInfo.project.name}: non-boss=${nonBossP95}ms boss=${bossP95}ms ratio=${ratio}`);
+    > 259 |   expect(bossP95).toBeLessThanOrEqual(nonBossP95 * 1.15);
+          |                   ^
+      260 |   expect(errors).toEqual([]);
+      261 | });
+      262 |
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-boss/e2e/e5-boss-dredge-queen.spec.ts:259:19
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e5-boss-dredge-queen-keeps-7c885-hin-15-of-the-non-boss-tile-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e5-boss-dredge-queen-keeps-7c885-hin-15-of-the-non-boss-tile-mobile-chrome/error-context.md
+
+
+  1 failed
+    [mobile-chrome] › e2e/e5-boss-dredge-queen.spec.ts:237:1 › keeps the boss-run frame p95 within 15% of the non-boss tile 
+  3 passed (21.7s)
+rc=1

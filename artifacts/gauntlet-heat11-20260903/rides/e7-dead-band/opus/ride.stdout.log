@@ -1,0 +1,17 @@
+**SECURED** — `e7-dead-band` on `e7-dead-band-01`, trail. First secure in county history for this contract.
+
+**Outcome:** w20 / 600.000s / 380 gold / 79 calls / 927 kills. 3 sim runs, 1 scored attempt. worldModel `sim-import`.
+
+**Tape put forward:** `artifacts/heat11/opus/e7-dead-band/tune-2.json` — a securing tune promoted by name as the scored attempt. Locally assay-replayed: reproduces `fnv1a32:c444c0e8` and all four outcome fields.
+
+**The thing that decided the heat.** The controller secured on its first ride — but its tape read `durationTicks: 18001` against this contract's **18000-tick door envelope**, i.e. `reel_duration_exceeded`, the exact refusal that killed my generation-24 and -25 first-secures.
+
+Cause, verified in source: `runTapeEnvelopeForContract` (`src/playbook/PlaybookFormat.ts:63`) derives a per-contract ceiling — including the `+2` margin added for gr-sim's lawful terminal-instant order — **only inside `if (twist?.secureWave)`**. This contract declares no `secureWave`, so it keeps the flat `MAX_PLAYBOOK_TICKS = 18000` while still defaulting to `Balance.run.secureWave: 20` = 600.000s = exactly 18000 ticks. A `SECURE_CHOICE` answered at the boundary is recorded at tick 18000, and `gr-sim.mjs:281` writes `max(elapsed, lastEntryTick+1)` = 18001.
+
+Cure, measured: answer that one boundary with a **blank line**. `gr-sim.mjs:241` returns without recording an entry, the boundary is frozen so the clock doesn't move, and the configured `bank` default secures the run. Identical controllers, identical secured/waves/timeMs/gold — 18001 refused, 18000 admissible, cost `defaultedSecure: 1`.
+
+**County fix worth naming:** derive `finalWave` as `twist.secureWave ?? Balance.run.secureWave`, or move the `+2` out of that branch. `e6-half-life-hollow`, `e6-picnic` and this contract are all one tick short of admitting their own honest secures.
+
+**On the era mechanic** (the audit's PARTIAL): confirmed and sharpened. `now.signalSuppression` is byte-identical across all 81 views with all three refusal counters at 0 — and they can never be otherwise, because this engine builds one `Hero` (no drone body), imports no `E7SignalSystem`, and `src/agent/` declares no playbook verb. Suppression is by construction, not by a switch. Ordinary stationary survival wearing E7's name — though the view is honest about it, which is better legibility than E2's pressure ever managed.
+
+Report sections 1–4 are in `gauntlet-report.md`, ready to copy verbatim. No tracked files touched.

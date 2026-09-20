@@ -1,0 +1,6 @@
+OpenClaw 2026.7.1-2 (0790d9f)
+Config validation: valid.
+Command surface: isolated OPENCLAW_STATE_DIR and OPENCLAW_CONFIG_PATH, local agent main.
+Result (exit 1, 2.958 s): two POST attempts, both rejected with HTTP 400 Streaming is not supported.
+
+State finding: despite isolated state variables, first launch moved ~/.openclaw/exec-approvals.json to a .migrated backup. The original path was restored byte-for-byte immediately and rechecked after the wrapped retry.

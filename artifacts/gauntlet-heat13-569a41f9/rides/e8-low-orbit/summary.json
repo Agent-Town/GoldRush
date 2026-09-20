@@ -1,0 +1,218 @@
+{
+  "rig": "opus",
+  "contract": "e8-low-orbit",
+  "model": "claude-opus-5",
+  "sessionId": "edb7baab-d832-4837-bd84-49ae0694376b",
+  "startedAt": "2026-09-07T11:24:50.912Z",
+  "endedAt": "2026-09-07T11:41:00.471Z",
+  "wallClockSeconds": 970,
+  "wallHit": false,
+  "exitCode": 0,
+  "signal": null,
+  "setupToFirstOutputSeconds": 165,
+  "arenaTrackedChanges": [],
+  "workspaceFiles": [
+    "attempt-1-result.json",
+    "attempt-1-table.json",
+    "attempt-1-tape.json",
+    "attempt-1-views.jsonl",
+    "ctrl-probe2.mjs",
+    "ctrl-v1.mjs",
+    "ctrl-v2.mjs",
+    "ctrl-v3.mjs",
+    "gauntlet-outcome.json",
+    "gauntlet-report.md",
+    "probe-idle-result.json",
+    "probe-idle-tape.json",
+    "probe-idle-views.jsonl",
+    "probe-route-result.json",
+    "probe-route-table.json",
+    "probe-route-tape.json",
+    "probe-route-views.jsonl",
+    "runner.mjs",
+    "tune-1-result.json",
+    "tune-1-table.json",
+    "tune-1-tape.json",
+    "tune-1-views.jsonl",
+    "tune-2-result.json",
+    "tune-2-table.json",
+    "tune-2-tape.json",
+    "tune-2-views.jsonl"
+  ],
+  "outcome": {
+    "secured": false,
+    "waves": 14,
+    "timeMs": 440967,
+    "gold": 45,
+    "kills": 573,
+    "calls": 60,
+    "defaultedPicks": 0,
+    "defaultedSecure": 0,
+    "eventLogHash": "fnv1a32:3705d684",
+    "tape": "/private/tmp/heat13-569a41f9/artifacts/heat13/opus/e8-low-orbit/tune-2-tape.json",
+    "scored": false,
+    "_outcome": {
+      "secured": false,
+      "waves": 14,
+      "timeMs": 440967,
+      "gold": 45,
+      "kills": 573,
+      "calls": 60,
+      "defaultedPicks": 0,
+      "defaultedSecure": 0,
+      "eventLogHash": "fnv1a32:3705d684"
+    },
+    "envelope": {
+      "durationTicks": 13229,
+      "entries": 60,
+      "lastEntryTick": 13054,
+      "bytes": 244113
+    },
+    "runsSoFar": 5,
+    "scoredAttempts": 1,
+    "worldModel": "sim-import",
+    "note": "NOT SECURED. Nothing is put forward. Best ride is tune-2 (w14/440.967s/45g); attempt-1 (ctrl-v3, w4/128.133s/70g, fnv1a32:b7254a26) was the scored attempt and regressed. The era gate was fully satisfied in tune-2 at t=368.4 (credited 4/4, reached 2, breathlessEntries 0); the run dies to hero momentum under feelG 0, not to the air."
+  },
+  "outcomeError": null,
+  "promotedTapeName": "tune-2-tape.json",
+  "scoredTapes": [
+    {
+      "file": "attempt-1-tape.json",
+      "id": "agent-f3d60623-c1837350-c0f6-4079-b85e-5b2c45948334",
+      "contract": "e8-low-orbit",
+      "seed": "e8-low-orbit-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "909163a06",
+        "engineHash": "09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 4,
+        "timeAlive": 128.133,
+        "gold": 70
+      },
+      "entries": 12,
+      "durationTicks": 3844,
+      "lastEntryTick": 3601,
+      "promotedByRig": false,
+      "discoveredBy": "filename"
+    },
+    {
+      "file": "tune-2-tape.json",
+      "id": "agent-01971015-6405d777-0ba8-4725-8ffd-fe9a9d708ca5",
+      "contract": "e8-low-orbit",
+      "seed": "e8-low-orbit-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "909163a06",
+        "engineHash": "09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 14,
+        "timeAlive": 440.967,
+        "gold": 45
+      },
+      "entries": 60,
+      "durationTicks": 13229,
+      "lastEntryTick": 13054,
+      "promotedByRig": true,
+      "discoveredBy": "outcome-file"
+    }
+  ],
+  "otherTapes": [
+    {
+      "file": "probe-idle-tape.json",
+      "id": "agent-a84b8aa6-9bedcc6c-eebe-4bf4-88eb-a664b592d152",
+      "contract": "e8-low-orbit",
+      "seed": "e8-low-orbit-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "62f801f49",
+        "engineHash": "09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 2,
+        "timeAlive": 78.333,
+        "gold": 0
+      },
+      "entries": 0,
+      "durationTicks": 2350,
+      "lastEntryTick": null
+    },
+    {
+      "file": "probe-route-tape.json",
+      "id": "agent-30f0b503-36331e31-ae87-47c0-9ec3-a7a746559dd9",
+      "contract": "e8-low-orbit",
+      "seed": "e8-low-orbit-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "909163a06",
+        "engineHash": "09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 2,
+        "timeAlive": 61.733,
+        "gold": 0
+      },
+      "entries": 4,
+      "durationTicks": 1852,
+      "lastEntryTick": 1801
+    },
+    {
+      "file": "tune-1-tape.json",
+      "id": "agent-e93bc7d0-d4f1a734-35d0-41b6-9c98-d51c3934f3bc",
+      "contract": "e8-low-orbit",
+      "seed": "e8-low-orbit-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "62f801f49",
+        "engineHash": "09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 3,
+        "timeAlive": 110.933,
+        "gold": 30
+      },
+      "entries": 11,
+      "durationTicks": 3328,
+      "lastEntryTick": 3158
+    }
+  ],
+  "otherSecuredTapes": [],
+  "report": {
+    "outcome": "**NOT SECURED.** Best measured ride: **tune-2 — waves 14, timeAlive 440.967 s, gold 45, calls 60**,\n`fnv1a32:3705d684`, tape `artifacts/heat13/opus/e8-low-orbit/tune-2-tape.json` (envelope 13,229\nticks / 60 entries / last accepted order tick 13,054 / 244,113 bytes — comfortably admissible had it\nsecured). Scored attempt `attempt-1` came in at w4 / 128.133 s / 70 g and is worse.\n**5 sim runs; 1 scored attempt. Nothing is put forward** — `gauntlet-outcome.json` names tune-2 as\nthe best row with `\"scored\": false` and `\"secured\": false`, and no reel should be submitted.",
+    "whatTheMapAsked": "It asked its era's signature mechanic — **E8 low gravity, air as wall, transfer under changed\nphysics** — squarely, in *both* halves, and for the first time on this contract both halves are\nload-bearing. My notebook's generation 35 called the mechanic \"fully implemented and structurally\noptional\"; generation 48 secured here at w20/200 g with the crossing discharged for free by the\nharvest tail at t = 25. **Both readings are dead.** The *air* half is now a genuine secure gate with\na genuine budget: `now.air.crossing` publishes `zones`, `required: 4`, `reached`, `credited`,\n`windowWaves: 4`, `window`, `creditedThisWindow`, `windowHeldEntries`, `breathlessEntries`, and\n`now.air.suit` publishes `body: \"hero\"`, 60 s capacity, 4/s refill and 5 hp/s of harm — no wave\nsecures until the human has stood in both vacuum decks on air and banked four entries at one per\n120 s window. That is real spatial planning (five windows, four credits, a 57.6-unit round trip\neach) and I solved it: 4/4 by t = 368 with zero breathless entries and 232 seconds of slack. The\n*gravity* half is what actually decided the contract, and it only became decisive because the\ngrammar changed underneath it: `MOVE_HERO` now positions a body that `feelG 0` and\n`knockbackScale 1.75` will not let stand still, on a map where `LowOrbitSystem.controlScale` halves\nthrust off the handhold spine. The fields that carried the ride were `now.air.crossing.*`,\n`now.air.suit.seconds/inDome`, **`now.hero.x/z`** (a field I had never needed on this map before),\n`now.works.entries`, `now.seams[].active/x/z`, `now.gold` against `now.score.goldPanned`, and\n`now.orders[].status/reason`. Orders used: `MOVE_HERO`, `HARVEST`, `BUILD`, `PICK_UPGRADE`,\n`BLAST_AT`, `CONTEXT_ACTION upgrade`, and one blank line — **not one E8 verb, because E8 has none.**\nDoes it still play the way my notebook remembers? No. Same claim, same three decks, same four\nharvest anchors, same idle floor to the tenth of a second — plus a secure gate that did not exist,\nto be answered with a body that could not previously be moved.",
+    "winnability": "**Winnable, and what stopped me was my own budget against one un-modelled physics fact — not a wall\nin the map, the grammar or the economy:** the era gate discharges with 232 s to spare and zero\nbreathless entries, no work can ever be wrecked (the roster's one id carries neither `wrecker` nor\n`thief`), and the fort was still buying at wave 12 — the run dies only because under `feelG 0` the\nhero's steering is thrust rather than position, so it coasts forty to sixty units out of its own\nturret ring and every naive correction overshoots (measured: chasing it home cost ten waves, w14 →\nw4), and I ran out of wall clock before riding the controller that damps instead of chases.",
+    "lessons": "- **A notebook entry can be dead in BOTH directions on the same map in one heat.** Generation 35\n  called Low Orbit's era lever \"fully implemented and structurally optional\"; generation 48 secured\n  here with the crossing discharged for free by the harvest tail at t = 25. This heat the same\n  contract carries `crossingRequired: 4` under a 120 s window, measured against **the hero**, and it\n  gates the secure. Read `twist.atmosphere`'s four numbers off the contract JSON every single ride —\n  the mechanic's existence, its BODY and its COUNT are three separate facts and all three have now\n  moved on this one map.\n- **When a ruling retires a verb, re-derive the PHYSICS, not the syntax.** Three heats running I\n  wrote that the 1:1 grammar change was free on a stationary-hero board. On a `feelG 0` board it is\n  the opposite. `StandingOrders`' own comment — \"the hero has no drift, so hold the hero here is\n  already MOVE_HERO plus silence\" — is true under gravity and **false in free fall**: silence is not\n  a hold where nothing decelerates, and `HOLD`, the verb that used to make standing still free, is\n  gone.\n- **In free fall, MOVE_HERO is a thrust order, so correcting a drift AMPLIFIES it.** Measured on one\n  changed variable: letting the hero coast reached wave 14; re-issuing \"come home\" first in every\n  array reached wave 4, with the body ping-ponging (40.6,-3) → (-31.9,23.8) → (26.3,2.3) →\n  (-33.6,24.5). **Never chase a body whose controller is an accelerator.** The move I never got to\n  ride is to damp: aim the correction at a point *between* the body and home, sized to the overshoot,\n  or simply stop ordering movement at all once the errand is banked and let the fort come to the\n  hero.\n- **A corrective order below a travelling verb is a corrective order that does not exist.** `BUILD`\n  returns `{movement: target}` — truthy — while the Prospector walks, and the first truthy order owns\n  the tick, so four gold-gated `BUILD` rungs silently deleted my come-home order for whole views.\n  Generation 65 learned \"put come-home above the tail\"; the sharper rule is *above the ladder*. (It\n  was still the right ordering fix and still the wrong policy — two independent facts.)\n- **The hero has no pathfinder, so a lane is a measurement, not an assumption.** `MOVE_HERO` walks a\n  straight line and refuses `UNREACHABLE_APPROACH` after four seconds without progress. Low Orbit\n  carries a static obstacle across z≈2 between x ≈ -14 and +4 that pinned tune-1's hero at (3.6, 2)\n  for an entire run. **Probe the routes before designing around them:** a five-leg `MOVE_HERO` chain\n  in one throwaway ride cost sixty seconds of sim and returned the whole navigable geometry — both\n  diagonals clear, and one out-and-back pair banking both crossing zones in thirty seconds.\n- **Read the latch's conjunction, then read what each term counts.** `reached.size >= zones` and\n  `credited >= required` are different counters on different clocks: `reached` is never window-gated\n  and was full after the first pair of sorties, while `credited` is one per window and took four.\n  Log both — generation 67 lost minutes on the Far Side reading `reached` when the latch reads\n  `credited`, and logging only `credited` here would have hidden the opposite half.\n- **The window picks the hour, not your health bar.** Four credits, five windows, one each: take the\n  trip at the window's first view when the wave is youngest, and take the far deck on the opening\n  empty board so `reached` is banked before anything can punish it. `breathlessEntries` was 0 across\n  61 views — on this map the suit was never the problem, the ballistics were.\n- **`goldPanned` flat while the hero wanders is a THIRD failure signature.** I already carry \"flat\n  pan + capped purse = dead sink\" and \"flat pan + low gold = the worker is not working\". The new one\n  is *flat pan + a hero fifty units from home*: the Prospector drifts to the hero, so a hero that\n  cannot hold its ground is also an economy that cannot pan. One column, three diagnoses.\n- **Budget the heat in runs and fire the synthesis early — tenth heat running, and this time the\n  reading was right and the RIDING was late.** Four minutes in `E8SuitAirSystem`, `E8AirWindow` and\n  `LowOrbitSystem` produced the entire contract before the first order, and the route probe was the\n  best sixty seconds I spent. What I never left room for was the run that combines tune-2's proven\n  route with a *damped* hero correction and the tier-2 purse sink. That run is one edit from tune-2,\n  and it is the one I would ride first next time."
+  },
+  "usage": {
+    "transcript": "/Users/robin/.claude/projects/-private-tmp-heat13-569a41f9/edb7baab-d832-4837-bd84-49ae0694376b.jsonl",
+    "assistantTurns": 73,
+    "toolCalls": 46,
+    "tokensIn": 146,
+    "tokensOut": 145846,
+    "cacheReadTokens": 25237460,
+    "cacheWriteTokens": 1115084,
+    "note": "tokensIn excludes cache reads/writes (reported separately); summed from the CLI session transcript, not self-reported by the rig"
+  }
+}

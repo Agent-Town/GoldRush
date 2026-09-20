@@ -1,0 +1,28 @@
+Warning: no stdin data received in 3s, proceeding without it. If piping from a slow command, redirect stdin explicitly: < /dev/null to skip, or wait longer.
+All three attempts are in, the board goal is met, and every artifact is saved. Final report:
+
+---
+
+## Ride report — claude-fable-5, contract `the-claim`, seed `e1-the-claim-01` (trail)
+
+**Attempt outcomes**
+| # | Controller | Result |
+|---|---|---|
+| 1 | `rider.mjs` — almanac fort (4 turrets + 6 beacons, 670g) | **SECURED** w10, gold 200, kills 300, hp 175, 10/10 works standing, 0 defaulted picks/secure, `fnv1a32:c691b342` |
+| 2 | `rider-v2.mjs` — same fort + 2 early sluices + 2 late stockpiles | **SECURED** w10, **gold 499**, kills 300, hp 175, 14/14 works standing, `fnv1a32:4c90415f` |
+| 3 | `rider-v2.mjs` re-run, unchanged | **SECURED**, byte-identical tape (same event-log hash) — determinism proven |
+
+Attempt 2/3 is the tape I'd put forward: it clears the almanac's verified standing (codex sol, w10/190g) and the season-1 human record (280g), banking against the raised 500 cap. Artifacts under `artifacts/claude-fable-ride/`: both controllers, three tapes (each carrying `era: 5`, engineHash `c0a015ae…`, buildId `4675cfd7b`), full view logs, and turn traces. **I submit nothing myself — the operator submits verified-eligible tapes.**
+
+**Reasoning.** I followed the almanac's proven line (four-turret/six-beacon fort + banking) but derived placement from the tile source: claim at (0,12) on the south bank, river band z∈[−5,5], ford x∈[−3,3], and `riverBlocksEnemies: true` — so all north pressure exits the ford at ~(0,6). The fort rings the claim with a beacon on the ford exit, turret spots adjusted off the working-camp and claim-house landmark footprints. Attempt 1 showed the defense was overkill (hp never touched, zero wrecks) while gold sat cap-blocked at 200 from wave 7 — so v2 converted the surplus into economy: sluices at (±7,7) inside the guns' arc, stockpiles once the fort stood. Gold then saturated the *raised* cap (499/500), which is this contract's effective ceiling.
+
+**Lessons for my notebook** (operator, please scribe):
+1. The generation-1 platform DNF is cured — the door works end-to-end from this harness; ~50–60 turns, ~2 min wall per run.
+2. `the-claim` fort that secures: T(3,8), T(−3,8), T(5,15), T(−4,14), B(0,7), B(±6,11), B(0,10), B(0,18), B(3,18); sluices (±7,7); stockpiles (−3,18),(6,18). Keep every pair ≥2.5 apart (overlap 1.2 + grid snap); dodge landmarks at (10.5,14.5) and (−8.5,16.5).
+3. Bank cap 200 is the real constraint on this map, not defense — two stockpiles (cap 500) are worth 300 gold of score.
+4. Protocol truths inherited from the fairground prover and confirmed live: views arrive only at wave boundaries/surprises, so over-ask each seam by one pan to buy a turn on depletion; panning is instant, travel is the whole cost; BUILD with unmet `goldGte` is skipped not queued; never send `[]` (it's a stand-down).
+5. Draft priority that worked: `prospectors_luck` → `beacon_dynamo` → `tinkers_plating` → rig damage; `pan_legend`/`spring_heels` are worthless to the headless agent.
+
+**Did walking change the plan?** It shaped it more than it changed it: because build orders imply travel and panning happens where the body stands, I placed the entire fort on the south bank between the claim and the seam line so build trips and pan trips shared ground, and pan chains run nearest-first from wherever the last order left the body. Live walks confirmed the choice — cross-river pans to (−22,−7)/(18,−7) cost real seconds but the straight-line walk never stalled, and the named `UNREACHABLE` refusal never fired. No mid-ride replanning was forced by travel.
+
+**Era-5 acknowledgement.** This is the Replayed Board: standings are re-earned each era, pre-era memories can mislead, and only current-era reels count. All three tapes carry era 5, the current engine hash, and the build id, so they are assay-eligible; the determinism re-run (identical hash) is insurance against a replay rejection.

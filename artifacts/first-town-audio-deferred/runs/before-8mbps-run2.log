@@ -1,0 +1,120 @@
+
+Running 2 tests using 1 worker
+
+[1/2] [desktop-chrome] › e2e/first-town-audio-deferred.spec.ts:129:1 › music is fetched only after the first town is playable (8mbps)
+[desktop-chrome] › e2e/first-town-audio-deferred.spec.ts:129:1 › music is fetched only after the first town is playable (8mbps)
+[audio-defer] desktop-chrome/8mbps cue 126 responses 7305528 bytes; townReady observed 6444 ms, published 5948 ms; cue-window music 4; music before playable 2; after-ready music 0
+
+[audio-defer] desktop-chrome/8mbps music fetch title-theme-CXP4b20O-diet-1408f6b4.mp3 at 592 ms (scene - -)
+
+[audio-defer] desktop-chrome/8mbps music fetch era-e1-frontier-loop-CQyR4akc-diet-1408f6b4.mp3 at 1051 ms (scene the town ready)
+
+[audio-defer] desktop-chrome/8mbps cue-window mp3 /assets/title-theme-CXP4b20O-diet-1408f6b4.mp3 1200587 B at 884 ms
+
+[audio-defer] desktop-chrome/8mbps cue-window mp3 /assets/menu-tap-DMz5CpTr-diet-1408f6b4.mp3 8821 B at 1055 ms
+
+[audio-defer] desktop-chrome/8mbps cue-window mp3 /assets/era-e1-frontier-loop-CQyR4akc-diet-1408f6b4.mp3 1800881 B at 1144 ms
+
+  1) [desktop-chrome] › e2e/first-town-audio-deferred.spec.ts:129:1 › music is fetched only after the first town is playable (8mbps) 
+
+    Error: a music file was fetched before the town published itself playable
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 16
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "at": 592,
+    +     "label": "",
+    +     "progress": "",
+    +     "state": "",
+    +     "url": "http://127.0.0.1:5294/assets/title-theme-CXP4b20O-diet-1408f6b4.mp3",
+    +   },
+    +   Object {
+    +     "at": 1051,
+    +     "label": "the town",
+    +     "progress": "0/0",
+    +     "state": "ready",
+    +     "url": "http://127.0.0.1:5294/assets/era-e1-frontier-loop-CQyR4akc-diet-1408f6b4.mp3",
+    +   },
+    + ]
+
+      207 |   expect(townPlayableAt, 'the town never published a ready phase after it started raising').toBeDefined();
+      208 |   expect(duringTheRaising, 'a music file was fetched while the town was still raising').toEqual([]);
+    > 209 |   expect(musicBeforePlayable, 'a music file was fetched before the town published itself playable').toEqual([]);
+          |                                                                                                     ^
+      210 |   expect(musicFetched.length, 'no music was fetched at all — the deferral muted the game').toBeGreaterThan(0);
+      211 |   await cdp?.detach();
+      212 |   expectNoConsoleErrors(watch);
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-audio/e2e/first-town-audio-deferred.spec.ts:209:101
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/first-town-audio-deferred--fe745-rst-town-is-playable-8mbps--desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/first-town-audio-deferred--fe745-rst-town-is-playable-8mbps--desktop-chrome/error-context.md
+
+
+[2/2] [mobile-chrome] › e2e/first-town-audio-deferred.spec.ts:129:1 › music is fetched only after the first town is playable (8mbps)
+[mobile-chrome] › e2e/first-town-audio-deferred.spec.ts:129:1 › music is fetched only after the first town is playable (8mbps)
+[audio-defer] mobile-chrome/8mbps cue 127 responses 7305651 bytes; townReady observed 6456 ms, published 5947 ms; cue-window music 4; music before playable 2; after-ready music 0
+
+[audio-defer] mobile-chrome/8mbps music fetch title-theme-CXP4b20O-diet-1408f6b4.mp3 at 595 ms (scene - -)
+
+[audio-defer] mobile-chrome/8mbps music fetch era-e1-frontier-loop-CQyR4akc-diet-1408f6b4.mp3 at 1067 ms (scene the town ready)
+
+[audio-defer] mobile-chrome/8mbps cue-window mp3 /assets/title-theme-CXP4b20O-diet-1408f6b4.mp3 1200587 B at 880 ms
+
+[audio-defer] mobile-chrome/8mbps cue-window mp3 /assets/menu-tap-DMz5CpTr-diet-1408f6b4.mp3 8821 B at 911 ms
+
+[audio-defer] mobile-chrome/8mbps cue-window mp3 /assets/era-e1-frontier-loop-CQyR4akc-diet-1408f6b4.mp3 1800881 B at 1139 ms
+
+  2) [mobile-chrome] › e2e/first-town-audio-deferred.spec.ts:129:1 › music is fetched only after the first town is playable (8mbps) 
+
+    Error: a music file was fetched before the town published itself playable
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 16
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "at": 595,
+    +     "label": "",
+    +     "progress": "",
+    +     "state": "",
+    +     "url": "http://127.0.0.1:5294/assets/title-theme-CXP4b20O-diet-1408f6b4.mp3",
+    +   },
+    +   Object {
+    +     "at": 1067,
+    +     "label": "the town",
+    +     "progress": "0/0",
+    +     "state": "ready",
+    +     "url": "http://127.0.0.1:5294/assets/era-e1-frontier-loop-CQyR4akc-diet-1408f6b4.mp3",
+    +   },
+    + ]
+
+      207 |   expect(townPlayableAt, 'the town never published a ready phase after it started raising').toBeDefined();
+      208 |   expect(duringTheRaising, 'a music file was fetched while the town was still raising').toEqual([]);
+    > 209 |   expect(musicBeforePlayable, 'a music file was fetched before the town published itself playable').toEqual([]);
+          |                                                                                                     ^
+      210 |   expect(musicFetched.length, 'no music was fetched at all — the deferral muted the game').toBeGreaterThan(0);
+      211 |   await cdp?.detach();
+      212 |   expectNoConsoleErrors(watch);
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-audio/e2e/first-town-audio-deferred.spec.ts:209:101
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/first-town-audio-deferred--fe745-rst-town-is-playable-8mbps--mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/first-town-audio-deferred--fe745-rst-town-is-playable-8mbps--mobile-chrome/error-context.md
+
+
+  2 failed
+    [desktop-chrome] › e2e/first-town-audio-deferred.spec.ts:129:1 › music is fetched only after the first town is playable (8mbps) 
+    [mobile-chrome] › e2e/first-town-audio-deferred.spec.ts:129:1 › music is fetched only after the first town is playable (8mbps) 

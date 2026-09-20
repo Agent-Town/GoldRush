@@ -1,0 +1,29 @@
+✖ the landed registry names the live engine and stays outside its hash corpus (5605.574541ms)
+✔ same-era re-pins append, and removing an earlier pin reds (513.894417ms)
+✔ tooling edits stay outside the engine identity while src edits rotate it (18.138333ms)
+✔ a new-basis alias keeps its old-basis pin in the current era (495.741209ms)
+✔ an era bump starts a fresh lineage (288.899667ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 4
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 13379.152792
+
+✖ failing tests:
+
+test at scripts/engine-era-guard.test.mjs:65:1
+✖ the landed registry names the live engine and stays outside its hash corpus (5605.574541ms)
+  AssertionError [ERR_ASSERTION]: engine hash 977ef6b77fd25040e7b2249d8ac1d814c1f6660a354500b98ca3e11a3cce6b58 is absent from era 5; append a same-era pin with its cause, or bump the era with a fresh pins array
+      at assertCurrentEra (file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-a/scripts/engine-era-guard.test.mjs:34:10)
+      at async TestContext.<anonymous> (file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-a/scripts/engine-era-guard.test.mjs:69:20)
+      at async Test.run (node:internal/test_runner/test:1054:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:297:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '=='
+  }

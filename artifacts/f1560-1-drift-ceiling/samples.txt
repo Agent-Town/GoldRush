@@ -1,0 +1,114 @@
+F-1560-1 denied-receipt drift ceiling two-window experiment
+
+Prediction stated before measurement:
+- CEILING CONFIRMED (geometric) if max_B <= max_A + 0.10.
+- CEILING REFUTED (window-limited) if max_B > max_A + 0.30.
+- INCONCLUSIVE otherwise.
+
+ARM A — control, advanceSim(0.35)
+
+desktop-chrome
+command: npx playwright test e2e/m4-06-embodiment.spec.ts --grep 'permission-denied receipts' --project=desktop-chrome --repeat-each=20 --workers=1
+01 [m4-06-denied] driftAbs=0.26277176408434727 gapClosed=0.2618334687917603
+02 [m4-06-denied] driftAbs=0.3722002149381437 gapClosed=0.37139096406706074
+03 [m4-06-denied] driftAbs=0.20800000000000016 gapClosed=0.20675740724312952
+04 [m4-06-denied] driftAbs=0.3529334214834294 gapClosed=0.3522530399578141
+05 [m4-06-denied] driftAbs=0.2833831328784402 gapClosed=0.2823313158299232
+06 [m4-06-denied] driftAbs=0.26277176408434727 gapClosed=0.2618334687917603
+07 [m4-06-denied] driftAbs=0.26277176408434727 gapClosed=0.2618334687917603
+08 [m4-06-denied] driftAbs=0.3026763948510024 gapClosed=0.30146923993916985
+09 [m4-06-denied] driftAbs=0.26277176408434727 gapClosed=0.2618334687917603
+10 [m4-06-denied] driftAbs=0.2833831328784402 gapClosed=0.2823313158299232
+11 [m4-06-denied] driftAbs=0.2833831328784402 gapClosed=0.2823313158299232
+12 [m4-06-denied] driftAbs=0.3722002149381437 gapClosed=0.37139096406706074
+13 [m4-06-denied] driftAbs=0.2833831328784402 gapClosed=0.2823313158299232
+14 [m4-06-denied] driftAbs=0.33233868267175914 gapClosed=0.33175519291965117
+15 [m4-06-denied] driftAbs=0.26277176408434727 gapClosed=0.2618334687917603
+16 [m4-06-denied] driftAbs=0.26277176408434727 gapClosed=0.2618334687917603
+17 [m4-06-denied] driftAbs=0.26277176408434727 gapClosed=0.2618334687917603
+18 [m4-06-denied] driftAbs=0.33233868267175914 gapClosed=0.33175519291965117
+19 [m4-06-denied] driftAbs=0.26277176408434727 gapClosed=0.2618334687917603
+20 [m4-06-denied] driftAbs=0.33233868267175914 gapClosed=0.33175519291965117
+summary: 20/20 passed
+
+mobile-chrome
+command: npx playwright test e2e/m4-06-embodiment.spec.ts --grep 'permission-denied receipts' --project=mobile-chrome --repeat-each=20 --workers=1
+01 [m4-06-denied] driftAbs=0.33233868267175914 gapClosed=0.33175519291965117
+02 [m4-06-denied] driftAbs=0.3722002149381437 gapClosed=0.37139096406706074
+03 [m4-06-denied] driftAbs=0.33233868267175914 gapClosed=0.33175519291965117
+04 [m4-06-denied] driftAbs=0.3026763948510024 gapClosed=0.30146923993916985
+05 [m4-06-denied] driftAbs=0.3026763948510024 gapClosed=0.30146923993916985
+06 [m4-06-denied] driftAbs=0.33233868267175914 gapClosed=0.33175519291965117
+07 [m4-06-denied] driftAbs=0.33233868267175914 gapClosed=0.33175519291965117
+08 [m4-06-denied] driftAbs=0.3722002149381437 gapClosed=0.37139096406706074
+09 [m4-06-denied] driftAbs=0.33233868267175914 gapClosed=0.33175519291965117
+10 [m4-06-denied] driftAbs=0.3722002149381437 gapClosed=0.37139096406706074
+11 [m4-06-denied] driftAbs=0.3722002149381437 gapClosed=0.37139096406706074
+12 [m4-06-denied] driftAbs=0.3722002149381437 gapClosed=0.37139096406706074
+13 [m4-06-denied] driftAbs=0.3722002149381437 gapClosed=0.37139096406706074
+14 [m4-06-denied] driftAbs=0.26277176408434727 gapClosed=0.2618334687917603
+15 [m4-06-denied] driftAbs=0.3722002149381437 gapClosed=0.37139096406706074
+16 [m4-06-denied] driftAbs=0.3722002149381437 gapClosed=0.37139096406706074
+17 [m4-06-denied] driftAbs=0.3722002149381437 gapClosed=0.37139096406706074
+18 [m4-06-denied] driftAbs=0.3722002149381437 gapClosed=0.37139096406706074
+19 [m4-06-denied] driftAbs=0.3722002149381437 gapClosed=0.37139096406706074
+20 [m4-06-denied] driftAbs=0.33233868267175914 gapClosed=0.33175519291965117
+summary: 20/20 passed
+
+ARM A combined: 7 distinct driftAbs values; max_A=0.3722002149381437
+
+ARM B — discriminating arm, temporary advanceSim(1.05)
+
+desktop-chrome
+command: npx playwright test e2e/m4-06-embodiment.spec.ts --grep 'permission-denied receipts' --project=desktop-chrome --repeat-each=20 --workers=1
+01 [m4-06-denied] driftAbs=0.2833831328784402 gapClosed=0.2823313158299232
+02 [m4-06-denied] driftAbs=0.26277176408434727 gapClosed=0.2618334687917603
+03 [m4-06-denied] driftAbs=0.2833831328784402 gapClosed=0.2823313158299232
+04 [m4-06-denied] driftAbs=0.26277176408434727 gapClosed=0.2618334687917603
+05 [m4-06-denied] driftAbs=0.26277176408434727 gapClosed=0.2618334687917603
+06 [m4-06-denied] driftAbs=0.2833831328784402 gapClosed=0.2823313158299232
+07 [m4-06-denied] driftAbs=0.2833831328784402 gapClosed=0.2823313158299232
+08 [m4-06-denied] driftAbs=0.2833831328784402 gapClosed=0.2823313158299232
+09 [m4-06-denied] driftAbs=0.2833831328784402 gapClosed=0.2823313158299232
+10 [m4-06-denied] driftAbs=0.26277176408434727 gapClosed=0.2618334687917603
+11 [m4-06-denied] driftAbs=0.26277176408434727 gapClosed=0.2618334687917603
+12 [m4-06-denied] driftAbs=0.2833831328784402 gapClosed=0.2823313158299232
+13 [m4-06-denied] driftAbs=0.3529334214834294 gapClosed=0.3522530399578141
+14 [m4-06-denied] driftAbs=0.2833831328784402 gapClosed=0.2823313158299232
+15 [m4-06-denied] driftAbs=0.26277176408434727 gapClosed=0.2618334687917603
+16 [m4-06-denied] driftAbs=0.26277176408434727 gapClosed=0.2618334687917603
+17 [m4-06-denied] driftAbs=0.2833831328784402 gapClosed=0.2823313158299232
+18 [m4-06-denied] driftAbs=0.2833831328784402 gapClosed=0.2823313158299232
+19 [m4-06-denied] driftAbs=0.26277176408434727 gapClosed=0.2618334687917603
+20 [m4-06-denied] driftAbs=0.33233868267175914 gapClosed=0.33175519291965117
+summary: 20/20 passed
+
+mobile-chrome
+command: npx playwright test e2e/m4-06-embodiment.spec.ts --grep 'permission-denied receipts' --project=mobile-chrome --repeat-each=20 --workers=1
+01 [m4-06-denied] driftAbs=0.26277176408434727 gapClosed=0.2618334687917603
+02 [m4-06-denied] driftAbs=0.26277176408434727 gapClosed=0.2618334687917603
+03 [m4-06-denied] driftAbs=0.33233868267175914 gapClosed=0.33175519291965117
+04 [m4-06-denied] driftAbs=0.3529334214834294 gapClosed=0.3522530399578141
+05 [m4-06-denied] driftAbs=0.26277176408434727 gapClosed=0.2618334687917603
+06 [m4-06-denied] driftAbs=0.33233868267175914 gapClosed=0.33175519291965117
+07 [m4-06-denied] driftAbs=0.33233868267175914 gapClosed=0.33175519291965117
+08 [m4-06-denied] driftAbs=0.33233868267175914 gapClosed=0.33175519291965117
+09 [m4-06-denied] driftAbs=0.33233868267175914 gapClosed=0.33175519291965117
+10 [m4-06-denied] driftAbs=0.3529334214834294 gapClosed=0.3522530399578141
+11 [m4-06-denied] driftAbs=0.33233868267175914 gapClosed=0.33175519291965117
+12 [m4-06-denied] driftAbs=0.33233868267175914 gapClosed=0.33175519291965117
+13 [m4-06-denied] driftAbs=0.33233868267175914 gapClosed=0.33175519291965117
+14 [m4-06-denied] driftAbs=0.33233868267175914 gapClosed=0.33175519291965117
+15 [m4-06-denied] driftAbs=0.26277176408434727 gapClosed=0.2618334687917603
+16 [m4-06-denied] driftAbs=0.33233868267175914 gapClosed=0.33175519291965117
+17 [m4-06-denied] driftAbs=0.33233868267175914 gapClosed=0.33175519291965117
+18 [m4-06-denied] driftAbs=0.26277176408434727 gapClosed=0.2618334687917603
+19 [m4-06-denied] driftAbs=0.33233868267175914 gapClosed=0.33175519291965117
+20 [m4-06-denied] driftAbs=0.33233868267175914 gapClosed=0.33175519291965117
+summary: 20/20 passed
+
+ARM B combined: 4 distinct driftAbs values; max_B=0.3529334214834294
+
+VERDICT: CEILING CONFIRMED (geometric)
+max_B=0.3529334214834294 <= max_A + 0.10=0.4722002149381437; tripling the window did not materially raise the maximum.
+Arm B assertions passed in all 40 samples; no assertion line failed.

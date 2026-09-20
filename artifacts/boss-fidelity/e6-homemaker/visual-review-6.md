@@ -1,0 +1,5 @@
+# Fresh V6 visual review
+
+Agent e6_shape_visual_6 inspected the reference, comparison, two full candidate images and eight 2x crops. Candidate closer, high confidence. Remaining high-confidence findings: rough stone-like metal; simple tall silhouette and slab limbs; rectangular broom; amber eye lacks radial machinery and shutdown reads as plug. Medium confidence: missing heavy hose collars, obscured broom grip, hose/chair layering, raised seated feet with black soles and unclear weight-bearing chair; tiny debris can read as stray geometry. No seated reference exists, so chair fidelity cannot be established against a matching source pose.
+
+Root triage: accept silhouette improvement, retain material/detail limits. Floor assertions independently caught V6 broom below ground; V7 changes the shoulder-pivot rotation only and passes all final-morph floor bounds. Actual in-game scenery overlap was a separate control-pylon issue, proven by object visibility isolation. No claim of final visual acceptance.

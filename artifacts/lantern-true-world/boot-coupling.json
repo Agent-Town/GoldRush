@@ -1,0 +1,140 @@
+[
+  {
+    "name": "desktop-control",
+    "inputUrl": "http://127.0.0.1:5194/?watch=agent-0729e0d5-34faa951-beba-4b1e-88b1-5b16711d9340&contract=the-claim&epoch=epoch-1-frontier",
+    "pageErrors": [],
+    "consoleErrors": [],
+    "url": "http://127.0.0.1:5194/?watch=agent-0729e0d5-34faa951-beba-4b1e-88b1-5b16711d9340&contract=the-claim&epoch=epoch-1-frontier",
+    "viewport": {
+      "width": 1280,
+      "height": 800
+    },
+    "webglRequests": [],
+    "lanternShows": 1,
+    "worlds": 1,
+    "worldTag": "svg",
+    "menu": false
+  },
+  {
+    "name": "desktop-no-webgl",
+    "inputUrl": "http://127.0.0.1:5194/?watch=agent-0729e0d5-34faa951-beba-4b1e-88b1-5b16711d9340&contract=the-claim&epoch=epoch-1-frontier",
+    "pageErrors": [
+      "Error creating WebGL context."
+    ],
+    "consoleErrors": [
+      "THREE.WebGLRenderer: Error creating WebGL context."
+    ],
+    "url": "http://127.0.0.1:5194/",
+    "viewport": {
+      "width": 1280,
+      "height": 800
+    },
+    "webglRequests": [
+      {
+        "canvas": "",
+        "type": "webgl"
+      },
+      {
+        "canvas": "",
+        "type": "experimental-webgl"
+      },
+      {
+        "canvas": "",
+        "type": "webgl"
+      },
+      {
+        "canvas": "",
+        "type": "experimental-webgl"
+      },
+      {
+        "canvas": "game-canvas",
+        "type": "webgl2"
+      },
+      {
+        "canvas": "game-canvas",
+        "type": "webgl2"
+      },
+      {
+        "canvas": "",
+        "type": "webgl"
+      },
+      {
+        "canvas": "",
+        "type": "experimental-webgl"
+      }
+    ],
+    "lanternShows": 0,
+    "worlds": 0,
+    "worldTag": null,
+    "menu": true
+  },
+  {
+    "name": "mobile-control",
+    "inputUrl": "http://127.0.0.1:5194/?watch=agent-0729e0d5-34faa951-beba-4b1e-88b1-5b16711d9340&contract=the-claim&epoch=epoch-1-frontier",
+    "pageErrors": [],
+    "consoleErrors": [],
+    "url": "http://127.0.0.1:5194/?watch=agent-0729e0d5-34faa951-beba-4b1e-88b1-5b16711d9340&contract=the-claim&epoch=epoch-1-frontier",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "webglRequests": [],
+    "lanternShows": 1,
+    "worlds": 1,
+    "worldTag": "svg",
+    "menu": false
+  },
+  {
+    "name": "mobile-no-webgl",
+    "inputUrl": "http://127.0.0.1:5194/?watch=agent-0729e0d5-34faa951-beba-4b1e-88b1-5b16711d9340&contract=the-claim&epoch=epoch-1-frontier",
+    "pageErrors": [
+      "Error creating WebGL context."
+    ],
+    "consoleErrors": [
+      "THREE.WebGLRenderer: Error creating WebGL context."
+    ],
+    "url": "http://127.0.0.1:5194/",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "webglRequests": [
+      {
+        "canvas": "",
+        "type": "webgl"
+      },
+      {
+        "canvas": "",
+        "type": "experimental-webgl"
+      },
+      {
+        "canvas": "",
+        "type": "webgl"
+      },
+      {
+        "canvas": "",
+        "type": "experimental-webgl"
+      },
+      {
+        "canvas": "game-canvas",
+        "type": "webgl2"
+      },
+      {
+        "canvas": "game-canvas",
+        "type": "webgl2"
+      },
+      {
+        "canvas": "",
+        "type": "webgl"
+      },
+      {
+        "canvas": "",
+        "type": "experimental-webgl"
+      }
+    ],
+    "lanternShows": 0,
+    "worlds": 0,
+    "worldTag": null,
+    "menu": true
+  }
+]

@@ -1,0 +1,91 @@
+{
+  "schema": "goldrush.canyonworks.bankcap.proof.v1",
+  "task": "canyon-works-bank-cap-override",
+  "branch": "fix/canyon-works-bank-cap",
+  "base": "ed57402e8",
+  "ruling": "owner 2026-09-06, verbatim: \"(2) a per-contract cap override\"",
+  "override": {
+    "field": "assets/contracts/epoch-3-voltage/contracts.json -> e3-canyon-works.twist.economy.bankCap",
+    "value": 360,
+    "default": 200,
+    "arithmetic": {
+      "latchCost": 330,
+      "latchCostFrom": "beaconCost(i) = ceil(Balance.beacon.costBase 25 * 1.3^i / 5) * 5 -> [25,35,45,55,75,95], six sites, six beacons",
+      "panYieldPerDescent": 60,
+      "panYieldFrom": "2 live seams x Balance.goldSeam.capacity 30; activeMin 2 of 4 anchors; respawn 20 s at a DIFFERENT anchor (HarvestSystem.pickOpenAnchor), two clusters 56 wu apart",
+      "headroom": 30,
+      "headroomFrom": "one Balance.goldSeam.capacity, so the last sweep before the descent is never refused mid-pan (Economy.canReceiveIncome would drop a whole 5 g tick and log gold_capped)",
+      "value": "330 + 30 = 360"
+    }
+  },
+  "deadline": {
+    "authored": "twist.powerGrid.connect { required: 2, byWave: 6 }",
+    "rule": "HeadlessContractSim.syncCanyonConnectObjective: complete while wave <= 6; failed once wave > 6",
+    "measuredFailsAt": "t = 210.03 s (wave 7 arrival)",
+    "blockerClaimed": "t = 180 s",
+    "correction": "the blocker's 'the wave <= 6 latch closes at t = 180' is one wave interval early; wave 6 opens at t = 180.03 and the latch is still live through it"
+  },
+  "runs": [
+    {
+      "name": "proof-purse-360",
+      "purpose": "the override is LIVE in the headless engine",
+      "command": "node artifacts/canyon-works-bank-cap/run.mjs ctrl-ceiling.mjs proof-purse-360.json",
+      "contract": "e3-canyon-works",
+      "seed": "e3-canyon-works-01",
+      "ticks": 18000,
+      "waves": 20,
+      "timeMs": 600000,
+      "eventLogHash": "fnv1a32:fd4c2ce9",
+      "peakGoldHeld": 360,
+      "firstGoldAbove200": "t = 210.03 s (gold 250)",
+      "plateauAt": "t = 302.87 s (gold 360, income refused above it)",
+      "verdict": "PASS - a purse of 360 is held and enforced; under Balance.economy.bankCap 200 this run could never have exceeded 200"
+    },
+    {
+      "name": "proof-onedescent-360",
+      "purpose": "one descent buys the whole ladder inside the deadline",
+      "command": "node artifacts/canyon-works-bank-cap/run.mjs ctrl-onedescent.mjs proof-onedescent-360.json",
+      "contract": "e3-canyon-works",
+      "seed": "e3-canyon-works-01",
+      "ticks": 18000,
+      "waves": 20,
+      "timeMs": 600000,
+      "eventLogHash": "fnv1a32:6b998cd6",
+      "sixBeaconsAt": "t = 270.03 s",
+      "galleriesPoweredAt": "t = 270.03 s (canyonConnect 2/2)",
+      "latchFailedAt": "t = 210.03 s",
+      "verdict": "FAIL - HONESTY GUARD. The grid completes and both galleries light, 60 s after the latch has already closed."
+    }
+  ],
+  "incomeCeiling": {
+    "source": "viewlog-ceiling.json (uncapped control at bankCap 900: viewlog-onedescent-900.json agrees row for row up to the plateau)",
+    "cumulativeGoldEarned": { "t17.3": 30, "t30": 60, "t99.2": 115, "t141.4": 180, "t180.03": 240, "t210.03": 310, "t270.03": 390 },
+    "sustainedRate": "800 g over 600 s = 1.33 g/s; 240 g over the first 180 s = 1.33 g/s",
+    "priorArt": "heat 12 generation 60 measured 180 g at t = 180 (1.00 g/s); the blocker's theoretical ceiling is 2.07 g/s",
+    "openingCommute": "81.4 wu from the stake (0,-44) to the nearest anchor (-34,30) at Balance.agent.moveSpeed 4.8 = 17.0 s, measured at 17.3 s",
+    "pylonTour": "143.4 wu over the six sites in route order = 29.9 s at 4.8 wu/s",
+    "conclusion": "330 g of cumulative income lands at t ~ 225 even uncapped, and the tour needs ~30 s after that, so the latch cannot close before t ~ 255 against a t = 210 deadline. At the blocker's own optimistic 2.07 g/s the floor is 159.4 s of panning + 17.0 s commute + 29.9 s tour = 206.3 s, which clears t = 180 by 26 s and only just fits t = 210 with 3.7 s to spare. The purse was necessary and is not sufficient."
+  },
+  "floors": {
+    "command": "node scripts/null-floor-anchors.mjs --check",
+    "differences": 11,
+    "rows": [
+      "eraStamp: pinned 2e9a92199, derived ed57402e8",
+      "e3-moth-season/e3-moth-season-01",
+      "e3-moth-season/e3-moth-season-02",
+      "e8-eclipse/e8-eclipse-01",
+      "e8-eclipse/e8-eclipse-02",
+      "e8-far-side/e8-far-side-01",
+      "e8-far-side/e8-far-side-02",
+      "e8-low-orbit/e8-low-orbit-01",
+      "e8-low-orbit/e8-low-orbit-02",
+      "e8-mare-claim/e8-mare-claim-01",
+      "e8-mare-claim/e8-mare-claim-02"
+    ],
+    "verdict": "e3-canyon-works rows did NOT move, so assets/contracts/null-floors.json was NOT regenerated. The idle floor never pans, so a raised purse cannot reach it; the map still loses idle at wave 3 / gold 0. The ten moved rows are the e3-moth-season/E8 set already known stale on main."
+  },
+  "engineHash": {
+    "value": "c97559e6f120c965dc687ebf9918127d9731b02259ba5c8a053c0c3b67934359",
+    "guard": "scripts/engine-era-guard.test.mjs reds by design after src/ and assets/contracts edits; the drain pins this hash in era 5"
+  }
+}

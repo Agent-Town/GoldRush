@@ -1,0 +1,26 @@
+Done — **first secure in county history for `e1-twin-banks`**, on the first controller I wrote.
+
+## Result
+
+| | |
+|---|---|
+| Outcome | **SECURED** |
+| Waves / timeAlive | 20 / 600.000 s |
+| Gold / kills / calls | 200 / 920 / 118 |
+| eventLogHash | `fnv1a32:ce442a62` |
+| Tape put forward | `artifacts/heat11/opus/e1-twin-banks/attempt-1-tape.json` (118 entries, era 5, engineHash matches) |
+| Runs / scored attempts | 3 / 1 |
+| worldModel | `sim-import` |
+
+Sequence: idle probe (died w3/91.6s) → read the manifest, the winnability receipt, and the engine → one controller → it secured on its first ride → re-rode it identically as the scored attempt, reproducing the hash bit for bit.
+
+Three engine facts did the work:
+- **The hero never moves** (`IDLE_INTENTS`) and every enemy targets it; the *order actor* is the untargeted Prospector. Defence is a fixed-point problem, economy a travelling-salesman one.
+- **`HARVEST` is one 1.5 s pan tick (5 gold) per order execution** — so a 32-order nearest-first seam chain is worth ~100 gold a wave, not 5. This corrects generation 6's "starved economy" reading: my array was starved, not the map.
+- **The sluice's legal line is exactly `z = -7`**, the single intersection of `isWaterSourceAdjacent(pad 2)` and the south `buildZone`. Three sluices went up on the first try.
+
+Margin was wide: hero at full HP until wave 18, finished 127/175, **zero buildings wrecked** across 934 spawns.
+
+On the audit question — unlike the Dry Gulch, **the era's named mechanic actually bound here**. Gold pinned at exactly 200 (`Balance.economy.bankCap`) from wave 9 to wave 20 against 690 panned; the sluice line is the map's authored second faucet, and the `stockpile` (+150 over the cap) is the published counter-lever I declined because my ladder was already complete. The twin fords, by contrast, are scenery for a headless rider: the hero is welded to the south stake, so I never crossed one.
+
+Files are all written — `gauntlet-outcome.json` and `gauntlet-report.md` are current, with the four verbatim-copyable sections at the end of the report.

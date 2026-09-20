@@ -1,0 +1,788 @@
+{
+  "contract": "e4-dust-flats",
+  "activeEpoch": 4,
+  "nightEnabled": false,
+  "lightRamp": null,
+  "dayNightCycle": null,
+  "mothSeason": null,
+  "e6Active": false,
+  "e9Active": false,
+  "diagnostics": {
+    "active": true,
+    "act": 2,
+    "dreadEvents": 0,
+    "dreadVisible": false,
+    "orbiting": false,
+    "orbitDistance": 1312.91,
+    "stolenHeads": 4,
+    "escortsFunded": 4,
+    "beached": true,
+    "craneReach": 6,
+    "turretsGrabbed": 0,
+    "bellTaken": false,
+    "gangDeparted": false,
+    "salvageReady": false,
+    "wreckRemains": false
+  },
+  "stages": {
+    "spawn": {
+      "actorUpdates": 24,
+      "ticks": 8,
+      "ids": [
+        "wheels",
+        "crane",
+        "wheelhouse"
+      ],
+      "multipliers": {
+        "passedMultiplier": [
+          1,
+          1
+        ],
+        "night": [
+          1,
+          1
+        ],
+        "weather": [
+          1,
+          1
+        ],
+        "wrangle": [
+          1,
+          1
+        ],
+        "e6": [
+          1,
+          1
+        ],
+        "e9": [
+          1,
+          1
+        ],
+        "scriptedSpeed": [
+          12.5663706144,
+          12.5663706144
+        ],
+        "hpRatio": [
+          0.9113915415151947,
+          1
+        ],
+        "y": [
+          -0.10892509250185388,
+          -0.08384485971987561
+        ],
+        "light": [
+          1,
+          1
+        ]
+      },
+      "maxSameTickMultiplierSpread": 0,
+      "maxSameTickLightSpread": 0,
+      "maxSameTickHeightSpread": 0.023728542637153405,
+      "allIgnoreTerrain": true,
+      "maxActivationDelay": 0,
+      "gnawing": false,
+      "wreckerStates": [
+        "seekBuilding"
+      ],
+      "thiefStates": [
+        "none"
+      ]
+    },
+    "before-hp-fixture": {
+      "actorUpdates": 5400,
+      "ticks": 1800,
+      "ids": [
+        "wheels",
+        "crane",
+        "wheelhouse"
+      ],
+      "multipliers": {
+        "passedMultiplier": [
+          0.7,
+          1
+        ],
+        "night": [
+          1,
+          1
+        ],
+        "weather": [
+          0.7,
+          1
+        ],
+        "wrangle": [
+          1,
+          1
+        ],
+        "e6": [
+          1,
+          1
+        ],
+        "e9": [
+          1,
+          1
+        ],
+        "scriptedSpeed": [
+          12.5663706144,
+          12.5663706144
+        ],
+        "hpRatio": [
+          0.7046384717173158,
+          1
+        ],
+        "y": [
+          -0.0961130571860608,
+          0.8085275005473457
+        ],
+        "light": [
+          1,
+          1
+        ]
+      },
+      "maxSameTickMultiplierSpread": 0,
+      "maxSameTickLightSpread": 0,
+      "maxSameTickHeightSpread": 0.26636607119007283,
+      "allIgnoreTerrain": true,
+      "maxActivationDelay": 0,
+      "gnawing": false,
+      "wreckerStates": [
+        "seekBuilding"
+      ],
+      "thiefStates": [
+        "none"
+      ]
+    },
+    "wheels-half-hp": {
+      "actorUpdates": 2700,
+      "ticks": 900,
+      "ids": [
+        "wheels",
+        "crane",
+        "wheelhouse"
+      ],
+      "multipliers": {
+        "passedMultiplier": [
+          0.7,
+          1
+        ],
+        "night": [
+          1,
+          1
+        ],
+        "weather": [
+          0.7,
+          1
+        ],
+        "wrangle": [
+          1,
+          1
+        ],
+        "e6": [
+          1,
+          1
+        ],
+        "e9": [
+          1,
+          1
+        ],
+        "scriptedSpeed": [
+          12.5663706144,
+          12.5663706144
+        ],
+        "hpRatio": [
+          0.37185538868692625,
+          0.8582264664243116
+        ],
+        "y": [
+          0.4084246688078701,
+          0.8085275005473457
+        ],
+        "light": [
+          1,
+          1
+        ]
+      },
+      "maxSameTickMultiplierSpread": 0,
+      "maxSameTickLightSpread": 0,
+      "maxSameTickHeightSpread": 0.19074251435199574,
+      "allIgnoreTerrain": true,
+      "maxActivationDelay": 0,
+      "gnawing": false,
+      "wreckerStates": [
+        "seekBuilding"
+      ],
+      "thiefStates": [
+        "none"
+      ]
+    },
+    "kill-crane": {
+      "actorUpdates": 19,
+      "ticks": 8,
+      "ids": [
+        "wheels",
+        "crane",
+        "wheelhouse"
+      ],
+      "multipliers": {
+        "passedMultiplier": [
+          1,
+          1
+        ],
+        "night": [
+          1,
+          1
+        ],
+        "weather": [
+          1,
+          1
+        ],
+        "wrangle": [
+          1,
+          1
+        ],
+        "e6": [
+          1,
+          1
+        ],
+        "e9": [
+          1,
+          1
+        ],
+        "scriptedSpeed": [
+          12.5663706144,
+          12.5663706144
+        ],
+        "hpRatio": [
+          0.00004322363828527087,
+          0.7164529328486231
+        ],
+        "y": [
+          0.500121482787388,
+          0.5764560111474314
+        ],
+        "light": [
+          1,
+          1
+        ]
+      },
+      "maxSameTickMultiplierSpread": 0,
+      "maxSameTickLightSpread": 0,
+      "maxSameTickHeightSpread": 0.06317219675342856,
+      "allIgnoreTerrain": true,
+      "maxActivationDelay": 0,
+      "gnawing": false,
+      "wreckerStates": [
+        "seekBuilding"
+      ],
+      "thiefStates": [
+        "none"
+      ]
+    },
+    "crane-dead-wheels-moving": {
+      "actorUpdates": 1800,
+      "ticks": 900,
+      "ids": [
+        "wheels",
+        "wheelhouse"
+      ],
+      "multipliers": {
+        "passedMultiplier": [
+          0.7,
+          1
+        ],
+        "night": [
+          1,
+          1
+        ],
+        "weather": [
+          0.7,
+          1
+        ],
+        "wrangle": [
+          1,
+          1
+        ],
+        "e6": [
+          1,
+          1
+        ],
+        "e9": [
+          1,
+          1
+        ],
+        "scriptedSpeed": [
+          12.5663706144,
+          12.5663706144
+        ],
+        "hpRatio": [
+          0.25342723030670117,
+          0.7161126763680414
+        ],
+        "y": [
+          0.4084246688078701,
+          0.8085275005473457
+        ],
+        "light": [
+          1,
+          1
+        ]
+      },
+      "maxSameTickMultiplierSpread": 0,
+      "maxSameTickLightSpread": 0,
+      "maxSameTickHeightSpread": 0.19074251435199574,
+      "allIgnoreTerrain": true,
+      "maxActivationDelay": 0,
+      "gnawing": false,
+      "wreckerStates": [
+        "seekBuilding"
+      ],
+      "thiefStates": [
+        "none"
+      ]
+    },
+    "kill-wheels": {
+      "actorUpdates": 11,
+      "ticks": 8,
+      "ids": [
+        "wheels",
+        "wheelhouse"
+      ],
+      "multipliers": {
+        "passedMultiplier": [
+          1,
+          1
+        ],
+        "night": [
+          1,
+          1
+        ],
+        "weather": [
+          1,
+          1
+        ],
+        "wrangle": [
+          1,
+          1
+        ],
+        "e6": [
+          1,
+          1
+        ],
+        "e9": [
+          1,
+          1
+        ],
+        "scriptedSpeed": [
+          0,
+          12.5663706144
+        ],
+        "hpRatio": [
+          0.000028815758856847248,
+          0.574339142792353
+        ],
+        "y": [
+          0.4368873635738752,
+          0.7019114297873864
+        ],
+        "light": [
+          1,
+          1
+        ]
+      },
+      "maxSameTickMultiplierSpread": 0,
+      "maxSameTickLightSpread": 0,
+      "maxSameTickHeightSpread": 0.16717285813620703,
+      "allIgnoreTerrain": true,
+      "maxActivationDelay": 0,
+      "gnawing": false,
+      "wreckerStates": [
+        "seekBuilding"
+      ],
+      "thiefStates": [
+        "none"
+      ]
+    },
+    "beached-wheelhouse": {
+      "actorUpdates": 120,
+      "ticks": 120,
+      "ids": [
+        "wheelhouse"
+      ],
+      "multipliers": {
+        "passedMultiplier": [
+          1,
+          1
+        ],
+        "night": [
+          1,
+          1
+        ],
+        "weather": [
+          1,
+          1
+        ],
+        "wrangle": [
+          1,
+          1
+        ],
+        "e6": [
+          1,
+          1
+        ],
+        "e9": [
+          1,
+          1
+        ],
+        "scriptedSpeed": [
+          0,
+          0
+        ],
+        "hpRatio": [
+          0.5739988863117713,
+          0.5739988863117713
+        ],
+        "y": [
+          0.6621994531134092,
+          0.6621994531134092
+        ],
+        "light": [
+          1,
+          1
+        ]
+      },
+      "maxSameTickMultiplierSpread": 0,
+      "maxSameTickLightSpread": 0,
+      "maxSameTickHeightSpread": 0,
+      "allIgnoreTerrain": true,
+      "maxActivationDelay": 0,
+      "gnawing": false,
+      "wreckerStates": [
+        "seekBuilding"
+      ],
+      "thiefStates": [
+        "none"
+      ]
+    }
+  },
+  "actorSamples": [
+    {
+      "stage": "spawn",
+      "at": 1.700000000000002,
+      "id": "wheels",
+      "delta": 0.03333333333333333,
+      "passedMultiplier": 1,
+      "scriptedSpeed": 12.5663706144,
+      "night": 1,
+      "weather": 1,
+      "wrangle": 1,
+      "e6": 1,
+      "e9": 1,
+      "hpRatio": 1,
+      "y": -0.08519654986470047,
+      "light": 1,
+      "ignoresTerrain": true,
+      "activationDelay": 0,
+      "wreckerState": "seekBuilding",
+      "thiefState": "none",
+      "gnawing": false
+    },
+    {
+      "stage": "before-hp-fixture",
+      "at": 1.9666666666666694,
+      "id": "wheels",
+      "delta": 0.03333333333333333,
+      "passedMultiplier": 1,
+      "scriptedSpeed": 12.5663706144,
+      "night": 1,
+      "weather": 1,
+      "wrangle": 1,
+      "e6": 1,
+      "e9": 1,
+      "hpRatio": 1,
+      "y": -0.08396407771173743,
+      "light": 1,
+      "ignoresTerrain": true,
+      "activationDelay": 0,
+      "wreckerState": "seekBuilding",
+      "thiefState": "none",
+      "gnawing": false
+    },
+    {
+      "stage": "before-hp-fixture",
+      "at": 10.033333333333308,
+      "id": "wheels",
+      "delta": 0.03333333333333333,
+      "passedMultiplier": 0.7,
+      "scriptedSpeed": 12.5663706144,
+      "night": 1,
+      "weather": 0.7,
+      "wrangle": 1,
+      "e6": 1,
+      "e9": 1,
+      "hpRatio": 1,
+      "y": 0.5853438025262807,
+      "light": 1,
+      "ignoresTerrain": true,
+      "activationDelay": 0,
+      "wreckerState": "seekBuilding",
+      "thiefState": "none",
+      "gnawing": false
+    },
+    {
+      "stage": "before-hp-fixture",
+      "at": 22.000000000000252,
+      "id": "wheels",
+      "delta": 0.03333333333333333,
+      "passedMultiplier": 1,
+      "scriptedSpeed": 12.5663706144,
+      "night": 1,
+      "weather": 1,
+      "wrangle": 1,
+      "e6": 1,
+      "e9": 1,
+      "hpRatio": 0.9409276943434631,
+      "y": 0.6152558300283534,
+      "light": 1,
+      "ignoresTerrain": true,
+      "activationDelay": 0,
+      "wreckerState": "seekBuilding",
+      "thiefState": "none",
+      "gnawing": false
+    },
+    {
+      "stage": "before-hp-fixture",
+      "at": 40.00000000000029,
+      "id": "wheels",
+      "delta": 0.03333333333333333,
+      "passedMultiplier": 0.7,
+      "scriptedSpeed": 12.5663706144,
+      "night": 1,
+      "weather": 0.7,
+      "wrangle": 1,
+      "e6": 1,
+      "e9": 1,
+      "hpRatio": 0.8818553886869263,
+      "y": 0.5963699227047382,
+      "light": 1,
+      "ignoresTerrain": true,
+      "activationDelay": 0,
+      "wreckerState": "seekBuilding",
+      "thiefState": "none",
+      "gnawing": false
+    },
+    {
+      "stage": "before-hp-fixture",
+      "at": 52.03333333333294,
+      "id": "wheels",
+      "delta": 0.03333333333333333,
+      "passedMultiplier": 1,
+      "scriptedSpeed": 12.5663706144,
+      "night": 1,
+      "weather": 1,
+      "wrangle": 1,
+      "e6": 1,
+      "e9": 1,
+      "hpRatio": 0.7637107773738526,
+      "y": 0.5382686261542922,
+      "light": 1,
+      "ignoresTerrain": true,
+      "activationDelay": 0,
+      "wreckerState": "seekBuilding",
+      "thiefState": "none",
+      "gnawing": false
+    },
+    {
+      "stage": "wheels-half-hp",
+      "at": 61.96666666666571,
+      "id": "wheels",
+      "delta": 0.03333333333333333,
+      "passedMultiplier": 1,
+      "scriptedSpeed": 12.5663706144,
+      "night": 1,
+      "weather": 1,
+      "wrangle": 1,
+      "e6": 1,
+      "e9": 1,
+      "hpRatio": 0.48999999999999994,
+      "y": 0.6094199503767622,
+      "light": 1,
+      "ignoresTerrain": true,
+      "activationDelay": 0,
+      "wreckerState": "seekBuilding",
+      "thiefState": "none",
+      "gnawing": false
+    },
+    {
+      "stage": "wheels-half-hp",
+      "at": 70.03333333333192,
+      "id": "wheels",
+      "delta": 0.03333333333333333,
+      "passedMultiplier": 0.7,
+      "scriptedSpeed": 12.5663706144,
+      "night": 1,
+      "weather": 0.7,
+      "wrangle": 1,
+      "e6": 1,
+      "e9": 1,
+      "hpRatio": 0.4309276943434631,
+      "y": 0.6039232703780859,
+      "light": 1,
+      "ignoresTerrain": true,
+      "activationDelay": 0,
+      "wreckerState": "seekBuilding",
+      "thiefState": "none",
+      "gnawing": false
+    },
+    {
+      "stage": "wheels-half-hp",
+      "at": 82.03333333333124,
+      "id": "wheels",
+      "delta": 0.03333333333333333,
+      "passedMultiplier": 1,
+      "scriptedSpeed": 12.5663706144,
+      "night": 1,
+      "weather": 1,
+      "wrangle": 1,
+      "e6": 1,
+      "e9": 1,
+      "hpRatio": 0.4309276943434631,
+      "y": 0.4350192063014172,
+      "light": 1,
+      "ignoresTerrain": true,
+      "activationDelay": 0,
+      "wreckerState": "seekBuilding",
+      "thiefState": "none",
+      "gnawing": false
+    },
+    {
+      "stage": "kill-crane",
+      "at": 91.96666666666401,
+      "id": "wheels",
+      "delta": 0.03333333333333333,
+      "passedMultiplier": 1,
+      "scriptedSpeed": 12.5663706144,
+      "night": 1,
+      "weather": 1,
+      "wrangle": 1,
+      "e6": 1,
+      "e9": 1,
+      "hpRatio": 0.37185538868692625,
+      "y": 0.5382014811337477,
+      "light": 1,
+      "ignoresTerrain": true,
+      "activationDelay": 0,
+      "wreckerState": "seekBuilding",
+      "thiefState": "none",
+      "gnawing": false
+    },
+    {
+      "stage": "crane-dead-wheels-moving",
+      "at": 92.23333333333066,
+      "id": "wheels",
+      "delta": 0.03333333333333333,
+      "passedMultiplier": 1,
+      "scriptedSpeed": 12.5663706144,
+      "night": 1,
+      "weather": 1,
+      "wrangle": 1,
+      "e6": 1,
+      "e9": 1,
+      "hpRatio": 0.37157184161977486,
+      "y": 0.5370261450820599,
+      "light": 1,
+      "ignoresTerrain": true,
+      "activationDelay": 0,
+      "wreckerState": "seekBuilding",
+      "thiefState": "none",
+      "gnawing": false
+    },
+    {
+      "stage": "crane-dead-wheels-moving",
+      "at": 100.03333333333022,
+      "id": "wheels",
+      "delta": 0.03333333333333333,
+      "passedMultiplier": 0.7,
+      "scriptedSpeed": 12.5663706144,
+      "night": 1,
+      "weather": 0.7,
+      "wrangle": 1,
+      "e6": 1,
+      "e9": 1,
+      "hpRatio": 0.31249953596323804,
+      "y": 0.6597110858812455,
+      "light": 1,
+      "ignoresTerrain": true,
+      "activationDelay": 0,
+      "wreckerState": "seekBuilding",
+      "thiefState": "none",
+      "gnawing": false
+    },
+    {
+      "stage": "crane-dead-wheels-moving",
+      "at": 112.03333333332954,
+      "id": "wheels",
+      "delta": 0.03333333333333333,
+      "passedMultiplier": 1,
+      "scriptedSpeed": 12.5663706144,
+      "night": 1,
+      "weather": 1,
+      "wrangle": 1,
+      "e6": 1,
+      "e9": 1,
+      "hpRatio": 0.31249953596323804,
+      "y": 0.5368331314406956,
+      "light": 1,
+      "ignoresTerrain": true,
+      "activationDelay": 0,
+      "wreckerState": "seekBuilding",
+      "thiefState": "none",
+      "gnawing": false
+    },
+    {
+      "stage": "kill-wheels",
+      "at": 122.23333333332896,
+      "id": "wheels",
+      "delta": 0.03333333333333333,
+      "passedMultiplier": 1,
+      "scriptedSpeed": 12.5663706144,
+      "night": 1,
+      "weather": 1,
+      "wrangle": 1,
+      "e6": 1,
+      "e9": 1,
+      "hpRatio": 0.000028815758856847248,
+      "y": 0.6040602217100822,
+      "light": 1,
+      "ignoresTerrain": true,
+      "activationDelay": 0,
+      "wreckerState": "seekBuilding",
+      "thiefState": "none",
+      "gnawing": false
+    },
+    {
+      "stage": "beached-wheelhouse",
+      "at": 122.49999999999561,
+      "id": "wheelhouse",
+      "delta": 0.03333333333333333,
+      "passedMultiplier": 1,
+      "scriptedSpeed": 0,
+      "night": 1,
+      "weather": 1,
+      "wrangle": 1,
+      "e6": 1,
+      "e9": 1,
+      "hpRatio": 0.5739988863117713,
+      "y": 0.6621994531134092,
+      "light": 1,
+      "ignoresTerrain": true,
+      "activationDelay": 0,
+      "wreckerState": "seekBuilding",
+      "thiefState": "none",
+      "gnawing": false
+    }
+  ],
+  "errors": [],
+  "modules": {
+    "game": "http://127.0.0.1:5246/src/game/Game.ts?t=1788845220454",
+    "enemy": "http://127.0.0.1:5246/src/entities/Enemy.ts"
+  }
+}

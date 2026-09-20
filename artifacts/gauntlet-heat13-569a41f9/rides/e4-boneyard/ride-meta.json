@@ -1,0 +1,19 @@
+{
+  "rig": "opus",
+  "model": "claude-opus-5",
+  "arena": "/tmp/heat13-569a41f9",
+  "workdir": "/tmp/heat13-569a41f9/artifacts/heat13/opus/e4-boneyard",
+  "charterFile": "/private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/rides/e4-boneyard/charter.md",
+  "charterSha256": "c676cafd3378112bd04d8c8d7e0e873c258986daf3386ed3af5c0bab5b021133",
+  "sessionId": "929e11a7-baf5-4149-9696-5937a5d2a768",
+  "wallSeconds": 1500,
+  "startedAt": "2026-09-07T12:32:40.202Z",
+  "invocation": "env -u CLAUDECODE -u CLAUDE_CODE_ENTRYPOINT -u CLAUDE_CONFIG_DIR claude -p \"<charter text, see charterFile>\" --model claude-opus-5 --allowedTools Read,Write,Glob,Bash(node *) --output-format text --session-id 929e11a7-baf5-4149-9696-5937a5d2a768",
+  "endedAt": "2026-09-07T12:49:03.476Z",
+  "wallClockSeconds": 983,
+  "exitCode": 0,
+  "signal": null,
+  "wallHit": false,
+  "firstOutputAt": "2026-09-07T12:37:40.243Z",
+  "setupToFirstOutputSeconds": 300
+}

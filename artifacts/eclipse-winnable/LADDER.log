@@ -1,0 +1,30 @@
+control | patch {} | defence default | secured=false identical=false | 98s
+    e8-eclipse-01#1 secured=false w19 t=588.733s gold=140 kills=895 tiers=[2,1,1,1] works={"sentry_beacon":6,"turret":4} hash=fnv1a32:ab543f56
+bank-1200 | patch {"economy":{"bankCap":1200}} | defence default | secured=false identical=false | 90s
+    e8-eclipse-01#1 secured=false w19 t=588.733s gold=140 kills=895 tiers=[2,1,1,1] works={"sentry_beacon":6,"turret":4} hash=fnv1a32:ab543f56
+bank-400 | patch {"economy":{"bankCap":400}} | defence default | secured=false identical=false | 90s
+    e8-eclipse-01#1 secured=false w19 t=588.733s gold=140 kills=895 tiers=[2,1,1,1] works={"sentry_beacon":6,"turret":4} hash=fnv1a32:ab543f56
+grit-300 | patch {"hero":{"maxHpBonus":300}} | defence default | secured=true identical=false | 81s
+    e8-eclipse-01#1 secured=true w20 t=600s gold=20 kills=916 tiers=[2,2,1,1] works={"sentry_beacon":6,"turret":4} hash=fnv1a32:b495fd34
+grit-100 | patch {"hero":{"maxHpBonus":100}} | tile {} | defence default | secured=true identical=false | 67s
+    e8-eclipse-01#1 secured=true w20 t=600s gold=20 kills=916 tiers=[2,2,1,1] works={"sentry_beacon":6,"turret":4} hash=fnv1a32:10ef585e
+fort-t5b6 | PROBE turrets=5 beacons=null | patch {} | defence t5b6 | secured=true | 59s
+    e8-eclipse-01#1 secured=true w20 t=600s gold=120 kills=916 tiers=[1,1,1,1,1] works={"sentry_beacon":6,"turret":5} hash=fnv1a32:8a7373c9
+fort-t6b9 | PROBE turrets=6 beacons=9 | patch {} | defence t6b9 | secured=true | 55s
+    e8-eclipse-01#1 secured=true w20 t=600s gold=0 kills=916 tiers=[2,1,1,1,1] works={"sentry_beacon":6,"turret":5} hash=fnv1a32:ad799e34
+buildline-apron | patch {} | tile @artifacts/eclipse-winnable/tile-apron.json | defence apron | secured=true identical=false | 45s
+    e8-eclipse-01#1 secured=true w20 t=600s gold=20 kills=915 tiers=[2,2,1,1] works={"sentry_beacon":6,"turret":4} hash=fnv1a32:292ce5d5
+roster-hp80 | patch {"enemyRoster":[{"id":"sun_glare_shambler","label":"Sun-Glare Shambler","hpScale":0.8},{"id":"scrap_corsair","label":"Scrap Corsair","hpScale":0.8}]} | tile {} | defence default | secured=true identical=false | 47s
+    e8-eclipse-01#1 secured=true w20 t=600s gold=140 kills=916 tiers=[2,1,1,1] works={"sentry_beacon":6,"turret":4} hash=fnv1a32:bcec6492
+seam-140 | patch {"seamYieldMult":1.4} | tile {} | defence default | kite none | secured=false identical=false | 45s
+    e8-eclipse-01#1 secured=false w19 t=589.333s gold=140 kills=896 tiers=[2,1,1,1] works={"sentry_beacon":6,"turret":4} hash=fnv1a32:8c39c3be
+kite-0-4 | patch {} | tile {} | defence default | kite 0,4 | secured=true identical=false | 46s
+    e8-eclipse-01#1 secured=true w20 t=600s gold=80 kills=923 tiers=[2,1,1,1] works={"sentry_beacon":6,"turret":4} hash=fnv1a32:f1614ea6
+kite-0-0 | patch {} | tile {} | defence default | kite 0,0 | secured=true identical=false | 44s
+    e8-eclipse-01#1 secured=true w20 t=600s gold=80 kills=919 tiers=[2,1,1,1] works={"sentry_beacon":6,"turret":4} hash=fnv1a32:1723fe17
+kite-north-0-26 | patch {} | tile {} | defence default | kite 0,26 | secured=false identical=false | 3s
+    e8-eclipse-01#1 secured=false w3 t=113.4s gold=90 kills=45 tiers=[1,1] works={"turret":2} hash=fnv1a32:77482b57
+kite-0-4-seed02 | patch {} | tile {} | defence default | kite 0,4 | secured=true identical=false | 55s
+    e8-eclipse-02#1 secured=true w20 t=600s gold=130 kills=922 tiers=[2,2,2,2] works={"sentry_beacon":6,"turret":4} hash=fnv1a32:49302624
+control-seed02 | patch {} | tile {} | defence default | kite none | secured=true identical=false | 53s
+    e8-eclipse-02#1 secured=true w20 t=600s gold=55 kills=916 tiers=[2,2,2,2] works={"sentry_beacon":6,"turret":4} hash=fnv1a32:e5dc3f16

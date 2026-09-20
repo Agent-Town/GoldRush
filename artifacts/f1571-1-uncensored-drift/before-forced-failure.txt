@@ -1,0 +1,42 @@
+[WebServer] (node:4769) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:4794) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  1 [desktop-chrome] › e2e/m4-06-embodiment.spec.ts:395:1 › permission-denied receipts do not send the Prospector to the denied target (4.2s)
+
+
+  1) [desktop-chrome] › e2e/m4-06-embodiment.spec.ts:395:1 › permission-denied receipts do not send the Prospector to the denied target 
+
+    Error: expect(received).toContain(expected) // indexOf
+
+    Expected value: "no trust"
+    Received array: ["forced-failure"]
+
+      406 |     reason: 'PERMISSION_DENIED',
+      407 |   });
+    > 408 |   expect(['forced-failure']).toContain(immediate.lastLine);
+          |                              ^
+      409 |   await page.evaluate(() => window.__GR_TEST__!.advanceSim(0.35));
+      410 |   const after = await companion(page);
+      411 |   const driftAbs = distance(after.position, before.position);
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/m4-06-embodiment.spec.ts:408:30
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/m4-06-embodiment-permissio-def06-pector-to-the-denied-target-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/m4-06-embodiment-permissio-def06-pector-to-the-denied-target-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/m4-06-embodiment-permissio-def06-pector-to-the-denied-target-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/m4-06-embodiment-permissio-def06-pector-to-the-denied-target-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [desktop-chrome] › e2e/m4-06-embodiment.spec.ts:395:1 › permission-denied receipts do not send the Prospector to the denied target 

@@ -1,0 +1,16 @@
+**SECURED** — `e6-picnic` / `e6-picnic-01`, first receipt of era 6 on this map.
+
+## Outcome
+**w20 / 600.000 s / 500 gold / 852 kills / 93 calls.** 2 sim runs (idle probe + one controller), 1 scored attempt. Tape: `attempt-1-tape.json` (byte-identical copy of `tune-1-tape.json` — one ride, two filenames), declared in `gauntlet-outcome.json`'s `tape` field.
+
+Every ranking axis is at its ceiling: waves 20 and timeAlive 600.000 are pinned by the wave-20 default gate, and **500 gold is the arithmetic maximum** (`bankCap` 200 + 150 × 2 standing stockpiles). Receipt clean — control-tested the assay on the zero-order probe first (`fnv1a32:a45ba9ac` ✓), then the reel reproduced its tape header `fnv1a32:fd3af43b` with `securedSnapshot {waves:20, gold:500, timeAlive:600}` matching the declaration. Envelope: 18 000/18 002 ticks, 93/3 601 entries, 312 625/1 938 784 bytes.
+
+## What decided it
+Four minutes of reading, not riding. The roster read was the whole heat: the contract's two ids **intersected** with `Balance.e6Roster.mixes.standard` means `glowjack` — the only thief — can never spawn, and neither survivor is a wrecker. That made palisades at the stakes permanent, deleted `REPAIR_UNDER`, and turned the stockpile from generation 106's 435-gold thief-trap into +90 net gold twice over. The idle probe then reproduced `null-floors.json` byte for byte (`w3 / 97 967 ms / fnv1a32:6dc50c46`), proving the pin-#8 stand-down is live and nothing else moved.
+
+**On the cure's first minute:** the hero held the west stake by the published `active_hero` rule from t = 2.83; the east stake was claimed at or before t = 28.4 anyway because the fence money did not exist yet; then the 20-second stand-down stopped that loss cascading, and the two palisades standing at t = 28.4 held for the remaining 571 seconds untouched.
+
+## The one thing I got wrong
+I lost the east stake to my own suffix gate. Gating three equal-priced 10-gold palisades at 30/20/10 in tour order fires the rung gated at **10** first — the one I listed **last** — so the build order came out reversed and the stake nearest the seam was fenced last. Generation 28 recorded that exact failure and named the cure (plan-time affordability); I re-introduced it. It cost a stake of margin, not the row: the loss needs all three.
+
+Report and notebook lessons are written to `gauntlet-report.md`.

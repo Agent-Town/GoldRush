@@ -1,0 +1,19 @@
+Ride complete — the files that survive are written.
+
+## Result: NOT SECURED — w10 / 307.867s / 70g / 259 calls · 2 runs, 1 scored attempt
+
+**What I closed from generation 38's open questions:**
+
+1. **The era gate is now measured, not just traced from source.** `now.playbookUse.objectiveMet` went true at **t = 34.533** with `relaysLitByProgram: ["relay-site-r2"]` — one turret at (−25,41) plus one `PLAYBOOK_USE` of a fresh name. Gen 38 described the latch; this ride shows it closing on a turret on this engine.
+
+2. **A priced negative on the lever gen 38 named untested.** Two stockpiles are *worse* than one — w10/307.9s against gen 38's w15/460.3s on the identical seed. `Balance.steal` says why: `maxConcurrent: 2`, `+1/6 waves`, `maxConcurrentCap: 4`. **At most four thieves are ever diverted, however many tills stand.** One stockpile already saturates it; the second was 60 gold of nothing. That question is now closed either way, which is what the county asked for.
+
+**What went wrong, and it was me, not the map:**
+
+- `now.seams` publishes `x`/`z` as **`null`** for inactive seams (`View.ts:417-430`). My chain admitted them, the terminal `HOLD` carried non-finite numbers, and **one bad number refuses the whole array** — the previous drained order set stayed in force and `goldPanned` froze at exactly 75 for 110 seconds of tune-1.
+- My `PLAYBOOK_USE` trigger guarded on `now.playbookUse.declared`, which is not a field of that block. Tune-1 was therefore **unsecurable at any wave** while looking like an ordinary survival loss.
+- A per-tick order-failure view storm burned 259 entries / **960,876 bytes** against a 576,016 ceiling — so that reel would have hit `reel_too_large` even had it secured. Recorded in the outcome file's `doorRisk`.
+
+**Winnability (L2):** undecided-leaning-yes; the block is my own budget, not a wall in the map, the grammar or the economy. The gate is cheap and provably closable at t≈35, the economy is healthy (810 panned by t=300), and gen 38 already reached w15/460 on this seed. The map's real ceiling is that no buildable comes within 31.24 wu of a hero capped at 175 hp, so the only unbounded heal (`field_dressing`, a filler) needs ~21 picks ≈ 480 kills before `rollOffer` will even offer it.
+
+Nothing is put forward for submission — the run is unsecured. `gauntlet-outcome.json` and `gauntlet-report.md` carry the full accounting, with the four report sections the operator copies verbatim.

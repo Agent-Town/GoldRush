@@ -1,0 +1,265 @@
+{
+  "contract": "e4-gusher-county",
+  "seed": "e4-gusher-county-01",
+  "policy": "floor",
+  "variant": "rig",
+  "views": 25,
+  "outcome": {
+    "secured": false,
+    "waves": 8,
+    "timeMs": 246500,
+    "gold": 0,
+    "kills": 198,
+    "calls": 24,
+    "defaultedPicks": 0,
+    "defaultedSecure": 0,
+    "eventLogHash": "fnv1a32:2ee655c6",
+    "motor": {
+      "graded": [
+        "camp-to-east-lease",
+        "camp-to-north-lease",
+        "camp-to-west-lease"
+      ],
+      "hauled": true,
+      "arrivedAt": 82.567,
+      "roadDistance": 224.741,
+      "distanceTravelled": 260.981,
+      "fuelDrawn": 30.682,
+      "tarHarvested": 9,
+      "convoyArrived": null,
+      "kind": "deliveries",
+      "delivered": [
+        "camp-to-west-lease",
+        "camp-to-east-lease",
+        "camp-to-north-lease"
+      ]
+    }
+  },
+  "motorEventKinds": [
+    "motor_haul_arrived",
+    "motor_haul_dispatched",
+    "motor_lease_delivered",
+    "motor_road_closed",
+    "motor_road_graded",
+    "motor_road_reopened",
+    "motor_tar_harvested",
+    "motor_weather"
+  ],
+  "motorEventCount": 65,
+  "terminalMotor": {
+    "contractId": "e4-gusher-county",
+    "objective": {
+      "kind": "deliveries",
+      "corridorId": "camp-to-north-lease",
+      "label": "the three lease heads",
+      "stop": {
+        "x": 0,
+        "z": 46
+      },
+      "stopReach": 2.5,
+      "arrived": true,
+      "arrivedAt": 82.567,
+      "roadDistanceAtArrival": 224.741,
+      "securableAtWave": 12,
+      "remaining": [],
+      "delivered": [
+        "camp-to-west-lease",
+        "camp-to-east-lease",
+        "camp-to-north-lease"
+      ]
+    },
+    "weather": {
+      "era": 4,
+      "contractId": "e4-gusher-county",
+      "phase": "telegraph",
+      "phaseProgress": 0.125,
+      "cycle": 8,
+      "simTime": 246.5,
+      "movementMultiplier": 1,
+      "visibilityMultiplier": 1,
+      "hazeColor": "#c99052",
+      "hazeStrength": 0.025,
+      "warning": true,
+      "nextPhaseInSeconds": 3.5
+    },
+    "roads": {
+      "segments": 3,
+      "length": 134.54,
+      "friendlySpeedMultiplier": 2.5,
+      "friendlyFuelMultiplier": 0.4,
+      "enemyRouteCostMultiplier": 0.25,
+      "gradeReach": 2.5,
+      "graded": [
+        "camp-to-east-lease",
+        "camp-to-north-lease",
+        "camp-to-west-lease"
+      ],
+      "corridors": [
+        {
+          "id": "camp-to-west-lease",
+          "start": {
+            "x": -12,
+            "z": -8
+          },
+          "end": {
+            "x": -50,
+            "z": -40
+          },
+          "graded": true,
+          "closed": false
+        },
+        {
+          "id": "camp-to-east-lease",
+          "start": {
+            "x": 12,
+            "z": -8
+          },
+          "end": {
+            "x": 48,
+            "z": -38
+          },
+          "graded": true,
+          "closed": false
+        },
+        {
+          "id": "camp-to-north-lease",
+          "start": {
+            "x": 0,
+            "z": 8
+          },
+          "end": {
+            "x": 0,
+            "z": 46
+          },
+          "graded": true,
+          "closed": false
+        }
+      ],
+      "closed": [],
+      "closesNext": "camp-to-north-lease"
+    },
+    "fuel": {
+      "active": true,
+      "tar": 0,
+      "stored": 5.318,
+      "capacity": 24,
+      "harvestedNodes": 3,
+      "refinedTar": 9,
+      "drawn": 30.682,
+      "nodes": [
+        {
+          "x": -12,
+          "z": -8,
+          "harvested": true,
+          "progress": 1
+        },
+        {
+          "x": 0,
+          "z": -8,
+          "harvested": true,
+          "progress": 1
+        },
+        {
+          "x": 12,
+          "z": -8,
+          "harvested": true,
+          "progress": 1
+        }
+      ]
+    },
+    "vehicle": {
+      "active": true,
+      "kind": "hauler",
+      "state": "arrived",
+      "x": 48,
+      "z": -38,
+      "target": null,
+      "speed": 9,
+      "burnPerSecond": 3,
+      "distanceTravelled": 260.981,
+      "onRoad": true,
+      "roadDistance": 224.741,
+      "dispatch": {
+        "x": 48,
+        "z": -38
+      }
+    },
+    "convoy": null,
+    "events": [
+      {
+        "type": "motor_weather",
+        "at": 172.033,
+        "phase": "clear",
+        "cycle": 5
+      },
+      {
+        "type": "motor_weather",
+        "at": 186.033,
+        "phase": "telegraph",
+        "cycle": 6
+      },
+      {
+        "type": "motor_road_closed",
+        "at": 190.033,
+        "corridorId": "camp-to-west-lease",
+        "cycle": 6
+      },
+      {
+        "type": "motor_weather",
+        "at": 190.033,
+        "phase": "storm",
+        "cycle": 6
+      },
+      {
+        "type": "motor_road_reopened",
+        "at": 202.033,
+        "corridorId": "camp-to-west-lease",
+        "cycle": 6
+      },
+      {
+        "type": "motor_weather",
+        "at": 202.033,
+        "phase": "clear",
+        "cycle": 6
+      },
+      {
+        "type": "motor_weather",
+        "at": 216.033,
+        "phase": "telegraph",
+        "cycle": 7
+      },
+      {
+        "type": "motor_road_closed",
+        "at": 220.033,
+        "corridorId": "camp-to-east-lease",
+        "cycle": 7
+      },
+      {
+        "type": "motor_weather",
+        "at": 220.033,
+        "phase": "storm",
+        "cycle": 7
+      },
+      {
+        "type": "motor_road_reopened",
+        "at": 232.033,
+        "corridorId": "camp-to-east-lease",
+        "cycle": 7
+      },
+      {
+        "type": "motor_weather",
+        "at": 232.033,
+        "phase": "clear",
+        "cycle": 7
+      },
+      {
+        "type": "motor_weather",
+        "at": 246.033,
+        "phase": "telegraph",
+        "cycle": 8
+      }
+    ],
+    "eventCount": 65
+  },
+  "speedLine": "gr-sim speed: 1.26 waves/s"
+}

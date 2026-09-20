@@ -1,0 +1,116 @@
+{
+  "rig": "opus",
+  "contract": "e4-boneyard",
+  "model": "claude-opus-5",
+  "sessionId": "db312ee1-878b-42cf-ad50-d902200c7f61",
+  "startedAt": "2026-09-03T22:15:40.161Z",
+  "endedAt": "2026-09-03T22:24:21.190Z",
+  "wallClockSeconds": 521,
+  "wallHit": false,
+  "exitCode": 0,
+  "signal": null,
+  "setupToFirstOutputSeconds": 60,
+  "arenaTrackedChanges": [],
+  "workspaceFiles": [
+    "attempt-1-tape.json",
+    "attempt-1-tape.log.json",
+    "gauntlet-outcome.json",
+    "gauntlet-report.md",
+    "probe-idle.json",
+    "probe-idle.ndjson",
+    "ride.mjs",
+    "tune-1-tape.json",
+    "tune-1-tape.log.json",
+    "tune-2-tape.json",
+    "tune-2-tape.log.json"
+  ],
+  "outcome": {
+    "secured": true,
+    "waves": 12,
+    "timeMs": 360000,
+    "gold": 200,
+    "kills": 333,
+    "calls": 41,
+    "defaultedPicks": 0,
+    "defaultedSecure": 0,
+    "eventLogHash": "fnv1a32:c87dfbd3",
+    "motor": {
+      "graded": [
+        "gate-to-west-rows"
+      ],
+      "hauled": true,
+      "arrivedAt": 42.767,
+      "roadDistance": 4.409,
+      "distanceTravelled": 68.424,
+      "fuelDrawn": 22.799,
+      "tarHarvested": 9,
+      "convoyArrived": null,
+      "kind": "tow",
+      "towed": true
+    },
+    "tape": "artifacts/heat11/opus/e4-boneyard/attempt-1-tape.json",
+    "scored": true,
+    "runsSoFar": 4,
+    "scoredAttempts": 1,
+    "worldModel": "sim-import"
+  },
+  "outcomeError": null,
+  "scoredTapes": [
+    {
+      "file": "attempt-1-tape.json",
+      "id": "agent-98011d35-1faec3aa-a568-41f5-9a84-f8fa3b54738b",
+      "contract": "e4-boneyard",
+      "seed": "e4-boneyard-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "b118c4d20",
+        "engineHash": "49c34f8bba3d61e003d1f421398e3835e3107945f396800fa124f946b2e4b2f9",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 12,
+        "timeAlive": 360,
+        "gold": 200
+      },
+      "entries": 41
+    }
+  ],
+  "otherSecuredTapes": [
+    {
+      "file": "tune-2-tape.json",
+      "id": "agent-98011d35-71030bac-4538-41c0-aefd-9fda7433628a",
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 12,
+        "timeAlive": 360,
+        "gold": 200
+      },
+      "meta": {
+        "buildId": "b118c4d20",
+        "engineHash": "49c34f8bba3d61e003d1f421398e3835e3107945f396800fa124f946b2e4b2f9",
+        "era": 5,
+        "viewVersion": 2
+      }
+    }
+  ],
+  "report": {
+    "outcome": "**SECURED.** `secured: true` · **waves 12** · **timeAlive 360.000 s** · **gold 200** · **calls 41** ·\nkills 333 · `defaultedPicks: 0` · `defaultedSecure: 0` · `eventLogHash: fnv1a32:c87dfbd3`.\nMotor block: `{ kind: \"tow\", towed: true, hauled: true, arrivedAt: 42.767, graded: [\"gate-to-west-rows\"],\nroadDistance: 4.409, distanceTravelled: 68.424, fuelDrawn: 22.799, tarHarvested: 9 }`.\n\nTape put forward: **`artifacts/heat11/opus/e4-boneyard/attempt-1-tape.json`**\n(identical run also on `tune-2-tape.json`). **4 sim runs, 1 scored attempt.**",
+    "whatTheMapAsked": "It asked me about **distance, fuel and road — the E4 signature mechanic, live and load-bearing — and the\ncounty's RESKIN measurement of this contract is out of date.** The secure is a conjunction: `wave >= 12`\n**and** `now.motor.objective.arrived`, and the errand is a two-leg tow that is pure spatial planning. Leg\none: the Hauler starts at (0, −40) and must come to rest within `objective.stopReach` 2.5 of the hulk\n`spent-boiler-west` at (−18, −8) — 36.7 wu of open country at `speed 9` and `burnPerSecond 3`, so\n12.2 fuel. Leg two: from the hulk to `objective.stop`, which *moves* the moment `hitched` flips, to the\ngate end of `gate-to-west-rows` at (−8, −38) — another 31.6 wu, 10.5 fuel. Against that, the whole run\nholds 36 fuel: three tar nodes at (−12, −8), (0, −8), (12, −8), three tar each, four fuel per tar, a\n24-unit tank. The margin is 22.8 needed against 36 available, and `weather` eats into it *by the second*\n— `stormMovementMultiplier: 0.75` means the same distance costs 33% more fuel under a storm, which is\nexactly the \"a storm makes distance cost more\" the door document promises. I planned to all three nodes\nrather than the two the arithmetic strictly needs, precisely because a storm on either leg would have\nstranded a two-node tank. The fields that carried it were `now.motor.objective` (`kind`, `stop`,\n`stopReach`, `hulk`, `hitched`, `arrived`), `now.motor.fuel` (`nodes[].harvested`, `stored`, `tar`),\n`now.motor.vehicle` (`state`, `x`, `z`), `now.motor.roads.corridors[].start/graded`, and\n`now.motor.weather.phase`; the orders that carried it were `MOVE_TO`, `GRADE` and `HAUL`. Two honest\nqualifiers. First, `GRADE` was nearly free here and nearly worthless: the Hauler drives a straight line,\nthe delivery leg meets the road at ~19° so only 4.409 wu of 68.424 travelled ever rode graded ground —\nthe road is a real lever on this map's *geometry* and this errand routes around it. Second, once the\nboiler was on the hook at t = 42.767 s the Motor layer went quiet and waves 3–12 were ordinary stationary\nsurvival — hard survival, on a starved economy, but not E4. So the fair reading is **half a reskin**:\nthe era's mechanic is genuinely composed, genuinely gates the secure, and genuinely made me do fuel and\ndistance arithmetic before writing an order — for the first 43 seconds of a 360-second contract.",
+    "winnability": "Secured, and the margin was **wide on the errand and thin on the fort**: the tow finished at t = 42.767 s\nwith 13.2 of 36 fuel unspent and never came close to running dry, while the hero bottomed at 39.6/150 in\nwave 6, held at 55/175 from wave 6 to the end with `threats.alive` pinned at its 60-enemy ceiling, and\nthe whole run was carried by three turrets and eight palisades bought out of a 50-wu commute — one more\nbad build trip and it would not have stood.",
+    "lessons": "- **The county's own era-mechanic audit can be stale, and the view settles it in one probe.** The brief\n  handed me `e4-boneyard` labelled RESKIN, \"no E4 system composed headless.\" The first idle view published\n  a complete `now.motor` with a live `tow` objective, `viewVersion: 2`, and a secure gated on it at\n  `HeadlessContractSim.ts:1210`. Gen-8 taught me a published *refusal* is a measurement of somebody's\n  policy; gen-15 adds that a published *audit* is a measurement of somebody's build. **Dump `now`'s keys\n  before you believe either.** One `--policy idle` run, ten seconds, decided it.\n- **Read the objective's `stop` as a moving target, not a coordinate.** `MotorSocket.stop()` returns the\n  hulk while `hitched` is false and the corridor's `start` afterwards, and `settleTow` only latches when\n  `vehicle.state === 'arrived'`. So the errand is two dispatches with a state flip between them, and a\n  second `HAUL` fired before the first arrival would silently re-target the Hauler and lose the hitch. I\n  split the legs across a wave boundary and branched on `objective.hitched` rather than trusting my own\n  clock — the cheapest possible insurance against a one-way latch.\n- **`MOVE_TO` alone will not harvest.** `Balance.agent.arriveRadius` is 0.16 and `e4Fuel.harvestRange`\n  is 1.35 with `harvestSeconds: 0.5`, but a completed `MOVE_TO` returns `{}` — truthy, so it owns the\n  tick — and the next order walks you off at 4.8 wu/s. Approach plus one tick is ~0.31 s and the node\n  never harvests. **A five-order dwell pattern (node → +1 → node → +1z → node) buys ~0.7 s in range and\n  all three nodes landed first try.** Any \"stand here for N seconds\" mechanic needs an explicit dwell;\n  the grammar has no wait verb.\n- **Rotating a `HARVEST` chain by distance is a commute generator.** Gen-9 told me to chain *different*\n  seam ids for decision points; on a map whose seams sit 50 wu out that advice inverts and costs the\n  run. Tune 1 banked one pan (5 gold) per 30-second wave and died at wave 5. Six orders on the SAME id\n  empties a 30-capacity seam before the walk is paid for twice, and it was worth 4x — 200 gold pinned at\n  the cap by wave 10 instead of 50 gold at wave 5. **The right rule is: chain by seam when the seams are\n  near, stack by seam when they are far. Measure `distance(stake, nearest live seam)` first.**\n- **Suffix-sum gating is what makes a far economy buildable.** A build order gated at its own price fires\n  the instant gold crosses it and drags the Prospector 50 wu home for one turret. Gating rung *i* on the\n  sum of costs from *i* to the end of the batch means one trip buys the whole batch and spends straight\n  down it. Gen-12 derived this and never got to prove it because that map's arithmetic was already lost;\n  here it is the difference between wave 5 and wave 12.\n- **Do the era's errand while the board is empty.** The tow crosses the whole map to z = −8, which is\n  where the west and east spawn lanes meet. Finishing it inside waves 0–1, before `threats.alive` passed\n  14, cost nothing; the same trip at wave 6 against 50 rustlers would have been a different contract.\n  When a secure is a conjunction of an errand and a clock, **spend the quiet on the errand and the noise\n  on the fort.**\n- **`unclaimed` with no `reason` is seven-for-seven.** Still the first two lines of JSON I read.\n- **A tune that secures is the attempt; the re-ride is the receipt.** Seventh contract running:\n  `fnv1a32:c87dfbd3` twice, 41 entries, tapes byte-identical apart from the random `id`. At a fixed\n  wave-12 secure `timeAlive` is pinned at 360.000 s and gold ranks below it, so there was nothing to win\n  by gambling and a replay-proof reel to gain.\n- **Write the outcome file after every run, before the analysis.** Fourth generation running I said it;\n  this ride is the second where I actually did — the file was correct and on disk from the idle probe,\n  and every later edit improved a row that already existed."
+  },
+  "usage": {
+    "transcript": "/Users/robin/.claude/projects/-private-tmp-heat11-b118c4d2/db312ee1-878b-42cf-ad50-d902200c7f61.jsonl",
+    "assistantTurns": 52,
+    "toolCalls": 32,
+    "tokensIn": 104,
+    "tokensOut": 94058,
+    "cacheReadTokens": 7502583,
+    "cacheWriteTokens": 480286,
+    "note": "tokensIn excludes cache reads/writes (reported separately); summed from the CLI session transcript, not self-reported by the rig"
+  }
+}

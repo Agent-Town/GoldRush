@@ -1,0 +1,116 @@
+{
+  "rig": "opus",
+  "contract": "e4-long-road",
+  "model": "claude-opus-5",
+  "sessionId": "c1a988c0-6170-4a1a-8e16-6d76f3d65a68",
+  "startedAt": "2026-09-03T23:01:16.466Z",
+  "endedAt": "2026-09-03T23:16:05.809Z",
+  "wallClockSeconds": 889,
+  "wallHit": false,
+  "exitCode": 0,
+  "signal": null,
+  "setupToFirstOutputSeconds": 105,
+  "arenaTrackedChanges": [],
+  "workspaceFiles": [
+    "attempt-1-tape.json",
+    "attempt-1.log",
+    "controller.mjs",
+    "controller2.mjs",
+    "gauntlet-outcome.json",
+    "gauntlet-report.md",
+    "probe-idle.json",
+    "probe-idle.out.txt",
+    "tune-1-tape.json",
+    "tune-1.log",
+    "tune-2-tape.json",
+    "tune-2.log"
+  ],
+  "outcome": {
+    "secured": true,
+    "waves": 12,
+    "timeMs": 360000,
+    "gold": 0,
+    "kills": 342,
+    "calls": 34,
+    "defaultedPicks": 0,
+    "defaultedSecure": 0,
+    "eventLogHash": "fnv1a32:b32a1b56",
+    "motor": {
+      "graded": [
+        "the-long-road"
+      ],
+      "hauled": true,
+      "arrivedAt": 270.1,
+      "roadDistance": 370,
+      "distanceTravelled": 370,
+      "fuelDrawn": 21.557,
+      "tarHarvested": 9,
+      "convoyArrived": true,
+      "kind": "convoy"
+    },
+    "tape": "/private/tmp/heat11-b118c4d2/artifacts/heat11/opus/e4-long-road/attempt-1-tape.json",
+    "scored": true,
+    "runsSoFar": 4,
+    "scoredAttempts": 1,
+    "worldModel": "sim-import"
+  },
+  "outcomeError": null,
+  "scoredTapes": [
+    {
+      "file": "attempt-1-tape.json",
+      "id": "agent-4a59b92c-ca8e7a83-0cfb-4d2f-af63-22ea38c637c1",
+      "contract": "e4-long-road",
+      "seed": "e4-long-road-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "b118c4d20",
+        "engineHash": "49c34f8bba3d61e003d1f421398e3835e3107945f396800fa124f946b2e4b2f9",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 12,
+        "timeAlive": 360,
+        "gold": 0
+      },
+      "entries": 34
+    }
+  ],
+  "otherSecuredTapes": [
+    {
+      "file": "tune-2-tape.json",
+      "id": "agent-4a59b92c-38e47816-92e6-444a-a29b-7726accb9012",
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 12,
+        "timeAlive": 360,
+        "gold": 0
+      },
+      "meta": {
+        "buildId": "b118c4d20",
+        "engineHash": "49c34f8bba3d61e003d1f421398e3835e3107945f396800fa124f946b2e4b2f9",
+        "era": 5,
+        "viewVersion": 2
+      }
+    }
+  ],
+  "report": {
+    "outcome": "**SECURED.** waves **12** · timeAlive **360.000 s** · gold **0** · calls **34** · kills 342 ·\n`eventLogHash fnv1a32:b32a1b56` · `defaultedPicks 0`, `defaultedSecure 0`.\nMotor: `graded:[\"the-long-road\"] · hauled:true · convoyArrived:true · arrivedAt 270.1 ·\nroadDistance 370 · distanceTravelled 370 · fuelDrawn 21.557 · tarHarvested 9`.\n\nTape put forward: **`artifacts/heat11/opus/e4-long-road/attempt-1-tape.json`** (34 entries,\nviewVersion 2).\n\n**4 sim runs** (idle probe, tune 1, tune 2, attempt 1) · **1 scored attempt**. Tune 2 secured with the\nidentical controller and identical hash; attempt 1 is the receipt re-ride, and it is what I put forward.",
+    "whatTheMapAsked": "It asked me about **distance, road and fuel — E4's signature mechanic, live and load-bearing — and the\ncounty's RESKIN measurement of this contract is out of date on this build; of the four Motor maps I have\nridden, this is the one where the era's lever mattered most.** The secure is a conjunction:\n`wave >= 12` **and** `now.motor.objective.arrived`, and `arrived` for `kind: \"convoy\"` means the lead\nHauler has reduced its distance to `(190,0)` by a cumulative 370 units and come to rest **on** the point\n— the town \"gains exactly the ground the lead Hauler gains toward the stop and never the ground it gives\nback,\" which is monotone `bestRemaining` in the code, so driving it backwards genuinely moves nobody.\nThat errand is not decoration and it is not cheap: the whole run holds 36 fuel and 380 wu of ungraded\nroad costs 123, so the single `GRADE` at the road's west stake — 8 wu from where the hero stands, free,\nand issuable in the first two seconds — is the difference between a winnable contract and an impossible\none. On the Boneyard grading was nearly worthless (4.4 of 68 wu ever rode graded ground) and on the Dust\nFlats it was a large saving; **here it is the map.** The storm is priced into it by the second\n(`stormMovementMultiplier 0.7` on a 30-second cycle), which is why 19.7 fuel of theory measured 21.557.\n\nDistance shaped the **defence** too, and that is the second, better half of the ask. The map is 400 units\nlong, the hero is welded to the stake at `(-180,0)`, and — I checked `Terrain.isBuildable` and all three\n`buildZones` — **no build ground comes within 32 wu of the hero**, against a turret range of 16. So\nnothing can defend the claim directly, and the real question is *which* of three way-station boxes,\n40 to 180 units away, sits on the gang's line. Tune 1 answered it the expensive way. The gates are at\n`(0,±46)` and everything converges on `(-180,0)`, so at the west way-station's x the south stream sits at\nz ≈ −11 (inside the box, which is z −22..−6) and the graded road the gang prefers\n(`enemyRouteCostMultiplier: 0.25`) runs z = 0 just north of it; turrets on the box's north edge at\nz = −6.5 reach both. That is spatial planning at scale, and the map asked it in its own right.\n\nFields that carried the run: `now.motor.objective` (`kind`, `corridorId`, `stop`, `stopReach`, `arrived`),\n`now.motor.convoy` (`leaderDistance`, `total: 370`, `members[].distance/gap`),\n`now.motor.roads.corridors[].start/graded` with `roads.gradeReach: 2.5`,\n`now.motor.fuel.nodes[].harvested/progress` with `stored`/`tar`/`drawn`,\n`now.motor.vehicle.state/x/z/onRoad`, and `now.motor.weather.phase`. Orders: **`MOVE_TO`, `GRADE`,\n`HAUL`, `HOLD`**, plus ordinary `BUILD`, `HARVEST`, `PICK_UPGRADE` and one `SECURE_CHOICE`.\n\nTwo honest qualifiers, both worth the county's attention. First, the errand latched at t = 270 of a\n360-second run and waves 9–12 were ordinary stationary survival — though the Prospector was on errand duty\nfrom wave 5 to wave 9, a longer bite of the run than any other Motor map took from me. Second, and more\nsubstantive: **the contract's headline fiction is not what the engine runs.** The manifest's own\n`engineDependencies` declares `convoy-claim-consumer: \"missing\"` — no Hauler-only basing, no moving\nclaim, no loss tied to the lead Hauler. The claim is a static stake and the loss is `hero_down` (the idle\nprobe's appendLog says `rider-down`, surprise `hero_down`). The authored `restStops` with their\n45-second anchorage windows are published in the manifest, appear in **no** view field, and have **no**\nverb — the same class of finding as E2's pressure, and the \"brief goodbye the map makes you practice\" is\nnot practisable through the door. The convoy's `members[].gap` is published and, for a rider, inert: all\nthree haulers report the same distance and nothing I can do changes their formation. So: the E4 lever is\nreal, readable and decisive here, while the *convoy-as-town* conceit the map is named for is still a\nbrowser-side promise.",
+    "winnability": "Secured, and the margin was **wide**: the hero never fell below 92 of its running maximum across all 35\nviews and finished **127/175 at level 16**, all four works (2 turrets, 2 sentry beacons) stood at the end\nhaving never been wrecked, `threats.alive` plateaued at its 60-enemy ceiling from wave 10, and the errand\nbanked at t = 270 with 14.443 of 36 fuel unspent and three waves of slack against the wave-12 gate — the\none genuinely thin thing was the purse, 180 gold panned all run, which bought the fort exactly and\nnothing more.",
+    "lessons": "- **`unclaimed` with no `reason` in `winnability-receipts.json` is ten-for-ten.** Still the first two\n  lines of JSON I read, still the cheapest information in the county, still never wrong.\n- **When the twist's own `description` names the plan, believe it and then price it.** The Long Road's\n  manifest says in plain words: grade from the west stake, fuel at the tar nodes, walk east ahead of the\n  Hauler. It was exactly right, and it took two minutes to confirm with arithmetic (36 fuel total, 3/s\n  burn, 123 fuel ungraded vs 19.7 graded). Generation 17 taught me to read fuel off the *view* rather\n  than the manifest; the complement is that the twist's prose is often the intended solution — verify it\n  with the view's numbers instead of ignoring it.\n- **`GRADE` ranges from worthless to mandatory across one epoch, and the fuel arithmetic tells you\n  which.** Boneyard: 4.4 of 68 wu ever graded, the errand routed around the road. Dust Flats: a large\n  saving. Long Road: 123 fuel against a 36-fuel run — impossible without it. Compute\n  `distance × burn / (speed × roadMultiplier)` against the tank *before* deciding whether the road is\n  optional. It is a different answer on every map.\n- **A convoy arrival is an EXACT-POSITION latch, and the Prospector's snap is what makes it reachable.**\n  `MotorSocket:345` wants `leaderDistance >= total - 1e-6`, i.e. the Hauler at rest on the point.\n  `Embodiment.ts:272` snaps the Prospector exactly onto its MOVE_TO target and `StandingOrders:336` has\n  `HOLD` re-issue movement every tick, so a held Prospector never drifts (drift is 0.093 wu per tick,\n  which would miss the latch by five orders of magnitude). Park with `HOLD`, verify\n  `now.prospector == stop` on the next view, *then* `HAUL`.\n- **Re-dispatch a `HAUL` that lands short — it is nearly free.** A fuel-limited final step left the\n  Hauler at 189.907 for a lead of 369.907/370. A second `HAUL` on the next view cost **0.005 fuel** and\n  latched it. Because `bestRemaining` is a running minimum, extra hauls can only ever help. Make\n  \"re-issue while `!arrived`\" a standing part of any motor controller rather than a fix you discover.\n- **When nothing can defend the claim, the fort question becomes \"which distant box is on the line.\"**\n  No build zone here comes within 32 wu of a hero with a 16 wu turret. Tune 1 died proving that the hero\n  cannot hold alone. The answer was geometric: enemies converge from `(0,±46)` on `(-180,0)`, so the\n  west way-station's north edge covers both the south stream (z ≈ −11, inside the box) and the graded\n  road they prefer at z = 0. Compute where the streams actually *pass* before choosing a box —\n  `spawnGates × claim × buildZones`, the same intersection move that found the Incline's pocket, but\n  solved for a line rather than a point.\n- **Order the errand against the hero's HP curve, not against tidiness.** My generation-15 lesson — \"do\n  the era's errand while the board is empty\" — is *contract-conditional* and it cost me tune 1 here. On\n  a map where the errand takes 125 seconds of the Prospector's feet and the hero cannot be defended, the\n  opening belongs to the economy and the fort; the errand goes in the middle, once works stand. Read\n  which resource is scarcer: the quiet board, or the worker's time.\n- **The manifest's `engineDependencies` block is a legibility gift — read it.** It said\n  `convoy-claim-consumer: \"missing\"` outright, which told me before I rode that the \"town IS the convoy\"\n  framing, the Hauler-only basing and the lead-Hauler loss condition do not exist, and that the loss is\n  an ordinary static stake. That saved me from planning around a moving claim. Along with\n  `winnability-receipts.json`, it belongs in the pre-ride read.\n- **Ninth contract running, the second run went to the receipt, not to greed.** Tune 2 secured; attempt 1\n  re-rode it for `fnv1a32:b32a1b56` twice, 34 entries, tapes byte-identical apart from the random `id`.\n  At a fixed wave-12 secure `timeAlive` is pinned at 360.000 s and gold ranks below it, so there was\n  nothing to win by gambling and a replay-proof reel to gain.\n- **Write the outcome file after every run, before the analysis.** Seventh generation running I have said\n  it; this is the fourth where I actually did it from the idle probe onward, and every edit since has\n  improved a row that already existed on disk."
+  },
+  "usage": {
+    "transcript": "/Users/robin/.claude/projects/-private-tmp-heat11-b118c4d2/c1a988c0-6170-4a1a-8e16-6d76f3d65a68.jsonl",
+    "assistantTurns": 84,
+    "toolCalls": 47,
+    "tokensIn": 168,
+    "tokensOut": 183613,
+    "cacheReadTokens": 13999562,
+    "cacheWriteTokens": 591076,
+    "note": "tokensIn excludes cache reads/writes (reported separately); summed from the CLI session transcript, not self-reported by the rig"
+  }
+}

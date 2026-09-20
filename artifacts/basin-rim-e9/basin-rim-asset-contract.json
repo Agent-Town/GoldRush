@@ -1,0 +1,281 @@
+{
+  "blender": "5.1.2",
+  "baseSha": "c272d3a8ba9c36ee2550c7bb55c3fb05edab087e",
+  "e1GreenHex": "#50674c",
+  "checked": {
+    "sha256": "89f23f703d96c5f519c820a7efca16c00ff5cb985923e9113cb1b480de81212e",
+    "bytes": 2050092,
+    "nodes": [
+      "BasinRimPlate"
+    ],
+    "meshes": 1,
+    "primitives": 1,
+    "triangles": 12656,
+    "materials": 1,
+    "textures": 1,
+    "images": 1,
+    "embeddedImages": 1,
+    "imageDimensions": [
+      [
+        2048,
+        2048
+      ]
+    ],
+    "cameras": 0,
+    "lights": 0,
+    "animations": 0,
+    "bounds": {
+      "min": [
+        -24.755192,
+        -2.05,
+        -25.084309
+      ],
+      "max": [
+        24.923944,
+        1.546617,
+        24.515692
+      ],
+      "size": [
+        49.679136,
+        3.596617,
+        49.6
+      ],
+      "center": [
+        0.084376,
+        -0.251692,
+        -0.284308
+      ]
+    },
+    "materialContract": [
+      {
+        "metallicFactor": 0,
+        "roughnessFactor": 0.9300000071525574,
+        "hasBaseColorTexture": true,
+        "hasEmissiveTexture": false,
+        "emissiveFactor": [
+          0,
+          0,
+          0
+        ],
+        "alphaMode": "OPAQUE",
+        "alphaCutoff": null,
+        "doubleSided": true
+      }
+    ]
+  },
+  "reexported": {
+    "sha256": "89f23f703d96c5f519c820a7efca16c00ff5cb985923e9113cb1b480de81212e",
+    "bytes": 2050092,
+    "nodes": [
+      "BasinRimPlate"
+    ],
+    "meshes": 1,
+    "primitives": 1,
+    "triangles": 12656,
+    "materials": 1,
+    "textures": 1,
+    "images": 1,
+    "embeddedImages": 1,
+    "imageDimensions": [
+      [
+        2048,
+        2048
+      ]
+    ],
+    "cameras": 0,
+    "lights": 0,
+    "animations": 0,
+    "bounds": {
+      "min": [
+        -24.755192,
+        -2.05,
+        -25.084309
+      ],
+      "max": [
+        24.923944,
+        1.546617,
+        24.515692
+      ],
+      "size": [
+        49.679136,
+        3.596617,
+        49.6
+      ],
+      "center": [
+        0.084376,
+        -0.251692,
+        -0.284308
+      ]
+    },
+    "materialContract": [
+      {
+        "metallicFactor": 0,
+        "roughnessFactor": 0.9300000071525574,
+        "hasBaseColorTexture": true,
+        "hasEmissiveTexture": false,
+        "emissiveFactor": [
+          0,
+          0,
+          0
+        ],
+        "alphaMode": "OPAQUE",
+        "alphaCutoff": null,
+        "doubleSided": true
+      }
+    ]
+  },
+  "byteIdentical": true,
+  "semanticIdentical": {
+    "nodes": true,
+    "meshes": true,
+    "primitives": true,
+    "triangles": true,
+    "materials": true,
+    "textures": true,
+    "images": true,
+    "embeddedImages": true,
+    "imageDimensions": true,
+    "cameras": true,
+    "lights": true,
+    "animations": true,
+    "bounds": true,
+    "materialContract": true
+  },
+  "threeRuntimeMaterial": {
+    "transparent": false,
+    "depthWrite": true,
+    "alphaTest": 0,
+    "doubleSided": true
+  },
+  "exactE1GreenPixels": 6679,
+  "realizedSurface": {
+    "surface": "saved basin-rim-plate.blend ray-cast",
+    "routeMaxAbs": 0.0070002079010009766,
+    "plaza": {
+      "samples": 749,
+      "min": -0.0070002079010009766,
+      "max": 2.384185791015625e-07,
+      "maxAbs": 0.0070002079010009766
+    },
+    "routes": {
+      "ring-road": {
+        "samples": 385,
+        "min": -0.006997108459472656,
+        "max": -0.006685018539428711,
+        "maxAbs": 0.006997108459472656
+      },
+      "tavern": {
+        "samples": 73,
+        "min": -0.0070002079010009766,
+        "max": -0.006881237030029297,
+        "maxAbs": 0.0070002079010009766
+      },
+      "claim_office": {
+        "samples": 73,
+        "min": -0.006999969482421875,
+        "max": -0.006949424743652344,
+        "maxAbs": 0.006999969482421875
+      },
+      "general_store": {
+        "samples": 79,
+        "min": -0.0070002079010009766,
+        "max": -0.006873369216918945,
+        "maxAbs": 0.0070002079010009766
+      },
+      "schoolhouse": {
+        "samples": 73,
+        "min": -0.0070002079010009766,
+        "max": -0.006892204284667969,
+        "maxAbs": 0.0070002079010009766
+      },
+      "assay_office": {
+        "samples": 73,
+        "min": -0.0070002079010009766,
+        "max": -0.006808280944824219,
+        "maxAbs": 0.0070002079010009766
+      },
+      "chapel": {
+        "samples": 75,
+        "min": -0.0070002079010009766,
+        "max": -0.006727457046508789,
+        "maxAbs": 0.0070002079010009766
+      },
+      "stamp-mill": {
+        "samples": 79,
+        "min": -0.0070002079010009766,
+        "max": -0.006781339645385742,
+        "maxAbs": 0.0070002079010009766
+      },
+      "gate": {
+        "samples": 151,
+        "min": -0.0070002079010009766,
+        "max": -0.0063800811767578125,
+        "maxAbs": 0.0070002079010009766
+      }
+    },
+    "canonicalPads": {
+      "tavern": {
+        "samples": 99,
+        "min": -4.76837158203125e-07,
+        "max": 4.76837158203125e-07,
+        "maxAbs": 4.76837158203125e-07
+      },
+      "claim_office": {
+        "samples": 99,
+        "min": -4.76837158203125e-07,
+        "max": 2.384185791015625e-07,
+        "maxAbs": 4.76837158203125e-07
+      },
+      "general_store": {
+        "samples": 99,
+        "min": -4.76837158203125e-07,
+        "max": 4.76837158203125e-07,
+        "maxAbs": 4.76837158203125e-07
+      },
+      "schoolhouse": {
+        "samples": 99,
+        "min": -2.384185791015625e-07,
+        "max": 2.384185791015625e-07,
+        "maxAbs": 2.384185791015625e-07
+      },
+      "assay_office": {
+        "samples": 99,
+        "min": -4.76837158203125e-07,
+        "max": 4.76837158203125e-07,
+        "maxAbs": 4.76837158203125e-07
+      },
+      "chapel": {
+        "samples": 99,
+        "min": -4.76837158203125e-07,
+        "max": 2.384185791015625e-07,
+        "maxAbs": 4.76837158203125e-07
+      },
+      "stamp-mill": {
+        "samples": 99,
+        "min": -4.76837158203125e-07,
+        "max": 2.384185791015625e-07,
+        "maxAbs": 4.76837158203125e-07
+      },
+      "dynamo-hall": {
+        "samples": 99,
+        "min": -2.384185791015625e-07,
+        "max": 2.384185791015625e-07,
+        "maxAbs": 2.384185791015625e-07
+      }
+    },
+    "basinPads": {
+      "ice-quarry-pad": {
+        "samples": 289,
+        "min": -4.76837158203125e-07,
+        "max": 4.76837158203125e-07,
+        "maxAbs": 4.76837158203125e-07
+      },
+      "ark-yard-pad": {
+        "samples": 197,
+        "min": -4.76837158203125e-07,
+        "max": 4.76837158203125e-07,
+        "maxAbs": 4.76837158203125e-07
+      }
+    }
+  }
+}

@@ -1,0 +1,10 @@
+**SECURED — first secure on the unclaimed `e4-boneyard`: w12 / 360.000s / 100g / 319 kills / 54 calls, zero defaults, hash `fnv1a32:48665704`.** Tape put forward: `artifacts/heat11/fable/e4-boneyard/attempt-1-tape.json` (era-5 papers match the arena pin; determinism proven — tune-2 and attempt-1 input logs are sha256-identical with identical outcomes). 3 sim runs, 1 scored attempt, stopped per the rules. `gauntlet-outcome.json` and `gauntlet-report.md` are current.
+
+How it went:
+
+- **Receipts-first paid the whole ride.** The county's own ship evidence (`artifacts/e4-roads-and-convoys/e4-boneyard.summary.json`) was a complete tow playbook with measured fuel numbers — and its floor policy's wave-4 death said plainly that the errand is cheap and *survival* is the contract. Source reads confirmed the tow gates the secure (`autoSecureWaveForRun`'s motor clause): the 2026-09-02 RESKIN audit is stale for this arena — no amount of stationary survival secures this map anymore.
+- **Tune-1 failed on two self-inflicted bugs**, both now notebook corrections: resending `SET_WEAPON` every array walks the Prospector back to the hero each time (my gen-9 "idempotent, safe to resend" note was wrong about travel), and a perpetual GRADE-pinger burned 1053 calls at triple wall clock. The v2 fix — `MOVE_TO` leading the array so the pinger fires exactly at arrival, plus a zero-cost sluice-probe alarm at the Prospector's own feet — secured on its first ride.
+- **Margin:** moderate — hero bottomed at 18.4/175 mid-game, errand used 21.4 of 36 fuel; the economy only ever funded 2 turrets + 1 beacon, and 13 undefaulted draft stacks carried the defense.
+- **Reskin verdict for the county's ladder** (in the report): the E4 mechanic is now load-bearing (secure-gating, real fuel/road/storm reasoning) but shallow here — a required 70-second prologue, not the ride's spine.
+
+One housekeeping note for the operator: gr-sim resolved `--tape` relative to the repo root, so tapes briefly landed there; I moved all three into the workspace — the repo tree is clean of my files outside `artifacts/heat11/fable/e4-boneyard/`.

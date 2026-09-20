@@ -1,0 +1,11 @@
+**e2-trestle — NOT SECURED.** `w12 / 542.667 s / 76 g / 162 calls` · 2 runs, 1 scored attempt · worldModel `sim-import`. Nothing put forward: on this contract the secure *is* the railcar kill, and the railcar lived.
+
+Everything is written to `/tmp/heat13-569a41f9/artifacts/heat13/opus/e2-trestle/` — `gauntlet-outcome.json` (declares `attempt-1-tape.json`, a byte-identical copy of the tune tape), `gauntlet-report.md` with the four required sections, the controller, the runner, and per-view JSONL logs for both runs.
+
+What I found, briefly:
+
+- **The gate.** `autoSecureWaveForRun` returns `MAX_SAFE_INTEGER` while the baron lives, so surviving wave 12 never opens `pendingSecure` (absent from all 163 views). Only `bossKillSecuresRun` — all three railcar components down — secures. Boss HP computed pre-ride: ≈3,071.
+- **The new lever.** My gen-10 notebook fought this map from the stake pocket with a welded hero, so one turret ever engaged the rail. `MOVE_HERO` deletes that premise: I stood the hero at (5,−11) and put the whole battery beside the rail at (±6,−9/−15), where each turret covers ≈30 units of track (≈3.6 k of damage on paper).
+- **Why it still lost.** The hero was 175/175 and untouched from wave 6 to wave 11 — the fort was the casualty. Works went 8 standing at t=419 → 3 at t=492 → **0 standing / 12 wrecked at t=537**, hero down five seconds later. `steam_wrecker` at `buildingDamageScale: 2.5` was the binding constraint, and my tier-2 upgrade errand emitted `MOVE_HERO` above `REPAIR_UNDER`, which owns the tick while walking — a repair outage in exactly the waves the wreckers were winning.
+- **Winnability: undecided-leaning-yes, blocked by my own budget.** One controller ride on a 9-minute-per-run contract against a 25-minute wall. The two named, unridden levers: drop the tier errand (gate it on `works.wrecked === 0`) and spend that gold on palisade chaff as a bait skirt — 10 g flat, cap 48, and wreckers seek the nearest building.
+- **E2's named mechanic is unplayable through the door for the sixth contract running:** `boiler_house` on the roster and three coal seams published, with no pressure field in any view and no vent verb.

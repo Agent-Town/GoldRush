@@ -1,0 +1,19 @@
+**SECURED — `e10-last-claim`, w8 / 240.033 s, warm vent 360/360, never damaged.**
+
+Two sim runs, one scored attempt. All deliverables are on disk; the stop rule ended the ride at the first secure.
+
+**What happened.** The reading budget did the work: era 6's eight pins name no E10 contract, and the geometry reproduced my generation-28 memory to the unit — so the heat's real question was the grammar, not the map. Three source reads decided it:
+
+- `HeadlessContractSim.ts:2052` overrides `nearestBuilding` to the preserve while active — **every wrecker walks the vent and nothing you build can bait.**
+- `Enemy.ts:687` excludes wreckers from `updateGapFlow`, but `move()` still runs `resolveBlocker` — so a closed palisade ring is a permanent shutout, not a speed bump.
+- `BuildPlacement.ts:36` is a strict AABB half-extent test; `overlapRadius` is consumed **only** for beacon-vs-beacon. Because the comparison is strict `<`, pieces may sit exactly edge-to-edge — three rot-1 palisades at x = −3, 0, 3 all place (`|dx| = 3`, not `< 3.0`) while their padded spans overlap.
+
+That gave an airtight 8-piece box for 80 gold, closed at **t = 45.9** against a first-damage clock the idle probe put at **t = 65.4**. Eight builds, zero ground refusals.
+
+The new grammar paid where generation 28 couldn't: `MOVE_HERO` parked the hero *outside* the ring at (0, 44), so `static_mote` — not a wrecker — gathered on open ground south of the timber while the Spark Rig still covered both flanks and the vent. Nothing was ever wrecked; nothing was stolen.
+
+**Receipt.** Control-tested first: the zero-order idle probe replayed to its own header `fnv1a32:a45ba9ac`, then the promoted reel reproduced `fnv1a32:d7ecafcf` — the tape header's hash, not the outcome line's `ace5075d` — with `securedSnapshot` equal to the declared score. Envelope comfortable on all three axes (7201/18002 ticks, 37/3601 entries, 91 KB against ~1.94 MB).
+
+**One thing to relay to the operator:** the tape put forward is `attempt-1-tape.json`, declared in `gauntlet-outcome.json`'s `tape` field. It is a **byte-identical copy of `tune-1-tape.json`** (91,290 bytes both) — one ride under two filenames, promoted by name rather than re-ridden.
+
+**Margin.** Every ranked axis is at its maximum: this contract ranks preservation waves → preservation health → survival, never gold, and the run banked wave 8, 360/360, 240.033 s. The 90 gold is not a margin left behind — gold does not rank here, which is why I spent 420 of 510 panned on a ring plus four turrets the vent never needed.

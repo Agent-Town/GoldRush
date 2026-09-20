@@ -1,0 +1,86 @@
+{
+  "rig": "fable",
+  "contract": "e1-drill-yard",
+  "model": "claude-fable-5",
+  "sessionId": "3f0b294b-327c-4240-93b7-61ef8aef8d7e",
+  "startedAt": "2026-09-03T13:00:19.183Z",
+  "endedAt": "2026-09-03T13:07:30.631Z",
+  "wallClockSeconds": 431,
+  "wallHit": false,
+  "exitCode": 0,
+  "signal": null,
+  "setupToFirstOutputSeconds": 60,
+  "arenaTrackedChanges": [],
+  "workspaceFiles": [
+    "attempt-1-log.txt",
+    "attempt-1-tape.json",
+    "controller.mjs",
+    "gauntlet-outcome.json",
+    "gauntlet-report.md",
+    "probe-idle-stdout.ndjson",
+    "probe-idle.json",
+    "tune-active-log.txt",
+    "tune-active-tape.json"
+  ],
+  "outcome": {
+    "outcome": {
+      "secured": false,
+      "waves": 2,
+      "timeMs": 60033,
+      "gold": 15,
+      "kills": 23,
+      "calls": 4,
+      "defaultedPicks": 0,
+      "defaultedSecure": 0,
+      "eventLogHash": "fnv1a32:73780fba",
+      "endReason": "wave-ceiling"
+    },
+    "tape": "/tmp/heat11-5e7a7c0b/artifacts/heat11/fable/e1-drill-yard/attempt-1-tape.json",
+    "scored": true,
+    "runsSoFar": 3,
+    "scoredAttempts": 1,
+    "worldModel": "sim-import",
+    "finding": "NOT WINNABLE THROUGH THE DOOR BY CONSTRUCTION: twist.secureWave=0 disables the secure latch (RunManager.maybeSecureRun early-returns on secureWave<=0), pendingSecure never opens, SECURE_CHOICE is refused ('SECURE_CHOICE requires a live secure window'), and the wave ceiling (secureWave+2=2) ends every ride at wave 2 unsecured. The county's own winnability-receipts.json already marks e1-drill-yard 'standings-disabled'. This is the tutorial practice yard: 'Nothing in the yard enters the county ledger.'"
+  },
+  "outcomeError": null,
+  "scoredTapes": [
+    {
+      "file": "attempt-1-tape.json",
+      "id": "agent-8b425ec0-bf3db449-02e3-4c7d-9fbd-a417792b541c",
+      "contract": "e1-drill-yard",
+      "seed": "gold-rush",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "5e7a7c0ba",
+        "engineHash": "a607a81f44e10dc2b2262682c1e116c15917edffeeaa0c5909f383ccea5d8e04",
+        "era": 5,
+        "viewVersion": 1
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 2,
+        "timeAlive": 60.033,
+        "gold": 15
+      },
+      "entries": 3
+    }
+  ],
+  "otherSecuredTapes": [],
+  "report": {
+    "outcome": "**Not secured — and unsecurable by construction.** Best ride: waves 2, timeAlive 60.033s, gold 15, kills 23, calls 4, `eventLogHash fnv1a32:73780fba`, `endReason: \"wave-ceiling\"`. Tape put forward: `attempt-1-tape.json` (as the evidence reel for the finding, not as a standing — the run is unsecured and must not be submitted). 3 sim runs total, 1 scored attempt; I stopped there because the wall is an authored constant (`secureWave: 0`), and no second attempt can move it.",
+    "whatTheMapAsked": "Nothing of the era's signature mechanic. E1's mechanic is survival against the bank cap — earn past the 200g pan cap by building stockpiles before the secure wave — but this map is the tutorial yard wearing a contract's clothes: `secureWave: 0` means there is no secure wave to bank toward, the 60-second/wave-2 ceiling closes the ride before the economy can even reach the first turret (≈15g panned by ceiling against a 50g turret and 60g stockpile), and the yard's real furniture — the assay-tent faucet (`top_up`), the drill bell (`ring`), the straw men and rolling logs (`strike`) — is browser-side interaction with no standing-order verb at all, so the door rider cannot touch the very stations the briefing names. The fields that carried what little there was: `stablePrefix.mechanics.interactables` (present but unreachable through the grammar), `now.seams`/`HARVEST` (the one working economy loop), and the almanac's wave packs + continuous trickle (ordinary E1 pressure). No `pendingSecure`, ever — which is the whole story.",
+    "winnability": "**Not winnable through the door from its starting kit: the authored `twist.secureWave: 0` makes the secure latch unreachable (`RunManager.maybeSecureRun` refuses `secureWave <= 0`, so `pendingSecure` never opens and `SECURE_CHOICE` is rejected), and the wave ceiling of `secureWave + 2 = 2` ends every ride unsecured at 60s — a wall in the map's constants, not in the grammar, the economy, or my budget — consistent with the county's own receipt (`standings-disabled`): the practice yard is deliberately outside the ledger, and L2 arguably should not bind it, or else it needs either a real secureWave or removal from the door list.**",
+    "lessons": "- e1-drill-yard is the tutorial practice yard riding the door contract list: `twist.secureWave: 0` + `RunManager.maybeSecureRun`'s `secureWave <= 0` guard = `run_secured` unreachable, `pendingSecure` never opens, `SECURE_CHOICE` refused (\"requires a live secure window\"), ceiling `secureWave + 2` = wave 2, 60s. Do not spend attempts on play quality when the constants close the door — one honest scored ride plus the code trace is the complete finding.\n- Check `assets/contracts/winnability-receipts.json` FIRST on any unclaimed contract: the county had already written `e1-drill-yard: standings-disabled`. Two minutes of receipts beats a wall of tapes.\n- A contract's `practice` block (faucet/bell/targets, ledger suppression) is browser-only furniture: headless, the faucet and bell have no verb, so the briefing's own goals are unreachable through the grammar — but gr-sim still writes tapes and runs real waves with a continuous trickle on top of wave packs.\n- The mid-ride refusal probe is cheap and safe: a rejected array never enters the tape (determinism holds, verified by identical `eventLogHash` across two rides), and the refusal string on stderr is quotable field evidence.\n- `endReason: \"wave-ceiling\"` can coincide with rider-down at the same boundary (hero hp 0 at 60.033s in both probe and active rides); read `appendLog` for the per-wave outcome, not just the terminal line.\n- Sub-90-second maps leave the E1 economy no room: ~15g panned by the wave-2 ceiling vs 50g first turret — on any future short-ceiling map, either the starting kit funds the defense or the defense never exists."
+  },
+  "usage": {
+    "transcript": "/Users/robin/.claude/projects/-private-tmp-heat11-5e7a7c0b/3f0b294b-327c-4240-93b7-61ef8aef8d7e.jsonl",
+    "assistantTurns": 79,
+    "toolCalls": 37,
+    "tokensIn": 158,
+    "tokensOut": 70129,
+    "cacheReadTokens": 9027281,
+    "cacheWriteTokens": 413057,
+    "note": "tokensIn excludes cache reads/writes (reported separately); summed from the CLI session transcript, not self-reported by the rig"
+  }
+}

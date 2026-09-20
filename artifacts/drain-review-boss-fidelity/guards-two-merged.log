@@ -1,0 +1,55 @@
+✖ rotation registry stays outside the engine identity corpus (71.891ms)
+✔ contract ids are globally unique across the ten epoch bundles (0.46975ms)
+✔ bench seed sets cover Frontier and contain only valid known-contract seeds (0.211084ms)
+✔ rotation mint is deterministic, week-sensitive, and requires a salt (148.862125ms)
+✖ droplet mirror ships the runtime closure and deletes only unprotected spillover (1175.565958ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 3
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1302.589792
+
+✖ failing tests:
+
+test at scripts/bench-seeds.test.mjs:47:1
+✖ rotation registry stays outside the engine identity corpus (71.891ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + '86e60c92f65b8b3f7c42dc285c619c1e73b9d931899c72035bf9236f13b13509'
+  - '09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4'
+  
+      at TestContext.<anonymous> (file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-boss/scripts/bench-seeds.test.mjs:55:10)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '86e60c92f65b8b3f7c42dc285c619c1e73b9d931899c72035bf9236f13b13509',
+    expected: '09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at scripts/deploy-mirror-allowlist.test.mjs:97:1
+✖ droplet mirror ships the runtime closure and deletes only unprotected spillover (1175.565958ms)
+  AssertionError [ERR_ASSERTION]: every derived runtime file ships
+  + actual - expected
+  
+  + [
+  +   'assets/pilots/land-yacht-3d/land-yacht.glb'
+  + ]
+  - []
+  
+      at TestContext.<anonymous> (file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-boss/scripts/deploy-mirror-allowlist.test.mjs:130:12)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: [ 'assets/pilots/land-yacht-3d/land-yacht.glb' ],
+    expected: [],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

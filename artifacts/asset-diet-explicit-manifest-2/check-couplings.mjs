@@ -1,0 +1,32 @@
+import assert from 'node:assert/strict';
+import { execFileSync } from 'node:child_process';
+import { mkdir, mkdtemp, readFile, writeFile } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import path from 'node:path';
+import { computeEngineHash } from '../../scripts/assay-replay-agent.mjs';
+
+const before = JSON.parse(execFileSync('git', ['show', 'HEAD:assets/engine-era.json'], { encoding: 'utf8' }));
+const after = JSON.parse(await readFile('assets/engine-era.json', 'utf8'));
+const expected = structuredClone(before);
+expected.engineHash = await computeEngineHash();
+expected.pins.push(after.pins.at(-1));
+assert.deepEqual(after, expected, 'only top-level hash and one appended same-era pin may change');
+assert.equal(after.engineHash, after.pins.at(-1).engineHash);
+assert.match(after.pins.at(-1).cause, /asset-diet-explicit-manifest-2/);
+
+const manifest = 'scripts/asset-diet.manifest.json';
+const include = `--include=/${manifest}`;
+const deploy = await readFile('scripts/deploy.sh', 'utf8');
+const block = deploy.match(/# MIRROR_FILTERS_BEGIN[\s\S]*?MIRROR_FILTERS=\(\n([\s\S]*?)\n\s*\)\n\s*# MIRROR_FILTERS_END/)[1];
+const filters = [...block.matchAll(/^\s*"([^"]+)"\s*$/gm)].map((match) => match[1]);
+assert.equal(filters[filters.indexOf('--include=/scripts/asset-diet.mjs') + 1], include);
+const originalDeploy = execFileSync('git', ['show', 'HEAD:scripts/deploy.sh'], { encoding: 'utf8' });
+assert.equal(deploy.replace(`        "${include}"\n`, ''), originalDeploy, 'exactly the authorized include line');
+const scratch = await mkdtemp(path.join(tmpdir(), 'goldrush-manifest-mirror-'));
+await mkdir(path.join(scratch, 'source/scripts'), { recursive: true });
+await mkdir(path.join(scratch, 'destination'));
+await writeFile(path.join(scratch, 'source', manifest), await readFile(manifest));
+const run = (rules) => execFileSync('rsync', ['-ani', '--delete', ...rules, `${scratch}/source/`, `${scratch}/destination/`], { encoding: 'utf8' });
+assert.ok(run(filters).includes(manifest), 'the manifest ships');
+assert.ok(!run(filters.filter((rule) => rule !== include)).includes(manifest), 'removing the new include excludes it');
+console.log(`PASS append-only era ${after.era} pin ${after.engineHash}; exact mirror line; rsync positive/negative controls. Scratch: ${scratch}`);

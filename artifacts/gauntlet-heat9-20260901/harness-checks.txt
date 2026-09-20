@@ -1,0 +1,19 @@
+PI receipt from goldrush-gauntlet/PROTOCOL.md:
+pi: own HOME prefix install; pi -p --provider openrouter --model deepseek/deepseek-v4-flash "..."
+
+Current heat-local PI package:
+@mariozechner/pi-coding-agent 0.73.1
+bin: pi -> dist/cli.js
+pi --version: 0.73.1
+isolated model resolution: heat9-shim/gpt-5.6-sol, 128K context, 16.4K max output, thinking yes
+
+Current Prime Agent:
+prime-agent --version: 0.8.0
+executable: /Users/robin/.nvm/versions/node/v23.11.1/bin/prime-agent
+isolated model resolution: heat9-shim/gpt-5.6-sol, 128K context, 16.4K max output, thinking yes
+
+Heat-4/5 evidence census:
+- Heat 4 has a dedicated artifacts/gauntlet-heat4-20260824/prime/ family and records Prime Agent 0.8.0.
+- Heat 4 has no independent PI artifact family.
+- Heat 5 and Heat 5b are Codex best-effort heats and contain no PI or Prime harness family.
+- PI's separate historical evidence is therefore the gauntlet PROTOCOL invocation plus pi__deepseek-v4-flash FORMAT headers; Prime's is the prime__ notebook family plus Heat 4's dedicated prime artifacts.

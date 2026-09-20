@@ -1,0 +1,182 @@
+{
+  "runA": {
+    "hash": "557f7203e04b202f01aa4280f57f2895e5da17be19a1a299839e99103a8bab10",
+    "payload": {
+      "los": {
+        "flat": false,
+        "clear": false,
+        "samples": 11,
+        "from": {
+          "x": -10,
+          "z": 18,
+          "h": -0.158
+        },
+        "to": {
+          "x": 14,
+          "z": 18,
+          "h": 0.014
+        },
+        "blockedAt": {
+          "x": -6,
+          "z": 18,
+          "h": 0.604,
+          "lineH": 0.554,
+          "step": 2
+        }
+      },
+      "combat": {
+        "hits": 0,
+        "misses": 0,
+        "staleSwitches": 0,
+        "shots": {
+          "bolt": 0,
+          "lob": 0
+        },
+        "lastShotKind": null,
+        "lastShotOwnerId": null
+      },
+      "samples": [
+        {
+          "height": -0.15814804508893998,
+          "slope": {
+            "dx": 0.14400109637017988,
+            "dz": 0.010821725117568404
+          },
+          "traversable": true,
+          "speedEast": 0.8354273184340801,
+          "speedWest": 1.04114317039148
+        },
+        {
+          "height": 1.9206729476277755,
+          "slope": {
+            "dx": 0.008116265297929193,
+            "dz": 0.010821725117568404
+          },
+          "traversable": true,
+          "speedEast": 0.9907242682309381,
+          "speedWest": 1.0023189329422655
+        },
+        {
+          "height": 0.014238488627066337,
+          "slope": {
+            "dx": -0.13315381448560015,
+            "dz": 0.008427967995745744
+          },
+          "traversable": true,
+          "speedEast": 1.0380439469958858,
+          "speedWest": 0.847824212016457
+        }
+      ]
+    },
+    "errors": {
+      "consoleErrors": [],
+      "pageErrors": []
+    }
+  },
+  "runB": {
+    "hash": "557f7203e04b202f01aa4280f57f2895e5da17be19a1a299839e99103a8bab10",
+    "payload": {
+      "los": {
+        "flat": false,
+        "clear": false,
+        "samples": 11,
+        "from": {
+          "x": -10,
+          "z": 18,
+          "h": -0.158
+        },
+        "to": {
+          "x": 14,
+          "z": 18,
+          "h": 0.014
+        },
+        "blockedAt": {
+          "x": -6,
+          "z": 18,
+          "h": 0.604,
+          "lineH": 0.554,
+          "step": 2
+        }
+      },
+      "combat": {
+        "hits": 0,
+        "misses": 0,
+        "staleSwitches": 0,
+        "shots": {
+          "bolt": 0,
+          "lob": 0
+        },
+        "lastShotKind": null,
+        "lastShotOwnerId": null
+      },
+      "samples": [
+        {
+          "height": -0.15814804508893998,
+          "slope": {
+            "dx": 0.14400109637017988,
+            "dz": 0.010821725117568404
+          },
+          "traversable": true,
+          "speedEast": 0.8354273184340801,
+          "speedWest": 1.04114317039148
+        },
+        {
+          "height": 1.9206729476277755,
+          "slope": {
+            "dx": 0.008116265297929193,
+            "dz": 0.010821725117568404
+          },
+          "traversable": true,
+          "speedEast": 0.9907242682309381,
+          "speedWest": 1.0023189329422655
+        },
+        {
+          "height": 0.014238488627066337,
+          "slope": {
+            "dx": -0.13315381448560015,
+            "dz": 0.008427967995745744
+          },
+          "traversable": true,
+          "speedEast": 1.0380439469958858,
+          "speedWest": 0.847824212016457
+        }
+      ]
+    },
+    "errors": {
+      "consoleErrors": [],
+      "pageErrors": []
+    }
+  },
+  "stress": {
+    "stressCount": 200,
+    "enemiesAlive": 96,
+    "frameMs": {
+      "last": 9.299999999999727,
+      "avg": 12.395714285033089,
+      "p95": 50,
+      "sampleCount": 70
+    },
+    "renderer": {
+      "calls": 147,
+      "triangles": 51486,
+      "geometries": 58,
+      "textures": 14
+    },
+    "los": {
+      "flat": false,
+      "clear": true,
+      "samples": 11,
+      "from": {
+        "x": 0,
+        "z": 12,
+        "h": 1.721
+      },
+      "to": {
+        "x": -1.415,
+        "z": 21.33,
+        "h": 1.631
+      },
+      "blockedAt": null
+    }
+  }
+}

@@ -1,0 +1,107 @@
+{
+  "rig": "opus",
+  "contract": "e7-relay-rush",
+  "model": "claude-opus-5",
+  "sessionId": "b418c94f-fe34-427e-a745-c024984a235d",
+  "startedAt": "2026-09-04T04:13:40.215Z",
+  "endedAt": "2026-09-04T04:22:02.306Z",
+  "wallClockSeconds": 502,
+  "wallHit": false,
+  "exitCode": 0,
+  "signal": null,
+  "setupToFirstOutputSeconds": 60,
+  "arenaTrackedChanges": [],
+  "workspaceFiles": [
+    "attempt-1-tape.json",
+    "gauntlet-outcome.json",
+    "gauntlet-report.md",
+    "probe-idle.json",
+    "ride.mjs",
+    "tune-1-tape-log.json",
+    "tune-1-tape.json"
+  ],
+  "outcome": {
+    "outcome": {
+      "secured": true,
+      "waves": 20,
+      "timeMs": 600000,
+      "gold": 200,
+      "kills": 644,
+      "calls": 68,
+      "defaultedPicks": 0,
+      "defaultedSecure": 0,
+      "eventLogHash": "fnv1a32:1c343c70"
+    },
+    "tape": "/tmp/heat11-5e7a7c0b/artifacts/heat11/opus/e7-relay-rush/attempt-1-tape.json",
+    "scored": true,
+    "runsSoFar": 2,
+    "scoredAttempts": 1,
+    "worldModel": "sim-import",
+    "note": "attempt-1-tape.json is a byte-identical copy of tune-1-tape.json — the SAME single securing ride, promoted by name under the brief's promotion clause (the stop rule ends the ride at the first SECURED outcome, so it was not re-ridden).",
+    "doorRisk": {
+      "warning": "reel_duration_exceeded is likely",
+      "durationTicks": 18001,
+      "envelopeMaxTicks": 18000,
+      "reason": "e7-relay-rush declares no twist.secureWave, so PlaybookFormat.runTapeEnvelopeForContract skips its +2 inclusive-endpoint slack and grants a flat MAX_PLAYBOOK_TICKS=18000. The secure lands at wave 20 = t 600.000s = tick 18000; gr-sim records the SECURE_CHOICE at tick 18000 and reports durationTicks = lastEntryTick+1 = 18001. No rider policy can avoid this: it is the same envelope defect that refused generations 24 and 25."
+    }
+  },
+  "outcomeError": null,
+  "scoredTapes": [
+    {
+      "file": "attempt-1-tape.json",
+      "id": "agent-bf8cd86d-75f73cc6-ae0e-4f79-ae6f-167c3085475e",
+      "contract": "e7-relay-rush",
+      "seed": "e7-relay-rush-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "5e7a7c0ba",
+        "engineHash": "a607a81f44e10dc2b2262682c1e116c15917edffeeaa0c5909f383ccea5d8e04",
+        "era": 5,
+        "viewVersion": 1
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 20,
+        "timeAlive": 600,
+        "gold": 200
+      },
+      "entries": 68
+    }
+  ],
+  "otherSecuredTapes": [
+    {
+      "file": "tune-1-tape.json",
+      "id": "agent-bf8cd86d-75f73cc6-ae0e-4f79-ae6f-167c3085475e",
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 20,
+        "timeAlive": 600,
+        "gold": 200
+      },
+      "meta": {
+        "buildId": "5e7a7c0ba",
+        "engineHash": "a607a81f44e10dc2b2262682c1e116c15917edffeeaa0c5909f383ccea5d8e04",
+        "era": 5,
+        "viewVersion": 1
+      }
+    }
+  ],
+  "report": {
+    "outcome": "**SECURED.** `{\"secured\":true,\"waves\":20,\"timeMs\":600000,\"gold\":200,\"kills\":644,\"calls\":68,\n\"defaultedPicks\":0,\"defaultedSecure\":0,\"eventLogHash\":\"fnv1a32:1c343c70\"}` — waves **20**,\ntimeAlive **600.000s**, gold **200** (pinned at the bank cap from wave 11), calls **68**.\nTape put forward: `attempt-1-tape.json`. **2 sim runs, 1 scored attempt.**\n\n**A first secure for `e7-relay-rush`** — and one caveat the operator must weigh before submitting:\nthe reel reports `durationTicks 18001` against this contract's `18000`-tick envelope, so the door\nwill very likely refuse it `reel_duration_exceeded`. The secure is real; the reel may not be\nadmissible. Detail in §Winnability and in `gauntlet-outcome.json.doorRisk`.",
+    "whatTheMapAsked": "It asked me about **the interference front**, squarely and expensively, and **the county's RESKIN\nmeasurement of this contract is out of date on this build**: E7's front is composed headless, fully\npublished, and it *gates the secure*. `InterferenceFrontSystem` is the whole consumer — schedule,\nmute, relay lighting and objective latch — and `HeadlessContractSim:1119` ANDs\n`interferenceFront.objectiveAllowsSecure` into `autoSecureWaveForRun`, so a run that misses the\ndeadline is unsecurable at *every* later wave. The rule reads in `now`, no source import needed:\na wall of static crosses west→east every `cadenceSeconds: 90` over `crossingSeconds: 20` with\n`halfWidth: 6`, and **three of the four relay sites must carry a standing turret or sentry beacon at\nthe instant the third front arrives — t = 270.000s exactly**, sampled once and latched either way.\nThat is a genuine \"expand under deadline\" problem, because the four sites are strung along a 100wu\nridge (r1 x −50..−40, r2 −30..−20, r3 20..30, r4 40..50) while the hero is welded to the stake at\n(−25,41) and the single order actor — the Prospector — must pan, build and walk with the same feet.\nThe lit set is *live state, not a latch*: a wrecked light goes dark and the deadline reads whatever\nstands, which is why I bought a fourth light at t=148 as insurance for a deadline 122 seconds away.\nThe map's one kindness is that the claim sits **inside** relay-site-r2, so the fort lights a site for\nfree and the errand is two walks (20wu and 50wu) rather than three.\n\nView fields that carried it: `now.interferenceFront.{sites[].lit/litBy/muted, litCount, frontsArrived,\nsecondsToNextFront, deadlineFront, relayTarget, deadlineResolved, litAtDeadline, objectiveMet,\nphase, centerX}`, plus `now.works.entries` (position + family — the only way to see which rung\nlanded and which refused), `now.works.byKind`, `now.seams[].active/x/z`, `now.gold`,\n`now.hero.hp/maxHp`, `now.threats.alive`, `now.pendingOffer`/`now.pendingSecure`. Orders: `BUILD`,\n`HARVEST`, `REPAIR_UNDER`, `PICK_UPGRADE`, one `SECURE_CHOICE`. **There is no E7 verb** — the\nfront is answered entirely with epoch-1 grammar, and that is fine: it is a *placement* mechanic, not\nan action one.\n\nTwo honest qualifiers. First, the mute itself was nearly inert for me: the band is 12wu wide moving\nat 6wu/s, so it stands over any one turret for about two seconds every ninety, and `mutedWorkSteps`\nnever cost me a wave. The front is a *deadline* here, not an adversary. Second, once the latch\nclosed at t=270 the remaining eleven waves were ordinary stationary survival at the 200-gold cap\nwith `threats.alive` pinned at its 60-enemy ceiling and nothing left to decide — the reasoning is\nfront-loaded into the first 150 seconds. Call it **half a contract of real E7 and half a hold.**",
+    "winnability": "Secured, and the margin was **as wide as this contract can be measured — while the door envelope is\nthe thing that is thin**: the hero **never dropped below 100, its running maximum, across all 69\nviews**, finishing 175/175; **zero of ten works were ever wrecked**; the deadline latched with all\n**four** sites lit against a target of three, 122 seconds early; gold was capped from wave 11 —\nhealth, defence, objective and money all had spare capacity at once. The one thing with no margin at\nall is the reel: `e7-relay-rush` declares no `twist.secureWave`, so\n`PlaybookFormat.runTapeEnvelopeForContract` computes its `+2` inclusive-endpoint slack only inside\n`if (twist?.secureWave)` and hands this contract a flat `MAX_PLAYBOOK_TICKS = 18000`; the secure\nlands at wave 20 = t 600.000s = tick 18000, `gr-sim` records the `SECURE_CHOICE` there, and\n`durationTicks = lastEntryTick + 1 = 18001`. **No rider policy can avoid that** — there is no\nearlier secure window, riding shorter forfeits the run, and a rejected non-`SECURE_CHOICE` array at\nthe boundary cannot buy a cheaper tick. This is the same envelope defect that refused generations 24\nand 25, now confirmed on a third contract and a third epoch; the fix is one `if` in\n`PlaybookFormat.ts`, not a change to the map, the grammar or the economy.",
+    "lessons": "- **`unclaimed` with no `reason` in `winnability-receipts.json` is seventeen-for-seventeen.** Still\n  the first two lines of JSON I read; still never wrong.\n- **A silent `twist.secureWave` is now a *two*-sided tell, and I should read it as both at once.**\n  Generation 24 learned side one: the gate falls through to `Balance.run.secureWave = 20`, so a thin\n  manifest means a 600-second contract, not a 360-second one. Side two, which cost gens 24/25 their\n  reels and costs this one too: that same silence skips the `+2` envelope slack in\n  `runTapeEnvelopeForContract`, so **any** secure of such a contract reports `durationTicks 18001`\n  against `18000` and is inadmissible however it is played. **Check the envelope before choosing the\n  contract's plan, and say so in the outcome file rather than letting the operator discover it at the\n  door.**\n- **`engineDependencies: \"missing\"` is now wrong five times in seven era rides** (E5 deepwater-claim,\n  E5 regatta, E6 glow-mesa, E8 mare-claim, E7 relay-rush) against two right (E4 long-road, E10\n  last-claim). Here it disclaims `interference-front-consumer` while `InterferenceFrontSystem` runs\n  headless, publishes a fifteen-field diagnostics block in `now`, **and gates the secure**. One idle\n  probe settles it in ten seconds; give a \"missing\" that contradicts a live `now` key zero weight.\n- **When the era's mechanic is a placement deadline, buy one more than the target.** The lit set is\n  live state, not a latch (`readSites` re-reads every step), so a wrecked light un-lights its site and\n  the deadline reads whatever stands at that instant. A fourth beacon at 45 gold insured a one-way\n  latch worth the whole contract. Ask of any latched objective: *is the quantity it samples a latch\n  or a live count?* — and if it is live, over-buy.\n- **The audit's RESKIN label is a measurement of the build it was taken on, and the idle probe is\n  why it looked like one.** Idle died at t=81.3, nine seconds before the first front at t=90 — so the\n  mechanic was never *reached*, not absent. An audit that samples only the idle ride cannot see a\n  mechanic whose first event is at t=90. Generation 15 learned that a stale audit is settled by one\n  probe of `now`; the sharper version is **check whether the audit's evidence could physically have\n  reached the mechanic's first event.**\n- **Put the claim's own zone in the ladder first and get a light for free.** The stake at (−25,41)\n  sits inside `relay-site-r2`, so the fort's first turret discharged a third of the objective at\n  t=26 with no walk. `stakeMarkers × buildZones × objectiveSites` is the same intersection move that\n  found the Incline's pocket — now solved for an *objective* rather than a defence.\n- **One BUILD trip in flight, re-issued verbatim until `works.entries` shows it standing.** Gen-13's\n  \"a stack of gold-gated BUILDs is a commute generator\" and gen-28's plan-time affordability compose\n  into one rule that needs no suffix arithmetic: emit the *next unbuilt* rung only when\n  `gold >= cost` right now, re-issue it each view, and let `works.entries` (not your own counter)\n  retire it. Ten rungs, ten first-try landings, across 50wu and 70wu errands.\n- **Give every rung a patience budget.** The eight palisade rungs I appended sat outside every build\n  zone and refused forever; a six-attempt skip stepped past all of them without stalling the ladder,\n  which is exactly the failure that cost me the Trestle in generation 10. Carrying junk at the tail\n  of a ladder is free when the ladder can skip.\n- **A wave-2 idle death still means nothing.** Twelfth map running: idle died at 81s and the first\n  controller rode the same seed to 600s at full health. But this time the idle probe earned its keep\n  in a different way — it published the entire `interferenceFront` block in view 0, including the\n  cadence, the target, the deadline ordinal and all four site rectangles. **Read the idle probe for\n  the mechanic's published constants, not for the difficulty curve.**\n- **Write the outcome file after every run, before the analysis.** Fourteenth generation saying it,\n  eleventh doing it — and this ride added a field I have wanted for three generations: a `doorRisk`\n  block naming the refusal I expect and the line of code that causes it, so the operator reads it\n  from the file rather than from the door."
+  },
+  "usage": {
+    "transcript": "/Users/robin/.claude/projects/-private-tmp-heat11-5e7a7c0b/b418c94f-fe34-427e-a745-c024984a235d.jsonl",
+    "assistantTurns": 50,
+    "toolCalls": 28,
+    "tokensIn": 100,
+    "tokensOut": 67454,
+    "cacheReadTokens": 9235773,
+    "cacheWriteTokens": 416230,
+    "note": "tokensIn excludes cache reads/writes (reported separately); summed from the CLI session transcript, not self-reported by the rig"
+  }
+}

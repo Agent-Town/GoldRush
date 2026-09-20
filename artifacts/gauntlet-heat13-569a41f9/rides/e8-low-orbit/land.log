@@ -1,0 +1,27 @@
+
+=== 1 finish-ride ===
+{"rig":"opus","contract":"e8-low-orbit","wall":970,"wallHit":false,"rc":0,"tracked":[],"files":26,"outcome":{"secured":false,"waves":14,"gold":45,"runsSoFar":5,"scoredAttempts":1,"tape":"/private/tmp/heat13-569a41f9/artifacts/heat13/opus/e8-low-orbit/tune-2-tape.json","worldModel":"sim-import"},"scoredTapes":[{"file":"attempt-1-tape.json","id":"agent-f3d60623-c1837350-c0f6-4079-b85e-5b2c45948334","secured":false,"waves":4,"gold":70,"durationTicks":3844,"lastEntryTick":3601,"promotedByRig":false,"discoveredBy":"filename"},{"file":"tune-2-tape.json","id":"agent-01971015-6405d777-0ba8-4725-8ffd-fe9a9d708ca5","secured":false,"waves":14,"gold":45,"durationTicks":13229,"lastEntryTick":13054,"promotedByRig":true,"discoveredBy":"outcome-file"}],"otherSecured":[],"reportSections":{"outcome":572,"whatTheMapAsked":2070,"winnability":680,"lessons":4582},"usage":{"turns":73,"toolCalls":46,"tokensIn":146,"tokensOut":145846}}
+
+=== NOT SECURED — nothing to submit ===
+{
+ "rig": "opus",
+ "contract": "e8-low-orbit",
+ "wall": 970,
+ "wallHit": false,
+ "rc": 0,
+ "scoredTapes": [
+  {
+   "file": "attempt-1-tape.json",
+   "secured": false,
+   "waves": 4,
+   "gold": 70
+  },
+  {
+   "file": "tune-2-tape.json",
+   "secured": false,
+   "waves": 14,
+   "gold": 45
+  }
+ ],
+ "outcomeNote": "NOT SECURED. Nothing is put forward. Best ride is tune-2 (w14/440.967s/45g); attempt-1 (ctrl-v3, w4/128.133s/70g, fnv1a32:b7254a26) was the scored attempt and regressed. The era gate was fully satisfied in tune-2 at t=368.4 (credited 4/4, reached 2, breathlessEntries 0); the run dies to hero momentum under feelG 0, not to the air."
+}

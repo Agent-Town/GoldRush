@@ -1,0 +1,59 @@
+{
+  "variant": "a",
+  "project": "desktop-chrome",
+  "shot": "5-dusk-north",
+  "frameMs": {
+    "last": 8.199999809265137,
+    "avg": 8.333333333333334,
+    "p95": 9.199999809265137,
+    "sampleCount": 180
+  },
+  "renderMs": {
+    "last": 0.19999980926513672,
+    "avg": 0.28944443066914877,
+    "p95": 0.5,
+    "sampleCount": 180
+  },
+  "renderer": {
+    "calls": 38,
+    "geometries": 97,
+    "textures": 41,
+    "triangles": 76064
+  },
+  "canvas": {
+    "width": 1280,
+    "height": 800,
+    "dpr": 1
+  },
+  "zoom": 0.85,
+  "hero": {
+    "x": 0,
+    "z": -13
+  },
+  "sky": {
+    "variant": "a",
+    "objects": 1,
+    "triangles": 1584,
+    "background": "ramp",
+    "topEdgePitchDeg": -29.51,
+    "topEdgeGroundZ": -31.77,
+    "beyondPlate": true
+  },
+  "lighting": {
+    "night": false,
+    "background": "TownSkyRamp",
+    "fog": "#c98a5c",
+    "fogNear": 28,
+    "fogFar": 68,
+    "sunIntensity": 1.12,
+    "fillIntensity": 0.91
+  },
+  "tier": "full",
+  "buildings": 6,
+  "errors": {
+    "consoleErrors": [
+      "THREE.GLTFLoader: Couldn't load texture blob:http://127.0.0.1:5301/19ee94e6-fb9a-4567-90ce-9cd0b6d33d39"
+    ],
+    "pageErrors": []
+  }
+}

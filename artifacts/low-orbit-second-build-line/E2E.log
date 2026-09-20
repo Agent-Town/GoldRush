@@ -1,0 +1,399 @@
+===== desktop-chrome 16:00:43
+(node:89281) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 19 tests using 1 worker
+
+[1/19] [desktop-chrome] › e2e/e8-low-orbit-momentum.spec.ts:35:1 › the contract wires the low-orbit consumer with its declared geography
+
+[WebServer] 4:00:45 PM [vite] (client) [console.warn] THREE.WARNING: Multiple instances of Three.js being imported.
+[2/19] [desktop-chrome] › e2e/e8-low-orbit-momentum.spec.ts:50:1 › a lob that hits nothing returns once after 12s, then is gone
+
+[WebServer] 4:00:48 PM [vite] (client) [console.warn] THREE.WARNING: Multiple instances of Three.js being imported.
+[3/19] [desktop-chrome] › e2e/e8-low-orbit-momentum.spec.ts:111:1 › a lob that hits something is spent, and never returns
+
+[WebServer] 4:00:50 PM [vite] (client) [console.warn] THREE.WARNING: Multiple instances of Three.js being imported.
+[4/19] [desktop-chrome] › e2e/e8-low-orbit-momentum.spec.ts:143:1 › handholds are a soft constraint: off-route thrust halves, and is never a wall
+
+[WebServer] 4:00:53 PM [vite] (client) [console.warn] THREE.WARNING: Multiple instances of Three.js being imported.
+[5/19] [desktop-chrome] › e2e/e8-low-orbit-momentum.spec.ts:184:1 › the debris bands slow the suit and chip it
+
+[WebServer] 4:00:55 PM [vite] (client) [console.warn] THREE.WARNING: Multiple instances of Three.js being imported.
+
+(node:89383) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[6/19] [desktop-chrome] › e2e/e8-physics.spec.ts:29:1 › contract gravity flags select Eclipse low-g and Low Orbit free-fall profiles
+
+[WebServer] 4:00:57 PM [vite] (client) [console.warn] THREE.WARNING: Multiple instances of Three.js being imported.
+[7/19] [desktop-chrome] › e2e/e8-physics.spec.ts:72:1 › fixed-tick filtering keeps deterministic floaty and free-fall drift after thrust ends
+
+[WebServer] 4:01:00 PM [vite] (client) [console.warn] THREE.WARNING: Multiple instances of Three.js being imported.
+[8/19] [desktop-chrome] › e2e/e8-physics.spec.ts:118:1 › lob reach and airtime follow each contract while vacuum arsenal classes stay light-law clean
+
+[WebServer] 4:01:02 PM [vite] (client) [console.warn] THREE.WARNING: Multiple instances of Three.js being imported.
+[9/19] [desktop-chrome] › e2e/e8-remaining-maps-parity.spec.ts:147:3 › e8-far-side rides to the same event-log hash in the browser as in node
+
+[WebServer] 4:01:04 PM [vite] (client) [console.warn] THREE.WARNING: Multiple instances of Three.js being imported.
+[10/19] [desktop-chrome] › e2e/e8-remaining-maps-parity.spec.ts:147:3 › e8-low-orbit rides to the same event-log hash in the browser as in node
+
+[WebServer] 4:01:06 PM [vite] (client) [console.warn] THREE.WARNING: Multiple instances of Three.js being imported.
+[11/19] [desktop-chrome] › e2e/e8-remaining-maps-parity.spec.ts:147:3 › e8-eclipse rides to the same event-log hash in the browser as in node
+
+[WebServer] 4:01:07 PM [vite] (client) [console.warn] THREE.WARNING: Multiple instances of Three.js being imported.
+[12/19] [desktop-chrome] › e2e/e8-remaining-maps-parity.spec.ts:147:3 › e8-mare-claim rides to the same event-log hash in the browser as in node
+
+[WebServer] 4:01:08 PM [vite] (client) [console.warn] THREE.WARNING: Multiple instances of Three.js being imported.
+[13/19] [desktop-chrome] › e2e/e8-roster.spec.ts:48:1 › E8 contract rows are era-gated while E1 keeps its untagged outlaws
+
+[WebServer] 4:01:09 PM [vite] (client) [console.warn] THREE.WARNING: Multiple instances of Three.js being imported.
+
+[WebServer] 4:01:11 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[14/19] [desktop-chrome] › e2e/e8-roster.spec.ts:113:1 › E8 placeholders preserve roster stats and cure-arms exits
+
+[WebServer] 4:01:12 PM [vite] (client) [console.warn] THREE.WARNING: Multiple instances of Three.js being imported.
+[15/19] [desktop-chrome] › e2e/e8-roster.spec.ts:166:1 › plain Orbital-era boot stays error-free without the debug harness
+
+[WebServer] 4:01:15 PM [vite] (client) [console.warn] THREE.WARNING: Multiple instances of Three.js being imported.
+[16/19] [desktop-chrome] › e2e/er01-e8-census.spec.ts:75:3 › e8-mare-claim census pins the Orbital contract's door state
+[desktop-chrome] › e2e/er01-e8-census.spec.ts:75:3 › e8-mare-claim census pins the Orbital contract's door state
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[17/19] [desktop-chrome] › e2e/er01-e8-census.spec.ts:75:3 › e8-far-side census pins the Orbital contract's door state
+[desktop-chrome] › e2e/er01-e8-census.spec.ts:75:3 › e8-far-side census pins the Orbital contract's door state
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[18/19] [desktop-chrome] › e2e/er01-e8-census.spec.ts:75:3 › e8-low-orbit census pins the Orbital contract's door state
+[desktop-chrome] › e2e/er01-e8-census.spec.ts:75:3 › e8-low-orbit census pins the Orbital contract's door state
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[19/19] [desktop-chrome] › e2e/er01-e8-census.spec.ts:75:3 › e8-eclipse census pins the Orbital contract's door state
+[desktop-chrome] › e2e/er01-e8-census.spec.ts:75:3 › e8-eclipse census pins the Orbital contract's door state
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+  19 passed (37.6s)
+----- desktop-chrome rc=0 16:01:21
+===== mobile-chrome 16:01:21
+(node:91195) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 19 tests using 1 worker
+
+[1/19] [mobile-chrome] › e2e/e8-low-orbit-momentum.spec.ts:35:1 › the contract wires the low-orbit consumer with its declared geography
+[2/19] [mobile-chrome] › e2e/e8-low-orbit-momentum.spec.ts:50:1 › a lob that hits nothing returns once after 12s, then is gone
+[3/19] [mobile-chrome] › e2e/e8-low-orbit-momentum.spec.ts:111:1 › a lob that hits something is spent, and never returns
+[4/19] [mobile-chrome] › e2e/e8-low-orbit-momentum.spec.ts:143:1 › handholds are a soft constraint: off-route thrust halves, and is never a wall
+[5/19] [mobile-chrome] › e2e/e8-low-orbit-momentum.spec.ts:184:1 › the debris bands slow the suit and chip it
+
+(node:91297) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[6/19] [mobile-chrome] › e2e/e8-physics.spec.ts:29:1 › contract gravity flags select Eclipse low-g and Low Orbit free-fall profiles
+[7/19] [mobile-chrome] › e2e/e8-physics.spec.ts:72:1 › fixed-tick filtering keeps deterministic floaty and free-fall drift after thrust ends
+[8/19] [mobile-chrome] › e2e/e8-physics.spec.ts:118:1 › lob reach and airtime follow each contract while vacuum arsenal classes stay light-law clean
+[9/19] [mobile-chrome] › e2e/e8-remaining-maps-parity.spec.ts:147:3 › e8-far-side rides to the same event-log hash in the browser as in node
+[10/19] [mobile-chrome] › e2e/e8-remaining-maps-parity.spec.ts:147:3 › e8-low-orbit rides to the same event-log hash in the browser as in node
+[11/19] [mobile-chrome] › e2e/e8-remaining-maps-parity.spec.ts:147:3 › e8-eclipse rides to the same event-log hash in the browser as in node
+[12/19] [mobile-chrome] › e2e/e8-remaining-maps-parity.spec.ts:147:3 › e8-mare-claim rides to the same event-log hash in the browser as in node
+[13/19] [mobile-chrome] › e2e/e8-roster.spec.ts:48:1 › E8 contract rows are era-gated while E1 keeps its untagged outlaws
+
+[WebServer] 4:01:48 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[14/19] [mobile-chrome] › e2e/e8-roster.spec.ts:113:1 › E8 placeholders preserve roster stats and cure-arms exits
+[15/19] [mobile-chrome] › e2e/e8-roster.spec.ts:166:1 › plain Orbital-era boot stays error-free without the debug harness
+[16/19] [mobile-chrome] › e2e/er01-e8-census.spec.ts:75:3 › e8-mare-claim census pins the Orbital contract's door state
+[mobile-chrome] › e2e/er01-e8-census.spec.ts:75:3 › e8-mare-claim census pins the Orbital contract's door state
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[17/19] [mobile-chrome] › e2e/er01-e8-census.spec.ts:75:3 › e8-far-side census pins the Orbital contract's door state
+[mobile-chrome] › e2e/er01-e8-census.spec.ts:75:3 › e8-far-side census pins the Orbital contract's door state
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[18/19] [mobile-chrome] › e2e/er01-e8-census.spec.ts:75:3 › e8-low-orbit census pins the Orbital contract's door state
+[mobile-chrome] › e2e/er01-e8-census.spec.ts:75:3 › e8-low-orbit census pins the Orbital contract's door state
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[19/19] [mobile-chrome] › e2e/er01-e8-census.spec.ts:75:3 › e8-eclipse census pins the Orbital contract's door state
+[mobile-chrome] › e2e/er01-e8-census.spec.ts:75:3 › e8-eclipse census pins the Orbital contract's door state
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+  19 passed (37.8s)
+----- mobile-chrome rc=0 16:01:59
+E2E DONE 16:01:59

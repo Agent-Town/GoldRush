@@ -1,0 +1,82 @@
+
+########## RIDE e7-relay-rush · seed e7-relay-rush-01 · gen 108 · stake era-retired · wall 1500s ##########
+--- 1 charter ---
+{"rig":"opus","contract":"e7-relay-rush","seed":"e7-relay-rush-01","seedMode":"bench","stake":"era-retired","generation":108,"wall":1500,"notebookSha256":"cc005574ba91451e8c8565bed3486b35d9faf895c9945743b7784584151b6c6a","charterSha256":"7d54fecf953c879687dc3a2406bc1333773dcf1c934be697a6737f3ee5d4c5aa","bytes":852673,"out":"/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/gauntlet-heat14-e3949bfa/rides/e7-relay-rush/charter.md"}
+--- 2 ride ---
+START opus claude-opus-5 pid=89317 session=6680b616-83bf-4d2d-8ecc-e496e836a428 at=2026-09-18T03:14:54.686Z
+FIRST-OUTPUT opus +330s
+OUTCOME opus secured=false waves=2 gold=0 runsSoFar=1 scored=0 +360s
+OUTCOME opus secured=true waves=20 gold=200 runsSoFar=2 scored=0 +465s
+OUTCOME opus secured=true waves=20 gold=200 runsSoFar=2 scored=1 +495s
+END opus rc=0 signal=null wall=650s wallHit=false
+ride-wall rc=0 signal=-
+--- 3 land ---
+
+=== 1 finish-ride ===
+{"rig":"opus","contract":"e7-relay-rush","wall":650,"wallHit":false,"rc":0,"tracked":[],"files":13,"outcome":{"secured":true,"waves":20,"gold":200,"runsSoFar":2,"scoredAttempts":1,"tape":"/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/heat14/opus/e7-relay-rush/attempt-1-tape.json","worldModel":"sim-import"},"scoredTapes":[{"file":"attempt-1-tape.json","id":"agent-2fecaaef-93a2af89-1d92-44fd-b945-826ad8de1644","secured":true,"waves":20,"gold":200,"durationTicks":18000,"lastEntryTick":17100,"promotedByRig":true,"discoveredBy":"outcome-file+filename"}],"otherSecured":[{"file":"tune-1-tape.json","id":"agent-2fecaaef-93a2af89-1d92-44fd-b945-826ad8de1644","waves":20,"gold":200}],"reportSections":{"outcome":1454,"whatTheMapAsked":3297,"winnability":1039,"lessons":5581},"usage":{"turns":49,"toolCalls":25,"tokensIn":98,"tokensOut":87020}}
+tape chosen: attempt-1-tape.json (id agent-2fecaaef-93a2af89-1d92-44fd-b945-826ad8de1644, promotedByRig=true, discoveredBy=outcome-file+filename)
+
+=== 2 freeze notebook header ===
+{"headerOnly":true,"headerBytes":431}
+
+=== 3 harnessDigest ===
+04e26131f71eab46088534e3816c5e9c98e08a5c826c0ae2fbfa6295bdbb5020
+
+=== 4 build-submission ===
+{"tapeId":"agent-2fecaaef-93a2af89-1d92-44fd-b945-826ad8de1644","contract":"e7-relay-rush","epochId":"epoch-7-signal","seed":"e7-relay-rush-01","seedMode":"bench","score":{"secured":true,"waves":20,"timeAlive":600,"gold":200,"baseValue":0},"papers":{"buildId":"3a729dc9d","engineHash":"540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068","era":6,"viewVersion":2},"durationTicks":18000,"lastEntryTick":17100,"stack":{"model":"claude-opus-5","harness":"heat14-operator","harnessVersion":"2.1.272","harnessDigest":"04e26131f71eab46088534e3816c5e9c98e08a5c826c0ae2fbfa6295bdbb5020","worldModel":"sim-import","config":"attended-hosted headless `claude -p` ride (heat 14, the era-6 re-ride) on Claude Code CLI 2.1.272; charter + door manual + own notebook (self-memory); own controller authored in-ride","calls":71,"tokensIn":21743893,"tokensOut":87020}}
+
+=== 5 publish (POST → poll → WATCH) ===
+FAILED: file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/gauntlet-heat14-e3949bfa/publish-submission.mjs:37
+if (slip?.assay !== 'verified') throw new Error(`assay ${slip?.assay ?? 'missing'}: ${slip?.assayReason ?? 'no reason'}`);
+                                      ^
+
+Error: assay pending: no reason
+    at file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/gauntlet-heat14-e3949bfa/publish-submission.mjs:37:39
+
+Node.js v26.4.0
+
+POST ok; assay still pending at the 120 s mark — resuming with the poll-only shim (no re-POST)
+
+=== 6 poll-verdict (no re-POST) ===
+{"tapeId":"agent-2fecaaef-93a2af89-1d92-44fd-b945-826ad8de1644","assay":"verified","assayHash":"fnv1a32:56e85b88","ranked":true,"papers":{"buildId":"3a729dc9d","engineHash":"540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068","era":6,"viewVersion":2}}
+
+=== LANDED ===
+{
+ "rig": "opus",
+ "contract": "e7-relay-rush",
+ "tapeFile": "attempt-1-tape.json",
+ "tapeId": "agent-2fecaaef-93a2af89-1d92-44fd-b945-826ad8de1644",
+ "assay": "verified",
+ "assayHash": "fnv1a32:56e85b88",
+ "ranked": true,
+ "rank": 1,
+ "waves": 20,
+ "gold": 200,
+ "calls": 71,
+ "eventLogHash": "fnv1a32:26c0e86f",
+ "wall": 650,
+ "harnessDigest": "04e26131f71eab46088534e3816c5e9c98e08a5c826c0ae2fbfa6295bdbb5020",
+ "usage": {
+  "turns": 49,
+  "toolCalls": 25,
+  "tokensIn": 21743893,
+  "tokensOut": 87020
+ }
+}
+file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/gauntlet-heat14-e3949bfa/publish-submission.mjs:37
+if (slip?.assay !== 'verified') throw new Error(`assay ${slip?.assay ?? 'missing'}: ${slip?.assayReason ?? 'no reason'}`);
+                                      ^
+
+Error: assay pending: no reason
+    at file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/gauntlet-heat14-e3949bfa/publish-submission.mjs:37:39
+
+Node.js v26.4.0
+
+land rc=0
+--- 4 notebook ---
+{"notebook":"/Users/robin/Claude/Projects/goldrush-gauntlet/memories/claude__opus-5/NOTEBOOK.md","generation":108,"headerBytes":431,"entryBytes":10838}
+--- 5 matrix ---
+| 12 | e7-relay-rush | `e7-relay-rush-01` | era-retired | 108 | **SECURED** | 20 | 200 | 600s | 650s | `attempt-1-tape.json` · `agent-2fecaaef-93a2af89-1d92-44fd-b945-826ad8de1644`<br>fnv1a32:26c0e86f | verified `fnv1a32:56e85b88` rank 1 | gen 108<br>slip `agent-2fecaaef-93a2af89-1d92-44fd-b945-826ad8de1644` |
+{"contract":"e7-relay-rush","secured":true,"tapesOnDisk":8,"scoredTapes":1,"otherSecured":1,"runs":2,"scoredAttempts":1,"wallHit":false,"rc":0,"assay":"verified","ranked":true,"winnability":"Secured, and the margin was **wide on survival, wide on the era gate, and exactly at target on the deadline**: the\nhero was never once scratched (175/175 at every view after the plating picks, 644 kills, `threats.alive` pinned at\nits 60 ceiling from t = 450), nothing was ever wrecked and nothing stolen, and the playbook latch closed 482\nseconds before the bank — while `litAtDeadline` came in at **3 against a target of 3**, so one refused build\ncoordinate on the r1 or r3 errand would have made the run unsecurable at every later wave (the third light landed\nat t = 131.77, 138 s of clock slack but zero *quantity* slack). The one number with nothing left on it is gold:\n**200 is the live bank cap**, reached at t = 407 with `score.goldPanned` frozen at 870 for the last 193 seconds —\nthe dead-sink signature, and here it is the arithmetic maximum, because the only lever that raises the cap is\n`stockpile` (60 g × 2, +150 each) and this roster is thief-only, which my generation 106 measured costing **435\ngold** on exactly that trade."}
+########## END e7-relay-rush ##########
+

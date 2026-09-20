@@ -1,0 +1,676 @@
+[
+  {
+    "case": "ADMIT-plain-door-secure",
+    "seed": "e5-stillwater-01",
+    "identical": true,
+    "secured": true,
+    "waves": 12,
+    "timeMs": 360000,
+    "gold": 65,
+    "kills": 97,
+    "calls": 17,
+    "defaultedPicks": 0,
+    "defaultedSecure": 0,
+    "eventLogHash": "fnv1a32:f9967071"
+  },
+  {
+    "case": "ADMIT-plain-door-secure",
+    "seed": "e5-stillwater-02",
+    "identical": true,
+    "secured": true,
+    "waves": 12,
+    "timeMs": 360000,
+    "gold": 75,
+    "kills": 127,
+    "calls": 20,
+    "defaultedPicks": 0,
+    "defaultedSecure": 0,
+    "eventLogHash": "fnv1a32:8fb9ae74"
+  },
+  {
+    "case": "ADMIT-plain-door-idle",
+    "seed": "e5-stillwater-01",
+    "identical": true,
+    "secured": false,
+    "waves": 3,
+    "timeMs": 106067,
+    "gold": 0,
+    "kills": 42,
+    "calls": 6,
+    "defaultedPicks": 1,
+    "defaultedSecure": 0,
+    "eventLogHash": "fnv1a32:91a34a6a"
+  },
+  {
+    "case": "ADMIT-plain-door-idle",
+    "seed": "e5-stillwater-02",
+    "identical": true,
+    "secured": false,
+    "waves": 3,
+    "timeMs": 90933,
+    "gold": 0,
+    "kills": 33,
+    "calls": 5,
+    "defaultedPicks": 0,
+    "defaultedSecure": 0,
+    "eventLogHash": "fnv1a32:bd5a9d8f"
+  },
+  {
+    "case": "ADMIT-in-process-secure",
+    "seed": "e5-stillwater-01",
+    "identical": true,
+    "secured": true,
+    "waves": 12,
+    "timeMs": 360000,
+    "gold": 65,
+    "kills": 97,
+    "calls": 17,
+    "defaultedPicks": 0,
+    "defaultedSecure": 0,
+    "eventLogHash": "fnv1a32:be2e0c63",
+    "policy": "public-verb/bait/turret+sentry_beacon+turret/harvest=on",
+    "noiseHunt": {
+      "trail": "harpoon-reload",
+      "strikes": 77,
+      "decks": [
+        "starboard:turret:57"
+      ],
+      "anchor": "shelf-watch",
+      "quietZones": [
+        "hand-pan-drift:-",
+        "sail-trim-drift:-"
+      ]
+    }
+  },
+  {
+    "case": "ADMIT-in-process-secure",
+    "seed": "e5-stillwater-02",
+    "identical": true,
+    "secured": true,
+    "waves": 12,
+    "timeMs": 360000,
+    "gold": 75,
+    "kills": 127,
+    "calls": 20,
+    "defaultedPicks": 0,
+    "defaultedSecure": 0,
+    "eventLogHash": "fnv1a32:201e03cd",
+    "policy": "public-verb/bait/turret+sentry_beacon+turret/harvest=on",
+    "noiseHunt": {
+      "trail": "harpoon-reload",
+      "strikes": 76,
+      "decks": [
+        "starboard:turret:60"
+      ],
+      "anchor": "shelf-watch",
+      "quietZones": [
+        "hand-pan-drift:-",
+        "sail-trim-drift:-"
+      ]
+    }
+  },
+  {
+    "case": "idle",
+    "seed": "e5-stillwater-01",
+    "identical": true,
+    "secured": false,
+    "waves": 3,
+    "timeMs": 107733,
+    "gold": 0,
+    "kills": 43,
+    "calls": 0,
+    "defaultedPicks": 0,
+    "defaultedSecure": 0,
+    "eventLogHash": "fnv1a32:30144ddc",
+    "policy": "idle",
+    "noiseHunt": {
+      "trail": null,
+      "strikes": 0,
+      "decks": [],
+      "anchor": "lagoon",
+      "quietZones": [
+        "hand-pan-drift:-",
+        "sail-trim-drift:-"
+      ]
+    }
+  },
+  {
+    "case": "idle",
+    "seed": "e5-stillwater-02",
+    "identical": true,
+    "secured": false,
+    "waves": 3,
+    "timeMs": 91767,
+    "gold": 0,
+    "kills": 33,
+    "calls": 0,
+    "defaultedPicks": 1,
+    "defaultedSecure": 0,
+    "eventLogHash": "fnv1a32:316f5a1b",
+    "policy": "idle",
+    "noiseHunt": {
+      "trail": null,
+      "strikes": 0,
+      "decks": [],
+      "anchor": "lagoon",
+      "quietZones": [
+        "hand-pan-drift:-",
+        "sail-trim-drift:-"
+      ]
+    }
+  },
+  {
+    "case": "deck-gun-beacon-gun-quiet-pan",
+    "seed": "e5-stillwater-01",
+    "identical": true,
+    "secured": false,
+    "waves": 4,
+    "timeMs": 128900,
+    "gold": 0,
+    "kills": 62,
+    "calls": 6,
+    "defaultedPicks": 0,
+    "defaultedSecure": 0,
+    "eventLogHash": "fnv1a32:07d7aaa8",
+    "policy": "public-verb/deck/turret+sentry_beacon+turret/harvest=off",
+    "noiseHunt": {
+      "trail": "harpoon-reload",
+      "strikes": 20,
+      "decks": [
+        "bow:turret:36",
+        "port:sentry_beacon:96",
+        "starboard:turret:96"
+      ],
+      "anchor": "lagoon",
+      "quietZones": [
+        "hand-pan-drift:-",
+        "sail-trim-drift:-"
+      ]
+    }
+  },
+  {
+    "case": "deck-gun-beacon-gun-quiet-pan",
+    "seed": "e5-stillwater-02",
+    "identical": true,
+    "secured": false,
+    "waves": 5,
+    "timeMs": 167700,
+    "gold": 0,
+    "kills": 97,
+    "calls": 10,
+    "defaultedPicks": 0,
+    "defaultedSecure": 0,
+    "eventLogHash": "fnv1a32:4a19ce9f",
+    "policy": "public-verb/deck/turret+sentry_beacon+turret/harvest=off",
+    "noiseHunt": {
+      "trail": "harpoon-reload",
+      "strikes": 29,
+      "decks": [
+        "bow:turret:9",
+        "port:sentry_beacon:96",
+        "starboard:turret:96"
+      ],
+      "anchor": "lagoon",
+      "quietZones": [
+        "hand-pan-drift:-",
+        "sail-trim-drift:-"
+      ]
+    }
+  },
+  {
+    "case": "deck-total-silence",
+    "seed": "e5-stillwater-01",
+    "identical": true,
+    "secured": false,
+    "waves": 3,
+    "timeMs": 110467,
+    "gold": 0,
+    "kills": 47,
+    "calls": 6,
+    "defaultedPicks": 0,
+    "defaultedSecure": 0,
+    "eventLogHash": "fnv1a32:8ebe627f",
+    "policy": "public-verb/deck/sentry_beacon+sentry_beacon+sentry_beacon/harvest=off",
+    "noiseHunt": {
+      "trail": null,
+      "strikes": 0,
+      "decks": [
+        "bow:sentry_beacon:96",
+        "port:sentry_beacon:96",
+        "starboard:sentry_beacon:96"
+      ],
+      "anchor": "lagoon",
+      "quietZones": [
+        "hand-pan-drift:-",
+        "sail-trim-drift:-"
+      ]
+    }
+  },
+  {
+    "case": "deck-total-silence",
+    "seed": "e5-stillwater-02",
+    "identical": true,
+    "secured": false,
+    "waves": 4,
+    "timeMs": 131200,
+    "gold": 0,
+    "kills": 66,
+    "calls": 7,
+    "defaultedPicks": 0,
+    "defaultedSecure": 0,
+    "eventLogHash": "fnv1a32:4814ac2b",
+    "policy": "public-verb/deck/sentry_beacon+sentry_beacon+sentry_beacon/harvest=off",
+    "noiseHunt": {
+      "trail": null,
+      "strikes": 0,
+      "decks": [
+        "bow:sentry_beacon:96",
+        "port:sentry_beacon:96",
+        "starboard:sentry_beacon:96"
+      ],
+      "anchor": "lagoon",
+      "quietZones": [
+        "hand-pan-drift:-",
+        "sail-trim-drift:-"
+      ]
+    }
+  },
+  {
+    "case": "drift-stay-quiet",
+    "seed": "e5-stillwater-01",
+    "identical": true,
+    "secured": false,
+    "waves": 0,
+    "timeMs": 28267,
+    "gold": 0,
+    "kills": 0,
+    "calls": 1,
+    "defaultedPicks": 0,
+    "defaultedSecure": 0,
+    "eventLogHash": "fnv1a32:9327d6ae",
+    "policy": "public-verb/drift/turret+sentry_beacon+turret/harvest=off",
+    "noiseHunt": {
+      "trail": null,
+      "strikes": 0,
+      "decks": [
+        "bow:turret:96",
+        "port:sentry_beacon:96",
+        "starboard:turret:96"
+      ],
+      "anchor": "open-water",
+      "quietZones": [
+        "hand-pan-drift:boat",
+        "sail-trim-drift:-"
+      ]
+    }
+  },
+  {
+    "case": "drift-stay-quiet",
+    "seed": "e5-stillwater-02",
+    "identical": true,
+    "secured": false,
+    "waves": 1,
+    "timeMs": 31867,
+    "gold": 0,
+    "kills": 0,
+    "calls": 2,
+    "defaultedPicks": 0,
+    "defaultedSecure": 0,
+    "eventLogHash": "fnv1a32:d1e0238e",
+    "policy": "public-verb/drift/turret+sentry_beacon+turret/harvest=off",
+    "noiseHunt": {
+      "trail": null,
+      "strikes": 0,
+      "decks": [
+        "bow:turret:96",
+        "port:sentry_beacon:96",
+        "starboard:turret:96"
+      ],
+      "anchor": "open-water",
+      "quietZones": [
+        "hand-pan-drift:boat",
+        "sail-trim-drift:-"
+      ]
+    }
+  },
+  {
+    "case": "aim-lure",
+    "seed": "e5-stillwater-01",
+    "identical": true,
+    "secured": true,
+    "waves": 12,
+    "timeMs": 360000,
+    "gold": 60,
+    "kills": 92,
+    "calls": 17,
+    "defaultedPicks": 0,
+    "defaultedSecure": 0,
+    "eventLogHash": "fnv1a32:c6b3aa1d",
+    "policy": "public-verb/aim/turret+sentry_beacon+turret/harvest=on",
+    "noiseHunt": {
+      "trail": "harpoon-reload",
+      "strikes": 80,
+      "decks": [
+        "starboard:turret:48"
+      ],
+      "anchor": "shelf-watch",
+      "quietZones": [
+        "hand-pan-drift:-",
+        "sail-trim-drift:-"
+      ]
+    }
+  },
+  {
+    "case": "aim-lure",
+    "seed": "e5-stillwater-02",
+    "identical": true,
+    "secured": false,
+    "waves": 1,
+    "timeMs": 40333,
+    "gold": 5,
+    "kills": 0,
+    "calls": 2,
+    "defaultedPicks": 0,
+    "defaultedSecure": 0,
+    "eventLogHash": "fnv1a32:250a734a",
+    "policy": "public-verb/aim/turret+sentry_beacon+turret/harvest=on",
+    "noiseHunt": {
+      "trail": null,
+      "strikes": 0,
+      "decks": [
+        "bow:turret:96",
+        "port:sentry_beacon:96",
+        "starboard:turret:96"
+      ],
+      "anchor": "shelf-watch",
+      "quietZones": [
+        "hand-pan-drift:-",
+        "sail-trim-drift:-"
+      ]
+    }
+  },
+  {
+    "case": "aim-three-guns",
+    "seed": "e5-stillwater-01",
+    "identical": true,
+    "secured": true,
+    "waves": 12,
+    "timeMs": 360000,
+    "gold": 65,
+    "kills": 83,
+    "calls": 16,
+    "defaultedPicks": 0,
+    "defaultedSecure": 0,
+    "eventLogHash": "fnv1a32:c24791e1",
+    "policy": "public-verb/aim/turret+turret+turret/harvest=on",
+    "noiseHunt": {
+      "trail": "harpoon-reload",
+      "strikes": 82,
+      "decks": [
+        "starboard:turret:42"
+      ],
+      "anchor": "shelf-watch",
+      "quietZones": [
+        "hand-pan-drift:-",
+        "sail-trim-drift:-"
+      ]
+    }
+  },
+  {
+    "case": "aim-three-guns",
+    "seed": "e5-stillwater-02",
+    "identical": true,
+    "secured": false,
+    "waves": 1,
+    "timeMs": 40333,
+    "gold": 5,
+    "kills": 0,
+    "calls": 2,
+    "defaultedPicks": 0,
+    "defaultedSecure": 0,
+    "eventLogHash": "fnv1a32:45da340c",
+    "policy": "public-verb/aim/turret+turret+turret/harvest=on",
+    "noiseHunt": {
+      "trail": null,
+      "strikes": 0,
+      "decks": [
+        "bow:turret:96",
+        "port:turret:96",
+        "starboard:turret:96"
+      ],
+      "anchor": "shelf-watch",
+      "quietZones": [
+        "hand-pan-drift:-",
+        "sail-trim-drift:-"
+      ]
+    }
+  },
+  {
+    "case": "aim-silent-control",
+    "seed": "e5-stillwater-01",
+    "identical": true,
+    "secured": false,
+    "waves": 1,
+    "timeMs": 32767,
+    "gold": 0,
+    "kills": 0,
+    "calls": 2,
+    "defaultedPicks": 0,
+    "defaultedSecure": 0,
+    "eventLogHash": "fnv1a32:8ec0698e",
+    "policy": "public-verb/aim/turret+sentry_beacon+turret/harvest=off",
+    "noiseHunt": {
+      "trail": null,
+      "strikes": 0,
+      "decks": [
+        "bow:turret:96",
+        "port:sentry_beacon:96",
+        "starboard:turret:96"
+      ],
+      "anchor": "shelf-watch",
+      "quietZones": [
+        "hand-pan-drift:-",
+        "sail-trim-drift:-"
+      ]
+    }
+  },
+  {
+    "case": "aim-silent-control",
+    "seed": "e5-stillwater-02",
+    "identical": true,
+    "secured": false,
+    "waves": 1,
+    "timeMs": 34367,
+    "gold": 0,
+    "kills": 0,
+    "calls": 2,
+    "defaultedPicks": 0,
+    "defaultedSecure": 0,
+    "eventLogHash": "fnv1a32:ab1b5a65",
+    "policy": "public-verb/aim/turret+sentry_beacon+turret/harvest=off",
+    "noiseHunt": {
+      "trail": null,
+      "strikes": 0,
+      "decks": [
+        "bow:turret:96",
+        "port:sentry_beacon:96",
+        "starboard:turret:96"
+      ],
+      "anchor": "shelf-watch",
+      "quietZones": [
+        "hand-pan-drift:-",
+        "sail-trim-drift:-"
+      ]
+    }
+  },
+  {
+    "case": "bait-shelf-while-trailed",
+    "seed": "e5-stillwater-01",
+    "identical": true,
+    "secured": true,
+    "waves": 12,
+    "timeMs": 360000,
+    "gold": 65,
+    "kills": 97,
+    "calls": 17,
+    "defaultedPicks": 0,
+    "defaultedSecure": 0,
+    "eventLogHash": "fnv1a32:be2e0c63",
+    "policy": "public-verb/bait/turret+sentry_beacon+turret/harvest=on",
+    "noiseHunt": {
+      "trail": "harpoon-reload",
+      "strikes": 77,
+      "decks": [
+        "starboard:turret:57"
+      ],
+      "anchor": "shelf-watch",
+      "quietZones": [
+        "hand-pan-drift:-",
+        "sail-trim-drift:-"
+      ]
+    }
+  },
+  {
+    "case": "bait-shelf-while-trailed",
+    "seed": "e5-stillwater-02",
+    "identical": true,
+    "secured": true,
+    "waves": 12,
+    "timeMs": 360000,
+    "gold": 75,
+    "kills": 127,
+    "calls": 20,
+    "defaultedPicks": 0,
+    "defaultedSecure": 0,
+    "eventLogHash": "fnv1a32:201e03cd",
+    "policy": "public-verb/bait/turret+sentry_beacon+turret/harvest=on",
+    "noiseHunt": {
+      "trail": "harpoon-reload",
+      "strikes": 76,
+      "decks": [
+        "starboard:turret:60"
+      ],
+      "anchor": "shelf-watch",
+      "quietZones": [
+        "hand-pan-drift:-",
+        "sail-trim-drift:-"
+      ]
+    }
+  },
+  {
+    "case": "shed-buy-the-decks-back",
+    "seed": "e5-stillwater-01",
+    "identical": true,
+    "secured": false,
+    "waves": 2,
+    "timeMs": 82967,
+    "gold": 15,
+    "kills": 12,
+    "calls": 3,
+    "defaultedPicks": 0,
+    "defaultedSecure": 0,
+    "eventLogHash": "fnv1a32:562e14aa",
+    "policy": "public-verb/shed/turret+sentry_beacon+turret/harvest=on",
+    "noiseHunt": {
+      "trail": null,
+      "strikes": 7,
+      "decks": [
+        "bow:turret:81",
+        "port:sentry_beacon:96",
+        "starboard:turret:90"
+      ],
+      "anchor": "open-water",
+      "quietZones": [
+        "hand-pan-drift:boat",
+        "sail-trim-drift:-"
+      ]
+    }
+  },
+  {
+    "case": "shed-buy-the-decks-back",
+    "seed": "e5-stillwater-02",
+    "identical": true,
+    "secured": false,
+    "waves": 1,
+    "timeMs": 40333,
+    "gold": 5,
+    "kills": 0,
+    "calls": 2,
+    "defaultedPicks": 0,
+    "defaultedSecure": 0,
+    "eventLogHash": "fnv1a32:250a734a",
+    "policy": "public-verb/shed/turret+sentry_beacon+turret/harvest=on",
+    "noiseHunt": {
+      "trail": null,
+      "strikes": 0,
+      "decks": [
+        "bow:turret:96",
+        "port:sentry_beacon:96",
+        "starboard:turret:96"
+      ],
+      "anchor": "shelf-watch",
+      "quietZones": [
+        "hand-pan-drift:-",
+        "sail-trim-drift:-"
+      ]
+    }
+  },
+  {
+    "case": "kite-hop-the-loud-stations",
+    "seed": "e5-stillwater-01",
+    "identical": true,
+    "secured": false,
+    "waves": 4,
+    "timeMs": 131400,
+    "gold": 20,
+    "kills": 43,
+    "calls": 5,
+    "defaultedPicks": 0,
+    "defaultedSecure": 0,
+    "eventLogHash": "fnv1a32:57e95292",
+    "policy": "public-verb/kite/turret+sentry_beacon+turret/harvest=on",
+    "noiseHunt": {
+      "trail": "harpoon-reload",
+      "strikes": 20,
+      "decks": [
+        "bow:turret:42",
+        "port:sentry_beacon:96",
+        "starboard:turret:90"
+      ],
+      "anchor": "lagoon",
+      "quietZones": [
+        "hand-pan-drift:-",
+        "sail-trim-drift:-"
+      ]
+    }
+  },
+  {
+    "case": "kite-hop-the-loud-stations",
+    "seed": "e5-stillwater-02",
+    "identical": true,
+    "secured": false,
+    "waves": 1,
+    "timeMs": 40333,
+    "gold": 5,
+    "kills": 0,
+    "calls": 2,
+    "defaultedPicks": 0,
+    "defaultedSecure": 0,
+    "eventLogHash": "fnv1a32:250a734a",
+    "policy": "public-verb/kite/turret+sentry_beacon+turret/harvest=on",
+    "noiseHunt": {
+      "trail": null,
+      "strikes": 0,
+      "decks": [
+        "bow:turret:96",
+        "port:sentry_beacon:96",
+        "starboard:turret:96"
+      ],
+      "anchor": "shelf-watch",
+      "quietZones": [
+        "hand-pan-drift:-",
+        "sail-trim-drift:-"
+      ]
+    }
+  }
+]

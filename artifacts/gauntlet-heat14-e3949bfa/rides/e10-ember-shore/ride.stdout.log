@@ -1,0 +1,15 @@
+**SECURED — first receipt of era 6 on `e10-ember-shore`, and the first verified secure this contract has ever had.**
+
+**Outcome:** w12 / 360.000 s / 60 gold / 414 kills / 56 calls. 2 sim runs (idle probe + one controller), 1 scored attempt. Tape put forward: `attempt-1-tape.json`, declared in `gauntlet-outcome.json`'s `tape` field — a byte-identical copy of `tune-1-tape.json`, one ride under two filenames, promoted by name because the first controller secured and the stop rule ends the heat there.
+
+**How it went:**
+- `null-floors.json` published the losing idle floor; my probe reproduced it byte for byte (`w3/93000ms/0g/43k/fnv1a32:1b73c4b7`, `endReason: vent_guttered`) — the rules did not move, which sent the whole reading budget to the mechanic.
+- Four minutes in the contract JSON + `E10PreserveSystem.ts` gave the entire contract before the first order: warmth 100, −4/s **only during a squall**, `STOKE` = 15 gold → +40 (capped), radius 4 measured at the hero, latch = `alight && squallsCompleted ≥ 1`.
+- The load-bearing subtraction: three squalls (68–93, 169–194, 270–295) drain 300 warmth from a 100 pool, and **no wave boundary falls inside squall 3**. So I built the stoke clock out of the order loop itself — one record per tick, `HARVEST` holds the tick while it pans, so `[HARVEST, STOKE, HARVEST, STOKE, …]` fires a stoke every pad-second with no view needed.
+- Result: 12 stokes, **zero refusals of any kind**, vent banked at a full 100/100 with `squallsSurvived: 3` against 1 required. Hero took **zero damage all run** (min HP fraction 1.000, finished 175/175 at level 18); 7 of 7 works unwrecked, `goldStolen` 0.
+
+**Receipts:** envelope measured on all three axes from `runTapeEnvelopeForContract` read in source (not the charter's summary): 10,800 ticks with the last order at 10,699 of a 18,002 ceiling; 56 entries of 3,601; 189,221 bytes of 1,938,784. Assay control-tested on the zero-order probe first, then the reel replayed to its own header hash `fnv1a32:d3959e47` with `securedSnapshot {waves: 12, gold: 60, timeAlive: 360}` matching the declaration.
+
+**The margin I left, stated honestly:** 60 gold banked of 620 panned against a 350 live cap. 180 went into the vent where the arithmetic floor is 120 — the ~60 gold of cap-clipped restore is almost exactly the banked figure. The report names the three-edit cure for the next rider.
+
+The four sections the operator copies are at the end of `artifacts/heat14/opus/e10-ember-shore/gauntlet-report.md`.

@@ -1,0 +1,104 @@
+# e8-mare-claim — the ride log for tasks/e8-mare-claim-physics.md
+# Produced by artifacts/e8-mare-claim-physics/ride.mjs (public door surface only: standing orders
+# in, the rider view out). Node v23.11.1, darwin, contract e8-mare-claim, bench seed e8-mare-claim-01.
+#
+# WHAT TO LOOK FOR
+#   · GRAVITY-SCALED LOBS — `blast_at` events carry lob={reach:24,airTime:1.68}. Off gravity that
+#     reach is Balance.blast.range = 10m and the hang 0.7s; this contract's 2.4x arc is what makes
+#     a 20m BLAST_AT legal at all (at 1.0x the same order is refused OUT_OF_RANGE).
+#   · AIR DRAIN — now.air.suit.seconds falls one second per second outside a breathing dome and
+#     refills at 4/s inside one; drainedTotal / emptySeconds / breathlessPans are cumulative.
+#   · THE DOMES — each pad's air dial falls while an outlaw stands on it (breached:true) and seals
+#     when the pad clears; `breaches` counts the sieges.
+#   · THE REGOLITH RUN — `regolith_ground_worked` fires the first time each authored ground is
+#     panned ON SUIT AIR. A breathless pan is counted in breathlessPans and credited to nothing.
+#   · THE SECURE — the claim cannot be offered a secure until regolith.complete is true.
+#
+# THREE RIDES, ONE SEED:
+#   1. IDLE       — the null floor: no orders at all. Suit empties, no ground is ever worked.
+#   2. FLOOR      — the scripted rider from its own starting kit, no buffs. Works 2 grounds on
+#                   air and opens the latch at t=5.3s, then dies at wave 2 (this map's null floor,
+#                   assets/contracts/null-floors.json), so it never reaches the wave-20 boundary.
+#                   No rider has ever secured this contract: winnability-receipts.json says
+#                   {"contractId":"e8-mare-claim","status":"unclaimed"}.
+#   3. HARNESS    — the same policy with an immortal hero (twin-banks-hash-probe idiom), so the
+#                   ride outlives the null floor and reaches the secure boundary. SECURED at wave
+#                   20 with the latch open. NOT a floor result and never to be read as one.
+#
+# A/B ON THE LATCH, same seed and same policy, measured 2026-09-04:
+#   latch CLOSED (the gate asking six grounds, five worked) -> no secure offered at wave 20; the
+#     ride ran on to wave 27 and died. secured:false eventLogHash fnv1a32:7f2c4650
+#   latch OPEN   (the gate asking one, five worked)         -> offered at wave 20, banked.
+#     secured:true  waves:20 eventLogHash fnv1a32:fea8b6d1
+
+
+====================================================================================================
+# ---------- IDLE RIDE (idle-ride.log) ----------
+ride: e8-mare-claim seed=e8-mare-claim-01 policy=idle viewVersion=1 schema=goldrush.view.v1
+claim={"x":0,"z":12} hero={"x":0,"z":12,"hp":100} prospector={"x":-1.8,"z":10.93}
+goals=["Build among the dome cluster and crater-rim pads.","Work the six regolith harvest grounds across the mare flat.","Watch the launch pad, lava-tube mouth, and eastbound mass-driver rail."]
+posting={"waves":[],"spawnEdges":["east","north","west"],"lossStakes":[]}
+now.gravity={"source":"gravity","movement":"floaty","feelG":0.6,"lobArcDistanceMultiplier":2.4,"lobAirTimeMultiplier":2.4,"knockbackScale":1.3,"orbitalReturn":false,"vacuum":true}
+now.air={"wall":"suit-timer","suit":{"body":"prospector","seconds":60,"capacity":60,"refillPerSecond":4,"inDome":null,"empty":false,"drainedTotal":0,"emptySeconds":0},"domes":[{"id":"dome-cluster-pad-west","air":1,"breached":false,"breaches":0,"siegers":0},{"id":"dome-cluster-pad-center","air":1,"breached":false,"breaches":0,"siegers":0},{"id":"dome-cluster-pad-east","air":1,"breached":false,"breaches":0,"siegers":0}],"regolith":{"grounds":6,"required":1,"worked":[],"runsOnAir":0,"breathlessPans":0,"complete":false}}
+TERMINAL decisions=4 outcome={"secured":false,"waves":2,"timeMs":81233,"gold":0,"kills":32,"calls":0,"defaultedPicks":0,"defaultedSecure":0,"eventLogHash":"fnv1a32:1a62757f"}
+final now.air={"wall":"suit-timer","suit":{"body":"prospector","seconds":0,"capacity":60,"refillPerSecond":4,"inDome":null,"empty":true,"drainedTotal":60,"emptySeconds":21.233},"domes":[{"id":"dome-cluster-pad-west","air":1,"breached":false,"breaches":0,"siegers":0},{"id":"dome-cluster-pad-center","air":1,"breached":false,"breaches":0,"siegers":0},{"id":"dome-cluster-pad-east","air":1,"breached":false,"breaches":0,"siegers":0}],"regolith":{"grounds":6,"required":1,"worked":[],"runsOnAir":0,"breathlessPans":0,"complete":false}}
+minSuitSeconds=0 domeRefills=0 turrets=0 blasts=0
+event kinds={"run_started":1,"enemy_killed":32,"announcement":8,"wave_started":2,"hero_damaged":14,"hero_died":1,"run_ended":1}
+
+
+====================================================================================================
+# ---------- FLOOR RIDE (floor-ride.log) ----------
+ride: e8-mare-claim seed=e8-mare-claim-01 policy=rider viewVersion=1 schema=goldrush.view.v1
+claim={"x":0,"z":12} hero={"x":0,"z":12,"hp":100} prospector={"x":-1.8,"z":10.93}
+goals=["Build among the dome cluster and crater-rim pads.","Work the six regolith harvest grounds across the mare flat.","Watch the launch pad, lava-tube mouth, and eastbound mass-driver rail."]
+posting={"waves":[],"spawnEdges":["east","north","west"],"lossStakes":[]}
+now.gravity={"source":"gravity","movement":"floaty","feelG":0.6,"lobArcDistanceMultiplier":2.4,"lobAirTimeMultiplier":2.4,"knockbackScale":1.3,"orbitalReturn":false,"vacuum":true}
+now.air={"wall":"suit-timer","suit":{"body":"prospector","seconds":60,"capacity":60,"refillPerSecond":4,"inDome":null,"empty":false,"drainedTotal":0,"emptySeconds":0},"domes":[{"id":"dome-cluster-pad-west","air":1,"breached":false,"breaches":0,"siegers":0},{"id":"dome-cluster-pad-center","air":1,"breached":false,"breaches":0,"siegers":0},{"id":"dome-cluster-pad-east","air":1,"breached":false,"breaches":0,"siegers":0}],"regolith":{"grounds":6,"required":1,"worked":[],"runsOnAir":0,"breathlessPans":0,"complete":false}}
+wave=1 t=30s GROUND WORKED -> [1] (1/1) runsOnAir=1 breathless=0 suit=30s inDome=null
+wave=2 t=60.03s GROUND WORKED -> [1,4] (2/1) runsOnAir=2 breathless=0 suit=0s inDome=null
+TERMINAL decisions=4 outcome={"secured":false,"waves":2,"timeMs":81233,"gold":10,"kills":32,"calls":4,"defaultedPicks":0,"defaultedSecure":0,"eventLogHash":"fnv1a32:c9894f31"}
+final now.air={"wall":"suit-timer","suit":{"body":"prospector","seconds":60,"capacity":60,"refillPerSecond":4,"inDome":"dome-cluster-pad-center","empty":false,"drainedTotal":60,"emptySeconds":1.067},"domes":[{"id":"dome-cluster-pad-west","air":1,"breached":false,"breaches":0,"siegers":0},{"id":"dome-cluster-pad-center","air":1,"breached":false,"breaches":0,"siegers":0},{"id":"dome-cluster-pad-east","air":1,"breached":false,"breaches":0,"siegers":0}],"regolith":{"grounds":6,"required":1,"worked":[1,4],"runsOnAir":2,"breathlessPans":0,"complete":true}}
+minSuitSeconds=0 domeRefills=1 turrets=0 blasts=1
+event kinds={"run_started":1,"orders":4,"regolith_ground_worked":2,"enemy_killed":32,"announcement":8,"wave_started":2,"blast_at":1,"hero_damaged":14,"hero_died":1,"run_ended":1}
+event {"type":"blast_at","at":37.867,"pos":{"x":20,"z":12},"lob":{"reach":24,"airTime":1.68}}
+event {"type":"regolith_ground_worked","at":5.3,"ground":1,"worked":1}
+event {"type":"regolith_ground_worked","at":37.8,"ground":4,"worked":2}
+
+
+====================================================================================================
+# ---------- HARNESS RIDE (harness-ride.log) ----------
+HARNESS RIDE: hero buffed (applyStats 10000/heal) to outlive the null floor. NOT a floor ride, NOT a door result.
+ride: e8-mare-claim seed=e8-mare-claim-01 policy=harness viewVersion=1 schema=goldrush.view.v1
+claim={"x":0,"z":12} hero={"x":0,"z":12,"hp":10100} prospector={"x":-1.8,"z":10.93}
+goals=["Build among the dome cluster and crater-rim pads.","Work the six regolith harvest grounds across the mare flat.","Watch the launch pad, lava-tube mouth, and eastbound mass-driver rail."]
+posting={"waves":[],"spawnEdges":["east","north","west"],"lossStakes":[]}
+now.gravity={"source":"gravity","movement":"floaty","feelG":0.6,"lobArcDistanceMultiplier":2.4,"lobAirTimeMultiplier":2.4,"knockbackScale":1.3,"orbitalReturn":false,"vacuum":true}
+now.air={"wall":"suit-timer","suit":{"body":"prospector","seconds":60,"capacity":60,"refillPerSecond":4,"inDome":null,"empty":false,"drainedTotal":0,"emptySeconds":0},"domes":[{"id":"dome-cluster-pad-west","air":1,"breached":false,"breaches":0,"siegers":0},{"id":"dome-cluster-pad-center","air":1,"breached":false,"breaches":0,"siegers":0},{"id":"dome-cluster-pad-east","air":1,"breached":false,"breaches":0,"siegers":0}],"regolith":{"grounds":6,"required":1,"worked":[],"runsOnAir":0,"breathlessPans":0,"complete":false}}
+wave=1 t=30s GROUND WORKED -> [1] (1/1) runsOnAir=1 breathless=0 suit=30s inDome=null
+wave=2 t=60.03s GROUND WORKED -> [1,4] (2/1) runsOnAir=2 breathless=0 suit=0s inDome=null
+wave=3 t=111.73s gold=15 hero=9694.399999999976/10100 turrets=0 blasts=2 suit=39.93s inDome=null domes=[["west",1,false],["center",1,false],["east",0.993,true]] worked=2/1
+wave=6 t=180.03s gold=35 hero=8809.599999999937/10100 turrets=0 blasts=4 suit=31.63s inDome=null domes=[["west",1,false],["center",1,false],["east",1,false]] worked=2/1
+wave=7 t=214.6s GROUND WORKED -> [1,2,4] (3/1) runsOnAir=9 breathless=0 suit=56.77s inDome=null
+wave=8 t=240.03s gold=55 hero=7986.399999999911/10100 turrets=0 blasts=6 suit=31.33s inDome=null domes=[["west",0.433,false],["center",1,false],["east",0.971,true]] worked=3/1
+wave=10 t=300s gold=80 hero=7160.79999999992/10100 turrets=0 blasts=9 suit=31.4s inDome=null domes=[["west",0.591,true],["center",1,false],["east",0.407,true]] worked=3/1
+wave=10 t=316.13s GROUND WORKED -> [1,2,3,4] (4/1) runsOnAir=17 breathless=0 suit=15.27s inDome=null
+wave=13 t=390s gold=100 hero=5917.599999999934/10100 turrets=0 blasts=12 suit=1.57s inDome=null domes=[["west",0.67,false],["center",1,false],["east",0.309,true]] worked=4/1
+wave=16 t=480s GROUND WORKED -> [1,2,3,4,5] (5/1) runsOnAir=23 breathless=0 suit=1.57s inDome=null
+wave=16 t=480s gold=115 hero=4691.19999999995/10100 turrets=0 blasts=14 suit=1.57s inDome=null domes=[["west",0.698,false],["center",1,false],["east",0.824,true]] worked=5/1
+wave=20 t=600s gold=130 hero=3053.5999999999685/10100 turrets=0 blasts=16 suit=60s inDome=dome-cluster-pad-center domes=[["west",1,false],["center",1,false],["east",0.914,true]] worked=5/1
+wave=20 t=600s PENDING SECURE (worked=[1,2,3,4,5] complete=true) -> bank
+TERMINAL decisions=43 outcome={"secured":true,"waves":20,"timeMs":600000,"gold":130,"kills":356,"calls":43,"defaultedPicks":16,"defaultedSecure":0,"eventLogHash":"fnv1a32:fea8b6d1"}
+final now.air={"wall":"suit-timer","suit":{"body":"prospector","seconds":60,"capacity":60,"refillPerSecond":4,"inDome":"dome-cluster-pad-center","empty":false,"drainedTotal":416.3,"emptySeconds":6.733},"domes":[{"id":"dome-cluster-pad-west","air":1,"breached":false,"breaches":33,"siegers":0},{"id":"dome-cluster-pad-center","air":1,"breached":false,"breaches":1,"siegers":0},{"id":"dome-cluster-pad-east","air":0.914,"breached":true,"breaches":40,"siegers":1}],"regolith":{"grounds":6,"required":1,"worked":[1,2,3,4,5],"runsOnAir":26,"breathlessPans":0,"complete":true}}
+minSuitSeconds=0 domeRefills=8 turrets=0 blasts=16
+event kinds={"run_started":1,"orders":43,"regolith_ground_worked":5,"enemy_killed":356,"announcement":78,"wave_started":20,"blast_at":16,"hero_damaged":926,"run_secured":1}
+event {"type":"blast_at","at":37.867,"pos":{"x":20,"z":12},"lob":{"reach":24,"airTime":1.68}}
+event {"type":"blast_at","at":102.667,"pos":{"x":-20,"z":12},"lob":{"reach":24,"airTime":1.68}}
+event {"type":"blast_at","at":128.567,"pos":{"x":0,"z":32},"lob":{"reach":24,"airTime":1.68}}
+event {"type":"blast_at","at":162.667,"pos":{"x":0,"z":32},"lob":{"reach":24,"airTime":1.68}}
+event {"type":"blast_at","at":217.1,"pos":{"x":0,"z":32},"lob":{"reach":24,"airTime":1.68}}
+event {"type":"blast_at","at":236.533,"pos":{"x":20,"z":12},"lob":{"reach":24,"airTime":1.68}}
+event {"type":"regolith_ground_worked","at":5.3,"ground":1,"worked":1}
+event {"type":"regolith_ground_worked","at":37.8,"ground":4,"worked":2}
+event {"type":"regolith_ground_worked","at":214.567,"ground":2,"worked":3}
+event {"type":"regolith_ground_worked","at":304.5,"ground":3,"worked":4}
+event {"type":"regolith_ground_worked","at":454.9,"ground":5,"worked":5}

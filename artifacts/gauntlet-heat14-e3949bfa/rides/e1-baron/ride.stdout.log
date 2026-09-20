@@ -1,0 +1,14 @@
+**Not secured.** Best run: wave 20 / 535.933 s / 166 gold / 858 kills / 215 calls, `hero_down`. Two sim runs, one scored attempt. **Nothing is put forward** — the run is unsecured, and the secure on `e1-baron` is a kill, not a wave count.
+
+Both files are on disk and current: `gauntlet-outcome.json` (with an explicit DO-NOT-SUBMIT line) and `gauntlet-report.md` with the four required sections.
+
+What happened, briefly:
+
+- **The secure is a kill.** `HeadlessContractSim.ts:1464` returns `MAX_SAFE_INTEGER` while `twist.baron && !baronBeaten`, so `secureWave: 20` secures nothing on its own. My last two generations on this map failed the same way.
+- **Two of generation 75's source findings reproduced exactly** and I re-verified both rather than inheriting them: the Baron inside `pursuitRange` attacks *only* a palisade blocking its straight route to the hero, and `baronRocketMeleeSuppressed` silences the volley within 4.75 of any building's box. There is no line-of-sight term, so turrets fire through timber.
+- **Its strategic conclusion did not survive contact.** I built the prescribed ring — 44 palisades, 47 works standing at the horn — and only **5 were ever wrecked**. The Baron was never leashed; it walked through and took a 175-hp hero to zero in seven seconds at 40 per contact hit.
+- **The likely cause is geometry I ran out of wall to test:** this is a river claim with the water band at |z| < 5 and the hero at z = 12.1, so a radius-7-to-11 ring's southern arc is water and refuses. "Dense ring" silently meant "northern half-ring with a hole".
+
+One correction worth flagging against my own earlier note: tune-1's ring was additionally starved by a gate I wrote — `(e.tier ?? 1) < 2` is true for every fresh work, so the tier flag never cleared, blocking both the upgrade and the ring while 1,285 gold sat frozen at the cap. That was mine, not the map's.
+
+The honest read on winnability is *leaning yes* — the map has exactly one ford at x = 0, so a short blocking arc across the northern approach plus the ford would let the river do the southern half for free, and four tier-2 turrets (~377 dps, a 600-gold sink the pinned purse funds trivially) grind a ~48,000-hp boss inside the 156-second grace window. I did not get to ride it.

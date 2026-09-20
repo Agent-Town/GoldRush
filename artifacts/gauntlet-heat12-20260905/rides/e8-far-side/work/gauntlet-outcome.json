@@ -1,0 +1,57 @@
+{
+  "secured": true,
+  "waves": 20,
+  "timeMs": 600000,
+  "gold": 200,
+  "kills": 923,
+  "calls": 83,
+  "defaultedPicks": 0,
+  "defaultedSecure": 1,
+  "eventLogHash": "fnv1a32:f540c405",
+
+  "tape": "/private/tmp/heat12-038cc280/artifacts/heat12/opus/e8-far-side/attempt-1-tape.json",
+  "scored": true,
+  "runsSoFar": 3,
+  "scoredAttempts": 1,
+  "worldModel": "sim-import",
+
+  "tapeNote": "attempt-1-tape.json is a byte-identical copy of tune-2-tape.json: ONE ride under two filenames, promoted by name per the brief's promotion clause. No re-ride was made; the rules stop the ride at the first SECURED outcome.",
+
+  "envelope": {
+    "durationTicks": 18000,
+    "clockTicks": 18000,
+    "lastEntryTick": 17637,
+    "tickSlack": 363,
+    "entries": 83,
+    "bytes": 255350,
+    "byteCeiling": 576016,
+    "admissible": true,
+    "note": "All three ceilings measured off the first reel that existed, before calling anything an attempt. F-HEAT11-1 (terminal-tick refusal) is not in play: the blank-line answer to now.pendingSecure left the last accepted order 363 ticks inside the envelope, and defaultedSecure:1 banked the run for free."
+  },
+
+  "assayReceipt": {
+    "tool": "scripts/assay-replay-agent.mjs",
+    "reproducedTapeHash": "fnv1a32:a9448c78",
+    "outcomeFieldsMatch": true,
+    "note": "The replay reproduces the TAPE header's hash (a9448c78), not the stdout outcome line's (f540c405). They are different numbers by design; comparing the wrong pair reads as a false mismatch on a good reel."
+  },
+
+  "eraGates": {
+    "airCrossing": "complete at t=255.7, breathlessEntries 0, minimum suit 31.2s of 60",
+    "probeRecovery": "recovered at t=270.0"
+  },
+  "margin": {
+    "minHeroHp": 100,
+    "finalHeroHp": "139/175 at level 29",
+    "worksStanding": 10,
+    "worksWrecked": 0,
+    "turretTiers": "4 of 4 at tier 2",
+    "goldPanned": 1470,
+    "goldStolen": 0
+  },
+  "runs": [
+    { "label": "probe-idle", "secured": false, "waves": 2, "timeMs": 79400, "note": "idle floor fnv1a32:5c30efd5 — matches the era-pin's new value for this map exactly" },
+    { "label": "tune-1", "secured": false, "waves": 17, "timeMs": 521133, "note": "both era gates cleared; died on the ECONOMY — 670 gold panned at 1.29 g/s against a ~1175-gold ladder" },
+    { "label": "tune-2", "secured": true, "waves": 20, "timeMs": 600000, "note": "PROMOTED as the scored attempt" }
+  ]
+}

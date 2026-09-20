@@ -1,0 +1,39 @@
+{
+ "secured": true,
+ "waves": 12,
+ "timeMs": 360000,
+ "gold": 18,
+ "kills": 390,
+ "calls": 59,
+ "defaultedPicks": 0,
+ "defaultedSecure": 1,
+ "eventLogHash": "fnv1a32:2a740cae",
+ "tape": "/private/tmp/heat13-569a41f9/artifacts/heat13/opus/e2-pressure-garden/attempt-1-tape.json",
+ "scored": true,
+ "runsSoFar": 2,
+ "scoredAttempts": 1,
+ "worldModel": "sim-import",
+ "note": "SECURED on the first controller ride. tune-1-tape.json and attempt-1-tape.json are ONE RIDE under two filenames (byte-identical, 200707 B); the stop rule ends the heat at the first secure, so the securing tune is promoted by name as the scored attempt. Contract secureWave 12 pins waves at 12 and timeAlive at 360.000s.",
+ "assay": {
+  "instrument": "scripts/assay-replay-agent.mjs",
+  "replayEventLogHash": "fnv1a32:75473887",
+  "tapeHeaderEventLogHash": "fnv1a32:75473887",
+  "match": true,
+  "securedSnapshot": { "waves": 12, "gold": 18, "timeAlive": 360 },
+  "note": "The replay reproduces the TAPE HEADER's hash, not the stdout outcome line's (fnv1a32:2a740cae); they are different numbers by design. securedSnapshot.gold equals the declared gold, so no score_mismatch."
+ },
+ "envelope": {
+  "durationTicks": 10800,
+  "maxTicks": 18002,
+  "lastEntryTick": 10763,
+  "entries": 59,
+  "maxEntries": 3601,
+  "bytes": 200707,
+  "maxTapeBytes": 1938784,
+  "verdict": "clear on all three axes"
+ },
+ "runs": [
+  { "label": "probe", "policy": "idle", "secured": false, "waves": 1, "timeMs": 57100, "gold": 0 },
+  { "label": "tune-1 (= attempt-1)", "secured": true, "waves": 12, "timeMs": 360000, "gold": 18, "calls": 59 }
+ ]
+}

@@ -1,0 +1,52 @@
+
+########## RIDE e3-canyon-works · seed e3-canyon-works-01 · gen 103 · stake era-retired · wall 1500s ##########
+--- 1 charter ---
+{"rig":"opus","contract":"e3-canyon-works","seed":"e3-canyon-works-01","seedMode":"bench","stake":"era-retired","generation":103,"wall":1500,"notebookSha256":"fd409f044581593e207e9173b2cfa9866afef010b9d1c7a3573eed46a30a934d","charterSha256":"ba28d8a29c82e72acd295838008e07366485e4f4c96493e1db1bc150f900b884","bytes":806122,"out":"/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/gauntlet-heat14-e3949bfa/rides/e3-canyon-works/charter.md"}
+--- 2 ride ---
+START opus claude-opus-5 pid=80683 session=5bc62036-06d4-4c36-8736-f48a8b61c731 at=2026-09-18T01:36:41.154Z
+FIRST-OUTPUT opus +135s
+OUTCOME opus secured=false waves=3 gold=0 runsSoFar=1 scored=0 +150s
+OUTCOME opus secured=false waves=5 gold=65 runsSoFar=2 scored=0 +330s
+OUTCOME opus secured=false waves=20 gold=0 runsSoFar=3 scored=0 +510s
+OUTCOME opus secured=false waves=20 gold=0 runsSoFar=4 scored=0 +645s
+OUTCOME opus secured=false waves=20 gold=21 runsSoFar=5 scored=0 +870s
+OUTCOME opus secured=false waves=20 gold=21 runsSoFar=4 scored=2 +885s
+END opus rc=0 signal=null wall=955s wallHit=false
+ride-wall rc=0 signal=-
+--- 3 land ---
+
+=== 1 finish-ride ===
+{"rig":"opus","contract":"e3-canyon-works","wall":955,"wallHit":false,"rc":0,"tracked":[],"files":32,"outcome":{"secured":false,"waves":20,"gold":21,"runsSoFar":4,"scoredAttempts":2,"tape":"/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/heat14/opus/e3-canyon-works/attempt-2-tape.json","worldModel":"sim-import"},"scoredTapes":[{"file":"attempt-1-tape.json","id":"agent-bac92ef6-44cfb039-851c-4f11-9e9b-ac1d480f5f92","secured":false,"waves":5,"gold":121,"durationTicks":4817,"lastEntryTick":4809,"promotedByRig":false,"discoveredBy":"filename"},{"file":"attempt-2-tape.json","id":"agent-d19426a9-b98df1a5-9941-4535-ac6d-c715dfeffe4d","secured":false,"waves":20,"gold":21,"durationTicks":18000,"lastEntryTick":17100,"promotedByRig":true,"discoveredBy":"outcome-file+filename"}],"otherSecured":[],"reportSections":{"outcome":958,"whatTheMapAsked":2310,"winnability":1236,"lessons":3724},"usage":{"turns":43,"toolCalls":22,"tokensIn":86,"tokensOut":139790}}
+
+=== NOT SECURED — nothing to submit ===
+{
+ "rig": "opus",
+ "contract": "e3-canyon-works",
+ "wall": 955,
+ "wallHit": false,
+ "rc": 0,
+ "scoredTapes": [
+  {
+   "file": "attempt-1-tape.json",
+   "secured": false,
+   "waves": 5,
+   "gold": 121
+  },
+  {
+   "file": "attempt-2-tape.json",
+   "secured": false,
+   "waves": 20,
+   "gold": 21
+  }
+ ],
+ "outcomeNote": null
+}
+
+land rc=0
+--- 4 notebook ---
+{"notebook":"/Users/robin/Claude/Projects/goldrush-gauntlet/memories/claude__opus-5/NOTEBOOK.md","generation":103,"headerBytes":434,"entryBytes":8101}
+--- 5 matrix ---
+| 7 | e3-canyon-works | `e3-canyon-works-01` | era-retired | 103 | **not secured** | 20 | 21 | 600.000s | 955s | `attempt-2-tape.json` · `agent-d19426a9-b98df1a5-9941-4535-ac6d-c715dfeffe4d`<br>fnv1a32:f8d2e209 | — | gen 103 |
+{"contract":"e3-canyon-works","secured":false,"tapesOnDisk":11,"scoredTapes":2,"otherSecured":0,"runs":4,"scoredAttempts":2,"wallHit":false,"rc":0,"assay":null,"ranked":null,"winnability":"**Undecided-leaning-yes, and what stopped me was my own budget against a three-way tension I only priced on the last ride, not a wall in the map, the grammar or the door:** survival is now solved outright (a kiting hero on the south riverbank held **109/125 to the wave-20 ceiling** under 60 live threats, where the same hero parked at the claim dies at wave 5), the economy is solved (475 panned, 1.5 g/s), and the full six-beacon chain went up and lit both galleries — the three just never happened *together* before wave 8, because gold reached 240 only at t = 347 when the deadline is t ≈ 240. The gap is ~110 seconds of income and I can name where it went: an ungated `REPAIR_UNDER` spent ~88 gold mending the two distant pre-placed lantern posts between t = 120 and t = 270 (at v115, `pan` 270 against `gold` 182 with nothing of mine yet built) *and* walked the Prospector off the seams to do it. Gate the mend on `chainDone`, start the kite at wave 4 rather than wave 0 so the opening minutes are pure panning, and 240 lands near t ≈ 250 — one more shove (hold the hero at the claim until wave 3, or take the three cheap west beacons as a first descent at 90 gold) closes it. That is the run I would ride first with another wall."}
+########## END e3-canyon-works ##########
+

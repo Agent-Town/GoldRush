@@ -1,0 +1,263 @@
+
+Running 36 tests using 1 worker
+
+  ✓   1 [desktop-chrome] › e2e/e5-deepwater-claim.spec.ts:30:1 › boots the Deepwater contract with deck pads, depth gates, and a storm-scheduled corsair wave (3.5s)
+  ✓   2 [desktop-chrome] › e2e/e5-deepwater-claim.spec.ts:99:1 › shows the active run wave in Deepwater and WaveSystem contracts (6.9s)
+  ✓   3 [desktop-chrome] › e2e/e5-deepwater-claim.spec.ts:135:1 › replays boat placement and two storm cycles deterministically (2.7s)
+(node:71384) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+  ✘   4 [desktop-chrome] › e2e/e5-flotilla-hulls.spec.ts:6:1 › the Flotilla keeps three losable hulls and secures both bench seeds deterministically (7.6s)
+  ✘   5 [desktop-chrome] › e2e/e5-flotilla-hulls.spec.ts:118:1 › idle Flotilla runs lose all hulls (2.3s)
+e5-flotilla plain boot watchErrors suppressed 0 known GLTFLoader blob error(s)
+  ✓   6 [desktop-chrome] › e2e/e5-flotilla-hulls.spec.ts:135:1 › plain boot resolves the Flotilla contract without browser errors (2.8s)
+  ✓   7 [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:111:1 › menu places a palisade and logs build_palisade spend (3.4s)
+  ✓   8 [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:136:1 › build menu shows six ready icons and Balance-backed blurbs (3.5s)
+  ✓   9 [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining (3.2s)
+  ✓  10 [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:205:1 › beacon cost curve stays intact through the menu (3.4s)
+  ✓  11 [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:227:1 › single enemy slides around a finite palisade line without passing through (5.9s)
+  ✓  12 [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:284:1 › 390px build menu is visible, tappable, and clear of HUD controls (9.1s)
+  ✓  13 [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:329:1 › stress draw calls stay under 200 with palisades and beacons (7.0s)
+  ✓  14 [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:105:1 › enemy crossing the river reaches the hero through the ford only (4.5s)
+  ✓  15 [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:123:1 › scheduled waves never place enemies in deep river over three waves (6.5s)
+  ✓  16 [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:139:1 › hero stops in the shallows and keeps weapons armed at the deep channel (3.2s)
+  ✓  17 [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:181:1 › xp from a residual deep-water death is auto-banked with no mote (2.7s)
+  ✓  18 [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:202:1 › far-bank sluice stays untouched when the river flank is open (3.7s)
+  ✓  19 [mobile-chrome] › e2e/e5-deepwater-claim.spec.ts:30:1 › boots the Deepwater contract with deck pads, depth gates, and a storm-scheduled corsair wave (3.4s)
+  ✓  20 [mobile-chrome] › e2e/e5-deepwater-claim.spec.ts:99:1 › shows the active run wave in Deepwater and WaveSystem contracts (6.7s)
+  ✓  21 [mobile-chrome] › e2e/e5-deepwater-claim.spec.ts:135:1 › replays boat placement and two storm cycles deterministically (2.6s)
+(node:72600) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+  ✘  22 [mobile-chrome] › e2e/e5-flotilla-hulls.spec.ts:6:1 › the Flotilla keeps three losable hulls and secures both bench seeds deterministically (7.5s)
+  ✘  23 [mobile-chrome] › e2e/e5-flotilla-hulls.spec.ts:118:1 › idle Flotilla runs lose all hulls (2.3s)
+e5-flotilla plain boot watchErrors suppressed 0 known GLTFLoader blob error(s)
+  ✓  24 [mobile-chrome] › e2e/e5-flotilla-hulls.spec.ts:135:1 › plain boot resolves the Flotilla contract without browser errors (2.8s)
+  ✓  25 [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:111:1 › menu places a palisade and logs build_palisade spend (3.4s)
+  ✓  26 [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:136:1 › build menu shows six ready icons and Balance-backed blurbs (3.3s)
+  ✓  27 [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining (3.2s)
+  ✓  28 [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:205:1 › beacon cost curve stays intact through the menu (3.3s)
+  ✓  29 [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:227:1 › single enemy slides around a finite palisade line without passing through (5.9s)
+  ✓  30 [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:284:1 › 390px build menu is visible, tappable, and clear of HUD controls (9.7s)
+  ✓  31 [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:329:1 › stress draw calls stay under 200 with palisades and beacons (6.6s)
+  ✓  32 [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:105:1 › enemy crossing the river reaches the hero through the ford only (3.5s)
+  ✓  33 [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:123:1 › scheduled waves never place enemies in deep river over three waves (6.4s)
+  ✓  34 [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:139:1 › hero stops in the shallows and keeps weapons armed at the deep channel (3.2s)
+  ✓  35 [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:181:1 › xp from a residual deep-water death is auto-banked with no mote (2.7s)
+  ✓  36 [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:202:1 › far-bank sluice stays untouched when the river flank is open (3.6s)
+
+
+  1) [desktop-chrome] › e2e/e5-flotilla-hulls.spec.ts:6:1 › the Flotilla keeps three losable hulls and secures both bench seeds deterministically 
+
+    Error: expect(received).toMatchObject(expected)
+
+    - Expected  - 1
+    + Received  + 1
+
+      Object {
+    -   "eventLogHash": "fnv1a32:a9f33e48",
+    +   "eventLogHash": "fnv1a32:c01dd739",
+        "kills": 30,
+        "secured": true,
+        "waves": 12,
+      }
+
+      105 |       // NAMED-CAUSE PIN (b2-flotilla-hulls, 2026-08-20): three deck builds, repeated
+      106 |       // straggler-biased defense, and REANCHOR formation pulls through secure wave 12.
+    > 107 |       expect(first).toMatchObject({ secured: true, waves: 12, kills: 30, eventLogHash });
+          |                     ^
+      108 |     }
+      109 |   } finally {
+      110 |     await vite.close();
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-regatta2/e2e/e5-flotilla-hulls.spec.ts:107:21
+
+    Error Context: test-results/e5-flotilla-hulls-the-Flot-5cf7c-nch-seeds-deterministically-desktop-chrome/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e5-flotilla-hulls-the-Flot-5cf7c-nch-seeds-deterministically-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e5-flotilla-hulls-the-Flot-5cf7c-nch-seeds-deterministically-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [desktop-chrome] › e2e/e5-flotilla-hulls.spec.ts:118:1 › idle Flotilla runs lose all hulls ────
+
+    Error: expect(received).toMatchObject(expected)
+
+    - Expected  - 1
+    + Received  + 1
+
+      Object {
+    -   "eventLogHash": "fnv1a32:68d87963",
+    +   "eventLogHash": "fnv1a32:815739a6",
+        "kills": 0,
+        "secured": false,
+        "timeMs": 46800,
+        "waves": 2,
+      }
+
+      129 |     const outcome = JSON.parse(run.stdout.trim().split('\n').at(-1)!);
+      130 |     // NAMED-CAUSE PIN: no rider follows the straggler, so all three hulls reach zero integrity.
+    > 131 |     expect(outcome).toMatchObject({ secured: false, waves: 2, timeMs: 46800, kills: 0, eventLogHash });
+          |                     ^
+      132 |   }
+      133 | });
+      134 |
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-regatta2/e2e/e5-flotilla-hulls.spec.ts:131:21
+
+    Error Context: test-results/e5-flotilla-hulls-idle-Flotilla-runs-lose-all-hulls-desktop-chrome/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e5-flotilla-hulls-idle-Flotilla-runs-lose-all-hulls-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e5-flotilla-hulls-idle-Flotilla-runs-lose-all-hulls-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [mobile-chrome] › e2e/e5-flotilla-hulls.spec.ts:6:1 › the Flotilla keeps three losable hulls and secures both bench seeds deterministically 
+
+    Error: expect(received).toMatchObject(expected)
+
+    - Expected  - 1
+    + Received  + 1
+
+      Object {
+    -   "eventLogHash": "fnv1a32:a9f33e48",
+    +   "eventLogHash": "fnv1a32:c01dd739",
+        "kills": 30,
+        "secured": true,
+        "waves": 12,
+      }
+
+      105 |       // NAMED-CAUSE PIN (b2-flotilla-hulls, 2026-08-20): three deck builds, repeated
+      106 |       // straggler-biased defense, and REANCHOR formation pulls through secure wave 12.
+    > 107 |       expect(first).toMatchObject({ secured: true, waves: 12, kills: 30, eventLogHash });
+          |                     ^
+      108 |     }
+      109 |   } finally {
+      110 |     await vite.close();
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-regatta2/e2e/e5-flotilla-hulls.spec.ts:107:21
+
+    Error Context: test-results/e5-flotilla-hulls-the-Flot-5cf7c-nch-seeds-deterministically-mobile-chrome/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e5-flotilla-hulls-the-Flot-5cf7c-nch-seeds-deterministically-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e5-flotilla-hulls-the-Flot-5cf7c-nch-seeds-deterministically-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [mobile-chrome] › e2e/e5-flotilla-hulls.spec.ts:118:1 › idle Flotilla runs lose all hulls ─────
+
+    Error: expect(received).toMatchObject(expected)
+
+    - Expected  - 1
+    + Received  + 1
+
+      Object {
+    -   "eventLogHash": "fnv1a32:68d87963",
+    +   "eventLogHash": "fnv1a32:815739a6",
+        "kills": 0,
+        "secured": false,
+        "timeMs": 46800,
+        "waves": 2,
+      }
+
+      129 |     const outcome = JSON.parse(run.stdout.trim().split('\n').at(-1)!);
+      130 |     // NAMED-CAUSE PIN: no rider follows the straggler, so all three hulls reach zero integrity.
+    > 131 |     expect(outcome).toMatchObject({ secured: false, waves: 2, timeMs: 46800, kills: 0, eventLogHash });
+          |                     ^
+      132 |   }
+      133 | });
+      134 |
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-regatta2/e2e/e5-flotilla-hulls.spec.ts:131:21
+
+    Error Context: test-results/e5-flotilla-hulls-idle-Flotilla-runs-lose-all-hulls-mobile-chrome/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e5-flotilla-hulls-idle-Flotilla-runs-lose-all-hulls-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e5-flotilla-hulls-idle-Flotilla-runs-lose-all-hulls-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4 failed
+    [desktop-chrome] › e2e/e5-flotilla-hulls.spec.ts:6:1 › the Flotilla keeps three losable hulls and secures both bench seeds deterministically 
+    [desktop-chrome] › e2e/e5-flotilla-hulls.spec.ts:118:1 › idle Flotilla runs lose all hulls ─────
+    [mobile-chrome] › e2e/e5-flotilla-hulls.spec.ts:6:1 › the Flotilla keeps three losable hulls and secures both bench seeds deterministically 
+    [mobile-chrome] › e2e/e5-flotilla-hulls.spec.ts:118:1 › idle Flotilla runs lose all hulls ──────
+  32 passed (2.8m)

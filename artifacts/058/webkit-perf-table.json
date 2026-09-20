@@ -1,0 +1,318 @@
+{
+  "project": "desktop-webkit",
+  "full": {
+    "tier": "full",
+    "p95": 24,
+    "renderer": {
+      "calls": 133,
+      "triangles": 111802,
+      "geometries": 87,
+      "textures": 34
+    },
+    "lighting": {
+      "sunPresent": true,
+      "shadowsQuality": "blob",
+      "fogNear": 42,
+      "fogFar": 88,
+      "postEnabled": true,
+      "paperGrainOpacity": 0.008,
+      "shadowMapSize": 0,
+      "shadowMapTargetSize": 0,
+      "blobShadows": 62,
+      "heatShimmer": false,
+      "dustDevilQuads": 0,
+      "palette": {
+        "background": "#f1c887",
+        "fog": "#ead2a3",
+        "sun": "#ffd28a",
+        "sunIntensity": 2.35,
+        "fill": "#fff2cc",
+        "fillIntensity": 1.12
+      },
+      "nightShift": {
+        "enabled": false,
+        "phase": "full",
+        "darkness": 0,
+        "lampIntensityMult": 1
+      },
+      "nightPools": 0,
+      "nightPoolCap": 8,
+      "nightPoolSources": 0,
+      "enemyLanterns": 0,
+      "enemyLanternCones": 0,
+      "prospectorLights": 0,
+      "muzzleFlashes": 0,
+      "muzzleFlashCount": 23,
+      "billboardLights": 0,
+      "dayNight": null,
+      "coverage": {
+        "darkness": 0,
+        "minLight": 0.045,
+        "falloff": 1.25,
+        "litThreshold": 0.35,
+        "sources": 0,
+        "lanterns": 0,
+        "poweredLamps": 0
+      }
+    },
+    "detail": {
+      "instanceClasses": 5,
+      "contactShadows": 166,
+      "totalInstances": 190,
+      "seededInstances": 190,
+      "densityTier": "desktop",
+      "seed": 2046754454,
+      "classes": [
+        {
+          "id": "rocks",
+          "instances": 44,
+          "visibleInstances": 44,
+          "drawCalls": 1
+        },
+        {
+          "id": "stumps",
+          "instances": 18,
+          "visibleInstances": 18,
+          "drawCalls": 1
+        },
+        {
+          "id": "dry_grass",
+          "instances": 92,
+          "visibleInstances": 92,
+          "drawCalls": 1
+        },
+        {
+          "id": "wagon_ruts",
+          "instances": 24,
+          "visibleInstances": 24,
+          "drawCalls": 1
+        },
+        {
+          "id": "claim_posts",
+          "instances": 12,
+          "visibleInstances": 12,
+          "drawCalls": 1
+        },
+        {
+          "id": "cactus",
+          "instances": 0,
+          "visibleInstances": 0,
+          "drawCalls": 1
+        },
+        {
+          "id": "reeds",
+          "instances": 0,
+          "visibleInstances": 0,
+          "drawCalls": 1
+        }
+      ],
+      "exclusions": {
+        "buildPadRadius": 4.8,
+        "routingLaneRadius": 4.2,
+        "harvestAnchorRadius": 2.4,
+        "buildingClearRadius": 2.4
+      },
+      "probes": {
+        "buildPad": {
+          "x": 0,
+          "z": 9,
+          "clearRadius": 4.8,
+          "nearest": 9.233492702581332,
+          "clear": true
+        },
+        "ford": {
+          "x": 0,
+          "z": 0,
+          "clearRadius": 6.25,
+          "nearest": 8.392460647465262,
+          "clear": true
+        },
+        "routingLane": {
+          "x": 0,
+          "z": -14,
+          "clearRadius": 4.2,
+          "nearest": 5.503047570297989,
+          "clear": true
+        },
+        "building": {
+          "x": 0,
+          "z": 9,
+          "clearRadius": 2.4,
+          "nearest": 9.233492702581332,
+          "clear": true
+        }
+      },
+      "signature": "24.55,11.07|-25.02,10.60|14.47,-25.05|22.70,8.68|27.81,-15.22|24.79,28.48|21.87,-10.30|18.95,-16.43|-30.31,17.91|-20.98,12.88|-29.09,20.99|18.94,-15.19"
+    },
+    "canvas": {
+      "clientWidth": 1280,
+      "clientHeight": 800,
+      "width": 1280,
+      "height": 800,
+      "dpr": 1
+    },
+    "errors": {
+      "consoleErrors": [],
+      "pageErrors": []
+    }
+  },
+  "lite": {
+    "tier": "lite",
+    "p95": 19,
+    "renderer": {
+      "calls": 141,
+      "triangles": 74218,
+      "geometries": 75,
+      "textures": 29
+    },
+    "lighting": {
+      "sunPresent": true,
+      "shadowsQuality": "blob",
+      "fogNear": 50,
+      "fogFar": 76,
+      "postEnabled": false,
+      "paperGrainOpacity": 0,
+      "shadowMapSize": 0,
+      "shadowMapTargetSize": 0,
+      "blobShadows": 62,
+      "heatShimmer": false,
+      "dustDevilQuads": 0,
+      "palette": {
+        "background": "#f1c887",
+        "fog": "#ead2a3",
+        "sun": "#ffd28a",
+        "sunIntensity": 2.35,
+        "fill": "#fff2cc",
+        "fillIntensity": 1.12
+      },
+      "nightShift": {
+        "enabled": false,
+        "phase": "full",
+        "darkness": 0,
+        "lampIntensityMult": 1
+      },
+      "nightPools": 0,
+      "nightPoolCap": 8,
+      "nightPoolSources": 0,
+      "enemyLanterns": 0,
+      "enemyLanternCones": 0,
+      "prospectorLights": 0,
+      "muzzleFlashes": 0,
+      "muzzleFlashCount": 23,
+      "billboardLights": 0,
+      "dayNight": null,
+      "coverage": {
+        "darkness": 0,
+        "minLight": 0.045,
+        "falloff": 1.25,
+        "litThreshold": 0.35,
+        "sources": 0,
+        "lanterns": 0,
+        "poweredLamps": 0
+      }
+    },
+    "detail": {
+      "instanceClasses": 5,
+      "contactShadows": 28,
+      "totalInstances": 32,
+      "seededInstances": 32,
+      "densityTier": "desktop",
+      "seed": 144395835,
+      "classes": [
+        {
+          "id": "rocks",
+          "instances": 7,
+          "visibleInstances": 7,
+          "drawCalls": 1
+        },
+        {
+          "id": "stumps",
+          "instances": 3,
+          "visibleInstances": 3,
+          "drawCalls": 1
+        },
+        {
+          "id": "dry_grass",
+          "instances": 16,
+          "visibleInstances": 16,
+          "drawCalls": 1
+        },
+        {
+          "id": "wagon_ruts",
+          "instances": 4,
+          "visibleInstances": 4,
+          "drawCalls": 1
+        },
+        {
+          "id": "claim_posts",
+          "instances": 2,
+          "visibleInstances": 2,
+          "drawCalls": 1
+        },
+        {
+          "id": "cactus",
+          "instances": 0,
+          "visibleInstances": 0,
+          "drawCalls": 1
+        },
+        {
+          "id": "reeds",
+          "instances": 0,
+          "visibleInstances": 0,
+          "drawCalls": 1
+        }
+      ],
+      "exclusions": {
+        "buildPadRadius": 4.8,
+        "routingLaneRadius": 4.2,
+        "harvestAnchorRadius": 2.4,
+        "buildingClearRadius": 2.4
+      },
+      "probes": {
+        "buildPad": {
+          "x": 0,
+          "z": 9,
+          "clearRadius": 4.8,
+          "nearest": 12.530045073751385,
+          "clear": true
+        },
+        "ford": {
+          "x": 0,
+          "z": 0,
+          "clearRadius": 6.25,
+          "nearest": 14.314595550423029,
+          "clear": true
+        },
+        "routingLane": {
+          "x": 0,
+          "z": -14,
+          "clearRadius": 4.2,
+          "nearest": 9.949705774554987,
+          "clear": true
+        },
+        "building": {
+          "x": 0,
+          "z": 9,
+          "clearRadius": 2.4,
+          "nearest": 12.530045073751385,
+          "clear": true
+        }
+      },
+      "signature": "-23.65,15.67|12.39,7.16|-29.18,13.28|-27.73,-11.84|-23.76,-27.30|29.05,12.63|22.93,-25.60|10.08,-13.37|-16.41,-7.85|17.00,-30.79|-8.82,-18.60|-9.75,20.15"
+    },
+    "canvas": {
+      "clientWidth": 1280,
+      "clientHeight": 800,
+      "width": 1280,
+      "height": 800,
+      "dpr": 1
+    },
+    "errors": {
+      "consoleErrors": [],
+      "pageErrors": []
+    }
+  },
+  "envelope": {
+    "liteP95MsMax": 25
+  }
+}

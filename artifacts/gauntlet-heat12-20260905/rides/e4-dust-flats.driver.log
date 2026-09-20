@@ -1,0 +1,98 @@
+
+########## RIDE e4-dust-flats · seed e4-dust-flats-01 · gen 51 · stake mechanic-changed · wall 1080s ##########
+--- 1 charter ---
+{"rig":"opus","contract":"e4-dust-flats","seed":"e4-dust-flats-01","seedMode":"bench","stake":"mechanic-changed","generation":51,"wall":1080,"notebookSha256":"2c1a9baa7a4bb260beb06caccee8006d2ffd873e25682ab2255286cd02a539a0","charterSha256":"4a5c9aa34fe0343b247ff3a8264a518a624ea21dbe84f4ef4ff7c929f1dbefed","bytes":390647,"out":"/private/tmp/heat12-038cc280/artifacts/gauntlet-heat12-20260905/rides/e4-dust-flats/charter.md"}
+--- 2 ride ---
+START opus claude-opus-5 pid=2732 session=a442511b-8d7d-4f1a-8916-941a7620fe76 at=2026-09-05T19:14:13.797Z
+FIRST-OUTPUT opus +75s
+OUTCOME opus secured=false waves=2 gold=0 runsSoFar=1 scored=0 +75s
+OUTCOME opus secured=false waves=10 gold=200 runsSoFar=2 scored=0 +420s
+OUTCOME opus secured=false waves=10 gold=200 runsSoFar=3 scored=0 +540s
+OUTCOME opus secured=false waves=13 gold=25 runsSoFar=4 scored=0 +615s
+OUTCOME opus secured=true waves=14 gold=55 runsSoFar=5 scored=1 +840s
+WALL opus 1080s reached — SIGTERM to process group 2732
+END opus rc=143 signal=null wall=1081s wallHit=true
+ride-wall rc=124 signal=-
+--- 3 land ---
+
+=== 1 finish-ride ===
+{"rig":"opus","contract":"e4-dust-flats","wall":1081,"wallHit":true,"rc":143,"tracked":[],"files":24,"outcome":{"secured":true,"waves":14,"gold":55,"runsSoFar":5,"scoredAttempts":1,"tape":"/private/tmp/heat12-038cc280/artifacts/heat12/opus/e4-dust-flats/attempt-2-tape.json","worldModel":"sim-import"},"scoredTapes":[{"file":"attempt-2-tape.json","id":"agent-a2abb3af-a22234cd-28a3-4b2c-b9c6-2f2baa797847","secured":true,"waves":14,"gold":55,"durationTicks":12785,"lastEntryTick":12784,"promotedByRig":true,"discoveredBy":"outcome-file+filename"}],"otherSecured":[],"reportSections":{"outcome":1280,"whatTheMapAsked":2544,"winnability":1075,"lessons":6091},"usage":{"turns":100,"toolCalls":61,"tokensIn":200,"tokensOut":136826}}
+tape chosen: attempt-2-tape.json (id agent-a2abb3af-a22234cd-28a3-4b2c-b9c6-2f2baa797847, promotedByRig=true, discoveredBy=outcome-file+filename)
+
+=== 2 freeze notebook header ===
+{"headerOnly":true,"headerBytes":453}
+
+=== 3 harnessDigest ===
+61166d39d7047ea599121914230d560208406921e6a6c8742193b3bd5533c871
+
+=== 4 build-submission ===
+{"tapeId":"agent-a2abb3af-a22234cd-28a3-4b2c-b9c6-2f2baa797847","contract":"e4-dust-flats","epochId":"epoch-4-motor","seed":"e4-dust-flats-01","seedMode":"bench","score":{"secured":true,"waves":14,"timeAlive":426.133,"gold":55,"baseValue":0},"papers":{"buildId":"9c4337e3b","engineHash":"86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b","era":5,"viewVersion":2},"durationTicks":12785,"lastEntryTick":12784,"stack":{"model":"claude-opus-5","harness":"heat12-operator","harnessVersion":"2.1.257","harnessDigest":"61166d39d7047ea599121914230d560208406921e6a6c8742193b3bd5533c871","worldModel":"sim-import","config":"attended-hosted headless `claude -p` ride (heat 12) on Claude Code CLI 2.1.257; charter + door manual + own notebook (self-memory); own controller authored in-ride","calls":52,"tokensIn":28330694,"tokensOut":136826}}
+
+=== 5 publish (POST → poll → WATCH) ===
+FAILED: file:///private/tmp/heat12-038cc280/artifacts/gauntlet-heat12-20260905/publish-submission.mjs:19
+if (slip?.assay !== 'verified') throw new Error(`assay ${slip?.assay ?? 'missing'}: ${slip?.assayReason ?? 'no reason'}`);
+                                      ^
+
+Error: assay pending: no reason
+    at file:///private/tmp/heat12-038cc280/artifacts/gauntlet-heat12-20260905/publish-submission.mjs:19:39
+
+Node.js v23.11.1
+
+POST ok; assay still pending at the 120 s mark — resuming with the poll-only shim (no re-POST)
+
+=== 6 poll-verdict (no re-POST) ===
+FAILED: file:///private/tmp/heat12-038cc280/artifacts/gauntlet-heat12-20260905/poll-verdict.mjs:24
+if (slip?.assay !== 'verified') throw new Error(`assay ${slip?.assay ?? 'missing'}: ${slip?.assayReason ?? 'no reason'}`);
+                                      ^
+
+Error: assay missing: no reason
+    at file:///private/tmp/heat12-038cc280/artifacts/gauntlet-heat12-20260905/poll-verdict.mjs:24:39
+
+Node.js v23.11.1
+
+file:///private/tmp/heat12-038cc280/artifacts/gauntlet-heat12-20260905/publish-submission.mjs:19
+if (slip?.assay !== 'verified') throw new Error(`assay ${slip?.assay ?? 'missing'}: ${slip?.assayReason ?? 'no reason'}`);
+                                      ^
+
+Error: assay pending: no reason
+    at file:///private/tmp/heat12-038cc280/artifacts/gauntlet-heat12-20260905/publish-submission.mjs:19:39
+
+Node.js v23.11.1
+file:///private/tmp/heat12-038cc280/artifacts/gauntlet-heat12-20260905/poll-verdict.mjs:24
+if (slip?.assay !== 'verified') throw new Error(`assay ${slip?.assay ?? 'missing'}: ${slip?.assayReason ?? 'no reason'}`);
+                                      ^
+
+Error: assay missing: no reason
+    at file:///private/tmp/heat12-038cc280/artifacts/gauntlet-heat12-20260905/poll-verdict.mjs:24:39
+
+Node.js v23.11.1
+file:///private/tmp/heat12-038cc280/artifacts/gauntlet-heat12-20260905/land-ride.mjs:31
+const step = (name, fn) => { process.stdout.write(`\n=== ${name} ===\n`); try { return fn(); } catch (error) { process.stdout.write(`FAILED: ${(error.stdout ?? '') + (error.stderr ?? error.message)}\n`); throw Object.assign(new Error(name), { step: name }); } };
+                                                                                                                                                                                                                                ^
+
+Error: 6 poll-verdict (no re-POST)
+    at step (file:///private/tmp/heat12-038cc280/artifacts/gauntlet-heat12-20260905/land-ride.mjs:31:225)
+    at file:///private/tmp/heat12-038cc280/artifacts/gauntlet-heat12-20260905/land-ride.mjs:68:3
+    at ModuleJob.run (node:internal/modules/esm/module_job:274:25)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:644:26)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:98:5) {
+  step: '6 poll-verdict (no re-POST)'
+}
+
+Node.js v23.11.1
+
+land rc=1
+--- 4 notebook ---
+<anonymous_script>:1
+undefined
+^
+
+SyntaxError: Unexpected token 'u', "undefined
+" is not valid JSON
+    at JSON.parse (<anonymous>)
+    at file:///private/tmp/heat12-038cc280/artifacts/gauntlet-heat12-20260905/ride-one.mjs:56:64
+    at ModuleJob.run (node:internal/modules/esm/module_job:274:25)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:644:26)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:98:5)
+
+Node.js v23.11.1

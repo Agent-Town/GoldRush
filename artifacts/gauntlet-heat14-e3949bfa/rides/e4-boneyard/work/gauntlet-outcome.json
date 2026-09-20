@@ -1,0 +1,71 @@
+{
+ "secured": true,
+ "waves": 12,
+ "timeMs": 360000,
+ "gold": 200,
+ "kills": 331,
+ "calls": 40,
+ "defaultedPicks": 0,
+ "defaultedSecure": 1,
+ "eventLogHash": "fnv1a32:f25913c4",
+ "motor": {
+  "graded": [],
+  "hauled": true,
+  "arrivedAt": 61.733,
+  "roadDistance": 0,
+  "distanceTravelled": 65.333,
+  "fuelDrawn": 25.14,
+  "tarHarvested": 9,
+  "convoyArrived": null,
+  "kind": "tow",
+  "towed": true
+ },
+
+ "tape": "/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/heat14/opus/e4-boneyard/attempt-1-tape.json",
+ "scored": true,
+ "runsSoFar": 2,
+ "scoredAttempts": 1,
+ "worldModel": "sim-import",
+
+ "note": "ONE RIDE UNDER TWO FILENAMES. The first controller (ctrl-v1.mjs) secured, so the stop rule ends the heat there; tune-1-tape.json was copied to attempt-1-tape.json and the two files are byte-identical (verified, 137328 bytes each). The operator reads this 'tape' field, not the filename.",
+
+ "tapeHeaderHash": "fnv1a32:99dc9ed0",
+ "assay": {
+  "instrumentControl": "zero-order probe-tape.json replayed to its OWN header fnv1a32:a45ba9ac and reproduced waves 4 / gold 0 / timeAlive 124.867 -- instrument verified before believing it about a tape I could influence",
+  "scoredReplay": "fnv1a32:99dc9ed0 == tape header, outcome secured/12/200/360 reproduced",
+  "securedSnapshot": { "waves": 12, "gold": 200, "timeAlive": 360 },
+  "hashPairNote": "the replay matches the TAPE HEADER's hash (99dc9ed0), never the stdout outcome line's (f25913c4); they are different numbers by design"
+ },
+
+ "envelope": {
+  "durationTicks": 10800,
+  "lastEntryTick": 10539,
+  "ticksInsideDuration": 261,
+  "entries": 40,
+  "bytes": 137328,
+  "maxTicks": 18002,
+  "maxEntries": 3601,
+  "maxBytes": 1938784,
+  "bytesPctOfCeiling": 7.1,
+  "derivation": "computed from runTapeEnvelopeForContract (PlaybookFormat.ts), NOT the charter's 16KiB+entries*160 summary: order-bearing entries are billed at 2400, so the real byte ceiling is 1,938,784 rather than the summary's ~592k"
+ },
+
+ "eraPapers": { "era": 6, "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068", "buildId": "0648b57e7", "viewVersion": 2 },
+
+ "nullFloorCheck": "idle probe reproduced assets/contracts/null-floors.json for e4-boneyard-01 BYTE FOR BYTE (w4 / 124867ms / 0 gold / 35 kills / fnv1a32:5c7f6600) -- era 6 moved this map's rendering, not its rules. Zero of the eight era-6 pins name this contract.",
+
+ "goldIsTheCeilingNotAMargin": "200 is the arithmetic maximum of this contract's default bankCap. The only cap-raiser on the roster is stockpile (60g x2, +150 each), and HeadlessContractSim.claimGold returns 0 unless holding.kind==='stockpile' -- so on this thief-only roster a till is the SOLE switch that arms theft. Priced: ~0.6 g/s with the till at the camp (81wu from both spawn gates), ~1.7 g/s at the west seam cluster (28wu), against 250s of exposure = 150-425 gold for +300 of ceiling that 475 panned cannot fill. Declined; measured goldStolen: 0 with up to 60 thieves alive.",
+
+ "marginEvidence": {
+  "heroMinHpFraction": 1.0,
+  "heroFinal": "175/175, never below its running maximum in any of 42 views",
+  "worksWrecked": 0,
+  "worksStanding": 5,
+  "goldStolen": 0,
+  "capReachedAt": 246.67,
+  "goldPannedFrozenAt": 475,
+  "errandLatchedAt": 61.733,
+  "fuelDrawn": "25.14 of 36",
+  "threatsAlivePeak": 60
+ }
+}

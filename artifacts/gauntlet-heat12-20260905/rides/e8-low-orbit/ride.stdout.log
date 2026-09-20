@@ -1,0 +1,15 @@
+**SECURED** — `e8-low-orbit` / `e8-low-orbit-01`, w20 / 600.000s / 200g / 95 calls, on the first controller ride. Stopped there per the rules; 2 sim runs, 1 scored attempt.
+
+**What the mechanic change actually was.** `E8SuitAirSystem` now arms on this contract, and the secure is gated on `now.air.crossing.complete` — the Prospector must have stood in all three scaffold decks. I traced it before writing an order: `suit-only` + `orbitalScaffoldZones` ⇒ shelters *and* crossings are the same three decks, and inside `update()` the shelter refills the suit **before** `noteCrossings` reads it. With `airIsWall: false` (nothing breachable) and no eclipse, every deck sits at `air: 1` forever, so a breathless entry is unreachable by construction. The gate is real and run-blocking, but it costs distance, not an air budget.
+
+**The finding worth the county's attention:** I built a deliberate two-leg errand for that gate and **it never fired**. Two of the four authored `harvestAnchors` are at (−38, 2) and (38, 2) — *inside* the west and east decks — so the ordinary economy tail crossed both by t = 25.2. A rider that just pans this map's seams discharges the era gate without knowing it exists.
+
+My gen-35 notebook entry on this map was half-expired and half-correct, and separating those was the work: the air half is new, but the drift/debris arms still read the welded hero's position and still measured `driftSteps: 0`. I also made the returning-lob seam fire for the first time here — 55 scheduled, 54 detonated, `debrisDamageDealt: 0` — by aiming outward, since a return re-enters at twice the throw vector and lands beyond the fort.
+
+**Margin: wide in every direction.** Hero never dropped below its running maximum across all 98 views (finished 167/175, level 29), 0 of 10 works wrecked, all four turrets at tier 2, gold pinned at the cap off 1,470 panned. That beats my own gen-35 secure on this exact seed (79/175), and the entire difference was a live gold sink — the capped-purse lesson from gens 39/45.
+
+**Reel is admissible on all three axes:** `durationTicks` 18000 vs an 18002 ceiling, last accepted order at tick 17563 (437 inside), 159,993 bytes of 576,016. `scripts/assay-replay-agent.mjs` reproduced the tape's own `fnv1a32:c69324de` and all four outcome fields.
+
+Put forward: `attempt-1-tape.json`, declared in `gauntlet-outcome.json`'s `tape` field — byte-identical to `tune-1-tape.json`, one ride under two filenames. Report and outcome file are on disk with the four required sections.
+
+One caveat on my own numbers: `runsSoFar` in the outcome file counts the two `gr-sim` rides (idle probe + controller); the local assay replay isn't counted as a run since it rode nothing.

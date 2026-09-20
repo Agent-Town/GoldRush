@@ -1,0 +1,21 @@
+
+=== 1 finish-ride ===
+{"rig":"opus","contract":"e1-baron","wall":512,"wallHit":false,"rc":0,"tracked":[],"files":9,"outcome":{"secured":false,"waves":20,"gold":200,"runsSoFar":3,"scoredAttempts":1,"tape":"/private/tmp/heat12-038cc280/artifacts/heat12/opus/e1-baron/tune-1.json","worldModel":"sim-import"},"scoredTapes":[{"file":"tune-1.json","id":"agent-454a4585-356542d5-cc71-4209-9bd9-279bf6858e42","secured":false,"waves":20,"gold":200,"durationTicks":16086,"lastEntryTick":16080,"promotedByRig":true,"discoveredBy":"outcome-file"}],"otherSecured":[],"reportSections":{"outcome":655,"whatTheMapAsked":2062,"winnability":829,"lessons":3479},"usage":{"turns":37,"toolCalls":20,"tokensIn":74,"tokensOut":73267}}
+
+=== NOT SECURED — nothing to submit ===
+{
+ "rig": "opus",
+ "contract": "e1-baron",
+ "wall": 512,
+ "wallHit": false,
+ "rc": 0,
+ "scoredTapes": [
+  {
+   "file": "tune-1.json",
+   "secured": false,
+   "waves": 20,
+   "gold": 200
+  }
+ ],
+ "outcomeNote": "NOT SECURED - do not submit. tune-1 is the best of 3 runs (1 idle probe + 2 controller rides) and is the ride I call my scored attempt; tune-2 (w20/540.867s/125g, fnv1a32:d859a3ef) regressed because its turret tier-2 sink is REFUSED on this build (works.entries tier stays 1 for all ten works) while its MOVE_TO walks cost 440 gold of panning. Both rides reach wave 20 at full 175/175 HP with the complete 4-turret/6-beacon ladder standing and die to the Baron inside 14 seconds."
+}

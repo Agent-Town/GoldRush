@@ -1,0 +1,3473 @@
+2026-09-08T18:07:01.226503Z  WARN codex_skills::interface: ignoring interface.icon_small: icon path with '..' must resolve under plugin assets/
+2026-09-08T18:07:01.226664Z  WARN codex_skills::interface: ignoring interface.icon_large: icon path with '..' must resolve under plugin assets/
+OpenAI Codex v0.153.4
+--------
+workdir: /Users/robin/.codex/worktrees/572c/Gold Rush
+model: gpt-5.6-sol
+provider: openai
+approval: never
+sandbox: read-only
+reasoning effort: medium
+reasoning summaries: none
+session id: 01a08233-b25c-7420-9872-9bc75f46fb68
+--------
+user
+Independent read-only static review of isolated V11-to-V12 Homemaker builder delta. Read only /Users/robin/.codex/worktrees/572c/Gold Rush/artifacts/boss-fidelity/e6-homemaker/source-review-12/builder.patch, before.py, candidate.py, build_dredge_queen.py, detail_opus5_kit.py and verifier.py as needed. Review the chair seat/frame/back dimension changes and added authoring group for concrete geometry, morph and export defects. Do not execute, inspect git, read other files or edit. Report ranked concrete defects with file:line. Distinguish visual inference. If none state static-only scope.
+2026-09-08T18:07:01.956866Z  WARN codex_skills::interface: ignoring interface.icon_small: icon path with '..' must resolve under plugin assets/
+2026-09-08T18:07:01.956921Z  WARN codex_skills::interface: ignoring interface.icon_large: icon path with '..' must resolve under plugin assets/
+exec
+/bin/zsh -lc 'for f in builder.patch before.py candidate.py build_dredge_queen.py detail_opus5_kit.py verifier.py; do echo "===== $f ====="; nl -ba "$f"; done' in /Users/robin/.codex/worktrees/572c/Gold Rush/artifacts/boss-fidelity/e6-homemaker/source-review-12
+2026-09-08T18:07:13.412034Z  WARN codex_analytics::reducer: dropping turn tool count update: missing turn state thread_id=01a08233-b25c-7420-9872-9bc75f46fb68 turn_id=01a08233-b31c-7ff1-9c25-19e09070f3ca item_id="exec-471dcdcc-30a1-4e61-aaf8-70515f78e9bc"
+ succeeded in 0ms:
+===== builder.patch =====
+     1	--- before.py
+     2	+++ candidate.py
+     3	@@ -267,23 +267,24 @@
+     4	 
+     5	     # Act 3 chair is production geometry carried by CORE. It is collapsed into
+     6	     # the floor in the basis and expands only under Damage_ChairPose.
+     7	-    parts.append(dq.box("Chair debris seat", (4.18, 2.36, 0.32), (0, 0.52, 1.12),
+     8	+    parts.append(dq.box("Chair debris seat", (4.18, 3.36, 0.32), (0, 1.02, 1.12),
+     9	                         "deck", material, 0.07, damage_group=chair))
+    10	-    parts.append(dq.box("Chair debris back", (4.12, 0.34, 3.34), (0, 1.54, 2.46),
+    11	+    parts.append(dq.box("Chair debris back", (4.12, 0.34, 3.34), (0, 2.54, 2.46),
+    12	                         "plate", material, 0.07, rotation=(math.radians(-8), 0, 0), damage_group=chair))
+    13	+    dq.mark_all(parts[-1], "ChairBackPanel")
+    14	     for side in (-1, 1):
+    15	         x = side * 1.82
+    16	-        parts.append(dq.beam(f"Chair rear leg {side}", (x, 1.30, 1.08), (x, 1.48, -0.025),
+    17	+        parts.append(dq.beam(f"Chair rear leg {side}", (x, 2.30, 1.08), (x, 2.48, -0.025),
+    18	                              0.20, "iron", material, chair))
+    19	         parts.append(dq.beam(f"Chair front leg {side}", (x, -0.46, 1.08), (x, -0.62, -0.025),
+    20	                              0.20, "iron", material, chair))
+    21	-        parts.append(dq.beam(f"Chair arm {side}", (x, -0.30, 1.78), (x, 1.18, 1.78),
+    22	+        parts.append(dq.beam(f"Chair arm {side}", (x, -0.30, 1.78), (x, 2.18, 1.78),
+    23	                              0.18, "brass", material, chair))
+    24	         parts.append(dq.ico_sphere(f"Chair arm finial {side}", 0.16, (x, -0.34, 1.80),
+    25	                                    "brass", material, chair))
+    26	-    parts.append(dq.beam("Chair back brace one", (-1.82, 1.64, 1.28), (1.82, 1.64, 3.62),
+    27	+    parts.append(dq.beam("Chair back brace one", (-1.82, 2.64, 1.28), (1.82, 2.64, 3.62),
+    28	                          0.14, "brass", material, chair))
+    29	-    parts.append(dq.beam("Chair back brace two", (1.82, 1.64, 1.28), (-1.82, 1.64, 3.62),
+    30	+    parts.append(dq.beam("Chair back brace two", (1.82, 2.64, 1.28), (-1.82, 2.64, 3.62),
+    31	                          0.14, "brass", material, chair))
+    32	     return parts
+    33	 
+===== before.py =====
+     1	from __future__ import annotations
+     2	
+     3	from pathlib import Path
+     4	import hashlib
+     5	import importlib.util
+     6	import json
+     7	import math
+     8	import sys
+     9	
+    10	sys.dont_write_bytecode = True
+    11	
+    12	import bpy
+    13	import numpy as np
+    14	from mathutils import Vector
+    15	
+    16	
+    17	ROOT = next(p for p in Path(__file__).resolve().parents if (p / "package.json").is_file() and (p / "assets").is_dir())
+    18	HERE = Path(__file__).resolve().parent
+    19	REFERENCE = ROOT / "assets/raw/plate-e6-boss-homemaker-9000.png"
+    20	BLEND = HERE / "homemaker-9000.blend"
+    21	GLB = HERE / "homemaker-9000.glb"
+    22	MODEL_LENGTH = 7.2
+    23	
+    24	
+    25	def load(name: str, path: Path):
+    26	    spec = importlib.util.spec_from_file_location(name, path)
+    27	    module = importlib.util.module_from_spec(spec)
+    28	    assert spec.loader is not None
+    29	    sys.modules[name] = module
+    30	    spec.loader.exec_module(module)
+    31	    return module
+    32	
+    33	
+    34	dq = load("homemaker_shared_builder", ROOT / "assets/pilots/dredge-queen-3d/build_dredge_queen.py")
+    35	kit = load("homemaker_shape_helpers", ROOT / "assets/pilots/dredge-queen-3d/detail_opus5_kit.py")
+    36	
+    37	
+    38	def create_atomic_atlas() -> bpy.types.Image:
+    39	    # Keep UVs inside each native field, away from the painted tile borders.
+    40	    cells={"iron":(0,2),"plate":(0,2),"amber":(1,2),"teal":(2,2),"brass":(0,1),
+    41	           "soot":(1,1),"cargo":(2,1),"sail":(0,0),"deck":(1,0),
+    42	           "damage":(2,0)}
+    43	    dq.REGIONS={name:((x+.07)/3,(y+.07)/3,(x+.93)/3,(y+.93)/3)
+    44	                for name,(x,y) in cells.items()}
+    45	    dq.REGIONS["glow"]=(.48,.80,.54,.87)
+    46	    image=bpy.data.images.load(str(HERE.parent / "candidate-material/atlas-silver-v5.png"),check_existing=False)
+    47	    image.name="Homemaker9000NativeAtlas"
+    48	    image.colorspace_settings.name="sRGB"
+    49	    image.scale(1024,1024)
+    50	    image.pack()
+    51	    return image
+    52	
+    53	
+    54	def build_vac(material: bpy.types.Material) -> list[bpy.types.Object]:
+    55	    parts: list[bpy.types.Object] = []
+    56	    upper, hose, head = "VacUpperArm", "VacHose", "VacHead"
+    57	    shoulder = Vector((-1.72, -0.12, 4.35))
+    58	    elbow = Vector((-2.60, -0.24, 3.72))
+    59	    wrist = Vector((-2.78, -0.38, 2.58))
+    60	    parts.append(dq.cylinder("VAC shoulder bearing", 0.48, 0.52, tuple(shoulder), "brass", material,
+    61	                             vertices=14, rotation=(math.pi / 2, 0, 0), bevel=0, damage_group=upper))
+    62	    parts.append(dq.torus("VAC shoulder teal seal", 0.40, 0.07, tuple(shoulder), "teal", material,
+    63	                          rotation=(math.pi / 2, 0, 0), damage_group=upper, major_segments=14))
+    64	    parts.append(dq.beam("VAC upper service arm", tuple(shoulder), tuple(elbow), 0.34, "plate", material, upper))
+    65	    parts.append(dq.cylinder("VAC elbow joint", 0.34, 0.48, tuple(elbow), "brass", material,
+    66	                             vertices=12, rotation=(math.pi / 2, 0, 0), bevel=0, damage_group=upper))
+    67	    parts.append(dq.beam("VAC lower service arm", tuple(elbow), tuple(wrist), 0.30, "iron", material, upper))
+    68	    parts.append(dq.cylinder("VAC wrist coupling", 0.26, 0.42, tuple(wrist), "brass", material,
+    69	                             vertices=12, rotation=(math.pi / 2, 0, 0), bevel=0, damage_group=upper))
+    70	
+    71	    control = [Vector(p) for p in ((-1.48,-1.04,3.66),(-3.36,-1.5,3.28),
+    72	                                       (-3.48,-1.1,1.86),(-2.72,-.52,.72))]
+    73	    hose_points=[]
+    74	    for i in range(17):
+    75	        t=i/16
+    76	        hose_points.append(control[0]*(1-t)**3+control[1]*(3*t*(1-t)**2)
+    77	                           +control[2]*(3*t*t*(1-t))+control[3]*t**3)
+    78	    rings=[]
+    79	    for i,center in enumerate(hose_points):
+    80	        tangent=(hose_points[min(16,i+1)]-hose_points[max(0,i-1)]).normalized()
+    81	        side=tangent.cross(Vector((0,1,0))).normalized();up=tangent.cross(side)
+    82	        radius=.38+.07*math.sin(math.pi*i/16)
+    83	        rings.append([tuple(center+radius*(side*math.cos(a)+up*math.sin(a)))
+    84	                      for a in (j*math.tau/12 for j in range(12))])
+    85	        parts.append(dq.torus(f"VAC hose rib {i}",radius+.025,.035,tuple(center),
+    86	            "iron",material,rotation=tuple(tangent.to_track_quat("Z","Y").to_euler()),
+    87	            damage_group=hose,major_segments=12))
+    88	    parts.append(kit.loft("VAC curved hose",rings,"soot",material,damage_group=hose,smooth=True))
+    89	    head_rings=[]
+    90	    for z,rx,ry in ((.12,1.16,.76),(.22,1.20,.78),(.42,1.12,.72),(.67,.68,.50),(.76,.35,.28)):
+    91	        head_rings.append([(-2.72+rx*math.cos(a),-.52+ry*math.sin(a),z)
+    92	                           for a in (j*math.tau/24 for j in range(24))])
+    93	    parts.append(kit.loft("VAC domed floor head",head_rings,"plate",material,damage_group=head,smooth=True))
+    94	    parts.append(dq.box("VAC mint bumper",(2.30,1.45,.15),(-2.72,-.52,.15),
+    95	                        "cargo",material,.055,damage_group=head))
+    96	    parts.append(dq.box("VAC teal starburst pane",(.76,.055,.31),(-2.72,-1.21,.40),
+    97	                        "teal",material,.05,damage_group=head))
+    98	    for x in (-3.43,-2.01):
+    99	        parts.append(dq.cylinder(f"VAC amber intake {x}",.23,.12,(x,-1.14,.29),
+   100	            "brass",material,vertices=12,rotation=(math.pi/2,0,0),bevel=0,damage_group=head))
+   101	    for x in (-3.48, -1.96):
+   102	        parts.append(dq.cylinder(f"VAC caster {x}", 0.18, 0.22, (x, -0.42, 0.13), "soot", material,
+   103	                                 vertices=10, rotation=(math.pi / 2, 0, 0), bevel=0, damage_group=head))
+   104	    for shard, at in enumerate(((-2.65, -0.62, 0.32), (-2.58, -0.54, 0.30), (-2.72, -0.58, 0.28))):
+   105	        parts.append(dq.box(f"Hidden VAC scrap {shard}", (0.18, 0.10, 0.08), at,
+   106	                            "damage", material, 0.002, damage_group=f"VacShard{shard}"))
+   107	    return parts
+   108	
+   109	
+   110	def bread_slice(parts: list[bpy.types.Object], index: int, x: float, material: bpy.types.Material) -> None:
+   111	    profile=[(-.62,5.84),(.62,5.84),(.62,6.45),(.53,6.68),(.29,6.82),
+   112	             (-.29,6.82),(-.53,6.68),(-.62,6.45)]
+   113	    parts.append(kit.loft(f"RACK rounded toast {index}",
+   114	        [[(xx,y,z) for y,z in profile] for xx in (x-.20,x+.20)],
+   115	        "brass",material,damage_group="RackUpper"))
+   116	    for side in (-1,1):
+   117	        points=[(x+side*.22,y,z) for y,z in profile+[profile[0]]]
+   118	        kit.polyline(parts,f"RACK toast rim {index} {side}",points,.035,"brass",material,"RackUpper")
+   119	
+   120	
+   121	def build_rack(material: bpy.types.Material) -> list[bpy.types.Object]:
+   122	    parts: list[bpy.types.Object] = []
+   123	    group = "RackUpper"
+   124	    parts.append(dq.box("RACK battery sill", (4.04, 2.10, 0.30), (0, 0, 5.62),
+   125	                        "iron", material, 0.05, damage_group=group))
+   126	    parts.append(dq.box("RACK amber rail front", (4.18, 0.10, 0.16), (0, -1.02, 5.76),
+   127	                        "brass", material, 0.015, damage_group=group))
+   128	    parts.append(dq.box("RACK amber rail rear", (4.18, 0.10, 0.16), (0, 1.02, 5.76),
+   129	                        "brass", material, 0.015, damage_group=group))
+   130	    for index, x in enumerate(np.linspace(-1.58, 1.58, 7)):
+   131	        bread_slice(parts, index, float(x), material)
+   132	        arch=[(float(x),-.94,5.75)]+[(float(x),.94*math.cos(a),6.0+.94*math.sin(a))
+   133	            for a in (math.pi-j*math.pi/8 for j in range(9))]+[(float(x),.94,5.75)]
+   134	        kit.polyline(parts,f"RACK arched cage {index}",arch,.065,"iron",material,group)
+   135	    for side in (-1,1):
+   136	        profile=[(-1.02,5.57),(1.02,5.57)]+[(.99*math.cos(a),6.0+.99*math.sin(a))
+   137	                 for a in (j*math.pi/8 for j in range(9))]
+   138	        parts.append(kit.loft(f"RACK curved end housing {side}",
+   139	            [[(side*2.04+dx,y,z) for y,z in profile] for dx in (-.06,.06)],
+   140	            "iron",material,damage_group=group))
+   141	        parts.append(dq.cylinder(f"RACK end terminal {side}",.24,.12,(side*2.16,0,6.05),
+   142	            "teal",material,vertices=12,rotation=(0,math.pi/2,0),bevel=0,damage_group=group))
+   143	        parts.append(dq.torus(f"RACK end terminal rim {side}",.28,.035,(side*2.23,0,6.05),
+   144	            "brass",material,rotation=(0,math.pi/2,0),damage_group=group,major_segments=12))
+   145	    for shard, at in enumerate(((-1.2, 0, 5.96), (0.1, 0, 5.92), (1.1, 0, 5.94))):
+   146	        parts.append(dq.box(f"Hidden toast shard {shard}", (0.24, 0.12, 0.10), at,
+   147	                            "damage", material, 0.002, damage_group=f"RackShard{shard}"))
+   148	    return parts
+   149	
+   150	
+   151	def build_core(material: bpy.types.Material) -> list[bpy.types.Object]:
+   152	    parts: list[bpy.types.Object] = []
+   153	    body, left_leg, right_leg, broom, chair = "ChairBody", "ChairLeftLeg", "ChairRightLeg", "ChairBroom", "ChairDebris"
+   154	    body_rings=[]
+   155	    for z,rx,ry in ((2.5,1.65,1.24),(3.0,1.85,1.34),(4.45,1.85,1.34),
+   156	                    (4.95,1.7,1.24),(5.28,1.3,1.0),(5.48,.62,.60),(5.50,.15,.20)):
+   157	        body_rings.append([(rx*math.cos(a),ry*math.sin(a),z)
+   158	                           for a in (j*math.tau/32 for j in range(32))])
+   159	    parts.append(kit.loft("CORE rounded pressure body",body_rings,"plate",material,damage_group=body,smooth=True))
+   160	    for name,z,rx,ry,region in (("upper casing seam",4.74,1.83,1.35,"brass"),
+   161	                                ("lower machine belt",3.02,1.88,1.38,"soot")):
+   162	        rings=[[(radius_x*math.cos(a),radius_y*math.sin(a),height)
+   163	                for a in (j*math.tau/32 for j in range(32))]
+   164	               for height,radius_x,radius_y in ((z-.06,rx,ry),(z,rx+.10,ry+.10),(z+.06,rx,ry))]
+   165	        parts.append(kit.loft(f"CORE {name}",rings,region,material,cap_start=False,cap_end=False,damage_group=body))
+   166	    for name,region,profile in (("CORE flared teal skirt","cargo",((1.85,2.10,1.66),(2.05,2.04,1.61),(2.9,1.61,1.25))),
+   167	                                ("CORE cream dust ruffle","sail",((1.64,2.16,1.71),(1.87,2.10,1.66)))):
+   168	        rings=[]
+   169	        for z,rx,ry in profile:
+   170	            rings.append([(rx*math.cos(a)*(1+.025*math.cos(16*a)),ry*math.sin(a)*(1+.025*math.cos(16*a)),z)
+   171	                          for a in (j*math.tau/64 for j in range(64))])
+   172	        parts.append(kit.loft(name,rings,region,material,damage_group=body))
+   173	    apron=[]
+   174	    for z,width,y in ((1.93,.66,-1.72),(2.1,.76,-1.68),(2.84,.57,-1.40)):
+   175	        apron.append([(-width,y,z),(width,y,z),(width,y+.055,z),(-width,y+.055,z)])
+   176	    parts.append(kit.loft("CORE cream apron",apron,"sail",material,damage_group=body))
+   177	    lens_rings=[]
+   178	    for y,radius in ((-1.28,.97),(-1.95,.97),(-2.02,.90),(-1.93,.79),(-1.78,.66)):
+   179	        lens_rings.append([(radius*math.cos(a),y,4.02+radius*math.sin(a))
+   180	                           for a in (j*math.tau/24 for j in range(24))])
+   181	    parts.append(kit.loft("CORE inset lens barrel",lens_rings,"iron",material,
+   182	                          cap_start=False,cap_end=False,damage_group=body))
+   183	    parts.append(dq.torus("CORE amber lens cage",.91,.075,(0,-1.98,4.02),"brass",material,
+   184	        rotation=(math.pi/2,0,0),damage_group=body,major_segments=24))
+   185	    parts.append(dq.cylinder("CORE amber lens",.66,.06,(0,-1.80,4.02),"amber",material,
+   186	        vertices=24,rotation=(math.pi/2,0,0),bevel=0,damage_group=body))
+   187	    parts.append(dq.ico_sphere("CORE lens glow",.63,(0,-1.84,4.02),"amber",material,body,scale=(1,.20,1)))
+   188	    for i in range(12):
+   189	        a=i*math.tau/12
+   190	        parts.append(dq.beam(f"CORE lens radial spoke {i}",(.23*math.cos(a),-1.974,4.02+.23*math.sin(a)),
+   191	            (.73*math.cos(a),-1.974,4.02+.73*math.sin(a)),.032,"brass",material,body))
+   192	    parts.append(dq.cylinder("CORE bright iris center",.20,.008,(0,-1.974,4.02),"glow",material,
+   193	        vertices=24,rotation=(math.pi/2,0,0),bevel=0,damage_group=body))
+   194	    # This cold shutter begins hidden inside the body and moves over the amber
+   195	    # core only in the final chair morph: powered down must read without light.
+   196	    parts.append(dq.ico_sphere("CORE hidden shutdown shutter",.64,(0,0,4.02),
+   197	                              "soot",material,"CoreShutdownShutter",scale=(1,.21,1)))
+   198	    for x, z in ((-1.12, 4.38), (1.10, 4.42), (-0.78, 3.50), (0.78, 3.48)):
+   199	        parts.append(dq.cylinder(f"CORE teal dial {x} {z}", 0.24, 0.10, (x, -1.51, z),
+   200	                                 "teal", material, vertices=12, rotation=(math.pi / 2, 0, 0),
+   201	                                 bevel=0, damage_group=body))
+   202	        parts.append(dq.torus(f"CORE dial cage {x} {z}", 0.26, 0.035, (x, -1.57, z),
+   203	                              "brass", material, rotation=(math.pi / 2, 0, 0),
+   204	                              damage_group=body, major_segments=12))
+   205	    for side in (-1, 1):
+   206	        x = side * 1.80
+   207	        parts.append(dq.beam(f"CORE side grab rail {side}", (x, -1.05, 3.10), (x, -1.05, 4.74),
+   208	                             0.08, "brass", material, body))
+   209	        for z in (3.10, 4.74):
+   210	            parts.append(dq.beam(f"CORE grab rail bracket {side} {z}", (x, -1.05, z), (x*.94, 0, z),
+   211	                                 0.08, "brass", material, body))
+   212	        for z in (3.10, 3.50, 3.90, 4.30, 4.70):
+   213	            parts.append(dq.cylinder(f"CORE rivet {side} {z}", 0.045, 0.06, (x, -1.10, z),
+   214	                                     "brass", material, vertices=8, rotation=(math.pi / 2, 0, 0),
+   215	                                     bevel=0, damage_group=body))
+   216	
+   217	    for side, group in ((-1, left_leg), (1, right_leg)):
+   218	        x = side * 0.94
+   219	        parts.append(dq.cylinder(f"CORE hip {side}", 0.38, 0.56, (x, 0, 2.05),
+   220	                                 "brass", material, vertices=12, rotation=(math.pi / 2, 0, 0),
+   221	                                 bevel=0, damage_group=group))
+   222	        parts.append(dq.beam(f"CORE leg {side}", (x, 0, 1.94), (x, -0.06, 0.72),
+   223	                             0.46, "iron", material, group))
+   224	        # A broad flat sole and armored dome replace the rounded slipper shape.
+   225	        foot_rings=[]
+   226	        for z,rx,ry in ((-.05,.68,.80),(.09,.70,.82),(.31,.66,.76),(.58,.41,.51),(.66,.17,.24)):
+   227	            foot_rings.append([(x+rx*math.cos(a),-.28+ry*math.sin(a),z)
+   228	                               for a in (j*math.tau/16 for j in range(16))])
+   229	        parts.append(kit.loft(f"CORE armored foot {side}",foot_rings,"plate",material,
+   230	                              damage_group=group,smooth=True))
+   231	        parts.append(dq.box(f"CORE dark foot sole {side}",(1.32,1.51,.10),(x,-.28,0),
+   232	                            "soot",material,.04,damage_group=group))
+   233	        parts.append(dq.cylinder(f"CORE foot teal cap {side}", 0.18, 0.12,
+   234	                                 (x, -0.92, 0.42), "teal", material, vertices=10,
+   235	                                 rotation=(math.pi / 2, 0, 0), bevel=0, damage_group=group))
+   236	
+   237	    shoulder = Vector((1.78, 0.0, 4.32))
+   238	    elbow = Vector((2.58, -0.18, 3.58))
+   239	    hand = Vector((2.86, -0.44, 2.42))
+   240	    parts.append(dq.cylinder("CORE broom shoulder", 0.42, 0.48, tuple(shoulder), "brass", material,
+   241	                             vertices=12, rotation=(math.pi / 2, 0, 0), bevel=0, damage_group=broom))
+   242	    dq.mark_all(parts[-1], "BroomShoulderPivot")
+   243	    parts.append(dq.beam("CORE broom upper arm", tuple(shoulder), tuple(elbow), 0.30,
+   244	                         "plate", material, broom))
+   245	    parts.append(dq.cylinder("CORE broom elbow", 0.28, 0.38, tuple(elbow), "brass", material,
+   246	                             vertices=12, rotation=(math.pi / 2, 0, 0), bevel=0, damage_group=broom))
+   247	    parts.append(dq.beam("CORE broom forearm", tuple(elbow), tuple(hand), 0.25,
+   248	                         "iron", material, broom))
+   249	    parts.append(dq.beam("CORE broom handle", tuple(hand), (3.20, -0.60, 0.72),
+   250	                         0.12, "deck", material, broom))
+   251	    for index, x in enumerate(np.linspace(2.74, 3.60, 9)):
+   252	        parts.append(dq.beam(f"CORE broom bristle {index}", (float(x), -0.62, 0.72),
+   253	                             (float(x) + (x - 3.16) * 0.18, -0.66, 0.18),
+   254	                             0.10, "sail", material, broom))
+   255	
+   256	    parts.append(dq.cylinder("CORE crown mast", 0.10, 0.84, (0, 0, 5.68),
+   257	                             "brass", material, vertices=10, damage_group=body))
+   258	    parts.append(dq.ico_sphere("CORE crown hub", 0.16, (0, 0, 6.14), "brass", material, body))
+   259	    for ray in range(8):
+   260	        angle = ray * math.tau / 8
+   261	        start = Vector((math.cos(angle) * 0.12, 0, 6.14 + math.sin(angle) * 0.12))
+   262	        end = Vector((math.cos(angle) * 0.58, 0, 6.14 + math.sin(angle) * 0.58))
+   263	        parts.append(dq.beam(f"CORE starburst ray {ray}", tuple(start), tuple(end),
+   264	                             0.055, "brass", material, body))
+   265	        parts.append(dq.ico_sphere(f"CORE starburst pip {ray}", 0.09, tuple(end),
+   266	                                   "brass", material, body))
+   267	
+   268	    # Act 3 chair is production geometry carried by CORE. It is collapsed into
+   269	    # the floor in the basis and expands only under Damage_ChairPose.
+   270	    parts.append(dq.box("Chair debris seat", (4.18, 2.36, 0.32), (0, 0.52, 1.12),
+   271	                        "deck", material, 0.07, damage_group=chair))
+   272	    parts.append(dq.box("Chair debris back", (4.12, 0.34, 3.34), (0, 1.54, 2.46),
+   273	                        "plate", material, 0.07, rotation=(math.radians(-8), 0, 0), damage_group=chair))
+   274	    for side in (-1, 1):
+   275	        x = side * 1.82
+   276	        parts.append(dq.beam(f"Chair rear leg {side}", (x, 1.30, 1.08), (x, 1.48, -0.025),
+   277	                             0.20, "iron", material, chair))
+   278	        parts.append(dq.beam(f"Chair front leg {side}", (x, -0.46, 1.08), (x, -0.62, -0.025),
+   279	                             0.20, "iron", material, chair))
+   280	        parts.append(dq.beam(f"Chair arm {side}", (x, -0.30, 1.78), (x, 1.18, 1.78),
+   281	                             0.18, "brass", material, chair))
+   282	        parts.append(dq.ico_sphere(f"Chair arm finial {side}", 0.16, (x, -0.34, 1.80),
+   283	                                   "brass", material, chair))
+   284	    parts.append(dq.beam("Chair back brace one", (-1.82, 1.64, 1.28), (1.82, 1.64, 3.62),
+   285	                         0.14, "brass", material, chair))
+   286	    parts.append(dq.beam("Chair back brace two", (1.82, 1.64, 1.28), (-1.82, 1.64, 3.62),
+   287	                         0.14, "brass", material, chair))
+   288	    return parts
+   289	
+   290	
+   291	def group_bounds(obj: bpy.types.Object, group_name: str) -> tuple[Vector, Vector]:
+   292	    points = [obj.data.vertices[index].co for index in dq.group_vertex_indices(obj, group_name)]
+   293	    assert points, f"missing group {obj.name}:{group_name}"
+   294	    return (
+   295	        Vector(tuple(min(point[axis] for point in points) for axis in range(3))),
+   296	        Vector(tuple(max(point[axis] for point in points) for axis in range(3))),
+   297	    )
+   298	
+   299	
+   300	def group_center(obj: bpy.types.Object, group_name: str) -> Vector:
+   301	    minimum, maximum = group_bounds(obj, group_name)
+   302	    return (minimum + maximum) * 0.5
+   303	
+   304	
+   305	def rotate_x(co: Vector, pivot: Vector, angle: float) -> None:
+   306	    local = co - pivot
+   307	    y = local.y * math.cos(angle) - local.z * math.sin(angle)
+   308	    z = local.y * math.sin(angle) + local.z * math.cos(angle)
+   309	    co.y = pivot.y + y
+   310	    co.z = pivot.z + z
+   311	
+   312	
+   313	def add_damage_shapes(vac: bpy.types.Object, rack: bpy.types.Object, core: bpy.types.Object) -> None:
+   314	    vac.shape_key_add(name="Basis")
+   315	    dropped = vac.shape_key_add(name="Damage_DroppedVac")
+   316	    pivot = group_center(vac, "VacUpperArm")
+   317	    for index in dq.group_vertex_indices(vac, "VacUpperArm"):
+   318	        co = dropped.data[index].co
+   319	        dq.rotate_y(co, pivot, math.radians(-28))
+   320	        co += Vector((-0.18, -0.18, -0.46))
+   321	    for index in dq.group_vertex_indices(vac, "VacHose"):
+   322	        co = dropped.data[index].co
+   323	        co += Vector((-0.18, -0.20, -0.55 * min(1, max(0, (co.z-.2)/1.2)) - max(0.0, co.z - 0.8) * 0.12))
+   324	    for index in dq.group_vertex_indices(vac, "VacHead"):
+   325	        dropped.data[index].co += Vector((-0.68, -0.88, 0.02))
+   326	    for shard, move in enumerate((Vector((-1.1, -1.0, -0.10)), Vector((-0.2, -1.35, -0.18)), Vector((0.45, -0.82, -0.12)))):
+   327	        for index in dq.group_vertex_indices(vac, f"VacShard{shard}"):
+   328	            dropped.data[index].co += move
+   329	        indices = dq.group_vertex_indices(vac, f"VacShard{shard}")
+   330	        floor_delta = 0.02 - min(dropped.data[index].co.z for index in indices)
+   331	        for index in indices:
+   332	            dropped.data[index].co.z += floor_delta
+   333	
+   334	    rack.shape_key_add(name="Basis")
+   335	    spent = rack.shape_key_add(name="Damage_SpentRack")
+   336	    minimum, maximum = group_bounds(rack, "RackUpper")
+   337	    pivot = Vector((minimum.x, (minimum.y + maximum.y) * 0.5, minimum.z))
+   338	    for index in dq.group_vertex_indices(rack, "RackUpper"):
+   339	        co = spent.data[index].co
+   340	        rotate_x(co, pivot, math.radians(18))
+   341	        dq.rotate_y(co, pivot, math.radians(-14))
+   342	        co += Vector((2.18, 0.78, -4.96))
+   343	    for shard, move in enumerate((Vector((-1.35, -1.15, -5.57)), Vector((0.15, -1.55, -5.52)), Vector((1.18, -0.82, -5.52)))):
+   344	        for index in dq.group_vertex_indices(rack, f"RackShard{shard}"):
+   345	            spent.data[index].co += move
+   346	        indices = dq.group_vertex_indices(rack, f"RackShard{shard}")
+   347	        floor_delta = 0.02 - min(spent.data[index].co.z for index in indices)
+   348	        for index in indices:
+   349	            spent.data[index].co.z += floor_delta
+   350	
+   351	    core.shape_key_add(name="Basis")
+   352	    chair_pose = core.shape_key_add(name="Damage_ChairPose")
+   353	    body_pivot = group_center(core, "ChairBody")
+   354	    for index in dq.group_vertex_indices(core, "ChairBody"):
+   355	        co = chair_pose.data[index].co
+   356	        rotate_x(co, body_pivot, math.radians(-12))
+   357	        co += Vector((0.0, 0.72, -1.24))
+   358	    for index in dq.group_vertex_indices(core, "CoreShutdownShutter"):
+   359	        co = chair_pose.data[index].co
+   360	        co.y -= 1.888
+   361	        rotate_x(co, body_pivot, math.radians(-12))
+   362	        co += Vector((0.0, 0.72, -1.24))
+   363	    for group_name, x_move in (("ChairLeftLeg", -0.22), ("ChairRightLeg", 0.22)):
+   364	        pivot = group_center(core, group_name)
+   365	        for index in dq.group_vertex_indices(core, group_name):
+   366	            co = chair_pose.data[index].co
+   367	            rotate_x(co, pivot, math.radians(-42))
+   368	            co += Vector((x_move, -0.90, 0.21))
+   369	    broom_pivot = group_center(core, "BroomShoulderPivot")
+   370	    for index in dq.group_vertex_indices(core, "ChairBroom"):
+   371	        co = chair_pose.data[index].co
+   372	        dq.rotate_y(co, broom_pivot, math.radians(-30))
+   373	        rotate_x(co, body_pivot, math.radians(-12))
+   374	        co += Vector((0.0, 0.72, -1.24))
+   375	
+   376	    # Keep the target's full chair coordinates, but make the intact basis a
+   377	    # near-zero bundle under the body. At weight 1 the debris chair builds.
+   378	    anchor = Vector((0.0, 0.55, 0.12))
+   379	    basis = core.data.shape_keys.key_blocks["Basis"]
+   380	    for index in dq.group_vertex_indices(core, "ChairDebris"):
+   381	        basis.data[index].co = anchor + (basis.data[index].co - anchor) * 0.006
+   382	
+   383	    for obj in (vac, rack, core):
+   384	        obj.active_shape_key_index = 0
+   385	        for key in obj.data.shape_keys.key_blocks:
+   386	            key.value = 0.0
+   387	        obj.data.update()
+   388	
+   389	
+   390	def recenter_shape_keyed_basis(objects: tuple[bpy.types.Object, ...]) -> None:
+   391	    """Re-center the basis after the hidden chair bundle changes its bounds.
+   392	
+   393	    Apply the same translation to every key block so the authored damage
+   394	    deltas remain unchanged while the exported intact basis stays base-center.
+   395	    """
+   396	    points = [
+   397	        point.co
+   398	        for obj in objects
+   399	        for point in obj.data.shape_keys.key_blocks["Basis"].data
+   400	    ]
+   401	    minimum = Vector(tuple(min(point[axis] for point in points) for axis in range(3)))
+   402	    maximum = Vector(tuple(max(point[axis] for point in points) for axis in range(3)))
+   403	    offset = Vector(((minimum.x + maximum.x) * 0.5, (minimum.y + maximum.y) * 0.5, minimum.z))
+   404	    for obj in objects:
+   405	        keys = obj.data.shape_keys
+   406	        assert keys is not None
+   407	        for key in keys.key_blocks:
+   408	            for point in key.data:
+   409	                point.co -= offset
+   410	        obj.data.update()
+   411	
+   412	
+   413	def shape_basis_bounds(objects: tuple[bpy.types.Object, ...]) -> tuple[Vector, Vector]:
+   414	    points = [
+   415	        point.co
+   416	        for obj in objects
+   417	        for point in obj.data.shape_keys.key_blocks["Basis"].data
+   418	    ]
+   419	    return (
+   420	        Vector(tuple(min(point[axis] for point in points) for axis in range(3))),
+   421	        Vector(tuple(max(point[axis] for point in points) for axis in range(3))),
+   422	    )
+   423	
+   424	
+   425	def main() -> None:
+   426	    HERE.mkdir(parents=True, exist_ok=True)
+   427	    dq.reset_scene()
+   428	    atlas = create_atomic_atlas()
+   429	    material = dq.create_material(atlas)
+   430	    material.name = "Homemaker9000PaintedMaterial"
+   431	    groups={"vac":build_vac(material),"rack":build_rack(material),"core":build_core(material)}
+   432	    for parts in groups.values():
+   433	        for part in parts:
+   434	            if any(word in part.name.lower() for word in ("rim", "cage", "bristle", "ray", "rail")):
+   435	                for modifier in list(part.modifiers):
+   436	                    if modifier.type=="BEVEL":part.modifiers.remove(modifier)
+   437	    vac,rack,core=(dq.join_component(name,groups[name],material) for name in ("vac","rack","core"))
+   438	    objects = (vac, rack, core)
+   439	    dq.MODEL_LENGTH = MODEL_LENGTH
+   440	    dq.normalize_base_center(objects)
+   441	    add_damage_shapes(*objects)
+   442	    recenter_shape_keyed_basis(objects)
+   443	
+   444	
+   445	    triangles = dq.triangle_count(objects)
+   446	    minimum, maximum = shape_basis_bounds(objects)
+   447	    assert triangles <= 12_000
+   448	    assert abs(maximum.x - minimum.x - MODEL_LENGTH) < 0.01
+   449	    assert abs(minimum.z) < 0.001
+   450	    assert abs((maximum.x + minimum.x) * 0.5) < 0.001
+   451	    assert abs((maximum.y + minimum.y) * 0.5) < 0.001
+   452	    dq.BLEND, dq.GLB = BLEND, GLB
+   453	    dq.export(objects)
+   454	    print(json.dumps({
+   455	        "blend": str(BLEND), "glb": str(GLB), "sha256": hashlib.sha256(GLB.read_bytes()).hexdigest(),
+   456	        "sourcePlate": {str(REFERENCE.relative_to(ROOT)): hashlib.sha256(REFERENCE.read_bytes()).hexdigest()},
+   457	        "components": [obj.name for obj in objects],
+   458	        "damageMorphs": [obj.data.shape_keys.key_blocks[1].name for obj in objects],
+   459	        "triangles": triangles,
+   460	        "boundsBlender": {"min": [round(v, 6) for v in minimum], "max": [round(v, 6) for v in maximum]},
+   461	    }, indent=2))
+   462	
+   463	
+   464	if __name__ == "__main__":
+   465	    main()
+===== candidate.py =====
+     1	from __future__ import annotations
+     2	
+     3	from pathlib import Path
+     4	import hashlib
+     5	import importlib.util
+     6	import json
+     7	import math
+     8	import sys
+     9	
+    10	sys.dont_write_bytecode = True
+    11	
+    12	import bpy
+    13	import numpy as np
+    14	from mathutils import Vector
+    15	
+    16	
+    17	ROOT = next(p for p in Path(__file__).resolve().parents if (p / "package.json").is_file() and (p / "assets").is_dir())
+    18	HERE = Path(__file__).resolve().parent
+    19	REFERENCE = ROOT / "assets/raw/plate-e6-boss-homemaker-9000.png"
+    20	BLEND = HERE / "homemaker-9000.blend"
+    21	GLB = HERE / "homemaker-9000.glb"
+    22	MODEL_LENGTH = 7.2
+    23	
+    24	
+    25	def load(name: str, path: Path):
+    26	    spec = importlib.util.spec_from_file_location(name, path)
+    27	    module = importlib.util.module_from_spec(spec)
+    28	    assert spec.loader is not None
+    29	    sys.modules[name] = module
+    30	    spec.loader.exec_module(module)
+    31	    return module
+    32	
+    33	
+    34	dq = load("homemaker_shared_builder", ROOT / "assets/pilots/dredge-queen-3d/build_dredge_queen.py")
+    35	kit = load("homemaker_shape_helpers", ROOT / "assets/pilots/dredge-queen-3d/detail_opus5_kit.py")
+    36	
+    37	
+    38	def create_atomic_atlas() -> bpy.types.Image:
+    39	    # Keep UVs inside each native field, away from the painted tile borders.
+    40	    cells={"iron":(0,2),"plate":(0,2),"amber":(1,2),"teal":(2,2),"brass":(0,1),
+    41	           "soot":(1,1),"cargo":(2,1),"sail":(0,0),"deck":(1,0),
+    42	           "damage":(2,0)}
+    43	    dq.REGIONS={name:((x+.07)/3,(y+.07)/3,(x+.93)/3,(y+.93)/3)
+    44	                for name,(x,y) in cells.items()}
+    45	    dq.REGIONS["glow"]=(.48,.80,.54,.87)
+    46	    image=bpy.data.images.load(str(HERE.parent / "candidate-material/atlas-silver-v5.png"),check_existing=False)
+    47	    image.name="Homemaker9000NativeAtlas"
+    48	    image.colorspace_settings.name="sRGB"
+    49	    image.scale(1024,1024)
+    50	    image.pack()
+    51	    return image
+    52	
+    53	
+    54	def build_vac(material: bpy.types.Material) -> list[bpy.types.Object]:
+    55	    parts: list[bpy.types.Object] = []
+    56	    upper, hose, head = "VacUpperArm", "VacHose", "VacHead"
+    57	    shoulder = Vector((-1.72, -0.12, 4.35))
+    58	    elbow = Vector((-2.60, -0.24, 3.72))
+    59	    wrist = Vector((-2.78, -0.38, 2.58))
+    60	    parts.append(dq.cylinder("VAC shoulder bearing", 0.48, 0.52, tuple(shoulder), "brass", material,
+    61	                             vertices=14, rotation=(math.pi / 2, 0, 0), bevel=0, damage_group=upper))
+    62	    parts.append(dq.torus("VAC shoulder teal seal", 0.40, 0.07, tuple(shoulder), "teal", material,
+    63	                          rotation=(math.pi / 2, 0, 0), damage_group=upper, major_segments=14))
+    64	    parts.append(dq.beam("VAC upper service arm", tuple(shoulder), tuple(elbow), 0.34, "plate", material, upper))
+    65	    parts.append(dq.cylinder("VAC elbow joint", 0.34, 0.48, tuple(elbow), "brass", material,
+    66	                             vertices=12, rotation=(math.pi / 2, 0, 0), bevel=0, damage_group=upper))
+    67	    parts.append(dq.beam("VAC lower service arm", tuple(elbow), tuple(wrist), 0.30, "iron", material, upper))
+    68	    parts.append(dq.cylinder("VAC wrist coupling", 0.26, 0.42, tuple(wrist), "brass", material,
+    69	                             vertices=12, rotation=(math.pi / 2, 0, 0), bevel=0, damage_group=upper))
+    70	
+    71	    control = [Vector(p) for p in ((-1.48,-1.04,3.66),(-3.36,-1.5,3.28),
+    72	                                       (-3.48,-1.1,1.86),(-2.72,-.52,.72))]
+    73	    hose_points=[]
+    74	    for i in range(17):
+    75	        t=i/16
+    76	        hose_points.append(control[0]*(1-t)**3+control[1]*(3*t*(1-t)**2)
+    77	                           +control[2]*(3*t*t*(1-t))+control[3]*t**3)
+    78	    rings=[]
+    79	    for i,center in enumerate(hose_points):
+    80	        tangent=(hose_points[min(16,i+1)]-hose_points[max(0,i-1)]).normalized()
+    81	        side=tangent.cross(Vector((0,1,0))).normalized();up=tangent.cross(side)
+    82	        radius=.38+.07*math.sin(math.pi*i/16)
+    83	        rings.append([tuple(center+radius*(side*math.cos(a)+up*math.sin(a)))
+    84	                      for a in (j*math.tau/12 for j in range(12))])
+    85	        parts.append(dq.torus(f"VAC hose rib {i}",radius+.025,.035,tuple(center),
+    86	            "iron",material,rotation=tuple(tangent.to_track_quat("Z","Y").to_euler()),
+    87	            damage_group=hose,major_segments=12))
+    88	    parts.append(kit.loft("VAC curved hose",rings,"soot",material,damage_group=hose,smooth=True))
+    89	    head_rings=[]
+    90	    for z,rx,ry in ((.12,1.16,.76),(.22,1.20,.78),(.42,1.12,.72),(.67,.68,.50),(.76,.35,.28)):
+    91	        head_rings.append([(-2.72+rx*math.cos(a),-.52+ry*math.sin(a),z)
+    92	                           for a in (j*math.tau/24 for j in range(24))])
+    93	    parts.append(kit.loft("VAC domed floor head",head_rings,"plate",material,damage_group=head,smooth=True))
+    94	    parts.append(dq.box("VAC mint bumper",(2.30,1.45,.15),(-2.72,-.52,.15),
+    95	                        "cargo",material,.055,damage_group=head))
+    96	    parts.append(dq.box("VAC teal starburst pane",(.76,.055,.31),(-2.72,-1.21,.40),
+    97	                        "teal",material,.05,damage_group=head))
+    98	    for x in (-3.43,-2.01):
+    99	        parts.append(dq.cylinder(f"VAC amber intake {x}",.23,.12,(x,-1.14,.29),
+   100	            "brass",material,vertices=12,rotation=(math.pi/2,0,0),bevel=0,damage_group=head))
+   101	    for x in (-3.48, -1.96):
+   102	        parts.append(dq.cylinder(f"VAC caster {x}", 0.18, 0.22, (x, -0.42, 0.13), "soot", material,
+   103	                                 vertices=10, rotation=(math.pi / 2, 0, 0), bevel=0, damage_group=head))
+   104	    for shard, at in enumerate(((-2.65, -0.62, 0.32), (-2.58, -0.54, 0.30), (-2.72, -0.58, 0.28))):
+   105	        parts.append(dq.box(f"Hidden VAC scrap {shard}", (0.18, 0.10, 0.08), at,
+   106	                            "damage", material, 0.002, damage_group=f"VacShard{shard}"))
+   107	    return parts
+   108	
+   109	
+   110	def bread_slice(parts: list[bpy.types.Object], index: int, x: float, material: bpy.types.Material) -> None:
+   111	    profile=[(-.62,5.84),(.62,5.84),(.62,6.45),(.53,6.68),(.29,6.82),
+   112	             (-.29,6.82),(-.53,6.68),(-.62,6.45)]
+   113	    parts.append(kit.loft(f"RACK rounded toast {index}",
+   114	        [[(xx,y,z) for y,z in profile] for xx in (x-.20,x+.20)],
+   115	        "brass",material,damage_group="RackUpper"))
+   116	    for side in (-1,1):
+   117	        points=[(x+side*.22,y,z) for y,z in profile+[profile[0]]]
+   118	        kit.polyline(parts,f"RACK toast rim {index} {side}",points,.035,"brass",material,"RackUpper")
+   119	
+   120	
+   121	def build_rack(material: bpy.types.Material) -> list[bpy.types.Object]:
+   122	    parts: list[bpy.types.Object] = []
+   123	    group = "RackUpper"
+   124	    parts.append(dq.box("RACK battery sill", (4.04, 2.10, 0.30), (0, 0, 5.62),
+   125	                        "iron", material, 0.05, damage_group=group))
+   126	    parts.append(dq.box("RACK amber rail front", (4.18, 0.10, 0.16), (0, -1.02, 5.76),
+   127	                        "brass", material, 0.015, damage_group=group))
+   128	    parts.append(dq.box("RACK amber rail rear", (4.18, 0.10, 0.16), (0, 1.02, 5.76),
+   129	                        "brass", material, 0.015, damage_group=group))
+   130	    for index, x in enumerate(np.linspace(-1.58, 1.58, 7)):
+   131	        bread_slice(parts, index, float(x), material)
+   132	        arch=[(float(x),-.94,5.75)]+[(float(x),.94*math.cos(a),6.0+.94*math.sin(a))
+   133	            for a in (math.pi-j*math.pi/8 for j in range(9))]+[(float(x),.94,5.75)]
+   134	        kit.polyline(parts,f"RACK arched cage {index}",arch,.065,"iron",material,group)
+   135	    for side in (-1,1):
+   136	        profile=[(-1.02,5.57),(1.02,5.57)]+[(.99*math.cos(a),6.0+.99*math.sin(a))
+   137	                 for a in (j*math.pi/8 for j in range(9))]
+   138	        parts.append(kit.loft(f"RACK curved end housing {side}",
+   139	            [[(side*2.04+dx,y,z) for y,z in profile] for dx in (-.06,.06)],
+   140	            "iron",material,damage_group=group))
+   141	        parts.append(dq.cylinder(f"RACK end terminal {side}",.24,.12,(side*2.16,0,6.05),
+   142	            "teal",material,vertices=12,rotation=(0,math.pi/2,0),bevel=0,damage_group=group))
+   143	        parts.append(dq.torus(f"RACK end terminal rim {side}",.28,.035,(side*2.23,0,6.05),
+   144	            "brass",material,rotation=(0,math.pi/2,0),damage_group=group,major_segments=12))
+   145	    for shard, at in enumerate(((-1.2, 0, 5.96), (0.1, 0, 5.92), (1.1, 0, 5.94))):
+   146	        parts.append(dq.box(f"Hidden toast shard {shard}", (0.24, 0.12, 0.10), at,
+   147	                            "damage", material, 0.002, damage_group=f"RackShard{shard}"))
+   148	    return parts
+   149	
+   150	
+   151	def build_core(material: bpy.types.Material) -> list[bpy.types.Object]:
+   152	    parts: list[bpy.types.Object] = []
+   153	    body, left_leg, right_leg, broom, chair = "ChairBody", "ChairLeftLeg", "ChairRightLeg", "ChairBroom", "ChairDebris"
+   154	    body_rings=[]
+   155	    for z,rx,ry in ((2.5,1.65,1.24),(3.0,1.85,1.34),(4.45,1.85,1.34),
+   156	                    (4.95,1.7,1.24),(5.28,1.3,1.0),(5.48,.62,.60),(5.50,.15,.20)):
+   157	        body_rings.append([(rx*math.cos(a),ry*math.sin(a),z)
+   158	                           for a in (j*math.tau/32 for j in range(32))])
+   159	    parts.append(kit.loft("CORE rounded pressure body",body_rings,"plate",material,damage_group=body,smooth=True))
+   160	    for name,z,rx,ry,region in (("upper casing seam",4.74,1.83,1.35,"brass"),
+   161	                                ("lower machine belt",3.02,1.88,1.38,"soot")):
+   162	        rings=[[(radius_x*math.cos(a),radius_y*math.sin(a),height)
+   163	                for a in (j*math.tau/32 for j in range(32))]
+   164	               for height,radius_x,radius_y in ((z-.06,rx,ry),(z,rx+.10,ry+.10),(z+.06,rx,ry))]
+   165	        parts.append(kit.loft(f"CORE {name}",rings,region,material,cap_start=False,cap_end=False,damage_group=body))
+   166	    for name,region,profile in (("CORE flared teal skirt","cargo",((1.85,2.10,1.66),(2.05,2.04,1.61),(2.9,1.61,1.25))),
+   167	                                ("CORE cream dust ruffle","sail",((1.64,2.16,1.71),(1.87,2.10,1.66)))):
+   168	        rings=[]
+   169	        for z,rx,ry in profile:
+   170	            rings.append([(rx*math.cos(a)*(1+.025*math.cos(16*a)),ry*math.sin(a)*(1+.025*math.cos(16*a)),z)
+   171	                          for a in (j*math.tau/64 for j in range(64))])
+   172	        parts.append(kit.loft(name,rings,region,material,damage_group=body))
+   173	    apron=[]
+   174	    for z,width,y in ((1.93,.66,-1.72),(2.1,.76,-1.68),(2.84,.57,-1.40)):
+   175	        apron.append([(-width,y,z),(width,y,z),(width,y+.055,z),(-width,y+.055,z)])
+   176	    parts.append(kit.loft("CORE cream apron",apron,"sail",material,damage_group=body))
+   177	    lens_rings=[]
+   178	    for y,radius in ((-1.28,.97),(-1.95,.97),(-2.02,.90),(-1.93,.79),(-1.78,.66)):
+   179	        lens_rings.append([(radius*math.cos(a),y,4.02+radius*math.sin(a))
+   180	                           for a in (j*math.tau/24 for j in range(24))])
+   181	    parts.append(kit.loft("CORE inset lens barrel",lens_rings,"iron",material,
+   182	                          cap_start=False,cap_end=False,damage_group=body))
+   183	    parts.append(dq.torus("CORE amber lens cage",.91,.075,(0,-1.98,4.02),"brass",material,
+   184	        rotation=(math.pi/2,0,0),damage_group=body,major_segments=24))
+   185	    parts.append(dq.cylinder("CORE amber lens",.66,.06,(0,-1.80,4.02),"amber",material,
+   186	        vertices=24,rotation=(math.pi/2,0,0),bevel=0,damage_group=body))
+   187	    parts.append(dq.ico_sphere("CORE lens glow",.63,(0,-1.84,4.02),"amber",material,body,scale=(1,.20,1)))
+   188	    for i in range(12):
+   189	        a=i*math.tau/12
+   190	        parts.append(dq.beam(f"CORE lens radial spoke {i}",(.23*math.cos(a),-1.974,4.02+.23*math.sin(a)),
+   191	            (.73*math.cos(a),-1.974,4.02+.73*math.sin(a)),.032,"brass",material,body))
+   192	    parts.append(dq.cylinder("CORE bright iris center",.20,.008,(0,-1.974,4.02),"glow",material,
+   193	        vertices=24,rotation=(math.pi/2,0,0),bevel=0,damage_group=body))
+   194	    # This cold shutter begins hidden inside the body and moves over the amber
+   195	    # core only in the final chair morph: powered down must read without light.
+   196	    parts.append(dq.ico_sphere("CORE hidden shutdown shutter",.64,(0,0,4.02),
+   197	                              "soot",material,"CoreShutdownShutter",scale=(1,.21,1)))
+   198	    for x, z in ((-1.12, 4.38), (1.10, 4.42), (-0.78, 3.50), (0.78, 3.48)):
+   199	        parts.append(dq.cylinder(f"CORE teal dial {x} {z}", 0.24, 0.10, (x, -1.51, z),
+   200	                                 "teal", material, vertices=12, rotation=(math.pi / 2, 0, 0),
+   201	                                 bevel=0, damage_group=body))
+   202	        parts.append(dq.torus(f"CORE dial cage {x} {z}", 0.26, 0.035, (x, -1.57, z),
+   203	                              "brass", material, rotation=(math.pi / 2, 0, 0),
+   204	                              damage_group=body, major_segments=12))
+   205	    for side in (-1, 1):
+   206	        x = side * 1.80
+   207	        parts.append(dq.beam(f"CORE side grab rail {side}", (x, -1.05, 3.10), (x, -1.05, 4.74),
+   208	                             0.08, "brass", material, body))
+   209	        for z in (3.10, 4.74):
+   210	            parts.append(dq.beam(f"CORE grab rail bracket {side} {z}", (x, -1.05, z), (x*.94, 0, z),
+   211	                                 0.08, "brass", material, body))
+   212	        for z in (3.10, 3.50, 3.90, 4.30, 4.70):
+   213	            parts.append(dq.cylinder(f"CORE rivet {side} {z}", 0.045, 0.06, (x, -1.10, z),
+   214	                                     "brass", material, vertices=8, rotation=(math.pi / 2, 0, 0),
+   215	                                     bevel=0, damage_group=body))
+   216	
+   217	    for side, group in ((-1, left_leg), (1, right_leg)):
+   218	        x = side * 0.94
+   219	        parts.append(dq.cylinder(f"CORE hip {side}", 0.38, 0.56, (x, 0, 2.05),
+   220	                                 "brass", material, vertices=12, rotation=(math.pi / 2, 0, 0),
+   221	                                 bevel=0, damage_group=group))
+   222	        parts.append(dq.beam(f"CORE leg {side}", (x, 0, 1.94), (x, -0.06, 0.72),
+   223	                             0.46, "iron", material, group))
+   224	        # A broad flat sole and armored dome replace the rounded slipper shape.
+   225	        foot_rings=[]
+   226	        for z,rx,ry in ((-.05,.68,.80),(.09,.70,.82),(.31,.66,.76),(.58,.41,.51),(.66,.17,.24)):
+   227	            foot_rings.append([(x+rx*math.cos(a),-.28+ry*math.sin(a),z)
+   228	                               for a in (j*math.tau/16 for j in range(16))])
+   229	        parts.append(kit.loft(f"CORE armored foot {side}",foot_rings,"plate",material,
+   230	                              damage_group=group,smooth=True))
+   231	        parts.append(dq.box(f"CORE dark foot sole {side}",(1.32,1.51,.10),(x,-.28,0),
+   232	                            "soot",material,.04,damage_group=group))
+   233	        parts.append(dq.cylinder(f"CORE foot teal cap {side}", 0.18, 0.12,
+   234	                                 (x, -0.92, 0.42), "teal", material, vertices=10,
+   235	                                 rotation=(math.pi / 2, 0, 0), bevel=0, damage_group=group))
+   236	
+   237	    shoulder = Vector((1.78, 0.0, 4.32))
+   238	    elbow = Vector((2.58, -0.18, 3.58))
+   239	    hand = Vector((2.86, -0.44, 2.42))
+   240	    parts.append(dq.cylinder("CORE broom shoulder", 0.42, 0.48, tuple(shoulder), "brass", material,
+   241	                             vertices=12, rotation=(math.pi / 2, 0, 0), bevel=0, damage_group=broom))
+   242	    dq.mark_all(parts[-1], "BroomShoulderPivot")
+   243	    parts.append(dq.beam("CORE broom upper arm", tuple(shoulder), tuple(elbow), 0.30,
+   244	                         "plate", material, broom))
+   245	    parts.append(dq.cylinder("CORE broom elbow", 0.28, 0.38, tuple(elbow), "brass", material,
+   246	                             vertices=12, rotation=(math.pi / 2, 0, 0), bevel=0, damage_group=broom))
+   247	    parts.append(dq.beam("CORE broom forearm", tuple(elbow), tuple(hand), 0.25,
+   248	                         "iron", material, broom))
+   249	    parts.append(dq.beam("CORE broom handle", tuple(hand), (3.20, -0.60, 0.72),
+   250	                         0.12, "deck", material, broom))
+   251	    for index, x in enumerate(np.linspace(2.74, 3.60, 9)):
+   252	        parts.append(dq.beam(f"CORE broom bristle {index}", (float(x), -0.62, 0.72),
+   253	                             (float(x) + (x - 3.16) * 0.18, -0.66, 0.18),
+   254	                             0.10, "sail", material, broom))
+   255	
+   256	    parts.append(dq.cylinder("CORE crown mast", 0.10, 0.84, (0, 0, 5.68),
+   257	                             "brass", material, vertices=10, damage_group=body))
+   258	    parts.append(dq.ico_sphere("CORE crown hub", 0.16, (0, 0, 6.14), "brass", material, body))
+   259	    for ray in range(8):
+   260	        angle = ray * math.tau / 8
+   261	        start = Vector((math.cos(angle) * 0.12, 0, 6.14 + math.sin(angle) * 0.12))
+   262	        end = Vector((math.cos(angle) * 0.58, 0, 6.14 + math.sin(angle) * 0.58))
+   263	        parts.append(dq.beam(f"CORE starburst ray {ray}", tuple(start), tuple(end),
+   264	                             0.055, "brass", material, body))
+   265	        parts.append(dq.ico_sphere(f"CORE starburst pip {ray}", 0.09, tuple(end),
+   266	                                   "brass", material, body))
+   267	
+   268	    # Act 3 chair is production geometry carried by CORE. It is collapsed into
+   269	    # the floor in the basis and expands only under Damage_ChairPose.
+   270	    parts.append(dq.box("Chair debris seat", (4.18, 3.36, 0.32), (0, 1.02, 1.12),
+   271	                        "deck", material, 0.07, damage_group=chair))
+   272	    parts.append(dq.box("Chair debris back", (4.12, 0.34, 3.34), (0, 2.54, 2.46),
+   273	                        "plate", material, 0.07, rotation=(math.radians(-8), 0, 0), damage_group=chair))
+   274	    dq.mark_all(parts[-1], "ChairBackPanel")
+   275	    for side in (-1, 1):
+   276	        x = side * 1.82
+   277	        parts.append(dq.beam(f"Chair rear leg {side}", (x, 2.30, 1.08), (x, 2.48, -0.025),
+   278	                             0.20, "iron", material, chair))
+   279	        parts.append(dq.beam(f"Chair front leg {side}", (x, -0.46, 1.08), (x, -0.62, -0.025),
+   280	                             0.20, "iron", material, chair))
+   281	        parts.append(dq.beam(f"Chair arm {side}", (x, -0.30, 1.78), (x, 2.18, 1.78),
+   282	                             0.18, "brass", material, chair))
+   283	        parts.append(dq.ico_sphere(f"Chair arm finial {side}", 0.16, (x, -0.34, 1.80),
+   284	                                   "brass", material, chair))
+   285	    parts.append(dq.beam("Chair back brace one", (-1.82, 2.64, 1.28), (1.82, 2.64, 3.62),
+   286	                         0.14, "brass", material, chair))
+   287	    parts.append(dq.beam("Chair back brace two", (1.82, 2.64, 1.28), (-1.82, 2.64, 3.62),
+   288	                         0.14, "brass", material, chair))
+   289	    return parts
+   290	
+   291	
+   292	def group_bounds(obj: bpy.types.Object, group_name: str) -> tuple[Vector, Vector]:
+   293	    points = [obj.data.vertices[index].co for index in dq.group_vertex_indices(obj, group_name)]
+   294	    assert points, f"missing group {obj.name}:{group_name}"
+   295	    return (
+   296	        Vector(tuple(min(point[axis] for point in points) for axis in range(3))),
+   297	        Vector(tuple(max(point[axis] for point in points) for axis in range(3))),
+   298	    )
+   299	
+   300	
+   301	def group_center(obj: bpy.types.Object, group_name: str) -> Vector:
+   302	    minimum, maximum = group_bounds(obj, group_name)
+   303	    return (minimum + maximum) * 0.5
+   304	
+   305	
+   306	def rotate_x(co: Vector, pivot: Vector, angle: float) -> None:
+   307	    local = co - pivot
+   308	    y = local.y * math.cos(angle) - local.z * math.sin(angle)
+   309	    z = local.y * math.sin(angle) + local.z * math.cos(angle)
+   310	    co.y = pivot.y + y
+   311	    co.z = pivot.z + z
+   312	
+   313	
+   314	def add_damage_shapes(vac: bpy.types.Object, rack: bpy.types.Object, core: bpy.types.Object) -> None:
+   315	    vac.shape_key_add(name="Basis")
+   316	    dropped = vac.shape_key_add(name="Damage_DroppedVac")
+   317	    pivot = group_center(vac, "VacUpperArm")
+   318	    for index in dq.group_vertex_indices(vac, "VacUpperArm"):
+   319	        co = dropped.data[index].co
+   320	        dq.rotate_y(co, pivot, math.radians(-28))
+   321	        co += Vector((-0.18, -0.18, -0.46))
+   322	    for index in dq.group_vertex_indices(vac, "VacHose"):
+   323	        co = dropped.data[index].co
+   324	        co += Vector((-0.18, -0.20, -0.55 * min(1, max(0, (co.z-.2)/1.2)) - max(0.0, co.z - 0.8) * 0.12))
+   325	    for index in dq.group_vertex_indices(vac, "VacHead"):
+   326	        dropped.data[index].co += Vector((-0.68, -0.88, 0.02))
+   327	    for shard, move in enumerate((Vector((-1.1, -1.0, -0.10)), Vector((-0.2, -1.35, -0.18)), Vector((0.45, -0.82, -0.12)))):
+   328	        for index in dq.group_vertex_indices(vac, f"VacShard{shard}"):
+   329	            dropped.data[index].co += move
+   330	        indices = dq.group_vertex_indices(vac, f"VacShard{shard}")
+   331	        floor_delta = 0.02 - min(dropped.data[index].co.z for index in indices)
+   332	        for index in indices:
+   333	            dropped.data[index].co.z += floor_delta
+   334	
+   335	    rack.shape_key_add(name="Basis")
+   336	    spent = rack.shape_key_add(name="Damage_SpentRack")
+   337	    minimum, maximum = group_bounds(rack, "RackUpper")
+   338	    pivot = Vector((minimum.x, (minimum.y + maximum.y) * 0.5, minimum.z))
+   339	    for index in dq.group_vertex_indices(rack, "RackUpper"):
+   340	        co = spent.data[index].co
+   341	        rotate_x(co, pivot, math.radians(18))
+   342	        dq.rotate_y(co, pivot, math.radians(-14))
+   343	        co += Vector((2.18, 0.78, -4.96))
+   344	    for shard, move in enumerate((Vector((-1.35, -1.15, -5.57)), Vector((0.15, -1.55, -5.52)), Vector((1.18, -0.82, -5.52)))):
+   345	        for index in dq.group_vertex_indices(rack, f"RackShard{shard}"):
+   346	            spent.data[index].co += move
+   347	        indices = dq.group_vertex_indices(rack, f"RackShard{shard}")
+   348	        floor_delta = 0.02 - min(spent.data[index].co.z for index in indices)
+   349	        for index in indices:
+   350	            spent.data[index].co.z += floor_delta
+   351	
+   352	    core.shape_key_add(name="Basis")
+   353	    chair_pose = core.shape_key_add(name="Damage_ChairPose")
+   354	    body_pivot = group_center(core, "ChairBody")
+   355	    for index in dq.group_vertex_indices(core, "ChairBody"):
+   356	        co = chair_pose.data[index].co
+   357	        rotate_x(co, body_pivot, math.radians(-12))
+   358	        co += Vector((0.0, 0.72, -1.24))
+   359	    for index in dq.group_vertex_indices(core, "CoreShutdownShutter"):
+   360	        co = chair_pose.data[index].co
+   361	        co.y -= 1.888
+   362	        rotate_x(co, body_pivot, math.radians(-12))
+   363	        co += Vector((0.0, 0.72, -1.24))
+   364	    for group_name, x_move in (("ChairLeftLeg", -0.22), ("ChairRightLeg", 0.22)):
+   365	        pivot = group_center(core, group_name)
+   366	        for index in dq.group_vertex_indices(core, group_name):
+   367	            co = chair_pose.data[index].co
+   368	            rotate_x(co, pivot, math.radians(-42))
+   369	            co += Vector((x_move, -0.90, 0.21))
+   370	    broom_pivot = group_center(core, "BroomShoulderPivot")
+   371	    for index in dq.group_vertex_indices(core, "ChairBroom"):
+   372	        co = chair_pose.data[index].co
+   373	        dq.rotate_y(co, broom_pivot, math.radians(-30))
+   374	        rotate_x(co, body_pivot, math.radians(-12))
+   375	        co += Vector((0.0, 0.72, -1.24))
+   376	
+   377	    # Keep the target's full chair coordinates, but make the intact basis a
+   378	    # near-zero bundle under the body. At weight 1 the debris chair builds.
+   379	    anchor = Vector((0.0, 0.55, 0.12))
+   380	    basis = core.data.shape_keys.key_blocks["Basis"]
+   381	    for index in dq.group_vertex_indices(core, "ChairDebris"):
+   382	        basis.data[index].co = anchor + (basis.data[index].co - anchor) * 0.006
+   383	
+   384	    for obj in (vac, rack, core):
+   385	        obj.active_shape_key_index = 0
+   386	        for key in obj.data.shape_keys.key_blocks:
+   387	            key.value = 0.0
+   388	        obj.data.update()
+   389	
+   390	
+   391	def recenter_shape_keyed_basis(objects: tuple[bpy.types.Object, ...]) -> None:
+   392	    """Re-center the basis after the hidden chair bundle changes its bounds.
+   393	
+   394	    Apply the same translation to every key block so the authored damage
+   395	    deltas remain unchanged while the exported intact basis stays base-center.
+   396	    """
+   397	    points = [
+   398	        point.co
+   399	        for obj in objects
+   400	        for point in obj.data.shape_keys.key_blocks["Basis"].data
+   401	    ]
+   402	    minimum = Vector(tuple(min(point[axis] for point in points) for axis in range(3)))
+   403	    maximum = Vector(tuple(max(point[axis] for point in points) for axis in range(3)))
+   404	    offset = Vector(((minimum.x + maximum.x) * 0.5, (minimum.y + maximum.y) * 0.5, minimum.z))
+   405	    for obj in objects:
+   406	        keys = obj.data.shape_keys
+   407	        assert keys is not None
+   408	        for key in keys.key_blocks:
+   409	            for point in key.data:
+   410	                point.co -= offset
+   411	        obj.data.update()
+   412	
+   413	
+   414	def shape_basis_bounds(objects: tuple[bpy.types.Object, ...]) -> tuple[Vector, Vector]:
+   415	    points = [
+   416	        point.co
+   417	        for obj in objects
+   418	        for point in obj.data.shape_keys.key_blocks["Basis"].data
+   419	    ]
+   420	    return (
+   421	        Vector(tuple(min(point[axis] for point in points) for axis in range(3))),
+   422	        Vector(tuple(max(point[axis] for point in points) for axis in range(3))),
+   423	    )
+   424	
+   425	
+   426	def main() -> None:
+   427	    HERE.mkdir(parents=True, exist_ok=True)
+   428	    dq.reset_scene()
+   429	    atlas = create_atomic_atlas()
+   430	    material = dq.create_material(atlas)
+   431	    material.name = "Homemaker9000PaintedMaterial"
+   432	    groups={"vac":build_vac(material),"rack":build_rack(material),"core":build_core(material)}
+   433	    for parts in groups.values():
+   434	        for part in parts:
+   435	            if any(word in part.name.lower() for word in ("rim", "cage", "bristle", "ray", "rail")):
+   436	                for modifier in list(part.modifiers):
+   437	                    if modifier.type=="BEVEL":part.modifiers.remove(modifier)
+   438	    vac,rack,core=(dq.join_component(name,groups[name],material) for name in ("vac","rack","core"))
+   439	    objects = (vac, rack, core)
+   440	    dq.MODEL_LENGTH = MODEL_LENGTH
+   441	    dq.normalize_base_center(objects)
+   442	    add_damage_shapes(*objects)
+   443	    recenter_shape_keyed_basis(objects)
+   444	
+   445	
+   446	    triangles = dq.triangle_count(objects)
+   447	    minimum, maximum = shape_basis_bounds(objects)
+   448	    assert triangles <= 12_000
+   449	    assert abs(maximum.x - minimum.x - MODEL_LENGTH) < 0.01
+   450	    assert abs(minimum.z) < 0.001
+   451	    assert abs((maximum.x + minimum.x) * 0.5) < 0.001
+   452	    assert abs((maximum.y + minimum.y) * 0.5) < 0.001
+   453	    dq.BLEND, dq.GLB = BLEND, GLB
+   454	    dq.export(objects)
+   455	    print(json.dumps({
+   456	        "blend": str(BLEND), "glb": str(GLB), "sha256": hashlib.sha256(GLB.read_bytes()).hexdigest(),
+   457	        "sourcePlate": {str(REFERENCE.relative_to(ROOT)): hashlib.sha256(REFERENCE.read_bytes()).hexdigest()},
+   458	        "components": [obj.name for obj in objects],
+   459	        "damageMorphs": [obj.data.shape_keys.key_blocks[1].name for obj in objects],
+   460	        "triangles": triangles,
+   461	        "boundsBlender": {"min": [round(v, 6) for v in minimum], "max": [round(v, 6) for v in maximum]},
+   462	    }, indent=2))
+   463	
+   464	
+   465	if __name__ == "__main__":
+   466	    main()
+===== build_dredge_queen.py =====
+     1	from pathlib import Path
+     2	import hashlib
+     3	import json
+     4	import math
+     5	
+     6	import bpy
+     7	import numpy as np
+     8	from mathutils import Vector
+     9	
+    10	
+    11	ROOT = Path(__file__).resolve().parents[3]
+    12	OUT = Path(__file__).resolve().parent
+    13	REFERENCE = ROOT / "assets/raw/boss-dredge-queen.png"
+    14	DAMAGE_REFERENCE = ROOT / "assets/raw/boss-dredge-queen-damage.png"
+    15	BLEND = OUT / "dredge-queen.blend"
+    16	GLB = OUT / "dredge-queen.glb"
+    17	ATLAS_SIZE = 1024
+    18	MODEL_LENGTH = 8.0
+    19	
+    20	REGIONS = {
+    21	    "soot": (0.02, 0.02, 0.20, 0.47),
+    22	    "iron": (0.23, 0.02, 0.41, 0.47),
+    23	    "brass": (0.44, 0.02, 0.61, 0.47),
+    24	    "deck": (0.64, 0.02, 0.78, 0.47),
+    25	    "teal": (0.81, 0.02, 0.89, 0.47),
+    26	    "damage": (0.92, 0.02, 0.98, 0.47),
+    27	    "plate": (0.02, 0.52, 0.53, 0.98),
+    28	    "sail": (0.56, 0.52, 0.78, 0.98),
+    29	    "rope": (0.81, 0.52, 0.89, 0.98),
+    30	    "cargo": (0.92, 0.52, 0.98, 0.98),
+    31	}
+    32	
+    33	
+    34	def reset_scene() -> None:
+    35	    bpy.ops.wm.read_factory_settings(use_empty=True)
+    36	    bpy.context.scene.unit_settings.system = "METRIC"
+    37	    bpy.context.scene.unit_settings.length_unit = "METERS"
+    38	
+    39	
+    40	def region_pixels(region: tuple[float, float, float, float]) -> tuple[int, int, int, int]:
+    41	    return tuple(int(value * ATLAS_SIZE) for value in region)
+    42	
+    43	
+    44	def sampled_color(colors: np.ndarray, mask: np.ndarray, fallback: tuple[float, float, float]) -> np.ndarray:
+    45	    selected = colors[mask]
+    46	    if len(selected) < 32:
+    47	        return np.array(fallback, dtype=np.float32)
+    48	    return np.clip(np.median(selected, axis=0), 0.01, 0.82)
+    49	
+    50	
+    51	def resized_nearest(source: np.ndarray, height: int, width: int) -> np.ndarray:
+    52	    ys = np.linspace(0, source.shape[0] - 1, height).astype(np.int32)
+    53	    xs = np.linspace(0, source.shape[1] - 1, width).astype(np.int32)
+    54	    return source[ys[:, None], xs[None, :]]
+    55	
+    56	
+    57	def create_atlas() -> tuple[bpy.types.Image, dict[str, str]]:
+    58	    source = bpy.data.images.load(str(REFERENCE), check_existing=False)
+    59	    pixels = np.array(source.pixels[:], dtype=np.float32).reshape(source.size[1], source.size[0], 4)
+    60	    colors = pixels[:, :, :3]
+    61	    luminance = colors.mean(axis=2)
+    62	    saturation = colors.max(axis=2) - colors.min(axis=2)
+    63	    dark = sampled_color(colors, (luminance > 0.015) & (luminance < 0.14), (0.035, 0.030, 0.022))
+    64	    warm = sampled_color(
+    65	        colors,
+    66	        (colors[:, :, 0] > colors[:, :, 1] * 1.08)
+    67	        & (colors[:, :, 1] > colors[:, :, 2] * 1.12)
+    68	        & (luminance > 0.12)
+    69	        & (luminance < 0.48),
+    70	        (0.34, 0.20, 0.07),
+    71	    )
+    72	    rust = sampled_color(
+    73	        colors,
+    74	        (colors[:, :, 0] > colors[:, :, 1] * 1.30)
+    75	        & (colors[:, :, 1] > colors[:, :, 2] * 1.05)
+    76	        & (saturation > 0.09),
+    77	        (0.34, 0.075, 0.028),
+    78	    )
+    79	    teal = sampled_color(
+    80	        colors,
+    81	        (colors[:, :, 1] > colors[:, :, 0] * 1.18)
+    82	        & (colors[:, :, 2] > colors[:, :, 0] * 1.18)
+    83	        & (saturation > 0.06),
+    84	        (0.025, 0.36, 0.38),
+    85	    )
+    86	    palette = {
+    87	        "soot": np.clip(dark * 0.50, 0.010, 0.060),
+    88	        "iron": np.clip(dark * 0.58 + warm * 0.34 + 0.015, 0.035, 0.22),
+    89	        "brass": np.clip(warm * 0.88 + 0.025, 0.09, 0.55),
+    90	        "deck": np.clip(warm * 0.54 + rust * 0.26 + 0.045, 0.06, 0.36),
+    91	        "teal": np.clip(teal * 1.12, 0.02, 0.62),
+    92	        "damage": np.clip(rust * 0.72 + np.array((0.16, 0.025, 0.012)), 0.03, 0.48),
+    93	        "sail": np.clip(rust * 0.74 + np.array((0.08, 0.012, 0.008)), 0.03, 0.40),
+    94	        "rope": np.clip(warm * 0.54 + np.array((0.10, 0.055, 0.012)), 0.05, 0.50),
+    95	        "cargo": np.clip(rust * 0.42 + warm * 0.42 + 0.018, 0.05, 0.44),
+    96	    }
+    97	    atlas = np.ones((ATLAS_SIZE, ATLAS_SIZE, 4), dtype=np.float32)
+    98	    atlas[:, :, :3] = palette["soot"]
+    99	    rng = np.random.default_rng(517)
+   100	
+   101	    # Carry the approved plate's real engraved line density into the largest tile.
+   102	    x0, y0, x1, y1 = region_pixels(REGIONS["plate"])
+   103	    crop = colors[
+   104	        int(source.size[1] * 0.09):int(source.size[1] * 0.88),
+   105	        int(source.size[0] * 0.08):int(source.size[0] * 0.95),
+   106	    ]
+   107	    painted = resized_nearest(resized_nearest(crop, 300, 420), y1 - y0, x1 - x0)
+   108	    ink = 1.0 - np.clip((painted.mean(axis=2) - 0.025) / 0.40, 0.0, 1.0)
+   109	    plate_base = palette["iron"] * 0.76 + palette["brass"] * 0.24
+   110	    engraved = plate_base[None, None, :] * (1.08 - ink[:, :, None] * 0.55)
+   111	    warm_mask = (painted[:, :, 0] > painted[:, :, 2] * 1.28) & (ink > 0.20)
+   112	    engraved[warm_mask] = engraved[warm_mask] * 0.75 + palette["brass"] * 0.17
+   113	    engraved += rng.normal(0, 0.008, (y1 - y0, x1 - x0, 1))
+   114	    atlas[y0:y1, x0:x1, :3] = np.clip(engraved, 0.008, 0.34)
+   115	
+   116	    for name, region in REGIONS.items():
+   117	        if name == "plate":
+   118	            continue
+   119	        x0, y0, x1, y1 = region_pixels(region)
+   120	        base = palette[name]
+   121	        noise = rng.normal(0, 0.008 if name != "teal" else 0.004, (y1 - y0, x1 - x0, 1))
+   122	        block = np.clip(base + noise, 0.008, 0.72)
+   123	        atlas[y0:y1, x0:x1, :3] = block
+   124	        if name in {"soot", "iron", "brass", "deck", "damage", "sail", "cargo"}:
+   125	            height = y1 - y0
+   126	            spacing = 17 if name in {"iron", "brass"} else 23
+   127	            for offset in range(-height, x1 - x0, spacing):
+   128	                for yy in range(y0, y1):
+   129	                    xx = x0 + offset + (yy - y0)
+   130	                    if x0 <= xx < x1:
+   131	                        atlas[yy, xx:min(xx + 2, x1), :3] *= 0.58
+   132	        if name in {"iron", "brass", "deck"}:
+   133	            for yy in range(y0 + 12, y1, 29):
+   134	                for xx in range(x0 + 12, x1, 29):
+   135	                    atlas[yy - 2:yy + 3, xx - 2:xx + 3, :3] *= 0.46
+   136	        if name == "sail":
+   137	            for yy in range(y0 + 18, y1, 26):
+   138	                atlas[yy:yy + 2, x0:x1, :3] *= 0.62
+   139	        if name == "teal":
+   140	            for yy in range(y0 + 7, y1, 15):
+   141	                atlas[yy:yy + 2, x0:x1, :3] = np.clip(base * 1.35, 0, 0.78)
+   142	
+   143	    # The source plate is storm-dark. Lift its baked albedo, not the material,
+   144	    # so engraved detail survives the high gameplay camera without emission.
+   145	    atlas[:, :, :3] = np.clip(atlas[:, :, :3] * 1.34 + 0.012, 0.008, 0.78)
+   146	
+   147	    image = bpy.data.images.new("DredgeQueenPlateAtlas", ATLAS_SIZE, ATLAS_SIZE, alpha=True)
+   148	    image.colorspace_settings.name = "sRGB"
+   149	    image.pixels.foreach_set(atlas.ravel())
+   150	    image.pack()
+   151	    return image, {
+   152	        "intact": hashlib.sha256(REFERENCE.read_bytes()).hexdigest(),
+   153	        "damage": hashlib.sha256(DAMAGE_REFERENCE.read_bytes()).hexdigest(),
+   154	    }
+   155	
+   156	
+   157	def create_material(image: bpy.types.Image) -> bpy.types.Material:
+   158	    material = bpy.data.materials.new("DredgeQueenMaterial")
+   159	    material.use_nodes = True
+   160	    material.use_backface_culling = False
+   161	    nodes = material.node_tree.nodes
+   162	    nodes.clear()
+   163	    output = nodes.new("ShaderNodeOutputMaterial")
+   164	    shader = nodes.new("ShaderNodeBsdfPrincipled")
+   165	    texture = nodes.new("ShaderNodeTexImage")
+   166	    texture.image = image
+   167	    texture.interpolation = "Linear"
+   168	    texture.extension = "REPEAT"
+   169	    shader.inputs["Metallic"].default_value = 0.0
+   170	    shader.inputs["Roughness"].default_value = 0.9
+   171	    shader.inputs["Emission Color"].default_value = (0, 0, 0, 1)
+   172	    shader.inputs["Emission Strength"].default_value = 0
+   173	    material.node_tree.links.new(texture.outputs["Color"], shader.inputs["Base Color"])
+   174	    material.node_tree.links.new(shader.outputs["BSDF"], output.inputs["Surface"])
+   175	    return material
+   176	
+   177	
+   178	def mark_all(obj: bpy.types.Object, group_name: str | None) -> None:
+   179	    if not group_name:
+   180	        return
+   181	    group = obj.vertex_groups.new(name=group_name)
+   182	    group.add(list(range(len(obj.data.vertices))), 1.0, "REPLACE")
+   183	
+   184	
+   185	def tag(
+   186	    obj: bpy.types.Object,
+   187	    region: str,
+   188	    material: bpy.types.Material,
+   189	    bevel: float = 0.012,
+   190	    damage_group: str | None = None,
+   191	    smooth: bool = False,
+   192	) -> bpy.types.Object:
+   193	    obj["atlas_region"] = region
+   194	    obj.data.materials.append(material)
+   195	    mark_all(obj, damage_group)
+   196	    if bevel > 0:
+   197	        modifier = obj.modifiers.new("Worked edge", "BEVEL")
+   198	        modifier.width = bevel
+   199	        modifier.segments = 1
+   200	        modifier.limit_method = "ANGLE"
+   201	    if smooth:
+   202	        for polygon in obj.data.polygons:
+   203	            polygon.use_smooth = True
+   204	    return obj
+   205	
+   206	
+   207	def box(
+   208	    name: str,
+   209	    size: tuple[float, float, float],
+   210	    at: tuple[float, float, float],
+   211	    region: str,
+   212	    material: bpy.types.Material,
+   213	    bevel: float = 0.012,
+   214	    rotation: tuple[float, float, float] = (0, 0, 0),
+   215	    damage_group: str | None = None,
+   216	) -> bpy.types.Object:
+   217	    bpy.ops.mesh.primitive_cube_add(location=at, rotation=rotation)
+   218	    obj = bpy.context.object
+   219	    obj.name = name
+   220	    obj.scale = tuple(value * 0.5 for value in size)
+   221	    bpy.ops.object.transform_apply(location=False, rotation=True, scale=True)
+   222	    return tag(obj, region, material, bevel, damage_group)
+   223	
+   224	
+   225	def cylinder(
+   226	    name: str,
+   227	    radius: float,
+   228	    depth: float,
+   229	    at: tuple[float, float, float],
+   230	    region: str,
+   231	    material: bpy.types.Material,
+   232	    vertices: int = 12,
+   233	    rotation: tuple[float, float, float] = (0, 0, 0),
+   234	    bevel: float = 0.006,
+   235	    damage_group: str | None = None,
+   236	) -> bpy.types.Object:
+   237	    bpy.ops.mesh.primitive_cylinder_add(vertices=vertices, radius=radius, depth=depth, location=at, rotation=rotation)
+   238	    obj = bpy.context.object
+   239	    obj.name = name
+   240	    bpy.ops.object.transform_apply(location=False, rotation=True, scale=True)
+   241	    return tag(obj, region, material, bevel, damage_group, smooth=True)
+   242	
+   243	
+   244	def cone(
+   245	    name: str,
+   246	    radius1: float,
+   247	    radius2: float,
+   248	    depth: float,
+   249	    at: tuple[float, float, float],
+   250	    region: str,
+   251	    material: bpy.types.Material,
+   252	    vertices: int = 12,
+   253	    rotation: tuple[float, float, float] = (0, 0, 0),
+   254	    damage_group: str | None = None,
+   255	) -> bpy.types.Object:
+   256	    bpy.ops.mesh.primitive_cone_add(
+   257	        vertices=vertices,
+   258	        radius1=radius1,
+   259	        radius2=radius2,
+   260	        depth=depth,
+   261	        location=at,
+   262	        rotation=rotation,
+   263	    )
+   264	    obj = bpy.context.object
+   265	    obj.name = name
+   266	    bpy.ops.object.transform_apply(location=False, rotation=True, scale=True)
+   267	    return tag(obj, region, material, 0.006, damage_group, smooth=True)
+   268	
+   269	
+   270	def torus(
+   271	    name: str,
+   272	    major_radius: float,
+   273	    minor_radius: float,
+   274	    at: tuple[float, float, float],
+   275	    region: str,
+   276	    material: bpy.types.Material,
+   277	    rotation: tuple[float, float, float] = (0, 0, 0),
+   278	    damage_group: str | None = None,
+   279	    major_segments: int = 12,
+   280	) -> bpy.types.Object:
+   281	    bpy.ops.mesh.primitive_torus_add(
+   282	        major_segments=major_segments,
+   283	        minor_segments=4,
+   284	        location=at,
+   285	        major_radius=major_radius,
+   286	        minor_radius=minor_radius,
+   287	        rotation=rotation,
+   288	    )
+   289	    obj = bpy.context.object
+   290	    obj.name = name
+   291	    bpy.ops.object.transform_apply(location=False, rotation=True, scale=True)
+   292	    return tag(obj, region, material, 0, damage_group, smooth=True)
+   293	
+   294	
+   295	def ico_sphere(
+   296	    name: str,
+   297	    radius: float,
+   298	    at: tuple[float, float, float],
+   299	    region: str,
+   300	    material: bpy.types.Material,
+   301	    damage_group: str | None = None,
+   302	    scale: tuple[float, float, float] = (1, 1, 1),
+   303	) -> bpy.types.Object:
+   304	    bpy.ops.mesh.primitive_ico_sphere_add(subdivisions=2, radius=radius, location=at)
+   305	    obj = bpy.context.object
+   306	    obj.name = name
+   307	    obj.scale = scale
+   308	    bpy.ops.object.transform_apply(location=False, rotation=False, scale=True)
+   309	    return tag(obj, region, material, 0, damage_group, smooth=True)
+   310	
+   311	
+   312	def beam(
+   313	    name: str,
+   314	    start: tuple[float, float, float],
+   315	    end: tuple[float, float, float],
+   316	    width: float,
+   317	    region: str,
+   318	    material: bpy.types.Material,
+   319	    damage_group: str | None = None,
+   320	) -> bpy.types.Object:
+   321	    a, b = Vector(start), Vector(end)
+   322	    direction = b - a
+   323	    obj = box(
+   324	        name,
+   325	        (width, width, direction.length),
+   326	        tuple((a + b) * 0.5),
+   327	        region,
+   328	        material,
+   329	        bevel=min(0.006, width * 0.18),
+   330	        damage_group=damage_group,
+   331	    )
+   332	    obj.rotation_mode = "QUATERNION"
+   333	    obj.rotation_quaternion = direction.to_track_quat("Z", "Y")
+   334	    bpy.context.view_layer.objects.active = obj
+   335	    obj.select_set(True)
+   336	    bpy.ops.object.transform_apply(location=False, rotation=True, scale=False)
+   337	    obj.select_set(False)
+   338	    return obj
+   339	
+   340	
+   341	def triangle_panel(
+   342	    name: str,
+   343	    points: tuple[tuple[float, float, float], tuple[float, float, float], tuple[float, float, float]],
+   344	    thickness: float,
+   345	    region: str,
+   346	    material: bpy.types.Material,
+   347	    damage_group: str | None = None,
+   348	) -> bpy.types.Object:
+   349	    front = [Vector(point) + Vector((0, -thickness * 0.5, 0)) for point in points]
+   350	    back = [Vector(point) + Vector((0, thickness * 0.5, 0)) for point in points]
+   351	    vertices = [tuple(point) for point in [*front, *back]]
+   352	    faces = [(0, 1, 2), (5, 4, 3), (0, 3, 4, 1), (1, 4, 5, 2), (2, 5, 3, 0)]
+   353	    mesh = bpy.data.meshes.new(f"{name}Mesh")
+   354	    mesh.from_pydata(vertices, [], faces)
+   355	    mesh.update()
+   356	    obj = bpy.data.objects.new(name, mesh)
+   357	    bpy.context.collection.objects.link(obj)
+   358	    return tag(obj, region, material, 0.004, damage_group)
+   359	
+   360	
+   361	def quad_panel(
+   362	    name: str,
+   363	    points: tuple[
+   364	        tuple[float, float, float],
+   365	        tuple[float, float, float],
+   366	        tuple[float, float, float],
+   367	        tuple[float, float, float],
+   368	    ],
+   369	    thickness: float,
+   370	    region: str,
+   371	    material: bpy.types.Material,
+   372	    damage_group: str | None = None,
+   373	) -> bpy.types.Object:
+   374	    front = [Vector(point) + Vector((0, -thickness * 0.5, 0)) for point in points]
+   375	    back = [Vector(point) + Vector((0, thickness * 0.5, 0)) for point in points]
+   376	    vertices = [tuple(point) for point in [*front, *back]]
+   377	    faces = [
+   378	        (0, 1, 2, 3),
+   379	        (7, 6, 5, 4),
+   380	        (0, 4, 5, 1),
+   381	        (1, 5, 6, 2),
+   382	        (2, 6, 7, 3),
+   383	        (3, 7, 4, 0),
+   384	    ]
+   385	    mesh = bpy.data.meshes.new(f"{name}Mesh")
+   386	    mesh.from_pydata(vertices, [], faces)
+   387	    mesh.update()
+   388	    obj = bpy.data.objects.new(name, mesh)
+   389	    bpy.context.collection.objects.link(obj)
+   390	    return tag(obj, region, material, 0.004, damage_group)
+   391	
+   392	
+   393	def add_rivets(
+   394	    parts: list[bpy.types.Object],
+   395	    prefix: str,
+   396	    xs: tuple[float, ...],
+   397	    y: float,
+   398	    z: float,
+   399	    material: bpy.types.Material,
+   400	    group: str | None = None,
+   401	) -> None:
+   402	    for index, x in enumerate(xs):
+   403	        parts.append(
+   404	            cylinder(
+   405	                f"{prefix} rivet {index}",
+   406	                0.035,
+   407	                0.045,
+   408	                (x, y, z),
+   409	                "brass",
+   410	                material,
+   411	                vertices=8,
+   412	                rotation=(math.pi / 2, 0, 0),
+   413	                bevel=0,
+   414	                damage_group=group,
+   415	            )
+   416	        )
+   417	
+   418	
+   419	def build_claw(material: bpy.types.Material) -> list[bpy.types.Object]:
+   420	    parts: list[bpy.types.Object] = []
+   421	    arm = "DamageClawArm"
+   422	    parts.append(box("Armored fore hull", (3.05, 3.70, 0.74), (-2.28, 0, 0.48), "plate", material, 0.10))
+   423	    parts.append(box("Reinforced bow wall", (0.58, 3.18, 0.92), (-3.72, 0, 0.64), "iron", material, 0.10))
+   424	    parts.append(box("Fore working deck", (2.88, 3.42, 0.18), (-2.30, 0, 0.94), "deck", material, 0.025))
+   425	    for side in (-1, 1):
+   426	        y = side * 1.76
+   427	        parts.append(beam(f"Fore rail {side}", (-3.48, y, 1.16), (-1.02, y, 1.16), 0.075, "brass", material))
+   428	        for x in (-3.35, -2.75, -2.15, -1.55, -1.05):
+   429	            parts.append(beam(f"Fore post {side} {x}", (x, y, 0.94), (x, y, 1.22), 0.060, "brass", material))
+   430	        add_rivets(parts, f"Bow flank {side}", (-3.52, -3.10, -2.68, -2.26, -1.84, -1.42), side * 1.88, 0.58, material)
+   431	    parts.append(box("Crane turntable", (0.82, 1.32, 0.30), (-1.36, 0, 1.14), "brass", material, 0.045))
+   432	    parts.append(cylinder("Crane pivot drum", 0.42, 1.20, (-1.42, 0, 1.48), "plate", material, vertices=14, rotation=(math.pi / 2, 0, 0), bevel=0))
+   433	    for side in (-1, 1):
+   434	        y = side * 0.50
+   435	        parts.append(beam(f"Crane leg lower {side}", (-1.48, y, 1.42), (-2.88, y, 4.42), 0.17, "iron", material, arm))
+   436	        parts.append(beam(f"Crane leg brass edge {side}", (-1.39, y, 1.50), (-2.78, y, 4.48), 0.075, "brass", material, arm))
+   437	    for rung, z in enumerate(np.linspace(1.96, 4.14, 7)):
+   438	        t = (z - 1.42) / (4.42 - 1.42)
+   439	        x = -1.48 + (-2.88 + 1.48) * t
+   440	        parts.append(beam(f"Crane cross rung {rung}", (x, -0.53, float(z)), (x, 0.53, float(z)), 0.060, "brass", material, arm))
+   441	    parts.append(beam("Crane boom upper", (-2.84, -0.40, 4.45), (-3.58, -0.28, 4.94), 0.16, "iron", material, arm))
+   442	    parts.append(beam("Crane boom upper pair", (-2.84, 0.40, 4.45), (-3.58, 0.28, 4.94), 0.16, "iron", material, arm))
+   443	    parts.append(cylinder("Crane crown pulley", 0.42, 0.34, (-2.86, 0, 4.53), "brass", material, vertices=14, rotation=(math.pi / 2, 0, 0), bevel=0, damage_group=arm))
+   444	    parts.append(torus("Crane crown rim", 0.45, 0.055, (-2.86, 0, 4.53), "brass", material, rotation=(math.pi / 2, 0, 0), damage_group=arm))
+   445	    parts.append(cylinder("Boom end pulley", 0.34, 0.30, (-3.60, 0, 4.94), "brass", material, vertices=12, rotation=(math.pi / 2, 0, 0), bevel=0, damage_group=arm))
+   446	    for cable, y in enumerate((-0.17, 0.0, 0.17)):
+   447	        parts.append(beam(f"Claw chain upper {cable}", (-3.60, y, 4.86), (-4.24, y, 3.36), 0.055, "rope", material, arm))
+   448	    parts.append(cylinder("Claw gearbox", 0.50, 0.82, (-4.25, 0, 3.20), "plate", material, vertices=14, rotation=(math.pi / 2, 0, 0), bevel=0, damage_group=arm))
+   449	    parts.append(torus("Claw gearbox collar", 0.52, 0.065, (-4.25, 0, 3.20), "brass", material, rotation=(math.pi / 2, 0, 0), damage_group=arm))
+   450	    parts.append(ico_sphere("Claw teal sight", 0.22, (-4.25, -0.46, 3.24), "teal", material, arm, scale=(1.0, 0.35, 1.0)))
+   451	    for finger, y in enumerate((-0.58, 0.0, 0.58)):
+   452	        spread = y * 1.24
+   453	        points = [
+   454	            (-4.28, y, 3.00),
+   455	            (-4.58, y * 1.08, 2.48),
+   456	            (-4.76, spread, 1.80),
+   457	            (-4.52, spread * 1.08, 1.17),
+   458	            (-4.10, spread * 0.86, 0.96),
+   459	        ]
+   460	        for segment, (start, end) in enumerate(zip(points, points[1:])):
+   461	            parts.append(beam(f"Claw finger {finger} {segment}", start, end, 0.19, "brass" if segment in {0, 3} else "iron", material, arm))
+   462	    parts.append(beam("Claw lower jaw brace", (-4.49, -0.76, 1.40), (-4.49, 0.76, 1.40), 0.14, "brass", material, arm))
+   463	    for shard, at in enumerate(((-4.18, -0.10, 3.0), (-4.12, 0.08, 3.0), (-4.20, 0.0, 2.92))):
+   464	        parts.append(box(f"Hidden claw chain scrap {shard}", (0.22, 0.06, 0.05), at, "damage", material, 0.002, damage_group=f"DamageClawShard{shard}"))
+   465	    return parts
+   466	
+   467	
+   468	def build_paddle(material: bpy.types.Material, side: int) -> list[bpy.types.Object]:
+   469	    label = "Port" if side < 0 else "Starboard"
+   470	    group = f"Damage{label}Paddle"
+   471	    center = Vector((1.35, side * 2.48, 1.64))
+   472	    parts: list[bpy.types.Object] = []
+   473	    parts.append(box(f"{label} wheel sponson", (3.38, 0.36, 0.84), (1.22, side * 2.10, 0.68), "plate", material, 0.055))
+   474	    parts.append(box(f"{label} wheel sill", (3.55, 0.44, 0.18), (1.22, side * 2.20, 1.02), "brass", material, 0.025))
+   475	    parts.append(torus(f"{label} paddle outer rim", 1.40, 0.105, tuple(center), "iron", material, rotation=(math.pi / 2, 0, 0), damage_group=group, major_segments=16))
+   476	    parts.append(torus(f"{label} paddle inner rim", 0.88, 0.070, tuple(center), "brass", material, rotation=(math.pi / 2, 0, 0), damage_group=group, major_segments=16))
+   477	    parts.append(cylinder(f"{label} paddle hub", 0.27, 0.52, tuple(center), "brass", material, vertices=14, rotation=(math.pi / 2, 0, 0), bevel=0, damage_group=group))
+   478	    for spoke in range(10):
+   479	        angle = math.tau * spoke / 10
+   480	        reach = 1.28
+   481	        dx, dz = math.cos(angle) * reach, math.sin(angle) * reach
+   482	        parts.append(beam(f"{label} spoke {spoke}", tuple(center - Vector((dx, 0, dz))), tuple(center + Vector((dx, 0, dz))), 0.065, "brass", material, group))
+   483	    for paddle in range(14):
+   484	        angle = math.tau * paddle / 14
+   485	        x = center.x + math.cos(angle) * 1.46
+   486	        z = center.z + math.sin(angle) * 1.46
+   487	        parts.append(
+   488	            box(
+   489	                f"{label} paddle blade {paddle}",
+   490	                (0.52, 0.38, 0.18),
+   491	                (x, center.y, z),
+   492	                "plate",
+   493	                material,
+   494	                0.008,
+   495	                rotation=(0, -angle, 0),
+   496	                damage_group=group,
+   497	            )
+   498	        )
+   499	    arch_points = []
+   500	    for step in range(7):
+   501	        angle = math.radians(18 + step * 24)
+   502	        arch_points.append((center.x + math.cos(angle) * 1.64, center.y, center.z + math.sin(angle) * 1.64))
+   503	    for step, (start, end) in enumerate(zip(arch_points, arch_points[1:])):
+   504	        parts.append(beam(f"{label} wheel armor arch {step}", start, end, 0.14, "plate", material, group if step in {0, 5} else None))
+   505	    parts.append(beam(f"{label} forward wheel stay", (-0.32, center.y, 0.88), (-0.12, center.y, 2.34), 0.14, "brass", material))
+   506	    parts.append(beam(f"{label} rear wheel stay", (2.92, center.y, 0.88), (2.82, center.y, 2.40), 0.14, "brass", material, group))
+   507	    parts.append(cylinder(f"{label} running lantern", 0.14, 0.38, (0.02, side * 2.38, 2.62), "teal", material, vertices=10, bevel=0))
+   508	    parts.append(torus(f"{label} lantern cage", 0.16, 0.028, (0.02, side * 2.38, 2.62), "brass", material, rotation=(math.pi / 2, 0, 0)))
+   509	    for shard, at in enumerate(((1.35, center.y, 1.52), (1.28, center.y, 1.48), (1.42, center.y, 1.46))):
+   510	        parts.append(box(f"Hidden {label} paddle shard {shard}", (0.32, 0.18, 0.10), at, "damage", material, 0.003, damage_group=f"Damage{label}Shard{shard}"))
+   511	    return parts
+   512	
+   513	
+   514	def build_hold(material: bpy.types.Material) -> list[bpy.types.Object]:
+   515	    parts: list[bpy.types.Object] = []
+   516	    parts.append(box("Central armored hull", (4.75, 4.18, 1.02), (1.02, 0, 0.60), "plate", material, 0.10))
+   517	    parts.append(box("Aft transom", (0.64, 3.84, 1.22), (3.28, 0, 0.74), "iron", material, 0.09, damage_group="DamageHoldRear"))
+   518	    parts.append(box("Main working deck", (4.45, 3.82, 0.20), (0.98, 0, 1.14), "deck", material, 0.025))
+   519	    for side in (-1, 1):
+   520	        y = side * 1.94
+   521	        parts.append(beam(f"Main rail {side}", (-1.05, y, 1.43), (3.14, y, 1.43), 0.075, "brass", material))
+   522	        for x in (-0.96, -0.34, 0.30, 0.94, 1.58, 2.22, 2.86):
+   523	            parts.append(beam(f"Main rail post {side} {x}", (x, y, 1.14), (x, y, 1.48), 0.060, "brass", material))
+   524	        add_rivets(parts, f"Main hull {side}", (-0.92, -0.48, -0.04, 0.40, 0.84, 1.28, 1.72, 2.16, 2.60, 3.04), side * 2.11, 0.70, material)
+   525	
+   526	    # Plate-derived domed corsair wheelhouse.
+   527	    parts.append(box("Wheelhouse armored base", (1.86, 2.58, 1.56), (-0.48, 0, 1.98), "iron", material, 0.055))
+   528	    parts.append(box("Wheelhouse brass crown", (2.08, 2.78, 0.20), (-0.48, 0, 2.80), "brass", material, 0.025))
+   529	    parts.append(ico_sphere("Wheelhouse copper dome", 0.76, (-0.48, 0, 3.12), "plate", material, scale=(1.0, 1.25, 0.55)))
+   530	    parts.append(cylinder("Wheelhouse dome cap", 0.17, 0.38, (-0.48, 0, 3.62), "brass", material, vertices=10))
+   531	    for side in (-1, 1):
+   532	        y = side * 1.31
+   533	        parts.append(box(f"Wheelhouse teal windows {side}", (1.22, 0.055, 0.38), (-0.48, y, 2.10), "teal", material, 0.006))
+   534	        parts.append(box(f"Wheelhouse window guard upper {side}", (1.36, 0.075, 0.060), (-0.48, y * 1.01, 2.32), "brass", material, 0.004))
+   535	        parts.append(box(f"Wheelhouse window guard lower {side}", (1.36, 0.075, 0.060), (-0.48, y * 1.01, 1.88), "brass", material, 0.004))
+   536	    parts.append(box("Wheelhouse forward amber pane", (0.055, 1.48, 0.48), (-1.42, 0, 2.10), "cargo", material, 0.008))
+   537	    parts.append(cylinder("Wheelhouse smoke stack", 0.18, 0.88, (-0.88, -0.62, 3.28), "soot", material, vertices=12))
+   538	    parts.append(torus("Wheelhouse stack crown", 0.22, 0.040, (-0.88, -0.62, 3.74), "brass", material))
+   539	
+   540	    # Fat aft loot hold, clearly separable from the wheelhouse and paddles.
+   541	    parts.append(box("Loot hold armored bin", (2.72, 3.30, 1.68), (2.00, 0, 2.05), "iron", material, 0.06, damage_group="DamageHoldRear"))
+   542	    parts.append(box("Loot hold port lid", (2.64, 1.62, 0.22), (1.96, -0.82, 2.94), "plate", material, 0.025, rotation=(math.radians(-8), 0, 0), damage_group="DamageHoldPortLid"))
+   543	    parts.append(box("Loot hold starboard lid", (2.64, 1.62, 0.22), (1.96, 0.82, 2.94), "plate", material, 0.025, rotation=(math.radians(8), 0, 0), damage_group="DamageHoldStarboardLid"))
+   544	    for x in (1.02, 1.52, 2.02, 2.52, 3.00):
+   545	        parts.append(beam(f"Hold lid strap {x}", (x, -1.60, 2.97), (x, 1.60, 2.97), 0.070, "brass", material, "DamageHoldPortLid" if x < 2.02 else "DamageHoldStarboardLid"))
+   546	    parts.append(torus("Hold rope coil port", 0.38, 0.060, (2.58, -1.68, 2.72), "rope", material, rotation=(math.pi / 2, 0, 0), damage_group="DamageHoldPortLid"))
+   547	    parts.append(torus("Hold rope coil starboard", 0.32, 0.055, (1.34, 1.68, 2.70), "rope", material, rotation=(math.pi / 2, 0, 0), damage_group="DamageHoldStarboardLid"))
+   548	
+   549	    # Masts, rigging, and the large oxblood corsair sail own the boss silhouette.
+   550	    parts.append(cylinder("Main mast", 0.14, 4.28, (0.52, 0, 3.22), "brass", material, vertices=12))
+   551	    parts.append(cone("Main mast finial", 0.20, 0.04, 0.46, (0.52, 0, 5.58), "brass", material, vertices=10))
+   552	    parts.append(cylinder("Aft mast", 0.105, 3.34, (3.00, 0, 3.16), "brass", material, vertices=10, damage_group="DamageFlag"))
+   553	    parts.append(cone("Aft mast finial", 0.15, 0.03, 0.34, (3.00, 0, 4.98), "brass", material, vertices=10, damage_group="DamageFlag"))
+   554	    parts.append(quad_panel("Oxblood main corsair sail", ((0.66, 0.02, 5.34), (3.88, 0.02, 4.98), (3.48, 0.02, 3.16), (0.74, 0.02, 2.78)), 0.065, "sail", material, "DamageFlag"))
+   555	    parts.append(triangle_panel("Oxblood aft sail", ((3.08, 0.03, 4.64), (3.92, 0.03, 4.18), (3.12, 0.03, 3.18)), 0.055, "sail", material, "DamageFlag"))
+   556	    parts.append(beam("Ghost pickaxe slash one", (1.30, -0.04, 3.70), (2.24, -0.04, 4.38), 0.065, "brass", material, "DamageFlag"))
+   557	    parts.append(beam("Ghost pickaxe slash two", (1.34, -0.06, 4.40), (2.24, -0.06, 3.66), 0.065, "brass", material, "DamageFlag"))
+   558	    for index, (start, end) in enumerate((
+   559	        ((0.52, -0.05, 5.50), (-3.35, -1.88, 1.46)),
+   560	        ((0.52, 0.05, 5.50), (3.20, 1.90, 1.48)),
+   561	        ((3.00, -0.03, 4.88), (0.56, -1.90, 1.46)),
+   562	        ((3.00, 0.03, 4.88), (3.22, 1.88, 1.48)),
+   563	    )):
+   564	        parts.append(beam(f"Rigging line {index}", start, end, 0.032, "rope", material, "DamageFlag" if index >= 2 else None))
+   565	
+   566	    for index, (x, y) in enumerate(((-0.92, -1.62), (-0.92, 1.62), (0.72, -1.62), (0.72, 1.62), (2.72, -1.62), (2.72, 1.62))):
+   567	        parts.append(cylinder(f"Deck teal lantern {index}", 0.10, 0.34, (x, y, 1.82), "teal", material, vertices=10, bevel=0))
+   568	        parts.append(torus(f"Deck lantern cage {index}", 0.12, 0.024, (x, y, 1.82), "brass", material, rotation=(math.pi / 2, 0, 0)))
+   569	        parts.append(beam(f"Deck lantern post {index}", (x, y, 1.44), (x, y, 1.98), 0.050, "brass", material))
+   570	
+   571	    # Damage-only cargo starts hidden inside the intact hold, then spills in Act 3.
+   572	    hidden = ((2.16, 0.0, 1.64), (2.02, 0.12, 1.60), (2.26, -0.10, 1.55), (2.04, -0.08, 1.58))
+   573	    for index, at in enumerate(hidden):
+   574	        if index % 2:
+   575	            parts.append(cylinder(f"Hidden cargo drum {index}", 0.18, 0.34, at, "cargo", material, vertices=10, rotation=(0, math.pi / 2, 0), bevel=0, damage_group=f"DamageCargo{index}"))
+   576	        else:
+   577	            parts.append(box(f"Hidden cargo crate {index}", (0.34, 0.30, 0.28), at, "cargo", material, 0.008, damage_group=f"DamageCargo{index}"))
+   578	    parts.append(box("Hidden hold rupture", (0.66, 0.08, 0.48), (2.82, 0.0, 1.56), "damage", material, 0.004, damage_group="DamageHoldBreach"))
+   579	    return parts
+   580	
+   581	
+   582	def prepare_part(obj: bpy.types.Object) -> None:
+   583	    bpy.context.view_layer.objects.active = obj
+   584	    obj.select_set(True)
+   585	    for modifier in list(obj.modifiers):
+   586	        bpy.ops.object.modifier_apply(modifier=modifier.name)
+   587	    bpy.ops.object.mode_set(mode="EDIT")
+   588	    bpy.ops.mesh.select_all(action="SELECT")
+   589	    bpy.ops.mesh.normals_make_consistent(inside=False)
+   590	    bpy.ops.uv.smart_project(angle_limit=math.radians(66), island_margin=0.025)
+   591	    bpy.ops.object.mode_set(mode="OBJECT")
+   592	    uv = obj.data.uv_layers.active.data
+   593	    coords = np.array([[loop.uv.x, loop.uv.y] for loop in uv], dtype=np.float32)
+   594	    low = coords.min(axis=0)
+   595	    span = np.maximum(coords.max(axis=0) - low, 1e-6)
+   596	    u0, v0, u1, v1 = REGIONS[obj["atlas_region"]]
+   597	    for loop, coord in zip(uv, coords):
+   598	        normalized = (coord - low) / span
+   599	        loop.uv = (u0 + normalized[0] * (u1 - u0), v0 + normalized[1] * (v1 - v0))
+   600	    obj.select_set(False)
+   601	
+   602	
+   603	def join_component(name: str, parts: list[bpy.types.Object], material: bpy.types.Material) -> bpy.types.Object:
+   604	    for part in parts:
+   605	        prepare_part(part)
+   606	    bpy.ops.object.select_all(action="DESELECT")
+   607	    for part in parts:
+   608	        part.select_set(True)
+   609	    bpy.context.view_layer.objects.active = parts[0]
+   610	    bpy.ops.object.join()
+   611	    component = bpy.context.object
+   612	    component.name = name
+   613	    component.data.name = f"{name}Mesh"
+   614	    component.data.materials.clear()
+   615	    component.data.materials.append(material)
+   616	    for polygon in component.data.polygons:
+   617	        polygon.material_index = 0
+   618	    component.data.uv_layers.active.name = "UVMap"
+   619	    bpy.context.scene.cursor.location = (0, 0, 0)
+   620	    bpy.ops.object.origin_set(type="ORIGIN_CURSOR")
+   621	    component.select_set(False)
+   622	    return component
+   623	
+   624	
+   625	def group_vertex_indices(obj: bpy.types.Object, group_name: str) -> set[int]:
+   626	    group = obj.vertex_groups.get(group_name)
+   627	    if group is None:
+   628	        return set()
+   629	    index = group.index
+   630	    return {vertex.index for vertex in obj.data.vertices if any(item.group == index for item in vertex.groups)}
+   631	
+   632	
+   633	def rotate_y(co: Vector, pivot: Vector, angle: float) -> None:
+   634	    local = co - pivot
+   635	    x = local.x * math.cos(angle) + local.z * math.sin(angle)
+   636	    z = -local.x * math.sin(angle) + local.z * math.cos(angle)
+   637	    co.x = pivot.x + x
+   638	    co.z = pivot.z + z
+   639	
+   640	
+   641	def add_damage_shapes(
+   642	    claw: bpy.types.Object,
+   643	    paddle_port: bpy.types.Object,
+   644	    paddle_starboard: bpy.types.Object,
+   645	    hold: bpy.types.Object,
+   646	) -> None:
+   647	    claw.shape_key_add(name="Basis")
+   648	    slack = claw.shape_key_add(name="Damage_SlackClaw")
+   649	    pivot = Vector((-1.40, 0.0, 1.30))
+   650	    for index in group_vertex_indices(claw, "DamageClawArm"):
+   651	        co = slack.data[index].co
+   652	        rotate_y(co, pivot, math.radians(-30))
+   653	        co.z -= 0.34
+   654	        co.y *= 1.06
+   655	    shard_moves = (Vector((-0.36, -0.40, -0.22)), Vector((-0.22, 0.44, -0.35)), Vector((0.10, 0.56, -0.46)))
+   656	    for shard, movement in enumerate(shard_moves):
+   657	        for index in group_vertex_indices(claw, f"DamageClawShard{shard}"):
+   658	            slack.data[index].co += movement
+   659	
+   660	    for paddle, side, label in ((paddle_port, -1, "Port"), (paddle_starboard, 1, "Starboard")):
+   661	        paddle.shape_key_add(name="Basis")
+   662	        broken = paddle.shape_key_add(name=f"Damage_Broken{label}Paddle")
+   663	        center = Vector((1.35, side * 2.48, 1.64))
+   664	        for index in group_vertex_indices(paddle, f"Damage{label}Paddle"):
+   665	            co = broken.data[index].co
+   666	            radial_x = co.x - center.x
+   667	            radial_z = co.z - center.z
+   668	            upper = max(0.0, radial_z)
+   669	            co.y += side * (0.30 + upper * 0.46)
+   670	            co.x += radial_z * (0.18 if side > 0 else -0.18)
+   671	            co.z -= 0.42 + abs(radial_x) * 0.18
+   672	        moves = (
+   673	            Vector((-0.56, side * 0.46, -0.18)),
+   674	            Vector((0.16, side * 0.62, -0.44)),
+   675	            Vector((0.62, side * 0.40, 0.08)),
+   676	        )
+   677	        for shard, movement in enumerate(moves):
+   678	            for index in group_vertex_indices(paddle, f"Damage{label}Shard{shard}"):
+   679	                broken.data[index].co += movement
+   680	
+   681	    hold.shape_key_add(name="Basis")
+   682	    cracked = hold.shape_key_add(name="Damage_CrackedLootHold")
+   683	    for index in group_vertex_indices(hold, "DamageHoldPortLid"):
+   684	        co = cracked.data[index].co
+   685	        co.y -= 0.58
+   686	        co.z += max(0.0, 2.50 - co.z) * 0.15 + 0.28
+   687	    for index in group_vertex_indices(hold, "DamageHoldStarboardLid"):
+   688	        co = cracked.data[index].co
+   689	        co.y += 0.62
+   690	        co.z += max(0.0, 2.50 - co.z) * 0.12 - 0.18
+   691	        co.x += 0.18
+   692	    for index in group_vertex_indices(hold, "DamageHoldRear"):
+   693	        co = cracked.data[index].co
+   694	        rear = max(0.0, min(1.0, (co.x - 1.55) / 1.80))
+   695	        co.x += rear * 0.20
+   696	        co.z -= rear * 0.50
+   697	        co.y *= 1.0 + rear * 0.08
+   698	    for index in group_vertex_indices(hold, "DamageFlag"):
+   699	        co = cracked.data[index].co
+   700	        mast_x = 0.52 if co.x < 2.60 else 3.00
+   701	        co.x = mast_x + (co.x - mast_x) * 0.30
+   702	        co.z = 2.42 + (co.z - 2.42) * 0.25
+   703	        co.y *= 0.60
+   704	    cargo_moves = (
+   705	        Vector((1.86, -2.08, -0.94)),
+   706	        Vector((1.58, 2.16, -0.86)),
+   707	        Vector((2.22, -1.12, -1.02)),
+   708	        Vector((2.00, 1.28, -0.92)),
+   709	    )
+   710	    for cargo, movement in enumerate(cargo_moves):
+   711	        for index in group_vertex_indices(hold, f"DamageCargo{cargo}"):
+   712	            cracked.data[index].co += movement
+   713	    for index in group_vertex_indices(hold, "DamageHoldBreach"):
+   714	        cracked.data[index].co += Vector((0.68, 1.68, -0.34))
+   715	
+   716	    for obj in (claw, paddle_port, paddle_starboard, hold):
+   717	        obj.active_shape_key_index = 0
+   718	        for key in obj.data.shape_keys.key_blocks:
+   719	            key.value = 0.0
+   720	
+   721	
+   722	def triangle_count(objects: tuple[bpy.types.Object, ...]) -> int:
+   723	    return sum(sum(len(polygon.vertices) - 2 for polygon in obj.data.polygons) for obj in objects)
+   724	
+   725	
+   726	def world_bounds(objects: tuple[bpy.types.Object, ...]) -> tuple[Vector, Vector]:
+   727	    points = [obj.matrix_world @ vertex.co for obj in objects for vertex in obj.data.vertices]
+   728	    return (
+   729	        Vector((min(point.x for point in points), min(point.y for point in points), min(point.z for point in points))),
+   730	        Vector((max(point.x for point in points), max(point.y for point in points), max(point.z for point in points))),
+   731	    )
+   732	
+   733	
+   734	def normalize_base_center(objects: tuple[bpy.types.Object, ...]) -> None:
+   735	    minimum, maximum = world_bounds(objects)
+   736	    center_x = (minimum.x + maximum.x) * 0.5
+   737	    center_y = (minimum.y + maximum.y) * 0.5
+   738	    scale = MODEL_LENGTH / (maximum.x - minimum.x)
+   739	    for obj in objects:
+   740	        for vertex in obj.data.vertices:
+   741	            vertex.co.x = (vertex.co.x - center_x) * scale
+   742	            vertex.co.y = (vertex.co.y - center_y) * scale
+   743	            vertex.co.z = (vertex.co.z - minimum.z) * scale
+   744	        obj.data.update()
+   745	
+   746	
+   747	def export(objects: tuple[bpy.types.Object, ...]) -> None:
+   748	    bpy.ops.object.select_all(action="DESELECT")
+   749	    for obj in objects:
+   750	        obj.select_set(True)
+   751	    bpy.context.view_layer.objects.active = objects[0]
+   752	    bpy.ops.wm.save_as_mainfile(filepath=str(BLEND))
+   753	    bpy.ops.export_scene.gltf(
+   754	        filepath=str(GLB.with_suffix("")),
+   755	        export_format="GLB",
+   756	        use_selection=True,
+   757	        export_apply=True,
+   758	        export_cameras=False,
+   759	        export_lights=False,
+   760	        export_animations=False,
+   761	        export_materials="EXPORT",
+   762	        export_morph=True,
+   763	    )
+   764	
+   765	
+   766	def main() -> None:
+   767	    OUT.mkdir(parents=True, exist_ok=True)
+   768	    reset_scene()
+   769	    atlas, source_hashes = create_atlas()
+   770	    material = create_material(atlas)
+   771	    claw = join_component("claw", build_claw(material), material)
+   772	    paddle_port = join_component("paddle_port", build_paddle(material, -1), material)
+   773	    paddle_starboard = join_component("paddle_starboard", build_paddle(material, 1), material)
+   774	    hold = join_component("hold", build_hold(material), material)
+   775	    objects = (claw, paddle_port, paddle_starboard, hold)
+   776	    normalize_base_center(objects)
+   777	    add_damage_shapes(*objects)
+   778	
+   779	    minimum, maximum = world_bounds(objects)
+   780	    triangles = triangle_count(objects)
+   781	    assert triangles <= 12_000, f"triangle budget exceeded: {triangles}"
+   782	    assert abs((maximum.x - minimum.x) - MODEL_LENGTH) < 0.01
+   783	    assert abs((maximum.x + minimum.x) * 0.5) < 0.001
+   784	    assert abs((maximum.y + minimum.y) * 0.5) < 0.001
+   785	    assert abs(minimum.z) < 0.001
+   786	    assert len({slot.material.name for obj in objects for slot in obj.material_slots if slot.material}) == 1
+   787	    export(objects)
+   788	    print(json.dumps({
+   789	        "blend": str(BLEND),
+   790	        "glb": str(GLB),
+   791	        "sha256": hashlib.sha256(GLB.read_bytes()).hexdigest(),
+   792	        "sourcePlates": {
+   793	            str(REFERENCE.relative_to(ROOT)): source_hashes["intact"],
+   794	            str(DAMAGE_REFERENCE.relative_to(ROOT)): source_hashes["damage"],
+   795	        },
+   796	        "objects": [obj.name for obj in objects],
+   797	        "damageMorphs": [obj.data.shape_keys.key_blocks[1].name for obj in objects],
+   798	        "triangles": triangles,
+   799	        "boundsBlender": {
+   800	            "min": [round(value, 6) for value in minimum],
+   801	            "max": [round(value, 6) for value in maximum],
+   802	        },
+   803	    }, indent=2))
+   804	
+   805	
+   806	if __name__ == "__main__":
+   807	    main()
+===== detail_opus5_kit.py =====
+     1	"""Shared craft kit for the Opus-5 boss-detail duel entries.
+     2	
+     3	This module carries the shipped pilot idiom verbatim where it is legality-relevant
+     4	(atlas sampling, one-material setup, region UV remap, join/normalise/export) and adds
+     5	the higher-detail construction helpers the 45k-triangle duel ceiling pays for:
+     6	lofted hulls, lattice trusses, chain runs, arc sweeps, and radial repeats.
+     7	
+     8	Nothing here writes to a shipped file. Both duel builders import this kit.
+     9	"""
+    10	
+    11	from pathlib import Path
+    12	import math
+    13	
+    14	import bpy
+    15	import numpy as np
+    16	from mathutils import Vector
+    17	
+    18	
+    19	# --------------------------------------------------------------------------------------
+    20	# scene + material
+    21	# --------------------------------------------------------------------------------------
+    22	
+    23	
+    24	def reset_scene() -> None:
+    25	    bpy.ops.wm.read_factory_settings(use_empty=True)
+    26	    bpy.context.scene.unit_settings.system = "METRIC"
+    27	    bpy.context.scene.unit_settings.length_unit = "METERS"
+    28	
+    29	
+    30	def sampled_color(colors: np.ndarray, mask: np.ndarray, fallback: tuple[float, float, float]) -> np.ndarray:
+    31	    selected = colors[mask]
+    32	    if len(selected) < 32:
+    33	        return np.array(fallback, dtype=np.float32)
+    34	    return np.clip(np.median(selected, axis=0), 0.01, 0.82)
+    35	
+    36	
+    37	def resized_nearest(source: np.ndarray, height: int, width: int) -> np.ndarray:
+    38	    ys = np.linspace(0, source.shape[0] - 1, height).astype(np.int32)
+    39	    xs = np.linspace(0, source.shape[1] - 1, width).astype(np.int32)
+    40	    return source[ys[:, None], xs[None, :]]
+    41	
+    42	
+    43	def plate_colors(path: Path) -> np.ndarray:
+    44	    source = bpy.data.images.load(str(path), check_existing=False)
+    45	    pixels = np.array(source.pixels[:], dtype=np.float32).reshape(source.size[1], source.size[0], 4)
+    46	    return pixels[:, :, :3]
+    47	
+    48	
+    49	def create_material(name: str, image: bpy.types.Image) -> bpy.types.Material:
+    50	    """Exact shipped material contract: metallic 0, roughness 0.9, double-sided, no emission."""
+    51	    material = bpy.data.materials.new(name)
+    52	    material.use_nodes = True
+    53	    material.use_backface_culling = False
+    54	    nodes = material.node_tree.nodes
+    55	    nodes.clear()
+    56	    output = nodes.new("ShaderNodeOutputMaterial")
+    57	    shader = nodes.new("ShaderNodeBsdfPrincipled")
+    58	    texture = nodes.new("ShaderNodeTexImage")
+    59	    texture.image = image
+    60	    texture.interpolation = "Linear"
+    61	    texture.extension = "REPEAT"
+    62	    shader.inputs["Metallic"].default_value = 0.0
+    63	    shader.inputs["Roughness"].default_value = 0.9
+    64	    shader.inputs["Emission Color"].default_value = (0, 0, 0, 1)
+    65	    shader.inputs["Emission Strength"].default_value = 0
+    66	    material.node_tree.links.new(texture.outputs["Color"], shader.inputs["Base Color"])
+    67	    material.node_tree.links.new(shader.outputs["BSDF"], output.inputs["Surface"])
+    68	    return material
+    69	
+    70	
+    71	# --------------------------------------------------------------------------------------
+    72	# tagging
+    73	# --------------------------------------------------------------------------------------
+    74	
+    75	
+    76	def mark_all(obj: bpy.types.Object, group_name: str | None) -> None:
+    77	    if not group_name:
+    78	        return
+    79	    group = obj.vertex_groups.new(name=group_name)
+    80	    group.add(list(range(len(obj.data.vertices))), 1.0, "REPLACE")
+    81	
+    82	
+    83	def tag(
+    84	    obj: bpy.types.Object,
+    85	    region: str,
+    86	    material: bpy.types.Material,
+    87	    bevel: float = 0.012,
+    88	    damage_group: str | None = None,
+    89	    smooth: bool = False,
+    90	) -> bpy.types.Object:
+    91	    obj["atlas_region"] = region
+    92	    obj.data.materials.append(material)
+    93	    mark_all(obj, damage_group)
+    94	    if bevel > 0:
+    95	        modifier = obj.modifiers.new("Worked edge", "BEVEL")
+    96	        modifier.width = bevel
+    97	        modifier.segments = 1
+    98	        modifier.limit_method = "ANGLE"
+    99	    if smooth:
+   100	        for polygon in obj.data.polygons:
+   101	            polygon.use_smooth = True
+   102	    return obj
+   103	
+   104	
+   105	def from_pydata(
+   106	    name: str,
+   107	    vertices: list[tuple[float, float, float]],
+   108	    faces: list[tuple[int, ...]],
+   109	    region: str,
+   110	    material: bpy.types.Material,
+   111	    bevel: float = 0.0,
+   112	    damage_group: str | None = None,
+   113	    smooth: bool = False,
+   114	) -> bpy.types.Object:
+   115	    mesh = bpy.data.meshes.new(f"{name}Mesh")
+   116	    mesh.from_pydata(vertices, [], faces)
+   117	    mesh.update()
+   118	    obj = bpy.data.objects.new(name, mesh)
+   119	    bpy.context.collection.objects.link(obj)
+   120	    return tag(obj, region, material, bevel, damage_group, smooth)
+   121	
+   122	
+   123	# --------------------------------------------------------------------------------------
+   124	# shipped primitives
+   125	# --------------------------------------------------------------------------------------
+   126	
+   127	
+   128	def box(
+   129	    name: str,
+   130	    size: tuple[float, float, float],
+   131	    at: tuple[float, float, float],
+   132	    region: str,
+   133	    material: bpy.types.Material,
+   134	    bevel: float = 0.012,
+   135	    rotation: tuple[float, float, float] = (0, 0, 0),
+   136	    damage_group: str | None = None,
+   137	) -> bpy.types.Object:
+   138	    bpy.ops.mesh.primitive_cube_add(location=at, rotation=rotation)
+   139	    obj = bpy.context.object
+   140	    obj.name = name
+   141	    obj.scale = tuple(value * 0.5 for value in size)
+   142	    bpy.ops.object.transform_apply(location=False, rotation=True, scale=True)
+   143	    return tag(obj, region, material, bevel, damage_group)
+   144	
+   145	
+   146	def cylinder(
+   147	    name: str,
+   148	    radius: float,
+   149	    depth: float,
+   150	    at: tuple[float, float, float],
+   151	    region: str,
+   152	    material: bpy.types.Material,
+   153	    vertices: int = 12,
+   154	    rotation: tuple[float, float, float] = (0, 0, 0),
+   155	    bevel: float = 0.006,
+   156	    damage_group: str | None = None,
+   157	) -> bpy.types.Object:
+   158	    bpy.ops.mesh.primitive_cylinder_add(vertices=vertices, radius=radius, depth=depth, location=at, rotation=rotation)
+   159	    obj = bpy.context.object
+   160	    obj.name = name
+   161	    bpy.ops.object.transform_apply(location=False, rotation=True, scale=True)
+   162	    return tag(obj, region, material, bevel, damage_group, smooth=True)
+   163	
+   164	
+   165	def cone(
+   166	    name: str,
+   167	    radius1: float,
+   168	    radius2: float,
+   169	    depth: float,
+   170	    at: tuple[float, float, float],
+   171	    region: str,
+   172	    material: bpy.types.Material,
+   173	    vertices: int = 12,
+   174	    rotation: tuple[float, float, float] = (0, 0, 0),
+   175	    damage_group: str | None = None,
+   176	) -> bpy.types.Object:
+   177	    bpy.ops.mesh.primitive_cone_add(
+   178	        vertices=vertices, radius1=radius1, radius2=radius2, depth=depth, location=at, rotation=rotation
+   179	    )
+   180	    obj = bpy.context.object
+   181	    obj.name = name
+   182	    bpy.ops.object.transform_apply(location=False, rotation=True, scale=True)
+   183	    return tag(obj, region, material, 0.006, damage_group, smooth=True)
+   184	
+   185	
+   186	def torus(
+   187	    name: str,
+   188	    major_radius: float,
+   189	    minor_radius: float,
+   190	    at: tuple[float, float, float],
+   191	    region: str,
+   192	    material: bpy.types.Material,
+   193	    rotation: tuple[float, float, float] = (0, 0, 0),
+   194	    damage_group: str | None = None,
+   195	    major_segments: int = 12,
+   196	    minor_segments: int = 4,
+   197	) -> bpy.types.Object:
+   198	    bpy.ops.mesh.primitive_torus_add(
+   199	        major_segments=major_segments,
+   200	        minor_segments=minor_segments,
+   201	        location=at,
+   202	        major_radius=major_radius,
+   203	        minor_radius=minor_radius,
+   204	        rotation=rotation,
+   205	    )
+   206	    obj = bpy.context.object
+   207	    obj.name = name
+   208	    bpy.ops.object.transform_apply(location=False, rotation=True, scale=True)
+   209	    return tag(obj, region, material, 0, damage_group, smooth=True)
+   210	
+   211	
+   212	def ico_sphere(
+   213	    name: str,
+   214	    radius: float,
+   215	    at: tuple[float, float, float],
+   216	    region: str,
+   217	    material: bpy.types.Material,
+   218	    damage_group: str | None = None,
+   219	    scale: tuple[float, float, float] = (1, 1, 1),
+   220	    subdivisions: int = 2,
+   221	) -> bpy.types.Object:
+   222	    bpy.ops.mesh.primitive_ico_sphere_add(subdivisions=subdivisions, radius=radius, location=at)
+   223	    obj = bpy.context.object
+   224	    obj.name = name
+   225	    obj.scale = scale
+   226	    bpy.ops.object.transform_apply(location=False, rotation=False, scale=True)
+   227	    return tag(obj, region, material, 0, damage_group, smooth=True)
+   228	
+   229	
+   230	def beam(
+   231	    name: str,
+   232	    start: tuple[float, float, float],
+   233	    end: tuple[float, float, float],
+   234	    width: float,
+   235	    region: str,
+   236	    material: bpy.types.Material,
+   237	    damage_group: str | None = None,
+   238	    depth: float | None = None,
+   239	) -> bpy.types.Object:
+   240	    a, b = Vector(start), Vector(end)
+   241	    direction = b - a
+   242	    obj = box(
+   243	        name,
+   244	        (width, depth if depth is not None else width, direction.length),
+   245	        tuple((a + b) * 0.5),
+   246	        region,
+   247	        material,
+   248	        bevel=min(0.006, width * 0.18),
+   249	        damage_group=damage_group,
+   250	    )
+   251	    obj.rotation_mode = "QUATERNION"
+   252	    obj.rotation_quaternion = direction.to_track_quat("Z", "Y")
+   253	    bpy.context.view_layer.objects.active = obj
+   254	    obj.select_set(True)
+   255	    bpy.ops.object.transform_apply(location=False, rotation=True, scale=False)
+   256	    obj.select_set(False)
+   257	    return obj
+   258	
+   259	
+   260	def quad_panel(
+   261	    name: str,
+   262	    points: tuple[tuple[float, float, float], ...],
+   263	    thickness: float,
+   264	    region: str,
+   265	    material: bpy.types.Material,
+   266	    damage_group: str | None = None,
+   267	    axis: int = 1,
+   268	) -> bpy.types.Object:
+   269	    offset = Vector((0.0, 0.0, 0.0))
+   270	    offset[axis] = thickness * 0.5
+   271	    front = [Vector(point) - offset for point in points]
+   272	    back = [Vector(point) + offset for point in points]
+   273	    vertices = [tuple(point) for point in [*front, *back]]
+   274	    faces = [(0, 1, 2, 3), (7, 6, 5, 4), (0, 4, 5, 1), (1, 5, 6, 2), (2, 6, 7, 3), (3, 7, 4, 0)]
+   275	    return from_pydata(name, vertices, faces, region, material, 0.004, damage_group)
+   276	
+   277	
+   278	def triangle_panel(
+   279	    name: str,
+   280	    points: tuple[tuple[float, float, float], ...],
+   281	    thickness: float,
+   282	    region: str,
+   283	    material: bpy.types.Material,
+   284	    damage_group: str | None = None,
+   285	    axis: int = 1,
+   286	) -> bpy.types.Object:
+   287	    offset = Vector((0.0, 0.0, 0.0))
+   288	    offset[axis] = thickness * 0.5
+   289	    front = [Vector(point) - offset for point in points]
+   290	    back = [Vector(point) + offset for point in points]
+   291	    vertices = [tuple(point) for point in [*front, *back]]
+   292	    faces = [(0, 1, 2), (5, 4, 3), (0, 3, 4, 1), (1, 4, 5, 2), (2, 5, 3, 0)]
+   293	    return from_pydata(name, vertices, faces, region, material, 0.004, damage_group)
+   294	
+   295	
+   296	# --------------------------------------------------------------------------------------
+   297	# detail-tier construction (what the raised ceiling buys)
+   298	# --------------------------------------------------------------------------------------
+   299	
+   300	
+   301	def loft(
+   302	    name: str,
+   303	    rings: list[list[tuple[float, float, float]]],
+   304	    region: str,
+   305	    material: bpy.types.Material,
+   306	    cap_start: bool = True,
+   307	    cap_end: bool = True,
+   308	    damage_group: str | None = None,
+   309	    smooth: bool = False,
+   310	) -> bpy.types.Object:
+   311	    """Skin a stack of equal-length closed rings. The cheapest way to buy real hull form."""
+   312	    count = len(rings[0])
+   313	    assert all(len(ring) == count for ring in rings), "loft rings must be equal length"
+   314	    vertices: list[tuple[float, float, float]] = []
+   315	    for ring in rings:
+   316	        vertices.extend(tuple(float(value) for value in point) for point in ring)
+   317	    faces: list[tuple[int, ...]] = []
+   318	    for index in range(len(rings) - 1):
+   319	        base = index * count
+   320	        nxt = base + count
+   321	        for step in range(count):
+   322	            following = (step + 1) % count
+   323	            faces.append((base + step, base + following, nxt + following, nxt + step))
+   324	    if cap_start:
+   325	        faces.append(tuple(range(count - 1, -1, -1)))
+   326	    if cap_end:
+   327	        base = (len(rings) - 1) * count
+   328	        faces.append(tuple(range(base, base + count)))
+   329	    return from_pydata(name, vertices, faces, region, material, 0.0, damage_group, smooth)
+   330	
+   331	
+   332	def hull_section(
+   333	    half_beam: float, keel: float, deck: float, crown: float = 0.06, tumblehome: float = 0.95
+   334	) -> list[tuple[float, float, float]]:
+   335	    """One armoured-corsair station: keel, bilge turn, max beam, tumblehome, deck edge, cambered deck."""
+   336	    mid = (keel + deck) * 0.5
+   337	    starboard = [
+   338	        (0.0, 0.0, keel),
+   339	        (0.0, half_beam * 0.52, keel + (deck - keel) * 0.06),
+   340	        (0.0, half_beam * 0.89, keel + (deck - keel) * 0.30),
+   341	        (0.0, half_beam, mid),
+   342	        (0.0, half_beam * tumblehome, deck - (deck - keel) * 0.16),
+   343	        (0.0, half_beam * (tumblehome - 0.09), deck),
+   344	    ]
+   345	    port = [(0.0, -point[1], point[2]) for point in reversed(starboard[1:])]
+   346	    return [*starboard, (0.0, 0.0, deck + crown), *port]
+   347	
+   348	
+   349	def hull_loft(
+   350	    name: str,
+   351	    stations: list[tuple[float, float, float, float]],
+   352	    region: str,
+   353	    material: bpy.types.Material,
+   354	    damage_group: str | None = None,
+   355	) -> bpy.types.Object:
+   356	    rings = []
+   357	    for x, half_beam, keel, deck in stations:
+   358	        rings.append([(x, point[1], point[2]) for point in hull_section(half_beam, keel, deck)])
+   359	    return loft(name, rings, region, material, damage_group=damage_group)
+   360	
+   361	
+   362	def truss(
+   363	    parts: list[bpy.types.Object],
+   364	    prefix: str,
+   365	    start: tuple[float, float, float],
+   366	    end: tuple[float, float, float],
+   367	    spread: float,
+   368	    width: float,
+   369	    bays: int,
+   370	    region: str,
+   371	    brace_region: str,
+   372	    material: bpy.types.Material,
+   373	    damage_group: str | None = None,
+   374	    axis: int = 1,
+   375	) -> None:
+   376	    """Two chords, transverse rungs, and alternating diagonals: a real lattice derrick."""
+   377	    a, b = Vector(start), Vector(end)
+   378	    offset = Vector((0.0, 0.0, 0.0))
+   379	    offset[axis] = spread * 0.5
+   380	    for sign in (-1, 1):
+   381	        chord_a = a + offset * sign
+   382	        chord_b = b + offset * sign
+   383	        parts.append(beam(f"{prefix} chord {sign}", tuple(chord_a), tuple(chord_b), width, region, material, damage_group))
+   384	    for bay in range(bays + 1):
+   385	        t = bay / bays
+   386	        point = a.lerp(b, t)
+   387	        parts.append(
+   388	            beam(
+   389	                f"{prefix} rung {bay}",
+   390	                tuple(point - offset),
+   391	                tuple(point + offset),
+   392	                width * 0.62,
+   393	                brace_region,
+   394	                material,
+   395	                damage_group,
+   396	            )
+   397	        )
+   398	    for bay in range(bays):
+   399	        low = a.lerp(b, bay / bays)
+   400	        high = a.lerp(b, (bay + 1) / bays)
+   401	        near, far = (-1, 1) if bay % 2 == 0 else (1, -1)
+   402	        parts.append(
+   403	            beam(
+   404	                f"{prefix} diagonal {bay}",
+   405	                tuple(low + offset * near),
+   406	                tuple(high + offset * far),
+   407	                width * 0.50,
+   408	                brace_region,
+   409	                material,
+   410	                damage_group,
+   411	            )
+   412	        )
+   413	
+   414	
+   415	def chain_run(
+   416	    parts: list[bpy.types.Object],
+   417	    prefix: str,
+   418	    start: tuple[float, float, float],
+   419	    end: tuple[float, float, float],
+   420	    links: int,
+   421	    radius: float,
+   422	    region: str,
+   423	    material: bpy.types.Material,
+   424	    damage_group: str | None = None,
+   425	) -> None:
+   426	    """Alternating perpendicular links. The plate's chains are load-bearing, not painted.
+   427	
+   428	    A link's plane CONTAINS the run direction, so the torus axis must be perpendicular to it.
+   429	    Consecutive links alternate between the two perpendiculars, which is what reads as a chain.
+   430	    """
+   431	    a, b = Vector(start), Vector(end)
+   432	    direction = (b - a).normalized()
+   433	    seed = Vector((0.0, 0.0, 1.0)) if abs(direction.z) < 0.90 else Vector((1.0, 0.0, 0.0))
+   434	    first = direction.cross(seed).normalized()
+   435	    second = direction.cross(first).normalized()
+   436	    for link in range(links):
+   437	        centre = a.lerp(b, (link + 0.5) / links)
+   438	        axis = first if link % 2 == 0 else second
+   439	        parts.append(
+   440	            torus(
+   441	                f"{prefix} link {link}",
+   442	                radius,
+   443	                radius * 0.34,
+   444	                tuple(centre),
+   445	                region,
+   446	                material,
+   447	                rotation=tuple(axis.to_track_quat("Z", "Y").to_euler()),
+   448	                damage_group=damage_group,
+   449	                major_segments=6,
+   450	                minor_segments=4,
+   451	            )
+   452	        )
+   453	
+   454	
+   455	def swept_tube(
+   456	    name: str,
+   457	    points: list[tuple[float, float, float]],
+   458	    radii: list[float],
+   459	    region: str,
+   460	    material: bpy.types.Material,
+   461	    sides: int = 8,
+   462	    damage_group: str | None = None,
+   463	    smooth: bool = True,
+   464	) -> bpy.types.Object:
+   465	    """A tapering tube swept along a curve, parallel-transported so it never twists.
+   466	
+   467	    This is what buys a real curved talon or cable: a beam chain reads as sticks,
+   468	    a swept tube reads as a claw, and it costs fewer triangles than beams+knuckles.
+   469	    """
+   470	    assert len(points) == len(radii) >= 2
+   471	    path = [Vector(point) for point in points]
+   472	    tangents = []
+   473	    for index in range(len(path)):
+   474	        if index == 0:
+   475	            tangent = path[1] - path[0]
+   476	        elif index == len(path) - 1:
+   477	            tangent = path[-1] - path[-2]
+   478	        else:
+   479	            tangent = path[index + 1] - path[index - 1]
+   480	        tangents.append(tangent.normalized())
+   481	    seed = Vector((0.0, 0.0, 1.0)) if abs(tangents[0].z) < 0.90 else Vector((1.0, 0.0, 0.0))
+   482	    right = tangents[0].cross(seed).normalized()
+   483	    rings: list[list[tuple[float, float, float]]] = []
+   484	    for index, (centre, tangent, radius) in enumerate(zip(path, tangents, radii)):
+   485	        if index > 0:
+   486	            # parallel transport: re-project the previous frame onto the new normal plane
+   487	            right = (right - tangent * right.dot(tangent))
+   488	            right = right.normalized() if right.length > 1e-6 else tangent.cross(seed).normalized()
+   489	        up = tangent.cross(right).normalized()
+   490	        ring = []
+   491	        for step in range(sides):
+   492	            angle = math.tau * step / sides
+   493	            offset = right * (math.cos(angle) * radius) + up * (math.sin(angle) * radius)
+   494	            ring.append(tuple(centre + offset))
+   495	        rings.append(ring)
+   496	    return loft(name, rings, region, material, damage_group=damage_group, smooth=smooth)
+   497	
+   498	
+   499	def arc_points(
+   500	    centre: tuple[float, float, float],
+   501	    radius: float,
+   502	    start_angle: float,
+   503	    end_angle: float,
+   504	    steps: int,
+   505	    plane: str = "xz",
+   506	) -> list[tuple[float, float, float]]:
+   507	    points = []
+   508	    for step in range(steps + 1):
+   509	        angle = start_angle + (end_angle - start_angle) * step / steps
+   510	        cos, sin = math.cos(angle) * radius, math.sin(angle) * radius
+   511	        if plane == "xz":
+   512	            points.append((centre[0] + cos, centre[1], centre[2] + sin))
+   513	        elif plane == "xy":
+   514	            points.append((centre[0] + cos, centre[1] + sin, centre[2]))
+   515	        else:
+   516	            points.append((centre[0], centre[1] + cos, centre[2] + sin))
+   517	    return points
+   518	
+   519	
+   520	def polyline(
+   521	    parts: list[bpy.types.Object],
+   522	    prefix: str,
+   523	    points: list[tuple[float, float, float]],
+   524	    width: float,
+   525	    region: str,
+   526	    material: bpy.types.Material,
+   527	    damage_group: str | None = None,
+   528	) -> None:
+   529	    for index, (start, end) in enumerate(zip(points, points[1:])):
+   530	        parts.append(beam(f"{prefix} {index}", start, end, width, region, material, damage_group))
+   531	
+   532	
+   533	def rivet_line(
+   534	    parts: list[bpy.types.Object],
+   535	    prefix: str,
+   536	    start: tuple[float, float, float],
+   537	    end: tuple[float, float, float],
+   538	    count: int,
+   539	    radius: float,
+   540	    material: bpy.types.Material,
+   541	    region: str = "brass",
+   542	    damage_group: str | None = None,
+   543	    rotation: tuple[float, float, float] = (math.pi / 2, 0, 0),
+   544	) -> None:
+   545	    a, b = Vector(start), Vector(end)
+   546	    for index in range(count):
+   547	        at = a.lerp(b, (index + 0.5) / count)
+   548	        parts.append(
+   549	            cylinder(
+   550	                f"{prefix} rivet {index}",
+   551	                radius,
+   552	                radius * 1.3,
+   553	                tuple(at),
+   554	                region,
+   555	                material,
+   556	                vertices=6,
+   557	                rotation=rotation,
+   558	                bevel=0,
+   559	                damage_group=damage_group,
+   560	            )
+   561	        )
+   562	
+   563	
+   564	def lens(
+   565	    parts: list[bpy.types.Object],
+   566	    name: str,
+   567	    radius: float,
+   568	    at: tuple[float, float, float],
+   569	    material: bpy.types.Material,
+   570	    rotation: tuple[float, float, float] = (math.pi / 2, 0, 0),
+   571	    damage_group: str | None = None,
+   572	    region: str = "teal",
+   573	) -> None:
+   574	    """A restrained teal eye in a brass bezel. Painted, never emissive."""
+   575	    parts.append(
+   576	        cylinder(f"{name} lens", radius, radius * 0.42, at, region, material, vertices=10, rotation=rotation, bevel=0, damage_group=damage_group)
+   577	    )
+   578	    parts.append(
+   579	        torus(f"{name} bezel", radius * 1.16, radius * 0.20, at, "brass", material, rotation=rotation, damage_group=damage_group, major_segments=10)
+   580	    )
+   581	
+   582	
+   583	# --------------------------------------------------------------------------------------
+   584	# assembly, normalisation, export (shipped contract, unchanged)
+   585	# --------------------------------------------------------------------------------------
+   586	
+   587	
+   588	def prepare_part(obj: bpy.types.Object, regions: dict[str, tuple[float, float, float, float]]) -> None:
+   589	    bpy.context.view_layer.objects.active = obj
+   590	    obj.select_set(True)
+   591	    for modifier in list(obj.modifiers):
+   592	        bpy.ops.object.modifier_apply(modifier=modifier.name)
+   593	    bpy.ops.object.mode_set(mode="EDIT")
+   594	    bpy.ops.mesh.select_all(action="SELECT")
+   595	    bpy.ops.mesh.normals_make_consistent(inside=False)
+   596	    bpy.ops.uv.smart_project(angle_limit=math.radians(66), island_margin=0.025)
+   597	    bpy.ops.object.mode_set(mode="OBJECT")
+   598	    uv = obj.data.uv_layers.active.data
+   599	    coords = np.array([[loop.uv.x, loop.uv.y] for loop in uv], dtype=np.float32)
+   600	    low = coords.min(axis=0)
+   601	    span = np.maximum(coords.max(axis=0) - low, 1e-6)
+   602	    u0, v0, u1, v1 = regions[obj["atlas_region"]]
+   603	    for loop, coord in zip(uv, coords):
+   604	        normalized = (coord - low) / span
+   605	        loop.uv = (u0 + normalized[0] * (u1 - u0), v0 + normalized[1] * (v1 - v0))
+   606	    obj.select_set(False)
+   607	
+   608	
+   609	def join_component(
+   610	    name: str,
+   611	    parts: list[bpy.types.Object],
+   612	    material: bpy.types.Material,
+   613	    regions: dict[str, tuple[float, float, float, float]],
+   614	) -> bpy.types.Object:
+   615	    for part in parts:
+   616	        prepare_part(part, regions)
+   617	    bpy.ops.object.select_all(action="DESELECT")
+   618	    for part in parts:
+   619	        part.select_set(True)
+   620	    bpy.context.view_layer.objects.active = parts[0]
+   621	    bpy.ops.object.join()
+   622	    component = bpy.context.object
+   623	    component.name = name
+   624	    component.data.name = f"{name}Mesh"
+   625	    component.data.materials.clear()
+   626	    component.data.materials.append(material)
+   627	    for polygon in component.data.polygons:
+   628	        polygon.material_index = 0
+   629	    component.data.uv_layers.active.name = "UVMap"
+   630	    bpy.context.scene.cursor.location = (0, 0, 0)
+   631	    bpy.ops.object.origin_set(type="ORIGIN_CURSOR")
+   632	    component.select_set(False)
+   633	    return component
+   634	
+   635	
+   636	def group_vertex_indices(obj: bpy.types.Object, group_name: str) -> set[int]:
+   637	    group = obj.vertex_groups.get(group_name)
+   638	    if group is None:
+   639	        return set()
+   640	    index = group.index
+   641	    return {vertex.index for vertex in obj.data.vertices if any(item.group == index for item in vertex.groups)}
+   642	
+   643	
+   644	def rotate_y(co: Vector, pivot: Vector, angle: float) -> None:
+   645	    local = co - pivot
+   646	    x = local.x * math.cos(angle) + local.z * math.sin(angle)
+   647	    z = -local.x * math.sin(angle) + local.z * math.cos(angle)
+   648	    co.x = pivot.x + x
+   649	    co.z = pivot.z + z
+   650	
+   651	
+   652	def triangle_count(objects: tuple[bpy.types.Object, ...]) -> int:
+   653	    return sum(sum(len(polygon.vertices) - 2 for polygon in obj.data.polygons) for obj in objects)
+   654	
+   655	
+   656	def world_bounds(objects: tuple[bpy.types.Object, ...]) -> tuple[Vector, Vector]:
+   657	    points = [obj.matrix_world @ vertex.co for obj in objects for vertex in obj.data.vertices]
+   658	    return (
+   659	        Vector((min(p.x for p in points), min(p.y for p in points), min(p.z for p in points))),
+   660	        Vector((max(p.x for p in points), max(p.y for p in points), max(p.z for p in points))),
+   661	    )
+   662	
+   663	
+   664	def normalize_base_center(objects: tuple[bpy.types.Object, ...], axis: int, target: float) -> None:
+   665	    """Scale on one axis to the shipped footprint, centre X/Y, sit the base on z=0."""
+   666	    minimum, maximum = world_bounds(objects)
+   667	    center_x = (minimum.x + maximum.x) * 0.5
+   668	    center_y = (minimum.y + maximum.y) * 0.5
+   669	    scale = target / ((maximum - minimum)[axis])
+   670	    for obj in objects:
+   671	        for vertex in obj.data.vertices:
+   672	            vertex.co.x = (vertex.co.x - center_x) * scale
+   673	            vertex.co.y = (vertex.co.y - center_y) * scale
+   674	            vertex.co.z = (vertex.co.z - minimum.z) * scale
+   675	        obj.data.update()
+   676	
+   677	
+   678	def export(objects: tuple[bpy.types.Object, ...], blend: Path, glb: Path) -> None:
+   679	    bpy.ops.object.select_all(action="DESELECT")
+   680	    for obj in objects:
+   681	        obj.select_set(True)
+   682	    bpy.context.view_layer.objects.active = objects[0]
+   683	    bpy.ops.wm.save_as_mainfile(filepath=str(blend))
+   684	    bpy.ops.export_scene.gltf(
+   685	        filepath=str(glb.with_suffix("")),
+   686	        export_format="GLB",
+   687	        use_selection=True,
+   688	        export_apply=True,
+   689	        export_cameras=False,
+   690	        export_lights=False,
+   691	        export_animations=False,
+   692	        export_materials="EXPORT",
+   693	        export_morph=True,
+   694	    )
+===== verifier.py =====
+     1	from __future__ import annotations
+     2	
+     3	from pathlib import Path
+     4	import hashlib
+     5	import importlib.util
+     6	import json
+     7	import sys
+     8	
+     9	sys.dont_write_bytecode = True
+    10	
+    11	import bpy
+    12	
+    13	
+    14	ROOT = Path(__file__).resolve().parents[3]
+    15	HERE = Path(__file__).resolve().parent
+    16	BLEND = HERE / "homemaker-9000.blend"
+    17	GLB = HERE / "homemaker-9000.glb"
+    18	OUT = HERE / "renders"
+    19	REEXPORT = Path("/tmp/homemaker-9000-reexport.glb")
+    20	REFERENCE = ROOT / "assets/raw/plate-e6-boss-homemaker-9000.png"
+    21	STORYBOOK = ROOT / "lore/STORYBOOK.md"
+    22	EXPECTED_NODES = ["vac", "rack", "core"]
+    23	EXPECTED_MORPHS = {
+    24	    "vacMesh": ["Damage_DroppedVac"],
+    25	    "rackMesh": ["Damage_SpentRack"],
+    26	    "coreMesh": ["Damage_ChairPose"],
+    27	}
+    28	EXPECTED_BINDINGS = [
+    29	    {"node": "vac", "mesh": "vacMesh", "targets": ["Damage_DroppedVac"], "defaultWeights": [0.0]},
+    30	    {"node": "rack", "mesh": "rackMesh", "targets": ["Damage_SpentRack"], "defaultWeights": [0.0]},
+    31	    {"node": "core", "mesh": "coreMesh", "targets": ["Damage_ChairPose"], "defaultWeights": [0.0]},
+    32	]
+    33	
+    34	
+    35	def load(name: str, path: Path):
+    36	    spec = importlib.util.spec_from_file_location(name, path)
+    37	    module = importlib.util.module_from_spec(spec)
+    38	    assert spec.loader is not None
+    39	    sys.modules[name] = module
+    40	    spec.loader.exec_module(module)
+    41	    return module
+    42	
+    43	
+    44	shared = load("homemaker_shared_verifier", ROOT / "assets/pilots/dredge-queen-3d/verify_dredge_queen.py")
+    45	
+    46	
+    47	def shape_bounds(obj: bpy.types.Object, key_name: str) -> dict[str, list[float]]:
+    48	    key = obj.data.shape_keys.key_blocks[key_name]
+    49	    return {
+    50	        "min": [round(min(vertex.co[axis] for vertex in key.data), 6) for axis in range(3)],
+    51	        "max": [round(max(vertex.co[axis] for vertex in key.data), 6) for axis in range(3)],
+    52	    }
+    53	
+    54	
+    55	def main() -> None:
+    56	    checked = shared.contract(GLB)
+    57	    bpy.ops.wm.open_mainfile(filepath=str(BLEND))
+    58	    meshes = [obj for obj in bpy.data.objects if obj.type == "MESH"]
+    59	    source_scene = {
+    60	        "meshObjects": [obj.name for obj in meshes],
+    61	        "cameras": [obj.name for obj in bpy.data.objects if obj.type == "CAMERA"],
+    62	        "lights": [obj.name for obj in bpy.data.objects if obj.type == "LIGHT"],
+    63	        "actions": [action.name for action in bpy.data.actions],
+    64	    }
+    65	    final_bounds = {obj.name: shape_bounds(obj, obj.data.shape_keys.key_blocks[1].name) for obj in meshes}
+    66	    core = bpy.data.objects["core"]
+    67	    chair_group = core.vertex_groups["ChairDebris"]
+    68	    chair_vertices = [
+    69	        vertex.index for vertex in core.data.vertices
+    70	        if any(item.group == chair_group.index for item in vertex.groups)
+    71	    ]
+    72	    core_keys = core.data.shape_keys.key_blocks
+    73	    basis_chair_span = max(core_keys["Basis"].data[index].co.x for index in chair_vertices) - min(core_keys["Basis"].data[index].co.x for index in chair_vertices)
+    74	    final_chair_span = max(core_keys["Damage_ChairPose"].data[index].co.x for index in chair_vertices) - min(core_keys["Damage_ChairPose"].data[index].co.x for index in chair_vertices)
+    75	
+    76	    bpy.ops.object.select_all(action="DESELECT")
+    77	    for obj in meshes:
+    78	        obj.select_set(True)
+    79	    bpy.context.view_layer.objects.active = meshes[0]
+    80	    bpy.ops.export_scene.gltf(
+    81	        filepath=str(REEXPORT.with_suffix("")), export_format="GLB", use_selection=True, export_apply=True,
+    82	        export_cameras=False, export_lights=False, export_animations=False, export_materials="EXPORT", export_morph=True,
+    83	    )
+    84	    exported = shared.contract(REEXPORT)
+    85	    stable = (
+    86	        "nodes", "nodeCount", "bindings", "nodeTransforms", "meshes", "meshNames", "primitives",
+    87	        "primitiveMaterials", "triangles", "morphTargets", "targetCounts", "materials",
+    88	        "materialTextureBindings", "materialContract", "textureSources", "images", "embeddedImages",
+    89	        "imageDimensions", "cameras", "lights", "animations", "bounds",
+    90	    )
+    91	    story_text = STORYBOOK.read_text()
+    92	    metrics = json.loads((OUT / "homemaker-9000-damage-metrics.json").read_text())
+    93	    evidence = {
+    94	        "blender": bpy.app.version_string,
+    95	        "baseSha": "f50cc240618ddc23b88efee1f27d4cf2035a04ab",
+    96	        "sourcePlate": {str(REFERENCE.relative_to(ROOT)): hashlib.sha256(REFERENCE.read_bytes()).hexdigest()},
+    97	        "storybook": {"path": str(STORYBOOK.relative_to(ROOT)), "sha256": hashlib.sha256(STORYBOOK.read_bytes()).hexdigest()},
+    98	        "damageImplementation": "one morph on each exact future component mesh; all three at weight 1 form the Act-3 chair state",
+    99	        "finalMorphBounds": final_bounds,
+   100	        "chairReveal": {"basisSpanX": round(basis_chair_span, 6), "finalSpanX": round(final_chair_span, 6)},
+   101	        "damageMetrics": metrics,
+   102	        "sourceScene": source_scene,
+   103	        "checked": checked,
+   104	        "reexported": exported,
+   105	        "byteIdentical": checked["sha256"] == exported["sha256"],
+   106	        "semanticIdentical": {key: checked[key] == exported[key] for key in stable},
+   107	    }
+   108	    OUT.mkdir(parents=True, exist_ok=True)
+   109	    (OUT / "homemaker-9000-asset-contract.json").write_text(json.dumps(evidence, indent=2) + "\n")
+   110	
+   111	    assert "components: VAC / RACK / CORE" in story_text
+   112	    assert "Builds ONE CHAIR from debris, carefully. Sits." in story_text
+   113	    assert sorted(source_scene["meshObjects"]) == sorted(EXPECTED_NODES)
+   114	    assert not source_scene["cameras"] and not source_scene["lights"] and not source_scene["actions"]
+   115	    assert checked["nodes"] == EXPECTED_NODES and checked["nodeCount"] == 3
+   116	    assert checked["bindings"] == EXPECTED_BINDINGS
+   117	    assert all(transform == {
+   118	        "translation": [0.0, 0.0, 0.0], "rotation": [0.0, 0.0, 0.0, 1.0],
+   119	        "scale": [1.0, 1.0, 1.0], "matrix": None,
+   120	    } for transform in checked["nodeTransforms"].values())
+   121	    assert checked["meshes"] == checked["primitives"] == 3
+   122	    assert checked["primitiveMaterials"] == [0, 0, 0]
+   123	    assert checked["triangles"] <= 12_000
+   124	    assert checked["morphTargets"] == EXPECTED_MORPHS
+   125	    assert all(count == 1 for count in checked["targetCounts"].values())
+   126	    assert checked["materials"] == checked["images"] == checked["embeddedImages"] == 1
+   127	    assert checked["materialTextureBindings"] == [{"material": 0, "baseColorTexture": 0, "image": 0}]
+   128	    assert checked["textureSources"] == [0] and checked["imageDimensions"] == [[1024, 1024]]
+   129	    assert checked["materialContract"] == [{
+   130	        "metallicFactor": 0, "roughnessFactor": 0.8999999761581421, "doubleSided": True,
+   131	        "hasBaseColorTexture": True, "hasEmissiveTexture": False, "emissiveFactor": [0.0, 0.0, 0.0],
+   132	    }]
+   133	    assert checked["cameras"] == checked["lights"] == checked["animations"] == 0
+   134	    assert abs(checked["bounds"]["size"][0] - 7.2) < 0.001
+   135	    assert abs(checked["bounds"]["min"][1]) < 0.001
+   136	    assert abs(checked["bounds"]["center"][0]) < 0.001 and abs(checked["bounds"]["center"][2]) < 0.001
+   137	    assert basis_chair_span < 0.05 and final_chair_span > 3.5
+   138	    assert all(bounds["min"][2] >= -0.001 for bounds in final_bounds.values())
+   139	    assert metrics["diffRatio16"] >= 0.07
+   140	    assert evidence["byteIdentical"] and all(evidence["semanticIdentical"].values())
+   141	    REEXPORT.unlink(missing_ok=True)
+   142	    print(json.dumps(evidence, indent=2))
+   143	
+   144	
+   145	if __name__ == "__main__":
+   146	    main()
+
+exec
+/bin/zsh -lc "echo '=== candidate 235-390 ==='; nl -ba candidate.py | sed -n '235,390p'; echo '=== candidate 390-end ==='; nl -ba candidate.py | sed -n '390,760p'; echo '=== before 235-390 ==='; nl -ba before.py | sed -n '235,390p'" in /Users/robin/.codex/worktrees/572c/Gold Rush/artifacts/boss-fidelity/e6-homemaker/source-review-12
+ succeeded in 0ms:
+=== candidate 235-390 ===
+   235	                                 rotation=(math.pi / 2, 0, 0), bevel=0, damage_group=group))
+   236	
+   237	    shoulder = Vector((1.78, 0.0, 4.32))
+   238	    elbow = Vector((2.58, -0.18, 3.58))
+   239	    hand = Vector((2.86, -0.44, 2.42))
+   240	    parts.append(dq.cylinder("CORE broom shoulder", 0.42, 0.48, tuple(shoulder), "brass", material,
+   241	                             vertices=12, rotation=(math.pi / 2, 0, 0), bevel=0, damage_group=broom))
+   242	    dq.mark_all(parts[-1], "BroomShoulderPivot")
+   243	    parts.append(dq.beam("CORE broom upper arm", tuple(shoulder), tuple(elbow), 0.30,
+   244	                         "plate", material, broom))
+   245	    parts.append(dq.cylinder("CORE broom elbow", 0.28, 0.38, tuple(elbow), "brass", material,
+   246	                             vertices=12, rotation=(math.pi / 2, 0, 0), bevel=0, damage_group=broom))
+   247	    parts.append(dq.beam("CORE broom forearm", tuple(elbow), tuple(hand), 0.25,
+   248	                         "iron", material, broom))
+   249	    parts.append(dq.beam("CORE broom handle", tuple(hand), (3.20, -0.60, 0.72),
+   250	                         0.12, "deck", material, broom))
+   251	    for index, x in enumerate(np.linspace(2.74, 3.60, 9)):
+   252	        parts.append(dq.beam(f"CORE broom bristle {index}", (float(x), -0.62, 0.72),
+   253	                             (float(x) + (x - 3.16) * 0.18, -0.66, 0.18),
+   254	                             0.10, "sail", material, broom))
+   255	
+   256	    parts.append(dq.cylinder("CORE crown mast", 0.10, 0.84, (0, 0, 5.68),
+   257	                             "brass", material, vertices=10, damage_group=body))
+   258	    parts.append(dq.ico_sphere("CORE crown hub", 0.16, (0, 0, 6.14), "brass", material, body))
+   259	    for ray in range(8):
+   260	        angle = ray * math.tau / 8
+   261	        start = Vector((math.cos(angle) * 0.12, 0, 6.14 + math.sin(angle) * 0.12))
+   262	        end = Vector((math.cos(angle) * 0.58, 0, 6.14 + math.sin(angle) * 0.58))
+   263	        parts.append(dq.beam(f"CORE starburst ray {ray}", tuple(start), tuple(end),
+   264	                             0.055, "brass", material, body))
+   265	        parts.append(dq.ico_sphere(f"CORE starburst pip {ray}", 0.09, tuple(end),
+   266	                                   "brass", material, body))
+   267	
+   268	    # Act 3 chair is production geometry carried by CORE. It is collapsed into
+   269	    # the floor in the basis and expands only under Damage_ChairPose.
+   270	    parts.append(dq.box("Chair debris seat", (4.18, 3.36, 0.32), (0, 1.02, 1.12),
+   271	                        "deck", material, 0.07, damage_group=chair))
+   272	    parts.append(dq.box("Chair debris back", (4.12, 0.34, 3.34), (0, 2.54, 2.46),
+   273	                        "plate", material, 0.07, rotation=(math.radians(-8), 0, 0), damage_group=chair))
+   274	    dq.mark_all(parts[-1], "ChairBackPanel")
+   275	    for side in (-1, 1):
+   276	        x = side * 1.82
+   277	        parts.append(dq.beam(f"Chair rear leg {side}", (x, 2.30, 1.08), (x, 2.48, -0.025),
+   278	                             0.20, "iron", material, chair))
+   279	        parts.append(dq.beam(f"Chair front leg {side}", (x, -0.46, 1.08), (x, -0.62, -0.025),
+   280	                             0.20, "iron", material, chair))
+   281	        parts.append(dq.beam(f"Chair arm {side}", (x, -0.30, 1.78), (x, 2.18, 1.78),
+   282	                             0.18, "brass", material, chair))
+   283	        parts.append(dq.ico_sphere(f"Chair arm finial {side}", 0.16, (x, -0.34, 1.80),
+   284	                                   "brass", material, chair))
+   285	    parts.append(dq.beam("Chair back brace one", (-1.82, 2.64, 1.28), (1.82, 2.64, 3.62),
+   286	                         0.14, "brass", material, chair))
+   287	    parts.append(dq.beam("Chair back brace two", (1.82, 2.64, 1.28), (-1.82, 2.64, 3.62),
+   288	                         0.14, "brass", material, chair))
+   289	    return parts
+   290	
+   291	
+   292	def group_bounds(obj: bpy.types.Object, group_name: str) -> tuple[Vector, Vector]:
+   293	    points = [obj.data.vertices[index].co for index in dq.group_vertex_indices(obj, group_name)]
+   294	    assert points, f"missing group {obj.name}:{group_name}"
+   295	    return (
+   296	        Vector(tuple(min(point[axis] for point in points) for axis in range(3))),
+   297	        Vector(tuple(max(point[axis] for point in points) for axis in range(3))),
+   298	    )
+   299	
+   300	
+   301	def group_center(obj: bpy.types.Object, group_name: str) -> Vector:
+   302	    minimum, maximum = group_bounds(obj, group_name)
+   303	    return (minimum + maximum) * 0.5
+   304	
+   305	
+   306	def rotate_x(co: Vector, pivot: Vector, angle: float) -> None:
+   307	    local = co - pivot
+   308	    y = local.y * math.cos(angle) - local.z * math.sin(angle)
+   309	    z = local.y * math.sin(angle) + local.z * math.cos(angle)
+   310	    co.y = pivot.y + y
+   311	    co.z = pivot.z + z
+   312	
+   313	
+   314	def add_damage_shapes(vac: bpy.types.Object, rack: bpy.types.Object, core: bpy.types.Object) -> None:
+   315	    vac.shape_key_add(name="Basis")
+   316	    dropped = vac.shape_key_add(name="Damage_DroppedVac")
+   317	    pivot = group_center(vac, "VacUpperArm")
+   318	    for index in dq.group_vertex_indices(vac, "VacUpperArm"):
+   319	        co = dropped.data[index].co
+   320	        dq.rotate_y(co, pivot, math.radians(-28))
+   321	        co += Vector((-0.18, -0.18, -0.46))
+   322	    for index in dq.group_vertex_indices(vac, "VacHose"):
+   323	        co = dropped.data[index].co
+   324	        co += Vector((-0.18, -0.20, -0.55 * min(1, max(0, (co.z-.2)/1.2)) - max(0.0, co.z - 0.8) * 0.12))
+   325	    for index in dq.group_vertex_indices(vac, "VacHead"):
+   326	        dropped.data[index].co += Vector((-0.68, -0.88, 0.02))
+   327	    for shard, move in enumerate((Vector((-1.1, -1.0, -0.10)), Vector((-0.2, -1.35, -0.18)), Vector((0.45, -0.82, -0.12)))):
+   328	        for index in dq.group_vertex_indices(vac, f"VacShard{shard}"):
+   329	            dropped.data[index].co += move
+   330	        indices = dq.group_vertex_indices(vac, f"VacShard{shard}")
+   331	        floor_delta = 0.02 - min(dropped.data[index].co.z for index in indices)
+   332	        for index in indices:
+   333	            dropped.data[index].co.z += floor_delta
+   334	
+   335	    rack.shape_key_add(name="Basis")
+   336	    spent = rack.shape_key_add(name="Damage_SpentRack")
+   337	    minimum, maximum = group_bounds(rack, "RackUpper")
+   338	    pivot = Vector((minimum.x, (minimum.y + maximum.y) * 0.5, minimum.z))
+   339	    for index in dq.group_vertex_indices(rack, "RackUpper"):
+   340	        co = spent.data[index].co
+   341	        rotate_x(co, pivot, math.radians(18))
+   342	        dq.rotate_y(co, pivot, math.radians(-14))
+   343	        co += Vector((2.18, 0.78, -4.96))
+   344	    for shard, move in enumerate((Vector((-1.35, -1.15, -5.57)), Vector((0.15, -1.55, -5.52)), Vector((1.18, -0.82, -5.52)))):
+   345	        for index in dq.group_vertex_indices(rack, f"RackShard{shard}"):
+   346	            spent.data[index].co += move
+   347	        indices = dq.group_vertex_indices(rack, f"RackShard{shard}")
+   348	        floor_delta = 0.02 - min(spent.data[index].co.z for index in indices)
+   349	        for index in indices:
+   350	            spent.data[index].co.z += floor_delta
+   351	
+   352	    core.shape_key_add(name="Basis")
+   353	    chair_pose = core.shape_key_add(name="Damage_ChairPose")
+   354	    body_pivot = group_center(core, "ChairBody")
+   355	    for index in dq.group_vertex_indices(core, "ChairBody"):
+   356	        co = chair_pose.data[index].co
+   357	        rotate_x(co, body_pivot, math.radians(-12))
+   358	        co += Vector((0.0, 0.72, -1.24))
+   359	    for index in dq.group_vertex_indices(core, "CoreShutdownShutter"):
+   360	        co = chair_pose.data[index].co
+   361	        co.y -= 1.888
+   362	        rotate_x(co, body_pivot, math.radians(-12))
+   363	        co += Vector((0.0, 0.72, -1.24))
+   364	    for group_name, x_move in (("ChairLeftLeg", -0.22), ("ChairRightLeg", 0.22)):
+   365	        pivot = group_center(core, group_name)
+   366	        for index in dq.group_vertex_indices(core, group_name):
+   367	            co = chair_pose.data[index].co
+   368	            rotate_x(co, pivot, math.radians(-42))
+   369	            co += Vector((x_move, -0.90, 0.21))
+   370	    broom_pivot = group_center(core, "BroomShoulderPivot")
+   371	    for index in dq.group_vertex_indices(core, "ChairBroom"):
+   372	        co = chair_pose.data[index].co
+   373	        dq.rotate_y(co, broom_pivot, math.radians(-30))
+   374	        rotate_x(co, body_pivot, math.radians(-12))
+   375	        co += Vector((0.0, 0.72, -1.24))
+   376	
+   377	    # Keep the target's full chair coordinates, but make the intact basis a
+   378	    # near-zero bundle under the body. At weight 1 the debris chair builds.
+   379	    anchor = Vector((0.0, 0.55, 0.12))
+   380	    basis = core.data.shape_keys.key_blocks["Basis"]
+   381	    for index in dq.group_vertex_indices(core, "ChairDebris"):
+   382	        basis.data[index].co = anchor + (basis.data[index].co - anchor) * 0.006
+   383	
+   384	    for obj in (vac, rack, core):
+   385	        obj.active_shape_key_index = 0
+   386	        for key in obj.data.shape_keys.key_blocks:
+   387	            key.value = 0.0
+   388	        obj.data.update()
+   389	
+   390	
+=== candidate 390-end ===
+   390	
+   391	def recenter_shape_keyed_basis(objects: tuple[bpy.types.Object, ...]) -> None:
+   392	    """Re-center the basis after the hidden chair bundle changes its bounds.
+   393	
+   394	    Apply the same translation to every key block so the authored damage
+   395	    deltas remain unchanged while the exported intact basis stays base-center.
+   396	    """
+   397	    points = [
+   398	        point.co
+   399	        for obj in objects
+   400	        for point in obj.data.shape_keys.key_blocks["Basis"].data
+   401	    ]
+   402	    minimum = Vector(tuple(min(point[axis] for point in points) for axis in range(3)))
+   403	    maximum = Vector(tuple(max(point[axis] for point in points) for axis in range(3)))
+   404	    offset = Vector(((minimum.x + maximum.x) * 0.5, (minimum.y + maximum.y) * 0.5, minimum.z))
+   405	    for obj in objects:
+   406	        keys = obj.data.shape_keys
+   407	        assert keys is not None
+   408	        for key in keys.key_blocks:
+   409	            for point in key.data:
+   410	                point.co -= offset
+   411	        obj.data.update()
+   412	
+   413	
+   414	def shape_basis_bounds(objects: tuple[bpy.types.Object, ...]) -> tuple[Vector, Vector]:
+   415	    points = [
+   416	        point.co
+   417	        for obj in objects
+   418	        for point in obj.data.shape_keys.key_blocks["Basis"].data
+   419	    ]
+   420	    return (
+   421	        Vector(tuple(min(point[axis] for point in points) for axis in range(3))),
+   422	        Vector(tuple(max(point[axis] for point in points) for axis in range(3))),
+   423	    )
+   424	
+   425	
+   426	def main() -> None:
+   427	    HERE.mkdir(parents=True, exist_ok=True)
+   428	    dq.reset_scene()
+   429	    atlas = create_atomic_atlas()
+   430	    material = dq.create_material(atlas)
+   431	    material.name = "Homemaker9000PaintedMaterial"
+   432	    groups={"vac":build_vac(material),"rack":build_rack(material),"core":build_core(material)}
+   433	    for parts in groups.values():
+   434	        for part in parts:
+   435	            if any(word in part.name.lower() for word in ("rim", "cage", "bristle", "ray", "rail")):
+   436	                for modifier in list(part.modifiers):
+   437	                    if modifier.type=="BEVEL":part.modifiers.remove(modifier)
+   438	    vac,rack,core=(dq.join_component(name,groups[name],material) for name in ("vac","rack","core"))
+   439	    objects = (vac, rack, core)
+   440	    dq.MODEL_LENGTH = MODEL_LENGTH
+   441	    dq.normalize_base_center(objects)
+   442	    add_damage_shapes(*objects)
+   443	    recenter_shape_keyed_basis(objects)
+   444	
+   445	
+   446	    triangles = dq.triangle_count(objects)
+   447	    minimum, maximum = shape_basis_bounds(objects)
+   448	    assert triangles <= 12_000
+   449	    assert abs(maximum.x - minimum.x - MODEL_LENGTH) < 0.01
+   450	    assert abs(minimum.z) < 0.001
+   451	    assert abs((maximum.x + minimum.x) * 0.5) < 0.001
+   452	    assert abs((maximum.y + minimum.y) * 0.5) < 0.001
+   453	    dq.BLEND, dq.GLB = BLEND, GLB
+   454	    dq.export(objects)
+   455	    print(json.dumps({
+   456	        "blend": str(BLEND), "glb": str(GLB), "sha256": hashlib.sha256(GLB.read_bytes()).hexdigest(),
+   457	        "sourcePlate": {str(REFERENCE.relative_to(ROOT)): hashlib.sha256(REFERENCE.read_bytes()).hexdigest()},
+   458	        "components": [obj.name for obj in objects],
+   459	        "damageMorphs": [obj.data.shape_keys.key_blocks[1].name for obj in objects],
+   460	        "triangles": triangles,
+   461	        "boundsBlender": {"min": [round(v, 6) for v in minimum], "max": [round(v, 6) for v in maximum]},
+   462	    }, indent=2))
+   463	
+   464	
+   465	if __name__ == "__main__":
+   466	    main()
+=== before 235-390 ===
+   235	                                 rotation=(math.pi / 2, 0, 0), bevel=0, damage_group=group))
+   236	
+   237	    shoulder = Vector((1.78, 0.0, 4.32))
+   238	    elbow = Vector((2.58, -0.18, 3.58))
+   239	    hand = Vector((2.86, -0.44, 2.42))
+   240	    parts.append(dq.cylinder("CORE broom shoulder", 0.42, 0.48, tuple(shoulder), "brass", material,
+   241	                             vertices=12, rotation=(math.pi / 2, 0, 0), bevel=0, damage_group=broom))
+   242	    dq.mark_all(parts[-1], "BroomShoulderPivot")
+   243	    parts.append(dq.beam("CORE broom upper arm", tuple(shoulder), tuple(elbow), 0.30,
+   244	                         "plate", material, broom))
+   245	    parts.append(dq.cylinder("CORE broom elbow", 0.28, 0.38, tuple(elbow), "brass", material,
+   246	                             vertices=12, rotation=(math.pi / 2, 0, 0), bevel=0, damage_group=broom))
+   247	    parts.append(dq.beam("CORE broom forearm", tuple(elbow), tuple(hand), 0.25,
+   248	                         "iron", material, broom))
+   249	    parts.append(dq.beam("CORE broom handle", tuple(hand), (3.20, -0.60, 0.72),
+   250	                         0.12, "deck", material, broom))
+   251	    for index, x in enumerate(np.linspace(2.74, 3.60, 9)):
+   252	        parts.append(dq.beam(f"CORE broom bristle {index}", (float(x), -0.62, 0.72),
+   253	                             (float(x) + (x - 3.16) * 0.18, -0.66, 0.18),
+   254	                             0.10, "sail", material, broom))
+   255	
+   256	    parts.append(dq.cylinder("CORE crown mast", 0.10, 0.84, (0, 0, 5.68),
+   257	                             "brass", material, vertices=10, damage_group=body))
+   258	    parts.append(dq.ico_sphere("CORE crown hub", 0.16, (0, 0, 6.14), "brass", material, body))
+   259	    for ray in range(8):
+   260	        angle = ray * math.tau / 8
+   261	        start = Vector((math.cos(angle) * 0.12, 0, 6.14 + math.sin(angle) * 0.12))
+   262	        end = Vector((math.cos(angle) * 0.58, 0, 6.14 + math.sin(angle) * 0.58))
+   263	        parts.append(dq.beam(f"CORE starburst ray {ray}", tuple(start), tuple(end),
+   264	                             0.055, "brass", material, body))
+   265	        parts.append(dq.ico_sphere(f"CORE starburst pip {ray}", 0.09, tuple(end),
+   266	                                   "brass", material, body))
+   267	
+   268	    # Act 3 chair is production geometry carried by CORE. It is collapsed into
+   269	    # the floor in the basis and expands only under Damage_ChairPose.
+   270	    parts.append(dq.box("Chair debris seat", (4.18, 2.36, 0.32), (0, 0.52, 1.12),
+   271	                        "deck", material, 0.07, damage_group=chair))
+   272	    parts.append(dq.box("Chair debris back", (4.12, 0.34, 3.34), (0, 1.54, 2.46),
+   273	                        "plate", material, 0.07, rotation=(math.radians(-8), 0, 0), damage_group=chair))
+   274	    for side in (-1, 1):
+   275	        x = side * 1.82
+   276	        parts.append(dq.beam(f"Chair rear leg {side}", (x, 1.30, 1.08), (x, 1.48, -0.025),
+   277	                             0.20, "iron", material, chair))
+   278	        parts.append(dq.beam(f"Chair front leg {side}", (x, -0.46, 1.08), (x, -0.62, -0.025),
+   279	                             0.20, "iron", material, chair))
+   280	        parts.append(dq.beam(f"Chair arm {side}", (x, -0.30, 1.78), (x, 1.18, 1.78),
+   281	                             0.18, "brass", material, chair))
+   282	        parts.append(dq.ico_sphere(f"Chair arm finial {side}", 0.16, (x, -0.34, 1.80),
+   283	                                   "brass", material, chair))
+   284	    parts.append(dq.beam("Chair back brace one", (-1.82, 1.64, 1.28), (1.82, 1.64, 3.62),
+   285	                         0.14, "brass", material, chair))
+   286	    parts.append(dq.beam("Chair back brace two", (1.82, 1.64, 1.28), (-1.82, 1.64, 3.62),
+   287	                         0.14, "brass", material, chair))
+   288	    return parts
+   289	
+   290	
+   291	def group_bounds(obj: bpy.types.Object, group_name: str) -> tuple[Vector, Vector]:
+   292	    points = [obj.data.vertices[index].co for index in dq.group_vertex_indices(obj, group_name)]
+   293	    assert points, f"missing group {obj.name}:{group_name}"
+   294	    return (
+   295	        Vector(tuple(min(point[axis] for point in points) for axis in range(3))),
+   296	        Vector(tuple(max(point[axis] for point in points) for axis in range(3))),
+   297	    )
+   298	
+   299	
+   300	def group_center(obj: bpy.types.Object, group_name: str) -> Vector:
+   301	    minimum, maximum = group_bounds(obj, group_name)
+   302	    return (minimum + maximum) * 0.5
+   303	
+   304	
+   305	def rotate_x(co: Vector, pivot: Vector, angle: float) -> None:
+   306	    local = co - pivot
+   307	    y = local.y * math.cos(angle) - local.z * math.sin(angle)
+   308	    z = local.y * math.sin(angle) + local.z * math.cos(angle)
+   309	    co.y = pivot.y + y
+   310	    co.z = pivot.z + z
+   311	
+   312	
+   313	def add_damage_shapes(vac: bpy.types.Object, rack: bpy.types.Object, core: bpy.types.Object) -> None:
+   314	    vac.shape_key_add(name="Basis")
+   315	    dropped = vac.shape_key_add(name="Damage_DroppedVac")
+   316	    pivot = group_center(vac, "VacUpperArm")
+   317	    for index in dq.group_vertex_indices(vac, "VacUpperArm"):
+   318	        co = dropped.data[index].co
+   319	        dq.rotate_y(co, pivot, math.radians(-28))
+   320	        co += Vector((-0.18, -0.18, -0.46))
+   321	    for index in dq.group_vertex_indices(vac, "VacHose"):
+   322	        co = dropped.data[index].co
+   323	        co += Vector((-0.18, -0.20, -0.55 * min(1, max(0, (co.z-.2)/1.2)) - max(0.0, co.z - 0.8) * 0.12))
+   324	    for index in dq.group_vertex_indices(vac, "VacHead"):
+   325	        dropped.data[index].co += Vector((-0.68, -0.88, 0.02))
+   326	    for shard, move in enumerate((Vector((-1.1, -1.0, -0.10)), Vector((-0.2, -1.35, -0.18)), Vector((0.45, -0.82, -0.12)))):
+   327	        for index in dq.group_vertex_indices(vac, f"VacShard{shard}"):
+   328	            dropped.data[index].co += move
+   329	        indices = dq.group_vertex_indices(vac, f"VacShard{shard}")
+   330	        floor_delta = 0.02 - min(dropped.data[index].co.z for index in indices)
+   331	        for index in indices:
+   332	            dropped.data[index].co.z += floor_delta
+   333	
+   334	    rack.shape_key_add(name="Basis")
+   335	    spent = rack.shape_key_add(name="Damage_SpentRack")
+   336	    minimum, maximum = group_bounds(rack, "RackUpper")
+   337	    pivot = Vector((minimum.x, (minimum.y + maximum.y) * 0.5, minimum.z))
+   338	    for index in dq.group_vertex_indices(rack, "RackUpper"):
+   339	        co = spent.data[index].co
+   340	        rotate_x(co, pivot, math.radians(18))
+   341	        dq.rotate_y(co, pivot, math.radians(-14))
+   342	        co += Vector((2.18, 0.78, -4.96))
+   343	    for shard, move in enumerate((Vector((-1.35, -1.15, -5.57)), Vector((0.15, -1.55, -5.52)), Vector((1.18, -0.82, -5.52)))):
+   344	        for index in dq.group_vertex_indices(rack, f"RackShard{shard}"):
+   345	            spent.data[index].co += move
+   346	        indices = dq.group_vertex_indices(rack, f"RackShard{shard}")
+   347	        floor_delta = 0.02 - min(spent.data[index].co.z for index in indices)
+   348	        for index in indices:
+   349	            spent.data[index].co.z += floor_delta
+   350	
+   351	    core.shape_key_add(name="Basis")
+   352	    chair_pose = core.shape_key_add(name="Damage_ChairPose")
+   353	    body_pivot = group_center(core, "ChairBody")
+   354	    for index in dq.group_vertex_indices(core, "ChairBody"):
+   355	        co = chair_pose.data[index].co
+   356	        rotate_x(co, body_pivot, math.radians(-12))
+   357	        co += Vector((0.0, 0.72, -1.24))
+   358	    for index in dq.group_vertex_indices(core, "CoreShutdownShutter"):
+   359	        co = chair_pose.data[index].co
+   360	        co.y -= 1.888
+   361	        rotate_x(co, body_pivot, math.radians(-12))
+   362	        co += Vector((0.0, 0.72, -1.24))
+   363	    for group_name, x_move in (("ChairLeftLeg", -0.22), ("ChairRightLeg", 0.22)):
+   364	        pivot = group_center(core, group_name)
+   365	        for index in dq.group_vertex_indices(core, group_name):
+   366	            co = chair_pose.data[index].co
+   367	            rotate_x(co, pivot, math.radians(-42))
+   368	            co += Vector((x_move, -0.90, 0.21))
+   369	    broom_pivot = group_center(core, "BroomShoulderPivot")
+   370	    for index in dq.group_vertex_indices(core, "ChairBroom"):
+   371	        co = chair_pose.data[index].co
+   372	        dq.rotate_y(co, broom_pivot, math.radians(-30))
+   373	        rotate_x(co, body_pivot, math.radians(-12))
+   374	        co += Vector((0.0, 0.72, -1.24))
+   375	
+   376	    # Keep the target's full chair coordinates, but make the intact basis a
+   377	    # near-zero bundle under the body. At weight 1 the debris chair builds.
+   378	    anchor = Vector((0.0, 0.55, 0.12))
+   379	    basis = core.data.shape_keys.key_blocks["Basis"]
+   380	    for index in dq.group_vertex_indices(core, "ChairDebris"):
+   381	        basis.data[index].co = anchor + (basis.data[index].co - anchor) * 0.006
+   382	
+   383	    for obj in (vac, rack, core):
+   384	        obj.active_shape_key_index = 0
+   385	        for key in obj.data.shape_keys.key_blocks:
+   386	            key.value = 0.0
+   387	        obj.data.update()
+   388	
+   389	
+   390	def recenter_shape_keyed_basis(objects: tuple[bpy.types.Object, ...]) -> None:
+
+2026-09-08T18:07:21.275549Z  WARN codex_analytics::reducer: dropping turn tool count update: missing turn state thread_id=01a08233-b25c-7420-9872-9bc75f46fb68 turn_id=01a08233-b31c-7ff1-9c25-19e09070f3ca item_id="exec-4d81394d-13d0-4ab7-ac31-af78febbe626"
+exec
+/bin/zsh -lc "grep -n \"def mark_all\\|def box\\|def beam\\|def join_component\\|def normalize_base_center\\|def export\\|def group_vertex_indices\" build_dredge_queen.py; nl -ba build_dredge_queen.py | sed -n '70,250p'; nl -ba build_dredge_queen.py | sed -n '580,710p'" in /Users/robin/.codex/worktrees/572c/Gold Rush/artifacts/boss-fidelity/e6-homemaker/source-review-12
+ succeeded in 0ms:
+178:def mark_all(obj: bpy.types.Object, group_name: str | None) -> None:
+207:def box(
+312:def beam(
+603:def join_component(name: str, parts: list[bpy.types.Object], material: bpy.types.Material) -> bpy.types.Object:
+625:def group_vertex_indices(obj: bpy.types.Object, group_name: str) -> set[int]:
+734:def normalize_base_center(objects: tuple[bpy.types.Object, ...]) -> None:
+747:def export(objects: tuple[bpy.types.Object, ...]) -> None:
+    70	        (0.34, 0.20, 0.07),
+    71	    )
+    72	    rust = sampled_color(
+    73	        colors,
+    74	        (colors[:, :, 0] > colors[:, :, 1] * 1.30)
+    75	        & (colors[:, :, 1] > colors[:, :, 2] * 1.05)
+    76	        & (saturation > 0.09),
+    77	        (0.34, 0.075, 0.028),
+    78	    )
+    79	    teal = sampled_color(
+    80	        colors,
+    81	        (colors[:, :, 1] > colors[:, :, 0] * 1.18)
+    82	        & (colors[:, :, 2] > colors[:, :, 0] * 1.18)
+    83	        & (saturation > 0.06),
+    84	        (0.025, 0.36, 0.38),
+    85	    )
+    86	    palette = {
+    87	        "soot": np.clip(dark * 0.50, 0.010, 0.060),
+    88	        "iron": np.clip(dark * 0.58 + warm * 0.34 + 0.015, 0.035, 0.22),
+    89	        "brass": np.clip(warm * 0.88 + 0.025, 0.09, 0.55),
+    90	        "deck": np.clip(warm * 0.54 + rust * 0.26 + 0.045, 0.06, 0.36),
+    91	        "teal": np.clip(teal * 1.12, 0.02, 0.62),
+    92	        "damage": np.clip(rust * 0.72 + np.array((0.16, 0.025, 0.012)), 0.03, 0.48),
+    93	        "sail": np.clip(rust * 0.74 + np.array((0.08, 0.012, 0.008)), 0.03, 0.40),
+    94	        "rope": np.clip(warm * 0.54 + np.array((0.10, 0.055, 0.012)), 0.05, 0.50),
+    95	        "cargo": np.clip(rust * 0.42 + warm * 0.42 + 0.018, 0.05, 0.44),
+    96	    }
+    97	    atlas = np.ones((ATLAS_SIZE, ATLAS_SIZE, 4), dtype=np.float32)
+    98	    atlas[:, :, :3] = palette["soot"]
+    99	    rng = np.random.default_rng(517)
+   100	
+   101	    # Carry the approved plate's real engraved line density into the largest tile.
+   102	    x0, y0, x1, y1 = region_pixels(REGIONS["plate"])
+   103	    crop = colors[
+   104	        int(source.size[1] * 0.09):int(source.size[1] * 0.88),
+   105	        int(source.size[0] * 0.08):int(source.size[0] * 0.95),
+   106	    ]
+   107	    painted = resized_nearest(resized_nearest(crop, 300, 420), y1 - y0, x1 - x0)
+   108	    ink = 1.0 - np.clip((painted.mean(axis=2) - 0.025) / 0.40, 0.0, 1.0)
+   109	    plate_base = palette["iron"] * 0.76 + palette["brass"] * 0.24
+   110	    engraved = plate_base[None, None, :] * (1.08 - ink[:, :, None] * 0.55)
+   111	    warm_mask = (painted[:, :, 0] > painted[:, :, 2] * 1.28) & (ink > 0.20)
+   112	    engraved[warm_mask] = engraved[warm_mask] * 0.75 + palette["brass"] * 0.17
+   113	    engraved += rng.normal(0, 0.008, (y1 - y0, x1 - x0, 1))
+   114	    atlas[y0:y1, x0:x1, :3] = np.clip(engraved, 0.008, 0.34)
+   115	
+   116	    for name, region in REGIONS.items():
+   117	        if name == "plate":
+   118	            continue
+   119	        x0, y0, x1, y1 = region_pixels(region)
+   120	        base = palette[name]
+   121	        noise = rng.normal(0, 0.008 if name != "teal" else 0.004, (y1 - y0, x1 - x0, 1))
+   122	        block = np.clip(base + noise, 0.008, 0.72)
+   123	        atlas[y0:y1, x0:x1, :3] = block
+   124	        if name in {"soot", "iron", "brass", "deck", "damage", "sail", "cargo"}:
+   125	            height = y1 - y0
+   126	            spacing = 17 if name in {"iron", "brass"} else 23
+   127	            for offset in range(-height, x1 - x0, spacing):
+   128	                for yy in range(y0, y1):
+   129	                    xx = x0 + offset + (yy - y0)
+   130	                    if x0 <= xx < x1:
+   131	                        atlas[yy, xx:min(xx + 2, x1), :3] *= 0.58
+   132	        if name in {"iron", "brass", "deck"}:
+   133	            for yy in range(y0 + 12, y1, 29):
+   134	                for xx in range(x0 + 12, x1, 29):
+   135	                    atlas[yy - 2:yy + 3, xx - 2:xx + 3, :3] *= 0.46
+   136	        if name == "sail":
+   137	            for yy in range(y0 + 18, y1, 26):
+   138	                atlas[yy:yy + 2, x0:x1, :3] *= 0.62
+   139	        if name == "teal":
+   140	            for yy in range(y0 + 7, y1, 15):
+   141	                atlas[yy:yy + 2, x0:x1, :3] = np.clip(base * 1.35, 0, 0.78)
+   142	
+   143	    # The source plate is storm-dark. Lift its baked albedo, not the material,
+   144	    # so engraved detail survives the high gameplay camera without emission.
+   145	    atlas[:, :, :3] = np.clip(atlas[:, :, :3] * 1.34 + 0.012, 0.008, 0.78)
+   146	
+   147	    image = bpy.data.images.new("DredgeQueenPlateAtlas", ATLAS_SIZE, ATLAS_SIZE, alpha=True)
+   148	    image.colorspace_settings.name = "sRGB"
+   149	    image.pixels.foreach_set(atlas.ravel())
+   150	    image.pack()
+   151	    return image, {
+   152	        "intact": hashlib.sha256(REFERENCE.read_bytes()).hexdigest(),
+   153	        "damage": hashlib.sha256(DAMAGE_REFERENCE.read_bytes()).hexdigest(),
+   154	    }
+   155	
+   156	
+   157	def create_material(image: bpy.types.Image) -> bpy.types.Material:
+   158	    material = bpy.data.materials.new("DredgeQueenMaterial")
+   159	    material.use_nodes = True
+   160	    material.use_backface_culling = False
+   161	    nodes = material.node_tree.nodes
+   162	    nodes.clear()
+   163	    output = nodes.new("ShaderNodeOutputMaterial")
+   164	    shader = nodes.new("ShaderNodeBsdfPrincipled")
+   165	    texture = nodes.new("ShaderNodeTexImage")
+   166	    texture.image = image
+   167	    texture.interpolation = "Linear"
+   168	    texture.extension = "REPEAT"
+   169	    shader.inputs["Metallic"].default_value = 0.0
+   170	    shader.inputs["Roughness"].default_value = 0.9
+   171	    shader.inputs["Emission Color"].default_value = (0, 0, 0, 1)
+   172	    shader.inputs["Emission Strength"].default_value = 0
+   173	    material.node_tree.links.new(texture.outputs["Color"], shader.inputs["Base Color"])
+   174	    material.node_tree.links.new(shader.outputs["BSDF"], output.inputs["Surface"])
+   175	    return material
+   176	
+   177	
+   178	def mark_all(obj: bpy.types.Object, group_name: str | None) -> None:
+   179	    if not group_name:
+   180	        return
+   181	    group = obj.vertex_groups.new(name=group_name)
+   182	    group.add(list(range(len(obj.data.vertices))), 1.0, "REPLACE")
+   183	
+   184	
+   185	def tag(
+   186	    obj: bpy.types.Object,
+   187	    region: str,
+   188	    material: bpy.types.Material,
+   189	    bevel: float = 0.012,
+   190	    damage_group: str | None = None,
+   191	    smooth: bool = False,
+   192	) -> bpy.types.Object:
+   193	    obj["atlas_region"] = region
+   194	    obj.data.materials.append(material)
+   195	    mark_all(obj, damage_group)
+   196	    if bevel > 0:
+   197	        modifier = obj.modifiers.new("Worked edge", "BEVEL")
+   198	        modifier.width = bevel
+   199	        modifier.segments = 1
+   200	        modifier.limit_method = "ANGLE"
+   201	    if smooth:
+   202	        for polygon in obj.data.polygons:
+   203	            polygon.use_smooth = True
+   204	    return obj
+   205	
+   206	
+   207	def box(
+   208	    name: str,
+   209	    size: tuple[float, float, float],
+   210	    at: tuple[float, float, float],
+   211	    region: str,
+   212	    material: bpy.types.Material,
+   213	    bevel: float = 0.012,
+   214	    rotation: tuple[float, float, float] = (0, 0, 0),
+   215	    damage_group: str | None = None,
+   216	) -> bpy.types.Object:
+   217	    bpy.ops.mesh.primitive_cube_add(location=at, rotation=rotation)
+   218	    obj = bpy.context.object
+   219	    obj.name = name
+   220	    obj.scale = tuple(value * 0.5 for value in size)
+   221	    bpy.ops.object.transform_apply(location=False, rotation=True, scale=True)
+   222	    return tag(obj, region, material, bevel, damage_group)
+   223	
+   224	
+   225	def cylinder(
+   226	    name: str,
+   227	    radius: float,
+   228	    depth: float,
+   229	    at: tuple[float, float, float],
+   230	    region: str,
+   231	    material: bpy.types.Material,
+   232	    vertices: int = 12,
+   233	    rotation: tuple[float, float, float] = (0, 0, 0),
+   234	    bevel: float = 0.006,
+   235	    damage_group: str | None = None,
+   236	) -> bpy.types.Object:
+   237	    bpy.ops.mesh.primitive_cylinder_add(vertices=vertices, radius=radius, depth=depth, location=at, rotation=rotation)
+   238	    obj = bpy.context.object
+   239	    obj.name = name
+   240	    bpy.ops.object.transform_apply(location=False, rotation=True, scale=True)
+   241	    return tag(obj, region, material, bevel, damage_group, smooth=True)
+   242	
+   243	
+   244	def cone(
+   245	    name: str,
+   246	    radius1: float,
+   247	    radius2: float,
+   248	    depth: float,
+   249	    at: tuple[float, float, float],
+   250	    region: str,
+   580	
+   581	
+   582	def prepare_part(obj: bpy.types.Object) -> None:
+   583	    bpy.context.view_layer.objects.active = obj
+   584	    obj.select_set(True)
+   585	    for modifier in list(obj.modifiers):
+   586	        bpy.ops.object.modifier_apply(modifier=modifier.name)
+   587	    bpy.ops.object.mode_set(mode="EDIT")
+   588	    bpy.ops.mesh.select_all(action="SELECT")
+   589	    bpy.ops.mesh.normals_make_consistent(inside=False)
+   590	    bpy.ops.uv.smart_project(angle_limit=math.radians(66), island_margin=0.025)
+   591	    bpy.ops.object.mode_set(mode="OBJECT")
+   592	    uv = obj.data.uv_layers.active.data
+   593	    coords = np.array([[loop.uv.x, loop.uv.y] for loop in uv], dtype=np.float32)
+   594	    low = coords.min(axis=0)
+   595	    span = np.maximum(coords.max(axis=0) - low, 1e-6)
+   596	    u0, v0, u1, v1 = REGIONS[obj["atlas_region"]]
+   597	    for loop, coord in zip(uv, coords):
+   598	        normalized = (coord - low) / span
+   599	        loop.uv = (u0 + normalized[0] * (u1 - u0), v0 + normalized[1] * (v1 - v0))
+   600	    obj.select_set(False)
+   601	
+   602	
+   603	def join_component(name: str, parts: list[bpy.types.Object], material: bpy.types.Material) -> bpy.types.Object:
+   604	    for part in parts:
+   605	        prepare_part(part)
+   606	    bpy.ops.object.select_all(action="DESELECT")
+   607	    for part in parts:
+   608	        part.select_set(True)
+   609	    bpy.context.view_layer.objects.active = parts[0]
+   610	    bpy.ops.object.join()
+   611	    component = bpy.context.object
+   612	    component.name = name
+   613	    component.data.name = f"{name}Mesh"
+   614	    component.data.materials.clear()
+   615	    component.data.materials.append(material)
+   616	    for polygon in component.data.polygons:
+   617	        polygon.material_index = 0
+   618	    component.data.uv_layers.active.name = "UVMap"
+   619	    bpy.context.scene.cursor.location = (0, 0, 0)
+   620	    bpy.ops.object.origin_set(type="ORIGIN_CURSOR")
+   621	    component.select_set(False)
+   622	    return component
+   623	
+   624	
+   625	def group_vertex_indices(obj: bpy.types.Object, group_name: str) -> set[int]:
+   626	    group = obj.vertex_groups.get(group_name)
+   627	    if group is None:
+   628	        return set()
+   629	    index = group.index
+   630	    return {vertex.index for vertex in obj.data.vertices if any(item.group == index for item in vertex.groups)}
+   631	
+   632	
+   633	def rotate_y(co: Vector, pivot: Vector, angle: float) -> None:
+   634	    local = co - pivot
+   635	    x = local.x * math.cos(angle) + local.z * math.sin(angle)
+   636	    z = -local.x * math.sin(angle) + local.z * math.cos(angle)
+   637	    co.x = pivot.x + x
+   638	    co.z = pivot.z + z
+   639	
+   640	
+   641	def add_damage_shapes(
+   642	    claw: bpy.types.Object,
+   643	    paddle_port: bpy.types.Object,
+   644	    paddle_starboard: bpy.types.Object,
+   645	    hold: bpy.types.Object,
+   646	) -> None:
+   647	    claw.shape_key_add(name="Basis")
+   648	    slack = claw.shape_key_add(name="Damage_SlackClaw")
+   649	    pivot = Vector((-1.40, 0.0, 1.30))
+   650	    for index in group_vertex_indices(claw, "DamageClawArm"):
+   651	        co = slack.data[index].co
+   652	        rotate_y(co, pivot, math.radians(-30))
+   653	        co.z -= 0.34
+   654	        co.y *= 1.06
+   655	    shard_moves = (Vector((-0.36, -0.40, -0.22)), Vector((-0.22, 0.44, -0.35)), Vector((0.10, 0.56, -0.46)))
+   656	    for shard, movement in enumerate(shard_moves):
+   657	        for index in group_vertex_indices(claw, f"DamageClawShard{shard}"):
+   658	            slack.data[index].co += movement
+   659	
+   660	    for paddle, side, label in ((paddle_port, -1, "Port"), (paddle_starboard, 1, "Starboard")):
+   661	        paddle.shape_key_add(name="Basis")
+   662	        broken = paddle.shape_key_add(name=f"Damage_Broken{label}Paddle")
+   663	        center = Vector((1.35, side * 2.48, 1.64))
+   664	        for index in group_vertex_indices(paddle, f"Damage{label}Paddle"):
+   665	            co = broken.data[index].co
+   666	            radial_x = co.x - center.x
+   667	            radial_z = co.z - center.z
+   668	            upper = max(0.0, radial_z)
+   669	            co.y += side * (0.30 + upper * 0.46)
+   670	            co.x += radial_z * (0.18 if side > 0 else -0.18)
+   671	            co.z -= 0.42 + abs(radial_x) * 0.18
+   672	        moves = (
+   673	            Vector((-0.56, side * 0.46, -0.18)),
+   674	            Vector((0.16, side * 0.62, -0.44)),
+   675	            Vector((0.62, side * 0.40, 0.08)),
+   676	        )
+   677	        for shard, movement in enumerate(moves):
+   678	            for index in group_vertex_indices(paddle, f"Damage{label}Shard{shard}"):
+   679	                broken.data[index].co += movement
+   680	
+   681	    hold.shape_key_add(name="Basis")
+   682	    cracked = hold.shape_key_add(name="Damage_CrackedLootHold")
+   683	    for index in group_vertex_indices(hold, "DamageHoldPortLid"):
+   684	        co = cracked.data[index].co
+   685	        co.y -= 0.58
+   686	        co.z += max(0.0, 2.50 - co.z) * 0.15 + 0.28
+   687	    for index in group_vertex_indices(hold, "DamageHoldStarboardLid"):
+   688	        co = cracked.data[index].co
+   689	        co.y += 0.62
+   690	        co.z += max(0.0, 2.50 - co.z) * 0.12 - 0.18
+   691	        co.x += 0.18
+   692	    for index in group_vertex_indices(hold, "DamageHoldRear"):
+   693	        co = cracked.data[index].co
+   694	        rear = max(0.0, min(1.0, (co.x - 1.55) / 1.80))
+   695	        co.x += rear * 0.20
+   696	        co.z -= rear * 0.50
+   697	        co.y *= 1.0 + rear * 0.08
+   698	    for index in group_vertex_indices(hold, "DamageFlag"):
+   699	        co = cracked.data[index].co
+   700	        mast_x = 0.52 if co.x < 2.60 else 3.00
+   701	        co.x = mast_x + (co.x - mast_x) * 0.30
+   702	        co.z = 2.42 + (co.z - 2.42) * 0.25
+   703	        co.y *= 0.60
+   704	    cargo_moves = (
+   705	        Vector((1.86, -2.08, -0.94)),
+   706	        Vector((1.58, 2.16, -0.86)),
+   707	        Vector((2.22, -1.12, -1.02)),
+   708	        Vector((2.00, 1.28, -0.92)),
+   709	    )
+   710	    for cargo, movement in enumerate(cargo_moves):
+
+2026-09-08T18:07:29.071435Z  WARN codex_analytics::reducer: dropping turn tool count update: missing turn state thread_id=01a08233-b25c-7420-9872-9bc75f46fb68 turn_id=01a08233-b31c-7ff1-9c25-19e09070f3ca item_id="exec-28600975-d2f5-484d-bb60-f16cb4ae3321"
+exec
+/bin/zsh -lc "nl -ba build_dredge_queen.py | sed -n '300,345p'; nl -ba build_dredge_queen.py | sed -n '725,775p'; echo '=== detail references ==='; grep -n \"def box\\|def beam\\|mark_all\\|shape\" detail_opus5_kit.py | head -80" in /Users/robin/.codex/worktrees/572c/Gold Rush/artifacts/boss-fidelity/e6-homemaker/source-review-12
+ succeeded in 0ms:
+   300	    material: bpy.types.Material,
+   301	    damage_group: str | None = None,
+   302	    scale: tuple[float, float, float] = (1, 1, 1),
+   303	) -> bpy.types.Object:
+   304	    bpy.ops.mesh.primitive_ico_sphere_add(subdivisions=2, radius=radius, location=at)
+   305	    obj = bpy.context.object
+   306	    obj.name = name
+   307	    obj.scale = scale
+   308	    bpy.ops.object.transform_apply(location=False, rotation=False, scale=True)
+   309	    return tag(obj, region, material, 0, damage_group, smooth=True)
+   310	
+   311	
+   312	def beam(
+   313	    name: str,
+   314	    start: tuple[float, float, float],
+   315	    end: tuple[float, float, float],
+   316	    width: float,
+   317	    region: str,
+   318	    material: bpy.types.Material,
+   319	    damage_group: str | None = None,
+   320	) -> bpy.types.Object:
+   321	    a, b = Vector(start), Vector(end)
+   322	    direction = b - a
+   323	    obj = box(
+   324	        name,
+   325	        (width, width, direction.length),
+   326	        tuple((a + b) * 0.5),
+   327	        region,
+   328	        material,
+   329	        bevel=min(0.006, width * 0.18),
+   330	        damage_group=damage_group,
+   331	    )
+   332	    obj.rotation_mode = "QUATERNION"
+   333	    obj.rotation_quaternion = direction.to_track_quat("Z", "Y")
+   334	    bpy.context.view_layer.objects.active = obj
+   335	    obj.select_set(True)
+   336	    bpy.ops.object.transform_apply(location=False, rotation=True, scale=False)
+   337	    obj.select_set(False)
+   338	    return obj
+   339	
+   340	
+   341	def triangle_panel(
+   342	    name: str,
+   343	    points: tuple[tuple[float, float, float], tuple[float, float, float], tuple[float, float, float]],
+   344	    thickness: float,
+   345	    region: str,
+   725	
+   726	def world_bounds(objects: tuple[bpy.types.Object, ...]) -> tuple[Vector, Vector]:
+   727	    points = [obj.matrix_world @ vertex.co for obj in objects for vertex in obj.data.vertices]
+   728	    return (
+   729	        Vector((min(point.x for point in points), min(point.y for point in points), min(point.z for point in points))),
+   730	        Vector((max(point.x for point in points), max(point.y for point in points), max(point.z for point in points))),
+   731	    )
+   732	
+   733	
+   734	def normalize_base_center(objects: tuple[bpy.types.Object, ...]) -> None:
+   735	    minimum, maximum = world_bounds(objects)
+   736	    center_x = (minimum.x + maximum.x) * 0.5
+   737	    center_y = (minimum.y + maximum.y) * 0.5
+   738	    scale = MODEL_LENGTH / (maximum.x - minimum.x)
+   739	    for obj in objects:
+   740	        for vertex in obj.data.vertices:
+   741	            vertex.co.x = (vertex.co.x - center_x) * scale
+   742	            vertex.co.y = (vertex.co.y - center_y) * scale
+   743	            vertex.co.z = (vertex.co.z - minimum.z) * scale
+   744	        obj.data.update()
+   745	
+   746	
+   747	def export(objects: tuple[bpy.types.Object, ...]) -> None:
+   748	    bpy.ops.object.select_all(action="DESELECT")
+   749	    for obj in objects:
+   750	        obj.select_set(True)
+   751	    bpy.context.view_layer.objects.active = objects[0]
+   752	    bpy.ops.wm.save_as_mainfile(filepath=str(BLEND))
+   753	    bpy.ops.export_scene.gltf(
+   754	        filepath=str(GLB.with_suffix("")),
+   755	        export_format="GLB",
+   756	        use_selection=True,
+   757	        export_apply=True,
+   758	        export_cameras=False,
+   759	        export_lights=False,
+   760	        export_animations=False,
+   761	        export_materials="EXPORT",
+   762	        export_morph=True,
+   763	    )
+   764	
+   765	
+   766	def main() -> None:
+   767	    OUT.mkdir(parents=True, exist_ok=True)
+   768	    reset_scene()
+   769	    atlas, source_hashes = create_atlas()
+   770	    material = create_material(atlas)
+   771	    claw = join_component("claw", build_claw(material), material)
+   772	    paddle_port = join_component("paddle_port", build_paddle(material, -1), material)
+   773	    paddle_starboard = join_component("paddle_starboard", build_paddle(material, 1), material)
+   774	    hold = join_component("hold", build_hold(material), material)
+   775	    objects = (claw, paddle_port, paddle_starboard, hold)
+=== detail references ===
+38:    ys = np.linspace(0, source.shape[0] - 1, height).astype(np.int32)
+39:    xs = np.linspace(0, source.shape[1] - 1, width).astype(np.int32)
+45:    pixels = np.array(source.pixels[:], dtype=np.float32).reshape(source.size[1], source.size[0], 4)
+76:def mark_all(obj: bpy.types.Object, group_name: str | None) -> None:
+93:    mark_all(obj, damage_group)
+128:def box(
+230:def beam(
+
+2026-09-08T18:07:35.246802Z  WARN codex_analytics::reducer: dropping turn tool count update: missing turn state thread_id=01a08233-b25c-7420-9872-9bc75f46fb68 turn_id=01a08233-b31c-7ff1-9c25-19e09070f3ca item_id="exec-c48b2d26-bc0c-4835-b96d-baf66d6e3542"
+codex
+Static-only review found no concrete geometry, morph, or export defect. The seat extension and rear frame/back translations remain aligned, while ChairBackPanel only adds overlapping authoring metadata; visual quality was not rendered or executed.
+Static-only review found no concrete geometry, morph, or export defect. The seat extension and rear frame/back translations remain aligned, while ChairBackPanel only adds overlapping authoring metadata; visual quality was not rendered or executed.

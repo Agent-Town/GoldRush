@@ -1,0 +1,113 @@
+{
+  "rig": "opus",
+  "contract": "e7-echo-canyon",
+  "model": "claude-opus-5",
+  "sessionId": "35b4b59b-02f7-496a-a3d4-8130a1b8de7b",
+  "startedAt": "2026-09-04T04:00:58.091Z",
+  "endedAt": "2026-09-04T04:08:10.566Z",
+  "wallClockSeconds": 432,
+  "wallHit": false,
+  "exitCode": 0,
+  "signal": null,
+  "setupToFirstOutputSeconds": 75,
+  "arenaTrackedChanges": [],
+  "workspaceFiles": [
+    ".runs.json",
+    "attempt-1-tape.json",
+    "ctrl-v1.mjs",
+    "gauntlet-outcome.json",
+    "gauntlet-report.md",
+    "probe-idle.err",
+    "probe-idle.json",
+    "probe-idle.ndjson",
+    "run.mjs",
+    "tune-1.err",
+    "tune-1.json",
+    "tune-1.ndjson"
+  ],
+  "outcome": {
+    "secured": true,
+    "waves": 20,
+    "timeMs": 600000,
+    "gold": 295,
+    "kills": 908,
+    "calls": 73,
+    "defaultedPicks": 0,
+    "defaultedSecure": 1,
+    "eventLogHash": "fnv1a32:2b384d92",
+    "tape": "/private/tmp/heat11-5e7a7c0b/artifacts/heat11/opus/e7-echo-canyon/attempt-1-tape.json",
+    "tapeNote": "attempt-1-tape.json is a byte-identical copy of tune-1.json, the single ride that secured; promoted by name as the scored attempt under the brief's promotion clause. It was NOT re-ridden (the stop rule ends the ride at the first secure).",
+    "tapeEventLogHash": "fnv1a32:a525ade1",
+    "tapeDurationTicks": 18000,
+    "tapeEnvelopeTicks": 18000,
+    "tapeEntries": 73,
+    "tapeEntriesCeiling": 3600,
+    "tapeBytes": 171156,
+    "tapeBytesCeiling": 592384,
+    "tapeLastEntryTick": 17905,
+    "localAssayReplay": "node scripts/assay-replay-agent.mjs -> {\"eventLogHash\":\"fnv1a32:a525ade1\",\"outcome\":{\"secured\":true,\"waves\":20,\"gold\":295,\"timeAlive\":600}} — reproduced",
+    "scored": true,
+    "runsSoFar": 2,
+    "scoredAttempts": 1,
+    "worldModel": "sim-import"
+  },
+  "outcomeError": null,
+  "scoredTapes": [
+    {
+      "file": "attempt-1-tape.json",
+      "id": "agent-1fb7409a-837964b0-ae4e-4ca9-b029-568b9f1a5c6a",
+      "contract": "e7-echo-canyon",
+      "seed": "e7-echo-canyon-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "5e7a7c0ba",
+        "engineHash": "a607a81f44e10dc2b2262682c1e116c15917edffeeaa0c5909f383ccea5d8e04",
+        "era": 5,
+        "viewVersion": 1
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 20,
+        "timeAlive": 600,
+        "gold": 295
+      },
+      "entries": 73
+    }
+  ],
+  "otherSecuredTapes": [
+    {
+      "file": "tune-1.json",
+      "id": "agent-1fb7409a-837964b0-ae4e-4ca9-b029-568b9f1a5c6a",
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 20,
+        "timeAlive": 600,
+        "gold": 295
+      },
+      "meta": {
+        "buildId": "5e7a7c0ba",
+        "engineHash": "a607a81f44e10dc2b2262682c1e116c15917edffeeaa0c5909f383ccea5d8e04",
+        "era": 5,
+        "viewVersion": 1
+      }
+    }
+  ],
+  "report": {
+    "outcome": "**SECURED.** `{\"secured\":true,\"waves\":20,\"timeMs\":600000,\"gold\":295,\"kills\":908,\"calls\":73,\"defaultedPicks\":0,\"defaultedSecure\":1,\"eventLogHash\":\"fnv1a32:2b384d92\"}`\n\n- waves **20** · timeAlive **600.000 s** · gold **295** · calls **73**\n- tape put forward: `artifacts/heat11/opus/e7-echo-canyon/attempt-1-tape.json` (tape\n  `eventLogHash` `fnv1a32:a525ade1`, `durationTicks` 18,000, 73 entries, 171,156 bytes,\n  `meta.era` 5, `meta.viewVersion` 1) — a byte-identical copy of `tune-1.json`, the one ride\n  that secured\n- **2 sim runs** (idle probe + `ctrl-v1` tune), **1 scored attempt** (that tune, promoted by\n  name). The assay-replay is a replay of the finished reel, not a third ride.",
+    "whatTheMapAsked": "It asked me **nothing about its era's signature mechanic, and the county's PARTIAL audit is\nexactly right — but this contract is the most legible version of that finding I have ridden.**\nE7 is playbooks and the Echo, and Echo Canyon publishes its half of that squarely:\n`now.broadcastMirror` is present in **all 75 views of the secured run and is byte-identical in\nevery one of them** — `{\"declared\":true,\"delay\":\"next-wave\",\"recordedUses\":0,\"distinctPlaybooks\":0,\n\"maxRepeat\":0,\"pending\":[],\"squadsFielded\":0,\"bodiesFielded\":0,\"lastFieldedWave\":null,\n\"capPerWave\":3,\"hpPerRepeat\":0.1,\"refusals\":{\"cappedSquads\":0}}`. Those zeros can never be\nanything else, and `mechanics.rules.broadcast_mirror` says why in its own words: the mirror is\n`recordedOn: \"a playbook USE (a replay that starts); recording a tape records nothing\"`, and\n**the public grammar has no playbook verb** — no record, no replay, no drone body — so\n`recordedUses` is pinned at 0 and no corrupted squad is ever fielded. The whole teaching intent\n(\"vary your own patterns; your habits have a shadow\") is therefore unreachable through the door:\nthe consequence clause, the `squadSize`-from-tape-length echo, the `wrecker if the tape built /\nthief otherwise` corruption rule, the 10%-per-repeat heaviness — all fully specified, all\ninert. `broadcastMirrorZones` covers the entire playable board and `mechanics.interactables` is\nempty. This is the same class as my E2 pressure findings (generations 8–10) but published\nhonestly rather than merely advertised, which is the version worth keeping: like `e7-dead-band`'s\n`signalSuppression`, a visible row of permanent zeros told me in one probe what E2 took me three\ngenerations of grepping consumers to work out. What actually decided the contract was ordinary\nsurvival geometry, and one subtraction: `canyon-floor-yard` reaches to z = 10, **2 wu** from a\nhero welded at (0, 12), so four turrets on the z ≈ 9–10 line at x ∈ {0, ±10} cover both canyon\nmouths and the claim itself. That is the precise inverse of `e7-relay-valley`, where the same\nE7 fiction put every build zone on the relay ridge 31.24 wu away and made the map unfortifiable;\nhere the era's geography is generous and the run never took a scratch until wave 19. The fields\nthat carried it were the plainest ones — `now.works.byKind`/`entries` (ladder state and\nplacement), `now.seams[].active/x/z` (income; ids re-anchor between waves, and only two of the\nfour anchors sit within 23 wu of the claim), `now.gold`, `now.hero.hp/maxHp/level`,\n`now.threats.alive` (peaked at 40, never near the published 60 cap) and\n`now.pendingOffer`/`now.pendingSecure` — and the orders were `BUILD`, `HARVEST`,\n`PICK_UPGRADE` and one blank line. Not one E7 verb, because E7 has none.",
+    "winnability": "Secured, and the margin was **wide and never once thin**: the hero sat at its full running\nmaximum for the first eighteen waves (100/100 through wave 5, then 175/175 from wave 8 to wave\n18) and lost its only 16 hit points at wave 19 to finish **159/175**, **0 of 10 works were ever\nwrecked** across 908 kills, `goldStolen` was 0, and gold pinned at the 200 cap from wave 12 with\nthe ladder finished at wave 10 — health, defence and money all had spare capacity simultaneously,\nand the only thing that could plausibly lose this contract is not checking the reel envelope.",
+    "lessons": "- **`unclaimed` with no `reason` in `winnability-receipts.json` is seventeen-for-seventeen.**\n  Still the first two lines of JSON I read, still the cheapest information in the county, still\n  never wrong.\n- **The blank-line secure is now proven on a second contract, and it should be standing\n  equipment on every `secureWave`-silent map.** Generation 27 found it on `e7-dead-band`; here\n  it worked first try, unmodified: `durationTicks` 18,000 against an 18,000 ceiling, last entry\n  at tick 17,905, `defaultedSecure: 1` and nothing else moved. The rule is mechanical — *if the\n  manifest omits `twist.secureWave`, answer `now.pendingSecure` with a blank line, never with\n  `SECURE_CHOICE`.* That one line of controller is the difference between generation 24/25's\n  refused first-secures and a ranked one.\n- **Check the four admissibility numbers off the tape the moment the run ends, before writing\n  anything else.** `durationTicks`, `lastEntryTick < durationTicks`, entry count, byte size.\n  It took ninety seconds and it is the check that three of my generations learned the expensive\n  way. Securing and producing a submittable reel are still different achievements.\n- **Two E7 contracts, opposite verdicts, and the difference was one subtraction I can do from\n  the manifest.** `min |claim − buildZone|` against turret range 16: relay-valley 31.24 (no\n  pocket, unfortifiable, not secured), echo-canyon **2.0** (pocket, secured on the first\n  controller at full health). Generation 26 wrote that the null case *is* the finding; the\n  positive case is just as decisive and just as cheap. **Do that subtraction before the idle\n  probe on every map, and let it choose the whole plan.**\n- **Read the roster's flags for what they exclude — second E7 map running.** Neither\n  `rogue_automaton` nor `data_rustler` carries `wrecker: true`, and `data_rustler`'s\n  `thief: true` makes `Enemy.ts:624` force `wrecker = false` anyway. So no work on this board\n  can be attacked: `works.wrecked` was 0 at all 75 views, `goldStolen` finished at 0, and every\n  `REPAIR_UNDER` slot I might have carried would have been dead weight. Two minutes in\n  `Balance.e7Roster` deleted a whole order class from the design.\n- **The generation 6→27 skeleton secured this on its first ride with zero tuning, for the second\n  contract running.** `PICK_UPGRADE` first under replace semantics; one ladder as a\n  non-decreasing price prefix; more candidate positions than slots with a stall blacklist; a\n  plating-first scorer; the tail stacked with `HARVEST` on the nearest live seam. Ten builds,\n  zero refusals, `goldPanned` 870, `maxHp` 100 → 175. **Stop treating it as a starting point to\n  re-derive and start treating it as the default opening**; the heat's real work is finding the\n  one thing the board does differently, and on an ordinary-survival board the honest answer is\n  sometimes \"nothing\".\n- **A published mechanic with permanently constant fields is a finding you can make in one\n  probe, and it is worth making explicitly.** `now.broadcastMirror` was byte-identical across\n  all 75 views. I did not have to grep a consumer, guess, or ride a control: `recordedUses: 0`\n  in view 0 plus `recordedOn: \"a playbook USE\"` in `mechanics.rules` plus the absence of a\n  playbook verb in the grammar is a complete proof that the era's lever cannot move. **Diff the\n  era socket across the whole view log — one line of code, and it settles PARTIAL/RESKIN\n  questions better than any amount of source reading.**\n- **`engineDependencies: \"missing\"` was right again, and the running score is now three right\n  to four wrong.** Echo Canyon declares `broadcast-mirror-consumer: \"missing\"` and it is\n  accurate — the mirror publishes but fields nothing. It remains a comment to confirm against\n  `now`'s keys in one idle probe, never a fact to plan on in either direction.\n- **The stop rule leaves room for exactly one receipt, and it is the local assay.**\n  `scripts/assay-replay-agent.mjs` reproduced the promoted reel's `fnv1a32:a525ade1` and all\n  four outcome fields without riding anything. Second generation doing this instead of a\n  re-ride; in an era that replays every reel it is strictly better than a second ride, because\n  it proves the *submitted bytes* rather than a sibling of them.\n- **Write the outcome file after every run, before the analysis.** Fourteenth generation saying\n  it, eleventh actually doing it — the runner wrote `gauntlet-outcome.json` on the idle probe's\n  exit and again on the secure. And the generation 23/24 caveat bit for the third time exactly\n  as predicted: a best-so-far comparator cannot know which run you have chosen to *call* your\n  scored attempt, or that the promoted tape lives under a different filename. **I hand-wrote the\n  final row. Check the file says what you mean.**"
+  },
+  "usage": {
+    "transcript": "/Users/robin/.claude/projects/-private-tmp-heat11-5e7a7c0b/35b4b59b-02f7-496a-a3d4-8130a1b8de7b.jsonl",
+    "assistantTurns": 57,
+    "toolCalls": 36,
+    "tokensIn": 114,
+    "tokensOut": 61667,
+    "cacheReadTokens": 10287250,
+    "cacheWriteTokens": 572210,
+    "note": "tokensIn excludes cache reads/writes (reported separately); summed from the CLI session transcript, not self-reported by the rig"
+  }
+}

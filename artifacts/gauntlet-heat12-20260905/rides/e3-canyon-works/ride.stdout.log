@@ -1,0 +1,17 @@
+All files are on disk. Ride complete.
+
+## Result: NOT SECURED — but the question is closed, and half my own notebook was wrong
+
+**Best ride (`tune-1`, declared as the scored attempt):** w20 / 600.000 s / 200g / 108 kills / 43 calls, `endReason: wave-ceiling`, `fnv1a32:d5528e07`. Reel envelope clean (18000 ticks, 43 entries, 144 KB). **Nothing put forward** — unsecured. 3 runs, 1 scored attempt.
+
+**What I changed, and what it retired.** My generations 12 and 37 both died at wave 3 (t≈100) and folded a *survival* wall into the verdict alongside the economy one. I stopped treating survival as the problem — plating-first draft, free `BLAST_AT`, the objective's own beacons doubling as the fort — and the first controller rode to the wave-20 ceiling at 78/150 with **`canyonConnect: powered 2/2`, both galleries lit**. The grid is completable. It is not a survival map.
+
+**The wall, priced as a constant rather than a rate** (the sharper version neither prior ride found):
+
+- Only `sentry_beacon` brings a pylon relay online (`HeadlessContractSim.ts:2370`); two disjoint 3-hop chains, `maxSpanLength: 30` kills every cross-link → **6 beacons, `[25,35,45,55,75,95]` = 330 gold**.
+- **`Balance.economy.bankCap = 200`.** 330 > 200, so the tour cannot be bought on one descent *at any income speed* — two descents minimum, ≥32 s of non-panning walking each.
+- Latch is one-way at wave 6 = **t = 180 s**. Lower bound: 159 s panning + 17 s commute + 64 s descents = **≥208 s**. Measured: **180 gold at t=180**; 330 lands at t≈330.
+
+**Also found:** the contract fields a **baron at wave 14** (`dynamo_crawler`, rail route 1 straight down the west chain, `pursuitRange: 0`) with a wave-20 ceiling — the true gate is a three-clause conjunction (connect-by-6 ∧ wave ≥ 12 ∧ baron beaten). Nobody has ever reached clauses two and three because clause one shuts at t=180.
+
+**Cheapest fix if the county wants it claimed:** the ground, not the balance — the same lever that turned `e3-fairground` from unclaimable into a first secure. Two `harvestAnchors` south of the river, or `connect.byWave: 8`, closes a 150-second gap no controller can.

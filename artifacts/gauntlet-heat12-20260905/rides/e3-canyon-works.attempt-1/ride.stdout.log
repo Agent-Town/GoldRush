@@ -1,0 +1,19 @@
+**NOT SECURED** — and I'm reporting it as a finding, with the arithmetic attached.
+
+**Result:** wave 3 / 106.500s / 120 gold / 42 kills / 12 calls. 6 sim runs, 1 scored attempt. Everything is on disk at `artifacts/heat12/opus/e3-canyon-works/` — `gauntlet-outcome.json` declares `attempt-1-tape.json` as the put-forward tape.
+
+**What I established (verified in source, not inherited from my own generation-12 notes):**
+
+- The connect latch is an **absolute secure gate** — `autoSecureWaveForRun:1339` returns unsecurable while `!canyonConnectCompletedByDeadline`. This closes the one caveat gen 12 left open: a "pure fortress line conceding the latch" cannot secure at any wave. The connect *is* the contract.
+- Completing it requires six `sentry_beacon`s on six pylon sites (`maxSpanLength 30` forbids every shortcut — I checked all cross-links). The map sells **exactly six** beacons (`maxCount: 6`), cost curve summing to **330 gold**, so every beacon is pre-spent by the objective and none is available for defence. No turret on this roster.
+- Deadline is `wave <= 6` → **t < 180s** (waves measured at 30s).
+- Income ceiling is **~2.07 g/s**: two live anchors (never three, in any view), each 30 gold per ~29s cycle, all sitting 78–81wu north across the river. 330 gold lands at **t ≈ 176 at the earliest** — before a single step of the ~147wu placement path.
+
+**Two corrections against myself worth flagging:** my gen-12 summary said the latch "demands 330 gold across six sites" while also quoting `required: 2` from the view. Both are true about different things (`required` counts galleries; the six beacons are what *reach* them), and reading my own prose I nearly planned for a two-beacon objective. Separately, I found and fixed a real controller bug — the harvest array alternated seam ids every order, walking 12.6wu before each 1.5s pan — but fixing it did not change the verdict.
+
+**Two things I want to be straight about rather than dress up:**
+
+1. Six palisades (60 gold) moved the hero's death by **zero ticks** — a bit-identical HP curve and the same t=106.5. So I never observed a run reach wave 6, which means the survival wall is asserted from four consistent configurations, not from a run that got past it.
+2. The experiment I most wanted — the stake-first beacon chain, where the two base pylons would defend the hero *and* advance the objective — was still spinning at the wall and I stopped it. It wrote no tape and no partial log. I don't know whether it was surviving deep or caught in an order-failure view storm. That is an **unmeasured question, not a result**, and it's the one thing that could soften the verdict. My controller only reported at exit; writing the log incrementally would have saved it, and that's the sharpest lesson in my notebook entry.
+
+So the honest verdict is **no, not winnable through the door from its starting kit**, on an economy-versus-deadline wall of roughly 30–60 seconds that no policy I can construct closes — with that one untested line named explicitly rather than buried.

@@ -1,0 +1,41 @@
+
+Running 4 tests using 1 worker
+
+[1/4] [mobile-chrome] › e2e/e5-boss-dredge-queen.spec.ts:131:1 › rides the storm, gates Act 2 on both paddles, spills the hold, and persists W6 per profile
+[2/4] [mobile-chrome] › e2e/e5-boss-dredge-queen.spec.ts:192:1 › interrupts a mid-cycle claw hit without transferring loot
+[3/4] [mobile-chrome] › e2e/e5-boss-dredge-queen.spec.ts:215:1 › damages only inside the telegraphed defensive-claw arc
+[4/4] [mobile-chrome] › e2e/e5-boss-dredge-queen.spec.ts:237:1 › keeps the boss-run frame p95 within 15% of the non-boss tile
+[mobile-chrome] › e2e/e5-boss-dredge-queen.spec.ts:237:1 › keeps the boss-run frame p95 within 15% of the non-boss tile
+Dredge-Queen perf mobile-chrome: non-boss=16.3ms boss=10.3ms ratio=0.6319
+
+  1) [mobile-chrome] › e2e/e5-boss-dredge-queen.spec.ts:237:1 › keeps the boss-run frame p95 within 15% of the non-boss tile 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 3
+
+    - Array []
+    + Array [
+    +   "THREE.GLTFLoader: Couldn't load texture blob:http://127.0.0.1:5331/65a8f54b-dba5-4144-a1c5-25be69596705",
+    + ]
+
+      258 |   console.log(`Dredge-Queen perf ${testInfo.project.name}: non-boss=${nonBossP95}ms boss=${bossP95}ms ratio=${ratio}`);
+      259 |   expect(bossP95).toBeLessThanOrEqual(nonBossP95 * 1.15);
+    > 260 |   expect(errors).toEqual([]);
+          |                  ^
+      261 | });
+      262 |
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-boss-control/e2e/e5-boss-dredge-queen.spec.ts:260:18
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e5-boss-dredge-queen-keeps-7c885-hin-15-of-the-non-boss-tile-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e5-boss-dredge-queen-keeps-7c885-hin-15-of-the-non-boss-tile-mobile-chrome/error-context.md
+
+
+  1 failed
+    [mobile-chrome] › e2e/e5-boss-dredge-queen.spec.ts:237:1 › keeps the boss-run frame p95 within 15% of the non-boss tile 
+  3 passed (22.4s)
+rc=1

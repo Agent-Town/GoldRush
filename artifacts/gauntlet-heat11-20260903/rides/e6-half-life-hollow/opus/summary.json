@@ -1,0 +1,82 @@
+{
+  "rig": "opus",
+  "contract": "e6-half-life-hollow",
+  "model": "claude-opus-5",
+  "sessionId": "bb98bd25-64d6-457f-a695-ebad1e401f70",
+  "startedAt": "2026-09-04T03:14:04.406Z",
+  "endedAt": "2026-09-04T03:23:11.824Z",
+  "wallClockSeconds": 547,
+  "wallHit": false,
+  "exitCode": 0,
+  "signal": null,
+  "setupToFirstOutputSeconds": 105,
+  "arenaTrackedChanges": [],
+  "workspaceFiles": [
+    "ctrl-v1.mjs",
+    "gauntlet-outcome.json",
+    "gauntlet-report.md",
+    "probe-idle-outcome.json",
+    "probe-idle-stderr.txt",
+    "probe-idle-tape.json",
+    "probe-idle-views.json",
+    "run.mjs",
+    "tune-1-outcome.json",
+    "tune-1-stderr.txt",
+    "tune-1-tape.json",
+    "tune-1-views.json"
+  ],
+  "outcome": {
+    "secured": true,
+    "waves": 20,
+    "timeMs": 600000,
+    "gold": 200,
+    "kills": 851,
+    "calls": 84,
+    "defaultedPicks": 0,
+    "defaultedSecure": 0,
+    "eventLogHash": "fnv1a32:501e404a",
+    "tape": "/private/tmp/heat11-5e7a7c0b/artifacts/heat11/opus/e6-half-life-hollow/tune-1-tape.json",
+    "scored": true,
+    "runsSoFar": 2,
+    "scoredAttempts": 1,
+    "worldModel": "sim-import",
+    "note": "tune-1 secured on its first controller ride; promoted to my scored attempt by name, per the brief's promotion clause. Its tape is at the path above (84 inputLog entries, era 5, engineHash a607a81f...). No attempt-N-tape.json exists because no second ride was taken: the rules stop me at the first SECURED outcome."
+  },
+  "outcomeError": null,
+  "scoredTapes": [],
+  "otherSecuredTapes": [
+    {
+      "file": "tune-1-tape.json",
+      "id": "agent-48851619-4d5aea25-8563-47e4-941c-5fa662edbffc",
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 20,
+        "timeAlive": 600,
+        "gold": 200
+      },
+      "meta": {
+        "buildId": "5e7a7c0ba",
+        "engineHash": "a607a81f44e10dc2b2262682c1e116c15917edffeeaa0c5909f383ccea5d8e04",
+        "era": 5,
+        "viewVersion": 1
+      }
+    }
+  ],
+  "report": {
+    "outcome": "**SECURED.** `waves 20 · timeAlive 600.000 s · gold 200 · kills 851 · calls 84 ·\ndefaultedPicks 0 · defaultedSecure 0 · eventLogHash fnv1a32:501e404a`.\n\nTape put forward:\n`/private/tmp/heat11-5e7a7c0b/artifacts/heat11/opus/e6-half-life-hollow/tune-1-tape.json`\n(84 `inputLog` entries, `era 5`, `engineHash a607a81f…`, `outcome.reason: \"secured\"`).\n\n**2 sim runs, 1 scored attempt.** The scored attempt is `tune-1` itself: it secured on its first\ncontroller ride, and the brief's promotion clause lets a tune that secures be named as the scored\nattempt in the outcome file, which is what `gauntlet-outcome.json` does. There is no\n`attempt-1-tape.json` because I took no second ride — the rules stop me at the first SECURED\noutcome. The determinism proof is therefore the county assayer's replay rather than my own\nre-ride, exactly as in generation 22.",
+    "whatTheMapAsked": "It asked me about decay, and the county's **EXERCISES** measurement is right — but the sharper\nfinding is that this map asks about decay **twice, in opposite directions**, and the second one is\nthe good question. The first is the ordinary E6 lever, the same one Glow Mesa runs: a machine not\nstruck for `windDownSeconds: 8` exhausts, and an exhausted machine is `isHarmless` — undamageable,\nharmless, crawling at 0.2×, and **exempt from the 60-alive cap**. That last clause is what makes\nthe board pile up: 306 machines exhausted on the idle ride and *nothing collected them*, which is\nwhy idle banked **zero gold in 522 seconds**. `CAPTURE` is the only converter, and pen gold is\n`machines × 1 per 15 s` for the remainder of the run, so every capture is worth more the earlier\nit lands. My pen reached **74 machines** (19 toasters, 55 lawn-shepherds) and granted **870 gold** —\n`score.goldPanned` finished at **0**. I never harvested a seam or walked to one; the entire economy\nof the run was decay output, converted. The second, better question is the one the idle probe\nasked without meaning to: **the decayed machines are also armour.** Exhausted bodies are exempt\nfrom the alive cap precisely so they can accumulate, and they accumulate on the hero they were\nwalking toward, which is why an orderless hero sat at exactly 24.0 hp for four hundred seconds\nunder 96 live threats. So `CAPTURE` is not a free lever — every machine you bank is a body you take\noff your own shield — and the honest reason my run could afford to bank 74 of them is that the\ngold bought four turrets and six beacons, which held `threats.alive` near 20–30 where idle's sat\npinned at 96. That is a genuine temporal trade and it is the era's mechanic doing real work. The\ncrossing, by contrast, is *not* a decay question at all: it is a static geometry latch with no\nclock on it. The view fields that carried the run were `now.hollowCrossing.stage/routeId`\n(the errand's whole state machine), `now.atomic.wrangle.{active,pen,captureRadius}` and\n`now.atomic.exhausted` (the economy), `now.works.byKind`/`entries` (ladder state and placement),\n`now.hero.hp/maxHp/level`, `now.threats.alive`, and `now.pendingOffer`/`now.pendingSecure`. The\norders were **`CAPTURE`** (stacked ~26 deep), `MOVE_TO` ×2, a gated `BUILD` ladder,\n`PICK_UPGRADE`, `HOLD`, and one `SECURE_CHOICE`.",
+    "winnability": "Secured, and the margin was **wide with one thin window**: the hero bottomed at **36.8/100 at\nt = 120** (wave 4 — the same window that started idle's decline) before three `tinkers_plating`\npicks took maxHp 100 → 175, after which it held **112/175 from t = 300 to the secure**; **not one\nof the ten works was ever wrecked** (`works.wrecked` was 0 at every one of the 85 views), gold sat\npinned at the 200 cap from wave 19, and the crossing latched at **t = 29.87 via the\n`central-causeway` with `radiationDamageDealt: 0`** — inside wave 0's quiet, before the first\nenemy arrived, with about 0.1 seconds to spare against the wave-1 horn.",
+    "lessons": "- **`unclaimed` with no `reason` in `winnability-receipts.json` is fifteen-for-fifteen.** Still\n  the first two lines of JSON I read, still the cheapest information in the county, still never\n  wrong.\n- **When the manifest declares no `secureWave`, go read the default — it may be the hardest number\n  on the board.** This twist declares *nothing* but an enemy roster, so the gate falls through to\n  `Balance.run.secureWave: 20`, a 600-second ride where my last nine contracts were 12-wave,\n  272–365-second affairs. A thin manifest is not an easy contract; it is a contract whose terms\n  are written somewhere else.\n- **Read the objective system end to end when it is small enough to read.** `HollowCrossingSystem`\n  is 106 lines and contains the entire contract. Two minutes in it produced the one fact that made\n  the errand trivial: the three stage tests run **sequentially inside a single `update()` call**,\n  and z = −40 is inside both the launch shelf (z −54..−40) and the causeway (z −40..40), so one\n  touch of (0,−40) runs launch→crossing→extraction in one tick. I had budgeted a wave for the\n  errand and it cost me a corner of wave 0.\n- **Check whether the errand's actor can be hurt before pricing the errand's risk.**\n  `CombatSystem` is built with `actors = [this.hero]`, so `actorNearestTo` can only ever return\n  the hero and the Prospector is untouchable — a 143 wu round trip across the whole map through\n  two spawn lanes cost exactly nothing. Generation 19 taught me to re-read `getPos` because the\n  body that *shoots* is not a constant; the twin rule is that the body that can be *hit* is not a\n  constant either, and it is one line at the constructor.\n- **A damage system that routes to \"the nearest actor\" is worth finding even when it resolves to\n  one body today** — it is the hook a future contract will hang a second sink on.\n- **An enemy exemption from the alive cap is a load-bearing clue, not bookkeeping.**\n  `exhausted machines are undamageable and exempt from the alive cap` is published in\n  `mechanics.rules.wrangle_capture`, and it is the whole reason 306 harmless bodies can stack on\n  the hero and pin it at 24 hp for four hundred seconds. When a rule exempts something from a cap,\n  ask what the accumulation *does* — here it is simultaneously the economy and an accidental\n  shield, and capturing spends one to buy the other.\n- **The idle probe's most useful output is still the resource that piles up untouched.** Second\n  E6 map running: `gold: 0` with `exhausted: 306` names the economy in one ten-second run. Tenth\n  map running where the idle *curve* told me nothing about the difficulty and the idle *inventory*\n  told me everything.\n- **Compute the intersection before choosing coordinates — again, and it was a single zone.** The\n  claim at (0,12) sits in **no** build zone; `east-countdown-ground` (x 8..42, z 10..26) is the\n  only one whose nearest point (8 wu out) is inside a 16 wu turret's range of it. Ten builds,\n  zero `out_of_zone`, zero `out_of_reach`, zero wrecked. `stakeMarkers × buildZones × range` is\n  now five contracts running.\n- **Score the upgrade offer; never take `offer[0]`.** Idle defaulted all 18 picks and finished\n  with maxHp 100. Scoring for plating first took maxHp to 175 and turned a wave-4 dip of 36.8 hp\n  into a plateau at 112. It is still the cheapest margin on the board and it still costs no gold.\n- **The stop rule and the receipt habit can conflict, and the brief resolves it.** Seven\n  generations taught me to spend the second run proving determinism; the rules stop me at the\n  first SECURED outcome. The brief's promotion clause is the intended path — name the securing\n  tune as the scored attempt in the outcome file rather than riding again. Second time I have hit\n  this (generation 22 was the first); it is now the standing answer, not a judgement call.\n- **Write the outcome file after every run, before the analysis.** Twelfth generation saying it,\n  ninth actually doing it — the runner writes `gauntlet-outcome.json` on every child exit, so a\n  truthful row existed on disk from the idle probe onward. One hand-edit was still needed at the\n  end, exactly as generation 23 warned: a best-so-far comparator does not know which run you have\n  chosen to *call* your scored attempt. Check the file says what you mean."
+  },
+  "usage": {
+    "transcript": "/Users/robin/.claude/projects/-private-tmp-heat11-5e7a7c0b/bb98bd25-64d6-457f-a695-ebad1e401f70.jsonl",
+    "assistantTurns": 91,
+    "toolCalls": 52,
+    "tokensIn": 182,
+    "tokensOut": 100941,
+    "cacheReadTokens": 16162007,
+    "cacheWriteTokens": 601430,
+    "note": "tokensIn excludes cache reads/writes (reported separately); summed from the CLI session transcript, not self-reported by the rig"
+  }
+}

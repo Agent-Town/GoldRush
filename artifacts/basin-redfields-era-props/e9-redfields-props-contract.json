@@ -1,0 +1,2123 @@
+{
+  "baseSha": "51319bf7ebceaaad9df4fdc4da0dcf96033b91e1",
+  "bundleRequirement": "dry/wet/flowing canal reaches + ice blocks + survey cairn + Ark scaffold stages 1/2/3",
+  "siteReset": "E9 floodReset:true; no E8 orbital accessories survive into Basin Rim",
+  "greenSwatch": {
+    "hex": "#50674c",
+    "exactPixels": 41468
+  },
+  "sharedAtlas": {
+    "path": "assets/pilots/plaza-props-3d/era-props-e9-atlas.png",
+    "sha256": "c78664fc8037234ec61467fea3e8772eba2a748cbd31872e4ec4b47a6d5a2f32",
+    "size": [
+      1024,
+      1024
+    ]
+  },
+  "assets": {
+    "canal-segment-dry.e9": {
+      "checked": {
+        "sha256": "f2eed930dbad83b348fc5e66cb3db5d91245c2638302ceff32e04c64786be9fc",
+        "bytes": 1468304,
+        "nodes": [
+          "CanalSegmentDryE9"
+        ],
+        "nodeCount": 1,
+        "bindings": [
+          {
+            "node": "CanalSegmentDryE9",
+            "mesh": "CanalSegmentDryE9Mesh",
+            "targets": [],
+            "defaultWeights": []
+          }
+        ],
+        "nodeTransforms": {
+          "CanalSegmentDryE9": {
+            "translation": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "matrix": null
+          }
+        },
+        "meshes": 1,
+        "meshNames": [
+          "CanalSegmentDryE9Mesh"
+        ],
+        "primitives": 1,
+        "primitiveMaterials": [
+          0
+        ],
+        "triangles": 96,
+        "morphTargets": {
+          "CanalSegmentDryE9Mesh": []
+        },
+        "targetCounts": {
+          "CanalSegmentDryE9Mesh": 0
+        },
+        "materials": 1,
+        "materialTextureBindings": [
+          {
+            "material": 0,
+            "baseColorTexture": 0,
+            "image": 0
+          }
+        ],
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.8999999761581421,
+            "doubleSided": true,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          }
+        ],
+        "textureSources": [
+          0
+        ],
+        "images": 1,
+        "embeddedImages": 1,
+        "imageDimensions": [
+          [
+            1024,
+            1024
+          ]
+        ],
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -2.4,
+            0,
+            -0.73
+          ],
+          "max": [
+            2.4,
+            0.036,
+            0.73
+          ],
+          "size": [
+            4.8,
+            0.036,
+            1.46
+          ],
+          "center": [
+            0.0,
+            0.018,
+            0.0
+          ]
+        }
+      },
+      "reexported": {
+        "sha256": "f2eed930dbad83b348fc5e66cb3db5d91245c2638302ceff32e04c64786be9fc",
+        "bytes": 1468304,
+        "nodes": [
+          "CanalSegmentDryE9"
+        ],
+        "nodeCount": 1,
+        "bindings": [
+          {
+            "node": "CanalSegmentDryE9",
+            "mesh": "CanalSegmentDryE9Mesh",
+            "targets": [],
+            "defaultWeights": []
+          }
+        ],
+        "nodeTransforms": {
+          "CanalSegmentDryE9": {
+            "translation": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "matrix": null
+          }
+        },
+        "meshes": 1,
+        "meshNames": [
+          "CanalSegmentDryE9Mesh"
+        ],
+        "primitives": 1,
+        "primitiveMaterials": [
+          0
+        ],
+        "triangles": 96,
+        "morphTargets": {
+          "CanalSegmentDryE9Mesh": []
+        },
+        "targetCounts": {
+          "CanalSegmentDryE9Mesh": 0
+        },
+        "materials": 1,
+        "materialTextureBindings": [
+          {
+            "material": 0,
+            "baseColorTexture": 0,
+            "image": 0
+          }
+        ],
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.8999999761581421,
+            "doubleSided": true,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          }
+        ],
+        "textureSources": [
+          0
+        ],
+        "images": 1,
+        "embeddedImages": 1,
+        "imageDimensions": [
+          [
+            1024,
+            1024
+          ]
+        ],
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -2.4,
+            0,
+            -0.73
+          ],
+          "max": [
+            2.4,
+            0.036,
+            0.73
+          ],
+          "size": [
+            4.8,
+            0.036,
+            1.46
+          ],
+          "center": [
+            0.0,
+            0.018,
+            0.0
+          ]
+        }
+      },
+      "byteIdentical": true,
+      "semanticIdentical": {
+        "nodes": true,
+        "nodeCount": true,
+        "bindings": true,
+        "nodeTransforms": true,
+        "meshes": true,
+        "meshNames": true,
+        "primitives": true,
+        "primitiveMaterials": true,
+        "triangles": true,
+        "morphTargets": true,
+        "targetCounts": true,
+        "materials": true,
+        "materialTextureBindings": true,
+        "materialContract": true,
+        "textureSources": true,
+        "images": true,
+        "embeddedImages": true,
+        "imageDimensions": true,
+        "cameras": true,
+        "lights": true,
+        "animations": true,
+        "bounds": true
+      },
+      "embeddedAtlasSha256": "c78664fc8037234ec61467fea3e8772eba2a748cbd31872e4ec4b47a6d5a2f32",
+      "walkFlatTop": 0.036
+    },
+    "canal-segment-wet.e9": {
+      "checked": {
+        "sha256": "f620766598cac72db625bb607c1b2e77060161e58fe8199c2a4527e29478da10",
+        "bytes": 1467464,
+        "nodes": [
+          "CanalSegmentWetE9"
+        ],
+        "nodeCount": 1,
+        "bindings": [
+          {
+            "node": "CanalSegmentWetE9",
+            "mesh": "CanalSegmentWetE9Mesh",
+            "targets": [],
+            "defaultWeights": []
+          }
+        ],
+        "nodeTransforms": {
+          "CanalSegmentWetE9": {
+            "translation": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "matrix": null
+          }
+        },
+        "meshes": 1,
+        "meshNames": [
+          "CanalSegmentWetE9Mesh"
+        ],
+        "primitives": 1,
+        "primitiveMaterials": [
+          0
+        ],
+        "triangles": 84,
+        "morphTargets": {
+          "CanalSegmentWetE9Mesh": []
+        },
+        "targetCounts": {
+          "CanalSegmentWetE9Mesh": 0
+        },
+        "materials": 1,
+        "materialTextureBindings": [
+          {
+            "material": 0,
+            "baseColorTexture": 0,
+            "image": 0
+          }
+        ],
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.8999999761581421,
+            "doubleSided": true,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          }
+        ],
+        "textureSources": [
+          0
+        ],
+        "images": 1,
+        "embeddedImages": 1,
+        "imageDimensions": [
+          [
+            1024,
+            1024
+          ]
+        ],
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -2.4,
+            0,
+            -0.73
+          ],
+          "max": [
+            2.4,
+            0.036,
+            0.73
+          ],
+          "size": [
+            4.8,
+            0.036,
+            1.46
+          ],
+          "center": [
+            0.0,
+            0.018,
+            0.0
+          ]
+        }
+      },
+      "reexported": {
+        "sha256": "f620766598cac72db625bb607c1b2e77060161e58fe8199c2a4527e29478da10",
+        "bytes": 1467464,
+        "nodes": [
+          "CanalSegmentWetE9"
+        ],
+        "nodeCount": 1,
+        "bindings": [
+          {
+            "node": "CanalSegmentWetE9",
+            "mesh": "CanalSegmentWetE9Mesh",
+            "targets": [],
+            "defaultWeights": []
+          }
+        ],
+        "nodeTransforms": {
+          "CanalSegmentWetE9": {
+            "translation": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "matrix": null
+          }
+        },
+        "meshes": 1,
+        "meshNames": [
+          "CanalSegmentWetE9Mesh"
+        ],
+        "primitives": 1,
+        "primitiveMaterials": [
+          0
+        ],
+        "triangles": 84,
+        "morphTargets": {
+          "CanalSegmentWetE9Mesh": []
+        },
+        "targetCounts": {
+          "CanalSegmentWetE9Mesh": 0
+        },
+        "materials": 1,
+        "materialTextureBindings": [
+          {
+            "material": 0,
+            "baseColorTexture": 0,
+            "image": 0
+          }
+        ],
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.8999999761581421,
+            "doubleSided": true,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          }
+        ],
+        "textureSources": [
+          0
+        ],
+        "images": 1,
+        "embeddedImages": 1,
+        "imageDimensions": [
+          [
+            1024,
+            1024
+          ]
+        ],
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -2.4,
+            0,
+            -0.73
+          ],
+          "max": [
+            2.4,
+            0.036,
+            0.73
+          ],
+          "size": [
+            4.8,
+            0.036,
+            1.46
+          ],
+          "center": [
+            0.0,
+            0.018,
+            0.0
+          ]
+        }
+      },
+      "byteIdentical": true,
+      "semanticIdentical": {
+        "nodes": true,
+        "nodeCount": true,
+        "bindings": true,
+        "nodeTransforms": true,
+        "meshes": true,
+        "meshNames": true,
+        "primitives": true,
+        "primitiveMaterials": true,
+        "triangles": true,
+        "morphTargets": true,
+        "targetCounts": true,
+        "materials": true,
+        "materialTextureBindings": true,
+        "materialContract": true,
+        "textureSources": true,
+        "images": true,
+        "embeddedImages": true,
+        "imageDimensions": true,
+        "cameras": true,
+        "lights": true,
+        "animations": true,
+        "bounds": true
+      },
+      "embeddedAtlasSha256": "c78664fc8037234ec61467fea3e8772eba2a748cbd31872e4ec4b47a6d5a2f32",
+      "walkFlatTop": 0.036
+    },
+    "canal-segment-flowing.e9": {
+      "checked": {
+        "sha256": "35153a362e56548f37eec48b4ba3a4472dc143e31ed6d424473e7bf3e3f2899b",
+        "bytes": 1470832,
+        "nodes": [
+          "CanalSegmentFlowingE9"
+        ],
+        "nodeCount": 1,
+        "bindings": [
+          {
+            "node": "CanalSegmentFlowingE9",
+            "mesh": "CanalSegmentFlowingE9Mesh",
+            "targets": [],
+            "defaultWeights": []
+          }
+        ],
+        "nodeTransforms": {
+          "CanalSegmentFlowingE9": {
+            "translation": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "matrix": null
+          }
+        },
+        "meshes": 1,
+        "meshNames": [
+          "CanalSegmentFlowingE9Mesh"
+        ],
+        "primitives": 1,
+        "primitiveMaterials": [
+          0
+        ],
+        "triangles": 132,
+        "morphTargets": {
+          "CanalSegmentFlowingE9Mesh": []
+        },
+        "targetCounts": {
+          "CanalSegmentFlowingE9Mesh": 0
+        },
+        "materials": 1,
+        "materialTextureBindings": [
+          {
+            "material": 0,
+            "baseColorTexture": 0,
+            "image": 0
+          }
+        ],
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.8999999761581421,
+            "doubleSided": true,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          }
+        ],
+        "textureSources": [
+          0
+        ],
+        "images": 1,
+        "embeddedImages": 1,
+        "imageDimensions": [
+          [
+            1024,
+            1024
+          ]
+        ],
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -2.4,
+            0,
+            -0.73
+          ],
+          "max": [
+            2.4,
+            0.046,
+            0.73
+          ],
+          "size": [
+            4.8,
+            0.046,
+            1.46
+          ],
+          "center": [
+            0.0,
+            0.023,
+            0.0
+          ]
+        }
+      },
+      "reexported": {
+        "sha256": "35153a362e56548f37eec48b4ba3a4472dc143e31ed6d424473e7bf3e3f2899b",
+        "bytes": 1470832,
+        "nodes": [
+          "CanalSegmentFlowingE9"
+        ],
+        "nodeCount": 1,
+        "bindings": [
+          {
+            "node": "CanalSegmentFlowingE9",
+            "mesh": "CanalSegmentFlowingE9Mesh",
+            "targets": [],
+            "defaultWeights": []
+          }
+        ],
+        "nodeTransforms": {
+          "CanalSegmentFlowingE9": {
+            "translation": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "matrix": null
+          }
+        },
+        "meshes": 1,
+        "meshNames": [
+          "CanalSegmentFlowingE9Mesh"
+        ],
+        "primitives": 1,
+        "primitiveMaterials": [
+          0
+        ],
+        "triangles": 132,
+        "morphTargets": {
+          "CanalSegmentFlowingE9Mesh": []
+        },
+        "targetCounts": {
+          "CanalSegmentFlowingE9Mesh": 0
+        },
+        "materials": 1,
+        "materialTextureBindings": [
+          {
+            "material": 0,
+            "baseColorTexture": 0,
+            "image": 0
+          }
+        ],
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.8999999761581421,
+            "doubleSided": true,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          }
+        ],
+        "textureSources": [
+          0
+        ],
+        "images": 1,
+        "embeddedImages": 1,
+        "imageDimensions": [
+          [
+            1024,
+            1024
+          ]
+        ],
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -2.4,
+            0,
+            -0.73
+          ],
+          "max": [
+            2.4,
+            0.046,
+            0.73
+          ],
+          "size": [
+            4.8,
+            0.046,
+            1.46
+          ],
+          "center": [
+            0.0,
+            0.023,
+            0.0
+          ]
+        }
+      },
+      "byteIdentical": true,
+      "semanticIdentical": {
+        "nodes": true,
+        "nodeCount": true,
+        "bindings": true,
+        "nodeTransforms": true,
+        "meshes": true,
+        "meshNames": true,
+        "primitives": true,
+        "primitiveMaterials": true,
+        "triangles": true,
+        "morphTargets": true,
+        "targetCounts": true,
+        "materials": true,
+        "materialTextureBindings": true,
+        "materialContract": true,
+        "textureSources": true,
+        "images": true,
+        "embeddedImages": true,
+        "imageDimensions": true,
+        "cameras": true,
+        "lights": true,
+        "animations": true,
+        "bounds": true
+      },
+      "embeddedAtlasSha256": "c78664fc8037234ec61467fea3e8772eba2a748cbd31872e4ec4b47a6d5a2f32",
+      "walkFlatTop": 0.046
+    },
+    "ice-blocks.e9": {
+      "checked": {
+        "sha256": "f705096b7ba8e28163f3fc280740397b1d0be18fc4af99c4b8d330f55dab28fc",
+        "bytes": 1491272,
+        "nodes": [
+          "IceBlocksE9"
+        ],
+        "nodeCount": 1,
+        "bindings": [
+          {
+            "node": "IceBlocksE9",
+            "mesh": "IceBlocksE9Mesh",
+            "targets": [],
+            "defaultWeights": []
+          }
+        ],
+        "nodeTransforms": {
+          "IceBlocksE9": {
+            "translation": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "matrix": null
+          }
+        },
+        "meshes": 1,
+        "meshNames": [
+          "IceBlocksE9Mesh"
+        ],
+        "primitives": 1,
+        "primitiveMaterials": [
+          0
+        ],
+        "triangles": 408,
+        "morphTargets": {
+          "IceBlocksE9Mesh": []
+        },
+        "targetCounts": {
+          "IceBlocksE9Mesh": 0
+        },
+        "materials": 1,
+        "materialTextureBindings": [
+          {
+            "material": 0,
+            "baseColorTexture": 0,
+            "image": 0
+          }
+        ],
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.8999999761581421,
+            "doubleSided": true,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          }
+        ],
+        "textureSources": [
+          0
+        ],
+        "images": 1,
+        "embeddedImages": 1,
+        "imageDimensions": [
+          [
+            1024,
+            1024
+          ]
+        ],
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -1.25,
+            0,
+            -0.895
+          ],
+          "max": [
+            1.375273,
+            1.28,
+            0.825
+          ],
+          "size": [
+            2.625273,
+            1.28,
+            1.72
+          ],
+          "center": [
+            0.062636,
+            0.64,
+            -0.035
+          ]
+        }
+      },
+      "reexported": {
+        "sha256": "f705096b7ba8e28163f3fc280740397b1d0be18fc4af99c4b8d330f55dab28fc",
+        "bytes": 1491272,
+        "nodes": [
+          "IceBlocksE9"
+        ],
+        "nodeCount": 1,
+        "bindings": [
+          {
+            "node": "IceBlocksE9",
+            "mesh": "IceBlocksE9Mesh",
+            "targets": [],
+            "defaultWeights": []
+          }
+        ],
+        "nodeTransforms": {
+          "IceBlocksE9": {
+            "translation": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "matrix": null
+          }
+        },
+        "meshes": 1,
+        "meshNames": [
+          "IceBlocksE9Mesh"
+        ],
+        "primitives": 1,
+        "primitiveMaterials": [
+          0
+        ],
+        "triangles": 408,
+        "morphTargets": {
+          "IceBlocksE9Mesh": []
+        },
+        "targetCounts": {
+          "IceBlocksE9Mesh": 0
+        },
+        "materials": 1,
+        "materialTextureBindings": [
+          {
+            "material": 0,
+            "baseColorTexture": 0,
+            "image": 0
+          }
+        ],
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.8999999761581421,
+            "doubleSided": true,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          }
+        ],
+        "textureSources": [
+          0
+        ],
+        "images": 1,
+        "embeddedImages": 1,
+        "imageDimensions": [
+          [
+            1024,
+            1024
+          ]
+        ],
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -1.25,
+            0,
+            -0.895
+          ],
+          "max": [
+            1.375273,
+            1.28,
+            0.825
+          ],
+          "size": [
+            2.625273,
+            1.28,
+            1.72
+          ],
+          "center": [
+            0.062636,
+            0.64,
+            -0.035
+          ]
+        }
+      },
+      "byteIdentical": true,
+      "semanticIdentical": {
+        "nodes": true,
+        "nodeCount": true,
+        "bindings": true,
+        "nodeTransforms": true,
+        "meshes": true,
+        "meshNames": true,
+        "primitives": true,
+        "primitiveMaterials": true,
+        "triangles": true,
+        "morphTargets": true,
+        "targetCounts": true,
+        "materials": true,
+        "materialTextureBindings": true,
+        "materialContract": true,
+        "textureSources": true,
+        "images": true,
+        "embeddedImages": true,
+        "imageDimensions": true,
+        "cameras": true,
+        "lights": true,
+        "animations": true,
+        "bounds": true
+      },
+      "embeddedAtlasSha256": "c78664fc8037234ec61467fea3e8772eba2a748cbd31872e4ec4b47a6d5a2f32"
+    },
+    "survey-cairn.e9": {
+      "checked": {
+        "sha256": "e0530bb9062d3727006b73269105712f02fdb3db8c0fca6ed6c8ac0efb34b18b",
+        "bytes": 1481168,
+        "nodes": [
+          "SurveyCairnE9"
+        ],
+        "nodeCount": 1,
+        "bindings": [
+          {
+            "node": "SurveyCairnE9",
+            "mesh": "SurveyCairnE9Mesh",
+            "targets": [],
+            "defaultWeights": []
+          }
+        ],
+        "nodeTransforms": {
+          "SurveyCairnE9": {
+            "translation": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "matrix": null
+          }
+        },
+        "meshes": 1,
+        "meshNames": [
+          "SurveyCairnE9Mesh"
+        ],
+        "primitives": 1,
+        "primitiveMaterials": [
+          0
+        ],
+        "triangles": 236,
+        "morphTargets": {
+          "SurveyCairnE9Mesh": []
+        },
+        "targetCounts": {
+          "SurveyCairnE9Mesh": 0
+        },
+        "materials": 1,
+        "materialTextureBindings": [
+          {
+            "material": 0,
+            "baseColorTexture": 0,
+            "image": 0
+          }
+        ],
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.8999999761581421,
+            "doubleSided": true,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          }
+        ],
+        "textureSources": [
+          0
+        ],
+        "images": 1,
+        "embeddedImages": 1,
+        "imageDimensions": [
+          [
+            1024,
+            1024
+          ]
+        ],
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -0.59,
+            0,
+            -0.418179
+          ],
+          "max": [
+            0.608,
+            1.72,
+            0.343698
+          ],
+          "size": [
+            1.198,
+            1.72,
+            0.761878
+          ],
+          "center": [
+            0.009,
+            0.86,
+            -0.03724
+          ]
+        }
+      },
+      "reexported": {
+        "sha256": "e0530bb9062d3727006b73269105712f02fdb3db8c0fca6ed6c8ac0efb34b18b",
+        "bytes": 1481168,
+        "nodes": [
+          "SurveyCairnE9"
+        ],
+        "nodeCount": 1,
+        "bindings": [
+          {
+            "node": "SurveyCairnE9",
+            "mesh": "SurveyCairnE9Mesh",
+            "targets": [],
+            "defaultWeights": []
+          }
+        ],
+        "nodeTransforms": {
+          "SurveyCairnE9": {
+            "translation": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "matrix": null
+          }
+        },
+        "meshes": 1,
+        "meshNames": [
+          "SurveyCairnE9Mesh"
+        ],
+        "primitives": 1,
+        "primitiveMaterials": [
+          0
+        ],
+        "triangles": 236,
+        "morphTargets": {
+          "SurveyCairnE9Mesh": []
+        },
+        "targetCounts": {
+          "SurveyCairnE9Mesh": 0
+        },
+        "materials": 1,
+        "materialTextureBindings": [
+          {
+            "material": 0,
+            "baseColorTexture": 0,
+            "image": 0
+          }
+        ],
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.8999999761581421,
+            "doubleSided": true,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          }
+        ],
+        "textureSources": [
+          0
+        ],
+        "images": 1,
+        "embeddedImages": 1,
+        "imageDimensions": [
+          [
+            1024,
+            1024
+          ]
+        ],
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -0.59,
+            0,
+            -0.418179
+          ],
+          "max": [
+            0.608,
+            1.72,
+            0.343698
+          ],
+          "size": [
+            1.198,
+            1.72,
+            0.761878
+          ],
+          "center": [
+            0.009,
+            0.86,
+            -0.03724
+          ]
+        }
+      },
+      "byteIdentical": true,
+      "semanticIdentical": {
+        "nodes": true,
+        "nodeCount": true,
+        "bindings": true,
+        "nodeTransforms": true,
+        "meshes": true,
+        "meshNames": true,
+        "primitives": true,
+        "primitiveMaterials": true,
+        "triangles": true,
+        "morphTargets": true,
+        "targetCounts": true,
+        "materials": true,
+        "materialTextureBindings": true,
+        "materialContract": true,
+        "textureSources": true,
+        "images": true,
+        "embeddedImages": true,
+        "imageDimensions": true,
+        "cameras": true,
+        "lights": true,
+        "animations": true,
+        "bounds": true
+      },
+      "embeddedAtlasSha256": "c78664fc8037234ec61467fea3e8772eba2a748cbd31872e4ec4b47a6d5a2f32"
+    },
+    "ark-scaffold-stage-1.e9": {
+      "checked": {
+        "sha256": "87a8bd2d8f2df1a8c205390f00c8b10fe165f78340e08a36296f690c5fa4fc1e",
+        "bytes": 1482732,
+        "nodes": [
+          "ArkScaffoldStage1E9"
+        ],
+        "nodeCount": 1,
+        "bindings": [
+          {
+            "node": "ArkScaffoldStage1E9",
+            "mesh": "ArkScaffoldStage1E9Mesh",
+            "targets": [],
+            "defaultWeights": []
+          }
+        ],
+        "nodeTransforms": {
+          "ArkScaffoldStage1E9": {
+            "translation": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "matrix": null
+          }
+        },
+        "meshes": 1,
+        "meshNames": [
+          "ArkScaffoldStage1E9Mesh"
+        ],
+        "primitives": 1,
+        "primitiveMaterials": [
+          0
+        ],
+        "triangles": 324,
+        "morphTargets": {
+          "ArkScaffoldStage1E9Mesh": []
+        },
+        "targetCounts": {
+          "ArkScaffoldStage1E9Mesh": 0
+        },
+        "materials": 1,
+        "materialTextureBindings": [
+          {
+            "material": 0,
+            "baseColorTexture": 0,
+            "image": 0
+          }
+        ],
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.8999999761581421,
+            "doubleSided": true,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          }
+        ],
+        "textureSources": [
+          0
+        ],
+        "images": 1,
+        "embeddedImages": 1,
+        "imageDimensions": [
+          [
+            1024,
+            1024
+          ]
+        ],
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -1.21,
+            0,
+            -0.93
+          ],
+          "max": [
+            1.21,
+            1.52,
+            0.93
+          ],
+          "size": [
+            2.42,
+            1.52,
+            1.86
+          ],
+          "center": [
+            0.0,
+            0.76,
+            0.0
+          ]
+        }
+      },
+      "reexported": {
+        "sha256": "87a8bd2d8f2df1a8c205390f00c8b10fe165f78340e08a36296f690c5fa4fc1e",
+        "bytes": 1482732,
+        "nodes": [
+          "ArkScaffoldStage1E9"
+        ],
+        "nodeCount": 1,
+        "bindings": [
+          {
+            "node": "ArkScaffoldStage1E9",
+            "mesh": "ArkScaffoldStage1E9Mesh",
+            "targets": [],
+            "defaultWeights": []
+          }
+        ],
+        "nodeTransforms": {
+          "ArkScaffoldStage1E9": {
+            "translation": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "matrix": null
+          }
+        },
+        "meshes": 1,
+        "meshNames": [
+          "ArkScaffoldStage1E9Mesh"
+        ],
+        "primitives": 1,
+        "primitiveMaterials": [
+          0
+        ],
+        "triangles": 324,
+        "morphTargets": {
+          "ArkScaffoldStage1E9Mesh": []
+        },
+        "targetCounts": {
+          "ArkScaffoldStage1E9Mesh": 0
+        },
+        "materials": 1,
+        "materialTextureBindings": [
+          {
+            "material": 0,
+            "baseColorTexture": 0,
+            "image": 0
+          }
+        ],
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.8999999761581421,
+            "doubleSided": true,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          }
+        ],
+        "textureSources": [
+          0
+        ],
+        "images": 1,
+        "embeddedImages": 1,
+        "imageDimensions": [
+          [
+            1024,
+            1024
+          ]
+        ],
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -1.21,
+            0,
+            -0.93
+          ],
+          "max": [
+            1.21,
+            1.52,
+            0.93
+          ],
+          "size": [
+            2.42,
+            1.52,
+            1.86
+          ],
+          "center": [
+            0.0,
+            0.76,
+            0.0
+          ]
+        }
+      },
+      "byteIdentical": true,
+      "semanticIdentical": {
+        "nodes": true,
+        "nodeCount": true,
+        "bindings": true,
+        "nodeTransforms": true,
+        "meshes": true,
+        "meshNames": true,
+        "primitives": true,
+        "primitiveMaterials": true,
+        "triangles": true,
+        "morphTargets": true,
+        "targetCounts": true,
+        "materials": true,
+        "materialTextureBindings": true,
+        "materialContract": true,
+        "textureSources": true,
+        "images": true,
+        "embeddedImages": true,
+        "imageDimensions": true,
+        "cameras": true,
+        "lights": true,
+        "animations": true,
+        "bounds": true
+      },
+      "embeddedAtlasSha256": "c78664fc8037234ec61467fea3e8772eba2a748cbd31872e4ec4b47a6d5a2f32"
+    },
+    "ark-scaffold-stage-2.e9": {
+      "checked": {
+        "sha256": "d2804691e8e73aed3c6bdc27bfd06e06348c590941c5274075f51b85cb68b077",
+        "bytes": 1491232,
+        "nodes": [
+          "ArkScaffoldStage2E9"
+        ],
+        "nodeCount": 1,
+        "bindings": [
+          {
+            "node": "ArkScaffoldStage2E9",
+            "mesh": "ArkScaffoldStage2E9Mesh",
+            "targets": [],
+            "defaultWeights": []
+          }
+        ],
+        "nodeTransforms": {
+          "ArkScaffoldStage2E9": {
+            "translation": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "matrix": null
+          }
+        },
+        "meshes": 1,
+        "meshNames": [
+          "ArkScaffoldStage2E9Mesh"
+        ],
+        "primitives": 1,
+        "primitiveMaterials": [
+          0
+        ],
+        "triangles": 460,
+        "morphTargets": {
+          "ArkScaffoldStage2E9Mesh": []
+        },
+        "targetCounts": {
+          "ArkScaffoldStage2E9Mesh": 0
+        },
+        "materials": 1,
+        "materialTextureBindings": [
+          {
+            "material": 0,
+            "baseColorTexture": 0,
+            "image": 0
+          }
+        ],
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.8999999761581421,
+            "doubleSided": true,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          }
+        ],
+        "textureSources": [
+          0
+        ],
+        "images": 1,
+        "embeddedImages": 1,
+        "imageDimensions": [
+          [
+            1024,
+            1024
+          ]
+        ],
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -1.39,
+            0,
+            -1.03
+          ],
+          "max": [
+            1.39,
+            2.2,
+            1.32
+          ],
+          "size": [
+            2.78,
+            2.2,
+            2.35
+          ],
+          "center": [
+            0.0,
+            1.1,
+            0.145
+          ]
+        }
+      },
+      "reexported": {
+        "sha256": "d2804691e8e73aed3c6bdc27bfd06e06348c590941c5274075f51b85cb68b077",
+        "bytes": 1491232,
+        "nodes": [
+          "ArkScaffoldStage2E9"
+        ],
+        "nodeCount": 1,
+        "bindings": [
+          {
+            "node": "ArkScaffoldStage2E9",
+            "mesh": "ArkScaffoldStage2E9Mesh",
+            "targets": [],
+            "defaultWeights": []
+          }
+        ],
+        "nodeTransforms": {
+          "ArkScaffoldStage2E9": {
+            "translation": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "matrix": null
+          }
+        },
+        "meshes": 1,
+        "meshNames": [
+          "ArkScaffoldStage2E9Mesh"
+        ],
+        "primitives": 1,
+        "primitiveMaterials": [
+          0
+        ],
+        "triangles": 460,
+        "morphTargets": {
+          "ArkScaffoldStage2E9Mesh": []
+        },
+        "targetCounts": {
+          "ArkScaffoldStage2E9Mesh": 0
+        },
+        "materials": 1,
+        "materialTextureBindings": [
+          {
+            "material": 0,
+            "baseColorTexture": 0,
+            "image": 0
+          }
+        ],
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.8999999761581421,
+            "doubleSided": true,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          }
+        ],
+        "textureSources": [
+          0
+        ],
+        "images": 1,
+        "embeddedImages": 1,
+        "imageDimensions": [
+          [
+            1024,
+            1024
+          ]
+        ],
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -1.39,
+            0,
+            -1.03
+          ],
+          "max": [
+            1.39,
+            2.2,
+            1.32
+          ],
+          "size": [
+            2.78,
+            2.2,
+            2.35
+          ],
+          "center": [
+            0.0,
+            1.1,
+            0.145
+          ]
+        }
+      },
+      "byteIdentical": true,
+      "semanticIdentical": {
+        "nodes": true,
+        "nodeCount": true,
+        "bindings": true,
+        "nodeTransforms": true,
+        "meshes": true,
+        "meshNames": true,
+        "primitives": true,
+        "primitiveMaterials": true,
+        "triangles": true,
+        "morphTargets": true,
+        "targetCounts": true,
+        "materials": true,
+        "materialTextureBindings": true,
+        "materialContract": true,
+        "textureSources": true,
+        "images": true,
+        "embeddedImages": true,
+        "imageDimensions": true,
+        "cameras": true,
+        "lights": true,
+        "animations": true,
+        "bounds": true
+      },
+      "embeddedAtlasSha256": "c78664fc8037234ec61467fea3e8772eba2a748cbd31872e4ec4b47a6d5a2f32"
+    },
+    "ark-scaffold-stage-3.e9": {
+      "checked": {
+        "sha256": "3e559ac3879a680a37020bfb9aa1fee012cfaf972b4a729fa647b7435b524806",
+        "bytes": 1502200,
+        "nodes": [
+          "ArkScaffoldStage3E9"
+        ],
+        "nodeCount": 1,
+        "bindings": [
+          {
+            "node": "ArkScaffoldStage3E9",
+            "mesh": "ArkScaffoldStage3E9Mesh",
+            "targets": [],
+            "defaultWeights": []
+          }
+        ],
+        "nodeTransforms": {
+          "ArkScaffoldStage3E9": {
+            "translation": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "matrix": null
+          }
+        },
+        "meshes": 1,
+        "meshNames": [
+          "ArkScaffoldStage3E9Mesh"
+        ],
+        "primitives": 1,
+        "primitiveMaterials": [
+          0
+        ],
+        "triangles": 624,
+        "morphTargets": {
+          "ArkScaffoldStage3E9Mesh": []
+        },
+        "targetCounts": {
+          "ArkScaffoldStage3E9Mesh": 0
+        },
+        "materials": 1,
+        "materialTextureBindings": [
+          {
+            "material": 0,
+            "baseColorTexture": 0,
+            "image": 0
+          }
+        ],
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.8999999761581421,
+            "doubleSided": true,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          }
+        ],
+        "textureSources": [
+          0
+        ],
+        "images": 1,
+        "embeddedImages": 1,
+        "imageDimensions": [
+          [
+            1024,
+            1024
+          ]
+        ],
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -2.122822,
+            0,
+            -1.13
+          ],
+          "max": [
+            1.57,
+            4.075,
+            1.42
+          ],
+          "size": [
+            3.692822,
+            4.075,
+            2.55
+          ],
+          "center": [
+            -0.276411,
+            2.0375,
+            0.145
+          ]
+        }
+      },
+      "reexported": {
+        "sha256": "3e559ac3879a680a37020bfb9aa1fee012cfaf972b4a729fa647b7435b524806",
+        "bytes": 1502200,
+        "nodes": [
+          "ArkScaffoldStage3E9"
+        ],
+        "nodeCount": 1,
+        "bindings": [
+          {
+            "node": "ArkScaffoldStage3E9",
+            "mesh": "ArkScaffoldStage3E9Mesh",
+            "targets": [],
+            "defaultWeights": []
+          }
+        ],
+        "nodeTransforms": {
+          "ArkScaffoldStage3E9": {
+            "translation": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "matrix": null
+          }
+        },
+        "meshes": 1,
+        "meshNames": [
+          "ArkScaffoldStage3E9Mesh"
+        ],
+        "primitives": 1,
+        "primitiveMaterials": [
+          0
+        ],
+        "triangles": 624,
+        "morphTargets": {
+          "ArkScaffoldStage3E9Mesh": []
+        },
+        "targetCounts": {
+          "ArkScaffoldStage3E9Mesh": 0
+        },
+        "materials": 1,
+        "materialTextureBindings": [
+          {
+            "material": 0,
+            "baseColorTexture": 0,
+            "image": 0
+          }
+        ],
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.8999999761581421,
+            "doubleSided": true,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          }
+        ],
+        "textureSources": [
+          0
+        ],
+        "images": 1,
+        "embeddedImages": 1,
+        "imageDimensions": [
+          [
+            1024,
+            1024
+          ]
+        ],
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -2.122822,
+            0,
+            -1.13
+          ],
+          "max": [
+            1.57,
+            4.075,
+            1.42
+          ],
+          "size": [
+            3.692822,
+            4.075,
+            2.55
+          ],
+          "center": [
+            -0.276411,
+            2.0375,
+            0.145
+          ]
+        }
+      },
+      "byteIdentical": true,
+      "semanticIdentical": {
+        "nodes": true,
+        "nodeCount": true,
+        "bindings": true,
+        "nodeTransforms": true,
+        "meshes": true,
+        "meshNames": true,
+        "primitives": true,
+        "primitiveMaterials": true,
+        "triangles": true,
+        "morphTargets": true,
+        "targetCounts": true,
+        "materials": true,
+        "materialTextureBindings": true,
+        "materialContract": true,
+        "textureSources": true,
+        "images": true,
+        "embeddedImages": true,
+        "imageDimensions": true,
+        "cameras": true,
+        "lights": true,
+        "animations": true,
+        "bounds": true
+      },
+      "embeddedAtlasSha256": "c78664fc8037234ec61467fea3e8772eba2a748cbd31872e4ec4b47a6d5a2f32"
+    }
+  },
+  "placementClearance": {
+    "e9-ice-blocks-quarry-edge": {
+      "footprintRadius": 1.575164,
+      "plazaClearance": 16.354577,
+      "routeClearance": 12.677204,
+      "padClearance": 0.362979
+    },
+    "e9-ice-blocks-quarry-haul": {
+      "footprintRadius": 1.312636,
+      "plazaClearance": 15.677162,
+      "routeClearance": 11.851709,
+      "padClearance": 2.592585
+    },
+    "e9-survey-cairn-east-rim": {
+      "footprintRadius": 0.8985,
+      "plazaClearance": 13.44283,
+      "routeClearance": 9.967962,
+      "padClearance": 4.823388
+    },
+    "e9-survey-cairn-southeast": {
+      "footprintRadius": 0.7188,
+      "plazaClearance": 12.878505,
+      "routeClearance": 9.978505,
+      "padClearance": 5.781969
+    },
+    "e9-survey-cairn-northeast": {
+      "footprintRadius": 0.74875,
+      "plazaClearance": 14.613103,
+      "routeClearance": 10.705507,
+      "padClearance": 3.629035
+    },
+    "e9-ark-scaffold-current-stage": {
+      "footprintRadius": 1.694,
+      "plazaClearance": 13.313733,
+      "assignedPad": "ark-yard-pad",
+      "assignedPadRadialMargin": 1.406
+    }
+  },
+  "manifest": {
+    "epoch": 9,
+    "floodReset": true,
+    "atlas": "era-props-e9-atlas.png",
+    "progressionVariants": {
+      "canal": [
+        "canal-segment-dry.e9.glb",
+        "canal-segment-wet.e9.glb",
+        "canal-segment-flowing.e9.glb"
+      ],
+      "arkScaffold": [
+        "ark-scaffold-stage-1.e9.glb",
+        "ark-scaffold-stage-2.e9.glb",
+        "ark-scaffold-stage-3.e9.glb"
+      ]
+    },
+    "props": [
+      {
+        "id": "e9-ice-blocks-quarry-edge",
+        "glb": "ice-blocks.e9.glb",
+        "position": {
+          "x": -12.1,
+          "z": -17.2
+        },
+        "rotation": 0.18,
+        "scale": 1.2
+      },
+      {
+        "id": "e9-ice-blocks-quarry-haul",
+        "glb": "ice-blocks.e9.glb",
+        "position": {
+          "x": -13.8,
+          "z": -14.6
+        },
+        "rotation": -0.24,
+        "scale": 1
+      },
+      {
+        "id": "e9-survey-cairn-east-rim",
+        "glb": "survey-cairn.e9.glb",
+        "position": {
+          "x": 17.4,
+          "z": 1.2
+        },
+        "rotation": -0.34,
+        "scale": 1.5
+      },
+      {
+        "id": "e9-survey-cairn-southeast",
+        "glb": "survey-cairn.e9.glb",
+        "position": {
+          "x": 15.8,
+          "z": -5.4
+        },
+        "rotation": 0.28,
+        "scale": 1.2
+      },
+      {
+        "id": "e9-survey-cairn-northeast",
+        "glb": "survey-cairn.e9.glb",
+        "position": {
+          "x": 17,
+          "z": 7.2
+        },
+        "rotation": -0.12,
+        "scale": 1.25
+      },
+      {
+        "id": "e9-ark-scaffold-current-stage",
+        "glb": "ark-scaffold-stage-1.e9.glb",
+        "position": {
+          "x": 7,
+          "z": -16.7
+        },
+        "rotation": 3.142,
+        "scale": 1.4
+      }
+    ]
+  }
+}

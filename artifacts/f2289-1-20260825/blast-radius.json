@@ -1,0 +1,1322 @@
+{
+  "total": 115,
+  "agree": 96,
+  "diverge": 8,
+  "unreplayable": 11,
+  "results": [
+    {
+      "path": "artifacts/assay-e2e-20260822/round2/tape-run1.json",
+      "claimed": "fnv1a32:a4d0de7f",
+      "replayed": "fnv1a32:a4d0de7f",
+      "status": "agree",
+      "outcome": {
+        "secured": true,
+        "waves": 10,
+        "gold": 200,
+        "timeAlive": 300
+      }
+    },
+    {
+      "path": "artifacts/assay-e2e-20260822/round2/tape-run2.json",
+      "claimed": "fnv1a32:a4d0de7f",
+      "replayed": "fnv1a32:a4d0de7f",
+      "status": "agree",
+      "outcome": {
+        "secured": true,
+        "waves": 10,
+        "gold": 200,
+        "timeAlive": 300
+      }
+    },
+    {
+      "path": "artifacts/assay-e2e-20260822/round2/tape-secure-verb.json",
+      "claimed": "fnv1a32:ba8fdc3e",
+      "replayed": "fnv1a32:ba8fdc3e",
+      "status": "agree",
+      "outcome": {
+        "secured": true,
+        "waves": 10,
+        "gold": 200,
+        "timeAlive": 300
+      }
+    },
+    {
+      "path": "artifacts/assay-e2e-20260822/tape-run1-v2-control.json",
+      "claimed": "fnv1a32:a4d0de7f",
+      "replayed": "fnv1a32:a4d0de7f",
+      "status": "agree",
+      "outcome": {
+        "secured": true,
+        "waves": 10,
+        "gold": 200,
+        "timeAlive": 300
+      }
+    },
+    {
+      "path": "artifacts/assay-e2e-20260822/tape-run1.json",
+      "claimed": "fnv1a32:a4d0de7f",
+      "status": "unreplayable",
+      "error": "assay replay failed: legacy tape v1 is unverifiable"
+    },
+    {
+      "path": "artifacts/assay-e2e-20260822/tape-run2.json",
+      "claimed": "fnv1a32:a4d0de7f",
+      "status": "unreplayable",
+      "error": "assay replay failed: legacy tape v1 is unverifiable"
+    },
+    {
+      "path": "artifacts/assay-e2e-20260822/tape-secure-verb-REFUSED.json",
+      "claimed": "fnv1a32:ba8fdc3e",
+      "status": "unreplayable",
+      "error": "assay replay failed: malformed tape"
+    },
+    {
+      "path": "artifacts/assay-e2e-cure/tape-v2-run1.json",
+      "claimed": "fnv1a32:a4d0de7f",
+      "replayed": "fnv1a32:a4d0de7f",
+      "status": "agree",
+      "outcome": {
+        "secured": true,
+        "waves": 10,
+        "gold": 200,
+        "timeAlive": 300
+      }
+    },
+    {
+      "path": "artifacts/assay-e2e-cure/tape-v2-run2.json",
+      "claimed": "fnv1a32:a4d0de7f",
+      "replayed": "fnv1a32:a4d0de7f",
+      "status": "agree",
+      "outcome": {
+        "secured": true,
+        "waves": 10,
+        "gold": 200,
+        "timeAlive": 300
+      }
+    },
+    {
+      "path": "artifacts/assay-e2e-cure/tape-v2-secure-verb.json",
+      "claimed": "fnv1a32:ba8fdc3e",
+      "replayed": "fnv1a32:ba8fdc3e",
+      "status": "agree",
+      "outcome": {
+        "secured": true,
+        "waves": 10,
+        "gold": 200,
+        "timeAlive": 300
+      }
+    },
+    {
+      "path": "artifacts/baron-door-audit-20260825/h10-centered-killbox-tape.json",
+      "claimed": "fnv1a32:467c0f72",
+      "replayed": "fnv1a32:467c0f72",
+      "status": "agree",
+      "outcome": {
+        "secured": false,
+        "waves": 5,
+        "gold": 200,
+        "timeAlive": 155.467
+      }
+    },
+    {
+      "path": "artifacts/baron-door-audit-20260825/h11-forward-rig-tape.json",
+      "claimed": "fnv1a32:79cbfb15",
+      "replayed": "fnv1a32:00d2c4f7",
+      "status": "diverge",
+      "outcome": {
+        "secured": false,
+        "waves": 20,
+        "gold": 200,
+        "timeAlive": 538.467
+      }
+    },
+    {
+      "path": "artifacts/gauntlet-heat-20260824/e1-baron/e1-baron-attempt-1-tape.json",
+      "claimed": "fnv1a32:f2487f5e",
+      "replayed": "fnv1a32:f2487f5e",
+      "status": "agree",
+      "outcome": {
+        "secured": false,
+        "waves": 12,
+        "gold": 135,
+        "timeAlive": 328.6
+      }
+    },
+    {
+      "path": "artifacts/gauntlet-heat-20260824/e1-baron/e1-baron-attempt-2-tape.json",
+      "claimed": "fnv1a32:e8f6da4d",
+      "replayed": "fnv1a32:e8f6da4d",
+      "status": "agree",
+      "outcome": {
+        "secured": false,
+        "waves": 21,
+        "gold": 8,
+        "timeAlive": 550.5
+      }
+    },
+    {
+      "path": "artifacts/gauntlet-heat-20260824/e1-baron/e1-baron-attempt-3-tape.json",
+      "claimed": "fnv1a32:89ffbd31",
+      "replayed": "fnv1a32:89ffbd31",
+      "status": "agree",
+      "outcome": {
+        "secured": false,
+        "waves": 21,
+        "gold": 8,
+        "timeAlive": 550.5
+      }
+    },
+    {
+      "path": "artifacts/gauntlet-heat-20260824/e1-dry-gulch/tape.json",
+      "claimed": "fnv1a32:08ad7db2",
+      "replayed": "fnv1a32:08ad7db2",
+      "status": "agree",
+      "outcome": {
+        "secured": true,
+        "waves": 20,
+        "gold": 147,
+        "timeAlive": 600
+      }
+    },
+    {
+      "path": "artifacts/gauntlet-heat-20260824/e1-night-shift/e1-night-shift-attempt-1-tape.json",
+      "claimed": "fnv1a32:6c75c5c7",
+      "replayed": "fnv1a32:6c75c5c7",
+      "status": "agree",
+      "outcome": {
+        "secured": false,
+        "waves": 16,
+        "gold": 109,
+        "timeAlive": 491.667
+      }
+    },
+    {
+      "path": "artifacts/gauntlet-heat-20260824/e1-night-shift/e1-night-shift-attempt-2-tape.json",
+      "claimed": "fnv1a32:cf08813d",
+      "replayed": "fnv1a32:cf08813d",
+      "status": "agree",
+      "outcome": {
+        "secured": false,
+        "waves": 8,
+        "gold": 5,
+        "timeAlive": 265.467
+      }
+    },
+    {
+      "path": "artifacts/gauntlet-heat-20260824/e1-night-shift/e1-night-shift-attempt-3-tape.json",
+      "claimed": "fnv1a32:044e1261",
+      "replayed": "fnv1a32:044e1261",
+      "status": "agree",
+      "outcome": {
+        "secured": false,
+        "waves": 10,
+        "gold": 153,
+        "timeAlive": 309.267
+      }
+    },
+    {
+      "path": "artifacts/gauntlet-heat-20260824/e1-twin-banks/e1-twin-banks-attempt-1-tape.json",
+      "claimed": "fnv1a32:55e2ed6f",
+      "replayed": "fnv1a32:55e2ed6f",
+      "status": "agree",
+      "outcome": {
+        "secured": false,
+        "waves": 7,
+        "gold": 159,
+        "timeAlive": 226.733
+      }
+    },
+    {
+      "path": "artifacts/gauntlet-heat-20260824/e1-twin-banks/e1-twin-banks-attempt-2-tape.json",
+      "claimed": "fnv1a32:a2f374c8",
+      "replayed": "fnv1a32:a2f374c8",
+      "status": "agree",
+      "outcome": {
+        "secured": false,
+        "waves": 9,
+        "gold": 40,
+        "timeAlive": 278.733
+      }
+    },
+    {
+      "path": "artifacts/gauntlet-heat-20260824/e1-twin-banks/e1-twin-banks-attempt-3-tape.json",
+      "claimed": "fnv1a32:b05eec39",
+      "replayed": "fnv1a32:b05eec39",
+      "status": "agree",
+      "outcome": {
+        "secured": false,
+        "waves": 12,
+        "gold": 200,
+        "timeAlive": 374.033
+      }
+    },
+    {
+      "path": "artifacts/gauntlet-heat-20260824/e2-hill-mine/e2-hill-mine-attempt-1-tape.json",
+      "claimed": "fnv1a32:83b80ff3",
+      "replayed": "fnv1a32:83b80ff3",
+      "status": "agree",
+      "outcome": {
+        "secured": false,
+        "waves": 10,
+        "gold": 125,
+        "timeAlive": 312.767
+      }
+    },
+    {
+      "path": "artifacts/gauntlet-heat-20260824/e2-hill-mine/e2-hill-mine-attempt-2-tape.json",
+      "claimed": "fnv1a32:427ffd13",
+      "status": "unreplayable",
+      "error": "assay replay failed: the run ended before tick 11650 of the order stream"
+    },
+    {
+      "path": "artifacts/gauntlet-heat-20260824/e2-hill-mine/e2-hill-mine-attempt-3-tape.json",
+      "claimed": "fnv1a32:cc6331ce",
+      "replayed": "fnv1a32:d066b1a2",
+      "status": "diverge",
+      "outcome": {
+        "secured": false,
+        "waves": 12,
+        "gold": 123,
+        "timeAlive": 373.667
+      }
+    },
+    {
+      "path": "artifacts/gauntlet-heat-20260824/the-claim/tape.json",
+      "claimed": "fnv1a32:42907676",
+      "replayed": "fnv1a32:42907676",
+      "status": "agree",
+      "outcome": {
+        "secured": true,
+        "waves": 10,
+        "gold": 98,
+        "timeAlive": 300
+      }
+    },
+    {
+      "path": "artifacts/gauntlet-heat2-20260824/codex-luna/e1-baron-e1-baron-01-attempt-1.tape.json",
+      "claimed": "fnv1a32:c6d906a9",
+      "replayed": "fnv1a32:c6d906a9",
+      "status": "agree",
+      "outcome": {
+        "secured": false,
+        "waves": 16,
+        "gold": 198,
+        "timeAlive": 426.267
+      }
+    },
+    {
+      "path": "artifacts/gauntlet-heat2-20260824/codex-luna/e1-baron-e1-baron-01-attempt-2.tape.json",
+      "claimed": "fnv1a32:17c4c848",
+      "replayed": "fnv1a32:17c4c848",
+      "status": "agree",
+      "outcome": {
+        "secured": false,
+        "waves": 15,
+        "gold": 200,
+        "timeAlive": 413.767
+      }
+    },
+    {
+      "path": "artifacts/gauntlet-heat2-20260824/codex-luna/e1-baron-e1-baron-01-attempt-3.tape.json",
+      "claimed": "fnv1a32:e63e239e",
+      "replayed": "fnv1a32:e63e239e",
+      "status": "agree",
+      "outcome": {
+        "secured": false,
+        "waves": 15,
+        "gold": 199,
+        "timeAlive": 407.6
+      }
+    },
+    {
+      "path": "artifacts/gauntlet-heat2-20260824/codex-luna/e1-dry-gulch-e1-dry-gulch-01-attempt-1.tape.json",
+      "claimed": "fnv1a32:f4d0fbff",
+      "replayed": "fnv1a32:f4d0fbff",
+      "status": "agree",
+      "outcome": {
+        "secured": false,
+        "waves": 18,
+        "gold": 151,
+        "timeAlive": 545
+      }
+    },
+    {
+      "path": "artifacts/gauntlet-heat2-20260824/codex-luna/e1-dry-gulch-e1-dry-gulch-01-attempt-2.tape.json",
+      "claimed": "fnv1a32:01430698",
+      "replayed": "fnv1a32:01430698",
+      "status": "agree",
+      "outcome": {
+        "secured": true,
+        "waves": 20,
+        "gold": 13,
+        "timeAlive": 600
+      }
+    },
+    {
+      "path": "artifacts/gauntlet-heat2-20260824/codex-luna/e1-night-shift-e1-night-shift-01-attempt-1.tape.json",
+      "claimed": "fnv1a32:3d52d9fc",
+      "replayed": "fnv1a32:3d52d9fc",
+      "status": "agree",
+      "outcome": {
+        "secured": false,
+        "waves": 15,
+        "gold": 120,
+        "timeAlive": 460.067
+      }
+    },
+    {
+      "path": "artifacts/gauntlet-heat2-20260824/codex-luna/e1-night-shift-e1-night-shift-01-attempt-2.tape.json",
+      "claimed": "fnv1a32:d22b8d28",
+      "replayed": "fnv1a32:d22b8d28",
+      "status": "agree",
+      "outcome": {
+        "secured": false,
+        "waves": 5,
+        "gold": 140,
+        "timeAlive": 169.5
+      }
+    },
+    {
+      "path": "artifacts/gauntlet-heat2-20260824/codex-luna/e1-night-shift-e1-night-shift-01-attempt-3.tape.json",
+      "claimed": "fnv1a32:b1a3d599",
+      "replayed": "fnv1a32:b1a3d599",
+      "status": "agree",
+      "outcome": {
+        "secured": false,
+        "waves": 14,
+        "gold": 81,
+        "timeAlive": 435.333
+      }
+    },
+    {
+      "path": "artifacts/gauntlet-heat2-20260824/codex-luna/e1-twin-banks-e1-twin-banks-01-attempt-1.tape.json",
+      "claimed": "fnv1a32:25dfb526",
+      "replayed": "fnv1a32:25dfb526",
+      "status": "agree",
+      "outcome": {
+        "secured": false,
+        "waves": 5,
+        "gold": 55,
+        "timeAlive": 160.4
+      }
+    },
+    {
+      "path": "artifacts/gauntlet-heat2-20260824/codex-luna/e1-twin-banks-e1-twin-banks-01-attempt-2.tape.json",
+      "claimed": "fnv1a32:fccfbfe3",
+      "replayed": "fnv1a32:fccfbfe3",
+      "status": "agree",
+      "outcome": {
+        "secured": false,
+        "waves": 4,
+        "gold": 55,
+        "timeAlive": 140.767
+      }
+    },
+    {
+      "path": "artifacts/gauntlet-heat2-20260824/codex-luna/e1-twin-banks-e1-twin-banks-01-attempt-3.tape.json",
+      "claimed": "fnv1a32:de040569",
+      "replayed": "fnv1a32:de040569",
+      "status": "agree",
+      "outcome": {
+        "secured": false,
+        "waves": 16,
+        "gold": 196,
+        "timeAlive": 496.867
+      }
+    },
+    {
+      "path": "artifacts/gauntlet-heat2-20260824/codex-luna/e2-hill-mine-e2-hill-mine-01-attempt-1.tape.json",
+      "claimed": "fnv1a32:5ceafcc4",
+      "replayed": "fnv1a32:5ceafcc4",
+      "status": "agree",
+      "outcome": {
+        "secured": false,
+        "waves": 2,
+        "gold": 37,
+        "timeAlive": 89.933
+      }
+    },
+    {
+      "path": "artifacts/gauntlet-heat2-20260824/codex-luna/e2-hill-mine-e2-hill-mine-01-attempt-2.tape.json",
+      "claimed": "fnv1a32:36602f2b",
+      "replayed": "fnv1a32:36602f2b",
+      "status": "agree",
+      "outcome": {
+        "secured": false,
+        "waves": 2,
+        "gold": 80,
+        "timeAlive": 85.5
+      }
+    },
+    {
+      "path": "artifacts/gauntlet-heat2-20260824/codex-luna/e2-hill-mine-e2-hill-mine-01-attempt-3.tape.json",
+      "claimed": "fnv1a32:ccc5aaa9",
+      "replayed": "fnv1a32:ccc5aaa9",
+      "status": "agree",
+      "outcome": {
+        "secured": false,
+        "waves": 3,
+        "gold": 70,
+        "timeAlive": 90.233
+      }
+    },
+    {
+      "path": "artifacts/gauntlet-heat2-20260824/hermes/e1-night-shift-attempt-1.json",
+      "claimed": "fnv1a32:240a557f",
+      "replayed": "fnv1a32:240a557f",
+      "status": "agree",
+      "outcome": {
+        "secured": false,
+        "waves": 3,
+        "gold": 32,
+        "timeAlive": 100.967
+      }
+    },
+    {
+      "path": "artifacts/gauntlet-heat2-20260824/hermes/e1-night-shift-attempt-2.json",
+      "claimed": "fnv1a32:116ae3d2",
+      "replayed": "fnv1a32:116ae3d2",
+      "status": "agree",
+      "outcome": {
+        "secured": false,
+        "waves": 8,
+        "gold": 87,
+        "timeAlive": 249.533
+      }
+    },
+    {
+      "path": "artifacts/gauntlet-heat2-20260824/hermes/e1-night-shift-attempt-3.json",
+      "claimed": "fnv1a32:8da554c8",
+      "replayed": "fnv1a32:8da554c8",
+      "status": "agree",
+      "outcome": {
+        "secured": false,
+        "waves": 7,
+        "gold": 16,
+        "timeAlive": 224.567
+      }
+    },
+    {
+      "path": "artifacts/gauntlet-heat2-20260824/hermes/e2-hill-mine-attempt-1.json",
+      "claimed": "fnv1a32:f23dbaec",
+      "replayed": "fnv1a32:f23dbaec",
+      "status": "agree",
+      "outcome": {
+        "secured": false,
+        "waves": 2,
+        "gold": 30,
+        "timeAlive": 85.5
+      }
+    },
+    {
+      "path": "artifacts/gauntlet-heat2-20260824/hermes/e2-hill-mine-attempt-2.json",
+      "claimed": "fnv1a32:9b7509e3",
+      "replayed": "fnv1a32:9b7509e3",
+      "status": "agree",
+      "outcome": {
+        "secured": false,
+        "waves": 2,
+        "gold": 0,
+        "timeAlive": 84.133
+      }
+    },
+    {
+      "path": "artifacts/gauntlet-heat2-20260824/hermes/e2-hill-mine-attempt-3.json",
+      "claimed": "fnv1a32:8201bab3",
+      "replayed": "fnv1a32:8201bab3",
+      "status": "agree",
+      "outcome": {
+        "secured": false,
+        "waves": 1,
+        "gold": 0,
+        "timeAlive": 42.133
+      }
+    },
+    {
+      "path": "artifacts/gauntlet-heat2-20260824/hermes/the-claim-attempt-3.json",
+      "claimed": "fnv1a32:3f6067fa",
+      "replayed": "fnv1a32:3f6067fa",
+      "status": "agree",
+      "outcome": {
+        "secured": false,
+        "waves": 4,
+        "gold": 45,
+        "timeAlive": 130.7
+      }
+    },
+    {
+      "path": "artifacts/gauntlet-heat2-20260824/openclaw/tapes/e1-night-shift-attempt1.tape.json",
+      "claimed": "fnv1a32:cd846988",
+      "replayed": "fnv1a32:cd846988",
+      "status": "agree",
+      "outcome": {
+        "secured": false,
+        "waves": 6,
+        "gold": 0,
+        "timeAlive": 203.1
+      }
+    },
+    {
+      "path": "artifacts/gauntlet-heat2-20260824/openclaw/tapes/e1-night-shift-attempt2.tape.json",
+      "claimed": "fnv1a32:8550a311",
+      "replayed": "fnv1a32:8550a311",
+      "status": "agree",
+      "outcome": {
+        "secured": false,
+        "waves": 3,
+        "gold": 14,
+        "timeAlive": 90.2
+      }
+    },
+    {
+      "path": "artifacts/gauntlet-heat2-20260824/openclaw/tapes/e1-night-shift-attempt3.tape.json",
+      "claimed": "fnv1a32:e75eb388",
+      "replayed": "fnv1a32:e75eb388",
+      "status": "agree",
+      "outcome": {
+        "secured": false,
+        "waves": 5,
+        "gold": 31,
+        "timeAlive": 167.5
+      }
+    },
+    {
+      "path": "artifacts/gauntlet-heat2-20260824/openclaw/tapes/e2-hill-mine-attempt1.tape.json",
+      "claimed": "fnv1a32:bff2f1f7",
+      "replayed": "fnv1a32:bff2f1f7",
+      "status": "agree",
+      "outcome": {
+        "secured": false,
+        "waves": 2,
+        "gold": 20,
+        "timeAlive": 83.233
+      }
+    },
+    {
+      "path": "artifacts/gauntlet-heat2-20260824/openclaw/tapes/e2-hill-mine-attempt2.tape.json",
+      "claimed": "fnv1a32:b8701282",
+      "replayed": "fnv1a32:b8701282",
+      "status": "agree",
+      "outcome": {
+        "secured": false,
+        "waves": 2,
+        "gold": 40,
+        "timeAlive": 84.133
+      }
+    },
+    {
+      "path": "artifacts/gauntlet-heat2-20260824/openclaw/tapes/e2-hill-mine-attempt3.tape.json",
+      "claimed": "fnv1a32:448789c2",
+      "replayed": "fnv1a32:448789c2",
+      "status": "agree",
+      "outcome": {
+        "secured": false,
+        "waves": 2,
+        "gold": 100,
+        "timeAlive": 73.2
+      }
+    },
+    {
+      "path": "artifacts/gauntlet-heat2-20260824/openclaw/tapes/the-claim-attempt2.tape.json",
+      "claimed": "fnv1a32:145355a1",
+      "replayed": "fnv1a32:145355a1",
+      "status": "agree",
+      "outcome": {
+        "secured": false,
+        "waves": 3,
+        "gold": 40,
+        "timeAlive": 107.1
+      }
+    },
+    {
+      "path": "artifacts/gauntlet-heat2-20260824/openclaw/tapes/the-claim-attempt3.tape.json",
+      "claimed": "fnv1a32:097043a6",
+      "replayed": "fnv1a32:097043a6",
+      "status": "agree",
+      "outcome": {
+        "secured": false,
+        "waves": 3,
+        "gold": 20,
+        "timeAlive": 109.233
+      }
+    },
+    {
+      "path": "artifacts/gauntlet-heat4-20260824/hermes/the-claim-attempt-1.tape.json",
+      "claimed": "fnv1a32:71e73935",
+      "replayed": "fnv1a32:71e73935",
+      "status": "agree",
+      "outcome": {
+        "secured": false,
+        "waves": 4,
+        "gold": 0,
+        "timeAlive": 148.5
+      }
+    },
+    {
+      "path": "artifacts/gauntlet-heat4-20260824/hermes/the-claim-attempt-3.tape.json",
+      "claimed": "fnv1a32:ca004362",
+      "replayed": "fnv1a32:ca004362",
+      "status": "agree",
+      "outcome": {
+        "secured": false,
+        "waves": 3,
+        "gold": 5,
+        "timeAlive": 96.833
+      }
+    },
+    {
+      "path": "artifacts/gauntlet-heat4-20260824/omp/the-claim-attempt-1.tape.json",
+      "claimed": "fnv1a32:3b65995d",
+      "replayed": "fnv1a32:3b65995d",
+      "status": "agree",
+      "outcome": {
+        "secured": false,
+        "waves": 4,
+        "gold": 3,
+        "timeAlive": 144.9
+      }
+    },
+    {
+      "path": "artifacts/gauntlet-heat4-20260824/omp/the-claim-attempt-2.tape.json",
+      "claimed": "fnv1a32:573af64d",
+      "replayed": "fnv1a32:573af64d",
+      "status": "agree",
+      "outcome": {
+        "secured": false,
+        "waves": 4,
+        "gold": 0,
+        "timeAlive": 133.467
+      }
+    },
+    {
+      "path": "artifacts/gauntlet-heat4-20260824/omp/the-claim-attempt-3.tape.json",
+      "claimed": "fnv1a32:6884fc5b",
+      "replayed": "fnv1a32:6884fc5b",
+      "status": "agree",
+      "outcome": {
+        "secured": false,
+        "waves": 5,
+        "gold": 0,
+        "timeAlive": 166.3
+      }
+    },
+    {
+      "path": "artifacts/gauntlet-heat4-20260824/prime/the-claim-attempt-2.tape.json",
+      "claimed": "fnv1a32:9b5b0e7d",
+      "replayed": "fnv1a32:9b5b0e7d",
+      "status": "agree",
+      "outcome": {
+        "secured": true,
+        "waves": 10,
+        "gold": 0,
+        "timeAlive": 300
+      }
+    },
+    {
+      "path": "artifacts/gauntlet-heat5-20260824/e1-baron/attempt-2-tape.json",
+      "claimed": "fnv1a32:248f9682",
+      "replayed": "fnv1a32:248f9682",
+      "status": "agree",
+      "outcome": {
+        "secured": false,
+        "waves": 21,
+        "gold": 100,
+        "timeAlive": 548.733
+      }
+    },
+    {
+      "path": "artifacts/gauntlet-heat5-20260824/e1-baron/attempt-3-tape.json",
+      "claimed": "fnv1a32:89b028bb",
+      "replayed": "fnv1a32:89b028bb",
+      "status": "agree",
+      "outcome": {
+        "secured": false,
+        "waves": 20,
+        "gold": 198,
+        "timeAlive": 534.9
+      }
+    },
+    {
+      "path": "artifacts/gauntlet-heat5-20260824/e1-baron/attempt-4-tape.json",
+      "claimed": "fnv1a32:79cbfb15",
+      "replayed": "fnv1a32:79cbfb15",
+      "status": "agree",
+      "outcome": {
+        "secured": false,
+        "waves": 20,
+        "gold": 200,
+        "timeAlive": 538.467
+      }
+    },
+    {
+      "path": "artifacts/gauntlet-heat5-20260824/e1-baron/attempt-5-tape.json",
+      "claimed": "fnv1a32:3666664d",
+      "replayed": "fnv1a32:3666664d",
+      "status": "agree",
+      "outcome": {
+        "secured": false,
+        "waves": 20,
+        "gold": 140,
+        "timeAlive": 537.867
+      }
+    },
+    {
+      "path": "artifacts/gauntlet-heat5-20260824/e1-baron/attempt-6-tape.json",
+      "claimed": "fnv1a32:f9ea2a8a",
+      "replayed": "fnv1a32:f9ea2a8a",
+      "status": "agree",
+      "outcome": {
+        "secured": false,
+        "waves": 18,
+        "gold": 16,
+        "timeAlive": 480.133
+      }
+    },
+    {
+      "path": "artifacts/gauntlet-heat5-20260824/e1-baron/attempt-7-tape.json",
+      "claimed": "fnv1a32:1989999a",
+      "replayed": "fnv1a32:1989999a",
+      "status": "agree",
+      "outcome": {
+        "secured": false,
+        "waves": 20,
+        "gold": 5,
+        "timeAlive": 532.4
+      }
+    },
+    {
+      "path": "artifacts/gauntlet-heat5-20260824/e1-baron/attempt-8-tape.json",
+      "claimed": "fnv1a32:aab2cf06",
+      "replayed": "fnv1a32:aab2cf06",
+      "status": "agree",
+      "outcome": {
+        "secured": false,
+        "waves": 20,
+        "gold": 3,
+        "timeAlive": 533.833
+      }
+    },
+    {
+      "path": "artifacts/gauntlet-heat5-20260824/e1-baron/attempt-9-tape.json",
+      "claimed": "fnv1a32:ea5d5f26",
+      "replayed": "fnv1a32:ea5d5f26",
+      "status": "agree",
+      "outcome": {
+        "secured": false,
+        "waves": 20,
+        "gold": 48,
+        "timeAlive": 542.7
+      }
+    },
+    {
+      "path": "artifacts/gauntlet-heat5-20260824/e1-dry-gulch/attempt-1-tape.json",
+      "claimed": "fnv1a32:6936de94",
+      "replayed": "fnv1a32:6936de94",
+      "status": "agree",
+      "outcome": {
+        "secured": true,
+        "waves": 20,
+        "gold": 145,
+        "timeAlive": 600
+      }
+    },
+    {
+      "path": "artifacts/gauntlet-heat5-20260824/e1-dry-gulch/winning-tape.json",
+      "claimed": "fnv1a32:6936de94",
+      "replayed": "fnv1a32:6936de94",
+      "status": "agree",
+      "outcome": {
+        "secured": true,
+        "waves": 20,
+        "gold": 145,
+        "timeAlive": 600
+      }
+    },
+    {
+      "path": "artifacts/gauntlet-heat5-20260824/e1-night-shift/attempt-2-tape.json",
+      "claimed": "fnv1a32:1b753746",
+      "replayed": "fnv1a32:1b753746",
+      "status": "agree",
+      "outcome": {
+        "secured": false,
+        "waves": 14,
+        "gold": 42,
+        "timeAlive": 436.133
+      }
+    },
+    {
+      "path": "artifacts/gauntlet-heat5-20260824/e1-night-shift/attempt-3-tape.json",
+      "claimed": "fnv1a32:42966bcc",
+      "status": "unreplayable",
+      "error": "assay replay failed: malformed tape"
+    },
+    {
+      "path": "artifacts/gauntlet-heat5-20260824/e1-night-shift/attempt-4-tape.json",
+      "claimed": "fnv1a32:44226074",
+      "status": "unreplayable",
+      "error": "assay replay failed: malformed tape"
+    },
+    {
+      "path": "artifacts/gauntlet-heat5-20260824/e1-night-shift/attempt-5-tape.json",
+      "claimed": "fnv1a32:0b664a98",
+      "status": "unreplayable",
+      "error": "assay replay failed: malformed tape"
+    },
+    {
+      "path": "artifacts/gauntlet-heat5-20260824/e1-night-shift/attempt-6-tape.json",
+      "claimed": "fnv1a32:889d9357",
+      "replayed": "fnv1a32:889d9357",
+      "status": "agree",
+      "outcome": {
+        "secured": true,
+        "waves": 25,
+        "gold": 115,
+        "timeAlive": 750.033
+      }
+    },
+    {
+      "path": "artifacts/gauntlet-heat5-20260824/e1-night-shift/winning-tape.json",
+      "claimed": "fnv1a32:889d9357",
+      "replayed": "fnv1a32:889d9357",
+      "status": "agree",
+      "outcome": {
+        "secured": true,
+        "waves": 25,
+        "gold": 115,
+        "timeAlive": 750.033
+      }
+    },
+    {
+      "path": "artifacts/gauntlet-heat5-20260824/e1-twin-banks/attempt-2-tape.json",
+      "claimed": "fnv1a32:2b3467b5",
+      "replayed": "fnv1a32:2b3467b5",
+      "status": "agree",
+      "outcome": {
+        "secured": true,
+        "waves": 20,
+        "gold": 1,
+        "timeAlive": 600
+      }
+    },
+    {
+      "path": "artifacts/gauntlet-heat5-20260824/e1-twin-banks/attempt-3-tape.json",
+      "claimed": "fnv1a32:cbe38d3b",
+      "replayed": "fnv1a32:cbe38d3b",
+      "status": "agree",
+      "outcome": {
+        "secured": true,
+        "waves": 20,
+        "gold": 178,
+        "timeAlive": 600
+      }
+    },
+    {
+      "path": "artifacts/gauntlet-heat5-20260824/e1-twin-banks/attempt-4-tape.json",
+      "claimed": "fnv1a32:29de3406",
+      "replayed": "fnv1a32:29de3406",
+      "status": "agree",
+      "outcome": {
+        "secured": true,
+        "waves": 20,
+        "gold": 178,
+        "timeAlive": 600
+      }
+    },
+    {
+      "path": "artifacts/gauntlet-heat5-20260824/e1-twin-banks/attempt-5-tape.json",
+      "claimed": "fnv1a32:95e60606",
+      "replayed": "fnv1a32:95e60606",
+      "status": "agree",
+      "outcome": {
+        "secured": true,
+        "waves": 20,
+        "gold": 127,
+        "timeAlive": 600
+      }
+    },
+    {
+      "path": "artifacts/gauntlet-heat5-20260824/e1-twin-banks/attempt-6-tape.json",
+      "claimed": "fnv1a32:b051e0c9",
+      "replayed": "fnv1a32:b051e0c9",
+      "status": "agree",
+      "outcome": {
+        "secured": true,
+        "waves": 20,
+        "gold": 127,
+        "timeAlive": 600
+      }
+    },
+    {
+      "path": "artifacts/gauntlet-heat5-20260824/e1-twin-banks/winning-tape.json",
+      "claimed": "fnv1a32:b051e0c9",
+      "replayed": "fnv1a32:b051e0c9",
+      "status": "agree",
+      "outcome": {
+        "secured": true,
+        "waves": 20,
+        "gold": 127,
+        "timeAlive": 600
+      }
+    },
+    {
+      "path": "artifacts/gauntlet-heat5-20260824/e2-hill-mine/attempt-10-tape.json",
+      "claimed": "fnv1a32:6663568b",
+      "status": "unreplayable",
+      "error": "assay replay failed: the run ended before tick 13483 of the order stream"
+    },
+    {
+      "path": "artifacts/gauntlet-heat5-20260824/e2-hill-mine/attempt-11-tape.json",
+      "claimed": "fnv1a32:25392676",
+      "replayed": "fnv1a32:e0e4a064",
+      "status": "diverge",
+      "outcome": {
+        "secured": false,
+        "waves": 17,
+        "gold": 42,
+        "timeAlive": 530.733
+      }
+    },
+    {
+      "path": "artifacts/gauntlet-heat5-20260824/e2-hill-mine/attempt-12-tape.json",
+      "claimed": "fnv1a32:71a7c734",
+      "status": "unreplayable",
+      "error": "assay replay failed: the run ended before tick 13500 of the order stream"
+    },
+    {
+      "path": "artifacts/gauntlet-heat5-20260824/e2-hill-mine/attempt-13-tape.json",
+      "claimed": "fnv1a32:038d026c",
+      "status": "unreplayable",
+      "error": "assay replay failed: the run ended before tick 12707 of the order stream"
+    },
+    {
+      "path": "artifacts/gauntlet-heat5-20260824/e2-hill-mine/attempt-14-tape.json",
+      "claimed": "fnv1a32:017e4c97",
+      "replayed": "fnv1a32:53d07e8d",
+      "status": "diverge",
+      "outcome": {
+        "secured": false,
+        "waves": 16,
+        "gold": 27,
+        "timeAlive": 508.967
+      }
+    },
+    {
+      "path": "artifacts/gauntlet-heat5-20260824/e2-hill-mine/attempt-2-tape.json",
+      "claimed": "fnv1a32:9d260869",
+      "status": "unreplayable",
+      "error": "assay replay failed: the run ended before tick 14027 of the order stream"
+    },
+    {
+      "path": "artifacts/gauntlet-heat5-20260824/e2-hill-mine/attempt-3-tape.json",
+      "claimed": "fnv1a32:2e568ebc",
+      "replayed": "fnv1a32:2e568ebc",
+      "status": "agree",
+      "outcome": {
+        "secured": false,
+        "waves": 1,
+        "gold": 60,
+        "timeAlive": 42.133
+      }
+    },
+    {
+      "path": "artifacts/gauntlet-heat5-20260824/e2-hill-mine/attempt-4-tape.json",
+      "claimed": "fnv1a32:0d8cf043",
+      "replayed": "fnv1a32:0d8cf043",
+      "status": "agree",
+      "outcome": {
+        "secured": false,
+        "waves": 12,
+        "gold": 5,
+        "timeAlive": 384.2
+      }
+    },
+    {
+      "path": "artifacts/gauntlet-heat5-20260824/e2-hill-mine/attempt-5-tape.json",
+      "claimed": "fnv1a32:209b7751",
+      "replayed": "fnv1a32:209b7751",
+      "status": "agree",
+      "outcome": {
+        "secured": false,
+        "waves": 12,
+        "gold": 9,
+        "timeAlive": 379.333
+      }
+    },
+    {
+      "path": "artifacts/gauntlet-heat5-20260824/e2-hill-mine/attempt-6-tape.json",
+      "claimed": "fnv1a32:66bf2616",
+      "replayed": "fnv1a32:66bf2616",
+      "status": "agree",
+      "outcome": {
+        "secured": false,
+        "waves": 9,
+        "gold": 2,
+        "timeAlive": 286.467
+      }
+    },
+    {
+      "path": "artifacts/gauntlet-heat5-20260824/e2-hill-mine/attempt-7-tape.json",
+      "claimed": "fnv1a32:af7dc0d8",
+      "replayed": "fnv1a32:af7dc0d8",
+      "status": "agree",
+      "outcome": {
+        "secured": false,
+        "waves": 12,
+        "gold": 18,
+        "timeAlive": 387.767
+      }
+    },
+    {
+      "path": "artifacts/gauntlet-heat5-20260824/e2-hill-mine/attempt-8-tape.json",
+      "claimed": "fnv1a32:e66c9896",
+      "replayed": "fnv1a32:7599a226",
+      "status": "diverge",
+      "outcome": {
+        "secured": false,
+        "waves": 17,
+        "gold": 45,
+        "timeAlive": 510.133
+      }
+    },
+    {
+      "path": "artifacts/gauntlet-heat5-20260824/e2-hill-mine/attempt-9-tape.json",
+      "claimed": "fnv1a32:21da72b1",
+      "replayed": "fnv1a32:17e1321e",
+      "status": "diverge",
+      "outcome": {
+        "secured": false,
+        "waves": 16,
+        "gold": 62,
+        "timeAlive": 487.3
+      }
+    },
+    {
+      "path": "artifacts/gauntlet-heat5-20260824/e2-hill-mine/winning-tape.json",
+      "claimed": "fnv1a32:017e4c97",
+      "replayed": "fnv1a32:53d07e8d",
+      "status": "diverge",
+      "outcome": {
+        "secured": false,
+        "waves": 16,
+        "gold": 27,
+        "timeAlive": 508.967
+      }
+    },
+    {
+      "path": "artifacts/gauntlet-heat5-20260824/the-claim/tape.json",
+      "claimed": "fnv1a32:ade9c894",
+      "replayed": "fnv1a32:ade9c894",
+      "status": "agree",
+      "outcome": {
+        "secured": true,
+        "waves": 10,
+        "gold": 190,
+        "timeAlive": 300
+      }
+    },
+    {
+      "path": "artifacts/gauntlet-heat5-20260824/the-claim/winning-tape.json",
+      "claimed": "fnv1a32:ade9c894",
+      "replayed": "fnv1a32:ade9c894",
+      "status": "agree",
+      "outcome": {
+        "secured": true,
+        "waves": 10,
+        "gold": 190,
+        "timeAlive": 300
+      }
+    },
+    {
+      "path": "artifacts/gauntlet-heat5b-20260825/e1-night-shift/attempt-1-tape.json",
+      "claimed": "fnv1a32:889d9357",
+      "replayed": "fnv1a32:889d9357",
+      "status": "agree",
+      "outcome": {
+        "secured": true,
+        "waves": 25,
+        "gold": 115,
+        "timeAlive": 750.033
+      }
+    },
+    {
+      "path": "artifacts/gauntlet-heat5b-20260825/e1-night-shift/winning-tape.json",
+      "claimed": "fnv1a32:889d9357",
+      "replayed": "fnv1a32:889d9357",
+      "status": "agree",
+      "outcome": {
+        "secured": true,
+        "waves": 25,
+        "gold": 115,
+        "timeAlive": 750.033
+      }
+    },
+    {
+      "path": "artifacts/gauntlet-heat5b-20260825/e2-hill-mine/attempt-1-tape.json",
+      "claimed": "fnv1a32:a38167d5",
+      "replayed": "fnv1a32:a38167d5",
+      "status": "agree",
+      "outcome": {
+        "secured": false,
+        "waves": 14,
+        "gold": 13,
+        "timeAlive": 438.967
+      }
+    },
+    {
+      "path": "artifacts/gauntlet-heat5b-20260825/e2-hill-mine/attempt-10-tape.json",
+      "claimed": "fnv1a32:a45ba9ac",
+      "replayed": "fnv1a32:85cb8a01",
+      "status": "diverge",
+      "outcome": {
+        "secured": true,
+        "waves": 17,
+        "gold": 5,
+        "timeAlive": 529.8
+      }
+    },
+    {
+      "path": "artifacts/gauntlet-heat5b-20260825/e2-hill-mine/attempt-2-tape.json",
+      "claimed": "fnv1a32:1a79b383",
+      "replayed": "fnv1a32:1a79b383",
+      "status": "agree",
+      "outcome": {
+        "secured": false,
+        "waves": 14,
+        "gold": 60,
+        "timeAlive": 430
+      }
+    },
+    {
+      "path": "artifacts/gauntlet-heat5b-20260825/e2-hill-mine/attempt-3-tape.json",
+      "claimed": "fnv1a32:bfc74e44",
+      "replayed": "fnv1a32:bfc74e44",
+      "status": "agree",
+      "outcome": {
+        "secured": false,
+        "waves": 14,
+        "gold": 56,
+        "timeAlive": 444.667
+      }
+    },
+    {
+      "path": "artifacts/gauntlet-heat5b-20260825/e2-hill-mine/attempt-4-tape.json",
+      "claimed": "fnv1a32:32d33198",
+      "replayed": "fnv1a32:32d33198",
+      "status": "agree",
+      "outcome": {
+        "secured": true,
+        "waves": 17,
+        "gold": 5,
+        "timeAlive": 529.8
+      }
+    },
+    {
+      "path": "artifacts/gauntlet-heat5b-20260825/e2-hill-mine/attempt-5-tape.json",
+      "claimed": "fnv1a32:7f0fd758",
+      "replayed": "fnv1a32:7f0fd758",
+      "status": "agree",
+      "outcome": {
+        "secured": false,
+        "waves": 15,
+        "gold": 0,
+        "timeAlive": 450.267
+      }
+    },
+    {
+      "path": "artifacts/gauntlet-heat5b-20260825/e2-hill-mine/attempt-6-tape.json",
+      "claimed": "fnv1a32:8c143a75",
+      "replayed": "fnv1a32:8c143a75",
+      "status": "agree",
+      "outcome": {
+        "secured": false,
+        "waves": 15,
+        "gold": 0,
+        "timeAlive": 451.333
+      }
+    },
+    {
+      "path": "artifacts/gauntlet-heat5b-20260825/e2-hill-mine/attempt-7-tape.json",
+      "claimed": "fnv1a32:1a2a3aff",
+      "replayed": "fnv1a32:1a2a3aff",
+      "status": "agree",
+      "outcome": {
+        "secured": false,
+        "waves": 15,
+        "gold": 0,
+        "timeAlive": 451.333
+      }
+    },
+    {
+      "path": "artifacts/gauntlet-heat5b-20260825/e2-hill-mine/attempt-8-tape.json",
+      "claimed": "fnv1a32:c8e3b807",
+      "replayed": "fnv1a32:c8e3b807",
+      "status": "agree",
+      "outcome": {
+        "secured": false,
+        "waves": 15,
+        "gold": 0,
+        "timeAlive": 451.333
+      }
+    },
+    {
+      "path": "artifacts/gauntlet-heat5b-20260825/e2-hill-mine/attempt-9-tape.json",
+      "claimed": "fnv1a32:17607ca3",
+      "replayed": "fnv1a32:17607ca3",
+      "status": "agree",
+      "outcome": {
+        "secured": true,
+        "waves": 17,
+        "gold": 5,
+        "timeAlive": 529.8
+      }
+    },
+    {
+      "path": "artifacts/gauntlet-heat5b-20260825/e2-hill-mine/winning-tape.json",
+      "claimed": "fnv1a32:85cb8a01",
+      "replayed": "fnv1a32:85cb8a01",
+      "status": "agree",
+      "outcome": {
+        "secured": true,
+        "waves": 17,
+        "gold": 5,
+        "timeAlive": 529.8
+      }
+    },
+    {
+      "path": "artifacts/gauntlet-heat5b-20260825/probe/rejected-bad-seed-tape.json",
+      "claimed": "fnv1a32:50e54fa9",
+      "replayed": "fnv1a32:50e54fa9",
+      "status": "agree",
+      "outcome": {
+        "secured": true,
+        "waves": 10,
+        "gold": 80,
+        "timeAlive": 300
+      }
+    },
+    {
+      "path": "artifacts/gauntlet-heat5b-20260825/probe/winning-tape.json",
+      "claimed": "fnv1a32:e7c3d0c0",
+      "replayed": "fnv1a32:e7c3d0c0",
+      "status": "agree",
+      "outcome": {
+        "secured": true,
+        "waves": 10,
+        "gold": 45,
+        "timeAlive": 300
+      }
+    },
+    {
+      "path": "artifacts/ops/l3-cutover/l3-tape-3158.json",
+      "claimed": "fnv1a32:8fda13d2",
+      "replayed": "fnv1a32:8fda13d2",
+      "status": "agree",
+      "outcome": {
+        "secured": true,
+        "waves": 10,
+        "gold": 55,
+        "timeAlive": 300
+      }
+    }
+  ]
+}

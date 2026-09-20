@@ -1,0 +1,30 @@
+{
+  "status": "PREPARED_NOT_STARTED",
+  "tests": 3348,
+  "files": 462,
+  "workers": 6,
+  "fireContextPresent": false,
+  "logicalCpus": 16,
+  "trackedOutputPaths": 16669,
+  "bankedDirtyOutputs": [
+    "artifacts/wire-crawler-3d/renderer-counts-desktop-chrome.json",
+    "artifacts/wire-crawler-3d/renderer-counts-mobile-chrome.json",
+    "artifacts/wire-railcar-3d/renderer-counts-desktop-chrome.json",
+    "artifacts/wire-railcar-3d/renderer-counts-mobile-chrome.json"
+  ],
+  "baselineStrategy": "Git blobs preserve clean tracked output bytes; only pre-existing modified output files are copied. At final source freeze take a new immutable baseline. Copy changed/new test outputs to full-regression/changed-outputs, then restore historical output bytes from baseline only. Do not alter sources, assets, test sources, or existing boss evidence.",
+  "command": [
+    "node",
+    "node_modules/@playwright/test/cli.js",
+    "test",
+    "--workers=6",
+    "--reporter=line,json",
+    "--output=artifacts/boss-fidelity/e3-crawler/full-regression/test-results"
+  ],
+  "environment": {
+    "GR_CAPTURE_EXTERNAL_SERVER": "1",
+    "GR_CAPTURE_BASE_URL": "http://127.0.0.1:5246",
+    "PLAYWRIGHT_JSON_OUTPUT_FILE": "/Users/robin/.codex/worktrees/572c/Gold Rush/artifacts/boss-fidelity/e3-crawler/full-regression/results.json"
+  },
+  "knownLimit": "Inventory labels are historical leads, not proof that current failures predate the patch; classify as unverified until controlled evidence supports attribution."
+}

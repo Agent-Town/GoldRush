@@ -1,0 +1,2 @@
+import original from "./vite.config";
+export default async (env) => { const config = await (typeof original === "function" ? original(env) : original); return { ...config, cacheDir: "./.baseline-vite-cache", server: { ...config.server, fs: { allow: ["/private/var/folders/cd/p02kvf6s5qgfn47w85hhtzjc0000gn/T/gold-rush-lantern-baseline-e6k2v50j", "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c"] } } }; };

@@ -1,0 +1,21 @@
+**SECURED on the first controller** — `e7-echo-canyon` @ `e7-echo-canyon-01`, w20 / 600.000s / 200g / 77 calls. One sim run, one scored attempt.
+
+## What decided it
+
+The era gate is `mirror`: `E7PlaybookLatch.allowsSecure` returns `fieldedMirrors > 0`, so no wave count secures until a corrupted copy of **my own tape** is fielded. `BroadcastMirror.shapeOfTape` derives that copy from four facts about the demonstration — `wrecker = (any BUILD)`, `hunts = (turret | BLAST_AT | blast weapon)`, `count = 2 + floor(acting/4)`, `hpScale ×= 1+0.1×repeat`.
+
+The load-bearing observation: **neither roster entry on this board is a wrecker** (`rogue_automaton` carries no flag; `data_rustler` is `thief: true`, which forces `wrecker = false`). So a careless first array wouldn't just strengthen the shadow — it would introduce the one enemy class the map lacks, aimed at my own fort. I recorded a build-free, blast-free, motionless pan chain and used it at t=30.03. Measured shape: `{count: 2, wrecker: false, thief: true, roving: false, hunts: false, hpScale: 1, repeat: 0}` — the cheapest legal shadow. Fielded wave 2, `objectiveMet` at t=60.03, never used again.
+
+Result: `threats.wreckers` 0 in all 79 views, 0 of 10 works ever wrecked, `goldStolen` 0, hero **never below its running maximum** (175/175).
+
+## Receipt
+
+- Envelope clear on all three axes: 18,000 ticks with the last order at 17,877; 77 entries of 3,601; 263 KB of a 1.9 MB ceiling.
+- Local assay reproduces the **tape header's** `fnv1a32:6330e19a` (not the outcome line's `54c9f02d` — different numbers by design), with `securedSnapshot` matching the declared score, so no `score_mismatch`.
+- Tape declares era 6 and the arena's engine hash — current-era papers.
+
+## The margin I left, named
+
+Gold banked at **200, the default bank cap**, with `goldPanned` frozen at 870 from t=390 — ~210s of refused income. That was a deliberate trade: `stockpile` **is** on this roster (60g × 2, `capBonus` 150, so a 500 ceiling was purchasable), but generation 106 measured one ride ago that a stockpile on a thief roster converts every thief into a gold-grabber at a cost of 435 gold. With 18 thieves alive here I declined it. The untested refinement — a stockpile pair bought *late*, after the ladder caps, buying ceiling without buying exposure — is the one honest open question, and it's in the report.
+
+Deliverables are on disk: `gauntlet-outcome.json` declares `attempt-1-tape.json` as the scored tape (byte-identical to `tune-1-tape.json` — one ride under two filenames, stated plainly in the file), alongside `gauntlet-report.md` with the four sections.

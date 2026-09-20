@@ -1,0 +1,252 @@
+F-2066-1 EVIDENCE CAPTURE — s2066, 2026-08-19
+Re-measurement of F-1501-3 (s1501): the Retention Law's largest live hole.
+
+===== art-staging-audit (headline buckets) =====
+$ node scripts/art-staging-audit.mjs
+
+ART STAGING AUDIT — 5 areas scanned, 983 files
+  staging/(root) · staging/contact-sheets · staging/motion-pilot · staging/raw · staging/requests
+main tracks 6643 files under assets/
+
+AT RISK (in NO object database — dies with this disk): 583 files, 527.95 MB
+  by area: staging/motion-pilot — 582 files, 527.89 MB
+  by area: staging/(root) — 1 files, 61 KB
+  UNTRACKED (name not on main): 582 files, 527.89 MB
+    worktrees/art/assets/motion-pilot/pose-library/hero/contact-sheets/hero-attack-down-takes123.png  1.10 MB
+    worktrees/art/assets/motion-pilot/pose-library/hero/contact-sheets/hero-attack-left-takes123.png  1.04 MB
+    worktrees/art/assets/motion-pilot/pose-library/hero/contact-sheets/hero-attack-right-takes123.png  1.03 MB
+    worktrees/art/assets/motion-pilot/pose-library/hero/contact-sheets/hero-attack-up-takes123.png  1.04 MB
+    worktrees/art/assets/motion-pilot/pose-library/hero/contact-sheets/hero-idle-down-takes123.png  870 KB
+    worktrees/art/assets/motion-pilot/pose-library/hero/contact-sheets/hero-idle-left-takes123.png  804 KB
+    worktrees/art/assets/motion-pilot/pose-library/hero/contact-sheets/hero-idle-right-takes123.png  756 KB
+    worktrees/art/assets/motion-pilot/pose-library/hero/contact-sheets/hero-idle-up-takes123.png  870 KB
+    worktrees/art/assets/motion-pilot/pose-library/hero/contact-sheets/hero-work-down-takes123.png  1.32 MB
+    worktrees/art/assets/motion-pilot/pose-library/hero/contact-sheets/hero-work-left-takes123.png  1.23 MB
+    worktrees/art/assets/motion-pilot/pose-library/hero/contact-sheets/hero-work-right-takes123.png  1.22 MB
+    worktrees/art/assets/motion-pilot/pose-library/hero/contact-sheets/hero-work-up-takes123.png  1.21 MB
+    … and 570 more (use --json for the full list)
+  EXPOSED (name IS on main, but these bytes are not): 1 files, 61 KB
+    worktrees/art/assets/LEDGER.md  staging 61 KB vs main 246 KB
+
+LOCAL-ONLY (in git HERE, but on no origin ref — one push from safe): 0 files, 0 KB
+
+SALVAGED (not on main, but the bytes ARE in git — parked): 178 files
+  worktrees/art/assets/contact-sheets/_gilded-r3c0-debug.png  55 KB
+  worktrees/art/assets/contact-sheets/char-hero-ages-sheets-25pct.png  658 KB
+  worktrees/art/assets/contact-sheets/char-hero-claimday-detail-crops-2x.png  1.76 MB
+  worktrees/art/assets/contact-sheets/char-hero-claimday-sheets-25pct.png  246 KB
+  worktrees/art/assets/contact-sheets/char-hero-four-ages-lineup.png  306 KB
+  worktrees/art/assets/contact-sheets/char-prospector-skins-detail-crops-2x.png  3.03 MB
+  worktrees/art/assets/contact-sheets/char-prospector-skins-sheets-25pct.png  1.64 MB
+  worktrees/art/assets/contact-sheets/char-prospector-three-coat-lineup.png  242 KB
+  worktrees/art/assets/contact-sheets/char-tailor-release-lineup.png  291 KB
+  worktrees/art/assets/contact-sheets/e2-icons-preview.png  122 KB
+  worktrees/art/assets/contact-sheets/e2-rail-elements-preview.png  137 KB
+  worktrees/art/assets/contact-sheets/stream-overlay-pack-preview.png  1.07 MB
+  … and 166 more (use --json for the full list)
+
+DIVERGED (regenerated over shipped art, bytes ARE in git): 21 files
+  worktrees/art/assets/raw/bld-canal-works.png  staging 2.95 MB vs main 3.05 MB
+  worktrees/art/assets/raw/bld-dome-commons.png  staging 2.82 MB vs main 3.37 MB
+  worktrees/art/assets/raw/bld-ice-quarry-rig.png  staging 2.77 MB vs main 3.28 MB
+  worktrees/art/assets/raw/bld-seed-vault.png  staging 2.79 MB vs main 3.21 MB
+  worktrees/art/assets/raw/bld-weather-spire.png  staging 2.40 MB vs main 2.86 MB
+  worktrees/art/assets/raw/char-coalthief-sheet-walk4-a.png  staging 1.26 MB vs main 1.30 MB
+  worktrees/art/assets/raw/char-e9-feral_terraformer-sheet-walk8.png  staging 1.35 MB vs main 1.52 MB
+  worktrees/art/assets/raw/char-hero-midlife-sheet-walk4-b.png  staging 1.11 MB vs main 1.26 MB
+  worktrees/art/assets/raw/char-hero-silver-sheet-walk4-b.png  staging 1.13 MB vs main 1.29 MB
+  worktrees/art/assets/raw/char-railtough-sheet-walk4-a.png  staging 1.11 MB vs main 1.08 MB
+  worktrees/art/assets/raw/char-railtough-sheet-walk4-b.png  staging 1.16 MB vs main 1.23 MB
+  worktrees/art/assets/raw/char-schoolteacher-sheet-walk8-b.png  staging 913 KB vs main 834 KB
+  … and 9 more (use --json for the full list)
+
+SHIPPED (blob-identical to main): 201 files
+
+
+===== motion-pilot file ages (dormancy test) =====
+$ node artifacts/f2066-art-retention/s2066-motion-age.mjs
+
+files: 780  totalMB: 577.30
+NEWEST 5:
+   2026-07-11 13:39 worktrees/art/assets/motion-pilot/pose-library/hero/logs/hero-credit-log.json
+   2026-07-11 13:39 worktrees/art/assets/motion-pilot/pose-library/hero/RUN-NOTE.md
+   2026-07-11 13:28 worktrees/art/assets/motion-pilot/pose-library/prospector/logs/prospector-idle-left-take3.json
+   2026-07-11 13:28 worktrees/art/assets/motion-pilot/pose-library/prospector/videos/prospector-idle-left-take2.mp4
+   2026-07-11 13:28 worktrees/art/assets/motion-pilot/pose-library/prospector/logs/prospector-idle-left-take2.json
+OLDEST 3:
+   2026-07-10 14:44 worktrees/art/assets/motion-pilot/production-newsie-mei/logs/newsie-mei-turnaround-generate.json
+   2026-07-10 08:49 worktrees/art/assets/motion-pilot/production-bandit-base/run-bandit.mjs
+   2026-07-10 08:48 worktrees/art/assets/motion-pilot/production-bandit-base/compose-bandit.mjs
+BY DAY:
+   2026-07-10 166
+   2026-07-11 614
+
+
+===== motion-pilot banked-vs-at-risk split =====
+$ node artifacts/f2066-art-retention/s2066-motion-split.mjs
+
+MAIN tracks assets/motion-pilot/ : 2363 files
+    production-hero 331
+    production-youngster-m 211
+    production-bandit-base 201
+    production-bandit-thief 198
+    production-tavernkeeper 197
+    production-storekeeper 182
+    production-elder 177
+    production-youngster-f 177
+    production-baron 157
+    production-jumper 156
+    production-prospector 89
+    production-hero-v3 74
+    production-hero-v2 64
+    production-hero-v4 57
+    frames 48
+    production-hero-replacement-package 16
+    contact-sheets 6
+    logs 6
+    production-newsie-mei 5
+    references 4
+    videos 3
+    NOTES.md 1
+    hero-side-take2-female.mp4 1
+    pose-library-CREDIT-CORRECTIVE.md 1
+    production-town-cast 1
+
+STAGING worktrees/art/assets/motion-pilot/ : 780 files
+    pose-library 614 files 421.3 MB | main tracks this subtree: NO
+    production-newsie-mei 123 files 146.7 MB | main tracks this subtree: 5 files
+    production-bandit-wrecker 41 files 9.3 MB | main tracks this subtree: NO
+    production-bandit-base 2 files 0.0 MB | main tracks this subtree: 201 files
+
+--- the 2 uncontrolled ledger refs ---
+char-jumper-sheet-rotation2.png => d84a3706e salvage: the batch-007 jumper rotation batch + coalthief row into git (Retention Law)
+plate-e3-boss-crawler.png => f23c7516f salvage: 10 untracked ART-slot raws into git (Retention Law)
+
+
+===== staging LEDGER.md asset refs, brace-expanded control =====
+$ node artifacts/f2066-art-retention/s2066-ledger5.mjs
+
+staging-ledger asset references (brace-expanded): 138
+  present on main: 133
+  ABSENT from main: 5
+    assets/raw/char-jumper-sheet-rotation2.png    <- char.claim_jumper SHEET full-ROTATION2 4x3
+    assets/raw/plate-e3-boss-crawler.png    <- boss.dynamo_crawler PLATE
+    assets/contact-sheets/char-hero-four-ages-lineup.png    <- char.hero AGES walk4 A/B (mid-life, silver, elder)
+    assets/contact-sheets/char-prospector-three-coat-lineup.png    <- char.prospector BOUNTY SKINS hover4 A/B (complainant, g
+    assets/contact-sheets/char-tailor-release-lineup.png    <- char.hero CLAIM-DAY walk4 A/B + tailor sign
+
+
+===== staging LEDGER.md row-key comparison vs main =====
+$ node artifacts/f2066-art-retention/s2066-ledger2.mjs
+
+staging rows: 47  main rows: 254
+
+ROW KEYS present in staging but ABSENT from main: 42
+   | char.claim_jumper SHEET full-ROTATION2 4x3
+   | char.newsie_mei TURNAROUND
+   | char.newsie_mei SHEET walk8 4x8 video-source
+   | char.bandit_wrecker TURNAROUND
+   | char.bandit_wrecker SHEET walk8 4x8 reference-composited
+   | char.hero POSE LIBRARY idle8/work8/attack8
+   | char.preacher SHEET walk8 a/b 4x4 split
+   | char.schoolteacher SHEET walk8 a/b 4x4 split
+   | char.assay_clerk SHEET walk8 a/b 4x4 split
+   | char.railtough SHEET walk4 a/b 4x4 split
+   | char.steamwrecker SHEET walk4 a/b 4x4 split
+   | char.coalthief SHEET walk4 a/b 4x4 split
+   | stream.overlay_pack
+   | kit.era_1
+   | boss.dynamo_crawler PLATE
+   | boss.dredge_queen PLATE
+   | boss.homemaker_9000 PLATE
+   | boss.the_echo PLATE
+   | contract.plates.e2_e3
+   | contract.plates.e4_e5
+   | contract.plates.e1_adoption
+   | e6.buildings_terrain_a
+   | e6.buildings_terrain_b
+   | e7.buildings_terrain_a
+   | e7.buildings_terrain_b
+   | e8.buildings
+   | e9.buildings_a
+   | e10.world_ember
+   | e10.world_glass
+   | e10.world_sea
+   | contract.plates.e6_e7
+   | contract.plates.e8_e9
+   | contract.plates.e10
+   | char.e7.roster SHEET walk8 right 4x2
+   | char.e9.roster SHEET walk8 right 4x2 + missing still
+   | char.hero AGES walk4 A/B (mid-life, silver, elder)
+   | char.prospector BOUNTY SKINS hover4 A/B (complainant, gilded)
+   | char.prospector COMPLAINANT COAT hover8
+   | char.prospector GILDED COAT hover8
+   | char.hero CLAIM-DAY walk4 A/B + tailor sign
+   | marketing.interview_cartoons
+   | drill_yard.stations
+
+ROW KEYS in BOTH but with different text: 5
+   KEY: bld.rail_depot
+     stg : | bld.rail_depot | `bld-general-store.png` + E2 building-set continuity | codex-art-run-e2-completion | ✓ 2026-07-12 (`assets/raw/bld-rail-depot.png`) | PENDING-PROCESSING; raw only |
+     main: | bld.rail_depot | ✓ `assets/raw/bld-rail-depot.png` | **PROCESSED 2026-07-12** — 1254px raw → 384px RGB; registered `bld.rail_depot` in `e2-steamworks.v1.json` (no live consumer yet; no gam
+   KEY: bld.machine_shop
+     stg : | bld.machine_shop | `bld-general-store.png` + E2 building-set continuity | codex-art-run-e2-completion | ✓ 2026-07-12 (`assets/raw/bld-machine-shop.png`) | PENDING-PROCESSING; raw only |
+     main: | bld.machine_shop | ✓ `assets/raw/bld-machine-shop.png` | **PROCESSED 2026-07-12** — 1254px raw → 384px RGB; registered `bld.machine_shop` in `e2-steamworks.v1.json` (no live consumer yet; 
+   KEY: ter.rail_elements
+     stg : | ter.rail_elements | E2 §A5.2 seven-cell rail prop sheet | codex-art-run-e2-completion | ✓ 2026-07-12 (`assets/raw/ter-rail-elements.png`) | PENDING-PROCESSING (`--key ff00ff`; grid/cells T
+     main: | ter.rail_elements | ✓ `assets/raw/ter-rail-elements.png` | **PROCESSED 2026-07-12** — 2172×724, inspected as 7×1; `--key ff00ff --grid 7x1`, 7 alpha cells + frames manifest; contract slots
+   KEY: icons.e2
+     stg : | icons.e2 | E2 §A6 eight-cell icon sheet | codex-art-run-e2-completion | ✓ 2026-07-12 (`assets/raw/icons-e2.png`) | PENDING-PROCESSING (`--key ff00ff`; grid/cells TBD by fire-side extractor
+     main: | icons.e2 | ✓ `assets/raw/icons-e2.png` | **PROCESSED + WIRED 2026-07-12** — 2172×724, inspected as 8×1; `--key ff00ff --grid 8x1`, 8 alpha cells + frames manifest; E2 research/build UI evi
+   KEY: herald.class_engravings
+     stg : | herald.class_engravings | art-herald-class-engravings / ongoing Herald reusable set | ✓ 2026-07-30 (`assets/raw/gazette-class-{board,trail,river,science,ledger,threat,growth,ceremony}.png`
+     main: | herald.class_engravings | text-only fallback for unclassified/future classes | art-herald-class-engravings / ongoing Herald reusable set | ✓ 2026-07-30 `assets/raw/gazette-class-{board,tra
+
+NON-TABLE staging lines absent from main: 39
+   | # Asset Ledger — Gold Rush Art Slot
+   | ## Slot Board
+   | ## Process Notes
+   | 41. **art-sprite-production-07 / Mei the Newsie walk8 Seedance production.** Status: **RAW GENERATED 2026-07-10; PENDING-PROCESSING + PENDING-INTEGRATION.** Tur
+   | 42. **art-sprite-production-06b / Bandit-wrecker walk8 raw sheet.** Status: **RAW GENERATED 2026-07-11; PENDING-PROCESSING + PENDING-INTEGRATION.** Turnaround `
+   | 43. **art-saga-library-e10 / Epoch 10 Deep Sky capstone library.** Status: **RAW GENERATED 2026-07-11; REFERENCE LIBRARY COMPLETE E1-E10; PENDING-CONSUMPTION.**
+   | 44. **art-pose-library-01 / Hero idle8, work8, attack8 raw pose sheets.** Status: **RAW GENERATED 2026-07-11; QA BLOCKED; STOPPED AT CREDIT FLOOR.** Native `ima
+   | 45. **art-e2-completion-batch / E2 Steamworks manifest remainder.** Status: **RAW GENERATED 2026-07-12; PENDING-PROCESSING + PENDING-INTEGRATION.** Native Codex
+   | 46. **art-townsfolk-walk8-gap / Preacher, schoolteacher, and assay clerk walk8 split sheets.** Status: **RAW GENERATED 2026-07-12; PENDING-PROCESSING + PENDING-
+   | 47. **art-stream-overlay-pack / Stream starting, BRB, ending, frame, and live badge.** Status: **RAW GENERATED 2026-07-12; PENDING-PROCESSING + PENDING-INTEGRAT
+
+
+===== control: the 5 absent refs =====
+$ node artifacts/f2066-art-retention/s2066-control5.mjs
+
+main assets matching "jumper": 359
+    assets/motion-pilot/production-jumper/JOBS.md
+    assets/motion-pilot/production-jumper/RUN-NOTE.md
+    assets/motion-pilot/production-jumper/char-jumper-sheet-walk8.png
+    assets/motion-pilot/production-jumper/contact-sheets/jumper-down-contact.png
+    assets/motion-pilot/production-jumper/contact-sheets/jumper-down-take1-contact.png
+    assets/motion-pilot/production-jumper/contact-sheets/jumper-down-take2-contact.png
+    assets/motion-pilot/production-jumper/contact-sheets/jumper-down-take3-contact.png
+    assets/motion-pilot/production-jumper/contact-sheets/jumper-down-takes123-contact.png
+main assets matching "crawler": 13
+    assets/pilots/crawler-3d/README.md
+    assets/pilots/crawler-3d/build_crawler.py
+    assets/pilots/crawler-3d/crawler.blend
+    assets/pilots/crawler-3d/crawler.glb
+    assets/pilots/crawler-3d/render_crawler.py
+    assets/pilots/crawler-3d/renders/crawler-asset-contract.json
+    assets/pilots/crawler-3d/renders/crawler-canyon-run-camera.png
+    assets/pilots/crawler-3d/renders/crawler-damage-states.png
+main assets matching "lineup": 1
+    assets/contact-sheets/char-prospector-three-coat-hover8-lineup.png
+main assets matching "rotation": 119
+    assets/motion-pilot/production-hero-replacement-package/downloads/char-hero-sheet-rotation-f-a0013119-182f-4924-81cb-eb90cb40f580.png
+    assets/motion-pilot/production-hero-replacement-package/downloads/char-hero-sheet-rotation2-f-ee0e32ff-6bfd-41ab-8e53-4af175702d78.png
+    assets/processed-full/char-hero-sheet-rotation-f-r0c0.png
+    assets/processed-full/char-hero-sheet-rotation-f-r0c1.png
+    assets/processed-full/char-hero-sheet-rotation-f-r0c2.png
+    assets/processed-full/char-hero-sheet-rotation-f-r0c3.png
+    assets/processed-full/char-hero-sheet-rotation-f-r1c0.png
+    assets/processed-full/char-hero-sheet-rotation-f-r1c1.png
+assets/contact-sheets/char-hero-four-ages-lineup.png => added in: 034c6a397 salvage: 13 untracked ART-slot contact sheets + run note into git (Retention Law)
+assets/contact-sheets/char-prospector-three-coat-lineup.png => added in: 034c6a397 salvage: 13 untracked ART-slot contact sheets + run note into git (Retention Law)
+assets/contact-sheets/char-tailor-release-lineup.png => added in: 034c6a397 salvage: 13 untracked ART-slot contact sheets + run note into git (Retention Law)

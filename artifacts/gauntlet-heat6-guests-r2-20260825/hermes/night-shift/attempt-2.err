@@ -1,0 +1,10 @@
+<anonymous_script>:1
+API call failed after 3 retries: HTTP 429: Too many concurrent completions
+^
+
+SyntaxError: Unexpected token 'A', "API call f"... is not valid JSON
+    at JSON.parse (<anonymous>)
+    at file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/artifacts/gauntlet-heat6-guests-r2-20260825/rider-driver.mjs:54:23
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+Node.js v23.11.1

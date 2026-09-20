@@ -1,0 +1,51 @@
+
+########## RIDE e1-night-shift · seed e1-night-shift-01 · gen 76 · stake never-claimed · wall 1500s ##########
+--- 1 charter ---
+{"rig":"opus","contract":"e1-night-shift","seed":"e1-night-shift-01","seedMode":"bench","stake":"never-claimed","generation":76,"wall":1500,"notebookSha256":"9e5f676244dc1cd05bbaa3aa4ddd5cd7772cdb65dceecf54a12c2d13d803fee3","charterSha256":"cc4089cd48774a1b3b84a5c3ab5f605f32397b5e0c17758848c779e931e61cc7","bytes":624324,"out":"/private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/rides/e1-night-shift/charter.md"}
+--- 2 ride ---
+START opus claude-opus-5 pid=67598 session=cd202c46-850f-4cea-a7eb-7108c556616c at=2026-09-07T13:54:58.563Z
+FIRST-OUTPUT opus +75s
+OUTCOME opus secured=false waves=4 gold=0 runsSoFar=1 scored=0 +90s
+OUTCOME opus secured=false waves=5 gold=198 runsSoFar=2 scored=0 +360s
+OUTCOME opus secured=false waves=23 gold=116 runsSoFar=3 scored=0 +615s
+OUTCOME opus secured=false waves=23 gold=116 runsSoFar=4 scored=1 +735s
+OUTCOME opus secured=false waves=23 gold=116 runsSoFar=4 scored=1 +750s
+END opus rc=0 signal=null wall=831s wallHit=false
+ride-wall rc=0 signal=-
+--- 3 land ---
+
+=== 1 finish-ride ===
+{"rig":"opus","contract":"e1-night-shift","wall":831,"wallHit":false,"rc":0,"tracked":[],"files":16,"outcome":{"secured":false,"waves":23,"gold":116,"runsSoFar":4,"scoredAttempts":1,"tape":"/tmp/heat13-569a41f9/artifacts/heat13/opus/e1-night-shift/tune-2-tape.json","worldModel":"sim-import"},"scoredTapes":[{"file":"attempt-1-tape.json","id":"agent-af1b6e7d-1e0bef05-1fd0-4ddc-803e-2ce83efe37e6","secured":false,"waves":23,"gold":14,"durationTicks":21022,"lastEntryTick":21011,"promotedByRig":false,"discoveredBy":"filename"},{"file":"tune-2-tape.json","id":"agent-98cd41c5-a116fdbf-342a-4bf8-a509-cbebd0d2e854","secured":false,"waves":23,"gold":116,"durationTicks":21133,"lastEntryTick":21132,"promotedByRig":true,"discoveredBy":"outcome-file"}],"otherSecured":[],"reportSections":{"outcome":831,"whatTheMapAsked":3126,"winnability":1607,"lessons":4505},"usage":{"turns":43,"toolCalls":24,"tokensIn":86,"tokensOut":93735}}
+
+=== NOT SECURED — nothing to submit ===
+{
+ "rig": "opus",
+ "contract": "e1-night-shift",
+ "wall": 831,
+ "wallHit": false,
+ "rc": 0,
+ "scoredTapes": [
+  {
+   "file": "attempt-1-tape.json",
+   "secured": false,
+   "waves": 23,
+   "gold": 14
+  },
+  {
+   "file": "tune-2-tape.json",
+   "secured": false,
+   "waves": 23,
+   "gold": 116
+  }
+ ],
+ "outcomeNote": "NOT SECURED - nothing is put forward. Best run of the heat is tune-2 (w23/704.433s), 45.6s short of the wave-25 dawn at t=750. The scored attempt (attempt-1-tape.json, w23/700.733s) is not secured either and is not promoted; the tape field names the BEST run, which is the honest row. No submission."
+}
+
+land rc=0
+--- 4 notebook ---
+{"notebook":"/Users/robin/Claude/Projects/goldrush-gauntlet/memories/claude__opus-5/NOTEBOOK.md","generation":76,"headerBytes":430,"entryBytes":10146}
+--- 5 matrix ---
+| 16 | e1-night-shift | `e1-night-shift-01` | never-claimed | 76 | **not secured** | 23 | 116 | 704.433s | 831s | `tune-2-tape.json` · `agent-98cd41c5-a116fdbf-342a-4bf8-a509-cbebd0d2e854`<br>fnv1a32:d6289d26 | — | gen 76 |
+{"contract":"e1-night-shift","secured":false,"tapesOnDisk":13,"scoredTapes":2,"otherSecured":0,"runs":4,"scoredAttempts":1,"wallHit":false,"rc":0,"assay":null,"ranked":null,"winnability":"**Undecided-leaning-yes, and what stopped me was my own budget — one field name cost me two of my\nfour runs:** `tune-1` spent its whole ride with *zero* works on the board because I read the\nbuildables block's cap as `b.max` when the field is `b.maxCount`, so `n < undefined` was false, the\nladder never emitted a single `BUILD`, and I burned a run and a diagnostic finding it; the one\ncontroller that actually rode reached **w23 / 704.4 s, 45.6 seconds short of dawn**, with the full\nfort standing (4 turrets all at tier 2, 6 beacons, 13 palisades, hero 175/175 and untouched through\nwave 18) and the map's own economy the binding constraint — 1650 gold panned against ~1460 spent,\nso there is no idle purse left to convert, and my scored attempt proved that buying the timber\nearlier simply trades panning feet for it (1520 panned, same 23 waves, 3.7 s worse). The untested\nlevers that close 45 seconds are named and cheap: **(a)** stop building entirely from about t = 640\nso the Prospector's last 110 seconds are pure panning *and* pure repair rather than 13 palisade\nround trips to a radius-10 ring — mending is 25 % of cost and the wrecked frame holds its ground;\n**(b)** put the palisade ring at radius 6–7 instead of 10–13, inside the beacon light and inside\nturret cover, so the timber is defended while it absorbs instead of being chewed in the dark; and\n**(c)** buy the one legal `lantern_post` plus relight the (0,16) post *early*, before wave 10, since\ndarkness is a speed bonus for exactly the class that ends the run. None of those is blocked by the\nmap, the grammar, the economy or the door."}
+########## END e1-night-shift ##########
+

@@ -1,0 +1,2288 @@
+{
+ "views": [
+  {
+   "schema": "goldrush.view.v1",
+   "viewVersion": 1,
+   "stablePrefix": {
+    "seed": "e5-flotilla-01",
+    "contract": {
+     "id": "e5-flotilla",
+     "name": "The Flotilla",
+     "briefing": {
+      "geography": "Three district hulls share the Shelf Reefs water tile in a broad defensive formation.",
+      "goals": [
+       "Build across the kitchen scow, turret raft, and still-room barge decks.",
+       "Watch both water approaches around the three hulls."
+      ],
+      "rules": [
+       "Each hull carries one surveyed build deck.",
+       "Three stake markers identify the hull centers.",
+       "Waves enter from the west and east."
+      ]
+     }
+    },
+    "mechanics": {
+     "schema": "goldrush.mechanics.v1",
+     "contractId": "e5-flotilla",
+     "buildables": [
+      {
+       "id": "sentry_beacon",
+       "operation": "BUILD",
+       "meaning": "Lights the dark and slows what it touches; radius 8wu.",
+       "cost": 25,
+       "costs": [
+        25,
+        35,
+        45,
+        55,
+        75,
+        95
+       ],
+       "costRule": "ceil-to-5",
+       "maxCount": 6,
+       "source": "buildables.registry"
+      },
+      {
+       "id": "palisade",
+       "operation": "BUILD",
+       "meaning": "Timber that holds. Bandits break it before you.",
+       "cost": 10,
+       "costs": [
+        10,
+        10,
+        10,
+        10,
+        10,
+        10
+       ],
+       "maxCount": 48,
+       "source": "buildables.registry"
+      },
+      {
+       "id": "sluice",
+       "operation": "BUILD",
+       "meaning": "Works the river for you: 3g per cycle beside water.",
+       "cost": 40,
+       "costs": [
+        40,
+        40,
+        40
+       ],
+       "maxCount": 3,
+       "source": "buildables.registry"
+      },
+      {
+       "id": "stockpile",
+       "operation": "BUILD",
+       "meaning": "Holds +150 gold above the pan cap.",
+       "cost": 60,
+       "costs": [
+        60,
+        60
+       ],
+       "maxCount": 2,
+       "source": "buildables.registry"
+      },
+      {
+       "id": "turret",
+       "operation": "BUILD",
+       "meaning": "Spark bolts, line-of-sight, 16wu range.",
+       "cost": 50,
+       "costs": [
+        50,
+        70,
+        95,
+        125
+       ],
+       "costRule": "ceil-to-5",
+       "maxCount": 4,
+       "source": "buildables.registry"
+      },
+      {
+       "id": "assay_office",
+       "operation": "BUILD",
+       "meaning": "Write orders; the town's craftsmen answer. One per claim.",
+       "cost": 80,
+       "costs": [
+        80
+       ],
+       "maxCount": 1,
+       "source": "buildables.registry"
+      }
+     ],
+     "interactables": [],
+     "rules": [
+      {
+       "id": "build_zones",
+       "source": "tileParams.buildZones",
+       "data": {
+        "count": 3,
+        "banks": [
+         "north"
+        ]
+       }
+      },
+      {
+       "id": "deepwater_arsenal",
+       "source": "DeepwaterArsenal.update",
+       "data": {
+        "deckBuildables": [
+         "sentry_beacon",
+         "turret"
+        ],
+        "weapons": [
+         "depthChargeLobber",
+         "depthChargeRack",
+         "harpoonBallista"
+        ],
+        "sharedMunition": "depth_charge",
+        "munitionCapacity": 12,
+        "sealedInDiveZone": true
+       }
+      },
+      {
+       "id": "deepwater_claim_boat",
+       "source": "ClaimBoat.placeBuilding+reanchor",
+       "data": {
+        "boatId": "flotilla-formation",
+        "pads": [
+         "kitchen-scow",
+         "still-room-barge",
+         "turret-raft"
+        ],
+        "anchors": [
+         "lagoon",
+         "open-water"
+        ],
+        "initialAnchor": "lagoon",
+        "padsAcceptOneBuildingEach": true,
+        "buildingsRideTheAnchor": "world position = anchor + pad offset"
+       }
+      },
+      {
+       "id": "deepwater_levers_unreachable",
+       "source": "AgentGameAdapter",
+       "data": {
+        "consumerLevers": [
+         "ClaimBoat.placeBuilding",
+         "ClaimBoat.reanchor"
+        ],
+        "agentOperations": [],
+        "reason": "no boat-build or reanchor verb exists on the agent tool surface"
+       }
+      },
+      {
+       "id": "deepwater_storm_track",
+       "source": "StormWaveScheduler.advance",
+       "data": {
+        "regionId": "open-water",
+        "westX": -64,
+        "eastX": 64,
+        "corsairsPerWave": 3,
+        "replacesScheduledWaves": true
+       }
+      },
+      {
+       "id": "deepwater_water_regions",
+       "source": "WaterRegionTile.sample",
+       "data": {
+        "tileId": "e5-deepwater-claim",
+        "size": 128,
+        "depthClasses": [
+         "reef",
+         "shallows",
+         "surface",
+         "trench",
+         "wreck"
+        ],
+        "diveZone": [
+         "reef",
+         "wreck",
+         "trench"
+        ]
+       }
+      },
+      {
+       "id": "flotilla_hulls",
+       "source": "FlotillaHullSystem.advance+reanchor+targetPosition",
+       "data": {
+        "hulls": [
+         "kitchen-scow",
+         "turret-raft",
+         "still-room-barge"
+        ],
+        "districts": [
+         "kitchen",
+         "turret",
+         "still-room"
+        ],
+        "integrity": 96,
+        "contactCooldownSeconds": 0.8,
+        "reshapeCooldownSeconds": 8,
+        "reshapeDistance": 6,
+        "minimumHullsAlive": 1,
+        "secureWave": 12
+       }
+      },
+      {
+       "id": "spring_cells",
+       "source": "tileParams.waterSources",
+       "data": {
+        "count": 1,
+        "kinds": [
+         "spring_pond"
+        ]
+       }
+      }
+     ],
+     "modes": [],
+     "posting": {
+      "waves": [
+       {
+        "event": "secure",
+        "wave": 12,
+        "source": "twist.secureWave"
+       }
+      ],
+      "spawnEdges": [
+       "east",
+       "west"
+      ],
+      "lossStakes": []
+     }
+    },
+    "map": {
+     "claim": {
+      "x": 0,
+      "z": 12
+     },
+     "seams": [
+      {
+       "id": "gold-seam-1",
+       "x": -26,
+       "z": 15
+      },
+      {
+       "id": "gold-seam-2",
+       "x": 0,
+       "z": 20
+      },
+      {
+       "id": "gold-seam-3",
+       "x": 26,
+       "z": 15
+      }
+     ],
+     "coalSeams": [],
+     "water": {
+      "river": false,
+      "ford": false,
+      "sources": 1,
+      "descriptor": "deepwater-surface-placeholder"
+     },
+     "spawnGates": [
+      {
+       "edge": "west",
+       "x": -62,
+       "z": 21
+      },
+      {
+       "edge": "east",
+       "x": 62,
+       "z": 21
+      }
+     ]
+    },
+    "orders": []
+   },
+   "appendLog": [],
+   "now": {
+    "wave": 0,
+    "blastReadyInMs": 0,
+    "weapon": "rig",
+    "timers": {
+     "runSeconds": 0,
+     "nextWaveInSeconds": 30
+    },
+    "gold": 0,
+    "hero": {
+     "hp": 100,
+     "maxHp": 100,
+     "x": 0,
+     "z": 12,
+     "level": 1,
+     "upgradesTaken": {},
+     "upgradeChoiceRule": "first-offer"
+    },
+    "prospector": {
+     "x": -1.8,
+     "z": 10.93
+    },
+    "works": {
+     "hp": 0,
+     "maxHp": 0,
+     "standing": 0,
+     "wrecked": 0,
+     "byKind": {},
+     "entries": []
+    },
+    "threats": {
+     "alive": 0,
+     "state": "quiet",
+     "edge": null,
+     "thieves": 0,
+     "wreckers": 0,
+     "spawnedTotal": 0,
+     "defeatedTotal": 0,
+     "defeatedBasis": "all enemies, including continuous tricklers"
+    },
+    "orders": [],
+    "needsRider": false,
+    "seams": [
+     {
+      "id": "gold-seam-1",
+      "active": true,
+      "remaining": 30,
+      "x": -26,
+      "z": 15,
+      "anchorIndex": 0
+     },
+     {
+      "id": "gold-seam-2",
+      "active": true,
+      "remaining": 30,
+      "x": 26,
+      "z": 15,
+      "anchorIndex": 2
+     },
+     {
+      "id": "gold-seam-3",
+      "active": false,
+      "remaining": 30,
+      "x": null,
+      "z": null,
+      "anchorIndex": null
+     }
+    ],
+    "score": {
+     "wavesSurvived": 0,
+     "goldPanned": 0,
+     "goldPannedByProspector": 0,
+     "goldStolen": 0,
+     "goldReclaimed": 0,
+     "goldReclaimedByProspector": 0,
+     "buildingsBuilt": 0
+    },
+    "deepwater": {
+     "contractId": "e5-flotilla",
+     "tileId": "e5-deepwater-claim",
+     "size": 128,
+     "anchor": {
+      "id": "lagoon",
+      "x": 0,
+      "z": 24
+     },
+     "anchors": [
+      {
+       "id": "lagoon",
+       "x": 0,
+       "z": 24
+      },
+      {
+       "id": "open-water",
+       "x": -24,
+       "z": 12
+      }
+     ],
+     "pads": [
+      {
+       "id": "kitchen-scow",
+       "occupied": false
+      },
+      {
+       "id": "turret-raft",
+       "occupied": false
+      },
+      {
+       "id": "still-room-barge",
+       "occupied": false
+      }
+     ],
+     "boatBuildings": [],
+     "storm": {
+      "time": 0,
+      "weather": {
+       "era": 5,
+       "contractId": "e5-flotilla",
+       "phase": "clear",
+       "phaseProgress": 0,
+       "cycle": 0,
+       "simTime": 0,
+       "movementMultiplier": 1,
+       "visibilityMultiplier": 1,
+       "hazeColor": "#335f64",
+       "hazeStrength": 0,
+       "warning": false
+      },
+      "frontX": null,
+      "waves": []
+     },
+     "corsairWaves": 0,
+     "corsairsSpawned": 0,
+     "corsairsRecycledAtExit": 0,
+     "wrecks": [],
+     "bossHandoffsRefused": 0,
+     "arsenal": {
+      "active": true,
+      "items": [
+       {
+        "id": "pressureSealed",
+        "line": "fire",
+        "munitionId": null
+       },
+       {
+        "id": "harpoonBallista",
+        "line": "watch",
+        "munitionId": null
+       },
+       {
+        "id": "depthChargeRack",
+        "line": "watch",
+        "munitionId": "depth_charge"
+       },
+       {
+        "id": "depthChargeLobber",
+        "line": "powder",
+        "munitionId": "depth_charge"
+       }
+      ],
+      "fires": {
+       "harpoonBallista": 0,
+       "depthChargeRack": 0,
+       "depthChargeLobber": 0
+      },
+      "sharedMunition": {
+       "id": "depth_charge",
+       "stock": 12,
+       "capacity": 12,
+       "spentBy": {
+        "depthChargeRack": 0,
+        "depthChargeLobber": 0
+       }
+      },
+      "pressureSealed": {
+       "active": true,
+       "inDiveZone": false
+      },
+      "silhouette": {
+       "harpoonBallista": 1.1,
+       "priorTurret": 1.1
+      },
+      "treatmentEvents": [],
+      "visuals": {
+       "harpoonBallista": true,
+       "depthChargeRack": true,
+       "depthChargeLobber": true
+      }
+     },
+     "flotilla": {
+      "hulls": [
+       {
+        "id": "kitchen-scow",
+        "district": "kitchen",
+        "x": -26,
+        "z": 21,
+        "radius": 5,
+        "integrity": 96,
+        "lost": false,
+        "straggler": true
+       },
+       {
+        "id": "turret-raft",
+        "district": "turret",
+        "x": 0,
+        "z": 27,
+        "radius": 5,
+        "integrity": 96,
+        "lost": false,
+        "straggler": false
+       },
+       {
+        "id": "still-room-barge",
+        "district": "still-room",
+        "x": 26,
+        "z": 21,
+        "radius": 5,
+        "integrity": 96,
+        "lost": false,
+        "straggler": false
+       }
+      ],
+      "centroid": {
+       "x": 0,
+       "z": 23
+      },
+      "allLost": false,
+      "reshapeCooldownSeconds": 0
+     }
+    }
+   },
+   "almanac": {
+    "label": "the Almanac reckons",
+    "estimate": true,
+    "nextWave": {
+     "wave": 1,
+     "arrivalInSeconds": 30,
+     "basis": "estimated-from-wave-schedule",
+     "composition": [
+      {
+       "id": "corsair_skiff",
+       "label": "Corsair Skiff",
+       "count": 6
+      }
+     ],
+     "compositionScope": "wave-horn packs only; continuous tricklers are additional",
+     "continuousTrickle": {
+      "currentIntervalSeconds": 2.4,
+      "includedInComposition": false,
+      "includedInDefeatedTotal": true
+     }
+    },
+    "projection": {
+     "expectedLeaks": 0,
+     "expectedWorksDamage": 0,
+     "expectedGold": 55.83,
+     "currentWorks": 0,
+     "harnessHash": "fnv1a32:1e9423eb"
+    }
+   }
+  },
+  {
+   "schema": "goldrush.view.v1",
+   "viewVersion": 1,
+   "stablePrefix": {
+    "seed": "e5-flotilla-01",
+    "contract": {
+     "id": "e5-flotilla",
+     "name": "The Flotilla",
+     "briefing": {
+      "geography": "Three district hulls share the Shelf Reefs water tile in a broad defensive formation.",
+      "goals": [
+       "Build across the kitchen scow, turret raft, and still-room barge decks.",
+       "Watch both water approaches around the three hulls."
+      ],
+      "rules": [
+       "Each hull carries one surveyed build deck.",
+       "Three stake markers identify the hull centers.",
+       "Waves enter from the west and east."
+      ]
+     }
+    },
+    "mechanics": {
+     "schema": "goldrush.mechanics.v1",
+     "contractId": "e5-flotilla",
+     "buildables": [
+      {
+       "id": "sentry_beacon",
+       "operation": "BUILD",
+       "meaning": "Lights the dark and slows what it touches; radius 8wu.",
+       "cost": 25,
+       "costs": [
+        25,
+        35,
+        45,
+        55,
+        75,
+        95
+       ],
+       "costRule": "ceil-to-5",
+       "maxCount": 6,
+       "source": "buildables.registry"
+      },
+      {
+       "id": "palisade",
+       "operation": "BUILD",
+       "meaning": "Timber that holds. Bandits break it before you.",
+       "cost": 10,
+       "costs": [
+        10,
+        10,
+        10,
+        10,
+        10,
+        10
+       ],
+       "maxCount": 48,
+       "source": "buildables.registry"
+      },
+      {
+       "id": "sluice",
+       "operation": "BUILD",
+       "meaning": "Works the river for you: 3g per cycle beside water.",
+       "cost": 40,
+       "costs": [
+        40,
+        40,
+        40
+       ],
+       "maxCount": 3,
+       "source": "buildables.registry"
+      },
+      {
+       "id": "stockpile",
+       "operation": "BUILD",
+       "meaning": "Holds +150 gold above the pan cap.",
+       "cost": 60,
+       "costs": [
+        60,
+        60
+       ],
+       "maxCount": 2,
+       "source": "buildables.registry"
+      },
+      {
+       "id": "turret",
+       "operation": "BUILD",
+       "meaning": "Spark bolts, line-of-sight, 16wu range.",
+       "cost": 50,
+       "costs": [
+        50,
+        70,
+        95,
+        125
+       ],
+       "costRule": "ceil-to-5",
+       "maxCount": 4,
+       "source": "buildables.registry"
+      },
+      {
+       "id": "assay_office",
+       "operation": "BUILD",
+       "meaning": "Write orders; the town's craftsmen answer. One per claim.",
+       "cost": 80,
+       "costs": [
+        80
+       ],
+       "maxCount": 1,
+       "source": "buildables.registry"
+      }
+     ],
+     "interactables": [],
+     "rules": [
+      {
+       "id": "build_zones",
+       "source": "tileParams.buildZones",
+       "data": {
+        "count": 3,
+        "banks": [
+         "north"
+        ]
+       }
+      },
+      {
+       "id": "deepwater_arsenal",
+       "source": "DeepwaterArsenal.update",
+       "data": {
+        "deckBuildables": [
+         "sentry_beacon",
+         "turret"
+        ],
+        "weapons": [
+         "depthChargeLobber",
+         "depthChargeRack",
+         "harpoonBallista"
+        ],
+        "sharedMunition": "depth_charge",
+        "munitionCapacity": 12,
+        "sealedInDiveZone": true
+       }
+      },
+      {
+       "id": "deepwater_claim_boat",
+       "source": "ClaimBoat.placeBuilding+reanchor",
+       "data": {
+        "boatId": "flotilla-formation",
+        "pads": [
+         "kitchen-scow",
+         "still-room-barge",
+         "turret-raft"
+        ],
+        "anchors": [
+         "lagoon",
+         "open-water"
+        ],
+        "initialAnchor": "lagoon",
+        "padsAcceptOneBuildingEach": true,
+        "buildingsRideTheAnchor": "world position = anchor + pad offset"
+       }
+      },
+      {
+       "id": "deepwater_levers_unreachable",
+       "source": "AgentGameAdapter",
+       "data": {
+        "consumerLevers": [
+         "ClaimBoat.placeBuilding",
+         "ClaimBoat.reanchor"
+        ],
+        "agentOperations": [],
+        "reason": "no boat-build or reanchor verb exists on the agent tool surface"
+       }
+      },
+      {
+       "id": "deepwater_storm_track",
+       "source": "StormWaveScheduler.advance",
+       "data": {
+        "regionId": "open-water",
+        "westX": -64,
+        "eastX": 64,
+        "corsairsPerWave": 3,
+        "replacesScheduledWaves": true
+       }
+      },
+      {
+       "id": "deepwater_water_regions",
+       "source": "WaterRegionTile.sample",
+       "data": {
+        "tileId": "e5-deepwater-claim",
+        "size": 128,
+        "depthClasses": [
+         "reef",
+         "shallows",
+         "surface",
+         "trench",
+         "wreck"
+        ],
+        "diveZone": [
+         "reef",
+         "wreck",
+         "trench"
+        ]
+       }
+      },
+      {
+       "id": "flotilla_hulls",
+       "source": "FlotillaHullSystem.advance+reanchor+targetPosition",
+       "data": {
+        "hulls": [
+         "kitchen-scow",
+         "turret-raft",
+         "still-room-barge"
+        ],
+        "districts": [
+         "kitchen",
+         "turret",
+         "still-room"
+        ],
+        "integrity": 96,
+        "contactCooldownSeconds": 0.8,
+        "reshapeCooldownSeconds": 8,
+        "reshapeDistance": 6,
+        "minimumHullsAlive": 1,
+        "secureWave": 12
+       }
+      },
+      {
+       "id": "spring_cells",
+       "source": "tileParams.waterSources",
+       "data": {
+        "count": 1,
+        "kinds": [
+         "spring_pond"
+        ]
+       }
+      }
+     ],
+     "modes": [],
+     "posting": {
+      "waves": [
+       {
+        "event": "secure",
+        "wave": 12,
+        "source": "twist.secureWave"
+       }
+      ],
+      "spawnEdges": [
+       "east",
+       "west"
+      ],
+      "lossStakes": []
+     }
+    },
+    "map": {
+     "claim": {
+      "x": 0,
+      "z": 12
+     },
+     "seams": [
+      {
+       "id": "gold-seam-1",
+       "x": -26,
+       "z": 15
+      },
+      {
+       "id": "gold-seam-2",
+       "x": 0,
+       "z": 20
+      },
+      {
+       "id": "gold-seam-3",
+       "x": 26,
+       "z": 15
+      }
+     ],
+     "coalSeams": [],
+     "water": {
+      "river": false,
+      "ford": false,
+      "sources": 1,
+      "descriptor": "deepwater-surface-placeholder"
+     },
+     "spawnGates": [
+      {
+       "edge": "west",
+       "x": -62,
+       "z": 21
+      },
+      {
+       "edge": "east",
+       "x": 62,
+       "z": 21
+      }
+     ]
+    },
+    "orders": []
+   },
+   "appendLog": [],
+   "now": {
+    "wave": 1,
+    "blastReadyInMs": 0,
+    "weapon": "rig",
+    "timers": {
+     "runSeconds": 8.03,
+     "nextWaveInSeconds": 21.97
+    },
+    "gold": 0,
+    "hero": {
+     "hp": 100,
+     "maxHp": 100,
+     "x": 0,
+     "z": 12,
+     "level": 1,
+     "upgradesTaken": {},
+     "upgradeChoiceRule": "first-offer"
+    },
+    "prospector": {
+     "x": -1.81,
+     "z": 10.66
+    },
+    "works": {
+     "hp": 0,
+     "maxHp": 0,
+     "standing": 0,
+     "wrecked": 0,
+     "byKind": {},
+     "entries": []
+    },
+    "threats": {
+     "alive": 3,
+     "state": "quiet",
+     "edge": null,
+     "thieves": 0,
+     "wreckers": 0,
+     "spawnedTotal": 0,
+     "defeatedTotal": 0,
+     "defeatedBasis": "all enemies, including continuous tricklers"
+    },
+    "orders": [],
+    "needsRider": false,
+    "seams": [
+     {
+      "id": "gold-seam-1",
+      "active": true,
+      "remaining": 30,
+      "x": -26,
+      "z": 15,
+      "anchorIndex": 0
+     },
+     {
+      "id": "gold-seam-2",
+      "active": true,
+      "remaining": 30,
+      "x": 26,
+      "z": 15,
+      "anchorIndex": 2
+     },
+     {
+      "id": "gold-seam-3",
+      "active": false,
+      "remaining": 30,
+      "x": null,
+      "z": null,
+      "anchorIndex": null
+     }
+    ],
+    "score": {
+     "wavesSurvived": 0,
+     "goldPanned": 0,
+     "goldPannedByProspector": 0,
+     "goldStolen": 0,
+     "goldReclaimed": 0,
+     "goldReclaimedByProspector": 0,
+     "buildingsBuilt": 0
+    },
+    "deepwater": {
+     "contractId": "e5-flotilla",
+     "tileId": "e5-deepwater-claim",
+     "size": 128,
+     "anchor": {
+      "id": "lagoon",
+      "x": 0,
+      "z": 24
+     },
+     "anchors": [
+      {
+       "id": "lagoon",
+       "x": 0,
+       "z": 24
+      },
+      {
+       "id": "open-water",
+       "x": -24,
+       "z": 12
+      }
+     ],
+     "pads": [
+      {
+       "id": "kitchen-scow",
+       "occupied": false
+      },
+      {
+       "id": "turret-raft",
+       "occupied": false
+      },
+      {
+       "id": "still-room-barge",
+       "occupied": false
+      }
+     ],
+     "boatBuildings": [],
+     "storm": {
+      "time": 8.033333333333315,
+      "weather": {
+       "era": 5,
+       "contractId": "e5-flotilla",
+       "phase": "storm",
+       "phaseProgress": 0.003333333333331545,
+       "cycle": 0,
+       "simTime": 8.033333333333315,
+       "movementMultiplier": 0.72,
+       "visibilityMultiplier": 0.58,
+       "hazeColor": "#335f64",
+       "hazeStrength": 0.28,
+       "warning": false
+      },
+      "frontX": -63.573333333333565,
+      "waves": [
+       {
+        "wave": 1,
+        "cycle": 0,
+        "scheduledAt": 8,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64
+       }
+      ]
+     },
+     "corsairWaves": 1,
+     "corsairsSpawned": 3,
+     "corsairsRecycledAtExit": 0,
+     "wrecks": [],
+     "bossHandoffsRefused": 0,
+     "arsenal": {
+      "active": true,
+      "items": [
+       {
+        "id": "pressureSealed",
+        "line": "fire",
+        "munitionId": null
+       },
+       {
+        "id": "harpoonBallista",
+        "line": "watch",
+        "munitionId": null
+       },
+       {
+        "id": "depthChargeRack",
+        "line": "watch",
+        "munitionId": "depth_charge"
+       },
+       {
+        "id": "depthChargeLobber",
+        "line": "powder",
+        "munitionId": "depth_charge"
+       }
+      ],
+      "fires": {
+       "harpoonBallista": 0,
+       "depthChargeRack": 0,
+       "depthChargeLobber": 0
+      },
+      "sharedMunition": {
+       "id": "depth_charge",
+       "stock": 12,
+       "capacity": 12,
+       "spentBy": {
+        "depthChargeRack": 0,
+        "depthChargeLobber": 0
+       }
+      },
+      "pressureSealed": {
+       "active": true,
+       "inDiveZone": false
+      },
+      "silhouette": {
+       "harpoonBallista": 1.1,
+       "priorTurret": 1.1
+      },
+      "treatmentEvents": [],
+      "visuals": {
+       "harpoonBallista": false,
+       "depthChargeRack": false,
+       "depthChargeLobber": true
+      }
+     },
+     "flotilla": {
+      "hulls": [
+       {
+        "id": "kitchen-scow",
+        "district": "kitchen",
+        "x": -26,
+        "z": 21,
+        "radius": 5,
+        "integrity": 96,
+        "lost": false,
+        "straggler": true
+       },
+       {
+        "id": "turret-raft",
+        "district": "turret",
+        "x": 0,
+        "z": 27,
+        "radius": 5,
+        "integrity": 96,
+        "lost": false,
+        "straggler": false
+       },
+       {
+        "id": "still-room-barge",
+        "district": "still-room",
+        "x": 26,
+        "z": 21,
+        "radius": 5,
+        "integrity": 96,
+        "lost": false,
+        "straggler": false
+       }
+      ],
+      "centroid": {
+       "x": 0,
+       "z": 23
+      },
+      "allLost": false,
+      "reshapeCooldownSeconds": 0
+     }
+    }
+   },
+   "almanac": {
+    "label": "the Almanac reckons",
+    "estimate": true,
+    "nextWave": {
+     "wave": 1,
+     "arrivalInSeconds": 21.97,
+     "basis": "estimated-from-wave-schedule",
+     "composition": [
+      {
+       "id": "corsair_skiff",
+       "label": "Corsair Skiff",
+       "count": 6
+      }
+     ],
+     "compositionScope": "wave-horn packs only; continuous tricklers are additional",
+     "continuousTrickle": {
+      "currentIntervalSeconds": 2.4,
+      "includedInComposition": false,
+      "includedInDefeatedTotal": true
+     }
+    },
+    "projection": {
+     "expectedLeaks": 0,
+     "expectedWorksDamage": 0,
+     "expectedGold": 55.83,
+     "currentWorks": 0,
+     "harnessHash": "fnv1a32:1e9423eb"
+    }
+   }
+  },
+  {
+   "schema": "goldrush.view.v1",
+   "viewVersion": 1,
+   "stablePrefix": {
+    "seed": "e5-flotilla-01",
+    "contract": {
+     "id": "e5-flotilla",
+     "name": "The Flotilla",
+     "briefing": {
+      "geography": "Three district hulls share the Shelf Reefs water tile in a broad defensive formation.",
+      "goals": [
+       "Build across the kitchen scow, turret raft, and still-room barge decks.",
+       "Watch both water approaches around the three hulls."
+      ],
+      "rules": [
+       "Each hull carries one surveyed build deck.",
+       "Three stake markers identify the hull centers.",
+       "Waves enter from the west and east."
+      ]
+     }
+    },
+    "mechanics": {
+     "schema": "goldrush.mechanics.v1",
+     "contractId": "e5-flotilla",
+     "buildables": [
+      {
+       "id": "sentry_beacon",
+       "operation": "BUILD",
+       "meaning": "Lights the dark and slows what it touches; radius 8wu.",
+       "cost": 25,
+       "costs": [
+        25,
+        35,
+        45,
+        55,
+        75,
+        95
+       ],
+       "costRule": "ceil-to-5",
+       "maxCount": 6,
+       "source": "buildables.registry"
+      },
+      {
+       "id": "palisade",
+       "operation": "BUILD",
+       "meaning": "Timber that holds. Bandits break it before you.",
+       "cost": 10,
+       "costs": [
+        10,
+        10,
+        10,
+        10,
+        10,
+        10
+       ],
+       "maxCount": 48,
+       "source": "buildables.registry"
+      },
+      {
+       "id": "sluice",
+       "operation": "BUILD",
+       "meaning": "Works the river for you: 3g per cycle beside water.",
+       "cost": 40,
+       "costs": [
+        40,
+        40,
+        40
+       ],
+       "maxCount": 3,
+       "source": "buildables.registry"
+      },
+      {
+       "id": "stockpile",
+       "operation": "BUILD",
+       "meaning": "Holds +150 gold above the pan cap.",
+       "cost": 60,
+       "costs": [
+        60,
+        60
+       ],
+       "maxCount": 2,
+       "source": "buildables.registry"
+      },
+      {
+       "id": "turret",
+       "operation": "BUILD",
+       "meaning": "Spark bolts, line-of-sight, 16wu range.",
+       "cost": 50,
+       "costs": [
+        50,
+        70,
+        95,
+        125
+       ],
+       "costRule": "ceil-to-5",
+       "maxCount": 4,
+       "source": "buildables.registry"
+      },
+      {
+       "id": "assay_office",
+       "operation": "BUILD",
+       "meaning": "Write orders; the town's craftsmen answer. One per claim.",
+       "cost": 80,
+       "costs": [
+        80
+       ],
+       "maxCount": 1,
+       "source": "buildables.registry"
+      }
+     ],
+     "interactables": [],
+     "rules": [
+      {
+       "id": "build_zones",
+       "source": "tileParams.buildZones",
+       "data": {
+        "count": 3,
+        "banks": [
+         "north"
+        ]
+       }
+      },
+      {
+       "id": "deepwater_arsenal",
+       "source": "DeepwaterArsenal.update",
+       "data": {
+        "deckBuildables": [
+         "sentry_beacon",
+         "turret"
+        ],
+        "weapons": [
+         "depthChargeLobber",
+         "depthChargeRack",
+         "harpoonBallista"
+        ],
+        "sharedMunition": "depth_charge",
+        "munitionCapacity": 12,
+        "sealedInDiveZone": true
+       }
+      },
+      {
+       "id": "deepwater_claim_boat",
+       "source": "ClaimBoat.placeBuilding+reanchor",
+       "data": {
+        "boatId": "flotilla-formation",
+        "pads": [
+         "kitchen-scow",
+         "still-room-barge",
+         "turret-raft"
+        ],
+        "anchors": [
+         "lagoon",
+         "open-water"
+        ],
+        "initialAnchor": "lagoon",
+        "padsAcceptOneBuildingEach": true,
+        "buildingsRideTheAnchor": "world position = anchor + pad offset"
+       }
+      },
+      {
+       "id": "deepwater_levers_unreachable",
+       "source": "AgentGameAdapter",
+       "data": {
+        "consumerLevers": [
+         "ClaimBoat.placeBuilding",
+         "ClaimBoat.reanchor"
+        ],
+        "agentOperations": [],
+        "reason": "no boat-build or reanchor verb exists on the agent tool surface"
+       }
+      },
+      {
+       "id": "deepwater_storm_track",
+       "source": "StormWaveScheduler.advance",
+       "data": {
+        "regionId": "open-water",
+        "westX": -64,
+        "eastX": 64,
+        "corsairsPerWave": 3,
+        "replacesScheduledWaves": true
+       }
+      },
+      {
+       "id": "deepwater_water_regions",
+       "source": "WaterRegionTile.sample",
+       "data": {
+        "tileId": "e5-deepwater-claim",
+        "size": 128,
+        "depthClasses": [
+         "reef",
+         "shallows",
+         "surface",
+         "trench",
+         "wreck"
+        ],
+        "diveZone": [
+         "reef",
+         "wreck",
+         "trench"
+        ]
+       }
+      },
+      {
+       "id": "flotilla_hulls",
+       "source": "FlotillaHullSystem.advance+reanchor+targetPosition",
+       "data": {
+        "hulls": [
+         "kitchen-scow",
+         "turret-raft",
+         "still-room-barge"
+        ],
+        "districts": [
+         "kitchen",
+         "turret",
+         "still-room"
+        ],
+        "integrity": 96,
+        "contactCooldownSeconds": 0.8,
+        "reshapeCooldownSeconds": 8,
+        "reshapeDistance": 6,
+        "minimumHullsAlive": 1,
+        "secureWave": 12
+       }
+      },
+      {
+       "id": "spring_cells",
+       "source": "tileParams.waterSources",
+       "data": {
+        "count": 1,
+        "kinds": [
+         "spring_pond"
+        ]
+       }
+      }
+     ],
+     "modes": [],
+     "posting": {
+      "waves": [
+       {
+        "event": "secure",
+        "wave": 12,
+        "source": "twist.secureWave"
+       }
+      ],
+      "spawnEdges": [
+       "east",
+       "west"
+      ],
+      "lossStakes": []
+     }
+    },
+    "map": {
+     "claim": {
+      "x": 0,
+      "z": 12
+     },
+     "seams": [
+      {
+       "id": "gold-seam-1",
+       "x": -26,
+       "z": 15
+      },
+      {
+       "id": "gold-seam-2",
+       "x": 0,
+       "z": 20
+      },
+      {
+       "id": "gold-seam-3",
+       "x": 26,
+       "z": 15
+      }
+     ],
+     "coalSeams": [],
+     "water": {
+      "river": false,
+      "ford": false,
+      "sources": 1,
+      "descriptor": "deepwater-surface-placeholder"
+     },
+     "spawnGates": [
+      {
+       "edge": "west",
+       "x": -62,
+       "z": 21
+      },
+      {
+       "edge": "east",
+       "x": 62,
+       "z": 21
+      }
+     ]
+    },
+    "orders": []
+   },
+   "appendLog": [],
+   "now": {
+    "wave": 2,
+    "blastReadyInMs": 0,
+    "weapon": "rig",
+    "timers": {
+     "runSeconds": 32,
+     "nextWaveInSeconds": 0
+    },
+    "gold": 0,
+    "hero": {
+     "hp": 100,
+     "maxHp": 100,
+     "x": 0,
+     "z": 12,
+     "level": 1,
+     "upgradesTaken": {},
+     "upgradeChoiceRule": "first-offer"
+    },
+    "prospector": {
+     "x": -1.87,
+     "z": 10.63
+    },
+    "works": {
+     "hp": 0,
+     "maxHp": 0,
+     "standing": 0,
+     "wrecked": 0,
+     "byKind": {},
+     "entries": []
+    },
+    "threats": {
+     "alive": 6,
+     "state": "quiet",
+     "edge": null,
+     "thieves": 0,
+     "wreckers": 0,
+     "spawnedTotal": 0,
+     "defeatedTotal": 0,
+     "defeatedBasis": "all enemies, including continuous tricklers"
+    },
+    "orders": [],
+    "needsRider": false,
+    "seams": [
+     {
+      "id": "gold-seam-1",
+      "active": true,
+      "remaining": 30,
+      "x": -26,
+      "z": 15,
+      "anchorIndex": 0
+     },
+     {
+      "id": "gold-seam-2",
+      "active": true,
+      "remaining": 30,
+      "x": 26,
+      "z": 15,
+      "anchorIndex": 2
+     },
+     {
+      "id": "gold-seam-3",
+      "active": false,
+      "remaining": 30,
+      "x": null,
+      "z": null,
+      "anchorIndex": null
+     }
+    ],
+    "score": {
+     "wavesSurvived": 0,
+     "goldPanned": 0,
+     "goldPannedByProspector": 0,
+     "goldStolen": 0,
+     "goldReclaimed": 0,
+     "goldReclaimedByProspector": 0,
+     "buildingsBuilt": 0
+    },
+    "deepwater": {
+     "contractId": "e5-flotilla",
+     "tileId": "e5-deepwater-claim",
+     "size": 128,
+     "anchor": {
+      "id": "lagoon",
+      "x": 0,
+      "z": 24
+     },
+     "anchors": [
+      {
+       "id": "lagoon",
+       "x": 0,
+       "z": 24
+      },
+      {
+       "id": "open-water",
+       "x": -24,
+       "z": 12
+      }
+     ],
+     "pads": [
+      {
+       "id": "kitchen-scow",
+       "occupied": false
+      },
+      {
+       "id": "turret-raft",
+       "occupied": false
+      },
+      {
+       "id": "still-room-barge",
+       "occupied": false
+      }
+     ],
+     "boatBuildings": [],
+     "storm": {
+      "time": 32.000000000000746,
+      "weather": {
+       "era": 5,
+       "contractId": "e5-flotilla",
+       "phase": "storm",
+       "phaseProgress": 7.460698725481052e-14,
+       "cycle": 1,
+       "simTime": 32.000000000000746,
+       "movementMultiplier": 0.72,
+       "visibilityMultiplier": 0.58,
+       "hazeColor": "#335f64",
+       "hazeStrength": 0.28,
+       "warning": false
+      },
+      "frontX": -63.99999999999045,
+      "waves": [
+       {
+        "wave": 1,
+        "cycle": 0,
+        "scheduledAt": 8,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64
+       },
+       {
+        "wave": 2,
+        "cycle": 1,
+        "scheduledAt": 32,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64
+       }
+      ]
+     },
+     "corsairWaves": 2,
+     "corsairsSpawned": 6,
+     "corsairsRecycledAtExit": 0,
+     "wrecks": [],
+     "bossHandoffsRefused": 0,
+     "arsenal": {
+      "active": true,
+      "items": [
+       {
+        "id": "pressureSealed",
+        "line": "fire",
+        "munitionId": null
+       },
+       {
+        "id": "harpoonBallista",
+        "line": "watch",
+        "munitionId": null
+       },
+       {
+        "id": "depthChargeRack",
+        "line": "watch",
+        "munitionId": "depth_charge"
+       },
+       {
+        "id": "depthChargeLobber",
+        "line": "powder",
+        "munitionId": "depth_charge"
+       }
+      ],
+      "fires": {
+       "harpoonBallista": 0,
+       "depthChargeRack": 0,
+       "depthChargeLobber": 0
+      },
+      "sharedMunition": {
+       "id": "depth_charge",
+       "stock": 12,
+       "capacity": 12,
+       "spentBy": {
+        "depthChargeRack": 0,
+        "depthChargeLobber": 0
+       }
+      },
+      "pressureSealed": {
+       "active": true,
+       "inDiveZone": false
+      },
+      "silhouette": {
+       "harpoonBallista": 1.1,
+       "priorTurret": 1.1
+      },
+      "treatmentEvents": [],
+      "visuals": {
+       "harpoonBallista": false,
+       "depthChargeRack": false,
+       "depthChargeLobber": true
+      }
+     },
+     "flotilla": {
+      "hulls": [
+       {
+        "id": "kitchen-scow",
+        "district": "kitchen",
+        "x": -26,
+        "z": 21,
+        "radius": 5,
+        "integrity": 0,
+        "lost": true,
+        "straggler": false
+       },
+       {
+        "id": "turret-raft",
+        "district": "turret",
+        "x": 0,
+        "z": 27,
+        "radius": 5,
+        "integrity": 96,
+        "lost": false,
+        "straggler": true
+       },
+       {
+        "id": "still-room-barge",
+        "district": "still-room",
+        "x": 26,
+        "z": 21,
+        "radius": 5,
+        "integrity": 96,
+        "lost": false,
+        "straggler": false
+       }
+      ],
+      "centroid": {
+       "x": 13,
+       "z": 24
+      },
+      "allLost": false,
+      "reshapeCooldownSeconds": 0
+     }
+    }
+   },
+   "almanac": {
+    "label": "the Almanac reckons",
+    "estimate": true,
+    "nextWave": {
+     "wave": 1,
+     "arrivalInSeconds": 0,
+     "basis": "estimated-from-wave-schedule",
+     "composition": [
+      {
+       "id": "corsair_skiff",
+       "label": "Corsair Skiff",
+       "count": 6
+      }
+     ],
+     "compositionScope": "wave-horn packs only; continuous tricklers are additional",
+     "continuousTrickle": {
+      "currentIntervalSeconds": 2.258,
+      "includedInComposition": false,
+      "includedInDefeatedTotal": true
+     }
+    },
+    "projection": {
+     "expectedLeaks": 0,
+     "expectedWorksDamage": 0,
+     "expectedGold": 55.83,
+     "currentWorks": 0,
+     "harnessHash": "fnv1a32:1e9423eb"
+    }
+   }
+  },
+  {
+   "schema": "goldrush.view.v1",
+   "viewVersion": 1,
+   "stablePrefix": {
+    "seed": "e5-flotilla-01",
+    "contract": {
+     "id": "e5-flotilla",
+     "name": "The Flotilla",
+     "briefing": {
+      "geography": "Three district hulls share the Shelf Reefs water tile in a broad defensive formation.",
+      "goals": [
+       "Build across the kitchen scow, turret raft, and still-room barge decks.",
+       "Watch both water approaches around the three hulls."
+      ],
+      "rules": [
+       "Each hull carries one surveyed build deck.",
+       "Three stake markers identify the hull centers.",
+       "Waves enter from the west and east."
+      ]
+     }
+    },
+    "mechanics": {
+     "schema": "goldrush.mechanics.v1",
+     "contractId": "e5-flotilla",
+     "buildables": [
+      {
+       "id": "sentry_beacon",
+       "operation": "BUILD",
+       "meaning": "Lights the dark and slows what it touches; radius 8wu.",
+       "cost": 25,
+       "costs": [
+        25,
+        35,
+        45,
+        55,
+        75,
+        95
+       ],
+       "costRule": "ceil-to-5",
+       "maxCount": 6,
+       "source": "buildables.registry"
+      },
+      {
+       "id": "palisade",
+       "operation": "BUILD",
+       "meaning": "Timber that holds. Bandits break it before you.",
+       "cost": 10,
+       "costs": [
+        10,
+        10,
+        10,
+        10,
+        10,
+        10
+       ],
+       "maxCount": 48,
+       "source": "buildables.registry"
+      },
+      {
+       "id": "sluice",
+       "operation": "BUILD",
+       "meaning": "Works the river for you: 3g per cycle beside water.",
+       "cost": 40,
+       "costs": [
+        40,
+        40,
+        40
+       ],
+       "maxCount": 3,
+       "source": "buildables.registry"
+      },
+      {
+       "id": "stockpile",
+       "operation": "BUILD",
+       "meaning": "Holds +150 gold above the pan cap.",
+       "cost": 60,
+       "costs": [
+        60,
+        60
+       ],
+       "maxCount": 2,
+       "source": "buildables.registry"
+      },
+      {
+       "id": "turret",
+       "operation": "BUILD",
+       "meaning": "Spark bolts, line-of-sight, 16wu range.",
+       "cost": 50,
+       "costs": [
+        50,
+        70,
+        95,
+        125
+       ],
+       "costRule": "ceil-to-5",
+       "maxCount": 4,
+       "source": "buildables.registry"
+      },
+      {
+       "id": "assay_office",
+       "operation": "BUILD",
+       "meaning": "Write orders; the town's craftsmen answer. One per claim.",
+       "cost": 80,
+       "costs": [
+        80
+       ],
+       "maxCount": 1,
+       "source": "buildables.registry"
+      }
+     ],
+     "interactables": [],
+     "rules": [
+      {
+       "id": "build_zones",
+       "source": "tileParams.buildZones",
+       "data": {
+        "count": 3,
+        "banks": [
+         "north"
+        ]
+       }
+      },
+      {
+       "id": "deepwater_arsenal",
+       "source": "DeepwaterArsenal.update",
+       "data": {
+        "deckBuildables": [
+         "sentry_beacon",
+         "turret"
+        ],
+        "weapons": [
+         "depthChargeLobber",
+         "depthChargeRack",
+         "harpoonBallista"
+        ],
+        "sharedMunition": "depth_charge",
+        "munitionCapacity": 12,
+        "sealedInDiveZone": true
+       }
+      },
+      {
+       "id": "deepwater_claim_boat",
+       "source": "ClaimBoat.placeBuilding+reanchor",
+       "data": {
+        "boatId": "flotilla-formation",
+        "pads": [
+         "kitchen-scow",
+         "still-room-barge",
+         "turret-raft"
+        ],
+        "anchors": [
+         "lagoon",
+         "open-water"
+        ],
+        "initialAnchor": "lagoon",
+        "padsAcceptOneBuildingEach": true,
+        "buildingsRideTheAnchor": "world position = anchor + pad offset"
+       }
+      },
+      {
+       "id": "deepwater_levers_unreachable",
+       "source": "AgentGameAdapter",
+       "data": {
+        "consumerLevers": [
+         "ClaimBoat.placeBuilding",
+         "ClaimBoat.reanchor"
+        ],
+        "agentOperations": [],
+        "reason": "no boat-build or reanchor verb exists on the agent tool surface"
+       }
+      },
+      {
+       "id": "deepwater_storm_track",
+       "source": "StormWaveScheduler.advance",
+       "data": {
+        "regionId": "open-water",
+        "westX": -64,
+        "eastX": 64,
+        "corsairsPerWave": 3,
+        "replacesScheduledWaves": true
+       }
+      },
+      {
+       "id": "deepwater_water_regions",
+       "source": "WaterRegionTile.sample",
+       "data": {
+        "tileId": "e5-deepwater-claim",
+        "size": 128,
+        "depthClasses": [
+         "reef",
+         "shallows",
+         "surface",
+         "trench",
+         "wreck"
+        ],
+        "diveZone": [
+         "reef",
+         "wreck",
+         "trench"
+        ]
+       }
+      },
+      {
+       "id": "flotilla_hulls",
+       "source": "FlotillaHullSystem.advance+reanchor+targetPosition",
+       "data": {
+        "hulls": [
+         "kitchen-scow",
+         "turret-raft",
+         "still-room-barge"
+        ],
+        "districts": [
+         "kitchen",
+         "turret",
+         "still-room"
+        ],
+        "integrity": 96,
+        "contactCooldownSeconds": 0.8,
+        "reshapeCooldownSeconds": 8,
+        "reshapeDistance": 6,
+        "minimumHullsAlive": 1,
+        "secureWave": 12
+       }
+      },
+      {
+       "id": "spring_cells",
+       "source": "tileParams.waterSources",
+       "data": {
+        "count": 1,
+        "kinds": [
+         "spring_pond"
+        ]
+       }
+      }
+     ],
+     "modes": [],
+     "posting": {
+      "waves": [
+       {
+        "event": "secure",
+        "wave": 12,
+        "source": "twist.secureWave"
+       }
+      ],
+      "spawnEdges": [
+       "east",
+       "west"
+      ],
+      "lossStakes": []
+     }
+    },
+    "map": {
+     "claim": {
+      "x": 0,
+      "z": 12
+     },
+     "seams": [
+      {
+       "id": "gold-seam-1",
+       "x": -26,
+       "z": 15
+      },
+      {
+       "id": "gold-seam-2",
+       "x": 0,
+       "z": 20
+      },
+      {
+       "id": "gold-seam-3",
+       "x": 26,
+       "z": 15
+      }
+     ],
+     "coalSeams": [],
+     "water": {
+      "river": false,
+      "ford": false,
+      "sources": 1,
+      "descriptor": "deepwater-surface-placeholder"
+     },
+     "spawnGates": [
+      {
+       "edge": "west",
+       "x": -62,
+       "z": 21
+      },
+      {
+       "edge": "east",
+       "x": 62,
+       "z": 21
+      }
+     ]
+    },
+    "orders": []
+   },
+   "appendLog": [],
+   "now": {
+    "wave": 2,
+    "blastReadyInMs": 0,
+    "weapon": "rig",
+    "timers": {
+     "runSeconds": 46.8,
+     "nextWaveInSeconds": 0
+    },
+    "gold": 0,
+    "hero": {
+     "hp": 0,
+     "maxHp": 100,
+     "x": 0,
+     "z": 12,
+     "level": 1,
+     "upgradesTaken": {},
+     "upgradeChoiceRule": "first-offer"
+    },
+    "prospector": {
+     "x": -2.02,
+     "z": 10.84
+    },
+    "works": {
+     "hp": 0,
+     "maxHp": 0,
+     "standing": 0,
+     "wrecked": 0,
+     "byKind": {},
+     "entries": []
+    },
+    "threats": {
+     "alive": 6,
+     "state": "quiet",
+     "edge": null,
+     "thieves": 0,
+     "wreckers": 0,
+     "spawnedTotal": 0,
+     "defeatedTotal": 0,
+     "defeatedBasis": "all enemies, including continuous tricklers"
+    },
+    "orders": [],
+    "needsRider": true,
+    "seams": [
+     {
+      "id": "gold-seam-1",
+      "active": true,
+      "remaining": 30,
+      "x": -26,
+      "z": 15,
+      "anchorIndex": 0
+     },
+     {
+      "id": "gold-seam-2",
+      "active": true,
+      "remaining": 30,
+      "x": 26,
+      "z": 15,
+      "anchorIndex": 2
+     },
+     {
+      "id": "gold-seam-3",
+      "active": false,
+      "remaining": 30,
+      "x": null,
+      "z": null,
+      "anchorIndex": null
+     }
+    ],
+    "score": {
+     "wavesSurvived": 0,
+     "goldPanned": 0,
+     "goldPannedByProspector": 0,
+     "goldStolen": 0,
+     "goldReclaimed": 0,
+     "goldReclaimedByProspector": 0,
+     "buildingsBuilt": 0
+    },
+    "deepwater": {
+     "contractId": "e5-flotilla",
+     "tileId": "e5-deepwater-claim",
+     "size": 128,
+     "anchor": {
+      "id": "lagoon",
+      "x": 0,
+      "z": 24
+     },
+     "anchors": [
+      {
+       "id": "lagoon",
+       "x": 0,
+       "z": 24
+      },
+      {
+       "id": "open-water",
+       "x": -24,
+       "z": 12
+      }
+     ],
+     "pads": [
+      {
+       "id": "kitchen-scow",
+       "occupied": false
+      },
+      {
+       "id": "turret-raft",
+       "occupied": false
+      },
+      {
+       "id": "still-room-barge",
+       "occupied": false
+      }
+     ],
+     "boatBuildings": [],
+     "storm": {
+      "time": 46.799999999999905,
+      "weather": {
+       "era": 5,
+       "contractId": "e5-flotilla",
+       "phase": "clear",
+       "phaseProgress": 0.7999999999999842,
+       "cycle": 1,
+       "simTime": 46.799999999999905,
+       "movementMultiplier": 1,
+       "visibilityMultiplier": 1,
+       "hazeColor": "#335f64",
+       "hazeStrength": 0,
+       "warning": false
+      },
+      "frontX": null,
+      "waves": [
+       {
+        "wave": 1,
+        "cycle": 0,
+        "scheduledAt": 8,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64
+       },
+       {
+        "wave": 2,
+        "cycle": 1,
+        "scheduledAt": 32,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64
+       }
+      ]
+     },
+     "corsairWaves": 2,
+     "corsairsSpawned": 6,
+     "corsairsRecycledAtExit": 0,
+     "wrecks": [],
+     "bossHandoffsRefused": 0,
+     "arsenal": {
+      "active": true,
+      "items": [
+       {
+        "id": "pressureSealed",
+        "line": "fire",
+        "munitionId": null
+       },
+       {
+        "id": "harpoonBallista",
+        "line": "watch",
+        "munitionId": null
+       },
+       {
+        "id": "depthChargeRack",
+        "line": "watch",
+        "munitionId": "depth_charge"
+       },
+       {
+        "id": "depthChargeLobber",
+        "line": "powder",
+        "munitionId": "depth_charge"
+       }
+      ],
+      "fires": {
+       "harpoonBallista": 0,
+       "depthChargeRack": 0,
+       "depthChargeLobber": 0
+      },
+      "sharedMunition": {
+       "id": "depth_charge",
+       "stock": 12,
+       "capacity": 12,
+       "spentBy": {
+        "depthChargeRack": 0,
+        "depthChargeLobber": 0
+       }
+      },
+      "pressureSealed": {
+       "active": true,
+       "inDiveZone": false
+      },
+      "silhouette": {
+       "harpoonBallista": 1.1,
+       "priorTurret": 1.1
+      },
+      "treatmentEvents": [],
+      "visuals": {
+       "harpoonBallista": false,
+       "depthChargeRack": false,
+       "depthChargeLobber": true
+      }
+     },
+     "flotilla": {
+      "hulls": [
+       {
+        "id": "kitchen-scow",
+        "district": "kitchen",
+        "x": -26,
+        "z": 21,
+        "radius": 5,
+        "integrity": 0,
+        "lost": true,
+        "straggler": false
+       },
+       {
+        "id": "turret-raft",
+        "district": "turret",
+        "x": 0,
+        "z": 27,
+        "radius": 5,
+        "integrity": 0,
+        "lost": true,
+        "straggler": false
+       },
+       {
+        "id": "still-room-barge",
+        "district": "still-room",
+        "x": 26,
+        "z": 21,
+        "radius": 5,
+        "integrity": 0,
+        "lost": true,
+        "straggler": false
+       }
+      ],
+      "centroid": {
+       "x": 0,
+       "z": 23
+      },
+      "allLost": true,
+      "reshapeCooldownSeconds": 0
+     }
+    }
+   },
+   "almanac": {
+    "label": "the Almanac reckons",
+    "estimate": true,
+    "nextWave": {
+     "wave": 1,
+     "arrivalInSeconds": 0,
+     "basis": "estimated-from-wave-schedule",
+     "composition": [
+      {
+       "id": "corsair_skiff",
+       "label": "Corsair Skiff",
+       "count": 6
+      }
+     ],
+     "compositionScope": "wave-horn packs only; continuous tricklers are additional",
+     "continuousTrickle": {
+      "currentIntervalSeconds": 2.125,
+      "includedInComposition": false,
+      "includedInDefeatedTotal": true
+     }
+    },
+    "projection": {
+     "expectedLeaks": 0,
+     "expectedWorksDamage": 0,
+     "expectedGold": 55.83,
+     "currentWorks": 0,
+     "harnessHash": "fnv1a32:1e9423eb"
+    }
+   }
+  }
+ ],
+ "outcome": {
+  "secured": false,
+  "waves": 2,
+  "timeMs": 46800,
+  "gold": 0,
+  "kills": 0,
+  "calls": 0,
+  "defaultedPicks": 0,
+  "defaultedSecure": 0,
+  "eventLogHash": "fnv1a32:68d87963"
+ },
+ "stderr": "gr-sim preset: trail enemy.hp=25.2\ngr-sim speed: 6.14 waves/s\n",
+ "code": 0
+}

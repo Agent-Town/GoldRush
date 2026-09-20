@@ -1,0 +1,21 @@
+{
+  "rig": "opus",
+  "model": "claude-opus-5",
+  "arena": "/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa",
+  "workdir": "/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/heat14/opus/e8-eclipse",
+  "charterFile": "/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/gauntlet-heat14-e3949bfa/rides/e8-eclipse/charter.md",
+  "charterSha256": "7dcadc1c31d50602c382fa3f40018a898974adf7ad46fe31bfc1853e58c060c7",
+  "sessionId": "d445cd7b-0b0d-445c-85d1-d2e4bf549465",
+  "wallSeconds": 1500,
+  "startedAt": "2026-09-18T03:43:39.692Z",
+  "charterBytes": 872778,
+  "charterDelivery": "stdin",
+  "invocation": "env -u CLAUDECODE -u CLAUDE_CODE_ENTRYPOINT -u CLAUDE_CONFIG_DIR claude -p --model claude-opus-5 --allowedTools Read,Write,Glob,Bash(node *) --output-format text --session-id d445cd7b-0b0d-445c-85d1-d2e4bf549465 < \"<charter text, see charterFile>\"",
+  "endedAt": "2026-09-18T03:56:08.402Z",
+  "wallClockSeconds": 749,
+  "exitCode": 0,
+  "signal": null,
+  "wallHit": false,
+  "firstOutputAt": "2026-09-18T03:45:24.711Z",
+  "setupToFirstOutputSeconds": 105
+}

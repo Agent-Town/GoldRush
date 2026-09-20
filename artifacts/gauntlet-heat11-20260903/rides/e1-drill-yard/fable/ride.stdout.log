@@ -1,0 +1,16 @@
+The ride is complete and the verdict is a finding, not a secure.
+
+**`e1-drill-yard` is not winnable through the door — by construction, not by play.** It is the county's tutorial practice yard, and four independently verified facts close it:
+
+1. Its authored manifest sets `twist.secureWave: 0` (`assets/contracts/epoch-1-frontier/contracts.json`), alongside a `practice` block whose own briefing says "Nothing in the yard enters the county ledger."
+2. `RunManager.maybeSecureRun` (`src/game/RunManager.ts:291`) early-returns whenever `secureWave <= 0`, so `run_secured` — and therefore `pendingSecure` — is unreachable in any ride.
+3. The door refuses the verb outright: my mid-ride probe drew the exact refusal `gr-sim rejected orders: SECURE_CHOICE requires a live secure window.`
+4. The wave ceiling is `secureWave + 2 = 2` (`src/sim/HeadlessContractSim.ts:1180-1183`), so every ride ends at wave 2, 60.033s, `secured: false, endReason: "wave-ceiling"` — confirmed in the field by both an idle probe and an active ride.
+
+The county already knew: `assets/contracts/winnability-receipts.json` marks this contract `unclaimed, reason: "standings-disabled"`.
+
+I ran 3 sim runs, 1 scored attempt, and stopped there — a second attempt cannot move an authored constant. The scored ride was an honest active one: panned gold-seam-2 (0→15g, proving the economy loop), staged a turret at `goldGte 50` (the 60s ceiling arrives before the purse), kited via `FALLBACK_IF`/`HOLD`, took `double_tap_coil` from the draft, and stood ready to bank instantly had a secure window ever opened. Determinism verified: the tune and scored rides reproduced identical `eventLogHash fnv1a32:73780fba`.
+
+On the era mechanic: the map did not exercise E1's bank cap at all — there's no secure wave to bank toward, and the yard's signature furniture (assay-tent faucet, drill bell, straw men) is browser-only interaction with no standing-order verb, unreachable through the grammar.
+
+Everything is written in the workspace: `attempt-1-tape.json` (evidence reel — unsecured, must not be submitted as a standing), `controller.mjs`, both probe/tune tapes and logs, `gauntlet-outcome.json`, and `gauntlet-report.md` ending with the four verbatim sections for the operator. The L2 note for the county: the practice yard either needs a real `secureWave` or removal from the door contract list.

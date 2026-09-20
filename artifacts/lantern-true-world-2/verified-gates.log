@@ -1,0 +1,238 @@
+
+Running 42 tests using 1 worker
+
+(node:91282) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 [desktop-chrome] › e2e/lantern-true-world.spec.ts:60:50 › claim plain watch draws its contract world with snapshot sprites (26.0s)
+  ✓   2 [desktop-chrome] › e2e/lantern-true-world.spec.ts:60:50 › signal plain watch draws its contract world with snapshot sprites (3.1s)
+  ✓   3 [desktop-chrome] › e2e/lantern-true-world.spec.ts:100:63 › tactical opens the labelled tactical reel without returning to the menu (2.5s)
+  ✓   4 [desktop-chrome] › e2e/lantern-true-world.spec.ts:100:63 › lite opens the labelled tactical reel without returning to the menu (2.4s)
+  ✓   5 [desktop-chrome] › e2e/lantern-true-world.spec.ts:100:63 › no-webgl opens the labelled tactical reel without returning to the menu (2.4s)
+[lantern-perf] {"project":"desktop-chrome","gameP95":17.300000071525574,"reelP95":32.60000002384186,"ratio":1.884393057171073}
+  ✘   6 [desktop-chrome] › e2e/lantern-true-world.spec.ts:134:1 › reel frame p95 stays within 115 percent of the mounted game (12.8s)
+(node:92800) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   7 [desktop-chrome] › e2e/lantern-true-world.spec.ts:155:1 › Game uses the shared agent controller and reproduces the recorded hash (32.3s)
+  ✓   8 [desktop-chrome] › e2e/lantern-true-world.spec.ts:175:1 › a stored lite preference survives replay storage isolation (891ms)
+  ✓   9 [desktop-chrome] › e2e/lantern-true-world.spec.ts:184:1 › stationary works keep family identity and Night Shift renders its dark phase (859ms)
+  ✓  10 [desktop-chrome] › e2e/perf-01-stress-budget.spec.ts:98:1 › stress profile stays within draw-call and sprite-swap budgets (11.5s)
+  ✓  11 [desktop-chrome] › e2e/reel-deep-links.spec.ts:10:1 › plain watch URL opens the true current-era show without a profile or debug (2.3s)
+  ✓  12 [desktop-chrome] › e2e/reel-deep-links.spec.ts:43:1 › an unknown watch URL shows an honest refusal and returns to the start menu (1.0s)
+  ✓  13 [desktop-chrome] › e2e/reel-deep-links.spec.ts:56:1 › landing watch links name their reel, contract, and epoch (212ms)
+  ✘  14 [desktop-chrome] › e2e/tape-02-lantern-show.spec.ts:10:1 › plain town WATCH replays a fresh tape read-only and refuses a mismatched reel (20.9s)
+(node:94795) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  15 [desktop-chrome] › e2e/terrain3d-claim-pilot.spec.ts:64:1 › terrain2d is byte-lazy and keeps the painted Claim (3.2s)
+  ✓  16 [desktop-chrome] › e2e/terrain3d-claim-pilot.spec.ts:76:1 › contract-valid GLB feeds every visualY consumer and keeps the water agreement (5.1s)
+  ✓  17 [desktop-chrome] › e2e/terrain3d-claim-pilot.spec.ts:140:1 › the terrain pilot leaves the planar simulation fingerprint unchanged (6.6s)
+  ✓  18 [desktop-chrome] › e2e/terrain3d-claim-pilot.spec.ts:151:1 › LITE and invalid bytes retain the painted fallback (5.2s)
+  ✘  19 [desktop-chrome] › e2e/terrain3d-claim-pilot.spec.ts:166:1 › the mounted terrain stays inside the 115% p95 budget (1.0m)
+(node:96767) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:96878) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[true-reel] contract=the-claim claimed=fnv1a32:a45ba9ac node=fnv1a32:a45ba9ac/2350/{"secured":false,"waves":2,"gold":0,"timeAlive":78.333} browser=fnv1a32:a45ba9ac/2350/{"secured":false,"waves":2,"gold":0,"timeAlive":78.333} browserWallMs=1292
+(node:97561) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[true-reel] contract=e4-dust-flats claimed=fnv1a32:086670cf node=fnv1a32:086670cf/2995/{"secured":false,"waves":3,"gold":10,"timeAlive":99.833} browser=fnv1a32:086670cf/2995/{"secured":false,"waves":3,"gold":10,"timeAlive":99.833} browserWallMs=2489
+  ✓  20 [desktop-chrome] › e2e/true-reel-harness.spec.ts:12:1 › the browser replays the Claim control and a terrain-reading Motor reel to the claimed and node hashes (16.0s)
+(node:97605) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[hill-mine-worker] claimed=fnv1a32:0cdd3e78 node=fnv1a32:0cdd3e78 browser=fnv1a32:0cdd3e78
+  ✓  21 [desktop-chrome] › e2e/true-reel-harness.spec.ts:44:1 › the module worker takes Hill Mine from the tape without a page location (1.4m)
+(node:99154) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  22 [mobile-chrome] › e2e/lantern-true-world.spec.ts:60:50 › claim plain watch draws its contract world with snapshot sprites (25.2s)
+  ✓  23 [mobile-chrome] › e2e/lantern-true-world.spec.ts:60:50 › signal plain watch draws its contract world with snapshot sprites (3.1s)
+  ✓  24 [mobile-chrome] › e2e/lantern-true-world.spec.ts:100:63 › tactical opens the labelled tactical reel without returning to the menu (1.4s)
+  ✓  25 [mobile-chrome] › e2e/lantern-true-world.spec.ts:100:63 › lite opens the labelled tactical reel without returning to the menu (1.1s)
+  ✓  26 [mobile-chrome] › e2e/lantern-true-world.spec.ts:100:63 › no-webgl opens the labelled tactical reel without returning to the menu (2.0s)
+[lantern-perf] {"project":"mobile-chrome","gameP95":21.199999928474426,"reelP95":8.699999928474426,"ratio":0.41037735650126894}
+  ✓  27 [mobile-chrome] › e2e/lantern-true-world.spec.ts:134:1 › reel frame p95 stays within 115 percent of the mounted game (8.4s)
+  ✓  28 [mobile-chrome] › e2e/lantern-true-world.spec.ts:155:1 › Game uses the shared agent controller and reproduces the recorded hash (23.4s)
+  ✓  29 [mobile-chrome] › e2e/lantern-true-world.spec.ts:175:1 › a stored lite preference survives replay storage isolation (991ms)
+  ✓  30 [mobile-chrome] › e2e/lantern-true-world.spec.ts:184:1 › stationary works keep family identity and Night Shift renders its dark phase (1.4s)
+  ✓  31 [mobile-chrome] › e2e/perf-01-stress-budget.spec.ts:98:1 › stress profile stays within draw-call and sprite-swap budgets (12.7s)
+  ✓  32 [mobile-chrome] › e2e/reel-deep-links.spec.ts:10:1 › plain watch URL opens the true current-era show without a profile or debug (3.2s)
+  ✓  33 [mobile-chrome] › e2e/reel-deep-links.spec.ts:43:1 › an unknown watch URL shows an honest refusal and returns to the start menu (1.5s)
+  ✓  34 [mobile-chrome] › e2e/reel-deep-links.spec.ts:56:1 › landing watch links name their reel, contract, and epoch (297ms)
+  ✘  35 [mobile-chrome] › e2e/tape-02-lantern-show.spec.ts:10:1 › plain town WATCH replays a fresh tape read-only and refuses a mismatched reel (20.9s)
+(node:2825) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  36 [mobile-chrome] › e2e/terrain3d-claim-pilot.spec.ts:64:1 › terrain2d is byte-lazy and keeps the painted Claim (3.9s)
+  ✘  37 [mobile-chrome] › e2e/terrain3d-claim-pilot.spec.ts:76:1 › contract-valid GLB feeds every visualY consumer and keeps the water agreement (1.0m)
+(node:7825) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  38 [mobile-chrome] › e2e/terrain3d-claim-pilot.spec.ts:140:1 › the terrain pilot leaves the planar simulation fingerprint unchanged (7.8s)
+  ✓  39 [mobile-chrome] › e2e/terrain3d-claim-pilot.spec.ts:151:1 › LITE and invalid bytes retain the painted fallback (6.4s)
+  ✘  40 [mobile-chrome] › e2e/terrain3d-claim-pilot.spec.ts:166:1 › the mounted terrain stays inside the 115% p95 budget (1.0m)
+(node:16971) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:17080) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[true-reel] contract=the-claim claimed=fnv1a32:a45ba9ac node=fnv1a32:a45ba9ac/2350/{"secured":false,"waves":2,"gold":0,"timeAlive":78.333} browser=fnv1a32:a45ba9ac/2350/{"secured":false,"waves":2,"gold":0,"timeAlive":78.333} browserWallMs=1139
+(node:17090) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[true-reel] contract=e4-dust-flats claimed=fnv1a32:086670cf node=fnv1a32:086670cf/2995/{"secured":false,"waves":3,"gold":10,"timeAlive":99.833} browser=fnv1a32:086670cf/2995/{"secured":false,"waves":3,"gold":10,"timeAlive":99.833} browserWallMs=2523
+  ✓  41 [mobile-chrome] › e2e/true-reel-harness.spec.ts:12:1 › the browser replays the Claim control and a terrain-reading Motor reel to the claimed and node hashes (13.0s)
+(node:17103) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[hill-mine-worker] claimed=fnv1a32:0cdd3e78 node=fnv1a32:0cdd3e78 browser=fnv1a32:0cdd3e78
+  ✓  42 [mobile-chrome] › e2e/true-reel-harness.spec.ts:44:1 › the module worker takes Hill Mine from the tape without a page location (1.1m)
+
+
+  1) [desktop-chrome] › e2e/lantern-true-world.spec.ts:134:1 › reel frame p95 stays within 115 percent of the mounted game 
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 19.89500008225441
+    Received:    32.60000002384186
+
+      148 |   await writeFile(path.join(output, `${info.project.name}-perf.json`), JSON.stringify(sample, null, 2));
+      149 |   console.log('[lantern-perf]', JSON.stringify(sample));
+    > 150 |   expect(reelP95).toBeLessThanOrEqual(gameP95 * 1.15);
+          |                   ^
+      151 |   expect(errors).toEqual([]);
+      152 | });
+      153 |
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/lantern-true-world.spec.ts:150:19
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/lantern-true-world-reel-fr-e0493-percent-of-the-mounted-game-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/lantern-true-world-reel-fr-e0493-percent-of-the-mounted-game-desktop-chrome/error-context.md
+
+  2) [desktop-chrome] › e2e/tape-02-lantern-show.spec.ts:10:1 › plain town WATCH replays a fresh tape read-only and refuses a mismatched reel 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 4
+
+      Object {
+    -   "console": Array [],
+    +   "console": Array [
+    +     "THREE.GLTFLoader: Couldn't load texture blob:http://127.0.0.1:5189/83548901-5abc-4f40-b98d-fb5b87107371",
+    +     "THREE.GLTFLoader: Couldn't load texture blob:http://127.0.0.1:5189/4b4215e0-5621-4e7e-8f94-c547a218fabf",
+    +   ],
+        "page": Array [],
+      }
+
+      74 |   await expect(page.getByTestId('tape-shelf')).toContainText(/wave 0.*KEPT/s);
+      75 |   await shot(page, testInfo, 'version-refusal');
+    > 76 |   expect(errors).toEqual({ console: [], page: [] });
+         |                  ^
+      77 | });
+      78 |
+      79 | async function seedProfile(page: Page): Promise<void> {
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/tape-02-lantern-show.spec.ts:76:18
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/tape-02-lantern-show-plain-7c220-d-refuses-a-mismatched-reel-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/tape-02-lantern-show-plain-7c220-d-refuses-a-mismatched-reel-desktop-chrome/error-context.md
+
+  3) [desktop-chrome] › e2e/terrain3d-claim-pilot.spec.ts:166:1 › the mounted terrain stays inside the 115% p95 budget 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: page.waitForFunction: Test timeout of 60000ms exceeded.
+
+      172 |   const paintedP95Ms = await p95(page);
+      173 |   await release!();
+    > 174 |   await page.waitForFunction(() => document.querySelector('canvas')?.dataset.terrain3dPilotState === 'ready');
+          |              ^
+      175 |   const pilotP95Ms = await p95(page);
+      176 |   const report = { paintedP95Ms, pilotP95Ms, ratio: pilotP95Ms / paintedP95Ms };
+      177 |   await mkdir(ARTIFACT_DIR, { recursive: true });
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/terrain3d-claim-pilot.spec.ts:174:14
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/terrain3d-claim-pilot-the--7f0b9-s-inside-the-115-p95-budget-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/terrain3d-claim-pilot-the--7f0b9-s-inside-the-115-p95-budget-desktop-chrome/error-context.md
+
+  4) [mobile-chrome] › e2e/tape-02-lantern-show.spec.ts:10:1 › plain town WATCH replays a fresh tape read-only and refuses a mismatched reel 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 4
+
+      Object {
+    -   "console": Array [],
+    +   "console": Array [
+    +     "THREE.GLTFLoader: Couldn't load texture blob:http://127.0.0.1:5189/2d304c92-49e4-4c5d-be5c-60ca28e2e39f",
+    +     "THREE.GLTFLoader: Couldn't load texture blob:http://127.0.0.1:5189/e6ba5899-b87e-4960-9094-6b889a984e4f",
+    +   ],
+        "page": Array [],
+      }
+
+      74 |   await expect(page.getByTestId('tape-shelf')).toContainText(/wave 0.*KEPT/s);
+      75 |   await shot(page, testInfo, 'version-refusal');
+    > 76 |   expect(errors).toEqual({ console: [], page: [] });
+         |                  ^
+      77 | });
+      78 |
+      79 | async function seedProfile(page: Page): Promise<void> {
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/tape-02-lantern-show.spec.ts:76:18
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/tape-02-lantern-show-plain-7c220-d-refuses-a-mismatched-reel-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/tape-02-lantern-show-plain-7c220-d-refuses-a-mismatched-reel-mobile-chrome/error-context.md
+
+  5) [mobile-chrome] › e2e/terrain3d-claim-pilot.spec.ts:76:1 › contract-valid GLB feeds every visualY consumer and keeps the water agreement 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: page.waitForFunction: Test timeout of 60000ms exceeded.
+
+      90 |   for (const [x, z] of samplePoints) {
+      91 |     await page.evaluate(([px, pz]) => window.__GR_TEST__?.teleport(px, pz), [x, z]);
+    > 92 |     await page.waitForFunction(([px, pz]) => {
+         |                ^
+      93 |       const hero = window.__THREE_GAME_DIAGNOSTICS__?.heroPos;
+      94 |       return hero != null && Math.abs(hero.x - px) < 0.01 && Math.abs(hero.z - pz) < 0.01;
+      95 |     }, [x, z]);
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/terrain3d-claim-pilot.spec.ts:92:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/terrain3d-claim-pilot-cont-43bda-d-keeps-the-water-agreement-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/terrain3d-claim-pilot-cont-43bda-d-keeps-the-water-agreement-mobile-chrome/error-context.md
+
+  6) [mobile-chrome] › e2e/terrain3d-claim-pilot.spec.ts:166:1 › the mounted terrain stays inside the 115% p95 budget 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: page.waitForFunction: Test timeout of 60000ms exceeded.
+
+      172 |   const paintedP95Ms = await p95(page);
+      173 |   await release!();
+    > 174 |   await page.waitForFunction(() => document.querySelector('canvas')?.dataset.terrain3dPilotState === 'ready');
+          |              ^
+      175 |   const pilotP95Ms = await p95(page);
+      176 |   const report = { paintedP95Ms, pilotP95Ms, ratio: pilotP95Ms / paintedP95Ms };
+      177 |   await mkdir(ARTIFACT_DIR, { recursive: true });
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/terrain3d-claim-pilot.spec.ts:174:14
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/terrain3d-claim-pilot-the--7f0b9-s-inside-the-115-p95-budget-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/terrain3d-claim-pilot-the--7f0b9-s-inside-the-115-p95-budget-mobile-chrome/error-context.md
+
+  6 failed
+    [desktop-chrome] › e2e/lantern-true-world.spec.ts:134:1 › reel frame p95 stays within 115 percent of the mounted game 
+    [desktop-chrome] › e2e/tape-02-lantern-show.spec.ts:10:1 › plain town WATCH replays a fresh tape read-only and refuses a mismatched reel 
+    [desktop-chrome] › e2e/terrain3d-claim-pilot.spec.ts:166:1 › the mounted terrain stays inside the 115% p95 budget 
+    [mobile-chrome] › e2e/tape-02-lantern-show.spec.ts:10:1 › plain town WATCH replays a fresh tape read-only and refuses a mismatched reel 
+    [mobile-chrome] › e2e/terrain3d-claim-pilot.spec.ts:76:1 › contract-valid GLB feeds every visualY consumer and keeps the water agreement 
+    [mobile-chrome] › e2e/terrain3d-claim-pilot.spec.ts:166:1 › the mounted terrain stays inside the 115% p95 budget 
+  36 passed (10.6m)

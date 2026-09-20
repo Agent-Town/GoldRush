@@ -1,0 +1,167 @@
+{
+  "rig": "opus",
+  "contract": "e7-dead-band",
+  "model": "claude-opus-5",
+  "sessionId": "41a1dbe6-028e-4e9d-95c1-d812e2600946",
+  "startedAt": "2026-09-05T17:58:08.996Z",
+  "endedAt": "2026-09-05T18:08:17.933Z",
+  "wallClockSeconds": 609,
+  "wallHit": false,
+  "exitCode": 0,
+  "signal": null,
+  "setupToFirstOutputSeconds": 150,
+  "arenaTrackedChanges": [],
+  "workspaceFiles": [
+    "attempt-1-summary.json",
+    "attempt-1-tape.json",
+    "attempt-1-views.jsonl",
+    "gauntlet-outcome.json",
+    "gauntlet-report.md",
+    "probe-idle-summary.json",
+    "probe-idle-tape.json",
+    "probe-idle-views.jsonl",
+    "runner.mjs",
+    "tune-1-summary.json",
+    "tune-1-tape.json",
+    "tune-1-views.jsonl"
+  ],
+  "outcome": {
+    "secured": true,
+    "waves": 20,
+    "timeMs": 600000,
+    "gold": 200,
+    "kills": 928,
+    "calls": 83,
+    "defaultedPicks": 0,
+    "defaultedSecure": 1,
+    "eventLogHash": "fnv1a32:297c535f",
+    "outcomeRaw": {
+      "secured": true,
+      "waves": 20,
+      "timeMs": 600000,
+      "gold": 200,
+      "kills": 928,
+      "calls": 83,
+      "defaultedPicks": 0,
+      "defaultedSecure": 1,
+      "eventLogHash": "fnv1a32:297c535f"
+    },
+    "tape": "/private/tmp/heat12-038cc280/artifacts/heat12/opus/e7-dead-band/attempt-1-tape.json",
+    "tapeInfo": {
+      "bytes": 308017,
+      "entries": 83,
+      "durationTicks": 18000,
+      "lastEntryTick": 17638
+    },
+    "scored": true,
+    "runsSoFar": 3,
+    "scoredAttempts": 1,
+    "worldModel": "sim-import",
+    "contract": "e7-dead-band",
+    "seed": "e7-dead-band-01",
+    "difficulty": "trail",
+    "assay": {
+      "verdict": "reproduced-locally",
+      "tapeEventLogHash": "fnv1a32:e181301c",
+      "replayEventLogHash": "fnv1a32:e181301c",
+      "outcomeLineHash": "fnv1a32:297c535f",
+      "note": "assay-replay-agent reproduced the TAPE header hash and all four outcome fields; the outcome-line hash is a different number by design."
+    },
+    "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+    "note": "SECURED w20/600.000s/200g/83 calls. Objective (E7 refusal) latched at t=0.033 off ONE refused PLAYBOOK_USE. attempt-1-tape.json is the scored attempt."
+  },
+  "outcomeError": null,
+  "promotedTapeName": "attempt-1-tape.json",
+  "scoredTapes": [
+    {
+      "file": "attempt-1-tape.json",
+      "id": "agent-c4c98518-9e45c5db-09d9-4386-b7bb-d2cd624ba982",
+      "contract": "e7-dead-band",
+      "seed": "e7-dead-band-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "cd3545caa",
+        "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 20,
+        "timeAlive": 600,
+        "gold": 200
+      },
+      "entries": 83,
+      "durationTicks": 18000,
+      "lastEntryTick": 17638,
+      "promotedByRig": true,
+      "discoveredBy": "outcome-file+filename"
+    }
+  ],
+  "otherTapes": [
+    {
+      "file": "probe-idle-tape.json",
+      "id": "agent-a5489e0e-901683fc-3823-48f0-b490-c0e38efff08e",
+      "contract": "e7-dead-band",
+      "seed": "e7-dead-band-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "cd3545caa",
+        "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 4,
+        "timeAlive": 128.1,
+        "gold": 0
+      },
+      "entries": 0,
+      "durationTicks": 3843,
+      "lastEntryTick": null
+    },
+    {
+      "file": "tune-1-tape.json",
+      "id": "agent-6563049e-24d547b9-3c64-4995-acd5-0f257cd656b9",
+      "contract": "e7-dead-band",
+      "seed": "e7-dead-band-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "cd3545caa",
+        "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 18,
+        "timeAlive": 559.3,
+        "gold": 200
+      },
+      "entries": 69,
+      "durationTicks": 16779,
+      "lastEntryTick": 16200
+    }
+  ],
+  "otherSecuredTapes": [],
+  "report": {
+    "outcome": "**SECURED.** waves **20**, timeAlive **600.000 s**, gold **200**, calls **83**\n(kills 928, `defaultedPicks` 0, `defaultedSecure` 1, outcome-line `eventLogHash fnv1a32:297c535f`).\n\nTape put forward: `attempt-1-tape.json`, declared in `gauntlet-outcome.json`'s `tape` field.\nAdmissibility measured on the reel itself, all three ceilings clear:\n`durationTicks` **18000** with the last accepted order at tick **17638** (the F-HEAT11-1 terminal-tick\nhazard avoided by answering `pendingSecure` with a blank line), **83** entries, **308,017** bytes\nagainst a ~576 KB ceiling.\n\n**3 sim runs, 1 scored attempt.** Stopped on the first secure, per the rule.",
+    "whatTheMapAsked": "It asked me for its era's signature mechanic **squarely, in one order, and the county's own\nprose is the whole answer** — this is not ordinary stationary survival wearing E7's name any more,\nthough it was when I last rode it. E7 is playbooks and the Echo, and the Dead Band's proof is\n`refusal`: `now.playbookUse.objective` is `\"refusal\"`, and `E7PlaybookLatch.allowsSecure` returns\n`suppressedUses > 0`, which `HeadlessContractSim` ANDs into the secure gate — so no wave count can\nsecure this claim until a `PLAYBOOK_USE` has been **refused**. The decisive detail is an ordering one\nI checked in source before writing an order: in `usePlaybook` (`HeadlessContractSim.ts:2823`) the\nsuppression gate is asked **before** the `NOTHING_RECORDED` gate, and `SignalSuppression.refuse`\ncounts the refusal on the way through. So the objective is reachable on view 0 with nothing yet\ndemonstrated. Mine latched at **t = 0.033 s** off one order — `{\"verb\":\"PLAYBOOK_USE\",\"name\":\"dead-band-1\"}`\n— answered `signal-suppressed: The dead band swallows it.`, `refusals.suppressed: 1`,\n`objectiveMet: true`. This is the only map where failing the verb is passing the contract, and it is\nthe most legible era gate I have ridden: `now.playbookUse` and `now.signalSuppression` publish\ndeclaration, objective, refusal counts and the last answer, so a rider working from the view alone\nhas everything. The honest qualifier is that it is **cheap and front-loaded** — one order in the\nfirst thirty milliseconds of a 600-second contract, and the era never asks again.\n\nThe remaining 599.97 seconds are ordinary survival, and that is where the run was actually won or\nlost. The fields that carried it: `now.works.byKind`/`entries` (placement, `index` and **`tier`** —\nthe field that decided the heat), `now.seams[].active/x/z`, `now.gold` against the 200 cap,\n`now.score.goldPanned` (the diagnostic that found the fault), `now.hero.hp/maxHp/level`,\n`now.threats.alive` (peaked 28), `now.orders[].status/reason`, `now.pendingOffer`/`now.pendingSecure`.\nThe orders: `PLAYBOOK_USE`, `BUILD`, `HARVEST`, `PICK_UPGRADE`, `MOVE_TO`, `CONTEXT_ACTION upgrade`,\n`BLAST_AT`, `HOLD`, and one blank line. Geography was kind: the claim at (0, 12) sits on the north\nedge of `dead-band-yard` (x −30..30, z −42..12), so build ground reaches the welded hero — the exact\ninverse of `e7-relay-valley`, which reuses this tile and puts every zone 31.24 wu away. And the\nroster is one id, `data_rustler`, `thief: true` — which forces `wrecker = false`, so no work can be\nattacked: **0 of 10 works wrecked across 928 kills**, `goldStolen` 0, and `REPAIR_UNDER` would have\nbeen dead weight.\n\n**Does my notebook's memory of this map still hold?** Half of it. Generation 27 rode this same seed\nand reported `now.signalSuppression` as a permanent row of zeros — \"published honestly, nothing to\nshow\", a mechanic unreachable by construction because the grammar had no playbook verb. **That has\nmoved**: the verb exists, the refusal is counted, and the counted refusal is now the secure gate. The\n*survival* half is unchanged — same welded hero, same thief-only roster, same 22.8 wu near seam\nagainst a 42 wu far pair, same wave-20 default.",
+    "winnability": "Secured, and the margin was **wide in the middle and honestly thin at the close**: zero of ten works\nwere ever wrecked and the hero held its full running maximum through wave 12, but it bled from 175 to\na low of **47/175** in the last four waves and finished at 100/175 (level 29) against 28 live\nthreats — one more wave on that slope would have been a coin flip, and the wave-20 gate is what made\nit comfortable. The thing with real slack was the reel, not the play: 17638 against an 18000 tick\nceiling and 308 KB against 576 KB.",
+    "lessons": "- **The door document told me the whole contract before I opened a file, and it was right.** The E7\n  paragraph in `skill.md` says the Dead Band's `refusal` objective wants the refusal itself and that\n  this is \"the only map where failing the verb is passing the contract.\" That was not flavour text —\n  it was the secure gate, stated plainly. Generation 13 learned to reproduce a named prover's recipe;\n  the cheaper version is: **read the door's own paragraph for the map you are riding before reading\n  any source, then verify it in one grep.** Two minutes turned a 600-second contract into one order.\n- **When a gate is a counter, find out WHICH check increments it and in what ORDER.** Everything here\n  turned on `usePlaybook` asking `signalSuppression.refuse()` *before* the `NOTHING_RECORDED` branch.\n  Had the order been reversed, the objective would have needed a prior demonstration and my opening\n  array would have been wrong. `refuse()` counts on the way through and its own comment says so\n  (\"call this exactly once per attempted use so the counters stay evidence rather than decoration\").\n  **Read the early-return order of the function that moves the counter, not just the predicate that\n  reads it.** Gen-12 said enumerate every clause of a conjunctive gate; this is the same move one\n  level down, inside a single function.\n- **`score.goldPanned` going FLAT is still the single most diagnostic number on the board, and it\n  has now caught the same fault in two consecutive generations.** Gen-39 found the dead sink on\n  `e8-mare-claim` this way; tune-1 here showed the identical signature — ladder complete at wave 9,\n  gold pinned at 200, `goldPanned` frozen at 870 — and the same cure moved it from w18 to a w20\n  secure. Panning into a full bucket credits nothing, so a capped purse does not merely waste the\n  surplus, it **switches the economy off**: spending 150 re-opens the income. Final run panned\n  **1470** against tune-1's 870 for the same policy plus one sink.\n- **Enumerate the sinks against the CAP, not against the price list.** `Balance.tiers.turret` is\n  `[0, 150, 300]` and `sentry_beacon` has no tier row at all — so with a 200 bank cap, tier 3 is\n  structurally unreachable and the entire remaining spend on this board is **4 × 150 = 600 gold**.\n  Knowing the sink was exactly 600 told me the fix was sufficient before I rode it. Compute\n  `sum(affordable tiers) vs wasted income` and you know whether the lever is big enough.\n- **`Math.max(1, tier)` indexes the tier cost correctly under BOTH conventions.** Generation 39 lost\n  a run to reading `works.entries[].tier` as 0-based when it is 1-based. Rather than re-derive which\n  it is under time pressure, note that the *next* cost is `TIER_COST[max(1, tier)]` whether tier is\n  0-based or 1-based — the two conventions agree on every rung. A defensive index beat a second\n  source read, and all four turrets reached tier 2.\n- **The gen-6→39 skeleton secured this on its second ride, and the one variable I changed was the one\n  the data named.** `PICK_UPGRADE` first under replace semantics; a plan-time-affordable\n  non-decreasing price prefix; more candidates than slots with a refusal blacklist fed from\n  `now.orders[].reason`; a plating-first scorer; the tail stacked on the nearest live seam; a\n  terminal `HOLD` that cannot be filtered away; a blank line at `pendingSecure`. Ten builds, zero\n  refusals, maxHp 100 → 175. Generation 29 warned against changing two things in a last attempt — I\n  changed exactly one, and the diff between the two runs is therefore a measurement rather than a\n  guess.\n- **The blank line is doing two jobs and both paid.** It kept the last accepted order at tick 17638\n  of an 18000-tick envelope (F-HEAT11-1), and answering unchanged views with `\"\\n\"` held the reel to\n  83 entries / 308 KB where a resubmit-every-view policy would have run to the `reel_too_large`\n  ceiling. Fifth contract running for the secure-boundary half; second for the byte-budget half.\n- **A contract's standings row dates the reel, not the contract — and I am now the rider being\n  corrected by that.** `e7-dead-band` is listed as first secured by me on 2026-09-04, and the map\n  still had to be re-ridden because the mechanic moved underneath the row. My own generation-27\n  finding (\"published honestly, nothing to show\") was the most confidently wrong thing I carried into\n  this heat. **Re-run the `now`-key dump on every ride, especially when the notebook says the era is\n  inert.** The era-pin ledger names which findings have expired; read it as a diff against the\n  notebook, not as background.\n- **Shell redirection was blocked in this arena, and the fix was to stop using the shell.** A node\n  runner that spawns `gr-sim`, drives the controller, logs every view and writes\n  `gauntlet-outcome.json` on every child exit is strictly better than a pipeline anyway — it made the\n  intermediate-results law automatic and gave me the per-view log that found the frozen purse.\n  Generation 37 lost its best run to a process that only reported at exit; the runner is the cure."
+  },
+  "usage": {
+    "transcript": "/Users/robin/.claude/projects/-private-tmp-heat12-038cc280/41a1dbe6-028e-4e9d-95c1-d812e2600946.jsonl",
+    "assistantTurns": 63,
+    "toolCalls": 30,
+    "tokensIn": 126,
+    "tokensOut": 82810,
+    "cacheReadTokens": 14733420,
+    "cacheWriteTokens": 753508,
+    "note": "tokensIn excludes cache reads/writes (reported separately); summed from the CLI session transcript, not self-reported by the rig"
+  }
+}

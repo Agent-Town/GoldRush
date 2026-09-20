@@ -1,0 +1,97 @@
+{
+  "label": "final",
+  "project": "desktop-chrome",
+  "viewport": {
+    "width": 1280,
+    "height": 800
+  },
+  "rounds": 3,
+  "nobeauty": {
+    "p95s": [
+      10,
+      10.099999999998545,
+      10
+    ],
+    "median": 10,
+    "min": 10,
+    "calls": [
+      83,
+      87,
+      92
+    ],
+    "triangles": [
+      116624,
+      116632,
+      117038
+    ],
+    "tier": null
+  },
+  "beauty": {
+    "p95s": [
+      9.80000000000291,
+      10,
+      9.900000000001455
+    ],
+    "median": 9.900000000001455,
+    "min": 9.80000000000291,
+    "calls": [
+      88,
+      91,
+      94
+    ],
+    "triangles": [
+      116724,
+      116730,
+      117132
+    ],
+    "tier": null
+  },
+  "datasets": {
+    "nobeauty": {
+      "state": "ready",
+      "renderSource": "glb",
+      "landmarks": "5",
+      "landmarkSkipped": "0",
+      "landmarkExpected": "5",
+      "landmarkEmissive": "1.45",
+      "landmarkDiagnostics": "",
+      "hiddenGroundLayers": "TerrainVistaRing|TerrainContinuousGroundMesh|terrain.river|terrain.ford|FordSteppingStones|SpringPonds",
+      "meshes": "1",
+      "triangles": "32768",
+      "vertices": "16641",
+      "materials": "1"
+    },
+    "beauty": {
+      "state": "ready",
+      "renderSource": "glb",
+      "landmarks": "5",
+      "landmarkSkipped": "0",
+      "landmarkExpected": "5",
+      "landmarkEmissive": "1.45",
+      "landmarkDiagnostics": "",
+      "sculptWater": "living-water-quad",
+      "sculptWaterY": "-0.0700",
+      "sculptWaterDeepest": "0.110",
+      "sculptWaterGlints": "3",
+      "contactShadows": "4",
+      "motes": "200",
+      "steam": "2x48",
+      "hiddenGroundLayers": "TerrainVistaRing|TerrainContinuousGroundMesh|terrain.river|terrain.ford|FordSteppingStones|SpringPonds",
+      "meshes": "1",
+      "triangles": "32768",
+      "vertices": "16641",
+      "materials": "1"
+    }
+  },
+  "consoleErrors": {
+    "nobeauty": [],
+    "beauty": []
+  },
+  "loadavg": [
+    84.787109375,
+    41.19677734375,
+    43.94873046875
+  ],
+  "ratio": 0.99,
+  "verdict": "WITHIN +15%"
+}

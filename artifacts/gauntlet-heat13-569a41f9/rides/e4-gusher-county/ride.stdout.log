@@ -1,0 +1,19 @@
+**SECURED on the first controller.** Everything is on disk.
+
+## Outcome
+`e4-gusher-county` / `e4-gusher-county-01` / trail — **secured, w12 / 360.000 s / 170 gold / 49 calls**, 414 kills, 4 turrets standing, 0 works ever wrecked. **2 sim runs** (idle probe + one controller ride), **1 scored attempt**.
+
+Tape put forward: **`attempt-1-tape.json`**, declared in `gauntlet-outcome.json`'s `tape` field — a byte-identical copy of `tune-1-tape.json`, one ride under two filenames (it secured on its first controller, so the stop rule ends the heat). Envelope clean on all three axes: 10800 ticks, last accepted order at 10780, 49 entries, 185,778 bytes. Local assay reproduced the tape's own `fnv1a32:0e24753e` and all four outcome fields.
+
+## What decided it
+Three source reads before the first order:
+- `settleDeliveries` compares against **`MOTOR_STOP_REACH` 2.5 — a radius**, not the exact-equality latch that made `e4-long-road` unwinnable under this grammar. That is why `MOVE_HERO` can aim this errand at all.
+- The closure washout is **closed form** (`cycle = floor(t/30)`, storm on `t mod 30 ∈ [10,22)`, closed lease `corridorIds[cycle % 3]`), so the gate could reason about a dispatch several seconds ahead and stall the hero back down the road past the window. It fired once and the delivery landed clean.
+- `now.threats.wreckers: 0, thieves: 0` deleted `REPAIR_UNDER`, palisades and the stockpile question in one read.
+
+The whole eleven-step errand fit in **one self-draining array** — `HAUL` captures the hero's position at dispatch, and the hauler's 2-second road drives hide inside the hero's 3–9-second walks. Errand latched at **t = 60.5**; my previous ride on this map took until t = 114.
+
+## Two things worth flagging
+**The retired verbs were a gift here, not a cost.** Generations 17 and 53 rode a welded hero and forted at the camp, 60 units from every seam, banking 80 and 5 gold. `MOVE_HERO` lets the hero walk after the errand into the `west-lease` build zone, which contains two of the three live seams — I parked 10 units from both, and panned 510 where they panned 370. Gold is the only free ranking axis at a fixed-wave secure, and the whole gain came from moving a body that used to be furniture.
+
+**One real defect in my own controller, reported rather than buried:** I suppressed re-dispatching an in-flight haul but not the *stage* step of a lease whose delivery was already in flight, so a wave-2 re-plan walked the hero 52 units back and burned the last four fuel on a pointless haul. It cost nothing (the objective had already landed) but the tank drew 36 of 36 — the fuel margin at the moment the third lease landed was about four, not the eight I planned.

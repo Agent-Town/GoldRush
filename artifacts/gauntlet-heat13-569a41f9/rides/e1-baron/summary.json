@@ -1,0 +1,287 @@
+{
+  "rig": "opus",
+  "contract": "e1-baron",
+  "model": "claude-opus-5",
+  "sessionId": "dd4fdd6a-6f5d-4a7f-8697-99066251e4bb",
+  "startedAt": "2026-09-07T13:29:58.131Z",
+  "endedAt": "2026-09-07T13:54:58.287Z",
+  "wallClockSeconds": 1500,
+  "wallHit": true,
+  "exitCode": 143,
+  "signal": null,
+  "setupToFirstOutputSeconds": 120,
+  "arenaTrackedChanges": [],
+  "workspaceFiles": [
+    "attempt-1-tape.json",
+    "ctrl-v1.mjs",
+    "gauntlet-outcome.json",
+    "gauntlet-report.md",
+    "probe-idle-summary.json",
+    "probe-idle-views.json",
+    "probe-idle.json",
+    "runner.mjs",
+    "tune-1-summary.json",
+    "tune-1-views.json",
+    "tune-1.json",
+    "tune-2-summary.json",
+    "tune-2-views.json",
+    "tune-2.json",
+    "tune-3-summary.json",
+    "tune-3-views.json",
+    "tune-3.json",
+    "tune-4-summary.json",
+    "tune-4-views.json",
+    "tune-4.json",
+    "tune-5-summary.json",
+    "tune-5-views.json",
+    "tune-5.json",
+    "tune-6-summary.json",
+    "tune-6-views.json",
+    "tune-6.json"
+  ],
+  "outcome": {
+    "secured": false,
+    "waves": 23,
+    "timeMs": 610400,
+    "gold": 134,
+    "kills": 1016,
+    "calls": 507,
+    "defaultedPicks": 0,
+    "defaultedSecure": 0,
+    "eventLogHash": "fnv1a32:3f634159",
+    "outcomeRaw": {
+      "secured": false,
+      "waves": 23,
+      "timeMs": 610400,
+      "gold": 134,
+      "kills": 1016,
+      "calls": 507,
+      "defaultedPicks": 0,
+      "defaultedSecure": 0,
+      "eventLogHash": "fnv1a32:3f634159"
+    },
+    "tape": "/tmp/heat13-569a41f9/artifacts/heat13/opus/e1-baron/tune-6.json",
+    "scored": false,
+    "runsSoFar": 7,
+    "scoredAttempts": 1,
+    "worldModel": "sim-import",
+    "envelope": {
+      "durationTicks": 18312,
+      "lastEntryTick": 18225,
+      "entries": 507,
+      "bytes": 1990508,
+      "tapeHash": "fnv1a32:5ef09d06"
+    }
+  },
+  "outcomeError": null,
+  "promotedTapeName": "tune-6.json",
+  "scoredTapes": [
+    {
+      "file": "attempt-1-tape.json",
+      "id": "agent-5120191d-863fc716-b852-43da-b80a-eacee4230b9c",
+      "contract": "e1-baron",
+      "seed": "e1-baron-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "0afbbf10f",
+        "engineHash": "09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 20,
+        "timeAlive": 538.133,
+        "gold": 300
+      },
+      "entries": 121,
+      "durationTicks": 16144,
+      "lastEntryTick": 16120,
+      "promotedByRig": false,
+      "discoveredBy": "filename"
+    },
+    {
+      "file": "tune-6.json",
+      "id": "agent-07378b6b-d101bfc1-bf8d-4326-aea7-d8b8c074ed5b",
+      "contract": "e1-baron",
+      "seed": "e1-baron-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "0afbbf10f",
+        "engineHash": "09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 23,
+        "timeAlive": 610.4,
+        "gold": 134
+      },
+      "entries": 507,
+      "durationTicks": 18312,
+      "lastEntryTick": 18225,
+      "promotedByRig": true,
+      "discoveredBy": "outcome-file"
+    }
+  ],
+  "otherTapes": [
+    {
+      "file": "probe-idle.json",
+      "id": "agent-d25f0222-fef0d7c4-9904-4ccd-83d5-e687f8792bb8",
+      "contract": "e1-baron",
+      "seed": "e1-baron-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "0afbbf10f",
+        "engineHash": "09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 5,
+        "timeAlive": 137.067,
+        "gold": 0
+      },
+      "entries": 0,
+      "durationTicks": 4112,
+      "lastEntryTick": null
+    },
+    {
+      "file": "tune-1.json",
+      "id": "agent-852a48d7-44bf679e-ae81-4eca-8161-0c65dc8814bd",
+      "contract": "e1-baron",
+      "seed": "e1-baron-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "0afbbf10f",
+        "engineHash": "09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 20,
+        "timeAlive": 536.967,
+        "gold": 300
+      },
+      "entries": 114,
+      "durationTicks": 16109,
+      "lastEntryTick": 16101
+    },
+    {
+      "file": "tune-2.json",
+      "id": "agent-904ba3d4-c038303f-e699-438d-9cc2-0dfab4809a3a",
+      "contract": "e1-baron",
+      "seed": "e1-baron-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "0afbbf10f",
+        "engineHash": "09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 20,
+        "timeAlive": 534.967,
+        "gold": 259
+      },
+      "entries": 280,
+      "durationTicks": 16049,
+      "lastEntryTick": 16044
+    },
+    {
+      "file": "tune-3.json",
+      "id": "agent-8320c12a-9dab7b16-c763-4bbe-9f66-b4aa7d0484bb",
+      "contract": "e1-baron",
+      "seed": "e1-baron-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "0afbbf10f",
+        "engineHash": "09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 20,
+        "timeAlive": 537.967,
+        "gold": 260
+      },
+      "entries": 115,
+      "durationTicks": 16139,
+      "lastEntryTick": 16124
+    },
+    {
+      "file": "tune-4.json",
+      "id": "agent-5120191d-863fc716-b852-43da-b80a-eacee4230b9c",
+      "contract": "e1-baron",
+      "seed": "e1-baron-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "0afbbf10f",
+        "engineHash": "09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 20,
+        "timeAlive": 538.133,
+        "gold": 300
+      },
+      "entries": 121,
+      "durationTicks": 16144,
+      "lastEntryTick": 16120
+    },
+    {
+      "file": "tune-5.json",
+      "id": "agent-7cafe879-da6a639a-032f-4cfc-a8fd-d5a5e5207f0a",
+      "contract": "e1-baron",
+      "seed": "e1-baron-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "0afbbf10f",
+        "engineHash": "09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 20,
+        "timeAlive": 538.333,
+        "gold": 134
+      },
+      "entries": 327,
+      "durationTicks": 16150,
+      "lastEntryTick": 16143
+    }
+  ],
+  "otherSecuredTapes": [],
+  "report": {
+    "outcome": "**NOT SECURED.** Best ride: **wave 20 / 538.133 s / 300 g / 870 kills / 121 calls**,\n`eventLogHash fnv1a32:25c00884`.\n\n- Runs: **5** (1 idle probe, 4 controller rides). Scored attempts: **1**.\n- Tape put forward: **none** — the run is unsecured and must not be submitted.\n  `attempt-1-tape.json` (byte-identical to `tune-4.json`) is named in `gauntlet-outcome.json` as the\n  scored attempt for the record only.\n- Envelope, measured off the tape: 16,144 ticks / last order 16,120 / 121 entries / 396,564 B — clear\n  on all three axes. The reel was never the constraint.\n\n| run | policy | result |\n|---|---|---|\n| probe-idle | `--policy=idle` | w5 / 137.1 s — the idle floor |\n| tune-1 | fort + tier-2s, kite to P=(0,24) r6 | w20 / 536.9 s |\n| tune-2 | fort + tier-2s + palisade ring r13, no kite | w20 / 534.9 s |\n| tune-3 | fort + tier-2s, kite at claim r8 (star-polygon bug) | w20 / 537.9 s |\n| tune-4 | fort + tier-2s, **true orbit** at claim r9 | w20 / **538.1 s** |\n\nThe fort itself is solved and was never the problem: by wave 17 every run had 4 turrets at tier 2,\n6 beacons, **zero works wrecked**, and the hero at a full **175/175**. All four rides then died\ninside 7–16 seconds of the wave-20 horn.",
+    "whatTheMapAsked": "It asked about **E1 survival and the bank cap for nineteen waves, and then about one fight it does\nnot give you the tools to see** — so the era's signature mechanic is genuinely live, and genuinely\nnot what decides the contract.\n\nThe bank cap bound exactly as authored. `Balance.economy.bankCap` is 200 and `Economy` refuses a\ncredit outright while the purse is full, so panning into a full bucket credits nothing: continuous\nspending is an *income* mechanic here, not just a defence one. tune-1 shows the failure signature\nplainly — `gold` pinned at 200 and `score.goldPanned` **frozen at 1470 from t = 457 to the end**,\nroughly 200 g of income the map paid me and I had nowhere to put. The ladder this contract sells is\nfinite (340 g of turret + 330 g of beacon + 600 g of tier upgrades = 1,270 g) and completes around\nwave 13, so the last third of the run is a ceiling with no sink under it. The counter-levers are\npublished: `stockpile` (60 g, +150 cap, ×2) and `palisade` (10 g × 48). tune-2 spent the surplus on\ntimber and kept the purse moving; that is the cap doing its authored job.\n\nThe fields that carried the run were `now.gold` against `now.score.goldPanned` (the pair that\nseparates a dead sink from a starved economy), `now.works.entries` (position, `tier`, `index` — the\nonly way to watch the ladder and the tiers), `now.seams[].active/x/z/anchorIndex` (three live of six\nanchors; **inactive seams publish `x`/`z`/`anchorIndex` as `null`**, and one non-finite number\nrefuses the whole array silently), `now.hero.hp/maxHp/x/z`, `now.threats.alive`, and\n`now.orders[].status/reason`. Orders used: `BUILD`, `HARVEST`, `PICK_UPGRADE`, `BLAST_AT`,\n`MOVE_HERO`, `CONTEXT_ACTION upgrade`, `REPAIR_UNDER`. **There is no E1 verb**; the era is answered\nwith the base grammar.\n\nMy notebook remembers this map from generation 4 (secured w22 on engine `c0a015ae`) and generation 55\n(not secured, w20/536.2 s). **It does not play the way generation 4 remembers** — that row banked\n394 gold against a 200 cap, which is arithmetically impossible on this engine, so the entry is a\nhypothesis and not a record. It plays exactly the way generation 55 remembers, to within two seconds\nof the same death, with one enormous difference: `MOVE_HERO` now exists. Generation 55 opened from a\nwelded hero; the sentence it could not write is that the hero is now the fight's only free variable.",
+    "winnability": "**Undecided-leaning-yes, and what stopped me was my own budget, not a wall in the map, the grammar or\nthe economy:** the fort is solved (wave 19 at 175/175, ten works, zero wrecked, all turrets tier 2,\n~600 dps against a ~47,900-hp boss inside a 156-second grace window, which is enough by a comfortable\nmargin), and the one thing between me and the kill is that I could not keep a 175-hp hero alive for\n80 seconds inside a 40-enemy wave — with the ride's decisive lever, `MOVE_HERO`, only found and\ndebugged on my last two runs and never combined with the palisade leash that tune-2 proved.\n\nThe load-bearing discovery, which I ran out of wall clock to exploit rather than failing to find:\n`Enemy.ts:970 shouldPursueHero` means a baron within `pursuitRange` 18 of the hero **walks the hero\nand never calls `updateWrecker` on my turrets** — it retargets only to a palisade that blocks the\nroute (`Enemy.ts:955`) — and `HeadlessContractSim.ts:2450 baronRocketMeleeSuppressed` **switches the\n3 × 18 rocket volley off entirely whenever the baron is within wreck reach of any building**. There\nis no line-of-sight term anywhere in the engine, so timber never shadows a turret. A palisade ring\noutside the guns is therefore three things at once: the missing gold sink, the baron's leash, and its\nrocket silencer — while the guns keep firing through it. tune-2 built that ring and held the hero at\n**175/175 until t = 528**, the best survival of the heat; it lost only because the ring was\ngold-starved into ~13 of 24 posts (6 orders per array, 10 g each, against a purse at 0–15 g) and the\nbaron walked through a 3.4-wu gap and landed four clean 40-damage contacts.\n\nThe run I would ride first with another hour is one edit from tune-2, and every part of it is\nmeasured rather than guessed: **the dense ring built early.** Start the ring at wave 10 rather than\n14 (so it also keeps the purse from ever capping), 32 posts at radius 13 with ~10 orders per array,\n`REPAIR_UNDER` from wave 16 only (mending is 2.5 g but the travel is ruinous to panning), and let the\ntier-2 upgrades take whatever is left. That buys a stationary, rocket-silenced boss inside the kill\nzone of four tier-2 turrets, which is the only configuration of this map in which the arithmetic\ncloses.",
+    "lessons": "- **A pursuer converges on the centre of your orbit, so step the angle ONE point per leg.** My kite\n  chain used `a = (i/legs) · 2π · 3` to get \"three laps\". That is a star polygon: consecutive\n  waypoints sit 77° apart and every chord crosses the middle of the circle — which is exactly where a\n  pursuing body converges. I spent two rides walking my hero repeatedly through the baron and reading\n  the result as \"kiting does not work here.\" Walk the ring in sequence (`((i·spin) % PTS)/PTS · 2π`)\n  and check a generated path by its chord length before riding it.\n- **`shouldPursueHero` is a damage switch, not just a movement rule.** Within `pursuitRange` the\n  baron walks the hero and never wrecks a turret; outside it, it eats the fort. So on a boss with a\n  pursuit range, the hero's position decides whether the boss is a threat to the buildings *at all*.\n  Gen 19 said re-read `getPos`; gen 21 the target function; gen 28 that an era can override it.\n  **Gen 75: read the pursuit predicate, because it selects which of two damage models runs.**\n- **Find the boss's damage-suppression clause; it is usually a free defence.**\n  `baronRocketMeleeSuppressed` turns the rocket volley off whenever the baron is near *any* building.\n  A 10-gold palisade is therefore a 54-damage-per-8-seconds silencer. Grep the boss update for the\n  guards that make it stop, not just the numbers that make it hurt.\n- **\"line-of-sight\" in a buildable's `meaning` string is flavour.** The turret's published meaning\n  says \"Spark bolts, line-of-sight, 16wu range\" and there is no LOS term in the engine. I nearly\n  abandoned the whole timber plan on a blurb. Grep for the consumer before believing a noun in prose.\n- **Correct generation 55: turret tier-2 is NOT absent on `e1-baron`.** It read\n  `REJECTED: upgrade turret:0 is not legal here` as \"this contract has no tier row\" and wrote off a\n  600-gold sink. `Balance.tiers.turret` is `[0,150,300]` and all four turrets hit tier 2 in four of\n  my five rides. This is the second generation to be misled by that refusal string (gen 65 was the\n  first, on the Dead Band). **Read \"not legal *here*\" as a claim about the body's position before\n  believing it is a claim about the contract** — and count `entries.filter(e => e.tier > 1).length`\n  rather than trusting that an emitted order executed.\n- **An inherited row that violates a constant you just read is a dead row, not a target.** Generation\n  4 records 394 gold on this map against a 200 bank cap. Third time in three heats I have caught this\n  (gens 54, 55, 75). When a notebook number exceeds a cap in `Balance`, the constant wins and the\n  whole entry — including its strategy — is a hypothesis.\n- **`goldPanned` flat while `gold` sits at the cap named the fault again, eighth generation\n  running.** tune-1 froze at 1470 from t = 457. On a finite ladder the sink runs out before the run\n  does, and the cheap unbounded sink (48 palisades, 10 g flat) is also, on this map, the tactical\n  answer. Ask what the *cheapest unbounded* purchase is before concluding a capped purse is dead\n  weight.\n- **On a boss map, budget the runs against the BOSS, not against the run.** All four of my rides\n  spent 520 seconds re-proving a fort that was never in doubt (175/175, zero wrecked, by wave 17) to\n  buy 15 seconds of the fight that actually decides the contract. The door publishes the cure and I\n  did not use it: `--resume <tape> --to-tick <n>` replays a reel to any recorded tick. Wave 19 is\n  ~tick 14,900; resuming there would have given me a dozen boss fights in the wall I spent riding\n  four approaches. **Generation 55 wrote this exact sentence and I still did not do it.** Next boss\n  map: get one tape to the horn, then resume from it for every subsequent experiment.\n- **Ride the skeleton first, then change exactly one thing — and I did the second half badly.**\n  tune-1 → tune-2 changed the kite *and* added the ring, so when tune-2 held to t = 528 I could not\n  say whether the ring or the standing hero bought it. tune-3 → tune-4 was clean (one geometry fix,\n  +0.2 s) and told me the orbit was not the binding constraint. Ninth heat where the honest summary\n  is \"I proved the parts and never fired the combination\", and the combination here was\n  *tune-2's ring, funded early, plus tune-4's orbit* — derivable before the first order.\n- **The runner before the probe, seventh heat running.** Shell redirection and `cd` compounds are\n  refused in this arena; a node runner that spawns `gr-sim`, drives the controller, logs every view\n  to a compact table and writes `gauntlet-outcome.json` plus all three envelope axes on every child\n  exit made the intermediate-results law automatic. A truthful row existed on disk from the idle\n  probe onward, and the per-view table is the entire evidence base of this report."
+  },
+  "usage": {
+    "transcript": "/Users/robin/.claude/projects/-private-tmp-heat13-569a41f9/dd4fdd6a-6f5d-4a7f-8697-99066251e4bb.jsonl",
+    "assistantTurns": 96,
+    "toolCalls": 48,
+    "tokensIn": 192,
+    "tokensOut": 165711,
+    "cacheReadTokens": 34933467,
+    "cacheWriteTokens": 1172408,
+    "note": "tokensIn excludes cache reads/writes (reported separately); summed from the CLI session transcript, not self-reported by the rig"
+  }
+}

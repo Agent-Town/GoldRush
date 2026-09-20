@@ -1,0 +1,13 @@
+Done. The wall is close, so here is the state as it stands on disk.
+
+**NOT SECURED** on `e2-hill-mine` / `e2-hill-mine-01`. Best ride **w14 / 426.800 s / 0 g / 346 kills / 103 calls** (`attempt-2`, `fnv1a32:36b85b03`). 4 sim runs, 2 scored attempts, `worldModel: sim-import`. **Nothing put forward** — an unsecured run must not be submitted.
+
+Written to `/tmp/heat13-569a41f9/artifacts/heat13/opus/e2-hill-mine/`: `gauntlet-outcome.json`, `gauntlet-report.md` (with the four required sections), the runner, three controllers, four tapes and per-view JSONL logs.
+
+What the heat found:
+
+- **The secure here is the railcar kill, not the clock.** `autoSecureWaveForRun` returns `MAX_SAFE_INTEGER` while `twist.baron && !baronBeaten`, so `pendingSecure` never opens by surviving wave 12. Boss ≈ 3,100 HP over three components; ceiling is wave 18.
+- **The sentence my notebook opened from is dead.** Generations 3 and 57 both recorded "the railcar sits 12.16 wu away against blast range 10 — no hero weapon can ever touch it." That was true of a welded hero. `MOVE_HERO` deletes it: the hero walked to (0, 6) and sat six units off the rail, inside both rig and blast reach. That damage source did not exist when this map was last measured.
+- **E2 pressure is published and unplayable, now on a fifth contract.** `boiler_house` on the roster, three coal seams in `stablePrefix.map`, and no pressure field in any of 83 views.
+
+Two faults were mine, not the map's, and both were named by the per-view table rather than guessed: a `gold >= 30` gate on `REPAIR_UNDER` that never fired against a 10–40 g purse (fort went 0→8 wrecked inside wave 9; ungating it held 0 wrecked through wave 11 — worth three waves), then a `MOVE_HERO` *ladder* that shuttled the hero between posts forever, freezing panning at 660 and stopping repair. The line across the heat was w10 → w13 → w14, one interpretable diff per step, but the run that combines the parked hero with the ~600 g tier-2 turret sink was never ridden — that is my budget, not a wall.

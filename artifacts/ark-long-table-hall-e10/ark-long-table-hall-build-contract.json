@@ -1,0 +1,58 @@
+{
+  "wave": "THE LONG TABLE HALL (E10)",
+  "baseSha": "101c0d97e9527b26cc5c94fdafab5b4f77aa33c0",
+  "unmergedDependency": {
+    "wave": "Ark Plaza E10 plate",
+    "tip": "e8128c260a3ee62ef836ec33e92b1d8459cecce1"
+  },
+  "production": {
+    "blend": "assets/pilots/ark-long-table-hall-e10-3d/ark-long-table-hall-e10.blend",
+    "glb": "assets/pilots/ark-long-table-hall-e10-3d/ark-long-table-hall-e10.glb",
+    "triangles": 16308,
+    "triangleBudget": 20000,
+    "mesh": "ArkLongTableHallE10",
+    "materials": 1,
+    "atlas": [
+      2048,
+      2048
+    ],
+    "lights": 0,
+    "cameras": 0,
+    "origin": "base-center; open south portal faces Ark plaza"
+  },
+  "identity": {
+    "longTable": "twelve chairs, place settings, shared food, lamps, folded chart",
+    "portraitWall": "ten blank production fields; profile-history compositor owns likenesses",
+    "panShrine": "handled concave E1 pan in a small warm case",
+    "elderTree": "living tree survivor in patched ribbed tin",
+    "grit": [
+      "deck patches",
+      "exposed service runs",
+      "rubbed timber",
+      "ship ribs"
+    ]
+  },
+  "anchors": [
+    "portrait_anchor_01",
+    "portrait_anchor_02",
+    "portrait_anchor_03",
+    "portrait_anchor_04",
+    "portrait_anchor_05",
+    "portrait_anchor_06",
+    "portrait_anchor_07",
+    "portrait_anchor_08",
+    "portrait_anchor_09",
+    "portrait_anchor_10",
+    "pan_shrine_anchor",
+    "elder_tree_anchor"
+  ],
+  "sources": {
+    "assets/raw/plate-e10-long-table.png": "b5349ca7ee9405304bfd56101d887bb90024a3c693bbc788f299a9dd0caf1abf",
+    "assets/raw/plate-e10-pan-shrine.png": "fa388fd06fea386bd51d14d643aa881ffd1323c7feca61e231218bec015c3236",
+    "assets/raw/plate-e10-charter-press-hall.png": "e85c0fc30573c0180137912a1801cd2002f4ac6d45c571f4496b752bb97dae36",
+    "assets/raw/kit-era-10.png": "19f79418c8e9aa8bbee493c8fc9c88d8d5364ce21576d8fd5f05304eee80614b",
+    "assets/raw/kit-the-ark.png": "462ad2e6a2e687111bf137aff5811ea639661f16be320e09fcc60033196d3475",
+    "assets/pilots/plaza-props-3d/build_plaza_props.py": "b4ca86d936610d467ce2ae9e1263a5e659c83b5834ecb583e31a2782437359c5",
+    "specs/epoch-saga/e10-deepsky-bundle.md": "9d10bbd7b9591d56870f6f483b06488e3c0c1e64a7438dbf2fa7ea72f96bf493"
+  }
+}

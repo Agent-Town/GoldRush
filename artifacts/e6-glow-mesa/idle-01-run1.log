@@ -1,0 +1,8 @@
+# scripts/gr-sim.mjs --contract e6-glow-mesa --seed e6-glow-mesa-01 --policy=idle
+# rc=0
+(node:6009) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+gr-sim speed: 3.08 waves/s
+
+---- stdout (last line = outcome) ----
+{"secured":false,"waves":18,"timeMs":540000,"gold":0,"kills":75,"calls":0,"defaultedPicks":2,"defaultedSecure":0,"eventLogHash":"fnv1a32:146a5771","endReason":"wave-ceiling"}

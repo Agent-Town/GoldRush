@@ -1,0 +1,80 @@
+{
+  "full": {
+    "hash": "sha256:9df63e56595f906f",
+    "performance": {
+      "tier": "full",
+      "override": "full",
+      "source": "override",
+      "reason": "settings override",
+      "gpuRenderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Max, Unspecified Version)",
+      "deviceMemory": 32,
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.7827.55 Safari/537.36",
+      "config": {
+        "maxDpr": 2,
+        "shadowsQuality": "soft",
+        "shadowMapSize": 1536,
+        "fogNear": 42,
+        "fogFar": 88,
+        "postEnabled": true,
+        "postPaperGrainOpacity": 0.008,
+        "detailDensity": 1,
+        "detailMobileDensity": 0.42,
+        "terrainSegments": 64,
+        "terrainMobileSegments": 40,
+        "vistaSegments": 12,
+        "vistaMobileSegments": 7,
+        "waterQuality": 1,
+        "waterMobileQuality": 0.55,
+        "terrainMesh": false,
+        "terrainSplat": false,
+        "terrainMeshVertexStep": 1,
+        "floatTextPool": 12,
+        "combatVfxPuffs": 32,
+        "combatVfxTicks": 48,
+        "combatVfxRings": 8,
+        "freedWalkerCap": 10,
+        "enemyBarCap": 60
+      },
+      "runtimeVerdict": 0
+    }
+  },
+  "lite": {
+    "hash": "sha256:6fdb109d9a63ca8f",
+    "performance": {
+      "tier": "lite",
+      "override": "lite",
+      "source": "override",
+      "reason": "settings override",
+      "gpuRenderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Max, Unspecified Version)",
+      "deviceMemory": 32,
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.7827.55 Safari/537.36",
+      "config": {
+        "maxDpr": 1,
+        "shadowsQuality": "blob",
+        "shadowMapSize": 0,
+        "fogNear": 50,
+        "fogFar": 76,
+        "postEnabled": false,
+        "postPaperGrainOpacity": 0,
+        "detailDensity": 0.18,
+        "detailMobileDensity": 0,
+        "terrainSegments": 40,
+        "terrainMobileSegments": 24,
+        "vistaSegments": 7,
+        "vistaMobileSegments": 4,
+        "waterQuality": 0.48,
+        "waterMobileQuality": 0.3,
+        "terrainMesh": false,
+        "terrainSplat": false,
+        "terrainMeshVertexStep": 2,
+        "floatTextPool": 8,
+        "combatVfxPuffs": 16,
+        "combatVfxTicks": 20,
+        "combatVfxRings": 4,
+        "freedWalkerCap": 6,
+        "enemyBarCap": 16
+      },
+      "runtimeVerdict": 0
+    }
+  }
+}

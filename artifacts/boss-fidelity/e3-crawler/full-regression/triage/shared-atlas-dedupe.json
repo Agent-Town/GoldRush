@@ -1,0 +1,268 @@
+{
+  "checkedUtc": "2026-09-08T10:27:58.729077+00:00",
+  "scope": "Bounded read-only trace/fixture/source triage during recovery collection. No browser, test, build, fixture/source edits or baseline execution.",
+  "failure": "outage-recovery-workers1 desktop shared-atlas-dedupe.spec.ts:84 fails at94 availability assertion expectedtrue actualfalse",
+  "censusGroup": {
+    "hash": "bee54f1adcac334370f489399a85140158e78a82f29f002e349f8f0176e7caf8",
+    "bytes": 271074,
+    "mimeType": "image/webp",
+    "images": [
+      "active_headframe-DFnjayGK-diet-a9d5c9a0.glb#image-0",
+      "claim_stake-DlQCz6m--diet-a9d5c9a0.glb#image-0",
+      "maintained_claim_house-CHFZbLoB-diet-a9d5c9a0.glb#image-0",
+      "riparian_dressing_pack-93xutUyz-diet-a9d5c9a0.glb#image-0",
+      "working_camp-D0I4uygC-diet-a9d5c9a0.glb#image-0"
+    ]
+  },
+  "currentDietFingerprint": "1408f6b4",
+  "headDietFingerprint": "1408f6b4",
+  "presence": [
+    {
+      "censusFile": "active_headframe-DFnjayGK-diet-a9d5c9a0.glb",
+      "expectedFileExists": false,
+      "sameContentHashCurrentDietFile": "active_headframe-DFnjayGK-diet-1408f6b4.glb",
+      "replacementExists": true,
+      "imageSha256": "bee54f1adcac334370f489399a85140158e78a82f29f002e349f8f0176e7caf8",
+      "imageBytes": 271074,
+      "imageMimeType": "image/webp",
+      "imageBytesMatchCensus": true
+    },
+    {
+      "censusFile": "claim_stake-DlQCz6m--diet-a9d5c9a0.glb",
+      "expectedFileExists": false,
+      "sameContentHashCurrentDietFile": "claim_stake-DlQCz6m--diet-1408f6b4.glb",
+      "replacementExists": true,
+      "imageSha256": "bee54f1adcac334370f489399a85140158e78a82f29f002e349f8f0176e7caf8",
+      "imageBytes": 271074,
+      "imageMimeType": "image/webp",
+      "imageBytesMatchCensus": true
+    },
+    {
+      "censusFile": "maintained_claim_house-CHFZbLoB-diet-a9d5c9a0.glb",
+      "expectedFileExists": false,
+      "sameContentHashCurrentDietFile": "maintained_claim_house-CHFZbLoB-diet-1408f6b4.glb",
+      "replacementExists": true,
+      "imageSha256": "bee54f1adcac334370f489399a85140158e78a82f29f002e349f8f0176e7caf8",
+      "imageBytes": 271074,
+      "imageMimeType": "image/webp",
+      "imageBytesMatchCensus": true
+    },
+    {
+      "censusFile": "riparian_dressing_pack-93xutUyz-diet-a9d5c9a0.glb",
+      "expectedFileExists": false,
+      "sameContentHashCurrentDietFile": "riparian_dressing_pack-93xutUyz-diet-1408f6b4.glb",
+      "replacementExists": true,
+      "imageSha256": "bee54f1adcac334370f489399a85140158e78a82f29f002e349f8f0176e7caf8",
+      "imageBytes": 271074,
+      "imageMimeType": "image/webp",
+      "imageBytesMatchCensus": true
+    },
+    {
+      "censusFile": "working_camp-D0I4uygC-diet-a9d5c9a0.glb",
+      "expectedFileExists": false,
+      "sameContentHashCurrentDietFile": "working_camp-D0I4uygC-diet-1408f6b4.glb",
+      "replacementExists": true,
+      "imageSha256": "bee54f1adcac334370f489399a85140158e78a82f29f002e349f8f0176e7caf8",
+      "imageBytes": 271074,
+      "imageMimeType": "image/webp",
+      "imageBytesMatchCensus": true
+    }
+  ],
+  "headEquality": [
+    {
+      "path": "e2e/shared-atlas-dedupe.spec.ts",
+      "equalsHead": true,
+      "sha256": "207a0e8d554da7af1bfb2376762bf82651fad5c1ebea2e305ca8cf4fe524f5d7",
+      "headSha256": "207a0e8d554da7af1bfb2376762bf82651fad5c1ebea2e305ca8cf4fe524f5d7"
+    },
+    {
+      "path": "artifacts/shared-atlas-dedupe/browser-harness.ts",
+      "equalsHead": true,
+      "sha256": "dcce7a90299afc4893dd82bfc596e9ff7904e3d55f7ef77ddce3b9f4552b5f3a",
+      "headSha256": "dcce7a90299afc4893dd82bfc596e9ff7904e3d55f7ef77ddce3b9f4552b5f3a"
+    },
+    {
+      "path": "artifacts/shared-atlas-dedupe/census.json",
+      "equalsHead": true,
+      "sha256": "6012d47f8e2ee7eecaa46e6d02dad34ea4547920e1c1876e3af49464d147e51f",
+      "headSha256": "6012d47f8e2ee7eecaa46e6d02dad34ea4547920e1c1876e3af49464d147e51f"
+    },
+    {
+      "path": "src/assets/AssetLoading.ts",
+      "equalsHead": true,
+      "sha256": "161f638df87345d8a850f63c1bdcadc6ef43eeccc898e7dede88105b02f4b96a",
+      "headSha256": "161f638df87345d8a850f63c1bdcadc6ef43eeccc898e7dede88105b02f4b96a"
+    },
+    {
+      "path": "src/assets/SharedAtlasPlugin.ts",
+      "equalsHead": true,
+      "sha256": "530d28efd4d577cc0991014c09d21b1f026638477fe3ad47c4ea804c73745a93",
+      "headSha256": "530d28efd4d577cc0991014c09d21b1f026638477fe3ad47c4ea804c73745a93"
+    },
+    {
+      "path": "src/utils/dispose.ts",
+      "equalsHead": true,
+      "sha256": "6d587f166ba48fc66610b0cb27210d322cb971552e52843ce4b3add913cd2ba7",
+      "headSha256": "6d587f166ba48fc66610b0cb27210d322cb971552e52843ce4b3add913cd2ba7"
+    },
+    {
+      "path": "vite.config.ts",
+      "equalsHead": true,
+      "sha256": "4ef3e4de0eb844da4dd02f15b887c0b2455c13861d9c3a4855e566b34484681a",
+      "headSha256": "4ef3e4de0eb844da4dd02f15b887c0b2455c13861d9c3a4855e566b34484681a"
+    },
+    {
+      "path": "scripts/asset-diet.mjs",
+      "equalsHead": true,
+      "sha256": "d43e18cccbe136800dc41a1b9e992a86ac49ee2bdeede10e80bdaa55cd44f665",
+      "headSha256": "d43e18cccbe136800dc41a1b9e992a86ac49ee2bdeede10e80bdaa55cd44f665"
+    },
+    {
+      "path": "scripts/asset-diet.manifest.json",
+      "equalsHead": true,
+      "sha256": "2a35ad1cb0b769e7481f9a8dfb91a337799b16ae1c34a8c7c220b4835c3d3904",
+      "headSha256": "2a35ad1cb0b769e7481f9a8dfb91a337799b16ae1c34a8c7c220b4835c3d3904"
+    },
+    {
+      "path": "package-lock.json",
+      "equalsHead": true,
+      "sha256": "1a1fa48ea5f6998f1f663732de3fe16dce266ba90be4e24c7b7ea3fab26ee863",
+      "headSha256": "1a1fa48ea5f6998f1f663732de3fe16dce266ba90be4e24c7b7ea3fab26ee863"
+    }
+  ],
+  "trace": {
+    "path": "artifacts/boss-fidelity/e3-crawler/full-regression/outage-recovery-workers1/test-results/shared-atlas-dedupe-produc-9df92-ns-to-the-renderer-baseline-desktop-chrome/trace.zip",
+    "assertions": [
+      {
+        "title": "Expect \"toContain\"",
+        "line": 25,
+        "passed": true
+      },
+      {
+        "title": "Expect \"toBe\"",
+        "line": 46,
+        "passed": true
+      },
+      {
+        "title": "Expect \"toHaveAttribute\"",
+        "line": 48,
+        "passed": true
+      },
+      {
+        "title": "Expect \"toHaveLength\"",
+        "line": 91,
+        "passed": true
+      },
+      {
+        "title": "Expect \"toBe\"",
+        "line": 94,
+        "passed": false
+      }
+    ],
+    "lifecycleOrGameDisposeEvaluations": [],
+    "productionOrBossGlbRequests": [],
+    "consolePageErrors": [],
+    "lifecycleRendererCounts": "Not captured because failure precedes lifecycle evaluation."
+  },
+  "otherResidencyArtifacts": [
+    {
+      "file": "artifacts/shared-atlas-dedupe/the-claim-desktop-chrome.json",
+      "mtimeUtc": "2026-09-08T10:23:09.156862+00:00",
+      "record": {
+        "before": {
+          "textures": 58,
+          "scene": {
+            "images": 54,
+            "estimatedBytes": 168440650.66666675
+          },
+          "landmarks": {
+            "images": 5,
+            "estimatedBytes": 27962026.666666664
+          }
+        },
+        "after": {
+          "textures": 54,
+          "scene": {
+            "images": 50,
+            "estimatedBytes": 146071029.33333337
+          },
+          "landmarks": {
+            "images": 1,
+            "estimatedBytes": 5592405.333333333
+          }
+        },
+        "errors": [],
+        "controlErrors": []
+      }
+    },
+    {
+      "file": "artifacts/shared-atlas-dedupe/e2-hill-mine-desktop-chrome.json",
+      "mtimeUtc": "2026-09-08T10:23:16.914737+00:00",
+      "record": {
+        "before": {
+          "textures": 58,
+          "scene": {
+            "images": 54,
+            "estimatedBytes": 168440650.66666675
+          },
+          "landmarks": {
+            "images": 5,
+            "estimatedBytes": 27962026.666666664
+          }
+        },
+        "after": {
+          "textures": 54,
+          "scene": {
+            "images": 50,
+            "estimatedBytes": 146071029.33333337
+          },
+          "landmarks": {
+            "images": 1,
+            "estimatedBytes": 5592405.333333333
+          }
+        },
+        "errors": [],
+        "controlErrors": []
+      }
+    },
+    {
+      "file": "artifacts/shared-atlas-dedupe/e8-mare-claim-desktop-chrome.json",
+      "mtimeUtc": "2026-09-08T10:23:25.255854+00:00",
+      "record": {
+        "before": {
+          "textures": 54,
+          "scene": {
+            "images": 51,
+            "estimatedBytes": 168178506.66666672
+          },
+          "landmarks": {
+            "images": 5,
+            "estimatedBytes": 27962026.666666664
+          }
+        },
+        "after": {
+          "textures": 50,
+          "scene": {
+            "images": 47,
+            "estimatedBytes": 145808885.33333334
+          },
+          "landmarks": {
+            "images": 1,
+            "estimatedBytes": 5592405.333333333
+          }
+        },
+        "errors": [],
+        "controlErrors": []
+      }
+    }
+  ],
+  "recoveryFailureHeaders": [
+    "14) [desktop-chrome] \u203a e2e/shared-atlas-dedupe.spec.ts:84:1 \u203a production WebP atlas load-dispose-load returns to the renderer baseline"
+  ],
+  "previousCollectionContext": {
+    "desktop": "Attempt2 all four same-file cases failed beforeEach line13 because Vite ECONNREFUSED. Recovery reaches real boot; those outage errors are not material tests.",
+    "mobile": "Attempt2 production lifecycle case already reached the same line94 missing filenames failure."
+  },
+  "changedSourceScope": "Game/EnemyPool/Crawler material changes can affect their respective loaded bosses in other flows, but this failure is a Node filesystem membership comparison before any lifecycle GLB load, group disposal, game teardown or count assertion. No supported introduced resource lifetime defect is evidenced. The default the-claim boot recorded no boss GLB request in this failure trace.",
+  "attributionLimit": "Current fixture/build name mismatch is proven. Config/census equality and historical failure context do not replace a current HEAD reproduction; no baseline claim."
+}

@@ -1,0 +1,32 @@
+{
+ "label": "probe-idle",
+ "rc": 0,
+ "outcome": {
+  "secured": false,
+  "waves": 3,
+  "timeMs": 92533,
+  "gold": 0,
+  "kills": 37,
+  "calls": 0,
+  "defaultedPicks": 1,
+  "defaultedSecure": 0,
+  "eventLogHash": "fnv1a32:9d7ff3fb",
+  "endReason": "preserve_fell"
+ },
+ "envelope": {
+  "durationTicks": 2776,
+  "lastEntryTick": 0,
+  "entries": 0,
+  "bytes": 1451,
+  "tapeHash": "fnv1a32:a45ba9ac",
+  "defaultedSecure": 0,
+  "defaultedPicks": 1
+ },
+ "views": 105,
+ "tape": "/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/heat14/opus/e10-last-claim/probe-idle-tape.json",
+ "stderrTail": [
+  "(node:93465) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.",
+  "(Use `node --trace-warnings ...` to show where the warning was created)",
+  "gr-sim speed: 3.39 waves/s"
+ ]
+}

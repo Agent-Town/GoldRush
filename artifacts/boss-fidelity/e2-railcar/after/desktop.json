@@ -1,0 +1,1588 @@
+{
+  "stage": "after",
+  "viewport": {
+    "width": 1280,
+    "height": 800
+  },
+  "assetHash": "206a539a40c57791fc249c31912d98b00709d47ff808d6409cc1c89c0e99da21",
+  "gameUrl": "http://127.0.0.1:5246/src/game/Game.ts?t=1788842025863",
+  "poses": {
+    "intact": {
+      "model": {
+        "position": [
+          -16.269043491898376,
+          -0.05500000715255737,
+          -0.7257934788290973
+        ],
+        "rotation": [
+          0,
+          -0.041642579098589594,
+          0,
+          "XYZ"
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "visible": true
+      },
+      "meshes": [
+        {
+          "name": "Railcar_Wheels",
+          "triangles": 5580,
+          "bounds": {
+            "min": [
+              -17.935182301860763,
+              -0.05500000715255737,
+              -1.4160714203523792
+            ],
+            "max": [
+              -14.607568474916466,
+              0.5979999899864197,
+              -0.16887449239178076
+            ]
+          },
+          "morphs": {
+            "Damage_BentWheels": 0
+          },
+          "influence": [
+            0
+          ],
+          "material": {
+            "name": "ArmoredRailcarPlateMaterial",
+            "emissive": "ffffff",
+            "intensity": 0.9,
+            "map": true,
+            "emissiveMap": true,
+            "emissiveUsesBase": true,
+            "metalness": 0.3199999928474426,
+            "roughness": 0.6600000262260437
+          }
+        },
+        {
+          "name": "Railcar_Boiler",
+          "triangles": 3832,
+          "bounds": {
+            "min": [
+              -17.59132385274858,
+              0.3269999623298645,
+              -1.1351749308142502
+            ],
+            "max": [
+              -15.501837266911515,
+              1.1470001339912415,
+              -0.28967889936740643
+            ]
+          },
+          "morphs": {
+            "Damage_VentingBoiler": 0
+          },
+          "influence": [
+            0
+          ],
+          "material": {
+            "name": "ArmoredRailcarPlateMaterial",
+            "emissive": "ffffff",
+            "intensity": 0.9,
+            "map": true,
+            "emissiveMap": true,
+            "emissiveUsesBase": true,
+            "metalness": 0.3199999928474426,
+            "roughness": 0.6600000262260437
+          }
+        },
+        {
+          "name": "Railcar_Cabin",
+          "triangles": 2524,
+          "bounds": {
+            "min": [
+              -15.716304143946127,
+              0.36799997091293335,
+              -1.2149239625041324
+            ],
+            "max": [
+              -14.793685354463541,
+              1.1870000958442688,
+              -0.12586899858974832
+            ]
+          },
+          "morphs": {
+            "Damage_CrackedCabin": 0
+          },
+          "influence": [
+            0
+          ],
+          "material": {
+            "name": "ArmoredRailcarPlateMaterial",
+            "emissive": "ffffff",
+            "intensity": 0.9,
+            "map": true,
+            "emissiveMap": true,
+            "emissiveUsesBase": true,
+            "metalness": 0.3199999928474426,
+            "roughness": 0.6600000262260437
+          }
+        }
+      ],
+      "screen": {
+        "minX": 592.9205517335862,
+        "minY": 285.20731325579357,
+        "maxX": 686.6582858805207,
+        "maxY": 325.6427227481484
+      },
+      "components": [
+        {
+          "x": -17.41904349189838,
+          "y": -0.13000000715255738,
+          "z": -1.2757934788290914,
+          "id": 0,
+          "spreadOffset": -1.3479215058879743,
+          "hp": 1046.7704926488657,
+          "maxHp": 1046.7704926488657,
+          "speed": 6.506080406105858,
+          "contactDamage": 0,
+          "buildingDamage": 56,
+          "supportBuildingDamage": 40,
+          "heroPursuitRange": 0,
+          "hitRadius": 1.7280000000000002,
+          "eliteKind": "railcar",
+          "variantId": "baron_railcar",
+          "variantLabel": "Armored Railcar",
+          "boltDamageMult": 0.8,
+          "bossGroupId": "e2-hill-mine:wave-12:railcar",
+          "bossGroupSize": 3,
+          "bossGroupTotalHp": 3489.234975496219,
+          "bossComponentId": "wheels",
+          "bossComponentLabel": "Wheel Trucks",
+          "bossDegradeSpeedMult": 0.82,
+          "presentation": {
+            "mesh": true,
+            "visible": true,
+            "railY": -0.13000000715255738,
+            "railRotation": 1.6124389058934847,
+            "textureKey": "boss-railcar-wheels",
+            "damaged": false,
+            "damageThreshold": 0.5,
+            "wreckerMarker": true,
+            "markerColor": "#a0522d",
+            "source": "glb",
+            "mounted": true,
+            "morphInfluence": 0,
+            "bossBarY": 1.5369999928474427,
+            "bossBarScale": 1
+          },
+          "scale": 2.8800000000000003,
+          "hasBanner": false,
+          "vx": 1.8983528388754678,
+          "vz": 0.07909803495314671,
+          "thief": false,
+          "wrecker": true,
+          "state": "none",
+          "wreckState": "seekBuilding",
+          "carried": 0,
+          "edge": "west",
+          "zone": "river",
+          "light": 1,
+          "nightSpeedMultiplier": 1,
+          "watchPainted": false,
+          "readState": "unfevered",
+          "fevered": false,
+          "freed": false,
+          "feverAccent": {
+            "active": false,
+            "kind": "none",
+            "strength": 0,
+            "surged": false,
+            "channel": "none"
+          },
+          "terrain": {
+            "grounded": true,
+            "slope": {
+              "dx": 2.224969250987661e-18,
+              "dz": 9.17451880990875e-18
+            },
+            "traversable": true,
+            "speedMul": 0
+          }
+        },
+        {
+          "x": -16.26904349189838,
+          "y": -0.13000000715255738,
+          "z": -0.725793478829103,
+          "id": 1,
+          "spreadOffset": -0.8972326519566665,
+          "hp": 1453.847906456758,
+          "maxHp": 1453.847906456758,
+          "speed": 6.506080406105858,
+          "contactDamage": 0,
+          "buildingDamage": 64.39999999999999,
+          "supportBuildingDamage": 40,
+          "heroPursuitRange": 0,
+          "hitRadius": 2.0736000000000003,
+          "eliteKind": "railcar",
+          "variantId": "baron_railcar",
+          "variantLabel": "Armored Railcar",
+          "boltDamageMult": 0.7,
+          "bossGroupId": "e2-hill-mine:wave-12:railcar",
+          "bossGroupSize": 3,
+          "bossGroupTotalHp": 3489.234975496219,
+          "bossComponentId": "boiler",
+          "bossComponentLabel": "Boiler",
+          "bossDegradeSpeedMult": 0.82,
+          "presentation": {
+            "mesh": true,
+            "visible": true,
+            "railY": -0.13000000715255738,
+            "railRotation": 1.6124389058934854,
+            "textureKey": "boss-railcar-boiler",
+            "damaged": false,
+            "damageThreshold": 0.5,
+            "wreckerMarker": true,
+            "markerColor": "#a0522d",
+            "source": "glb",
+            "mounted": true,
+            "morphInfluence": 0,
+            "bossBarY": 1.5369999928474427,
+            "bossBarScale": 1
+          },
+          "scale": 3.4560000000000004,
+          "hasBanner": false,
+          "vx": 1.8983528388754678,
+          "vz": 0.07909803495314338,
+          "thief": false,
+          "wrecker": true,
+          "state": "none",
+          "wreckState": "seekBuilding",
+          "carried": 0,
+          "edge": "west",
+          "zone": "river",
+          "light": 1,
+          "nightSpeedMultiplier": 1,
+          "watchPainted": false,
+          "readState": "unfevered",
+          "fevered": false,
+          "freed": false,
+          "feverAccent": {
+            "active": false,
+            "kind": "none",
+            "strength": 0,
+            "surged": false,
+            "channel": "none"
+          },
+          "terrain": {
+            "grounded": true,
+            "slope": {
+              "dx": 8.287765944940283e-18,
+              "dz": 3.7458511804329464e-17
+            },
+            "traversable": true,
+            "speedMul": 0
+          }
+        },
+        {
+          "x": -15.119043491898378,
+          "y": -0.13000000715255738,
+          "z": -0.17579347882909793,
+          "id": 2,
+          "spreadOffset": -0.5830506153383876,
+          "hp": 988.6165763905954,
+          "maxHp": 988.6165763905954,
+          "speed": 6.506080406105858,
+          "contactDamage": 0,
+          "buildingDamage": 56,
+          "supportBuildingDamage": 40,
+          "heroPursuitRange": 0,
+          "hitRadius": 1.8432,
+          "eliteKind": "railcar",
+          "variantId": "baron_railcar",
+          "variantLabel": "Armored Railcar",
+          "boltDamageMult": 0.85,
+          "bossGroupId": "e2-hill-mine:wave-12:railcar",
+          "bossGroupSize": 3,
+          "bossGroupTotalHp": 3489.234975496219,
+          "bossComponentId": "cabin",
+          "bossComponentLabel": "Cabin",
+          "bossDegradeSpeedMult": 0.82,
+          "presentation": {
+            "mesh": true,
+            "visible": true,
+            "railY": -0.13000000715255738,
+            "railRotation": 1.6124389058934852,
+            "textureKey": "boss-railcar-cabin",
+            "damaged": false,
+            "damageThreshold": 0.5,
+            "wreckerMarker": true,
+            "markerColor": "#a0522d",
+            "source": "glb",
+            "mounted": true,
+            "morphInfluence": 0,
+            "bossBarY": 1.5369999928474427,
+            "bossBarScale": 1
+          },
+          "scale": 3.072,
+          "hasBanner": false,
+          "vx": 1.8983528388754678,
+          "vz": 0.07909803495314421,
+          "thief": false,
+          "wrecker": true,
+          "state": "none",
+          "wreckState": "seekBuilding",
+          "carried": 0,
+          "edge": "west",
+          "zone": "river",
+          "light": 1,
+          "nightSpeedMultiplier": 1,
+          "watchPainted": false,
+          "readState": "unfevered",
+          "fevered": false,
+          "freed": false,
+          "feverAccent": {
+            "active": false,
+            "kind": "none",
+            "strength": 0,
+            "surged": false,
+            "channel": "none"
+          },
+          "terrain": {
+            "grounded": true,
+            "slope": {
+              "dx": 2.8570429274810497e-17,
+              "dz": 1.432941498974432e-16
+            },
+            "traversable": true,
+            "speedMul": 0
+          }
+        }
+      ],
+      "bar": {
+        "visible": true,
+        "ratio": 1,
+        "renderedRatio": 1,
+        "litSegments": 2,
+        "segments": 3,
+        "groupId": "e2-hill-mine:wave-12:railcar",
+        "aliveComponents": 3,
+        "destroyedComponents": 0,
+        "components": [
+          {
+            "id": "wheels",
+            "label": "Wheel Trucks",
+            "hp": 1046.77,
+            "maxHp": 1046.77
+          },
+          {
+            "id": "boiler",
+            "label": "Boiler",
+            "hp": 1453.85,
+            "maxHp": 1453.85
+          },
+          {
+            "id": "cabin",
+            "label": "Cabin",
+            "hp": 988.62,
+            "maxHp": 988.62
+          }
+        ]
+      },
+      "renderer": {
+        "calls": 78,
+        "triangles": 128288,
+        "geometries": 98,
+        "textures": 26
+      },
+      "crop": {
+        "left": 490,
+        "top": 195,
+        "width": 300,
+        "height": 220
+      },
+      "fullSha256": "3e6811841ed7910a80122d431d8ef6759873f4191c691996a6e8b2e75f277b73",
+      "cropSha256": "861900fe1a6ed5c3d9038cb8594598492f87d2ed98b8aa0dbb786b57a0c26a91",
+      "cropPixelEquality": true
+    },
+    "wheels-broken": {
+      "model": {
+        "position": [
+          -16.269043491898376,
+          -0.05500000715255737,
+          -0.7257934788290973
+        ],
+        "rotation": [
+          0,
+          -0.041642579098589594,
+          0,
+          "XYZ"
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "visible": true
+      },
+      "meshes": [
+        {
+          "name": "Railcar_Wheels",
+          "triangles": 5580,
+          "bounds": {
+            "min": [
+              -17.935182301860763,
+              -0.05500000715255737,
+              -1.4160714203523792
+            ],
+            "max": [
+              -14.607568474916466,
+              0.6455997228622437,
+              -0.13452515456895764
+            ]
+          },
+          "morphs": {
+            "Damage_BentWheels": 0
+          },
+          "influence": [
+            1
+          ],
+          "material": {
+            "name": "ArmoredRailcarPlateMaterial",
+            "emissive": "f8eae8",
+            "intensity": 1,
+            "map": true,
+            "emissiveMap": true,
+            "emissiveUsesBase": true,
+            "metalness": 0.3199999928474426,
+            "roughness": 0.6600000262260437
+          }
+        },
+        {
+          "name": "Railcar_Boiler",
+          "triangles": 3832,
+          "bounds": {
+            "min": [
+              -17.59132385274858,
+              0.3269999623298645,
+              -1.1351749308142502
+            ],
+            "max": [
+              -15.501837266911515,
+              1.1470001339912415,
+              -0.28967889936740643
+            ]
+          },
+          "morphs": {
+            "Damage_VentingBoiler": 0
+          },
+          "influence": [
+            0
+          ],
+          "material": {
+            "name": "ArmoredRailcarPlateMaterial",
+            "emissive": "ffffff",
+            "intensity": 0.9,
+            "map": true,
+            "emissiveMap": true,
+            "emissiveUsesBase": true,
+            "metalness": 0.3199999928474426,
+            "roughness": 0.6600000262260437
+          }
+        },
+        {
+          "name": "Railcar_Cabin",
+          "triangles": 2524,
+          "bounds": {
+            "min": [
+              -15.716304143946127,
+              0.36799997091293335,
+              -1.2149239625041324
+            ],
+            "max": [
+              -14.793685354463541,
+              1.1870000958442688,
+              -0.12586899858974832
+            ]
+          },
+          "morphs": {
+            "Damage_CrackedCabin": 0
+          },
+          "influence": [
+            0
+          ],
+          "material": {
+            "name": "ArmoredRailcarPlateMaterial",
+            "emissive": "ffffff",
+            "intensity": 0.9,
+            "map": true,
+            "emissiveMap": true,
+            "emissiveUsesBase": true,
+            "metalness": 0.3199999928474426,
+            "roughness": 0.6600000262260437
+          }
+        }
+      ],
+      "screen": {
+        "minX": 592.920551733586,
+        "minY": 285.20731325579345,
+        "maxX": 686.6582858805205,
+        "maxY": 325.64272274814834
+      },
+      "components": [
+        {
+          "x": -17.41904349189838,
+          "y": -0.13000000715255738,
+          "z": -1.2757934788290914,
+          "id": 0,
+          "spreadOffset": -1.3479215058879743,
+          "hp": 512.9175413979442,
+          "maxHp": 1046.7704926488657,
+          "speed": 6.506080406105858,
+          "contactDamage": 0,
+          "buildingDamage": 56,
+          "supportBuildingDamage": 40,
+          "heroPursuitRange": 0,
+          "hitRadius": 1.7280000000000002,
+          "eliteKind": "railcar",
+          "variantId": "baron_railcar",
+          "variantLabel": "Armored Railcar",
+          "boltDamageMult": 0.8,
+          "bossGroupId": "e2-hill-mine:wave-12:railcar",
+          "bossGroupSize": 3,
+          "bossGroupTotalHp": 3489.234975496219,
+          "bossComponentId": "wheels",
+          "bossComponentLabel": "Wheel Trucks",
+          "bossDegradeSpeedMult": 0.82,
+          "presentation": {
+            "mesh": true,
+            "visible": true,
+            "railY": -0.13000000715255738,
+            "railRotation": 1.6124389058934847,
+            "textureKey": "boss-railcar-wheels-damaged",
+            "damaged": true,
+            "damageThreshold": 0.5,
+            "wreckerMarker": true,
+            "markerColor": "#a0522d",
+            "source": "glb",
+            "mounted": true,
+            "morphInfluence": 1,
+            "bossBarY": 1.5369999928474427,
+            "bossBarScale": 1
+          },
+          "scale": 2.8800000000000003,
+          "hasBanner": false,
+          "vx": 1.8983528388754678,
+          "vz": 0.07909803495314671,
+          "thief": false,
+          "wrecker": true,
+          "state": "none",
+          "wreckState": "seekBuilding",
+          "carried": 0,
+          "edge": "west",
+          "zone": "river",
+          "light": 1,
+          "nightSpeedMultiplier": 1,
+          "watchPainted": false,
+          "readState": "unfevered",
+          "fevered": false,
+          "freed": false,
+          "feverAccent": {
+            "active": false,
+            "kind": "none",
+            "strength": 0,
+            "surged": false,
+            "channel": "none"
+          },
+          "terrain": {
+            "grounded": true,
+            "slope": {
+              "dx": 2.224969250987661e-18,
+              "dz": 9.17451880990875e-18
+            },
+            "traversable": true,
+            "speedMul": 0
+          }
+        },
+        {
+          "x": -16.26904349189838,
+          "y": -0.13000000715255738,
+          "z": -0.725793478829103,
+          "id": 1,
+          "spreadOffset": -0.8972326519566665,
+          "hp": 1453.847906456758,
+          "maxHp": 1453.847906456758,
+          "speed": 6.506080406105858,
+          "contactDamage": 0,
+          "buildingDamage": 64.39999999999999,
+          "supportBuildingDamage": 40,
+          "heroPursuitRange": 0,
+          "hitRadius": 2.0736000000000003,
+          "eliteKind": "railcar",
+          "variantId": "baron_railcar",
+          "variantLabel": "Armored Railcar",
+          "boltDamageMult": 0.7,
+          "bossGroupId": "e2-hill-mine:wave-12:railcar",
+          "bossGroupSize": 3,
+          "bossGroupTotalHp": 3489.234975496219,
+          "bossComponentId": "boiler",
+          "bossComponentLabel": "Boiler",
+          "bossDegradeSpeedMult": 0.82,
+          "presentation": {
+            "mesh": true,
+            "visible": true,
+            "railY": -0.13000000715255738,
+            "railRotation": 1.6124389058934854,
+            "textureKey": "boss-railcar-boiler",
+            "damaged": false,
+            "damageThreshold": 0.5,
+            "wreckerMarker": true,
+            "markerColor": "#a0522d",
+            "source": "glb",
+            "mounted": true,
+            "morphInfluence": 0,
+            "bossBarY": 1.5369999928474427,
+            "bossBarScale": 1
+          },
+          "scale": 3.4560000000000004,
+          "hasBanner": false,
+          "vx": 1.8983528388754678,
+          "vz": 0.07909803495314338,
+          "thief": false,
+          "wrecker": true,
+          "state": "none",
+          "wreckState": "seekBuilding",
+          "carried": 0,
+          "edge": "west",
+          "zone": "river",
+          "light": 1,
+          "nightSpeedMultiplier": 1,
+          "watchPainted": false,
+          "readState": "unfevered",
+          "fevered": false,
+          "freed": false,
+          "feverAccent": {
+            "active": false,
+            "kind": "none",
+            "strength": 0,
+            "surged": false,
+            "channel": "none"
+          },
+          "terrain": {
+            "grounded": true,
+            "slope": {
+              "dx": 8.287765944940283e-18,
+              "dz": 3.7458511804329464e-17
+            },
+            "traversable": true,
+            "speedMul": 0
+          }
+        },
+        {
+          "x": -15.119043491898378,
+          "y": -0.13000000715255738,
+          "z": -0.17579347882909793,
+          "id": 2,
+          "spreadOffset": -0.5830506153383876,
+          "hp": 988.6165763905954,
+          "maxHp": 988.6165763905954,
+          "speed": 6.506080406105858,
+          "contactDamage": 0,
+          "buildingDamage": 56,
+          "supportBuildingDamage": 40,
+          "heroPursuitRange": 0,
+          "hitRadius": 1.8432,
+          "eliteKind": "railcar",
+          "variantId": "baron_railcar",
+          "variantLabel": "Armored Railcar",
+          "boltDamageMult": 0.85,
+          "bossGroupId": "e2-hill-mine:wave-12:railcar",
+          "bossGroupSize": 3,
+          "bossGroupTotalHp": 3489.234975496219,
+          "bossComponentId": "cabin",
+          "bossComponentLabel": "Cabin",
+          "bossDegradeSpeedMult": 0.82,
+          "presentation": {
+            "mesh": true,
+            "visible": true,
+            "railY": -0.13000000715255738,
+            "railRotation": 1.6124389058934852,
+            "textureKey": "boss-railcar-cabin",
+            "damaged": false,
+            "damageThreshold": 0.5,
+            "wreckerMarker": true,
+            "markerColor": "#a0522d",
+            "source": "glb",
+            "mounted": true,
+            "morphInfluence": 0,
+            "bossBarY": 1.5369999928474427,
+            "bossBarScale": 1
+          },
+          "scale": 3.072,
+          "hasBanner": false,
+          "vx": 1.8983528388754678,
+          "vz": 0.07909803495314421,
+          "thief": false,
+          "wrecker": true,
+          "state": "none",
+          "wreckState": "seekBuilding",
+          "carried": 0,
+          "edge": "west",
+          "zone": "river",
+          "light": 1,
+          "nightSpeedMultiplier": 1,
+          "watchPainted": false,
+          "readState": "unfevered",
+          "fevered": false,
+          "freed": false,
+          "feverAccent": {
+            "active": false,
+            "kind": "none",
+            "strength": 0,
+            "surged": false,
+            "channel": "none"
+          },
+          "terrain": {
+            "grounded": true,
+            "slope": {
+              "dx": 2.8570429274810497e-17,
+              "dz": 1.432941498974432e-16
+            },
+            "traversable": true,
+            "speedMul": 0
+          }
+        }
+      ],
+      "bar": {
+        "visible": true,
+        "ratio": 0.847,
+        "renderedRatio": 0.847,
+        "litSegments": 2,
+        "segments": 3,
+        "groupId": "e2-hill-mine:wave-12:railcar",
+        "aliveComponents": 3,
+        "destroyedComponents": 0,
+        "components": [
+          {
+            "id": "wheels",
+            "label": "Wheel Trucks",
+            "hp": 512.92,
+            "maxHp": 1046.77
+          },
+          {
+            "id": "boiler",
+            "label": "Boiler",
+            "hp": 1453.85,
+            "maxHp": 1453.85
+          },
+          {
+            "id": "cabin",
+            "label": "Cabin",
+            "hp": 988.62,
+            "maxHp": 988.62
+          }
+        ]
+      },
+      "renderer": {
+        "calls": 79,
+        "triangles": 128290,
+        "geometries": 98,
+        "textures": 27
+      },
+      "crop": {
+        "left": 490,
+        "top": 195,
+        "width": 300,
+        "height": 220
+      },
+      "fullSha256": "fe7d58a71fbc5b6bc860d2bbbe9d64956faa091a18edc8b82a95272d352a524b",
+      "cropSha256": "d32ed2d554fe5e41192ee57bbe707163aa944ad134159196d0422648d87a35e3",
+      "cropPixelEquality": true
+    },
+    "boiler-broken": {
+      "model": {
+        "position": [
+          -16.269043491898376,
+          -0.05500000715255737,
+          -0.7257934788290973
+        ],
+        "rotation": [
+          0,
+          -0.041642579098589594,
+          0,
+          "XYZ"
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "visible": true
+      },
+      "meshes": [
+        {
+          "name": "Railcar_Wheels",
+          "triangles": 5580,
+          "bounds": {
+            "min": [
+              -17.935182301860763,
+              -0.05500000715255737,
+              -1.4160714203523792
+            ],
+            "max": [
+              -14.607568474916466,
+              0.5979999899864197,
+              -0.16887449239178076
+            ]
+          },
+          "morphs": {
+            "Damage_BentWheels": 0
+          },
+          "influence": [
+            0
+          ],
+          "material": {
+            "name": "ArmoredRailcarPlateMaterial",
+            "emissive": "ffffff",
+            "intensity": 0.9,
+            "map": true,
+            "emissiveMap": true,
+            "emissiveUsesBase": true,
+            "metalness": 0.3199999928474426,
+            "roughness": 0.6600000262260437
+          }
+        },
+        {
+          "name": "Railcar_Boiler",
+          "triangles": 3832,
+          "bounds": {
+            "min": [
+              -17.59132385274858,
+              0.3269999623298645,
+              -1.2537533016699494
+            ],
+            "max": [
+              -15.501837266911515,
+              1.3729999661445618,
+              -0.20717884109307882
+            ]
+          },
+          "morphs": {
+            "Damage_VentingBoiler": 0
+          },
+          "influence": [
+            1
+          ],
+          "material": {
+            "name": "ArmoredRailcarPlateMaterial",
+            "emissive": "eaeded",
+            "intensity": 1,
+            "map": true,
+            "emissiveMap": true,
+            "emissiveUsesBase": true,
+            "metalness": 0.3199999928474426,
+            "roughness": 0.6600000262260437
+          }
+        },
+        {
+          "name": "Railcar_Cabin",
+          "triangles": 2524,
+          "bounds": {
+            "min": [
+              -15.716304143946127,
+              0.36799997091293335,
+              -1.2149239625041324
+            ],
+            "max": [
+              -14.793685354463541,
+              1.1870000958442688,
+              -0.12586899858974832
+            ]
+          },
+          "morphs": {
+            "Damage_CrackedCabin": 0
+          },
+          "influence": [
+            0
+          ],
+          "material": {
+            "name": "ArmoredRailcarPlateMaterial",
+            "emissive": "ffffff",
+            "intensity": 0.9,
+            "map": true,
+            "emissiveMap": true,
+            "emissiveUsesBase": true,
+            "metalness": 0.3199999928474426,
+            "roughness": 0.6600000262260437
+          }
+        }
+      ],
+      "screen": {
+        "minX": 592.920551733586,
+        "minY": 277.6786415677359,
+        "maxX": 686.6582858805205,
+        "maxY": 325.64272274814834
+      },
+      "components": [
+        {
+          "x": -17.41904349189838,
+          "y": -0.13000000715255738,
+          "z": -1.2757934788290914,
+          "id": 0,
+          "spreadOffset": -1.3479215058879743,
+          "hp": 1046.7704926488657,
+          "maxHp": 1046.7704926488657,
+          "speed": 6.506080406105858,
+          "contactDamage": 0,
+          "buildingDamage": 56,
+          "supportBuildingDamage": 40,
+          "heroPursuitRange": 0,
+          "hitRadius": 1.7280000000000002,
+          "eliteKind": "railcar",
+          "variantId": "baron_railcar",
+          "variantLabel": "Armored Railcar",
+          "boltDamageMult": 0.8,
+          "bossGroupId": "e2-hill-mine:wave-12:railcar",
+          "bossGroupSize": 3,
+          "bossGroupTotalHp": 3489.234975496219,
+          "bossComponentId": "wheels",
+          "bossComponentLabel": "Wheel Trucks",
+          "bossDegradeSpeedMult": 0.82,
+          "presentation": {
+            "mesh": true,
+            "visible": true,
+            "railY": -0.13000000715255738,
+            "railRotation": 1.6124389058934847,
+            "textureKey": "boss-railcar-wheels",
+            "damaged": false,
+            "damageThreshold": 0.5,
+            "wreckerMarker": true,
+            "markerColor": "#a0522d",
+            "source": "glb",
+            "mounted": true,
+            "morphInfluence": 0,
+            "bossBarY": 1.5369999928474427,
+            "bossBarScale": 1
+          },
+          "scale": 2.8800000000000003,
+          "hasBanner": false,
+          "vx": 1.8983528388754678,
+          "vz": 0.07909803495314671,
+          "thief": false,
+          "wrecker": true,
+          "state": "none",
+          "wreckState": "seekBuilding",
+          "carried": 0,
+          "edge": "west",
+          "zone": "river",
+          "light": 1,
+          "nightSpeedMultiplier": 1,
+          "watchPainted": false,
+          "readState": "unfevered",
+          "fevered": false,
+          "freed": false,
+          "feverAccent": {
+            "active": false,
+            "kind": "none",
+            "strength": 0,
+            "surged": false,
+            "channel": "none"
+          },
+          "terrain": {
+            "grounded": true,
+            "slope": {
+              "dx": 2.224969250987661e-18,
+              "dz": 9.17451880990875e-18
+            },
+            "traversable": true,
+            "speedMul": 0
+          }
+        },
+        {
+          "x": -16.26904349189838,
+          "y": -0.13000000715255738,
+          "z": -0.725793478829103,
+          "id": 1,
+          "spreadOffset": -0.8972326519566665,
+          "hp": 712.3854741638114,
+          "maxHp": 1453.847906456758,
+          "speed": 6.506080406105858,
+          "contactDamage": 0,
+          "buildingDamage": 64.39999999999999,
+          "supportBuildingDamage": 40,
+          "heroPursuitRange": 0,
+          "hitRadius": 2.0736000000000003,
+          "eliteKind": "railcar",
+          "variantId": "baron_railcar",
+          "variantLabel": "Armored Railcar",
+          "boltDamageMult": 0.7,
+          "bossGroupId": "e2-hill-mine:wave-12:railcar",
+          "bossGroupSize": 3,
+          "bossGroupTotalHp": 3489.234975496219,
+          "bossComponentId": "boiler",
+          "bossComponentLabel": "Boiler",
+          "bossDegradeSpeedMult": 0.82,
+          "presentation": {
+            "mesh": true,
+            "visible": true,
+            "railY": -0.13000000715255738,
+            "railRotation": 1.6124389058934854,
+            "textureKey": "boss-railcar-boiler-damaged",
+            "damaged": true,
+            "damageThreshold": 0.5,
+            "wreckerMarker": true,
+            "markerColor": "#a0522d",
+            "source": "glb",
+            "mounted": true,
+            "morphInfluence": 1,
+            "bossBarY": 1.5369999928474427,
+            "bossBarScale": 1
+          },
+          "scale": 3.4560000000000004,
+          "hasBanner": false,
+          "vx": 1.8983528388754678,
+          "vz": 0.07909803495314338,
+          "thief": false,
+          "wrecker": true,
+          "state": "none",
+          "wreckState": "seekBuilding",
+          "carried": 0,
+          "edge": "west",
+          "zone": "river",
+          "light": 1,
+          "nightSpeedMultiplier": 1,
+          "watchPainted": false,
+          "readState": "unfevered",
+          "fevered": false,
+          "freed": false,
+          "feverAccent": {
+            "active": false,
+            "kind": "none",
+            "strength": 0,
+            "surged": false,
+            "channel": "none"
+          },
+          "terrain": {
+            "grounded": true,
+            "slope": {
+              "dx": 8.287765944940283e-18,
+              "dz": 3.7458511804329464e-17
+            },
+            "traversable": true,
+            "speedMul": 0
+          }
+        },
+        {
+          "x": -15.119043491898378,
+          "y": -0.13000000715255738,
+          "z": -0.17579347882909793,
+          "id": 2,
+          "spreadOffset": -0.5830506153383876,
+          "hp": 988.6165763905954,
+          "maxHp": 988.6165763905954,
+          "speed": 6.506080406105858,
+          "contactDamage": 0,
+          "buildingDamage": 56,
+          "supportBuildingDamage": 40,
+          "heroPursuitRange": 0,
+          "hitRadius": 1.8432,
+          "eliteKind": "railcar",
+          "variantId": "baron_railcar",
+          "variantLabel": "Armored Railcar",
+          "boltDamageMult": 0.85,
+          "bossGroupId": "e2-hill-mine:wave-12:railcar",
+          "bossGroupSize": 3,
+          "bossGroupTotalHp": 3489.234975496219,
+          "bossComponentId": "cabin",
+          "bossComponentLabel": "Cabin",
+          "bossDegradeSpeedMult": 0.82,
+          "presentation": {
+            "mesh": true,
+            "visible": true,
+            "railY": -0.13000000715255738,
+            "railRotation": 1.6124389058934852,
+            "textureKey": "boss-railcar-cabin",
+            "damaged": false,
+            "damageThreshold": 0.5,
+            "wreckerMarker": true,
+            "markerColor": "#a0522d",
+            "source": "glb",
+            "mounted": true,
+            "morphInfluence": 0,
+            "bossBarY": 1.5369999928474427,
+            "bossBarScale": 1
+          },
+          "scale": 3.072,
+          "hasBanner": false,
+          "vx": 1.8983528388754678,
+          "vz": 0.07909803495314421,
+          "thief": false,
+          "wrecker": true,
+          "state": "none",
+          "wreckState": "seekBuilding",
+          "carried": 0,
+          "edge": "west",
+          "zone": "river",
+          "light": 1,
+          "nightSpeedMultiplier": 1,
+          "watchPainted": false,
+          "readState": "unfevered",
+          "fevered": false,
+          "freed": false,
+          "feverAccent": {
+            "active": false,
+            "kind": "none",
+            "strength": 0,
+            "surged": false,
+            "channel": "none"
+          },
+          "terrain": {
+            "grounded": true,
+            "slope": {
+              "dx": 2.8570429274810497e-17,
+              "dz": 1.432941498974432e-16
+            },
+            "traversable": true,
+            "speedMul": 0
+          }
+        }
+      ],
+      "bar": {
+        "visible": true,
+        "ratio": 0.788,
+        "renderedRatio": 0.788,
+        "litSegments": 2,
+        "segments": 3,
+        "groupId": "e2-hill-mine:wave-12:railcar",
+        "aliveComponents": 3,
+        "destroyedComponents": 0,
+        "components": [
+          {
+            "id": "wheels",
+            "label": "Wheel Trucks",
+            "hp": 1046.77,
+            "maxHp": 1046.77
+          },
+          {
+            "id": "boiler",
+            "label": "Boiler",
+            "hp": 712.39,
+            "maxHp": 1453.85
+          },
+          {
+            "id": "cabin",
+            "label": "Cabin",
+            "hp": 988.62,
+            "maxHp": 988.62
+          }
+        ]
+      },
+      "renderer": {
+        "calls": 78,
+        "triangles": 128288,
+        "geometries": 98,
+        "textures": 27
+      },
+      "crop": {
+        "left": 490,
+        "top": 192,
+        "width": 300,
+        "height": 220
+      },
+      "fullSha256": "c9b445e6c7b80c4634f6a30e412867079f2c59dfe845fcf28fa70f9e91727bd0",
+      "cropSha256": "7b25abd0a225f727e4798904d78798e32cdf86892cdd08645b8fae17ac37633d",
+      "cropPixelEquality": true
+    },
+    "cabin-broken": {
+      "model": {
+        "position": [
+          -16.269043491898376,
+          -0.05500000715255737,
+          -0.7257934788290973
+        ],
+        "rotation": [
+          0,
+          -0.041642579098589594,
+          0,
+          "XYZ"
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "visible": true
+      },
+      "meshes": [
+        {
+          "name": "Railcar_Wheels",
+          "triangles": 5580,
+          "bounds": {
+            "min": [
+              -17.935182301860763,
+              -0.05500000715255737,
+              -1.4160714203523792
+            ],
+            "max": [
+              -14.607568474916466,
+              0.5979999899864197,
+              -0.16887449239178076
+            ]
+          },
+          "morphs": {
+            "Damage_BentWheels": 0
+          },
+          "influence": [
+            0
+          ],
+          "material": {
+            "name": "ArmoredRailcarPlateMaterial",
+            "emissive": "ffffff",
+            "intensity": 0.9,
+            "map": true,
+            "emissiveMap": true,
+            "emissiveUsesBase": true,
+            "metalness": 0.3199999928474426,
+            "roughness": 0.6600000262260437
+          }
+        },
+        {
+          "name": "Railcar_Boiler",
+          "triangles": 3832,
+          "bounds": {
+            "min": [
+              -17.59132385274858,
+              0.3269999623298645,
+              -1.1351749308142502
+            ],
+            "max": [
+              -15.501837266911515,
+              1.1470001339912415,
+              -0.28967889936740643
+            ]
+          },
+          "morphs": {
+            "Damage_VentingBoiler": 0
+          },
+          "influence": [
+            0
+          ],
+          "material": {
+            "name": "ArmoredRailcarPlateMaterial",
+            "emissive": "ffffff",
+            "intensity": 0.9,
+            "map": true,
+            "emissiveMap": true,
+            "emissiveUsesBase": true,
+            "metalness": 0.3199999928474426,
+            "roughness": 0.6600000262260437
+          }
+        },
+        {
+          "name": "Railcar_Cabin",
+          "triangles": 2524,
+          "bounds": {
+            "min": [
+              -15.746049601559584,
+              0.2658468782901764,
+              -1.1539997437190241
+            ],
+            "max": [
+              -14.793685354463541,
+              1.1870000958442688,
+              -0.12586899858974832
+            ]
+          },
+          "morphs": {
+            "Damage_CrackedCabin": 0
+          },
+          "influence": [
+            1
+          ],
+          "material": {
+            "name": "ArmoredRailcarPlateMaterial",
+            "emissive": "f5ede8",
+            "intensity": 1,
+            "map": true,
+            "emissiveMap": true,
+            "emissiveUsesBase": true,
+            "metalness": 0.3199999928474426,
+            "roughness": 0.6600000262260437
+          }
+        }
+      ],
+      "screen": {
+        "minX": 592.920551733586,
+        "minY": 287.60852420064003,
+        "maxX": 686.6582858805205,
+        "maxY": 325.64272274814834
+      },
+      "components": [
+        {
+          "x": -17.41904349189838,
+          "y": -0.13000000715255738,
+          "z": -1.2757934788290914,
+          "id": 0,
+          "spreadOffset": -1.3479215058879743,
+          "hp": 1046.7704926488657,
+          "maxHp": 1046.7704926488657,
+          "speed": 6.506080406105858,
+          "contactDamage": 0,
+          "buildingDamage": 56,
+          "supportBuildingDamage": 40,
+          "heroPursuitRange": 0,
+          "hitRadius": 1.7280000000000002,
+          "eliteKind": "railcar",
+          "variantId": "baron_railcar",
+          "variantLabel": "Armored Railcar",
+          "boltDamageMult": 0.8,
+          "bossGroupId": "e2-hill-mine:wave-12:railcar",
+          "bossGroupSize": 3,
+          "bossGroupTotalHp": 3489.234975496219,
+          "bossComponentId": "wheels",
+          "bossComponentLabel": "Wheel Trucks",
+          "bossDegradeSpeedMult": 0.82,
+          "presentation": {
+            "mesh": true,
+            "visible": true,
+            "railY": -0.13000000715255738,
+            "railRotation": 1.6124389058934847,
+            "textureKey": "boss-railcar-wheels",
+            "damaged": false,
+            "damageThreshold": 0.5,
+            "wreckerMarker": true,
+            "markerColor": "#a0522d",
+            "source": "glb",
+            "mounted": true,
+            "morphInfluence": 0,
+            "bossBarY": 1.5369999928474427,
+            "bossBarScale": 1
+          },
+          "scale": 2.8800000000000003,
+          "hasBanner": false,
+          "vx": 1.8983528388754678,
+          "vz": 0.07909803495314671,
+          "thief": false,
+          "wrecker": true,
+          "state": "none",
+          "wreckState": "seekBuilding",
+          "carried": 0,
+          "edge": "west",
+          "zone": "river",
+          "light": 1,
+          "nightSpeedMultiplier": 1,
+          "watchPainted": false,
+          "readState": "unfevered",
+          "fevered": false,
+          "freed": false,
+          "feverAccent": {
+            "active": false,
+            "kind": "none",
+            "strength": 0,
+            "surged": false,
+            "channel": "none"
+          },
+          "terrain": {
+            "grounded": true,
+            "slope": {
+              "dx": 2.224969250987661e-18,
+              "dz": 9.17451880990875e-18
+            },
+            "traversable": true,
+            "speedMul": 0
+          }
+        },
+        {
+          "x": -16.26904349189838,
+          "y": -0.13000000715255738,
+          "z": -0.725793478829103,
+          "id": 1,
+          "spreadOffset": -0.8972326519566665,
+          "hp": 1453.847906456758,
+          "maxHp": 1453.847906456758,
+          "speed": 6.506080406105858,
+          "contactDamage": 0,
+          "buildingDamage": 64.39999999999999,
+          "supportBuildingDamage": 40,
+          "heroPursuitRange": 0,
+          "hitRadius": 2.0736000000000003,
+          "eliteKind": "railcar",
+          "variantId": "baron_railcar",
+          "variantLabel": "Armored Railcar",
+          "boltDamageMult": 0.7,
+          "bossGroupId": "e2-hill-mine:wave-12:railcar",
+          "bossGroupSize": 3,
+          "bossGroupTotalHp": 3489.234975496219,
+          "bossComponentId": "boiler",
+          "bossComponentLabel": "Boiler",
+          "bossDegradeSpeedMult": 0.82,
+          "presentation": {
+            "mesh": true,
+            "visible": true,
+            "railY": -0.13000000715255738,
+            "railRotation": 1.6124389058934854,
+            "textureKey": "boss-railcar-boiler",
+            "damaged": false,
+            "damageThreshold": 0.5,
+            "wreckerMarker": true,
+            "markerColor": "#a0522d",
+            "source": "glb",
+            "mounted": true,
+            "morphInfluence": 0,
+            "bossBarY": 1.5369999928474427,
+            "bossBarScale": 1
+          },
+          "scale": 3.4560000000000004,
+          "hasBanner": false,
+          "vx": 1.8983528388754678,
+          "vz": 0.07909803495314338,
+          "thief": false,
+          "wrecker": true,
+          "state": "none",
+          "wreckState": "seekBuilding",
+          "carried": 0,
+          "edge": "west",
+          "zone": "river",
+          "light": 1,
+          "nightSpeedMultiplier": 1,
+          "watchPainted": false,
+          "readState": "unfevered",
+          "fevered": false,
+          "freed": false,
+          "feverAccent": {
+            "active": false,
+            "kind": "none",
+            "strength": 0,
+            "surged": false,
+            "channel": "none"
+          },
+          "terrain": {
+            "grounded": true,
+            "slope": {
+              "dx": 8.287765944940283e-18,
+              "dz": 3.7458511804329464e-17
+            },
+            "traversable": true,
+            "speedMul": 0
+          }
+        },
+        {
+          "x": -15.119043491898378,
+          "y": -0.13000000715255738,
+          "z": -0.17579347882909793,
+          "id": 2,
+          "spreadOffset": -0.5830506153383876,
+          "hp": 484.4221224313917,
+          "maxHp": 988.6165763905954,
+          "speed": 6.506080406105858,
+          "contactDamage": 0,
+          "buildingDamage": 56,
+          "supportBuildingDamage": 40,
+          "heroPursuitRange": 0,
+          "hitRadius": 1.8432,
+          "eliteKind": "railcar",
+          "variantId": "baron_railcar",
+          "variantLabel": "Armored Railcar",
+          "boltDamageMult": 0.85,
+          "bossGroupId": "e2-hill-mine:wave-12:railcar",
+          "bossGroupSize": 3,
+          "bossGroupTotalHp": 3489.234975496219,
+          "bossComponentId": "cabin",
+          "bossComponentLabel": "Cabin",
+          "bossDegradeSpeedMult": 0.82,
+          "presentation": {
+            "mesh": true,
+            "visible": true,
+            "railY": -0.13000000715255738,
+            "railRotation": 1.6124389058934852,
+            "textureKey": "boss-railcar-cabin-damaged",
+            "damaged": true,
+            "damageThreshold": 0.5,
+            "wreckerMarker": true,
+            "markerColor": "#a0522d",
+            "source": "glb",
+            "mounted": true,
+            "morphInfluence": 1,
+            "bossBarY": 1.5369999928474427,
+            "bossBarScale": 1
+          },
+          "scale": 3.072,
+          "hasBanner": false,
+          "vx": 1.8983528388754678,
+          "vz": 0.07909803495314421,
+          "thief": false,
+          "wrecker": true,
+          "state": "none",
+          "wreckState": "seekBuilding",
+          "carried": 0,
+          "edge": "west",
+          "zone": "river",
+          "light": 1,
+          "nightSpeedMultiplier": 1,
+          "watchPainted": false,
+          "readState": "unfevered",
+          "fevered": false,
+          "freed": false,
+          "feverAccent": {
+            "active": false,
+            "kind": "none",
+            "strength": 0,
+            "surged": false,
+            "channel": "none"
+          },
+          "terrain": {
+            "grounded": true,
+            "slope": {
+              "dx": 2.8570429274810497e-17,
+              "dz": 1.432941498974432e-16
+            },
+            "traversable": true,
+            "speedMul": 0
+          }
+        }
+      ],
+      "bar": {
+        "visible": true,
+        "ratio": 0.856,
+        "renderedRatio": 0.856,
+        "litSegments": 2,
+        "segments": 3,
+        "groupId": "e2-hill-mine:wave-12:railcar",
+        "aliveComponents": 3,
+        "destroyedComponents": 0,
+        "components": [
+          {
+            "id": "wheels",
+            "label": "Wheel Trucks",
+            "hp": 1046.77,
+            "maxHp": 1046.77
+          },
+          {
+            "id": "boiler",
+            "label": "Boiler",
+            "hp": 1453.85,
+            "maxHp": 1453.85
+          },
+          {
+            "id": "cabin",
+            "label": "Cabin",
+            "hp": 484.42,
+            "maxHp": 988.62
+          }
+        ]
+      },
+      "renderer": {
+        "calls": 79,
+        "triangles": 128290,
+        "geometries": 98,
+        "textures": 27
+      },
+      "crop": {
+        "left": 490,
+        "top": 197,
+        "width": 300,
+        "height": 220
+      },
+      "fullSha256": "f366cb2659e9cc1cc8b9a9265861ffe708430e6f127fede267a7bfacb4d47b5c",
+      "cropSha256": "f9686e8f72aa091fb4ebe89bf1727f95823e05efdaa35788030ccb1403b9a59f",
+      "cropPixelEquality": true
+    }
+  },
+  "errors": []
+}

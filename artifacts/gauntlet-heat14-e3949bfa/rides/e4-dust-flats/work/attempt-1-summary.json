@@ -1,0 +1,36 @@
+{
+  "label": "attempt-1",
+  "code": 0,
+  "outcome": {
+    "secured": false,
+    "waves": 13,
+    "timeMs": 396633,
+    "gold": 175,
+    "kills": 494,
+    "calls": 48,
+    "defaultedPicks": 0,
+    "defaultedSecure": 0,
+    "eventLogHash": "fnv1a32:03eb20ce",
+    "motor": {
+      "graded": [
+        "camp-to-railhead"
+      ],
+      "hauled": true,
+      "arrivedAt": 25.6,
+      "roadDistance": 60.64,
+      "distanceTravelled": 87.94,
+      "fuelDrawn": 16.279,
+      "tarHarvested": 9,
+      "convoyArrived": null
+    }
+  },
+  "env": {
+    "durationTicks": 11899,
+    "lastEntryTick": 11700,
+    "entries": 48,
+    "bytes": 178465,
+    "tapeHash": "fnv1a32:e75b621b"
+  },
+  "views": 49,
+  "stderrTail": "(node:26628) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\ngr-sim speed: 0.58 waves/s\n"
+}

@@ -1,0 +1,57 @@
+{
+  "version": 1,
+  "id": "order_m5_03_sample_20260708t091330000z_fair_pan_receipt_for_stat_sim_evidence",
+  "request": {
+    "version": 1,
+    "id": "order_m5_03_sample_20260708t091330000z_fair_pan_receipt_for_stat_sim_evidence",
+    "text": "fair pan receipt for stat sim evidence",
+    "profile": "m5_03_sample",
+    "timestamp": "2026-07-08T09:13:30.000Z",
+    "tier": 1
+  },
+  "item": {
+    "id": "m5_03_fair_pan_receipt",
+    "kind": "tool",
+    "rarity": "common",
+    "family": "panning",
+    "name": "Fair Pan Receipt",
+    "blurb": "A brass-stamped receipt for steadier panning.",
+    "cost": 30,
+    "stats": {
+      "panTickMult": -0.12
+    }
+  },
+  "contractVerdict": {
+    "ok": true,
+    "reasons": [],
+    "summary": "M5-01 paper budget 0.96 <= common budget 3."
+  },
+  "simVerdict": {
+    "ok": true,
+    "status": "within-tolerance",
+    "tolerance": 1.25,
+    "declaredBudget": 0.96,
+    "measuredBudget": 0.912,
+    "measurements": {
+      "baseline": {
+        "dps": 24,
+        "survivalTime": 17.1,
+        "goldRate": 1.917
+      },
+      "measured": {
+        "dps": 24,
+        "survivalTime": 17.1,
+        "goldRate": 2.5
+      },
+      "deltas": {
+        "dps": 0,
+        "survivalTime": 0,
+        "goldRate": 0.3041
+      }
+    },
+    "hash": "fnv1a32:04b3bd67",
+    "reasons": [],
+    "summary": "M5-03 stat sim within tolerance: measured 0.912 <= declared 0.96 x 1.25."
+  },
+  "approvedAt": "2026-07-08T09:15:00.000Z"
+}

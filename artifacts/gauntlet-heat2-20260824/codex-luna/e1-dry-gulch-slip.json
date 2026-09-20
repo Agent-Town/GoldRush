@@ -1,0 +1,12 @@
+{
+  "httpStatus": 400,
+  "tapeId": "agent-8d5feff7-7623f50a-da43-4b63-86af-986f0e3722e1",
+  "assay": "not-queued",
+  "ranked": false,
+  "response": {
+    "ok": false,
+    "error": "bad_payload",
+    "message": "Standing not accepted."
+  },
+  "operatorFinding": "The simulator-authored secured tape has inputLog.durationTicks 18001 and a SECURE_CHOICE entry at tick 18000; standings validation accepts durationTicks only through 18000, so the tape cannot be posted without prohibited editing."
+}

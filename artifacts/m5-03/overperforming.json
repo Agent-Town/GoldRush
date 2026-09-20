@@ -1,0 +1,71 @@
+{
+  "version": 1,
+  "id": "order_m5_03_sample_20260708t091430000z_overclocked_spark_condenser_for_stat_sim_evidenc",
+  "request": {
+    "version": 1,
+    "id": "order_m5_03_sample_20260708t091430000z_overclocked_spark_condenser_for_stat_sim_evidenc",
+    "text": "overclocked spark condenser for stat sim evidence",
+    "profile": "m5_03_sample",
+    "timestamp": "2026-07-08T09:14:30.000Z",
+    "tier": 1
+  },
+  "item": {
+    "id": "m5_03_overclocked_spark_condenser",
+    "kind": "weapon_mod",
+    "rarity": "rare",
+    "family": "damage",
+    "name": "Overclocked Spark Condenser",
+    "blurb": "A brass condenser that claims ordinary Spark Rig improvements.",
+    "cost": 80,
+    "stats": {
+      "damageMult": 0.35,
+      "fireRateMult": 0.3
+    }
+  },
+  "contractVerdict": {
+    "ok": true,
+    "reasons": [],
+    "summary": "M5-01 paper budget 5.2 <= rare budget 8."
+  },
+  "simVerdict": {
+    "ok": false,
+    "status": "overperforming",
+    "tolerance": 1.25,
+    "declaredBudget": 5.2,
+    "measuredBudget": 6.568,
+    "measurements": {
+      "baseline": {
+        "dps": 24,
+        "survivalTime": 21.2,
+        "goldRate": 1.889
+      },
+      "measured": {
+        "dps": 42.12,
+        "survivalTime": 24,
+        "goldRate": 1.889
+      },
+      "deltas": {
+        "dps": 0.755,
+        "survivalTime": 0.1321,
+        "goldRate": 0
+      }
+    },
+    "hash": "fnv1a32:90c6a247",
+    "reasons": [
+      {
+        "code": "overperforming",
+        "message": "Measured utility budget 6.568 exceeds declared 5.2 x 1.25.",
+        "path": "stats"
+      }
+    ],
+    "summary": "M5-03 stat sim overperforming: measured 6.568 > declared 5.2 x 1.25."
+  },
+  "reasons": [
+    {
+      "code": "overperforming",
+      "message": "Measured utility budget 6.568 exceeds declared 5.2 x 1.25.",
+      "path": "stats"
+    }
+  ],
+  "rejectedAt": "2026-07-08T09:15:30.000Z"
+}

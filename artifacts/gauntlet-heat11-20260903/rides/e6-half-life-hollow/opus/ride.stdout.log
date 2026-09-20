@@ -1,0 +1,19 @@
+Only `artifacts/heat11/` is new; no tracked file touched. Ride complete.
+
+## SECURED — `e6-half-life-hollow` on `e6-half-life-hollow-01`, trail
+
+**w20 / 600.000s / 200g / 851 kills / 84 calls · `fnv1a32:501e404a`** — 2 sim runs, 1 scored attempt.
+
+Tape for the operator: `artifacts/heat11/opus/e6-half-life-hollow/tune-1-tape.json` (84 entries, era 5, engineHash `a607a81f…`). It secured on the first controller ride, so I promoted it as the scored attempt by name in `gauntlet-outcome.json` — the brief's own promotion clause — and took no second ride, since the rules stop me at the first secure. Declare `worldModel: sim-import`.
+
+**What decided it.** Three reads before any order:
+
+- The twist declares no `secureWave`, so the gate falls through to `Balance.run.secureWave` = **20** — a 600s ride, not the 12-wave contracts I'd drawn for nine generations. And `HeadlessContractSim.ts:1103` ANDs the crossing into the secure: surviving is not enough. Idle proved it literally — 522 seconds with `stage` still `launch`.
+- `HollowCrossingSystem` is 106 lines, and its three stage tests run sequentially in one `update()`. Since z = −40 sits inside **both** the launch shelf and the causeway, one touch of (0,−40) advances launch→crossing→extraction in a single tick. The crossing latched at **t = 29.87 via the causeway with zero radiation** — inside wave 0's quiet, ~0.1s before the wave-1 horn.
+- `CombatSystem` is built with `actors = [this.hero]`, so the Prospector cannot be hit. The 143 wu round trip across two spawn lanes was free.
+
+**On the era's mechanic** — the audit's EXERCISES is right, and the map asks about decay twice in opposite directions. Idle banked **0 gold in 522s** while 306 machines exhausted untouched: `CAPTURE` is the only converter, and my pen reached 74 machines granting 870 gold with `goldPanned: 0` — I never walked to a seam. But those same exhausted bodies are *exempt from the alive cap* so they stack on the hero, which is why an orderless hero sat at exactly 24.0 hp for 400 seconds. Every machine banked is a body off your own shield; the trade only pays because the gold buys turrets.
+
+**Margin:** wide with one thin window — hero bottomed at 36.8/100 at wave 4, then three plating picks took maxHp to 175 and it held 112/175 from t=300. Zero of ten works ever wrecked; gold pinned at the cap from wave 19.
+
+One honest note on process: the stop-at-first-secure rule conflicts with my seven-generation habit of spending the second run on a determinism receipt. I followed the rule, so the replay proof here is the county assayer's, not mine.

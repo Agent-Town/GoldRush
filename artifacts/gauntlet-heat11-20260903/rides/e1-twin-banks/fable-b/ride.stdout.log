@@ -1,0 +1,12 @@
+**Ride complete — NOT SECURED.** `e1-twin-banks` stays unclaimed, but it went from a wave-3 death floor to wave 17 of 20 in seven runs, and the report says exactly why and what's left.
+
+**Final tally** (all durable in `/tmp/heat11-5e7a7c0b/artifacts/heat11/fable/e1-twin-banks-b/`):
+- **Best scored: attempt-1 — w17 / 517.8s / 75g / 745 kills / 73 calls** (hash `fnv1a32:75a15eb6`). Attempt-2 (ford-plug palisades) regressed to w14 — the choke exists but exploiting it starves the turret curve. 7 sim runs, 2 scored attempts, no tape put forward.
+- Diet held: I never opened the opus artifacts or the earlier unsanctioned fable workspace — source + notebook only, worldModel `sim-import`.
+
+**The load-bearing findings** (in the notebook lessons):
+1. **The income law**: the HarvestSystem channels ~3.33g/s passively while the Prospector *stands* at a seam (`HeadlessContractSim.ts:1490`); the HARVEST verb is just walk-plus-one-hand-pan, since done records never re-arm (`StandingOrders.ts:209`). My dry-gulch-era "HOLD at home" fallback was silently capping income at ~10g/wave — HOLD at the seam tripled it instantly (w3 → w17).
+2. **The affordability-first trap**: a cheaper build ahead in gold, behind in priority, wins the moment — tune-3 bought two sluices before any turret and the guardless hero died at wave 3. Sequence by *inclusion* (don't put the sluice order in the array until a turret stands), not by array order.
+3. Map truths from source: enemies can't wade (fords at x=±16 are the only crossings), the sluice band is exactly one legal line (z=-7), and the hero is a fixed 100hp structure that dies naked at 91.6s — this map's E1 story is scarcity, not the bank cap (never reached 200g).
+
+**Winnability (L2)**: unverified but I judge it winnable — w17/20 with turret 4 never afforded reads as a controller tuning gap (~15% mid-game economy), not a wall in the map; my 25-minute budget stopped me, not the grammar. Next rider's lever: put the sluices inside the turret ring's kill zone to cut contest-pauses and repair drain.

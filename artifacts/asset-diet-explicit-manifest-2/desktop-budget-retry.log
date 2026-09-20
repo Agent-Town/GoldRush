@@ -1,0 +1,21 @@
+[WebServer] (node:88216) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:88259) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+(node:88056) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:88263) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:88263) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+normal prefetchWait=false cacheDisabled=false watchErrors suppressed 0 known GLTFLoader blob error(s)
+normal prefetchWait=false cacheDisabled=true watchErrors suppressed 0 known GLTFLoader blob error(s)
+normal prefetchWait=true cacheDisabled=false watchErrors suppressed 0 known GLTFLoader blob error(s)
+normal prefetchWait=true cacheDisabled=true watchErrors suppressed 0 known GLTFLoader blob error(s)
+normal watchErrors suppressed 0 known GLTFLoader blob error(s)
+saveData watchErrors suppressed 0 known GLTFLoader blob error(s)
+  ✓  1 [desktop-chrome] › e2e/asset-diet.spec.ts:277:1 › town byte budget reports normal and saveData arms by URL (2.4m)
+
+  1 passed (2.5m)

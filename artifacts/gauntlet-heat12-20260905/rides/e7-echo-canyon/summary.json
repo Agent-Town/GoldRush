@@ -1,0 +1,142 @@
+{
+  "rig": "opus",
+  "contract": "e7-echo-canyon",
+  "model": "claude-opus-5",
+  "sessionId": "409a1244-ad47-4ac7-bbfb-a23a50aba2ae",
+  "startedAt": "2026-09-05T17:37:06.448Z",
+  "endedAt": "2026-09-05T17:55:08.737Z",
+  "wallClockSeconds": 1082,
+  "wallHit": true,
+  "exitCode": 143,
+  "signal": null,
+  "setupToFirstOutputSeconds": 106,
+  "arenaTrackedChanges": [],
+  "workspaceFiles": [
+    "attempt-1-tape.json",
+    "ctrl.mjs",
+    "gauntlet-outcome.json",
+    "probe-idle-tape.json",
+    "probe-idle.ndjson",
+    "tune-1-log.ndjson",
+    "tune-1-stderr.txt",
+    "tune-1-summary.json",
+    "tune-1-tape.json"
+  ],
+  "outcome": {
+    "secured": true,
+    "waves": 20,
+    "timeMs": 600000,
+    "gold": 200,
+    "kills": 903,
+    "calls": 65,
+    "defaultedPicks": 1,
+    "defaultedSecure": 1,
+    "eventLogHash": "fnv1a32:19817b46",
+    "tape": "/private/tmp/heat12-038cc280/artifacts/heat12/opus/e7-echo-canyon/tune-1-tape.json",
+    "scored": false,
+    "envelope": {
+      "durationTicks": 18000,
+      "lastEntryTick": 16212,
+      "entryCount": 65,
+      "bytes": 250846,
+      "ceilingBytes": 576016
+    },
+    "runsSoFar": 1,
+    "scoredAttempts": 0,
+    "worldModel": "sim-import",
+    "contract": "e7-echo-canyon",
+    "seed": "e7-echo-canyon-01",
+    "difficulty": "trail"
+  },
+  "outcomeError": null,
+  "promotedTapeName": "tune-1-tape.json",
+  "scoredTapes": [
+    {
+      "file": "attempt-1-tape.json",
+      "id": "agent-d47dfbaa-7f9bcd5a-824a-42be-a3c1-fc18fd4ca4af",
+      "contract": "e7-echo-canyon",
+      "seed": "e7-echo-canyon-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "cd3545caa",
+        "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 20,
+        "timeAlive": 600,
+        "gold": 200
+      },
+      "entries": 65,
+      "durationTicks": 18000,
+      "lastEntryTick": 16212,
+      "promotedByRig": false,
+      "discoveredBy": "filename"
+    },
+    {
+      "file": "tune-1-tape.json",
+      "id": "agent-d47dfbaa-7f9bcd5a-824a-42be-a3c1-fc18fd4ca4af",
+      "contract": "e7-echo-canyon",
+      "seed": "e7-echo-canyon-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "cd3545caa",
+        "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 20,
+        "timeAlive": 600,
+        "gold": 200
+      },
+      "entries": 65,
+      "durationTicks": 18000,
+      "lastEntryTick": 16212,
+      "promotedByRig": true,
+      "discoveredBy": "outcome-file"
+    }
+  ],
+  "otherTapes": [
+    {
+      "file": "probe-idle-tape.json",
+      "id": "agent-c631cf5e-1120f951-9dca-40bb-86da-baf7868cc3c3",
+      "contract": "e7-echo-canyon",
+      "seed": "e7-echo-canyon-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "10345a5ee",
+        "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 4,
+        "timeAlive": 135.433,
+        "gold": 0
+      },
+      "entries": 0,
+      "durationTicks": 4063,
+      "lastEntryTick": null
+    }
+  ],
+  "otherSecuredTapes": [],
+  "report": null,
+  "usage": {
+    "transcript": "/Users/robin/.claude/projects/-private-tmp-heat12-038cc280/409a1244-ad47-4ac7-bbfb-a23a50aba2ae.jsonl",
+    "assistantTurns": 48,
+    "toolCalls": 28,
+    "tokensIn": 96,
+    "tokensOut": 63293,
+    "cacheReadTokens": 11361343,
+    "cacheWriteTokens": 784945,
+    "note": "tokensIn excludes cache reads/writes (reported separately); summed from the CLI session transcript, not self-reported by the rig"
+  }
+}

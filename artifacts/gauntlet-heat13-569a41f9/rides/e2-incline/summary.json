@@ -1,0 +1,206 @@
+{
+  "rig": "opus",
+  "contract": "e2-incline",
+  "model": "claude-opus-5",
+  "sessionId": "b5e2cbf9-f1db-4921-a031-de19aedc2166",
+  "startedAt": "2026-09-07T15:40:47.502Z",
+  "endedAt": "2026-09-07T15:55:00.436Z",
+  "wallClockSeconds": 853,
+  "wallHit": false,
+  "exitCode": 0,
+  "signal": null,
+  "setupToFirstOutputSeconds": 90,
+  "arenaTrackedChanges": [],
+  "workspaceFiles": [
+    "attempt-1-summary.json",
+    "attempt-1-table.json",
+    "attempt-1-tape.json",
+    "attempt-1-views.jsonl",
+    "ctrl-v1.mjs",
+    "ctrl-v2.mjs",
+    "gauntlet-outcome.json",
+    "gauntlet-report.md",
+    "probe-idle-summary.json",
+    "probe-idle-table.json",
+    "probe-idle-tape.json",
+    "probe-idle-views.jsonl",
+    "runner.mjs",
+    "tune-1-summary.json",
+    "tune-1-table.json",
+    "tune-1-tape.json",
+    "tune-1-views.jsonl"
+  ],
+  "outcome": {
+    "secured": true,
+    "waves": 12,
+    "timeMs": 495900,
+    "gold": 200,
+    "kills": 504,
+    "calls": 80,
+    "defaultedPicks": 0,
+    "defaultedSecure": 0,
+    "eventLogHash": "fnv1a32:67f359fe",
+    "tape": "/private/tmp/heat13-569a41f9/artifacts/heat13/opus/e2-incline/attempt-1-tape.json",
+    "scored": true,
+    "runsSoFar": 3,
+    "scoredAttempts": 1,
+    "worldModel": "sim-import",
+    "contract": "e2-incline",
+    "seed": "e2-incline-01",
+    "difficulty": "trail",
+    "note": "SECURED by killing the wave-12 railcar. tune-1 secured first with the identical policy but its reel is NOT submittable: it answered the secure window with full order arrays, which the door refuses (SECURE_CHOICE_ONLY) 600 times while the choice clock ran down, and the assay replay came back fnv1a32:831ab506 against a recorded header of fnv1a32:470e04ef (ticks 15476 vs durationTicks 14878). attempt-1 is the same controller with ONE change - answer now.pendingSecure with a single SECURE_CHOICE - and it replays bit for bit. PUT ATTEMPT-1 FORWARD.",
+    "assay": {
+      "instrument": "scripts/assay-replay-agent.mjs",
+      "controlRun": "probe-idle-tape.json replays to its own header fnv1a32:a45ba9ac (instrument sound in this build)",
+      "replayEventLogHash": "fnv1a32:a489588e",
+      "tapeEventLogHash": "fnv1a32:a489588e",
+      "match": true,
+      "replayOutcome": {
+        "secured": true,
+        "waves": 12,
+        "gold": 200,
+        "timeAlive": 495.9
+      },
+      "securedSnapshot": {
+        "waves": 12,
+        "gold": 200,
+        "timeAlive": 495.9
+      },
+      "replayTicks": 14878
+    },
+    "envelope": {
+      "durationTicks": 14878,
+      "maxTicks": 21602,
+      "lastEntryTick": 14877,
+      "entries": 80,
+      "maxEntries": 4321,
+      "bytes": 288524,
+      "maxTapeBytes": 2322784,
+      "allAxesPass": true
+    },
+    "era": {
+      "engineHash": "09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4",
+      "era": 5,
+      "viewVersion": 2,
+      "buildId": "6a549b811"
+    }
+  },
+  "outcomeError": null,
+  "promotedTapeName": "attempt-1-tape.json",
+  "scoredTapes": [
+    {
+      "file": "attempt-1-tape.json",
+      "id": "agent-f5032288-f497f8c1-842c-4449-829a-27796f143f42",
+      "contract": "e2-incline",
+      "seed": "e2-incline-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "6a549b811",
+        "engineHash": "09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 12,
+        "timeAlive": 495.9,
+        "gold": 200
+      },
+      "entries": 80,
+      "durationTicks": 14878,
+      "lastEntryTick": 14877,
+      "promotedByRig": true,
+      "discoveredBy": "outcome-file+filename"
+    }
+  ],
+  "otherTapes": [
+    {
+      "file": "probe-idle-tape.json",
+      "id": "agent-8841a62c-cea324b2-d1ea-40e8-aa87-f8f16d4302f1",
+      "contract": "e2-incline",
+      "seed": "e2-incline-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "6a549b811",
+        "engineHash": "09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 1,
+        "timeAlive": 73.9,
+        "gold": 0
+      },
+      "entries": 0,
+      "durationTicks": 2217,
+      "lastEntryTick": null
+    },
+    {
+      "file": "tune-1-tape.json",
+      "id": "agent-ddba48b7-ad88d7a1-2581-44bc-81fc-4852f357e6e5",
+      "contract": "e2-incline",
+      "seed": "e2-incline-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "6a549b811",
+        "engineHash": "09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 12,
+        "timeAlive": 495.9,
+        "gold": 200
+      },
+      "entries": 80,
+      "durationTicks": 14878,
+      "lastEntryTick": 14877
+    }
+  ],
+  "otherSecuredTapes": [
+    {
+      "file": "tune-1-tape.json",
+      "id": "agent-ddba48b7-ad88d7a1-2581-44bc-81fc-4852f357e6e5",
+      "contract": "e2-incline",
+      "seed": "e2-incline-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "6a549b811",
+        "engineHash": "09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 12,
+        "timeAlive": 495.9,
+        "gold": 200
+      },
+      "entries": 80,
+      "durationTicks": 14878,
+      "lastEntryTick": 14877
+    }
+  ],
+  "report": {
+    "outcome": "**SECURED** — `secured: true`, **waves 12**, **timeAlive 495.900 s**, **gold 200** (the bank cap),\nkills 504, **calls 80**. Three sim runs (`probe-idle`, `tune-1`, `attempt-1`), **one scored attempt**.\n\nTape put forward: **`/private/tmp/heat13-569a41f9/artifacts/heat13/opus/e2-incline/attempt-1-tape.json`**\n(declared in `gauntlet-outcome.json`'s `tape` field).\n\nThe run: hero **never dropped below its running maximum** across all 81 views (min 100, finishing\n**175/175 at level 21** on 3× `tinkers_plating`), **zero of 17 works ever wrecked**\n(worksHp 1086/1126 at the bank), `goldStolen` **0**, 563 spawned against 504 defeated with\n`threats.alive` pinned at its 60 cap. The railcar spawned with wave 12 at t ≈ 482 and was down by\nt = 495.9 — about **14 seconds** under four turrets on the rail line.\n\n**A defective first reel, named plainly.** `tune-1` secured with the identical policy and its reel is\n**not submittable**: it answered the secure window with full order arrays, the door refused all ~600\nof them (`SECURE_CHOICE_ONLY`) while the choice clock ran down, and the local assay replayed it to\n`fnv1a32:831ab506` against a recorded header of `fnv1a32:470e04ef` (replay 15,476 ticks vs a declared\n`durationTicks` of 14,878). `attempt-1` is the same controller with exactly one change — branch on\n`now.pendingSecure` and answer it with a single `SECURE_CHOICE` — and it is clean.\n\nReceipt, instrument first: `scripts/assay-replay-agent.mjs` was control-tested on the zero-order idle\nprobe, which replays to its own header `fnv1a32:a45ba9ac`, so the instrument is sound in this build.\n`attempt-1` then replays to **`fnv1a32:a489588e`, matching its tape header bit for bit**, with\n`outcome` and `securedSnapshot` both `{secured: true, waves: 12, gold: 200, timeAlive: 495.9}` — the\ndeclared gold equals the secure-tick purse, so no `score_mismatch` — and `ticks` 14,878 now equal to\n`durationTicks`. Envelope, all four axes measured against `runTapeEnvelopeForContract`:\n14,878 / 21,602 ticks, last accepted order at 14,877 (inside, so not the F-HEAT11-1 terminal-tick\ncase), 80 / 4,321 entries, 288,524 / 2,322,784 bytes.",
+    "whatTheMapAsked": "Its era's signature mechanic is E2 **pressure with hazard — vent-or-boom** — and it asked me nothing\nabout it, for the seventh time across my generations. The fixtures are honest and complete:\n`boiler_house` is on the roster at 70 g × 3 and `stablePrefix.map.coalSeams` publishes three seams at\n(0, −28), (4, −26), (7, −22), ~11 wu from the stake, exactly as the door document promises. But the\nunion of `now` keys across all 81 views is `blastReadyInMs · expiresAtSimMs · gold · hero ·\nneedsRider · orders · pendingOffer · prospector · score · seams · threats · timers · wave · weapon ·\nworks` — **no pressure value, no band, no coal count, no boiler fuel** — and the grammar has no vent\nverb. This ride adds a sharper reason than my earlier \"no feedback field\" findings: the three\npressure weapons are *constructed* headless but every one is gated on\n`hasResearch(node) && hasBaronMedal()` read from injected profile storage, and the sim's own comment\nstates that a run declaring nothing \"sees precisely what a browser player who has unlocked nothing\nsees: three shooters that never pass `enabled()`\". So on a plain boot the line cannot fire at all,\nand 210 gold of boiler is a strictly dominated purchase rather than an unobservable gamble.\n\nWhat the map *does* ask, in its own right, is a good **spatial question that the boss gate makes\nmandatory**, and it is not stationary survival wearing the era's name. Because the railcar declares\n`pursuitRange: 0` and rides a fixed polyline, every gold decision is priced in *seconds of fire on\nthe rail*: a turret at lateral offset d covers `2·√(256 − d²)` units of track, so moving the battery\nfrom the stake pocket (d = 12, 21.2 units) onto the rail shoulder (d = 4, 31.0 units) is a ~46 %\nincrease in fire window per pass, on four turrets, for free. And the map hands you a second reason to\nstand there: `riverBlocksEnemies` plus fords only at x = ±12 means the lower ford *is* the rail line,\nso the same four turrets own the boss's track and the wreckers' only northern door. That is a real,\nlegible, closed-form question and the map asked it honestly. The view fields that carried it were\n`now.works.entries`/`byKind`/`wrecked`, `now.seams[].active/x/z/anchorIndex`, `now.gold` against\n`now.score.goldPanned`, `now.hero.hp/maxHp/x/z`, `now.threats.alive/wreckers`,\n`now.orders[].status/reason` and `now.pendingOffer`/`now.pendingSecure`; the orders were\n`MOVE_HERO`, `BUILD`, `HARVEST`, `PICK_UPGRADE`, `BLAST_AT`, `REPAIR_UNDER` and one `SECURE_CHOICE`.\n**Not one E2 verb, because E2 has none.**\n\nMy notebook remembers this map from generation 8, which secured it w14 / 592.700 s / 197 g on engine\n`a607a81f`. **It still plays the way I remember in its bones and not in its controls, and the control\nchange is worth real ground.** Every structural number reproduced: the same stake, the same\n`lower-yard`, the same near seam at (−30, −20), the same wave-12 railcar at `hpScale` 12.5, the same\npatrol line. What is dead is the sentence that generation opened from — it rode a *welded* hero and\nfortified \"the `lower-yard` pocket around the loss stake\", 12 wu from the rail. `MOVE_HERO` deletes\nthat constraint: the hero walks to (−18, −15), the fort rings the body it defends *and* sits on the\nboss's track, and the same contract secures two waves earlier at full health.",
+    "winnability": "Secured, and the margin was **wide in every direction at once** — the hero never dropped below its\nrunning maximum and finished 175/175, not one of seventeen works was ever wrecked, no gold was\nstolen, and the purse sat at the 200 bank cap — with the single genuinely thin thing being the reel\nrather than the play: my first securing tape was inadmissible on a hash mismatch caused entirely by\nhow I answered the secure window, and it took a one-line fix and a control-tested assay to find it.",
+    "lessons": "- **A secured run and a submittable reel are still different achievements — and the gap can be\n  invisible in the outcome line.** `tune-1` reported `secured: true, waves 12, gold 200` and its\n  envelope passed on all four axes; it was still dead on arrival, because the assay replayed it to a\n  different `eventLogHash` than its own header. Four of my generations lost reels to the *envelope*;\n  this is the first I nearly lost to a **replay divergence**, and the outcome line, the envelope\n  check and the tape header all looked fine. **Run the local assay on every securing tape before\n  calling the ride done — the hash comparison is the only check that catches this class.**\n- **The cause was rejected submissions burning the choice clock.** `StandingOrders` accepts exactly\n  one order while `now.pendingSecure` is present (`SECURE_CHOICE_ONLY`); anything else refuses the\n  whole array and re-serves the same frozen view. My controller spun ~600 refusals through the\n  20-second trail choice clock, and the replay — which sees only the 80 *accepted* entries — cannot\n  reproduce that, so it ran 598 ticks long and hashed differently. Generation 9 already wrote\n  \"branch on `now.pendingSecure` at the very top of the controller\"; I knew the rule, did not carry\n  it, and it cost a reel. **Rejected input is not free: it is invisible to the tape and visible to\n  the sim.**\n- **Control-test the assay instrument before believing OR fearing it — fifth generation, first time\n  it mattered in the accusing direction.** Generations 4/34/35/52/64 all tripped on comparing the\n  replay against the *outcome line's* hash instead of the *tape header's*. Here the tape header was\n  the right comparand and it genuinely disagreed. Replaying the zero-order idle probe first (it\n  matched its own header exactly) is what turned \"my instrument is broken\" into \"my reel is broken\"\n  in one command.\n- **When a ruling retires a verb, ask what the replacement makes REACHABLE.** Generation 8 fortified\n  the stake pocket 12 wu off the rail because a welded hero had to be defended where it stood. With\n  `MOVE_HERO` the hero walks onto the rail shoulder, the fort follows it, and turret rail-coverage\n  goes from 21.2 to 31.0 units per turret per pass. Third map in three heats (with `e8-mare-claim`\n  and `e4-gusher-county`) where the 1:1 parity ruling turned a fixed-geometry compromise into a free\n  choice — **and on a kill-gated boss map that choice is the contract.**\n- **On a fixed-rail boss, place beside the rail and let the river choose the offset.** d = 4 is\n  ~94 % of the coverage of d = 0 while keeping the whole battery clear of a `scale 3.2` hull with\n  `buildingDamageScale 7`. Zero works wrecked in 563 spawns. The arithmetic that picks d is two\n  minutes; the arithmetic that picks *which* d is safe is the boss's own hull width.\n- **Read the era system's gate predicates, not just its view fields.** Six of my generations recorded\n  \"E2 pressure is published and unreadable\" from the absence of a `now` field. The sharper and\n  cheaper finding is one constructor: `PressureArsenalSystem` takes `hasResearch` and `hasBaronMedal`\n  and a door run supplies neither. That converts \"an unobservable subsystem I cannot steer\" into \"a\n  strictly dominated 210-gold purchase\", which is a decision rather than a mystery.\n- **Check whether seams re-anchor before designing the economy — it is nine views of an idle probe.**\n  Here `anchorIndex` held at 0/2/5 for the whole probe, which pinned the near seam at 6.3 wu from the\n  stake and made a single-seam camped tail correct. On maps where anchors walk between waves the same\n  tail starves. `anchorIndex` answers it directly; do not infer it from coordinates.\n- **Ride the skeleton first and change nothing — twelfth heat where that is the whole discipline, and\n  the ninth in a row where it secured on ride one.** The reading budget went to the secure gate, the\n  rail route, the arsenal's gates and the water rule; the riding budget went to the unmodified\n  generation-6→83 skeleton plus the one thing this board does differently. Seventeen builds, zero\n  ladder stalls, zero wrecked, and the only edit after the first ride was the secure-window branch.\n- **What I left on the table, named precisely: waves.** The county ranks secured claims by waves DESC\n  before gold, and the railcar spawns at wave 12, so a run that survives to wave 17 and *then* kills\n  it ranks above a wave-12 kill. I banked at the first opportunity because the objective was a\n  first-secure receipt and the stop rule ends the ride there. On a re-ride of this contract, hold the\n  fort and delay the kill — the fort took zero damage for twelve waves and the ceiling is wave 18."
+  },
+  "usage": {
+    "transcript": "/Users/robin/.claude/projects/-private-tmp-heat13-569a41f9/b5e2cbf9-f1db-4921-a031-de19aedc2166.jsonl",
+    "assistantTurns": 91,
+    "toolCalls": 54,
+    "tokensIn": 182,
+    "tokensOut": 101600,
+    "cacheReadTokens": 36975824,
+    "cacheWriteTokens": 875177,
+    "note": "tokensIn excludes cache reads/writes (reported separately); summed from the CLI session transcript, not self-reported by the rig"
+  }
+}

@@ -1,0 +1,14 @@
+**SECURED** — `e1-twin-banks` / `e1-twin-banks-01` / trail: **w20 / 600.000s / 556 gold**, 917 kills, 150 calls. 3 sim runs, 1 scored attempt. Stopped at the first secure per the rules.
+
+## Outcome
+Secured on the second ride, tape put forward as `attempt-1-tape.json` (byte-identical to `tune-2-tape.json` — one ride under two filenames, declared in `gauntlet-outcome.json`'s `tape` field). Locally assay-verified: instrument control-tested on the zero-order probe first, then the reel reproduced its tape header `fnv1a32:3be42a34` exactly, with `securedSnapshot` gold 556 matching the declaration (`score_mismatch` clear). Envelope clear on all four axes — 18,000 of 18,002 ticks, last order at 17,702, 150 of 3,601 entries, 450,750 B of ~1.92 MB.
+
+## What the map asked
+Its era's named mechanic squarely: `twist.secureWave: 20` pins waves and time, so **the bank cap is the entire score**. The decisive arithmetic was three lines — *building* a stockpile is 60g for +150 cap (net **+90**), tier 2 is 110g for +90 (net −20), tier 3 is 260g for +120 (net −140), and turret/sluice tiers raise no cap at all. The sluice's legal ground is an exact line I computed from the waterMask before ordering: `z = ±7, |x| ∈ [11,20]`, nothing else.
+
+**The map has not moved.** Despite era 6 being named for rebuilt maps, every geometry clause my notebook carries from generations 7 and 82 reproduced to the decimal. Era 6 moved rendering, not rules — third heat running.
+
+## The one thing that cost me
+Ride 1 died at wave 19, 13.3 seconds short. The post-mortem found a defect worth flagging: my ladder priced a rung as `builtCount + rungsWalkedPast` instead of `builtCount + emittedThisArray`. That double-count made rungs hit `maxCount`, return `null`, and trip my own (correct) "retire a rung with no candidates" rule — **permanently retiring half the ladder**. Both rides built ~8 of 15 works while looking like they were choosing not to buy. A defensive rule and an arithmetic bug composed into a plausible wrong answer.
+
+So the 556 was banked with a fort that was never finished. The same policy with that arithmetic corrected should complete a 15-work fort and settle nearer an 800 cap — which also overturns my generation 82's claim that 500 was this contract's ceiling. Both are written into the report for the next generation.

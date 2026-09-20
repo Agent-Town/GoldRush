@@ -1,0 +1,936 @@
+(node:50086) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 222 tests using 1 worker
+
+[1/222] [desktop-chrome] › e2e/054-baron-epic.spec.ts:171:1 › wave 20 Baron spawns as epic-scale boss with anchored bar and one camera impulse
+[2/222] [desktop-chrome] › e2e/054-baron-epic.spec.ts:212:1 › unkited Baron wrecks structures with boss hit counts and governed crack audio
+[3/222] [desktop-chrome] › e2e/054-baron-epic.spec.ts:262:1 › stationary unplated hero dies within three Baron contacts, while base-speed kite opens distance
+[4/222] [desktop-chrome] › e2e/054-baron-epic.spec.ts:318:1 › scaled Baron collider accepts weapon hits at the visible edge
+[5/222] [desktop-chrome] › e2e/054-baron-epic.spec.ts:337:1 › scripted wave-20 kite build survives 60 seconds, wins before 180, and is deterministic
+[6/222] [desktop-chrome] › e2e/055-baron-kill-stop.spec.ts:125:1 › Baron kill-stop freezes sim, advances render, plants the standard, then the note persists
+[7/222] [desktop-chrome] › e2e/055-baron-kill-stop.spec.ts:163:1 › click or key skips only the hold and leaves the defeat card active
+[8/222] [desktop-chrome] › e2e/055-baron-kill-stop.spec.ts:175:1 › kill-stop leaves the sim hash identical to a nopause control
+[9/222] [desktop-chrome] › e2e/055-baron-kill-stop.spec.ts:200:1 › same-tick overrun and Baron kill does not start the celebration
+
+(node:51400) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[10/222] [desktop-chrome] › e2e/057-baron-rocket-cart.spec.ts:251:1 › kited Baron telegraphs and launches rockets that damage hero and buildings through CombatSystem
+  1) [desktop-chrome] › e2e/057-baron-rocket-cart.spec.ts:251:1 › kited Baron telegraphs and launches rockets that damage hero and buildings through CombatSystem 
+
+    Error: expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      255 |   const telegraph = await advanceUntil(page, () => rocketSnapshot(page), (snapshot) => snapshot.rocket.telegraphActive);
+      256 |   expect(telegraph.rocket.cartVisible).toBe(true);
+    > 257 |   expect(telegraph.audio.startedBySound['blast-charge-arm'] ?? 0).toBeGreaterThan(0);
+          |                                                                   ^
+      258 |
+      259 |   const midFlight = await advanceUntil(page, () => rocketSnapshot(page), (snapshot) => snapshot.blastsAlive >= 3);
+      260 |   expect(midFlight.rocket.lastOwnerId).toMatch(/^baron_rocket:/);
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-boss/e2e/057-baron-rocket-cart.spec.ts:257:67
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/057-baron-rocket-cart-kite-e68cc-ldings-through-CombatSystem-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/057-baron-rocket-cart-kite-e68cc-ldings-through-CombatSystem-desktop-chrome/error-context.md
+
+
+
+(node:62617) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[11/222] [desktop-chrome] › e2e/057-baron-rocket-cart.spec.ts:275:1 › lethal Baron rocket stops the death tick before XP and gold collection
+[12/222] [desktop-chrome] › e2e/057-baron-rocket-cart.spec.ts:334:1 › melee range suppresses the Baron rocket volley
+[13/222] [desktop-chrome] › e2e/057-baron-rocket-cart.spec.ts:359:1 › defeating the Baron captures the cart, shows the medal line, and unlocks captured research
+[14/222] [desktop-chrome] › e2e/057-baron-rocket-cart.spec.ts:415:1 › Sky-Rocket Battery requires Baron capture and preserves veteran profiles
+[15/222] [desktop-chrome] › e2e/057-baron-rocket-cart.spec.ts:444:1 › Baron rocket volley targeting is deterministic for the same seed
+[16/222] [desktop-chrome] › e2e/beauty-baron.spec.ts:236:1 › shot 1 — arrival boot: the taunt-banner moment over the fought-over ground
+[17/222] [desktop-chrome] › e2e/beauty-baron.spec.ts:258:1 › shot 2 — fixed fresh-eye run camera: warm home bank against cold company iron
+[18/222] [desktop-chrome] › e2e/beauty-baron.spec.ts:267:1 › shot 3 — MID-VOLLEY: tracers, impact rings, embers, and the p95 evidence frame
+[19/222] [desktop-chrome] › e2e/beauty-baron.spec.ts:316:1 › shot 4 — siege-line close-up: banners, wreck margin, scorch pads
+[20/222] [desktop-chrome] › e2e/beauty-baron.spec.ts:329:1 › shot 6 — the horizon behind the fort: what the panorama says about his operation
+[21/222] [desktop-chrome] › e2e/beauty-baron.spec.ts:341:1 › shot 5 — victory over the battle-scarred field
+[22/222] [desktop-chrome] › e2e/e1-baron.spec.ts:317:1 › default contract does not preload Baron art
+[23/222] [desktop-chrome] › e2e/e1-baron.spec.ts:343:1 › contract board requires science plus two secured claims and always shows an earned medal
+[24/222] [desktop-chrome] › e2e/e1-baron.spec.ts:389:1 › board launch uses the live Baron contract for cadence and wave 20 spawn
+[25/222] [desktop-chrome] › e2e/e1-baron.spec.ts:411:1 › Baron manifest loads and taunts fire at waves 5, 12, and 18
+[26/222] [desktop-chrome] › e2e/e1-baron.spec.ts:489:1 › wave 20 spawns the Baron with elite stats, banner, escorts, and stable seed data
+[27/222] [desktop-chrome] › e2e/e1-baron.spec.ts:526:1 › Baron damage visibly drains bar segments and the launcher stays carried
+[28/222] [desktop-chrome] › e2e/e1-baron.spec.ts:557:1 › standard rig damage defeats the Baron, doubles science, and persists the medal
+[29/222] [desktop-chrome] › e2e/e1-baron.spec.ts:607:1 › fast Baron kill preserves the queued arrival card before secure
+[30/222] [desktop-chrome] › e2e/e1-baron.spec.ts:644:1 › Baron art fallback keeps the placeholder path green when generated art fails
+[31/222] [desktop-chrome] › e2e/e1-baron.spec.ts:675:1 › same-frame overrun and Baron kill does not award the medal
+[32/222] [desktop-chrome] › e2e/e1-baron.spec.ts:704:1 › loss to the Baron contract remains the normal overrun ledger with no medal
+[33/222] [desktop-chrome] › e2e/e10-ember-shore-preserve.spec.ts:155:1 › E10S-3 plain boot: the Ember Shore shows the vent meter on the ordinary HUD
+[desktop-chrome] › e2e/e10-ember-shore-preserve.spec.ts:155:1 › E10S-3 plain boot: the Ember Shore shows the vent meter on the ordinary HUD
+e10-ember-shore plain boot watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[34/222] [desktop-chrome] › e2e/e10-ember-shore-preserve.spec.ts:204:1 › E10S-3 the stoke: confirm at the vent spends the authored gold for the authored warmth
+[desktop-chrome] › e2e/e10-ember-shore-preserve.spec.ts:204:1 › E10S-3 the stoke: confirm at the vent spends the authored gold for the authored warmth
+e10-ember-shore stoke watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[35/222] [desktop-chrome] › e2e/e10-ember-shore-preserve.spec.ts:274:1 › E10S-4 plain boot: panning a cooling vein pays for the stoke that keeps the vent
+[desktop-chrome] › e2e/e10-ember-shore-preserve.spec.ts:274:1 › E10S-4 plain boot: panning a cooling vein pays for the stoke that keeps the vent
+e10-ember-shore plain-boot errand watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[36/222] [desktop-chrome] › e2e/e10-ember-shore-preserve.spec.ts:336:1 › E10S-3 the loss: an unstoked vent gutters inside the first squall and ends the run
+[desktop-chrome] › e2e/e10-ember-shore-preserve.spec.ts:336:1 › E10S-3 the loss: an unstoked vent gutters inside the first squall and ends the run
+e10-ember-shore vent guttered watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[37/222] [desktop-chrome] › e2e/e10-ember-shore-squall.spec.ts:85:1 › E10S-2 plain boot: the Ember Shore opens as itself and its squall clock is already running
+[desktop-chrome] › e2e/e10-ember-shore-squall.spec.ts:85:1 › E10S-2 plain boot: the Ember Shore opens as itself and its squall clock is already running
+e10-ember-shore plain boot watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[38/222] [desktop-chrome] › e2e/e10-ember-shore-squall.spec.ts:131:1 › E10S-2 the clock: the browser changes phase on the same ticks the headless engine does
+[desktop-chrome] › e2e/e10-ember-shore-squall.spec.ts:131:1 › E10S-2 the clock: the browser changes phase on the same ticks the headless engine does
+e10-ember-shore squall clock watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[39/222] [desktop-chrome] › e2e/e10-finale-staging.spec.ts:14:1 › E10 closes on the Ark, re-inks, and offers THE RIVER through the Press
+[40/222] [desktop-chrome] › e2e/e10-preserve-objective.spec.ts:8:1 › a plain Last Claim boot shows the warm vent preserve objective
+[desktop-chrome] › e2e/e10-preserve-objective.spec.ts:8:1 › a plain Last Claim boot shows the warm vent preserve objective
+e10 preserve plain boot watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[41/222] [desktop-chrome] › e2e/e10-preserve-objective.spec.ts:29:1 › the browser uses the same seeded preserve-fell terminal rule
+[desktop-chrome] › e2e/e10-preserve-objective.spec.ts:29:1 › the browser uses the same seeded preserve-fell terminal rule
+e10 preserve terminal parity watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[42/222] [desktop-chrome] › e2e/e10-research-tree.spec.ts:23:1 › the active Deep Sky chart renders its uncertified bank without purchasable picks
+[43/222] [desktop-chrome] › e2e/e10-river-boot-guard.spec.ts:12:1 › raw E10 River door opens as The River without errors
+[44/222] [desktop-chrome] › e2e/e10-static-boss.spec.ts:37:1 › The Last Claim boots directly and the Static arrives without the e10static flag
+[45/222] [desktop-chrome] › e2e/e10-static-boss.spec.ts:71:1 › the Static pressures meaning, three preserves make the Quiet recede, and nothing is killed
+[46/222] [desktop-chrome] › e2e/e10-static-boss.spec.ts:145:1 › the Static stays unarmed without the E10 contract or explicit debug seam
+[47/222] [desktop-chrome] › e2e/e10-static-boss.spec.ts:153:1 › recession hands the secured claim to the existing T10 re-inking finale
+  2) [desktop-chrome] › e2e/e10-static-boss.spec.ts:153:1 › recession hands the secured claim to the existing T10 re-inking finale 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByTestId('bank-secured-claim')
+    Expected: visible
+    Timeout: 10000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 10000ms
+      - waiting for getByTestId('bank-secured-claim')
+
+
+      176 |   });
+      177 |
+    > 178 |   await expect(page.getByTestId('bank-secured-claim')).toBeVisible();
+          |                                                        ^
+      179 |   await page.getByTestId('bank-secured-claim').click();
+      180 |   await expect(page.getByTestId('e10-river-lever')).toBeVisible();
+      181 |   expect(await page.evaluate(() => ({
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-boss/e2e/e10-static-boss.spec.ts:178:56
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e10-static-boss-recession--53f77-isting-T10-re-inking-finale-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e10-static-boss-recession--53f77-isting-T10-re-inking-finale-desktop-chrome/error-context.md
+
+
+[48/222] [desktop-chrome] › e2e/e3-crawler-boss.spec.ts:73:1 › plays the four Crawler acts and leaves the town its wreck
+[49/222] [desktop-chrome] › e2e/e3-crawler-boss.spec.ts:178:1 › holds later component effects until their preceding acts are complete
+[50/222] [desktop-chrome] › e2e/e3-crawler-boss.spec.ts:209:1 › restores crawler act timers without revealing the offstage Baron
+[51/222] [desktop-chrome] › e2e/e3-crawler-boss.spec.ts:257:1 › does not turn a failed CONNECT objective into a boss victory
+[52/222] [desktop-chrome] › e2e/e4-landyacht-boss.spec.ts:89:1 › plays the Land-Yacht acts on the Dust Flats ring road
+[53/222] [desktop-chrome] › e2e/e4-landyacht-boss.spec.ts:161:1 › arrives without an early warning and holds later acts behind the wheels
+
+(node:6127) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[54/222] [desktop-chrome] › e2e/e5-boss-dredge-queen.spec.ts:131:1 › rides the storm, gates Act 2 on both paddles, spills the hold, and persists W6 per profile
+[55/222] [desktop-chrome] › e2e/e5-boss-dredge-queen.spec.ts:192:1 › interrupts a mid-cycle claw hit without transferring loot
+[56/222] [desktop-chrome] › e2e/e5-boss-dredge-queen.spec.ts:215:1 › damages only inside the telegraphed defensive-claw arc
+[57/222] [desktop-chrome] › e2e/e5-boss-dredge-queen.spec.ts:237:1 › keeps the boss-run frame p95 within 15% of the non-boss tile
+[desktop-chrome] › e2e/e5-boss-dredge-queen.spec.ts:237:1 › keeps the boss-run frame p95 within 15% of the non-boss tile
+Dredge-Queen perf desktop-chrome: non-boss=16.4ms boss=16.1ms ratio=0.9817
+
+[58/222] [desktop-chrome] › e2e/e6-boss-homemaker.spec.ts:126:1 › unbuilds, tidies, makes one chair, and remains kept without ever hurting the player
+[59/222] [desktop-chrome] › e2e/e7-boss.spec.ts:49:1 › Relay Valley boots directly and THE ECHO arrives without the e7boss flag
+[60/222] [desktop-chrome] › e2e/e7-boss.spec.ts:78:1 › mirrors the live base, grades novelty, and keeps the Echo in a jar without a kill
+[61/222] [desktop-chrome] › e2e/e7-boss.spec.ts:160:1 › does not arm the debug harness without the explicit boss seam
+[62/222] [desktop-chrome] › e2e/e7-echo-canyon-mirror.spec.ts:69:1 › a playbook used in Echo Canyon returns as a corrupted squad on the next wave
+[63/222] [desktop-chrome] › e2e/e7-echo-canyon-mirror.spec.ts:128:1 › CONTROL — the Relay Valley, same epoch and same tape, casts no shadow
+[64/222] [desktop-chrome] › e2e/e8-boss-salvage-claw.spec.ts:102:1 › descends by component state, drops a lifted building savable, and persists the yard
+[65/222] [desktop-chrome] › e2e/e8-boss-salvage-claw.spec.ts:155:1 › a completed lift removes through demolition and leaves a salvage-tag ledger event
+[66/222] [desktop-chrome] › e2e/e9-boss-old-digger.spec.ts:73:1 › surveys, legally unmakes its path, never attacks, and cannot be killed
+[67/222] [desktop-chrome] › e2e/e9-boss-old-digger.spec.ts:103:1 › boards the live machine, spawns drones, takes hazard ticks, and dismounts safely
+[68/222] [desktop-chrome] › e2e/e9-boss-old-digger.spec.ts:123:3 › THE SWAP uses the prior recording and persists gentle
+[69/222] [desktop-chrome] › e2e/e9-boss-old-digger.spec.ts:123:3 › THE SWAP uses the no-recording survey fallback and persists gentle
+[70/222] [desktop-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-ember-shore census cites the existing Deep Sky debt
+[desktop-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-ember-shore census cites the existing Deep Sky debt
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[71/222] [desktop-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-archive-world census cites the existing Deep Sky debt
+[desktop-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-archive-world census cites the existing Deep Sky debt
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[72/222] [desktop-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-last-claim census cites the existing Deep Sky debt
+[desktop-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-last-claim census cites the existing Deep Sky debt
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[73/222] [desktop-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-river census cites the existing Deep Sky debt
+[desktop-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-river census cites the existing Deep Sky debt
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[74/222] [desktop-chrome] › e2e/f-bw-16-baron-siege.spec.ts:66:1 › north barricade makes the Baron melee the blocker and volley the fortification line
+[75/222] [desktop-chrome] › e2e/f-bw-16-baron-siege.spec.ts:131:1 › unblocked Baron fight keeps its deterministic baseline
+  3) [desktop-chrome] › e2e/f-bw-16-baron-siege.spec.ts:131:1 › unblocked Baron fight keeps its deterministic baseline 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 3
+    + Received  + 3
+
+    @@ -29,18 +29,18 @@
+          "light": 1,
+          "maxHp": 53346.89295292784,
+          "nightSpeedMultiplier": 1,
+          "presentation": Object {
+            "bossBarScale": 3.52,
+    -       "bossBarY": 6.924224340768981,
+    +       "bossBarY": 6.923850674967718,
+            "damageThreshold": 0.5,
+            "damaged": false,
+            "markerColor": "#a0522d",
+            "mesh": false,
+            "morphInfluence": 0,
+            "mounted": false,
+    -       "railRotation": 3.0158298023499137,
+    +       "railRotation": 3.0185855101243373,
+            "railY": 0.5742243407689814,
+            "source": "billboard",
+            "textureKey": "boss-railcar-unknown",
+            "visible": false,
+            "wreckerMarker": true,
+    @@ -76,11 +76,11 @@
+        },
+        "hp": 82,
+        "rocket": Object {
+          "carried": true,
+          "cartVisible": true,
+    -     "distanceFromBaron": 1.757068815450042,
+    +     "distanceFromBaron": 1.7570688154500427,
+          "lastOwnerId": "baron_rocket:0",
+          "lastTarget": Object {
+            "x": 0,
+            "z": 20,
+          },
+
+      133 |   const second = await unblockedFingerprint(browser, 'f-bw-16-unblocked');
+      134 |   await attach(testInfo, 'f-bw-16-unblocked-determinism', { first, second });
+    > 135 |   expect(second.payload).toEqual(first.payload);
+          |                          ^
+      136 |   expect(second.hash).toBe(first.hash);
+      137 |   expect(first.errors).toEqual({ console: [], page: [] });
+      138 |   expect(second.errors).toEqual({ console: [], page: [] });
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-boss/e2e/f-bw-16-baron-siege.spec.ts:135:26
+
+    attachment #2: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/f-bw-16-baron-siege-unbloc-d218f--its-deterministic-baseline-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #3: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/f-bw-16-baron-siege-unbloc-d218f--its-deterministic-baseline-desktop-chrome/test-failed-2.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/f-bw-16-baron-siege-unbloc-d218f--its-deterministic-baseline-desktop-chrome/error-context.md
+
+
+
+(node:98017) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[76/222] [desktop-chrome] › e2e/lane-baron-arrival.spec.ts:42:1 › Baron boot has no palisade tax and spends no repair gold
+[77/222] [desktop-chrome] › e2e/lane-baron-arrival.spec.ts:50:1 › Baron body, motorcade, and arrival card derive their side from the fort
+[78/222] [desktop-chrome] › e2e/lane-baron-props-detail.spec.ts:7:1 › the detailed launcher and powder keg mount without the wrecker stone
+  4) [desktop-chrome] › e2e/lane-baron-props-detail.spec.ts:7:1 › the detailed launcher and powder keg mount without the wrecker stone 
+
+    Error: expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      49 |   const flight = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.vfx.baronVolley);
+      50 |   expect(flight.rockets.modelReady).toBe(true);
+    > 51 |   expect(flight.rockets.active).toBeGreaterThan(0);
+         |                                 ^
+      52 |   expect(flight.rockets.active).toBeLessThanOrEqual(flight.rockets.capacity);
+      53 |   expect(flight.tracers.active).toBe(flight.rockets.active);
+      54 |   expect(errors).toEqual([]);
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-boss/e2e/lane-baron-props-detail.spec.ts:51:33
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/lane-baron-props-detail-th-7b7a6-t-without-the-wrecker-stone-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/lane-baron-props-detail-th-7b7a6-t-without-the-wrecker-stone-desktop-chrome/error-context.md
+
+
+[79/222] [desktop-chrome] › e2e/lane-boss-healthbar.spec.ts:8:1 › boss damage leaves green life over red loss
+[80/222] [desktop-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:29:1 › T spawns Claim Jumpers, contact kills hero, R restarts in place
+[81/222] [desktop-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:59:1 › T does not spawn Claim Jumpers without debug consent
+[82/222] [desktop-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:72:1 › nospawn blocks debug packs
+[83/222] [desktop-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:83:1 › double restart recycles enemies without geometry growth
+[84/222] [desktop-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:109:1 › stress=120 stays within pool and draw-call budget
+[85/222] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:111:1 › menu places a palisade and logs build_palisade spend
+[86/222] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:136:1 › build menu shows six ready icons and Balance-backed blurbs
+[87/222] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining
+[88/222] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:205:1 › beacon cost curve stays intact through the menu
+[89/222] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:227:1 › single enemy slides around a finite palisade line without passing through
+[90/222] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:284:1 › 390px build menu is visible, tappable, and clear of HUD controls
+[91/222] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:329:1 › stress draw calls stay under 200 with palisades and beacons
+
+(node:98507) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[92/222] [desktop-chrome] › e2e/ss-11-e10-beats.spec.ts:169:1 › SS-11 table is attributed, presentational, and uses the E2/E3 trigger vocabulary
+[93/222] [desktop-chrome] › e2e/ss-11-e10-beats.spec.ts:182:1 › every Deep Sky beat cites a storybook line in source
+[94/222] [desktop-chrome] › e2e/ss-11-e10-beats.spec.ts:194:1 › a player-selected Deep Sky town presents the boarding and the Long Table before the ride
+[desktop-chrome] › e2e/ss-11-e10-beats.spec.ts:194:1 › a player-selected Deep Sky town presents the boarding and the Long Table before the ride
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[95/222] [desktop-chrome] › e2e/ss-11-e10-beats.spec.ts:234:1 › The Claim cannot load Deep Sky beats in Frontier
+[desktop-chrome] › e2e/ss-11-e10-beats.spec.ts:234:1 › The Claim cannot load Deep Sky beats in Frontier
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[96/222] [desktop-chrome] › e2e/ss-11-e10-beats.spec.ts:249:1 › epoch-3-voltage cannot load Deep Sky beats
+[desktop-chrome] › e2e/ss-11-e10-beats.spec.ts:249:1 › epoch-3-voltage cannot load Deep Sky beats
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[97/222] [desktop-chrome] › e2e/ss-11-e10-beats.spec.ts:260:1 › the Quiet, the return and the Press beats fire only on their own triggers
+[desktop-chrome] › e2e/ss-11-e10-beats.spec.ts:260:1 › the Quiet, the return and the Press beats fire only on their own triggers
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[98/222] [desktop-chrome] › e2e/ss-11-e10-beats.spec.ts:340:1 › the other two Deep Sky worlds speak only when their own card unlocks
+[desktop-chrome] › e2e/ss-11-e10-beats.spec.ts:340:1 › the other two Deep Sky worlds speak only when their own card unlocks
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[99/222] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:105:1 › enemy crossing the river reaches the hero through the ford only
+[100/222] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:123:1 › scheduled waves never place enemies in deep river over three waves
+[101/222] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:139:1 › hero stops in the shallows and keeps weapons armed at the deep channel
+[102/222] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:181:1 › xp from a residual deep-water death is auto-banked with no mote
+[103/222] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:202:1 › far-bank sluice stays untouched when the river flank is open
+[104/222] [desktop-chrome] › e2e/town-t5-townsfolk.spec.ts:209:1 › townsfolk bark data is epoch-scoped and short
+[105/222] [desktop-chrome] › e2e/town-t5-townsfolk.spec.ts:219:1 › seeded growth tiers show the correct townsfolk roster with no run sim diagnostics
+[106/222] [desktop-chrome] › e2e/town-t5-townsfolk.spec.ts:252:1 › approach barks identify sampled speakers and the Prospector greets by town name
+[107/222] [desktop-chrome] › e2e/town-t5-townsfolk.spec.ts:272:1 › youngsters ride the town ring road
+[108/222] [desktop-chrome] › e2e/town-t5-townsfolk.spec.ts:290:1 › mobile bark card is readable above the stick zone and captures concept comparison
+[109/222] [desktop-chrome] › e2e/wire-crawler-3d.spec.ts:115:1 › mounts the Crawler GLB, flips all three damage morphs, and disposes on kill
+  5) [desktop-chrome] › e2e/wire-crawler-3d.spec.ts:115:1 › mounts the Crawler GLB, flips all three damage morphs, and disposes on kill 
+
+    Error: renderer count mounted.triangles expected exact 157812, got 157592
+
+       at renderer-count-artifact.ts:37
+
+      35 |       if (typeof value !== 'number') throw new Error(`renderer count ${label} is missing`);
+      36 |       if (typeof expected === 'number') {
+    > 37 |         if (value !== expected) throw new Error(`renderer count ${label} expected exact ${expected}, got ${value}`);
+         |                                       ^
+      38 |       } else if (value < expected.tolerance[0] || value > expected.tolerance[1]) {
+      39 |         throw new Error(`renderer count ${label}=${value} outside band [${expected.tolerance.join(', ')}]`);
+      40 |       }
+        at verifyAndWriteRendererCounts (/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-boss/e2e/renderer-count-artifact.ts:37:39)
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-boss/e2e/wire-crawler-3d.spec.ts:147:3
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/wire-crawler-3d-mounts-the-e75eb-morphs-and-disposes-on-kill-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/wire-crawler-3d-mounts-the-e75eb-morphs-and-disposes-on-kill-desktop-chrome/error-context.md
+
+
+[110/222] [desktop-chrome] › e2e/wire-crawler-3d.spec.ts:158:1 › LITE keeps the placeholder and never requests the Crawler GLB
+[111/222] [desktop-chrome] › e2e/wire-crawler-3d.spec.ts:174:1 › invalid Crawler GLB bytes keep the placeholder presentation
+[112/222] [mobile-chrome] › e2e/054-baron-epic.spec.ts:171:1 › wave 20 Baron spawns as epic-scale boss with anchored bar and one camera impulse
+[113/222] [mobile-chrome] › e2e/054-baron-epic.spec.ts:212:1 › unkited Baron wrecks structures with boss hit counts and governed crack audio
+[114/222] [mobile-chrome] › e2e/054-baron-epic.spec.ts:262:1 › stationary unplated hero dies within three Baron contacts, while base-speed kite opens distance
+[115/222] [mobile-chrome] › e2e/054-baron-epic.spec.ts:318:1 › scaled Baron collider accepts weapon hits at the visible edge
+[116/222] [mobile-chrome] › e2e/054-baron-epic.spec.ts:337:1 › scripted wave-20 kite build survives 60 seconds, wins before 180, and is deterministic
+[117/222] [mobile-chrome] › e2e/055-baron-kill-stop.spec.ts:125:1 › Baron kill-stop freezes sim, advances render, plants the standard, then the note persists
+[118/222] [mobile-chrome] › e2e/055-baron-kill-stop.spec.ts:163:1 › click or key skips only the hold and leaves the defeat card active
+[119/222] [mobile-chrome] › e2e/055-baron-kill-stop.spec.ts:175:1 › kill-stop leaves the sim hash identical to a nopause control
+[120/222] [mobile-chrome] › e2e/055-baron-kill-stop.spec.ts:200:1 › same-tick overrun and Baron kill does not start the celebration
+
+(node:37622) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[121/222] [mobile-chrome] › e2e/057-baron-rocket-cart.spec.ts:251:1 › kited Baron telegraphs and launches rockets that damage hero and buildings through CombatSystem
+  6) [mobile-chrome] › e2e/057-baron-rocket-cart.spec.ts:251:1 › kited Baron telegraphs and launches rockets that damage hero and buildings through CombatSystem 
+
+    Error: expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      255 |   const telegraph = await advanceUntil(page, () => rocketSnapshot(page), (snapshot) => snapshot.rocket.telegraphActive);
+      256 |   expect(telegraph.rocket.cartVisible).toBe(true);
+    > 257 |   expect(telegraph.audio.startedBySound['blast-charge-arm'] ?? 0).toBeGreaterThan(0);
+          |                                                                   ^
+      258 |
+      259 |   const midFlight = await advanceUntil(page, () => rocketSnapshot(page), (snapshot) => snapshot.blastsAlive >= 3);
+      260 |   expect(midFlight.rocket.lastOwnerId).toMatch(/^baron_rocket:/);
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-boss/e2e/057-baron-rocket-cart.spec.ts:257:67
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/057-baron-rocket-cart-kite-e68cc-ldings-through-CombatSystem-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/057-baron-rocket-cart-kite-e68cc-ldings-through-CombatSystem-mobile-chrome/error-context.md
+
+
+
+(node:40767) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[122/222] [mobile-chrome] › e2e/057-baron-rocket-cart.spec.ts:275:1 › lethal Baron rocket stops the death tick before XP and gold collection
+[123/222] [mobile-chrome] › e2e/057-baron-rocket-cart.spec.ts:334:1 › melee range suppresses the Baron rocket volley
+[124/222] [mobile-chrome] › e2e/057-baron-rocket-cart.spec.ts:359:1 › defeating the Baron captures the cart, shows the medal line, and unlocks captured research
+[125/222] [mobile-chrome] › e2e/057-baron-rocket-cart.spec.ts:415:1 › Sky-Rocket Battery requires Baron capture and preserves veteran profiles
+[126/222] [mobile-chrome] › e2e/057-baron-rocket-cart.spec.ts:444:1 › Baron rocket volley targeting is deterministic for the same seed
+[127/222] [mobile-chrome] › e2e/beauty-baron.spec.ts:236:1 › shot 1 — arrival boot: the taunt-banner moment over the fought-over ground
+[128/222] [mobile-chrome] › e2e/beauty-baron.spec.ts:258:1 › shot 2 — fixed fresh-eye run camera: warm home bank against cold company iron
+[129/222] [mobile-chrome] › e2e/beauty-baron.spec.ts:267:1 › shot 3 — MID-VOLLEY: tracers, impact rings, embers, and the p95 evidence frame
+[130/222] [mobile-chrome] › e2e/beauty-baron.spec.ts:316:1 › shot 4 — siege-line close-up: banners, wreck margin, scorch pads
+[131/222] [mobile-chrome] › e2e/beauty-baron.spec.ts:329:1 › shot 6 — the horizon behind the fort: what the panorama says about his operation
+[132/222] [mobile-chrome] › e2e/beauty-baron.spec.ts:341:1 › shot 5 — victory over the battle-scarred field
+[133/222] [mobile-chrome] › e2e/e1-baron.spec.ts:317:1 › default contract does not preload Baron art
+[134/222] [mobile-chrome] › e2e/e1-baron.spec.ts:343:1 › contract board requires science plus two secured claims and always shows an earned medal
+[135/222] [mobile-chrome] › e2e/e1-baron.spec.ts:389:1 › board launch uses the live Baron contract for cadence and wave 20 spawn
+[136/222] [mobile-chrome] › e2e/e1-baron.spec.ts:411:1 › Baron manifest loads and taunts fire at waves 5, 12, and 18
+[137/222] [mobile-chrome] › e2e/e1-baron.spec.ts:489:1 › wave 20 spawns the Baron with elite stats, banner, escorts, and stable seed data
+[138/222] [mobile-chrome] › e2e/e1-baron.spec.ts:526:1 › Baron damage visibly drains bar segments and the launcher stays carried
+[139/222] [mobile-chrome] › e2e/e1-baron.spec.ts:557:1 › standard rig damage defeats the Baron, doubles science, and persists the medal
+[140/222] [mobile-chrome] › e2e/e1-baron.spec.ts:607:1 › fast Baron kill preserves the queued arrival card before secure
+[141/222] [mobile-chrome] › e2e/e1-baron.spec.ts:644:1 › Baron art fallback keeps the placeholder path green when generated art fails
+[142/222] [mobile-chrome] › e2e/e1-baron.spec.ts:675:1 › same-frame overrun and Baron kill does not award the medal
+[143/222] [mobile-chrome] › e2e/e1-baron.spec.ts:704:1 › loss to the Baron contract remains the normal overrun ledger with no medal
+[144/222] [mobile-chrome] › e2e/e10-ember-shore-preserve.spec.ts:155:1 › E10S-3 plain boot: the Ember Shore shows the vent meter on the ordinary HUD
+[mobile-chrome] › e2e/e10-ember-shore-preserve.spec.ts:155:1 › E10S-3 plain boot: the Ember Shore shows the vent meter on the ordinary HUD
+e10-ember-shore plain boot watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[145/222] [mobile-chrome] › e2e/e10-ember-shore-preserve.spec.ts:204:1 › E10S-3 the stoke: confirm at the vent spends the authored gold for the authored warmth
+[mobile-chrome] › e2e/e10-ember-shore-preserve.spec.ts:204:1 › E10S-3 the stoke: confirm at the vent spends the authored gold for the authored warmth
+e10-ember-shore stoke watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[146/222] [mobile-chrome] › e2e/e10-ember-shore-preserve.spec.ts:274:1 › E10S-4 plain boot: panning a cooling vein pays for the stoke that keeps the vent
+[mobile-chrome] › e2e/e10-ember-shore-preserve.spec.ts:274:1 › E10S-4 plain boot: panning a cooling vein pays for the stoke that keeps the vent
+e10-ember-shore plain-boot errand watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[147/222] [mobile-chrome] › e2e/e10-ember-shore-preserve.spec.ts:336:1 › E10S-3 the loss: an unstoked vent gutters inside the first squall and ends the run
+[mobile-chrome] › e2e/e10-ember-shore-preserve.spec.ts:336:1 › E10S-3 the loss: an unstoked vent gutters inside the first squall and ends the run
+e10-ember-shore vent guttered watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[148/222] [mobile-chrome] › e2e/e10-ember-shore-squall.spec.ts:85:1 › E10S-2 plain boot: the Ember Shore opens as itself and its squall clock is already running
+[mobile-chrome] › e2e/e10-ember-shore-squall.spec.ts:85:1 › E10S-2 plain boot: the Ember Shore opens as itself and its squall clock is already running
+e10-ember-shore plain boot watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[149/222] [mobile-chrome] › e2e/e10-ember-shore-squall.spec.ts:131:1 › E10S-2 the clock: the browser changes phase on the same ticks the headless engine does
+[mobile-chrome] › e2e/e10-ember-shore-squall.spec.ts:131:1 › E10S-2 the clock: the browser changes phase on the same ticks the headless engine does
+e10-ember-shore squall clock watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[150/222] [mobile-chrome] › e2e/e10-finale-staging.spec.ts:14:1 › E10 closes on the Ark, re-inks, and offers THE RIVER through the Press
+[151/222] [mobile-chrome] › e2e/e10-preserve-objective.spec.ts:8:1 › a plain Last Claim boot shows the warm vent preserve objective
+[mobile-chrome] › e2e/e10-preserve-objective.spec.ts:8:1 › a plain Last Claim boot shows the warm vent preserve objective
+e10 preserve plain boot watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[152/222] [mobile-chrome] › e2e/e10-preserve-objective.spec.ts:29:1 › the browser uses the same seeded preserve-fell terminal rule
+[mobile-chrome] › e2e/e10-preserve-objective.spec.ts:29:1 › the browser uses the same seeded preserve-fell terminal rule
+e10 preserve terminal parity watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[153/222] [mobile-chrome] › e2e/e10-research-tree.spec.ts:23:1 › the active Deep Sky chart renders its uncertified bank without purchasable picks
+[154/222] [mobile-chrome] › e2e/e10-river-boot-guard.spec.ts:12:1 › raw E10 River door opens as The River without errors
+[155/222] [mobile-chrome] › e2e/e10-static-boss.spec.ts:37:1 › The Last Claim boots directly and the Static arrives without the e10static flag
+[156/222] [mobile-chrome] › e2e/e10-static-boss.spec.ts:71:1 › the Static pressures meaning, three preserves make the Quiet recede, and nothing is killed
+[157/222] [mobile-chrome] › e2e/e10-static-boss.spec.ts:145:1 › the Static stays unarmed without the E10 contract or explicit debug seam
+[158/222] [mobile-chrome] › e2e/e10-static-boss.spec.ts:153:1 › recession hands the secured claim to the existing T10 re-inking finale
+  7) [mobile-chrome] › e2e/e10-static-boss.spec.ts:153:1 › recession hands the secured claim to the existing T10 re-inking finale 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByTestId('bank-secured-claim')
+    Expected: visible
+    Timeout: 10000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 10000ms
+      - waiting for getByTestId('bank-secured-claim')
+
+
+      176 |   });
+      177 |
+    > 178 |   await expect(page.getByTestId('bank-secured-claim')).toBeVisible();
+          |                                                        ^
+      179 |   await page.getByTestId('bank-secured-claim').click();
+      180 |   await expect(page.getByTestId('e10-river-lever')).toBeVisible();
+      181 |   expect(await page.evaluate(() => ({
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-boss/e2e/e10-static-boss.spec.ts:178:56
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e10-static-boss-recession--53f77-isting-T10-re-inking-finale-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e10-static-boss-recession--53f77-isting-T10-re-inking-finale-mobile-chrome/error-context.md
+
+
+[159/222] [mobile-chrome] › e2e/e3-crawler-boss.spec.ts:73:1 › plays the four Crawler acts and leaves the town its wreck
+[160/222] [mobile-chrome] › e2e/e3-crawler-boss.spec.ts:178:1 › holds later component effects until their preceding acts are complete
+[161/222] [mobile-chrome] › e2e/e3-crawler-boss.spec.ts:209:1 › restores crawler act timers without revealing the offstage Baron
+[162/222] [mobile-chrome] › e2e/e3-crawler-boss.spec.ts:257:1 › does not turn a failed CONNECT objective into a boss victory
+[163/222] [mobile-chrome] › e2e/e4-landyacht-boss.spec.ts:89:1 › plays the Land-Yacht acts on the Dust Flats ring road
+[164/222] [mobile-chrome] › e2e/e4-landyacht-boss.spec.ts:161:1 › arrives without an early warning and holds later acts behind the wheels
+
+(node:57628) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[165/222] [mobile-chrome] › e2e/e5-boss-dredge-queen.spec.ts:131:1 › rides the storm, gates Act 2 on both paddles, spills the hold, and persists W6 per profile
+[166/222] [mobile-chrome] › e2e/e5-boss-dredge-queen.spec.ts:192:1 › interrupts a mid-cycle claw hit without transferring loot
+[167/222] [mobile-chrome] › e2e/e5-boss-dredge-queen.spec.ts:215:1 › damages only inside the telegraphed defensive-claw arc
+[168/222] [mobile-chrome] › e2e/e5-boss-dredge-queen.spec.ts:237:1 › keeps the boss-run frame p95 within 15% of the non-boss tile
+[mobile-chrome] › e2e/e5-boss-dredge-queen.spec.ts:237:1 › keeps the boss-run frame p95 within 15% of the non-boss tile
+Dredge-Queen perf mobile-chrome: non-boss=9.3ms boss=16.6ms ratio=1.7849
+
+  8) [mobile-chrome] › e2e/e5-boss-dredge-queen.spec.ts:237:1 › keeps the boss-run frame p95 within 15% of the non-boss tile 
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 10.695
+    Received:    16.6
+
+      257 |
+      258 |   console.log(`Dredge-Queen perf ${testInfo.project.name}: non-boss=${nonBossP95}ms boss=${bossP95}ms ratio=${ratio}`);
+    > 259 |   expect(bossP95).toBeLessThanOrEqual(nonBossP95 * 1.15);
+          |                   ^
+      260 |   expect(errors).toEqual([]);
+      261 | });
+      262 |
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-boss/e2e/e5-boss-dredge-queen.spec.ts:259:19
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e5-boss-dredge-queen-keeps-7c885-hin-15-of-the-non-boss-tile-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e5-boss-dredge-queen-keeps-7c885-hin-15-of-the-non-boss-tile-mobile-chrome/error-context.md
+
+
+[169/222] [mobile-chrome] › e2e/e6-boss-homemaker.spec.ts:126:1 › unbuilds, tidies, makes one chair, and remains kept without ever hurting the player
+[170/222] [mobile-chrome] › e2e/e7-boss.spec.ts:49:1 › Relay Valley boots directly and THE ECHO arrives without the e7boss flag
+[171/222] [mobile-chrome] › e2e/e7-boss.spec.ts:78:1 › mirrors the live base, grades novelty, and keeps the Echo in a jar without a kill
+[172/222] [mobile-chrome] › e2e/e7-boss.spec.ts:160:1 › does not arm the debug harness without the explicit boss seam
+[173/222] [mobile-chrome] › e2e/e7-echo-canyon-mirror.spec.ts:69:1 › a playbook used in Echo Canyon returns as a corrupted squad on the next wave
+[174/222] [mobile-chrome] › e2e/e7-echo-canyon-mirror.spec.ts:128:1 › CONTROL — the Relay Valley, same epoch and same tape, casts no shadow
+[175/222] [mobile-chrome] › e2e/e8-boss-salvage-claw.spec.ts:102:1 › descends by component state, drops a lifted building savable, and persists the yard
+[176/222] [mobile-chrome] › e2e/e8-boss-salvage-claw.spec.ts:155:1 › a completed lift removes through demolition and leaves a salvage-tag ledger event
+[177/222] [mobile-chrome] › e2e/e9-boss-old-digger.spec.ts:73:1 › surveys, legally unmakes its path, never attacks, and cannot be killed
+[178/222] [mobile-chrome] › e2e/e9-boss-old-digger.spec.ts:103:1 › boards the live machine, spawns drones, takes hazard ticks, and dismounts safely
+[179/222] [mobile-chrome] › e2e/e9-boss-old-digger.spec.ts:123:3 › THE SWAP uses the prior recording and persists gentle
+[180/222] [mobile-chrome] › e2e/e9-boss-old-digger.spec.ts:123:3 › THE SWAP uses the no-recording survey fallback and persists gentle
+[181/222] [mobile-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-ember-shore census cites the existing Deep Sky debt
+[mobile-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-ember-shore census cites the existing Deep Sky debt
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[182/222] [mobile-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-archive-world census cites the existing Deep Sky debt
+[mobile-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-archive-world census cites the existing Deep Sky debt
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[183/222] [mobile-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-last-claim census cites the existing Deep Sky debt
+[mobile-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-last-claim census cites the existing Deep Sky debt
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[184/222] [mobile-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-river census cites the existing Deep Sky debt
+[mobile-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-river census cites the existing Deep Sky debt
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[185/222] [mobile-chrome] › e2e/f-bw-16-baron-siege.spec.ts:66:1 › north barricade makes the Baron melee the blocker and volley the fortification line
+[186/222] [mobile-chrome] › e2e/f-bw-16-baron-siege.spec.ts:131:1 › unblocked Baron fight keeps its deterministic baseline
+  9) [mobile-chrome] › e2e/f-bw-16-baron-siege.spec.ts:131:1 › unblocked Baron fight keeps its deterministic baseline 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 5
+    + Received  + 5
+
+    @@ -29,19 +29,19 @@
+          "light": 1,
+          "maxHp": 53346.89295292784,
+          "nightSpeedMultiplier": 1,
+          "presentation": Object {
+            "bossBarScale": 3.52,
+    -       "bossBarY": 6.719018725613382,
+    +       "bossBarY": 6.719003270103559,
+            "damageThreshold": 0.5,
+            "damaged": false,
+            "markerColor": "#a0522d",
+            "mesh": false,
+            "morphInfluence": 0,
+            "mounted": false,
+    -       "railRotation": 3.017261412343608,
+    -       "railY": 0.5742243407689814,
+    +       "railRotation": 3.017306680643804,
+    +       "railY": 0.36950750611152566,
+            "source": "billboard",
+            "textureKey": "boss-railcar-unknown",
+            "visible": false,
+            "wreckerMarker": true,
+          },
+    @@ -50,11 +50,11 @@
+          "speed": 2.6325000000000003,
+          "spreadOffset": -1.3479215058879743,
+          "state": "none",
+          "supportBuildingDamage": 96,
+          "terrain": Object {
+    -       "grounded": false,
+    +       "grounded": true,
+            "slope": Object {
+              "dx": 0,
+              "dz": 0,
+            },
+            "speedMul": 1,
+    @@ -76,11 +76,11 @@
+        },
+        "hp": 82,
+        "rocket": Object {
+          "carried": true,
+          "cartVisible": true,
+    -     "distanceFromBaron": 1.7570688154500427,
+    +     "distanceFromBaron": 1.757068815450043,
+          "lastOwnerId": "baron_rocket:0",
+          "lastTarget": Object {
+            "x": 0,
+            "z": 20,
+          },
+
+      133 |   const second = await unblockedFingerprint(browser, 'f-bw-16-unblocked');
+      134 |   await attach(testInfo, 'f-bw-16-unblocked-determinism', { first, second });
+    > 135 |   expect(second.payload).toEqual(first.payload);
+          |                          ^
+      136 |   expect(second.hash).toBe(first.hash);
+      137 |   expect(first.errors).toEqual({ console: [], page: [] });
+      138 |   expect(second.errors).toEqual({ console: [], page: [] });
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-boss/e2e/f-bw-16-baron-siege.spec.ts:135:26
+
+    attachment #2: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/f-bw-16-baron-siege-unbloc-d218f--its-deterministic-baseline-mobile-chrome/test-failed-2.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #3: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/f-bw-16-baron-siege-unbloc-d218f--its-deterministic-baseline-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/f-bw-16-baron-siege-unbloc-d218f--its-deterministic-baseline-mobile-chrome/error-context.md
+
+
+
+(node:60675) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[187/222] [mobile-chrome] › e2e/lane-baron-arrival.spec.ts:42:1 › Baron boot has no palisade tax and spends no repair gold
+[188/222] [mobile-chrome] › e2e/lane-baron-arrival.spec.ts:50:1 › Baron body, motorcade, and arrival card derive their side from the fort
+[189/222] [mobile-chrome] › e2e/lane-baron-props-detail.spec.ts:7:1 › the detailed launcher and powder keg mount without the wrecker stone
+[190/222] [mobile-chrome] › e2e/lane-boss-healthbar.spec.ts:8:1 › boss damage leaves green life over red loss
+[191/222] [mobile-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:29:1 › T spawns Claim Jumpers, contact kills hero, R restarts in place
+[192/222] [mobile-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:59:1 › T does not spawn Claim Jumpers without debug consent
+[193/222] [mobile-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:72:1 › nospawn blocks debug packs
+[194/222] [mobile-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:83:1 › double restart recycles enemies without geometry growth
+[195/222] [mobile-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:109:1 › stress=120 stays within pool and draw-call budget
+[196/222] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:111:1 › menu places a palisade and logs build_palisade spend
+[197/222] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:136:1 › build menu shows six ready icons and Balance-backed blurbs
+[198/222] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining
+[199/222] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:205:1 › beacon cost curve stays intact through the menu
+[200/222] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:227:1 › single enemy slides around a finite palisade line without passing through
+[201/222] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:284:1 › 390px build menu is visible, tappable, and clear of HUD controls
+[202/222] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:329:1 › stress draw calls stay under 200 with palisades and beacons
+[203/222] [mobile-chrome] › e2e/ss-11-e10-beats.spec.ts:169:1 › SS-11 table is attributed, presentational, and uses the E2/E3 trigger vocabulary
+[204/222] [mobile-chrome] › e2e/ss-11-e10-beats.spec.ts:182:1 › every Deep Sky beat cites a storybook line in source
+[205/222] [mobile-chrome] › e2e/ss-11-e10-beats.spec.ts:194:1 › a player-selected Deep Sky town presents the boarding and the Long Table before the ride
+[mobile-chrome] › e2e/ss-11-e10-beats.spec.ts:194:1 › a player-selected Deep Sky town presents the boarding and the Long Table before the ride
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[206/222] [mobile-chrome] › e2e/ss-11-e10-beats.spec.ts:234:1 › The Claim cannot load Deep Sky beats in Frontier
+[mobile-chrome] › e2e/ss-11-e10-beats.spec.ts:234:1 › The Claim cannot load Deep Sky beats in Frontier
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[207/222] [mobile-chrome] › e2e/ss-11-e10-beats.spec.ts:249:1 › epoch-3-voltage cannot load Deep Sky beats
+[mobile-chrome] › e2e/ss-11-e10-beats.spec.ts:249:1 › epoch-3-voltage cannot load Deep Sky beats
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[208/222] [mobile-chrome] › e2e/ss-11-e10-beats.spec.ts:260:1 › the Quiet, the return and the Press beats fire only on their own triggers

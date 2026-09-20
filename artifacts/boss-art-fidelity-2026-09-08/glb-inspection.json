@@ -1,0 +1,303 @@
+[
+  {
+    "id": "railcar",
+    "glb_sha256": "2abe1fceb5bf7f8e9ea3ba4c2dc4a42e28aa7d9e04b2327d9842862ae48d99b9",
+    "triangles": 10948,
+    "meshes": [
+      {
+        "name": "Railcar_WheelsMesh",
+        "morphs": [
+          "Damage_BentWheels"
+        ],
+        "primitives": 1
+      },
+      {
+        "name": "Railcar_BoilerMesh",
+        "morphs": [
+          "Damage_VentingBoiler"
+        ],
+        "primitives": 1
+      },
+      {
+        "name": "Railcar_CabinMesh",
+        "morphs": [
+          "Damage_CrackedCabin"
+        ],
+        "primitives": 1
+      }
+    ],
+    "materials": [
+      {
+        "doubleSided": true,
+        "name": "ArmoredRailcarPlateMaterial",
+        "pbrMetallicRoughness": {
+          "baseColorTexture": {
+            "index": 0
+          },
+          "metallicFactor": 0.3199999928474426,
+          "roughnessFactor": 0.6600000262260437
+        }
+      }
+    ],
+    "animations": 0
+  },
+  {
+    "id": "crawler",
+    "glb_sha256": "a336f7574d42ae6e1d69d13310fd549411c442e93073fec6a64ea0128f4f75f9",
+    "triangles": 11980,
+    "meshes": [
+      {
+        "name": "drain_mastMesh",
+        "morphs": [
+          "Damage_ToppledDrainMast"
+        ],
+        "primitives": 1
+      },
+      {
+        "name": "tracksMesh",
+        "morphs": [
+          "Damage_ShatteredTracks"
+        ],
+        "primitives": 1
+      },
+      {
+        "name": "capacitor_bankMesh",
+        "morphs": [
+          "Damage_RupturedCapacitorBank"
+        ],
+        "primitives": 1
+      }
+    ],
+    "materials": [
+      {
+        "doubleSided": true,
+        "name": "RivalDynamoCrawlerMaterial",
+        "pbrMetallicRoughness": {
+          "baseColorTexture": {
+            "index": 0
+          },
+          "metallicFactor": 0.18000000715255737,
+          "roughnessFactor": 0.8199999928474426
+        }
+      }
+    ],
+    "animations": 0
+  },
+  {
+    "id": "land-yacht",
+    "glb_sha256": "902191310b8cf604a1196902696ff14de78811f81bb30dd4bb5a3011f5ce7a01",
+    "triangles": 10632,
+    "meshes": [
+      {
+        "name": "wheelsMesh",
+        "morphs": [
+          "Damage_BeachedWheels"
+        ],
+        "primitives": 1
+      },
+      {
+        "name": "craneMesh",
+        "morphs": [
+          "Damage_SlackCrane"
+        ],
+        "primitives": 1
+      },
+      {
+        "name": "wheelhouseMesh",
+        "morphs": [
+          "Damage_CrackedWheelhouse"
+        ],
+        "primitives": 1
+      }
+    ],
+    "materials": [
+      {
+        "doubleSided": true,
+        "name": "LandYachtPaintedMaterial",
+        "pbrMetallicRoughness": {
+          "baseColorTexture": {
+            "index": 0
+          },
+          "metallicFactor": 0,
+          "roughnessFactor": 0.8999999761581421
+        }
+      }
+    ],
+    "animations": 0
+  },
+  {
+    "id": "dredge-queen",
+    "glb_sha256": "678e2e7a03733b3d1b3bdbf65557c6eea103ee8871a720c35a9e44201e38c39d",
+    "triangles": 33124,
+    "meshes": [
+      {
+        "name": "clawMesh",
+        "morphs": [
+          "Damage_SlackClaw"
+        ],
+        "primitives": 1
+      },
+      {
+        "name": "paddle_portMesh",
+        "morphs": [
+          "Damage_BrokenPortPaddle"
+        ],
+        "primitives": 1
+      },
+      {
+        "name": "paddle_starboardMesh",
+        "morphs": [
+          "Damage_BrokenStarboardPaddle"
+        ],
+        "primitives": 1
+      },
+      {
+        "name": "holdMesh",
+        "morphs": [
+          "Damage_CrackedLootHold"
+        ],
+        "primitives": 1
+      }
+    ],
+    "materials": [
+      {
+        "doubleSided": true,
+        "name": "DredgeQueenDetailOpus5Material",
+        "pbrMetallicRoughness": {
+          "baseColorTexture": {
+            "index": 0
+          },
+          "metallicFactor": 0,
+          "roughnessFactor": 0.8999999761581421
+        }
+      }
+    ],
+    "animations": 0
+  },
+  {
+    "id": "homemaker",
+    "glb_sha256": "3dc03cfafaab0645dc44350843ade2ede19e5ddf4f1a55519afbabeebc649ba9",
+    "triangles": 7644,
+    "meshes": [
+      {
+        "name": "vacMesh",
+        "morphs": [
+          "Damage_DroppedVac"
+        ],
+        "primitives": 1
+      },
+      {
+        "name": "rackMesh",
+        "morphs": [
+          "Damage_SpentRack"
+        ],
+        "primitives": 1
+      },
+      {
+        "name": "coreMesh",
+        "morphs": [
+          "Damage_ChairPose"
+        ],
+        "primitives": 1
+      }
+    ],
+    "materials": [
+      {
+        "doubleSided": true,
+        "name": "Homemaker9000PaintedMaterial",
+        "pbrMetallicRoughness": {
+          "baseColorTexture": {
+            "index": 0
+          },
+          "metallicFactor": 0,
+          "roughnessFactor": 0.8999999761581421
+        }
+      }
+    ],
+    "animations": 0
+  },
+  {
+    "id": "salvage-claw",
+    "glb_sha256": "9027a1451eee91ea943616c9dc1be84fcf0b571191ceaaeb4942913451b3ed98",
+    "triangles": 30100,
+    "meshes": [
+      {
+        "name": "winchMesh",
+        "morphs": [
+          "Landing_SprungWinch"
+        ],
+        "primitives": 1
+      },
+      {
+        "name": "anchor_feetMesh",
+        "morphs": [
+          "Landing_SettledAnchorFeet"
+        ],
+        "primitives": 1
+      },
+      {
+        "name": "crownMesh",
+        "morphs": [
+          "Landing_DarkCrown"
+        ],
+        "primitives": 1
+      }
+    ],
+    "materials": [
+      {
+        "doubleSided": true,
+        "name": "SalvageClawDetailOpus5Material",
+        "pbrMetallicRoughness": {
+          "baseColorTexture": {
+            "index": 0
+          },
+          "metallicFactor": 0,
+          "roughnessFactor": 0.8999999761581421
+        }
+      }
+    ],
+    "animations": 0
+  },
+  {
+    "id": "old-digger",
+    "glb_sha256": "4152727d1866d203a80a735a83525c26c263aef663261e146a616d727ab940df",
+    "triangles": 7192,
+    "meshes": [
+      {
+        "name": "bucket_wheelsMesh",
+        "morphs": [
+          "Redemption_GentleBuckets"
+        ],
+        "primitives": 1
+      },
+      {
+        "name": "gantryMesh",
+        "morphs": [
+          "Redemption_SafeGantry"
+        ],
+        "primitives": 1
+      },
+      {
+        "name": "tape_deckMesh",
+        "morphs": [
+          "Redemption_TealTapeDeck"
+        ],
+        "primitives": 1
+      }
+    ],
+    "materials": [
+      {
+        "doubleSided": true,
+        "name": "OldDiggerPaintedMaterial",
+        "pbrMetallicRoughness": {
+          "baseColorTexture": {
+            "index": 0
+          },
+          "metallicFactor": 0,
+          "roughnessFactor": 0.8999999761581421
+        }
+      }
+    ],
+    "animations": 0
+  }
+]

@@ -1,0 +1,196 @@
+{
+  "note": "THE FIRST TOWN'S DECLARED PAYLOAD, by family. One source for the gate (scripts/first-town-payload.mjs, which sums each family's files in dist/) and for the game (src/assets/AdvanceStream.ts reads saveDataTrim below). WHY IT EXISTS: F-BUDGET-4 \u2014 the released gate measured a browser race, not a payload (21.6 / 10.5 / 21.6 MB on one fixed build), so what the town DECLARES had to become data. A family here is the hashed basename with the build hash, the -diet- content hash and any -rNcM sheet cell stripped, exactly as scripts/first-town-request-families.test.mjs derives it. ADD A ROW IN THE SAME COMMIT AS THE CHANGE THAT INTRODUCES THE ASSET; a family in dist that nothing here names is invisible to the gate, and a family named here that dist does not emit fails it.",
+  "saveDataTrim": [
+    "dynamo-hall",
+    "stamp-mill"
+  ],
+  "saveDataTrimWhy": "The bulk halls the advance stream drops when navigator.connection.saveData is set. src/assets/AdvanceStream.ts builds its townUrls filter from this list; the gate subtracts the same names for its Save Data subtotal, so the metered arm of the game and the metered arm of the budget cannot disagree.",
+  "groups": [
+    {
+      "kind": "hero",
+      "why": "The hero slot's DEFAULT clip group (assets/layer-contracts/characters.v2.json clipGroups.default = 'town'; the town declares SPRITE_CLIP_GROUPS.town). The claim group's two sheets are in `excluded` below.",
+      "families": [
+        "char-hero-sheet-back-f.png",
+        "char-hero-sheet-front-f.png",
+        "char-hero-sheet-rotation-f.png",
+        "char-hero-sheet-rotation2-f.png",
+        "char-hero-sheet-side-actions-f.png",
+        "char-hero-sheet-side-f.png",
+        "char-hero-sheet-walk8.png",
+        "char-hero-sheet-walkdiag8.png"
+      ]
+    },
+    {
+      "kind": "cast",
+      "demandPaged": false,
+      "why": "GATED since 2026-09-07 (owner desk answer A11, verbatim: \"raise the budget, this is a good size in my opinion, we don't have to go too crazy\"): the ten town actors, one sheet each, named by src/town/town-actor-sheets.json and animated by src/town/TownScene.ts applyFullBodyFrame (`-r<row>c<frame>`), so every cell of every sheet is reachable while the player stands in the town. A cell is fetched the first time an actor turns to face that way, never at entry, so this is the UPPER BOUND of the first town, judged against a budget raised from 25,000,000 to 35,000,000 B for exactly this reason. Before the ruling the group was demand-paged and reported, not gated (F-FTP-1).",
+      "families": [
+        "char-assay-clerk-idle.png",
+        "char-assay-clerk-sheet-walk8-a.png",
+        "char-elder-idle.png",
+        "char-elder-sheet-walk8.png",
+        "char-newsie-mei-idle.png",
+        "char-newsie-mei-sheet-walk8.png",
+        "char-preacher-idle.png",
+        "char-preacher-sheet-walk8-a.png",
+        "char-prospector-sheet-hover8.png",
+        "char-schoolteacher-sheet-walk8-a.png",
+        "char-storekeeper-sheet-walk8.png",
+        "char-tavernkeeper-sheet-walk8.png",
+        "char-youngster-f-sheet-walk8.png",
+        "char-youngster-m-sheet-walk8.png"
+      ]
+    },
+    {
+      "kind": "plates",
+      "why": "Single-image plates the town shows: building facades, the cast's portraits (src/town/townsfolk.ts portraitUrl), the hero and prospector stills, the era kit sheet, the menu furniture and the tab icon.",
+      "families": [
+        "bld-chapel.png",
+        "bld-claim-office.png",
+        "bld-general-store.png",
+        "bld-schoolhouse.png",
+        "bld-tavern.png",
+        "char-prospector-portrait.png",
+        "favicon-32.png",
+        "hero-homesteader-f.png",
+        "kit-era-1.png",
+        "townsfolk-assay-clerk.png",
+        "townsfolk-elder.png",
+        "townsfolk-newsie-e1.png",
+        "townsfolk-preacher.png",
+        "townsfolk-schoolteacher.png",
+        "townsfolk-storekeeper.png",
+        "townsfolk-tavernkeeper.png",
+        "townsfolk-youngster-a.png",
+        "townsfolk-youngster-b.png",
+        "ui-menu-panel.png",
+        "ui-title-emblem.png"
+      ]
+    },
+    {
+      "kind": "models",
+      "why": "The town's own GLB plan: the plate, the seven halls, the era props and the plaza dressing \u2014 src/town/TownTavernPilot.ts townPrefetchUrls(), which is the advance stream's priority-1 town target.",
+      "families": [
+        "active_headframe.glb",
+        "assay-office.glb",
+        "chapel.glb",
+        "claim-office.glb",
+        "claim_stake.glb",
+        "covered_wagon.glb",
+        "general-store.glb",
+        "maintained_claim_house.glb",
+        "pan_monument.glb",
+        "riparian_dressing_pack.glb",
+        "schoolhouse.glb",
+        "stamp-mill.glb",
+        "town-plate.glb",
+        "town-v3-tavern.glb",
+        "water_trough.glb",
+        "working_camp.glb"
+      ]
+    },
+    {
+      "kind": "audio",
+      "why": "The click's own sound. The music group is deferred (see `excluded`).",
+      "families": [
+        "menu-tap.mp3"
+      ]
+    },
+    {
+      "kind": "code",
+      "why": "The chunks and stylesheets the first town pulls. The browser probe cannot see most of these: vite preview serves them without a content-length, so the cue-window instrument records 25 of them at ZERO bytes (measured, artifacts/first-town-payload-gate/).",
+      "families": [
+        "AssayBench.js",
+        "CameraRig.js",
+        "EraBackdrop.js",
+        "LandmarkCollision.js",
+        "Loop.js",
+        "Medals.js",
+        "Renderer.js",
+        "SoundSystem.js",
+        "SpriteAnimator.js",
+        "StartMenu.js",
+        "Terrain3dClaimPilot.js",
+        "TownNaming.js",
+        "TownScene.css",
+        "TownScene.js",
+        "TownTavernPilot.js",
+        "WorldInfoNotes.js",
+        "_gold-rush-release-e1-ceremony-scripts.js",
+        "active_headframe.js",
+        "ceremonyPostscripts.js",
+        "claim_stake.js",
+        "dispose.js",
+        "index.css",
+        "index.js",
+        "kit-era-1.js",
+        "maintained_claim_house.js",
+        "menu-tap.js",
+        "payload.js",
+        "riparian_dressing_pack.js",
+        "runBeacon.js",
+        "story.css",
+        "story.js",
+        "townEraProps.js",
+        "working_camp.js"
+      ]
+    },
+    {
+      "kind": "document",
+      "why": "The page itself.",
+      "families": [
+        "index.html"
+      ]
+    }
+  ],
+  "excluded": [
+    {
+      "family": "the-claim-terrain.glb",
+      "why": "The NEXT map, held by the F-BUDGET-3 scene hold; inside the recorded cue window only because that window's end is polled over CDP with ~500 ms of skirt (F-AUDIO-4)."
+    },
+    {
+      "family": "the-claim-panorama.glb",
+      "why": "Same as the-claim-terrain.glb \u2014 advance-stream residue, not the town's payload."
+    },
+    {
+      "family": "era-e1-frontier-loop.mp3",
+      "why": "Deferred music (F-AUDIO-3): held until the scene the player stands in publishes itself playable, and it arrives 26-195 ms after playable."
+    },
+    {
+      "family": "era-e1-frontier-loop.js",
+      "why": "The deferred loop's own ?url module; leaves with it."
+    },
+    {
+      "family": "char-hero-sheet-work8.png",
+      "why": "The hero's `pan` clip, moved to the claim clip group by hero-slot-clip-split; the town plays it never."
+    },
+    {
+      "family": "char-hero-sheet-work8-south-clean-v7.png",
+      "why": "The Hero south pan replacement remains in the claim clip group; town does not request this action."
+    },
+    {
+      "family": "char-hero-sheet-attack8.png",
+      "why": "The hero's `attack` clip, claim clip group; the town never calls playAttackPose."
+    },
+    {
+      "family": "char-hero-sheet-attack8-r2-east-clean-v1.png",
+      "why": "Replacement east attack frames remain in the claim clip group; town never calls playAttackPose."
+    },
+    {
+      "family": "version.json",
+      "why": "Written into dist by scripts/deploy.sh AFTER the build (its :81), so it is not a build output the payload can be computed from. ~60 bytes."
+    },
+    {
+      "family": "char-hero-sheet-work8-west-recovered-v1.png",
+      "why": "Recovered west pan remains in the Hero claim clip group; town does not play pan actions."
+    },
+    {
+      "family": "char-hero-sheet-work8-north-clean-v1.png",
+      "why": "Cleaned north pan remains in the Hero claim clip group; town does not play pan actions."
+    },
+    {
+      "family": "char-hero-sheet-work8-east-clean-v1.png",
+      "why": "Cleaned east pan remains in the Hero claim clip group; town does not play pan actions."
+    }
+  ]
+}

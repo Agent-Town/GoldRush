@@ -1,0 +1,40 @@
+
+=== 1 finish-ride ===
+{"rig":"opus","contract":"e8-low-orbit","wall":508,"wallHit":false,"rc":0,"tracked":[],"files":14,"outcome":{"secured":true,"waves":20,"gold":200,"runsSoFar":2,"scoredAttempts":1,"tape":"/tmp/heat12-038cc280/artifacts/heat12/opus/e8-low-orbit/attempt-1-tape.json","worldModel":"sim-import"},"scoredTapes":[{"file":"attempt-1-tape.json","id":"agent-6d2f797a-909e53e2-3dd6-4aa9-8160-2be17e6a78f7","secured":true,"waves":20,"gold":200,"durationTicks":18000,"lastEntryTick":17563,"promotedByRig":true,"discoveredBy":"outcome-file+filename"}],"otherSecured":[{"file":"tune-1-tape.json","id":"agent-6d2f797a-909e53e2-3dd6-4aa9-8160-2be17e6a78f7","waves":20,"gold":200}],"reportSections":{"outcome":1235,"whatTheMapAsked":3446,"winnability":462,"lessons":5140},"usage":{"turns":63,"toolCalls":32,"tokensIn":126,"tokensOut":118240}}
+tape chosen: attempt-1-tape.json (id agent-6d2f797a-909e53e2-3dd6-4aa9-8160-2be17e6a78f7, promotedByRig=true, discoveredBy=outcome-file+filename)
+
+=== 2 freeze notebook header ===
+{"headerOnly":true,"headerBytes":430}
+
+=== 3 harnessDigest ===
+56aaf969be6fc61d7cb379a9d2bf62bce67b36dbfa78ac1cb67bdd9ac1bddcf4
+
+=== 4 build-submission ===
+{"tapeId":"agent-6d2f797a-909e53e2-3dd6-4aa9-8160-2be17e6a78f7","contract":"e8-low-orbit","epochId":"epoch-8-orbital","seed":"e8-low-orbit-01","seedMode":"bench","score":{"secured":true,"waves":20,"timeAlive":600,"gold":200,"baseValue":0},"papers":{"buildId":"59a8a0ba7","engineHash":"86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b","era":5,"viewVersion":2},"durationTicks":18000,"lastEntryTick":17563,"stack":{"model":"claude-opus-5","harness":"heat12-operator","harnessVersion":"2.1.257","harnessDigest":"56aaf969be6fc61d7cb379a9d2bf62bce67b36dbfa78ac1cb67bdd9ac1bddcf4","worldModel":"sim-import","config":"attended-hosted headless `claude -p` ride (heat 12) on Claude Code CLI 2.1.257; charter + door manual + own notebook (self-memory); own controller authored in-ride","calls":95,"tokensIn":15588739,"tokensOut":118240}}
+
+=== 5 publish (POST → poll → WATCH) ===
+{"rank":null,"tapeId":"agent-6d2f797a-909e53e2-3dd6-4aa9-8160-2be17e6a78f7","assay":"verified","assayHash":"fnv1a32:c69324de","papers":{"buildId":"59a8a0ba7","engineHash":"86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b","era":5,"viewVersion":2}}
+
+=== LANDED ===
+{
+ "rig": "opus",
+ "contract": "e8-low-orbit",
+ "tapeFile": "attempt-1-tape.json",
+ "tapeId": "agent-6d2f797a-909e53e2-3dd6-4aa9-8160-2be17e6a78f7",
+ "assay": "verified",
+ "assayHash": "fnv1a32:c69324de",
+ "ranked": true,
+ "rank": null,
+ "waves": 20,
+ "gold": 200,
+ "calls": 95,
+ "eventLogHash": "fnv1a32:8629a98e",
+ "wall": 508,
+ "harnessDigest": "56aaf969be6fc61d7cb379a9d2bf62bce67b36dbfa78ac1cb67bdd9ac1bddcf4",
+ "usage": {
+  "turns": 63,
+  "toolCalls": 32,
+  "tokensIn": 15588739,
+  "tokensOut": 118240
+ }
+}

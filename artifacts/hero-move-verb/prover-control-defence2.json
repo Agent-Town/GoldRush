@@ -1,0 +1,655 @@
+{
+  "contract": "e10-ember-shore",
+  "arm": "control + defence 2/6",
+  "defence": 2,
+  "policy": {
+    "verbs": [
+      "HARVEST",
+      "MOVE_TO",
+      "CONTEXT_ACTION(stoke)",
+      "HOLD",
+      "SECURE_CHOICE"
+    ],
+    "kiteRing": null,
+    "kiteLegsPerTurn": null,
+    "kiteThreatFloor": null,
+    "purseTarget": 140,
+    "maxPansPerTurn": 6,
+    "ventStandOffset": 2.5
+  },
+  "identical": true,
+  "runs": [
+    {
+      "seed": "e10-ember-shore-01",
+      "exitCode": 0,
+      "turns": 30,
+      "secureChoices": 1,
+      "outcome": {
+        "secured": true,
+        "waves": 12,
+        "timeMs": 360000,
+        "gold": 125,
+        "kills": 410,
+        "calls": 29,
+        "defaultedPicks": 12,
+        "defaultedSecure": 0,
+        "eventLogHash": "fnv1a32:7855da66"
+      },
+      "run": 1,
+      "tape": null,
+      "trace": [
+        {
+          "wave": 11,
+          "runSeconds": 337.53,
+          "phase": "calm",
+          "warmth": 80.8,
+          "gold": 140,
+          "inReach": true,
+          "squallSecondsAhead": 0,
+          "warmthAtRisk": 0,
+          "errand": [],
+          "build": null,
+          "kite": null,
+          "works": {
+            "turret": 2
+          },
+          "pans": 0,
+          "stokes": {
+            "opening": 0,
+            "closing": 0
+          },
+          "stokeUses": 13,
+          "refusals": {
+            "undeclared": 0,
+            "guttered": 0,
+            "out-of-reach": 0,
+            "insufficient-gold": 0,
+            "already-warm": 7
+          },
+          "squallsSurvived": 3,
+          "objectiveMet": true,
+          "heroHp": 119,
+          "threats": 14
+        },
+        {
+          "wave": 11,
+          "runSeconds": 357.53,
+          "phase": "calm",
+          "warmth": 80.8,
+          "gold": 140,
+          "inReach": true,
+          "squallSecondsAhead": 16.53,
+          "warmthAtRisk": 66.13,
+          "errand": [],
+          "build": null,
+          "kite": null,
+          "works": {
+            "turret": 2
+          },
+          "pans": 0,
+          "stokes": {
+            "opening": 0,
+            "closing": 2
+          },
+          "stokeUses": 13,
+          "refusals": {
+            "undeclared": 0,
+            "guttered": 0,
+            "out-of-reach": 0,
+            "insufficient-gold": 0,
+            "already-warm": 7
+          },
+          "squallsSurvived": 3,
+          "objectiveMet": true,
+          "heroHp": 111,
+          "threats": 11
+        },
+        {
+          "wave": 11,
+          "runSeconds": 357.63,
+          "phase": "calm",
+          "warmth": 100,
+          "gold": 125,
+          "inReach": true,
+          "squallSecondsAhead": 16.63,
+          "warmthAtRisk": 66.53,
+          "errand": [
+            [
+              "gold-seam-1",
+              3
+            ]
+          ],
+          "build": null,
+          "kite": null,
+          "works": {
+            "turret": 2
+          },
+          "pans": 3,
+          "stokes": {
+            "opening": 0,
+            "closing": 1
+          },
+          "stokeUses": 14,
+          "refusals": {
+            "undeclared": 0,
+            "guttered": 0,
+            "out-of-reach": 0,
+            "insufficient-gold": 0,
+            "already-warm": 8
+          },
+          "squallsSurvived": 3,
+          "objectiveMet": true,
+          "heroHp": 111,
+          "threats": 11
+        },
+        {
+          "wave": 12,
+          "runSeconds": 360,
+          "phase": "calm",
+          "warmth": 100,
+          "gold": 125,
+          "inReach": false,
+          "squallSecondsAhead": 19,
+          "warmthAtRisk": 76,
+          "errand": [
+            [
+              "gold-seam-1",
+              3
+            ]
+          ],
+          "build": null,
+          "kite": null,
+          "works": {
+            "turret": 2
+          },
+          "pans": 3,
+          "stokes": {
+            "opening": 0,
+            "closing": 2
+          },
+          "stokeUses": 14,
+          "refusals": {
+            "undeclared": 0,
+            "guttered": 0,
+            "out-of-reach": 0,
+            "insufficient-gold": 0,
+            "already-warm": 8
+          },
+          "squallsSurvived": 3,
+          "objectiveMet": true,
+          "heroHp": 111,
+          "threats": 11
+        }
+      ]
+    },
+    {
+      "seed": "e10-ember-shore-01",
+      "exitCode": 0,
+      "turns": 30,
+      "secureChoices": 1,
+      "outcome": {
+        "secured": true,
+        "waves": 12,
+        "timeMs": 360000,
+        "gold": 125,
+        "kills": 410,
+        "calls": 29,
+        "defaultedPicks": 12,
+        "defaultedSecure": 0,
+        "eventLogHash": "fnv1a32:7855da66"
+      },
+      "run": 2,
+      "tape": null,
+      "trace": [
+        {
+          "wave": 11,
+          "runSeconds": 337.53,
+          "phase": "calm",
+          "warmth": 80.8,
+          "gold": 140,
+          "inReach": true,
+          "squallSecondsAhead": 0,
+          "warmthAtRisk": 0,
+          "errand": [],
+          "build": null,
+          "kite": null,
+          "works": {
+            "turret": 2
+          },
+          "pans": 0,
+          "stokes": {
+            "opening": 0,
+            "closing": 0
+          },
+          "stokeUses": 13,
+          "refusals": {
+            "undeclared": 0,
+            "guttered": 0,
+            "out-of-reach": 0,
+            "insufficient-gold": 0,
+            "already-warm": 7
+          },
+          "squallsSurvived": 3,
+          "objectiveMet": true,
+          "heroHp": 119,
+          "threats": 14
+        },
+        {
+          "wave": 11,
+          "runSeconds": 357.53,
+          "phase": "calm",
+          "warmth": 80.8,
+          "gold": 140,
+          "inReach": true,
+          "squallSecondsAhead": 16.53,
+          "warmthAtRisk": 66.13,
+          "errand": [],
+          "build": null,
+          "kite": null,
+          "works": {
+            "turret": 2
+          },
+          "pans": 0,
+          "stokes": {
+            "opening": 0,
+            "closing": 2
+          },
+          "stokeUses": 13,
+          "refusals": {
+            "undeclared": 0,
+            "guttered": 0,
+            "out-of-reach": 0,
+            "insufficient-gold": 0,
+            "already-warm": 7
+          },
+          "squallsSurvived": 3,
+          "objectiveMet": true,
+          "heroHp": 111,
+          "threats": 11
+        },
+        {
+          "wave": 11,
+          "runSeconds": 357.63,
+          "phase": "calm",
+          "warmth": 100,
+          "gold": 125,
+          "inReach": true,
+          "squallSecondsAhead": 16.63,
+          "warmthAtRisk": 66.53,
+          "errand": [
+            [
+              "gold-seam-1",
+              3
+            ]
+          ],
+          "build": null,
+          "kite": null,
+          "works": {
+            "turret": 2
+          },
+          "pans": 3,
+          "stokes": {
+            "opening": 0,
+            "closing": 1
+          },
+          "stokeUses": 14,
+          "refusals": {
+            "undeclared": 0,
+            "guttered": 0,
+            "out-of-reach": 0,
+            "insufficient-gold": 0,
+            "already-warm": 8
+          },
+          "squallsSurvived": 3,
+          "objectiveMet": true,
+          "heroHp": 111,
+          "threats": 11
+        },
+        {
+          "wave": 12,
+          "runSeconds": 360,
+          "phase": "calm",
+          "warmth": 100,
+          "gold": 125,
+          "inReach": false,
+          "squallSecondsAhead": 19,
+          "warmthAtRisk": 76,
+          "errand": [
+            [
+              "gold-seam-1",
+              3
+            ]
+          ],
+          "build": null,
+          "kite": null,
+          "works": {
+            "turret": 2
+          },
+          "pans": 3,
+          "stokes": {
+            "opening": 0,
+            "closing": 2
+          },
+          "stokeUses": 14,
+          "refusals": {
+            "undeclared": 0,
+            "guttered": 0,
+            "out-of-reach": 0,
+            "insufficient-gold": 0,
+            "already-warm": 8
+          },
+          "squallsSurvived": 3,
+          "objectiveMet": true,
+          "heroHp": 111,
+          "threats": 11
+        }
+      ]
+    },
+    {
+      "seed": "e10-ember-shore-02",
+      "exitCode": 0,
+      "turns": 27,
+      "secureChoices": 0,
+      "outcome": {
+        "secured": false,
+        "waves": 11,
+        "timeMs": 345800,
+        "gold": 140,
+        "kills": 376,
+        "calls": 26,
+        "defaultedPicks": 11,
+        "defaultedSecure": 0,
+        "eventLogHash": "fnv1a32:feedaf8f"
+      },
+      "run": 1,
+      "tape": null,
+      "trace": [
+        {
+          "wave": 10,
+          "runSeconds": 317.63,
+          "phase": "calm",
+          "warmth": 84.267,
+          "gold": 140,
+          "inReach": true,
+          "squallSecondsAhead": 0,
+          "warmthAtRisk": 0,
+          "errand": [],
+          "build": null,
+          "kite": null,
+          "works": {
+            "turret": 2
+          },
+          "pans": 0,
+          "stokes": {
+            "opening": 0,
+            "closing": 0
+          },
+          "stokeUses": 12,
+          "refusals": {
+            "undeclared": 0,
+            "guttered": 0,
+            "out-of-reach": 0,
+            "insufficient-gold": 0,
+            "already-warm": 5
+          },
+          "squallsSurvived": 3,
+          "objectiveMet": true,
+          "heroHp": 61,
+          "threats": 23
+        },
+        {
+          "wave": 11,
+          "runSeconds": 330,
+          "phase": "calm",
+          "warmth": 84.267,
+          "gold": 140,
+          "inReach": true,
+          "squallSecondsAhead": 0,
+          "warmthAtRisk": 0,
+          "errand": [],
+          "build": null,
+          "kite": null,
+          "works": {
+            "turret": 2
+          },
+          "pans": 0,
+          "stokes": {
+            "opening": 0,
+            "closing": 0
+          },
+          "stokeUses": 12,
+          "refusals": {
+            "undeclared": 0,
+            "guttered": 0,
+            "out-of-reach": 0,
+            "insufficient-gold": 0,
+            "already-warm": 5
+          },
+          "squallsSurvived": 3,
+          "objectiveMet": true,
+          "heroHp": 29,
+          "threats": 28
+        },
+        {
+          "wave": 11,
+          "runSeconds": 337.63,
+          "phase": "calm",
+          "warmth": 84.267,
+          "gold": 140,
+          "inReach": true,
+          "squallSecondsAhead": 0,
+          "warmthAtRisk": 0,
+          "errand": [],
+          "build": null,
+          "kite": null,
+          "works": {
+            "turret": 2
+          },
+          "pans": 0,
+          "stokes": {
+            "opening": 0,
+            "closing": 0
+          },
+          "stokeUses": 12,
+          "refusals": {
+            "undeclared": 0,
+            "guttered": 0,
+            "out-of-reach": 0,
+            "insufficient-gold": 0,
+            "already-warm": 5
+          },
+          "squallsSurvived": 3,
+          "objectiveMet": true,
+          "heroHp": 29,
+          "threats": 17
+        },
+        {
+          "wave": 11,
+          "runSeconds": 345.8,
+          "phase": "calm",
+          "warmth": 84.267,
+          "gold": 140,
+          "inReach": true,
+          "squallSecondsAhead": 4.8,
+          "warmthAtRisk": 19.2,
+          "errand": [],
+          "build": null,
+          "kite": null,
+          "works": {
+            "turret": 2
+          },
+          "pans": 0,
+          "stokes": {
+            "opening": 0,
+            "closing": 0
+          },
+          "stokeUses": 12,
+          "refusals": {
+            "undeclared": 0,
+            "guttered": 0,
+            "out-of-reach": 0,
+            "insufficient-gold": 0,
+            "already-warm": 5
+          },
+          "squallsSurvived": 3,
+          "objectiveMet": true,
+          "heroHp": 0,
+          "threats": 28
+        }
+      ]
+    },
+    {
+      "seed": "e10-ember-shore-02",
+      "exitCode": 0,
+      "turns": 27,
+      "secureChoices": 0,
+      "outcome": {
+        "secured": false,
+        "waves": 11,
+        "timeMs": 345800,
+        "gold": 140,
+        "kills": 376,
+        "calls": 26,
+        "defaultedPicks": 11,
+        "defaultedSecure": 0,
+        "eventLogHash": "fnv1a32:feedaf8f"
+      },
+      "run": 2,
+      "tape": null,
+      "trace": [
+        {
+          "wave": 10,
+          "runSeconds": 317.63,
+          "phase": "calm",
+          "warmth": 84.267,
+          "gold": 140,
+          "inReach": true,
+          "squallSecondsAhead": 0,
+          "warmthAtRisk": 0,
+          "errand": [],
+          "build": null,
+          "kite": null,
+          "works": {
+            "turret": 2
+          },
+          "pans": 0,
+          "stokes": {
+            "opening": 0,
+            "closing": 0
+          },
+          "stokeUses": 12,
+          "refusals": {
+            "undeclared": 0,
+            "guttered": 0,
+            "out-of-reach": 0,
+            "insufficient-gold": 0,
+            "already-warm": 5
+          },
+          "squallsSurvived": 3,
+          "objectiveMet": true,
+          "heroHp": 61,
+          "threats": 23
+        },
+        {
+          "wave": 11,
+          "runSeconds": 330,
+          "phase": "calm",
+          "warmth": 84.267,
+          "gold": 140,
+          "inReach": true,
+          "squallSecondsAhead": 0,
+          "warmthAtRisk": 0,
+          "errand": [],
+          "build": null,
+          "kite": null,
+          "works": {
+            "turret": 2
+          },
+          "pans": 0,
+          "stokes": {
+            "opening": 0,
+            "closing": 0
+          },
+          "stokeUses": 12,
+          "refusals": {
+            "undeclared": 0,
+            "guttered": 0,
+            "out-of-reach": 0,
+            "insufficient-gold": 0,
+            "already-warm": 5
+          },
+          "squallsSurvived": 3,
+          "objectiveMet": true,
+          "heroHp": 29,
+          "threats": 28
+        },
+        {
+          "wave": 11,
+          "runSeconds": 337.63,
+          "phase": "calm",
+          "warmth": 84.267,
+          "gold": 140,
+          "inReach": true,
+          "squallSecondsAhead": 0,
+          "warmthAtRisk": 0,
+          "errand": [],
+          "build": null,
+          "kite": null,
+          "works": {
+            "turret": 2
+          },
+          "pans": 0,
+          "stokes": {
+            "opening": 0,
+            "closing": 0
+          },
+          "stokeUses": 12,
+          "refusals": {
+            "undeclared": 0,
+            "guttered": 0,
+            "out-of-reach": 0,
+            "insufficient-gold": 0,
+            "already-warm": 5
+          },
+          "squallsSurvived": 3,
+          "objectiveMet": true,
+          "heroHp": 29,
+          "threats": 17
+        },
+        {
+          "wave": 11,
+          "runSeconds": 345.8,
+          "phase": "calm",
+          "warmth": 84.267,
+          "gold": 140,
+          "inReach": true,
+          "squallSecondsAhead": 4.8,
+          "warmthAtRisk": 19.2,
+          "errand": [],
+          "build": null,
+          "kite": null,
+          "works": {
+            "turret": 2
+          },
+          "pans": 0,
+          "stokes": {
+            "opening": 0,
+            "closing": 0
+          },
+          "stokeUses": 12,
+          "refusals": {
+            "undeclared": 0,
+            "guttered": 0,
+            "out-of-reach": 0,
+            "insufficient-gold": 0,
+            "already-warm": 5
+          },
+          "squallsSurvived": 3,
+          "objectiveMet": true,
+          "heroHp": 0,
+          "threats": 28
+        }
+      ]
+    }
+  ]
+}

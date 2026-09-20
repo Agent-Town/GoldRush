@@ -1,0 +1,106 @@
+A9 — e9-devils-alley — GATE LOG (2026-08-21, Node 26.4.0, base b9fd6fecb)
+=========================================================================
+Every playwright command below used playwright.a9-scratch.config.ts: a self-booting vite DEV
+server on 127.0.0.1:5276. Port 5279 was already listening (a neighbour), 5188 is never touched,
+and a vite PREVIEW server would 404 the runtime `/src/*.ts` imports the census spec makes.
+
+1. npx tsc --noEmit
+   rc=0, no output.
+
+2. npm run build
+   rc=0. "✓ built in 2.68s"; dist/assets/index-*.js 1,370.40 kB (gzip 329.31 kB).
+
+3. npx playwright test --list
+   Total: 2932 tests in 422 files
+   CONTROL on the same tree, this slice's own tests filtered out:
+     npx playwright test --list --grep-invert "A9 (plain boot|the wind)"
+     Total: 2928 tests in 421 files
+   => +4 tests / +1 file, exactly this slice's 2 tests across 2 projects. Collection intact
+      (F-A8-7: a both-engines module importing render code collapses this to 0 tests in 0 files).
+
+4. node artifacts/e9-devils-alley/run-evidence.mjs          [12 runs, every repeat byte-identical]
+   secure     e9-devils-alley-01 run1: secured=true  waves=20 kills=928 sweeps=19 moved=0 held=652 hash=fnv1a32:947390e6
+   secure     e9-devils-alley-01 run2: secured=true  waves=20 kills=928 sweeps=19 moved=0 held=652 hash=fnv1a32:947390e6
+   secure     e9-devils-alley-02 run1: secured=true  waves=20 kills=928 sweeps=19 moved=0 held=652 hash=fnv1a32:a92b5ed1
+   secure     e9-devils-alley-02 run2: secured=true  waves=20 kills=928 sweeps=19 moved=0 held=652 hash=fnv1a32:a92b5ed1
+   unanchored e9-devils-alley-01 run1: secured=false waves=17 kills=770 sweeps=16 moved=4 held=0   hash=fnv1a32:2859b0c3
+   unanchored e9-devils-alley-01 run2: secured=false waves=17 kills=770 sweeps=16 moved=4 held=0   hash=fnv1a32:2859b0c3
+   unanchored e9-devils-alley-02 run1: secured=false waves=19 kills=883 sweeps=18 moved=4 held=0   hash=fnv1a32:62c9b358
+   unanchored e9-devils-alley-02 run2: secured=false waves=19 kills=883 sweeps=18 moved=4 held=0   hash=fnv1a32:62c9b358
+   (The control's 7th pad was first (0,-8) — EXACTLY 8.00 from the stake, and anchored() is
+    inclusive, so it was held rather than exposed. Moved to (2,-8) = 8.246 and the whole battery
+    re-run: shape unchanged, only the two control hashes moved.)
+   idle       e9-devils-alley-01 run1: secured=false waves=3  kills=55  sweeps=2  moved=0 held=0   hash=fnv1a32:1a15181a
+   idle       e9-devils-alley-01 run2: secured=false waves=3  kills=55  sweeps=2  moved=0 held=0   hash=fnv1a32:1a15181a
+   idle       e9-devils-alley-02 run1: secured=false waves=3  kills=53  sweeps=2  moved=0 held=0   hash=fnv1a32:aa33adf0
+   idle       e9-devils-alley-02 run2: secured=false waves=3  kills=53  sweeps=2  moved=0 held=0   hash=fnv1a32:aa33adf0
+
+5. node scripts/null-floor-anchors.mjs          (regen)
+   Diff: 19 insertions, 1 deletion — the git-derived eraStamp (1817cb273 -> b9fd6fecb, this
+   branch's own merge-base) plus the 18 lines of the e9-devils-alley block. EVERY other
+   contract's floor rows are byte-unmoved.
+   node scripts/null-floor-anchors.mjs --check
+   "67 null floors match assets/contracts/null-floors.json (230.9s)."   rc=0
+
+6. node scripts/run-node-guards.mjs same-game-audit same-game-report-guard door-admission-ratchet
+        bench-seeds null-floor-anchors e3-mask-tables skillmd-guard
+   tests 45 | pass 45 | fail 0 | duration_ms 352804.8
+
+7. same-game audit re-measured on THIS tree and re-pinned, ATTRIBUTED BY REVERT-AND-REPRODUCE:
+   this tree     : not-offered 5, agent-lacks 473, equal 1007, exemptions 7, measurements 10
+   anchors emptied in BOTH contract + mask table, nothing else changed:
+                   not-offered 6, agent-lacks 463, equal  977, exemptions 7, measurements 10
+   => the base numbers reproduce EXACTLY, so every number that moved moves with those 4 anchors.
+   docs/bench/same-game-audit.md regenerated with `--write-report` on the same tree.
+
+8. npx playwright test --config playwright.a9-scratch.config.ts \
+        e2e/e9-devils-alley-relocation.spec.ts --workers=1
+   4 passed (20.6s)   [desktop-chrome + mobile-chrome, 2 tests each]
+   Console watch: 0 real errors; 4 suppressed "THREE.GLTFLoader: Couldn't load texture blob:"
+   transients on mobile (the known F-1304-1 / F-1180-2 class the shared watcher tolerates).
+
+9. npx playwright test --config playwright.a9-scratch.config.ts e2e/er01-e9-census.spec.ts --workers=1
+   8 passed (52.0s)   [4 contracts x 2 projects]
+
+10. npx playwright test --config playwright.a9-scratch.config.ts \
+        e2e/tp02-green-waypoint.spec.ts e2e/task-025-bandits-dont-swim.spec.ts \
+        e2e/m1-01-claim-jumpers-death.spec.ts e2e/m2-01-build-menu.spec.ts --workers=1
+    38 passed  [both projects]
+
+11. npm run test:node-guards   (FULL battery, run ALONE — pre/post bracket showed no neighbour)
+    tests 477 | pass 469 | fail 6 | skipped 2 | duration_ms 251040.4 | rc=1
+    Full log: artifacts/e9-devils-alley/node-guards.txt
+
+    ALL SIX REDS COLLAPSE TO ONE ENVIRONMENTAL CAUSE, VERIFIED DIRECTLY RATHER THAN INHERITED:
+    this git worktree has NO node_modules/typescript.
+        ls .claude/worktrees/agent-afb0b4a8ee24d0d5f/node_modules/typescript -> No such file
+        ls "Gold Rush"/node_modules/typescript/bin                           -> tsc, tsserver
+    (Which is also why `npx tsc` and `npm run build` resolve fine here — npx walks up to the
+     repo root — so the absence is invisible to every other gate.)
+      - worker-type-coverage "every functions/**/*.ts is type-checked": spawns the hardcoded
+        <cwd>/node_modules/typescript/bin/tsc. This slice touches ZERO files under functions/.
+      - suite-red-inventory x4 (script-root-invariant / absolute raw paths / refuses body
+        statistics / loss guard fails closed): each dies with
+        "Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'typescript' imported from
+         /tmp/gold-rush-suite-red-scripts-*/a/scripts/suite-red-inventory.mjs".
+      - fixture-teardown "all 34 scripts/*.test.mjs fixture owners remove their temp directories":
+        fails BECAUSE its child is scripts/suite-red-inventory.test.mjs, i.e. downstream of the
+        same four. Its assertion body quotes that child's 11-pass/4-fail run verbatim.
+    Same six A8's review recorded as pre-existing (reviews/e9-seed-run.md:141-156); this run names
+    the CAUSE rather than only reproducing the symptom. Zero unattributed reds.
+
+12. npm run test:node-guards exits 1, which SHORT-CIRCUITS its own && chain — the six tail guards
+    never ran (the trap reviews/e5-admission-completion.md:12 records). Run explicitly:
+      node scripts/test-ticker-stats.mjs                            rc=0
+      npm run test:ledger-guards                                    rc=0  "RESULT: 0 failure(s)"
+    test:ledger-guards chains findings-state, blocker-panel, ruling-propagation, citations,
+    desk-declaration, desk-birth, desk-carryforward, status-archive-audit, attended-owed-audit,
+    the six shell guards and nul-audit ("CLEAN — no raw NUL bytes in tracked text sources").
+    Run LAST, per F-1300-4, after every ledger edit this slice makes.
+
+CONTENTION PROTOCOL OBSERVED: a neighbouring agent's full node-guards battery was alive for most
+of this session (bracketed with `pgrep -fl "run-node-guards\.mjs"` before and after every heavy
+step). The full battery below was deliberately deferred until that one exited. NOTE the F-A8-6
+trap and its cure: the waiting loop matches on `run-node-guards\.mjs` (escaped dot) precisely so
+the waiter's own command line — which contains the backslash — cannot match itself and wait
+forever.

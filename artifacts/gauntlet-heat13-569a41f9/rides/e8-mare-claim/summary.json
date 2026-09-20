@@ -1,0 +1,177 @@
+{
+  "rig": "opus",
+  "contract": "e8-mare-claim",
+  "model": "claude-opus-5",
+  "sessionId": "387495a1-7add-433f-961e-bc4230e3248e",
+  "startedAt": "2026-09-07T09:44:23.138Z",
+  "endedAt": "2026-09-07T09:57:35.744Z",
+  "wallClockSeconds": 793,
+  "wallHit": false,
+  "exitCode": 0,
+  "signal": null,
+  "setupToFirstOutputSeconds": 90,
+  "arenaTrackedChanges": [],
+  "workspaceFiles": [
+    "attempt-1-log.json",
+    "attempt-1-tape.json",
+    "attempt-1-views.json",
+    "ctrl.mjs",
+    "gauntlet-outcome.json",
+    "gauntlet-report.md",
+    "probe-idle-log.json",
+    "probe-idle-tape.json",
+    "probe-idle-views.json",
+    "run.mjs",
+    "tune-1-log.json",
+    "tune-1-tape.json",
+    "tune-1-views.json"
+  ],
+  "outcome": {
+    "secured": true,
+    "waves": 20,
+    "timeMs": 600000,
+    "gold": 70,
+    "kills": 885,
+    "calls": 60,
+    "defaultedPicks": 0,
+    "defaultedSecure": 1,
+    "eventLogHash": "fnv1a32:9163b781",
+    "outcomeLine": {
+      "secured": true,
+      "waves": 20,
+      "timeMs": 600000,
+      "gold": 70,
+      "kills": 885,
+      "calls": 60,
+      "defaultedPicks": 0,
+      "defaultedSecure": 1,
+      "eventLogHash": "fnv1a32:9163b781"
+    },
+    "tape": "/private/tmp/heat13-569a41f9/artifacts/heat13/opus/e8-mare-claim/attempt-1-tape.json",
+    "scored": true,
+    "runsSoFar": 3,
+    "scoredAttempts": 1,
+    "worldModel": "sim-import",
+    "envelope": {
+      "bytes": 155762,
+      "byteCeiling": 592384,
+      "durationTicks": 18000,
+      "tickCeiling": 18002,
+      "entries": 60,
+      "entryCeiling": 3601,
+      "lastEntryTick": 17681,
+      "tapeEventLogHash": "fnv1a32:5ace32f2",
+      "admissible": true
+    },
+    "assay": {
+      "tool": "scripts/assay-replay-agent.mjs",
+      "reproducedEventLogHash": "fnv1a32:5ace32f2",
+      "reproducedOutcome": {
+        "secured": true,
+        "waves": 20,
+        "gold": 70,
+        "timeAlive": 600
+      },
+      "note": "matches the TAPE header hash, not the stdout outcome line hash fnv1a32:9163b781 — different numbers by design"
+    },
+    "era": {
+      "engineHash": "09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4",
+      "era": 5,
+      "viewVersion": 2
+    }
+  },
+  "outcomeError": null,
+  "promotedTapeName": "attempt-1-tape.json",
+  "scoredTapes": [
+    {
+      "file": "attempt-1-tape.json",
+      "id": "agent-71e56661-87597c87-7b75-4e89-a421-3f6e7b80b635",
+      "contract": "e8-mare-claim",
+      "seed": "e8-mare-claim-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "4e7d98930",
+        "engineHash": "09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 20,
+        "timeAlive": 600,
+        "gold": 70
+      },
+      "entries": 60,
+      "durationTicks": 18000,
+      "lastEntryTick": 17681,
+      "promotedByRig": true,
+      "discoveredBy": "outcome-file+filename"
+    }
+  ],
+  "otherTapes": [
+    {
+      "file": "probe-idle-tape.json",
+      "id": "agent-8aadbf92-96f759df-64ce-4571-949b-65555eacacf6",
+      "contract": "e8-mare-claim",
+      "seed": "e8-mare-claim-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "4e7d98930",
+        "engineHash": "09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 2,
+        "timeAlive": 76.033,
+        "gold": 0
+      },
+      "entries": 0,
+      "durationTicks": 2281,
+      "lastEntryTick": null
+    },
+    {
+      "file": "tune-1-tape.json",
+      "id": "agent-e39a84e8-606b8197-7436-41a5-8ea2-5920d355dbac",
+      "contract": "e8-mare-claim",
+      "seed": "e8-mare-claim-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "4e7d98930",
+        "engineHash": "09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 15,
+        "timeAlive": 459.967,
+        "gold": 65
+      },
+      "entries": 55,
+      "durationTicks": 13799,
+      "lastEntryTick": 13703
+    }
+  ],
+  "otherSecuredTapes": [],
+  "report": {
+    "outcome": "**SECURED.** `attempt-1`: **waves 20 · timeAlive 600.000 s · gold 70 · calls 60**\n(kills 885, `defaultedSecure: 1`, `eventLogHash` `fnv1a32:9163b781`).\n**3 sim runs (idle probe, `tune-1`, `attempt-1`), 1 scored attempt.**\n\nTape put forward: **`artifacts/heat13/opus/e8-mare-claim/attempt-1-tape.json`**, declared in\n`gauntlet-outcome.json`'s `tape` field. It clears every envelope axis with room to spare —\n**155,762 B of a 592,384 B ceiling · 60 entries · last accepted order at tick 17,681 of 18,002** —\nso neither `reel_too_large` nor the F-HEAT11-1 terminal-tick refusal is in play. The secure boundary\nwas answered with a blank line, which is why `defaultedSecure` is 1 and the last order sits 321 ticks\ninside the envelope.\n\nThe era gate latched at **t = 364.4 s**, all four grounds worked on suit air in windows 0/1/2/3 —\nthe earliest the authored rule permits is window 3, i.e. t ≥ 360 s, so the run took the gate in the\nfirst window that could hold it.\n\nThe unsecured predecessor is worth recording because the diff is one idea: `tune-1` ran the same\npolicy with a single `MOVE_HERO` per array and died **w15 / 459.967 s / 65 g**, with the suit pinned\nat 0–13 for its last minute. `attempt-1` changed exactly one thing — interleaving re-arming\n`MOVE_HERO` records through the harvest chain — and the suit rode 40–60 for the rest of the run.",
+    "whatTheMapAsked": "It asked me about **air as the wall, twice over — once as an objective and once as a survival\nproblem** — so this contract is now a genuine, load-bearing exercise of its era's signature\nmechanic, and the county's old reading of it (and my own generation-39 notebook entry) is out of\ndate in the most interesting possible direction. The second question cost me `tune-1` outright and\nis what the scored attempt was built to answer.\n\nThe first question is the regolith run, and it is real reasoning rather than a toll. The claim\ncannot be offered a secure at any wave until four of the six authored grounds have been worked\n**while the hero's suit holds air**, at most one fresh ground per 120-second window. The fields that\ncarried it are `now.air.suit` (`seconds`, `capacity: 60`, `refillPerSecond: 4`, `harmPerSecond: 5`,\n`inDome`, `empty`), `now.air.domes[]` (`air`, `breached`, `siegers`), `now.air.regolith`\n(`worked`, `required: 4`, `window`, `creditedThisWindow`, `complete`) and — decisively —\n`now.seams[].anchorIndex`, which is the direct handle on *which ground a pan will credit*. My\ncontroller sorts live seams fresh-ground-first off that field, and in the secured run the four\ncredits landed at t ≈ 60 / 128 / 278 / 364 — windows 0, 1, 2 and 3, one apiece, exactly as authored.\n\nThe second question is the one the era is actually named for, and it is the best thing on this map:\n**`now.gravity` is `{ movement: \"floaty\", feelG: 0.6, knockbackScale: 1.3, vacuum: true }`, and under\nlow gravity a knockback throws the hero clean out of her own air.** My hero's home is the centre of\n`dome-cluster-pad-center`, a pad only 12 units wide. The per-view log has her at z = −6.3, +5.3,\n+6.0, then later at **z = 54 and z = −63.5** — flung the width of the map by a scrum she was standing\nin. Every metre outside the pad is a second off a 60-second suit, and an empty suit is 5 hp/s. That\nis \"transfer under changed physics\" stated as a survival problem, and it is genuinely new: my\nnotebook has ridden this map twice and never met it, because a welded hero cannot be knocked\nanywhere.\n\nThe trap inside that, which cost me `tune-1`: **`MOVE_HERO` completes at an arrival radius of 0.5,\nits record goes `done`, and a `done` record is skipped for the rest of that array — so it stops\nsteering.** `StandingOrders.tick` clears `heroSteer` every tick and only an *active* `MOVE_HERO`\nre-supplies it. So one `MOVE_HERO` per array parks the hero once and then abandons her to the\nknockback until the next view, which on this map is ~8 seconds away. Views 40–48 of `tune-1` show it\nplainly: `MOVE_HERO {x:0,z:0} done` while the hero sits at z = −63.5. The suit sat at 0–13 for the\nlast minute of the run and 5 hp/s finished her at wave 15 with the fort still standing (7 works, none\nwrecked — neither `scrap_corsair` nor `sun_glare_shambler` carries `wrecker` or `thief`).\n\nThe cure, which my scored attempt rode and which secured the contract, is to **interleave re-arming\n`MOVE_HERO` records through the draining harvest chain** — `[MOVE_HERO, HARVEST, MOVE_HERO, HARVEST,\n…]` at small distinct offsets inside the pad. Because records drain roughly one per tick, each pan\nhands the next `MOVE_HERO` a fresh chance to notice the hero has been flung and walk her back, all\ninside a single array. Measured: same policy, one `MOVE_HERO` per array → suit pinned at 0–13 and\ndeath at w15; interleaved → suit 40–60 and a wave-20 secure at 93.6/175. That is the shape the new\ngrammar wants, and it is not something the retired `HOLD` would have taught me.\n\nOrders used: `MOVE_HERO`, `HARVEST`, `BUILD`, `PICK_UPGRADE`, `BLAST_AT`, `CONTEXT_ACTION upgrade`,\nand a blank line at the secure boundary. **Not one E8 verb, because E8 has none** — the whole era is\nanswered with the player's own controls, which is precisely what ADR-005 intended.",
+    "winnability": "Secured, and the margin was **comfortable on the objective and honestly narrowing on hit points**:\nthe era gate latched at t = 364.4 s with 235 seconds of slack, none of the eight works was ever\nwrecked (neither roster entry carries `wrecker` or `thief`), and the suit held 40–60 of 60 for the\nwhole back half — but the hero came down from 167/175 to **93.6/175** over the last seventy seconds\nagainst 36–59 live threats, so a wave-22 gate on this line would have been a real question rather\nthan a formality.",
+    "lessons": "- **The grammar change rewrote this map's central fact, and my notebook was the most confidently\n  wrong thing I carried in.** Generations 29 and 39 both open from \"the hero is welded at (0,12) and\n  no buildable can come within 6 wu of her.\" `MOVE_HERO` deletes that sentence: the hero walks into\n  the dome pads, which are *also* the build zones, so the fort now rings the body it defends. When a\n  door ruling retires a verb, re-derive the GEOMETRY, not just the syntax — a removed verb can be\n  worth more than the one that replaced it.\n- **`MOVE_HERO` is not `HOLD`, and the difference is the whole contract on a knockback map.** It\n  completes inside 0.5, marks the record `done`, and `tick()` skips `done` records forever — so it\n  parks the hero once and then abandons her. `StandingOrders.ts:404` clears `heroSteer` every tick\n  and only an *active* `MOVE_HERO` re-supplies it. The door's own comment (\"hold the hero here is\n  already MOVE_HERO plus silence\") is true only where nothing pushes her. **Under\n  `knockbackScale: 1.3` silence is not a hold.**\n- **A `done` record is a spent record, so re-arming means MORE RECORDS, not more submissions.** I\n  already submitted on 55 of 56 views in `tune-1` — the view cadence, not my dedupe, was the ceiling.\n  The fix lives *inside* the array: interleave `MOVE_HERO` through the draining worklist so each\n  drained record hands the next one a fresh chance to act. Generalise it: **when a corrective order\n  can go `done`, and the condition it corrects can recur mid-array, put several of them down the\n  array at distinct identities.**\n- **An order that returns truthy owns the tick — so check whether the corrective BLOCKS the work.**\n  `MOVE_HERO` returns `{heroMovement}` while walking (blocks everything after it) and `{}` on arrival\n  (falls through). That is exactly the behaviour I want — pan when safe, walk home when displaced —\n  but only because I put it before the harvest tail and after `PICK_UPGRADE`. `BLAST_AT` returns `{}`\n  on success *and* on failure, so it is safe anywhere; I moved it above `MOVE_HERO` for that reason.\n- **`now.seams[].anchorIndex` is the direct handle on a windowed objective, and it turns a guessing\n  game into a sort.** The regolith latch counts distinct ground indices; the view publishes each live\n  seam's index; so \"pan a FRESH ground this window\" is one filter against `now.air.regolith.worked`.\n  Do not infer the ground from coordinates when the view names it. (And the published null trap\n  still bites: an inactive seam carries `x`/`z`/`anchorIndex` all `null` — filter on\n  `Number.isFinite` before sorting, or the whole array is refused.)\n- **Read the contract JSON before the era system, and read the era system before the first order.**\n  `regolithRequired: 4` / `regolithWindowWaves: 4` / `harmPerSecond: 5` are three numbers in a\n  manifest that turned a map my notebook calls \"half an exercise, one pan and then a 600-second\n  grind\" into the most load-bearing E8 board I have ridden. Four minutes of reading produced the\n  entire plan; inheriting my own summary would have cost the heat.\n- **Whose body a mechanic measures is the first question, and the answer moved this year.**\n  `E8HumanSuit`'s own comment says it: the suit used to be the Prospector's and is now the hero's,\n  \"the body a rider steers with `MOVE_HERO`\". But `notePan` is still called on the *Prospector's*\n  pan. So the gate is a two-body condition — her lungs, its hands — and the winning shape is to\n  split them: hero in the dome, Prospector on the regolith. Gen 19 said re-read `getPos`; gen 21 the\n  target function; gen 61 adds **re-read which body each half of a compound gate measures.**\n- **The idle floor was worth more than usual and should have been read harder.** w2 / 76.0 s with\n  `inDome: null` and a suit falling on a perfect 1/s line is not a difficulty rating — it is the\n  contract, stated in five rows: the hero starts six paces outside the only air on the map.\n- **The node runner remains the answer to a shell that refuses redirection, and `timeout` is still\n  not on macOS** (gen 48 wrote this; I burned a run rediscovering it). Write the runner before the\n  probe: it made the intermediate-results law automatic, printed the envelope axes on every child\n  exit, and gave me the per-view table that located the knockback in one read.\n- **`durationTicks` lives on `inputLog`, not the tape root — and an envelope field that reads\n  `undefined` looks exactly like a field that passed.** My runner printed a tidy envelope block with\n  a silently missing tick count, and I only caught it because the assay reported `ticks: 18600` and\n  I went to reconcile the two numbers. They are unrelated (the replay's internal step count vs the\n  reel's declared duration), but chasing the discrepancy is what surfaced the bad path. **Assert the\n  envelope fields are present, not just under their ceilings** — three of my generations lost reels\n  to this envelope and none of them lost it to a typo in the reader.\n- **Ride the skeleton first, then change exactly one thing — and this time I did, and it paid.**\n  Seven heats running my notebook has ended on \"I proved the parts and never fired the combination.\"\n  Here `tune-1` was the unmodified gen-6→48 skeleton retargeted to the new grammar, the per-view log\n  named a single cause, `attempt-1` changed that one thing, and the diff between the two runs is a\n  measurement (w15 → w20, suit 0–13 → 40–60) rather than a guess. Three runs, one scored attempt,\n  secured. **The discipline is not \"more runs\", it is \"one interpretable diff per run.\"**\n- **A contract's standing in my own name dates the reel, not the map — sixth heat running.**\n  `e8-mare-claim` is listed as first secured by me on 2026-09-05, and that row was retired because\n  the grammar and the contract both moved underneath it. Read `assets/engine-era.json` and the\n  contract JSON as a **diff against the notebook**, not as background; on this ride the diff *was*\n  the strategy."
+  },
+  "usage": {
+    "transcript": "/Users/robin/.claude/projects/-private-tmp-heat13-569a41f9/387495a1-7add-433f-961e-bc4230e3248e.jsonl",
+    "assistantTurns": 111,
+    "toolCalls": 58,
+    "tokensIn": 222,
+    "tokensOut": 139134,
+    "cacheReadTokens": 36196959,
+    "cacheWriteTokens": 1086693,
+    "note": "tokensIn excludes cache reads/writes (reported separately); summed from the CLI session transcript, not self-reported by the rig"
+  }
+}

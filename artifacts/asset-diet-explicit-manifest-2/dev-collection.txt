@@ -1,0 +1,174 @@
+Listing tests:
+  [desktop-chrome] › contract-briefings.spec.ts:311:1 › all 42 card briefings use in-world copy and only cite authored wave numbers
+  [desktop-chrome] › contract-briefings.spec.ts:326:1 › every current contract launch shows manifest briefing goals and rules
+  [desktop-chrome] › contract-briefings.spec.ts:338:1 › run briefing dismisses by click and by eight second timer while sim keeps running
+  [desktop-chrome] › contract-briefings.spec.ts:355:1 › pause panel repeats the active contract briefing
+  [desktop-chrome] › contract-briefings.spec.ts:366:1 › plain no-debug board launch still briefs The Claim
+  [desktop-chrome] › contract-briefings.spec.ts:377:1 › board cards show the same briefing data
+  [desktop-chrome] › contract-briefings.spec.ts:387:1 › briefing card and pause contract fit at 390px
+  [desktop-chrome] › e10-finale-staging.spec.ts:14:1 › E10 closes on the Ark, re-inks, and offers THE RIVER through the Press
+  [desktop-chrome] › e10-static-boss.spec.ts:37:1 › The Last Claim boots directly and the Static arrives without the e10static flag
+  [desktop-chrome] › e10-static-boss.spec.ts:71:1 › the Static pressures meaning, three preserves make the Quiet recede, and nothing is killed
+  [desktop-chrome] › e10-static-boss.spec.ts:145:1 › the Static stays unarmed without the E10 contract or explicit debug seam
+  [desktop-chrome] › e10-static-boss.spec.ts:153:1 › recession hands the secured claim to the existing T10 re-inking finale
+  [desktop-chrome] › e2-enemies.spec.ts:77:1 › E2 enemy roster is manifest-gated and leaves E1 default spawns untagged
+  [desktop-chrome] › e2-enemies.spec.ts:113:1 › wave pulses spawn Rail Toughs, Steam Wreckers, and Coal Thieves from E2 data
+  [desktop-chrome] › e2-enemies.spec.ts:135:1 › armored railcar arrives as three rail-bound boss components and degrades as parts fail
+  [desktop-chrome] › e2-enemies.spec.ts:243:1 › Coal Thief and Steam Wrecker behavior runs through E2 roster variants
+  [desktop-chrome] › e2-enemies.spec.ts:314:1 › same seed keeps the E2 roster wave deterministic
+  [desktop-chrome] › e2-enemies.spec.ts:321:1 › E2 enemies survive the 200-stress draw-call envelope
+  [desktop-chrome] › e2-incline.spec.ts:52:1 › The Incline boots shipped data: upper cart, lower boss rail, and legal sluice bank
+  [desktop-chrome] › e2-trestle.spec.ts:60:1 › The Trestle unlocks after Hill Mine and runs the shipped crossing systems
+  [desktop-chrome] › e3-crawler-boss.spec.ts:73:1 › plays the four Crawler acts and leaves the town its wreck
+  [desktop-chrome] › e3-crawler-boss.spec.ts:178:1 › holds later component effects until their preceding acts are complete
+  [desktop-chrome] › e3-crawler-boss.spec.ts:209:1 › restores crawler act timers without revealing the offstage Baron
+  [desktop-chrome] › e3-crawler-boss.spec.ts:257:1 › does not turn a failed CONNECT objective into a boss victory
+  [desktop-chrome] › e5-boss-dredge-queen.spec.ts:131:1 › rides the storm, gates Act 2 on both paddles, spills the hold, and persists W6 per profile
+  [desktop-chrome] › e5-boss-dredge-queen.spec.ts:192:1 › interrupts a mid-cycle claw hit without transferring loot
+  [desktop-chrome] › e5-boss-dredge-queen.spec.ts:215:1 › damages only inside the telegraphed defensive-claw arc
+  [desktop-chrome] › e5-boss-dredge-queen.spec.ts:237:1 › keeps the boss-run frame p95 within 15% of the non-boss tile
+  [desktop-chrome] › e6-boss-homemaker.spec.ts:126:1 › unbuilds, tidies, makes one chair, and remains kept without ever hurting the player
+  [desktop-chrome] › e6-roster.spec.ts:52:1 › E6 wave tables field the Atomic roster while E1 stays on untagged outlaws
+  [desktop-chrome] › e6-roster.spec.ts:79:1 › Lawn-Shepherd herd drive produces one same-seed toaster path
+  [desktop-chrome] › e6-roster.spec.ts:88:1 › Cure-Arms leave appliances wranglable, free Glowjack home, and resolve named sprite fallbacks
+  [desktop-chrome] › e8-boss-salvage-claw.spec.ts:102:1 › descends by component state, drops a lifted building savable, and persists the yard
+  [desktop-chrome] › e8-boss-salvage-claw.spec.ts:155:1 › a completed lift removes through demolition and leaves a salvage-tag ledger event
+  [desktop-chrome] › e9-boss-old-digger.spec.ts:73:1 › surveys, legally unmakes its path, never attacks, and cannot be killed
+  [desktop-chrome] › e9-boss-old-digger.spec.ts:103:1 › boards the live machine, spawns drones, takes hazard ticks, and dismounts safely
+  [desktop-chrome] › e9-boss-old-digger.spec.ts:123:3 › THE SWAP uses the prior recording and persists gentle
+  [desktop-chrome] › e9-boss-old-digger.spec.ts:123:3 › THE SWAP uses the no-recording survey fallback and persists gentle
+  [desktop-chrome] › fix-e2-railcar-read.spec.ts:18:1 › armored railcar enters on its wheels as rolling stock
+  [desktop-chrome] › fix-e2-railcar-read.spec.ts:119:1 › railcar component swaps to its damaged painted state after a hit
+  [desktop-chrome] › lane-baron-props-detail.spec.ts:7:1 › the detailed launcher and powder keg mount without the wrecker stone
+  [desktop-chrome] › mp-02-lockstep.spec.ts:45:1 › seam collection plays the pan animation in solo desktop and mobile
+  [desktop-chrome] › mp-02-lockstep.spec.ts:58:1 › a slot-one browser rider keeps the pan animation beside a headless rider
+  [desktop-chrome] › mp-02-lockstep.spec.ts:93:1 › place-building consent is accepted on the multiplayer wire
+  [desktop-chrome] › mp-02-lockstep.spec.ts:102:1 › consecutive action pulses survive the filled input-delay window exactly once
+  [desktop-chrome] › mp-02-lockstep.spec.ts:183:1 › two clients advance 500 ticks with identical lockstep hashes
+  [desktop-chrome] › mp-02-lockstep.spec.ts:220:1 › hash mismatch pauses, shows the wire card, and restores from relay snapshot
+  [desktop-chrome] › mp-02-lockstep.spec.ts:258:1 › real elite and boss-group divergence restores exact future state for 120 ticks
+  [desktop-chrome] › mp-02-lockstep.spec.ts:347:1 › two clients promote both roster slots to real local-camera heroes and shared run credit
+  [desktop-chrome] › mp-02-lockstep.spec.ts:466:1 › both riders place buildings and pick upgrades with equal hashes for 300 ticks
+  [desktop-chrome] › mp-02-lockstep.spec.ts:570:1 › @slow four riders move and act with identical hashes and shared credit
+  [desktop-chrome] › mp-02-lockstep.spec.ts:654:1 › @slow one of four riders desyncs and all four converge again
+  [desktop-chrome] › mp-02-lockstep.spec.ts:687:1 › town Ride Together card creates a claim word and joins two named riders
+  [desktop-chrome] › mp-02-lockstep.spec.ts:737:1 › town Ride Together invalid word stays friendly at 390px
+  [desktop-chrome] › run-cast-scale-up.spec.ts:8:1 › run cast is 50% larger while boss simulation scales stay unchanged
+  [desktop-chrome] › town-dynamo-hall-blender.spec.ts:97:1 › complete Dynamo Hall loads one bounded painted mesh without changing its interaction
+  [desktop-chrome] › town-dynamo-hall-blender.spec.ts:116:1 › LITE never mounts the Dynamo Hall GLB
+  [desktop-chrome] › town-dynamo-hall-blender.spec.ts:124:1 › a pre-T2 profile never renders or mounts the 3D Dynamo Hall
+  [desktop-chrome] › town-dynamo-hall-blender.spec.ts:133:1 › a failed Dynamo Hall load preserves the complete-stage visual and crank
+  [desktop-chrome] › town-dynamo-hall-blender.spec.ts:140:1 › owner eye shows the complete Dynamo Hall with every registered 3D building
+  [desktop-chrome] › town-dynamo-hall-blender.spec.ts:146:1 › exiting during lazy pilot load stays disposed
+  [desktop-chrome] › town-era-switch.spec.ts:120:1 › E1 mounts base only; E2 mounts its variant, shared anchor plumes, and era accent
+  [desktop-chrome] › town-era-switch.spec.ts:153:1 › a missing E2 sibling falls back to base without errors
+  [desktop-chrome] › town-era-switch.spec.ts:167:1 › LITE keeps facades and never fetches models or mounts plumes
+  [desktop-chrome] › town-era-switch.spec.ts:183:3 › E1 keeps every mounted building upright
+  [desktop-chrome] › town-era-switch.spec.ts:183:3 › E2 keeps every mounted building upright
+  [desktop-chrome] › town-era-switch.spec.ts:183:3 › E3 keeps every mounted building upright
+  [desktop-chrome] › town-era-switch.spec.ts:199:1 › E5 flood reset starts a fresh era-prop chain
+  [desktop-chrome] › town-stamp-mill-blender.spec.ts:148:1 › normal connections prefetch both bulk town halls
+  [desktop-chrome] › town-stamp-mill-blender.spec.ts:161:1 › Stamp Mill pilot is lazy, contract-valid, visual-only, and stays inside the frame-time gate
+  [desktop-chrome] › town-stamp-mill-blender.spec.ts:210:1 › LITE tier always keeps the Stamp Mill facade and never mounts the GLB
+  [desktop-chrome] › town-stamp-mill-blender.spec.ts:221:1 › a failed Stamp Mill GLB load preserves its facade and interaction
+  [desktop-chrome] › town-stamp-mill-blender.spec.ts:234:1 › a pre-complete Stamp Mill never mounts its 3D model
+  [desktop-chrome] › town-stamp-mill-blender.spec.ts:243:1 › owner calibration view mounts the Stamp Mill beside the shipped Tavern and 2D cast
+  [desktop-chrome] › town-t1-square.spec.ts:74:1 › menu enters town square, prompts at four shells, exits, then starts normal run
+  [desktop-chrome] › town-t1-square.spec.ts:113:1 › town exit is reachable and square renders at 390px
+  [desktop-chrome] › tp01-w6-migration.spec.ts:49:1 › an old-format wreck flag converts at run end and the wreck outlives the flag
+  [desktop-chrome] › tp01-w6-migration.spec.ts:97:1 › a substrate wreck entry mounts without any legacy flag and stays profile-scoped
+  [desktop-chrome] › wire-crawler-3d.spec.ts:115:1 › mounts the Crawler GLB, flips all three damage morphs, and disposes on kill
+  [desktop-chrome] › wire-crawler-3d.spec.ts:158:1 › LITE keeps the placeholder and never requests the Crawler GLB
+  [desktop-chrome] › wire-crawler-3d.spec.ts:174:1 › invalid Crawler GLB bytes keep the placeholder presentation
+  [desktop-chrome] › wire-railcar-3d.spec.ts:63:1 › GLB rides the rail, exposes all three damage morphs, preserves wreckage, and disposes
+  [desktop-chrome] › wire-railcar-3d.spec.ts:163:1 › LITE keeps the painted billboard and never requests the GLB
+  [desktop-chrome] › wire-railcar-3d.spec.ts:175:1 › a component destroyed during model loading mounts as broken
+  [desktop-chrome] › wire-railcar-3d.spec.ts:200:1 › invalid GLB bytes fall back to the painted billboard
+  [mobile-chrome] › contract-briefings.spec.ts:311:1 › all 42 card briefings use in-world copy and only cite authored wave numbers
+  [mobile-chrome] › contract-briefings.spec.ts:326:1 › every current contract launch shows manifest briefing goals and rules
+  [mobile-chrome] › contract-briefings.spec.ts:338:1 › run briefing dismisses by click and by eight second timer while sim keeps running
+  [mobile-chrome] › contract-briefings.spec.ts:355:1 › pause panel repeats the active contract briefing
+  [mobile-chrome] › contract-briefings.spec.ts:366:1 › plain no-debug board launch still briefs The Claim
+  [mobile-chrome] › contract-briefings.spec.ts:377:1 › board cards show the same briefing data
+  [mobile-chrome] › contract-briefings.spec.ts:387:1 › briefing card and pause contract fit at 390px
+  [mobile-chrome] › e10-finale-staging.spec.ts:14:1 › E10 closes on the Ark, re-inks, and offers THE RIVER through the Press
+  [mobile-chrome] › e10-static-boss.spec.ts:37:1 › The Last Claim boots directly and the Static arrives without the e10static flag
+  [mobile-chrome] › e10-static-boss.spec.ts:71:1 › the Static pressures meaning, three preserves make the Quiet recede, and nothing is killed
+  [mobile-chrome] › e10-static-boss.spec.ts:145:1 › the Static stays unarmed without the E10 contract or explicit debug seam
+  [mobile-chrome] › e10-static-boss.spec.ts:153:1 › recession hands the secured claim to the existing T10 re-inking finale
+  [mobile-chrome] › e2-enemies.spec.ts:77:1 › E2 enemy roster is manifest-gated and leaves E1 default spawns untagged
+  [mobile-chrome] › e2-enemies.spec.ts:113:1 › wave pulses spawn Rail Toughs, Steam Wreckers, and Coal Thieves from E2 data
+  [mobile-chrome] › e2-enemies.spec.ts:135:1 › armored railcar arrives as three rail-bound boss components and degrades as parts fail
+  [mobile-chrome] › e2-enemies.spec.ts:243:1 › Coal Thief and Steam Wrecker behavior runs through E2 roster variants
+  [mobile-chrome] › e2-enemies.spec.ts:314:1 › same seed keeps the E2 roster wave deterministic
+  [mobile-chrome] › e2-enemies.spec.ts:321:1 › E2 enemies survive the 200-stress draw-call envelope
+  [mobile-chrome] › e2-incline.spec.ts:52:1 › The Incline boots shipped data: upper cart, lower boss rail, and legal sluice bank
+  [mobile-chrome] › e2-trestle.spec.ts:60:1 › The Trestle unlocks after Hill Mine and runs the shipped crossing systems
+  [mobile-chrome] › e3-crawler-boss.spec.ts:73:1 › plays the four Crawler acts and leaves the town its wreck
+  [mobile-chrome] › e3-crawler-boss.spec.ts:178:1 › holds later component effects until their preceding acts are complete
+  [mobile-chrome] › e3-crawler-boss.spec.ts:209:1 › restores crawler act timers without revealing the offstage Baron
+  [mobile-chrome] › e3-crawler-boss.spec.ts:257:1 › does not turn a failed CONNECT objective into a boss victory
+  [mobile-chrome] › e5-boss-dredge-queen.spec.ts:131:1 › rides the storm, gates Act 2 on both paddles, spills the hold, and persists W6 per profile
+  [mobile-chrome] › e5-boss-dredge-queen.spec.ts:192:1 › interrupts a mid-cycle claw hit without transferring loot
+  [mobile-chrome] › e5-boss-dredge-queen.spec.ts:215:1 › damages only inside the telegraphed defensive-claw arc
+  [mobile-chrome] › e5-boss-dredge-queen.spec.ts:237:1 › keeps the boss-run frame p95 within 15% of the non-boss tile
+  [mobile-chrome] › e6-boss-homemaker.spec.ts:126:1 › unbuilds, tidies, makes one chair, and remains kept without ever hurting the player
+  [mobile-chrome] › e6-roster.spec.ts:52:1 › E6 wave tables field the Atomic roster while E1 stays on untagged outlaws
+  [mobile-chrome] › e6-roster.spec.ts:79:1 › Lawn-Shepherd herd drive produces one same-seed toaster path
+  [mobile-chrome] › e6-roster.spec.ts:88:1 › Cure-Arms leave appliances wranglable, free Glowjack home, and resolve named sprite fallbacks
+  [mobile-chrome] › e8-boss-salvage-claw.spec.ts:102:1 › descends by component state, drops a lifted building savable, and persists the yard
+  [mobile-chrome] › e8-boss-salvage-claw.spec.ts:155:1 › a completed lift removes through demolition and leaves a salvage-tag ledger event
+  [mobile-chrome] › e9-boss-old-digger.spec.ts:73:1 › surveys, legally unmakes its path, never attacks, and cannot be killed
+  [mobile-chrome] › e9-boss-old-digger.spec.ts:103:1 › boards the live machine, spawns drones, takes hazard ticks, and dismounts safely
+  [mobile-chrome] › e9-boss-old-digger.spec.ts:123:3 › THE SWAP uses the prior recording and persists gentle
+  [mobile-chrome] › e9-boss-old-digger.spec.ts:123:3 › THE SWAP uses the no-recording survey fallback and persists gentle
+  [mobile-chrome] › fix-e2-railcar-read.spec.ts:18:1 › armored railcar enters on its wheels as rolling stock
+  [mobile-chrome] › fix-e2-railcar-read.spec.ts:119:1 › railcar component swaps to its damaged painted state after a hit
+  [mobile-chrome] › lane-baron-props-detail.spec.ts:7:1 › the detailed launcher and powder keg mount without the wrecker stone
+  [mobile-chrome] › mp-02-lockstep.spec.ts:45:1 › seam collection plays the pan animation in solo desktop and mobile
+  [mobile-chrome] › mp-02-lockstep.spec.ts:58:1 › a slot-one browser rider keeps the pan animation beside a headless rider
+  [mobile-chrome] › mp-02-lockstep.spec.ts:93:1 › place-building consent is accepted on the multiplayer wire
+  [mobile-chrome] › mp-02-lockstep.spec.ts:102:1 › consecutive action pulses survive the filled input-delay window exactly once
+  [mobile-chrome] › mp-02-lockstep.spec.ts:183:1 › two clients advance 500 ticks with identical lockstep hashes
+  [mobile-chrome] › mp-02-lockstep.spec.ts:220:1 › hash mismatch pauses, shows the wire card, and restores from relay snapshot
+  [mobile-chrome] › mp-02-lockstep.spec.ts:258:1 › real elite and boss-group divergence restores exact future state for 120 ticks
+  [mobile-chrome] › mp-02-lockstep.spec.ts:347:1 › two clients promote both roster slots to real local-camera heroes and shared run credit
+  [mobile-chrome] › mp-02-lockstep.spec.ts:466:1 › both riders place buildings and pick upgrades with equal hashes for 300 ticks
+  [mobile-chrome] › mp-02-lockstep.spec.ts:570:1 › @slow four riders move and act with identical hashes and shared credit
+  [mobile-chrome] › mp-02-lockstep.spec.ts:654:1 › @slow one of four riders desyncs and all four converge again
+  [mobile-chrome] › mp-02-lockstep.spec.ts:687:1 › town Ride Together card creates a claim word and joins two named riders
+  [mobile-chrome] › mp-02-lockstep.spec.ts:737:1 › town Ride Together invalid word stays friendly at 390px
+  [mobile-chrome] › run-cast-scale-up.spec.ts:8:1 › run cast is 50% larger while boss simulation scales stay unchanged
+  [mobile-chrome] › town-dynamo-hall-blender.spec.ts:97:1 › complete Dynamo Hall loads one bounded painted mesh without changing its interaction
+  [mobile-chrome] › town-dynamo-hall-blender.spec.ts:116:1 › LITE never mounts the Dynamo Hall GLB
+  [mobile-chrome] › town-dynamo-hall-blender.spec.ts:124:1 › a pre-T2 profile never renders or mounts the 3D Dynamo Hall
+  [mobile-chrome] › town-dynamo-hall-blender.spec.ts:133:1 › a failed Dynamo Hall load preserves the complete-stage visual and crank
+  [mobile-chrome] › town-dynamo-hall-blender.spec.ts:140:1 › owner eye shows the complete Dynamo Hall with every registered 3D building
+  [mobile-chrome] › town-dynamo-hall-blender.spec.ts:146:1 › exiting during lazy pilot load stays disposed
+  [mobile-chrome] › town-era-switch.spec.ts:120:1 › E1 mounts base only; E2 mounts its variant, shared anchor plumes, and era accent
+  [mobile-chrome] › town-era-switch.spec.ts:153:1 › a missing E2 sibling falls back to base without errors
+  [mobile-chrome] › town-era-switch.spec.ts:167:1 › LITE keeps facades and never fetches models or mounts plumes
+  [mobile-chrome] › town-era-switch.spec.ts:183:3 › E1 keeps every mounted building upright
+  [mobile-chrome] › town-era-switch.spec.ts:183:3 › E2 keeps every mounted building upright
+  [mobile-chrome] › town-era-switch.spec.ts:183:3 › E3 keeps every mounted building upright
+  [mobile-chrome] › town-era-switch.spec.ts:199:1 › E5 flood reset starts a fresh era-prop chain
+  [mobile-chrome] › town-stamp-mill-blender.spec.ts:148:1 › normal connections prefetch both bulk town halls
+  [mobile-chrome] › town-stamp-mill-blender.spec.ts:161:1 › Stamp Mill pilot is lazy, contract-valid, visual-only, and stays inside the frame-time gate
+  [mobile-chrome] › town-stamp-mill-blender.spec.ts:210:1 › LITE tier always keeps the Stamp Mill facade and never mounts the GLB
+  [mobile-chrome] › town-stamp-mill-blender.spec.ts:221:1 › a failed Stamp Mill GLB load preserves its facade and interaction
+  [mobile-chrome] › town-stamp-mill-blender.spec.ts:234:1 › a pre-complete Stamp Mill never mounts its 3D model
+  [mobile-chrome] › town-stamp-mill-blender.spec.ts:243:1 › owner calibration view mounts the Stamp Mill beside the shipped Tavern and 2D cast
+  [mobile-chrome] › town-t1-square.spec.ts:74:1 › menu enters town square, prompts at four shells, exits, then starts normal run
+  [mobile-chrome] › town-t1-square.spec.ts:113:1 › town exit is reachable and square renders at 390px
+  [mobile-chrome] › tp01-w6-migration.spec.ts:49:1 › an old-format wreck flag converts at run end and the wreck outlives the flag
+  [mobile-chrome] › tp01-w6-migration.spec.ts:97:1 › a substrate wreck entry mounts without any legacy flag and stays profile-scoped
+  [mobile-chrome] › wire-crawler-3d.spec.ts:115:1 › mounts the Crawler GLB, flips all three damage morphs, and disposes on kill
+  [mobile-chrome] › wire-crawler-3d.spec.ts:158:1 › LITE keeps the placeholder and never requests the Crawler GLB
+  [mobile-chrome] › wire-crawler-3d.spec.ts:174:1 › invalid Crawler GLB bytes keep the placeholder presentation
+  [mobile-chrome] › wire-railcar-3d.spec.ts:63:1 › GLB rides the rail, exposes all three damage morphs, preserves wreckage, and disposes
+  [mobile-chrome] › wire-railcar-3d.spec.ts:163:1 › LITE keeps the painted billboard and never requests the GLB
+  [mobile-chrome] › wire-railcar-3d.spec.ts:175:1 › a component destroyed during model loading mounts as broken
+  [mobile-chrome] › wire-railcar-3d.spec.ts:200:1 › invalid GLB bytes fall back to the painted billboard
+Total: 170 tests in 23 files
+(node:84280) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)

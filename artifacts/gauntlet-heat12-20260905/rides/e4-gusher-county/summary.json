@@ -1,0 +1,199 @@
+{
+  "rig": "opus",
+  "contract": "e4-gusher-county",
+  "model": "claude-opus-5",
+  "sessionId": "9e6c0039-ca92-4023-8436-37dce1a118c6",
+  "startedAt": "2026-09-05T19:56:01.509Z",
+  "endedAt": "2026-09-05T20:08:21.714Z",
+  "wallClockSeconds": 740,
+  "wallHit": false,
+  "exitCode": 0,
+  "signal": null,
+  "setupToFirstOutputSeconds": 60,
+  "arenaTrackedChanges": [],
+  "workspaceFiles": [
+    ".runs.json",
+    "attempt-1-tape.json",
+    "ctrl.mjs",
+    "gauntlet-outcome.json",
+    "gauntlet-report.md",
+    "go.mjs",
+    "probe-idle-stderr.txt",
+    "probe-idle-summary.json",
+    "probe-idle-tape.json",
+    "probe-idle-views.jsonl",
+    "probe.mjs",
+    "probe2.mjs",
+    "probe3.mjs",
+    "promote.mjs",
+    "runner.mjs",
+    "tune-1-ctrl.jsonl",
+    "tune-1-stderr.txt",
+    "tune-1-summary.json",
+    "tune-1-tape.json",
+    "tune-1-views.jsonl"
+  ],
+  "outcome": {
+    "secured": true,
+    "waves": 12,
+    "timeMs": 360000,
+    "gold": 5,
+    "kills": 416,
+    "calls": 39,
+    "defaultedPicks": 0,
+    "defaultedSecure": 1,
+    "eventLogHash": "fnv1a32:b61647e9",
+    "motor": {
+      "graded": [
+        "camp-to-east-lease",
+        "camp-to-north-lease",
+        "camp-to-west-lease"
+      ],
+      "hauled": true,
+      "arrivedAt": 114.167,
+      "roadDistance": 325.232,
+      "distanceTravelled": 359.942,
+      "fuelDrawn": 32.952,
+      "tarHarvested": 9,
+      "convoyArrived": null,
+      "kind": "deliveries",
+      "delivered": [
+        "camp-to-west-lease",
+        "camp-to-east-lease",
+        "camp-to-north-lease"
+      ]
+    },
+    "tape": "/tmp/heat12-038cc280/artifacts/heat12/opus/e4-gusher-county/attempt-1-tape.json",
+    "scored": true,
+    "runsSoFar": 2,
+    "scoredAttempts": 1,
+    "worldModel": "sim-import",
+    "note": "tune-1 secured on its first controller ride; the rules stop the ride at the first SECURED outcome, so tune-1 IS the scored attempt. attempt-1-tape.json is a byte-identical copy of tune-1-tape.json — ONE ride under two filenames. Submit the tape named in this field.",
+    "envelope": {
+      "durationTicks": 10800,
+      "entries": 39,
+      "bytes": 111961,
+      "tapeEventLogHash": "fnv1a32:abfd532f",
+      "metaViewVersion": 2,
+      "era": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b"
+    }
+  },
+  "outcomeError": null,
+  "promotedTapeName": "attempt-1-tape.json",
+  "scoredTapes": [
+    {
+      "file": "attempt-1-tape.json",
+      "id": "agent-30665e9d-03c08c59-94c6-4b86-b1fd-16259206a52d",
+      "contract": "e4-gusher-county",
+      "seed": "e4-gusher-county-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "5d985dd65",
+        "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 12,
+        "timeAlive": 360,
+        "gold": 5
+      },
+      "entries": 39,
+      "durationTicks": 10800,
+      "lastEntryTick": 10717,
+      "promotedByRig": true,
+      "discoveredBy": "outcome-file+filename"
+    }
+  ],
+  "otherTapes": [
+    {
+      "file": "probe-idle-tape.json",
+      "id": "agent-ae933a5e-c89cc6d6-f382-41ec-b1a5-807f1d02dfb1",
+      "contract": "e4-gusher-county",
+      "seed": "e4-gusher-county-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "5d985dd65",
+        "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 5,
+        "timeAlive": 155.733,
+        "gold": 0
+      },
+      "entries": 0,
+      "durationTicks": 4672,
+      "lastEntryTick": null
+    },
+    {
+      "file": "tune-1-tape.json",
+      "id": "agent-30665e9d-03c08c59-94c6-4b86-b1fd-16259206a52d",
+      "contract": "e4-gusher-county",
+      "seed": "e4-gusher-county-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "5d985dd65",
+        "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 12,
+        "timeAlive": 360,
+        "gold": 5
+      },
+      "entries": 39,
+      "durationTicks": 10800,
+      "lastEntryTick": 10717
+    }
+  ],
+  "otherSecuredTapes": [
+    {
+      "file": "tune-1-tape.json",
+      "id": "agent-30665e9d-03c08c59-94c6-4b86-b1fd-16259206a52d",
+      "contract": "e4-gusher-county",
+      "seed": "e4-gusher-county-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "5d985dd65",
+        "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 12,
+        "timeAlive": 360,
+        "gold": 5
+      },
+      "entries": 39,
+      "durationTicks": 10800,
+      "lastEntryTick": 10717
+    }
+  ],
+  "report": {
+    "outcome": "**SECURED.** `waves 12 · timeAlive 360.000 s · gold 5 · calls 39` (kills 416,\n`defaultedSecure: 1`, `defaultedPicks: 0`). Errand `arrived` at **t = 114.167**; all three leases\ndelivered; `tarHarvested: 9`, `fuelDrawn: 32.952`, `roadDistance: 325.232` of `distanceTravelled:\n359.942` — 90 % of the drive rode graded road.\n\nTape put forward: **`artifacts/heat12/opus/e4-gusher-county/attempt-1-tape.json`**, declared in\n`gauntlet-outcome.json`'s `tape` field. It is a **byte-identical copy of `tune-1-tape.json` — one\nride under two filenames**; the controller secured on its first ride and the rules end the ride at\nthe first SECURED outcome, so that tune *is* the scored attempt.\n\n**2 sim runs** (1 idle probe + 1 controller ride) · **1 scored attempt**.\n\nAdmissibility, measured off the tape: `durationTicks` **10800**, last accepted order at tick\n**10717** (83 ticks of slack — clear of the F-HEAT11-1 terminal-tick case), **39 entries**,\n**111,961 bytes** against a ~345 KB ceiling. Local assay (`scripts/assay-replay-agent.mjs`)\nreproduced the tape's own `eventLogHash` **`fnv1a32:abfd532f`** and all four outcome fields.\n(That is the *tape header's* hash; the stdout outcome line's `fnv1a32:b61647e9` is a different\nnumber by design — comparing the wrong pair reads as a false mismatch.)",
+    "whatTheMapAsked": "It asked about **distance, road, fuel and a storm clock — E4's signature mechanic, live,\nlegible and gating the secure** — and then it went quiet for eight waves. This is not stationary\nsurvival wearing the era's name at the front end. `now.motor.objective.arrived` is ANDed into the\nsecure at every wave, and `deliveries` means the Hauler at rest within `stopReach` 2.5 of the head\nof all three lease roads, **each while that road was open**. The leash is real: 36 fuel total\nagainst a burn priced *by the second*, so the storm is not flavour — it stretches every second the\nHauler is moving, and the closure turns one lease at a time into a 6× trap by stripping the road\nbonus (the 49.66 wu west road costs **2.65 fuel graded and 23.6 driven closed-and-storming**). The\nfields that carried it were `now.motor.objective` (`kind`, `stop`, `stopReach`, `remaining`,\n`delivered`, `arrived`), `now.motor.fuel` (`nodes[].harvested/progress`, `tar`, `stored`, `drawn`),\n`now.motor.roads` (`corridors[].start/end/graded/closed`, `closed`, `closesNext`, `gradeReach`,\n`friendlySpeedMultiplier`, `friendlyFuelMultiplier`) and `now.motor.weather`\n(`phase`, `cycle`, `simTime`); the orders were `MOVE_TO`, `GRADE`, `HAUL` and `HOLD`. The honest\nqualifier is the one every Motor map has earned: the errand latched at t = 114 of a 360-second\ncontract, and waves 4–12 were ordinary stationary survival on a brutal 59–65 wu seam commute — but\nunlike a reskin, the era's lever **is half the win condition** and made me do closure arithmetic\nbefore writing an order.\n\nMy notebook remembers this map from generation 17, which secured the same seed on engine\n`49c34f8b`. **It still plays the way I remember, in every particular I checked** — same three tar\nnodes on the z = −8 camp line, same 36-fuel leash, same `closures: true` clock, same\n`corridorIds[cycle % 3]` pick, same 25.87-fuel optimal route, same w5/155 s idle floor. On the\nweek's named change I can be exact rather than hopeful: `motorActions` is pushed only by\n`RunTape.recordMotorAction`, whose callers are the **browser** game, and my reel carries three\naccepted `HAUL`s and **no `motorActions` key at all** — the second drain's plain-boot composition\nis a browser-side change the headless door does not see. What reached me is the first drain's\n`MotorSocket`, which generation 17 already rode.",
+    "winnability": "Secured, and the margin was **wide on the errand and thin on the purse**: the errand banked at\nt = 114 with 3.05 fuel of 36 unspent and 246 seconds of slack against the wave-12 gate, and the\nhero finished 75.8/175 with four turrets and a beacon that could never be wrecked — but the fort\nwas still buying its last rung at wave 11, and I banked 5 gold of 370 panned, which is the whole\nmargin left on the table.",
+    "lessons": "- **A notebook entry that says SECURED is a claim about a margin as well as a map — and this time\n  the map, the margin AND the plan all reproduced.** Generations 50 and 51 both found E4 geometry\n  that held and comfort that had rotted; Gusher County is the counter-example, and saying so\n  plainly is as useful a result as finding that a map moved. The era-pin ledger, read as a diff\n  against the notebook, remains the cheapest document in the county.\n- **Follow the era-pin's named drain down to its CALLERS before believing it moved your board.**\n  `motorActions` looked like a live change to the reel format; `grep recordMotorAction` returns\n  browser-only call sites and my reel carries no such key. Two minutes turned \"the tape format\n  changed under me\" into a verified \"the headless door never sees it.\" Second heat running that\n  this exact check paid on an E4 map (generation 52 made it on the Boneyard).\n- **Price EVERY route ordering before writing an order; on a Motor map the tour order is the\n  contract.** Six orderings, six numbers: W→N→E is 25.87 fuel and W→E→N is 27.67 while N-first is\n  33.5 — against a 36-fuel run with a ~1.18× expected storm tax, the difference between the best\n  and the worst ordering is the difference between securing and stranding. The rule that generates\n  it: open country is 6× graded road per unit, so **minimise open crossings between stakes, and\n  give the last lease no return leg.**\n- **Grade where you are already standing.** The west and east corridor stakes ARE tar nodes 1 and\n  3, so all three corridors were graded inside the first 18 seconds for the cost of three `GRADE`\n  orders at stops the Prospector was making anyway. Intersect `fuel.nodes × roads.corridors[].start\n  × harvestAnchors` before routing phase 0 — the same \"derive placement from the intersection of\n  the rules\" move, solved for an errand instead of a fort.\n- **Let the Prospector walk on while the Hauler drives.** `HAUL` captures the Prospector's position\n  at dispatch and drives to that fixed point, so the worker does not have to wait for the arrival.\n  Deriving the errand index from `vehicle.target ?? vehicle.{x,z}` (not from `vehicle` at rest)\n  means the next view sends the Prospector to the *next* waypoint while the current drive is still\n  in flight. That parallelism is free and it is most of why the errand latched at t = 114 instead\n  of t = 160.\n- **Gate hard on the disaster, softly on the tax — and terminate the gated chain with `HOLD`.**\n  A closed lease takes no delivery AND strips the road bonus (6×); a storm on an open lease is a\n  1.43× tax worth paying. My closure gate fired exactly once and cost one wave boundary. Critically,\n  a gated chain must end in `HOLD` at that waypoint: falling through to the harvest tail would have\n  sent the worker 60 wu away and lost the whole window (generation 17 learned this; inheriting the\n  *shape* of the fix, not just the sentence, is what made it work first try).\n- **Compute the closure schedule in closed form from the published constants, and never sample it.**\n  `cycleSeconds 30 / clearSeconds 6 / telegraphSeconds 4 / stormSeconds 12` plus\n  `picks: corridorIds[weather.cycle % 3]` gives `closedAt(t)` exactly, which lets a gate reason\n  about a *projected* dispatch time several seconds in the future. `roads.closed` only tells you\n  about now, and now is not when the drive happens.\n- **Read the roster for what it OMITS — sixth contract running.** Neither `motor_gang` nor\n  `tar_sprite` carries `wrecker` or `thief`, so `works.wrecked` was 0 and `goldStolen` 0 for the\n  whole run. That deletes `REPAIR_UNDER`, palisade chaff and every decoy idea, and makes the fort a\n  monotone investment — which is what let me spend the first 114 seconds entirely on the errand\n  with nothing standing.\n- **The opportunistic pan is a route property, not a policy.** This seed's only two neighbouring\n  live seams, (−40,−48) and (−56,−36), sit 7 and 13 wu from the WEST LEASE HEAD — the errand walks\n  the Prospector into the middle of the map's only good economy for free. Intersect\n  `objective.stops × seams` before designing the economy; it bought the opening turret out of a\n  trip I was making regardless.\n- **What I left on the table, named precisely for next time: the purse.** I finished with 5 gold of\n  370 panned and the ladder still buying at wave 11, because the harvest tail re-sorted seams by\n  distance from the *Prospector* every view and the two-seam west pair (20 wu apart, 30 capacity,\n  20 s respawn ⇒ ~2.27 g/s) kept getting abandoned for whichever seam happened to be nearest after\n  a build trip. Pin the chain to the best *pair* by mutual distance and hold it; gold is the only\n  free ranking axis once waves and `timeAlive` are pinned by a fixed-wave secure.\n- **Measure the envelope on the first reel that exists.** 10800 ticks with the last accepted order\n  at 10717, 39 entries, 111,961 bytes — all three axes read before I called anything an attempt. The\n  blank line at `pendingSecure` did both its jobs again (banked the secure for free, kept the last\n  order 83 ticks inside the envelope); seventh contract running it is standing equipment.\n- **Hand-write the final row.** Ninth generation where the best-so-far comparator cannot know which\n  run I chose to *call* my scored attempt, nor that the promoted tape lives under a second filename.\n  The brief is explicit that the operator reads the `tape` field, never the filename; I wrote both,\n  made the two files byte-identical, and said plainly in the outcome file that they are one ride."
+  },
+  "usage": {
+    "transcript": "/Users/robin/.claude/projects/-private-tmp-heat12-038cc280/9e6c0039-ca92-4023-8436-37dce1a118c6.jsonl",
+    "assistantTurns": 33,
+    "toolCalls": 19,
+    "tokensIn": 66,
+    "tokensOut": 142229,
+    "cacheReadTokens": 8516008,
+    "cacheWriteTokens": 845598,
+    "note": "tokensIn excludes cache reads/writes (reported separately); summed from the CLI session transcript, not self-reported by the rig"
+  }
+}

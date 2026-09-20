@@ -1,0 +1,2889 @@
+(node:51403) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 122 tests using 1 worker
+
+
+(node:51524) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[1/122] [desktop-chrome] › e2e/contract-briefings.spec.ts:329:1 › all 42 card briefings use in-world copy and only cite authored wave numbers
+[2/122] [desktop-chrome] › e2e/contract-briefings.spec.ts:344:1 › every current contract launch shows manifest briefing goals and rules
+
+[WebServer] 1:14:58 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[3/122] [desktop-chrome] › e2e/contract-briefings.spec.ts:356:1 › run briefing dismisses by click and by eight second timer while sim keeps running
+
+[WebServer] 1:15:09 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+
+[WebServer] 1:15:12 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[4/122] [desktop-chrome] › e2e/contract-briefings.spec.ts:373:1 › pause panel repeats the active contract briefing
+[5/122] [desktop-chrome] › e2e/contract-briefings.spec.ts:384:1 › plain no-debug board launch still briefs The Claim
+[6/122] [desktop-chrome] › e2e/contract-briefings.spec.ts:395:1 › board cards show the same briefing data
+[7/122] [desktop-chrome] › e2e/contract-briefings.spec.ts:405:1 › briefing card and pause contract fit at 390px
+[8/122] [desktop-chrome] › e2e/e8-remaining-maps-parity.spec.ts:147:3 › e8-far-side rides to the same event-log hash in the browser as in node
+[9/122] [desktop-chrome] › e2e/e8-remaining-maps-parity.spec.ts:147:3 › e8-low-orbit rides to the same event-log hash in the browser as in node
+[10/122] [desktop-chrome] › e2e/e8-remaining-maps-parity.spec.ts:147:3 › e8-eclipse rides to the same event-log hash in the browser as in node
+[11/122] [desktop-chrome] › e2e/e8-remaining-maps-parity.spec.ts:147:3 › e8-mare-claim rides to the same event-log hash in the browser as in node
+[12/122] [desktop-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-ember-shore census cites the existing Deep Sky debt
+[desktop-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-ember-shore census cites the existing Deep Sky debt
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[13/122] [desktop-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-archive-world census cites the existing Deep Sky debt
+  1) [desktop-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-archive-world census cites the existing Deep Sky debt 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    Expected: undefined
+    Received: ["e10-archive-world-01", "e10-archive-world-02"]
+
+      136 |     console.warn = (...args: unknown[]) => consoleErrors.push(args.map(String).join(' '));
+      137 |     try {
+    > 138 |       expect((benchSeeds as Record<string, string[]>)[contract.id]).toEqual(EXPECTED_SEEDS[contract.id]);
+          |                                                                     ^
+      139 |       const dependency = 'engineDependencies' in contract.tileParams
+      140 |         ? contract.tileParams.engineDependencies
+      141 |         : undefined;
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-maps/e2e/er01-e10-census.spec.ts:138:69
+
+    Error Context: test-results/er01-e10-census-e10-archiv-b80f9--the-existing-Deep-Sky-debt-desktop-chrome/error-context.md
+
+
+[14/122] [desktop-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-last-claim census cites the existing Deep Sky debt
+[desktop-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-last-claim census cites the existing Deep Sky debt
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[15/122] [desktop-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-river census cites the existing Deep Sky debt
+[desktop-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-river census cites the existing Deep Sky debt
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[16/122] [desktop-chrome] › e2e/er01-e2-census.spec.ts:17:3 › e2-hill-mine census support is explicit and deterministic
+[desktop-chrome] › e2e/er01-e2-census.spec.ts:17:3 › e2-hill-mine census support is explicit and deterministic
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+  2) [desktop-chrome] › e2e/er01-e2-census.spec.ts:17:3 › e2-hill-mine census support is explicit and deterministic 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    Expected: ArrayContaining [{"data": {"above": 80, "cooldownSeconds": 3, "loss": 35}, "id": "pressure_auto_vent", "source": "PressureSystem.vent"}, {"data": {"bands": ["empty:<=0", "low:>0,<25", "working:>=25,<=80", "high:>80"]}, "id": "pressure_bands", "source": "PressureSystem.band"}, {"data": {"buildable": "boiler_house", "coalSeconds": 12, "input": "coal", "pressurePerTick": 4, "tickSeconds": 1}, "id": "pressure_generation", "source": "PressureSystem.update"}, {"data": {"bandBoosts": ["boiler_battery"], "spends": ["auto_pan", "boiler_lance", "pressure_mortar", "sky_rocket_battery"]}, "id": "pressure_powers", "source": "PressureArsenalSystem"}]
+    Received: [{"data": {"escortCount": 6, "hpScale": 12.5}, "id": "baron", "source": "twist.baron"}, {"data": {"banks": ["north"], "count": 5}, "id": "build_zones", "source": "tileParams.buildZones"}, {"data": {"arriveRadius": 0.5, "body": "hero", "pilots": {"headless": "the rider pilots the run's only hero", "roomSeat": "a headless roster seat pilots its own hero", "soloBrowser": "a human pilots the hero; MOVE_HERO refuses HERO_NOT_YOURS"}, "refusals": ["HERO_NOT_YOURS", "UNREACHABLE_TERRAIN", "UNREACHABLE_APPROACH", "HERO_UNAVAILABLE"], "verb": "MOVE_HERO"}, "id": "hero_orders", "source": "StandingOrders.MOVE_HERO"}, {"data": {"above": 80, "cooldownSeconds": 3, "loss": 35}, "id": "pressure_auto_vent", "source": "PressureSystem.vent"}, {"data": {"bands": ["empty:<=0", "low:>0,<25", "working:>=25,<=80", "high:>80"]}, "id": "pressure_bands", "source": "PressureSystem.band"}, {"data": {"buildable": "boiler_house", "coalSeconds": 36, "input": "coal", "pressurePerTick": 4, "tickSeconds": 1}, "id": "pressure_generation", "source": "PressureSystem.update"}, {"data": {"bandBoosts": ["boiler_battery"], "spends": ["auto_pan", "boiler_lance", "pressure_mortar", "sky_rocket_battery"]}, "id": "pressure_powers", "source": "PressureArsenalSystem"}, {"data": {}, "id": "river", "source": "tileParams.river"}, {"data": {"count": 1, "ids": ["trestle"]}, "id": "water_crossings", "source": "tileParams.ford"}]
+
+       98 |             source: 'twist.pressureEnabled',
+       99 |           })]));
+    > 100 |         expect(probe.currentTurn().view.stablePrefix.mechanics.rules).toEqual(expect.arrayContaining([
+          |                                                                       ^
+      101 |             {
+      102 |               id: 'pressure_auto_vent',
+      103 |               source: 'PressureSystem.vent',
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-maps/e2e/er01-e2-census.spec.ts:100:71
+
+    Error Context: test-results/er01-e2-census-e2-hill-min-5a34b--explicit-and-deterministic-desktop-chrome/error-context.md
+
+
+[17/122] [desktop-chrome] › e2e/er01-e2-census.spec.ts:17:3 › e2-trestle census support is explicit and deterministic
+[desktop-chrome] › e2e/er01-e2-census.spec.ts:17:3 › e2-trestle census support is explicit and deterministic
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+  3) [desktop-chrome] › e2e/er01-e2-census.spec.ts:17:3 › e2-trestle census support is explicit and deterministic 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    Expected: ArrayContaining [{"data": {"above": 80, "cooldownSeconds": 3, "loss": 35}, "id": "pressure_auto_vent", "source": "PressureSystem.vent"}, {"data": {"bands": ["empty:<=0", "low:>0,<25", "working:>=25,<=80", "high:>80"]}, "id": "pressure_bands", "source": "PressureSystem.band"}, {"data": {"buildable": "boiler_house", "coalSeconds": 12, "input": "coal", "pressurePerTick": 4, "tickSeconds": 1}, "id": "pressure_generation", "source": "PressureSystem.update"}, {"data": {"bandBoosts": ["boiler_battery"], "spends": ["auto_pan", "boiler_lance", "pressure_mortar", "sky_rocket_battery"]}, "id": "pressure_powers", "source": "PressureArsenalSystem"}]
+    Received: [{"data": {"escortCount": 6, "hpScale": 12.5}, "id": "baron", "source": "twist.baron"}, {"data": {"banks": ["north", "south"], "count": 2}, "id": "build_zones", "source": "tileParams.buildZones"}, {"data": {"arriveRadius": 0.5, "body": "hero", "pilots": {"headless": "the rider pilots the run's only hero", "roomSeat": "a headless roster seat pilots its own hero", "soloBrowser": "a human pilots the hero; MOVE_HERO refuses HERO_NOT_YOURS"}, "refusals": ["HERO_NOT_YOURS", "UNREACHABLE_TERRAIN", "UNREACHABLE_APPROACH", "HERO_UNAVAILABLE"], "verb": "MOVE_HERO"}, "id": "hero_orders", "source": "StandingOrders.MOVE_HERO"}, {"data": {"above": 80, "cooldownSeconds": 3, "loss": 35}, "id": "pressure_auto_vent", "source": "PressureSystem.vent"}, {"data": {"bands": ["empty:<=0", "low:>0,<25", "working:>=25,<=80", "high:>80"]}, "id": "pressure_bands", "source": "PressureSystem.band"}, {"data": {"buildable": "boiler_house", "coalSeconds": 36, "input": "coal", "pressurePerTick": 4, "tickSeconds": 1}, "id": "pressure_generation", "source": "PressureSystem.update"}, {"data": {"bandBoosts": ["boiler_battery"], "spends": ["auto_pan", "boiler_lance", "pressure_mortar", "sky_rocket_battery"]}, "id": "pressure_powers", "source": "PressureArsenalSystem"}, {"data": {}, "id": "river", "source": "tileParams.river"}, {"data": {"count": 1, "ids": ["trestle"]}, "id": "water_crossings", "source": "tileParams.ford"}, {"data": {"multiplier": 0.7}, "id": "wave_cadence_multiplier", "source": "twist.waveCadenceMult"}]
+
+       98 |             source: 'twist.pressureEnabled',
+       99 |           })]));
+    > 100 |         expect(probe.currentTurn().view.stablePrefix.mechanics.rules).toEqual(expect.arrayContaining([
+          |                                                                       ^
+      101 |             {
+      102 |               id: 'pressure_auto_vent',
+      103 |               source: 'PressureSystem.vent',
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-maps/e2e/er01-e2-census.spec.ts:100:71
+
+    Error Context: test-results/er01-e2-census-e2-trestle--8ba84--explicit-and-deterministic-desktop-chrome/error-context.md
+
+
+[18/122] [desktop-chrome] › e2e/er01-e2-census.spec.ts:17:3 › e2-pressure-garden census support is explicit and deterministic
+[desktop-chrome] › e2e/er01-e2-census.spec.ts:17:3 › e2-pressure-garden census support is explicit and deterministic
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+  4) [desktop-chrome] › e2e/er01-e2-census.spec.ts:17:3 › e2-pressure-garden census support is explicit and deterministic 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    Expected: ArrayContaining [{"data": {"above": 80, "cooldownSeconds": 3, "loss": 35}, "id": "pressure_auto_vent", "source": "PressureSystem.vent"}, {"data": {"bands": ["empty:<=0", "low:>0,<25", "working:>=25,<=80", "high:>80"]}, "id": "pressure_bands", "source": "PressureSystem.band"}, {"data": {"buildable": "boiler_house", "coalSeconds": 12, "input": "coal", "pressurePerTick": 4, "tickSeconds": 1}, "id": "pressure_generation", "source": "PressureSystem.update"}, {"data": {"bandBoosts": ["boiler_battery"], "spends": ["auto_pan", "boiler_lance", "pressure_mortar", "sky_rocket_battery"]}, "id": "pressure_powers", "source": "PressureArsenalSystem"}]
+    Received: [{"data": {"banks": ["north"], "count": 4}, "id": "build_zones", "source": "tileParams.buildZones"}, {"data": {"arriveRadius": 0.5, "body": "hero", "pilots": {"headless": "the rider pilots the run's only hero", "roomSeat": "a headless roster seat pilots its own hero", "soloBrowser": "a human pilots the hero; MOVE_HERO refuses HERO_NOT_YOURS"}, "refusals": ["HERO_NOT_YOURS", "UNREACHABLE_TERRAIN", "UNREACHABLE_APPROACH", "HERO_UNAVAILABLE"], "verb": "MOVE_HERO"}, "id": "hero_orders", "source": "StandingOrders.MOVE_HERO"}, {"data": {"above": 80, "cooldownSeconds": 3, "loss": 35}, "id": "pressure_auto_vent", "source": "PressureSystem.vent"}, {"data": {"bands": ["empty:<=0", "low:>0,<25", "working:>=25,<=80", "high:>80"]}, "id": "pressure_bands", "source": "PressureSystem.band"}, {"data": {"buildable": "boiler_house", "coalSeconds": 36, "input": "coal", "pressurePerTick": 4, "tickSeconds": 1}, "id": "pressure_generation", "source": "PressureSystem.update"}, {"data": {"bandBoosts": ["boiler_battery"], "spends": ["auto_pan", "boiler_lance", "pressure_mortar", "sky_rocket_battery"]}, "id": "pressure_powers", "source": "PressureArsenalSystem"}, {"data": {}, "id": "river", "source": "tileParams.river"}, {"data": {"count": 1, "ids": ["garden-crossing"]}, "id": "water_crossings", "source": "tileParams.ford"}]
+
+       98 |             source: 'twist.pressureEnabled',
+       99 |           })]));
+    > 100 |         expect(probe.currentTurn().view.stablePrefix.mechanics.rules).toEqual(expect.arrayContaining([
+          |                                                                       ^
+      101 |             {
+      102 |               id: 'pressure_auto_vent',
+      103 |               source: 'PressureSystem.vent',
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-maps/e2e/er01-e2-census.spec.ts:100:71
+
+    Error Context: test-results/er01-e2-census-e2-pressure-25f67--explicit-and-deterministic-desktop-chrome/error-context.md
+
+
+[19/122] [desktop-chrome] › e2e/er01-e2-census.spec.ts:17:3 › e2-incline census support is explicit and deterministic
+[desktop-chrome] › e2e/er01-e2-census.spec.ts:17:3 › e2-incline census support is explicit and deterministic
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+  5) [desktop-chrome] › e2e/er01-e2-census.spec.ts:17:3 › e2-incline census support is explicit and deterministic 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    Expected: ArrayContaining [{"data": {"above": 80, "cooldownSeconds": 3, "loss": 35}, "id": "pressure_auto_vent", "source": "PressureSystem.vent"}, {"data": {"bands": ["empty:<=0", "low:>0,<25", "working:>=25,<=80", "high:>80"]}, "id": "pressure_bands", "source": "PressureSystem.band"}, {"data": {"buildable": "boiler_house", "coalSeconds": 12, "input": "coal", "pressurePerTick": 4, "tickSeconds": 1}, "id": "pressure_generation", "source": "PressureSystem.update"}, {"data": {"bandBoosts": ["boiler_battery"], "spends": ["auto_pan", "boiler_lance", "pressure_mortar", "sky_rocket_battery"]}, "id": "pressure_powers", "source": "PressureArsenalSystem"}]
+    Received: [{"data": {"escortCount": 6, "hpScale": 12.5}, "id": "baron", "source": "twist.baron"}, {"data": {"banks": ["north", "south"], "count": 4}, "id": "build_zones", "source": "tileParams.buildZones"}, {"data": {"arriveRadius": 0.5, "body": "hero", "pilots": {"headless": "the rider pilots the run's only hero", "roomSeat": "a headless roster seat pilots its own hero", "soloBrowser": "a human pilots the hero; MOVE_HERO refuses HERO_NOT_YOURS"}, "refusals": ["HERO_NOT_YOURS", "UNREACHABLE_TERRAIN", "UNREACHABLE_APPROACH", "HERO_UNAVAILABLE"], "verb": "MOVE_HERO"}, "id": "hero_orders", "source": "StandingOrders.MOVE_HERO"}, {"data": {"above": 80, "cooldownSeconds": 3, "loss": 35}, "id": "pressure_auto_vent", "source": "PressureSystem.vent"}, {"data": {"bands": ["empty:<=0", "low:>0,<25", "working:>=25,<=80", "high:>80"]}, "id": "pressure_bands", "source": "PressureSystem.band"}, {"data": {"buildable": "boiler_house", "coalSeconds": 36, "input": "coal", "pressurePerTick": 4, "tickSeconds": 1}, "id": "pressure_generation", "source": "PressureSystem.update"}, {"data": {"bandBoosts": ["boiler_battery"], "spends": ["auto_pan", "boiler_lance", "pressure_mortar", "sky_rocket_battery"]}, "id": "pressure_powers", "source": "PressureArsenalSystem"}, {"data": {}, "id": "river", "source": "tileParams.river"}, {"data": {"count": 2, "ids": ["lower-line-crossing", "upper-line-crossing"]}, "id": "water_crossings", "source": "tileParams.ford"}, {"data": {"multiplier": 0.75}, "id": "wave_cadence_multiplier", "source": "twist.waveCadenceMult"}]
+
+       98 |             source: 'twist.pressureEnabled',
+       99 |           })]));
+    > 100 |         expect(probe.currentTurn().view.stablePrefix.mechanics.rules).toEqual(expect.arrayContaining([
+          |                                                                       ^
+      101 |             {
+      102 |               id: 'pressure_auto_vent',
+      103 |               source: 'PressureSystem.vent',
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-maps/e2e/er01-e2-census.spec.ts:100:71
+
+    Error Context: test-results/er01-e2-census-e2-incline--0dfce--explicit-and-deterministic-desktop-chrome/error-context.md
+
+
+[20/122] [desktop-chrome] › e2e/er01-e3-census.spec.ts:16:3 › e3-blackout-ridge census support is explicit and deterministic
+[desktop-chrome] › e2e/er01-e3-census.spec.ts:16:3 › e3-blackout-ridge census support is explicit and deterministic
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[21/122] [desktop-chrome] › e2e/er01-e3-census.spec.ts:16:3 › e3-moth-season census support is explicit and deterministic
+[desktop-chrome] › e2e/er01-e3-census.spec.ts:16:3 › e3-moth-season census support is explicit and deterministic
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[22/122] [desktop-chrome] › e2e/er01-e3-census.spec.ts:16:3 › e3-canyon-works census support is explicit and deterministic
+[desktop-chrome] › e2e/er01-e3-census.spec.ts:16:3 › e3-canyon-works census support is explicit and deterministic
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+  6) [desktop-chrome] › e2e/er01-e3-census.spec.ts:16:3 › e3-canyon-works census support is explicit and deterministic 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    Expected: ArrayContaining [{"data": {"byWave": 6, "completionLatch": "one-way-at-or-before-deadline", "consumerRole": "gallery", "failureLatch": "one-way-after-deadline", "missedDeadline": "run-unsecurable", "poweredState": "powered", "required": 2}, "id": "connect_objective", "source": "Game.syncCanyonConnectObjective"}, {"data": {"darkWave": 8, "duskWave": 4, "nightDepth": 1, "phases": ["full", "dusk", "dark"], "progression": "clamp((wave-duskWave)/max(1,darkWave-duskWave),0,1)", "returnsToFull": false}, "id": "darkness_cycle", "source": "Game.nightShiftLightingState"}]
+    Received: [{"data": {"escortCount": 0, "hpScale": 1}, "id": "baron", "source": "twist.baron"}, {"data": {"banks": ["north", "south"], "count": 5}, "id": "build_zones", "source": "tileParams.buildZones"}, {"data": {"byWave": 8, "completionLatch": "one-way-at-or-before-deadline", "consumerRole": "gallery", "failureLatch": "one-way-after-deadline", "missedDeadline": "run-unsecurable", "poweredState": "powered", "required": 2}, "id": "connect_objective", "source": "Game.syncCanyonConnectObjective"}, {"data": {"bankCap": 360, "defaultBankCap": 200, "rule": "income-above-the-purse-is-refused"}, "id": "contract_bank_cap", "source": "twist.economy.bankCap"}, {"data": {"defaultTotal": 330, "ladder": [{"cost": 25, "defaultCost": 25, "rung": 1}, {"cost": 30, "defaultCost": 35, "rung": 2}, {"cost": 35, "defaultCost": 45, "rung": 3}, {"cost": 45, "defaultCost": 55, "rung": 4}, {"cost": 50, "defaultCost": 75, "rung": 5}, {"cost": 55, "defaultCost": 95, "rung": 6}], "rule": "authored-prices-replace-the-default-curve-on-this-claim; buildables[].costs carries the same prices", "total": 240}, "id": "contract_beacon_ladder", "source": "twist.economy.beaconLadder"}, {"data": {"darkWave": 8, "duskWave": 4, "nightDepth": 1, "phases": ["full", "dusk", "dark"], "progression": "clamp((wave-duskWave)/max(1,darkWave-duskWave),0,1)", "returnsToFull": false}, "id": "darkness_cycle", "source": "Game.nightShiftLightingState"}, {"data": {"arriveRadius": 0.5, "body": "hero", "pilots": {"headless": "the rider pilots the run's only hero", "roomSeat": "a headless roster seat pilots its own hero", "soloBrowser": "a human pilots the hero; MOVE_HERO refuses HERO_NOT_YOURS"}, "refusals": ["HERO_NOT_YOURS", "UNREACHABLE_TERRAIN", "UNREACHABLE_APPROACH", "HERO_UNAVAILABLE"], "verb": "MOVE_HERO"}, "id": "hero_orders", "source": "StandingOrders.MOVE_HERO"}, {"data": {}, "id": "river", "source": "tileParams.river"}, {"data": {"count": 1, "ids": ["works-bridge"]}, "id": "water_crossings", "source": "tileParams.ford"}]
+
+      59 |         expect(mechanics.buildables.map(({ id }: { id: string }) => id)).not.toContain('turret');
+      60 |         expect(mechanics.interactables.flatMap(({ operations }: { operations: string[] }) => operations)).toEqual([]);
+    > 61 |         expect(mechanics.rules).toEqual(expect.arrayContaining([
+         |                                 ^
+      62 |           {
+      63 |             id: 'connect_objective',
+      64 |             source: 'Game.syncCanyonConnectObjective',
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-maps/e2e/er01-e3-census.spec.ts:61:33
+
+    Error Context: test-results/er01-e3-census-e3-canyon-w-257fc--explicit-and-deterministic-desktop-chrome/error-context.md
+
+
+[23/122] [desktop-chrome] › e2e/er01-e3-census.spec.ts:16:3 › e3-fairground census support is explicit and deterministic
+[desktop-chrome] › e2e/er01-e3-census.spec.ts:16:3 › e3-fairground census support is explicit and deterministic
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[24/122] [desktop-chrome] › e2e/er01-e4-census.spec.ts:13:3 › e4-dust-flats is admitted while its signature engine dependency is missing, and declares only consumed vocabulary
+[desktop-chrome] › e2e/er01-e4-census.spec.ts:13:3 › e4-dust-flats is admitted while its signature engine dependency is missing, and declares only consumed vocabulary
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[25/122] [desktop-chrome] › e2e/er01-e4-census.spec.ts:13:3 › e4-long-road is admitted while its signature engine dependency is missing, and declares only consumed vocabulary
+[desktop-chrome] › e2e/er01-e4-census.spec.ts:13:3 › e4-long-road is admitted while its signature engine dependency is missing, and declares only consumed vocabulary
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[26/122] [desktop-chrome] › e2e/er01-e4-census.spec.ts:13:3 › e4-gusher-county is admitted while its signature engine dependency is missing, and declares only consumed vocabulary
+[desktop-chrome] › e2e/er01-e4-census.spec.ts:13:3 › e4-gusher-county is admitted while its signature engine dependency is missing, and declares only consumed vocabulary
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[27/122] [desktop-chrome] › e2e/er01-e4-census.spec.ts:13:3 › e4-boneyard is admitted while its signature engine dependency is missing, and declares only consumed vocabulary
+[desktop-chrome] › e2e/er01-e4-census.spec.ts:13:3 › e4-boneyard is admitted while its signature engine dependency is missing, and declares only consumed vocabulary
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[28/122] [desktop-chrome] › e2e/er01-e5-census.spec.ts:25:1 › E5 storm cargo and schedule facts stay separate, and only crewed fronts emit waves
+[desktop-chrome] › e2e/er01-e5-census.spec.ts:25:1 › E5 storm cargo and schedule facts stay separate, and only crewed fronts emit waves
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[29/122] [desktop-chrome] › e2e/er01-e5-census.spec.ts:137:3 › e5-deepwater-claim census admission is explicit
+[desktop-chrome] › e2e/er01-e5-census.spec.ts:137:3 › e5-deepwater-claim census admission is explicit
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[30/122] [desktop-chrome] › e2e/er01-e5-census.spec.ts:137:3 › e5-regatta census admission is explicit
+[desktop-chrome] › e2e/er01-e5-census.spec.ts:137:3 › e5-regatta census admission is explicit
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[31/122] [desktop-chrome] › e2e/er01-e5-census.spec.ts:137:3 › e5-stillwater census admission is explicit
+[desktop-chrome] › e2e/er01-e5-census.spec.ts:137:3 › e5-stillwater census admission is explicit
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[32/122] [desktop-chrome] › e2e/er01-e5-census.spec.ts:137:3 › e5-flotilla census admission is explicit
+[desktop-chrome] › e2e/er01-e5-census.spec.ts:137:3 › e5-flotilla census admission is explicit
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[33/122] [desktop-chrome] › e2e/er01-e6-census.spec.ts:74:3 › e6-glow-mesa census admission is explicit
+[desktop-chrome] › e2e/er01-e6-census.spec.ts:74:3 › e6-glow-mesa census admission is explicit
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[34/122] [desktop-chrome] › e2e/er01-e6-census.spec.ts:74:3 › e6-showroom census admission is explicit
+[desktop-chrome] › e2e/er01-e6-census.spec.ts:74:3 › e6-showroom census admission is explicit
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[35/122] [desktop-chrome] › e2e/er01-e6-census.spec.ts:74:3 › e6-half-life-hollow census admission is explicit
+[desktop-chrome] › e2e/er01-e6-census.spec.ts:74:3 › e6-half-life-hollow census admission is explicit
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[36/122] [desktop-chrome] › e2e/er01-e6-census.spec.ts:74:3 › e6-picnic census admission is explicit
+[desktop-chrome] › e2e/er01-e6-census.spec.ts:74:3 › e6-picnic census admission is explicit
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[37/122] [desktop-chrome] › e2e/er01-e7-census.spec.ts:119:3 › e7-relay-valley census refuses the unsocketed Signal mechanics
+[desktop-chrome] › e2e/er01-e7-census.spec.ts:119:3 › e7-relay-valley census refuses the unsocketed Signal mechanics
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[38/122] [desktop-chrome] › e2e/er01-e7-census.spec.ts:119:3 › e7-echo-canyon census refuses the unsocketed Signal mechanics
+[desktop-chrome] › e2e/er01-e7-census.spec.ts:119:3 › e7-echo-canyon census refuses the unsocketed Signal mechanics
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[39/122] [desktop-chrome] › e2e/er01-e7-census.spec.ts:119:3 › e7-dead-band census refuses the unsocketed Signal mechanics
+[desktop-chrome] › e2e/er01-e7-census.spec.ts:119:3 › e7-dead-band census refuses the unsocketed Signal mechanics
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[40/122] [desktop-chrome] › e2e/er01-e7-census.spec.ts:119:3 › e7-relay-rush census refuses the unsocketed Signal mechanics
+[desktop-chrome] › e2e/er01-e7-census.spec.ts:119:3 › e7-relay-rush census refuses the unsocketed Signal mechanics
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[41/122] [desktop-chrome] › e2e/er01-e8-census.spec.ts:75:3 › e8-mare-claim census pins the Orbital contract's door state
+  7) [desktop-chrome] › e2e/er01-e8-census.spec.ts:75:3 › e8-mare-claim census pins the Orbital contract's door state 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 2
+    + Received  + 4
+
+      Array [
+    -   ObjectContaining {
+    +   Object {
+          "dep": "atmosphere-wall-consumer",
+    -     "status": "missing",
+    +     "description": "Browser and headless engines compose the atmosphere and suit consumer: outside air drains the suit, breathing domes refill it, empty suits take damage through CombatSystem, and four distinct mining grounds across four air windows gate securing. Native desktop09 and mobile07 complete mining, wave20 secure, banking and reload; evidence is recorded in reviews/sol-map-art-repairs-20260908.md. This records the landed gameplay consumer, not full concept-art acceptance or release admission.",
+    +     "landedBy": "map-art-repairs F48/F49",
+    +     "status": "landed",
+        },
+      ]
+
+      106 |       // which is also why two contracts can be socketed concurrently without fighting here.
+      107 |       const admitted = (contract.tileParams.harvestAnchors?.length ?? 0) > 0;
+    > 108 |       expect(contract.tileParams.engineDependencies).toEqual([
+          |                                                      ^
+      109 |         expect.objectContaining({ dep: EXPECTED_DEPENDENCY[contract.id], status: 'missing' }),
+      110 |       ]);
+      111 |       const seeds = [`${contract.id}-01`, `${contract.id}-02`];
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-maps/e2e/er01-e8-census.spec.ts:108:54
+
+    Error Context: test-results/er01-e8-census-e8-mare-cla-350c9-bital-contract-s-door-state-desktop-chrome/error-context.md
+
+
+[42/122] [desktop-chrome] › e2e/er01-e8-census.spec.ts:75:3 › e8-far-side census pins the Orbital contract's door state
+[desktop-chrome] › e2e/er01-e8-census.spec.ts:75:3 › e8-far-side census pins the Orbital contract's door state
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[43/122] [desktop-chrome] › e2e/er01-e8-census.spec.ts:75:3 › e8-low-orbit census pins the Orbital contract's door state
+[desktop-chrome] › e2e/er01-e8-census.spec.ts:75:3 › e8-low-orbit census pins the Orbital contract's door state
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[44/122] [desktop-chrome] › e2e/er01-e8-census.spec.ts:75:3 › e8-eclipse census pins the Orbital contract's door state
+[desktop-chrome] › e2e/er01-e8-census.spec.ts:75:3 › e8-eclipse census pins the Orbital contract's door state
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[45/122] [desktop-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:29:1 › T spawns Claim Jumpers, contact kills hero, R restarts in place
+[46/122] [desktop-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:59:1 › T does not spawn Claim Jumpers without debug consent
+[47/122] [desktop-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:72:1 › nospawn blocks debug packs
+[48/122] [desktop-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:83:1 › double restart recycles enemies without geometry growth
+[49/122] [desktop-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:109:1 › stress=120 stays within pool and draw-call budget
+[50/122] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:111:1 › menu places a palisade and logs build_palisade spend
+[51/122] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:136:1 › build menu shows six ready icons and Balance-backed blurbs
+[52/122] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining
+[53/122] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:205:1 › beacon cost curve stays intact through the menu
+[54/122] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:227:1 › single enemy slides around a finite palisade line without passing through
+[55/122] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:284:1 › 390px build menu is visible, tappable, and clear of HUD controls
+[56/122] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:329:1 › stress draw calls stay under 200 with palisades and beacons
+[57/122] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:105:1 › enemy crossing the river reaches the hero through the ford only
+[58/122] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:123:1 › scheduled waves never place enemies in deep river over three waves
+[59/122] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:139:1 › hero stops in the shallows and keeps weapons armed at the deep channel
+[60/122] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:181:1 › xp from a residual deep-water death is auto-banked with no mote
+[61/122] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:202:1 › far-bank sluice stays untouched when the river flank is open
+
+(node:60293) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[62/122] [mobile-chrome] › e2e/contract-briefings.spec.ts:329:1 › all 42 card briefings use in-world copy and only cite authored wave numbers
+[63/122] [mobile-chrome] › e2e/contract-briefings.spec.ts:344:1 › every current contract launch shows manifest briefing goals and rules
+
+[WebServer] 1:19:28 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[64/122] [mobile-chrome] › e2e/contract-briefings.spec.ts:356:1 › run briefing dismisses by click and by eight second timer while sim keeps running
+
+[WebServer] 1:19:37 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+
+[WebServer] 1:19:39 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[65/122] [mobile-chrome] › e2e/contract-briefings.spec.ts:373:1 › pause panel repeats the active contract briefing
+[66/122] [mobile-chrome] › e2e/contract-briefings.spec.ts:384:1 › plain no-debug board launch still briefs The Claim
+[67/122] [mobile-chrome] › e2e/contract-briefings.spec.ts:395:1 › board cards show the same briefing data
+[68/122] [mobile-chrome] › e2e/contract-briefings.spec.ts:405:1 › briefing card and pause contract fit at 390px
+[69/122] [mobile-chrome] › e2e/e8-remaining-maps-parity.spec.ts:147:3 › e8-far-side rides to the same event-log hash in the browser as in node
+[70/122] [mobile-chrome] › e2e/e8-remaining-maps-parity.spec.ts:147:3 › e8-low-orbit rides to the same event-log hash in the browser as in node
+[71/122] [mobile-chrome] › e2e/e8-remaining-maps-parity.spec.ts:147:3 › e8-eclipse rides to the same event-log hash in the browser as in node
+[72/122] [mobile-chrome] › e2e/e8-remaining-maps-parity.spec.ts:147:3 › e8-mare-claim rides to the same event-log hash in the browser as in node
+[73/122] [mobile-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-ember-shore census cites the existing Deep Sky debt
+[mobile-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-ember-shore census cites the existing Deep Sky debt
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[74/122] [mobile-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-archive-world census cites the existing Deep Sky debt
+  8) [mobile-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-archive-world census cites the existing Deep Sky debt 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    Expected: undefined
+    Received: ["e10-archive-world-01", "e10-archive-world-02"]
+
+      136 |     console.warn = (...args: unknown[]) => consoleErrors.push(args.map(String).join(' '));
+      137 |     try {
+    > 138 |       expect((benchSeeds as Record<string, string[]>)[contract.id]).toEqual(EXPECTED_SEEDS[contract.id]);
+          |                                                                     ^
+      139 |       const dependency = 'engineDependencies' in contract.tileParams
+      140 |         ? contract.tileParams.engineDependencies
+      141 |         : undefined;
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-maps/e2e/er01-e10-census.spec.ts:138:69
+
+    Error Context: test-results/er01-e10-census-e10-archiv-b80f9--the-existing-Deep-Sky-debt-mobile-chrome/error-context.md
+
+
+[75/122] [mobile-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-last-claim census cites the existing Deep Sky debt
+[mobile-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-last-claim census cites the existing Deep Sky debt
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[76/122] [mobile-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-river census cites the existing Deep Sky debt
+[mobile-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-river census cites the existing Deep Sky debt
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[77/122] [mobile-chrome] › e2e/er01-e2-census.spec.ts:17:3 › e2-hill-mine census support is explicit and deterministic
+[mobile-chrome] › e2e/er01-e2-census.spec.ts:17:3 › e2-hill-mine census support is explicit and deterministic
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+  9) [mobile-chrome] › e2e/er01-e2-census.spec.ts:17:3 › e2-hill-mine census support is explicit and deterministic 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    Expected: ArrayContaining [{"data": {"above": 80, "cooldownSeconds": 3, "loss": 35}, "id": "pressure_auto_vent", "source": "PressureSystem.vent"}, {"data": {"bands": ["empty:<=0", "low:>0,<25", "working:>=25,<=80", "high:>80"]}, "id": "pressure_bands", "source": "PressureSystem.band"}, {"data": {"buildable": "boiler_house", "coalSeconds": 12, "input": "coal", "pressurePerTick": 4, "tickSeconds": 1}, "id": "pressure_generation", "source": "PressureSystem.update"}, {"data": {"bandBoosts": ["boiler_battery"], "spends": ["auto_pan", "boiler_lance", "pressure_mortar", "sky_rocket_battery"]}, "id": "pressure_powers", "source": "PressureArsenalSystem"}]
+    Received: [{"data": {"escortCount": 6, "hpScale": 12.5}, "id": "baron", "source": "twist.baron"}, {"data": {"banks": ["north"], "count": 5}, "id": "build_zones", "source": "tileParams.buildZones"}, {"data": {"arriveRadius": 0.5, "body": "hero", "pilots": {"headless": "the rider pilots the run's only hero", "roomSeat": "a headless roster seat pilots its own hero", "soloBrowser": "a human pilots the hero; MOVE_HERO refuses HERO_NOT_YOURS"}, "refusals": ["HERO_NOT_YOURS", "UNREACHABLE_TERRAIN", "UNREACHABLE_APPROACH", "HERO_UNAVAILABLE"], "verb": "MOVE_HERO"}, "id": "hero_orders", "source": "StandingOrders.MOVE_HERO"}, {"data": {"above": 80, "cooldownSeconds": 3, "loss": 35}, "id": "pressure_auto_vent", "source": "PressureSystem.vent"}, {"data": {"bands": ["empty:<=0", "low:>0,<25", "working:>=25,<=80", "high:>80"]}, "id": "pressure_bands", "source": "PressureSystem.band"}, {"data": {"buildable": "boiler_house", "coalSeconds": 36, "input": "coal", "pressurePerTick": 4, "tickSeconds": 1}, "id": "pressure_generation", "source": "PressureSystem.update"}, {"data": {"bandBoosts": ["boiler_battery"], "spends": ["auto_pan", "boiler_lance", "pressure_mortar", "sky_rocket_battery"]}, "id": "pressure_powers", "source": "PressureArsenalSystem"}, {"data": {}, "id": "river", "source": "tileParams.river"}, {"data": {"count": 1, "ids": ["trestle"]}, "id": "water_crossings", "source": "tileParams.ford"}]
+
+       98 |             source: 'twist.pressureEnabled',
+       99 |           })]));
+    > 100 |         expect(probe.currentTurn().view.stablePrefix.mechanics.rules).toEqual(expect.arrayContaining([
+          |                                                                       ^
+      101 |             {
+      102 |               id: 'pressure_auto_vent',
+      103 |               source: 'PressureSystem.vent',
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-maps/e2e/er01-e2-census.spec.ts:100:71
+
+    Error Context: test-results/er01-e2-census-e2-hill-min-5a34b--explicit-and-deterministic-mobile-chrome/error-context.md
+
+
+[78/122] [mobile-chrome] › e2e/er01-e2-census.spec.ts:17:3 › e2-trestle census support is explicit and deterministic
+[mobile-chrome] › e2e/er01-e2-census.spec.ts:17:3 › e2-trestle census support is explicit and deterministic
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+  10) [mobile-chrome] › e2e/er01-e2-census.spec.ts:17:3 › e2-trestle census support is explicit and deterministic 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    Expected: ArrayContaining [{"data": {"above": 80, "cooldownSeconds": 3, "loss": 35}, "id": "pressure_auto_vent", "source": "PressureSystem.vent"}, {"data": {"bands": ["empty:<=0", "low:>0,<25", "working:>=25,<=80", "high:>80"]}, "id": "pressure_bands", "source": "PressureSystem.band"}, {"data": {"buildable": "boiler_house", "coalSeconds": 12, "input": "coal", "pressurePerTick": 4, "tickSeconds": 1}, "id": "pressure_generation", "source": "PressureSystem.update"}, {"data": {"bandBoosts": ["boiler_battery"], "spends": ["auto_pan", "boiler_lance", "pressure_mortar", "sky_rocket_battery"]}, "id": "pressure_powers", "source": "PressureArsenalSystem"}]
+    Received: [{"data": {"escortCount": 6, "hpScale": 12.5}, "id": "baron", "source": "twist.baron"}, {"data": {"banks": ["north", "south"], "count": 2}, "id": "build_zones", "source": "tileParams.buildZones"}, {"data": {"arriveRadius": 0.5, "body": "hero", "pilots": {"headless": "the rider pilots the run's only hero", "roomSeat": "a headless roster seat pilots its own hero", "soloBrowser": "a human pilots the hero; MOVE_HERO refuses HERO_NOT_YOURS"}, "refusals": ["HERO_NOT_YOURS", "UNREACHABLE_TERRAIN", "UNREACHABLE_APPROACH", "HERO_UNAVAILABLE"], "verb": "MOVE_HERO"}, "id": "hero_orders", "source": "StandingOrders.MOVE_HERO"}, {"data": {"above": 80, "cooldownSeconds": 3, "loss": 35}, "id": "pressure_auto_vent", "source": "PressureSystem.vent"}, {"data": {"bands": ["empty:<=0", "low:>0,<25", "working:>=25,<=80", "high:>80"]}, "id": "pressure_bands", "source": "PressureSystem.band"}, {"data": {"buildable": "boiler_house", "coalSeconds": 36, "input": "coal", "pressurePerTick": 4, "tickSeconds": 1}, "id": "pressure_generation", "source": "PressureSystem.update"}, {"data": {"bandBoosts": ["boiler_battery"], "spends": ["auto_pan", "boiler_lance", "pressure_mortar", "sky_rocket_battery"]}, "id": "pressure_powers", "source": "PressureArsenalSystem"}, {"data": {}, "id": "river", "source": "tileParams.river"}, {"data": {"count": 1, "ids": ["trestle"]}, "id": "water_crossings", "source": "tileParams.ford"}, {"data": {"multiplier": 0.7}, "id": "wave_cadence_multiplier", "source": "twist.waveCadenceMult"}]
+
+       98 |             source: 'twist.pressureEnabled',
+       99 |           })]));
+    > 100 |         expect(probe.currentTurn().view.stablePrefix.mechanics.rules).toEqual(expect.arrayContaining([
+          |                                                                       ^
+      101 |             {
+      102 |               id: 'pressure_auto_vent',
+      103 |               source: 'PressureSystem.vent',
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-maps/e2e/er01-e2-census.spec.ts:100:71
+
+    Error Context: test-results/er01-e2-census-e2-trestle--8ba84--explicit-and-deterministic-mobile-chrome/error-context.md
+
+
+[79/122] [mobile-chrome] › e2e/er01-e2-census.spec.ts:17:3 › e2-pressure-garden census support is explicit and deterministic
+[mobile-chrome] › e2e/er01-e2-census.spec.ts:17:3 › e2-pressure-garden census support is explicit and deterministic
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+  11) [mobile-chrome] › e2e/er01-e2-census.spec.ts:17:3 › e2-pressure-garden census support is explicit and deterministic 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    Expected: ArrayContaining [{"data": {"above": 80, "cooldownSeconds": 3, "loss": 35}, "id": "pressure_auto_vent", "source": "PressureSystem.vent"}, {"data": {"bands": ["empty:<=0", "low:>0,<25", "working:>=25,<=80", "high:>80"]}, "id": "pressure_bands", "source": "PressureSystem.band"}, {"data": {"buildable": "boiler_house", "coalSeconds": 12, "input": "coal", "pressurePerTick": 4, "tickSeconds": 1}, "id": "pressure_generation", "source": "PressureSystem.update"}, {"data": {"bandBoosts": ["boiler_battery"], "spends": ["auto_pan", "boiler_lance", "pressure_mortar", "sky_rocket_battery"]}, "id": "pressure_powers", "source": "PressureArsenalSystem"}]
+    Received: [{"data": {"banks": ["north"], "count": 4}, "id": "build_zones", "source": "tileParams.buildZones"}, {"data": {"arriveRadius": 0.5, "body": "hero", "pilots": {"headless": "the rider pilots the run's only hero", "roomSeat": "a headless roster seat pilots its own hero", "soloBrowser": "a human pilots the hero; MOVE_HERO refuses HERO_NOT_YOURS"}, "refusals": ["HERO_NOT_YOURS", "UNREACHABLE_TERRAIN", "UNREACHABLE_APPROACH", "HERO_UNAVAILABLE"], "verb": "MOVE_HERO"}, "id": "hero_orders", "source": "StandingOrders.MOVE_HERO"}, {"data": {"above": 80, "cooldownSeconds": 3, "loss": 35}, "id": "pressure_auto_vent", "source": "PressureSystem.vent"}, {"data": {"bands": ["empty:<=0", "low:>0,<25", "working:>=25,<=80", "high:>80"]}, "id": "pressure_bands", "source": "PressureSystem.band"}, {"data": {"buildable": "boiler_house", "coalSeconds": 36, "input": "coal", "pressurePerTick": 4, "tickSeconds": 1}, "id": "pressure_generation", "source": "PressureSystem.update"}, {"data": {"bandBoosts": ["boiler_battery"], "spends": ["auto_pan", "boiler_lance", "pressure_mortar", "sky_rocket_battery"]}, "id": "pressure_powers", "source": "PressureArsenalSystem"}, {"data": {}, "id": "river", "source": "tileParams.river"}, {"data": {"count": 1, "ids": ["garden-crossing"]}, "id": "water_crossings", "source": "tileParams.ford"}]
+
+       98 |             source: 'twist.pressureEnabled',
+       99 |           })]));
+    > 100 |         expect(probe.currentTurn().view.stablePrefix.mechanics.rules).toEqual(expect.arrayContaining([
+          |                                                                       ^
+      101 |             {
+      102 |               id: 'pressure_auto_vent',
+      103 |               source: 'PressureSystem.vent',
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-maps/e2e/er01-e2-census.spec.ts:100:71
+
+    Error Context: test-results/er01-e2-census-e2-pressure-25f67--explicit-and-deterministic-mobile-chrome/error-context.md
+
+
+[80/122] [mobile-chrome] › e2e/er01-e2-census.spec.ts:17:3 › e2-incline census support is explicit and deterministic
+[mobile-chrome] › e2e/er01-e2-census.spec.ts:17:3 › e2-incline census support is explicit and deterministic
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+  12) [mobile-chrome] › e2e/er01-e2-census.spec.ts:17:3 › e2-incline census support is explicit and deterministic 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    Expected: ArrayContaining [{"data": {"above": 80, "cooldownSeconds": 3, "loss": 35}, "id": "pressure_auto_vent", "source": "PressureSystem.vent"}, {"data": {"bands": ["empty:<=0", "low:>0,<25", "working:>=25,<=80", "high:>80"]}, "id": "pressure_bands", "source": "PressureSystem.band"}, {"data": {"buildable": "boiler_house", "coalSeconds": 12, "input": "coal", "pressurePerTick": 4, "tickSeconds": 1}, "id": "pressure_generation", "source": "PressureSystem.update"}, {"data": {"bandBoosts": ["boiler_battery"], "spends": ["auto_pan", "boiler_lance", "pressure_mortar", "sky_rocket_battery"]}, "id": "pressure_powers", "source": "PressureArsenalSystem"}]
+    Received: [{"data": {"escortCount": 6, "hpScale": 12.5}, "id": "baron", "source": "twist.baron"}, {"data": {"banks": ["north", "south"], "count": 4}, "id": "build_zones", "source": "tileParams.buildZones"}, {"data": {"arriveRadius": 0.5, "body": "hero", "pilots": {"headless": "the rider pilots the run's only hero", "roomSeat": "a headless roster seat pilots its own hero", "soloBrowser": "a human pilots the hero; MOVE_HERO refuses HERO_NOT_YOURS"}, "refusals": ["HERO_NOT_YOURS", "UNREACHABLE_TERRAIN", "UNREACHABLE_APPROACH", "HERO_UNAVAILABLE"], "verb": "MOVE_HERO"}, "id": "hero_orders", "source": "StandingOrders.MOVE_HERO"}, {"data": {"above": 80, "cooldownSeconds": 3, "loss": 35}, "id": "pressure_auto_vent", "source": "PressureSystem.vent"}, {"data": {"bands": ["empty:<=0", "low:>0,<25", "working:>=25,<=80", "high:>80"]}, "id": "pressure_bands", "source": "PressureSystem.band"}, {"data": {"buildable": "boiler_house", "coalSeconds": 36, "input": "coal", "pressurePerTick": 4, "tickSeconds": 1}, "id": "pressure_generation", "source": "PressureSystem.update"}, {"data": {"bandBoosts": ["boiler_battery"], "spends": ["auto_pan", "boiler_lance", "pressure_mortar", "sky_rocket_battery"]}, "id": "pressure_powers", "source": "PressureArsenalSystem"}, {"data": {}, "id": "river", "source": "tileParams.river"}, {"data": {"count": 2, "ids": ["lower-line-crossing", "upper-line-crossing"]}, "id": "water_crossings", "source": "tileParams.ford"}, {"data": {"multiplier": 0.75}, "id": "wave_cadence_multiplier", "source": "twist.waveCadenceMult"}]
+
+       98 |             source: 'twist.pressureEnabled',
+       99 |           })]));
+    > 100 |         expect(probe.currentTurn().view.stablePrefix.mechanics.rules).toEqual(expect.arrayContaining([
+          |                                                                       ^
+      101 |             {
+      102 |               id: 'pressure_auto_vent',
+      103 |               source: 'PressureSystem.vent',
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-maps/e2e/er01-e2-census.spec.ts:100:71
+
+    Error Context: test-results/er01-e2-census-e2-incline--0dfce--explicit-and-deterministic-mobile-chrome/error-context.md
+
+
+[81/122] [mobile-chrome] › e2e/er01-e3-census.spec.ts:16:3 › e3-blackout-ridge census support is explicit and deterministic
+[mobile-chrome] › e2e/er01-e3-census.spec.ts:16:3 › e3-blackout-ridge census support is explicit and deterministic
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[82/122] [mobile-chrome] › e2e/er01-e3-census.spec.ts:16:3 › e3-moth-season census support is explicit and deterministic
+[mobile-chrome] › e2e/er01-e3-census.spec.ts:16:3 › e3-moth-season census support is explicit and deterministic
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[83/122] [mobile-chrome] › e2e/er01-e3-census.spec.ts:16:3 › e3-canyon-works census support is explicit and deterministic
+[mobile-chrome] › e2e/er01-e3-census.spec.ts:16:3 › e3-canyon-works census support is explicit and deterministic
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+  13) [mobile-chrome] › e2e/er01-e3-census.spec.ts:16:3 › e3-canyon-works census support is explicit and deterministic 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    Expected: ArrayContaining [{"data": {"byWave": 6, "completionLatch": "one-way-at-or-before-deadline", "consumerRole": "gallery", "failureLatch": "one-way-after-deadline", "missedDeadline": "run-unsecurable", "poweredState": "powered", "required": 2}, "id": "connect_objective", "source": "Game.syncCanyonConnectObjective"}, {"data": {"darkWave": 8, "duskWave": 4, "nightDepth": 1, "phases": ["full", "dusk", "dark"], "progression": "clamp((wave-duskWave)/max(1,darkWave-duskWave),0,1)", "returnsToFull": false}, "id": "darkness_cycle", "source": "Game.nightShiftLightingState"}]
+    Received: [{"data": {"escortCount": 0, "hpScale": 1}, "id": "baron", "source": "twist.baron"}, {"data": {"banks": ["north", "south"], "count": 5}, "id": "build_zones", "source": "tileParams.buildZones"}, {"data": {"byWave": 8, "completionLatch": "one-way-at-or-before-deadline", "consumerRole": "gallery", "failureLatch": "one-way-after-deadline", "missedDeadline": "run-unsecurable", "poweredState": "powered", "required": 2}, "id": "connect_objective", "source": "Game.syncCanyonConnectObjective"}, {"data": {"bankCap": 360, "defaultBankCap": 200, "rule": "income-above-the-purse-is-refused"}, "id": "contract_bank_cap", "source": "twist.economy.bankCap"}, {"data": {"defaultTotal": 330, "ladder": [{"cost": 25, "defaultCost": 25, "rung": 1}, {"cost": 30, "defaultCost": 35, "rung": 2}, {"cost": 35, "defaultCost": 45, "rung": 3}, {"cost": 45, "defaultCost": 55, "rung": 4}, {"cost": 50, "defaultCost": 75, "rung": 5}, {"cost": 55, "defaultCost": 95, "rung": 6}], "rule": "authored-prices-replace-the-default-curve-on-this-claim; buildables[].costs carries the same prices", "total": 240}, "id": "contract_beacon_ladder", "source": "twist.economy.beaconLadder"}, {"data": {"darkWave": 8, "duskWave": 4, "nightDepth": 1, "phases": ["full", "dusk", "dark"], "progression": "clamp((wave-duskWave)/max(1,darkWave-duskWave),0,1)", "returnsToFull": false}, "id": "darkness_cycle", "source": "Game.nightShiftLightingState"}, {"data": {"arriveRadius": 0.5, "body": "hero", "pilots": {"headless": "the rider pilots the run's only hero", "roomSeat": "a headless roster seat pilots its own hero", "soloBrowser": "a human pilots the hero; MOVE_HERO refuses HERO_NOT_YOURS"}, "refusals": ["HERO_NOT_YOURS", "UNREACHABLE_TERRAIN", "UNREACHABLE_APPROACH", "HERO_UNAVAILABLE"], "verb": "MOVE_HERO"}, "id": "hero_orders", "source": "StandingOrders.MOVE_HERO"}, {"data": {}, "id": "river", "source": "tileParams.river"}, {"data": {"count": 1, "ids": ["works-bridge"]}, "id": "water_crossings", "source": "tileParams.ford"}]
+
+      59 |         expect(mechanics.buildables.map(({ id }: { id: string }) => id)).not.toContain('turret');
+      60 |         expect(mechanics.interactables.flatMap(({ operations }: { operations: string[] }) => operations)).toEqual([]);
+    > 61 |         expect(mechanics.rules).toEqual(expect.arrayContaining([
+         |                                 ^
+      62 |           {
+      63 |             id: 'connect_objective',
+      64 |             source: 'Game.syncCanyonConnectObjective',
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-maps/e2e/er01-e3-census.spec.ts:61:33
+
+    Error Context: test-results/er01-e3-census-e3-canyon-w-257fc--explicit-and-deterministic-mobile-chrome/error-context.md
+
+
+[84/122] [mobile-chrome] › e2e/er01-e3-census.spec.ts:16:3 › e3-fairground census support is explicit and deterministic
+[mobile-chrome] › e2e/er01-e3-census.spec.ts:16:3 › e3-fairground census support is explicit and deterministic
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[85/122] [mobile-chrome] › e2e/er01-e4-census.spec.ts:13:3 › e4-dust-flats is admitted while its signature engine dependency is missing, and declares only consumed vocabulary
+[mobile-chrome] › e2e/er01-e4-census.spec.ts:13:3 › e4-dust-flats is admitted while its signature engine dependency is missing, and declares only consumed vocabulary
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[86/122] [mobile-chrome] › e2e/er01-e4-census.spec.ts:13:3 › e4-long-road is admitted while its signature engine dependency is missing, and declares only consumed vocabulary
+[mobile-chrome] › e2e/er01-e4-census.spec.ts:13:3 › e4-long-road is admitted while its signature engine dependency is missing, and declares only consumed vocabulary
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[87/122] [mobile-chrome] › e2e/er01-e4-census.spec.ts:13:3 › e4-gusher-county is admitted while its signature engine dependency is missing, and declares only consumed vocabulary
+[mobile-chrome] › e2e/er01-e4-census.spec.ts:13:3 › e4-gusher-county is admitted while its signature engine dependency is missing, and declares only consumed vocabulary
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[88/122] [mobile-chrome] › e2e/er01-e4-census.spec.ts:13:3 › e4-boneyard is admitted while its signature engine dependency is missing, and declares only consumed vocabulary
+[mobile-chrome] › e2e/er01-e4-census.spec.ts:13:3 › e4-boneyard is admitted while its signature engine dependency is missing, and declares only consumed vocabulary
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[89/122] [mobile-chrome] › e2e/er01-e5-census.spec.ts:25:1 › E5 storm cargo and schedule facts stay separate, and only crewed fronts emit waves
+[mobile-chrome] › e2e/er01-e5-census.spec.ts:25:1 › E5 storm cargo and schedule facts stay separate, and only crewed fronts emit waves
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[90/122] [mobile-chrome] › e2e/er01-e5-census.spec.ts:137:3 › e5-deepwater-claim census admission is explicit
+[mobile-chrome] › e2e/er01-e5-census.spec.ts:137:3 › e5-deepwater-claim census admission is explicit
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[91/122] [mobile-chrome] › e2e/er01-e5-census.spec.ts:137:3 › e5-regatta census admission is explicit
+[mobile-chrome] › e2e/er01-e5-census.spec.ts:137:3 › e5-regatta census admission is explicit
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[92/122] [mobile-chrome] › e2e/er01-e5-census.spec.ts:137:3 › e5-stillwater census admission is explicit
+[mobile-chrome] › e2e/er01-e5-census.spec.ts:137:3 › e5-stillwater census admission is explicit
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[93/122] [mobile-chrome] › e2e/er01-e5-census.spec.ts:137:3 › e5-flotilla census admission is explicit
+[mobile-chrome] › e2e/er01-e5-census.spec.ts:137:3 › e5-flotilla census admission is explicit
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[94/122] [mobile-chrome] › e2e/er01-e6-census.spec.ts:74:3 › e6-glow-mesa census admission is explicit
+[mobile-chrome] › e2e/er01-e6-census.spec.ts:74:3 › e6-glow-mesa census admission is explicit
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[95/122] [mobile-chrome] › e2e/er01-e6-census.spec.ts:74:3 › e6-showroom census admission is explicit
+[mobile-chrome] › e2e/er01-e6-census.spec.ts:74:3 › e6-showroom census admission is explicit
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[96/122] [mobile-chrome] › e2e/er01-e6-census.spec.ts:74:3 › e6-half-life-hollow census admission is explicit
+[mobile-chrome] › e2e/er01-e6-census.spec.ts:74:3 › e6-half-life-hollow census admission is explicit
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[97/122] [mobile-chrome] › e2e/er01-e6-census.spec.ts:74:3 › e6-picnic census admission is explicit
+[mobile-chrome] › e2e/er01-e6-census.spec.ts:74:3 › e6-picnic census admission is explicit
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[98/122] [mobile-chrome] › e2e/er01-e7-census.spec.ts:119:3 › e7-relay-valley census refuses the unsocketed Signal mechanics
+[mobile-chrome] › e2e/er01-e7-census.spec.ts:119:3 › e7-relay-valley census refuses the unsocketed Signal mechanics
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[99/122] [mobile-chrome] › e2e/er01-e7-census.spec.ts:119:3 › e7-echo-canyon census refuses the unsocketed Signal mechanics
+[mobile-chrome] › e2e/er01-e7-census.spec.ts:119:3 › e7-echo-canyon census refuses the unsocketed Signal mechanics
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[100/122] [mobile-chrome] › e2e/er01-e7-census.spec.ts:119:3 › e7-dead-band census refuses the unsocketed Signal mechanics
+[mobile-chrome] › e2e/er01-e7-census.spec.ts:119:3 › e7-dead-band census refuses the unsocketed Signal mechanics
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[101/122] [mobile-chrome] › e2e/er01-e7-census.spec.ts:119:3 › e7-relay-rush census refuses the unsocketed Signal mechanics
+[mobile-chrome] › e2e/er01-e7-census.spec.ts:119:3 › e7-relay-rush census refuses the unsocketed Signal mechanics
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[102/122] [mobile-chrome] › e2e/er01-e8-census.spec.ts:75:3 › e8-mare-claim census pins the Orbital contract's door state
+  14) [mobile-chrome] › e2e/er01-e8-census.spec.ts:75:3 › e8-mare-claim census pins the Orbital contract's door state 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 2
+    + Received  + 4
+
+      Array [
+    -   ObjectContaining {
+    +   Object {
+          "dep": "atmosphere-wall-consumer",
+    -     "status": "missing",
+    +     "description": "Browser and headless engines compose the atmosphere and suit consumer: outside air drains the suit, breathing domes refill it, empty suits take damage through CombatSystem, and four distinct mining grounds across four air windows gate securing. Native desktop09 and mobile07 complete mining, wave20 secure, banking and reload; evidence is recorded in reviews/sol-map-art-repairs-20260908.md. This records the landed gameplay consumer, not full concept-art acceptance or release admission.",
+    +     "landedBy": "map-art-repairs F48/F49",
+    +     "status": "landed",
+        },
+      ]
+
+      106 |       // which is also why two contracts can be socketed concurrently without fighting here.
+      107 |       const admitted = (contract.tileParams.harvestAnchors?.length ?? 0) > 0;
+    > 108 |       expect(contract.tileParams.engineDependencies).toEqual([
+          |                                                      ^
+      109 |         expect.objectContaining({ dep: EXPECTED_DEPENDENCY[contract.id], status: 'missing' }),
+      110 |       ]);
+      111 |       const seeds = [`${contract.id}-01`, `${contract.id}-02`];
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-maps/e2e/er01-e8-census.spec.ts:108:54
+
+    Error Context: test-results/er01-e8-census-e8-mare-cla-350c9-bital-contract-s-door-state-mobile-chrome/error-context.md
+
+
+[103/122] [mobile-chrome] › e2e/er01-e8-census.spec.ts:75:3 › e8-far-side census pins the Orbital contract's door state
+[mobile-chrome] › e2e/er01-e8-census.spec.ts:75:3 › e8-far-side census pins the Orbital contract's door state
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[104/122] [mobile-chrome] › e2e/er01-e8-census.spec.ts:75:3 › e8-low-orbit census pins the Orbital contract's door state
+[mobile-chrome] › e2e/er01-e8-census.spec.ts:75:3 › e8-low-orbit census pins the Orbital contract's door state
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[105/122] [mobile-chrome] › e2e/er01-e8-census.spec.ts:75:3 › e8-eclipse census pins the Orbital contract's door state
+[mobile-chrome] › e2e/er01-e8-census.spec.ts:75:3 › e8-eclipse census pins the Orbital contract's door state
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[106/122] [mobile-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:29:1 › T spawns Claim Jumpers, contact kills hero, R restarts in place
+[107/122] [mobile-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:59:1 › T does not spawn Claim Jumpers without debug consent
+[108/122] [mobile-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:72:1 › nospawn blocks debug packs
+[109/122] [mobile-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:83:1 › double restart recycles enemies without geometry growth
+[110/122] [mobile-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:109:1 › stress=120 stays within pool and draw-call budget
+[111/122] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:111:1 › menu places a palisade and logs build_palisade spend
+[112/122] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:136:1 › build menu shows six ready icons and Balance-backed blurbs
+[113/122] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining
+[114/122] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:205:1 › beacon cost curve stays intact through the menu
+[115/122] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:227:1 › single enemy slides around a finite palisade line without passing through
+[116/122] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:284:1 › 390px build menu is visible, tappable, and clear of HUD controls
+[117/122] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:329:1 › stress draw calls stay under 200 with palisades and beacons
+[118/122] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:105:1 › enemy crossing the river reaches the hero through the ford only
+[119/122] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:123:1 › scheduled waves never place enemies in deep river over three waves
+  15) [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:123:1 › scheduled waves never place enemies in deep river over three waves 
+
+    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:5324/?debug&timescale=20&nokill&nolevel&nopause&seed=task-025-waves
+    Call log:
+      - navigating to "http://127.0.0.1:5324/?debug&timescale=20&nokill&nolevel&nopause&seed=task-025-waves", waiting until "load"
+
+
+      16 | async function openGame(page: Page, query: string): Promise<ErrorBucket> {
+      17 |   const errors = collectErrors(page);
+    > 18 |   await page.goto(`/${query}`);
+         |              ^
+      19 |   await expect(page.locator('#game-canvas')).toBeVisible();
+      20 |   await page.waitForFunction(() => window.__GR_TEST__ && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+      21 |   return errors;
+        at openGame (/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-maps/e2e/task-025-bandits-dont-swim.spec.ts:18:14)
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-maps/e2e/task-025-bandits-dont-swim.spec.ts:124:24
+
+    Error Context: test-results/task-025-bandits-dont-swim-7595f-deep-river-over-three-waves-mobile-chrome/error-context.md
+
+
+[120/122] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:139:1 › hero stops in the shallows and keeps weapons armed at the deep channel
+  16) [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:139:1 › hero stops in the shallows and keeps weapons armed at the deep channel 
+
+    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:5324/?debug&timescale=8&nowaves&nokill&nolevel&nopause&seed=task-025-wet
+    Call log:
+      - navigating to "http://127.0.0.1:5324/?debug&timescale=8&nowaves&nokill&nolevel&nopause&seed=task-025-wet", waiting until "load"
+
+
+      16 | async function openGame(page: Page, query: string): Promise<ErrorBucket> {
+      17 |   const errors = collectErrors(page);
+    > 18 |   await page.goto(`/${query}`);
+         |              ^
+      19 |   await expect(page.locator('#game-canvas')).toBeVisible();
+      20 |   await page.waitForFunction(() => window.__GR_TEST__ && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+      21 |   return errors;
+        at openGame (/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-maps/e2e/task-025-bandits-dont-swim.spec.ts:18:14)
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-maps/e2e/task-025-bandits-dont-swim.spec.ts:140:24
+
+    Error Context: test-results/task-025-bandits-dont-swim-48bd9-s-armed-at-the-deep-channel-mobile-chrome/error-context.md
+
+
+[121/122] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:181:1 › xp from a residual deep-water death is auto-banked with no mote
+  17) [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:181:1 › xp from a residual deep-water death is auto-banked with no mote 
+
+    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:5324/?debug&timescale=8&nowaves&nolevel&nopause&seed=task-025-xp
+    Call log:
+      - navigating to "http://127.0.0.1:5324/?debug&timescale=8&nowaves&nolevel&nopause&seed=task-025-xp", waiting until "load"
+
+
+      16 | async function openGame(page: Page, query: string): Promise<ErrorBucket> {
+      17 |   const errors = collectErrors(page);
+    > 18 |   await page.goto(`/${query}`);
+         |              ^
+      19 |   await expect(page.locator('#game-canvas')).toBeVisible();
+      20 |   await page.waitForFunction(() => window.__GR_TEST__ && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+      21 |   return errors;
+        at openGame (/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-maps/e2e/task-025-bandits-dont-swim.spec.ts:18:14)
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-maps/e2e/task-025-bandits-dont-swim.spec.ts:182:24
+
+    Error Context: test-results/task-025-bandits-dont-swim-87b71-is-auto-banked-with-no-mote-mobile-chrome/error-context.md
+
+
+[122/122] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:202:1 › far-bank sluice stays untouched when the river flank is open
+  18) [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:202:1 › far-bank sluice stays untouched when the river flank is open 
+
+    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:5324/?debug&timescale=10&nowaves&nolevel&nopause&seed=task-025-sluice
+    Call log:
+      - navigating to "http://127.0.0.1:5324/?debug&timescale=10&nowaves&nolevel&nopause&seed=task-025-sluice", waiting until "load"
+
+
+      16 | async function openGame(page: Page, query: string): Promise<ErrorBucket> {
+      17 |   const errors = collectErrors(page);
+    > 18 |   await page.goto(`/${query}`);
+         |              ^
+      19 |   await expect(page.locator('#game-canvas')).toBeVisible();
+      20 |   await page.waitForFunction(() => window.__GR_TEST__ && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+      21 |   return errors;
+        at openGame (/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-maps/e2e/task-025-bandits-dont-swim.spec.ts:18:14)
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-maps/e2e/task-025-bandits-dont-swim.spec.ts:203:24
+
+    Error Context: test-results/task-025-bandits-dont-swim-8c7d3-hen-the-river-flank-is-open-mobile-chrome/error-context.md
+
+
+  18 failed
+    [desktop-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-archive-world census cites the existing Deep Sky debt 
+    [desktop-chrome] › e2e/er01-e2-census.spec.ts:17:3 › e2-hill-mine census support is explicit and deterministic 
+    [desktop-chrome] › e2e/er01-e2-census.spec.ts:17:3 › e2-trestle census support is explicit and deterministic 
+    [desktop-chrome] › e2e/er01-e2-census.spec.ts:17:3 › e2-pressure-garden census support is explicit and deterministic 
+    [desktop-chrome] › e2e/er01-e2-census.spec.ts:17:3 › e2-incline census support is explicit and deterministic 
+    [desktop-chrome] › e2e/er01-e3-census.spec.ts:16:3 › e3-canyon-works census support is explicit and deterministic 
+    [desktop-chrome] › e2e/er01-e8-census.spec.ts:75:3 › e8-mare-claim census pins the Orbital contract's door state 
+    [mobile-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-archive-world census cites the existing Deep Sky debt 
+    [mobile-chrome] › e2e/er01-e2-census.spec.ts:17:3 › e2-hill-mine census support is explicit and deterministic 
+    [mobile-chrome] › e2e/er01-e2-census.spec.ts:17:3 › e2-trestle census support is explicit and deterministic 
+    [mobile-chrome] › e2e/er01-e2-census.spec.ts:17:3 › e2-pressure-garden census support is explicit and deterministic 
+    [mobile-chrome] › e2e/er01-e2-census.spec.ts:17:3 › e2-incline census support is explicit and deterministic 
+    [mobile-chrome] › e2e/er01-e3-census.spec.ts:16:3 › e3-canyon-works census support is explicit and deterministic 
+    [mobile-chrome] › e2e/er01-e8-census.spec.ts:75:3 › e8-mare-claim census pins the Orbital contract's door state 
+    [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:123:1 › scheduled waves never place enemies in deep river over three waves 
+    [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:139:1 › hero stops in the shallows and keeps weapons armed at the deep channel 
+    [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:181:1 › xp from a residual deep-water death is auto-banked with no mote 
+    [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:202:1 › far-bank sluice stays untouched when the river flank is open 
+  104 passed (8.1m)

@@ -1,0 +1,51 @@
+{
+ "secured": true,
+ "waves": 14,
+ "timeMs": 618600,
+ "gold": 176,
+ "kills": 697,
+ "calls": 395,
+ "defaultedPicks": 0,
+ "defaultedSecure": 1,
+ "eventLogHash": "fnv1a32:1197d233",
+ "tape": "/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/heat14/opus/e2-trestle/attempt-1-tape.json",
+ "scored": true,
+ "runsSoFar": 2,
+ "scoredAttempts": 1,
+ "worldModel": "sim-import",
+ "note": "attempt-1-tape.json is a BYTE-IDENTICAL copy of tune-1-tape.json: ONE ride, two filenames. The first controller secured and the stop rule ends the heat there, so the securing tune is promoted by name in this tape field. cmp verified identical.",
+ "tapeHeaderHash": "fnv1a32:8a13dd06",
+ "outcomeLineHash": "fnv1a32:1197d233",
+ "hashNote": "These two differ BY DESIGN: the assay replay reproduces the TAPE HEADER's hash, never the stdout outcome line's.",
+ "envelope": {
+  "durationTicks": 18558,
+  "maxTicks": 23145,
+  "lastEntryTick": 18405,
+  "entries": 395,
+  "maxEntries": 4629,
+  "bytes": 1385182,
+  "maxTapeBytes": 2486304,
+  "derivation": "runTapeEnvelopeForContract('e2-trestle'): finalWave=max(secureWave 12, baron.wave 12)+6=18; contractTicks=ceil((18*30/0.7)/(1/30))=23143; maxTicks=max(18000,23143)+2=23145; maxEntries=ceil(23145/5)=4629; maxOrderEntries=ceil(23145/30)=772; maxTapeBytes=16384+4629*160+772*2240=2486304. ALL THREE AXES PASS (ticks 80%, entries 8.5%, bytes 55.7%). The charter's 592544 figure is the conservative floor formula (16KiB + maxEntries*160); the live ceiling adds maxOrderEntries*(2400-160)."
+ },
+ "run": {
+  "minHeroHpFraction": 0.36,
+  "minHeroHpAtSeconds": 536.7,
+  "finalHeroHp": "63/175",
+  "peakWorksStanding": 13,
+  "finalWorks": { "palisade": 13, "turret": 4, "standing": 13, "wrecked": 4 },
+  "turretsLost": 0,
+  "goldPanned": 1010,
+  "goldStolen": 0,
+  "peakThreatsAlive": 63,
+  "peakWreckers": 56
+ },
+ "idleFloor": {
+  "secured": false,
+  "waves": 1,
+  "timeMs": 70700,
+  "gold": 0,
+  "kills": 13,
+  "eventLogHash": "fnv1a32:48102054",
+  "note": "Measured this ride. Wave 1 lands at t=42.87 with 17 enemies of which 11 are wreckers; the hero is dead at t=70.700 with no works. This is the pin-#4 cure (five spawn gates) showing in the floor."
+ }
+}

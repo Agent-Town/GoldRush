@@ -1,0 +1,19 @@
+{
+  "rig": "fable",
+  "model": "claude-fable-5",
+  "arena": "/tmp/heat11-b118c4d2",
+  "workdir": "/tmp/heat11-b118c4d2/artifacts/heat11/fable/e4-long-road",
+  "charterFile": "rides/e4-long-road/fable/charter.md",
+  "charterSha256": "be2541dc8b5f80afe94a3bb75db7b6e42acc340ad4421bb8580832aa54fba18b",
+  "sessionId": "84b7d305-646e-48ae-abfa-b42c5548273a",
+  "wallSeconds": 1500,
+  "startedAt": "2026-09-03T23:43:12.197Z",
+  "invocation": "env -u CLAUDECODE -u CLAUDE_CODE_ENTRYPOINT -u CLAUDE_CONFIG_DIR claude -p \"<charter text, see charterFile>\" --model claude-fable-5 --allowedTools Read,Write,Glob,Bash(node *) --output-format text --session-id 84b7d305-646e-48ae-abfa-b42c5548273a",
+  "endedAt": "2026-09-03T23:54:51.291Z",
+  "wallClockSeconds": 699,
+  "exitCode": 143,
+  "signal": null,
+  "wallHit": false,
+  "firstOutputAt": null,
+  "setupToFirstOutputSeconds": null
+}

@@ -1,0 +1,82 @@
+[
+  {
+    "family": "terrain",
+    "patterns": [
+      "assets/pilots/map-rebuild-spike/*-terrain.glb"
+    ],
+    "compress": true,
+    "reason": "Terrain uses the shared Meshopt loader; retain topology and texture dimensions."
+  },
+  {
+    "family": "landmarks",
+    "patterns": [
+      "assets/pilots/map-rebuild-spike/landmarks/**/*.glb"
+    ],
+    "compress": true,
+    "reason": "Landmark packs use the shared Meshopt loader; preserve named mounts."
+  },
+  {
+    "family": "panoramas",
+    "patterns": [
+      "assets/pilots/map-rebuild-spike/*-panorama.glb"
+    ],
+    "compress": true,
+    "reason": "Panoramas use the terrain loader and can decode the same compression."
+  },
+  {
+    "family": "town-buildings",
+    "patterns": [
+      "assets/pilots/assay-office-3d/assay-office.glb",
+      "assets/pilots/chapel-3d/chapel.glb",
+      "assets/pilots/claim-office-3d/claim-office.glb",
+      "assets/pilots/dynamo-hall-3d/dynamo-hall.glb",
+      "assets/pilots/general-store-3d/general-store.glb",
+      "assets/pilots/schoolhouse-3d/schoolhouse.glb",
+      "assets/pilots/stamp-mill-3d/stamp-mill.glb",
+      "assets/pilots/tavern-3d/town-v3-tavern.glb",
+      "assets/pilots/town-plate-3d/town-plate.glb"
+    ],
+    "compress": true,
+    "reason": "Base buildings and the town plate use the tracked shared loader."
+  },
+  {
+    "family": "town-era-variants",
+    "patterns": [
+      "assets/pilots/{assay-office,catalog-warehouse,chapel,claim-office,dynamo-hall,general-store,schoolhouse,stamp-mill,tavern}-3d/*.e[0-9]*.glb"
+    ],
+    "compress": true,
+    "reason": "Every .eN sibling uses the same tracked loader as its base building."
+  },
+  {
+    "family": "props",
+    "patterns": [
+      "assets/pilots/plaza-props-3d/*.glb",
+      "assets/pilots/run3d/*.glb",
+      "assets/pilots/baron-props-3d/baron-props.glb"
+    ],
+    "compress": true,
+    "reason": "Town, run, and Baron props use shared Meshopt loaders; retain named meshes."
+  },
+  {
+    "family": "bosses",
+    "patterns": [
+      "assets/pilots/crawler-3d/crawler.glb",
+      "assets/pilots/railcar-3d/railcar.glb",
+      "assets/pilots/salvage-claw-3d/salvage-claw-detail-opus5.glb",
+      "assets/pilots/dredge-queen-3d/dredge-queen-detail-opus5.glb",
+      "assets/pilots/homemaker-9000-3d/homemaker-9000.glb",
+      "assets/pilots/old-digger-3d/old-digger.glb"
+    ],
+    "compress": true,
+    "reason": "All boss loaders decode Meshopt; preserve component names, morph targets, and triangle counts."
+  },
+  {
+    "family": "finale",
+    "patterns": [
+      "assets/pilots/ark-plaza-e10-3d/ark-plaza-e10.glb",
+      "assets/pilots/ark-deck-era-dressing-e10-3d/ark-deck-era-dressing-e10.glb"
+    ],
+    "compress": true,
+    "reason": "Both Ark staging models use the shared Meshopt loader."
+  }
+]

@@ -1,0 +1,2377 @@
+
+> gold-rush@0.1.0 test:node-guards
+> node scripts/run-node-guards.mjs scripts/e5-stillwater-front-crew.test.mjs scripts/kit-guard.test.mjs scripts/e10-preserve-objective.test.mjs scripts/e8-mare-claim-physics.test.mjs scripts/e8-remaining-maps.test.mjs scripts/view-schema-guard.test.mjs scripts/health-watch-agents.test.mjs scripts/deploy-mirror-allowlist.test.mjs scripts/engine-era-guard.test.mjs scripts/standing-orders-module-split.test.mjs scripts/frontier-registry.test.mjs scripts/no-emdash-guard.test.mjs scripts/battery-manifest.test.mjs scripts/f2135-canyon-census-player.test.mjs scripts/canyon-terminal-probe-binding.test.mjs scripts/campaign-harness-terrain.test.mjs scripts/coal-seams-on-the-view.test.mjs scripts/canyon-connect-view.test.mjs scripts/contract-bank-cap-override.test.mjs scripts/contract-beacon-ladder-override.test.mjs scripts/terrain-contract-scope.test.mjs scripts/picnic-hold-contract-scope.test.mjs scripts/same-game-audit.test.mjs scripts/same-game-report-guard.test.mjs scripts/door-admission-ratchet.test.mjs scripts/gazette-backfill-sweep.test.mjs scripts/wrangler-version-assert.test.mjs scripts/agent-rung-conformance.test.mjs scripts/agent-seat.test.mjs scripts/agent-reels.test.mjs scripts/assay-replay.test.mjs scripts/same-laws-harvest-parity.test.mjs scripts/e4-roads-and-convoys.test.mjs scripts/assay-worker.test.mjs scripts/assert-release-build.test.mjs scripts/bench-seeds.test.mjs scripts/null-floor-anchors.test.mjs scripts/season-registry.test.mjs scripts/blocker-panel-closed-guard.test.mjs scripts/character-direction-assets.test.mjs scripts/citation-title-guard.test.mjs scripts/claimed-spec-harness-guard.test.mjs scripts/collection-guards-cwd-invariance.test.mjs scripts/stale-ready-for-gates-guard.test.mjs scripts/component-boss-secure.test.mjs scripts/console-watch-single-source.test.mjs scripts/cross-engine-skip.test.mjs scripts/desk-declaration-guard.test.mjs scripts/desk-birth-guard.test.mjs scripts/drain-block-check.test.mjs scripts/e3-mask-tables.test.mjs scripts/entry-damage-table.test.mjs scripts/external-server-is-dev.test.mjs scripts/findings-state-guard.test.mjs scripts/fire-shell-serialisation.test.mjs scripts/fixture-teardown.test.mjs scripts/function-cors-allowlist.test.mjs scripts/gate-caller-audit.test.mjs scripts/gate-battery.test.mjs scripts/glob-fallback-completeness.test.mjs scripts/goal-closure-reason.test.mjs scripts/goal-tracker.test.mjs scripts/gr-sim.test.mjs scripts/gr-sim-campaign.test.mjs scripts/moth-season-pressure.test.mjs scripts/law-pointer-guard.test.mjs scripts/lane-residue.test.mjs scripts/lane-usable-dirt-parse.test.mjs scripts/lane-usable-busy-self.test.mjs scripts/probe-base.test.mjs scripts/rehearsal-base.test.mjs scripts/red-inventory-lookup.test.mjs scripts/review-evidence-audit.test.mjs scripts/ruling-propagation-guard.test.mjs scripts/run-guards.test.mjs scripts/run-log-retention.test.mjs scripts/script-tree-parse.test.mjs scripts/site-contract.test.mjs scripts/skillmd-guard.test.mjs scripts/skillmd-contracts-guard.test.mjs scripts/stream-curate.test.mjs scripts/stream-director.test.mjs scripts/stream-showcase-queue.test.mjs scripts/subject-tree.test.mjs scripts/suite-red-inventory.test.mjs scripts/town-era-props-node-safety.test.mjs scripts/town-spec-collection.test.mjs scripts/wave-scaling-cross-engine.test.mjs scripts/whole-suite-collection.test.mjs scripts/worker-type-coverage.test.mjs scripts/node-guards-concurrency.test.mjs scripts/node-guards-timeout.test.mjs scripts/node-guards-contention.test.mjs scripts/master-shipped-classifier.test.mjs ops/droplet/ledger-backup.test.mjs scripts/ledger-backup-pull.test.mjs src/encyclopedia/stackDirectory.test.mjs scripts/e7-playbook-rows.test.mjs scripts/deploy-budget.test.mjs scripts/glb-contract-guard.test.mjs scripts/shared-atlas-plugin.test.mjs scripts/gltf-loader-usage-guard.test.mjs scripts/terrain-height-sampler.test.mjs scripts/board-launchable-guard.test.mjs scripts/secure-choice-refusal.test.mjs && node scripts/test-ticker-stats.mjs && npm run test:findings-state && npm run test:blocker-panel && npm run test:ruling-propagation && npm run test:desk-declaration scripts/e10-squall-scheduler.test.mjs scripts/board-tape-gold.test.mjs scripts/contract-hero-grit-override.test.mjs scripts/run-tape-envelope-budget.test.mjs scripts/e10-preserve-consumer.test.mjs scripts/hero-move-verb.test.mjs scripts/e8-regolith-gate-override.test.mjs scripts/first-town-request-families.test.mjs scripts/relay-rush-reel.test.mjs scripts/e8-crossing-gate-override.test.mjs scripts/sprite-cell-url-inlining.test.mjs scripts/eclipse-winnable.test.mjs scripts/profile-data-key-sweep.test.mjs scripts/gr-sim-resume-tape-safety.test.mjs scripts/hero-clip-groups.test.mjs scripts/e8-air-suit-human.test.mjs scripts/rider-parity-reach.test.mjs scripts/repair-under-radius.test.mjs scripts/rider-parity-retirement.test.mjs scripts/rider-parity-context-press.test.mjs && node scripts/nul-audit.mjs
+
+(node:14041) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ VACUUM INTO backup restores byte-identical ledger rows (7.5215ms)
+✔ rotation deletes only dated ledger backups older than 14 days (1.904167ms)
+✔ agent reel validation reuses the door bounds and CLI tape content stays deterministic under unique ids (11413.631334ms)
+✔ agent consent keeps the ruled pan and build rungs plus shipped repair rung (0.824375ms)
+✔ tool surface keeps auto-pan and place-building at their ruled rungs (0.145ms)
+✔ standing orders keep harvest at rung 2 and build at rung 3 (0.116875ms)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/23',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+✔ a wire act crosses into the sim and changes it (4291.265417ms)
+✔ agent_orders validates the standing-order grammar and wire bounds (176.557333ms)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/23',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+✔ two independently booted sims agree tick for tick (4638.784584ms)
+✔ the seat carries BUILD and refuses to stretch for the rest (122.368292ms)
+✔ the seat carries the facing, and refuses a facing the county does not keep (78.999167ms)
+✔ the throttle ceiling is the relay rate limit, not a taste (4508.436542ms)
+✔ rob's v1 live reel is retained but reported as unverifiable legacy (400.148042ms)
+✔ the browser arm of the assay instrument reports the purse held, not lifetime panning (0.211167ms)
+✔ the round-2 corpus hash remains byte-for-byte pinned (0.764167ms)
+✔ pre-era engine-stamped agent tapes are retired: the assayer refuses their plans (3885.703958ms)
+✔ the hill-mine libm divergence tape is retired, and the tape it was measured from is kept (3918.002875ms)
+✔ a securing door tape carries its start, its boundary answer, and replays to its own hash (50240.113875ms)
+✔ an overtime replay returns the immutable secure-event snapshot and the later final outcome (46369.797584ms)
+✔ once keeps completed mismatches rejected and retries instrument failures before unassayable (648.099875ms)
+✔ engine lineage wins over build id, with build id retained for legacy tapes (164.2385ms)
+✔ an earlier pin in the current era remains assayable (219.534333ms)
+✔ the worker environment law refuses every Node version except the exact canonical one (0.278709ms)
+✔ engine hash ignores a doc-only commit and moves on a Balance edit in a scratch worktree (252.845417ms)
+✔ a posted unassayable reason names files, never paths; the operator log keeps both (245.627792ms)
+✔ dry-run prints the verdict without posting it (138.507417ms)
+✔ shutdown during replay leaves the row pending (161.413875ms)
+✔ API failures back off before polling again (205.045375ms)
+✔ a row flipped back to pending is assayed again from a clean attempt budget (274.62925ms)
+✔ a missing dist/ is refused, not cleared (36.958334ms)
+✔ CONTROL: the same fixture with one benign dist file passes — it is the emptiness, not the fixture (42.145292ms)
+✔ an empty later-asset blacklist is refused — the leak check would otherwise pass vacuously (31.73075ms)
+✔ the success line reports the denominator, so a vacuous clearance would be legible (41.967709ms)
+✔ POSITIVE CONTROL: a later-epoch manifest id in dist still fails (34.808583ms)
+✔ POSITIVE CONTROL: a leaked later-epoch plate asset in dist still fails (33.412166ms)
+✔ POSITIVE CONTROL: the GR_RELEASE=e1 precondition still refuses a bare invocation (35.718458ms)
+✔ an E1 asset whose content hash reads like an era tag is NOT a leak (36.383458ms)
+✔ POSITIVE CONTROL: a genuine later-era asset in dist still fails (33.823792ms)
+✔ POSITIVE CONTROL: a later-era tag ENDING the module name still fails (the `$` anchor) (31.621959ms)
+✔ two named additions account for a two-test tally delta (169.899084ms)
+✔ identical manifests have an empty diff (95.7585ms)
+✔ a file-level collection failure leaves an unaccounted tally residue (144.328625ms)
+✔ a status flip is visible when the tally is unchanged (153.201459ms)
+✔ stdin and --from-log emit the same deterministic manifest (318.287ms)
+✖ rotation registry stays outside the engine identity corpus (293.61675ms)
+✔ contract ids are globally unique across the ten epoch bundles (0.351ms)
+✔ bench seed sets cover Frontier and contain only valid known-contract seeds (0.212583ms)
+✔ rotation mint is deterministic, week-sensitive, and requires a salt (169.493166ms)
+✔ reds on a real ledger with a subject-led closed finding on the panel, greens on the live root (1446.604625ms)
+✔ a cited id does not borrow the subject id closure on the old real ledger (229.03575ms)
+✔ a closure APPENDED below the panel row does not clear the panel — which is the whole defect (63.290625ms)
+✔ striking the ORIGINAL line clears the panel — the fix the guard prescribes actually works (60.29125ms)
+✔ an open finding on the panel is left alone (61.429167ms)
+✔ REFUSES rather than passes when the panel moves out from under it (38.875208ms)
+✔ the wide closure vocabulary is opt-in and does not leak into the default census (0.6085ms)
+✔ the board is not empty (0.305417ms)
+✔ every board contract either has seams or declares a harvest-free objective (0.477709ms)
+✔ the harvest-free declaration is ratcheted, and only seamless maps carry it (0.130375ms)
+✔ the door still reads the declaration, in the shape the same-game audit can lift (0.4175ms)
+✔ the harvest-free exemption does not open the agent-play door (0.07475ms)
+✔ campaign harness URL binds Terrain to its selected contract (6298.536625ms)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/23',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+✔ Canyon Works alone publishes its live connection objective (4429.305917ms)
+✔ every destructured ssrLoadModule symbol is exported by its source module (2.199ms)
+✔ contract direction files exist under assets/processed (1.818917ms)
+✔ contract direction aliases do not overwrite explicit directions (0.314917ms)
+✔ a bare spec:line citation fails the guard (286.674333ms)
+✔ a citation carrying an exact test title passes (290.311083ms)
+✔ a short code span cannot consume the following quoted title (313.944833ms)
+✔ a bare apostrophe cannot consume the following quoted title (231.42225ms)
+✔ an odd same-kind delimiter cannot consume the following quoted title (271.769042ms)
+✔ a test helper string is not harvested as a title (251.1275ms)
+✔ chained describe modifiers remain title declarations (235.673041ms)
+✔ a citation carrying an ELIDED test title passes (219.366667ms)
+✔ a quoted title that does not exist in the spec still fails (225.315125ms)
+✔ a grandfathered bare citation passes, and a second copy of it does not (380.289041ms)
+✔ --report never gates (258.219584ms)
+✔ REFUSES when no tracked task markdown exists (denominator 0 docs) (231.485916ms)
+✔ REFUSES when task docs exist but carry zero citations (273.292958ms)
+✔ REFUSES when the baseline it ratchets against is missing (331.223666ms)
+✔ a citation quoting a real NON-TEST source line is carried, not a violation (276.925041ms)
+✔ a quote matching NEITHER a title nor any source line still fails (277.611041ms)
+✔ the verdict names the citations it did NOT gate (273.030667ms)
+✔ --report still never gates, even on a denominator it could not read (244.802375ms)
+✔ the claimed-spec -> owning-config map is DERIVED, not tabulated (4.466583ms)
+✔ derivation REFUSES rather than silently measuring nothing if the array is renamed (1.232375ms)
+✔ MANUFACTURED: a claimed spec whose owning config has NO npm caller is named (1.093625ms)
+✔ a runnerless harness WARNS and never changes the exit code (42.792541ms)
+✔ NO package.json is not the same as no caller — a synthetic root must stay silent (47.441083ms)
+✔ MANUFACTURED: a bare playwright command naming a claimed spec FAILS the guard (52.494541ms)
+✔ MANUFACTURED: a CHECKLIST-form adjacent-suite line FAILS the guard (why arm (b), not (a)) (49.760625ms)
+✔ MANUFACTURED: a mention inside the SELF-CHECK region FAILS the guard (46.8515ms)
+✔ a DESCRIPTIVE mention outside any gate region is NOT an offender (why not arm (c)) (45.304542ms)
+✔ naming the owning CONFIG clears the master (52.555875ms)
+✔ naming the npm ALIAS clears the master (46.647542ms)
+✔ the guard actually RUNS when invoked as a script (entrypoint is not a silent no-op) (237.917ms)
+✔ the live board has no LIVE offender (170.550417ms)
+✔ every grandfathered file is still a real offender (no stale excuses) (176.138458ms)
+✔ the guard sets process.exitCode and never force-exits (F-2098-1) (0.391042ms)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/23',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/23',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/23',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/23',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+✔ the agent view publishes declared pressure-contract coal seams only (16989.547084ms)
+collection-guard corpus: 3 subject(s) derived from collection-guards-cwd-invariance.test.mjs's own directory
+✔ the collection-guard subject set is derived and non-empty (0.359916ms)
+✔ lane-usable-untracked-files-guard.test.mjs is cwd-invariant from os.tmpdir() (3224.454792ms)
+✔ lane-usable-untracked-files-guard.test.mjs is cwd-invariant from a repo subdirectory (3471.432542ms)
+✔ town-spec-collection.test.mjs is cwd-invariant from os.tmpdir() (1203.088375ms)
+✔ town-spec-collection.test.mjs is cwd-invariant from a repo subdirectory (998.82325ms)
+✔ whole-suite-collection.test.mjs is cwd-invariant from os.tmpdir() (3098.714083ms)
+✔ whole-suite-collection.test.mjs is cwd-invariant from a repo subdirectory (2903.032167ms)
+✔ E2 default railcar group secures only when its last component dies (0.356917ms)
+✔ E2 default railcar group rejects a wrong group id (0.05075ms)
+✔ E3 variant uses the component-boss group suffix, not railcar (0.189458ms)
+✔ E1 plain Baron accepts no group id and rejects a defined one (0.085791ms)
+✔ E6 Homemaker secures on its CORE only, never on the authored VAC+RACK group (0.166917ms)
+✔ elite kind must match even when the component group is fully down (0.048791ms)
+✔ console error watching stays in one literal-prefix source (13.529ms)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/23',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+✔ both engines take the purse from twist.economy.bankCap, and Economy stays the one writer (4454.75325ms)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/23',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+✔ a contract without the twist opens at exactly Balance.economy.bankCap (4581.598041ms)
+✔ the published purse cannot drift from the authored one (1025.147542ms)
+✔ the door refuses a purse that is not a positive whole number of gold (382.34975ms)
+✔ the browser applies the same field through the same Economy call (2.169709ms)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/23',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+✔ both engines price beacons from twist.economy.beaconLadder, through one function (4591.996709ms)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/23',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+✔ a contract without the twist is charged exactly Balance.beacon, in both engines and on the card (4513.714625ms)
+✔ the published ladder cannot drift from the authored one, or from the card a human reads (974.72825ms)
+✔ the door refuses a ladder that is not 1..maxCount non-decreasing whole multiples of 5 (506.586583ms)
+✔ the browser applies the same field through the same one call (2.58725ms)
+✔ fire shell SKIPS the cross-engine guard, with a reason a reader can act on (0.351417ms)
+✔ lane and attended shells RUN the cross-engine guard (0.094667ms)
+✔ a missing second interpreter still outranks the shell question (0.406083ms)
+✔ deploy fails closed: payload over the budget (1302.087416ms)
+✔ deploy fails closed: payload exactly ON the budget (the comparison is less-than) (686.844083ms)
+✔ deploy fails closed: a declared family the build does not emit (651.763916ms)
+✔ deploy fails closed: the probe tripwire over its ceiling (676.004416ms)
+✔ the deploy survives a broken tripwire and says so: the probe exits nonzero (716.239083ms)
+✔ the deploy survives a broken tripwire and says so: the probe measures nothing (658.5355ms)
+✔ the deploy survives a broken tripwire and says so: the per-file report is unreadable (655.335791ms)
+✔ the deploy survives a broken tripwire and says so: mobile never reported (633.737125ms)
+✔ the deploy survives a broken tripwire and says so: the same project reported twice (599.312083ms)
+✔ the verdict block names which number gates and which only trips (701.070292ms)
+✔ the budget and the ceiling in the block are the constants deploy.sh holds (0.290833ms)
+✔ --allow-over-budget waives both numbers at once, and says which failed (697.638625ms)
+✔ under-budget dry run passes; an existing owner verdict is reported without interpreting it (744.187ms)
+✔ allowance reaches the publisher; strict still governs deploy errors (1325.56525ms)
+✔ build failure prints a verdict and preserves strict=false (386.331959ms)
+✔ build failure prints a verdict and preserves strict=true (359.96175ms)
+✔ lock refusal prints the release verdict before any build (227.277375ms)
+✔ deploy.sh falls back to the probe only when the payload script is genuinely absent (1389.530417ms)
+✔ the fallback is unreachable in this repo: the payload script and its declaration are here (0.108791ms)
+✔ the payload table is deterministic: three runs, byte-identical (919.984916ms)
+✔ the declared set is non-empty, sorted, disjoint, and every row carries its reason (0.220917ms)
+✔ the declaration cannot drift from the town's own sources (1.275917ms)
+✔ the cross-check bites: a cast member dropped from the declaration is named (0.617833ms)
+✔ the cross-check bites: re-declaring a deferred hero clip group is refused (0.408708ms)
+✔ a corpus family the declaration does not name is reported, never counted (758.535875ms)
+✔ the family derivation is a verbatim copy of the request-family guard's (0.2815ms)
+✔ the payload computed here is the payload the block prints (778.345917ms)
+(node:20119) ExperimentalWarning: glob is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+mirror closure: ledger 1470 files; assay 2334 files; engine 538 files; total 2487
+✔ droplet mirror ships the runtime closure and deletes only unprotected spillover (1889.658792ms)
+✔ the SELECTOR admits an owner ACT and refuses a gate that merely says the word (1.4035ms)
+✔ a NEGATED owner gate is a disclaimer and must NOT flag (F-1551-4) (0.315667ms)
+✔ negation handling does not disarm the guard — every positive still flags (0.058667ms)
+✔ a negation is scoped to its own sentence, so a mixed gate keeps its owner half (0.043542ms)
+✔ the selector reads the other real owner-gate phrasings on the board (0.122292ms)
+✔ and refuses the fire-actionable phrasings that sit beside them (0.045584ms)
+✔ a row is keyed by the id it INTRODUCES, not one its prose cites (0.17875ms)
+✔ gateOf takes the LAST gate clause, since row prose quotes earlier ones (0.049667ms)
+✔ MANUFACTURED DEFECT — an owner-gated row filed with no desk mention is named (0.926208ms)
+✔ THE REAL s1540->s1541 EVENT: both undesked owner rows are caught, the six others are not (0.34175ms)
+✔ ...and once they are ON the desk, the same window passes (0.129709ms)
+✔ the desk is the LAST desk word, so an upstream PROSE mention does not satisfy it (0.110416ms)
+✔ DESK-NOT-OWED excuses an id, and is scoped so it cannot cover an unrelated one (0.092542ms)
+✔ SKIPS mid-fire on an ACTIVE lock, so drain batteries are unaffected (0.03775ms)
+✔ REFUSES rather than greening when line-1 carries no desk at all (0.027ms)
+✔ the backtick header is readable here too — the three desk parsers stay in step (0.0545ms)
+✔ addedRows reads the ledger glyphs and ignores diff noise (0.128ms)
+✔ a desk item WITH a declaring row passes (73.193625ms)
+✔ MANUFACTURED: a desk item with NO row anywhere exits 1 and names the id (55.582667ms)
+✔ MANUFACTURED: the F-1328-3 shape — MENTIONED inside another finding row is NOT declared (52.129459ms)
+✔ a row whose id sits past the 90-char subject zone does NOT declare it (52.680209ms)
+✔ the leading GLYPH is irrelevant — F-1334-1 refuted marker equality (344.928917ms)
+✔ the markdown list bullet is stripped: bulleted and unbulleted rows read alike (151.585417ms)
+✔ GROUND TRUTH — the real s1529 backtick header must NOT read as "no desk" (52.888167ms)
+✔ REFUSES (exit 2) rather than greening when there is no OWNER DESK segment (34.172125ms)
+✔ REFUSES (exit 2) when the desk segment holds zero keyed items (39.679667ms)
+✔ REFUSES (exit 2) when BACKLOG.md is missing (30.786042ms)
+✔ the entrypoint actually RUNS — a space in the repo path must not no-op it (68.886708ms)
+✔ the live board is green under this guard (baseline is honest) (313.554ms)
+✔ MANUFACTURED F-1471-3: an ARCHIVED desk never satisfies the guard (34.500875ms)
+✔ MANUFACTURED F-1471-3: an archived desk must not MASK an undeclared LIVE item (72.706459ms)
+✔ all five desk spellings are read — the majority form was invisible (291.804208ms)
+✔ an ACTIVE lock line SKIPs (exit 0) — the desk is written at handoff time (66.101ms)
+✔ a lock line that MENTIONS the desk in prose is still a lock, not a desk (54.240208ms)
+✔ MANUFACTURED: a prose mention upstream loses to the REAL desk in the tail (52.825125ms)
+✔ a handoff whose desk header has no F-IDs after it REFUSES (exit 2) (32.418708ms)
+✔ a SLUG-keyed desk item WITH a declaring row passes (88.658417ms)
+✔ MANUFACTURED F-1534-2: a SLUG desk item with NO row exits 1 and names the slug (59.931375ms)
+✔ the F-1328-3 shape on the SLUG axis: a slug CITED in another row is not declared (75.39075ms)
+✔ F-1535-1: a backtick in an item's PROSE is not a desk item (the flat-scan trap) (99.986958ms)
+✔ F-1535-1: an item keyed by an F-ID that also cites its slug is ONE F-keyed item (89.646834ms)
+✔ a desk of ONLY slug items does not trip the zero-keyed-items refusal (75.946333ms)
+✔ the grandfather list may only SHRINK — never grows past the s1334 baseline (0.267292ms)
+✔ every grandfathered id is still on the desk — the list must not rot (41.0215ms)
+✔ MANUFACTURED: with the list EMPTY the guard is strict — no id is excused (55.107958ms)
+✔ derived door matches the fixed admission baseline (4216.210833ms)
+✔ drain path REFUSES a terminal-closed leaf (F-1248-1) — and clears the same fixture when live (155.288875ms)
+✔ every TERMINAL_CLOSED word is refused on the drain path, and no other word is (833.867833ms)
+✔ an owner BLOCK still outranks everything and still names the owner (unchanged by F-1248-1) (82.135458ms)
+✔ --queue keeps its own wording and its own reason line (95.216333ms)
+✔ F-1311-2: --queue refuses a fresh bare citation and names the repair (275.727084ms)
+✔ F-1311-2: --queue accepts the same citation with its test title (287.555625ms)
+✔ F-1311-2: --queue respects the grandfathered baseline (276.314291ms)
+✔ F-1311-2: the drain arm remains unchanged for a fresh bare citation (99.98425ms)
+✔ a closed leaf whose reason sits under a session-stamped key is still explained (185.958958ms)
+✔ F-1249-1: a session-stamped reason key that varies the STEM is explained, and non-reason keys are not (223.544875ms)
+✔ F-1249-1: a stale blockedReason is never printed as the CLOSURE cause (142.710542ms)
+✔ F-1249-1: the leaf TITLE is printed on both refusal arms, even when a reason key exists (255.048333ms)
+✔ --all reports terminal-closed leaves but its exit code still tracks BLOCKED alone (200.376208ms)
+✔ F-1250-1: an EXACT taskFile match outranks a longer-named sibling (no false CLEAR) (229.43125ms)
+✔ F-1250-1: the reverse — a lawful merged drain is not reddened by a longer closed predecessor (144.301708ms)
+✔ F-1250-1: with NO exact match, longest-wins still decides (the tie-break is kept, not replaced) (68.066167ms)
+✔ F-1250-1 rider: a blocked SIBLING still refuses, but now says which leaf you actually named (147.102459ms)
+✔ a missing leaf is still UNKNOWN-not-a-clearance, and --strict still escalates it (161.147959ms)
+✔ --queue REFUSES a master a runner already holds (F-1322-1) — and clears it once the slot frees (406.918209ms)
+✔ the live-run match is the runner's exact shape, not a name suffix (309.54025ms)
+✔ an UNDRAINED done-move WARNS but never refuses — s1320's lawful §7.5 re-dispatch must pass (718.6645ms)
+✔ F-2097-1: an UNREGISTERED master is still refused when a runner holds it (259.203917ms)
+✔ the DRAIN path is untouched by both arms — a done-move is what a drain is FOR (84.505416ms)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/23',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+{"extract":{"secured":false,"waves":4,"timeMs":128667,"gold":60,"kills":66,"calls":1,"defaultedPicks":3,"defaultedSecure":0,"eventLogHash":"fnv1a32:9b133c8d","endReason":"preserve_fell"},"defend":{"secured":true,"waves":8,"timeMs":240033,"gold":10,"kills":200,"calls":2,"defaultedPicks":6,"defaultedSecure":0,"eventLogHash":"fnv1a32:3eec9b2b"}}
+✔ the Last Claim flips extraction into a preserve objective (18635.060584ms)
+✔ published mask tables exactly track authored contract data (44.702542ms)
+✔ published Moth Season mask stays inside bounds and agrees with authored water (1.054083ms)
+✔ e2-trestle mask stays inside bounds and agrees with authored water (1.400125ms)
+✔ e2-pressure-garden mask stays inside bounds and agrees with authored water (0.641ms)
+✔ e2-incline mask stays inside bounds and agrees with authored water (0.556709ms)
+✔ e3-canyon-works mask stays inside bounds and agrees with authored water (2.069167ms)
+✔ e3-blackout-ridge mask stays inside bounds and agrees with authored water (1.556375ms)
+✔ e3-moth-season mask stays inside bounds and agrees with authored water (0.742834ms)
+✔ e3-fairground mask stays inside bounds and agrees with authored water (1.417458ms)
+✔ e4-dust-flats mask stays inside bounds and agrees with authored water (1.120375ms)
+✔ e4-long-road mask stays inside bounds and agrees with authored water (3.100125ms)
+✔ e4-gusher-county mask stays inside bounds and agrees with authored water (0.71475ms)
+✔ e4-boneyard mask stays inside bounds and agrees with authored water (1.243833ms)
+✔ e5-regatta mask stays inside bounds and agrees with authored water (0.899ms)
+✔ e5-stillwater mask stays inside bounds and agrees with authored water (2.185292ms)
+✔ e5-flotilla mask stays inside bounds and agrees with authored water (1.069375ms)
+✔ e6-glow-mesa mask stays inside bounds and agrees with authored water (1.516583ms)
+✔ e6-showroom mask stays inside bounds and agrees with authored water (1.125041ms)
+✔ e6-half-life-hollow mask stays inside bounds and agrees with authored water (0.905958ms)
+✔ e6-picnic mask stays inside bounds and agrees with authored water (0.709333ms)
+✔ e7-relay-valley mask stays inside bounds and agrees with authored water (0.440084ms)
+✔ e7-echo-canyon mask stays inside bounds and agrees with authored water (0.675583ms)
+✔ e7-dead-band mask stays inside bounds and agrees with authored water (0.898708ms)
+✔ e7-relay-rush mask stays inside bounds and agrees with authored water (0.742208ms)
+✔ e8-mare-claim mask stays inside bounds and agrees with authored water (0.837667ms)
+✔ e9-dome-basin mask stays inside bounds and agrees with authored water (1.565417ms)
+✔ e9-seed-run mask stays inside bounds and agrees with authored water (0.436416ms)
+✔ e9-devils-alley mask stays inside bounds and agrees with authored water (0.404ms)
+✔ e9-old-canal mask stays inside bounds and agrees with authored water (0.865375ms)
+✔ e10-ember-shore mask stays inside bounds and agrees with authored water (0.391292ms)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/23',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+✔ each Motor map composes its own errand, and a door without the twist composes none (4699.947625ms)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/23',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+✔ the mechanic fires: tar fuels the Hauler, GRADE builds the corridor, HAUL rides it 2.5x faster on 0.4x fuel, and the haul latch opens the secure wave (5497.150917ms)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/23',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+✔ the storm slows the Hauler by the authored multiplier and every outlaw with it (4332.851959ms)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/23',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+✔ the Long Road's town gains only the ground its lead Hauler gains, and latches at the far stop (4598.781375ms)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/23',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+✔ Gusher County washes out one lease per storm, refuses a delivery through it, and takes it when it reopens (6165.994875ms)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/23',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+✔ the Boneyard hitches its hulk where it lies and delivers it at the gate end of the road (5863.016125ms)
+✔ the contract schema fails closed: unknown motor fields, two errands, an errand naming no corridor, a tow with no such hulk (4052.979833ms)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/23',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+✔ e4-dust-flats: idle cannot secure and pins its hash; the floor lands the errand and pins its own (14197.216625ms)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/23',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+✔ e4-long-road: idle cannot secure and pins its hash; the floor lands the errand and pins its own (12808.6105ms)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/23',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+✔ e4-gusher-county: idle cannot secure and pins its hash; the floor lands the errand and pins its own (15756.152375ms)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/23',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+✔ e4-boneyard: idle cannot secure and pins its hash; the floor lands the errand and pins its own (10996.540917ms)
+✔ Stillwater carries one corsair at 8 seconds on a 32 second cycle without disabling scheduled waves (699.179084ms)
+✔ ordinary Stillwater riders lose by wave 3 while the reference ride secures at wave 12 (55479.10675ms)
+✔ the other E5 idle pins stay byte-identical (24704.872667ms)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/23',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+✔ the Relay Valley: a program lights a relay, and that is what opens its secure (9093.475375ms)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/23',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+✔ Echo Canyon: a use is recorded, the next wave fields the mirror, and a repeat is counted (7328.729083ms)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/23',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+✔ the Dead Band: the verb is refused signal-suppressed, and the refusal is the objective (6055.308917ms)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/23',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+✔ Relay Rush: the interference front suspends a running program and restores it (8210.894708ms)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/23',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+✔ the era scope is the Signal bundle: no other contract grows a row, a latch or a refusal (4016.881458ms)
+✔ HUMAN PARITY: browser player and rider use the shared Signal latch and the human tape records the use (1.781875ms)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/23',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+{"closedAtWave":22,"gatedAtWave":22,"open":{"secured":true,"waves":20,"timeMs":600000,"gold":5,"kills":340,"calls":2,"defaultedPicks":16,"defaultedSecure":0,"eventLogHash":"fnv1a32:43632fc0"}}
+✔ one contract, one gravity profile, and the three seams the browser reads it at (71.465166ms)
+✔ air is the wall: the suit drains outside, refills inside, and a breathless pan buys nothing (2.95875ms)
+✔ the ride the audit measured, now carrying its air — and the un-composed hash it replaces (1710.019458ms)
+✔ the gravity-scaled lob: 2.4x reach and hang, and OUT_OF_RANGE the moment the profile is gone (47.276208ms)
+✔ the secure turns on the regolith run: same seed, same orders, two latches (40292.224291ms)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/23',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+{"closedAtWave":22,"open":{"secured":true,"waves":20,"timeMs":600000,"gold":0,"kills":160,"calls":32,"defaultedPicks":10,"defaultedSecure":0,"eventLogHash":"fnv1a32:1aaf16f5"}}
+✔ the gravity half was already composed: all three publish the profile the browser holds (118.231375ms)
+✔ the air wall arms on each map own declaration, and on nothing else (0.231792ms)
+✔ air is the wall: the suit drains outside a shelter, refills inside one, and only a wall map breaches (1.3ms)
+✔ the crossing is made on air, or it is not made: a breathless entry counts and credits nothing (0.393875ms)
+✔ the crossing window credits at most one entry per window, and holds the rest (1.332708ms)
+✔ low orbit crosses its two outboard decks, and the returning-lob seam is untouched (8.383416ms)
+✔ the eclipse removes an air route mid-run, and the secure needs a ground worked after it (1.794083ms)
+✔ the ride the audit measured, now carrying its air, and the un-composed hash it replaces (5191.0045ms)
+✔ the Mare Claim is the control: byte-identical with the siblings composed and with them gone (1524.45ms)
+✔ the secure turns on the crossing: same seed, same orders, two latches (32868.107375ms)
+✖ the landed registry names the live engine and stays outside its hash corpus (3.354917ms)
+✔ same-era re-pins append, and removing an earlier pin reds (43.540417ms)
+✔ tooling edits stay outside the engine identity while src edits rotate it (16.292125ms)
+✔ a new-basis alias keeps its old-basis pin in the current era (12.249958ms)
+✔ an era bump starts a fresh lineage (23.557917ms)
+(node:34028) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ entry damage tables include both E1 contracts (0.338209ms)
+✔ night shift wave 3 has reduced entry damage (0.054833ms)
+✔ night shift wave 12 has no entry damage scale (0.051459ms)
+✔ entry damage scaling ends after wave 10 (0.048834ms)
+✔ entry damage scales are finite reductions (0.100083ms)
+✔ E1 entry damage tables agree (0.506542ms)
+✔ a dev server classifies as dev (15.464583ms)
+✔ a preview server classifies as not-dev — status 200 must NOT exonerate it (3.071292ms)
+✔ a dead port classifies as unreachable (1.658541ms)
+✔ a trailing slash on baseURL does not break the probe (1.633583ms)
+✔ the not-dev message names the actual fix, not just the fault (0.150791ms)
+✔ globalSetup THROWS on a preview server — the violation path actually runs (3.4795ms)
+✔ globalSetup RESOLVES on a dev server — the guard is not one that always fires (2.36ms)
+✔ globalSetup is INERT when the flag is unset — lanes and ordinary runs pay nothing (0.129708ms)
+✔ a default write leaves the banked census byte-identical (33.998791ms)
+✔ an explicit F2135_CENSUS_FILE write still lands where asked (27.933625ms)
+✔ a differing third run recomputes the comparison across all three runs (28.10975ms)
+✔ the committed two-run artifact round-trips byte-identically (1107.182125ms)
+✔ real history has exactly the four former double-state findings and current BACKLOG has none (153.9985ms)
+✔ prose citations are not declarations, only struck declarations close, and duplicate opens stay open (39.778583ms)
+✔ regression arm: narrow open vocabulary is byte-identical when explicitly selected (1.243375ms)
+✔ wide open vocabulary admits an explicit 🟠 OPEN declaration (0.13925ms)
+✔ 🟢 RULING without a state word is not an open declaration (0.132917ms)
+✔ wide open vocabulary exposes a ✅ plus separate 🔬 OPEN conflict without reddening narrow (31.64775ms)
+✔ wide-open advisory reports skipped rows, hidden open IDs, and narrow closed-only IDs (35.008708ms)
+✔ fire shell (CLAUDE_CONFIG_DIR present) resolves playwright workers to 1 (387.78825ms)
+✔ non-fire shell (CLAUDE_CONFIG_DIR absent) keeps playwright parallelism (380.152917ms)
+✖ all 128 scripts/*.test.mjs fixture owners remove their temp directories (125734.111291ms)
+✔ frontier derivation is deterministic and ignores unverified rows (1.588708ms)
+✔ one leaner verified frontier emits one retained dethronement event (0.5265ms)
+✔ --check is clean against a seeded board fixture (42.927ms)
+✔ every worker CORS allowlist admits both agenttown origins (5.095875ms)
+✔ no worker leaves the allowlist subject by deleting its declaration (1.372042ms)
+✔ a second battery APPENDS — it never destroys the first arm evidence (164.146583ms)
+✔ playwright jobs get --workers=1 injected (0.730875ms)
+✔ an explicit --workers is respected, so a deliberate parallelism control is not overridden (0.107792ms)
+✔ non-playwright jobs are left exactly as given (0.125167ms)
+✔ a failing job produces a non-zero overall verdict (82.902583ms)
+✔ a command that cannot spawn is recorded as a failure, not a pass (49.910542ms)
+✔ misuse exits 2 rather than reporting a vacuous green (108.645541ms)
+✔ a bare build:release job is refused as misuse, not run and reported as a red leaf (38.011625ms)
+✔ --env GR_RELEASE=e1 satisfies the precondition, so the lawful form is not refused (55.972459ms)
+✔ an inherited GR_RELEASE=e1 also satisfies it — the check reads the RESOLVED environment (53.189834ms)
+✔ a battery with no release job is untouched by the precondition (49.466583ms)
+✔ --cwd actually runs the job in that directory (52.436625ms)
+✔ --env reaches the child process (71.380125ms)
+✔ --env is merged over the inherited environment, not a replacement (76.445542ms)
+✔ a non-existent --cwd exits 2 rather than falling back to the repo root (36.841875ms)
+✔ a malformed --env exits 2 rather than dropping the variable silently (74.757625ms)
+✔ the jobs spec is still found when the new flags precede it (62.750791ms)
+✔ a gate nothing calls is reported as a NEW orphan and exits 1 (227.514375ms)
+✔ a tracked test file nothing calls is reported as a NEW orphan and exits 1 (180.825958ms)
+✔ grandfathering that orphan with a reason turns the gate green (225.974792ms)
+✔ a gate whose only caller is a *.config.ts webServer command counts as REACHED (208.494208ms)
+✔ a guard named only in a COMMENT is not reached — prose is not a caller (218.370916ms)
+✔ putting it in the GUARDS array clears it — the control for the arm above (235.535041ms)
+✔ a non-gate script (dev, preview, census) is never ratcheted on (183.837792ms)
+✔ an orphan that GAINED a caller is reported so the baseline can tighten (229.331416ms)
+✔ --report never gates, even with a fresh orphan present (253.254ms)
+✔ REGRESSION: an untracked guard-shaped file is byte-invisible by default (268.057625ms)
+✔ --include-untracked reports an untracked guard-shaped file as NEW with no caller (219.453709ms)
+✔ a tracked baselined orphan stays known under --include-untracked (227.553084ms)
+✔ --include-untracked still excludes untracked SCRATCH_FILE probes (240.15875ms)
+✔ --include-untracked excludes gitignored guard-shaped files (269.155958ms)
+✔ --update-baseline --include-untracked REFUSES without writing baseline bytes (181.564625ms)
+✔ REFUSES (rc=2) when package.json has no scripts block (186.548416ms)
+✔ REFUSES (rc=2) when no scripts/*.mjs is tracked (167.387292ms)
+✔ REFUSES (rc=2) when the resolver cannot reach its own anchors (260.127792ms)
+✔ REFUSES (rc=2) when the baseline file is missing — not read as {} (190.426ms)
+✔ REFUSES (rc=2) when the baseline is unreadable (193.634792ms)
+✔ REFUSES (rc=2) when no subject matches the gate patterns (515.547583ms)
+✔ an owner escalation whose cited F-ID has no ledger row exits 1 (246.275792ms)
+✔ the SAME escalation goes green once the F-ID has a ledger row -- the control (205.151667ms)
+✔ escalating with NO F-ID cited at all exits 1 -- it can never be found (187.151792ms)
+✔ all five desk spellings are matched, so the check cannot be dodged by an apostrophe (989.348583ms)
+✔ ADMISSION: a *.test.sh nothing calls is a NEW orphan (pre-cure it is byte-invisible) (309.098792ms)
+✔ ADMISSION: a guard-shaped .sh nothing calls is a NEW orphan (pre-cure invisible) (309.1815ms)
+✔ ADMISSION CONTROL: a NON-guard-shaped .sh is still never ratcheted on (189.316667ms)
+✔ ADMISSION: a test-<thing>.mjs nothing calls is a NEW orphan (pre-cure invisible) (241.351667ms)
+✔ TEETH: dropping a test-<thing>.mjs from a live gate now REDS (the real silent-drop) (393.548417ms)
+✔ EDGE: a test file OUTSIDE scripts/ is REACHED when a gate calls it (273.547167ms)
+✔ ADMISSION CONTROL: a `test-` prefix in a DIRECTORY name does not admit the file (177.614417ms)
+✔ LAW ROOT: a battery only a LAW surface calls is REACHED, and so are its leaves (326.043875ms)
+✔ LAW ROOT TEETH: dropping a leaf from the chain now REDS — the whole point (184.54675ms)
+✔ LAW ROOT: a law citing a script package.json does NOT define confers nothing (195.655167ms)
+✔ RETENTION: --update-baseline SUPERSEDES a healed entry instead of deleting its reason (198.757667ms)
+✔ RETENTION: `superseded` excuses NOTHING — a re-orphaned gate reds as FRESH (230.809458ms)
+✔ a NON-guard-named step of a gate script is admitted as a subject (235.615042ms)
+✔ CONTROL: that same file, named by nothing and persisted nowhere, is invisible (251.529459ms)
+✔ DROPPING a persisted battery step from its battery reds as a NEW orphan (219.9715ms)
+✔ a dropped battery step can be grandfathered with a reason, like any orphan (238.709292ms)
+✔ --update-baseline is ADDITIVE: a step no script names any longer is KEPT (217.302666ms)
+✔ a step of a NON-gate script (dev, census) is never admitted (194.347583ms)
+✔ REGRESSION: the real repo persists asset-diet.mjs as a battery step (0.811417ms)
+✔ POSITIVE CONTROL: the real repo passes, with a non-empty measured subject (238.360042ms)
+✔ classifies citation purpose with paragraph scope (0.428666ms)
+✔ date-only sweep windows start at midnight instead of the current clock time (0.087084ms)
+✔ parseGlb rejects a non-GLB and reads the JSON + BIN chunks of a real one (2.206833ms)
+✔ metrics reproduce the runtime definitions: triangles, welded vertices, world bounds (2.378542ms)
+✔ bounds are TRANSFORMED bounds: a node translation moves them (F-ASTRA-8) (0.482959ms)
+✔ a node rotation is applied to the bounds, not ignored (0.632083ms)
+✔ non-finite positions are counted, not silently folded into the bounds (0.577708ms)
+✔ the grid probe accepts a complete lattice and rejects a punctured one (0.282541ms)
+✔ texture dimensions come from the real image header, and the family cap is enforced (0.395625ms)
+✔ external buffers and images are policy violations (0.220791ms)
+✔ an alpha mode outside the family policy is a violation; a permitted one is not (0.699875ms)
+✔ required extras are reported as ONE violation per asset, listing every missing key (0.782792ms)
+✔ the baseline key carries the detail, so a NEW violation on a baselined asset still reds (0.187958ms)
+✔ water metadata is required by the asset's own contract, never by blanket family rule (0.287542ms)
+✔ contract counts and bounds are compared against the sibling JSON the runtime reads (0.405542ms)
+(node:35018) ExperimentalWarning: glob is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+| family            | assets | triangles | vertices  | materials | textures | max tex | cap   | 2-sided | anims | skins | extras | anchors |
+|-------------------|--------|-----------|-----------|-----------|----------|---------|-------|---------|-------|-------|--------|---------|
+| bosses            | 7      | 137,137   | 75,563    | 7         | 7        | 1024²   | 1024² | 7       | 0     | 0     | 1      | 0       |
+| finale            | 2      | 25,260    | 13,834    | 2         | 2        | 2048²   | 1024² | 2       | 0     | 0     | 0      | 0       |
+| landmarks         | 196    | 200,492   | 110,782   | 196       | 196      | 1024²   | 1024² | 196     | 0     | 0     | 171    | 0       |
+| panoramas         | 32     | 83,960    | 59,706    | 32        | 32       | 2048²   | 2048² | 32      | 0     | 0     | 32     | 0       |
+| props             | 61     | 45,796    | 24,936    | 61        | 63       | 1024²   | 512²  | 61      | 0     | 0     | 0      | 19      |
+| rail-element      | 1      | 132       | 72        | 1         | 1        | 256²    | 512²  | 1       | 0     | 0     | 0      | 0       |
+| terrain           | 32     | 1,067,008 | 541,792   | 32        | 32       | 2048²   | 2048² | 32      | 0     | 0     | 32     | 0       |
+| town-buildings    | 9      | 49,744    | 26,371    | 9         | 9        | 2048²   | 1024² | 9       | 0     | 0     | 0      | 0       |
+| town-era-variants | 73     | 472,838   | 252,013   | 73        | 73       | 1024²   | 1024² | 73      | 0     | 0     | 0      | 55      |
+| TOTAL             | 413    | 2,082,367 | 1,105,069 | 413       | 415      |         |       | 413     | 0     | 0     | 236    | 74      |
+413 production GLBs · 67 violations · 67 grandfathered · 0 live
+✔ THE CORPUS: every production GLB is clean or explicitly grandfathered (5336.367333ms)
+✔ the census totals every family in the manifest and every family has a policy (202.576666ms)
+✔ the terrain family and the hero carry an export sidecar, and every sidecar is well-formed (17.822833ms)
+✔ reexport-pilot.sh reads the sidecar and leaves the no-sidecar path on the old recipe (2.306292ms)
+✔ the baseline is paid down by hand: no regenerate path exists in the guard (1.808542ms)
+✔ contractFor resolves the same sibling JSON Terrain3dClaimPilot.ts imports (2.360416ms)
+✔ census rows sum to the asset count (0.489917ms)
+fallbackTownEraPropManifests: 7 fallback keys = 7 static imports = 7 files
+fallbackManifests (non-release): 10 fallback keys = 10 files
+fallbackFamilyBundles: 1 fallback keys = 1 files
+fallbackCapsBundles: 1 fallback keys = 1 files
+fallbackContractBundles (non-release): 10 fallback keys = 10 files
+✔ node glob fallbacks match every on-disk manifest (non-release branches) (3.945334ms)
+✔ only AssetLoading constructs GLTFLoader so every caller gets Meshopt decoding (48.749709ms)
+✔ every terminal-closed goal leaf can state why it closed (1.422125ms)
+✔ the mirrored resolver vocabulary still matches drain-block-check.mjs (0.296209ms)
+✖ goal tree schema is valid (2.206542ms)
+✔ ten sampled merged leaves have a done receipt and ancestral merge (28568.8135ms)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/23',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+✔ FakeStorage threads research into the headless sim without moving the cold hash (9183.111917ms)
+✔ campaign walks E1 legally, persists each leg, and hashes deterministically (9923.696875ms)
+✔ a killed campaign resumes from its last profile checkpoint (8560.743458ms)
+✔ --contract selects exactly one named contract (4030.698333ms)
+✔ --contract refuses unknown, unseeded, and locked contracts loudly (11397.896667ms)
+✔ --contract refuses an empty selector instead of falling back (154.190542ms)
+✔ harness digest pins all three rider-side inputs (108.209459ms)
+✔ gr-sim replays the same contract, seed, and orders byte-for-byte (19716.942292ms)
+[tape-resume] straight=fnv1a32:7134dd41 resumed=fnv1a32:7134dd41 assay=fnv1a32:7134dd41 door=accepted
+✔ gr-sim resumes at a recorded mid-ride tick as one byte-identical tape (41527.382041ms)
+✔ a reactive client can recover from rejected orders (3328.162625ms)
+✔ headless landmark starts release before enemies can stall at the perimeter (24844.145625ms)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/23',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+✔ a distant HARVEST walks before it pays (1700.976458ms)
+✔ BUILD walks, confirms from the ordering body, and cannot wedge on unreachable terrain (53.761125ms)
+✔ the gr-sim door walks to a remote BUILD and its tape assay-replays (23651.029042ms)
+✔ gr-sim keeps standing orders through free blank and null turns (2847.350834ms)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/23',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+✔ gr-sim hashes a fractional-yield run identically twice (4462.76575ms)
+✔ gr-sim deterministically runs the Claim objective (4119.814708ms)
+✔ overtime banks the Claim secure and measures the homestead on both Node engines (79596.710416ms)
+✔ runtime rush and --overtime use the same CLI ceiling and terminal stream (41231.871667ms)
+✔ the CLI science input reaches and funds the published megaproject cost (2210.975625ms)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/23',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+✔ gr-sim boots escort mode from data instead of URL state (3798.3905ms)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/23',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+✔ the Claim driver consumes declared water and posts RunManager secure at wave 10 (6354.414292ms)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/23',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+✔ Twin Banks consumes its declared crossings and build zones before securing at wave 20 (19737.490584ms)
+✔ the frozen Claim environment rows equal the five pinned bench seeds (0.464042ms)
+✔ gr-sim places Night Shift fixtures from the contract (15225.372417ms)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/23',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+✔ Night Shift wreckers outrun lantern light headlessly (1369.361667ms)
+﹣ gr-sim ends an idle Baron run at its grace ceiling (0.091792ms) # F-E2S-3 owner ruling 2026-08-09: no still-listed Baron contract reaches its ceiling under idle; the pressure-to-damage socket slice restores this test.
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/23',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+✖ scripts/gr-sim.test.mjs (300002.204958ms)
+✔ loaded launch agents keep the pass green (1923.75325ms)
+✔ a missing launch agent fails the pass and records the exact remedy (1438.460042ms)
+(node:41925) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+kind | bolt | blast | evidence
+--- | --- | --- | ---
+baron [elite=baron] | yes | yes | assets/contracts/epoch-1-frontier/contracts.json:358; src/systems/CombatSystem.ts:856/898; src/entities/Enemy.ts:774
+baron_railcar:boiler [elite=railcar] | scaled ×0.7 | yes | assets/contracts/epoch-2-steamworks/contracts.json:451; src/systems/CombatSystem.ts:856/898; src/entities/Enemy.ts:774
+baron_railcar:cabin [elite=railcar] | scaled ×0.85 | yes | assets/contracts/epoch-2-steamworks/contracts.json:452; src/systems/CombatSystem.ts:856/898; src/entities/Enemy.ts:774
+baron_railcar:wheels [elite=railcar] | scaled ×0.8 | yes | assets/contracts/epoch-2-steamworks/contracts.json:450; src/systems/CombatSystem.ts:856/898; src/entities/Enemy.ts:774
+claim_jump_prospect_drone | yes | yes | assets/contracts/epoch-9-redfields/contracts.json:183; src/systems/CombatSystem.ts:856/898; src/entities/Enemy.ts:774
+coal_thief | yes | yes | assets/contracts/epoch-2-steamworks/contracts.json:411; src/systems/CombatSystem.ts:856/898; src/entities/Enemy.ts:774
+corsair_racer | yes | yes | assets/contracts/epoch-5-deepwater/contracts.json:248; src/systems/CombatSystem.ts:856/898; src/entities/Enemy.ts:774
+corsair_skiff | yes | yes | assets/contracts/epoch-5-deepwater/contracts.json:385; src/systems/CombatSystem.ts:856/898; src/entities/Enemy.ts:774
+data_rustler | yes | yes | assets/contracts/epoch-7-signal/contracts.json:108; src/systems/CombatSystem.ts:856/898; src/entities/Enemy.ts:774
+dredge_queen:claw [elite=railcar] | yes | yes | assets/contracts/epoch-5-deepwater/contracts.json:116; src/systems/CombatSystem.ts:856/898; src/entities/Enemy.ts:774
+dredge_queen:hold [elite=railcar] | yes | yes | assets/contracts/epoch-5-deepwater/contracts.json:119; src/systems/CombatSystem.ts:856/898; src/entities/Enemy.ts:774
+dredge_queen:paddle_port [elite=railcar] | yes | yes | assets/contracts/epoch-5-deepwater/contracts.json:117; src/systems/CombatSystem.ts:856/898; src/entities/Enemy.ts:774
+dredge_queen:paddle_starboard [elite=railcar] | yes | yes | assets/contracts/epoch-5-deepwater/contracts.json:118; src/systems/CombatSystem.ts:856/898; src/entities/Enemy.ts:774
+dynamo_crawler:capacitor_bank [elite=railcar] | yes | yes | assets/contracts/epoch-3-voltage/contracts.json:337; src/systems/CombatSystem.ts:856/898; src/entities/Enemy.ts:774
+dynamo_crawler:drain_mast [elite=railcar] | yes | yes | assets/contracts/epoch-3-voltage/contracts.json:335; src/systems/CombatSystem.ts:856/898; src/entities/Enemy.ts:774
+dynamo_crawler:tracks [elite=railcar] | yes | yes | assets/contracts/epoch-3-voltage/contracts.json:336; src/systems/CombatSystem.ts:856/898; src/entities/Enemy.ts:774
+feral_terraformer | yes | yes | assets/contracts/epoch-9-redfields/contracts.json:182; src/systems/CombatSystem.ts:856/898; src/entities/Enemy.ts:774
+feral_toaster | yes | yes | assets/contracts/epoch-6-atomic/contracts.json:494; src/systems/CombatSystem.ts:856/898; src/entities/Enemy.ts:774
+fevered_saboteur | yes | yes | assets/contracts/epoch-3-voltage/contracts.json:150; src/systems/CombatSystem.ts:856/898; src/entities/Enemy.ts:774
+glowjack | yes | yes | assets/contracts/epoch-6-atomic/contracts.json:387; src/systems/CombatSystem.ts:856/898; src/entities/Enemy.ts:774
+homemaker_9000:core [elite=railcar] | yes | yes | src/systems/HomemakerBossSystem.ts:424; src/systems/CombatSystem.ts:856/898; src/entities/Enemy.ts:774
+homemaker_9000:rack [elite=railcar] | yes | yes | assets/contracts/epoch-6-atomic/contracts.json:149; src/systems/CombatSystem.ts:856/898; src/entities/Enemy.ts:774
+homemaker_9000:vac [elite=railcar] | yes | yes | assets/contracts/epoch-6-atomic/contracts.json:148; src/systems/CombatSystem.ts:856/898; src/entities/Enemy.ts:774
+land_yacht:crane [elite=railcar] | yes | yes | assets/contracts/epoch-4-motor/contracts.json:118; src/systems/CombatSystem.ts:856/898; src/entities/Enemy.ts:774
+land_yacht:wheelhouse [elite=railcar] | yes | yes | assets/contracts/epoch-4-motor/contracts.json:119; src/systems/CombatSystem.ts:856/898; src/entities/Enemy.ts:774
+land_yacht:wheels [elite=railcar] | yes | yes | assets/contracts/epoch-4-motor/contracts.json:117; src/systems/CombatSystem.ts:856/898; src/entities/Enemy.ts:774
+lawn_shepherd | yes | yes | assets/contracts/epoch-6-atomic/contracts.json:495; src/systems/CombatSystem.ts:856/898; src/entities/Enemy.ts:774
+machine_leviathan | yes | yes | assets/contracts/epoch-5-deepwater/contracts.json:401; src/systems/CombatSystem.ts:856/898; src/entities/Enemy.ts:774
+maintenance_drone | yes | yes | src/systems/OldDiggerBossSystem.ts:321; src/systems/CombatSystem.ts:856/898; src/entities/Enemy.ts:774
+moth_swarm | yes | yes | assets/contracts/epoch-3-voltage/contracts.json:146; src/systems/CombatSystem.ts:856/898; src/entities/Enemy.ts:774
+motor_gang | yes | yes | assets/contracts/epoch-4-motor/contracts.json:222; src/systems/CombatSystem.ts:856/898; src/entities/Enemy.ts:774
+night_runner | yes | yes | assets/contracts/epoch-3-voltage/contracts.json:149; src/systems/CombatSystem.ts:856/898; src/entities/Enemy.ts:774
+old_digger:hull | scaled ×0.05 | scaled ×0.05 | src/systems/OldDiggerBossSystem.ts:453/469; src/systems/CombatSystem.ts:856/898; src/entities/Enemy.ts:774
+pipeline_rustler | yes | yes | assets/contracts/epoch-4-motor/contracts.json:451; src/systems/CombatSystem.ts:856/898; src/entities/Enemy.ts:774
+rail_tough | scaled ×0.65 | yes | assets/contracts/epoch-2-steamworks/contracts.json:388; src/systems/CombatSystem.ts:856/898; src/entities/Enemy.ts:774
+rogue_automaton | yes | yes | assets/contracts/epoch-7-signal/contracts.json:107; src/systems/CombatSystem.ts:856/898; src/entities/Enemy.ts:774
+salvage_claw:anchor_feet | yes | yes | src/systems/SalvageClawBossSystem.ts:337; src/systems/CombatSystem.ts:856/898; src/entities/Enemy.ts:774
+salvage_claw:grapple_port | yes | yes | src/systems/SalvageClawBossSystem.ts:12; src/systems/CombatSystem.ts:856/898; src/entities/Enemy.ts:774
+salvage_claw:grapple_starboard | yes | yes | src/systems/SalvageClawBossSystem.ts:12; src/systems/CombatSystem.ts:856/898; src/entities/Enemy.ts:774
+salvage_claw:winch | yes | yes | src/systems/SalvageClawBossSystem.ts:299; src/systems/CombatSystem.ts:856/898; src/entities/Enemy.ts:774
+scrap_corsair | yes | yes | assets/contracts/epoch-8-orbital/contracts.json:197; src/systems/CombatSystem.ts:856/898; src/entities/Enemy.ts:774
+static_mote | yes | yes | assets/contracts/epoch-10-deepsky/contracts.json:522; src/systems/CombatSystem.ts:856/898; src/entities/Enemy.ts:774
+steam_wrecker | yes | yes | assets/contracts/epoch-2-steamworks/contracts.json:399; src/systems/CombatSystem.ts:856/898; src/entities/Enemy.ts:774
+sun_glare_shambler | yes | yes | assets/contracts/epoch-8-orbital/contracts.json:198; src/systems/CombatSystem.ts:856/898; src/entities/Enemy.ts:774
+tar_sprite | yes | yes | assets/contracts/epoch-4-motor/contracts.json:347; src/systems/CombatSystem.ts:856/898; src/entities/Enemy.ts:774
+unraveled_machine | yes | yes | assets/contracts/epoch-10-deepsky/contracts.json:523; src/systems/CombatSystem.ts:856/898; src/entities/Enemy.ts:774
+kit-guard: 37 door contracts, 88 fielded contract-kind paths, 46 distinct damage rows
+kit-guard coverage: 32 asserting / 5 zero; zero: e1-drill-yard, e1-dry-gulch, e1-night-shift, e1-twin-banks, the-claim
+✔ e1-baron: every fielded kind accepts default-kit damage (0.988542ms)
+✔ e1-drill-yard: every fielded kind accepts default-kit damage (0.056292ms)
+✔ e1-dry-gulch: every fielded kind accepts default-kit damage (0.094541ms)
+✔ e1-night-shift: every fielded kind accepts default-kit damage (0.041ms)
+✔ e1-twin-banks: every fielded kind accepts default-kit damage (0.04825ms)
+✔ e10-ember-shore: every fielded kind accepts default-kit damage (0.154584ms)
+✔ e10-last-claim: every fielded kind accepts default-kit damage (0.276916ms)
+✔ e2-hill-mine: every fielded kind accepts default-kit damage (0.570542ms)
+✔ e2-incline: every fielded kind accepts default-kit damage (0.554542ms)
+✔ e2-pressure-garden: every fielded kind accepts default-kit damage (0.315ms)
+✔ e2-trestle: every fielded kind accepts default-kit damage (0.236ms)
+✔ e3-blackout-ridge: every fielded kind accepts default-kit damage (0.066542ms)
+✔ e3-canyon-works: every fielded kind accepts default-kit damage (0.271792ms)
+✔ e3-fairground: every fielded kind accepts default-kit damage (0.120583ms)
+✔ e3-moth-season: every fielded kind accepts default-kit damage (0.138125ms)
+✔ e4-boneyard: every fielded kind accepts default-kit damage (0.06025ms)
+✔ e4-dust-flats: every fielded kind accepts default-kit damage (0.118583ms)
+✔ e4-gusher-county: every fielded kind accepts default-kit damage (0.072792ms)
+✔ e4-long-road: every fielded kind accepts default-kit damage (0.046667ms)
+✔ e5-deepwater-claim: every fielded kind accepts default-kit damage (0.120667ms)
+✔ e5-flotilla: every fielded kind accepts default-kit damage (0.050917ms)
+✔ e5-regatta: every fielded kind accepts default-kit damage (0.039167ms)
+✔ e5-stillwater: every fielded kind accepts default-kit damage (0.077792ms)
+✔ e6-glow-mesa: every fielded kind accepts default-kit damage (0.168167ms)
+✔ e6-half-life-hollow: every fielded kind accepts default-kit damage (0.083959ms)
+✔ e6-picnic: every fielded kind accepts default-kit damage (0.071458ms)
+✔ e7-dead-band: every fielded kind accepts default-kit damage (0.047708ms)
+✔ e7-echo-canyon: every fielded kind accepts default-kit damage (0.050791ms)
+✔ e7-relay-rush: every fielded kind accepts default-kit damage (0.079417ms)
+✔ e7-relay-valley: every fielded kind accepts default-kit damage (0.049875ms)
+✔ e8-eclipse: every fielded kind accepts default-kit damage (0.101166ms)
+✔ e8-far-side: every fielded kind accepts default-kit damage (0.052083ms)
+✔ e8-low-orbit: every fielded kind accepts default-kit damage (0.057458ms)
+✔ e8-mare-claim: every fielded kind accepts default-kit damage (0.177166ms)
+✔ e9-devils-alley: every fielded kind accepts default-kit damage (0.060083ms)
+✔ e9-dome-basin: every fielded kind accepts default-kit damage (0.24825ms)
+✔ the-claim: every fielded kind accepts default-kit damage (0.030917ms)
+✔ all added lines present in main are absorbed (1.516834ms)
+✔ one absent line is returned as residue (0.171958ms)
+✔ token-rich lane lines can be absorbed by a main superset line (0.177917ms)
+✔ token-poor lane lines are not absorbed by unrelated main text (0.079333ms)
+✔ token fallback starts at exactly eight qualifying tokens (0.137292ms)
+✔ binary diffs are never counted (0.182ms)
+✔ blank and whitespace-only additions are ignored (0.066125ms)
+✔ missing text is undecidable and never counted (0.047584ms)
+✔ a lane-only new file reports every added line absent from main (0.361542ms)
+✔ a lane-only new binary file remains binary and uncounted (0.234541ms)
+✔ an unreadable lane-tip path remains undecidable (0.188666ms)
+✔ zero residue remains HELD rather than changing the verdict (0.111666ms)
+✔ absorbed-lines counts a lane-created text file missing in main (0.131792ms)
+✔ absorbed-lines keeps a lane-created binary file binary (0.059167ms)
+✔ absorbed-lines narrows undecidable to an unreadable lane tip (0.041208ms)
+Preparing worktree (checking out 'tmp-ledger-drift')
+Preparing worktree (checking out 'tmp-no-ledger-drift')
+✔ no pidfile: the slot is free (0.501ms)
+✔ our OWN dispatcher does not count as busy (the F-1418-1 cure) (172.851416ms)
+✔ a FOREIGN runner IS busy — the direction that must never regress (115.250125ms)
+✔ pid 1 is an ancestor of EVERY process and must still read busy (33.531541ms)
+✔ fail safe: anything we cannot establish reads busy (0.199625ms)
+✔ an unrelated pid that is merely NUMERIC is not trusted (37.381583ms)
+✔ bookkeeping reassurance narrows only when tasks are behind (969.719416ms)
+✔ the FIRST line keeps its leading space — no character is eaten (F-1416-1) (0.904208ms)
+✔ a churn path on the FIRST line is still recognised as churn (the false DIRTY) (0.066666ms)
+✔ every CHURN constant is recognised in first position (0.106417ms)
+✔ a churn DIRECTORY matches by prefix, not by equality (0.115583ms)
+✔ untracked debris and tracked dirt stay in separate buckets (s1299) (0.414ms)
+✔ staged and staged+unstaged prefixes parse identically (0.075667ms)
+✔ a trailing newline produces no phantom entry (0.131959ms)
+✔ empty porcelain is a clean tree (0.061125ms)
+✔ a correctly-pointed law passes once baselined (99.480542ms)
+✔ CODE-SIDE ROT: the cited line moves under a fixed coordinate -> POINTER DRIFT (the fire.md :315 shape) (95.03475ms)
+✔ LAW-SIDE ROT: the law is edited to a stale coordinate -> red until re-verified (the F-1276-2 shape) (105.319792ms)
+✔ a pointer past EOF is caught as OUT OF RANGE, not silently skipped (52.380583ms)
+✔ a pointer to a file that does not exist fails rather than being ignored (46.576ms)
+✔ prose that is not a file:line is not mistaken for a pointer (47.925459ms)
+✔ a MISSING law surface is itself a red — the law cannot be checked if it is gone (49.021459ms)
+✔ THE REAL TREE: every law-surface pointer in this repo currently holds (390.944875ms)
+✔ MARKDOWN TARGET: a law surface citing another .md by coordinate is checked, not skipped (F-1278-2) (147.240417ms)
+✔ BOUNDARY: a NEW law surface outside the closed SURFACES list is NAMED (pre-cure it is invisible) (135.182625ms)
+✔ BOUNDARY: a DECLARED exclusion prints its reason instead of the undeclared prompt (92.276833ms)
+✔ BOUNDARY: the live/frozen split is DERIVED from the file, so a new handoff cannot rot it (147.433334ms)
+✔ BOUNDARY: a law-surface-shaped file with NO citations is reported as costless, not as a problem (91.60725ms)
+✔ BOUNDARY: a file already IN SURFACES is never named as unscanned, and a red still reds (134.593959ms)
+✔ GOAL LEDGER ROT: a live non-terminal blockedReason pointer moves -> red names the leaf (150.008666ms)
+✔ BACKLOG COORDINATE BAN: live leaves red, --update cannot bury it, terminal history stays out (217.466875ms)
+✔ DEAD INSTRUMENT: a law ordering fires to run a tool that does not exist is a red (F-2198-1) (46.588958ms)
+✔ a bare citation to a tool that EXISTS resolves and does not red (43.588167ms)
+✔ a citation WITH a coordinate stays POINTER-owned and is not counted as an instrument (80.557875ms)
+✔ SCAN SPACE: declared on the HAPPY path too — a declaration that appears only on failure re-creates the ambiguity it removes (F-2208-1) (209.602875ms)
+✔ SCAN SPACE: DERIVED from the families it enumerates, never transcribed (185.777958ms)
+✔ SCAN SPACE (reverse control): the edge is DECLARED, not widened — a law-shaped .md outside the families stays unscanned (104.909583ms)
+✔ dry run prints a bounded plan without contacting the droplet (37.629416ms)
+✔ today's local backup makes the pull an offline no-op (40.535875ms)
+✔ a drained done-move ships the master and names its hash (63.3225ms)
+✔ a slot-stripped review ships the master and manufactures F-1569-1 (67.003833ms)
+✔ a failed trace is ran but unmerged (57.9975ms)
+✔ a master with no trace and no banner is a candidate (64.421666ms)
+✔ a no-trace master records its DO NOT QUEUE banner and is not a candidate (81.858167ms)
+✔ archive-CODEX-WALL real NEVER QUEUE wording is a banner (51.607916ms)
+✔ art-era-motion real NOT QUEUEABLE wording is a banner (58.694ms)
+✔ 058b real NOT FIRE-QUEUEABLE wording is a banner (66.809875ms)
+✔ regression: DO NOT QUEUE and DO-NOT-QUEUE remain banners (117.334833ms)
+✔ queue this after the drain mentions queueing without refusing it (61.102458ms)
+✔ the banner window ends after line six (61.481125ms)
+✔ a merged goal leaf ships its exact task file with its hash (79.46ms)
+moth-season idle {"secured":false,"waves":4,"timeMs":122500,"gold":0,"kills":55,"calls":0,"defaultedPicks":1,"defaultedSecure":0,"eventLogHash":"fnv1a32:e7d0ebdb"}
+moth-season competent {"secured":true,"waves":12,"timeMs":360000,"gold":0,"kills":312,"calls":137,"defaultedPicks":0,"defaultedSecure":0,"eventLogHash":"fnv1a32:f7af6739"}
+✔ Moth Season rejects idle darkness while the relayed-light floor ride secures (36926.545708ms)
+moth-season circuit beats dark@0 lit@1 cut@24 relit=none terminal=dark hash=fnv1a32:f7af6739
+✔ the corridor circuit is cut, dark, repaired and lit across the floor ride (20734.274959ms)
+moth-season mend ride lit@1 cut@18 relit@37 outcome={"secured":false,"waves":11,"timeMs":344733,"gold":2,"kills":352,"calls":86,"defaultedPicks":0,"defaultedSecure":0,"eventLogHash":"fnv1a32:5b4816d0"}
+✔ the fourth beat on its own ride: walking the hero to the corridor mends it, and costs the claim (13946.995917ms)
+moth-season secure rule dark={"powered":0,"required":1,"byWave":12,"complete":false,"failed":true} relayed={"secured":true,"waves":12,"timeMs":360000,"gold":0,"kills":464,"calls":0,"defaultedPicks":13,"defaultedSecure":1,"eventLogHash":"fnv1a32:1d5d278f"}
+✔ surviving the dark does not secure it: the corridor must have carried current (12820.948542ms)
+scan space: 290 tracked src TS files (282 scanned, 8 skipped)
+✔ visitor copy and contract text fields contain no em dashes (1989.774375ms)
+✔ fire shell bounds node-guard file concurrency and explains the reduced run (0.422375ms)
+✔ lane and attended shells keep Node's default file concurrency (0.110708ms)
+✔ launcher propagates a non-zero node:test child exit code exactly (164.462459ms)
+MANUFACTURED_DETECTION: shell + node sibling collapsed to 1 battery; reported 2 total
+EXIT_CODES: passing alone=0 sibling=0; failing alone=1 sibling=1
+✔ contention is advisory, correctly counted, and absent when alone (3300.876833ms)
+✔ the harness gives the battery a finite default per-test timeout (181.721958ms)
+✖ a per-test timeout still overrides the default, so declared budgets are untouched (1047.301625ms)
+✔ null-floor artifact exactly covers every door-servable bench seed (1.544ms)
+✔ Picnic hold is enabled only for e6-picnic across every epoch contract (652.998041ms)
+✔ rejects an unset PROBE_BASE before launching a browser (265.569667ms)
+✔ rejects an unset PROBE_BASE before checking the browser executable (240.781ms)
+✔ rejects a positional base URL with a PROBE_BASE directive (250.33ms)
+✔ title lookup finds a red even when its recorded coordinate has rotted (79.141333ms)
+✔ matching file:line never substitutes for an exact title match (70.716833ms)
+✔ clean and absent specs have distinct words and exit codes (210.77375ms)
+✔ json output still names the outcome and denominator (65.320667ms)
+✔ strict mode makes a known red actionable without changing its word (64.792791ms)
+✔ skipped-only tests are not called clean (65.81875ms)
+✔ literal backslashes survive markdown parsing (69.642375ms)
+✔ absent and malformed inventories fail loudly (112.253875ms)
+✔ bare names are misuse and verdict dates track the compact snapshot (177.035458ms)
+✔ a correction is printed above the snapshot row it outranks (200.095333ms)
+✔ a stale snapshot warns and a fresh one does not (147.905625ms)
+✔ the staleness warning names the direction of the error, which differs by outcome (129.803125ms)
+✔ the staleness warning prints above the snapshot rows and corrections it qualifies (64.431625ms)
+✔ an uncomputable age is treated as STALE, never as fresh (99.079458ms)
+✔ a bad threshold or clock override fails loudly instead of disabling the warning (119.779084ms)
+✔ staleness is advisory and changes no exit code (438.357042ms)
+✔ json carries the staleness fields so a caller need not parse prose (107.966083ms)
+✔ a malformed corrections table fails loudly instead of dropping the warning (36.627833ms)
+✔ rejects an unset base before probing ownership (1.075209ms)
+✔ accepts a listener owned by this checkout (0.100958ms)
+✔ rejects a listener owned by another checkout (0.09ms)
+✔ rejects a port with no listener (0.136667ms)
+✔ rejects an unusable ownership probe (0.176709ms)
+✔ a review citing a tracked file is TRACKED (209.766084ms)
+✔ 274-vs-13 regression: a review citing a tracked directory is TRACKED (199.979792ms)
+✔ an ignored on-disk log is ON-DISK-UNTRACKED and strict exits non-zero (232.196958ms)
+✔ a brace range is SKIPPED rather than a violation (220.245542ms)
+✔ a line suffix resolves against the tracked file without it (222.630625ms)
+✔ default mode exits zero with ON-DISK-UNTRACKED evidence (200.788292ms)
+✔ a blocked leaf citing a RULED finding is stale (1.350834ms)
+✔ a blocked leaf citing an UNRULED finding is not stale (0.128ms)
+✔ "RULING REQUIRED" prose does not count as a ruling — only "<id> RULED" does (0.057333ms)
+✔ terminal-closed statuses refuse work too, so their reasons are checked (0.121125ms)
+✔ a merged leaf is not a refusal, however its reason reads (0.12125ms)
+✔ a leaf is any node carrying taskFile — NOT a childless node (0.053458ms)
+✔ denominator agrees with drain-block-check on the live tree (8.806167ms)
+✔ the live tree carries no stale refusal (29.298833ms)
+✔ runner exit follows guard exit codes (3930.173333ms)
+✔ --only rejects unknown guards and runs one known guard (306.739167ms)
+✔ --only accepts a comma-separated subset in canonical order (868.461042ms)
+✔ --only rejects a list containing an unknown guard rather than narrowing (36.295ms)
+✔ power-budget rows include p95 only when printed (581.436958ms)
+✔ --changed-since runs the base gate when no path rule matches (1128.77475ms)
+✔ --changed-since adds the worker guards when functions/ moved (3583.431209ms)
+✔ --changed-since exits 2 on a bad ref rather than narrowing to the base gate (309.873584ms)
+✔ --changed-since exits 2 when the untracked listing fails rather than reporting a green (2244.746791ms)
+✔ guards run with GR_GUARD_NO_ARTIFACT so a gate cannot dirty its own tree (307.184375ms)
+✔ a signal-killed guard is never a pass (273.080417ms)
+✔ each guard gets a 15-minute outer timeout (0.13775ms)
+AT RISK (archive files absent from git ls-files; informational): 802 files, 2967.72 MB
+Task-stats high-water: subject 799 rows, baseline 789
+Run log retention: 799 entries checked, 0 unrecoverable
+✔ every recorded run log remains recoverable (930.591ms)
+✔ same-game audit runs over every contract and keeps its row schema (17525.050834ms)
+✔ same-game audit follows the door grammar through the final AP-16 verbs (13878.369458ms)
+✔ same-game audit also emits a complete markdown table (10710.360458ms)
+✔ every door verb is mapped to a human control (ADR-005) (0.641875ms)
+✔ same-game audit publishes the ADR-005 controls section (10130.947542ms)
+✔ the committed same-game report carries a controls row for every door verb (1.194917ms)
+✔ same-game report exemption prose matches its table (0.704625ms)
+✔ same-game report exemption table matches source (6048.036917ms)
+✔ same-game report exemption reasons and citations match source (4402.692542ms)
+✔ human tape preserves the Prospector dispatch input (1060.720625ms)
+✔ every scripts/**/*.mjs parses (4384.457208ms)
+✔ every scripts/**/*.sh parses (301.081292ms)
+✔ every rehearsal/**/*.mjs parses (278.99475ms)
+✔ every foundry/**/*.mjs parses (31.699041ms)
+✔ every foundry/**/*.sh parses (19.474167ms)
+(node:93634) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ registry turns from Season 1 to Season 2 at the half-open boundary (0.464125ms)
+✔ season resolver leaves dates before all seasons unlabelled (0.062125ms)
+✔ season resolver leaves missing timestamps unlabelled (0.049042ms)
+✔ season resolver treats null endsAt as open-ended (0.051208ms)
+✔ a concatenated plan is refused with the word, told on both wires, and the clock runs it out (22868.473709ms)
+✔ a lone SECURE_CHOICE still secures, and no refusal reaches the tape (24506.303167ms)
+✔ FNV-1a 64 known vectors, full bytes, and independent BigInt reference (3.970166ms)
+✔ concurrent hits decode once; independent texture state shares Source until final disposal (1.062458ms)
+✔ misses, decode failure retry, and reset during decode do not retain or resurrect entries (0.8665ms)
+✔ real GLTF parser: cross-file wrap, colorSpace, UV and WebP paths preserve independent material views (9.815625ms)
+✔ late town retries cannot replace or dispose the active run tracker (77.75275ms)
+✔ site: every local <script src> the pages load actually exists (2.065583ms)
+✔ site: each loaded script parses under the grammar its tag requests (67.237083ms)
+✔ site: each inline <script> parses under the grammar its tag requests (34.490083ms)
+✔ site: every local href/src resolves to a file that exists (4.742ms)
+✔ site: the denominator still contains a data-* reference, an escaping path and a query string (14.01025ms)
+✔ site: every in-page anchor targets an element that exists (7.755334ms)
+✔ site: assay-office duration vocabulary matches functions/api/stats.ts (1.086541ms)
+✔ winnability receipts stay outside the engine identity corpus (10.320292ms)
+✔ skill.md contract list matches its sources (58.621125ms)
+✔ every door contract appears once with one receipt marker (0.940958ms)
+✔ the contract guard BITES a hand-edited marker (48.173625ms)
+✔ score screen, landing, and rider protocol carry one county ranking rule (1.593333ms)
+✔ skill.md pins the lawful world-model disclosure (0.684125ms)
+✔ skill.md pins the operator-probe ranking law (0.063917ms)
+✔ skill.md pins the E10 preserve ranking law (0.104208ms)
+✔ skill.md pins optional declared tokens outside ranking (0.053292ms)
+✔ skill.md pins the harness receipt law (0.046542ms)
+✔ every standings submission refusal branch is enumerated (0.974458ms)
+✔ skill.md refusal list matches the executable taxonomy (0.364333ms)
+✔ the refusal enumeration BITES an unrecorded branch (10534.780292ms)
+✔ skill.md pins the tape checkpoint command (0.225791ms)
+✔ skill.md grammar matches every StandingOrder source form (0.761542ms)
+✔ skill.md buildables match BuildableId (0.164625ms)
+✔ skill.md bench seeds match the source registry (0.309292ms)
+✔ skill.md rotations match the source registry (0.098542ms)
+✔ skill.md door-contracts match SUPPORTED_CONTRACTS in HeadlessContractSim (0.092125ms)
+✔ the guard BITES a drifted skill.md (positive control, manufactured defect) (7450.265625ms)
+✔ reds on the s1461 incident row that motivated the finding (0.696042ms)
+✔ reds on the live e3-moth-socket ghost line (0.21375ms)
+✔ stays silent on a leaf mentioned in the body as an aside (0.064542ms)
+✔ does not red on an open 🟡 finding whose slice merged (arm (a) is rejected) (0.065292ms)
+✔ treats a backticked mention as a quotation, not a claim (0.112458ms)
+✔ stays silent on a row already marked closed (0.059125ms)
+✔ stays silent while the leaf has not landed (0.11625ms)
+✔ reports a claim it cannot resolve rather than guessing (0.059667ms)
+✔ rows without the claim are not classified at all (0.265542ms)
+✔ resolves a leaf by taskFile as well as by id (0.278084ms)
+✔ headline is the leading bold span, and falls back when there is none (0.140959ms)
+✔ the guard RUNS when invoked as a script (entrypoint is not a silent no-op) (74.640875ms)
+✔ the live ledger carries no stale READY-FOR-GATES claim (67.05575ms)
+✔ a shipped leaf counts as landed, not only a merged one (0.462667ms)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/23',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+✔ tape hash keeps the sim-owned standing-orders module across invalidation (4569.03425ms)
+✔ curation is deterministic, interleaved, and never repeats thin-pool items (1.593875ms)
+✔ intake rejects headless captures and explicit banned files (2.744792ms)
+✔ OBS v5 authentication, scene discovery, and switch request use one websocket (1.715334ms)
+✔ failed preconditions are silent no-ops (0.143541ms)
+✔ missing spec, websocket, or required scenes never enter FACTORY (7.984625ms)
+✔ offline stream leaves FACTORY untouched (1.09575ms)
+✔ green showcase switches FACTORY, dwells, and always restores AUTOPILOT (1.064584ms)
+✔ red showcase skips dwell and restores AUTOPILOT (0.681459ms)
+✔ append is hash-idempotent and keeps one JSON line per entry (14.097875ms)
+✔ downtime accumulates and catch-up shows oldest first without double-show (26.029542ms)
+✔ concurrent appenders preserve every entry and concurrent consumers show once (253.73575ms)
+✔ missing subject directory fires the actionable existence message (1.573083ms)
+✔ subject below its floor reports expected and walked counts (0.690917ms)
+✔ subject exactly at its floor passes (0.900375ms)
+✔ empty present subject fires the floor instead of passing silently (0.49ms)
+✔ ignoreReadErrors returns only readable paths (1.127667ms)
+✔ default walk fails closed on an unreadable subtree (0.808958ms)
+✔ floor catches files hidden by an ignored read error (1.232375ms)
+✔ reducer output is cwd-invariant (527.809125ms)
+✔ reducer reports configured and actual workers distinctly (256.819375ms)
+✔ reducer reports absent harness config as unrecorded (282.451ms)
+✔ reducer reports the captured revision (266.695292ms)
+✔ reducer reports an absent revision as unrecorded (260.1185ms)
+✔ reducer reports a dirty captured revision (262.897334ms)
+✔ reducer output is script-root-invariant (536.501167ms)
+✔ reducer renders absolute raw paths relative to the recorded tree (276.035667ms)
+✔ reducer refuses body statistics when the recorded tree is unavailable (563.414917ms)
+✔ an unresolved masking row never outranks a resolved row (279.385ms)
+✔ reducer preserves an appended tail section byte-for-byte (519.441042ms)
+✔ reducer preserves corrections before failing tests (536.759ms)
+✔ reducer replaces generated sections instead of duplicating them (552.682541ms)
+✔ reducer keeps fresh-output behavior when output is absent (264.646458ms)
+✔ reducer loss guard fails closed without touching output (264.360708ms)
+✔ terrain contract scope report matches a fresh SSR measurement (3223.054083ms)
+✔ Terrain still resolves DEFAULT_CONTRACT_ID under SSR (737.084458ms)
+✔ Terrain seam census excludes its declaration and fallback (5.341583ms)
+✔ the F-A10-1 Terrain consumption and override seams have not moved (1.751125ms)
+
+  centroid discrepancy vs the drawn triangles (every triangle of every terrain)
+  terrain     triangles  old max    old p95    new max    new p95    worst point (x, z)
+  The Claim   32768      0.025272   0.000719   2.78e-15   8.88e-16   (29.667, 29.833)
+  Twin Banks  51200      0.022965   0.001956   5.53e-7    6.64e-8    (-19.467, 0.667)
+  Hill Mine   32768      0.103274   0.000250   1.42e-14   8.88e-16   (-16.000, 17.500)
+  Mare Claim  32768      0.666667   0.003457   7.11e-14   1.07e-14   (41.667, -26.667)
+
+✔ the height sampler lands on the drawn triangles, not near them (F-ASTRA-10) (101.4915ms)
+✔ the diagonal is read from the index buffer, never assumed (0.490083ms)
+✔ a cell the mesh never split, or split both ways, is rejected rather than guessed (0.5705ms)
+✔ townEraProps resolves its manifests under plain node, not only under Vite (121.830833ms)
+✔ town specs collect without loading Vite-only modules (1019.295875ms)
+✔ the canonical rider view matches the additive versioned registry (1944.118041ms)
+✔ view-schema mutation proofs: removal reds, unbumped addition reds, bumped addition greens (1.768709ms)
+✔ editing viewSchema does not rotate computeEngineHash (26.783833ms)
+✔ e1-dry-gulch hash is identical across installed Node engines (25801.872625ms)
+✔ the-claim hash is identical across installed Node engines (10353.009916ms)
+✔ e1-night-shift hash is identical across installed Node engines (70561.731ms)
+✔ whole suite collects without loading Vite-only modules (3251.529167ms)
+✔ every functions/**/*.ts is type-checked (9331.384708ms)
+✔ positive arm accepts the expected Wrangler version (0.616708ms)
+✔ violation arm rejects Wrangler version drift (57.022791ms)
+✔ missing arm reports Wrangler absent from PATH (0.609709ms)
+✔ escape arm warns loudly and permits explicit drift (35.723125ms)
+(node:8071) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ county stack directory matches the live rig names by whole normalized words (0.536791ms)
+✔ county stack directory links public mind ids without guessing bare unknowns (0.121875ms)
+ℹ tests 740
+ℹ suites 0
+ℹ pass 733
+ℹ fail 5
+ℹ cancelled 1
+ℹ skipped 1
+ℹ todo 0
+ℹ duration_ms 315038.538459
+
+✖ failing tests:
+
+test at scripts/bench-seeds.test.mjs:47:1
+✖ rotation registry stays outside the engine identity corpus (293.61675ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + '86e60c92f65b8b3f7c42dc285c619c1e73b9d931899c72035bf9236f13b13509'
+  - '09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4'
+  
+      at TestContext.<anonymous> (file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-boss/scripts/bench-seeds.test.mjs:55:10)
+      at async Test.run (node:internal/test_runner/test:1054:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:297:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '86e60c92f65b8b3f7c42dc285c619c1e73b9d931899c72035bf9236f13b13509',
+    expected: '09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4',
+    operator: 'strictEqual'
+  }
+
+test at scripts/engine-era-guard.test.mjs:65:1
+✖ the landed registry names the live engine and stays outside its hash corpus (3.354917ms)
+  AssertionError [ERR_ASSERTION]: each engine pin must carry an aliases array
+      at assertCurrentEra (file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-boss/scripts/engine-era-guard.test.mjs:25:12)
+      at async TestContext.<anonymous> (file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-boss/scripts/engine-era-guard.test.mjs:69:20)
+      at async Test.run (node:internal/test_runner/test:1054:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:297:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '=='
+  }
+
+test at scripts/fixture-teardown.test.mjs:24:1
+✖ all 128 scripts/*.test.mjs fixture owners remove their temp directories (125734.111291ms)
+  AssertionError [ERR_ASSERTION]: scripts/bench-seeds.test.mjs child failed:
+  ✖ rotation registry stays outside the engine identity corpus (58.441542ms)
+  ✔ contract ids are globally unique across the ten epoch bundles (0.327583ms)
+  ✔ bench seed sets cover Frontier and contain only valid known-contract seeds (0.201208ms)
+  ✔ rotation mint is deterministic, week-sensitive, and requires a salt (121.219292ms)
+  ℹ tests 4
+  ℹ suites 0
+  ℹ pass 3
+  ℹ fail 1
+  ℹ cancelled 0
+  ℹ skipped 0
+  ℹ todo 0
+  ℹ duration_ms 291.498833
+  
+  ✖ failing tests:
+  
+  test at scripts/bench-seeds.test.mjs:47:1
+  ✖ rotation registry stays outside the engine identity corpus (58.441542ms)
+    AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+    + actual - expected
+    
+    + '86e60c92f65b8b3f7c42dc285c619c1e73b9d931899c72035bf9236f13b13509'
+    - '09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4'
+    
+        at TestContext.<anonymous> (file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-boss/scripts/bench-seeds.test.mjs:55:10)
+        at async Test.run (node:internal/test_runner/test:1054:7)
+        at async startSubtestAfterBootstrap (node:internal/test_runner/harness:297:3) {
+      generatedMessage: true,
+      code: 'ERR_ASSERTION',
+      actual: '86e60c92f65b8b3f7c42dc285c619c1e73b9d931899c72035bf9236f13b13509',
+      expected: '09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4',
+      operator: 'strictEqual'
+    }
+  
+  
+  1 !== 0
+  
+      at TestContext.<anonymous> (file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-boss/scripts/fixture-teardown.test.mjs:40:14)
+      at Test.runInAsyncScope (node:async_hooks:214:14)
+      at Test.run (node:internal/test_runner/test:1047:25)
+      at Test.start (node:internal/test_runner/test:944:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:297:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual'
+  }
+
+test at scripts/goal-tracker.test.mjs:61:1
+✖ goal tree schema is valid (2.206542ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /^[0-9a-f]{40}$/. Input:
+  
+  'b89f70c70'
+  
+      at checkLeaf (file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-boss/scripts/goal-tracker.test.mjs:80:32)
+      at TestContext.<anonymous> (file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-boss/scripts/goal-tracker.test.mjs:98:41)
+      at Test.runInAsyncScope (node:async_hooks:214:14)
+      at Test.run (node:internal/test_runner/test:1047:25)
+      at Test.start (node:internal/test_runner/test:944:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:297:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'b89f70c70',
+    expected: /^[0-9a-f]{40}$/,
+    operator: 'match'
+  }
+
+test at scripts/gr-sim.test.mjs:1:1
+✖ scripts/gr-sim.test.mjs (300002.204958ms)
+  'test timed out after 300000ms'
+
+test at scripts/node-guards-timeout.test.mjs:94:1
+✖ a per-test timeout still overrides the default, so declared budgets are untouched (1047.301625ms)
+  AssertionError [ERR_ASSERTION]: the declared budget should have won:
+  ✖ /var/folders/cd/p02kvf6s5qgfn47w85hhtzjc0000gn/T/s1479-node-guards-timeout-XNDuXR/override.test.mjs (1001.403875ms)
+  ℹ tests 1
+  ℹ suites 0
+  ℹ pass 0
+  ℹ fail 0
+  ℹ cancelled 1
+  ℹ skipped 0
+  ℹ todo 0
+  ℹ duration_ms 1006.466125
+  
+  ✖ failing tests:
+  
+  test at ../../../../../../../var/folders/cd/p02kvf6s5qgfn47w85hhtzjc0000gn/T/s1479-node-guards-timeout-XNDuXR/override.test.mjs:1:1
+  ✖ /var/folders/cd/p02kvf6s5qgfn47w85hhtzjc0000gn/T/s1479-node-guards-timeout-XNDuXR/override.test.mjs (1001.403875ms)
+    'test timed out after 1000ms'
+  
+  
+  DIAGNOSIS: this node (v23.11.1) bounds --test-timeout at FILE granularity, so the fixture was cancelled whole and no per-test budget was consulted. This is NOT a timing flake and must NOT be cured by loosening the assertion — on such a node the battery's declared budgets (the escort test's 120 s, protected by F-1410-2) are not honoured per-test at all. Cure the NODE, not the test: .nvmrc pins 26.4.0. See F-1507-1.
+      at file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-boss/scripts/node-guards-timeout.test.mjs:132:12
+      at withFixture (file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-boss/scripts/node-guards-timeout.test.mjs:43:12)
+      at TestContext.<anonymous> (file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-boss/scripts/node-guards-timeout.test.mjs:105:3)
+      at Test.runInAsyncScope (node:async_hooks:214:14)
+      at Test.run (node:internal/test_runner/test:1047:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+      at Test.postRun (node:internal/test_runner/test:1173:19)
+      at Test.run (node:internal/test_runner/test:1101:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:297:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: "✖ /var/folders/cd/p02kvf6s5qgfn47w85hhtzjc0000gn/T/s1479-node-guards-timeout-XNDuXR/override.test.mjs (1001.403875ms)\nℹ tests 1\nℹ suites 0\nℹ pass 0\nℹ fail 0\nℹ cancelled 1\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 1006.466125\n\n✖ failing tests:\n\ntest at ../../../../../../../var/folders/cd/p02kvf6s5qgfn47w85hhtzjc0000gn/T/s1479-node-guards-timeout-XNDuXR/override.test.mjs:1:1\n✖ /var/folders/cd/p02kvf6s5qgfn47w85hhtzjc0000gn/T/s1479-node-guards-timeout-XNDuXR/override.test.mjs (1001.403875ms)\n  'test timed out after 1000ms'\n",
+    expected: /✔ explicitly bounded sibling/,
+    operator: 'match'
+  }
+rc=1

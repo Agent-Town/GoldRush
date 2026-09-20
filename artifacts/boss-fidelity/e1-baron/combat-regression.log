@@ -1,0 +1,69 @@
+
+Running 20 tests using 1 worker
+
+
+(node:68005) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[1/20] [desktop-chrome] › e2e/055-baron-kill-stop.spec.ts:125:1 › Baron kill-stop freezes sim, advances render, plants the standard, then the note persists
+[2/20] [desktop-chrome] › e2e/055-baron-kill-stop.spec.ts:163:1 › click or key skips only the hold and leaves the defeat card active
+[3/20] [desktop-chrome] › e2e/055-baron-kill-stop.spec.ts:175:1 › kill-stop leaves the sim hash identical to a nopause control
+[4/20] [desktop-chrome] › e2e/055-baron-kill-stop.spec.ts:200:1 › same-tick overrun and Baron kill does not start the celebration
+[5/20] [desktop-chrome] › e2e/057-baron-rocket-cart.spec.ts:251:1 › kited Baron telegraphs and launches rockets that damage hero and buildings through CombatSystem
+[6/20] [desktop-chrome] › e2e/057-baron-rocket-cart.spec.ts:275:1 › lethal Baron rocket stops the death tick before XP and gold collection
+[7/20] [desktop-chrome] › e2e/057-baron-rocket-cart.spec.ts:334:1 › melee range suppresses the Baron rocket volley
+[8/20] [desktop-chrome] › e2e/057-baron-rocket-cart.spec.ts:359:1 › defeating the Baron captures the cart, shows the medal line, and unlocks captured research
+[9/20] [desktop-chrome] › e2e/057-baron-rocket-cart.spec.ts:415:1 › Sky-Rocket Battery requires Baron capture and preserves veteran profiles
+[10/20] [desktop-chrome] › e2e/057-baron-rocket-cart.spec.ts:444:1 › Baron rocket volley targeting is deterministic for the same seed
+
+(node:71680) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[11/20] [mobile-chrome] › e2e/055-baron-kill-stop.spec.ts:125:1 › Baron kill-stop freezes sim, advances render, plants the standard, then the note persists
+[12/20] [mobile-chrome] › e2e/055-baron-kill-stop.spec.ts:163:1 › click or key skips only the hold and leaves the defeat card active
+[13/20] [mobile-chrome] › e2e/055-baron-kill-stop.spec.ts:175:1 › kill-stop leaves the sim hash identical to a nopause control
+[14/20] [mobile-chrome] › e2e/055-baron-kill-stop.spec.ts:200:1 › same-tick overrun and Baron kill does not start the celebration
+[15/20] [mobile-chrome] › e2e/057-baron-rocket-cart.spec.ts:251:1 › kited Baron telegraphs and launches rockets that damage hero and buildings through CombatSystem
+  1) [mobile-chrome] › e2e/057-baron-rocket-cart.spec.ts:251:1 › kited Baron telegraphs and launches rockets that damage hero and buildings through CombatSystem 
+
+    Error: page.evaluate: Execution context was destroyed, most likely because of a navigation
+
+      133 |
+      134 | async function advance(page: Page, seconds: number): Promise<void> {
+    > 135 |   await page.evaluate((duration) => window.__GR_TEST__?.advanceSim(duration), seconds);
+          |              ^
+      136 | }
+      137 |
+      138 | async function advanceUntil<T>(page: Page, read: () => Promise<T>, pass: (value: T) => boolean, seconds = 4): Promise<T> {
+        at advance (/Users/robin/.codex/worktrees/572c/Gold Rush/e2e/057-baron-rocket-cart.spec.ts:135:14)
+        at prepareKitedBaron (/Users/robin/.codex/worktrees/572c/Gold Rush/e2e/057-baron-rocket-cart.spec.ts:182:9)
+        at /Users/robin/.codex/worktrees/572c/Gold Rush/e2e/057-baron-rocket-cart.spec.ts:252:18
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/057-baron-rocket-cart-kite-e68cc-ldings-through-CombatSystem-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/057-baron-rocket-cart-kite-e68cc-ldings-through-CombatSystem-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/057-baron-rocket-cart-kite-e68cc-ldings-through-CombatSystem-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/057-baron-rocket-cart-kite-e68cc-ldings-through-CombatSystem-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:71881) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[16/20] [mobile-chrome] › e2e/057-baron-rocket-cart.spec.ts:275:1 › lethal Baron rocket stops the death tick before XP and gold collection
+[17/20] [mobile-chrome] › e2e/057-baron-rocket-cart.spec.ts:334:1 › melee range suppresses the Baron rocket volley
+[18/20] [mobile-chrome] › e2e/057-baron-rocket-cart.spec.ts:359:1 › defeating the Baron captures the cart, shows the medal line, and unlocks captured research
+[19/20] [mobile-chrome] › e2e/057-baron-rocket-cart.spec.ts:415:1 › Sky-Rocket Battery requires Baron capture and preserves veteran profiles
+[20/20] [mobile-chrome] › e2e/057-baron-rocket-cart.spec.ts:444:1 › Baron rocket volley targeting is deterministic for the same seed
+  1 failed
+    [mobile-chrome] › e2e/057-baron-rocket-cart.spec.ts:251:1 › kited Baron telegraphs and launches rockets that damage hero and buildings through CombatSystem 
+  1 skipped
+  18 passed (2.2m)

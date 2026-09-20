@@ -1,0 +1,27 @@
+{
+ "secured": true,
+ "waves": 20,
+ "timeMs": 600000,
+ "gold": 80,
+ "kills": 923,
+ "calls": 77,
+ "defaultedPicks": 0,
+ "defaultedSecure": 1,
+ "eventLogHash": "fnv1a32:d939e5f7",
+ "tape": "/private/tmp/heat13-569a41f9/artifacts/heat13/opus/e8-eclipse/attempt-1-tape.json",
+ "scored": true,
+ "runsSoFar": 2,
+ "scoredAttempts": 1,
+ "worldModel": "sim-import",
+ "note": "tune-1 secured on the first controller ride; the rules stop the heat at the first SECURED outcome, so it IS the scored attempt. attempt-1-tape.json is a byte-identical copy of tune-1-tape.json — one ride under two filenames, promoted here by name as the brief's tape field requires.",
+ "tapeEventLogHash": "fnv1a32:b1e52be6",
+ "assayReplay": "scripts/assay-replay-agent.mjs reproduced the tape's own fnv1a32:b1e52be6 and all four outcome fields (secured true / waves 20 / gold 80 / timeAlive 600). The stdout outcome line's fnv1a32:d939e5f7 is a different number by design; the replay matches the TAPE header.",
+ "envelope": {
+  "durationTicks": 18000,
+  "lastEntryTick": 17628,
+  "entries": 77,
+  "bytes": 402832,
+  "conservativeByteFloor": 592384,
+  "verdict": "clear on all three axes"
+ }
+}

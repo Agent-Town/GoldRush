@@ -1,0 +1,15 @@
+{
+  "at": "2026-09-09T01:40:15.754323+00:00",
+  "stage": "E6_HANDOFF_WITH_EXCEPTIONS_E7_READY",
+  "goal": "E1-E10 sequential boss fidelity; E1-E5 scoped handoffs recorded with known exceptions; E6 broad reconciliation next; E7 read-only preflight; E8-E10 pending",
+  "manifest": "artifacts/boss-fidelity/e6-homemaker/production-adoption/manifest.json",
+  "evidence": "artifacts/boss-fidelity/e6-homemaker/production-adoption/runtime-checks.json",
+  "fullRegression": "artifacts/boss-fidelity/e6-homemaker/full-regression/full-workers2",
+  "next": "Capture current E7 Echo FULL/LITE varied-base and jar evidence, then implement recognizable owned building snapshots and signal/jar fidelity. E8-E10 remain pending.",
+  "liveSession": null,
+  "livePid": null,
+  "latestTriage": "artifacts/boss-fidelity/e6-homemaker/full-regression/final-reconciliation.json",
+  "previousTurnClassification": "Progress: exact 95 confirmations completed and restored; 79 passed, 16 failed; pre-E6 two-file controls started.",
+  "diskIncident": "artifacts/boss-fidelity/e6-homemaker/full-regression/disk-space-incident.json",
+  "requiredConfirmations": "artifacts/boss-fidelity/e6-homemaker/full-regression/confirmation-selection.json"
+}

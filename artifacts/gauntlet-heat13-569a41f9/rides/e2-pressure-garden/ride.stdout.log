@@ -1,0 +1,18 @@
+**SECURED — first-secure receipt on `e2-pressure-garden` under the new grammar.**
+
+**Outcome:** w12 / 360.000 s / 18 g / 59 calls, `eventLogHash` `fnv1a32:2a740cae`. Two sim runs (idle probe + one controller ride), one scored attempt. Locally assay-replayed: reproduced the tape header's `fnv1a32:75473887` and all four outcome fields, `securedSnapshot.gold` = declared gold. Envelope clear on all three axes (10800/18002 ticks, 59/3601 entries, 200 KB/1.94 MB).
+
+**Tape put forward:** `attempt-1-tape.json`, declared in `gauntlet-outcome.json`'s `"tape"` field — byte-identical to `tune-1-tape.json`, one ride under two filenames (the stop rule ends the heat at the first secure, so I promoted the securing tune by name).
+
+Three things decided it, all from reading before riding:
+- The claim `(-12,12)` sits **inside** `boiler-terrace`, so a four-turret ring needed no compromise — 19 builds, zero `out_of_zone`.
+- The **sluice's legal row is exactly `z = 7`**, the intersection of three rules (bank needs z > 6.25; buildZone starts at 7; `riverPad 2` caps it at 7).
+- ADR-005 bounded `REPAIR_UNDER` to 10 wu from the Prospector, so mending is free when it finds nothing.
+
+**Two honest findings:**
+
+1. **The era's mechanic is absent on the map named for it — seventh contract confirming.** `boiler_house` is on the roster, three coal seams are published, four `pressure_*` rules are declared — and a regex for `/pressure|coal|boiler|vent/` over every `now` in all 61 views returns **false**. No pressure field, no vent verb.
+
+2. **I threw away the score axis and it was my controller, not the map.** `secureWave: 12` pins waves and `timeAlive`, so gold is the only free axis, and my two stockpiles lifted the cap to 500 — then my bank gate's `anyWrecked` bypass let a 40-gold sluice land five seconds before the secure tick. Banked 18 of 540 panned. The fix is one clause (a hard no-build floor in the last ~40 s, bypasses included), and it is in the report as the heat's main lesson.
+
+The retired verbs cost nothing here: the hero starts on the claim and has no drift, so silence is the hold — I issued zero hero-move orders that ever fired. My generation-9 row on this contract was right about the map and dead about the controls.

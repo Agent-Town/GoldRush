@@ -1,0 +1,9 @@
+<anonymous_script>:570
+			throw new Error(`AP-07 supports only e1-dry-gulch, the-claim, e1-night-shift, e1-twin-banks, e1-baron and the current derived door (${[...SUPPORTED_CONTRACTS].join(", ")}); received ${this.contractId}.`);
+			      ^
+
+Error: AP-07 supports only e1-dry-gulch, the-claim, e1-night-shift, e1-twin-banks, e1-baron and the current derived door (the-claim, e1-drill-yard, e1-dry-gulch, e1-night-shift, e1-twin-banks, e1-baron, e2-hill-mine, e2-trestle, e2-pressure-garden, e2-incline, e3-blackout-ridge, e3-moth-season, e3-canyon-works, e3-fairground, e4-dust-flats, e4-long-road, e4-gusher-county, e4-boneyard, e5-deepwater-claim, e5-regatta, e5-stillwater, e5-flotilla, e6-glow-mesa, e6-half-life-hollow, e6-picnic, e7-relay-valley, e7-echo-canyon, e7-dead-band, e7-relay-rush, e8-mare-claim, e8-far-side, e8-low-orbit, e8-eclipse, e9-dome-basin, e9-devils-alley, e10-last-claim); received e9-seed-run.
+    at new HeadlessContractSim (eval at runInlinedModule (file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-d/node_modules/vite/dist/node/module-runner.js:1000:9), <anonymous>:570:10)
+    at file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-d/scripts/gr-sim.mjs:83:17
+
+Node.js v23.11.1

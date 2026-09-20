@@ -1,0 +1,79 @@
+{
+ "secured": false,
+ "waves": 16,
+ "timeMs": 499200,
+ "gold": 80,
+ "kills": 650,
+ "calls": 265,
+ "defaultedPicks": 0,
+ "defaultedSecure": 0,
+ "eventLogHash": "fnv1a32:2b4a09b5",
+ "tape": "/tmp/heat12-038cc280/artifacts/heat12/opus/e9-dome-basin/tune-3-tape.json",
+ "scored": false,
+ "runsSoFar": 5,
+ "scoredAttempts": 0,
+ "worldModel": "sim-import",
+ "envelope": {
+  "durationTicks": 14976,
+  "entries": 265,
+  "bytes": 621674,
+  "maxTicks": 18002,
+  "maxEntries": 3601,
+  "maxTapeBytes": 592544,
+  "admissible": false
+ },
+ "bestAdmissible": {
+  "tape": "/tmp/heat12-038cc280/artifacts/heat12/opus/e9-dome-basin/tune-2-tape.json",
+  "waves": 15,
+  "timeMs": 451667,
+  "gold": 72,
+  "bytes": 197790,
+  "eventLogHash": "fnv1a32:fa9878ea"
+ },
+ "runs": [
+  {
+   "tag": "probe-idle",
+   "waves": 2,
+   "timeMs": 82600,
+   "gold": 0,
+   "note": "idle"
+  },
+  {
+   "tag": "tune-1",
+   "waves": 14,
+   "timeMs": 427633,
+   "gold": 20,
+   "bytes": 988766,
+   "admissible": false,
+   "note": "stockpile thief-decoy; reel 67% over ceiling"
+  },
+  {
+   "tag": "tune-2",
+   "waves": 15,
+   "timeMs": 451667,
+   "gold": 72,
+   "bytes": 197790,
+   "admissible": true,
+   "note": "no decoy, blank-line gate, palisade bait wall"
+  },
+  {
+   "tag": "tune-3",
+   "waves": 16,
+   "timeMs": 499200,
+   "gold": 80,
+   "bytes": 621674,
+   "admissible": false,
+   "note": "gold-gated mends, 4 per rim trip — BEST PLAY"
+  },
+  {
+   "tag": "tune-4",
+   "waves": 14,
+   "timeMs": 421567,
+   "gold": 61,
+   "bytes": 522803,
+   "admissible": true,
+   "note": "dropped turret rungs 3-4 for 22 more palisades: LOST 2 waves. Turret dps beats bait mass."
+  }
+ ],
+ "note": "NOT SECURED against a wave-20/600s gate. Nothing put forward. Best play tune-3 w16/499.2s, but its reel is 621,674 B against this contract 592,544 B ceiling (reel_too_large) so it was never submittable either. No scored attempts declared: none of these is a claim."
+}

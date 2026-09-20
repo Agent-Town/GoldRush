@@ -1,0 +1,19 @@
+{
+  "rig": "opus",
+  "model": "claude-opus-5",
+  "arena": "/tmp/heat13-569a41f9",
+  "workdir": "/tmp/heat13-569a41f9/artifacts/heat13/opus/e7-echo-canyon",
+  "charterFile": "/private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/rides/e7-echo-canyon/charter.md",
+  "charterSha256": "fbdb4f546ff6ddbd2b25f2a4c66d283768aee746e3303a34745a43babd275ed5",
+  "sessionId": "fab4e0da-8263-4d34-8d3f-f4620706dcb8",
+  "wallSeconds": 1500,
+  "startedAt": "2026-09-07T10:27:08.498Z",
+  "invocation": "env -u CLAUDECODE -u CLAUDE_CODE_ENTRYPOINT -u CLAUDE_CONFIG_DIR claude -p \"<charter text, see charterFile>\" --model claude-opus-5 --allowedTools Read,Write,Glob,Bash(node *) --output-format text --session-id fab4e0da-8263-4d34-8d3f-f4620706dcb8",
+  "endedAt": "2026-09-07T10:36:34.853Z",
+  "wallClockSeconds": 566,
+  "exitCode": 0,
+  "signal": null,
+  "wallHit": false,
+  "firstOutputAt": "2026-09-07T10:29:38.523Z",
+  "setupToFirstOutputSeconds": 150
+}

@@ -1,0 +1,42 @@
+{
+  "at": "2026-09-09T01:40:15.754323+00:00",
+  "status": "RELEASED_WITH_EXCEPTIONS",
+  "latestActualStats": {
+    "expected": 2839,
+    "skipped": 198,
+    "unexpected": 311
+  },
+  "confirmationStats": {
+    "expected": 79,
+    "unexpected": 16
+  },
+  "narrowSourceControlStats": {
+    "expected": 3,
+    "unexpected": 13
+  },
+  "actualRecheckStats": {
+    "unexpected": 2,
+    "expected": 1
+  },
+  "unresolvedControlPassedActualFailed": [
+    {
+      "id": "79f3c8bd6382e178bd36-318462b92f15186874df",
+      "file": "e9-seed-run-caravan.spec.ts",
+      "line": 180,
+      "project": "desktop-chrome",
+      "title": "planting at the stake spends the guard, lands at run end, and is born as a green next run",
+      "evidenceRun": "actual-recheck-desktop-chrome"
+    },
+    {
+      "id": "8fccce9bf9c12f9af696-d12644e6387b992d7581",
+      "file": "e1-dry-gulch.spec.ts",
+      "line": 222,
+      "project": "mobile-chrome",
+      "title": "seeded Dry Gulch diagnostics are stable",
+      "evidenceRun": "actual-recheck-mobile-chrome"
+    }
+  ],
+  "sourceAndAssetsChecked": 8495,
+  "sourceAndAssetHashChanges": [],
+  "scope": "E6 focused fidelity checks passed. Broad suite remains non-green. Matching failures and narrow two-file controls do not establish general causality; two differential failures remain unresolved. No unrelated gameplay or tests changed."
+}

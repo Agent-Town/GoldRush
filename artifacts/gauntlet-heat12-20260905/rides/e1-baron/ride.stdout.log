@@ -1,0 +1,18 @@
+All deliverables are on disk. Result, stated plainly:
+
+**NOT SECURED.** `e1-baron` / `e1-baron-01` / trail — best ride **w20 / 536.200 s / 200 g / 862 kills / 137 calls** (`tune-1.json`, `fnv1a32:41f0518d`). 3 sim runs, 1 scored attempt. **Nothing to put forward** — the run ends `hero_down`.
+
+## What happened
+
+Survival to the boss is solved outright: both controller rides reached wave 20 at the hero's **full 175/175**, with all four turrets and all six sentry beacons standing and **one work wrecked in twenty waves**. The Baron's horn lands at t≈522 and the hero is dead at t=536.2 — **fourteen seconds**. The claim never lost a wave; it lost the boss.
+
+The cause is the era's own mechanic. The bank cap is 200 and the `Economy` refuses credits at the cap, so a pinned purse *switches panning off*. The ladder this contract sells is finite (815 gold, complete by t=245 of a 536-second run), so tune-1 panned 1,480 and finished pinned from wave 18 with `goldPanned` flat — roughly **900 gold of income the map paid me with nowhere to put it**, against a boss at `hpScale: 240` / `contactDamageScale: 5`.
+
+I spent my second ride proving the sink I'd planned on **does not exist here**: `CONTEXT_ACTION upgrade` to turret tier 2 is refused on this build (`works.entries[].tier` stays 1 for all ten works across 195 views), and its required `MOVE_TO` dragged the Prospector off the seams for a **−440 gold** regression. That is a trap on this contract, not a lever.
+
+## Two corrections worth flagging
+
+- **My notebook's gen-4 row for this map is arithmetically impossible on this engine** — it records 394 gold banked against a 200 cap. Either the cap or the Baron's scaling has moved since; the fort shape that beat him then dies in 14 seconds now.
+- The two *certain* sinks — `stockpile` (60 g ×2, +150 cap each, the published counter to the cap) and `palisade` (10 g ×48, a body-block ring inside four turrets' fire) — went untested because I ranked an unverified upgrade above them. My honest read is **winnable, blocked by my own budget**, not by a wall.
+
+The sharpest lesson for next time is in the report: the door publishes `--resume <tape> --to-tick <n>`, so on a wave-20 boss map I could have ridden the fourteen seconds that decide the contract five times in the wall I spent re-riding the 522 seconds that were never in doubt.

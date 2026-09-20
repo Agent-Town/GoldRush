@@ -1,0 +1,40 @@
+
+=== 1 finish-ride ===
+{"rig":"opus","contract":"e4-gusher-county","wall":740,"wallHit":false,"rc":0,"tracked":[],"files":20,"outcome":{"secured":true,"waves":12,"gold":5,"runsSoFar":2,"scoredAttempts":1,"tape":"/tmp/heat12-038cc280/artifacts/heat12/opus/e4-gusher-county/attempt-1-tape.json","worldModel":"sim-import"},"scoredTapes":[{"file":"attempt-1-tape.json","id":"agent-30665e9d-03c08c59-94c6-4b86-b1fd-16259206a52d","secured":true,"waves":12,"gold":5,"durationTicks":10800,"lastEntryTick":10717,"promotedByRig":true,"discoveredBy":"outcome-file+filename"}],"otherSecured":[{"file":"tune-1-tape.json","id":"agent-30665e9d-03c08c59-94c6-4b86-b1fd-16259206a52d","waves":12,"gold":5}],"reportSections":{"outcome":1292,"whatTheMapAsked":2343,"winnability":410,"lessons":5572},"usage":{"turns":33,"toolCalls":19,"tokensIn":66,"tokensOut":142229}}
+tape chosen: attempt-1-tape.json (id agent-30665e9d-03c08c59-94c6-4b86-b1fd-16259206a52d, promotedByRig=true, discoveredBy=outcome-file+filename)
+
+=== 2 freeze notebook header ===
+{"headerOnly":true,"headerBytes":432}
+
+=== 3 harnessDigest ===
+4bbb3d2de226694de2e00f23f9230286358c1c0b9578ebb88018d6023076cde8
+
+=== 4 build-submission ===
+{"tapeId":"agent-30665e9d-03c08c59-94c6-4b86-b1fd-16259206a52d","contract":"e4-gusher-county","epochId":"epoch-4-motor","seed":"e4-gusher-county-01","seedMode":"bench","score":{"secured":true,"waves":12,"timeAlive":360,"gold":5,"baseValue":0},"papers":{"buildId":"5d985dd65","engineHash":"86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b","era":5,"viewVersion":2},"durationTicks":10800,"lastEntryTick":10717,"stack":{"model":"claude-opus-5","harness":"heat12-operator","harnessVersion":"2.1.257","harnessDigest":"4bbb3d2de226694de2e00f23f9230286358c1c0b9578ebb88018d6023076cde8","worldModel":"sim-import","config":"attended-hosted headless `claude -p` ride (heat 12) on Claude Code CLI 2.1.257; charter + door manual + own notebook (self-memory); own controller authored in-ride","calls":39,"tokensIn":8516074,"tokensOut":142229}}
+
+=== 5 publish (POST → poll → WATCH) ===
+{"rank":null,"tapeId":"agent-30665e9d-03c08c59-94c6-4b86-b1fd-16259206a52d","assay":"verified","assayHash":"fnv1a32:abfd532f","papers":{"buildId":"5d985dd65","engineHash":"86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b","era":5,"viewVersion":2}}
+
+=== LANDED ===
+{
+ "rig": "opus",
+ "contract": "e4-gusher-county",
+ "tapeFile": "attempt-1-tape.json",
+ "tapeId": "agent-30665e9d-03c08c59-94c6-4b86-b1fd-16259206a52d",
+ "assay": "verified",
+ "assayHash": "fnv1a32:abfd532f",
+ "ranked": true,
+ "rank": null,
+ "waves": 12,
+ "gold": 5,
+ "calls": 39,
+ "eventLogHash": "fnv1a32:b61647e9",
+ "wall": 740,
+ "harnessDigest": "4bbb3d2de226694de2e00f23f9230286358c1c0b9578ebb88018d6023076cde8",
+ "usage": {
+  "turns": 33,
+  "toolCalls": 19,
+  "tokensIn": 8516074,
+  "tokensOut": 142229
+ }
+}

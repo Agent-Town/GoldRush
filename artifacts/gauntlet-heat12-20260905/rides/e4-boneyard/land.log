@@ -1,0 +1,76 @@
+
+=== 1 finish-ride ===
+{"rig":"opus","contract":"e4-boneyard","wall":655,"wallHit":false,"rc":0,"tracked":[],"files":11,"outcome":{"secured":true,"waves":12,"gold":200,"runsSoFar":2,"scoredAttempts":1,"tape":"/tmp/heat12-038cc280/artifacts/heat12/opus/e4-boneyard/attempt-1-tape.json","worldModel":"sim-import"},"scoredTapes":[{"file":"attempt-1-tape.json","id":"agent-3af455e5-52d1fd7c-5ddf-475e-84f1-1081e5f2caf0","secured":true,"waves":12,"gold":200,"durationTicks":10800,"lastEntryTick":10689,"promotedByRig":true,"discoveredBy":"outcome-file+filename"}],"otherSecured":[{"file":"tune-1-tape.json","id":"agent-3af455e5-52d1fd7c-5ddf-475e-84f1-1081e5f2caf0","waves":12,"gold":200}],"reportSections":{"outcome":767,"whatTheMapAsked":3473,"winnability":503,"lessons":3904},"usage":{"turns":57,"toolCalls":30,"tokensIn":114,"tokensOut":87191}}
+tape chosen: attempt-1-tape.json (id agent-3af455e5-52d1fd7c-5ddf-475e-84f1-1081e5f2caf0, promotedByRig=true, discoveredBy=outcome-file+filename)
+
+=== 2 freeze notebook header ===
+{"headerOnly":true,"headerBytes":429}
+
+=== 3 harnessDigest ===
+05cfd64eb0f7b9cc1b47b99cb983d81054146b7ed9568076c953e12b145f3b56
+
+=== 4 build-submission ===
+{"tapeId":"agent-3af455e5-52d1fd7c-5ddf-475e-84f1-1081e5f2caf0","contract":"e4-boneyard","epochId":"epoch-4-motor","seed":"e4-boneyard-01","seedMode":"bench","score":{"secured":true,"waves":12,"timeAlive":360,"gold":200,"baseValue":0},"papers":{"buildId":"9c4337e3b","engineHash":"86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b","era":5,"viewVersion":2},"durationTicks":10800,"lastEntryTick":10689,"stack":{"model":"claude-opus-5","harness":"heat12-operator","harnessVersion":"2.1.257","harnessDigest":"05cfd64eb0f7b9cc1b47b99cb983d81054146b7ed9568076c953e12b145f3b56","worldModel":"sim-import","config":"attended-hosted headless `claude -p` ride (heat 12) on Claude Code CLI 2.1.257; charter + door manual + own notebook (self-memory); own controller authored in-ride","calls":45,"tokensIn":14538617,"tokensOut":87191}}
+
+=== 5 publish (POST → poll → WATCH) ===
+FAILED: node:internal/deps/undici/undici:13510
+      Error.captureStackTrace(err);
+            ^
+
+TypeError: fetch failed
+    at node:internal/deps/undici/undici:13510:13
+    at async file:///private/tmp/heat12-038cc280/artifacts/gauntlet-heat12-20260905/publish-submission.mjs:14:20 {
+  [cause]: Error: read ECONNRESET
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:216:20) {
+    errno: -54,
+    code: 'ECONNRESET',
+    syscall: 'read'
+  }
+}
+
+Node.js v23.11.1
+
+POST ok; assay still pending at the 120 s mark — resuming with the poll-only shim (no re-POST)
+
+=== 6 poll-verdict (no re-POST) ===
+{"tapeId":"agent-3af455e5-52d1fd7c-5ddf-475e-84f1-1081e5f2caf0","assay":"verified","assayHash":"fnv1a32:49e829d4","ranked":true,"papers":{"buildId":"9c4337e3b","engineHash":"86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b","era":5,"viewVersion":2}}
+
+=== LANDED ===
+{
+ "rig": "opus",
+ "contract": "e4-boneyard",
+ "tapeFile": "attempt-1-tape.json",
+ "tapeId": "agent-3af455e5-52d1fd7c-5ddf-475e-84f1-1081e5f2caf0",
+ "assay": "verified",
+ "assayHash": "fnv1a32:49e829d4",
+ "ranked": true,
+ "rank": null,
+ "waves": 12,
+ "gold": 200,
+ "calls": 45,
+ "eventLogHash": "fnv1a32:76da210d",
+ "wall": 655,
+ "harnessDigest": "05cfd64eb0f7b9cc1b47b99cb983d81054146b7ed9568076c953e12b145f3b56",
+ "usage": {
+  "turns": 57,
+  "toolCalls": 30,
+  "tokensIn": 14538617,
+  "tokensOut": 87191
+ }
+}
+node:internal/deps/undici/undici:13510
+      Error.captureStackTrace(err);
+            ^
+
+TypeError: fetch failed
+    at node:internal/deps/undici/undici:13510:13
+    at async file:///private/tmp/heat12-038cc280/artifacts/gauntlet-heat12-20260905/publish-submission.mjs:14:20 {
+  [cause]: Error: read ECONNRESET
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:216:20) {
+    errno: -54,
+    code: 'ECONNRESET',
+    syscall: 'read'
+  }
+}
+
+Node.js v23.11.1

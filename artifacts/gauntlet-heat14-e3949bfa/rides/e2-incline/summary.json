@@ -1,0 +1,199 @@
+{
+  "rig": "opus",
+  "contract": "e2-incline",
+  "model": "claude-opus-5",
+  "sessionId": "9ad41fc4-6fa8-42a9-80b5-a3061307342e",
+  "startedAt": "2026-09-18T00:40:22.573Z",
+  "endedAt": "2026-09-18T00:54:05.837Z",
+  "wallClockSeconds": 823,
+  "wallHit": false,
+  "exitCode": 0,
+  "signal": null,
+  "setupToFirstOutputSeconds": 90,
+  "arenaTrackedChanges": [],
+  "workspaceFiles": [
+    "attempt-1-tape.json",
+    "ctrl-v1.mjs",
+    "gauntlet-outcome.json",
+    "gauntlet-report.md",
+    "probe-idle-summary.json",
+    "probe-idle-tape.json",
+    "probe-idle-views.json",
+    "runner.mjs",
+    "tune-1-summary.json",
+    "tune-1-tape.json",
+    "tune-1-views.json"
+  ],
+  "outcome": {
+    "secured": true,
+    "waves": 12,
+    "timeMs": 496333,
+    "gold": 129,
+    "kills": 451,
+    "calls": 69,
+    "defaultedPicks": 0,
+    "defaultedSecure": 1,
+    "eventLogHash": "fnv1a32:78fe88df",
+    "tape": "/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/heat14/opus/e2-incline/attempt-1-tape.json",
+    "scored": true,
+    "runsSoFar": 2,
+    "scoredAttempts": 1,
+    "worldModel": "sim-import",
+    "score": {
+      "secured": true,
+      "waves": 12,
+      "timeAlive": 496.333,
+      "gold": 129,
+      "baseValue": 0
+    },
+    "envelope": {
+      "durationTicks": 14890,
+      "lastEntryTick": 14832,
+      "entries": 69,
+      "bytes": 250577,
+      "note": "clear on all three axes; maxTicks floor is 18000"
+    },
+    "tapeMeta": {
+      "buildId": "c7b6eecc8",
+      "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+      "era": 6,
+      "viewVersion": 2
+    },
+    "localAssay": {
+      "verb": "node scripts/assay-replay-agent.mjs artifacts/heat14/opus/e2-incline/attempt-1-tape.json",
+      "eventLogHash": "fnv1a32:ccf9deef",
+      "matchesTapeHeader": true,
+      "outcome": {
+        "secured": true,
+        "waves": 12,
+        "gold": 129,
+        "timeAlive": 496.333
+      },
+      "securedSnapshot": {
+        "waves": 12,
+        "gold": 129,
+        "timeAlive": 496.333
+      },
+      "note": "The replay reproduces the TAPE header's hash (ccf9deef), not the stdout outcome line's (78fe88df); they are different numbers by design. securedSnapshot.gold equals the declared gold, so no score_mismatch."
+    },
+    "note": "tune-1 secured on the FIRST controller ride and is PROMOTED as the scored attempt. attempt-1-tape.json is a byte-identical copy of tune-1-tape.json (both 250577 bytes) — they are ONE ride under two filenames, not two runs. 2 sim runs total: the --policy idle probe (died w2/119.333s) and this one."
+  },
+  "outcomeError": null,
+  "promotedTapeName": "attempt-1-tape.json",
+  "scoredTapes": [
+    {
+      "file": "attempt-1-tape.json",
+      "id": "agent-85fac865-be6b28a1-d693-4350-8972-12072c0d563c",
+      "contract": "e2-incline",
+      "seed": "e2-incline-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "c7b6eecc8",
+        "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+        "era": 6,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 12,
+        "timeAlive": 496.333,
+        "gold": 129
+      },
+      "entries": 69,
+      "durationTicks": 14890,
+      "lastEntryTick": 14832,
+      "promotedByRig": true,
+      "discoveredBy": "outcome-file+filename"
+    }
+  ],
+  "otherTapes": [
+    {
+      "file": "probe-idle-tape.json",
+      "id": "agent-8841a62c-a4bbabe0-e9ce-43db-80be-329c49b84e52",
+      "contract": "e2-incline",
+      "seed": "e2-incline-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "d2773566f",
+        "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+        "era": 6,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 2,
+        "timeAlive": 119.333,
+        "gold": 0
+      },
+      "entries": 0,
+      "durationTicks": 3580,
+      "lastEntryTick": null
+    },
+    {
+      "file": "tune-1-tape.json",
+      "id": "agent-85fac865-be6b28a1-d693-4350-8972-12072c0d563c",
+      "contract": "e2-incline",
+      "seed": "e2-incline-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "c7b6eecc8",
+        "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+        "era": 6,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 12,
+        "timeAlive": 496.333,
+        "gold": 129
+      },
+      "entries": 69,
+      "durationTicks": 14890,
+      "lastEntryTick": 14832
+    }
+  ],
+  "otherSecuredTapes": [
+    {
+      "file": "tune-1-tape.json",
+      "id": "agent-85fac865-be6b28a1-d693-4350-8972-12072c0d563c",
+      "contract": "e2-incline",
+      "seed": "e2-incline-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "c7b6eecc8",
+        "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+        "era": 6,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 12,
+        "timeAlive": 496.333,
+        "gold": 129
+      },
+      "entries": 69,
+      "durationTicks": 14890,
+      "lastEntryTick": 14832
+    }
+  ],
+  "report": {
+    "outcome": "**SECURED.** `waves 12 · timeAlive 496.333 s · gold 129 · kills 451 · calls 69`, `defaultedSecure: 1`.\n\nTape put forward: `attempt-1-tape.json` (a byte-identical copy of `tune-1-tape.json` — **one ride\nunder two filenames**, declared in `gauntlet-outcome.json`'s `tape` field).\n\n**2 sim runs · 1 scored attempt.** Run 1 was the `--policy idle` probe (died wave 2 / 119.333 s).\nRun 2 was the first controller, which secured, so the stop rule ended the heat there and the tune was\npromoted by name.\n\nReel envelope, measured on the first reel that existed: `durationTicks 14,890`, last accepted order at\ntick **14,832** (58 ticks inside its own duration, ~3,100 inside the 18,000 floor), **69 entries**,\n**250,577 bytes** — clear on all three axes.\n\nFort at the bank: 4 turrets (all standing, none ever wrecked), 6 sentry beacons, 2 stockpiles,\n5 palisades (2 wrecked — the bait doing its job). Hero **175/175**, having held its full running\nmaximum from t = 270 to the secure. 975 gold panned.\n\nLocal assay of the promoted reel: `node scripts/assay-replay-agent.mjs attempt-1-tape.json` reproduces\nthe tape header's `eventLogHash fnv1a32:ccf9deef` and all four outcome fields, with\n`securedSnapshot {waves 12, gold 129, timeAlive 496.333}` equal to the declared score — no\n`score_mismatch` exposure. (That is the TAPE's hash; the stdout outcome line's `fnv1a32:78fe88df` is a\ndifferent number by design.) The tape carries current-era papers: `era 6`, engine\n`540b49aff0…2ad1a068`, `viewVersion 2`, build `c7b6eecc8`.",
+    "whatTheMapAsked": "Its era's signature mechanic is **E2 pressure with hazard — vent-or-boom resource management** — and\nit asked me nothing about it, for the **eighth time across my generations**. The fixtures are honest\nand complete: `boiler_house` is on the roster at 70 g × 3 with `source: \"twist.pressureEnabled\"`, and\n`stablePrefix.map.coalSeams` publishes all three seams at (0,−28), (4,−26), (7,−22) — ~11 units from\nthe stake, exactly as the door document promises. But the union of `now` keys across every view is\n`wave · blastReadyInMs · weapon · timers · gold · hero · prospector · works · threats · orders ·\nneedsRider · seams · score`: **no pressure value, no band, no coal count, no boiler fuel**, and the\ngrammar has no vent verb. The `boilerHouse.coalSeconds` change from 12 to 36 that the charter names is\nreal in `Balance` and invisible through the door — one coal lasting three times as long is three times\nas long a process I cannot observe, cannot steer and cannot spend. 210 gold of boiler is a strictly\ndominated purchase here, not a gamble.\n\nWhat the contract *does* ask, in its own right, is a good **spatial question that the boss gate makes\nmandatory**, and era 6 sharpened it. Because the railcar rides a fixed polyline with `pursuitRange: 0`,\nevery gold decision is priced in *seconds of fire on the rail*, and the answer is closed form (the\n`2·√(256 − d²)` window above). Era 6's lane rewrite then makes the same coordinates do a second job:\nwith the south edge dropped and the river blocking, the `x = -12` ford is the swarm's only door to the\nlower yard *and* the boss's track, so four turrets at `x = -16` (d = 4) cover the claim at (−24,−18),\nthe ford mouth, and 31 units of rail apiece. The view fields that carried it were `now.works.entries`\n(position, `tier`, `index`, `wrecked`), `now.works.byKind`, `now.seams[].active/x/z/anchorIndex`,\n`now.gold` against `now.score.goldPanned`, `now.hero.hp/maxHp/x/z`, `now.threats.alive/wreckers`, and\n`now.orders[].status/reason`. The orders were `BUILD`, `HARVEST`, `PICK_UPGRADE`, `BLAST_AT`,\n`MOVE_HERO` and `REPAIR_UNDER`, plus one blank line. **Not one E2 verb, because E2 has none.**\n\nMy notebook remembers this map from generations 8 and 84, and **it does not play the way either\nremembers — the cure landed and it moved the first minute.** Generation 8 rode a welded hero and\nfortified \"the `lower-yard` pocket around the loss stake\"; generation 84 used `MOVE_HERO` to reach the\nrail shoulder and reported the map as a two-door problem with a *south* spawn edge feeding the yard\ndirectly. **What the first minute actually did this time:** the idle probe's very first wave put 18\nenemies on the board of which **11 were wreckers**, and every one of them entered north of the water\nat `z = 24` or `z = 46` — nothing spawned in the lower yard at all. That is the pin-#4 cure: the yard\nis no longer flanked, it is *funnelled*, and the whole opening is \"get one gun onto the west ford\nbefore the first crossing lands\". My first turret stood at t ≈ 50 and the fort was never wrecked\nagain — where `skill.md`'s pre-cure paragraph still says the incline \"dies at wave 6 of 12 on seed 01\nwith two turrets standing\". That paragraph is measuring a map that no longer exists.",
+    "winnability": "Secured, and the margin was **wide on survival and thin only where it is scored**: the hero never\nfell below its running maximum after the wave-6 plating picks and finished 175/175, all four turrets\nand all six beacons stood unwrecked through 451 kills with `threats.alive` pinned at its 60 ceiling,\nand the boss fell on its first pass with five waves of grace still in hand — while the banked purse,\n**129 of a live 500 cap**, is the whole margin I left behind, because my harvest tail chased a seam\nacross the river whenever `gold-seam-1` was between respawns.",
+    "lessons": "- **Read the route's END behaviour, not just its speed.** `Enemy.ts:1253-1256` REVERSES a scripted\n  route at each endpoint, so `railRouteIndex` bosses PATROL rather than making one pass. That turned\n  my damage budget from \"3,000 per pass against 3,129 hp — tight\" into \"three passes inside the grace\n  window — comfortable\", and it is the difference between designing for a gamble and designing for a\n  certainty. Generations 10, 57, 77 and 83 all priced a railcar's fire window; none of them checked\n  whether it comes back. **On a scripted-route boss, find the wrap clause before budgeting damage.**\n- **An era named for rebuilt maps CAN move a map's rules, and the pin prose names which.** Three heats\n  running (gens 97, 98, 99) era 6 moved rendering and not rules, and I opened this one expecting the\n  same. Pin #4 genuinely re-parameterised this contract — south lane edge dropped, `coal_thief` north\n  gate added — and that single change converts a flanked yard into a funnel whose only door is also\n  the boss's track. **Read `assets/engine-era.json`'s pins as a per-contract diff, and when one names\n  your map, go read the contract JSON's `lanes` and roster gates rather than inheriting the notebook's\n  geometry.**\n- **`posting.spawnEdges` and the roster's own `spawnGates` can disagree; the lanes block wins where it\n  matters.** `rail_tough` still declares `spawnEdges: [\"south\",\"north\"]` with a south gate at\n  (12,−46), and `map.spawnGates` still publishes it — while `posting.spawnEdges` is\n  `[\"east\",\"north\",\"west\"]` and the idle probe's `threats.edge` never once read `south`. **A published\n  gate is not a used gate; measure the edge on the probe.**\n- **When the door funnels, the fort is one column, and the column is the objective.** Turrets at\n  `x = -16` (d = 4 from the rail) simultaneously covered the claim at (−24,−18), the west ford mouth\n  at (−12,−7) and 31 units of the boss's track. Compute\n  `stakeMarkers × buildZones × fords × railRoute` and look for the coordinate that is on *all* of\n  them — that intersection existed here and it is why the ride needed no tuning.\n- **Keep the battery ≥ 4 units off a `scale 3.2` hull with `buildingDamageScale 7`, and the whole\n  fort survives.** Four turrets at d = 4 through 451 kills and a full boss pass: **zero wrecked**.\n  Only the palisade bait I deliberately put at d = 1–3 near the ford died, which is what bait is for.\n- **The seam-distance sort must be anchored to a POINT I control, and it must not follow a depleted\n  seam across the map.** My tail ranked live seams by distance to the claim and dropped inactive ones,\n  so every time `gold-seam-1` went between respawns the array named a seam 46 units away across the\n  river and the Prospector left the yard — it finished the run at (10.2, 10.8), on the wrong bank.\n  975 panned, 129 banked, against a 500 cap I had already paid two stockpiles for. **Cap the tail's\n  reach: name only seams within ~20 units of the post, and when none is live, keep naming the nearest\n  ANCHOR anyway so the failing order parks the worker where the gold will come back.** Sixth\n  generation to lose most of the gold axis, and the first where the cause was the tail rather than the\n  ladder.\n- **Ride the skeleton first and change nothing — sixteenth heat where that is the whole discipline,\n  and the thirteenth in a row where it secured on ride one.** Two runs total: a ten-second probe and\n  one controller. The reading budget went to the secure gate, the route wrap, the boss HP arithmetic,\n  the lane diff and the buildables roster; the riding budget went to the unmodified generation-6→99\n  skeleton (draft first under replace semantics with a plating-first scorer, maxHp 100 → 175; a ladder\n  in *strategy* order with plan-time affordability read off `buildables[].costs[standing]`; more\n  candidate spots than slots with a refusal blacklist partitioned into GROUND — poison the coordinate\n  — and ECONOMY — `insufficient_gold`, retry and poison nothing; a rung with no candidates left\n  RETIRED rather than stalling the rungs behind it; `Number.isFinite` filtering on seam coordinates;\n  a free `BLAST_AT` above the traveller; a `MOVE_HERO` emitted once and dropped when parked; a blank\n  line at `pendingSecure`).\n- **I wrote the generation-99 ladder bug and caught it before riding.** My first draft again computed\n  the instance index as `standing + rungsWalkedPast`, which double-counts and retires half the ladder.\n  The correct shape is an **ordinal**: count how many rungs of that id you have walked past, skip the\n  rung when `standing >= ordinal`, and price the first unsatisfied one at `costs[standing]`. Emitting\n  only the head rung makes cumulative gating unnecessary — a cheap rung cannot steal from an expensive\n  one when it is never emitted alongside it.\n- **E2 pressure is unplayable through the door — now measured on an eighth contract** (Drill Yard\n  gen 5, Incline gens 8/84/100, Pressure Garden gens 9/85, Trestle gens 10/83, Hill Mine gens 57/77).\n  The charter's `coalSeconds 12 → 36` cure is real in `Balance` and invisible in `now`. Stop\n  re-deriving this per contract: dump the `now`-key union once and spend the minutes on what the map\n  actually asks.\n- **The blank line at `pendingSecure` did its four jobs again, thirteenth contract running** —\n  `defaultedSecure: 1`, last accepted order 58 ticks inside `durationTicks`, 69 entries / 250 KB, and\n  it cannot be *rejected*, so the replay cannot diverge the way generation 84's nearly did on this\n  very map.\n- **A first-secure ride and a top-of-board ride are still different designs, and the stop rule makes\n  you choose before you know.** The heat ends at the first secure, so the ride that gets the receipt\n  also sets the row. I designed for \"kill the railcar\" and got it on ride one; the gold axis was an\n  afterthought. On a bare board that is the right trade — but **put the gold plan in the FIRST\n  controller, because there may not be a second.**"
+  },
+  "usage": {
+    "transcript": "/Users/robin/.claude/projects/-private-tmp-claude-501--Users-robin-Claude-Projects-Gold-Rush-fe6b8d27-b064-40eb-934b-1d29d57a71db-scratchpad-arena-heat14-e3949bfa/9ad41fc4-6fa8-42a9-80b5-a3061307342e.jsonl",
+    "assistantTurns": 70,
+    "toolCalls": 40,
+    "tokensIn": 140,
+    "tokensOut": 110099,
+    "cacheReadTokens": 29301722,
+    "cacheWriteTokens": 1344253,
+    "note": "tokensIn excludes cache reads/writes (reported separately); summed from the CLI session transcript, not self-reported by the rig"
+  }
+}

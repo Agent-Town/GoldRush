@@ -1,0 +1,32 @@
+
+########## RIDE e5-deepwater-claim · seed e5-deepwater-claim-01 · gen 88 · stake never-claimed · wall 1500s ##########
+--- 1 charter ---
+{"rig":"opus","contract":"e5-deepwater-claim","seed":"e5-deepwater-claim-01","seedMode":"bench","stake":"never-claimed","generation":88,"wall":1500,"notebookSha256":"3b4bac0ebbadf46e8e6f67a54120e12391e4c56e1c70a0c1b8cff22e7aec87a4","charterSha256":"ea3e1bf0a6484376a68da7ad9f5a9ab157f2690a76468f229e797d5424b2f1ee","bytes":733597,"out":"/private/tmp/heat13-569a41f9/artifacts/gauntlet-heat13-569a41f9/rides/e5-deepwater-claim/charter.md"}
+--- 2 ride ---
+START opus claude-opus-5 pid=11226 session=6b8ed0ab-5d49-4f98-bafe-4d23f606ffd3 at=2026-09-07T16:48:23.465Z
+END opus rc=1 signal=null wall=12s wallHit=false
+ride-wall rc=1 signal=-
+--- 3 land ---
+
+=== 1 finish-ride ===
+{"rig":"opus","contract":"e5-deepwater-claim","wall":12,"wallHit":false,"rc":1,"tracked":[],"files":0,"outcome":null,"scoredTapes":[],"otherSecured":[],"reportSections":null,"usage":{"turns":4,"toolCalls":2,"tokensIn":6,"tokensOut":714}}
+
+=== NOT SECURED — nothing to submit ===
+{
+ "rig": "opus",
+ "contract": "e5-deepwater-claim",
+ "wall": 12,
+ "wallHit": false,
+ "rc": 1,
+ "scoredTapes": [],
+ "outcomeNote": null
+}
+
+land rc=0
+--- 4 notebook ---
+{"notebook":"/Users/robin/Claude/Projects/goldrush-gauntlet/memories/claude__opus-5/NOTEBOOK.md","generation":88,"headerBytes":426,"entryBytes":903}
+--- 5 matrix ---
+| 28 | e5-deepwater-claim | `e5-deepwater-claim-01` | never-claimed | 88 | **not secured** | — | — | —s | 12s | —<br>— | — | gen 88 |
+{"contract":"e5-deepwater-claim","secured":false,"tapesOnDisk":0,"scoredTapes":0,"otherSecured":0,"wallHit":false,"rc":1,"assay":null,"ranked":null,"winnability":null}
+########## END e5-deepwater-claim ##########
+

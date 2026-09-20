@@ -1,0 +1,15 @@
+**SECURED** on the first controller — `e3-moth-season` / `e3-moth-season-01`, w12 / 360.000s / 113g / 269 calls, in 2 sim runs and 1 scored attempt.
+
+**What I put forward:** `attempt-1-tape.json` (declared in `gauntlet-outcome.json`'s `tape` field) — a byte-identical copy of `tune-1-tape.json`. tune-1 secured on its first ride, so this is one ride under two filenames, stated plainly in the outcome file.
+
+**Receipt:** `assay-replay-agent.mjs` reproduces the tape header's `fnv1a32:6f7df0c3` and all four outcome fields. Envelope measured on all three axes: 937,547 bytes against a **1,938,784** ceiling, 269 of 3,601 entries, last order at tick 10,784 of 10,800.
+
+Three things decided the heat:
+
+1. **The grammar retirement was free here.** I braced to rewrite the skeleton around `MOVE_HERO`, then found `StandingOrders:44` says the hero has no drift — "hold the hero here is already MOVE_HERO plus silence." The hero starts at the claim, which is where I wanted it, so the correct number of `MOVE_HERO` orders was zero. `BUILD` walks the *Prospector* (`{movement}`), so errands never cost the hero its ground.
+
+2. **The era gate is a 25-gold errand.** `syncCanyonConnectObjective:2705` latches one-way the first tick a `sentry_beacon` stands within 2.5 of the pylon at (0,−14). It latched at t=30, and I watched `powered` go 0 → 1 → 0 as saboteurs ate that beacon while `complete` stayed true. The grid's *real* weight is second-order: `twist.powerGrid` strips `turret` from the roster, so the whole arsenal is sentry beacons.
+
+3. **One correction worth flagging** — the brief gives the byte envelope as `16 KiB + maxEntries × 160`, which is 361,984 here and would have made my reel look like a `reel_too_large` loss. `runTapeEnvelopeForContract:107` adds a second term (`maxOrderEntries × 2,240`) worth 1.35 MB, and `maxTicks` has an 18,000-tick floor, so a 12-wave map gets a 20-wave allowance. The published formula is a summary of the formula.
+
+My notebook's memory of this map is now dead twice over: generation 14 won it with four turrets that can no longer be built, and generation 42 rode a welded hero that no longer exists. The report's four required sections are at `gauntlet-report.md`, ready to copy verbatim.

@@ -1,0 +1,147 @@
+{
+  "seed": "task-053-weapon-cycling-audit",
+  "durationSeconds": 60,
+  "ownerToggleCadencePerMinute": 85,
+  "ownerToggleIntervalSeconds": 0.706,
+  "targetWall": [
+    {
+      "x": -0.9,
+      "z": 6
+    },
+    {
+      "x": -0.3,
+      "z": 6
+    },
+    {
+      "x": 0.3,
+      "z": 6
+    },
+    {
+      "x": 0.9,
+      "z": 6
+    }
+  ],
+  "constants": {
+    "sparkDamage": 12,
+    "sparkFireRate": 2,
+    "blastDamage": 20,
+    "blastCooldown": 2.5,
+    "blastAirTime": 0.7,
+    "blastRadius": 2.2
+  },
+  "rows": [
+    {
+      "scenario": "pure-spark",
+      "run": 1,
+      "sampleSeconds": 60,
+      "toggles": 0,
+      "togglesPerMinute": 0,
+      "sparkDamage": 1440,
+      "blastDamage": 0,
+      "totalDamage": 1440,
+      "sparkDps": 24,
+      "blastDps": 0,
+      "totalDps": 24,
+      "boltHits": 120,
+      "detonations": 0
+    },
+    {
+      "scenario": "pure-blast",
+      "run": 1,
+      "sampleSeconds": 60,
+      "toggles": 1,
+      "togglesPerMinute": 1,
+      "sparkDamage": 0,
+      "blastDamage": 1920,
+      "totalDamage": 1920,
+      "sparkDps": 0,
+      "blastDps": 32,
+      "totalDps": 32,
+      "boltHits": 0,
+      "detonations": 24
+    },
+    {
+      "scenario": "rapid-cycle",
+      "run": 1,
+      "sampleSeconds": 60,
+      "toggles": 85,
+      "togglesPerMinute": 85,
+      "sparkDamage": 1008,
+      "blastDamage": 1760,
+      "totalDamage": 2768,
+      "sparkDps": 16.8,
+      "blastDps": 29.3,
+      "totalDps": 46.1,
+      "boltHits": 84,
+      "detonations": 22
+    },
+    {
+      "scenario": "pure-spark",
+      "run": 2,
+      "sampleSeconds": 60,
+      "toggles": 0,
+      "togglesPerMinute": 0,
+      "sparkDamage": 1440,
+      "blastDamage": 0,
+      "totalDamage": 1440,
+      "sparkDps": 24,
+      "blastDps": 0,
+      "totalDps": 24,
+      "boltHits": 120,
+      "detonations": 0
+    },
+    {
+      "scenario": "pure-blast",
+      "run": 2,
+      "sampleSeconds": 60,
+      "toggles": 1,
+      "togglesPerMinute": 1,
+      "sparkDamage": 0,
+      "blastDamage": 1920,
+      "totalDamage": 1920,
+      "sparkDps": 0,
+      "blastDps": 32,
+      "totalDps": 32,
+      "boltHits": 0,
+      "detonations": 24
+    },
+    {
+      "scenario": "rapid-cycle",
+      "run": 2,
+      "sampleSeconds": 60,
+      "toggles": 85,
+      "togglesPerMinute": 85,
+      "sparkDamage": 1008,
+      "blastDamage": 1760,
+      "totalDamage": 2768,
+      "sparkDps": 16.8,
+      "blastDps": 29.3,
+      "totalDps": 46.1,
+      "boltHits": 84,
+      "detonations": 22
+    }
+  ],
+  "summary": [
+    {
+      "scenario": "pure-spark",
+      "dps": 24,
+      "sparkDps": 24,
+      "blastDps": 0,
+      "togglesPerMinute": 0
+    },
+    {
+      "scenario": "pure-blast",
+      "dps": 32,
+      "sparkDps": 0,
+      "blastDps": 32,
+      "togglesPerMinute": 1
+    },
+    {
+      "scenario": "rapid-cycle",
+      "dps": 46.1,
+      "sparkDps": 16.8,
+      "blastDps": 29.3,
+      "togglesPerMinute": 85
+    }
+  ]
+}

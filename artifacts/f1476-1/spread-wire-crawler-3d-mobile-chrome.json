@@ -1,0 +1,324 @@
+{
+  "slice": "wire-crawler-3d",
+  "project": "mobile-chrome",
+  "commit": "14028bd8eb637877971c0525aa39c11ab4de5787",
+  "n": 8,
+  "phases": {
+    "coldBaseline": {
+      "calls": {
+        "min": 55,
+        "max": 56,
+        "spread": 1,
+        "values": [
+          55,
+          56
+        ],
+        "stable": false
+      },
+      "triangles": {
+        "min": 144120,
+        "max": 144122,
+        "spread": 2,
+        "values": [
+          144120,
+          144122
+        ],
+        "stable": false
+      },
+      "geometries": {
+        "min": 69,
+        "max": 69,
+        "spread": 0,
+        "values": [
+          69
+        ],
+        "stable": true
+      },
+      "textures": {
+        "min": 30,
+        "max": 30,
+        "spread": 0,
+        "values": [
+          30
+        ],
+        "stable": true
+      }
+    },
+    "mounted": {
+      "calls": {
+        "min": 57,
+        "max": 57,
+        "spread": 0,
+        "values": [
+          57
+        ],
+        "stable": true
+      },
+      "triangles": {
+        "min": 154346,
+        "max": 154346,
+        "spread": 0,
+        "values": [
+          154346
+        ],
+        "stable": true
+      },
+      "geometries": {
+        "min": 78,
+        "max": 78,
+        "spread": 0,
+        "values": [
+          78
+        ],
+        "stable": true
+      },
+      "textures": {
+        "min": 37,
+        "max": 37,
+        "spread": 0,
+        "values": [
+          37
+        ],
+        "stable": true
+      }
+    },
+    "loadedBeforeKill": {
+      "calls": {
+        "min": 55,
+        "max": 55,
+        "spread": 0,
+        "values": [
+          55
+        ],
+        "stable": true
+      },
+      "triangles": {
+        "min": 154322,
+        "max": 154322,
+        "spread": 0,
+        "values": [
+          154322
+        ],
+        "stable": true
+      },
+      "geometries": {
+        "min": 95,
+        "max": 95,
+        "spread": 0,
+        "values": [
+          95
+        ],
+        "stable": true
+      },
+      "textures": {
+        "min": 39,
+        "max": 39,
+        "spread": 0,
+        "values": [
+          39
+        ],
+        "stable": true
+      }
+    },
+    "presentationBaseline": {
+      "geometries": {
+        "min": 104,
+        "max": 104,
+        "spread": 0,
+        "values": [
+          104
+        ],
+        "stable": true
+      },
+      "textures": {
+        "min": 38,
+        "max": 38,
+        "spread": 0,
+        "values": [
+          38
+        ],
+        "stable": true
+      }
+    },
+    "disposed": {
+      "calls": {
+        "min": 63,
+        "max": 63,
+        "spread": 0,
+        "values": [
+          63
+        ],
+        "stable": true
+      },
+      "triangles": {
+        "min": 143306,
+        "max": 143306,
+        "spread": 0,
+        "values": [
+          143306
+        ],
+        "stable": true
+      },
+      "geometries": {
+        "min": 104,
+        "max": 104,
+        "spread": 0,
+        "values": [
+          104
+        ],
+        "stable": true
+      },
+      "textures": {
+        "min": 35,
+        "max": 35,
+        "spread": 0,
+        "values": [
+          35
+        ],
+        "stable": true
+      }
+    }
+  },
+  "deltas": {
+    "mounted-coldBaseline": {
+      "geometries": {
+        "values": [
+          9
+        ],
+        "stable": true
+      },
+      "textures": {
+        "values": [
+          7
+        ],
+        "stable": true
+      }
+    },
+    "loadedBeforeKill-coldBaseline": {
+      "geometries": {
+        "values": [
+          26
+        ],
+        "stable": true
+      },
+      "textures": {
+        "values": [
+          9
+        ],
+        "stable": true
+      }
+    },
+    "presentationBaseline-coldBaseline": {
+      "geometries": {
+        "values": [
+          35
+        ],
+        "stable": true
+      },
+      "textures": {
+        "values": [
+          8
+        ],
+        "stable": true
+      }
+    },
+    "disposed-coldBaseline": {
+      "geometries": {
+        "values": [
+          35
+        ],
+        "stable": true
+      },
+      "textures": {
+        "values": [
+          5
+        ],
+        "stable": true
+      }
+    },
+    "loadedBeforeKill-mounted": {
+      "geometries": {
+        "values": [
+          17
+        ],
+        "stable": true
+      },
+      "textures": {
+        "values": [
+          2
+        ],
+        "stable": true
+      }
+    },
+    "presentationBaseline-mounted": {
+      "geometries": {
+        "values": [
+          26
+        ],
+        "stable": true
+      },
+      "textures": {
+        "values": [
+          1
+        ],
+        "stable": true
+      }
+    },
+    "disposed-mounted": {
+      "geometries": {
+        "values": [
+          26
+        ],
+        "stable": true
+      },
+      "textures": {
+        "values": [
+          -2
+        ],
+        "stable": true
+      }
+    },
+    "presentationBaseline-loadedBeforeKill": {
+      "geometries": {
+        "values": [
+          9
+        ],
+        "stable": true
+      },
+      "textures": {
+        "values": [
+          -1
+        ],
+        "stable": true
+      }
+    },
+    "disposed-loadedBeforeKill": {
+      "geometries": {
+        "values": [
+          9
+        ],
+        "stable": true
+      },
+      "textures": {
+        "values": [
+          -4
+        ],
+        "stable": true
+      }
+    },
+    "disposed-presentationBaseline": {
+      "geometries": {
+        "values": [
+          0
+        ],
+        "stable": true
+      },
+      "textures": {
+        "values": [
+          -3
+        ],
+        "stable": true
+      }
+    }
+  }
+}

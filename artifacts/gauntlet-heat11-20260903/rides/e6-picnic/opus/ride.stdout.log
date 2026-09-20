@@ -1,0 +1,16 @@
+No tracked files touched; everything is under my workspace. Done, well inside the wall.
+
+## SECURED — `e6-picnic` on `e6-picnic-01`, trail
+
+**w20 / 600.000 s / 155 g / 63 calls** · `eventLogHash: fnv1a32:38d6a73b` · 3 sim runs, 1 scored attempt.
+Tape put forward: `artifacts/heat11/opus/e6-picnic/attempt-1-tape.json`. First-secure on an unclaimed contract.
+
+**What decided it.** The receipt was `unclaimed` with no `reason` (green light, fifteen-for-fifteen), and the manifest had **no `secureWave`** — which is not a missing field but `Balance.run.secureWave` = **20**, double the twelve-wave shape I'd started assuming. Then `PicnicHoldSystem.ts` gave away the whole contract: a stake is claimed after 6 s of an uncontested enemy inside radius 3, `contested()` accepts **any standing building** (`active && hp > 0`) in that disc, `lossRule: all-stakes-claimed`, `secureRule: at-least-one-stake-held`. All three stakes sit inside the `mesa-meadow` build zone and a palisade is 10 gold — so a 600-second contract is decided by 30 gold spent before t≈25 s.
+
+The idle probe supplied the clock (west stake claimed before t=30, all three by t=73) and one thing worth more: **the hero sat at 100/100 the entire time**, so the `hero_down` surprise was the hold falling, not the hero dying. Gold starts at 0 and the next view is a wave boundary away, so the opening had to be one blind array — six stacked `HARVEST` (unconditional, so they drain before any `BUILD` can fire) banking 30 gold, then three gated palisade builds ordered nearest-seam-first. At t=30: three palisades, 30 gold, three stakes held.
+
+**Margin: wide.** Hero never below its running maximum (min 100, finished 141/175 at level 28), **zero of 13 works wrecked**, all three stakes finished HELD — no stake timer was ticking at any of the 64 observed boundaries — against a loss needing all three.
+
+**On the era's mechanic (EXERCISES — I agree, with a caveat).** Decay is load-bearing but arrives as the *enemy's* clock: exhausted machines are exempt from the alive cap, so `threats.alive` peaked at 39 against a published cap of 60 while 36 machines sat off the books — that's much of why the board never compounded. And `CAPTURE` penned 28 machines paying **165 of my 185 gold**, out-earning the seams two to one. The honest caveat is that the era's lever didn't *win* the map; the geometry did, and everything after t=25 s was ordinary survival. One legibility bug for the county: `mechanics.rules.wrangle_capture` declares `agentOperations: []` while its own sibling field says `captureLever: "CAPTURE"` and the verb works — the same stale "unreachable lever" assertion I hit on Stillwater, and here it disclaims the map's main income.
+
+The scored attempt was a byte-identical re-ride (same hash, same 63-entry `inputLog`, tapes differing only in the random `id`) — at a wave-20 secure `timeAlive` is pinned and gold ranks below it, so there was nothing to win by gambling and a replay-proof reel to gain. Report and outcome file are current at `gauntlet-report.md` / `gauntlet-outcome.json`.

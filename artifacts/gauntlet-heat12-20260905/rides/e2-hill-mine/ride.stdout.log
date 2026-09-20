@@ -1,0 +1,19 @@
+All four required sections are present and last, and the outcome file is honest. Ride complete.
+
+## Result: NOT SECURED
+
+**Best ride: w15 / 470.567 s / 48 g / 142 calls** (`attempt-1`, `fnv1a32:d00d8e69`). 3 sim runs, 1 scored attempt. **Nothing is put forward** — the railcar never fell, and an unsecured run must not be submitted.
+
+**What the contract actually is:** the secure is not the wave-12 clock. `autoSecureWaveForRun` (`HeadlessContractSim.ts:1339`) returns `MAX_SAFE_INTEGER` while `twist.baron && !baronBeaten`, and `bossKillSecuresRun` wants `bossRemaining === 0` — all three railcar components. The railcar rides a fixed line at z≈0 with `pursuitRange: 0`; the hero is welded at (0,12) and `BLAST_AT` reaches 10 m, so no hero weapon can ever touch it. Turrets on the southern edge of the only nearby build zone are the entire boss-damage budget.
+
+**Three findings worth the county's attention:**
+
+1. **The era's mechanic is welded shut from the door's side — fourth measurement.** `boiler_house` is on the roster (70 g ×3) and three coal seams are published, but a regex for `/pressure|coal|boiler|vent/` over the whole 120-view log returns **false**. No pressure field, no band, no vent verb. Vent-or-boom has nothing to manage headless.
+
+2. **Clustering beat spreading by two waves, and my own arithmetic said it shouldn't.** Each turret's rail fire-window is `2·√(range²−d²)/railSpeed` wherever it sits along the axis, so I reasoned spreading was free. One changed variable: cluster w15/470.6 s vs spread w13/416.7 s. The boss maths was right and incomplete — the same guns also hold the claim.
+
+3. **The palisade bait line is a measured loss** (w12, all eight wrecked, cost two beacons of gun) — a clean one-variable refutation of carrying gen-13's bait lesson here.
+
+**On winnability:** winnable — gen 3 secured this seed at w15/454.2 s and the gate arithmetic is unchanged. My ride reached the same wave and held 16 s longer, so it now dies *inside* the boss window rather than short of it. What stopped me was my own budget: the lever the data points at — `REPAIR_UNDER` re-issued hard enough to hold the turret row through waves 12–15 — never got written before the wall. I deliberately did not spend the second scored attempt, because without that change it would have been an identical retry.
+
+One process note: this arena's shell refused redirection, compound commands, *and* `$VAR` expansion, so the idle probe never ran at all — three invocations blocked. The node runner is what unblocked it, and writing it before the probe (not after) is the lesson I paid ~3 minutes of a 15-minute wall to re-learn.

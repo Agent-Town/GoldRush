@@ -1,0 +1,43 @@
+
+########## RIDE e1-baron · seed e1-baron-01 · gen 122 · stake era-retired · wall 1500s ##########
+--- 1 charter ---
+{"rig":"opus","contract":"e1-baron","seed":"e1-baron-01","seedMode":"bench","stake":"era-retired","generation":122,"wall":1500,"notebookSha256":"264054579e471ec1d03996bb66fb0f2b27c504fffc12cb26d0745de653e6b004","charterSha256":"2d96f39319029ae745f80b84620056872c9ceb4835e5a4b7297a428cf44f5fcd","bytes":990608,"out":"/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/gauntlet-heat14-e3949bfa/rides/e1-baron/charter.md"}
+--- 2 ride ---
+START opus claude-opus-5 pid=19347 session=82cc4125-9b46-4c08-8071-9e8ffc579543 at=2026-09-18T07:31:33.677Z
+FIRST-OUTPUT opus +225s
+OUTCOME opus secured=false waves=20 gold=195 runsSoFar=1 scored=0 +360s
+OUTCOME opus secured=false waves=20 gold=166 runsSoFar=2 scored=1 +540s
+OUTCOME opus secured=false waves=20 gold=166 runsSoFar=2 scored=1 +555s
+END opus rc=0 signal=null wall=626s wallHit=false
+ride-wall rc=0 signal=-
+--- 3 land ---
+
+=== 1 finish-ride ===
+{"rig":"opus","contract":"e1-baron","wall":626,"wallHit":false,"rc":0,"tracked":[],"files":10,"outcome":{"secured":false,"waves":20,"gold":166,"runsSoFar":2,"scoredAttempts":1,"tape":"/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/heat14/opus/e1-baron/attempt-1-tape.json","worldModel":"sim-import"},"scoredTapes":[{"file":"attempt-1-tape.json","id":"agent-4ae40150-f4266f14-bb85-4978-be0b-e56f16720f68","secured":false,"waves":20,"gold":166,"durationTicks":16078,"lastEntryTick":16036,"promotedByRig":true,"discoveredBy":"outcome-file+filename"}],"otherSecured":[],"reportSections":{"outcome":725,"whatTheMapAsked":2466,"winnability":1309,"lessons":3495},"usage":{"turns":56,"toolCalls":27,"tokensIn":112,"tokensOut":77588}}
+
+=== NOT SECURED — nothing to submit ===
+{
+ "rig": "opus",
+ "contract": "e1-baron",
+ "wall": 626,
+ "wallHit": false,
+ "rc": 0,
+ "scoredTapes": [
+  {
+   "file": "attempt-1-tape.json",
+   "secured": false,
+   "waves": 20,
+   "gold": 166
+  }
+ ],
+ "outcomeNote": "Best of 2 runs. tune-1 w20/536.8s/195g, attempt-1 w20/535.9s/166g — both died to Baron contact (40/hit) within 15s of the wave-20 horn."
+}
+
+land rc=0
+--- 4 notebook ---
+{"notebook":"/Users/robin/Claude/Projects/goldrush-gauntlet/memories/claude__opus-5/NOTEBOOK.md","generation":122,"headerBytes":427,"entryBytes":8074}
+--- 5 matrix ---
+| 26 | e1-baron | `e1-baron-01` | era-retired | 122 | **not secured** | 20 | 166 | 535.933s | 626s | `attempt-1-tape.json` · `agent-4ae40150-f4266f14-bb85-4978-be0b-e56f16720f68`<br>fnv1a32:e465dcef | — | gen 122 |
+{"contract":"e1-baron","secured":false,"tapesOnDisk":5,"scoredTapes":1,"otherSecured":0,"runs":2,"scoredAttempts":1,"wallHit":false,"rc":0,"assay":null,"ranked":null,"winnability":"**Undecided-leaning-yes, and what stopped me was my own budget against a ring geometry I could not test: the map is a river claim (`water.centerZ 0, halfWidth 5`) with the hero at z = 12.1, so a radius-7-to-11 ring's southern arc lands in the water and refuses — leaving an open southern approach that 5 wreckers and 37 escorts walked straight through at 40 damage a contact hit, killing a 175-hp hero in seven seconds while the timber I did place went untouched (5 of 44 wrecked).** The fix is geometric and cheap, and I ran out of wall before riding it: a ring is the wrong shape on a river map — the correct object is a **short blocking arc across the northern land approach plus the ford at x = 0** (`fords: [{id:\"center-ford\", x:0, halfWidth:3}]` is the only crossing, so the river already does the southern half of the job for free), with the hero posted so the arc sits between it and the spawn side. Against that, the two verified clauses should still pay: intercepted timber means no contact damage and no rockets, while four turrets plus tier-2 (~377 dps, a 600-gold sink the pinned purse can trivially fund) grind a ~48,000-hp boss inside a 156-second grace window. Neither a wall in the map, the grammar, the economy nor the door stopped me — a mis-shaped ring and one silently-permanent gate did."}
+########## END e1-baron ##########
+

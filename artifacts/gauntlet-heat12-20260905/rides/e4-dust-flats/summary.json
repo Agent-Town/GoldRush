@@ -1,0 +1,215 @@
+{
+  "rig": "opus",
+  "contract": "e4-dust-flats",
+  "model": "claude-opus-5",
+  "sessionId": "a442511b-8d7d-4f1a-8916-941a7620fe76",
+  "startedAt": "2026-09-05T19:14:13.797Z",
+  "endedAt": "2026-09-05T19:32:14.387Z",
+  "wallClockSeconds": 1081,
+  "wallHit": true,
+  "exitCode": 143,
+  "signal": null,
+  "setupToFirstOutputSeconds": 75,
+  "arenaTrackedChanges": [],
+  "workspaceFiles": [
+    "attempt-1-views.jsonl",
+    "attempt-2-result.json",
+    "attempt-2-tape.json",
+    "attempt-2-views.jsonl",
+    "ctrl-v1.mjs",
+    "ctrl-v2.mjs",
+    "ctrl-v3.mjs",
+    "ctrl-v4.mjs",
+    "ctrl-v5.mjs",
+    "gauntlet-outcome.json",
+    "gauntlet-report.md",
+    "probe-idle-result.json",
+    "probe-idle-tape.json",
+    "probe-idle-views.jsonl",
+    "runner.mjs",
+    "tune-1-result.json",
+    "tune-1-tape.json",
+    "tune-1-views.jsonl",
+    "tune-2-result.json",
+    "tune-2-tape.json",
+    "tune-2-views.jsonl",
+    "tune-3-result.json",
+    "tune-3-tape.json",
+    "tune-3-views.jsonl"
+  ],
+  "outcome": {
+    "secured": true,
+    "waves": 14,
+    "timeMs": 426133,
+    "gold": 55,
+    "kills": 551,
+    "calls": 52,
+    "defaultedPicks": 0,
+    "defaultedSecure": 0,
+    "eventLogHash": "fnv1a32:aa5cf98e",
+    "motor": {
+      "graded": [
+        "camp-to-railhead"
+      ],
+      "hauled": true,
+      "arrivedAt": 30.833,
+      "roadDistance": 61.411,
+      "distanceTravelled": 88.291,
+      "fuelDrawn": 16.104,
+      "tarHarvested": 9,
+      "convoyArrived": null
+    },
+    "tape": "/private/tmp/heat12-038cc280/artifacts/heat12/opus/e4-dust-flats/attempt-2-tape.json",
+    "scored": true,
+    "runsSoFar": 5,
+    "scoredAttempts": 1,
+    "worldModel": "sim-import",
+    "envelope": {
+      "durationTicks": 12785,
+      "entries": 52,
+      "bytes": 208038,
+      "eventLogHash": "fnv1a32:46686d78"
+    },
+    "label": "attempt-2"
+  },
+  "outcomeError": null,
+  "promotedTapeName": "attempt-2-tape.json",
+  "scoredTapes": [
+    {
+      "file": "attempt-2-tape.json",
+      "id": "agent-a2abb3af-a22234cd-28a3-4b2c-b9c6-2f2baa797847",
+      "contract": "e4-dust-flats",
+      "seed": "e4-dust-flats-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "9c4337e3b",
+        "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 14,
+        "timeAlive": 426.133,
+        "gold": 55
+      },
+      "entries": 52,
+      "durationTicks": 12785,
+      "lastEntryTick": 12784,
+      "promotedByRig": true,
+      "discoveredBy": "outcome-file+filename"
+    }
+  ],
+  "otherTapes": [
+    {
+      "file": "probe-idle-tape.json",
+      "id": "agent-53a5d7fe-bdf5bf2d-1c57-4f65-ab9e-93d08ae6ffde",
+      "contract": "e4-dust-flats",
+      "seed": "e4-dust-flats-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "9c4337e3b",
+        "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 2,
+        "timeAlive": 79.033,
+        "gold": 0
+      },
+      "entries": 0,
+      "durationTicks": 2371,
+      "lastEntryTick": null
+    },
+    {
+      "file": "tune-1-tape.json",
+      "id": "agent-17cd5d6d-388f5056-98c0-421d-8fbb-37fcb965d5d8",
+      "contract": "e4-dust-flats",
+      "seed": "e4-dust-flats-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "9c4337e3b",
+        "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 10,
+        "timeAlive": 307.1,
+        "gold": 200
+      },
+      "entries": 53,
+      "durationTicks": 9213,
+      "lastEntryTick": 9000
+    },
+    {
+      "file": "tune-2-tape.json",
+      "id": "agent-7f02ff7c-5c8f3332-f702-449a-8b40-4f30f31c7e2e",
+      "contract": "e4-dust-flats",
+      "seed": "e4-dust-flats-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "9c4337e3b",
+        "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 4,
+        "timeAlive": 129.433,
+        "gold": 30
+      },
+      "entries": 8,
+      "durationTicks": 3883,
+      "lastEntryTick": 3601
+    },
+    {
+      "file": "tune-3-tape.json",
+      "id": "agent-aa106a88-d6722e48-247c-4e83-8bab-05fe7bdd8600",
+      "contract": "e4-dust-flats",
+      "seed": "e4-dust-flats-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "9c4337e3b",
+        "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 13,
+        "timeAlive": 397.167,
+        "gold": 25
+      },
+      "entries": 40,
+      "durationTicks": 11915,
+      "lastEntryTick": 11889
+    }
+  ],
+  "otherSecuredTapes": [],
+  "report": {
+    "outcome": "**NOT SECURED.** Best ride `tune-3`: **waves 13 · timeAlive 397.167 s · gold 25 · kills 495 ·\ncalls 40** (`fnv1a32:c416f096`; motor: graded `camp-to-railhead`, hauled, `arrivedAt` 30.833,\n16.104 fuel drawn, 3 turrets standing). **5 sim runs · 1 scored attempt.** Nothing is put forward —\nno run secured, so there is no lawful tape to submit. The tape named in `gauntlet-outcome.json` is\nthe best unsecured reel, marked `\"secured\": false`.\n\nRuns: `probe-idle` (w2 / 79.033 s — the idle floor), `tune-1` (w10 / 307.100 s / 200 g — ladder\npoisoned by a blacklist bug), `tune-2` (w4 / 129.433 s / 30 g — harvest tail filtered to empty),\n`tune-3` (w13 / 397.167 s / 25 g — both bugs fixed; **died 23 seconds before the Land-Yacht arrives\nat wave 14**), `attempt-1` (the economy synthesis; whatever it reached is recorded in\n`gauntlet-outcome.json`, which is authoritative over this line if the two disagree).\n\nThe curve is w10 → w13 on a strictly rising line with the mechanism understood, and the terminal\nnumber is unusually legible: **the boss the secure depends on had not spawned yet.** The binding\nconstraint is measured and single: `score.goldPanned` finished at **240 over 397 s = 0.60 g/s**\nagainst a four-turret ladder that costs **340**. Three turrets is what 240 gold buys.",
+    "whatTheMapAsked": "It asked me about **distance, road and fuel — E4's signature mechanic, live, legible and\nload-bearing — and then it asked the same question a second time in the shape of a boss.** This is\nnot stationary survival wearing the era's name at either end. The errand is half the win condition,\nnot a flourish: `now.motor.objective.arrived` is ANDed into the secure gate at every wave, and the\nfuel arithmetic is a real leash — the whole run holds 36 fuel and the naive open-country haul costs\n27.5 clear or ~39 under a storm, so a rider that does not stage at the corridor stake and `GRADE`\nfirst can strand the objective outright and make the contract unsecurable however long it survives.\nThe fields that carried it were `now.motor.objective` (`kind`, `corridorId`, `stop`, `stopReach`,\n`arrived`), `now.motor.fuel.nodes[].harvested/progress` with `stored`/`tar`/`drawn`,\n`now.motor.roads.corridors[].start/graded` with `roads.gradeReach`, `now.motor.vehicle.state/x/z`\nand `now.motor.weather.phase`; the orders were `MOVE_TO`, `GRADE` and `HAUL`. The boss is the second\nspatial question and it publishes its own counter — `land_yacht_orbit` gives centre, radius and\nangular speed in the view, so the fort placement is a closed-form arc problem rather than a guess,\nand `land_yacht_crane` (reach 6, `damage: target.maxHp`, `targets: turret`) tightens it into a\ntwo-sided inequality on the turret radius. The middle of the run — waves 3 to 13 — is ordinary\nstationary survival on a starved 42 wu commute. Call it two-thirds of an era, bracketed at both ends.\n\n**Does it still play the way my notebook remembers?** In its bones yes and in its margin no.\nGeneration 16 secured this map at w14 / 437.967 s on engine `49c34f8b`, and every structural number\nit recorded reproduced exactly: the same claim, the same three tar nodes, the same\n`camp-to-railhead` stake, the same 82.5 wu naive drive, the same orbit at radius 24. What did not\nreproduce is the *comfort*. Gen-16 reports the errand latching at t = 60.5 and the hero holding\n95/175 from wave 7 to wave 12 behind four turrets and three beacons; I latched the errand **twice as\nfast, at t = 30.833**, and still could not fund four turrets before the pressure curve crossed me.\nThe idle floor is w2 / 79.033 s and the hero takes 32 damage inside wave 1. My honest reading is\nthat the map is the same and the survival margin is thinner than my notebook's prose implies —\nwhich is exactly the correction generation 50 wrote about `e4-long-road` on this same era, on the\nsame epoch, one ride earlier.",
+    "winnability": "**Yes — winnable, and what stopped me was my own budget against a measured economy, not a wall in\nthe map, the grammar or the door:** the era gate is discharged at t = 30.8 with 20 of 36 fuel\nunspent, the roster carries neither `wrecker` nor `thief` so no work can ever be lost, and the fort\ngeometry is solved in closed form — the whole contract reduces to whether 397 seconds of a single\nProspector can pay 340 gold for four turrets across a 42 wu seam and a 45 wu fort, and at the\n0.60 g/s my best ride actually measured it pays for exactly three, which is why I died 23 seconds\nbefore the boss arrived; two of my five runs went to self-inflicted controller faults (a blacklist\nthat poisoned all twenty build coordinates on transient `insufficient_gold` refusals, then an\n`active`-filtered harvest tail that emptied itself and froze the purse for 90 seconds) rather than to\nthe one question the board was asking, and the untested lever that closes a 100-gold gap is plain —\ntune-1 measured **0.90 g/s** rotating across live seams against tune-3's **0.60 g/s** camping one.",
+    "lessons": "- **`insufficient_gold` is not a bad coordinate — never blacklist on it.** My refusal blacklist\n  (gen-35's third piece: let the view tell you which candidate to strike) has been standing\n  equipment for sixteen generations and it had never once met a *transient* refusal. Here a\n  `when.goldGte` gate opened at the wrong price, the Prospector walked 45 wu, the build was refused\n  for money, and I struck the coordinate off. Twenty candidates died that way in one run and the\n  fort stopped at one turret while 200 gold sat in the purse. **Partition refusal reasons into\n  GROUND (`out_of_zone`, `collision`, `out_of_reach`, `cap_reached` — poison the coordinate) and\n  ECONOMY (`insufficient_gold` — poison nothing, retry).** A blacklist without that partition is a\n  self-inflicted `cap_reached`.\n- **Gate a rung on the ACTUAL next-instance price, not on the ladder's nominal cost.**\n  `costFor = costs[count]`, so once one turret stands the next costs 70, not 50. A gate written from\n  the ladder's own table opens 20 gold early, buys a 45 wu round trip, and is refused on arrival.\n  Read the price out of `stablePrefix.mechanics.buildables[].costs` indexed by the live count in\n  `works.entries` — the same \"index past what is already standing\" that generation 11 learned for\n  pre-placed works, now for my own.\n- **A filter that can return empty is a wipe generator — third generation running, and this time it\n  cost a whole ride.** Generation 42 wrote this exact sentence about a distance filter; I wrote an\n  `active` filter on the harvest tail, `gold-seam-3` depleted at t = 38.8, the tail emptied to a\n  single `HOLD`, **no order ever failed again so no surprise view was ever emitted**, and the run\n  stood at one coordinate through four wave boundaries with `goldPanned` frozen at 30. The tail is\n  not just throughput, it is the *clock*: a stacked `HARVEST` on a depleted seam fails where the\n  Prospector already stands, costs nothing, and buys the decision point. **Emit the harvest tail\n  unconditionally and let the failures do the timing.**\n- **Correct my own gen-15/gen-47 seam rule: distance is the wrong variable — the seam's own SUPPLY\n  RATE is.** I have twice written \"stack on one seam when the seams are far,\" and on this board that\n  rule cost me the contract. A seam holds 30 gold (six 1.5 s pans = 9 s of work) and then respawns\n  for 20 s, so **one seam can never supply more than ~1.0 g/s no matter how efficiently you camp\n  it** — and camping means idling through the respawn. Measured on this seed, same ladder, same\n  fort: rotating across live seams (tune-1) banked **0.90 g/s**; camping the nearest seam and\n  waiting out its respawn (tune-3) banked **0.60 g/s**, even though camping saves every step of\n  travel. The correct comparison is `capacity/(drain+respawn)` for the near seam against\n  `capacity/(drain+2·distance/speed)` for the walk to the next live one, and on a 160-unit map with\n  a 20 s respawn the walk often wins. **Compute the seam's supply rate before deciding whether to\n  camp it.**\n- **`score.goldPanned` going flat is still the most diagnostic number on the board — fourth\n  generation running.** It found gen-39's dead sink, gen-45's capped purse, gen-50's commute, and\n  here it separated two different faults in two different runs in one command each: `pan` frozen at\n  30 (the wipe) versus `gold` pinned at 200 with `pan` still climbing (the poisoned blacklist). Log\n  it every view; the two failure signatures are distinguishable at a glance.\n- **A boss that publishes its route publishes its counter — and sometimes a second constraint that\n  closes the interval.** `land_yacht_orbit` gives the arc optimum at r = √320 = 17.89; `land_yacht_crane`\n  (`reach 6`, `damage: target.maxHp`, `targets: turret`) says act 2 one-shots anything at r > 18.\n  The two together admit a window of about 0.3 wu, and r = 17.7 sits in it. **Read every rule whose\n  `source` names the boss system, not just the one that names the route** — the second rule turned a\n  maximisation into a two-sided inequality, and gen-16's own winning coordinates (±13, ±13 ⇒ r = 18.38)\n  are on the wrong side of it.\n- **Read the roster for what it OMITS before designing a defence — fifth contract running.**\n  One id, `motor_gang`, with neither `wrecker` nor `thief`: `works.wrecked` 0 and `goldStolen` 0 in\n  every view of every ride. That deletes `REPAIR_UNDER`, palisade chaff and every decoy idea, and\n  makes the fort a monotone investment whose only predator is the crane in act 2.\n- **`GRADE` is the cheapest decisive order in the epoch and it is not where the difficulty lives —\n  second heat running.** Staging at the corridor stake and grading turned a 27.5-fuel drive into\n  16.1 and latched the objective at t = 30.833, half of generation 16's time, on the first\n  controller and every one after. Bank it in view 0 and then spend the entire heat on what the map\n  is actually short of. On the Dust Flats that is **gold per second against a 42 wu seam and a\n  45 wu fort**, and I never got to ride a controller that solved it.\n- **Budget the heat in runs and fire the synthesis early — fifth heat running I have not.**\n  Generations 32, 40, 49 and 50 all end with this sentence. My probe and source read were worth\n  every minute (they produced the whole contract before the first order), but runs 2 and 3 were\n  spent finding my own bugs rather than testing a hypothesis about the map, and the run that\n  combined what they proved was still riding at the wall. **The controller's own failure modes are\n  not measurements of the contract.** Next heat: ride the skeleton unmodified first, and only then\n  change one thing.\n- **A notebook entry that says SECURED is a claim about a margin as well as a map, and the margin is\n  the part that rots — now measured twice on E4 in two consecutive generations.** Generation 50 hit\n  it on the Long Road; generation 51 hits it on the Dust Flats. Every *structural* number gen-16\n  recorded reproduced exactly; its comfort did not. **Inherit an inherited plan's geometry and\n  re-derive its survivability.**"
+  },
+  "usage": {
+    "transcript": "/Users/robin/.claude/projects/-private-tmp-heat12-038cc280/a442511b-8d7d-4f1a-8916-941a7620fe76.jsonl",
+    "assistantTurns": 100,
+    "toolCalls": 61,
+    "tokensIn": 200,
+    "tokensOut": 136826,
+    "cacheReadTokens": 28330494,
+    "cacheWriteTokens": 851521,
+    "note": "tokensIn excludes cache reads/writes (reported separately); summed from the CLI session transcript, not self-reported by the rig"
+  }
+}

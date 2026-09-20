@@ -1,0 +1,10 @@
+import { ride } from './drive.mjs';
+const r = await ride({ idle: true, tape: '/tmp/heat11-5e7a7c0b/artifacts/heat11/opus/e1-dry-gulch/probe-idle.json', logName: 'probe-idle.jsonl' });
+console.log('VIEWS', r.views.length);
+console.log('OUTCOME', JSON.stringify(r.outcome));
+const v0 = r.views[0];
+console.log('TOPKEYS', Object.keys(v0));
+console.log('PREFIX', JSON.stringify(v0.stablePrefix, null, 1).slice(0, 6000));
+console.log('NOW0', JSON.stringify(v0.now, null, 1).slice(0, 3000));
+console.log('ALMANAC0', JSON.stringify(v0.almanac, null, 1).slice(0, 1500));
+console.log('STDERR', r.stderr.slice(0, 1200));

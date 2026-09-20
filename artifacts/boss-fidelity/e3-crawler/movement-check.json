@@ -1,0 +1,641 @@
+{
+  "note": "Actual production 30 Hz movement; legacy arm overrides only the isolated instance night callback as a negative control. No actor/route resnap.",
+  "arms": {
+    "browser-legacy": {
+      "poses": [
+        {
+          "at": 2.200000000000002,
+          "parts": [
+            {
+              "id": "drain_mast",
+              "x": -45.66812840721394,
+              "z": 43.60175408865672,
+              "speed": 1.8
+            },
+            {
+              "id": "tracks",
+              "x": -44.10356584583454,
+              "z": 39.92043041482282,
+              "speed": 1.8
+            },
+            {
+              "id": "capacitor_bank",
+              "x": -42.53900328445513,
+              "z": 36.23910674098892,
+              "speed": 1.8
+            }
+          ],
+          "span": 8
+        },
+        {
+          "at": 12.199999999999967,
+          "parts": [
+            {
+              "id": "drain_mast",
+              "x": -34.83198112344029,
+              "z": 28.495943370320678,
+              "speed": 1.8
+            },
+            {
+              "id": "tracks",
+              "x": -33.16496076587144,
+              "z": 24.507246307918418,
+              "speed": 1.8
+            },
+            {
+              "id": "capacitor_bank",
+              "x": -31.518431967540472,
+              "z": 20.58002392322983,
+              "speed": 1.8
+            }
+          ],
+          "span": 8.581456094474612
+        },
+        {
+          "at": 22.200000000000262,
+          "parts": [
+            {
+              "id": "drain_mast",
+              "x": -28.880321584790607,
+              "z": 10.640964754371787,
+              "speed": 1.8
+            },
+            {
+              "id": "tracks",
+              "x": -27.104012911286283,
+              "z": 6.324402744163141,
+              "speed": 1.8
+            },
+            {
+              "id": "capacitor_bank",
+              "x": -25.370964196173077,
+              "z": 2.137620609127854,
+              "speed": 1.8
+            }
+          ],
+          "span": 9.199046196943394
+        }
+      ],
+      "instrument": {
+        "ticks": 608,
+        "splitTicks": 255,
+        "maxSpread": 0.08000000000000007,
+        "maxError": 0.08000000000000007,
+        "deltas": [
+          0.03333333333333333
+        ],
+        "scalars": [
+          1.08,
+          1
+        ],
+        "anchorIds": [
+          "tracks"
+        ],
+        "diagnosticErrors": 0,
+        "ordinaryErrors": 0,
+        "ungroupedPassed": true
+      },
+      "restored": false,
+      "errors": [],
+      "gameUrl": "http://127.0.0.1:5246/src/game/Game.ts?t=1788847198076"
+    },
+    "browser": {
+      "poses": [
+        {
+          "at": 2.1333333333333355,
+          "parts": [
+            {
+              "id": "drain_mast",
+              "x": -45.66812840721394,
+              "z": 43.60175408865672,
+              "speed": 1.8
+            },
+            {
+              "id": "tracks",
+              "x": -44.10356584583454,
+              "z": 39.92043041482282,
+              "speed": 1.8
+            },
+            {
+              "id": "capacitor_bank",
+              "x": -42.53900328445513,
+              "z": 36.23910674098892,
+              "speed": 1.8
+            }
+          ],
+          "span": 8
+        },
+        {
+          "at": 12.1333333333333,
+          "parts": [
+            {
+              "id": "drain_mast",
+              "x": -34.729523327250845,
+              "z": 28.188569981752316,
+              "speed": 1.8
+            },
+            {
+              "id": "tracks",
+              "x": -33.16496076587144,
+              "z": 24.507246307918418,
+              "speed": 1.8
+            },
+            {
+              "id": "capacitor_bank",
+              "x": -31.60039820449203,
+              "z": 20.82592263408452,
+              "speed": 1.8
+            }
+          ],
+          "span": 8
+        },
+        {
+          "at": 22.133333333333592,
+          "parts": [
+            {
+              "id": "drain_mast",
+              "x": -28.668575472665715,
+              "z": 10.005726417997117,
+              "speed": 1.8
+            },
+            {
+              "id": "tracks",
+              "x": -27.104012911286283,
+              "z": 6.324402744163141,
+              "speed": 1.8
+            },
+            {
+              "id": "capacitor_bank",
+              "x": -25.539450349906858,
+              "z": 2.6430790703291915,
+              "speed": 1.8
+            }
+          ],
+          "span": 8.000000000000137
+        }
+      ],
+      "instrument": {
+        "ticks": 730,
+        "splitTicks": 330,
+        "maxSpread": 0,
+        "maxError": 0,
+        "deltas": [
+          0.03333333333333333
+        ],
+        "scalars": [
+          1.08,
+          1
+        ],
+        "anchorIds": [
+          "tracks",
+          "drain_mast",
+          "capacitor_bank"
+        ],
+        "diagnosticErrors": 0,
+        "ordinaryErrors": 0,
+        "ungroupedPassed": true
+      },
+      "fallback": {
+        "active": true,
+        "act": 1,
+        "flickerEvents": 0,
+        "flickerActive": false,
+        "drainActive": true,
+        "drainWatts": 18,
+        "drainTarget": "pylon-west-rim",
+        "dialVisible": false,
+        "dialProgress": 0,
+        "bursts": 0,
+        "tracksPinned": false,
+        "overchargeActive": false,
+        "overchargeRemaining": 0,
+        "turretFireRateMult": 1,
+        "wreckRemains": false,
+        "destroyed": [
+          "tracks"
+        ],
+        "crawler3dState": "loading",
+        "travel": 1.7507114175567957,
+        "spanError": 1.2523315717771766e-13
+      },
+      "pinned": {
+        "active": true,
+        "act": 2,
+        "flickerEvents": 0,
+        "flickerActive": false,
+        "drainActive": false,
+        "drainWatts": 0,
+        "drainTarget": null,
+        "dialVisible": false,
+        "dialProgress": 0,
+        "bursts": 0,
+        "tracksPinned": true,
+        "overchargeActive": false,
+        "overchargeRemaining": 0,
+        "turretFireRateMult": 1,
+        "wreckRemains": false,
+        "destroyed": [
+          "drain_mast",
+          "tracks"
+        ],
+        "crawler3dState": "loading",
+        "travel": 0
+      },
+      "restored": true,
+      "errors": [],
+      "gameUrl": "http://127.0.0.1:5246/src/game/Game.ts?t=1788847198076"
+    },
+    "browser-lite": {
+      "poses": [
+        {
+          "at": 1.8333333333333357,
+          "parts": [
+            {
+              "id": "drain_mast",
+              "x": -45.66812840721394,
+              "z": 43.60175408865672,
+              "speed": 1.8
+            },
+            {
+              "id": "tracks",
+              "x": -44.10356584583454,
+              "z": 39.92043041482282,
+              "speed": 1.8
+            },
+            {
+              "id": "capacitor_bank",
+              "x": -42.53900328445513,
+              "z": 36.23910674098892,
+              "speed": 1.8
+            }
+          ],
+          "span": 8
+        },
+        {
+          "at": 11.833333333333302,
+          "parts": [
+            {
+              "id": "drain_mast",
+              "x": -34.729523327250845,
+              "z": 28.188569981752316,
+              "speed": 1.8
+            },
+            {
+              "id": "tracks",
+              "x": -33.16496076587144,
+              "z": 24.507246307918418,
+              "speed": 1.8
+            },
+            {
+              "id": "capacitor_bank",
+              "x": -31.60039820449203,
+              "z": 20.82592263408452,
+              "speed": 1.8
+            }
+          ],
+          "span": 8
+        },
+        {
+          "at": 21.833333333333577,
+          "parts": [
+            {
+              "id": "drain_mast",
+              "x": -28.668575472665715,
+              "z": 10.005726417997117,
+              "speed": 1.8
+            },
+            {
+              "id": "tracks",
+              "x": -27.104012911286283,
+              "z": 6.324402744163141,
+              "speed": 1.8
+            },
+            {
+              "id": "capacitor_bank",
+              "x": -25.539450349906858,
+              "z": 2.6430790703291915,
+              "speed": 1.8
+            }
+          ],
+          "span": 8.000000000000137
+        }
+      ],
+      "instrument": {
+        "ticks": 730,
+        "splitTicks": 330,
+        "maxSpread": 0,
+        "maxError": 0,
+        "deltas": [
+          0.03333333333333333
+        ],
+        "scalars": [
+          1.08,
+          1
+        ],
+        "anchorIds": [
+          "tracks",
+          "drain_mast",
+          "capacitor_bank"
+        ],
+        "diagnosticErrors": 0,
+        "ordinaryErrors": 0,
+        "ungroupedPassed": true
+      },
+      "fallback": {
+        "active": true,
+        "act": 1,
+        "flickerEvents": 0,
+        "flickerActive": false,
+        "drainActive": true,
+        "drainWatts": 18,
+        "drainTarget": "pylon-west-rim",
+        "dialVisible": false,
+        "dialProgress": 0,
+        "bursts": 0,
+        "tracksPinned": false,
+        "overchargeActive": false,
+        "overchargeRemaining": 0,
+        "turretFireRateMult": 1,
+        "wreckRemains": false,
+        "destroyed": [
+          "tracks"
+        ],
+        "crawler3dState": "lite",
+        "travel": 1.7507114175567957,
+        "spanError": 1.2523315717771766e-13
+      },
+      "pinned": {
+        "active": true,
+        "act": 2,
+        "flickerEvents": 0,
+        "flickerActive": false,
+        "drainActive": false,
+        "drainWatts": 0,
+        "drainTarget": null,
+        "dialVisible": false,
+        "dialProgress": 0,
+        "bursts": 0,
+        "tracksPinned": true,
+        "overchargeActive": false,
+        "overchargeRemaining": 0,
+        "turretFireRateMult": 1,
+        "wreckRemains": false,
+        "destroyed": [
+          "drain_mast",
+          "tracks"
+        ],
+        "crawler3dState": "lite",
+        "travel": 0
+      },
+      "restored": true,
+      "errors": [],
+      "gameUrl": "http://127.0.0.1:5246/src/game/Game.ts?t=1788847198076"
+    },
+    "headless-legacy": {
+      "poses": [
+        {
+          "at": 0.7999999999999999,
+          "parts": [
+            {
+              "id": "drain_mast",
+              "x": -45.66812840721394,
+              "z": 43.60175408865672,
+              "speed": 1.8
+            },
+            {
+              "id": "tracks",
+              "x": -44.10356584583454,
+              "z": 39.92043041482282,
+              "speed": 1.8
+            },
+            {
+              "id": "capacitor_bank",
+              "x": -42.53900328445513,
+              "z": 36.23910674098892,
+              "speed": 1.8
+            }
+          ],
+          "span": 8
+        },
+        {
+          "at": 10.799999999999972,
+          "parts": [
+            {
+              "id": "drain_mast",
+              "x": -34.83198112344029,
+              "z": 28.495943370320678,
+              "speed": 1.8
+            },
+            {
+              "id": "tracks",
+              "x": -33.16496076587144,
+              "z": 24.507246307918418,
+              "speed": 1.8
+            },
+            {
+              "id": "capacitor_bank",
+              "x": -31.518431967540472,
+              "z": 20.58002392322983,
+              "speed": 1.8
+            }
+          ],
+          "span": 8.581456094474612
+        },
+        {
+          "at": 20.800000000000193,
+          "parts": [
+            {
+              "id": "drain_mast",
+              "x": -28.88487526462125,
+              "z": 10.654625793863712,
+              "speed": 1.8
+            },
+            {
+              "id": "tracks",
+              "x": -27.108566591116922,
+              "z": 6.338063783655064,
+              "speed": 1.8
+            },
+            {
+              "id": "capacitor_bank",
+              "x": -25.370964196173077,
+              "z": 2.137620609127854,
+              "speed": 1.8
+            }
+          ],
+          "span": 9.213411328806506
+        }
+      ],
+      "instrument": {
+        "ticks": 608,
+        "splitTicks": 258,
+        "maxSpread": 0.08000000000000007,
+        "maxError": 0.08000000000000007,
+        "deltas": [
+          0.03333333333333333
+        ],
+        "scalars": [
+          1.08,
+          1
+        ],
+        "anchorIds": [
+          "tracks"
+        ],
+        "diagnosticErrors": 0,
+        "ordinaryErrors": 0,
+        "ungroupedPassed": true
+      },
+      "errors": []
+    },
+    "headless": {
+      "poses": [
+        {
+          "at": 0.7999999999999999,
+          "parts": [
+            {
+              "id": "drain_mast",
+              "x": -45.66812840721394,
+              "z": 43.60175408865672,
+              "speed": 1.8
+            },
+            {
+              "id": "tracks",
+              "x": -44.10356584583454,
+              "z": 39.92043041482282,
+              "speed": 1.8
+            },
+            {
+              "id": "capacitor_bank",
+              "x": -42.53900328445513,
+              "z": 36.23910674098892,
+              "speed": 1.8
+            }
+          ],
+          "span": 8
+        },
+        {
+          "at": 10.799999999999972,
+          "parts": [
+            {
+              "id": "drain_mast",
+              "x": -34.729523327250845,
+              "z": 28.188569981752316,
+              "speed": 1.8
+            },
+            {
+              "id": "tracks",
+              "x": -33.16496076587144,
+              "z": 24.507246307918418,
+              "speed": 1.8
+            },
+            {
+              "id": "capacitor_bank",
+              "x": -31.60039820449203,
+              "z": 20.82592263408452,
+              "speed": 1.8
+            }
+          ],
+          "span": 8
+        },
+        {
+          "at": 20.800000000000193,
+          "parts": [
+            {
+              "id": "drain_mast",
+              "x": -28.67464704577324,
+              "z": 10.02394113731969,
+              "speed": 1.8
+            },
+            {
+              "id": "tracks",
+              "x": -27.110084484393806,
+              "z": 6.342617463485712,
+              "speed": 1.8
+            },
+            {
+              "id": "capacitor_bank",
+              "x": -25.545521923014384,
+              "z": 2.661293789651771,
+              "speed": 1.8
+            }
+          ],
+          "span": 8.00000000000013
+        }
+      ],
+      "instrument": {
+        "ticks": 670,
+        "splitTicks": 274,
+        "maxSpread": 0,
+        "maxError": 0,
+        "deltas": [
+          0.03333333333333333
+        ],
+        "scalars": [
+          1.08,
+          1
+        ],
+        "anchorIds": [
+          "tracks",
+          "drain_mast",
+          "capacitor_bank"
+        ],
+        "diagnosticErrors": 0,
+        "ordinaryErrors": 0,
+        "ungroupedPassed": true
+      },
+      "fallback": {
+        "active": true,
+        "act": 1,
+        "flickerEvents": 0,
+        "flickerActive": false,
+        "drainActive": true,
+        "drainWatts": 18,
+        "drainTarget": "pylon-west-rim",
+        "dialVisible": false,
+        "dialProgress": 0,
+        "bursts": 0,
+        "tracksPinned": false,
+        "overchargeActive": false,
+        "overchargeRemaining": 0,
+        "turretFireRateMult": 1,
+        "wreckRemains": false,
+        "destroyed": [
+          "tracks"
+        ],
+        "crawler3dState": "off",
+        "travel": 1.8000000000000123,
+        "spanError": 1.7763568394002505e-14
+      },
+      "pinned": {
+        "active": true,
+        "act": 2,
+        "flickerEvents": 0,
+        "flickerActive": false,
+        "drainActive": false,
+        "drainWatts": 0,
+        "drainTarget": null,
+        "dialVisible": false,
+        "dialProgress": 0,
+        "bursts": 0,
+        "tracksPinned": true,
+        "overchargeActive": false,
+        "overchargeRemaining": 0,
+        "turretFireRateMult": 1,
+        "wreckRemains": false,
+        "destroyed": [
+          "drain_mast",
+          "tracks"
+        ],
+        "crawler3dState": "off",
+        "travel": 0
+      },
+      "errors": []
+    }
+  },
+  "prepatchEvidence": [
+    8,
+    8.581456094474612,
+    9.199046196943394
+  ],
+  "passed": true
+}

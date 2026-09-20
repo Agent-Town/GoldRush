@@ -1,0 +1,758 @@
+✔ Claim Boat candidate preserves its pinned source, export and clear authored pad contract (126.160875ms)
+✔ Flotilla exports match three authored hull identities with compliant textures and clear pads (110.239708ms)
+(node:62270) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+✖ Regatta measures the rider, applies fast water to that body, and secures reproducibly (6811.592291ms)
+✔ published mask tables exactly track authored contract data (12.009459ms)
+✔ published Moth Season mask stays inside bounds and agrees with authored water (0.461709ms)
+✔ e2-trestle mask stays inside bounds and agrees with authored water (0.255667ms)
+✔ e2-pressure-garden mask stays inside bounds and agrees with authored water (0.252917ms)
+✔ e2-incline mask stays inside bounds and agrees with authored water (0.176083ms)
+✔ e3-canyon-works mask stays inside bounds and agrees with authored water (0.197375ms)
+✔ e3-blackout-ridge mask stays inside bounds and agrees with authored water (0.196958ms)
+✔ e3-moth-season mask stays inside bounds and agrees with authored water (0.249292ms)
+✔ e3-fairground mask stays inside bounds and agrees with authored water (0.225625ms)
+✔ e4-dust-flats mask stays inside bounds and agrees with authored water (0.399834ms)
+✔ e4-long-road mask stays inside bounds and agrees with authored water (0.252375ms)
+✔ e4-gusher-county mask stays inside bounds and agrees with authored water (0.349875ms)
+✔ e4-boneyard mask stays inside bounds and agrees with authored water (0.618292ms)
+✔ e5-regatta mask stays inside bounds and agrees with authored water (0.251167ms)
+✔ e5-stillwater mask stays inside bounds and agrees with authored water (0.257083ms)
+✔ e5-flotilla mask stays inside bounds and agrees with authored water (0.205208ms)
+✔ e6-glow-mesa mask stays inside bounds and agrees with authored water (0.275416ms)
+✔ e6-showroom mask stays inside bounds and agrees with authored water (0.276416ms)
+✔ e6-half-life-hollow mask stays inside bounds and agrees with authored water (0.259292ms)
+✔ e6-picnic mask stays inside bounds and agrees with authored water (0.239791ms)
+✔ e7-relay-valley mask stays inside bounds and agrees with authored water (0.237958ms)
+✔ e7-echo-canyon mask stays inside bounds and agrees with authored water (0.163792ms)
+✔ e7-dead-band mask stays inside bounds and agrees with authored water (0.226916ms)
+✔ e7-relay-rush mask stays inside bounds and agrees with authored water (0.214208ms)
+✔ e8-mare-claim mask stays inside bounds and agrees with authored water (0.24775ms)
+✔ e9-dome-basin mask stays inside bounds and agrees with authored water (0.195083ms)
+✔ e9-seed-run mask stays inside bounds and agrees with authored water (0.27275ms)
+✔ e9-devils-alley mask stays inside bounds and agrees with authored water (0.597791ms)
+✔ e9-old-canal mask stays inside bounds and agrees with authored water (0.241917ms)
+✔ e10-ember-shore mask stays inside bounds and agrees with authored water (0.178833ms)
+✔ harness digest pins all three rider-side inputs (79.384375ms)
+✔ gr-sim replays the same contract, seed, and orders byte-for-byte (10254.917791ms)
+[tape-resume] straight=fnv1a32:7134dd41 resumed=fnv1a32:7134dd41 assay=fnv1a32:7134dd41 door=accepted
+✔ gr-sim resumes at a recorded mid-ride tick as one byte-identical tape (30633.722916ms)
+✔ a reactive client can recover from rejected orders (2923.52025ms)
+✔ headless landmark starts release before enemies can stall at the perimeter (25881.372542ms)
+(node:62272) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+✔ a distant HARVEST walks before it pays (2418.165833ms)
+✔ BUILD walks, confirms from the ordering body, and cannot wedge on unreachable terrain (63.541ms)
+✔ the gr-sim door walks to a remote BUILD and its tape assay-replays (28558.487459ms)
+✔ gr-sim keeps standing orders through free blank and null turns (3619.12225ms)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+✔ gr-sim hashes a fractional-yield run identically twice (5978.665625ms)
+✔ gr-sim deterministically runs the Claim objective (5144.477167ms)
+✔ overtime banks the Claim secure and measures the homestead on both Node engines (93753.617583ms)
+✔ runtime rush and --overtime use the same CLI ceiling and terminal stream (46802.919875ms)
+✔ the CLI science input reaches and funds the published megaproject cost (3093.060792ms)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+✔ gr-sim boots escort mode from data instead of URL state (4887.651417ms)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+✔ the Claim driver consumes declared water and posts RunManager secure at wave 10 (8785.6185ms)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+✔ Twin Banks consumes its declared crossings and build zones before securing at wave 20 (39161.8315ms)
+✔ the frozen Claim environment rows equal the five pinned bench seeds (1.018583ms)
+✔ gr-sim places Night Shift fixtures from the contract (14858.285666ms)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+✔ Night Shift wreckers outrun lantern light headlessly (1792.204375ms)
+﹣ gr-sim ends an idle Baron run at its grace ceiling (0.093709ms) # F-E2S-3 owner ruling 2026-08-09: no still-listed Baron contract reaches its ceiling under idle; the pressure-to-damage socket slice restores this test.
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+✔ the Baron driver runs the declared fight and keeps medal writes off headless (24117.0635ms)
+﹣ the E2 Baron fights keep their pinned outcomes (0.0885ms) # F-E2S-3 owner ruling 2026-08-09: no still-listed Baron contract reaches its ceiling under idle; the pressure-to-damage socket slice restores these railcar pins.
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+✔ identical order failures coalesce across submissions without hiding a new failure (2840.182125ms)
+(node:62273) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+✔ the hero boards by walking aboard, is carried at the deck anchor, and steps ashore again (2950.516292ms)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+✔ the boat refuses on the status channel: NOT_ABOARD ashore, UNREACHABLE_WATER at the helm (2164.063875ms)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+[regatta-boat] {"turnRateRadPerSecMeasured":3.14,"fullTurnSeconds":2.001,"halfTurnSeconds":1.001,"crossingSeconds":61.033,"crossingAtTopSpeedSeconds":59.394,"topSpeed":1.65,"fastWaterSpeed":2.475,"physics":{"topSpeed":1.65,"acceleration":0.55,"turnRateRadPerSec":3.14,"drag":0.8,"fastWaterMultiplier":1.5}}
+✔ the authored physics turn her in about two seconds and cross the course in about a minute (3024.6065ms)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+[regatta-boat] tape hash fnv1a32:dd4116bf over 42 samples
+✔ the same tape reaches the same boat track and the same hash on this engine (2942.306459ms)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+[regatta-race] {"finishedAtSeconds":137.967,"sailedSeconds":137.9,"closestApproach":{"northwest-checkpoint":5.999,"midcourse-checkpoint":5.999,"northeast-checkpoint":5.925,"finish-beacon":5.996,"claim-boat":5.971},"gateRadii":{"start-beacon":6,"northwest-checkpoint":6,"midcourse-checkpoint":6,"northeast-checkpoint":6,"finish-beacon":6},"fastWaterMultiplier":1.5}
+✔ SLICE 2 — a rider sails the five buoys and the race is won by the BOAT (3538.969583ms)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+✔ SLICE 2 — leaving the boat after the start beacon forfeits the race for the run (2089.067ms)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+✔ SLICE 2 — a hero who never boards never advances the course (2357.694ms)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+✔ a ride that never boards is the idle ride it always was (2760.869667ms)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+✔ SLICE 2 — the marks score before the bow-probe reaches the rim (the radius-6 reason) (2248.371ms)
+✔ same-game audit runs over every contract and keeps its row schema (10310.921917ms)
+✔ same-game audit follows the door grammar through the final AP-16 verbs (10084.937375ms)
+✔ same-game audit also emits a complete markdown table (9805.264917ms)
+✔ every door verb is mapped to a human control (ADR-005) (0.763208ms)
+✔ same-game audit publishes the ADR-005 controls section (9803.861875ms)
+✔ the committed same-game report carries a controls row for every door verb (2.911458ms)
+ℹ tests 72
+ℹ suites 0
+ℹ pass 69
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 2
+ℹ todo 0
+ℹ duration_ms 355796.296708
+
+✖ failing tests:
+
+test at scripts/deepwater-rider-parity.test.mjs:6:1
+✖ Regatta measures the rider, applies fast water to that body, and secures reproducibly (6811.592291ms)
+  AssertionError [ERR_ASSERTION]: {"ticks":701,"now":{"wave":15,"blastReadyInMs":0,"weapon":"rig","timers":{"runSeconds":350,"nextWaveInSeconds":0},"gold":0,"hero":{"hp":100,"maxHp":100,"x":-49,"z":-1.3,"level":1,"upgradesTaken":{},"upgradeChoiceRule":"first-offer"},"prospector":{"x":-50.68,"z":-2.38},"works":{"hp":0,"maxHp":0,"standing":0,"wrecked":0,"byKind":{},"entries":[]},"threats":{"alive":0,"state":"quiet","edge":null,"thieves":0,"wreckers":0,"spawnedTotal":0,"defeatedTotal":45,"defeatedBasis":"all enemies, including continuous tricklers"},"orders":[{"id":"orders-2-1","order":{"verb":"MOVE_HERO","pos":{"x":-49,"z":2}},"status":"failed","reason":"UNREACHABLE_APPROACH: MOVE_HERO target has no traversable approach."}],"needsRider":true,"seams":[{"id":"gold-seam-1","active":true,"remaining":30,"x":-49,"z":-4,"anchorIndex":1},{"id":"gold-seam-2","active":true,"remaining":30,"x":-46,"z":-4,"anchorIndex":2},{"id":"gold-seam-3","active":true,"remaining":30,"x":-46,"z":4,"anchorIndex":4},{"id":"gold-seam-4","active":false,"remaining":30,"x":null,"z":null,"anchorIndex":null},{"id":"gold-seam-5","active":false,"remaining":30,"x":null,"z":null,"anchorIndex":null}],"score":{"wavesSurvived":0,"goldPanned":0,"goldPannedByProspector":0,"goldStolen":0,"goldReclaimed":0,"goldReclaimedByProspector":0,"buildingsBuilt":0},"deepwater":{"contractId":"e5-regatta","tileId":"e5-regatta","size":128,"anchor":{"id":"start-line","x":-49,"z":0},"anchors":[{"id":"start-line","x":-49,"z":0},{"id":"finish-line","x":49,"z":0}],"pads":[{"id":"bow","occupied":false},{"id":"port","occupied":false},{"id":"starboard","occupied":false}],"boatBuildings":[],"storm":{"time":350.0000000000628,"weather":{"era":5,"contractId":"e5-regatta","phase":"storm","phaseProgress":0.6000000000062812,"cycle":14,"simTime":350.0000000000628,"movementMultiplier":0.72,"visibilityMultiplier":0.58,"hazeColor":"#335f64","hazeStrength":0.28,"warning":false},"frontX":12.80000000080399,"waves":[{"wave":1,"cycle":0,"scheduledAt":8,"direction":"west-to-east","fromX":-64,"toX":64},{"wave":2,"cycle":1,"scheduledAt":32,"direction":"west-to-east","fromX":-64,"toX":64},{"wave":3,"cycle":2,"scheduledAt":56,"direction":"west-to-east","fromX":-64,"toX":64},{"wave":4,"cycle":3,"scheduledAt":80,"direction":"west-to-east","fromX":-64,"toX":64},{"wave":5,"cycle":4,"scheduledAt":104,"direction":"west-to-east","fromX":-64,"toX":64},{"wave":6,"cycle":5,"scheduledAt":128,"direction":"west-to-east","fromX":-64,"toX":64},{"wave":7,"cycle":6,"scheduledAt":152,"direction":"west-to-east","fromX":-64,"toX":64},{"wave":8,"cycle":7,"scheduledAt":176,"direction":"west-to-east","fromX":-64,"toX":64},{"wave":9,"cycle":8,"scheduledAt":200,"direction":"west-to-east","fromX":-64,"toX":64},{"wave":10,"cycle":9,"scheduledAt":224,"direction":"west-to-east","fromX":-64,"toX":64},{"wave":11,"cycle":10,"scheduledAt":248,"direction":"west-to-east","fromX":-64,"toX":64},{"wave":12,"cycle":11,"scheduledAt":272,"direction":"west-to-east","fromX":-64,"toX":64},{"wave":13,"cycle":12,"scheduledAt":296,"direction":"west-to-east","fromX":-64,"toX":64},{"wave":14,"cycle":13,"scheduledAt":320,"direction":"west-to-east","fromX":-64,"toX":64},{"wave":15,"cycle":14,"scheduledAt":344,"direction":"west-to-east","fromX":-64,"toX":64}]},"corsairWaves":15,"corsairsSpawned":45,"corsairsRecycledAtExit":0,"wrecks":[],"bossHandoffsRefused":0,"arsenal":{"active":true,"items":[{"id":"pressureSealed","line":"fire","munitionId":null},{"id":"harpoonBallista","line":"watch","munitionId":null},{"id":"depthChargeRack","line":"watch","munitionId":"depth_charge"},{"id":"depthChargeLobber","line":"powder","munitionId":"depth_charge"}],"fires":{"harpoonBallista":0,"depthChargeRack":0,"depthChargeLobber":0},"sharedMunition":{"id":"depth_charge","stock":12,"capacity":12,"spentBy":{"depthChargeRack":0,"depthChargeLobber":0}},"pressureSealed":{"active":true,"inDiveZone":false},"silhouette":{"harpoonBallista":1.1,"priorTurret":1.1},"treatmentEvents":[],"visuals":{"harpoonBallista":false,"depthChargeRack":false,"depthChargeLobber":true}},"race":{"nextGate":{"id":"start-beacon","x":-49,"z":0,"radius":6},"gatesPassed":[],"finished":false,"finishedAt":null,"forfeited":false,"forfeitedAt":null,"fastWaterMultiplier":1.5}}},"orders":{"needsRider":true,"orders":[{"id":"orders-2-1","order":{"verb":"MOVE_HERO","pos":{"x":-49,"z":2}},"status":"failed","reason":"UNREACHABLE_APPROACH: MOVE_HERO target has no traversable approach."}],"log":[{"seq":1,"at":0,"type":"orders_replaced","orders":[{"id":"orders-1-1","order":{"verb":"BOAT_BUILD","padId":"bow","buildingId":"sentry_beacon"},"status":"pending"},{"id":"orders-1-2","order":{"verb":"BOAT_BUILD","padId":"port","buildingId":"turret"},"status":"pending"},{"id":"orders-1-3","order":{"verb":"BOAT_BUILD","padId":"starboard","buildingId":"turret"},"status":"pending"}]},{"seq":2,"at":0,"type":"orders_replaced","orders":[{"id":"orders-2-1","order":{"verb":"MOVE_HERO","pos":{"x":-49,"z":2}},"status":"pending"}]},{"seq":3,"at":0.03333333333333333,"type":"order_status","orderId":"orders-2-1","status":"active"},{"seq":4,"at":4.066666666666662,"type":"order_status","orderId":"orders-2-1","status":"failed","reason":"UNREACHABLE_APPROACH: MOVE_HERO target has no traversable approach."},{"seq":5,"at":4.066666666666662,"type":"surprise","surprise":"order_failure","orderId":"orders-2-1","reason":"UNREACHABLE_APPROACH: MOVE_HERO target has no traversable approach."}]}}
+  
+  false !== true
+  
+      at run (file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-regatta2/scripts/deepwater-rider-parity.test.mjs:52:14)
+      at TestContext.<anonymous> (file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-regatta2/scripts/deepwater-rider-parity.test.mjs:61:21)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

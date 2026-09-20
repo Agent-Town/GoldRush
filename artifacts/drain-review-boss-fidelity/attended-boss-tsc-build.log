@@ -1,0 +1,12 @@
+tsc
+tsc rc=0
+build
+| landmarks | 196 | 313187204 | 53025380 | 83% | compress |
+| panoramas | 32 | 28727380 | 3106360 | 89% | compress |
+| town-buildings | 9 | 17901452 | 2573016 | 86% | compress |
+| town-era-variants | 73 | 112127592 | 17922008 | 84% | compress |
+| props | 58 | 64848708 | 2328976 | 96% | compress |
+| rail-element | 1 | 35048 | 35048 | 0% | skip: Run3dPilot instances raw geometry without the node transform required by Meshopt quantization; preserve sleeper size and grounding until that consumer is fixed. |
+| bosses | 7 | 26337172 | 4989588 | 81% | compress |
+| finale | 2 | 7771872 | 577052 | 93% | compress |
+build rc=

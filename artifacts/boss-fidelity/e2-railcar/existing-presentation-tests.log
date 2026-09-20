@@ -1,0 +1,89 @@
+
+Running 12 tests using 1 worker
+
+(node:31333) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 [desktop-chrome] › e2e/fix-e2-railcar-read.spec.ts:18:1 › armored railcar enters on its wheels as rolling stock (6.0s)
+  ✓   2 [desktop-chrome] › e2e/fix-e2-railcar-read.spec.ts:119:1 › railcar component swaps to its damaged painted state after a hit (3.2s)
+  ✘   3 [desktop-chrome] › e2e/wire-railcar-3d.spec.ts:63:1 › GLB rides the rail, exposes all three damage morphs, preserves wreckage, and disposes (12.9s)
+(node:31553) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   4 [desktop-chrome] › e2e/wire-railcar-3d.spec.ts:163:1 › LITE keeps the painted billboard and never requests the GLB (2.2s)
+  ✓   5 [desktop-chrome] › e2e/wire-railcar-3d.spec.ts:175:1 › a component destroyed during model loading mounts as broken (4.2s)
+  ✓   6 [desktop-chrome] › e2e/wire-railcar-3d.spec.ts:200:1 › invalid GLB bytes fall back to the painted billboard (2.7s)
+(node:31656) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   7 [mobile-chrome] › e2e/fix-e2-railcar-read.spec.ts:18:1 › armored railcar enters on its wheels as rolling stock (6.7s)
+  ✓   8 [mobile-chrome] › e2e/fix-e2-railcar-read.spec.ts:119:1 › railcar component swaps to its damaged painted state after a hit (3.4s)
+  ✘   9 [mobile-chrome] › e2e/wire-railcar-3d.spec.ts:63:1 › GLB rides the rail, exposes all three damage morphs, preserves wreckage, and disposes (13.6s)
+(node:31919) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  10 [mobile-chrome] › e2e/wire-railcar-3d.spec.ts:163:1 › LITE keeps the painted billboard and never requests the GLB (2.4s)
+  ✓  11 [mobile-chrome] › e2e/wire-railcar-3d.spec.ts:175:1 › a component destroyed during model loading mounts as broken (4.3s)
+  ✓  12 [mobile-chrome] › e2e/wire-railcar-3d.spec.ts:200:1 › invalid GLB bytes fall back to the painted billboard (3.0s)
+
+
+  1) [desktop-chrome] › e2e/wire-railcar-3d.spec.ts:63:1 › GLB rides the rail, exposes all three damage morphs, preserves wreckage, and disposes 
+
+    Error: renderer count mounted.triangles expected exact 124212, got 125168
+
+       at renderer-count-artifact.ts:37
+
+      35 |       if (typeof value !== 'number') throw new Error(`renderer count ${label} is missing`);
+      36 |       if (typeof expected === 'number') {
+    > 37 |         if (value !== expected) throw new Error(`renderer count ${label} expected exact ${expected}, got ${value}`);
+         |                                       ^
+      38 |       } else if (value < expected.tolerance[0] || value > expected.tolerance[1]) {
+      39 |         throw new Error(`renderer count ${label}=${value} outside band [${expected.tolerance.join(', ')}]`);
+      40 |       }
+        at verifyAndWriteRendererCounts (/Users/robin/.codex/worktrees/572c/Gold Rush/e2e/renderer-count-artifact.ts:37:39)
+        at /Users/robin/.codex/worktrees/572c/Gold Rush/e2e/wire-railcar-3d.spec.ts:153:3
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/wire-railcar-3d-GLB-rides--8c7b9-erves-wreckage-and-disposes-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/wire-railcar-3d-GLB-rides--8c7b9-erves-wreckage-and-disposes-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/wire-railcar-3d-GLB-rides--8c7b9-erves-wreckage-and-disposes-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/wire-railcar-3d-GLB-rides--8c7b9-erves-wreckage-and-disposes-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [mobile-chrome] › e2e/wire-railcar-3d.spec.ts:63:1 › GLB rides the rail, exposes all three damage morphs, preserves wreckage, and disposes 
+
+    Error: renderer count mounted.triangles expected exact 120992, got 121948
+
+       at renderer-count-artifact.ts:37
+
+      35 |       if (typeof value !== 'number') throw new Error(`renderer count ${label} is missing`);
+      36 |       if (typeof expected === 'number') {
+    > 37 |         if (value !== expected) throw new Error(`renderer count ${label} expected exact ${expected}, got ${value}`);
+         |                                       ^
+      38 |       } else if (value < expected.tolerance[0] || value > expected.tolerance[1]) {
+      39 |         throw new Error(`renderer count ${label}=${value} outside band [${expected.tolerance.join(', ')}]`);
+      40 |       }
+        at verifyAndWriteRendererCounts (/Users/robin/.codex/worktrees/572c/Gold Rush/e2e/renderer-count-artifact.ts:37:39)
+        at /Users/robin/.codex/worktrees/572c/Gold Rush/e2e/wire-railcar-3d.spec.ts:153:3
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/wire-railcar-3d-GLB-rides--8c7b9-erves-wreckage-and-disposes-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/wire-railcar-3d-GLB-rides--8c7b9-erves-wreckage-and-disposes-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/wire-railcar-3d-GLB-rides--8c7b9-erves-wreckage-and-disposes-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/wire-railcar-3d-GLB-rides--8c7b9-erves-wreckage-and-disposes-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [desktop-chrome] › e2e/wire-railcar-3d.spec.ts:63:1 › GLB rides the rail, exposes all three damage morphs, preserves wreckage, and disposes 
+    [mobile-chrome] › e2e/wire-railcar-3d.spec.ts:63:1 › GLB rides the rail, exposes all three damage morphs, preserves wreckage, and disposes 
+  10 passed (1.2m)

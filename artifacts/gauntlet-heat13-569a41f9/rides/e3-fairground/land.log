@@ -1,0 +1,21 @@
+
+=== 1 finish-ride ===
+{"rig":"opus","contract":"e3-fairground","wall":1069,"wallHit":false,"rc":0,"tracked":[],"files":27,"outcome":{"secured":false,"waves":6,"gold":36,"runsSoFar":6,"scoredAttempts":1,"tape":"/tmp/heat13-569a41f9/artifacts/heat13/opus/e3-fairground/attempt-1-tape.json","worldModel":"sim-import"},"scoredTapes":[{"file":"attempt-1-tape.json","id":"agent-cff0b8b9-8d513141-f31b-4f32-9bba-2a47b22e2bbd","secured":false,"waves":6,"gold":36,"durationTicks":5873,"lastEntryTick":5858,"promotedByRig":true,"discoveredBy":"outcome-file+filename"}],"otherSecured":[],"reportSections":{"outcome":1289,"whatTheMapAsked":2988,"winnability":654,"lessons":4816},"usage":{"turns":73,"toolCalls":39,"tokensIn":146,"tokensOut":150491}}
+
+=== NOT SECURED — nothing to submit ===
+{
+ "rig": "opus",
+ "contract": "e3-fairground",
+ "wall": 1069,
+ "wallHit": false,
+ "rc": 0,
+ "scoredTapes": [
+  {
+   "file": "attempt-1-tape.json",
+   "secured": false,
+   "waves": 6,
+   "gold": 36
+  }
+ ],
+ "outcomeNote": "attempt-1-tape.json is byte-identical to tune-1-tape.json; one ride under two filenames. Best waves of 6 runs. tune-4 (w4/143.3s) is the more informative run: it satisfied BOTH secure clauses - all three flocks crossed (1/1/4) and the wheel still spinning - and died only on hero HP."
+}

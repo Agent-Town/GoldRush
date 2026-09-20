@@ -1,0 +1,43 @@
+{
+ "secured": true,
+ "waves": 12,
+ "timeMs": 360000,
+ "gold": 170,
+ "kills": 414,
+ "calls": 49,
+ "defaultedPicks": 0,
+ "defaultedSecure": 1,
+ "eventLogHash": "fnv1a32:1c64ed8e",
+ "motor": {
+  "graded": [
+   "camp-to-east-lease",
+   "camp-to-north-lease",
+   "camp-to-west-lease"
+  ],
+  "hauled": true,
+  "arrivedAt": 60.467,
+  "roadDistance": 228.821,
+  "distanceTravelled": 290.141,
+  "fuelDrawn": 36,
+  "tarHarvested": 9,
+  "convoyArrived": null,
+  "kind": "deliveries",
+  "delivered": [
+   "camp-to-west-lease",
+   "camp-to-east-lease",
+   "camp-to-north-lease"
+  ]
+ },
+ "tape": "/private/tmp/heat13-569a41f9/artifacts/heat13/opus/e4-gusher-county/attempt-1-tape.json",
+ "scored": true,
+ "envelope": {
+  "durationTicks": 10800,
+  "lastEntryTick": 10780,
+  "entries": 49,
+  "bytes": 185778
+ },
+ "runsSoFar": 2,
+ "scoredAttempts": 1,
+ "worldModel": "sim-import",
+ "note": "ONE RIDE UNDER TWO FILENAMES: tune-1-tape.json secured on its first controller and is promoted by name as the scored attempt; attempt-1-tape.json is a byte-identical copy. Envelope: 10800 ticks, last accepted order at 10780, 49 entries, 185778 bytes."
+}

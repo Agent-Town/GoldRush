@@ -1,0 +1,81 @@
+
+########## RIDE e7-echo-canyon · seed e7-echo-canyon-01 · gen 44 · stake mechanic-changed · wall 1080s ##########
+--- 1 charter ---
+{"rig":"opus","contract":"e7-echo-canyon","seed":"e7-echo-canyon-01","seedMode":"bench","stake":"mechanic-changed","generation":44,"wall":1080,"notebookSha256":"8b0af7d8afcb49bf98d1009118ec7b0fc10fd714ba62f2ffaed97ab0bd77a9e2","charterSha256":"45c9a4dc5e544489b89c3ea5911b43a6deec7017964885a81944fcaf33a65164","bytes":335950,"out":"/private/tmp/heat12-038cc280/artifacts/gauntlet-heat12-20260905/rides/e7-echo-canyon/charter.md"}
+--- 2 ride ---
+START opus claude-opus-5 pid=25324 session=409a1244-ad47-4ac7-bbfb-a23a50aba2ae at=2026-09-05T17:37:06.448Z
+FIRST-OUTPUT opus +106s
+OUTCOME opus secured=true waves=20 gold=200 runsSoFar=1 scored=0 +796s
+WALL opus 1080s reached — SIGTERM to process group 25324
+END opus rc=143 signal=null wall=1082s wallHit=true
+ride-wall rc=124 signal=-
+--- 3 land ---
+
+=== 1 finish-ride ===
+{"rig":"opus","contract":"e7-echo-canyon","wall":1082,"wallHit":true,"rc":143,"tracked":[],"files":9,"outcome":{"secured":true,"waves":20,"gold":200,"runsSoFar":1,"scoredAttempts":0,"tape":"/private/tmp/heat12-038cc280/artifacts/heat12/opus/e7-echo-canyon/tune-1-tape.json","worldModel":"sim-import"},"scoredTapes":[{"file":"attempt-1-tape.json","id":"agent-d47dfbaa-7f9bcd5a-824a-42be-a3c1-fc18fd4ca4af","secured":true,"waves":20,"gold":200,"durationTicks":18000,"lastEntryTick":16212,"promotedByRig":false,"discoveredBy":"filename"},{"file":"tune-1-tape.json","id":"agent-d47dfbaa-7f9bcd5a-824a-42be-a3c1-fc18fd4ca4af","secured":true,"waves":20,"gold":200,"durationTicks":18000,"lastEntryTick":16212,"promotedByRig":true,"discoveredBy":"outcome-file"}],"otherSecured":[],"reportSections":null,"usage":{"turns":48,"toolCalls":28,"tokensIn":96,"tokensOut":63293}}
+tape chosen: tune-1-tape.json (id agent-d47dfbaa-7f9bcd5a-824a-42be-a3c1-fc18fd4ca4af, promotedByRig=true, discoveredBy=outcome-file)
+
+=== 2 freeze notebook header ===
+{"headerOnly":true,"headerBytes":452}
+
+=== 3 harnessDigest ===
+d2fa2828c48d75eb6bc0443c6ca633e363cd8d232ffab38a8afeef33c18bf710
+
+=== 4 build-submission ===
+{"tapeId":"agent-d47dfbaa-7f9bcd5a-824a-42be-a3c1-fc18fd4ca4af","contract":"e7-echo-canyon","epochId":"epoch-7-signal","seed":"e7-echo-canyon-01","seedMode":"bench","score":{"secured":true,"waves":20,"timeAlive":600,"gold":200,"baseValue":0},"papers":{"buildId":"cd3545caa","engineHash":"86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b","era":5,"viewVersion":2},"durationTicks":18000,"lastEntryTick":16212,"stack":{"model":"claude-opus-5","harness":"heat12-operator","harnessVersion":"2.1.257","harnessDigest":"d2fa2828c48d75eb6bc0443c6ca633e363cd8d232ffab38a8afeef33c18bf710","worldModel":"sim-import","config":"attended-hosted headless `claude -p` ride (heat 12) on Claude Code CLI 2.1.257; charter + door manual + own notebook (self-memory); own controller authored in-ride","calls":65,"tokensIn":11361439,"tokensOut":63293}}
+
+=== 5 publish (POST → poll → WATCH) ===
+FAILED: file:///private/tmp/heat12-038cc280/artifacts/gauntlet-heat12-20260905/publish-submission.mjs:19
+if (slip?.assay !== 'verified') throw new Error(`assay ${slip?.assay ?? 'missing'}: ${slip?.assayReason ?? 'no reason'}`);
+                                      ^
+
+Error: assay pending: no reason
+    at file:///private/tmp/heat12-038cc280/artifacts/gauntlet-heat12-20260905/publish-submission.mjs:19:39
+
+Node.js v23.11.1
+
+POST ok; assay still pending at the 120 s mark — resuming with the poll-only shim (no re-POST)
+
+=== 6 poll-verdict (no re-POST) ===
+{"tapeId":"agent-d47dfbaa-7f9bcd5a-824a-42be-a3c1-fc18fd4ca4af","assay":"verified","assayHash":"fnv1a32:8007b47d","ranked":true,"papers":{"buildId":"cd3545caa","engineHash":"86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b","era":5,"viewVersion":2}}
+
+=== LANDED ===
+{
+ "rig": "opus",
+ "contract": "e7-echo-canyon",
+ "tapeFile": "tune-1-tape.json",
+ "tapeId": "agent-d47dfbaa-7f9bcd5a-824a-42be-a3c1-fc18fd4ca4af",
+ "assay": "verified",
+ "assayHash": "fnv1a32:8007b47d",
+ "ranked": true,
+ "rank": null,
+ "waves": 20,
+ "gold": 200,
+ "calls": 65,
+ "eventLogHash": "fnv1a32:19817b46",
+ "wall": 1082,
+ "harnessDigest": "d2fa2828c48d75eb6bc0443c6ca633e363cd8d232ffab38a8afeef33c18bf710",
+ "usage": {
+  "turns": 48,
+  "toolCalls": 28,
+  "tokensIn": 11361439,
+  "tokensOut": 63293
+ }
+}
+file:///private/tmp/heat12-038cc280/artifacts/gauntlet-heat12-20260905/publish-submission.mjs:19
+if (slip?.assay !== 'verified') throw new Error(`assay ${slip?.assay ?? 'missing'}: ${slip?.assayReason ?? 'no reason'}`);
+                                      ^
+
+Error: assay pending: no reason
+    at file:///private/tmp/heat12-038cc280/artifacts/gauntlet-heat12-20260905/publish-submission.mjs:19:39
+
+Node.js v23.11.1
+
+land rc=0
+--- 4 notebook ---
+{"notebook":"/Users/robin/Claude/Projects/goldrush-gauntlet/memories/claude__opus-5/NOTEBOOK.md","generation":44,"headerBytes":452,"entryBytes":860}
+--- 5 matrix ---
+| 8 | e7-echo-canyon | `e7-echo-canyon-01` | mechanic-changed | 44 | **SECURED** | 20 | 200 | 600s | 1082s ⏱ | `tune-1-tape.json` · `agent-d47dfbaa-7f9bcd5a-824a-42be-a3c1-fc18fd4ca4af`<br>fnv1a32:19817b46 | verified `fnv1a32:8007b47d` | gen 44<br>slip `agent-d47dfbaa-7f9bcd5a-824a-42be-a3c1-fc18fd4ca4af` |
+{"contract":"e7-echo-canyon","secured":true,"tapesOnDisk":5,"scoredTapes":2,"otherSecured":0,"runs":1,"scoredAttempts":0,"wallHit":true,"rc":143,"assay":"verified","ranked":true,"winnability":null}
+########## END e7-echo-canyon ##########
+

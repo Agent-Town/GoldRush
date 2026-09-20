@@ -1,0 +1,207 @@
+gate battery transcript (append-only — see scripts/gate-battery.mjs)
+
+
+######## BATTERY 2026-09-02T20:59:23.201Z — e10-preserve-ranking drain (s2462) ########
+cwd=/Users/robin/Claude/Projects/Gold Rush/gate-s2462
+env+ GR_CAPTURE_EXTERNAL_SERVER=1 GR_CAPTURE_BASE_URL=http://127.0.0.1:5234
+
+===== preserve-objective (sibling) =====
+$ npx playwright test e2e/e10-preserve-objective.spec.ts --reporter=line --workers=1
+rc=0 38.2s
+
+Running 4 tests using 1 worker
+
+[1/4] [desktop-chrome] › e2e/e10-preserve-objective.spec.ts:8:1 › a plain Last Claim boot shows the warm vent preserve objective
+[desktop-chrome] › e2e/e10-preserve-objective.spec.ts:8:1 › a plain Last Claim boot shows the warm vent preserve objective
+e10 preserve plain boot watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[2/4] [desktop-chrome] › e2e/e10-preserve-objective.spec.ts:29:1 › the browser uses the same seeded preserve-fell terminal rule
+[desktop-chrome] › e2e/e10-preserve-objective.spec.ts:29:1 › the browser uses the same seeded preserve-fell terminal rule
+e10 preserve terminal parity watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[3/4] [mobile-chrome] › e2e/e10-preserve-objective.spec.ts:8:1 › a plain Last Claim boot shows the warm vent preserve objective
+[mobile-chrome] › e2e/e10-preserve-objective.spec.ts:8:1 › a plain Last Claim boot shows the warm vent preserve objective
+e10 preserve plain boot watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[4/4] [mobile-chrome] › e2e/e10-preserve-objective.spec.ts:29:1 › the browser uses the same seeded preserve-fell terminal rule
+[mobile-chrome] › e2e/e10-preserve-objective.spec.ts:29:1 › the browser uses the same seeded preserve-fell terminal rule
+e10 preserve terminal parity watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+  4 passed (37.6s)
+
+
+===== county-standings =====
+$ npx playwright test e2e/lb-01-county-standings.spec.ts --reporter=line --workers=1
+rc=0 80.8s
+
+Running 28 tests using 1 worker
+
+
+[1/28] [desktop-chrome] › e2e/lb-01-county-standings.spec.ts:251:1 › public county rows carry submitted time while legacy rows keep the missing-time fallback
+[2/28] [desktop-chrome] › e2e/lb-01-county-standings.spec.ts:303:1 › standings accept a declared harness with its version
+[3/28] [desktop-chrome] › e2e/lb-01-county-standings.spec.ts:314:1 › standings reject a declared harness without its version
+[4/28] [desktop-chrome] › e2e/lb-01-county-standings.spec.ts:326:1 › standings still accept model-only and undeclared riders
+[5/28] [desktop-chrome] › e2e/lb-01-county-standings.spec.ts:342:1 › standings accept an optional world model and reject descriptions over 64 characters
+[6/28] [desktop-chrome] › e2e/lb-01-county-standings.spec.ts:360:1 › stored version-less harness rows still render through the standings route
+[7/28] [desktop-chrome] › e2e/lb-01-county-standings.spec.ts:387:1 › endpoint stores optional self-declared stack and publishes only its board-safe declaration
+[8/28] [desktop-chrome] › e2e/lb-01-county-standings.spec.ts:616:1 › bench submissions require membership in the contract frozen seed set
+[9/28] [desktop-chrome] › e2e/lb-01-county-standings.spec.ts:654:1 › secure submits the county row with pinned origin, hashes, and profile name
+[10/28] [desktop-chrome] › e2e/lb-01-county-standings.spec.ts:709:1 › secure skips county submission for a pinned seed outside the frozen set
+[11/28] [desktop-chrome] › e2e/lb-01-county-standings.spec.ts:719:1 › development standings require the explicit dev-send opt-in
+[12/28] [desktop-chrome] › e2e/lb-01-county-standings.spec.ts:729:1 › standings opt-out suppresses submission
+[13/28] [desktop-chrome] › e2e/lb-01-county-standings.spec.ts:739:1 › offline standings failure stays silent through the secure ceremony
+[14/28] [desktop-chrome] › e2e/lb-01-county-standings.spec.ts:754:1 › Claim Ledger renders the seeded county board and its empty contract state
+
+[15/28] [mobile-chrome] › e2e/lb-01-county-standings.spec.ts:251:1 › public county rows carry submitted time while legacy rows keep the missing-time fallback
+[16/28] [mobile-chrome] › e2e/lb-01-county-standings.spec.ts:303:1 › standings accept a declared harness with its version
+[17/28] [mobile-chrome] › e2e/lb-01-county-standings.spec.ts:314:1 › standings reject a declared harness without its version
+[18/28] [mobile-chrome] › e2e/lb-01-county-standings.spec.ts:326:1 › standings still accept model-only and undeclared riders
+[19/28] [mobile-chrome] › e2e/lb-01-county-standings.spec.ts:342:1 › standings accept an optional world model and reject descriptions over 64 characters
+[20/28] [mobile-chrome] › e2e/lb-01-county-standings.spec.ts:360:1 › stored version-less harness rows still render through the standings route
+[21/28] [mobile-chrome] › e2e/lb-01-county-standings.spec.ts:387:1 › endpoint stores optional self-declared stack and publishes only its board-safe declaration
+[22/28] [mobile-chrome] › e2e/lb-01-county-standings.spec.ts:616:1 › bench submissions require membership in the contract frozen seed set
+[23/28] [mobile-chrome] › e2e/lb-01-county-standings.spec.ts:654:1 › secure submits the county row with pinned origin, hashes, and profile name
+[24/28] [mobile-chrome] › e2e/lb-01-county-standings.spec.ts:709:1 › secure skips county submission for a pinned seed outside the frozen set
+[25/28] [mobile-chrome] › e2e/lb-01-county-standings.spec.ts:719:1 › development standings require the explicit dev-send opt-in
+[26/28] [mobile-chrome] › e2e/lb-01-county-standings.spec.ts:729:1 › standings opt-out suppresses submission
+[27/28] [mobile-chrome] › e2e/lb-01-county-standings.spec.ts:739:1 › offline standings failure stays silent through the secure ceremony
+[28/28] [mobile-chrome] › e2e/lb-01-county-standings.spec.ts:754:1 › Claim Ledger renders the seeded county board and its empty contract state
+  28 passed (1.3m)
+(node:21130) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:21155) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:24400) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+===== skillmd-door =====
+$ npx playwright test e2e/skillmd-door.spec.ts --reporter=line --workers=1
+rc=0 1.8s
+
+Running 2 tests using 1 worker
+
+[1/2] [desktop-chrome] › e2e/skillmd-door.spec.ts:3:1 › served skill.md exposes the source-locked grammar and replace warning
+[2/2] [mobile-chrome] › e2e/skillmd-door.spec.ts:3:1 › served skill.md exposes the source-locked grammar and replace warning
+  2 passed (948ms)
+
+
+===== adjacent: task-025 + m1-01 + m2-01 =====
+$ npx playwright test e2e/task-025-bandits-dont-swim.spec.ts e2e/m1-01-claim-jumpers-death.spec.ts e2e/m2-01-build-menu.spec.ts --reporter=line --workers=1
+rc=0 294.8s
+
+Running 32 tests using 1 worker
+
+[1/32] [desktop-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:29:1 › T spawns Claim Jumpers, contact kills hero, R restarts in place
+[2/32] [desktop-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:59:1 › nospawn blocks debug packs
+[3/32] [desktop-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:70:1 › double restart recycles enemies without geometry growth
+[4/32] [desktop-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:96:1 › stress=120 stays within pool and draw-call budget
+[5/32] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:111:1 › menu places a palisade and logs build_palisade spend
+[6/32] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:136:1 › build menu shows six ready icons and Balance-backed blurbs
+[7/32] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining
+[8/32] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:204:1 › beacon cost curve stays intact through the menu
+[9/32] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:226:1 › single enemy slides around a finite palisade line without passing through
+[10/32] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:283:1 › 390px build menu is visible, tappable, and clear of HUD controls
+[11/32] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:328:1 › stress draw calls stay under 200 with palisades and beacons
+[12/32] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:105:1 › enemy crossing the river reaches the hero through the ford only
+[13/32] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:123:1 › scheduled waves never place enemies in deep river over three waves
+[14/32] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:139:1 › hero stops in the shallows and keeps weapons armed at the deep channel
+[15/32] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:181:1 › xp from a residual deep-water death is auto-banked with no mote
+[16/32] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:202:1 › far-bank sluice stays untouched when the river flank is open
+[17/32] [mobile-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:29:1 › T spawns Claim Jumpers, contact kills hero, R restarts in place
+[18/32] [mobile-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:59:1 › nospawn blocks debug packs
+[19/32] [mobile-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:70:1 › double restart recycles enemies without geometry growth
+[20/32] [mobile-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:96:1 › stress=120 stays within pool and draw-call budget
+[21/32] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:111:1 › menu places a palisade and logs build_palisade spend
+[22/32] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:136:1 › build menu shows six ready icons and Balance-backed blurbs
+[23/32] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining
+[24/32] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:204:1 › beacon cost curve stays intact through the menu
+[25/32] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:226:1 › single enemy slides around a finite palisade line without passing through
+[26/32] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:283:1 › 390px build menu is visible, tappable, and clear of HUD controls
+[27/32] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:328:1 › stress draw calls stay under 200 with palisades and beacons
+[28/32] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:105:1 › enemy crossing the river reaches the hero through the ford only
+[29/32] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:123:1 › scheduled waves never place enemies in deep river over three waves
+[30/32] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:139:1 › hero stops in the shallows and keeps weapons armed at the deep channel
+[31/32] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:181:1 › xp from a residual deep-water death is auto-banked with no mote
+[32/32] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:202:1 › far-bank sluice stays untouched when the river flank is open
+  32 passed (4.9m)
+
+
+SUMMARY {"preserve-objective (sibling)":0,"county-standings":0,"skillmd-door":0,"adjacent: task-025 + m1-01 + m2-01":0}
+OVERALL rc=0
+
+
+######## BATTERY 2026-09-02T21:23:30.070Z — e10-preserve-ranking drain (s2462) — tape/replay adjacency ########
+cwd=/Users/robin/Claude/Projects/Gold Rush/gate-s2462
+env+ GR_CAPTURE_EXTERNAL_SERVER=1 GR_CAPTURE_BASE_URL=http://127.0.0.1:5234
+
+===== tape-01 + tape-02 + c7 replay =====
+$ npx playwright test e2e/tape-01-run-tape.spec.ts e2e/tape-02-lantern-show.spec.ts e2e/c7-standing-order-replay.spec.ts --reporter=line --workers=1
+rc=0 112.1s
+
+Running 14 tests using 1 worker
+
+
+[1/14] [desktop-chrome] › e2e/c7-standing-order-replay.spec.ts:8:1 › a fresh browser standing-order tape watches to its own hash while an unstamped tape uses the tape show
+[2/14] [desktop-chrome] › e2e/tape-01-run-tape.spec.ts:75:1 › the profile tape ring keeps the latest ten plus older marked runs
+[3/14] [desktop-chrome] › e2e/tape-01-run-tape.spec.ts:90:1 › the keep result stays false when profile storage rejects the write
+[4/14] [desktop-chrome] › e2e/tape-01-run-tape.spec.ts:102:1 › the recorder deduplicates routed actions and freezes the hash at its input ceiling
+
+[5/14] [desktop-chrome] › e2e/tape-01-run-tape.spec.ts:123:1 › a resumed recording keeps the engine stamp captured by the original build
+[6/14] [desktop-chrome] › e2e/tape-01-run-tape.spec.ts:140:1 › every ended run writes a keepable tape whose replay reproduces its event hash
+[7/14] [desktop-chrome] › e2e/tape-02-lantern-show.spec.ts:10:1 › plain town WATCH replays a fresh tape read-only and refuses a mismatched reel
+
+[8/14] [mobile-chrome] › e2e/c7-standing-order-replay.spec.ts:8:1 › a fresh browser standing-order tape watches to its own hash while an unstamped tape uses the tape show
+[9/14] [mobile-chrome] › e2e/tape-01-run-tape.spec.ts:75:1 › the profile tape ring keeps the latest ten plus older marked runs
+[10/14] [mobile-chrome] › e2e/tape-01-run-tape.spec.ts:90:1 › the keep result stays false when profile storage rejects the write
+[11/14] [mobile-chrome] › e2e/tape-01-run-tape.spec.ts:102:1 › the recorder deduplicates routed actions and freezes the hash at its input ceiling
+
+[12/14] [mobile-chrome] › e2e/tape-01-run-tape.spec.ts:123:1 › a resumed recording keeps the engine stamp captured by the original build
+[13/14] [mobile-chrome] › e2e/tape-01-run-tape.spec.ts:140:1 › every ended run writes a keepable tape whose replay reproduces its event hash
+[14/14] [mobile-chrome] › e2e/tape-02-lantern-show.spec.ts:10:1 › plain town WATCH replays a fresh tape read-only and refuses a mismatched reel
+  14 passed (1.9m)
+(node:34638) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:34664) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[desktop-chrome] › e2e/tape-01-run-tape.spec.ts:102:1 › the recorder deduplicates routed actions and freezes the hash at its input ceiling
+[run-tape] recording truncated: max-ticks at tick 18000
+(node:36087) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[mobile-chrome] › e2e/tape-01-run-tape.spec.ts:102:1 › the recorder deduplicates routed actions and freezes the hash at its input ceiling
+[run-tape] recording truncated: max-ticks at tick 18000
+
+
+===== same-laws-harvest-parity =====
+$ npx playwright test e2e/same-laws-harvest-parity.spec.ts --reporter=line --workers=1
+rc=0 43.6s
+
+Running 4 tests using 1 worker
+
+[1/4] [desktop-chrome] › e2e/same-laws-harvest-parity.spec.ts:110:1 › mouse and touch dispatch travel, then grant one rider-rate tick per command
+[desktop-chrome] › e2e/same-laws-harvest-parity.spec.ts:110:1 › mouse and touch dispatch travel, then grant one rider-rate tick per command
+same-laws parity [desktop-chrome] seam=gold-seam-1
+| tick | player dispatch (s after command) | rider HARVEST (s after order) | gold | cumulative |
+|---|---|---|---|---|
+| 1 | 1.867 | 1.867 | 5 | 5 / 5 |
+| 2 | 1.900 | 1.900 | 5 | 10 / 10 |
+
+SAME_LAWS_ASSAY_SLIP {"eventLogHash":"fnv1a32:a6c04f80","outcome":{"secured":false,"waves":0,"gold":10,"timeAlive":20.033333},"ticks":601,"wallMs":4108}
+
+[2/4] [desktop-chrome] › e2e/same-laws-harvest-parity.spec.ts:203:1 › plain boot: the command is reachable without ?debug and the boot is clean
+[3/4] [mobile-chrome] › e2e/same-laws-harvest-parity.spec.ts:110:1 › mouse and touch dispatch travel, then grant one rider-rate tick per command
+[mobile-chrome] › e2e/same-laws-harvest-parity.spec.ts:110:1 › mouse and touch dispatch travel, then grant one rider-rate tick per command
+same-laws parity [mobile-chrome] seam=gold-seam-1
+| tick | player dispatch (s after command) | rider HARVEST (s after order) | gold | cumulative |
+|---|---|---|---|---|
+| 1 | 1.867 | 1.867 | 5 | 5 / 5 |
+| 2 | 1.900 | 1.900 | 5 | 10 / 10 |
+
+SAME_LAWS_ASSAY_SLIP {"eventLogHash":"fnv1a32:a6c04f80","outcome":{"secured":false,"waves":0,"gold":10,"timeAlive":20.033333},"ticks":601,"wallMs":3720}
+
+[4/4] [mobile-chrome] › e2e/same-laws-harvest-parity.spec.ts:203:1 › plain boot: the command is reachable without ?debug and the boot is clean
+  4 passed (43.1s)
+
+
+SUMMARY {"tape-01 + tape-02 + c7 replay":0,"same-laws-harvest-parity":0}
+OVERALL rc=0

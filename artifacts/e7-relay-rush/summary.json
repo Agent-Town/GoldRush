@@ -1,0 +1,310 @@
+{
+  "schema": "goldrush.a5-relay-rush-evidence.v1",
+  "contract": "e7-relay-rush",
+  "ratification": "specs/agent-play/door-completion-sheet.md:16 (A5, RATIFIED 2026-08-20)",
+  "ruling": "owner 2026-08-21, verbatim to the five-map fork table: \"lets follow your recommendation\" — F-A5-1, a heroStart stake inside a relay site. Stake: relay-ridge-command-stake at (-25,41), the centre of relay-site-r2.",
+  "laws": {
+    "secure": "the public-verb prover must SECURE both bench seeds, twice, with matching hashes — MET at wave 20 on both",
+    "plain": "and it must do it through the ORDINARY door, with no admissionProbe — which is only possible once admitted",
+    "idle": "Law 2 — an idle run must NOT secure",
+    "objective": "the ratified deadline is discharge-able: 3 of 4 relay sites lit before the third front (t=270s)"
+  },
+  "rows": [
+    {
+      "kind": "secure",
+      "seed": "e7-relay-rush-01",
+      "run": 1,
+      "secured": true,
+      "waves": 20,
+      "timeMs": 600000,
+      "gold": 125,
+      "kills": 671,
+      "eventLogHash": "fnv1a32:bc89348d",
+      "front": {
+        "frontsArrived": 6,
+        "deadlineFront": 3,
+        "relayTarget": 3,
+        "litCount": 3,
+        "litSites": [
+          "relay-site-r1",
+          "relay-site-r2",
+          "relay-site-r3"
+        ],
+        "deadlineResolved": true,
+        "litAtDeadline": 3,
+        "objectiveMet": true,
+        "mutedWorkSteps": 1980
+      }
+    },
+    {
+      "kind": "secure",
+      "seed": "e7-relay-rush-01",
+      "run": 2,
+      "secured": true,
+      "waves": 20,
+      "timeMs": 600000,
+      "gold": 125,
+      "kills": 671,
+      "eventLogHash": "fnv1a32:bc89348d",
+      "front": {
+        "frontsArrived": 6,
+        "deadlineFront": 3,
+        "relayTarget": 3,
+        "litCount": 3,
+        "litSites": [
+          "relay-site-r1",
+          "relay-site-r2",
+          "relay-site-r3"
+        ],
+        "deadlineResolved": true,
+        "litAtDeadline": 3,
+        "objectiveMet": true,
+        "mutedWorkSteps": 1980
+      }
+    },
+    {
+      "kind": "secure",
+      "seed": "e7-relay-rush-02",
+      "run": 1,
+      "secured": true,
+      "waves": 20,
+      "timeMs": 600000,
+      "gold": 90,
+      "kills": 717,
+      "eventLogHash": "fnv1a32:b25f69b0",
+      "front": {
+        "frontsArrived": 6,
+        "deadlineFront": 3,
+        "relayTarget": 3,
+        "litCount": 3,
+        "litSites": [
+          "relay-site-r1",
+          "relay-site-r2",
+          "relay-site-r3"
+        ],
+        "deadlineResolved": true,
+        "litAtDeadline": 3,
+        "objectiveMet": true,
+        "mutedWorkSteps": 2340
+      }
+    },
+    {
+      "kind": "secure",
+      "seed": "e7-relay-rush-02",
+      "run": 2,
+      "secured": true,
+      "waves": 20,
+      "timeMs": 600000,
+      "gold": 90,
+      "kills": 717,
+      "eventLogHash": "fnv1a32:b25f69b0",
+      "front": {
+        "frontsArrived": 6,
+        "deadlineFront": 3,
+        "relayTarget": 3,
+        "litCount": 3,
+        "litSites": [
+          "relay-site-r1",
+          "relay-site-r2",
+          "relay-site-r3"
+        ],
+        "deadlineResolved": true,
+        "litAtDeadline": 3,
+        "objectiveMet": true,
+        "mutedWorkSteps": 2340
+      }
+    },
+    {
+      "kind": "plain",
+      "seed": "e7-relay-rush-01",
+      "run": 1,
+      "secured": true,
+      "waves": 20,
+      "timeMs": 600000,
+      "gold": 125,
+      "kills": 671,
+      "eventLogHash": "fnv1a32:bc89348d",
+      "front": {
+        "frontsArrived": 6,
+        "deadlineFront": 3,
+        "relayTarget": 3,
+        "litCount": 3,
+        "litSites": [
+          "relay-site-r1",
+          "relay-site-r2",
+          "relay-site-r3"
+        ],
+        "deadlineResolved": true,
+        "litAtDeadline": 3,
+        "objectiveMet": true,
+        "mutedWorkSteps": 1980
+      }
+    },
+    {
+      "kind": "plain",
+      "seed": "e7-relay-rush-01",
+      "run": 2,
+      "secured": true,
+      "waves": 20,
+      "timeMs": 600000,
+      "gold": 125,
+      "kills": 671,
+      "eventLogHash": "fnv1a32:bc89348d",
+      "front": {
+        "frontsArrived": 6,
+        "deadlineFront": 3,
+        "relayTarget": 3,
+        "litCount": 3,
+        "litSites": [
+          "relay-site-r1",
+          "relay-site-r2",
+          "relay-site-r3"
+        ],
+        "deadlineResolved": true,
+        "litAtDeadline": 3,
+        "objectiveMet": true,
+        "mutedWorkSteps": 1980
+      }
+    },
+    {
+      "kind": "plain",
+      "seed": "e7-relay-rush-02",
+      "run": 1,
+      "secured": true,
+      "waves": 20,
+      "timeMs": 600000,
+      "gold": 90,
+      "kills": 717,
+      "eventLogHash": "fnv1a32:b25f69b0",
+      "front": {
+        "frontsArrived": 6,
+        "deadlineFront": 3,
+        "relayTarget": 3,
+        "litCount": 3,
+        "litSites": [
+          "relay-site-r1",
+          "relay-site-r2",
+          "relay-site-r3"
+        ],
+        "deadlineResolved": true,
+        "litAtDeadline": 3,
+        "objectiveMet": true,
+        "mutedWorkSteps": 2340
+      }
+    },
+    {
+      "kind": "plain",
+      "seed": "e7-relay-rush-02",
+      "run": 2,
+      "secured": true,
+      "waves": 20,
+      "timeMs": 600000,
+      "gold": 90,
+      "kills": 717,
+      "eventLogHash": "fnv1a32:b25f69b0",
+      "front": {
+        "frontsArrived": 6,
+        "deadlineFront": 3,
+        "relayTarget": 3,
+        "litCount": 3,
+        "litSites": [
+          "relay-site-r1",
+          "relay-site-r2",
+          "relay-site-r3"
+        ],
+        "deadlineResolved": true,
+        "litAtDeadline": 3,
+        "objectiveMet": true,
+        "mutedWorkSteps": 2340
+      }
+    },
+    {
+      "kind": "idle",
+      "seed": "e7-relay-rush-01",
+      "run": 1,
+      "secured": false,
+      "waves": 2,
+      "timeMs": 81333,
+      "gold": 0,
+      "kills": 35,
+      "eventLogHash": "fnv1a32:ebf7134e",
+      "front": {
+        "frontsArrived": 0,
+        "deadlineFront": 3,
+        "relayTarget": 3,
+        "litCount": 0,
+        "litSites": [],
+        "deadlineResolved": false,
+        "litAtDeadline": null,
+        "objectiveMet": false,
+        "mutedWorkSteps": 0
+      }
+    },
+    {
+      "kind": "idle",
+      "seed": "e7-relay-rush-01",
+      "run": 2,
+      "secured": false,
+      "waves": 2,
+      "timeMs": 81333,
+      "gold": 0,
+      "kills": 35,
+      "eventLogHash": "fnv1a32:ebf7134e",
+      "front": {
+        "frontsArrived": 0,
+        "deadlineFront": 3,
+        "relayTarget": 3,
+        "litCount": 0,
+        "litSites": [],
+        "deadlineResolved": false,
+        "litAtDeadline": null,
+        "objectiveMet": false,
+        "mutedWorkSteps": 0
+      }
+    },
+    {
+      "kind": "idle",
+      "seed": "e7-relay-rush-02",
+      "run": 1,
+      "secured": false,
+      "waves": 2,
+      "timeMs": 79833,
+      "gold": 0,
+      "kills": 34,
+      "eventLogHash": "fnv1a32:862ecace",
+      "front": {
+        "frontsArrived": 0,
+        "deadlineFront": 3,
+        "relayTarget": 3,
+        "litCount": 0,
+        "litSites": [],
+        "deadlineResolved": false,
+        "litAtDeadline": null,
+        "objectiveMet": false,
+        "mutedWorkSteps": 0
+      }
+    },
+    {
+      "kind": "idle",
+      "seed": "e7-relay-rush-02",
+      "run": 2,
+      "secured": false,
+      "waves": 2,
+      "timeMs": 79833,
+      "gold": 0,
+      "kills": 34,
+      "eventLogHash": "fnv1a32:862ecace",
+      "front": {
+        "frontsArrived": 0,
+        "deadlineFront": 3,
+        "relayTarget": 3,
+        "litCount": 0,
+        "litSites": [],
+        "deadlineResolved": false,
+        "litAtDeadline": null,
+        "objectiveMet": false,
+        "mutedWorkSteps": 0
+      }
+    }
+  ]
+}

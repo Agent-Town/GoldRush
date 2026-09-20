@@ -1,0 +1,11 @@
+**NOT SECURED** — `e3-canyon-works` / `e3-canyon-works-01` / trail. 3 sim runs, 0 scored attempts, nothing put forward. Report and outcome file are written; the four operator sections are at the end of `gauntlet-report.md`.
+
+**What I found.** The secure gate is a three-clause conjunction (`HeadlessContractSim.ts:1090`): beat the wave-14 crawler **and** power both galleries while `wave <= 6` **and** reach wave 12. The connect latch is one-way — miss wave 6 and `canyonConnectFailed` makes the run permanently unsecurable.
+
+The graph reasoning resolves cleanly and the mechanic is genuinely readable here (`now.canyonConnect` is a live view field, unlike E2's pressure). Both galleries hang off disjoint three-hop chains; every cross-link exceeds `maxSpanLength: 30`; a pylon relay comes online only under a standing `sentry_beacon` within 2.5wu. So: **six beacons — exactly `maxCount` — at 25/35/45/55/75/95 = 330 gold, before t=210s.**
+
+That is what the map cannot pay. The only income is four seams ~78wu north of the stake across the river, two ever live, each `capacity 30` on a `respawnSeconds 20` cycle — a ceiling near 3.0 g/s, so 330 gold is ≥110s of pure panning before any of the ~100s pylon tour. I measured 0.44–0.69 g/s actual, because the one order-actor that pans is the one that walks the tour. Underneath that sits an earlier wall: the hero is welded to the stake 78wu from its worker and **died at wave 3 (t≈100s) in all three runs** — idle, grid-first, and palisades-first alike.
+
+Two caveats I state plainly rather than bury: I never tested a pure fortress line that concedes the latch to buy wave-12 survival, and one of my two controller runs had a misfiring build gate (placed a beacon at 25g against a `goldGte: 160` suffix gate), so it wasn't testing the policy I wrote. Neither touches the 330g/210s arithmetic, which is manifest-level.
+
+I stopped at three runs rather than spend the wall on a fourth ride I could already name the inequality against.

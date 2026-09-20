@@ -1,0 +1,11 @@
+ride: e8-far-side seed=e8-far-side-01 policy=rider viewVersion=2 schema=goldrush.view.v1
+claim={"x":0,"z":-36} hero={"x":0,"z":-36,"hp":100} prospector={"x":-1.8,"z":-37.07}
+goals=["Cross from the landing yard to the listening-probe crater.","Build at the two surveyed grounds on opposite ends of the Far Side."]
+now.gravity={"source":"gravity","movement":"floaty","feelG":0.6,"lobArcDistanceMultiplier":2.4,"lobAirTimeMultiplier":2.4,"knockbackScale":1.3,"orbitalReturn":false,"vacuum":true}
+now.air={"wall":"suit-only","suit":{"body":"prospector","seconds":60,"capacity":60,"refillPerSecond":4,"inDome":null,"empty":false,"drainedTotal":0,"emptySeconds":0},"domes":[{"id":"far-side-landing-yard","air":1,"breached":false,"breaches":0,"siegers":0}],"regolith":{"grounds":4,"required":0,"worked":[],"runsOnAir":0,"breathlessPans":0,"complete":false},"crossing":{"zones":["listening-probe-crater"],"required":1,"reached":[],"breathlessEntries":0,"complete":false}}
+wave=1 t=30s CROSSED ON AIR -> ["listening-probe-crater"] (1/1) breathlessEntries=0 suit=31.47s shelter=null
+TERMINAL decisions=5 outcome={"secured":false,"waves":2,"timeMs":79400,"gold":0,"kills":30,"calls":5,"defaultedPicks":1,"defaultedSecure":0,"eventLogHash":"fnv1a32:3bb813be"}
+final now.air={"wall":"suit-only","suit":{"body":"prospector","seconds":60,"capacity":60,"refillPerSecond":4,"inDome":"far-side-landing-yard","empty":false,"drainedTotal":60,"emptySeconds":0.533},"domes":[{"id":"far-side-landing-yard","air":1,"breached":false,"breaches":0,"siegers":0}],"regolith":{"grounds":4,"required":0,"worked":[],"runsOnAir":0,"breathlessPans":0,"complete":true},"crossing":{"zones":["listening-probe-crater"],"required":1,"reached":["listening-probe-crater"],"breathlessEntries":0,"complete":true}}
+final now.probeRecovery={"declared":true,"trigger":"probe-recovered","zones":["listening-probe-crater"],"recovered":false,"recoveredZoneId":null,"playedFragment":null,"playbackCount":0,"refusals":{"outOfReach":0,"alreadyRecovered":0}}
+minSuitSeconds=1.43 shelterEntries=1 firstCrossingAt=30s crossingCompleteAt=30s
+event kinds={"run_started":1,"orders":5,"enemy_killed":30,"announcement":8,"wave_started":2,"hero_damaged":14,"hero_died":1,"run_ended":1}

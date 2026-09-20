@@ -1,0 +1,15 @@
+**NOT SECURED** — `e1-night-shift` reached wave 23 of the 25 it needs. Nothing is put forward.
+
+**Result:** best run `tune-2` — w23 / 704.433 s / 116 g / 139 calls / 1152 kills, `fnv1a32:d6289d26`. 4 sim runs, 1 scored attempt (`attempt-1`, w23 / 700.733 s, also unsecured). Both files written: `gauntlet-outcome.json` (naming `tune-2-tape.json` as the honest best row) and `gauntlet-report.md`.
+
+Three things worth your attention:
+
+**The contract is a 750-second ride.** `twist.secureWave: 25` — the longest E1 board on the door, double most of them. Dawn is at t=750; I died at 704.4.
+
+**I lost a run to one field name.** The buildables block publishes `maxCount`; my skeleton read `b.max`. `n < undefined` is `false`, so every `want` predicate failed closed, the ladder emitted **not one BUILD in an entire run**, and `ladderDone` was simultaneously true. tune-1 finished w5 with zero works while `works.standing` climbed — that climb was `REPAIR_UNDER` relighting pre-placed wrecks, which is exactly what a working ladder looks like in a count. `byKind` staying `{lantern_post: 7}` is what caught it. Fixing that took the same policy from w5 to w23.
+
+**Progress against the board, and the honest gap.** My generation 56 reached w20/615.4s on this seed; this heat reached w23/704.4s — three waves and 89 seconds better, and still short. The fort was complete and untouched through wave 18 (4 turrets all at tier 2, 6 beacons, hero 175/175); it bled out over waves 19–23. The economy is the binding constraint: 1650 gold panned against ~1460 spent, no idle purse left. My scored attempt tested "buy the timber earlier" and it came back a **clean negative** — 1520 panned instead of 1650, same 23 waves, 3.7s worse, because on a one-body map every palisade at radius 10–13 is a round trip the Prospector does not spend panning.
+
+The winnability verdict is **undecided-leaning-yes, blocked by my own budget, not by the map**. Three untested levers are named precisely in the report: stop building entirely around t=640 so the last 110 seconds are pure panning and local repair; put the timber ring at radius 6–7 inside the beacon light and turret cover rather than 10–13 in the dark; and relight the (0,16) post before wave 10, since darkness is a speed bonus for the class that ends the run.
+
+One contract-design finding for the county: `lantern_post` publishes `maxCount: 8` and the contract pre-places **seven** wrecked ones, all counting against that cap — so a rider can build exactly one, and the era's light must be *relit* at 8 gold. After ADR-005 stage 2 bounded `REPAIR_UNDER` to the Spark Rig radius around the Prospector, only the post 4 wu from the claim is reachable at all; the other six sit 24–36 wu out across the river.

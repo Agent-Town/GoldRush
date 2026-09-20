@@ -1,0 +1,806 @@
+{
+  "scope": "Actual Game with isolated candidate source/asset routing. Loader/reset/disposal checks, not production acceptance or full regression.",
+  "assetSha256": "d81454a11c49f963251563812a70883e84822092fd6f6482ef8d994ddd4d42d5",
+  "sourceSha256": "8c0b2d6da50709df851ec1402cee53ef02801d350b660342fc57f5735cdc1294",
+  "cases": [
+    {
+      "mode": "lite",
+      "before": {
+        "state": "lite",
+        "model": false,
+        "meshes": 0,
+        "hulls": 0,
+        "supports": 0,
+        "modelChildren": 0,
+        "primitive": true,
+        "morphs": {},
+        "diagnostics": {
+          "active": true,
+          "act": 1,
+          "position": {
+            "x": 8,
+            "z": 4
+          },
+          "tidiedMarkers": 2,
+          "liveComponents": [
+            "vac",
+            "rack"
+          ],
+          "unbuilds": 0,
+          "unbuildOrder": [],
+          "partsStackPickups": 0,
+          "rackArcs": 0,
+          "rackTelegraphed": false,
+          "structureDamageEvents": 0,
+          "playerDamageEvents": 0,
+          "pickupsCurated": 0,
+          "loosePickups": 0,
+          "pileCenters": [
+            {
+              "x": 6.5,
+              "z": 6.2
+            },
+            {
+              "x": 9.5,
+              "z": 6.2
+            }
+          ],
+          "pictogram": "sparkle",
+          "chairPlaced": false,
+          "poweredDown": false,
+          "nonHostile": false,
+          "kept": false,
+          "persistentKept": false
+        }
+      },
+      "requests": 0
+    },
+    {
+      "mode": "invalid",
+      "before": {
+        "state": "failed",
+        "model": false,
+        "meshes": 0,
+        "hulls": 0,
+        "supports": 0,
+        "modelChildren": 0,
+        "primitive": true,
+        "morphs": {},
+        "diagnostics": {
+          "active": true,
+          "act": 1,
+          "position": {
+            "x": 8,
+            "z": 4
+          },
+          "tidiedMarkers": 2,
+          "liveComponents": [
+            "vac",
+            "rack"
+          ],
+          "unbuilds": 0,
+          "unbuildOrder": [],
+          "partsStackPickups": 0,
+          "rackArcs": 0,
+          "rackTelegraphed": false,
+          "structureDamageEvents": 0,
+          "playerDamageEvents": 0,
+          "pickupsCurated": 0,
+          "loosePickups": 0,
+          "pileCenters": [
+            {
+              "x": 6.5,
+              "z": 6.2
+            },
+            {
+              "x": 9.5,
+              "z": 6.2
+            }
+          ],
+          "pictogram": "sparkle",
+          "chairPlaced": false,
+          "poweredDown": false,
+          "nonHostile": false,
+          "kept": false,
+          "persistentKept": false
+        }
+      },
+      "requests": 1
+    },
+    {
+      "mode": "wrong-contract",
+      "before": {
+        "state": "failed",
+        "model": false,
+        "meshes": 0,
+        "hulls": 0,
+        "supports": 0,
+        "modelChildren": 0,
+        "primitive": true,
+        "morphs": {},
+        "diagnostics": {
+          "active": true,
+          "act": 1,
+          "position": {
+            "x": 8,
+            "z": 4
+          },
+          "tidiedMarkers": 2,
+          "liveComponents": [
+            "vac",
+            "rack"
+          ],
+          "unbuilds": 0,
+          "unbuildOrder": [],
+          "partsStackPickups": 0,
+          "rackArcs": 0,
+          "rackTelegraphed": false,
+          "structureDamageEvents": 0,
+          "playerDamageEvents": 0,
+          "pickupsCurated": 0,
+          "loosePickups": 0,
+          "pileCenters": [
+            {
+              "x": 6.5,
+              "z": 6.2
+            },
+            {
+              "x": 9.5,
+              "z": 6.2
+            }
+          ],
+          "pictogram": "sparkle",
+          "chairPlaced": false,
+          "poweredDown": false,
+          "nonHostile": false,
+          "kept": false,
+          "persistentKept": false
+        }
+      },
+      "requests": 1
+    },
+    {
+      "mode": "late-vac",
+      "before": {
+        "state": "loading",
+        "model": false,
+        "meshes": 0,
+        "hulls": 0,
+        "supports": 0,
+        "modelChildren": 0,
+        "primitive": true,
+        "morphs": {},
+        "diagnostics": {
+          "active": true,
+          "act": 1,
+          "position": {
+            "x": 8,
+            "z": 4
+          },
+          "tidiedMarkers": 2,
+          "liveComponents": [
+            "vac",
+            "rack"
+          ],
+          "unbuilds": 0,
+          "unbuildOrder": [],
+          "partsStackPickups": 0,
+          "rackArcs": 0,
+          "rackTelegraphed": false,
+          "structureDamageEvents": 0,
+          "playerDamageEvents": 0,
+          "pickupsCurated": 0,
+          "loosePickups": 0,
+          "pileCenters": [
+            {
+              "x": 6.5,
+              "z": 6.2
+            },
+            {
+              "x": 9.5,
+              "z": 6.2
+            }
+          ],
+          "pictogram": "sparkle",
+          "chairPlaced": false,
+          "poweredDown": false,
+          "nonHostile": false,
+          "kept": false,
+          "persistentKept": false
+        }
+      },
+      "after": {
+        "state": "ready",
+        "model": true,
+        "meshes": 3,
+        "hulls": 3,
+        "supports": 3,
+        "modelChildren": 1,
+        "primitive": false,
+        "morphs": {
+          "vac": 1,
+          "rack": 0,
+          "core": 0
+        },
+        "diagnostics": {
+          "active": true,
+          "act": 1,
+          "position": {
+            "x": 8,
+            "z": 4
+          },
+          "tidiedMarkers": 2,
+          "liveComponents": [
+            "vac",
+            "rack"
+          ],
+          "unbuilds": 0,
+          "unbuildOrder": [],
+          "partsStackPickups": 0,
+          "rackArcs": 0,
+          "rackTelegraphed": false,
+          "structureDamageEvents": 0,
+          "playerDamageEvents": 0,
+          "pickupsCurated": 0,
+          "loosePickups": 0,
+          "pileCenters": [
+            {
+              "x": 6.5,
+              "z": 6.2
+            },
+            {
+              "x": 9.5,
+              "z": 6.2
+            }
+          ],
+          "pictogram": "sparkle",
+          "chairPlaced": false,
+          "poweredDown": false,
+          "nonHostile": false,
+          "kept": false,
+          "persistentKept": false
+        }
+      },
+      "requests": 1
+    },
+    {
+      "mode": "late-rack",
+      "before": {
+        "state": "loading",
+        "model": false,
+        "meshes": 0,
+        "hulls": 0,
+        "supports": 0,
+        "modelChildren": 0,
+        "primitive": true,
+        "morphs": {},
+        "diagnostics": {
+          "active": true,
+          "act": 1,
+          "position": {
+            "x": 8,
+            "z": 4
+          },
+          "tidiedMarkers": 2,
+          "liveComponents": [
+            "vac",
+            "rack"
+          ],
+          "unbuilds": 0,
+          "unbuildOrder": [],
+          "partsStackPickups": 0,
+          "rackArcs": 0,
+          "rackTelegraphed": false,
+          "structureDamageEvents": 0,
+          "playerDamageEvents": 0,
+          "pickupsCurated": 0,
+          "loosePickups": 0,
+          "pileCenters": [
+            {
+              "x": 6.5,
+              "z": 6.2
+            },
+            {
+              "x": 9.5,
+              "z": 6.2
+            }
+          ],
+          "pictogram": "sparkle",
+          "chairPlaced": false,
+          "poweredDown": false,
+          "nonHostile": false,
+          "kept": false,
+          "persistentKept": false
+        }
+      },
+      "after": {
+        "state": "ready",
+        "model": true,
+        "meshes": 3,
+        "hulls": 3,
+        "supports": 3,
+        "modelChildren": 1,
+        "primitive": false,
+        "morphs": {
+          "vac": 0,
+          "rack": 1,
+          "core": 0
+        },
+        "diagnostics": {
+          "active": true,
+          "act": 1,
+          "position": {
+            "x": 8,
+            "z": 4
+          },
+          "tidiedMarkers": 2,
+          "liveComponents": [
+            "vac",
+            "rack"
+          ],
+          "unbuilds": 0,
+          "unbuildOrder": [],
+          "partsStackPickups": 0,
+          "rackArcs": 0,
+          "rackTelegraphed": false,
+          "structureDamageEvents": 0,
+          "playerDamageEvents": 0,
+          "pickupsCurated": 0,
+          "loosePickups": 0,
+          "pileCenters": [
+            {
+              "x": 6.5,
+              "z": 6.2
+            },
+            {
+              "x": 9.5,
+              "z": 6.2
+            }
+          ],
+          "pictogram": "sparkle",
+          "chairPlaced": false,
+          "poweredDown": false,
+          "nonHostile": false,
+          "kept": false,
+          "persistentKept": false
+        }
+      },
+      "requests": 1
+    },
+    {
+      "mode": "late-core",
+      "before": {
+        "state": "loading",
+        "model": false,
+        "meshes": 0,
+        "hulls": 0,
+        "supports": 0,
+        "modelChildren": 0,
+        "primitive": true,
+        "morphs": {},
+        "diagnostics": {
+          "active": true,
+          "act": 1,
+          "position": {
+            "x": 8,
+            "z": 4
+          },
+          "tidiedMarkers": 2,
+          "liveComponents": [
+            "vac",
+            "rack"
+          ],
+          "unbuilds": 0,
+          "unbuildOrder": [],
+          "partsStackPickups": 0,
+          "rackArcs": 0,
+          "rackTelegraphed": false,
+          "structureDamageEvents": 0,
+          "playerDamageEvents": 0,
+          "pickupsCurated": 0,
+          "loosePickups": 0,
+          "pileCenters": [
+            {
+              "x": 6.5,
+              "z": 6.2
+            },
+            {
+              "x": 9.5,
+              "z": 6.2
+            }
+          ],
+          "pictogram": "sparkle",
+          "chairPlaced": false,
+          "poweredDown": false,
+          "nonHostile": false,
+          "kept": false,
+          "persistentKept": false
+        }
+      },
+      "after": {
+        "state": "ready",
+        "model": true,
+        "meshes": 3,
+        "hulls": 3,
+        "supports": 3,
+        "modelChildren": 1,
+        "primitive": false,
+        "morphs": {
+          "vac": 1,
+          "rack": 0,
+          "core": 1
+        },
+        "diagnostics": {
+          "active": true,
+          "act": 2,
+          "position": {
+            "x": 8,
+            "z": 4
+          },
+          "tidiedMarkers": 2,
+          "liveComponents": [
+            "core",
+            "rack"
+          ],
+          "unbuilds": 0,
+          "unbuildOrder": [],
+          "partsStackPickups": 0,
+          "rackArcs": 0,
+          "rackTelegraphed": false,
+          "structureDamageEvents": 0,
+          "playerDamageEvents": 0,
+          "pickupsCurated": 0,
+          "loosePickups": 0,
+          "pileCenters": [
+            {
+              "x": 6.5,
+              "z": 6.2
+            },
+            {
+              "x": 9.5,
+              "z": 6.2
+            }
+          ],
+          "pictogram": "broom",
+          "chairPlaced": false,
+          "poweredDown": false,
+          "nonHostile": false,
+          "kept": false,
+          "persistentKept": false
+        }
+      },
+      "requests": 1
+    },
+    {
+      "mode": "late-chair",
+      "before": {
+        "state": "loading",
+        "model": false,
+        "meshes": 0,
+        "hulls": 0,
+        "supports": 0,
+        "modelChildren": 0,
+        "primitive": true,
+        "morphs": {},
+        "diagnostics": {
+          "active": true,
+          "act": 1,
+          "position": {
+            "x": 8,
+            "z": 4
+          },
+          "tidiedMarkers": 2,
+          "liveComponents": [
+            "vac",
+            "rack"
+          ],
+          "unbuilds": 0,
+          "unbuildOrder": [],
+          "partsStackPickups": 0,
+          "rackArcs": 0,
+          "rackTelegraphed": false,
+          "structureDamageEvents": 0,
+          "playerDamageEvents": 0,
+          "pickupsCurated": 0,
+          "loosePickups": 0,
+          "pileCenters": [
+            {
+              "x": 6.5,
+              "z": 6.2
+            },
+            {
+              "x": 9.5,
+              "z": 6.2
+            }
+          ],
+          "pictogram": "sparkle",
+          "chairPlaced": false,
+          "poweredDown": false,
+          "nonHostile": false,
+          "kept": false,
+          "persistentKept": false
+        }
+      },
+      "after": {
+        "state": "ready",
+        "model": true,
+        "meshes": 3,
+        "hulls": 3,
+        "supports": 3,
+        "modelChildren": 1,
+        "primitive": false,
+        "morphs": {
+          "vac": 1,
+          "rack": 1,
+          "core": 1
+        },
+        "diagnostics": {
+          "active": false,
+          "act": 3,
+          "position": {
+            "x": 8,
+            "z": 4
+          },
+          "tidiedMarkers": 2,
+          "liveComponents": [],
+          "unbuilds": 0,
+          "unbuildOrder": [],
+          "partsStackPickups": 0,
+          "rackArcs": 0,
+          "rackTelegraphed": false,
+          "structureDamageEvents": 0,
+          "playerDamageEvents": 0,
+          "pickupsCurated": 0,
+          "loosePickups": 0,
+          "pileCenters": [
+            {
+              "x": 6.5,
+              "z": 6.2
+            },
+            {
+              "x": 9.5,
+              "z": 6.2
+            }
+          ],
+          "pictogram": "DONE",
+          "chairPlaced": true,
+          "poweredDown": true,
+          "nonHostile": true,
+          "kept": true,
+          "persistentKept": false
+        }
+      },
+      "requests": 1
+    },
+    {
+      "mode": "reset",
+      "before": {
+        "state": "loading",
+        "model": false,
+        "meshes": 0,
+        "hulls": 0,
+        "supports": 0,
+        "modelChildren": 0,
+        "primitive": true,
+        "morphs": {},
+        "diagnostics": {
+          "active": true,
+          "act": 1,
+          "position": {
+            "x": 8,
+            "z": 4
+          },
+          "tidiedMarkers": 2,
+          "liveComponents": [
+            "vac",
+            "rack"
+          ],
+          "unbuilds": 0,
+          "unbuildOrder": [],
+          "partsStackPickups": 0,
+          "rackArcs": 0,
+          "rackTelegraphed": false,
+          "structureDamageEvents": 0,
+          "playerDamageEvents": 0,
+          "pickupsCurated": 0,
+          "loosePickups": 0,
+          "pileCenters": [
+            {
+              "x": 6.5,
+              "z": 6.2
+            },
+            {
+              "x": 9.5,
+              "z": 6.2
+            }
+          ],
+          "pictogram": "sparkle",
+          "chairPlaced": false,
+          "poweredDown": false,
+          "nonHostile": false,
+          "kept": false,
+          "persistentKept": false
+        }
+      },
+      "after": {
+        "state": "off",
+        "model": false,
+        "meshes": 0,
+        "hulls": 0,
+        "supports": 0,
+        "modelChildren": 0,
+        "primitive": false,
+        "morphs": {},
+        "diagnostics": {
+          "active": false,
+          "act": 0,
+          "position": {
+            "x": 8,
+            "z": 4
+          },
+          "tidiedMarkers": 0,
+          "liveComponents": [],
+          "unbuilds": 0,
+          "unbuildOrder": [],
+          "partsStackPickups": 0,
+          "rackArcs": 0,
+          "rackTelegraphed": false,
+          "structureDamageEvents": 0,
+          "playerDamageEvents": 0,
+          "pickupsCurated": 0,
+          "loosePickups": 0,
+          "pileCenters": [
+            {
+              "x": 6.5,
+              "z": 6.2
+            },
+            {
+              "x": 9.5,
+              "z": 6.2
+            }
+          ],
+          "pictogram": "none",
+          "chairPlaced": false,
+          "poweredDown": false,
+          "nonHostile": false,
+          "kept": false,
+          "persistentKept": false
+        }
+      },
+      "requests": 1
+    },
+    {
+      "mode": "loaded-reset",
+      "before": {
+        "state": "ready",
+        "model": true,
+        "meshes": 3,
+        "hulls": 3,
+        "supports": 3,
+        "modelChildren": 1,
+        "primitive": false,
+        "morphs": {
+          "vac": 0,
+          "rack": 0,
+          "core": 0
+        },
+        "diagnostics": {
+          "active": true,
+          "act": 1,
+          "position": {
+            "x": 8,
+            "z": 4
+          },
+          "tidiedMarkers": 2,
+          "liveComponents": [
+            "vac",
+            "rack"
+          ],
+          "unbuilds": 0,
+          "unbuildOrder": [],
+          "partsStackPickups": 0,
+          "rackArcs": 0,
+          "rackTelegraphed": false,
+          "structureDamageEvents": 0,
+          "playerDamageEvents": 0,
+          "pickupsCurated": 0,
+          "loosePickups": 0,
+          "pileCenters": [
+            {
+              "x": 6.5,
+              "z": 6.2
+            },
+            {
+              "x": 9.5,
+              "z": 6.2
+            }
+          ],
+          "pictogram": "sparkle",
+          "chairPlaced": false,
+          "poweredDown": false,
+          "nonHostile": false,
+          "kept": false,
+          "persistentKept": false
+        }
+      },
+      "after": {
+        "state": "off",
+        "model": false,
+        "meshes": 0,
+        "hulls": 0,
+        "supports": 0,
+        "modelChildren": 0,
+        "primitive": false,
+        "morphs": {},
+        "diagnostics": {
+          "active": false,
+          "act": 0,
+          "position": {
+            "x": 8,
+            "z": 4
+          },
+          "tidiedMarkers": 0,
+          "liveComponents": [],
+          "unbuilds": 0,
+          "unbuildOrder": [],
+          "partsStackPickups": 0,
+          "rackArcs": 0,
+          "rackTelegraphed": false,
+          "structureDamageEvents": 0,
+          "playerDamageEvents": 0,
+          "pickupsCurated": 0,
+          "loosePickups": 0,
+          "pileCenters": [
+            {
+              "x": 6.5,
+              "z": 6.2
+            },
+            {
+              "x": 9.5,
+              "z": 6.2
+            }
+          ],
+          "pictogram": "none",
+          "chairPlaced": false,
+          "poweredDown": false,
+          "nonHostile": false,
+          "kept": false,
+          "persistentKept": false
+        }
+      },
+      "disposals": [
+        {
+          "type": "geometry",
+          "count": 1
+        },
+        {
+          "type": "material",
+          "count": 1
+        },
+        {
+          "type": "texture",
+          "count": 6
+        },
+        {
+          "type": "geometry",
+          "count": 1
+        },
+        {
+          "type": "material",
+          "count": 1
+        },
+        {
+          "type": "geometry",
+          "count": 1
+        },
+        {
+          "type": "material",
+          "count": 1
+        }
+      ],
+      "requests": 1
+    }
+  ],
+  "errors": [],
+  "passed": true
+}

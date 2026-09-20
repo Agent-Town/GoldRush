@@ -1,0 +1,15 @@
+VIEW wave=0 t=0 gold=0 heroHp=100 alive=0 pendingSecure=null pendingOffer=none
+SENT: [{"verb":"HARVEST","seam":"gold-seam-2"},{"verb":"BUILD","what":"turret","where":{"x":-4,"z":9},"when":{"goldGte":50}},{"verb":"FALLBACK_IF","threat":{"enemiesGte":5},"pos":{"x":12,"z":-2}},{"verb":"HOLD","pos":{"x":-6,"z":9}}]
+VIEW wave=1 t=30 gold=5 heroHp=100 alive=7 pendingSecure=null pendingOffer=none
+SENT: [{"verb":"SECURE_CHOICE","choice":"bank"}]
+STDERR: gr-sim rejected orders: SECURE_CHOICE requires a live secure window.
+VIEW wave=1 t=30 gold=5 heroHp=100 alive=7 pendingSecure=null pendingOffer=none
+SENT: [{"verb":"HARVEST","seam":"gold-seam-2"},{"verb":"BUILD","what":"turret","where":{"x":-4,"z":9},"when":{"goldGte":50}},{"verb":"FALLBACK_IF","threat":{"enemiesGte":5},"pos":{"x":12,"z":-2}},{"verb":"HOLD","pos":{"x":-6,"z":9}}]
+VIEW wave=1 t=47.27 gold=10 heroHp=76 alive=2 pendingSecure=null pendingOffer=double_tap_coil,spring_heels,pan_legend
+SENT: [{"verb":"PICK_UPGRADE","id":"double_tap_coil"},{"verb":"HARVEST","seam":"gold-seam-2"},{"verb":"BUILD","what":"turret","where":{"x":-4,"z":9},"when":{"goldGte":50}},{"verb":"FALLBACK_IF","threat":{"enemiesGte":5},"pos":{"x":12,"z":-2}},{"verb":"HOLD","pos":{"x":-6,"z":9}}]
+VIEW wave=2 t=60.03 gold=15 heroHp=0 alive=8 pendingSecure=null pendingOffer=none
+SENT: [{"verb":"HARVEST","seam":"gold-seam-2"},{"verb":"BUILD","what":"turret","where":{"x":-4,"z":9},"when":{"goldGte":50}},{"verb":"FALLBACK_IF","threat":{"enemiesGte":5},"pos":{"x":12,"z":-2}},{"verb":"HOLD","pos":{"x":-6,"z":9}}]
+OUTCOME: {"secured":false,"waves":2,"timeMs":60033,"gold":15,"kills":23,"calls":4,"defaultedPicks":0,"defaultedSecure":0,"eventLogHash":"fnv1a32:73780fba","endReason":"wave-ceiling"}
+STDERR: gr-sim speed: 4.23 waves/s
+SENT: [{"verb":"HARVEST","seam":"gold-seam-2"},{"verb":"BUILD","what":"turret","where":{"x":-4,"z":9},"when":{"goldGte":50}},{"verb":"FALLBACK_IF","threat":{"enemiesGte":5},"pos":{"x":12,"z":-2}},{"verb":"HOLD","pos":{"x":-6,"z":9}}]
+CLOSE code=0

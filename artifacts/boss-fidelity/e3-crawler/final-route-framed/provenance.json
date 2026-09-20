@@ -1,0 +1,37 @@
+{
+  "capturedAt": "2026-09-08T06:02:31.154Z",
+  "files": {
+    "src/systems/CrawlerBossSystem.ts": {
+      "sha256": "dd2d61dcc904af9bee6e08878c9f458a1c502109b9ef3bb6293f95350706ad7b"
+    },
+    "src/entities/pools.ts": {
+      "sha256": "e9509ad20e647c302694a419494d621a32b910acf0b40eab90050c4461c6f2ee"
+    },
+    "src/game/Game.ts": {
+      "sha256": "5d1ea4bf63df8f16882f2c60d5c6e3549657483ba3f466066492fd06800b5944"
+    },
+    "scripts/check-crawler-presentation.mjs": {
+      "sha256": "deb8580dbbf1c6e85d87a8b72d702f8bfb98ee5b8f085ff37c1bb4ff2244f685"
+    },
+    "assets/pilots/crawler-3d/crawler.glb": {
+      "sha256": "26112eaa095aa891d57c209e224e81a3a9fc89bc6f56614eb98ee6d5d5016eb6"
+    }
+  },
+  "scope": "Frozen joint presentation/movement source; fixed inspection hero offset X-0.5 Z+1.0. Route-wide target fit is covered by separate route evidence.",
+  "fixture": {
+    "centroid": {
+      "x": -44.10356584583454,
+      "z": 39.92043041482282
+    },
+    "heroOffset": {
+      "x": -0.5,
+      "z": 1
+    },
+    "heroPosition": [
+      -44.60356584583454,
+      4.550220064271602,
+      40.92043041482282
+    ]
+  },
+  "receipt": "../check-receipts/final-route-presentation.jsonl"
+}

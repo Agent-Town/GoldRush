@@ -1,0 +1,66 @@
+
+=== 1 finish-ride ===
+{"rig":"opus","contract":"e4-dust-flats","wall":1081,"wallHit":true,"rc":143,"tracked":[],"files":24,"outcome":{"secured":true,"waves":14,"gold":55,"runsSoFar":5,"scoredAttempts":1,"tape":"/private/tmp/heat12-038cc280/artifacts/heat12/opus/e4-dust-flats/attempt-2-tape.json","worldModel":"sim-import"},"scoredTapes":[{"file":"attempt-2-tape.json","id":"agent-a2abb3af-a22234cd-28a3-4b2c-b9c6-2f2baa797847","secured":true,"waves":14,"gold":55,"durationTicks":12785,"lastEntryTick":12784,"promotedByRig":true,"discoveredBy":"outcome-file+filename"}],"otherSecured":[],"reportSections":{"outcome":1280,"whatTheMapAsked":2544,"winnability":1075,"lessons":6091},"usage":{"turns":100,"toolCalls":61,"tokensIn":200,"tokensOut":136826}}
+tape chosen: attempt-2-tape.json (id agent-a2abb3af-a22234cd-28a3-4b2c-b9c6-2f2baa797847, promotedByRig=true, discoveredBy=outcome-file+filename)
+
+=== 2 freeze notebook header ===
+{"headerOnly":true,"headerBytes":453}
+
+=== 3 harnessDigest ===
+61166d39d7047ea599121914230d560208406921e6a6c8742193b3bd5533c871
+
+=== 4 build-submission ===
+{"tapeId":"agent-a2abb3af-a22234cd-28a3-4b2c-b9c6-2f2baa797847","contract":"e4-dust-flats","epochId":"epoch-4-motor","seed":"e4-dust-flats-01","seedMode":"bench","score":{"secured":true,"waves":14,"timeAlive":426.133,"gold":55,"baseValue":0},"papers":{"buildId":"9c4337e3b","engineHash":"86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b","era":5,"viewVersion":2},"durationTicks":12785,"lastEntryTick":12784,"stack":{"model":"claude-opus-5","harness":"heat12-operator","harnessVersion":"2.1.257","harnessDigest":"61166d39d7047ea599121914230d560208406921e6a6c8742193b3bd5533c871","worldModel":"sim-import","config":"attended-hosted headless `claude -p` ride (heat 12) on Claude Code CLI 2.1.257; charter + door manual + own notebook (self-memory); own controller authored in-ride","calls":52,"tokensIn":28330694,"tokensOut":136826}}
+
+=== 5 publish (POST → poll → WATCH) ===
+FAILED: file:///private/tmp/heat12-038cc280/artifacts/gauntlet-heat12-20260905/publish-submission.mjs:19
+if (slip?.assay !== 'verified') throw new Error(`assay ${slip?.assay ?? 'missing'}: ${slip?.assayReason ?? 'no reason'}`);
+                                      ^
+
+Error: assay pending: no reason
+    at file:///private/tmp/heat12-038cc280/artifacts/gauntlet-heat12-20260905/publish-submission.mjs:19:39
+
+Node.js v23.11.1
+
+POST ok; assay still pending at the 120 s mark — resuming with the poll-only shim (no re-POST)
+
+=== 6 poll-verdict (no re-POST) ===
+FAILED: file:///private/tmp/heat12-038cc280/artifacts/gauntlet-heat12-20260905/poll-verdict.mjs:24
+if (slip?.assay !== 'verified') throw new Error(`assay ${slip?.assay ?? 'missing'}: ${slip?.assayReason ?? 'no reason'}`);
+                                      ^
+
+Error: assay missing: no reason
+    at file:///private/tmp/heat12-038cc280/artifacts/gauntlet-heat12-20260905/poll-verdict.mjs:24:39
+
+Node.js v23.11.1
+
+file:///private/tmp/heat12-038cc280/artifacts/gauntlet-heat12-20260905/publish-submission.mjs:19
+if (slip?.assay !== 'verified') throw new Error(`assay ${slip?.assay ?? 'missing'}: ${slip?.assayReason ?? 'no reason'}`);
+                                      ^
+
+Error: assay pending: no reason
+    at file:///private/tmp/heat12-038cc280/artifacts/gauntlet-heat12-20260905/publish-submission.mjs:19:39
+
+Node.js v23.11.1
+file:///private/tmp/heat12-038cc280/artifacts/gauntlet-heat12-20260905/poll-verdict.mjs:24
+if (slip?.assay !== 'verified') throw new Error(`assay ${slip?.assay ?? 'missing'}: ${slip?.assayReason ?? 'no reason'}`);
+                                      ^
+
+Error: assay missing: no reason
+    at file:///private/tmp/heat12-038cc280/artifacts/gauntlet-heat12-20260905/poll-verdict.mjs:24:39
+
+Node.js v23.11.1
+file:///private/tmp/heat12-038cc280/artifacts/gauntlet-heat12-20260905/land-ride.mjs:31
+const step = (name, fn) => { process.stdout.write(`\n=== ${name} ===\n`); try { return fn(); } catch (error) { process.stdout.write(`FAILED: ${(error.stdout ?? '') + (error.stderr ?? error.message)}\n`); throw Object.assign(new Error(name), { step: name }); } };
+                                                                                                                                                                                                                                ^
+
+Error: 6 poll-verdict (no re-POST)
+    at step (file:///private/tmp/heat12-038cc280/artifacts/gauntlet-heat12-20260905/land-ride.mjs:31:225)
+    at file:///private/tmp/heat12-038cc280/artifacts/gauntlet-heat12-20260905/land-ride.mjs:68:3
+    at ModuleJob.run (node:internal/modules/esm/module_job:274:25)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:644:26)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:98:5) {
+  step: '6 poll-verdict (no re-POST)'
+}
+
+Node.js v23.11.1

@@ -1,0 +1,15 @@
+Ride complete. **Not secured** — 4 runs, 2 scored attempts, nothing put forward.
+
+**What happened:** I reproduced generation 80's plan on era 6 and found every structural number unchanged (idle floor w3/98.267s against my notebook's "w3/≈100s"; bankCap 360, beacon ladder 240, `connect.byWave` 8 all intact). None of era 6's eight pins names this contract, so the re-survey moved its rendering, not its rules.
+
+The three sub-problems each got solved, just never at the same time:
+
+- **Survival** — solved outright. A *kiting* hero on the south riverbank held 109/125 to the wave-20 ceiling under 60 live threats; the same hero *parked* on that identical coordinate dies at wave 5. The 12wu shuffle is a shutout at hero speed 6.0 vs a roster at ~3.0.
+- **Economy** — solved. Moving the hero 36wu north off the claim (the unemployed Prospector drifts to the hero, so the hero's post *is* the income rate) took panning from 0.54 g/s to 1.5 g/s.
+- **The objective** — built, lit, and 146 seconds late. `now.canyonConnect` read `powered 2/2` at t=386.6 with `failed: true` already set. Gold first reached the chain's 240 at t=346.9; the deadline is t≈240.
+
+**Two measurements worth keeping.** The hero genuinely cannot cross this river — `MOVE_HERO` to (0,10) answers `UNREACHABLE_APPROACH` at the ford's own x, confirming gen 80 on the current engine. And tune-2's worst bug was its best measurement: its unreachable waypoints stayed `active` and owned every tick, freezing `pan` at 0 for 600 seconds — which is exactly how I discovered the kite.
+
+**The gap is named, not mysterious:** an ungated `REPAIR_UNDER` spent ~88 gold mending two distant pre-placed lantern posts I didn't build and didn't need, and walked the worker off the seams to do it. Gating the mend on chain-complete and starting the kite at wave 4 instead of wave 0 puts 240 gold near t≈250; one more shove closes a wave-8 deadline.
+
+Files that survive: `gauntlet-outcome.json` (with `submit: DO NOT SUBMIT` and the envelope, clean on all three axes), `gauntlet-report.md`, four per-view tables, four tapes, and controllers v1–v4.

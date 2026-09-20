@@ -1,0 +1,24 @@
+e8-far-side [E8SuitAirSystem] secured=false waves=22 gold=200 t=672.333s
+  replay reproduced the tape: true (fnv1a32:a9448c78 vs fnv1a32:a9448c78)
+  suit: 673/672s with air; first empty at nulls; drained 209.4s; empty 0s
+  regolith: worked [0,1,2,3] of 4 (required 0); runsOnAir 294; breathless 0; latch closed at nulls
+  grounds first worked: #1@4s #2@17s #0@71s #3@94s
+  domes: far-side-landing-yard air=1 breaches=0
+  crossing: 1/4 reached; breathless entries 0
+  wrote artifacts/e8-air-wall-all-maps/measure-e8-far-side.json
+e8-low-orbit [E8SuitAirSystem] secured=true waves=20 gold=200 t=600s
+  replay reproduced the tape: true (fnv1a32:c69324de vs fnv1a32:c69324de)
+  suit: 621/620s with air; first empty at nulls; drained 94.2s; empty 0s
+  regolith: worked [0,1,2,3] of 4 (required 0); runsOnAir 294; breathless 0; latch closed at 364s
+  grounds first worked: #2@4s #3@9s #0@26s #1@34s
+  domes: west-scaffold-deck air=1 breaches=0 | claw-carcass-yard air=1 breaches=0 | east-scaffold-deck air=1 breaches=0
+  crossing: 3/4 reached; breathless entries 0
+  wrote artifacts/e8-air-wall-all-maps/measure-e8-low-orbit.json
+e8-eclipse [E8SuitAirSystem] secured=false waves=19 gold=190 t=585.2s
+  replay reproduced the tape: true (fnv1a32:623e0994 vs fnv1a32:623e0994)
+  suit: 198/585s with air; first empty at 62s; drained 168.133s; empty 387.533s
+  regolith: worked [0,2,3,5] of 6 (required 4); runsOnAir 103; breathless 189; latch closed at 484s
+  grounds first worked: #3@5s #2@294s #5@450s #0@484s
+  domes: dome-cluster-pad-west air=0 breaches=38 | dome-cluster-pad-center air=1 breaches=0 | dome-cluster-pad-east air=0 breaches=46
+  eclipse: arrived=true at wave 10; offline [dome-cluster-pad-west,dome-cluster-pad-east]; reserve dome-cluster-pad-center; after 73/1
+  wrote artifacts/e8-air-wall-all-maps/measure-e8-eclipse.json

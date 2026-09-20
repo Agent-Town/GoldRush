@@ -1,0 +1,11 @@
+**NOT SECURED** — best and scored: **w19 / 585.200 s / 190 g / 89 calls**, 14.8 seconds short of the wave-20 gate. 4 sim runs, 1 scored attempt. Nothing put forward; the run is a death and `skill.md` forbids submitting it.
+
+Both files are on disk at `/tmp/heat12-038cc280/artifacts/heat12/opus/e8-eclipse/`: `gauntlet-outcome.json` (naming `attempt-1-tape.json`) and `gauntlet-report.md` with the four required sections.
+
+What the ride found:
+
+- **My notebook was inverted, not stale.** Generation 36 secured this map reporting `now.air` absent from all 89 views. It is now live, and it carries an `eclipse` block no sibling publishes — `arrived`, `arrivedAtWave`, `offline`, `reserve`, `groundsWorkedAfter`, `requiredAfter`.
+- **The gate is real and cheap.** `E8SuitAirSystem.objectiveAllowsSecure` wants one regolith pan on suit air, plus one more *after* the shadow. The shadow lands at `ceil(secureWave/2)` = wave 10 — computable from source on a map that deliberately publishes no countdown (`firstRunWarning: false`). It takes every dome offline but `dome-cluster-pad-center`. One wave parked on that reserve carried the suit to 51 s; `groundsWorkedAfter` finished at **73** against a requirement of 1. The era was never the wall.
+- **The wall was ordinary survival, and the miss was mine.** The tier-upgrade sink emitted **zero** `CONTEXT_ACTION` orders across 89 arrays: I gated it on `gold >= 150` at a view instant, which a 200-cap purse drained by a ten-rung ladder never presents. My scored attempt therefore reproduced tune-2 bit for bit (`fnv1a32:a0a58077`) — ~600 gold of dps never bought, on a run that died 15 seconds short.
+
+One correction worth flagging: an identical `eventLogHash` between two runs whose controllers differ is a bug report, not a determinism receipt. I read it as the latter for a moment, and that cost the attempt.

@@ -1,0 +1,28 @@
+All deliverables are on disk. The ride is done — here is what it produced.
+
+## Result: NOT SECURED
+
+**Best:** w14 / 439.567 s / 96 gold / 151 calls (tune-1, `fnv1a32:17e14213`). **Scored attempt:** w13 / 419.367 s / 11 gold / 66 calls. 4 sim runs, 1 scored attempt. **Nothing put forward** — no run secured, so no tape is submittable.
+
+## What I changed, as required
+
+My gen-40 notes closed by naming the run I never fired: *"write the two-sided-bait run first next time."* I fired it. Both rim pads got forts instead of the east one only — derived from the manifest before any order: spawn ring r26 through gates north/west/east gives spawn points (0,38), (−26,12), (26,12); east pad corner (28,8) is 4.47 wu from its spawn and west (−28,6) is 6.32, both beating the claim's 26, while north's nearest legal ground is 34.7 — **the north lane is unbaitable by construction.**
+
+I also closed the constraint gen 40 discovered late: tune-1 spent **538,306 of a 576,176-byte ceiling by wave 14**, so my best run was also my most unsubmittable. Pacing submissions against an entry budget took the same policy to 176–185 KB across longer rides. That risk is now solved.
+
+## What the runs actually taught
+
+The two tunes are a clean one-variable pair that disagree informatively:
+
+- **tune-1** (mend on): hero flat at **119/175 from t=175 to t=377** under 30–44 threats — but the purse froze (`goldPanned` flat for 42 s, then 44 s, then 56 s), **1.09 g/s**, only 180 gold of ladder ever landed.
+- **tune-2** (mend removed): **2.16 g/s**, 870 panned, entire ladder landed — and all 20 works finished wrecked, hero bleeding 100→114→93→69.
+
+Bait works; bait mass is a consumable; mending it with the same feet that pan is what starves it. `REPAIR_UNDER` costs more income here (1.07 g/s) than the entire ladder costs gold.
+
+**Two things I want to flag rather than bury:**
+
+1. My scored synthesis was *worse than either extreme it interpolated between* (w13 vs w14/w13). Gating the mend on surplus means it fires exactly when the ladder wants that gold — it starves both jobs a little instead of one completely. That's a real negative result, and it's in the report.
+
+2. On my own repeated failure mode: this is the sixth heat running that ends "fire the synthesis first." I *did* write gen 40's named lever first this time — but gen 40 listed **two** untested levers and I treated them as a menu rather than a conjunction. The run I should have ridden was two-sided bait *plus* a mend rate that doesn't spend the panning feet.
+
+**Winnability (L2):** undecided-leaning-yes, stopped by my own budget against a now-priced tension, not by a wall in the map, the grammar, or the door. On the era question: this contract asks nothing about E9 persistent tiles — `CanalChoiceSystem` exists and gates secures elsewhere, but keys on `twist.persistentCanalChoices`, which this manifest doesn't declare. The `now`-key union across every view of every run carries no `canalChoices` and nothing that persists across a wave. The idle floor reproduced gen 40's w2/82.6 s exactly, confirming the charter's "no mechanic-change pin."

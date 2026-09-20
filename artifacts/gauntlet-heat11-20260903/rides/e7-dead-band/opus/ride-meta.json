@@ -1,0 +1,19 @@
+{
+  "rig": "opus",
+  "model": "claude-opus-5",
+  "arena": "/tmp/heat11-5e7a7c0b",
+  "workdir": "/tmp/heat11-5e7a7c0b/artifacts/heat11/opus/e7-dead-band",
+  "charterFile": "rides/e7-dead-band/opus/charter.md",
+  "charterSha256": "553de7bdcd2bf7312838b6668bfb8112a6f235a3c0c259165242593b46ac6085",
+  "sessionId": "b37e68c2-e2ca-4ddf-8c10-984aa267016c",
+  "wallSeconds": 1500,
+  "startedAt": "2026-09-04T03:26:06.627Z",
+  "invocation": "env -u CLAUDECODE -u CLAUDE_CODE_ENTRYPOINT -u CLAUDE_CONFIG_DIR claude -p \"<charter text, see charterFile>\" --model claude-opus-5 --allowedTools Read,Write,Glob,Bash(node *) --output-format text --session-id b37e68c2-e2ca-4ddf-8c10-984aa267016c",
+  "endedAt": "2026-09-04T03:38:02.222Z",
+  "wallClockSeconds": 716,
+  "exitCode": 0,
+  "signal": null,
+  "wallHit": false,
+  "firstOutputAt": "2026-09-04T03:28:06.642Z",
+  "setupToFirstOutputSeconds": 120
+}

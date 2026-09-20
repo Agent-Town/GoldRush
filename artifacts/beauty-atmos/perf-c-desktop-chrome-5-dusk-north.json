@@ -1,0 +1,57 @@
+{
+  "variant": "c",
+  "project": "desktop-chrome",
+  "shot": "5-dusk-north",
+  "frameMs": {
+    "last": 7.90000057220459,
+    "avg": 8.328888893127441,
+    "p95": 8.799999237060547,
+    "sampleCount": 180
+  },
+  "renderMs": {
+    "last": 0.39999961853027344,
+    "avg": 0.2838888592190213,
+    "p95": 0.40000057220458984,
+    "sampleCount": 180
+  },
+  "renderer": {
+    "calls": 37,
+    "geometries": 96,
+    "textures": 41,
+    "triangles": 74480
+  },
+  "canvas": {
+    "width": 1280,
+    "height": 800,
+    "dpr": 1
+  },
+  "zoom": 0.85,
+  "hero": {
+    "x": 0,
+    "z": -13
+  },
+  "sky": {
+    "variant": "c",
+    "objects": 0,
+    "triangles": 0,
+    "background": "ramp",
+    "topEdgePitchDeg": -29.51,
+    "topEdgeGroundZ": -31.77,
+    "beyondPlate": true
+  },
+  "lighting": {
+    "night": false,
+    "background": "TownSkyRamp",
+    "fog": "#c98a5c",
+    "fogNear": 28,
+    "fogFar": 68,
+    "sunIntensity": 1.12,
+    "fillIntensity": 0.91
+  },
+  "tier": "full",
+  "buildings": 6,
+  "errors": {
+    "consoleErrors": [],
+    "pageErrors": []
+  }
+}

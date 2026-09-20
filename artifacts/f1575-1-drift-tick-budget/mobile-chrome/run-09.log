@@ -1,0 +1,20 @@
+[WebServer] (node:10619) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 10 tests using 1 worker
+
+(node:10639) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 [mobile-chrome] › e2e/m4-06-embodiment.spec.ts:148:1 › plain boot renders the Prospector near the claim with no debug gate (3.9s)
+  ✓   2 [mobile-chrome] › e2e/m4-06-embodiment.spec.ts:187:1 › permission chip shows portrait, current level, abilities, and growth path (2.3s)
+  ✓   3 [mobile-chrome] › e2e/m4-06-embodiment.spec.ts:205:1 › Prospector floats above terrain while following hero probe points (10.2s)
+  ✓   4 [mobile-chrome] › e2e/m4-06-embodiment.spec.ts:238:1 › normal play Prospector gathers XP motes when permission allows (2.4s)
+  ✓   5 [mobile-chrome] › e2e/m4-06-embodiment.spec.ts:257:1 › Prospector defers XP gathering while a higher-priority receipt is active (3.5s)
+  ✓   6 [mobile-chrome] › e2e/m4-06-embodiment.spec.ts:298:1 › real Prospector sprite loads and faces pan movement (5.2s)
+  ✓   7 [mobile-chrome] › e2e/m4-06-embodiment.spec.ts:373:1 › debug receipt moves the Prospector toward a panning target and floats ledger voice (2.7s)
+[m4-06-denied] driftAbs=0.31888869531546643 gapClosed=0.3184430074749045 tickBefore=24 tickAfter=49 tickDelta=25 simSecondsDelta=2.2333333333333347
+  ✓   8 [mobile-chrome] › e2e/m4-06-embodiment.spec.ts:404:1 › permission-denied receipts do not send the Prospector to the denied target (2.0s)
+  ✓   9 [mobile-chrome] › e2e/m4-06-embodiment.spec.ts:442:1 › permission-denied bark survives the first idle survey (2.4s)
+  ✓  10 [mobile-chrome] › e2e/m4-06-embodiment.spec.ts:469:1 › the Prospector has no collider for scripted enemy movement (6.2s)
+
+  10 passed (42.0s)

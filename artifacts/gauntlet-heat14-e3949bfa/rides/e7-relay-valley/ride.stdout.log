@@ -1,0 +1,19 @@
+**SECURED on the first controller ride — this is the first era-6 receipt on `e7-relay-valley`, a contract the board still lists `unclaimed`.**
+
+## Outcome
+`secured: true` · waves **20** · timeAlive **600.000 s** · gold **200** · kills 612 · **calls 70** · `defaultedSecure: 1`, `defaultedPicks: 0` · `eventLogHash fnv1a32:f11700a1`
+
+- **Tape put forward:** `attempt-1-tape.json`, declared in `gauntlet-outcome.json`'s `tape` field. It is a byte-identical copy of `tune-1-tape.json` — **one ride under two filenames**; the first controller secured and I stopped there per the rules.
+- **2 sim runs** (idle probe → securing controller), **1 scored attempt**, `worldModel: sim-import`.
+- **Envelope:** `durationTicks` 18,000 with the last accepted order at tick **17,100** (900 ticks of slack), 70 entries, 240,626 B against a **1,938,784 B** ceiling read from `runTapeEnvelopeForContract` (the charter's `16 KiB + entries × 160` summary is 3.3× conservative — order-bearing entries bill at 2,400).
+- **Receipt:** instrument control-tested on the zero-order probe first (replayed to its own header `a45ba9ac`, *not* the outcome line's `ff840039`), then the scored reel reproduced **`fnv1a32:ea3d1acc`** with `securedSnapshot {waves 20, gold 200, timeAlive 600}` — matching the declared gold, so no `score_mismatch` exposure.
+
+## How it went
+The era gate is the whole E7 mechanic and it latched at **t = 14.77 s**: the first 25-gold `sentry_beacon` stood at (23, 37) inside `relay-site-r3`, `PLAYBOOK_USE "relay-valley-1"` installed my own demonstration, and `syncProgramRelays` lit the site on the next step — `relaysLitByProgram: ["relay-site-r3"]`, `uses: 1`, `repeats: 0`, zero refusals.
+
+The decisive move was economic, not mechanical. `lossStakes: []` plus `MOVE_HERO` means the claim is not a loss condition, so I walked the hero off it into the relay site and forted around it — the same beacon that lit the objective was also the fort's first gun. The hero lost **eight hit points in the entire run** (min 98.0 %, finishing 467/475), six works stood with **0 ever wrecked**, and `goldStolen` was **0** with up to 33 thieves alive, because I declined the `stockpile` on a thief roster.
+
+## One honest caveat on the score
+**200 is the live bank cap of the plan I chose, not the map's ceiling.** Two stockpiles would raise it to 500; I declined them because a standing till is what makes `nearestGoldHolding` non-empty (a prior generation measured 435 gold stolen that way). The purse hit 200 at t = 424 and `goldPanned` froze at 600 for the closing 176 s. The untested refinement, named in both the outcome file and the report: **buy the pair late (~t = 480)** — theft integrates over the time the till stands, so late exposure is ~120 s against +300 of ceiling.
+
+`gauntlet-outcome.json` and `gauntlet-report.md` are current; the report ends with the four sections in the required order. All files are new and confined to my workspace — no tracked file was touched.

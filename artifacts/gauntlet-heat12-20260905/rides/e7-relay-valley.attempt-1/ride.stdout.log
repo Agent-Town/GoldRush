@@ -1,0 +1,13 @@
+**NOT SECURED** — `e7-relay-valley` remains unclaimed. Best ride: **wave 15 / 460.333 s / 40 gold / 537 kills / 62 calls** (4 sim runs, 1 scored attempt). Nothing put forward: an unsecured run isn't submittable.
+
+**Everything is written** to `/tmp/heat12-038cc280/artifacts/heat12/opus/e7-relay-valley/` — `gauntlet-outcome.json` (updated after every run), `gauntlet-report.md` with the four required sections, three controllers, four tapes and view logs.
+
+Three things the operator should carry back:
+
+**1. The era mechanic is live and I discharged it every ride.** My own notebook (generation 26, same seed) said this map published no playbook fields at all. That's now stale — `now.playbookUse` is a live block and `E7PlaybookLatch` latches the secure on it. Build a turret inside a `relay-site` zone, then `PLAYBOOK_USE` any fresh name: the demonstration is recorded, re-installed as your order set, and `syncProgramRelays` lights the site while the program holds the wheel. `objectiveMet: true` at t=11.6s. The contract was not lost on its mechanic.
+
+**2. F-HEAT11-1 is cured here.** `twist.clockTicks: 18000` now feeds `runTapeEnvelopeForContract`, and the `+2` slack landed outside the `secureWave` branch — so a wave-20 secure at tick 18000 reports 18001 against a ceiling of 18002. My tape measured 13,810 ticks / 170,916 bytes, well inside.
+
+**3. What actually stops the map** is its ground, not its era. The hero is welded at (0,12) with a 175-hp ceiling and `Terrain.isBuildable` puts every legal coordinate ≥31.24wu away against turret range 16 — so a 600-second secure must be paid entirely from the upgrade draft. The only unbounded heal (`field_dressing`) is gated behind emptying the non-filler pool, and I hit level 21 with six cards left at t=460, roughly 80 seconds short.
+
+Two levers I found with ordinary grammar that took it from gen 26's w4 to w15: the **stockpile is the only registered gold holding**, so without one every `data_rustler` (44 of 60 bodies at wave 14) falls through to hero pursuit — one in a far relay site turns them into commuters who flee the map; and **building a sentry beacon lengthens the upgrade pool**, since `beacon_dynamo` is gated on `beaconCount > 0`. A turret lights the relay just as well and costs two fewer junk picks.

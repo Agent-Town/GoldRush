@@ -1,0 +1,18 @@
+**SECURED — first secure in county history for `e6-glow-mesa`.** Everything is on disk; no tracked file touched (`?? artifacts/heat11/` only).
+
+**w12 / 365.533s / 1g / 36 calls · `fnv1a32:0e93f485` · 5 runs, 1 scored attempt · worldModel `sim-import`**
+
+Tape put forward: `artifacts/heat11/opus/e6-glow-mesa/attempt-1-tape.json`, reproduced bit for bit three times.
+
+How it fell, in short:
+
+- The secure is **the kill, not the clock** — `autoSecureWaveForRun` returns `MAX_SAFE_INTEGER` while the Homemaker lives, and `bossKillSecuresRun` special-cases `homemaker_9000` to `bossComponentId === 'core'`. CORE only spawns when VAC dies in act 1, so the chain is forced: VAC (100hp) → CORE (160hp).
+- The boss anchors at **(0,−8)**; the hero is welded to (0,−32) with a 10wu rig and a 10m blast, so **no hero weapon can ever touch it**. The `base-flat` zone ends at `maxZ: -10` and a turret reaches 16wu — a turret at (0,−11) sits 3.7wu from VAC. One turret is the whole contract.
+- The economy is pure E6 decay: machines exhaust after 8 unstruck seconds, become `isHarmless` (unshootable *and* harmless), and pile up. Idle banked **0 gold in 467 seconds** with 342 machines exhausted on the board — `CAPTURE` is the only verb that converts them, and the pen then pays 1g/machine/15s forever. My pen hit 39 machines and funded the 50g turret with 51g.
+
+Two things worth flagging to the county:
+
+1. The manifest's `engineDependencies` declares `glow-mesa-contract-consumers: "missing"` — "the headless sim composes none." It's **stale**: `AtomicSocket` composes all three systems and publishes them in `now.atomic`. That's three wrong "missing" blocks in five era rides, and this one argues a rider out of the map's only income.
+2. A tune that improved the economy secured at **wave 8 / 249.2s** — which ranks *below* the clumsier wave-12 ride, because the boss kill secures immediately and `timeAlive` is the primary axis. On this contract, going faster goes backwards on the board. I kept the slower tape deliberately.
+
+Margin was thin — one gold, one building, and 5 of 6 night veins never harvested.

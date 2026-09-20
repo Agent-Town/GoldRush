@@ -1,0 +1,106 @@
+=== F-1580-1 run 'run1' ===
+specs: e2e/m4-06-embodiment.spec.ts e2e/task-025-bandits-dont-swim.spec.ts e2e/m1-01-claim-jumpers-death.spec.ts e2e/m2-01-build-menu.spec.ts
+start: 2026-08-08T18:59:12.100Z
+load at start: 1:59  up 65 days,  5:10, 47 users, load averages: 17.94 6.85 4.68
+
+
+Running 52 tests using 1 worker
+
+  ✓   1 [desktop-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:29:1 › T spawns Claim Jumpers, contact kills hero, R restarts in place (11.6s)
+  ✓   2 [desktop-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:59:1 › nospawn blocks debug packs (2.0s)
+  ✓   3 [desktop-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:70:1 › double restart recycles enemies without geometry growth (8.3s)
+  ✓   4 [desktop-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:96:1 › stress=120 stays within pool and draw-call budget (3.0s)
+  ✓   5 [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:111:1 › menu places a palisade and logs build_palisade spend (2.8s)
+  ✓   6 [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:136:1 › build menu shows six ready icons and Balance-backed blurbs (3.1s)
+  ✓   7 [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining (2.5s)
+  ✓   8 [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:198:1 › beacon cost curve stays intact through the menu (2.9s)
+  ✓   9 [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:220:1 › single enemy slides around a finite palisade line without passing through (4.4s)
+  ✓  10 [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:277:1 › 390px build menu is visible, tappable, and clear of HUD controls (9.1s)
+  ✓  11 [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:322:1 › stress draw calls stay under 200 with palisades and beacons (6.7s)
+  ✓  12 [desktop-chrome] › e2e/m4-06-embodiment.spec.ts:148:1 › plain boot renders the Prospector near the claim with no debug gate (3.4s)
+  ✓  13 [desktop-chrome] › e2e/m4-06-embodiment.spec.ts:187:1 › permission chip shows portrait, current level, abilities, and growth path (2.4s)
+  ✓  14 [desktop-chrome] › e2e/m4-06-embodiment.spec.ts:205:1 › Prospector floats above terrain while following hero probe points (10.3s)
+  ✓  15 [desktop-chrome] › e2e/m4-06-embodiment.spec.ts:238:1 › normal play Prospector gathers XP motes when permission allows (2.2s)
+  ✓  16 [desktop-chrome] › e2e/m4-06-embodiment.spec.ts:257:1 › Prospector defers XP gathering while a higher-priority receipt is active (3.6s)
+  ✓  17 [desktop-chrome] › e2e/m4-06-embodiment.spec.ts:298:1 › real Prospector sprite loads and faces pan movement (5.2s)
+  ✓  18 [desktop-chrome] › e2e/m4-06-embodiment.spec.ts:373:1 › debug receipt moves the Prospector toward a panning target and floats ledger voice (2.5s)
+[m4-06-denied] driftAbs=0.3026763948510024 gapClosed=0.30146923993916985 tickBefore=27 tickAfter=51 tickDelta=24 simSecondsDelta=2.1000000000000023
+  ✓  19 [desktop-chrome] › e2e/m4-06-embodiment.spec.ts:404:1 › permission-denied receipts do not send the Prospector to the denied target (2.1s)
+  ✓  20 [desktop-chrome] › e2e/m4-06-embodiment.spec.ts:442:1 › permission-denied bark survives the first idle survey (2.4s)
+  ✓  21 [desktop-chrome] › e2e/m4-06-embodiment.spec.ts:469:1 › the Prospector has no collider for scripted enemy movement (6.2s)
+  ✓  22 [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:105:1 › enemy crossing the river reaches the hero through the ford only (2.9s)
+  ✓  23 [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:123:1 › scheduled waves never place enemies in deep river over three waves (6.0s)
+  ✓  24 [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:139:1 › hero stops in the shallows and keeps weapons armed at the deep channel (2.9s)
+  ✓  25 [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:181:1 › xp from a residual deep-water death is auto-banked with no mote (2.2s)
+  ✓  26 [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:202:1 › far-bank sluice stays untouched when the river flank is open (3.3s)
+  ✓  27 [mobile-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:29:1 › T spawns Claim Jumpers, contact kills hero, R restarts in place (9.6s)
+  ✓  28 [mobile-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:59:1 › nospawn blocks debug packs (2.0s)
+  ✓  29 [mobile-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:70:1 › double restart recycles enemies without geometry growth (8.4s)
+  ✓  30 [mobile-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:96:1 › stress=120 stays within pool and draw-call budget (3.0s)
+  ✓  31 [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:111:1 › menu places a palisade and logs build_palisade spend (2.7s)
+  ✓  32 [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:136:1 › build menu shows six ready icons and Balance-backed blurbs (2.8s)
+  ✘  33 [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining (18.4s)
+  ✓  34 [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:198:1 › beacon cost curve stays intact through the menu (3.2s)
+  ✓  35 [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:220:1 › single enemy slides around a finite palisade line without passing through (4.7s)
+  ✓  36 [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:277:1 › 390px build menu is visible, tappable, and clear of HUD controls (9.3s)
+  ✓  37 [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:322:1 › stress draw calls stay under 200 with palisades and beacons (6.6s)
+  ✓  38 [mobile-chrome] › e2e/m4-06-embodiment.spec.ts:148:1 › plain boot renders the Prospector near the claim with no debug gate (3.5s)
+  ✓  39 [mobile-chrome] › e2e/m4-06-embodiment.spec.ts:187:1 › permission chip shows portrait, current level, abilities, and growth path (2.1s)
+  ✓  40 [mobile-chrome] › e2e/m4-06-embodiment.spec.ts:205:1 › Prospector floats above terrain while following hero probe points (10.3s)
+  ✓  41 [mobile-chrome] › e2e/m4-06-embodiment.spec.ts:238:1 › normal play Prospector gathers XP motes when permission allows (2.4s)
+  ✓  42 [mobile-chrome] › e2e/m4-06-embodiment.spec.ts:257:1 › Prospector defers XP gathering while a higher-priority receipt is active (4.0s)
+  ✓  43 [mobile-chrome] › e2e/m4-06-embodiment.spec.ts:298:1 › real Prospector sprite loads and faces pan movement (5.4s)
+  ✓  44 [mobile-chrome] › e2e/m4-06-embodiment.spec.ts:373:1 › debug receipt moves the Prospector toward a panning target and floats ledger voice (2.7s)
+[m4-06-denied] driftAbs=0.3722002149381437 gapClosed=0.37139096406706074 tickBefore=26 tickAfter=50 tickDelta=24 simSecondsDelta=2.100000000000002
+  ✓  45 [mobile-chrome] › e2e/m4-06-embodiment.spec.ts:404:1 › permission-denied receipts do not send the Prospector to the denied target (2.0s)
+  ✓  46 [mobile-chrome] › e2e/m4-06-embodiment.spec.ts:442:1 › permission-denied bark survives the first idle survey (2.5s)
+  ✓  47 [mobile-chrome] › e2e/m4-06-embodiment.spec.ts:469:1 › the Prospector has no collider for scripted enemy movement (6.2s)
+  ✓  48 [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:105:1 › enemy crossing the river reaches the hero through the ford only (2.9s)
+  ✓  49 [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:123:1 › scheduled waves never place enemies in deep river over three waves (5.8s)
+  ✓  50 [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:139:1 › hero stops in the shallows and keeps weapons armed at the deep channel (3.0s)
+  ✓  51 [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:181:1 › xp from a residual deep-water death is auto-banked with no mote (2.1s)
+  ✓  52 [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:202:1 › far-bank sluice stays untouched when the river flank is open (3.3s)
+
+
+  1) [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+    Call Log:
+    - Timeout 5000ms exceeded while waiting on the predicate
+
+      82 |
+      83 | async function placeSelected(page: Page, id: BuildableId): Promise<void> {
+    > 84 |   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.ghostValid ?? false)).toBe(true);
+         |                                                                                                              ^
+      85 |   const before = await buildableCount(page, id);
+      86 |   await page.keyboard.press('Enter');
+      87 |   await expect.poll(() => buildableCount(page, id)).toBe(before + 1);
+        at placeSelected (/Users/robin/Claude/Projects/Gold Rush/gate-s1581/e2e/m2-01-build-menu.spec.ts:84:110)
+        at placeBuildableAt (/Users/robin/Claude/Projects/Gold Rush/gate-s1581/e2e/m2-01-build-menu.spec.ts:80:9)
+        at /Users/robin/Claude/Projects/Gold Rush/gate-s1581/e2e/m2-01-build-menu.spec.ts:191:3
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/m2-01-build-menu-palisade--49d2a-llowing-edge-touch-chaining-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/m2-01-build-menu-palisade--49d2a-llowing-edge-touch-chaining-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/m2-01-build-menu-palisade--49d2a-llowing-edge-touch-chaining-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/m2-01-build-menu-palisade--49d2a-llowing-edge-touch-chaining-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining 
+  51 passed (4.3m)
+
+=== rc=1 elapsed=259.0s end=2026-08-08T19:03:31.139Z ===
+load at end: 2:03  up 65 days,  5:15, 47 users, load averages: 5.65 6.65 5.27
+=== captured test-results -> /Users/robin/Claude/Projects/Gold Rush/artifacts/f1580-1-batch-red/test-results-run1 ===

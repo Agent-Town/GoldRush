@@ -1,0 +1,47 @@
+{
+  "status": "NOT READY-FOR-GATES",
+  "blocker": "parent-confirmed Homemaker kept-state reload calls WaveSystem before initialization; outside task firewall",
+  "finalGlbBytes": 122625052,
+  "glbs": 413,
+  "panoramaMetricsPassed": 32,
+  "focusedGuardsPassed": 7,
+  "manifestChecksPassed": 5,
+  "assetDietFirstCorrectedRun": {
+    "startTime": "2026-09-05T05:11:55.121Z",
+    "duration": 606294.9789999999,
+    "expected": 5,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  },
+  "assetDietDesktopBudgetRetryWithoutTracing": {
+    "startTime": "2026-09-05T05:22:33.880Z",
+    "duration": 148593.862,
+    "expected": 1,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "assetDietAllCasesPassedAcrossRuns": true,
+  "adjacent": {
+    "planned": 170,
+    "completed": 33,
+    "passed": 25,
+    "failed": 8,
+    "notCompleted": 137
+  },
+  "homemakerParentControl": {
+    "startTime": "2026-09-05T05:15:57.468Z",
+    "duration": 380912.814,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 2,
+    "flaky": 0
+  },
+  "engineHash": "977ef6b77fd25040e7b2249d8ac1d814c1f6660a354500b98ca3e11a3cce6b58",
+  "fingerprints": [
+    "1408f6b4",
+    "528a29dc",
+    "1408f6b4"
+  ]
+}

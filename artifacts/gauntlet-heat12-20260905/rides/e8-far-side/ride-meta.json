@@ -1,0 +1,19 @@
+{
+  "rig": "opus",
+  "model": "claude-opus-5",
+  "arena": "/tmp/heat12-038cc280",
+  "workdir": "/tmp/heat12-038cc280/artifacts/heat12/opus/e8-far-side",
+  "charterFile": "/private/tmp/heat12-038cc280/artifacts/gauntlet-heat12-20260905/rides/e8-far-side/charter.md",
+  "charterSha256": "a460382aef3a2ba98da70b1e5c43f4116594ca268a8de9c50b6e1e210e0467b6",
+  "sessionId": "67901f2d-e228-4a42-9305-6350aa23f46e",
+  "wallSeconds": 1080,
+  "startedAt": "2026-09-05T18:27:24.115Z",
+  "invocation": "env -u CLAUDECODE -u CLAUDE_CODE_ENTRYPOINT -u CLAUDE_CONFIG_DIR claude -p \"<charter text, see charterFile>\" --model claude-opus-5 --allowedTools Read,Write,Glob,Bash(node *) --output-format text --session-id 67901f2d-e228-4a42-9305-6350aa23f46e",
+  "endedAt": "2026-09-05T18:39:35.770Z",
+  "wallClockSeconds": 732,
+  "exitCode": 0,
+  "signal": null,
+  "wallHit": false,
+  "firstOutputAt": "2026-09-05T18:30:09.137Z",
+  "setupToFirstOutputSeconds": 165
+}

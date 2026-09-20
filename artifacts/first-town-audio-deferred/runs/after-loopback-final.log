@@ -1,0 +1,48 @@
+
+Running 6 tests using 1 worker
+
+[1/6] [desktop-chrome] › e2e/first-town-audio-deferred.spec.ts:129:1 › music is fetched only after the first town is playable (loopback)
+[desktop-chrome] › e2e/first-town-audio-deferred.spec.ts:129:1 › music is fetched only after the first town is playable (loopback)
+[audio-defer] desktop-chrome/loopback cue 143 responses 7737681 bytes; townReady observed 629 ms, published 589 ms; cue-window music 0; music before playable 0; after-ready music 2
+
+[audio-defer] desktop-chrome/loopback music fetch era-e1-frontier-loop-CQyR4akc-diet-1408f6b4.mp3 at 657 ms (scene the town ready)
+
+[audio-defer] desktop-chrome/loopback cue-window mp3 /assets/menu-tap-DMz5CpTr-diet-1408f6b4.mp3 8821 B at 401 ms
+
+[audio-defer] desktop-chrome/loopback after-ready mp3 /assets/era-e1-frontier-loop-DJG8Ozuy-diet-1408f6b4.js 110 B at 658 ms
+
+[audio-defer] desktop-chrome/loopback after-ready mp3 /assets/era-e1-frontier-loop-CQyR4akc-diet-1408f6b4.mp3 1800881 B at 681 ms
+
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[2/6] [desktop-chrome] › e2e/first-town-audio-deferred.spec.ts:215:1 › the title theme answers a gesture made on the menu
+[desktop-chrome] › e2e/first-town-audio-deferred.spec.ts:215:1 › the title theme answers a gesture made on the menu
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[3/6] [desktop-chrome] › e2e/first-town-audio-deferred.spec.ts:229:1 › the era loop plays in the town after the entering click
+[desktop-chrome] › e2e/first-town-audio-deferred.spec.ts:229:1 › the era loop plays in the town after the entering click
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[4/6] [mobile-chrome] › e2e/first-town-audio-deferred.spec.ts:129:1 › music is fetched only after the first town is playable (loopback)
+[mobile-chrome] › e2e/first-town-audio-deferred.spec.ts:129:1 › music is fetched only after the first town is playable (loopback)
+[audio-defer] mobile-chrome/loopback cue 145 responses 8910985 bytes; townReady observed 597 ms, published 559 ms; cue-window music 0; music before playable 0; after-ready music 2
+
+[audio-defer] mobile-chrome/loopback music fetch era-e1-frontier-loop-CQyR4akc-diet-1408f6b4.mp3 at 634 ms (scene the town ready)
+
+[audio-defer] mobile-chrome/loopback cue-window mp3 /assets/menu-tap-DMz5CpTr-diet-1408f6b4.mp3 8821 B at 389 ms
+
+[audio-defer] mobile-chrome/loopback after-ready mp3 /assets/era-e1-frontier-loop-DJG8Ozuy-diet-1408f6b4.js 110 B at 636 ms
+
+[audio-defer] mobile-chrome/loopback after-ready mp3 /assets/era-e1-frontier-loop-CQyR4akc-diet-1408f6b4.mp3 1800881 B at 658 ms
+
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[5/6] [mobile-chrome] › e2e/first-town-audio-deferred.spec.ts:215:1 › the title theme answers a gesture made on the menu
+[mobile-chrome] › e2e/first-town-audio-deferred.spec.ts:215:1 › the title theme answers a gesture made on the menu
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[6/6] [mobile-chrome] › e2e/first-town-audio-deferred.spec.ts:229:1 › the era loop plays in the town after the entering click
+[mobile-chrome] › e2e/first-town-audio-deferred.spec.ts:229:1 › the era loop plays in the town after the entering click
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+  6 passed (8.8s)

@@ -1,0 +1,14 @@
+
+Running 6 tests using 1 worker
+
+(node:11330) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 [desktop-chrome] › e2e/lantern-true-world.spec.ts:59:50 › claim plain watch draws its contract world with snapshot sprites (30.5s)
+  ✓  2 [desktop-chrome] › e2e/lantern-true-world.spec.ts:59:50 › signal plain watch draws its contract world with snapshot sprites (5.9s)
+  ✓  3 [desktop-chrome] › e2e/lantern-true-world.spec.ts:99:63 › tactical opens the labelled tactical reel without returning to the menu (3.6s)
+  ✓  4 [desktop-chrome] › e2e/lantern-true-world.spec.ts:99:63 › lite opens the labelled tactical reel without returning to the menu (3.1s)
+  ✓  5 [desktop-chrome] › e2e/lantern-true-world.spec.ts:99:63 › no-webgl opens the labelled tactical reel without returning to the menu (2.8s)
+[lantern-perf] {"project":"desktop-chrome","gameP95":36.300000071525574,"reelP95":30.299999952316284,"ratio":0.8347107408433366}
+  ✓  6 [desktop-chrome] › e2e/lantern-true-world.spec.ts:126:1 › reel frame p95 stays within 115 percent of the mounted game (17.9s)
+
+  6 passed (1.1m)

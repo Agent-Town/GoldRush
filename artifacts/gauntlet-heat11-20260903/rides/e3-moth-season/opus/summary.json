@@ -1,0 +1,107 @@
+{
+  "rig": "opus",
+  "contract": "e3-moth-season",
+  "model": "claude-opus-5",
+  "sessionId": "44d1a48f-3f27-4f9b-b0b2-8f76f6323e2e",
+  "startedAt": "2026-09-03T21:59:49.524Z",
+  "endedAt": "2026-09-03T22:07:13.548Z",
+  "wallClockSeconds": 444,
+  "wallHit": false,
+  "exitCode": 0,
+  "signal": null,
+  "setupToFirstOutputSeconds": 60,
+  "arenaTrackedChanges": [],
+  "workspaceFiles": [
+    "attempt-1-outcome.json",
+    "attempt-1-stderr.txt",
+    "attempt-1-tape.json",
+    "attempt-1-views.ndjson",
+    "ctrl-v1.mjs",
+    "gauntlet-outcome.json",
+    "gauntlet-report.md",
+    "probe-idle-outcome.json",
+    "probe-idle-stderr.txt",
+    "probe-idle-tape.json",
+    "probe-idle-views.ndjson",
+    "run.mjs",
+    "tune-1-outcome.json",
+    "tune-1-stderr.txt",
+    "tune-1-tape.json",
+    "tune-1-views.ndjson"
+  ],
+  "outcome": {
+    "secured": true,
+    "waves": 12,
+    "timeMs": 360000,
+    "gold": 45,
+    "kills": 251,
+    "calls": 31,
+    "defaultedPicks": 0,
+    "defaultedSecure": 0,
+    "eventLogHash": "fnv1a32:ac94ba3f",
+    "tape": "/tmp/heat11-5e7a7c0b/artifacts/heat11/opus/e3-moth-season/attempt-1-tape.json",
+    "scored": true,
+    "runsSoFar": 3,
+    "scoredAttempts": 1,
+    "worldModel": "sim-import"
+  },
+  "outcomeError": null,
+  "scoredTapes": [
+    {
+      "file": "attempt-1-tape.json",
+      "id": "agent-1faff8b1-a4dc9c44-05df-47a2-bda0-fda42e5813a5",
+      "contract": "e3-moth-season",
+      "seed": "e3-moth-season-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "5e7a7c0ba",
+        "engineHash": "a607a81f44e10dc2b2262682c1e116c15917edffeeaa0c5909f383ccea5d8e04",
+        "era": 5,
+        "viewVersion": 1
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 12,
+        "timeAlive": 360,
+        "gold": 45
+      },
+      "entries": 31
+    }
+  ],
+  "otherSecuredTapes": [
+    {
+      "file": "tune-1-tape.json",
+      "id": "agent-1faff8b1-745eaf53-acfd-442b-813c-4c6d6521e16d",
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 12,
+        "timeAlive": 360,
+        "gold": 45
+      },
+      "meta": {
+        "buildId": "5e7a7c0ba",
+        "engineHash": "a607a81f44e10dc2b2262682c1e116c15917edffeeaa0c5909f383ccea5d8e04",
+        "era": 5,
+        "viewVersion": 1
+      }
+    }
+  ],
+  "report": {
+    "outcome": "**SECURED.** waves **12**, timeAlive **360.000 s**, gold **45**, calls **31**\n(kills 251, `defaultedPicks` 0, `defaultedSecure` 0, `eventLogHash` `fnv1a32:ac94ba3f`).\n\nTape put forward: **`attempt-1-tape.json`** — 31 accepted entries, its `inputLog` byte-identical to\n`tune-1-tape.json`, both hashing to `fnv1a32:ac94ba3f`.\n\n**3 sim runs, 1 scored attempt.** I stopped on the first secured outcome, as the brief directs.",
+    "whatTheMapAsked": "It asked me almost nothing about a network, and the audit note is right: this is **RESKIN**, but not\nin the ordinary way — the era's signature mechanic is *present, fully specified, genuinely\nimplemented, and entirely optional*, because **the rider is the one who installs it.** E3 is \"the\ngrid under sabotage\"; there is no grid here at all (no `twist.powerGrid`, so `powerConsumerAt` returns\n`true` unconditionally and `turret`/`lantern_post` survive the roster filter that stripped them on\nBlackout Ridge and the Fairground). What the contract offers instead is a *bait economy*: moths spawn\n`max(4, lights)` per wave, target `coverageAt(x,z) × radius × radiusWeight × targetWeight`, and eat\n6 hp/s from a `decoy_shed` — the \"one shed pays the nightly tithe\" of the briefing. Every clause of\nthat is real and correctly wired. It is also, through the door, a **cost with no matching benefit**:\nthe only thing lights buy is cancelling a `nightSpeedOutsideLight` of **1.12** — a 12% slow inside\nradius-7 discs — while moths do zero contact and zero building damage and can only ever damage the\ndecoy shed the rider volunteers. So the dominant line is to build no lights, at which point the\nentire mechanic idles: `brightest` is `undefined` and 4 swarms a wave stand still. I secured having\nbuilt neither buildable the twist adds. That is the same shape as gen-11's Blackout Ridge finding\n(*a named mechanic can be real and still be a bad buy*) pushed to its end point: here the lever is not\nmerely overpriced, it is **strictly dominated**, because declining it removes the threat rather than\nmerely forgoing a benefit. Legibility is a mixed picture and worth the county's attention:\n`stablePrefix.mechanics.rules` publishes the mechanic in unusually good detail — `moth_wave`\n(`count: \"max(mothsBaselinePerWave, floor(lightSources)*mothsPerLightPerWave)\"`), `moth_targeting`\n(the scoring formula, tie-break and all) and `moth_attachment` (`damageTarget: \"decoy_shed\"`,\n`radiusLossPerAttached: 0.3`) — but the union of `now` keys across all 32 views of the secured run is\n`blastReadyInMs · expiresAtSimMs · gold · hero · needsRider · orders · pendingOffer · pendingSecure ·\nprospector · score · seams · threats · timers · wave · weapon · works`: **no darkness, no coverage, no\nlight-source list, no attach counts.** The one live sighting of the mechanic is\n`almanac.nextWave.composition[0] = moth_swarm \"Fever Moths\"` — and the door calls the almanac an\nestimate, not observed fact. So a rider who *did* buy the lights could not read whether they were\nbeing dimmed. The fields that actually carried my run were the ordinary ones: `now.works.entries`\n(positions + `wrecked`, the only way to see which slots refused), `now.works.byKind` (ladder state),\n`now.seams[].active/x/z`, `now.gold`, `now.hero.hp/maxHp/level`, `now.threats.alive` — which\nsaturates at **60–64 from wave 7**, the plateau that makes the map survivable — and\n`now.pendingOffer`/`now.pendingSecure`. The orders were `BUILD`, `HARVEST`, `REPAIR_UNDER`,\n`PICK_UPGRADE` and one `SECURE_CHOICE`. Not one of them is an E3 verb, because E3 has none.",
+    "winnability": "Secured, and the margin was **wide**: the hero never once dropped below its running maximum across\nall 32 views — 100/100 held through wave 4, finishing **151/175 at level 13** — **zero of six works\nwere ever wrecked**, no gold was stolen, and the whole 325-gold economy went into a ladder that was\nstill buying at wave 11; the thin part was only the opening, where 30 s of wave-0 quiet buys one\n25-gold beacon and the first turret does not land until t=148.",
+    "lessons": "- **`winnability-receipts.json` is six-for-six.** `unclaimed` with no `reason` = green light;\n  `unclaimed` + `standings-disabled` = wall. Still the cheapest information in the county, still the\n  first thing I read, and it has never once been wrong.\n- **Check whether the twist's own buildables are a cost or a benefit before assuming they are the\n  plan.** `lantern_post` and `decoy_shed` are the two buildables this contract *adds*, and buying\n  either is what *creates* the threat: moths spawn `max(4, lights)`, target only lanterns and decoys,\n  and damage only decoys. A twist buildable is an offer, not an instruction — and on this map it is\n  strictly dominated. Gen-11 learned \"a named mechanic can be real and still be a bad buy\"; the\n  sharper version is **some named mechanics are opt-in threats, and the winning move is to not opt\n  in.**\n- **Read the argument list of the mechanic's `update`, not just its class.** One line —\n  `mothSwarm.update(STEP, this.mothLightSources, ...)` — decided the entire contract, because it says\n  the swarm can only see lanterns and decoys. Two minutes of reading turned a survival puzzle with a\n  bait-management layer into plain survival. Grep the *call site*, the same way gen-8 taught me to\n  grep the view builder and gen-11 the roster builder.\n- **`damageScale: 0` on all three channels means the enemy is scenery.** `contactDamageScale`,\n  `buildingDamageScale` and `supportBuildingDamageScale` were all zero in the manifest's own\n  `enemyRoster`, visible before I rode at all. When an enemy's roster entry zeroes every damage\n  channel, the only harm it can do is through a *special-cased callback* — so go find that callback\n  (`damageSource`, here) and read exactly what it is wired to. It was wired to `decoy:` ids only.\n- **The turret filter is conditional on `twist.powerGrid`, not on the epoch.** Two E3 rides in a row\n  taught me \"assume beacons and chaff on E3\"; this E3 contract has no power grid and therefore has\n  turrets, and turrets-first is what made it comfortable. Re-derive the roster from the *view* every\n  ride instead of carrying an epoch-shaped prior. My own gen-13 lesson had already hardened into the\n  wrong generalisation within one generation.\n- **The gen-9 non-decreasing-price prefix and the gen-10 slot-skipper compose, and both fired.** The\n  prefix bought `b25 → b35 → t50 → t70` in one batch with no cheap rung starving an expensive one;\n  the skipper stepped past two turret slots that refused silently and landed the turrets elsewhere\n  instead of parking at `turret: 0` for the whole run, which is precisely the failure that cost me\n  the Trestle. Carrying more candidates than rungs is now non-negotiable.\n- **Score the upgrade offer; never take `offer[0]`.** Gen-11 secured at 4 HP having picked blindly\n  and finished with `maxHp` still 100. A three-line keyword scorer preferring plating over damage\n  took `maxHp` 100 → 175 and the hero finished this ride having never dropped below its running\n  maximum. It is the cheapest margin on the board and it costs no gold.\n- **A tune that secures is the attempt; the re-ride is the receipt.** Sixth contract running:\n  `fnv1a32:ac94ba3f` twice, `inputLog` byte-identical, 31 entries both times. At a fixed wave-12\n  secure `timeAlive` is already pinned at 360.000 s and gold ranks below it, so there was nothing to\n  win by gambling and a replay-proof reel to gain.\n- **Write the outcome file after every run, before the analysis.** Third generation running I said\n  this; this ride is the first where I actually did it on the *idle probe* — the file was correct and\n  on disk from minute nine, and every later edit was an improvement to a row that already existed."
+  },
+  "usage": {
+    "transcript": "/Users/robin/.claude/projects/-private-tmp-heat11-5e7a7c0b/44d1a48f-3f27-4f9b-b0b2-8f76f6323e2e.jsonl",
+    "assistantTurns": 61,
+    "toolCalls": 31,
+    "tokensIn": 122,
+    "tokensOut": 98982,
+    "cacheReadTokens": 8304289,
+    "cacheWriteTokens": 509840,
+    "note": "tokensIn excludes cache reads/writes (reported separately); summed from the CLI session transcript, not self-reported by the rig"
+  }
+}

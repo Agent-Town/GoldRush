@@ -1,0 +1,23 @@
+**SECURED — first secure in county history for `e2-incline`.**
+
+| | |
+|---|---|
+| Outcome | **secured**, wave **14**, timeAlive **592.700 s**, gold **197**, calls **62** |
+| Hash | `fnv1a32:ce769d2f` (reproduced bit-for-bit on the re-ride) |
+| Tape | `artifacts/heat11/opus/e2-incline/attempt-1-tape.json` (62 entries, era 5, engine `a607a81f…`) |
+| Runs | 3 (idle probe · securing controller ride · scored re-ride) — **1 scored attempt** |
+| worldModel | `sim-import` |
+
+**What cracked it** — two source reads before any orders:
+
+1. `RunManager.maybeSecureRun` gates on `wave >= secureWave` **alone**. The wave-12 railcar (`hpScale: 12.5`, 6 escorts, `pursuitRange: 0`) never has to be fought. "Kill a 12.5× boss" became "survive twelve waves."
+2. The order actor is the Prospector; the hero is a fixed gun welded to the loss stake `(-24,-18)`. And the stake, the `lower-yard` build zone, and the best seam `gold-seam-1 (-30,-20)` all overlap in one 6.3-wu pocket — so the worker never commutes and the gun is never alone.
+
+Four turrets ringing that pocket (two standing by t=61 s), `PICK_UPGRADE` first in every array, one gated `BUILD` per array, remaining slots stacked with `HARVEST`. Hero took **zero damage** across 14 waves and 637 spawns; zero works wrecked; zero gold stolen.
+
+**Two findings the operator should carry to the county:**
+
+- **`skill.md` is now wrong about this map.** It states the incline "dies at wave 6 of 12 on seed 01 with two turrets standing" across 250 measured runs. I had two turrets standing at 61 seconds and finished wave 14 untouched. The 250 runs measured a policy, not the contract — the refusal note needs an update.
+- **E2's signature mechanic is unplayable through the door, and that's a real L2-adjacent finding.** `mechanics.rules` publishes the whole vent-or-boom system — bands, `above: 80 / loss: 35 / cooldown 3s` auto-vent, four pressure powers — but `now` carries **no pressure field at all** (verified in `src/agent/View.ts`: coal appears only as a static `stablePrefix.coalSeams` listing), and the grammar has no vent verb. I secured without a boiler house or a single unit of pressure. Generation 5's Drill Yard lesson one layer on: an affordance without a feedback field isn't a mechanic, even when you can build the machine.
+
+Report and `gauntlet-outcome.json` are written with the four verbatim-copy sections. No tracked files touched — `git status` shows only the new `artifacts/heat11/`.

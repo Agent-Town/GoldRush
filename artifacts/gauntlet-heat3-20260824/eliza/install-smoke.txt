@@ -1,0 +1,11 @@
+elizaOS 1.7.2
+
+Canonical alias attempt:
+  bun install -g elizaos@latest
+  elizaos --version
+Result: ERR_PACKAGE_PATH_NOT_EXPORTED for @elizaos/cli/dist/index.js.
+
+Canonical direct CLI attempt:
+  bun install -g @elizaos/cli@latest
+  elizaos --version
+Result: emitted no stdout or stderr and did not exit in more than 60 seconds; interrupted.

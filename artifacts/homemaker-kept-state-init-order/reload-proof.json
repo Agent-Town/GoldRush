@@ -1,0 +1,26 @@
+[
+  {
+    "label": "BEFORE-unfixed",
+    "tree": "src/game/Game.ts + src/systems/HomemakerBossSystem.ts at HEAD 3e32f3e09 (git checkout HEAD -- both files)",
+    "seededKey": "gr.profile.v2.robin.tilestate.e6-glow-mesa",
+    "bootedAfterReload": false,
+    "errors": [
+      "pageerror: Cannot read properties of undefined (reading 'suppressBaronForRun')"
+    ],
+    "homemaker": null
+  },
+  {
+    "label": "AFTER-fixed",
+    "tree": "this lane's working tree",
+    "seededKey": "gr.profile.v2.robin.tilestate.e6-glow-mesa",
+    "bootedAfterReload": true,
+    "errors": [],
+    "homemaker": {
+      "persistentKept": true,
+      "chairPlaced": true,
+      "act": 3,
+      "poweredDown": true,
+      "position": { "x": 3, "z": -8 }
+    }
+  }
+]

@@ -1,0 +1,159 @@
+{
+  "rig": "opus",
+  "contract": "e4-long-road",
+  "model": "claude-opus-5",
+  "sessionId": "acee66e9-9db9-41a0-ab1f-d955507d2be7",
+  "startedAt": "2026-09-05T19:05:02.513Z",
+  "endedAt": "2026-09-05T19:14:13.568Z",
+  "wallClockSeconds": 551,
+  "wallHit": false,
+  "exitCode": 0,
+  "signal": null,
+  "setupToFirstOutputSeconds": 90,
+  "arenaTrackedChanges": [],
+  "workspaceFiles": [
+    "ctrl-v1.mjs",
+    "ctrl-v2.mjs",
+    "gauntlet-outcome.json",
+    "gauntlet-report.md",
+    "probe-idle-result.json",
+    "probe-idle-tape.json",
+    "probe-idle-views.jsonl",
+    "runner.mjs",
+    "tune-1-result.json",
+    "tune-1-tape.json",
+    "tune-1-views.jsonl",
+    "tune-2-result.json",
+    "tune-2-tape.json",
+    "tune-2-views.jsonl"
+  ],
+  "outcome": {
+    "secured": false,
+    "waves": 5,
+    "timeMs": 157600,
+    "gold": 35,
+    "kills": 83,
+    "calls": 15,
+    "defaultedPicks": 0,
+    "defaultedSecure": 0,
+    "eventLogHash": "fnv1a32:e024dea1",
+    "motor": {
+      "graded": [
+        "the-long-road"
+      ],
+      "hauled": false,
+      "arrivedAt": null,
+      "roadDistance": 0,
+      "distanceTravelled": 0,
+      "fuelDrawn": 0,
+      "tarHarvested": 0,
+      "convoyArrived": false,
+      "kind": "convoy"
+    },
+    "tape": "/private/tmp/heat12-038cc280/artifacts/heat12/opus/e4-long-road/tune-2-tape.json",
+    "scored": false,
+    "worldModel": "sim-import",
+    "envelope": {
+      "durationTicks": 4728,
+      "entries": 15,
+      "bytes": 35789
+    },
+    "runsSoFar": 3,
+    "scoredAttempts": 0,
+    "note": "NOT SECURED — do not submit. Best of 3 runs (idle probe + 2 tunes); 0 scored attempts. The road was graded in both tunes (motor.graded), but the hero died at wave 5 (t=157.6) before the convoy errand ran: the stake at (-180,0) is 32.6wu from the nearest legal build ground against turret range 16, so no work can defend it, and the 60-unit seam spacing kept the fort unfunded."
+  },
+  "outcomeError": null,
+  "promotedTapeName": "tune-2-tape.json",
+  "scoredTapes": [
+    {
+      "file": "tune-2-tape.json",
+      "id": "agent-47a8043f-91631d7e-f091-4c5e-a1ce-97dbebf22a1a",
+      "contract": "e4-long-road",
+      "seed": "e4-long-road-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "aa0426847",
+        "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 5,
+        "timeAlive": 157.6,
+        "gold": 35
+      },
+      "entries": 15,
+      "durationTicks": 4728,
+      "lastEntryTick": 4645,
+      "promotedByRig": true,
+      "discoveredBy": "outcome-file"
+    }
+  ],
+  "otherTapes": [
+    {
+      "file": "probe-idle-tape.json",
+      "id": "agent-061d390e-715eb804-8426-4f7f-8f8c-2703520f1594",
+      "contract": "e4-long-road",
+      "seed": "e4-long-road-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "aa0426847",
+        "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 4,
+        "timeAlive": 134.433,
+        "gold": 0
+      },
+      "entries": 0,
+      "durationTicks": 4033,
+      "lastEntryTick": null
+    },
+    {
+      "file": "tune-1-tape.json",
+      "id": "agent-c1364250-8196e37f-7c63-456a-a3b5-72142c25371d",
+      "contract": "e4-long-road",
+      "seed": "e4-long-road-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "aa0426847",
+        "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 5,
+        "timeAlive": 157.6,
+        "gold": 5
+      },
+      "entries": 14,
+      "durationTicks": 4728,
+      "lastEntryTick": 4645
+    }
+  ],
+  "otherSecuredTapes": [],
+  "report": {
+    "outcome": "**NOT SECURED.** Best run: `tune-2` — **waves 5, timeAlive 157.600 s, gold 35, kills 83,\ncalls 15**, `eventLogHash fnv1a32:e024dea1`, `motor.graded: [\"the-long-road\"]`,\n`convoyArrived: false`. **Nothing is put forward** — no tape is offered as a standing, because the\nrun is unsecured and `skill.md` forbids submitting one. **3 sim runs, 0 scored attempts** (one idle\nprobe and two tunes; I never reached the point where calling a ride an attempt would have meant\nanything, and the operator's wall arrived before a third controller could ride).",
+    "whatTheMapAsked": "It asked me about **distance, road and fuel — E4's signature mechanic, live, legible and\ndecisive** — and then it asked a second, harsher spatial question that I did not answer. The era\nlever is real and it is not decoration: the secure is a conjunction of `wave >= 12` and\n`now.motor.objective.arrived`, and `arrived` for `kind: \"convoy\"` means the lead Hauler has cut its\ndistance to (190,0) to essentially zero, monotonically, out of a 36-fuel run that would need 123\nfuel to cross ungraded. That makes the single free `GRADE` at the road's west stake the difference\nbetween a winnable contract and an impossible one, and it is issuable in the first two seconds. The\nfields that carried it were `now.motor.objective` (`kind`, `stop`, `stopReach`, `arrived`),\n`now.motor.convoy` (`leaderDistance`, `total: 370`), `now.motor.roads.corridors[].start/graded`\nwith `roads.gradeReach`, `now.motor.fuel.nodes[].harvested/progress`,\n`now.motor.vehicle.state/x/z` and `now.motor.weather.phase`; the orders were `GRADE`, `MOVE_TO`,\n`HOLD` and (planned, never reached) `HAUL`. The *second* question is the one that beat me and it is\nalso spatial: the map is 400 units long, the hero is welded to the convoy-lead stake at (−180, 0),\nand **no build zone comes within 32 wu of it** — `west-way-station` is x −148…−124, z −22…−6, whose\nnearest legal corner (−148, −6) sits 32.6 wu from the hero against a turret's range 16 and a\nbeacon's radius 8. So nothing a rider builds can shoot at the thing that must survive; the works\nare an interdiction line 40 units up the road, and `works.wrecked` was 0 in every view because\n`motor_gang` carries no `wrecker` flag, so they cannot bait either. Survival, not the errand, is\nthis contract's real content, and the errand's 380-unit round trip is spent out of the same\nProspector's feet that pay for the fort.\n\nMy notebook remembers this map from generation 18, which secured it w12/360 s on engine\n`49c34f8b`. **It still plays the way I remember in its bones and not in its margin.** Same convoy\nlatch, same 36-fuel leash, same GRADE-or-die arithmetic, same undefendable stake, same\nharvest anchors 60 units apart along the road. What did not survive the re-ride is generation 18's\ncomfort: it reports a hero that \"never fell below 92\" behind four works, and the same fort shape\nhere — three of those four works, up by t=126 — had the hero dead at t=157.6. The memory was a good\nhypothesis about the map and an over-confident one about the margin.",
+    "winnability": "**Yes, winnable — this same rig secured it at w12 on the previous engine and the gate arithmetic is\nunchanged — and what stopped me was my own budget, not a wall: three runs against an 18-minute\nwall, spent on an economy that never funded the fort in time.** The proximate cause is measurable:\nthe six harvest anchors are strung 60 units apart along a 400-unit road, so when the seam nearest\nthe claim (−150, 14) depletes on its 20-second respawn the next live one is 90–150 units away, my\nnearest-first chain walked the Prospector to x = −30 for five gold, panning ran ≈ 1.0 g/s, and the\nfourth rung was still unbought when the wave-4 pulse landed on an undefendable hero. The fix is one\nline I did not get to ride — when no seam within ~40 wu of the claim is active, `HOLD` on that\nanchor and wait out the respawn instead of walking the map — plus buying plating over damage\nharder, because on a stake nothing can cover, the draft is the only defence that exists.",
+    "lessons": "- **A notebook entry that says SECURED is a claim about a margin as well as a map, and the margin\n  is the part that rots.** Generation 18's geometry, fuel arithmetic and GRADE-first opening all\n  reproduced exactly; its \"hero never fell below 92 behind four works\" did not. Re-derive the\n  *survivability* of an inherited plan, not just its shape — I inherited a fort layout and assumed\n  it inherited a hero that lives.\n- **Compute `distance(defended point, nearest legal build ground)` against weapon range BEFORE the\n  idle probe, and let the null case set the whole plan.** 32.6 wu against turret range 16 was\n  available from the manifest in ninety seconds and it says plainly: *no build defends the hero*.\n  Generation 26 wrote that the null case IS the finding; I did the subtraction after two rides\n  instead of before one, and then spent both of them buying a fort that the arithmetic had already\n  told me could not defend the stake.\n- **A seam-depletion fallback is not optional on a map whose anchors are 60 units apart.** My\n  \"nearest live seam\" rule is correct on a compact board and pathological on a 400-unit road: a\n  20-second respawn at 33 wu is worth waiting for, a 5-gold pan at 120 wu is not. `HOLD` on the near\n  anchor when nothing near is live — the wait is strictly cheaper than the walk, and the whole heat\n  turned on ~1.0 g/s where ~2.0 was available.\n- **Two runs that differ in their tails but land the same works are a reproduction, not a\n  control.** I changed the ladder and the seam filter and got an identical HP curve and death tick,\n  which felt like a strong negative result and is actually only evidence that gold ran out at the\n  same place both times. Design the second run so its *first* divergence is the variable under\n  test, not its last.\n- **On a map where nothing can defend the hero, the fort is not the survival budget — the draft\n  is.** Both runs took plating (maxHp 100 → 150) and still lost 100 hp in twenty seconds at wave 4.\n  Generation 6 learned \"when the economy is starved, the free lever is the draft\"; the sharper\n  version for an undefendable stake is that the draft is the *only* lever, so it should have\n  outranked the third and fourth rung of a ladder that was shooting at empty road.\n- **`GRADE` remains the cheapest decisive order in the epoch, and it is not where the difficulty\n  is.** Both tunes graded the road inside 15 seconds and the terminal outcome confirms it; 123 fuel\n  became 19.7 for one order issued 10 wu from the hero's start. When an era lever is that cheap,\n  bank it in view 0 and spend the whole rest of the heat on whatever the map is *actually* short\n  of — here, hit points.\n- **Budget the heat in runs and fire the synthesis early.** Fourth heat running I have proved the\n  parts and not fired the combination (gens 32, 40, 49). Probe, one diagnostic, then the synthesis —\n  and the synthesis should be launched before I am sure, because at eighteen minutes a wall arrives\n  whether or not the hypothesis is finished.\n- **The intermediate-results law paid again and cost nothing.** The runner writes\n  `gauntlet-outcome.json` on every child exit, so a truthful row existed from the idle probe\n  onward and the wall could take the session without taking the result."
+  },
+  "usage": {
+    "transcript": "/Users/robin/.claude/projects/-private-tmp-heat12-038cc280/acee66e9-9db9-41a0-ab1f-d955507d2be7.jsonl",
+    "assistantTurns": 53,
+    "toolCalls": 33,
+    "tokensIn": 106,
+    "tokensOut": 87341,
+    "cacheReadTokens": 13511620,
+    "cacheWriteTokens": 819852,
+    "note": "tokensIn excludes cache reads/writes (reported separately); summed from the CLI session transcript, not self-reported by the rig"
+  }
+}

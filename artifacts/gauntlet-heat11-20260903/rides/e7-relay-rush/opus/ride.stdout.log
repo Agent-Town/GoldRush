@@ -1,0 +1,13 @@
+**SECURED — a first secure for `e7-relay-rush`.**
+
+## Outcome
+`w20 / 600.000s / 200g / 68 calls / 644 kills / eventLogHash fnv1a32:1c343c70` — 2 sim runs, 1 scored attempt, worldModel `sim-import`. Tape put forward: `attempt-1-tape.json` (byte-identical copy of the securing `tune-1-tape.json`; the stop rule ended the ride at the first secure, so it was promoted by name rather than re-ridden).
+
+Margin was wide: hero never fell below 100 (its running max) across all 69 views, finished 175/175, **zero of ten works ever wrecked**, gold capped from wave 11, and the objective latched with all **four** relay sites lit against a target of three, 122 seconds early.
+
+## One thing the operator must weigh before submitting
+The reel reports `durationTicks 18001` against this contract's `18000`-tick envelope, so the door will very likely refuse it `reel_duration_exceeded`. `e7-relay-rush` declares no `twist.secureWave`, so `PlaybookFormat.runTapeEnvelopeForContract` skips its `+2` inclusive-endpoint slack and grants a flat `MAX_PLAYBOOK_TICKS`; the secure lands at wave 20 = tick 18000 and the `SECURE_CHOICE` is recorded there. **No rider policy avoids this** — same defect that refused generations 24 and 25, now confirmed on a third epoch. It's recorded in `gauntlet-outcome.json.doorRisk` with the line of code.
+
+## Two findings for the county
+- **The RESKIN measurement is out of date.** `InterferenceFrontSystem` is composed headless, publishes a fifteen-field block in `now.interferenceFront`, and `HeadlessContractSim:1119` ANDs its latch into the secure gate — 3 of 4 relay sites must carry a standing turret/beacon at t=270.000 exactly, one-way. The audit's evidence was the idle ride, which dies at t=81.3, **nine seconds before the first front at t=90** — it could never have reached the mechanic.
+- **`engineDependencies: interference-front-consumer "missing"` is wrong** — now 5 wrong in 7 era rides.

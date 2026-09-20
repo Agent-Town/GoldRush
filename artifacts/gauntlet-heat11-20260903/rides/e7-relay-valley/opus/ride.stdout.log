@@ -1,0 +1,17 @@
+Both files are on disk and truthful. Result:
+
+## NOT SECURED — `e7-relay-valley`, 4 runs, 0 scored attempts, nothing put forward
+
+**Best ride:** w4 / 130.800 s / 200 g / 415 calls (tune-1). Tape written, but not promoted — it is unsecured.
+
+**What decided the map.** `Terrain.isBuildable` confines every buildable to the contract's four relay sites, all on the north ridge at `z 36–46`. The hero is welded at the claim (0, 12), **31.24 wu** from the nearest legal build point, against a 16 wu turret range. tune-2 was the control: a full four-turret, six-beacon ladder on that ground moved the outcome by **−1.03 seconds**. The relay sites cannot reach the fight, and because `spawnEdges()` puts the north lane at `x ≈ 0` they cannot cover the approach either. Meanwhile `threats.alive` held flat at 4–6 all the way down — the hero keeps up on kills and dies of ~1.4 hp/s attrition on a 100-hp pool. It's a sustain problem on a map that cannot be fortified.
+
+**Era verdict: RESKIN confirmed.** The union of `now` keys across every view carries no relay, line-of-sight, dead zone, recording, or Echo field; `mechanics.rules` publishes exactly one entry (`build_zones`) and `interactables` is empty. E7's fiction survives only as the reason the build ground sits on a ridge instead of near the claim.
+
+**Two door findings worth more than my ride, both independent of strategy:**
+
+1. **A secure here is refused by exactly one tick.** `runTapeEnvelopeForContract` reads `twist.secureWave`, but the run uses `twist.secureWave ?? Balance.run.secureWave`. This contract declares none, so it rides to wave 20 (600.000 s = 18,000 ticks) inside an 18,000-tick envelope; the banking `SECURE_CHOICE` lands *at* tick 18,000, making `durationTicks = 18,001` → `reel_duration_exceeded`. This is the identical refusal my generations 24 and 25 took on `e6-picnic` and `e6-half-life-hollow`, and I verified the full class: `e6-showroom`, both e6 refusals, and **all four E7 contracts** declare no `secureWave`; `e6-glow-mesa`, which declares 12, secured cleanly. The fix is one `??`.
+
+2. **`maxTapeBytes` budgets 160 bytes per entry.** My 32-order arrays run ~4 KB, so tune-1 was 1,724,873 bytes — 2.9× the 592,384-byte ceiling — after only 131 of 600 seconds. The stacked-failing-order idiom that won my generations 23 and 25 is a `reel_too_large` bomb on a 20-wave contract.
+
+**Honest limits.** I did not prove unwinnability — I ruled out the ground, not the draft. tune-3 (survival-weighted draft, testing whether repeatable `field_dressing`/`tinkers_plating` heals can fund 600 seconds) was still riding when the wall arrived and produced no tape; I launched it at minute 18 after spending minutes 11–17 confirming a subtraction I could have done in ninety seconds. That's a budgeting failure of mine, and it's in the notebook lessons.

@@ -1,0 +1,30 @@
+{
+  "expected": {
+    "startY": 3.6407633797327676,
+    "endY": 0.7394220529248318
+  },
+  "sample": {
+    "ownerId": "turrets",
+    "targetId": 0,
+    "x": 24,
+    "y": 3.322,
+    "z": 22.867,
+    "startY": 3.641,
+    "endY": 0.739,
+    "progress": 0.11
+  },
+  "runtime": {
+    "frameMs": {
+      "last": 8.400000000000091,
+      "avg": 17.70625,
+      "p95": 10,
+      "sampleCount": 48
+    },
+    "renderer": {
+      "calls": 52,
+      "triangles": 109574,
+      "geometries": 85,
+      "textures": 22
+    }
+  }
+}

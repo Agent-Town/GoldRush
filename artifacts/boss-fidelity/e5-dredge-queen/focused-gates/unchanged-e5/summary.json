@@ -1,0 +1,40 @@
+{
+  "status": "COMPLETED",
+  "stats": {
+    "startTime": "2026-09-08T15:55:06.962Z",
+    "duration": 234078.413,
+    "expected": 32,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "testEntries": 32,
+  "run": {
+    "startedAt": "2026-09-08T15:55:04.085557+00:00",
+    "command": [
+      "node",
+      "node_modules/@playwright/test/cli.js",
+      "test",
+      "e2e/e5-boss-dredge-queen.spec.ts",
+      "e2e/tp01-w6-migration.spec.ts",
+      "e2e/ss-06-e5-beats.spec.ts",
+      "e2e/er01-e5-census.spec.ts",
+      "--project=desktop-chrome",
+      "--project=mobile-chrome",
+      "--workers=1",
+      "--reporter=line,json",
+      "--output=/Users/robin/.codex/worktrees/572c/Gold Rush/artifacts/boss-fidelity/e5-dredge-queen/focused-gates/unchanged-e5/test-results"
+    ],
+    "workers": 1,
+    "baseURL": "http://127.0.0.1:5246",
+    "externalServer": true,
+    "sourceFrozen": true,
+    "scope": "Unchanged E5 boss, tile persistence, story beats and census checks on the adopted V10 source; desktop and mobile Chromium.",
+    "pid": 83793,
+    "exitCode": 0,
+    "completedAt": "2026-09-08T15:59:01.043341+00:00",
+    "durationSeconds": 236.96375316591002
+  },
+  "globalErrors": [],
+  "note": "Raw results retain infrastructure failures; any recovery runs are separate evidence."
+}

@@ -1,0 +1,140 @@
+{
+  "at": "2026-09-08T18:53:29.068938+00:00",
+  "log": "artifacts/boss-fidelity/e5-dredge-queen/production-adoption/vite-restart.log",
+  "timezone": "Asia/Bangkok UTC+07:00; log midnight rollover resolved from E5 run start",
+  "finding": "E6 scratch TypeScript changes and a nested tsconfig triggered all-client Vite reloads during the E5 full run. Frozen production hashes alone do not establish test isolation. HTML-only paths are filtered by the Vite client and do not by themselves show a root game-page reload.",
+  "implementationEvidence": {
+    "serverTsconfig": "node_modules/vite/dist/node/chunks/node.js:2798",
+    "serverModuleReload": "node_modules/vite/dist/node/chunks/node.js:26833",
+    "client": "node_modules/vite/dist/client/client.mjs:978"
+  },
+  "events": [
+    {
+      "line": 196,
+      "atUTC": "2026-09-08T17:03:16+00:00",
+      "kind": "all-client-reload",
+      "source": "12:03:16 AM [vite] (client) page reload artifacts/boss-fidelity/e6-homemaker/candidate-runtime/HomemakerBossSystem.browser.ts"
+    },
+    {
+      "line": 204,
+      "atUTC": "2026-09-08T17:12:44+00:00",
+      "kind": "path-scoped-html-reload",
+      "source": "12:12:44 AM [vite] (client) page reload artifacts/boss-fidelity/e6-homemaker/index.html"
+    },
+    {
+      "line": 205,
+      "atUTC": "2026-09-08T17:13:10+00:00",
+      "kind": "path-scoped-html-reload",
+      "source": "12:13:10 AM [vite] (client) page reload artifacts/boss-fidelity/e6-homemaker/index.html"
+    },
+    {
+      "line": 212,
+      "atUTC": "2026-09-08T17:20:42+00:00",
+      "kind": "all-client-reload",
+      "source": "12:20:42 AM [vite] (client) page reload artifacts/boss-fidelity/e6-homemaker/candidate-runtime/HomemakerBossSystem.browser.ts"
+    },
+    {
+      "line": 214,
+      "atUTC": "2026-09-08T17:22:28+00:00",
+      "kind": "all-client-reload",
+      "source": "12:22:28 AM [vite] (client) page reload artifacts/boss-fidelity/e6-homemaker/candidate-runtime/HomemakerBossSystem.browser.ts"
+    },
+    {
+      "line": 232,
+      "atUTC": "2026-09-08T17:34:47+00:00",
+      "kind": "all-client-reload",
+      "source": "12:34:47 AM [vite] (client) page reload artifacts/boss-fidelity/e6-homemaker/candidate-runtime/HomemakerBossSystem.browser.ts"
+    },
+    {
+      "line": 277,
+      "atUTC": "2026-09-08T17:55:57+00:00",
+      "kind": "all-client-reload",
+      "source": "12:55:57 AM [vite] (client) page reload artifacts/boss-fidelity/e6-homemaker/candidate-runtime/HomemakerBossSystem.browser.ts"
+    },
+    {
+      "line": 387,
+      "atUTC": "2026-09-08T18:11:12+00:00",
+      "kind": "path-scoped-html-reload",
+      "source": "1:11:12 AM [vite] (client) page reload artifacts/boss-fidelity/e6-homemaker/index.html"
+    },
+    {
+      "line": 411,
+      "atUTC": "2026-09-08T18:19:19+00:00",
+      "kind": "path-scoped-html-reload",
+      "source": "1:19:19 AM [vite] (client) page reload artifacts/boss-fidelity/e6-homemaker/bundle-preview-v12/project/src/replay/harness.html"
+    },
+    {
+      "line": 412,
+      "atUTC": "2026-09-08T18:19:20+00:00",
+      "kind": "path-scoped-html-reload",
+      "source": "1:19:20 AM [vite] (client) page reload artifacts/boss-fidelity/e6-homemaker/bundle-preview-v12/project/scripts/stream-player.html"
+    },
+    {
+      "line": 413,
+      "atUTC": "2026-09-08T18:19:20+00:00",
+      "kind": "path-scoped-html-reload",
+      "source": "1:19:20 AM [vite] (client) page reload artifacts/boss-fidelity/e6-homemaker/bundle-preview-v12/project/scripts/stream-dashboard.html"
+    },
+    {
+      "line": 414,
+      "atUTC": "2026-09-08T18:19:21+00:00",
+      "kind": "path-scoped-html-reload",
+      "source": "1:19:21 AM [vite] (client) page reload artifacts/boss-fidelity/e6-homemaker/bundle-preview-v12/project/site/index.html"
+    },
+    {
+      "line": 415,
+      "atUTC": "2026-09-08T18:19:21+00:00",
+      "kind": "path-scoped-html-reload",
+      "source": "1:19:21 AM [vite] (client) page reload artifacts/boss-fidelity/e6-homemaker/bundle-preview-v12/project/site/index-legacy-2026-08-13.html"
+    },
+    {
+      "line": 416,
+      "atUTC": "2026-09-08T18:19:21+00:00",
+      "kind": "path-scoped-html-reload",
+      "source": "1:19:21 AM [vite] (client) page reload artifacts/boss-fidelity/e6-homemaker/bundle-preview-v12/project/site/news.html"
+    },
+    {
+      "line": 417,
+      "atUTC": "2026-09-08T18:19:21+00:00",
+      "kind": "all-client-reload",
+      "source": "1:19:21 AM [vite] changed tsconfig file detected: /Users/robin/.codex/worktrees/572c/Gold Rush/artifacts/boss-fidelity/e6-homemaker/bundle-preview-v12/project/tsconfig.json - Clearing cache and forcing full-reload to ensure TypeScript is compiled with updated config values."
+    },
+    {
+      "line": 418,
+      "atUTC": "2026-09-08T18:19:21+00:00",
+      "kind": "path-scoped-html-reload",
+      "source": "1:19:21 AM [vite] (client) page reload artifacts/boss-fidelity/e6-homemaker/bundle-preview-v12/project/site/news.html"
+    },
+    {
+      "line": 419,
+      "atUTC": "2026-09-08T18:19:21+00:00",
+      "kind": "path-scoped-html-reload",
+      "source": "1:19:21 AM [vite] (client) page reload artifacts/boss-fidelity/e6-homemaker/bundle-preview-v12/project/index.html"
+    },
+    {
+      "line": 421,
+      "atUTC": "2026-09-08T18:21:06+00:00",
+      "kind": "path-scoped-html-reload",
+      "source": "1:21:06 AM [vite] (client) page reload artifacts/boss-fidelity/e6-homemaker/bundle-preview-v12/project/dist/index.html"
+    },
+    {
+      "line": 454,
+      "atUTC": "2026-09-08T18:40:23+00:00",
+      "kind": "path-scoped-html-reload",
+      "source": "1:40:23 AM [vite] (client) page reload artifacts/boss-fidelity/e6-homemaker/index.html"
+    },
+    {
+      "line": 456,
+      "atUTC": "2026-09-08T18:43:44+00:00",
+      "kind": "all-client-reload",
+      "source": "1:43:44 AM [vite] (client) page reload assets/crafting-queue/approved/order_e2e_status_mobile_chrome_20260706t103900000z_brass_teal_spark_rig_coupler_for_steady_target_s.json"
+    },
+    {
+      "line": 457,
+      "atUTC": "2026-09-08T18:43:44+00:00",
+      "kind": "all-client-reload",
+      "source": "1:43:44 AM [vite] (client) page reload assets/crafting-queue/approved/order_e2e_status_mobile_chrome_20260706t103900000z_brass_teal_spark_rig_coupler_for_steady_target_s.json"
+    }
+  ],
+  "next": "After final JSON arrives, join every execution startTime/duration against all-client reload timestamps (allow timestamp rounding). Rerun affected failures and new/different failures quietly. Preserve affected passing outcomes as contaminated evidence until confirmed as needed. Future concurrent scratch work must live outside the active server watch root, or wait for test completion."
+}

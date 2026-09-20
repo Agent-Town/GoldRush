@@ -1,0 +1,174 @@
+{
+  "rig": "opus",
+  "contract": "e6-glow-mesa",
+  "model": "claude-opus-5",
+  "sessionId": "2f2745f2-2300-4533-8d12-0436556adb32",
+  "startedAt": "2026-09-18T05:52:12.675Z",
+  "endedAt": "2026-09-18T06:03:16.537Z",
+  "wallClockSeconds": 664,
+  "wallHit": false,
+  "exitCode": 0,
+  "signal": null,
+  "setupToFirstOutputSeconds": 150,
+  "arenaTrackedChanges": [],
+  "workspaceFiles": [
+    "attempt-1-tape.json",
+    "ctrl-v1.mjs",
+    "gauntlet-outcome.json",
+    "gauntlet-report.md",
+    "probe-summary.json",
+    "probe-tape.json",
+    "probe-views.jsonl",
+    "runner.mjs",
+    "runs-state.json",
+    "tune-1-summary.json",
+    "tune-1-tape.json",
+    "tune-1-views.jsonl"
+  ],
+  "outcome": {
+    "secured": true,
+    "waves": 15,
+    "timeMs": 460500,
+    "gold": 109,
+    "kills": 498,
+    "calls": 65,
+    "defaultedPicks": 0,
+    "defaultedSecure": 1,
+    "eventLogHash": "fnv1a32:87bea4cc",
+    "tape": "/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/heat14/opus/e6-glow-mesa/attempt-1-tape.json",
+    "scored": true,
+    "runsSoFar": 2,
+    "scoredAttempts": 1,
+    "worldModel": "sim-import",
+    "note": "ONE RIDE UNDER TWO FILENAMES: attempt-1-tape.json is a byte-identical copy of tune-1-tape.json, the first controller ride, which secured. The stop rule ends the heat at the first SECURED outcome, so that tune IS the scored attempt and is promoted here by name.",
+    "envelope": {
+      "durationTicks": 13815,
+      "lastEntryTick": 13655,
+      "entries": 65,
+      "bytes": 190119
+    },
+    "era": {
+      "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+      "era": 6,
+      "viewVersion": 2
+    }
+  },
+  "outcomeError": null,
+  "promotedTapeName": "attempt-1-tape.json",
+  "scoredTapes": [
+    {
+      "file": "attempt-1-tape.json",
+      "id": "agent-b3c94abf-7ab4831c-02a4-42ac-b4b9-806d94be84d9",
+      "contract": "e6-glow-mesa",
+      "seed": "e6-glow-mesa-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "30a42c890",
+        "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+        "era": 6,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 15,
+        "timeAlive": 460.5,
+        "gold": 109
+      },
+      "entries": 65,
+      "durationTicks": 13815,
+      "lastEntryTick": 13655,
+      "promotedByRig": true,
+      "discoveredBy": "outcome-file+filename"
+    }
+  ],
+  "otherTapes": [
+    {
+      "file": "probe-tape.json",
+      "id": "agent-bc4a84b8-86b5b536-3721-4c58-994f-6db7d2f05a18",
+      "contract": "e6-glow-mesa",
+      "seed": "e6-glow-mesa-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "699c077d8",
+        "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+        "era": 6,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 15,
+        "timeAlive": 460.5,
+        "gold": 0
+      },
+      "entries": 0,
+      "durationTicks": 13815,
+      "lastEntryTick": null
+    },
+    {
+      "file": "tune-1-tape.json",
+      "id": "agent-b3c94abf-7ab4831c-02a4-42ac-b4b9-806d94be84d9",
+      "contract": "e6-glow-mesa",
+      "seed": "e6-glow-mesa-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "30a42c890",
+        "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+        "era": 6,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 15,
+        "timeAlive": 460.5,
+        "gold": 109
+      },
+      "entries": 65,
+      "durationTicks": 13815,
+      "lastEntryTick": 13655
+    }
+  ],
+  "otherSecuredTapes": [
+    {
+      "file": "tune-1-tape.json",
+      "id": "agent-b3c94abf-7ab4831c-02a4-42ac-b4b9-806d94be84d9",
+      "contract": "e6-glow-mesa",
+      "seed": "e6-glow-mesa-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "30a42c890",
+        "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+        "era": 6,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 15,
+        "timeAlive": 460.5,
+        "gold": 109
+      },
+      "entries": 65,
+      "durationTicks": 13815,
+      "lastEntryTick": 13655
+    }
+  ],
+  "report": {
+    "outcome": "**SECURED** — waves **15**, timeAlive **460.500 s**, gold **109**, kills 498, calls **65**\n(`defaultedPicks: 0`, `defaultedSecure: 1`, `eventLogHash fnv1a32:87bea4cc`).\n\nTape put forward: **`attempt-1-tape.json`**, named in `gauntlet-outcome.json`'s `tape`\nfield. It is a byte-identical copy of `tune-1-tape.json` — **one ride under two\nfilenames**. The first controller ride secured, and the stop rule ends the heat at the\nfirst SECURED outcome, so that tune *is* the scored attempt.\n\n**2 sim runs, 1 scored attempt.** Envelope measured off the first reel that existed and\nread from `runTapeEnvelopeForContract`, never the charter's summary of it (`maxTicks =\nmax(18000, clockTicks) + 2`, and bytes add `maxOrderEntries × (2400 − 160)`): ticks\n13,815 with the last accepted order at **13,655**, 65 entries, **190,119 bytes** against\na real ceiling near 1.94 MB — roughly 10%.",
+    "whatTheMapAsked": "It asked me about **decay and patience**, and the era's signature mechanic is\nload-bearing in the strictest sense: **without `CAPTURE` there is no economy at all.**\nA machine not struck for `windDownSeconds: 8` *exhausts* — `isHarmless`, undamageable,\ncrawling at 0.2x, and exempt from the alive cap, so the board piles up. The idle probe\nis the proof and it is the loudest number on this contract: **295 machines exhausted,\n`gold: 0` across 460 seconds.** The income exists, it accumulates in plain sight, and no\norder collects it. `now.atomic.wrangle` publishes `windDownSeconds`, `captureRadius: 2.2`\nand the pen (`goldPerMachine: 1`, `tickSeconds: 15`), and every penned machine pays for\nthe rest of the run — so the verb is an opening move, not a mid-game one. My pen reached\n**65 machines** and granted **339 gold**. The second decay clock is the night/day dial\ngating the six-vein starstone ring (`tiles.night`, `tiles.veins`), and the third is the\npuddle set (`tiles.puddles`, `safe`/`stage`/`remainingTicks`) — both authored fields sit\neast of x = 18 and never crossed my line, so they cost me nothing here. The boss is a\ndecay engine too: while VAC lives, `updateUnbuild` deletes my highest-HP building every\n2.5 s, globally, with **no distance term** — it took 14 buildings off me.\n\nFields that carried it: `now.atomic.wrangle.{active,pen}`,\n`now.atomic.homemakerBoss.{act,liveComponents,position,unbuilds}`, `now.atomic.tiles.*`,\n`now.works.byKind`, `now.seams[].active/x/z/anchorIndex`, `now.gold` against\n`score.goldPanned`/`goldStolen`, `now.hero.hp/maxHp/x/z`, `now.orders[].status/reason`.\nOrders: **`CAPTURE`** (stacked 16 deep), `BUILD`, `HARVEST`, `PICK_UPGRADE`, `BLAST_AT`,\n**`MOVE_HERO`**, and one blank line. There is no E6 verb beyond `CAPTURE`.\n\n**My notebook remembers this map (generation 23, era 5) and it does NOT still play the\nway I remember — in the one coordinate that decides the fight.** Generation 23 wrote\n\"boss at (0,−8) … a turret at (0,−11) is 3.7wu from VAC\", and built its whole plan around\na welded hero that could not reach it. `HomemakerBossSystem:161` sets the anchor to\n**(8, 0, 4)**, and `now.atomic.homemakerBoss.position` publishes `{x: 8, z: 4}` in view 0.\nEverything else reproduced to the decimal — same `secureWave: 12`, same wave-8 boss, same\nVAC/RACK, same wrangle constants, same six anchors — and the idle floor came back\n`w15 / 460.500 s / 0 gold / 282 kills`, hash `fnv1a32:3c293671`, **matching\n`assets/contracts/null-floors.json` byte for byte.** None of era 6's eight pins names this\ncontract. So the re-survey moved this map's rendering, not its rules.\n\n**This map is not on the cured list this week**, but since the brief asks what its first\nminute actually did: nothing threatening. Three seams live from t = 0, the first pan block\nfunded a 50-gold turret by t = 50.7, the hero took no damage at all until t = 381, and the\nfirst machine exhausted inside wave 1 with nothing yet able to collect it.",
+    "winnability": "Secured, and the margin was **wide on survival and open on the score**: the hero never\nfell below **73.7%** of its running maximum (finishing 129/175), `goldStolen` was **0**,\nand the entire 260-HP boss (VAC 100 → core 160; RACK's 90 is optional, because act 2 opens\non VAC alone) fell in about five seconds once the hero walked up — while the banked purse,\n109 against a 200 cap, is the margin I left behind, because from wave 8 the boss deleted\nevery building I bought and my ladder kept buying them (14 built, **14 unbuilt**).",
+    "lessons": "- **Generation 23's boss coordinate on this map is DEAD, and the view publishes the\n  correction for free.** It put the Homemaker at (0,−8); `HomemakerBossSystem:161` sets\n  `(8, 0, 4)` and `now.atomic.homemakerBoss.position` says `{x:8,z:4}` in view 0. Every\n  *other* clause of that entry reproduced to the decimal. Grade a notebook entry clause by\n  clause — and grade a bare **coordinate** as carefully as a mechanic, because a plan built\n  on a stale one aims at empty ground.\n- **Read what the act transition does FOR you before budgeting boss HP — second time this\n  has paid** (gen 114's Dredge Queen recycled its own claw). Here\n  `if (componentId === 'vac' && this.act === 1) this.startAct2(...)` means RACK's 90 HP\n  never has to be spent: the bill is VAC 100 + core 160 = **260**, not 350. The gate's\n  requirement, not the roster's list, is the arithmetic that matters.\n- **A boss that zeroes every damage scale is a puzzle, and its teeth are in a special-cased\n  callback.** `contactDamageScale`, `buildingDamageScale`, `supportBuildingDamageScale` and\n  `pursuitRange` are all 0, and the real threat is `updateUnbuild` — which sorts **all**\n  buildings by HP and deletes the top one every 2.5 s with **no distance term**. You cannot\n  place out of its reach; you can only end it by killing VAC. Gen 14's rule paid again.\n- **…and the corollary I paid 91 gold to learn: once an unbuild clock is running and gold is\n  a ranking axis, STOP BUYING.** From wave 8 my ladder rebuilt a turret three times and the\n  boss ate each one inside 2.5 s. Every one of those coins could have been banked instead.\n  **Gate the ladder on \"can this purchase survive long enough to matter\", not on affordability.**\n- **A thief flag on one roster entry settles the cap question by itself — third heat running\n  I have carried this rule instead of re-deriving it.** `glowjack` is `thief: true` and no\n  entry is a wrecker, so: works are unattackable (`REPAIR_UNDER` and palisade bait are dead\n  weight) *and* the 60-gold `stockpile` is the trap generation 106 measured at 435 gold,\n  because a standing till is what makes `nearestGoldHolding` non-empty. Declined; measured\n  `goldStolen: 0`. The cap stays 200, which makes **waves** the axis that actually moves.\n- **`MOVE_HERO` turned this contract from \"raise 50 gold for a turret in range\" into \"walk\n  36 units and shoot it yourself\".** Generation 23 needed a turret because a welded hero's\n  rig could never reach; the hero now walks to (6,−2.3) in 5.2 s and kills the whole boss\n  with rig + blast. **When a ruling retires a verb, ask what the replacement makes\n  REACHABLE** — here it deleted the map's entire gold prerequisite.\n- **Latch the endgame trip on a wave target AND a health bail, and it cannot do worse than an\n  early secure.** `wave >= 15 || hpFrac < 0.50`, latched once true. Waves rank above gold and\n  above time, so riding costs nothing while the hero is healthy and the run still secures if\n  it turns. That one predicate is why a first controller secured at wave 15 instead of wave 8.\n- **`securedSnapshot` is a third number to read, and it is the one the door compares.** The\n  replay published `{waves: 12, gold: 109, …}` beside an outcome line saying `waves: 15`.\n  Report the discrepancy rather than declaring a number I have not traced — a guessed\n  declaration is exactly what `score_mismatch` is for.\n- **Control-test the assay before believing OR fearing it, then compare the right pair of\n  hashes — eighth generation for this.** The replay matches the **tape header's** hash\n  (`b8a19332`), never the stdout outcome line's (`87bea4cc`). Running the zero-order probe\n  first proved the instrument on a run I could not have influenced.\n- **Ride the skeleton first and change nothing — and the reading budget is what secures it.**\n  Two runs total. The reading went to the era pins as a per-contract diff, `null-floors.json`,\n  the contract JSON, the boss system and the roster flags; the riding went to the unmodified\n  generation-6→116 skeleton plus the one thing this board does differently. Twenty-two of my\n  generations end on \"I proved the parts and never fired the combination\"; the cure keeps\n  turning out to be reading, not riding.\n- **`null-floors.json` is the cheapest expiry check in the county and I should open it first\n  every ride.** One file said `w15 / 460500 / 0 gold / 282 kills` before I ran anything, and\n  the probe reproduced it to the hash — which told me the rules had not moved and redirected\n  the whole budget to the two things that had: the boss's coordinate and the grammar."
+  },
+  "usage": {
+    "transcript": "/Users/robin/.claude/projects/-private-tmp-claude-501--Users-robin-Claude-Projects-Gold-Rush-fe6b8d27-b064-40eb-934b-1d29d57a71db-scratchpad-arena-heat14-e3949bfa/2f2745f2-2300-4533-8d12-0436556adb32.jsonl",
+    "assistantTurns": 71,
+    "toolCalls": 31,
+    "tokensIn": 142,
+    "tokensOut": 135362,
+    "cacheReadTokens": 33431457,
+    "cacheWriteTokens": 1580762,
+    "note": "tokensIn excludes cache reads/writes (reported separately); summed from the CLI session transcript, not self-reported by the rig"
+  }
+}

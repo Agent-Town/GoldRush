@@ -1,0 +1,128 @@
+
+Running 36 tests using 1 worker
+
+(node:14142) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 [desktop-chrome] › e2e/lantern-true-world.spec.ts:60:50 › claim plain watch draws its contract world with snapshot sprites (31.1s)
+  ✓   2 [desktop-chrome] › e2e/lantern-true-world.spec.ts:60:50 › signal plain watch draws its contract world with snapshot sprites (5.0s)
+  ✓   3 [desktop-chrome] › e2e/lantern-true-world.spec.ts:100:63 › tactical opens the labelled tactical reel without returning to the menu (3.1s)
+  ✓   4 [desktop-chrome] › e2e/lantern-true-world.spec.ts:100:63 › lite opens the labelled tactical reel without returning to the menu (2.4s)
+  ✓   5 [desktop-chrome] › e2e/lantern-true-world.spec.ts:100:63 › no-webgl opens the labelled tactical reel without returning to the menu (2.3s)
+[lantern-perf] {"project":"desktop-chrome","gameP95":37.5,"reelP95":15.700000047683716,"ratio":0.41866666793823243}
+  ✓   6 [desktop-chrome] › e2e/lantern-true-world.spec.ts:127:1 › reel frame p95 stays within 115 percent of the mounted game (15.3s)
+  ✘   7 [desktop-chrome] › e2e/perf-01-stress-budget.spec.ts:98:1 › stress profile stays within draw-call and sprite-swap budgets (7.5s)
+(node:15704) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   8 [desktop-chrome] › e2e/reel-deep-links.spec.ts:10:1 › plain watch URL opens the true current-era show without a profile or debug (4.6s)
+  ✓   9 [desktop-chrome] › e2e/reel-deep-links.spec.ts:43:1 › an unknown watch URL shows an honest refusal and returns to the start menu (3.8s)
+  ✓  10 [desktop-chrome] › e2e/reel-deep-links.spec.ts:56:1 › landing watch links name their reel, contract, and epoch (1.6s)
+  ✘  11 [desktop-chrome] › e2e/tape-02-lantern-show.spec.ts:10:1 › plain town WATCH replays a fresh tape read-only and refuses a mismatched reel (17.0s)
+(node:17460) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  12 [desktop-chrome] › e2e/terrain3d-claim-pilot.spec.ts:64:1 › terrain2d is byte-lazy and keeps the painted Claim (7.2s)
+  ✘  13 [desktop-chrome] › e2e/terrain3d-claim-pilot.spec.ts:76:1 › contract-valid GLB feeds every visualY consumer and keeps the water agreement (5.6s)
+(node:19230) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  14 [desktop-chrome] › e2e/terrain3d-claim-pilot.spec.ts:140:1 › the terrain pilot leaves the planar simulation fingerprint unchanged (9.8s)
+  ✓  15 [desktop-chrome] › e2e/terrain3d-claim-pilot.spec.ts:151:1 › LITE and invalid bytes retain the painted fallback (18.0s)
+  ✓  16 [desktop-chrome] › e2e/terrain3d-claim-pilot.spec.ts:166:1 › the mounted terrain stays inside the 115% p95 budget (19.6s)
+(node:20656) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  17 [desktop-chrome] › e2e/true-reel-harness.spec.ts:12:1 › the browser replays the Claim control and a terrain-reading Motor reel to the claimed and node hashes (12.6s)
+
+
+  1) [desktop-chrome] › e2e/perf-01-stress-budget.spec.ts:98:1 › stress profile stays within draw-call and sprite-swap budgets 
+
+    Error: page.evaluate: Execution context was destroyed, most likely because of a navigation
+
+      57 | async function placePalisadeAt(page: Page, x: number, z: number): Promise<void> {
+      58 |   await page.evaluate((pos) => window.__GR_TEST__?.teleport(pos.x, pos.z + 2), { x, z });
+    > 59 |   await page.evaluate(() => window.__GR_TEST__?.selectBuildable('palisade'));
+         |              ^
+      60 |   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.ghostValid ?? false)).toBe(true);
+      61 |   const before = await buildableCount(page, 'palisade');
+      62 |   await page.evaluate(() => window.__GR_TEST__?.confirmBuild());
+        at placePalisadeAt (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/perf-01-stress-budget.spec.ts:59:14)
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/perf-01-stress-budget.spec.ts:104:5
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/perf-01-stress-budget-stre-465d6-all-and-sprite-swap-budgets-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/perf-01-stress-budget-stre-465d6-all-and-sprite-swap-budgets-desktop-chrome/error-context.md
+
+  2) [desktop-chrome] › e2e/tape-02-lantern-show.spec.ts:10:1 › plain town WATCH replays a fresh tape read-only and refuses a mismatched reel 
+
+    Error: page.evaluate: Execution context was destroyed, most likely because of a navigation
+
+      127 | async function openTapeShelf(page: Page): Promise<void> {
+      128 |   await page.waitForFunction(() => (window.__GR_TOWN_DIAGNOSTICS__?.frame ?? 0) > 10);
+    > 129 |   await page.evaluate(() => {
+          |              ^
+      130 |     const town = window.__GR_TOWN_DIAGNOSTICS__!;
+      131 |     const approach = town.buildings.find((building) => building.id === 'schoolhouse')!.approach;
+      132 |     town.teleport(approach.x, approach.z);
+        at openTapeShelf (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/tape-02-lantern-show.spec.ts:129:14)
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/tape-02-lantern-show.spec.ts:18:3
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/tape-02-lantern-show-plain-7c220-d-refuses-a-mismatched-reel-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/tape-02-lantern-show-plain-7c220-d-refuses-a-mismatched-reel-desktop-chrome/error-context.md
+
+  3) [desktop-chrome] › e2e/terrain3d-claim-pilot.spec.ts:76:1 › contract-valid GLB feeds every visualY consumer and keeps the water agreement 
+
+    Error: expect(received).toBeCloseTo(expected, precision)
+
+    Expected: 0.7964298105239869
+    Received: 0.8391575670242308
+
+    Expected precision:    2
+    Expected difference: < 0.005
+    Received difference:   0.04272775650024396
+
+       99 |       heroY: window.__THREE_GAME_DIAGNOSTICS__!.heroPos.y,
+      100 |     }), [x, z]);
+    > 101 |     expect(sample.heroY).toBeCloseTo(sample.height + 0.06, 2);
+          |                          ^
+      102 |     table.push({ x, z, ...sample });
+      103 |   }
+      104 |   expect(Math.max(...table.map((entry) => entry.height)) - Math.min(...table.map((entry) => entry.height))).toBeGreaterThan(0.35);
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/terrain3d-claim-pilot.spec.ts:101:26
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/terrain3d-claim-pilot-cont-43bda-d-keeps-the-water-agreement-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/terrain3d-claim-pilot-cont-43bda-d-keeps-the-water-agreement-desktop-chrome/error-context.md
+
+  4) [desktop-chrome] › e2e/true-reel-harness.spec.ts:12:1 › the browser replays the Claim control and a terrain-reading Motor reel to the claimed and node hashes 
+
+    Test was interrupted.
+
+    Error: page.evaluate: Test ended.
+
+      27 |     await page.goto(`/src/replay/harness.html?debug&contract=${fixture.contract}&seed=${fixture.seed}`);
+      28 |     await page.waitForFunction(() => Boolean(window.__GR_AGENT_TAPE_REPLAY__));
+    > 29 |     const browser = await page.evaluate(async (tape) => {
+         |                                ^
+      30 |       const startedAt = performance.now();
+      31 |       const replay = await window.__GR_AGENT_TAPE_REPLAY__!.replay(tape);
+      32 |       return { ...replay, wallMs: Math.round(performance.now() - startedAt) };
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/true-reel-harness.spec.ts:29:32
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/true-reel-harness-the-brow-816ea-the-claimed-and-node-hashes-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/true-reel-harness-the-brow-816ea-the-claimed-and-node-hashes-desktop-chrome/error-context.md
+
+  3 failed
+    [desktop-chrome] › e2e/perf-01-stress-budget.spec.ts:98:1 › stress profile stays within draw-call and sprite-swap budgets 
+    [desktop-chrome] › e2e/tape-02-lantern-show.spec.ts:10:1 › plain town WATCH replays a fresh tape read-only and refuses a mismatched reel 
+    [desktop-chrome] › e2e/terrain3d-claim-pilot.spec.ts:76:1 › contract-valid GLB feeds every visualY consumer and keeps the water agreement 
+  1 interrupted
+    [desktop-chrome] › e2e/true-reel-harness.spec.ts:12:1 › the browser replays the Claim control and a terrain-reading Motor reel to the claimed and node hashes 
+  19 did not run
+  13 passed (3.1m)

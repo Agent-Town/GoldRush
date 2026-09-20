@@ -1,0 +1,15 @@
+**NOT SECURED** on `e3-fairground`. Everything is written to `/tmp/heat13-569a41f9/artifacts/heat13/opus/e3-fairground/` — `gauntlet-outcome.json` and `gauntlet-report.md` are current.
+
+**Result:** best ride `tune-1` — waves 6 / 195.767 s / 36 gold / 229 calls, ended `hero_down`. 6 sim runs, 1 scored attempt. **Nothing put forward** — no run secured, so no tape is submittable (`attempt-1-tape.json` is named in the outcome file only for the record, and carries `secured: false`).
+
+**What the contract is, from source:** the secure ANDs two fairground clauses — the Fair Wheel must still be spinning (`FerrisWheel.damage()` sets `spinning = false` on *any* hit, permanently) **and** all three crowd flocks must have banked a crossing. The idle probe loses the wheel at t ≈ 21.5, because with no player work standing the wheel *is* the nearest building to the west/east saboteurs.
+
+**The two halves were each solved, but not in the same ride:**
+- Every controller that kept one cheap work standing kept the wheel at a pristine 240/240 — a 10-gold palisade on each flank is the whole latch.
+- `tune-4` moved the fort and hero into the corridors between the three flock lanes (x = −20, 0, +20, fright radius 7) and got crossings **1 / 1 / 4 — `allCrossed` true — with the wheel intact**. It then died on hero HP at wave 4.
+
+**Winnability: probably yes; my own budget stopped me.** Both hard latches are demonstrably satisfiable on this seed; what is missing is keeping a 125-maxHp hero alive from wave 6 to 12 on a measured 1.4 g/s economy that funded only 2–3 of the 6 beacons.
+
+Two findings worth flagging beyond this ride:
+- A **wrecked frame still occupies its tile**, so a "rebuild the wrecked rung" rule produced 26 `collision` refusals — each a full Prospector round trip — and dropped the economy from 1.4 to 0.5 g/s. Wrecked works must be *mended*, not rebuilt.
+- `REPAIR_UNDER` now searches only within `Balance.sparkRig.range` (10) of the **Prospector**, which lives at the seams 20–25 units from the fort — so the mend order silently never finds a target and the bait ring decays to nothing. That makes it a *placement* constraint (put bait within 10 of a live seam), not a repair setting.

@@ -1,0 +1,18 @@
+**SECURED — `e5-regatta` on `e5-regatta-01`, trail. First secure for this contract.**
+
+`secured: true` · waves **12** · timeAlive **272.000 s** · gold **200** (bank cap) · kills 33 · calls **18** · `eventLogHash: fnv1a32:48836c5c`
+
+Tape put forward: `artifacts/heat11/opus/e5-regatta/attempt-1-tape.json` — **3 runs, 1 scored attempt**, worldModel `sim-import`.
+
+**What decided it.** The idle probe rode to the wave ceiling (14/320 s) untouched and scored nothing — the tell that the secure is an errand, not a fight. `HeadlessContractSim.ts:1097` ANDs `race.finished` into the secure, and `RegattaRaceSystem.advance:40` **freezes the race at wave 12** (t=272 s), so the beacon course is a hard deadline, not a side quest. Two further source reads paid for themselves:
+
+- `race.advance` takes **two racers** — the Prospector *and* the boat anchor. The boat's start-line anchor (-49,0) already sits inside the final gate's radius 6, so touching the last beacon at (49,0) finishes the race outright and deletes a 98 wu return leg.
+- `BOAT_BUILD` is free and `DeepwaterArsenal` reads exactly two ids (`turret` → harpoon ballista r14, `sentry_beacon` → depth-charge rack r12). Two opening orders bought a fort that held the hero alone while its shooter was 100 wu away.
+
+Controller: deck guns → a chain of `MOVE_TO` through the four unpassed checkpoints → home → stacked `HARVEST` → `HOLD`. Course latched `finished` at **t=31.2 s against a 272 s deadline**; hero **100/100 at all 19 views**; gold pinned at cap from t=160.
+
+The scored attempt re-rode the securing controller identically: same `fnv1a32:48836c5c`, 18 entries, tapes byte-identical apart from the random `id`.
+
+Two findings for the county, both in the report: the contract's `engineDependencies` declares `regatta-race-consumer: "missing"` while that consumer runs headlessly **and gates the secure** (second stale "missing" in two E5 rides, and stale in the dangerous direction); and `stormMovementMultiplier: 0.72` never reaches the Prospector — only the fast-water 1.35 does — so the era's adversarial-weather half is decorative here while its scheduling half is the whole contract.
+
+`gauntlet-outcome.json` and `gauntlet-report.md` are written with the four required sections.

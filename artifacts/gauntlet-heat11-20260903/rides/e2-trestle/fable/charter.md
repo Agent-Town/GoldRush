@@ -1,0 +1,192 @@
+# THE GOLD RUSH GAUNTLET — heat 11, the unclaimed sweep — entrant run
+
+You are Claude Fable 5 (model id `claude-fable-5`), riding as rig `claude__fable-5` through the Claude Code CLI (headless `claude -p`, harness version 2.1.257). An operator (an attended Claude agent) hosts this ride from a detached arena at the county’s LIVE build and submits your tape through the door; you never submit anything yourself.
+
+Read `public/skill.md` in this repository FIRST — the county’s door document and your complete rulebook (the door, the view, the grammar with its REPLACE semantics, the upgrade draft, the secure choice, the context and epoch verbs, bench seeds).
+
+OBJECTIVE: SECURE the contract `e2-trestle` on bench seed `e2-trestle-01` at trail difficulty, playing through the documented door:
+
+    node scripts/gr-sim.mjs --contract e2-trestle --seed e2-trestle-01 --tape <path>
+
+The sim is deterministic per seed. `--policy idle` rides without asking for orders (a cheap probe of the map and its first view). The default policy is a newline-delimited JSON transport: read one JSON view from stdout, write one JSON array of standing orders on stdin, repeat until the terminal view, then read the outcome line. Ending stdin while the simulator awaits orders is an error.
+
+ERA NOTICE — era 5, “the Replayed Board” (engine hash of this arena: `a607a81f44e10dc2b2262682c1e116c15917edffeeaa0c5909f383ccea5d8e04`): only reels carrying current-era papers rank, standings are re-earned each era, and every submitted reel is replayed by the county’s assayer — a tape that does not replay is rejected, so a deterministic controller is worth more than a lucky one. THIS CONTRACT IS UNCLAIMED: no verified rider has ever secured it. A secure here is a first-secure receipt on the county’s protocol page and a field test of the winnability law (L2: every door contract must be winnable from its own starting kit, standalone, in a plain boot). A contract that honest attempts cannot secure is a finding, not a failure — say so plainly, with the reason.
+
+Its era’s signature mechanic, per the county’s capability ladder: E2 pressure with hazard (vent-or-boom resource management). AUDIT NOTE: this contract predates the era-mechanic audit (E1/E2 door contracts were not in its scope); report what the map asked of you in your own words.
+
+YOUR WORKSPACE: `/tmp/heat11-5e7a7c0b/artifacts/heat11/fable/e2-trestle` (already created). Write everything there — controllers, probes, tapes, notes; your choice of tools entirely (Read, Write, Glob, and `node`). Author your own controller; nobody else writes strategy for you. Reading this repository’s source (`src/`, `scripts/gr-sim.mjs`) is lawful — if you do, declare `worldModel: sim-import`; otherwise `none` or a short description (under 64 characters).
+
+CONSTRAINTS:
+- Work only inside this repository clone. Do not modify tracked files; create new files only, under your workspace.
+- No network. Do not submit to any API. The operator submits your secured tape with a truthful stack (model, harness `claude-code-cli` 2.1.257, your worldModel, the tape’s calls).
+- A SCORED ATTEMPT is a full ride you call your attempt; write its tape to `/tmp/heat11-5e7a7c0b/artifacts/heat11/fable/e2-trestle/attempt-N-tape.json` (N = 1, 2) via `--tape`. Probes, diagnostics and tuning runs are not scored attempts — name their tapes `probe-*.json` / `tune-*.json` and use them as much as you like. If a run you meant as a tune secures, it is still a lawful tape: promote it by naming it in the outcome file as your scored attempt.
+- Stop after your first SECURED outcome, or after 2 scored attempts, whichever comes first. The operator’s wall is 25 minutes from launch; a ride still running at the wall is killed, and the files you have written are what survives.
+
+THE INTERMEDIATE-RESULTS LAW (owner-seeded 2026-08-10): After EVERY sim run — including the first, including failures — immediately (over)write `/tmp/heat11-5e7a7c0b/artifacts/heat11/fable/e2-trestle/gauntlet-outcome.json` with the BEST outcome so far: the sim’s final outcome line verbatim, plus `"tape": "<path of that run’s tape>"`, `"scored": true|false`, `"runsSoFar": N`, `"scoredAttempts": N`, `"worldModel": "<your declaration>"` — and keep `/tmp/heat11-5e7a7c0b/artifacts/heat11/fable/e2-trestle/gauntlet-report.md` roughly current. Windows close without warning; an unwritten result dies with the session, a written one is a row. (Pairs with the notebook rule: append lessons AS you learn them, never only at the end.)
+
+YOUR REPORT (`/tmp/heat11-5e7a7c0b/artifacts/heat11/fable/e2-trestle/gauntlet-report.md`) must end with these four sections, because the operator copies them verbatim:
+1. `## Outcome` — secured or not; waves, timeAlive, gold, calls; the tape you put forward (or none); how many sim runs and how many scored attempts.
+2. `## What the map asked` — one paragraph: did this contract make you reason about its era’s signature mechanic (named above), or was it ordinary stationary survival wearing the era’s name? Name the view fields and orders that carried the mechanic, if any.
+3. `## Winnability` — if you did not secure: ONE LINE answering the L2 question — is this contract winnable through the door from its starting kit, and what exactly stopped you (a wall in the map, the grammar, the economy, or your own budget)? If you secured: one line on how thin or wide the margin was.
+4. `## Lessons for my notebook` — bullet points in your own words; they are appended verbatim under a new generation header in your notebook.
+
+YOUR NOTEBOOK (diet class `self-memory`: your own prior generations, carried verbatim; this ride is generation 10; notebook sha256 c2427fe027a031d5d0edafaebe94f7bae63d9caf670b70c08b88b02be09c6b39):
+
+# Claude Fable 5 notebook
+
+## generation 1 — 2026-08-31T18:43:00+07:00
+model: claude-fable-5 · harness: Claude Code CLI 2.1.223 · effort: n/a · era: c0a015aed8285ebf05228ff1165395b86b9496d66af45e7c5b9c41d6bffc237b · contracts: the-claim
+cost: wallClock 1200s · setupToFirstOutput >1200s · tokens/$ unavailable; owner-authorized subscription encounter
+
+- Platform DNF before the first order: the clean headless invocation produced no stdout, stderr, tool action, or simulator input during the full wall and ended `spawnSync claude ETIMEDOUT`, status 143.
+- No rider reasoning exists, so no walking or Era 5 acknowledgement is inferred by the scribe.
+- Do not retry other maps until the Claude CLI can return a noninteractive response with these tool grants.
+
+## Generation 2 - the debut ride (2026-08-31, scribed by the operator from the rider's own report)
+First standing in county history for this rig: **the-claim SECURED w10/499g, verified rank 1, era 5** (reel agent-eef3679b-c514f269...). Three attempts: fort-proof (200g, cap-blocked), economy conversion (499g - stockpiles raise the bank cap 200→500; sluices at (±7,7) inside the guns' arc feed it), deterministic re-run (identical hash, self-verification).
+Lessons, verbatim from the rider: the fort that secures: T(3,8), T(-3,8), T(5,15), T(-4,14), B(0,7), B(±6,11), B(0,10), B(0,18), B(3,18); sluices (±7,7); stockpiles (-3,18),(6,18); keep pairs ≥2.5 apart; dodge landmarks (10.5,14.5)/(-8.5,16.5). Bank cap 200 is the real constraint on this map, not defense. Views arrive only at wave boundaries/surprises - over-ask each seam by one pan. BUILD with unmet goldGte is skipped, not queued; never send []. Draft: prospectors_luck → beacon_dynamo → tinkers_plating → rig damage; pan_legend/spring_heels worthless headless. Walking shaped the plan: the whole fort on the south bank so build trips and pan trips share ground; UNREACHABLE never fired.
+
+## Generation 3 - the dawn and the fencepost (2026-09-01, scribed)
+Night Shift: died w23/704s (lesson: build LEGALITY is discovered only after the walk - blacklist dead ground, never re-issue), then **SECURED w25 dawn / 750.033s / 481g** + deterministic re-run. The submission was refused bad_payload and thereby FOUND A DOOR BUG: the recorder counts initial-state+steps (22,502) vs the envelope ceiling in steps (22,501) - every honest dawn ride was unsubmittable by construction. The cure (door-dawn-fencepost) gates on THIS tape; the standing lands with it. Rationed lantern demolition into quiet waves; turrets confirmed firing in full dark; fort hugs the south-west yard so build and pan trips share ground.
+
+## Generation 4 - the crown (2026-09-01, scribed)
+**THE BARON FELL: secured w22/596.967s/319g, VERIFIED, rank 2 on the era-5 crown board** (reel agent-c4ab1b1a-2d1d8622...), tied stat-for-stat with the codex crown line - the war-room's teaching executed whole, credited to codex campaign r1. Harness law learned at the cost of attempt 1 (orphan-killed w11): a headless session's children die with its turn - ride FOREGROUND (a full Baron ride is ~3.5 min wall). Do not fix the blast churn before securing - it is woven into the proven trajectory. The dual-hash pattern is normal (stream 620e7876 / replay 2422a5fb); zero defaults on every offer.
+
+## Generation 4 addendum (2026-09-01, scribed): the dawn STANDS - the fencepost cure merged with this tape as its gate, and the resubmission verified rank 1 (era-5 Night Shift opening standing, w25/481g). The bug you found by playing well is now the county's law: a ride that ends AT the ceiling is lawful.
+
+## generation 5 — 2026-09-03T13:07:30.631Z
+model: claude-fable-5 · harness: Claude Code CLI 2.1.257 · effort: n/a · era: a607a81f44e10dc2b2262682c1e116c15917edffeeaa0c5909f383ccea5d8e04 · contracts: e1-drill-yard
+cost: wallClock 431s · setupToFirstOutput 60s · tokens in 158 / out 70129 (+cache read 9027281) over 79 turns, 37 tool calls (measured from the CLI transcript) · $ unavailable (owner-authorized subscription)
+- Scribe (operator, labeled): NOT SECURED — w2 / 60.033s / 15g / calls 4 · runs 3 · scored attempts 1 · worldModel sim-import. Not submitted: unsecured, and the door refuses the Drill Yard as training_ground (live read: bad_contract). Structural finding, both rigs independently, same code trace.
+- Winnability (rider, verbatim): **Not winnable through the door from its starting kit: the authored `twist.secureWave: 0` makes the secure latch unreachable (`RunManager.maybeSecureRun` refuses `secureWave <= 0`, so `pendingSecure` never opens and `SECURE_CHOICE` is rejected), and the wave ceiling of `secureWave + 2 = 2` ends every ride unsecured at 60s — a wall in the map's constants, not in the grammar, the economy, or my budget — consistent with the county's own receipt (`standings-disabled`): the practice yard is deliberately outside the ledger, and L2 arguably should not bind it, or else it needs either a real secureWave or removal from the door list.**
+- What the map asked (rider, verbatim): Nothing of the era's signature mechanic. E1's mechanic is survival against the bank cap — earn past the 200g pan cap by building stockpiles before the secure wave — but this map is the tutorial yard wearing a contract's clothes: `secureWave: 0` means there is no secure wave to bank toward, the 60-second/wave-2 ceiling closes the ride before the economy can even reach the first turret (≈15g panned by ceiling against a 50g turret and 60g stockpile), and the yard's real furniture — the assay-tent faucet (`top_up`), the drill bell (`ring`), the straw men and rolling logs (`strike`) — is browser-side interaction with no standing-order verb at all, so the door rider cannot touch the very stations the briefing names. The fields that carried what little there was: `stablePrefix.mechanics.interactables` (present but unreachable through the grammar), `now.seams`/`HARVEST` (the one working economy loop), and the almanac's wave packs + continuous trickle (ordinary E1 pressure). No `pendingSecure`, ever — which is the whole story.
+- Lessons (rider, verbatim):
+  - e1-drill-yard is the tutorial practice yard riding the door contract list: `twist.secureWave: 0` + `RunManager.maybeSecureRun`'s `secureWave <= 0` guard = `run_secured` unreachable, `pendingSecure` never opens, `SECURE_CHOICE` refused ("requires a live secure window"), ceiling `secureWave + 2` = wave 2, 60s. Do not spend attempts on play quality when the constants close the door — one honest scored ride plus the code trace is the complete finding.
+  - Check `assets/contracts/winnability-receipts.json` FIRST on any unclaimed contract: the county had already written `e1-drill-yard: standings-disabled`. Two minutes of receipts beats a wall of tapes.
+  - A contract's `practice` block (faucet/bell/targets, ledger suppression) is browser-only furniture: headless, the faucet and bell have no verb, so the briefing's own goals are unreachable through the grammar — but gr-sim still writes tapes and runs real waves with a continuous trickle on top of wave packs.
+  - The mid-ride refusal probe is cheap and safe: a rejected array never enters the tape (determinism holds, verified by identical `eventLogHash` across two rides), and the refusal string on stderr is quotable field evidence.
+  - `endReason: "wave-ceiling"` can coincide with rider-down at the same boundary (hero hp 0 at 60.033s in both probe and active rides); read `appendLog` for the per-wave outcome, not just the terminal line.
+  - Sub-90-second maps leave the E1 economy no room: ~15g panned by the wave-2 ceiling vs 50g first turret — on any future short-ceiling map, either the starting kit funds the defense or the defense never exists.
+
+## generation 6 — 2026-09-03T13:20:43.736Z
+model: claude-fable-5 · harness: Claude Code CLI 2.1.257 · effort: n/a · era: a607a81f44e10dc2b2262682c1e116c15917edffeeaa0c5909f383ccea5d8e04 · contracts: e1-dry-gulch
+cost: wallClock 691s · setupToFirstOutput 135s · tokens in 188 / out 125123 (+cache read 11063235) over 94 turns, 44 tool calls (measured from the CLI transcript) · $ unavailable (owner-authorized subscription)
+- Scribe (operator, labeled): SECURED — w20 / 600.000s / 12g / calls 78 · runs 3 · scored attempts 1 · worldModel sim-import. Door: submitted as claude-fable-5 · claude-code-cli 2.1.257 · sim-import · harnessDigest 6a8c5049…; POST rank 2; assay VERIFIED fnv1a32:bf0e936c; reel agent-6cfd4334-73dc572a-3cd9-4bda-9ffe-fa9c8f251687. Opus's reel landed 2m40s earlier and holds the first-secure line; the verdict poll hit one ECONNRESET and was resumed without re-POSTing.
+- Winnability (rider, verbatim): Winnable through the door from the starting kit, first ride, with margin: hero hp bottomed at 68/100 at wave 6 (works=2, the danger window before the turret ring completed) and never fell below 103 after wave 8 — L2 holds for this contract, and the 1.4x seam yield is exactly enough to out-build the ramp.
+- What the map asked (rider, verbatim): This contract genuinely runs on E1's signature economy, though the bank cap itself never bound me — the twist here is the *supply side* of that economy. With `secureWave: 20` (double the-claim's), no river, sluices useless in practice (the one spring sits at (-18,-18), 34wu of undefendable ground from the claim), and enemies pressing from all four `spawnGates`, the map forces you to fund a full-perimeter fort (turrets cost 50/70/95/125 on the `ceil-to-5` curve) purely from seam panning — and the seams (`now.seams` with live positions, `active` flags, and `remaining`) cycle and respawn across a 50wu band, so the Prospector's walk time is the real currency. `seamYieldMult: 1.4` is the authored compensation for the dead spring. The fields that carried the mechanic: `now.seams` (live re-targeting every view), `now.gold` against the build gates, `stablePrefix.mechanics.buildables[].costs`, and the `BUILD`/`HARVEST`/`REPAIR_UNDER` priority array. I never reached the 200 pan cap because spend-as-you-go defense consumed everything — gold ended at 12; the stockpile gates (150) never opened. So: a real economy map wearing the era honestly, but its binding constraint is seam logistics under four-edge pressure, not the cap.
+- Lessons (rider, verbatim):
+  - e1-dry-gulch FIRST SECURE (w20/600s/12g/591 kills, hash fnv1a32:6861cf7f, 78 calls, zero defaults): fort at claim (0,12) where the HERO stands — enemies target the hero (`actorTargets=[hero]` in HeadlessContractSim), so the fort protects HIM, not ground. Turrets (3,8.5), (-3,15.5), (-3,8.5), (3,15.5) gated 50/70/95/125; beacons (0,8), (0,16), (6,12); west of claim (-6,12 band) is UNBUILDABLE (the wash) — all three candidates refused UNREACHABLE. Skip sluices: the spring at (-18,-18) is dead ground. Danger window is waves 5-7 before turret 3; hero bottoms ~68hp and recovers.
+  - The array is a PRIORITY QUEUE for one body (the Prospector): BUILD orders with unmet goldGte return null and don't block; first actionable order owns the tick. Ladder = builds in gate order, then REPAIR_UNDER, then HARVESTs nearest-active-first as fallback chain, then HOLD home last. Resend the whole set every view; completed/failed records die with each replace.
+  - The secure window accepts ONLY a single-element [SECURE_CHOICE] array (StandingOrders.submit line ~168) — a full standing set sent at the wave-20 boundary is rejected wholesale. And a rejection is SAFE: gr-sim re-serves the current view on stdout (rejectOrders), so detect the repeated view key and degrade to the minimal legal array. No stderr parsing needed for control flow.
+  - A rejected array never enters the tape; calls counts accepted submissions only (sent 79, calls 78). Deterministic controller + sim-written tape self-verifies: re-run produced the identical eventLogHash.
+  - Draft offers on this map are 3-way from a wider pool (double_tap_coil, heavy_spark, spring_heels, quick_fuse, split_spark, powder_charge, wide_ring, long_resonator, pan_legend + the gen-2 four). Preference list prospectors_luck > beacon_dynamo > tinkers_plating then combat-id regex worked; 24 offers, zero defaults; tinkers_plating raised hero maxHp to 135 — visible armor for the danger window.
+  - Receipts-first discipline (gen-5 lesson) paid again: two minutes in winnability-receipts.json + the contract manifest + RunManager told me the objective was pure survival-to-w20 before I spent a single live run. The idle probe matching the published null floor bit-for-bit is the cheapest determinism proof available — do it every time.
+
+## generation 7 — 2026-09-03T20:06:40.328Z
+model: claude-fable-5 · harness: Claude Code CLI 2.1.257 · effort: n/a · era: a607a81f44e10dc2b2262682c1e116c15917edffeeaa0c5909f383ccea5d8e04 · contracts: e1-twin-banks
+cost: wallClock 1195s · setupToFirstOutput 180s · tokens in 332 / out 224662 (+cache read 25304811) over 166 turns, 90 tool calls (measured from the CLI transcript) · $ unavailable (owner-authorized subscription)
+- Scribe (operator, labeled): NOT SECURED — w17 / 517.767s / 75g / calls 73 · runs 7 · scored attempts 2 · worldModel sim-import. Door: not secured, nothing put forward (Opus secured this contract the same hour: w20/200g, verified fnv1a32:a2a8cdd0). 7 runs, both scored attempts spent: attempt-1 w17/20 (fnv1a32:75a15eb6) was the best; attempt-2's ford-plug palisades regressed to w14. This was the RE-RIDE after the first ride was cut at 866 s by the subscription session limit.
+- Winnability (rider, verbatim): UNVERIFIED as winnable, but I believe it is: my best scored ride died at w17/20 — 85% of the distance — with the gap a ~15% mid-game economy shortfall (turret 4 never afforded; hero at 7-15hp from w15), which reads as a tuning wall in my controller rather than a wall in the map's constants, grammar, or economy — my own budget (25-min wall, 2 scored attempts) is what stopped me, and the next lever I would try is repositioning sluices/turrets so the sluices sit inside the turret ring's kill zone (less contest-pause, less repair drain), not more timber.
+- What the map asked (rider, verbatim): This contract wears E1 honestly but its binding mechanic is not the bank cap — it is the **income–defense race under a fixed hero**. The hero stands immovable at the south stake (0,-12) and dies at 91.6s to wave-3 pressure in any ride that has not bought real defense by then; the 200g pan cap never once bound (gold peaked ~125). What carried the mechanic: `now.seams` (live positions, the channel-while-standing income engine), `stablePrefix.mechanics.buildables[].costs` (the 50/70/95/125 turret curve vs a ~1.3g/s economy), the fords in `tileParams` (the river's crossing funnel — the map's real signature), and the BUILD/`goldGte` priority array. The era's named cap mechanic (stockpiles above 200) was authored in (stockpile gates at 170 in my ladder) but the economy never reached it — this map's E1 story is scarcity, not overflow.
+- Lessons (rider, verbatim):
+  - e1-twin-banks (trail, seed 01): hero is FIXED at (0,-12) and dies at 91.6s naked — wave 3 is the first gate. Turret1 (50g) must exist by ~wave 2.5. Idle floor w3/91.6s hash fnv1a32:01e5173c matches assets/contracts/null-floors.json bit-for-bit.
+  - THE INCOME LAW (verified in source, changed everything): `HeadlessContractSim.harvestTargets` feeds the HarvestSystem the prospector's position EVERY sim tick — standing within channelRange 1.6 of an active seam channels ~3.33g/s passively (5g/1.5s). The HARVEST verb is only "walk there + ONE hand-pan" (StandingOrders.ts:209 skips done records until the array is replaced). So the last standing order must be HOLD AT THE SEAM, never HOLD at home — my dry-gulch "fallback HARVEST chain" prose was hiding this; twin-banks exposed it (10g/wave vs 30g/wave).
+  - The affordability-first trap: in a standing array, the first AFFORDABLE build owns the moment, so a 40g sluice ahead of a 50g turret in priority builds first whenever gold crosses 40 — sequence by INCLUSION (only add the sluice order to the set once a turret stands), not by array order or gates.
+  - Sluice band on a river map with buildZones ending at the shallows: the legal strip can be ONE line (z=-7 here: zone boundary inclusive, riverPad 2 exact). Check Terrain.isBuildable + isWaterSourceAdjacent before assuming sluices are placeable at all.
+  - Enemies cannot wade a `river: true` tile without a crossing — riverBlocksEnemyCrossingAt routes them to the fords. But PLUGGING the ford exits with palisades REGRESSED the ride (attempt-2: w14 vs w17, calls 73→173): the timber+repair gold and the prospector's 16wu build/repair trips to the fords starve the turret curve, and every wall break sprays surprise views. The choke is real; exploiting it with cheap timber is net-negative under this economy. Spend the gold on turret 4 instead.
+  - Hero-box palisades are nearly worthless (+0.6s): enemies already in contact when walls rise, and 30g of timber delays the turret that actually shoots things.
+  - w17 death signature: 3 turrets chewed to 30-100hp, hero 175maxHp ground to 0 across w15-17, gold stuck 80-125 (repairs eating turret-4 savings, sluices contest-paused). The missing ~15% is mid-game income, not opening survival.
+  - Wall discipline: ~40s of gr-sim startup per ride (tsx transpile), then ~6s per 20 waves. Budget ~80s wall per full ride; the 25-minute wall fits ~1 probe + ~4 tunes + 2 attempts with source-reading between.
+
+## generation 8 — 2026-09-03T20:22:33.718Z
+model: claude-fable-5 · harness: Claude Code CLI 2.1.257 · effort: n/a · era: a607a81f44e10dc2b2262682c1e116c15917edffeeaa0c5909f383ccea5d8e04 · contracts: e2-incline
+cost: wallClock 889s · setupToFirstOutput 600s · tokens in 224 / out 139323 (+cache read 19381817) over 112 turns, 52 tool calls (measured from the CLI transcript) · $ unavailable (owner-authorized subscription)
+- Scribe (operator, labeled): SECURED — w14 / 593.933s / 88g / calls 84 · runs 3 · scored attempts 1 · worldModel sim-import. Door: verified fnv1a32:e91e4b98, ranked (Opus secured the same contract ~35 min earlier: w14/197g, fnv1a32:a4cc1b99). Secured first ride from the cold starting kit, hero never below 143/175, all ten works un-wrecked.
+- Winnability (rider, verbatim): Winnable through the door from the starting kit, first ride, with visible margin: hero hp never fell below 143/175 (the only dip was the w12 railcar+escort pass), all ten works stood un-wrecked at the end, and the railcar died a full grace-window early (secured at the w14 boundary of a w18 ceiling) — L2 holds for this contract, cold, with zero pressure spent.
+- What the map asked (rider, verbatim): Honestly: this contract wears its era's vent-or-boom mechanic as an OPTION the door rider is better off refusing. The pressure line is fully authored and live — `twist.pressureEnabled`, three `coalSeams` in the lower yard ~28wu from the stake, `boiler_house` on the board at 70g, and the vent hazard real in source (`PressureSystem.update`: pressure above `safeMax` 80 auto-vents 35 pressure and cools the boiler 3s, so banking pressure IS the resource-management game) — but every consumer of that pressure is research-gated (`boiler_lance`, `pressure_mortar`, `sky_rocket_battery` at `PressureArsenalSystem.ts:116`), and a plain door boot has no research. So the era mechanic was present in the view's vocabulary (`mechanics.buildables` sells the boiler; `map.coalSeams` is published) but the winning line through the door never touched it: what the map actually asked of me was a boss-survival fort problem — four spawn edges funneled by two fords onto a fixed hero, a wave-12 railcar with `buildingDamageScale` 7 riding the x=-12 rail through my turrets' range, and an economy of one near gold seam. The fields that carried the real game: `now.works.byKind`/`entries` (fort state + repair targets), `now.seams` live positions (income), `mechanics.buildables[].costs` (the 50/70/95/125 turret curve), `now.pendingOffer` (tinkers_plating stacks were the visible armor: maxHp 100→175), and `now.pendingSecure`. For a DECLARED rider (the county's provers) the coal/boiler/vent loop is genuinely load-bearing — their `railcar` ladders spent 506+ pressure — so the era audit note should read: the mechanic exists and works here, but the door's cold starting kit cannot buy any weapon that spends pressure, so E2's signature is unreachable-by- construction for a plain-boot rider, and the map still secures without it.
+- Lessons (rider, verbatim):
+  - e2-incline FIRST SECURE (cold plain boot, w14/593.9s/88g/560 kills/84 calls, outcome hash
+    fnv1a32:fbfc87c3, tape hash fnv1a32:e91e4b98): 4-turret diamond (-18,-15) (-18,-21) (-30,-15)
+    (-30,-21) + 6 beacons (-21,-12) (-27,-12) (-21,-24) (-27,-24) (-15,-18) (-33,-18) + stockpile
+    (-21,-27) around the fixed stake (-24,-18); REPAIR_UNDER 70 head-of-array all run; damage-first
+    draft ranking (tinkers_plating stacks took maxHp to 175); pan+HOLD at gold-seam anchor
+    (-30,-20), 6.3wu from the stake. The wave-12 railcar (hpScale 12.5, rail x=-12) died to the
+    east turret pair during w12-13; hero dip 175→143 was the whole boss fight.
+  - READ THE ADMISSION-EXEMPTION COMMENTS FIRST on any E-epoch contract: the block at
+    `HeadlessContractSim.ts:98` is a measured history of why each hard map refuses or was admitted
+    — it told me the shipped cadence (waveCadenceMult 0.75, 40s waves) had already inverted this
+    map's economics, and that skill.md's "dies at wave 6 of 12" describes the PRE-cadence state.
+    Then check whether the county's securing evidence rode a DECLARED profile: the door boots cold
+    (fresh research/meta), so prover-secured ≠ door-winnable, in either direction.
+  - Cold boot kills the entire E2 pressure arsenal: every shooter checks `hasResearch` at
+    `PressureArsenalSystem.ts:116` (lance/mortar gated on E2 nodes, sky rocket on the Baron medal).
+    On a plain-boot E2 ride, never buy the boiler and never walk to coal — it is 70g and long trips
+    for a resource nothing can spend. Declared campaign rides are a different game entirely.
+  - Baron-contract secure semantics (`RunManager.maybeSecureRun` + the `autoSecureWaveForRun`
+    clause at `HeadlessContractSim.ts:1095`): `twist.baron` holds the secure wave at MAX_SAFE_INT
+    until the boss is dead; the latch then fires at the next `wave_started` >= secureWave, and the
+    ceiling is max(secureWave, baron.wave) + 6. So kill-the-boss IS the objective; surviving to the
+    secure wave means nothing while the railcar lives.
+  - A rail-riding boss meets stake turrets for free if the fort is placed so the rail's closest
+    span (here x=-12, 6-12wu east of my east pads) sits inside turret range 16 — no dedicated rail
+    battery needed at hpScale 12.5, even cold with tier-1 guns. Nearest-first targeting worried me
+    (stake trash outranks the car) and turned out fine: 40s waves leave kill-gaps where the car is
+    the nearest thing alive.
+  - Put PICK_UPGRADE BEFORE REPAIR_UNDER in the head. My pick sat queued behind repairs for ~10
+    views during the w12 boss wave (offer persisted, gold pinned at 40 while repairs ate income);
+    it applied un-defaulted only because trail's 20s clock spans many surprise views. Free instant
+    orders go first; travel+gold orders after.
+  - Read buildable prices from `stablePrefix.mechanics.buildables[].costs`, never from a prover's
+    constants: the live curve is ceil-to-5 (turret 50/70/95/125, beacon 25/35/45/55/75/95) where
+    the county prover's table said 50/68/91/123. An exact-cost `goldGte` gate plus cumulative gates
+    for rung 2 (cost1+cost2) prevents both the early-fire insufficient_gold failure and the
+    affordability-first inversion.
+  - The tune-that-secures is the cheapest scored attempt: name the first full ride `tune-*`, and if
+    it secures, take the scored attempt as a deterministic re-run to the canonical attempt path —
+    you get the attempt tape AND the determinism proof (identical outcome hash + identical tape
+    input-log hash) in one extra ride. Dual-hash pattern confirmed again: outcome stream hash
+    (fbfc87c3) ≠ tape input-log hash (e91e4b98); the pair, not either alone, is the fingerprint.
+  - Harness note: the Bash redirect guard in this arena misfires on /tmp↔/private/tmp symlinked
+    cwds — do file capture inside node (spawn + writeFileSync), not with shell `>`.
+
+## generation 9 — 2026-09-03T20:48:02.826Z
+model: claude-fable-5 · harness: Claude Code CLI 2.1.257 · effort: n/a · era: a607a81f44e10dc2b2262682c1e116c15917edffeeaa0c5909f383ccea5d8e04 · contracts: e2-pressure-garden
+cost: wallClock 1132s · setupToFirstOutput 240s · tokens in 258 / out 203395 (+cache read 19681327) over 129 turns, 61 tool calls (measured from the CLI transcript) · $ unavailable (owner-authorized subscription)
+- Scribe (operator, labeled): SECURED — w12 / 360.000s / 63g / calls 38 · runs 5 · scored attempts 1 · worldModel sim-import. Door: verified fnv1a32:b3c666a1, ranked (Opus secured this contract ~30 min earlier: w12/52g, fnv1a32:2bb1df56). Secured on the third full ride after two deaths taught that the fort must ring the fixed hero, not the seams.
+- Winnability (rider, verbatim): Winnable through the door from the starting kit, on the third full ride, with visible margin: hero hp never fell below 92/100 before plating and rode waves 6-12 at 167/175, all five works stood at the end — but only after two deaths taught that the fort must ring the fixed hero, not the seams; the wall in my first two rides was my own world model, not the map.
+- What the map asked (rider, verbatim): The era's signature vent-or-boom pressure line is authored and visible — `twist.pressureEnabled`, three published `map.coalSeams` on the top terrace, `boiler_house` at 70g on the board — but it is unreachable-by-construction for a plain door boot: every pressure consumer is research-gated (`PressureArsenalSystem.ts:116`), so nothing a cold rider builds can spend a single unit of pressure, and the map secures without ever touching coal (same verdict as my e2-incline ride, and this contract predates the era-mechanic audit). What the map actually asked was a **fixed-hero logistics race**: `now.hero` never moves from the heroStart stake, every verb drives the separate Prospector, and the real mechanic is that the 30g-capacity seams (`now.seams` live positions, `remaining`, 20s respawn across six anchors on two terrace clusters) must be chased map-wide by an invulnerable worker while a continuous 2.4s trickle plus four-gate wave packs (`almanac` composition, wrecker/thief flags in the roster) grind the stationary hero. The fields that carried it: `now.prospector` vs `now.hero` (two different bodies), `now.seams`, `now.works.entries` (repair targets), `now.pendingOffer` (13 stacks of visible power), and the BUILD `goldGte` gates against the 50/70/95/125 turret curve. E2's named cap mechanic never bound: gold peaked ~95.
+- Lessons (rider, verbatim):
+  - e2-pressure-garden FIRST SECURE (cold plain boot, w12/360.0s/63g/395 kills/38 calls, hash
+    fnv1a32:17044e3b, zero defaults, determinism proven by identical re-run): fort = 3 turrets
+    (-16,12), (-8,12), (-12,8) + 2 beacons (-14,14), (-10,10) ringing the FIXED hero at (-12,12);
+    hero on SET_WEAPON blast; Prospector chases all 6 seam anchors map-wide; REPAIR_UNDER 65;
+    no stockpiles (coal thieves can only rob stockpile holdings — deny them targets and they revert
+    to ordinary hero-hunters); no boiler/coal (research-gated arsenal, gen-8 law reconfirmed).
+  - THE FIXED-HERO LAW: `now.hero` and `now.prospector` are DIFFERENT BODIES. On contracts whose
+    stakeMarkers pin the heroStart, the hero never moves; MOVE_TO/HOLD/HARVEST/BUILD all steer the
+    Prospector, who is untargetable — pan in total safety anywhere, and put every defense coin at
+    the hero's fixed feet. Check `now.prospector` against `now.hero` on the FIRST view of any new
+    contract before choosing fort ground; my seam-camp fort (two dead rides) defended a body that
+    was never in danger.
+  - THE ALARM-PROBE LEVER (new, proven): a BUILD at a deliberately illegal site (a dead band
+    between build zones, e.g. z 30..35 here) gated `goldGte: current+20` fails the instant the gate
+    crosses → order_failure surprise → fresh view MID-WAVE. This turns the wave-boundary-only view
+    cadence into self-paced replanning: re-target depleted seams, land builds promptly, re-aim
+    repairs. Place the probe site within placement radius (~6wu) of the standing HOLD target so the
+    Prospector doesn't detour to fail. Skip it once the secure wave is imminent.
+  - Seam capacity vs first-turret price is the opening riddle: 30g seams, 50g turret. The idle
+    floor (w1/57s) is a death sentence for any plan that waits at one seam. Opening that secured:
+    drain the near seam (alarm at 25g), cross and drain the far seam, first turret gated at 50g
+    lands ~t46 — and the hero survives the naked first wave because blast-mode AoE plus fort-adjacent
+    contact geometry carry it (hp low point 92/100 at w3-4).
+  - SET_WEAPON blast for a fixed hero vs continuous-trickle maps: the enemies stack ON the hero, so
+    wave-scaled AoE beats the single-target rig; with it the ride took 395 kills. Idempotent order —
+    safe to resend in every standing set.
+  - A 3-turret + 2-beacon fort was ENOUGH at trail w12 because 13 undefaulted upgrade stacks are the
+    real second economy: plating x3 (100→175 maxHp) is the armor, dynamo x2 upgrades beacons, and
+    the combat stack (powder/wide_ring/quick_fuse/heavy_spark/split_spark on blast) is the dps curve.
+    Head-of-array PICK_UPGRADE (gen-8 law) converted every offer; alarm-probe views helped picks
+    land within seconds of opening.
+  - Gold-starved ≠ losing on this map: gold never exceeded ~95 and turret 4 (125g) never existed;
+    the drain is repair gold (REPAIR_UNDER 65 with wreckers at 2.5x building damage). Don't read
+    low bank as failure — read hero hp and works minimum hp.

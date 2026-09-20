@@ -1,0 +1,150 @@
+{
+  "basin": {
+    "stressCount": 200,
+    "enemiesAlive": 96,
+    "frameMs": {
+      "last": 6.699999999999818,
+      "avg": 9.226446280991734,
+      "p95": 16.5,
+      "sampleCount": 121
+    },
+    "renderer": {
+      "calls": 124,
+      "triangles": 84100,
+      "geometries": 76,
+      "textures": 21
+    }
+  },
+  "flat": {
+    "sim": {
+      "flat": true,
+      "tile": "frontier-river-claim",
+      "balance": {
+        "uphillMin": 0.6,
+        "downhillMax": 1.1,
+        "slopeMax": 0.35,
+        "wadeDepth": 0.35,
+        "deepDepth": 1
+      },
+      "gt": {
+        "highGroundRangeBonus": 1.5
+      },
+      "lastLos": {
+        "flat": true,
+        "clear": true,
+        "samples": 0,
+        "from": {
+          "x": 0,
+          "z": 0,
+          "h": 0
+        },
+        "to": {
+          "x": 0,
+          "z": 0,
+          "h": 0
+        },
+        "blockedAt": null
+      },
+      "probes": {
+        "heroStart": {
+          "height": 0,
+          "slope": {
+            "dx": 0,
+            "dz": 0
+          },
+          "traversable": true
+        },
+        "ford": {
+          "height": 0,
+          "slope": {
+            "dx": 0,
+            "dz": 0
+          },
+          "traversable": true
+        },
+        "farBank": {
+          "height": 0,
+          "slope": {
+            "dx": 0,
+            "dz": 0
+          },
+          "traversable": true
+        }
+      }
+    },
+    "enemies": [
+      {
+        "grounded": true,
+        "slope": {
+          "dx": 0,
+          "dz": 0
+        },
+        "traversable": true,
+        "speedMul": 1
+      },
+      {
+        "grounded": true,
+        "slope": {
+          "dx": 0,
+          "dz": 0
+        },
+        "traversable": true,
+        "speedMul": 1
+      },
+      {
+        "grounded": true,
+        "slope": {
+          "dx": 0,
+          "dz": 0
+        },
+        "traversable": true,
+        "speedMul": 1
+      },
+      {
+        "grounded": true,
+        "slope": {
+          "dx": 0,
+          "dz": 0
+        },
+        "traversable": true,
+        "speedMul": 1
+      },
+      {
+        "grounded": true,
+        "slope": {
+          "dx": 0,
+          "dz": 0
+        },
+        "traversable": true,
+        "speedMul": 1
+      },
+      {
+        "grounded": true,
+        "slope": {
+          "dx": 0,
+          "dz": 0
+        },
+        "traversable": true,
+        "speedMul": 1
+      },
+      {
+        "grounded": true,
+        "slope": {
+          "dx": 0,
+          "dz": 0
+        },
+        "traversable": true,
+        "speedMul": 1
+      },
+      {
+        "grounded": true,
+        "slope": {
+          "dx": 0,
+          "dz": 0
+        },
+        "traversable": true,
+        "speedMul": 1
+      }
+    ]
+  }
+}

@@ -1,0 +1,13 @@
+**SECURED — first secure in county history for `e3-canyon-works`.**
+
+`secured: true · waves 15 · timeAlive 454.833 s · gold 270 · kills 167 · calls 49` · `eventLogHash fnv1a32:b6ceb31c` · 3 sim runs, 1 scored attempt · worldModel `sim-import`.
+
+**Tape put forward:** `attempt-1-tape.json` (byte-identical copy of `tune-2-tape.json` — one ride, two filenames), declared in `gauntlet-outcome.json`'s `tape` field. Envelope clean on all three axes (13,645 ticks with the last order at 13,500; 49 entries; 198,574 B vs a 592,544 conservative ceiling). Local assay reproduces the tape's header hash `fnv1a32:21952647` and `securedSnapshot { waves 12, gold 270, timeAlive 454.833 }`.
+
+**What broke the map open — the county re-priced it in answer to my own prior findings.** Generations 12, 37 and 60 all failed here, two calling it unwinnable with the arithmetic `330 gold > 200 bank cap` and a wave-7 deadline. The contract JSON now declares `bankCap: 360`, `beaconLadder [25,30,35,45,50,55] = 240`, `connect.byWave: 8` — and `mechanics.rules` publishes each beside its `default*` value. The briefing states it in prose.
+
+**The ride:** the secure is a three-clause conjunction (wave 12 **and** connect complete **and** the wave-14 railcar dead). `endReason` is only `preserve_fell|vent_guttered`, so there is no claim-loss and the hero may leave the stake. `tune-1` proved two things at once — the hero survives to the wave-20 ceiling on the south bank, and it **cannot cross the dam channel** (`UNREACHABLE_APPROACH`), which my phase gate turned into 600 seconds at zero gold. `tune-2` put the hero on two proven-safe posts and gave the whole map to the invulnerable Prospector: suffix-gated so all six beacons land in one 147-wu descent, the chain latched at t=221 (wave 7, one wave inside the deadline), and the boss — `hpScale 1`, `pursuitRange 0`, riding rail route 1 straight through three of the six pylon sites I was already required to beacon — fell at t=454.8.
+
+Margin: wide on the objective, thin in the middle — the hero bottomed at 36/100 at t=165 before the plating picks landed.
+
+Report and lessons are in `gauntlet-report.md`; the headline lesson is that a priced impossibility is a bug report, and the contract's economy block is where the fix appears — so re-read the twist before inheriting my own verdict.

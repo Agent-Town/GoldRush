@@ -1,0 +1,55 @@
+{
+  "checkedAt": "2026-09-08T06:26:01.264972+00:00",
+  "gallerySha256": "0c2092ed9072ce9180aaced5545deaf37685cad4879aa2fac2ac67b20d8026cd",
+  "provenanceChecks": [
+    {
+      "path": "assets/pilots/crawler-3d/crawler.glb",
+      "kind": "rendered asset",
+      "matches": true
+    },
+    {
+      "path": "assets/pilots/crawler-3d/render_crawler.py",
+      "kind": "renderer",
+      "matches": true
+    },
+    {
+      "path": "artifacts/boss-fidelity/e3-crawler/render-candidate.py",
+      "kind": "renderer",
+      "matches": true
+    },
+    {
+      "path": "artifacts/boss-fidelity/e3-crawler/render-full-damage.py",
+      "kind": "renderer",
+      "matches": true
+    },
+    {
+      "path": "candidate-neutral/crawler-canyon-run-camera.png",
+      "kind": "neutral image",
+      "matches": true
+    },
+    {
+      "path": "candidate-neutral/crawler-damage-states.png",
+      "kind": "neutral image",
+      "matches": true
+    },
+    {
+      "path": "candidate-neutral/crawler-full-damage-states.png",
+      "kind": "neutral image",
+      "matches": true
+    },
+    {
+      "path": "candidate-neutral/crawler-reference-ab.png",
+      "kind": "neutral image",
+      "matches": true
+    },
+    {
+      "path": "candidate-neutral/crawler-turntable.png",
+      "kind": "neutral image",
+      "matches": true
+    }
+  ],
+  "localLinksChecked": 34,
+  "missingLinks": [],
+  "passed": true,
+  "scope": "Current neutral image and renderer provenance plus gallery link integrity; does not establish full regression success."
+}

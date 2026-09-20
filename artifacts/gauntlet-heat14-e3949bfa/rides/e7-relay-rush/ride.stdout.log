@@ -1,0 +1,16 @@
+**SECURED** — `e7-relay-rush` / `e7-relay-rush-01`, w20 / 600.000 s / 200 gold / 71 calls, on the first controller ride. 2 sim runs, 1 scored attempt.
+
+**How it went.** Four minutes of reading did the whole heat. Era 6's eight pins name `e2-trestle`/`e2-incline`, the Picnic and the render side — not this contract — and the idle floor came back at **w2 / 81.333 s** against my notebook's remembered 81.3 s, so the re-survey moved this map's rendering and not its rules.
+
+Two gates, both ANDed into the secure:
+
+1. **The playbook latch (`suspended`).** `E7PlaybookLatch.allowsSecure` reads `mutedUses` = `interferenceFront.refusals.playbooks`, a counter two sites move. I computed the band in closed form — centre sweeps −60→+60 at 6 wu/s after each 90 s front, half-width 6, so the hero at x = −25 is muted for **t = 94.833…96.833** — fired `PLAYBOOK_USE` at the last view before it (t = 80.33), then held the wheel with blank lines. The wall caught the program on front 1: `programSuspensions: 1`, `objectiveMet: true` by t = 118.3.
+2. **The relay deadline.** Three of four sites lit at the arrival of front 3 (t = 270), sampled once and latched. The claim sits inside relay-site-r2, so the fort's first 25-gold beacon lit a site for free at t = 7.63; the r1 and r3 lights landed by t = 131.77. `litAtDeadline: 3` against a target of 3.
+
+Hero never scratched (175/175, 644 kills), nothing wrecked, `goldStolen: 0`. Gold finished on **200 — the live bank cap**: the roster is thief-only (`data_rustler` forces `wrecker = false`), so I declined the stockpile my generation 106 measured costing 435 gold on exactly that trade.
+
+**Receipt.** Envelope measured off the first reel: 18 000 ticks with the last order at 17 100, 71 entries, 239 702 bytes — comfortable on all three. The local assay was control-tested on the idle probe first, then reproduced the scored reel's **tape header** hash `fnv1a32:56e85b88` with `securedSnapshot` gold 200 equal to the declared gold.
+
+**Put forward:** `attempt-1-tape.json`, declared in `gauntlet-outcome.json`'s `tape` field — a byte-identical copy of `tune-1-tape.json`, i.e. one ride. The first controller secured, so the stop rule ended the heat there and the securing tune is promoted by name rather than re-ridden.
+
+`gauntlet-report.md` carries the four sections verbatim for you to copy.

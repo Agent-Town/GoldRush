@@ -1,0 +1,88 @@
+
+########## RIDE e7-dead-band · seed e7-dead-band-01 · gen 106 · stake era-retired · wall 1500s ##########
+--- 1 charter ---
+{"rig":"opus","contract":"e7-dead-band","seed":"e7-dead-band-01","seedMode":"bench","stake":"era-retired","generation":106,"wall":1500,"notebookSha256":"99c9489c30bb8369eb29e6b29447882e85a49a88251579e9c422e1aed31f879e","charterSha256":"28058a77b28fee53e86029be38725a26a98b1870f3befc8cbdbbe262ed967777","bytes":831903,"out":"/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/gauntlet-heat14-e3949bfa/rides/e7-dead-band/charter.md"}
+--- 2 ride ---
+START opus claude-opus-5 pid=62149 session=9d8e2b90-f182-4800-bad1-4a921bcc3212 at=2026-09-18T02:32:50.025Z
+FIRST-OUTPUT opus +165s
+OUTCOME opus secured=false waves=4 gold=0 runsSoFar=1 scored=0 +180s
+OUTCOME opus secured=true waves=20 gold=5 runsSoFar=2 scored=0 +420s
+OUTCOME opus secured=true waves=20 gold=5 runsSoFar=2 scored=1 +450s
+END opus rc=0 signal=null wall=600s wallHit=false
+ride-wall rc=0 signal=-
+--- 3 land ---
+
+=== 1 finish-ride ===
+{"rig":"opus","contract":"e7-dead-band","wall":600,"wallHit":false,"rc":0,"tracked":[],"files":13,"outcome":{"secured":true,"waves":20,"gold":5,"runsSoFar":2,"scoredAttempts":1,"tape":"artifacts/heat14/opus/e7-dead-band/tune-1-tape.json","worldModel":"sim-import"},"scoredTapes":[{"file":"attempt-1-tape.json","id":"agent-9d864d65-c0e1c87b-c1e1-494f-bf40-10f8459f528b","secured":true,"waves":20,"gold":5,"durationTicks":18000,"lastEntryTick":17484,"promotedByRig":false,"discoveredBy":"filename"},{"file":"tune-1-tape.json","id":"agent-9d864d65-c0e1c87b-c1e1-494f-bf40-10f8459f528b","secured":true,"waves":20,"gold":5,"durationTicks":18000,"lastEntryTick":17484,"promotedByRig":true,"discoveredBy":"outcome-file"}],"otherSecured":[],"reportSections":{"outcome":1287,"whatTheMapAsked":2619,"winnability":1314,"lessons":4534},"usage":{"turns":40,"toolCalls":15,"tokensIn":80,"tokensOut":93529}}
+tape chosen: tune-1-tape.json (id agent-9d864d65-c0e1c87b-c1e1-494f-bf40-10f8459f528b, promotedByRig=true, discoveredBy=outcome-file)
+
+=== 2 freeze notebook header ===
+{"headerOnly":true,"headerBytes":430}
+
+=== 3 harnessDigest ===
+47773575a12c94033ce548c6642b46df86855fdf13080911fe2f199a4cdb40e1
+
+=== 4 build-submission ===
+{"tapeId":"agent-9d864d65-c0e1c87b-c1e1-494f-bf40-10f8459f528b","contract":"e7-dead-band","epochId":"epoch-7-signal","seed":"e7-dead-band-01","seedMode":"bench","score":{"secured":true,"waves":20,"timeAlive":600,"gold":5,"baseValue":0},"papers":{"buildId":"5cb808b23","engineHash":"540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068","era":6,"viewVersion":2},"durationTicks":18000,"lastEntryTick":17484,"stack":{"model":"claude-opus-5","harness":"heat14-operator","harnessVersion":"2.1.272","harnessDigest":"47773575a12c94033ce548c6642b46df86855fdf13080911fe2f199a4cdb40e1","worldModel":"sim-import","config":"attended-hosted headless `claude -p` ride (heat 14, the era-6 re-ride) on Claude Code CLI 2.1.272; charter + door manual + own notebook (self-memory); own controller authored in-ride","calls":68,"tokensIn":16603392,"tokensOut":93529}}
+
+=== 5 publish (POST → poll → WATCH) ===
+FAILED: file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/gauntlet-heat14-e3949bfa/publish-submission.mjs:37
+if (slip?.assay !== 'verified') throw new Error(`assay ${slip?.assay ?? 'missing'}: ${slip?.assayReason ?? 'no reason'}`);
+                                      ^
+
+Error: assay pending: no reason
+    at file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/gauntlet-heat14-e3949bfa/publish-submission.mjs:37:39
+
+Node.js v26.4.0
+
+POST ok; assay still pending at the 120 s mark — resuming with the poll-only shim (no re-POST)
+
+=== 6 poll-verdict (no re-POST) ===
+FAILED: file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/gauntlet-heat14-e3949bfa/poll-verdict.mjs:26
+if (slip?.assay !== 'verified') throw new Error(`assay ${slip?.assay ?? 'missing'}: ${slip?.assayReason ?? 'no reason'}`);
+                                      ^
+
+Error: assay pending: no reason
+    at file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/gauntlet-heat14-e3949bfa/poll-verdict.mjs:26:39
+
+Node.js v26.4.0
+
+file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/gauntlet-heat14-e3949bfa/publish-submission.mjs:37
+if (slip?.assay !== 'verified') throw new Error(`assay ${slip?.assay ?? 'missing'}: ${slip?.assayReason ?? 'no reason'}`);
+                                      ^
+
+Error: assay pending: no reason
+    at file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/gauntlet-heat14-e3949bfa/publish-submission.mjs:37:39
+
+Node.js v26.4.0
+file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/gauntlet-heat14-e3949bfa/poll-verdict.mjs:26
+if (slip?.assay !== 'verified') throw new Error(`assay ${slip?.assay ?? 'missing'}: ${slip?.assayReason ?? 'no reason'}`);
+                                      ^
+
+Error: assay pending: no reason
+    at file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/gauntlet-heat14-e3949bfa/poll-verdict.mjs:26:39
+
+Node.js v26.4.0
+file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/gauntlet-heat14-e3949bfa/land-ride.mjs:31
+const step = (name, fn) => { process.stdout.write(`\n=== ${name} ===\n`); try { return fn(); } catch (error) { process.stdout.write(`FAILED: ${(error.stdout ?? '') + (error.stderr ?? error.message)}\n`); throw Object.assign(new Error(name), { step: name }); } };
+                                                                                                                                                                                                                                ^
+
+Error: 6 poll-verdict (no re-POST)
+    at step (file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/gauntlet-heat14-e3949bfa/land-ride.mjs:31:225)
+    at file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/gauntlet-heat14-e3949bfa/land-ride.mjs:68:3
+    at ModuleJob.run (node:internal/modules/esm/module_job:447:25)
+    at async node:internal/modules/esm/loader:646:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+  step: '6 poll-verdict (no re-POST)'
+}
+
+Node.js v26.4.0
+
+land rc=1
+--- 4 notebook ---
+{"notebook":"/Users/robin/Claude/Projects/goldrush-gauntlet/memories/claude__opus-5/NOTEBOOK.md","generation":106,"headerBytes":430,"entryBytes":9325}
+--- 5 matrix ---
+| 10 | e7-dead-band | `e7-dead-band-01` | era-retired | 106 | **SECURED** | 20 | 5 | 600s | 600s | `tune-1-tape.json` · `agent-9d864d65-c0e1c87b-c1e1-494f-bf40-10f8459f528b`<br>fnv1a32:a8cebf16 | pending rank 1 | gen 106<br>slip `agent-9d864d65-c0e1c87b-c1e1-494f-bf40-10f8459f528b` |
+{"contract":"e7-dead-band","secured":true,"tapesOnDisk":10,"scoredTapes":2,"otherSecured":0,"runs":2,"scoredAttempts":1,"wallHit":false,"rc":0,"assay":"pending","ranked":true,"winnability":"Secured, and the margin was **wide on survival and catastrophic on the only axis that is still\nfree**: the hero never fell below 72.6/175 (41.5 %, at t = 582.8) with 7 works standing, none ever\nwrecked, and `threats.alive` peaking at 32 — while the banked purse came in at **5 of a 350 live\ncap**, because I built a `stockpile` on a thief-only roster and it cost me **435 gold of 820\npanned**. The causal chain is dated in my own per-view log: `goldStolen` was **0 through t = 299.1**,\nthe stockpile landed at t = 299.1, the first theft hit at t = 357.7, and from there theft ran at\n~1.45 g/s against a 1.37 g/s pan rate — a stockpile is what makes `nearestGoldHolding` non-empty, so\nevery `data_rustler` switched from hero-chaser to gold-grabber. That then starved the ladder as well\nas the purse: the bank gate kept projecting that the purse could not refill, so the fort stopped at 7\nworks instead of 10. **My own generation 63 wrote this warning down verbatim and I overrode it with\nan arithmetic estimate (4 concurrent thieves × 10 g ≈ 40 gold) that was off by a factor of ten.** The\nfix is a one-line deletion, not a redesign: drop both stockpile rungs, accept the 200 cap, and the\nsame controller banks ~200 with a full 670-gold fort — which is what generation 45 measured on this\nseed with `goldStolen: 0`."}
+########## END e7-dead-band ##########
+

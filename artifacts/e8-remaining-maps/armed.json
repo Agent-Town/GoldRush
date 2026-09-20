@@ -1,0 +1,313 @@
+[
+ {
+  "id": "e8-far-side",
+  "seed": "e8-far-side-01",
+  "air": {
+   "wall": "suit-only",
+   "suit": {
+    "body": "prospector",
+    "seconds": 60,
+    "capacity": 60,
+    "refillPerSecond": 4,
+    "inDome": null,
+    "empty": false,
+    "drainedTotal": 0,
+    "emptySeconds": 0
+   },
+   "domes": [
+    {
+     "id": "far-side-landing-yard",
+     "air": 1,
+     "breached": false,
+     "breaches": 0,
+     "siegers": 0
+    }
+   ],
+   "regolith": {
+    "grounds": 4,
+    "required": 0,
+    "worked": [],
+    "runsOnAir": 0,
+    "breathlessPans": 0,
+    "complete": false
+   },
+   "crossing": {
+    "zones": [
+     "listening-probe-crater"
+    ],
+    "required": 1,
+    "reached": [],
+    "breathlessEntries": 0,
+    "complete": false
+   }
+  },
+  "outcome": {
+   "secured": false,
+   "waves": 2,
+   "timeMs": 79400,
+   "gold": 0,
+   "kills": 30,
+   "calls": 0,
+   "defaultedPicks": 1,
+   "defaultedSecure": 0,
+   "eventLogHash": "fnv1a32:5c30efd5"
+  }
+ },
+ {
+  "id": "e8-far-side",
+  "seed": "e8-far-side-02",
+  "outcome": {
+   "secured": false,
+   "waves": 2,
+   "timeMs": 77867,
+   "gold": 0,
+   "kills": 28,
+   "calls": 0,
+   "defaultedPicks": 1,
+   "defaultedSecure": 0,
+   "eventLogHash": "fnv1a32:47d63524"
+  }
+ },
+ {
+  "id": "e8-low-orbit",
+  "seed": "e8-low-orbit-01",
+  "air": {
+   "wall": "suit-only",
+   "suit": {
+    "body": "prospector",
+    "seconds": 60,
+    "capacity": 60,
+    "refillPerSecond": 4,
+    "inDome": null,
+    "empty": false,
+    "drainedTotal": 0,
+    "emptySeconds": 0
+   },
+   "domes": [
+    {
+     "id": "west-scaffold-deck",
+     "air": 1,
+     "breached": false,
+     "breaches": 0,
+     "siegers": 0
+    },
+    {
+     "id": "claw-carcass-yard",
+     "air": 1,
+     "breached": false,
+     "breaches": 0,
+     "siegers": 0
+    },
+    {
+     "id": "east-scaffold-deck",
+     "air": 1,
+     "breached": false,
+     "breaches": 0,
+     "siegers": 0
+    }
+   ],
+   "regolith": {
+    "grounds": 4,
+    "required": 0,
+    "worked": [],
+    "runsOnAir": 0,
+    "breathlessPans": 0,
+    "complete": false
+   },
+   "crossing": {
+    "zones": [
+     "west-scaffold-deck",
+     "claw-carcass-yard",
+     "east-scaffold-deck"
+    ],
+    "required": 3,
+    "reached": [],
+    "breathlessEntries": 0,
+    "complete": false
+   }
+  },
+  "outcome": {
+   "secured": false,
+   "waves": 2,
+   "timeMs": 78333,
+   "gold": 0,
+   "kills": 33,
+   "calls": 0,
+   "defaultedPicks": 0,
+   "defaultedSecure": 0,
+   "eventLogHash": "fnv1a32:6e1931c2"
+  }
+ },
+ {
+  "id": "e8-low-orbit",
+  "seed": "e8-low-orbit-02",
+  "outcome": {
+   "secured": false,
+   "waves": 2,
+   "timeMs": 79867,
+   "gold": 0,
+   "kills": 35,
+   "calls": 0,
+   "defaultedPicks": 0,
+   "defaultedSecure": 0,
+   "eventLogHash": "fnv1a32:b77f104b"
+  }
+ },
+ {
+  "id": "e8-eclipse",
+  "seed": "e8-eclipse-01",
+  "air": {
+   "wall": "suit-timer",
+   "suit": {
+    "body": "prospector",
+    "seconds": 60,
+    "capacity": 60,
+    "refillPerSecond": 4,
+    "inDome": null,
+    "empty": false,
+    "drainedTotal": 0,
+    "emptySeconds": 0
+   },
+   "domes": [
+    {
+     "id": "dome-cluster-pad-west",
+     "air": 1,
+     "breached": false,
+     "breaches": 0,
+     "siegers": 0
+    },
+    {
+     "id": "dome-cluster-pad-center",
+     "air": 1,
+     "breached": false,
+     "breaches": 0,
+     "siegers": 0
+    },
+    {
+     "id": "dome-cluster-pad-east",
+     "air": 1,
+     "breached": false,
+     "breaches": 0,
+     "siegers": 0
+    }
+   ],
+   "regolith": {
+    "grounds": 6,
+    "required": 1,
+    "worked": [],
+    "runsOnAir": 0,
+    "breathlessPans": 0,
+    "complete": false
+   },
+   "eclipse": {
+    "arrived": false,
+    "arrivedAtWave": null,
+    "offline": [],
+    "reserve": "dome-cluster-pad-center",
+    "solar": "online",
+    "groundsWorkedAfter": 0,
+    "requiredAfter": 1
+   }
+  },
+  "outcome": {
+   "secured": false,
+   "waves": 2,
+   "timeMs": 81800,
+   "gold": 0,
+   "kills": 32,
+   "calls": 0,
+   "defaultedPicks": 1,
+   "defaultedSecure": 0,
+   "eventLogHash": "fnv1a32:466507ac"
+  }
+ },
+ {
+  "id": "e8-eclipse",
+  "seed": "e8-eclipse-02",
+  "outcome": {
+   "secured": false,
+   "waves": 2,
+   "timeMs": 78767,
+   "gold": 0,
+   "kills": 31,
+   "calls": 0,
+   "defaultedPicks": 1,
+   "defaultedSecure": 0,
+   "eventLogHash": "fnv1a32:1568e702"
+  }
+ },
+ {
+  "id": "e8-mare-claim",
+  "seed": "e8-mare-claim-01",
+  "air": {
+   "wall": "suit-timer",
+   "suit": {
+    "body": "prospector",
+    "seconds": 60,
+    "capacity": 60,
+    "refillPerSecond": 4,
+    "inDome": null,
+    "empty": false,
+    "drainedTotal": 0,
+    "emptySeconds": 0
+   },
+   "domes": [
+    {
+     "id": "dome-cluster-pad-west",
+     "air": 1,
+     "breached": false,
+     "breaches": 0,
+     "siegers": 0
+    },
+    {
+     "id": "dome-cluster-pad-center",
+     "air": 1,
+     "breached": false,
+     "breaches": 0,
+     "siegers": 0
+    },
+    {
+     "id": "dome-cluster-pad-east",
+     "air": 1,
+     "breached": false,
+     "breaches": 0,
+     "siegers": 0
+    }
+   ],
+   "regolith": {
+    "grounds": 6,
+    "required": 1,
+    "worked": [],
+    "runsOnAir": 0,
+    "breathlessPans": 0,
+    "complete": false
+   }
+  },
+  "outcome": {
+   "secured": false,
+   "waves": 2,
+   "timeMs": 81233,
+   "gold": 0,
+   "kills": 32,
+   "calls": 0,
+   "defaultedPicks": 0,
+   "defaultedSecure": 0,
+   "eventLogHash": "fnv1a32:1a62757f"
+  }
+ },
+ {
+  "id": "e8-mare-claim",
+  "seed": "e8-mare-claim-02",
+  "outcome": {
+   "secured": false,
+   "waves": 2,
+   "timeMs": 81433,
+   "gold": 0,
+   "kills": 32,
+   "calls": 0,
+   "defaultedPicks": 0,
+   "defaultedSecure": 0,
+   "eventLogHash": "fnv1a32:dc8e828d"
+  }
+ }
+]

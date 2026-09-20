@@ -1,0 +1,24 @@
+{
+ "secured": true,
+ "waves": 12,
+ "timeMs": 272000,
+ "gold": 200,
+ "kills": 33,
+ "calls": 21,
+ "defaultedPicks": 0,
+ "defaultedSecure": 1,
+ "eventLogHash": "fnv1a32:5b5372c2",
+ "tape": "/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/heat14/opus/e5-regatta/attempt-1-tape.json",
+ "note": "attempt-1-tape.json is a byte-identical copy of tune-2-tape.json: ONE ride, promoted by name per the brief. Securing controller: ctrl-v2.mjs.",
+ "scored": true,
+ "runsSoFar": 4,
+ "scoredAttempts": 1,
+ "worldModel": "sim-import",
+ "envelope": {
+  "durationTicks": 8160,
+  "lastEntryTick": 7441,
+  "entries": 21,
+  "bytes": 70988
+ },
+ "goldCeiling": "200 is the arithmetic maximum on this contract: one spring_pond r64 at (0,0) makes every sample zone=shallows, and Terrain.isBuildable:244 demands zone===bank, so the roster stockpile (60g x2, +150 cap each) can never be placed. Measured in tune-1: every BUILD answered outside buildable terrain."
+}

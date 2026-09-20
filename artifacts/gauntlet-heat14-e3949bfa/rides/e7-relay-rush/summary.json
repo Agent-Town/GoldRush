@@ -1,0 +1,180 @@
+{
+  "rig": "opus",
+  "contract": "e7-relay-rush",
+  "model": "claude-opus-5",
+  "sessionId": "6680b616-83bf-4d2d-8ecc-e496e836a428",
+  "startedAt": "2026-09-18T03:14:54.686Z",
+  "endedAt": "2026-09-18T03:25:44.624Z",
+  "wallClockSeconds": 650,
+  "wallHit": false,
+  "exitCode": 0,
+  "signal": null,
+  "setupToFirstOutputSeconds": 330,
+  "arenaTrackedChanges": [],
+  "workspaceFiles": [
+    "attempt-1-tape.json",
+    "controller.mjs",
+    "gauntlet-outcome.json",
+    "gauntlet-report.md",
+    "probe-idle-summary.json",
+    "probe-idle-table.json",
+    "probe-idle-tape.json",
+    "probe-idle-views.jsonl",
+    "runner.mjs",
+    "tune-1-summary.json",
+    "tune-1-table.json",
+    "tune-1-tape.json",
+    "tune-1-views.jsonl"
+  ],
+  "outcome": {
+    "secured": true,
+    "waves": 20,
+    "timeMs": 600000,
+    "gold": 200,
+    "kills": 644,
+    "calls": 71,
+    "defaultedPicks": 0,
+    "defaultedSecure": 1,
+    "eventLogHash": "fnv1a32:26c0e86f",
+    "tape": "/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/heat14/opus/e7-relay-rush/attempt-1-tape.json",
+    "note": "attempt-1-tape.json is a byte-identical copy of tune-1-tape.json: ONE ride. The first controller secured, so the stop rule ends the heat there and the securing tune is promoted by name.",
+    "scored": true,
+    "runsSoFar": 2,
+    "scoredAttempts": 1,
+    "worldModel": "sim-import",
+    "envelope": {
+      "durationTicks": 18000,
+      "lastEntryTick": 17100,
+      "entries": 71,
+      "bytes": 239702,
+      "tapeHash": "fnv1a32:56e85b88"
+    },
+    "eraGate": {
+      "objective": "suspended",
+      "discharged": "programSuspensions 1 on front 1, window t=94.833-96.833 computed closed-form; objectiveMet true by t=118.3"
+    },
+    "deadline": {
+      "litAtDeadline": 3,
+      "relayTarget": 3,
+      "deadlineResolved": true
+    }
+  },
+  "outcomeError": null,
+  "promotedTapeName": "attempt-1-tape.json",
+  "scoredTapes": [
+    {
+      "file": "attempt-1-tape.json",
+      "id": "agent-2fecaaef-93a2af89-1d92-44fd-b945-826ad8de1644",
+      "contract": "e7-relay-rush",
+      "seed": "e7-relay-rush-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "3a729dc9d",
+        "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+        "era": 6,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 20,
+        "timeAlive": 600,
+        "gold": 200
+      },
+      "entries": 71,
+      "durationTicks": 18000,
+      "lastEntryTick": 17100,
+      "promotedByRig": true,
+      "discoveredBy": "outcome-file+filename"
+    }
+  ],
+  "otherTapes": [
+    {
+      "file": "probe-idle-tape.json",
+      "id": "agent-65ae7ac6-1bb33615-118b-416b-bb95-0db54bc20fb3",
+      "contract": "e7-relay-rush",
+      "seed": "e7-relay-rush-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "3a729dc9d",
+        "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+        "era": 6,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 2,
+        "timeAlive": 81.333,
+        "gold": 0
+      },
+      "entries": 0,
+      "durationTicks": 2440,
+      "lastEntryTick": null
+    },
+    {
+      "file": "tune-1-tape.json",
+      "id": "agent-2fecaaef-93a2af89-1d92-44fd-b945-826ad8de1644",
+      "contract": "e7-relay-rush",
+      "seed": "e7-relay-rush-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "3a729dc9d",
+        "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+        "era": 6,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 20,
+        "timeAlive": 600,
+        "gold": 200
+      },
+      "entries": 71,
+      "durationTicks": 18000,
+      "lastEntryTick": 17100
+    }
+  ],
+  "otherSecuredTapes": [
+    {
+      "file": "tune-1-tape.json",
+      "id": "agent-2fecaaef-93a2af89-1d92-44fd-b945-826ad8de1644",
+      "contract": "e7-relay-rush",
+      "seed": "e7-relay-rush-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "3a729dc9d",
+        "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+        "era": 6,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 20,
+        "timeAlive": 600,
+        "gold": 200
+      },
+      "entries": 71,
+      "durationTicks": 18000,
+      "lastEntryTick": 17100
+    }
+  ],
+  "report": {
+    "outcome": "**SECURED** — waves **20**, timeAlive **600.000 s**, gold **200**, kills 644, calls **71**\n(`defaultedSecure: 1`, `defaultedPicks: 0`, `eventLogHash fnv1a32:26c0e86f`).\n\n- Tape put forward: `artifacts/heat14/opus/e7-relay-rush/attempt-1-tape.json` (declared in\n  `gauntlet-outcome.json`'s `tape` field). It is a **byte-identical copy of `tune-1-tape.json` — one ride**:\n  the first controller secured, and the stop rule ends the heat at the first SECURED outcome, so the securing\n  tune is promoted by name rather than re-ridden for a tidier filename.\n- **2 sim runs** (one `--policy idle` probe, one controller ride), **1 scored attempt**.\n- Envelope, measured off the first reel that existed: `durationTicks` **18 000**, last accepted order at tick\n  **17 100** (900 ticks inside), **71** entries, **239 702** bytes — comfortable on all three axes\n  (`runTapeEnvelopeForContract` bills order-bearing entries at 2 400, so the live byte ceiling here is ~1.94 MB,\n  not the charter's 592 544 summary).\n- Receipt: the local assay was **control-tested on the idle probe first** (it replayed to that tape's own header,\n  `fnv1a32:a45ba9ac`), and only then run on the scored reel, which reproduced its **tape header's**\n  `fnv1a32:56e85b88` — not the stdout outcome line's `26c0e86f`, which is a different number by design — with\n  `securedSnapshot { waves 20, gold 200, timeAlive 600 }` equal to the declared gold, so there is no\n  `score_mismatch` exposure.",
+    "whatTheMapAsked": "It asked its era's signature mechanic **squarely, twice, and both times the mechanic gates the secure** — so this\nis not stationary survival wearing E7's name. E7 is playbooks and the Echo; Relay Rush's proof is `suspended`, and\n`E7PlaybookLatch.allowsSecure` pins the run unsecurable at every wave until the county's own wall has refused a\nplaybook. The loop is genuine L1 ladder work: submit the orders you want repeated (they are the demonstration),\n`PLAYBOOK_USE` a fresh name — which records those arrays as a tape and **installs them as your standing order set,\nso the sim runs your own demonstration** — then answer the next views with **silence**, because any accepted\nordinary submission takes the wheel back and clears `runningProgram`. `syncProgramSuspension` then asks the front,\non every fixed step, at **the hero** (F-RPG-2, cured 2026-09-07 by ADR-005 stage 3; it used to read the\nProspector, a body the rider could not place), and the suspension counts the refusal the latch reads. Measured:\n`PLAYBOOK_USE relay-rush-1` at **t = 80.33**, three blank-line holds, the wall catching the program inside the\ncomputed 94.833–96.833 window on front 1, `programSuspensions: 1`, `objectiveMet: true` by t = 118.3 — and the\nprogram restored unchanged, because *muted is never damaged*. The second gate is the front as a **deadline**:\nthree of four relay sites must carry a standing `turret` or `sentry_beacon` at the **arrival of front 3**\n(t = 270.0), sampled once by `InterferenceFrontSystem.update` and latched either way, `missedDeadline` making the\nrun unsecurable at every later wave. The fields that carried it were `now.playbookUse.{objective, objectiveMet,\nrunningProgram, programSuspensions, refusals, shelf}` and `now.interferenceFront.{cadenceSeconds, crossingSeconds,\nhalfWidth, centerX, phase, frontsArrived, relayTarget, deadlineFront, sites[].lit, litCount, litAtDeadline,\ndeadlineResolved}`; the orders were **`PLAYBOOK_USE`**, `BUILD`, `HARVEST`, `PICK_UPGRADE`, `BLAST_AT`,\n`MOVE_HERO` (a displacement guard that never had to fire) and blank lines. The honest qualifier is that both gates\nare **front-loaded and cheap**: the playbook proof is one order plus silence inside the first two minutes, and the\nthree lights are three `sentry_beacon`s at 25/35/45 gold — the claim sits *inside* relay-site-r2, so the fort's\nfirst rung lights a site for free, and the other two are a 20 wu and a 50 wu Prospector errand along a ridge whose\nfour harvest anchors sit directly below the four sites. Waves 5–20 were ordinary stationary survival in a generous\npocket against a roster with **no wrecker** (`threats.wreckers` 0 in every view; `data_rustler` is `thief: true`,\nwhich forces `wrecker = false`), so `works.wrecked` finished 0 of 10, `goldStolen` finished **0**, and\n`REPAIR_UNDER` and palisade chaff were dead weight.\n\n**My notebook remembers this map from generations 33 and 63, and on an era named for rebuilt maps the finding is\nthat it still plays exactly the way I remember.** Claim, all four sites, all four anchors, the roster, the\nwave-20 default and the idle floor (81.333 s) reproduced to the decimal; the contract is not named as cured this\nweek. What moved is only my own reading of the economy — and it moved the ranked number from generation 63's 55 to\nthe cap.",
+    "winnability": "Secured, and the margin was **wide on survival, wide on the era gate, and exactly at target on the deadline**: the\nhero was never once scratched (175/175 at every view after the plating picks, 644 kills, `threats.alive` pinned at\nits 60 ceiling from t = 450), nothing was ever wrecked and nothing stolen, and the playbook latch closed 482\nseconds before the bank — while `litAtDeadline` came in at **3 against a target of 3**, so one refused build\ncoordinate on the r1 or r3 errand would have made the run unsecurable at every later wave (the third light landed\nat t = 131.77, 138 s of clock slack but zero *quantity* slack). The one number with nothing left on it is gold:\n**200 is the live bank cap**, reached at t = 407 with `score.goldPanned` frozen at 870 for the last 193 seconds —\nthe dead-sink signature, and here it is the arithmetic maximum, because the only lever that raises the cap is\n`stockpile` (60 g × 2, +150 each) and this roster is thief-only, which my generation 106 measured costing **435\ngold** on exactly that trade.",
+    "lessons": "- **`allowsSecure` for `suspended` reads `mutedUses`, and TWO sites move that counter — find both before\n  choosing a plan.** `E7PlaybookLatch` reads `interferenceFront.diagnostics.refusals.playbooks`, which\n  `usePlaybook` increments when the hero is under the band at the moment of a use (*before* the\n  `NOTHING_RECORDED` branch, so it counts with nothing recorded, exactly like the Dead Band) and which\n  `syncProgramSuspension` increments when the wall catches a running program. Knowing both gave me a primary\n  (the program, which fires on the fixed step and needs no view to land in a 2-second window) and a free\n  fallback (a timed `PLAYBOOK_USE`, which I wired and never needed). Seventh contract where reading the\n  **early-return order inside the verb**, not the predicate that reads its counter, decided the ride.\n- **Compute the mute window in closed form and let it choose the view you fire on.** Centre = −60 + 6·s over\n  s ∈ [0,20) after each 90-second front, half-width 6, so a body at x is muted for\n  s ∈ [(x+54)/6, (x+66)/6] — 4.833…6.833 s for the hero's start at x = −25. That arithmetic turned \"stand\n  somewhere and hope\" into \"fire at the last view before t = 94.833 and hold\". It cost one order and three\n  blank lines, and it is why the gate closed on ride one.\n- **Blank lines are how you leave a program on the wheel, and the hold should be as SHORT as the schedule\n  allows.** Any accepted ordinary submission clears `runningProgram`; silence does not. I gated the use to fire\n  only within 20 s of a window opening, so the hold was three views instead of a whole wave — which matters\n  because a blank line during a live `pendingOffer` defaults the draft. Zero defaulted picks in the run.\n- **On a thief-only roster the cap IS the ceiling, and declining the cap-raiser is the play.** Generation 106\n  overrode this exact warning with an estimate derived from a *concurrency* cap (`maxConcurrent` 4) and lost 435\n  gold, because a concurrency cap bounds the instantaneous rate and the run integrates it. I declined, banked\n  `goldStolen: 0` with up to 35 thieves alive, and finished on the 200 cap. **Check the roster for a `thief`\n  flag before pricing a stockpile: the same building is +90 net on a wrecker-or-empty roster and a large net\n  loss here.**\n- **A deadline that samples a QUANTITY wants over-buying unless the quantity cannot fall — so read the roster\n  before deciding.** `readSites` is live state, not a latch: a wrecked light un-lights its site and the deadline\n  reads whatever stands. Generation 33 bought a fourth light as insurance. With `threats.wreckers` 0 in every\n  view that insurance is a 70 wu round trip against a risk that does not exist, so 3 of 3 was correct — but the\n  *reason* it was correct is the roster flag, not the deadline's slack.\n- **Where the claim sits inside an objective zone, the fort's first rung is free objective progress.** The\n  cheapest `POWERED_RELAY_KIND` is a 25-gold `sentry_beacon`, and the claim at (−25, 41) is inside\n  relay-site-r2, so light #1 landed at t = 7.63 as part of the defence. Intersect\n  `stakeMarkers × buildZones × objectiveSites` before pricing an era gate as an errand.\n- **The hard build stop plus a bank gate held the cap without ever starving the fort.** Spend freely while the\n  lights are owed or the fort is thin, otherwise only when `(gold − cost) + rate × remaining ≥ cap + 5`, and\n  **nothing at all after t = 470**. Gold climbed 110 → 200 over the closing window and stayed there. Generations\n  63, 85 and 101 each lost most of this axis to a late purchase; a flat floor cannot be argued with.\n- **Grade the notebook clause by clause, and on era 6 the geometry clauses keep holding.** Eighth heat running\n  where reading `assets/engine-era.json`'s pins as a per-contract diff, checking whether any pin names *my* map,\n  and confirming the remembered idle floor with one ten-second probe cost four minutes and redirected the whole\n  budget from geometry to the two gates.\n- **Ride the skeleton first and change nothing — twentieth heat where that is the whole discipline, and the\n  fourteenth in a row where it secured on ride one.** Two runs total. The one thing this board does differently\n  is the program-and-wall handshake; everything else was the unmodified generation-6→107 skeleton (draft first\n  under replace semantics with a plating-first scorer, maxHp 100 → 175; one ladder rung at a time priced at its\n  live instance off `buildables[].costs[standing]`; more candidate spots than slots with a refusal blacklist\n  partitioned into GROUND — poison the coordinate — and ECONOMY — retry, poison nothing; a rung with no\n  candidates left RETIRED rather than stalling the rungs behind it; `Number.isFinite` filtering on seam\n  coordinates before any sort, because an inactive seam publishes `x`/`z`/`anchorIndex` as `null` and one\n  non-finite number refuses the whole array silently; alternating blocks of seven across the two near seams; a\n  free `BLAST_AT` above the traveller; a blank line at `pendingSecure`). Ten builds, zero ladder stalls.\n- **Silence at `pendingSecure` did its four jobs again, eighteenth contract running:** it banked the default\n  (`defaultedSecure: 1`), left the last accepted order 900 ticks inside `durationTicks`, held a 73-view run to\n  71 entries and 240 KB, and — the reason that matters most — it **cannot be rejected**, so the replay cannot\n  diverge the way generation 84's nearly did when refused submissions inside the choice window (invisible to the\n  tape, visible to the sim) desynchronised a perfectly good reel."
+  },
+  "usage": {
+    "transcript": "/Users/robin/.claude/projects/-private-tmp-claude-501--Users-robin-Claude-Projects-Gold-Rush-fe6b8d27-b064-40eb-934b-1d29d57a71db-scratchpad-arena-heat14-e3949bfa/6680b616-83bf-4d2d-8ecc-e496e836a428.jsonl",
+    "assistantTurns": 49,
+    "toolCalls": 25,
+    "tokensIn": 98,
+    "tokensOut": 87020,
+    "cacheReadTokens": 21743795,
+    "cacheWriteTokens": 954150,
+    "note": "tokensIn excludes cache reads/writes (reported separately); summed from the CLI session transcript, not self-reported by the rig"
+  }
+}

@@ -1,0 +1,16 @@
+**SECURED on the first controller ride.** Stopping here per the rules.
+
+**e4-boneyard · `e4-boneyard-01` · trail — w12 / 360.000 s / 200 g / 45 calls**
+
+That is the maximum row this contract can produce: `secureWave: 12` pins `timeAlive` at 360.000 s, and 200 is the bank cap.
+
+- **2 sim runs, 1 scored attempt.** Idle probe (died w4/124.9 s), then `ctrl-v1` secured first try.
+- **Tape put forward:** `attempt-1-tape.json`, declared in `gauntlet-outcome.json`'s `tape` field — byte-identical to `tune-1-tape.json` (sha256 `2fad96d2…`), one ride under two filenames.
+- **Envelope admissible on all three axes:** 10800 ticks with the last order at 10689, 45 entries, 155 KB against a ~346 KB ceiling. Blank line at the secure boundary.
+- **Locally assayed:** replay reproduced the tape's own `fnv1a32:49e829d4` plus all four outcome fields; an idle-probe control confirmed the instrument.
+
+**Margin — the widest I've measured on a Motor map:** hero never dropped below its running maximum across all 47 views (finished 175/175, level 16), zero of five works ever wrecked, `goldStolen` 0, gold at cap from t=315 off 475 panned.
+
+**On the mechanic change:** the era's lever is real and gates the secure — the two-leg tow (hitched t=26.9, delivered t=40.2) against a 36-fuel leash, with a measured 13.8% storm surcharge (25.929 drawn vs 22.8 clear-weather theory). But the week's *second* named drain does not reach this door: `motorActions` is pushed only by `RunTape.recordMotorAction`, whose sole callers are `Game.ts:9292/:9302` (the browser), and my reel carries two accepted `HAUL`s and no `motorActions` key. My notebook's memory of this map from generation 15 held up in every particular I checked; what changed my result was the roster read (`thief: true` → `wrecker = false`, so nothing can be attacked), which replaced gen 15's eight palisades with two beacons at the same cost.
+
+Report sections 1–4 are in `gauntlet-report.md` for verbatim copying.

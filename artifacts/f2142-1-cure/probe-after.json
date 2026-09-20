@@ -1,0 +1,950 @@
+{
+  "schema": "goldrush.f2142.canyon-terminal.v1",
+  "terrainBinding": {
+    "activeContractId": null,
+    "claimWidth": 64,
+    "claimHeight": 64,
+    "contractDimensions": null,
+    "matchesRequestedContract": false
+  },
+  "groundCensus": [
+    {
+      "id": "pylon-west-base",
+      "x": -12,
+      "z": -36,
+      "centreBuildable": false,
+      "centreWalkable": false,
+      "discRadius": 2.5,
+      "discScanned": 317,
+      "discBuildable": 0,
+      "nearestBuildableInDisc": null
+    },
+    {
+      "id": "pylon-east-base",
+      "x": 12,
+      "z": -36,
+      "centreBuildable": false,
+      "centreWalkable": false,
+      "discRadius": 2.5,
+      "discScanned": 317,
+      "discBuildable": 0,
+      "nearestBuildableInDisc": null
+    },
+    {
+      "id": "pylon-west-switch",
+      "x": -24,
+      "z": -20,
+      "centreBuildable": true,
+      "centreWalkable": true,
+      "discRadius": 2.5,
+      "discScanned": 317,
+      "discBuildable": 317,
+      "nearestBuildableInDisc": {
+        "x": -24,
+        "z": -20,
+        "d": 0
+      }
+    },
+    {
+      "id": "pylon-east-switch",
+      "x": 24,
+      "z": -20,
+      "centreBuildable": true,
+      "centreWalkable": true,
+      "discRadius": 2.5,
+      "discScanned": 317,
+      "discBuildable": 317,
+      "nearestBuildableInDisc": {
+        "x": 24,
+        "z": -20,
+        "d": 0
+      }
+    },
+    {
+      "id": "pylon-east-rim",
+      "x": 28,
+      "z": 8,
+      "centreBuildable": true,
+      "centreWalkable": true,
+      "discRadius": 2.5,
+      "discScanned": 317,
+      "discBuildable": 279,
+      "nearestBuildableInDisc": {
+        "x": 28,
+        "z": 8,
+        "d": 0
+      }
+    },
+    {
+      "id": "pylon-west-rim",
+      "x": -28,
+      "z": 8,
+      "centreBuildable": true,
+      "centreWalkable": true,
+      "discRadius": 2.5,
+      "discScanned": 317,
+      "discBuildable": 279,
+      "nearestBuildableInDisc": {
+        "x": -28,
+        "z": 8,
+        "d": 0
+      }
+    }
+  ],
+  "contractId": "e3-canyon-works",
+  "seed": "e3-canyon-works-01",
+  "ordersRejected": null,
+  "outcome": {
+    "secured": false,
+    "waves": 2,
+    "timeMs": 60033,
+    "gold": 60,
+    "kills": 24,
+    "calls": 10,
+    "defaultedPicks": 1,
+    "defaultedSecure": 0,
+    "eventLogHash": "fnv1a32:6437f65b"
+  },
+  "terminalCause": "rider-down (dead)",
+  "terminalView": {
+    "turnIndex": 10,
+    "wave": 2,
+    "runSeconds": 60.03,
+    "hp": 0,
+    "maxHp": 100,
+    "gold": 60,
+    "prospector": {
+      "x": 11.34,
+      "z": -35.96
+    },
+    "heroPos": {
+      "x": 0,
+      "z": -31.5
+    },
+    "threats": {
+      "alive": 7,
+      "state": "warning",
+      "edge": "south",
+      "thieves": 0,
+      "wreckers": 0,
+      "spawnedTotal": 31,
+      "defeatedTotal": 24,
+      "defeatedBasis": "all enemies, including continuous tricklers"
+    },
+    "works": {
+      "standing": 4,
+      "wrecked": 0,
+      "hp": 170,
+      "byKind": {
+        "turret": 2,
+        "lantern_post": 2
+      }
+    },
+    "seamsActive": 2,
+    "orders": [
+      {
+        "verb": "MOVE_TO",
+        "status": "active"
+      },
+      {
+        "verb": "BUILD",
+        "what": "sentry_beacon",
+        "where": {
+          "x": -12,
+          "z": -36
+        },
+        "when": {
+          "goldGte": 25
+        },
+        "status": "pending"
+      },
+      {
+        "verb": "MOVE_TO",
+        "status": "pending"
+      },
+      {
+        "verb": "BUILD",
+        "what": "sentry_beacon",
+        "where": {
+          "x": 12,
+          "z": -36
+        },
+        "when": {
+          "goldGte": 35
+        },
+        "status": "pending"
+      },
+      {
+        "verb": "HARVEST",
+        "status": "pending"
+      }
+    ],
+    "connect": {
+      "powered": 0,
+      "required": 2,
+      "complete": false,
+      "failed": false
+    }
+  },
+  "turnsObserved": 10,
+  "trace": [
+    {
+      "turnIndex": 0,
+      "wave": 0,
+      "runSeconds": 0,
+      "hp": 100,
+      "maxHp": 100,
+      "gold": 0,
+      "prospector": {
+        "x": -1.8,
+        "z": -45.07
+      },
+      "heroPos": {
+        "x": 0,
+        "z": -44
+      },
+      "threats": {
+        "alive": 0,
+        "state": "quiet",
+        "edge": null,
+        "thieves": 0,
+        "wreckers": 0,
+        "spawnedTotal": 0,
+        "defeatedTotal": 0,
+        "defeatedBasis": "all enemies, including continuous tricklers"
+      },
+      "works": {
+        "standing": 4,
+        "wrecked": 0,
+        "hp": 170,
+        "byKind": {
+          "turret": 2,
+          "lantern_post": 2
+        }
+      },
+      "seamsActive": 2,
+      "orders": [],
+      "connect": {
+        "powered": 0,
+        "required": 2,
+        "complete": false,
+        "failed": false
+      }
+    },
+    {
+      "turnIndex": 1,
+      "wave": 0,
+      "runSeconds": 17.27,
+      "hp": 84,
+      "maxHp": 100,
+      "gold": 30,
+      "prospector": {
+        "x": -22,
+        "z": 34
+      },
+      "heroPos": {
+        "x": 0,
+        "z": -31.5
+      },
+      "threats": {
+        "alive": 3,
+        "state": "active",
+        "edge": null,
+        "thieves": 0,
+        "wreckers": 0,
+        "spawnedTotal": 5,
+        "defeatedTotal": 2,
+        "defeatedBasis": "all enemies, including continuous tricklers"
+      },
+      "works": {
+        "standing": 4,
+        "wrecked": 0,
+        "hp": 170,
+        "byKind": {
+          "turret": 2,
+          "lantern_post": 2
+        }
+      },
+      "seamsActive": 1,
+      "orders": [
+        {
+          "verb": "HARVEST",
+          "status": "done"
+        },
+        {
+          "verb": "HARVEST",
+          "status": "done"
+        },
+        {
+          "verb": "HARVEST",
+          "status": "done"
+        },
+        {
+          "verb": "HARVEST",
+          "status": "done"
+        },
+        {
+          "verb": "HARVEST",
+          "status": "done"
+        },
+        {
+          "verb": "HARVEST",
+          "status": "done"
+        },
+        {
+          "verb": "HARVEST",
+          "status": "failed",
+          "reason": "INVALID_TARGET: __turn-1 is unavailable."
+        }
+      ],
+      "connect": {
+        "powered": 0,
+        "required": 2,
+        "complete": false,
+        "failed": false
+      }
+    },
+    {
+      "turnIndex": 2,
+      "wave": 0,
+      "runSeconds": 20.17,
+      "hp": 84,
+      "maxHp": 100,
+      "gold": 60,
+      "prospector": {
+        "x": -34,
+        "z": 30
+      },
+      "heroPos": {
+        "x": 0,
+        "z": -31.5
+      },
+      "threats": {
+        "alive": 3,
+        "state": "active",
+        "edge": null,
+        "thieves": 0,
+        "wreckers": 0,
+        "spawnedTotal": 6,
+        "defeatedTotal": 3,
+        "defeatedBasis": "all enemies, including continuous tricklers"
+      },
+      "works": {
+        "standing": 4,
+        "wrecked": 0,
+        "hp": 170,
+        "byKind": {
+          "turret": 2,
+          "lantern_post": 2
+        }
+      },
+      "seamsActive": 0,
+      "orders": [
+        {
+          "verb": "HARVEST",
+          "status": "done"
+        },
+        {
+          "verb": "HARVEST",
+          "status": "done"
+        },
+        {
+          "verb": "HARVEST",
+          "status": "done"
+        },
+        {
+          "verb": "HARVEST",
+          "status": "done"
+        },
+        {
+          "verb": "HARVEST",
+          "status": "done"
+        },
+        {
+          "verb": "HARVEST",
+          "status": "done"
+        },
+        {
+          "verb": "HARVEST",
+          "status": "failed",
+          "reason": "INVALID_TARGET: __turn-2 is unavailable."
+        }
+      ],
+      "connect": {
+        "powered": 0,
+        "required": 2,
+        "complete": false,
+        "failed": false
+      }
+    },
+    {
+      "turnIndex": 3,
+      "wave": 0,
+      "runSeconds": 24.63,
+      "hp": 84,
+      "maxHp": 100,
+      "gold": 60,
+      "prospector": {
+        "x": -27.22,
+        "z": 9.66
+      },
+      "heroPos": {
+        "x": 0,
+        "z": -31.5
+      },
+      "threats": {
+        "alive": 2,
+        "state": "active",
+        "edge": null,
+        "thieves": 0,
+        "wreckers": 0,
+        "spawnedTotal": 8,
+        "defeatedTotal": 6,
+        "defeatedBasis": "all enemies, including continuous tricklers"
+      },
+      "works": {
+        "standing": 4,
+        "wrecked": 0,
+        "hp": 170,
+        "byKind": {
+          "turret": 2,
+          "lantern_post": 2
+        }
+      },
+      "seamsActive": 0,
+      "orders": [
+        {
+          "verb": "MOVE_TO",
+          "status": "active"
+        },
+        {
+          "verb": "BUILD",
+          "what": "sentry_beacon",
+          "where": {
+            "x": -12,
+            "z": -36
+          },
+          "when": {
+            "goldGte": 25
+          },
+          "status": "pending"
+        },
+        {
+          "verb": "MOVE_TO",
+          "status": "pending"
+        },
+        {
+          "verb": "BUILD",
+          "what": "sentry_beacon",
+          "where": {
+            "x": 12,
+            "z": -36
+          },
+          "when": {
+            "goldGte": 35
+          },
+          "status": "pending"
+        },
+        {
+          "verb": "HARVEST",
+          "status": "pending"
+        }
+      ],
+      "connect": {
+        "powered": 0,
+        "required": 2,
+        "complete": false,
+        "failed": false
+      }
+    },
+    {
+      "turnIndex": 4,
+      "wave": 1,
+      "runSeconds": 30,
+      "hp": 84,
+      "maxHp": 100,
+      "gold": 60,
+      "prospector": {
+        "x": -19.07,
+        "z": -14.78
+      },
+      "heroPos": {
+        "x": 0,
+        "z": -31.5
+      },
+      "threats": {
+        "alive": 6,
+        "state": "warning",
+        "edge": "west",
+        "thieves": 0,
+        "wreckers": 0,
+        "spawnedTotal": 14,
+        "defeatedTotal": 8,
+        "defeatedBasis": "all enemies, including continuous tricklers"
+      },
+      "works": {
+        "standing": 4,
+        "wrecked": 0,
+        "hp": 170,
+        "byKind": {
+          "turret": 2,
+          "lantern_post": 2
+        }
+      },
+      "seamsActive": 0,
+      "orders": [
+        {
+          "verb": "MOVE_TO",
+          "status": "active"
+        },
+        {
+          "verb": "BUILD",
+          "what": "sentry_beacon",
+          "where": {
+            "x": -12,
+            "z": -36
+          },
+          "when": {
+            "goldGte": 25
+          },
+          "status": "pending"
+        },
+        {
+          "verb": "MOVE_TO",
+          "status": "pending"
+        },
+        {
+          "verb": "BUILD",
+          "what": "sentry_beacon",
+          "where": {
+            "x": 12,
+            "z": -36
+          },
+          "when": {
+            "goldGte": 35
+          },
+          "status": "pending"
+        },
+        {
+          "verb": "HARVEST",
+          "status": "pending"
+        }
+      ],
+      "connect": {
+        "powered": 0,
+        "required": 2,
+        "complete": false,
+        "failed": false
+      }
+    },
+    {
+      "turnIndex": 5,
+      "wave": 1,
+      "runSeconds": 34.7,
+      "hp": 84,
+      "maxHp": 100,
+      "gold": 60,
+      "prospector": {
+        "x": -11.91,
+        "z": -35.97
+      },
+      "heroPos": {
+        "x": 0,
+        "z": -31.5
+      },
+      "threats": {
+        "alive": 5,
+        "state": "active",
+        "edge": "west",
+        "thieves": 0,
+        "wreckers": 0,
+        "spawnedTotal": 14,
+        "defeatedTotal": 9,
+        "defeatedBasis": "all enemies, including continuous tricklers"
+      },
+      "works": {
+        "standing": 4,
+        "wrecked": 0,
+        "hp": 170,
+        "byKind": {
+          "turret": 2,
+          "lantern_post": 2
+        }
+      },
+      "seamsActive": 0,
+      "orders": [
+        {
+          "verb": "MOVE_TO",
+          "status": "done"
+        },
+        {
+          "verb": "BUILD",
+          "what": "sentry_beacon",
+          "where": {
+            "x": -12,
+            "z": -36
+          },
+          "when": {
+            "goldGte": 25
+          },
+          "status": "failed",
+          "reason": "FAILED (out_of_zone): BUILD action was rejected."
+        },
+        {
+          "verb": "MOVE_TO",
+          "status": "pending"
+        },
+        {
+          "verb": "BUILD",
+          "what": "sentry_beacon",
+          "where": {
+            "x": 12,
+            "z": -36
+          },
+          "when": {
+            "goldGte": 35
+          },
+          "status": "pending"
+        },
+        {
+          "verb": "HARVEST",
+          "status": "pending"
+        }
+      ],
+      "connect": {
+        "powered": 0,
+        "required": 2,
+        "complete": false,
+        "failed": false
+      }
+    },
+    {
+      "turnIndex": 6,
+      "wave": 1,
+      "runSeconds": 39.77,
+      "hp": 60,
+      "maxHp": 100,
+      "gold": 60,
+      "prospector": {
+        "x": 11.91,
+        "z": -35.98
+      },
+      "heroPos": {
+        "x": 0,
+        "z": -31.5
+      },
+      "threats": {
+        "alive": 3,
+        "state": "active",
+        "edge": "south",
+        "thieves": 0,
+        "wreckers": 0,
+        "spawnedTotal": 16,
+        "defeatedTotal": 13,
+        "defeatedBasis": "all enemies, including continuous tricklers"
+      },
+      "works": {
+        "standing": 4,
+        "wrecked": 0,
+        "hp": 170,
+        "byKind": {
+          "turret": 2,
+          "lantern_post": 2
+        }
+      },
+      "seamsActive": 1,
+      "orders": [
+        {
+          "verb": "MOVE_TO",
+          "status": "done"
+        },
+        {
+          "verb": "BUILD",
+          "what": "sentry_beacon",
+          "where": {
+            "x": -12,
+            "z": -36
+          },
+          "when": {
+            "goldGte": 25
+          },
+          "status": "failed",
+          "reason": "FAILED (out_of_zone): BUILD action was rejected."
+        },
+        {
+          "verb": "MOVE_TO",
+          "status": "done"
+        },
+        {
+          "verb": "BUILD",
+          "what": "sentry_beacon",
+          "where": {
+            "x": 12,
+            "z": -36
+          },
+          "when": {
+            "goldGte": 35
+          },
+          "status": "failed",
+          "reason": "FAILED (out_of_zone): BUILD action was rejected."
+        },
+        {
+          "verb": "HARVEST",
+          "status": "pending"
+        }
+      ],
+      "connect": {
+        "powered": 0,
+        "required": 2,
+        "complete": false,
+        "failed": false
+      }
+    },
+    {
+      "turnIndex": 7,
+      "wave": 1,
+      "runSeconds": 49.87,
+      "hp": 20,
+      "maxHp": 100,
+      "gold": 60,
+      "prospector": {
+        "x": 11.82,
+        "z": -35.95
+      },
+      "heroPos": {
+        "x": 0,
+        "z": -31.5
+      },
+      "threats": {
+        "alive": 3,
+        "state": "active",
+        "edge": "south",
+        "thieves": 0,
+        "wreckers": 0,
+        "spawnedTotal": 21,
+        "defeatedTotal": 18,
+        "defeatedBasis": "all enemies, including continuous tricklers"
+      },
+      "works": {
+        "standing": 4,
+        "wrecked": 0,
+        "hp": 170,
+        "byKind": {
+          "turret": 2,
+          "lantern_post": 2
+        }
+      },
+      "seamsActive": 2,
+      "orders": [
+        {
+          "verb": "MOVE_TO",
+          "status": "done"
+        },
+        {
+          "verb": "BUILD",
+          "what": "sentry_beacon",
+          "where": {
+            "x": -12,
+            "z": -36
+          },
+          "when": {
+            "goldGte": 25
+          },
+          "status": "failed",
+          "reason": "FAILED (out_of_zone): BUILD action was rejected."
+        },
+        {
+          "verb": "MOVE_TO",
+          "status": "done"
+        },
+        {
+          "verb": "BUILD",
+          "what": "sentry_beacon",
+          "where": {
+            "x": 12,
+            "z": -36
+          },
+          "when": {
+            "goldGte": 35
+          },
+          "status": "failed",
+          "reason": "FAILED (out_of_zone): BUILD action was rejected."
+        },
+        {
+          "verb": "HARVEST",
+          "status": "failed",
+          "reason": "INVALID_TARGET: __turn-7 is unavailable."
+        }
+      ],
+      "connect": {
+        "powered": 0,
+        "required": 2,
+        "complete": false,
+        "failed": false
+      }
+    },
+    {
+      "turnIndex": 8,
+      "wave": 1,
+      "runSeconds": 50.03,
+      "hp": 20,
+      "maxHp": 100,
+      "gold": 60,
+      "prospector": {
+        "x": 11.02,
+        "z": -35.96
+      },
+      "heroPos": {
+        "x": 0,
+        "z": -31.5
+      },
+      "threats": {
+        "alive": 2,
+        "state": "active",
+        "edge": "south",
+        "thieves": 0,
+        "wreckers": 0,
+        "spawnedTotal": 21,
+        "defeatedTotal": 19,
+        "defeatedBasis": "all enemies, including continuous tricklers"
+      },
+      "works": {
+        "standing": 4,
+        "wrecked": 0,
+        "hp": 170,
+        "byKind": {
+          "turret": 2,
+          "lantern_post": 2
+        }
+      },
+      "seamsActive": 2,
+      "orders": [
+        {
+          "verb": "MOVE_TO",
+          "status": "active"
+        },
+        {
+          "verb": "BUILD",
+          "what": "sentry_beacon",
+          "where": {
+            "x": -12,
+            "z": -36
+          },
+          "when": {
+            "goldGte": 25
+          },
+          "status": "pending"
+        },
+        {
+          "verb": "MOVE_TO",
+          "status": "pending"
+        },
+        {
+          "verb": "BUILD",
+          "what": "sentry_beacon",
+          "where": {
+            "x": 12,
+            "z": -36
+          },
+          "when": {
+            "goldGte": 35
+          },
+          "status": "pending"
+        },
+        {
+          "verb": "HARVEST",
+          "status": "pending"
+        }
+      ],
+      "connect": {
+        "powered": 0,
+        "required": 2,
+        "complete": false,
+        "failed": false
+      }
+    },
+    {
+      "turnIndex": 9,
+      "wave": 1,
+      "runSeconds": 59.93,
+      "hp": 4,
+      "maxHp": 100,
+      "gold": 60,
+      "prospector": {
+        "x": 11.82,
+        "z": -35.95
+      },
+      "heroPos": {
+        "x": 0,
+        "z": -31.5
+      },
+      "threats": {
+        "alive": 2,
+        "state": "warning",
+        "edge": "south",
+        "thieves": 0,
+        "wreckers": 0,
+        "spawnedTotal": 26,
+        "defeatedTotal": 24,
+        "defeatedBasis": "all enemies, including continuous tricklers"
+      },
+      "works": {
+        "standing": 4,
+        "wrecked": 0,
+        "hp": 170,
+        "byKind": {
+          "turret": 2,
+          "lantern_post": 2
+        }
+      },
+      "seamsActive": 2,
+      "orders": [
+        {
+          "verb": "MOVE_TO",
+          "status": "done"
+        },
+        {
+          "verb": "BUILD",
+          "what": "sentry_beacon",
+          "where": {
+            "x": -12,
+            "z": -36
+          },
+          "when": {
+            "goldGte": 25
+          },
+          "status": "failed",
+          "reason": "FAILED (out_of_zone): BUILD action was rejected."
+        },
+        {
+          "verb": "MOVE_TO",
+          "status": "done"
+        },
+        {
+          "verb": "BUILD",
+          "what": "sentry_beacon",
+          "where": {
+            "x": 12,
+            "z": -36
+          },
+          "when": {
+            "goldGte": 35
+          },
+          "status": "failed",
+          "reason": "FAILED (out_of_zone): BUILD action was rejected."
+        },
+        {
+          "verb": "HARVEST",
+          "status": "failed",
+          "reason": "INVALID_TARGET: __turn-9 is unavailable."
+        }
+      ],
+      "connect": {
+        "powered": 0,
+        "required": 2,
+        "complete": false,
+        "failed": false
+      }
+    }
+  ]
+}

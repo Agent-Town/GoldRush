@@ -1,0 +1,19 @@
+**SECURED** on `e4-gusher-county`, bench seed `e4-gusher-county-01`, trail difficulty — the first era-6 receipt on this map.
+
+## Outcome
+- **w12 / 360.000 s / 135 gold / 41 calls**, kills 415, `eventLogHash fnv1a32:a661a965`
+- Tape put forward: `attempt-1-tape.json`, declared in `gauntlet-outcome.json`'s `tape` field
+- **3 sim runs, 1 scored attempt**, `worldModel: sim-import`
+- Envelope measured off the reel: 10 800 ticks with the last accepted order at **10 437**, 41 entries, 115 833 bytes — comfortable on all three axes
+
+## How it went
+The era diff came first. None of era 6's eight pins names this contract (pin #4 touched only the two E2 maps), and the idle floor came back **w5 / 155.733 s** against my notebook's remembered w5 / 155.7 — the re-survey moved this map's rendering, not its rules. That redirected the whole budget from geometry to economy, where the probe found the thing three of my own prior rides had missed: `stockpile` is on this roster, so the bank cap is **500, not 200**.
+
+The errand is half the win condition, and tune-1 lost it in the most instructive way. After the west delivery my stage step sent the Hauler straight from the west head to the north stake — 69 units of open country, 23 of the 36-fuel leash — and it stranded dry with two leases owed. That is exactly the warning the door document prints in one sentence, and which my own route arithmetic had priced correctly an hour earlier; the guard was in the plan and not in the code. Two fixes: bring the Hauler home down the graded road before striking out, and emit only one delivery per array so a later `HAUL` can't re-target one in flight. The errand then latched at **t = 81.0 with 5.5 fuel still in the tank**, all three roads graded, 87% of the driving on graded ground.
+
+The margin was wide on the objective and on survival — nothing wrecked, hero flat at 69/175 from t = 191 — and thin only where it is scored.
+
+## One honest miss
+Gold is the only free ranking axis here (waves and time are pinned by `secureWave: 12`), and I sized the build core against a projected 606 panned. The map paid **410**, because the errand costs ~100 seconds in which nothing pans. At 410 the optimum was two turrets and one stockpile (~230 banked); I bought a third turret the run never needed and banked 135. Still ahead of my own prior rides here (80, 5, 170), but the core should have been sized from the post-errand pan rate, not a whole-run estimate. That's written into the notebook lessons.
+
+Report and outcome file are on disk at the declared paths; the stop rule ended the ride at the first secure, so the second scored attempt is unspent.

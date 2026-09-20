@@ -1,0 +1,156 @@
+gate battery transcript (append-only — see scripts/gate-battery.mjs)
+
+
+######## BATTERY 2026-08-07T05:18:14.575Z — fd3 CONTROL s1521 — pre-merge main, desktop ########
+cwd=/Users/robin/Claude/Projects/Gold Rush/gate-s1521
+env+ GR_CAPTURE_EXTERNAL_SERVER=1 GR_CAPTURE_BASE_URL=http://127.0.0.1:5231
+
+===== control desktop =====
+$ npx playwright test e2e/lb-01-county-standings.spec.ts --project=desktop-chrome --reporter=line --workers=1
+rc=1 58.8s
+
+Running 8 tests using 1 worker
+
+
+[1/8] [desktop-chrome] › e2e/lb-01-county-standings.spec.ts:163:1 › endpoint stores optional self-declared stack and keeps the public board stack-blind
+[2/8] [desktop-chrome] › e2e/lb-01-county-standings.spec.ts:366:1 › bench submissions require membership in the contract frozen seed set
+[3/8] [desktop-chrome] › e2e/lb-01-county-standings.spec.ts:404:1 › secure submits the county row with pinned origin, hashes, and profile name
+  1) [desktop-chrome] › e2e/lb-01-county-standings.spec.ts:404:1 › secure submits the county row with pinned origin, hashes, and profile name 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 4
+
+    - Array []
+    + Array [
+    +   "Failed to load resource: the server responded with a status of 429 ()",
+    +   "Failed to load resource: the server responded with a status of 429 ()",
+    + ]
+
+      157 |
+      158 | function expectNoErrors(errors: ErrorBucket): void {
+    > 159 |   expect(errors.consoleErrors).toEqual([]);
+          |                                ^
+      160 |   expect(errors.pageErrors).toEqual([]);
+      161 | }
+      162 |
+        at expectNoErrors (/Users/robin/Claude/Projects/Gold Rush/gate-s1521/e2e/lb-01-county-standings.spec.ts:159:32)
+        at /Users/robin/Claude/Projects/Gold Rush/gate-s1521/e2e/lb-01-county-standings.spec.ts:449:3
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/lb-01-county-standings-sec-0dfa9-gin-hashes-and-profile-name-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/lb-01-county-standings-sec-0dfa9-gin-hashes-and-profile-name-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/lb-01-county-standings-sec-0dfa9-gin-hashes-and-profile-name-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/lb-01-county-standings-sec-0dfa9-gin-hashes-and-profile-name-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+[4/8] [desktop-chrome] › e2e/lb-01-county-standings.spec.ts:452:1 › secure skips county submission for a pinned seed outside the frozen set
+  2) [desktop-chrome] › e2e/lb-01-county-standings.spec.ts:452:1 › secure skips county submission for a pinned seed outside the frozen set 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 3
+
+    - Array []
+    + Array [
+    +   "Failed to load resource: the server responded with a status of 429 ()",
+    + ]
+
+      157 |
+      158 | function expectNoErrors(errors: ErrorBucket): void {
+    > 159 |   expect(errors.consoleErrors).toEqual([]);
+          |                                ^
+      160 |   expect(errors.pageErrors).toEqual([]);
+      161 | }
+      162 |
+        at expectNoErrors (/Users/robin/Claude/Projects/Gold Rush/gate-s1521/e2e/lb-01-county-standings.spec.ts:159:32)
+        at /Users/robin/Claude/Projects/Gold Rush/gate-s1521/e2e/lb-01-county-standings.spec.ts:459:3
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/lb-01-county-standings-sec-aed4a-seed-outside-the-frozen-set-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/lb-01-county-standings-sec-aed4a-seed-outside-the-frozen-set-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/lb-01-county-standings-sec-aed4a-seed-outside-the-frozen-set-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/lb-01-county-standings-sec-aed4a-seed-outside-the-frozen-set-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+[5/8] [desktop-chrome] › e2e/lb-01-county-standings.spec.ts:462:1 › development standings require the explicit dev-send opt-in
+[6/8] [desktop-chrome] › e2e/lb-01-county-standings.spec.ts:472:1 › standings opt-out suppresses submission
+[7/8] [desktop-chrome] › e2e/lb-01-county-standings.spec.ts:482:1 › offline standings failure stays silent through the secure ceremony
+  3) [desktop-chrome] › e2e/lb-01-county-standings.spec.ts:482:1 › offline standings failure stays silent through the secure ceremony 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 3
+
+    - Array []
+    + Array [
+    +   "Failed to load resource: the server responded with a status of 429 ()",
+    + ]
+
+      157 |
+      158 | function expectNoErrors(errors: ErrorBucket): void {
+    > 159 |   expect(errors.consoleErrors).toEqual([]);
+          |                                ^
+      160 |   expect(errors.pageErrors).toEqual([]);
+      161 | }
+      162 |
+        at expectNoErrors (/Users/robin/Claude/Projects/Gold Rush/gate-s1521/e2e/lb-01-county-standings.spec.ts:159:32)
+        at /Users/robin/Claude/Projects/Gold Rush/gate-s1521/e2e/lb-01-county-standings.spec.ts:492:3
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/lb-01-county-standings-off-01e62-through-the-secure-ceremony-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/lb-01-county-standings-off-01e62-through-the-secure-ceremony-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/lb-01-county-standings-off-01e62-through-the-secure-ceremony-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/lb-01-county-standings-off-01e62-through-the-secure-ceremony-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+[8/8] [desktop-chrome] › e2e/lb-01-county-standings.spec.ts:495:1 › Claim Ledger renders the seeded county board and its empty contract state
+  3 failed
+    [desktop-chrome] › e2e/lb-01-county-standings.spec.ts:404:1 › secure submits the county row with pinned origin, hashes, and profile name 
+    [desktop-chrome] › e2e/lb-01-county-standings.spec.ts:452:1 › secure skips county submission for a pinned seed outside the frozen set 
+    [desktop-chrome] › e2e/lb-01-county-standings.spec.ts:482:1 › offline standings failure stays silent through the secure ceremony 
+  5 passed (57.7s)
+(node:8372) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:8427) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:8701) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:9090) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:10071) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+SUMMARY {"control desktop":1}
+OVERALL rc=1

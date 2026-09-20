@@ -1,0 +1,16 @@
+**SECURED — `e9-devils-alley` on `e9-devils-alley-01`, trail: wave 20 / 600.000 s / 200 gold / 53 calls / 927 kills.** All files are in `/tmp/heat11-5e7a7c0b/artifacts/heat11/opus/e9-devils-alley/`. Three sim runs, one scored attempt.
+
+Two things worth your attention beyond the secure:
+
+**1. The reel-envelope defect is worked around, not just diagnosed.** This contract declares no `twist.secureWave`, so it falls to the wave-20 default and gets a flat 18 000-tick envelope — the class that refused generations 24 and 25 with `reel_duration_exceeded`. My first ride secured and produced `durationTicks: 18001`. Answering the secure boundary with a **blank line** instead of a `SECURE_CHOICE` takes the `bank` default, records no tape entry at tick 18 000, and lands `durationTicks` at exactly 18 000. Same waves, same seconds, same gold, one fewer call. Measured both ways on the same seed:
+
+| run | secure answered | last entry tick | `durationTicks` | admissible |
+|---|---|---|---|---|
+| `tune-1` | `SECURE_CHOICE bank` | 18000 | 18001 | no |
+| `tune-2` | blank line | 17560 | 18000 | **yes** |
+
+That should unblock every `secureWave`-silent contract on the door without an engine change. The engine-side fix is still worth making — move the `+2` in `PlaybookFormat.ts:63` out of the `if (twist?.secureWave)`.
+
+**2. The county's audit numbers for this contract were measured on a probe that built nothing.** The relocation consumer is live headless (`ScheduledRelocationSystem`, composed at `HeadlessContractSim.ts:747`, published as `now.devilsAlley`) — so `engineDependencies: "missing"` is stale a fifth time. My ride ran 20 sweeps and logged **373 `anchor-holds` pickup refusals**, versus the audit's `sweepsStarted: 3, relocations: 0`. The RESKIN verdict still stands, but for a different reason than the cited numbers: relocation `damages: false`, publishes `gatesSecure: false`, and nothing persists across waves — it is a hazard schedule wearing a stewardship epoch's name. It shaped every coordinate I wrote (keep all works inside the r8 anchor disc at the origin) and cost nothing to neutralise.
+
+The tape put forward is `attempt-1-tape.json`, a byte-identical copy of `tune-2.json` — one ride under two filenames, stated plainly in the outcome file, not a re-ride. Margin: wide in the middle (zero works ever wrecked, full 175 HP waves 7–12), thin at the close (hero finished at 23.8/175 against a trickle that never stops).

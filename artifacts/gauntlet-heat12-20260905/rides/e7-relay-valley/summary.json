@@ -1,0 +1,115 @@
+{
+  "rig": "opus",
+  "contract": "e7-relay-valley",
+  "model": "claude-opus-5",
+  "sessionId": "7c28f346-7923-4cc6-8a4e-2f33e65d1ba4",
+  "startedAt": "2026-09-05T20:55:57.907Z",
+  "endedAt": "2026-09-05T21:05:11.939Z",
+  "wallClockSeconds": 554,
+  "wallHit": false,
+  "exitCode": 0,
+  "signal": null,
+  "setupToFirstOutputSeconds": 285,
+  "arenaTrackedChanges": [],
+  "workspaceFiles": [
+    "attempt-1-result.json",
+    "attempt-1-tape.json",
+    "attempt-1-views.jsonl",
+    "ctl.mjs",
+    "gauntlet-outcome.json",
+    "gauntlet-report.md",
+    "tune-1-result.json",
+    "tune-1-tape.json",
+    "tune-1-views.jsonl"
+  ],
+  "outcome": {
+    "secured": false,
+    "waves": 10,
+    "timeMs": 307867,
+    "gold": 70,
+    "kills": 248,
+    "calls": 259,
+    "defaultedPicks": 0,
+    "defaultedSecure": 0,
+    "eventLogHash": "fnv1a32:56777ed0",
+    "tape": "/tmp/heat12-038cc280/artifacts/heat12/opus/e7-relay-valley/attempt-1-tape.json",
+    "scored": true,
+    "runsSoFar": 2,
+    "scoredAttempts": 1,
+    "worldModel": "sim-import",
+    "doorRisk": "NOT SECURED - nothing should be submitted. Note for the record that this reel would also have been refused reel_too_large even if it had secured: 960,876 bytes against a ceiling of 16 + ceil(18000/5)*160 = 576,016. Cause is mine, not the map's: an order-failure surprise fires a view on EVERY tick once the seam chain is depleted, and I resubmitted a ~10-order array to each one (259 entries, six of them 0.03s apart).",
+    "eraGate": "CLOSED, and this is the ride's real deliverable: now.playbookUse.objectiveMet went true at t=34.533 with relaysLitByProgram [relay-site-r2], off one turret at (-25,41) plus one PLAYBOOK_USE of a fresh name. Generation 38 left that as a described-but-unverified line; it is now measured on this engine.",
+    "bestSoFar": "attempt-1 (w10/307.867s) beats tune-1 (w6/202.433s) and both fall short of generation 38's w15/460.333s on this same seed."
+  },
+  "outcomeError": null,
+  "promotedTapeName": "attempt-1-tape.json",
+  "scoredTapes": [
+    {
+      "file": "attempt-1-tape.json",
+      "id": "agent-807d85f3-a7f9ed28-db67-492a-9bd0-df4c2c0b3454",
+      "contract": "e7-relay-valley",
+      "seed": "e7-relay-valley-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "b2ff58455",
+        "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 10,
+        "timeAlive": 307.867,
+        "gold": 70
+      },
+      "entries": 259,
+      "durationTicks": 9236,
+      "lastEntryTick": 9226,
+      "promotedByRig": true,
+      "discoveredBy": "outcome-file+filename"
+    }
+  ],
+  "otherTapes": [
+    {
+      "file": "tune-1-tape.json",
+      "id": "agent-d1f93214-05e9c763-6daa-453c-9025-85440e1ea9fc",
+      "contract": "e7-relay-valley",
+      "seed": "e7-relay-valley-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "b2ff58455",
+        "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 6,
+        "timeAlive": 202.433,
+        "gold": 25
+      },
+      "entries": 15,
+      "durationTicks": 6073,
+      "lastEntryTick": 5913
+    }
+  ],
+  "otherSecuredTapes": [],
+  "report": {
+    "outcome": "**NOT SECURED.** Best run: **wave 10 / 307.867 s / 70 gold / 248 kills / 259 calls**\n(`attempt-1-tape.json`, `eventLogHash fnv1a32:56777ed0`). **2 sim runs, 1 scored attempt.**\nTape put forward: **none** — the run is unsecured and must not be submitted.\n\n| run | waves | timeAlive | gold | calls | bytes | note |\n|---|---|---|---|---|---|---|\n| tune-1 | 6 | 202.433 | 25 | 15 | 10,512 | two controller faults, both mine |\n| attempt-1 (scored) | 10 | 307.867 | 70 | 259 | 960,876 | era gate CLOSED at t=34.533 |\n\nTwo things are worth more than the wave count. First, **the era gate is now measured, not\ndescribed**: `now.playbookUse.objectiveMet` went true at **t = 34.533** with\n`relaysLitByProgram: [\"relay-site-r2\"]`, off exactly one turret at (−25, 41) and one\n`PLAYBOOK_USE` of a fresh name. Generation 38 reported the latch from source and never showed it\nclosing on a turret; it closes. Second, a priced negative: **two stockpiles are not better than\none.** Gen 38's single decoy reached w15/460.3 s on this seed; two decoys, same claim, same\neconomy, reached w10/307.9 s. `Balance.steal` explains it — `maxConcurrent: 2`,\n`maxConcurrentPerWaves: 6`, `maxConcurrentCap: 4`, so **at most four thieves are ever diverted at\nonce no matter how many tills you build**, and the second stockpile bought 60 gold of nothing.\nThe lever is the concurrency cap, and it is already saturated by one stockpile.\n\nAlso recorded for the next rider: even a secured version of this reel would have been refused\n`reel_too_large` at 960,876 bytes against a 576,016 ceiling — my fault, not the map's (see below).",
+    "whatTheMapAsked": "It asked about its era's signature mechanic **squarely, and cheaply**, and then it asked about\nattrition for the remaining 565 seconds. E7 is playbooks and the Echo, and after the\n`e7-playbook-rows` / `e7-player-playbook-parity` drains this contract's secure is latched on\n`now.playbookUse`: `E7PlaybookLatch.allowsSecure` returns `lit.size > 0` for `objective: \"relay\"`,\nso no wave count can secure this claim until a relay site is lit **by a running program**. The\nloop is real L1 ladder work — submit ordinary orders (they are the demonstration), get a powered\nwork standing inside an authored `relay-site` zone, then `PLAYBOOK_USE` a fresh name, which records\nthose arrays as a tape and re-installs them, and `syncProgramRelays` lights the site during the\nwindow the program holds the wheel. The fields that carried it were\n`now.playbookUse.{objective, objectiveMet, relaysLitByProgram, shelf, uses, refusals}` and\n`now.works.entries[].{id, position, wrecked}`; the order was one `PLAYBOOK_USE`. The honest\nqualifier is that it is **front-loaded and cheap**: one turret and one order, discharged 34 seconds\ninto a 600-second contract, and the era never asks again. Everything after t = 34.5 is the hardest\nstationary survival the door posts — because `Terrain.isBuildable` confines every buildable to the\nfour relay sites at z 36..46 while the hero is welded at (0, 12), so the nearest legal build ground\nis 31.24 wu away against a turret's range 16: **not one gold can buy a point of defence for the\nbody that has to live.** Orders used: `PLAYBOOK_USE`, `BUILD`, `HARVEST`, `PICK_UPGRADE`,\n`BLAST_AT`, `HOLD`. There is no E7 verb beyond `PLAYBOOK_USE`.\n\nDoes my notebook still describe this map? **Yes for generation 38, no for generation 26.** Gen 26\nrode this seed and reported no relay, no playbook and no Echo in `now`, and called it RESKIN; that\nis dead. Gen 38's reading — live `playbookUse`, latched secure, unfortifiable ground, wave-20\ndefault, 31.24 wu subtraction — reproduced in every particular I checked.",
+    "winnability": "**Undecided-leaning-yes, and what stopped me was my own budget — two of my three faults were\ncontroller bugs, not the map:** the era gate is cheap and provably closable (t = 34.5), the economy\nis fine (810 panned by t = 300), and gen 38 already showed w15/460 s on this seed, but I spent\nrun 1 on a refused-array freeze (`now.seams` publishes `x`/`z` as **null** for an inactive seam, so\nmy terminal `HOLD` carried non-finite numbers, the whole array was refused, and `goldPanned` sat at\nexactly 75 for 110 seconds) and run 2 on a hypothesis the constants already refuted — a second\nstockpile cannot help when `Balance.steal.maxConcurrentCap` is 4 — while a per-tick order-failure\nsurprise loop burned 259 entries and 960 KB of a 576 KB reel. The wall in the map is real but\nun-hit by me: the hero has a 175 hp ceiling, nothing can be built within 31.24 wu of it, and the\nonly unbounded heal (`field_dressing`) is a filler that `rollOffer` will not offer until fewer than\nthree non-filler cards remain eligible — roughly 21 picks, which is ~480 kills of XP, which\ngen 38 reached at t = 460 and I never reached at all.",
+    "lessons": "- **Read the null contract of every view field before you sort on it.** `now.seams` publishes\n  `x`/`z` as **`null`** when `active` is false (`View.ts:417-430`). I filtered on `s.active !== false`,\n  which admits `active: false`, then took `Math.hypot(null - 0, …)`, then handed the seam's null\n  coordinates to a terminal `HOLD`. One non-finite number **refuses the whole array**, the previous\n  already-drained order set stays in force, and the run silently stops working: `goldPanned` frozen\n  at exactly 75 from t = 90 to death. My own notebook has said \"a filter that can return empty is a\n  wipe generator\" three generations running; the sharper version is **a filter that returns\n  GARBAGE is worse than one that returns empty**, because an empty array at least fails loudly.\n  Hardcode the terminal anchor's numbers and validate finiteness before writing to stdin.\n- **Field-name a gate against the view, never against your model of the view.** My\n  `PLAYBOOK_USE` trigger required `now.playbookUse.declared`. That key does not exist on this\n  block, so the gate never fired, the era objective was never attempted, and tune-1 was\n  **unsecurable at any wave** while looking like an ordinary survival loss. The tell was in my own\n  log the whole time: I logged `objectiveMet: false` (not `undefined`), which proves the block was\n  present and that the guard beside it was the thing that was wrong. **When a sibling field reads\n  as a real value, suspect your guard, not the socket.**\n- **A concurrency cap is the price of a diversion mechanic, and it is one grep.** `Balance.steal`\n  is `maxConcurrent: 2`, `+1 per 6 waves`, `maxConcurrentCap: 4`. Four thieves diverted, ever,\n  however many tills stand. Generation 40 wrote this exact sentence about `e9-dome-basin`\n  (\"find the concurrency cap before costing the diversion\") and I still spent my one scored\n  attempt on a second stockpile. **Read my own notebook's cross-map constants before designing a\n  ride around a lever a sibling generation already priced.**\n- **Surprise views are not free above a threshold, and the threshold is a runaway.** A deep\n  failing `HARVEST` tail buys decision points at a wave boundary and buys a **per-tick view storm**\n  once every seam is depleted — six views 0.03 s apart, 259 entries, 960,876 bytes against a\n  576,016 ceiling. Generation 26 measured the byte ceiling on this same contract and generation 58\n  fixed it with an adaptive floor on the gap between submissions; I shipped neither. **Blank-line\n  any view whose plan signature has not changed, and make that floor a function of the remaining\n  ticks — the reel budget is a controller feature, not a strategy one.**\n- **The era gate here is one turret and one order, and it should be view-0 business.** Turret at\n  (−25, 41) inside `relay-site-r2`, then `PLAYBOOK_USE` a fresh name once\n  `works.entries` shows it standing and unwrecked; `objectiveMet` latches within one view.\n  Everything else on this contract is attrition. Bank the gate, then spend the entire wall on hit\n  points — which is where both of my rides should have gone.\n- **Seventh heat running I did not fire the synthesis, and this time I did not even fire the\n  skeleton.** Generations 32, 40, 49, 50, 51, 57 and 58 all end with this. The correct opening on a\n  15-to-23-minute wall is the unmodified gen-6→58 skeleton with the era gate bolted on, ridden\n  first, before a single new hypothesis. I instead shipped a brand-new controller carrying two\n  untested field assumptions and burned both runs finding them. **A controller's own failure modes\n  are not measurements of the contract** — I wrote that after generation 51 and then proved it\n  again.\n- **What the next rider should try, named precisely:** one stockpile (not two), the relay turret\n  and the `PLAYBOOK_USE` inside the first 35 seconds, a submission floor of about 3 seconds, and a\n  draft policy that maximises *card types retired* rather than card power — the fillers, and with\n  them the only unbounded heal in the game, open when at most two non-filler types remain\n  eligible, which is roughly 21 picks and about 480 kills."
+  },
+  "usage": {
+    "transcript": "/Users/robin/.claude/projects/-private-tmp-heat12-038cc280/7c28f346-7923-4cc6-8a4e-2f33e65d1ba4.jsonl",
+    "assistantTurns": 54,
+    "toolCalls": 32,
+    "tokensIn": 108,
+    "tokensOut": 81615,
+    "cacheReadTokens": 14916638,
+    "cacheWriteTokens": 1115060,
+    "note": "tokensIn excludes cache reads/writes (reported separately); summed from the CLI session transcript, not self-reported by the rig"
+  }
+}

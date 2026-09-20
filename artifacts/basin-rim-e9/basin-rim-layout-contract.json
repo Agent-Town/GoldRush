@@ -1,0 +1,147 @@
+{
+  "baseSha": "c272d3a8ba9c36ee2550c7bb55c3fb05edab087e",
+  "site": "E9 Basin Rim fresh red-world town plate",
+  "sources": {
+    "assets/pilots/town-plate-3d/build_town_plate.py": "d46c3799bf395387ac62c22074fa9bc5b2cc2c0be9549c8382ca4395b4e286ce",
+    "src/town/townLayout.ts": "6d000feac3c0e2e14051f287205e5450b3b701bec4c44e513613a34ea39017d0",
+    "src/town/TownScene.ts": "88f0dcfd3daca9626883176b857fe6b7db289fd223908d0f13bf68803c885cd7",
+    "assets/contracts/epoch-2-steamworks/manifest.json": "5e0f6a5b4f850553e560fceac2ef325d47a71826b98bbb8ebbb4b6c1c17e6a20",
+    "assets/raw/kit-era-9.png": "88712877e83751d18de297b47fda26e85662de4ca1a0c314d5419d2688b955df",
+    "specs/epoch-saga/e9-redfields-bundle.md": "91a7e4ee14bbb28c6c7ccaa2a4d5eb4a76ea89de72a30259069138c31f26646a"
+  },
+  "production": {
+    "blend": "assets/pilots/basin-rim-3d/basin-rim-plate.blend",
+    "glb": "assets/pilots/basin-rim-3d/basin-rim-plate.glb",
+    "triangles": 12656,
+    "triangleBudget": 20000,
+    "materialCount": 1,
+    "atlas": [
+      2048,
+      2048
+    ],
+    "e1GreenHex": "#50674c"
+  },
+  "canonicalSlots": [
+    {
+      "id": "tavern",
+      "position": [
+        -7.1,
+        -7.1
+      ],
+      "footprint": [
+        5.2,
+        3.4
+      ]
+    },
+    {
+      "id": "claim_office",
+      "position": [
+        7.1,
+        -7.1
+      ],
+      "footprint": [
+        4.4,
+        3.2
+      ]
+    },
+    {
+      "id": "general_store",
+      "position": [
+        0.0,
+        -10.2
+      ],
+      "footprint": [
+        4.8,
+        3.3
+      ]
+    },
+    {
+      "id": "schoolhouse",
+      "position": [
+        -9.4,
+        3.4
+      ],
+      "footprint": [
+        4.4,
+        3.4
+      ]
+    },
+    {
+      "id": "assay_office",
+      "position": [
+        9.4,
+        3.4
+      ],
+      "footprint": [
+        4.6,
+        3.4
+      ]
+    },
+    {
+      "id": "chapel",
+      "position": [
+        -4.8,
+        9.0
+      ],
+      "footprint": [
+        4.2,
+        3.2
+      ]
+    },
+    {
+      "id": "stamp-mill",
+      "position": [
+        4.8,
+        9.0
+      ],
+      "footprint": [
+        6.2,
+        1.65
+      ]
+    },
+    {
+      "id": "dynamo-hall",
+      "position": [
+        10.0,
+        10.0
+      ],
+      "footprint": [
+        5.5,
+        3.5
+      ]
+    }
+  ],
+  "basinPads": [
+    {
+      "id": "ice-quarry-pad",
+      "position": [
+        -7.4,
+        -16.6
+      ],
+      "shape": "rectangle",
+      "footprint": [
+        5.6,
+        3.8
+      ],
+      "role": "E9 ice-quarry head"
+    },
+    {
+      "id": "ark-yard-pad",
+      "position": [
+        7.0,
+        -16.7
+      ],
+      "shape": "circle",
+      "footprint": [
+        6.2,
+        6.2
+      ],
+      "role": "E9 Ark scaffold yard"
+    }
+  ],
+  "laws": {
+    "flatWalkLimit": 0.05,
+    "greenPersistenceBoundary": "plate shows only the first short E1-green seam; later spread is tile-persistence-owned",
+    "panMonument": "unchanged independent heritage GLB; dry until open-sky canal water arrives"
+  }
+}

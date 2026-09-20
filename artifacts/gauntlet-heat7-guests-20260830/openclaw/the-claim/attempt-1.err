@@ -1,0 +1,147 @@
+[state-migrations] Auto-migrated legacy state:
+- Migrated exec approvals → /tmp/heat7g-openclaw-state/exec-approvals.json
+- Archived legacy exec approvals → /Users/robin/.openclaw/exec-approvals.json.migrated-1788108037818
+[provider-transport-fetch] [model-fetch] start provider=heat4-shim api=openai-completions model=gpt-5.6-sol method=POST url=http://127.0.0.1:8899/v1/chat/completions timeoutMs=undefined proxy=none policy=custom
+[provider-transport-fetch] [model-fetch] response provider=heat4-shim api=openai-completions model=gpt-5.6-sol status=200 elapsedMs=21352 contentType=text/event-stream; charset=utf-8
+[agents/agent-command] [agent] run 3c3f089e-69d2-4391-a391-681beebe7d43 ended with stopReason=stop
+[agent/embedded] [trace:embedded-run] startup stages: runId=ec02af96-a713-4e90-89ac-9125c07d8224 sessionId=heat7g-attempt-1.log phase=attempt-dispatch totalMs=6700 stages=workspace:0ms@0ms,runtime-plugins:5720ms@5720ms,hooks:3ms@5723ms,model-resolution:504ms@6227ms,auth:307ms@6534ms,context-engine:1ms@6535ms,attempt-workspace:1ms@6536ms,attempt-prompt:0ms@6536ms,attempt-runtime-plan:164ms@6700ms,attempt-dispatch:0ms@6700ms
+[provider-transport-fetch] [model-fetch] start provider=heat4-shim api=openai-completions model=gpt-5.6-sol method=POST url=http://127.0.0.1:8899/v1/chat/completions timeoutMs=undefined proxy=none policy=custom
+[provider-transport-fetch] [model-fetch] response provider=heat4-shim api=openai-completions model=gpt-5.6-sol status=200 elapsedMs=23977 contentType=text/event-stream; charset=utf-8
+[agents/agent-command] [agent] run ec02af96-a713-4e90-89ac-9125c07d8224 ended with stopReason=stop
+[provider-transport-fetch] [model-fetch] start provider=heat4-shim api=openai-completions model=gpt-5.6-sol method=POST url=http://127.0.0.1:8899/v1/chat/completions timeoutMs=undefined proxy=none policy=custom
+[provider-transport-fetch] [model-fetch] response provider=heat4-shim api=openai-completions model=gpt-5.6-sol status=200 elapsedMs=18951 contentType=text/event-stream; charset=utf-8
+[agents/agent-command] [agent] run 2fd81368-4efc-4ec6-b17f-f766e43db6aa ended with stopReason=stop
+[provider-transport-fetch] [model-fetch] start provider=heat4-shim api=openai-completions model=gpt-5.6-sol method=POST url=http://127.0.0.1:8899/v1/chat/completions timeoutMs=undefined proxy=none policy=custom
+[provider-transport-fetch] [model-fetch] response provider=heat4-shim api=openai-completions model=gpt-5.6-sol status=200 elapsedMs=15588 contentType=text/event-stream; charset=utf-8
+[agents/agent-command] [agent] run 6902d6c9-2635-452d-b7e6-b1ad5b891e92 ended with stopReason=stop
+[provider-transport-fetch] [model-fetch] start provider=heat4-shim api=openai-completions model=gpt-5.6-sol method=POST url=http://127.0.0.1:8899/v1/chat/completions timeoutMs=undefined proxy=none policy=custom
+[provider-transport-fetch] [model-fetch] response provider=heat4-shim api=openai-completions model=gpt-5.6-sol status=200 elapsedMs=15797 contentType=text/event-stream; charset=utf-8
+[agents/agent-command] [agent] run 38803666-47e3-40e2-b531-4a8b0d4b6a77 ended with stopReason=stop
+[provider-transport-fetch] [model-fetch] start provider=heat4-shim api=openai-completions model=gpt-5.6-sol method=POST url=http://127.0.0.1:8899/v1/chat/completions timeoutMs=undefined proxy=none policy=custom
+[provider-transport-fetch] [model-fetch] response provider=heat4-shim api=openai-completions model=gpt-5.6-sol status=200 elapsedMs=16528 contentType=text/event-stream; charset=utf-8
+[agents/agent-command] [agent] run e60f7bb6-4ffa-49a2-bd2b-5ec5c8a51dec ended with stopReason=stop
+[provider-transport-fetch] [model-fetch] start provider=heat4-shim api=openai-completions model=gpt-5.6-sol method=POST url=http://127.0.0.1:8899/v1/chat/completions timeoutMs=undefined proxy=none policy=custom
+[provider-transport-fetch] [model-fetch] response provider=heat4-shim api=openai-completions model=gpt-5.6-sol status=200 elapsedMs=12440 contentType=text/event-stream; charset=utf-8
+[agents/agent-command] [agent] run 3920f0e9-7400-491a-9ea8-79722f976969 ended with stopReason=stop
+[provider-transport-fetch] [model-fetch] start provider=heat4-shim api=openai-completions model=gpt-5.6-sol method=POST url=http://127.0.0.1:8899/v1/chat/completions timeoutMs=undefined proxy=none policy=custom
+[provider-transport-fetch] [model-fetch] response provider=heat4-shim api=openai-completions model=gpt-5.6-sol status=200 elapsedMs=12978 contentType=text/event-stream; charset=utf-8
+[agents/agent-command] [agent] run 18be24c2-fdd4-42ea-84d8-a743f3add115 ended with stopReason=stop
+[provider-transport-fetch] [model-fetch] start provider=heat4-shim api=openai-completions model=gpt-5.6-sol method=POST url=http://127.0.0.1:8899/v1/chat/completions timeoutMs=undefined proxy=none policy=custom
+[provider-transport-fetch] [model-fetch] response provider=heat4-shim api=openai-completions model=gpt-5.6-sol status=200 elapsedMs=15691 contentType=text/event-stream; charset=utf-8
+[agents/agent-command] [agent] run 11832771-6ad8-40d9-8db1-7153804dca96 ended with stopReason=stop
+[provider-transport-fetch] [model-fetch] start provider=heat4-shim api=openai-completions model=gpt-5.6-sol method=POST url=http://127.0.0.1:8899/v1/chat/completions timeoutMs=undefined proxy=none policy=custom
+[provider-transport-fetch] [model-fetch] response provider=heat4-shim api=openai-completions model=gpt-5.6-sol status=200 elapsedMs=15170 contentType=text/event-stream; charset=utf-8
+[agents/agent-command] [agent] run f6f76244-f12d-453d-8929-08b87e317110 ended with stopReason=stop
+[provider-transport-fetch] [model-fetch] start provider=heat4-shim api=openai-completions model=gpt-5.6-sol method=POST url=http://127.0.0.1:8899/v1/chat/completions timeoutMs=undefined proxy=none policy=custom
+[provider-transport-fetch] [model-fetch] response provider=heat4-shim api=openai-completions model=gpt-5.6-sol status=200 elapsedMs=13260 contentType=text/event-stream; charset=utf-8
+[agents/agent-command] [agent] run 929b7e03-b47e-4a79-80cc-0f605b2dcccc ended with stopReason=stop
+[provider-transport-fetch] [model-fetch] start provider=heat4-shim api=openai-completions model=gpt-5.6-sol method=POST url=http://127.0.0.1:8899/v1/chat/completions timeoutMs=undefined proxy=none policy=custom
+[provider-transport-fetch] [model-fetch] response provider=heat4-shim api=openai-completions model=gpt-5.6-sol status=200 elapsedMs=16006 contentType=text/event-stream; charset=utf-8
+[agents/agent-command] [agent] run e0d7f7bf-b0a1-445d-9fca-f16dc0a2be1e ended with stopReason=stop
+[provider-transport-fetch] [model-fetch] start provider=heat4-shim api=openai-completions model=gpt-5.6-sol method=POST url=http://127.0.0.1:8899/v1/chat/completions timeoutMs=undefined proxy=none policy=custom
+[provider-transport-fetch] [model-fetch] response provider=heat4-shim api=openai-completions model=gpt-5.6-sol status=200 elapsedMs=16191 contentType=text/event-stream; charset=utf-8
+[agents/agent-command] [agent] run bea055e4-6590-40ba-9c31-53e2245bbe1d ended with stopReason=stop
+[agent/embedded] [trace:embedded-run] startup stages: runId=967e2a41-6d7b-45c3-af6b-9505f9f634c9 sessionId=heat7g-attempt-1.log phase=attempt-dispatch totalMs=8941 stages=workspace:1ms@1ms,runtime-plugins:7110ms@7111ms,hooks:2ms@7113ms,model-resolution:1336ms@8449ms,auth:458ms@8907ms,context-engine:2ms@8909ms,attempt-workspace:1ms@8910ms,attempt-prompt:0ms@8910ms,attempt-runtime-plan:31ms@8941ms,attempt-dispatch:0ms@8941ms
+[provider-transport-fetch] [model-fetch] start provider=heat4-shim api=openai-completions model=gpt-5.6-sol method=POST url=http://127.0.0.1:8899/v1/chat/completions timeoutMs=undefined proxy=none policy=custom
+[provider-transport-fetch] [model-fetch] response provider=heat4-shim api=openai-completions model=gpt-5.6-sol status=200 elapsedMs=22522 contentType=text/event-stream; charset=utf-8
+[agents/agent-command] [agent] run 967e2a41-6d7b-45c3-af6b-9505f9f634c9 ended with stopReason=stop
+[provider-transport-fetch] [model-fetch] start provider=heat4-shim api=openai-completions model=gpt-5.6-sol method=POST url=http://127.0.0.1:8899/v1/chat/completions timeoutMs=undefined proxy=none policy=custom
+[provider-transport-fetch] [model-fetch] response provider=heat4-shim api=openai-completions model=gpt-5.6-sol status=200 elapsedMs=14662 contentType=text/event-stream; charset=utf-8
+[agents/agent-command] [agent] run b854dfd5-9264-4b75-a9b3-08d9d3386e46 ended with stopReason=stop
+[provider-transport-fetch] [model-fetch] start provider=heat4-shim api=openai-completions model=gpt-5.6-sol method=POST url=http://127.0.0.1:8899/v1/chat/completions timeoutMs=undefined proxy=none policy=custom
+[provider-transport-fetch] [model-fetch] response provider=heat4-shim api=openai-completions model=gpt-5.6-sol status=200 elapsedMs=15323 contentType=text/event-stream; charset=utf-8
+[agents/agent-command] [agent] run 50cf3824-e4fe-4c7e-8f0f-ef6d2acfa4d2 ended with stopReason=stop
+[provider-transport-fetch] [model-fetch] start provider=heat4-shim api=openai-completions model=gpt-5.6-sol method=POST url=http://127.0.0.1:8899/v1/chat/completions timeoutMs=undefined proxy=none policy=custom
+[provider-transport-fetch] [model-fetch] response provider=heat4-shim api=openai-completions model=gpt-5.6-sol status=200 elapsedMs=15936 contentType=text/event-stream; charset=utf-8
+[agents/agent-command] [agent] run eb224398-a0c9-45f2-bf19-0465a305a426 ended with stopReason=stop
+[provider-transport-fetch] [model-fetch] start provider=heat4-shim api=openai-completions model=gpt-5.6-sol method=POST url=http://127.0.0.1:8899/v1/chat/completions timeoutMs=undefined proxy=none policy=custom
+[provider-transport-fetch] [model-fetch] response provider=heat4-shim api=openai-completions model=gpt-5.6-sol status=200 elapsedMs=16674 contentType=text/event-stream; charset=utf-8
+[agents/agent-command] [agent] run 48b4cd15-8841-49ff-b621-5bc8a81651c5 ended with stopReason=stop
+[provider-transport-fetch] [model-fetch] start provider=heat4-shim api=openai-completions model=gpt-5.6-sol method=POST url=http://127.0.0.1:8899/v1/chat/completions timeoutMs=undefined proxy=none policy=custom
+[provider-transport-fetch] [model-fetch] response provider=heat4-shim api=openai-completions model=gpt-5.6-sol status=200 elapsedMs=14198 contentType=text/event-stream; charset=utf-8
+[agent/embedded] embedded run auto-compaction start: runId=e9fb5772-632c-4a38-86d3-c808341025ee reason=threshold
+[provider-transport-fetch] [model-fetch] start provider=heat4-shim api=openai-completions model=gpt-5.6-sol method=POST url=http://127.0.0.1:8899/v1/chat/completions timeoutMs=undefined proxy=none policy=custom
+[provider-transport-fetch] [model-fetch] response provider=heat4-shim api=openai-completions model=gpt-5.6-sol status=200 elapsedMs=27851 contentType=text/event-stream; charset=utf-8
+[provider-transport-fetch] [model-fetch] start provider=heat4-shim api=openai-completions model=gpt-5.6-sol method=POST url=http://127.0.0.1:8899/v1/chat/completions timeoutMs=undefined proxy=none policy=custom
+[provider-transport-fetch] [model-fetch] response provider=heat4-shim api=openai-completions model=gpt-5.6-sol status=200 elapsedMs=10419 contentType=text/event-stream; charset=utf-8
+[agent/embedded] embedded run auto-compaction complete: runId=e9fb5772-632c-4a38-86d3-c808341025ee reason=threshold compactionCount=1 willRetry=false
+[agent/embedded] [compaction-diag] end runId=heat7g-attempt-1.log sessionKey=agent:main:explicit:heat7g-attempt-1.log diagId=cmp-mtg1otyp-yjgCHw trigger=cli_budget provider=heat4-shim/gpt-5.6-sol attempt=1 maxAttempts=1 outcome=failed reason=already_compacted_recently durationMs=2596
+[agents/cli-compaction] CLI transcript compaction skipped for heat4-shim/gpt-5.6-sol: Already compacted
+[agents/agent-command] [agent] run e9fb5772-632c-4a38-86d3-c808341025ee ended with stopReason=stop
+[provider-transport-fetch] [model-fetch] start provider=heat4-shim api=openai-completions model=gpt-5.6-sol method=POST url=http://127.0.0.1:8899/v1/chat/completions timeoutMs=undefined proxy=none policy=custom
+[provider-transport-fetch] [model-fetch] response provider=heat4-shim api=openai-completions model=gpt-5.6-sol status=200 elapsedMs=12412 contentType=text/event-stream; charset=utf-8
+[agents/agent-command] [agent] run eb62e300-e31b-4e32-9843-8e38c9023dca ended with stopReason=stop
+[provider-transport-fetch] [model-fetch] start provider=heat4-shim api=openai-completions model=gpt-5.6-sol method=POST url=http://127.0.0.1:8899/v1/chat/completions timeoutMs=undefined proxy=none policy=custom
+[provider-transport-fetch] [model-fetch] response provider=heat4-shim api=openai-completions model=gpt-5.6-sol status=200 elapsedMs=12122 contentType=text/event-stream; charset=utf-8
+[agents/agent-command] [agent] run ae6f5e7b-4933-4d0a-9eb7-9c95d76bdedc ended with stopReason=stop
+[provider-transport-fetch] [model-fetch] start provider=heat4-shim api=openai-completions model=gpt-5.6-sol method=POST url=http://127.0.0.1:8899/v1/chat/completions timeoutMs=undefined proxy=none policy=custom
+[provider-transport-fetch] [model-fetch] response provider=heat4-shim api=openai-completions model=gpt-5.6-sol status=200 elapsedMs=12153 contentType=text/event-stream; charset=utf-8
+[agents/agent-command] [agent] run a1b23ec5-0fc7-4fce-b3d2-8401795d5b8a ended with stopReason=stop
+[provider-transport-fetch] [model-fetch] start provider=heat4-shim api=openai-completions model=gpt-5.6-sol method=POST url=http://127.0.0.1:8899/v1/chat/completions timeoutMs=undefined proxy=none policy=custom
+[provider-transport-fetch] [model-fetch] response provider=heat4-shim api=openai-completions model=gpt-5.6-sol status=200 elapsedMs=14803 contentType=text/event-stream; charset=utf-8
+[agents/agent-command] [agent] run cf5ca045-a9f5-4725-bab9-ab6fa3eb3dc6 ended with stopReason=stop
+[provider-transport-fetch] [model-fetch] start provider=heat4-shim api=openai-completions model=gpt-5.6-sol method=POST url=http://127.0.0.1:8899/v1/chat/completions timeoutMs=undefined proxy=none policy=custom
+[provider-transport-fetch] [model-fetch] response provider=heat4-shim api=openai-completions model=gpt-5.6-sol status=200 elapsedMs=14180 contentType=text/event-stream; charset=utf-8
+[agents/agent-command] [agent] run be32f599-f536-4a64-be21-05476e959b40 ended with stopReason=stop
+[provider-transport-fetch] [model-fetch] start provider=heat4-shim api=openai-completions model=gpt-5.6-sol method=POST url=http://127.0.0.1:8899/v1/chat/completions timeoutMs=undefined proxy=none policy=custom
+[provider-transport-fetch] [model-fetch] response provider=heat4-shim api=openai-completions model=gpt-5.6-sol status=200 elapsedMs=13020 contentType=text/event-stream; charset=utf-8
+[agents/agent-command] [agent] run 3d2f4959-a680-4d07-a62b-8a70dce1ee99 ended with stopReason=stop
+[provider-transport-fetch] [model-fetch] start provider=heat4-shim api=openai-completions model=gpt-5.6-sol method=POST url=http://127.0.0.1:8899/v1/chat/completions timeoutMs=undefined proxy=none policy=custom
+[provider-transport-fetch] [model-fetch] response provider=heat4-shim api=openai-completions model=gpt-5.6-sol status=200 elapsedMs=12399 contentType=text/event-stream; charset=utf-8
+[agents/agent-command] [agent] run cd9f4bd4-9059-4544-941d-7d5859dbb688 ended with stopReason=stop
+[provider-transport-fetch] [model-fetch] start provider=heat4-shim api=openai-completions model=gpt-5.6-sol method=POST url=http://127.0.0.1:8899/v1/chat/completions timeoutMs=undefined proxy=none policy=custom
+[provider-transport-fetch] [model-fetch] response provider=heat4-shim api=openai-completions model=gpt-5.6-sol status=200 elapsedMs=12187 contentType=text/event-stream; charset=utf-8
+[agents/agent-command] [agent] run 918180ef-d104-4313-9b91-d76685731547 ended with stopReason=stop
+[provider-transport-fetch] [model-fetch] start provider=heat4-shim api=openai-completions model=gpt-5.6-sol method=POST url=http://127.0.0.1:8899/v1/chat/completions timeoutMs=undefined proxy=none policy=custom
+[provider-transport-fetch] [model-fetch] response provider=heat4-shim api=openai-completions model=gpt-5.6-sol status=200 elapsedMs=13759 contentType=text/event-stream; charset=utf-8
+[agents/agent-command] [agent] run 249717ab-8de4-493c-9384-64d3326c2e02 ended with stopReason=stop
+[provider-transport-fetch] [model-fetch] start provider=heat4-shim api=openai-completions model=gpt-5.6-sol method=POST url=http://127.0.0.1:8899/v1/chat/completions timeoutMs=undefined proxy=none policy=custom
+[provider-transport-fetch] [model-fetch] response provider=heat4-shim api=openai-completions model=gpt-5.6-sol status=200 elapsedMs=12510 contentType=text/event-stream; charset=utf-8
+[agents/agent-command] [agent] run 1649dcb8-7ff5-4485-bb7e-69455fe06c5f ended with stopReason=stop
+[provider-transport-fetch] [model-fetch] start provider=heat4-shim api=openai-completions model=gpt-5.6-sol method=POST url=http://127.0.0.1:8899/v1/chat/completions timeoutMs=undefined proxy=none policy=custom
+[provider-transport-fetch] [model-fetch] response provider=heat4-shim api=openai-completions model=gpt-5.6-sol status=200 elapsedMs=11812 contentType=text/event-stream; charset=utf-8
+[agents/agent-command] [agent] run 6c95bb13-2b6c-4e9f-b369-0264f78ff840 ended with stopReason=stop
+[provider-transport-fetch] [model-fetch] start provider=heat4-shim api=openai-completions model=gpt-5.6-sol method=POST url=http://127.0.0.1:8899/v1/chat/completions timeoutMs=undefined proxy=none policy=custom
+[provider-transport-fetch] [model-fetch] response provider=heat4-shim api=openai-completions model=gpt-5.6-sol status=200 elapsedMs=11847 contentType=text/event-stream; charset=utf-8
+[agent/embedded] embedded run auto-compaction start: runId=87072116-359c-434a-99e0-3ba8f3b3edc4 reason=threshold
+[provider-transport-fetch] [model-fetch] start provider=heat4-shim api=openai-completions model=gpt-5.6-sol method=POST url=http://127.0.0.1:8899/v1/chat/completions timeoutMs=undefined proxy=none policy=custom
+[provider-transport-fetch] [model-fetch] response provider=heat4-shim api=openai-completions model=gpt-5.6-sol status=200 elapsedMs=32469 contentType=text/event-stream; charset=utf-8
+[agent/embedded] embedded run auto-compaction complete: runId=87072116-359c-434a-99e0-3ba8f3b3edc4 reason=threshold compactionCount=1 willRetry=false
+[agent/embedded] [compaction-diag] end runId=heat7g-attempt-1.log sessionKey=agent:main:explicit:heat7g-attempt-1.log diagId=cmp-mtg1u5vz-hHkt5Q trigger=cli_budget provider=heat4-shim/gpt-5.6-sol attempt=1 maxAttempts=1 outcome=failed reason=already_compacted_recently durationMs=2313
+[agents/cli-compaction] CLI transcript compaction skipped for heat4-shim/gpt-5.6-sol: Already compacted
+[agents/agent-command] [agent] run 87072116-359c-434a-99e0-3ba8f3b3edc4 ended with stopReason=stop
+[provider-transport-fetch] [model-fetch] start provider=heat4-shim api=openai-completions model=gpt-5.6-sol method=POST url=http://127.0.0.1:8899/v1/chat/completions timeoutMs=undefined proxy=none policy=custom
+[provider-transport-fetch] [model-fetch] response provider=heat4-shim api=openai-completions model=gpt-5.6-sol status=200 elapsedMs=12555 contentType=text/event-stream; charset=utf-8
+[agents/agent-command] [agent] run 0caf4c3a-a66c-4010-9415-cc2b2a92d4a5 ended with stopReason=stop
+[provider-transport-fetch] [model-fetch] start provider=heat4-shim api=openai-completions model=gpt-5.6-sol method=POST url=http://127.0.0.1:8899/v1/chat/completions timeoutMs=undefined proxy=none policy=custom
+[provider-transport-fetch] [model-fetch] response provider=heat4-shim api=openai-completions model=gpt-5.6-sol status=200 elapsedMs=14303 contentType=text/event-stream; charset=utf-8
+[agents/agent-command] [agent] run cd35a3e0-8bf2-48ad-b5de-a97f5d3b7fe1 ended with stopReason=stop
+[provider-transport-fetch] [model-fetch] start provider=heat4-shim api=openai-completions model=gpt-5.6-sol method=POST url=http://127.0.0.1:8899/v1/chat/completions timeoutMs=undefined proxy=none policy=custom
+[provider-transport-fetch] [model-fetch] response provider=heat4-shim api=openai-completions model=gpt-5.6-sol status=200 elapsedMs=11912 contentType=text/event-stream; charset=utf-8
+[agents/agent-command] [agent] run a8472b5e-3a6d-4925-a504-c893d50121c8 ended with stopReason=stop
+[provider-transport-fetch] [model-fetch] start provider=heat4-shim api=openai-completions model=gpt-5.6-sol method=POST url=http://127.0.0.1:8899/v1/chat/completions timeoutMs=undefined proxy=none policy=custom
+[provider-transport-fetch] [model-fetch] response provider=heat4-shim api=openai-completions model=gpt-5.6-sol status=200 elapsedMs=12853 contentType=text/event-stream; charset=utf-8
+[agents/agent-command] [agent] run fece0899-f7ca-47f3-b718-c88bc611dfd1 ended with stopReason=stop
+[provider-transport-fetch] [model-fetch] start provider=heat4-shim api=openai-completions model=gpt-5.6-sol method=POST url=http://127.0.0.1:8899/v1/chat/completions timeoutMs=undefined proxy=none policy=custom
+[provider-transport-fetch] [model-fetch] response provider=heat4-shim api=openai-completions model=gpt-5.6-sol status=200 elapsedMs=14814 contentType=text/event-stream; charset=utf-8
+[agents/agent-command] [agent] run 161d7738-fae1-4785-9eb7-804512266e6e ended with stopReason=stop
+[provider-transport-fetch] [model-fetch] start provider=heat4-shim api=openai-completions model=gpt-5.6-sol method=POST url=http://127.0.0.1:8899/v1/chat/completions timeoutMs=undefined proxy=none policy=custom
+[provider-transport-fetch] [model-fetch] response provider=heat4-shim api=openai-completions model=gpt-5.6-sol status=200 elapsedMs=12606 contentType=text/event-stream; charset=utf-8
+[provider-transport-fetch] [model-fetch] start provider=heat4-shim api=openai-completions model=gpt-5.6-sol method=POST url=http://127.0.0.1:8899/v1/chat/completions timeoutMs=undefined proxy=none policy=custom
+[provider-transport-fetch] [model-fetch] response provider=heat4-shim api=openai-completions model=gpt-5.6-sol status=200 elapsedMs=35053 contentType=text/event-stream; charset=utf-8
+[agents/agent-command] [agent] run 715e79a6-d472-4f17-a3d6-004c1339c112 ended with stopReason=stop
+[provider-transport-fetch] [model-fetch] start provider=heat4-shim api=openai-completions model=gpt-5.6-sol method=POST url=http://127.0.0.1:8899/v1/chat/completions timeoutMs=undefined proxy=none policy=custom
+[provider-transport-fetch] [model-fetch] response provider=heat4-shim api=openai-completions model=gpt-5.6-sol status=200 elapsedMs=6285 contentType=text/event-stream; charset=utf-8
+[provider-transport-fetch] [model-fetch] start provider=heat4-shim api=openai-completions model=gpt-5.6-sol method=POST url=http://127.0.0.1:8899/v1/chat/completions timeoutMs=undefined proxy=none policy=custom
+[provider-transport-fetch] [model-fetch] response provider=heat4-shim api=openai-completions model=gpt-5.6-sol status=200 elapsedMs=36371 contentType=text/event-stream; charset=utf-8
+[agents/agent-command] [agent] run 88dc5f80-8fab-4121-a15f-cb7e3c1c702f ended with stopReason=stop
+[provider-transport-fetch] [model-fetch] start provider=heat4-shim api=openai-completions model=gpt-5.6-sol method=POST url=http://127.0.0.1:8899/v1/chat/completions timeoutMs=undefined proxy=none policy=custom
+[provider-transport-fetch] [model-fetch] response provider=heat4-shim api=openai-completions model=gpt-5.6-sol status=200 elapsedMs=9577 contentType=text/event-stream; charset=utf-8
+[provider-transport-fetch] [model-fetch] start provider=heat4-shim api=openai-completions model=gpt-5.6-sol method=POST url=http://127.0.0.1:8899/v1/chat/completions timeoutMs=undefined proxy=none policy=custom
+[provider-transport-fetch] [model-fetch] response provider=heat4-shim api=openai-completions model=gpt-5.6-sol status=200 elapsedMs=36748 contentType=text/event-stream; charset=utf-8
+[agents/agent-command] [agent] run 9cb59281-89eb-44a6-97f8-41d476eb3ee1 ended with stopReason=stop
+[provider-transport-fetch] [model-fetch] start provider=heat4-shim api=openai-completions model=gpt-5.6-sol method=POST url=http://127.0.0.1:8899/v1/chat/completions timeoutMs=undefined proxy=none policy=custom
+[provider-transport-fetch] [model-fetch] response provider=heat4-shim api=openai-completions model=gpt-5.6-sol status=200 elapsedMs=10521 contentType=text/event-stream; charset=utf-8
+[provider-transport-fetch] [model-fetch] start provider=heat4-shim api=openai-completions model=gpt-5.6-sol method=POST url=http://127.0.0.1:8899/v1/chat/completions timeoutMs=undefined proxy=none policy=custom
+[provider-transport-fetch] [model-fetch] response provider=heat4-shim api=openai-completions model=gpt-5.6-sol status=200 elapsedMs=41294 contentType=text/event-stream; charset=utf-8
+[agents/agent-command] [agent] run 3019ab1c-3afe-419f-836c-ee494de8b094 ended with stopReason=stop

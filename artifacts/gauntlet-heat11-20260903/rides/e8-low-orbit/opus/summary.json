@@ -1,0 +1,110 @@
+{
+  "rig": "opus",
+  "contract": "e8-low-orbit",
+  "model": "claude-opus-5",
+  "sessionId": "6bdf896f-9431-4159-8515-5c4ab673be34",
+  "startedAt": "2026-09-04T04:24:39.978Z",
+  "endedAt": "2026-09-04T04:38:20.832Z",
+  "wallClockSeconds": 821,
+  "wallHit": false,
+  "exitCode": 0,
+  "signal": null,
+  "setupToFirstOutputSeconds": 90,
+  "arenaTrackedChanges": [],
+  "workspaceFiles": [
+    "attempt-1-tape.json",
+    "ctrl-v1.mjs",
+    "ctrl-v2.mjs",
+    "gauntlet-outcome.json",
+    "gauntlet-report.md",
+    "probe-idle-outcome.json",
+    "probe-idle-stderr.txt",
+    "probe-idle-tape.json",
+    "probe-idle-views.json",
+    "run.mjs",
+    "tune-1-outcome.json",
+    "tune-1-stderr.txt",
+    "tune-1-tape.json",
+    "tune-1-views.json",
+    "tune-2-outcome.json",
+    "tune-2-stderr.txt",
+    "tune-2-tape.json",
+    "tune-2-views.json"
+  ],
+  "outcome": {
+    "secured": true,
+    "waves": 20,
+    "timeMs": 600000,
+    "gold": 200,
+    "kills": 925,
+    "calls": 94,
+    "defaultedPicks": 0,
+    "defaultedSecure": 1,
+    "eventLogHash": "fnv1a32:19c0bd12",
+    "tape": "/tmp/heat11-b118c4d2/artifacts/heat11/opus/e8-low-orbit/attempt-1-tape.json",
+    "scored": true,
+    "runsSoFar": 3,
+    "scoredAttempts": 1,
+    "worldModel": "sim-import",
+    "note": "The securing ride was launched as tune-2; its tape is promoted verbatim (byte-identical copy) to attempt-1-tape.json and is my scored attempt. tune-2-tape.json is the same single ride under its original filename. Tape header eventLogHash fnv1a32:51619722, durationTicks 18000 (cap 18000), last entry tick 17587, 94 entries, 267683 bytes (cap 592384); scripts/assay-replay-agent.mjs reproduces fnv1a32:51619722 and secured/20/600/200."
+  },
+  "outcomeError": null,
+  "scoredTapes": [
+    {
+      "file": "attempt-1-tape.json",
+      "id": "agent-003b8757-7f88efd0-fead-4df8-83f0-34b50814cb60",
+      "contract": "e8-low-orbit",
+      "seed": "e8-low-orbit-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "b118c4d20",
+        "engineHash": "49c34f8bba3d61e003d1f421398e3835e3107945f396800fa124f946b2e4b2f9",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 20,
+        "timeAlive": 600,
+        "gold": 200
+      },
+      "entries": 94
+    }
+  ],
+  "otherSecuredTapes": [
+    {
+      "file": "tune-2-tape.json",
+      "id": "agent-003b8757-7f88efd0-fead-4df8-83f0-34b50814cb60",
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 20,
+        "timeAlive": 600,
+        "gold": 200
+      },
+      "meta": {
+        "buildId": "b118c4d20",
+        "engineHash": "49c34f8bba3d61e003d1f421398e3835e3107945f396800fa124f946b2e4b2f9",
+        "era": 5,
+        "viewVersion": 2
+      }
+    }
+  ],
+  "report": {
+    "outcome": "**SECURED.** Waves **20**, timeAlive **600.000 s**, gold **200** (the bank cap), calls **94**,\nkills 925 of 934 spawned. The tape I put forward is\n`artifacts/heat11/opus/e8-low-orbit/attempt-1-tape.json` — a byte-identical copy of the securing ride's\nown reel, which was launched under the name `tune-2`; it is one ride under two filenames, promoted by\nname here and in `gauntlet-outcome.json`, not a re-ride. **3 sim runs, 1 scored attempt.**",
+    "whatTheMapAsked": "It asked me about its era's signature mechanic **exactly zero times, and the reason is worth the\ncounty's attention, because it is not the ordinary \"published but unreadable\" finding.** E8's lever\nhere is fully composed, fully published and genuinely implemented: `now.lowOrbit` appears in all 96\nviews of the secured run carrying `declared: true, orbitalReturn: true, returnSeconds: 12,\nscaffoldZones: 3, debrisFields: 2, handholdSegments: 4` plus five live counters, and `now.gravity`\npublishes `feelG 0, movement \"free-fall\", lobArcDistanceMultiplier 4.8, lobAirTimeMultiplier 4.8,\nknockbackScale 1.75, orbitalReturn true, vacuum true`. The lob multiplier is really consumed —\n`HeadlessContractSim.syncE8LobPhysics:624` sets `blastShooter.range = Balance.blast.range × 4.8`, so a\n`BLAST_AT` on this board reaches 48 metres instead of 10. The mechanic is not decoration and it is not\ninvisible. **It is avoidable, in all three of its arms at once, and my securing reel proves it: every\none of `returnsScheduled`, `returnsDetonated`, `driftSteps`, `debrisSteps` and `debrisDamageDealt`\nfinished at 0**, unchanged across all 96 views and all 600 seconds.\n\nWhy each arm idles, from the code that drives it:\n\n- **Orbital return** (`CombatSystem.considerOrbitalReturn:741`) fires only on a lob that hits nothing.\n  It is opt-in through `BLAST_AT` or `SET_WEAPON blast`; a rider that never throws never schedules a\n  return. It is also *safe* when you do throw, which undercuts the teaching intent: the return re-enters\n  at `position + (position − origin)`, i.e. twice the throw distance along the same vector, so a lob\n  aimed outward from the claim lands its return further outward still, away from every work. The\n  \"missed lobs are a future problem\" lesson has an easy, geometric exemption.\n- **Handhold drift** (`LowOrbitSystem.controlScale` via `HeadlessContractSim.e8PhysicsIntents:634`) is\n  **hero-only and positional** — it reads `this.hero.group.position` and filters slot 0's movement. The\n  hero on a non-deepwater map is welded to the claim at (0, 12), which sits *inside*\n  `claw-carcass-yard`, one of the three declared scaffold zones. `onHandhold` therefore returns true on\n  every tick of every run, `controlScale` never leaves 1, and the counter can never increment. The\n  order actor — the Prospector, the body that actually travels — is not filtered at all, and in any\n  case all four authored `harvestAnchors` ((±12, 4) and (±38, 2)) lie inside a scaffold deck, with the\n  gap between decks covered by the spine's 4wu half-width. There is no journey on this map that leaves\n  the exempt region.\n- **The debris chip** (`applyLowOrbitDebris:615`) is hero-only too, and the two bands sit at |z| ≥ 24\n  while the hero never moves from z = 12.\n\nSo the honest verdict on the audit's PARTIAL: it is right that lobs are the only arm that can fire, and\nmy run sharpens it — the audit's \"one return scheduled and detonated\" was measured on a ride that threw\na lob, and a ride that does not throw one gets a clean row of zeros. **The mechanic is not partially\nimplemented; it is fully implemented and structurally optional, because the map's own geography places\nthe claim, the hero, every seam and every legal build coordinate inside the regions that exempt them.**\nWhat actually decided the contract was ordinary stationary survival on an unusually kind pocket: the\nclaim at (0, 12) sits inside a 36 × 28 build zone, the two near seam anchors are 14.4 wu away, no enemy\non the roster (`scrap_corsair` alone, `Balance.e8Roster`) carries `wrecker` or `thief`, so `goldStolen`\nfinished at 0 and not one of ten works was ever wrecked — and the whole run is a 934-enemy continuous\ntrickle against a fort. The fields that carried it were `now.works.byKind` and `now.works.entries`\n(placement, `tier` and `index` — `index` is what `CONTEXT_ACTION` needs), `now.seams[].active/x/z`,\n`now.gold` against the cap, `now.hero.hp/maxHp/level`, `now.threats.alive`, `now.orders[].status/reason`\n(the blacklist's source) and `now.pendingOffer`/`now.pendingSecure`. The orders were `BUILD`, `HARVEST`,\n`PICK_UPGRADE`, `MOVE_TO`, `CONTEXT_ACTION upgrade`, `REPAIR_UNDER` and one blank line. **Not one E8\nverb, because E8 has none.**\n\nOne legibility note for the county: the manifest's `engineDependencies` declares\n`low-orbit-contract-consumers: \"missing\"` — \"needs the declared scaffold, debris, handhold-road,\nobjective, and atmosphere-wall consumers\". Half of that is stale: `LowOrbitSystem` composes the\nscaffold, debris and handhold consumers headless and publishes them in `now.lowOrbit`. The other half is\naccurate — there is no objective consumer (the secure is the plain wave-20 default) and no\n`now.air`, because this contract declares `atmosphere.airIsWall: false`.",
+    "winnability": "Secured, and the margin was **wide but not comfortable at the close**: the hero held its full running\nmaximum through wave 16 and finished **79/175**, with all ten works standing unwrecked, `goldStolen` 0\nand gold at the 200 cap — but the last four waves cost 96 hit points against 28 live threats, so one\nmore wave of the same slope and it would have been thin.",
+    "lessons": "- **`unclaimed` with no `reason` in `winnability-receipts.json` is eighteen-for-eighteen.** Still the\n  first two lines of JSON I read, still the cheapest information in the county, still never wrong.\n- **When gold pins at the cap with the ladder finished, the sink is the tier upgrade, and it is the\n  whole difference between wave 18 and the secure.** `tune-1` and `tune-2` differ by one order pair and\n  two waves. `Balance.tiers.turret` prices tier 2 at 150 for ×1.4 damage ×1.18 fire rate (×1.65 dps) —\n  On the base turret and beacon damage figures I carry from generation 7 — not re-measured on this\n  board — that is slightly *worse* dps per gold than another beacon, and the upgrade still wins\n  outright, because the beacon ladder is capped at six and the turret ladder at four while the cap\n  keeps refilling. When both build ladders are exhausted, dps-per-gold stops being the question;\n  **the question is which purchase still has stock.**\n- **`CONTEXT_ACTION` does not travel and has no `when` clause — so it needs both a `MOVE_TO` in front\n  of it and plan-time affordability behind it.** Gen-29 learned the first half on the Mare Claim and\n  never got to prove it; here `MOVE_TO(turret.position)` then `CONTEXT_ACTION upgrade {id, index}` from\n  `now.works.entries` landed four upgrades in four consecutive views. `interactRadius` is 1.6 and\n  `MOVE_TO` snaps exactly onto its target, so the pair is reliable. Emit it only when `now.gold` already\n  covers the tier cost: an unaffordable `CONTEXT_ACTION` fails the instant it is reached and the record\n  is consumed for the life of the array.\n- **Read `now.orders[].reason` and blacklist the coordinate.** `(0, 2)` is inside the declared build\n  zone and still `UNREACHABLE: BUILD target is outside buildable terrain` — a published rectangle is\n  not buildable ground. In `tune-1` the sixth beacon parked on that coordinate for eight waves with 200\n  gold in hand. A four-line refusal blacklist fed from the view's own order records fixed it without my\n  ever learning *why* the tile refuses. Gen-10 lost the Trestle to one refused coordinate; gen-14 added\n  more candidates than slots; **gen-35 adds the third piece — let the view tell you which candidate to\n  strike, instead of guessing which will refuse.**\n- **A mechanic can be real, readable, correctly implemented AND structurally optional.** Gen-8: an\n  affordance without a feedback field is not a mechanic. Gen-9: a contract's own goal is not evidence the\n  goal is reachable. Gen-14: some named mechanics are opt-in threats and the winning move is not to opt\n  in. **Gen-35 is the sharpest version yet: two of low orbit's three arms key on `this.hero.group.position`,\n  and the hero is welded to a claim that sits inside the exempt zone, so those arms cannot fire for any\n  rider on any policy.** Before writing an era off *or* planning around it, find out **whose position**\n  the mechanic reads — the hero's, the Prospector's, or an enemy's. On a map where the hero never moves,\n  a hero-positional hazard is a constant, not a mechanic.\n- **Diff the era socket across the whole view log; a row of unchanging zeros is a finding you can make in\n  one command.** Gen-31 learned this on `now.broadcastMirror`; here five counters at 0 across 96 views is\n  the entire \"what the map asked\" paragraph, and it took one line of node.\n- **Check the tape envelope on the FIRST reel that exists, not on the attempt.** `durationTicks` 18 000,\n  last entry 17 587, 94 entries, 267 683 bytes — all four measured before I called anything an attempt.\n  The blank-line answer to `now.pendingSecure` is now standing equipment on every `secureWave`-silent\n  contract: third generation running it worked first try, unmodified.\n- **A wave-2 idle death still means nothing.** Twelfth map running. Idle died at 78.3 s with 0 gold; the\n  very first controller rode the same seed to 550.9 s and the second secured at 600.\n- **`engineDependencies` can be stale in HALF a sentence.** This one names five missing consumers; three\n  of them are live and published, two genuinely are not. Score across my rides is now roughly five wrong\n  to three right — but the useful upgrade is that it is not a per-contract boolean at all. Read it clause\n  by clause against `now`'s keys, and trust only the clauses the view contradicts or confirms.\n- **Stop at the secure, promote the tune by name, and spend what is left on the receipt.** Fourth\n  generation running where a tune secured and the rules end the ride there. The local assay\n  (`scripts/assay-replay-agent.mjs <tape>`, positional argument, not `--tape`) reproduced\n  `fnv1a32:51619722` and the four outcome fields without riding anything — and note that this is the\n  TAPE header's hash, not the outcome line's `fnv1a32:19c0bd12`. Gen-4 wrote that down; I nearly read\n  the mismatch as a determinism failure before checking which hash the replay is supposed to match."
+  },
+  "usage": {
+    "transcript": "/Users/robin/.claude/projects/-private-tmp-heat11-b118c4d2/6bdf896f-9431-4159-8515-5c4ab673be34.jsonl",
+    "assistantTurns": 109,
+    "toolCalls": 71,
+    "tokensIn": 218,
+    "tokensOut": 96347,
+    "cacheReadTokens": 23553751,
+    "cacheWriteTokens": 656401,
+    "note": "tokensIn excludes cache reads/writes (reported separately); summed from the CLI session transcript, not self-reported by the rig"
+  }
+}

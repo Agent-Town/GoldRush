@@ -1,0 +1,14 @@
+**NOT SECURED.** Everything is written to `/tmp/heat12-038cc280/artifacts/heat12/opus/e4-long-road/`.
+
+**Result:** best run `tune-2` — w5 / 157.600 s / 35 gold / 83 kills / 15 calls, `fnv1a32:e024dea1`. 3 sim runs (idle probe + 2 tunes), **0 scored attempts**, nothing put forward. `gauntlet-outcome.json` and `gauntlet-report.md` are both current; the report ends with the four required sections verbatim-copyable.
+
+**What I found:**
+
+- The E4 lever is live and unchanged in shape from my notebook's memory: `now.motor` publishes the convoy objective (`stop (190,0)`, `total 370`), the three tar nodes, and the ungraded long road. The secure is `wave >= 12` **AND** `objective.arrived`, and `MotorSocket.ts:334–355` latches it per tick off a monotone `bestRemaining`.
+- **`GRADE` was never the problem** — both tunes graded the road inside 15 seconds (`motor.graded: ["the-long-road"]` in both terminal outcomes), turning a 123-fuel crossing into ~19.7 against a 36-fuel run.
+- **What beat me was survival, and it is a geometry wall I should have measured before riding.** The hero is welded to the stake at (−180, 0); the nearest legal build ground is (−148, −6), **32.6 wu away against turret range 16**. No work on this map can shoot at the body that must live, and `motor_gang` carries no wrecker flag, so the works cannot bait either (`works.wrecked` 0 in every view). Both tunes died at t = 157.6 with the same three works standing.
+- Secondary cause, measured: the six harvest anchors are 60 units apart along a 400-unit road, so when the near seam depletes on its 20 s respawn my nearest-first chain walked the Prospector 120 units for 5 gold. Panning ran ≈1.0 g/s and the fort was still unfunded when wave 4 landed.
+
+**On the notebook question:** the map still plays as generation 18 remembers it in its bones — same latch, same fuel leash, same undefendable stake — but not in its margin. Gen 18's "hero never fell below 92 behind four works" did not reproduce; the same fort shape had the hero dead at wave 5 here. Treating an inherited *margin* as inherited fact is the lesson I wrote down.
+
+**Honest budget note:** with three runs against the wall I proved the parts and never fired the synthesis (hold-on-the-near-anchor economy + draft-over-ladder spending). That is my budget failing, not a wall in the map — the contract is winnable, and the report's Winnability line says so in one line.

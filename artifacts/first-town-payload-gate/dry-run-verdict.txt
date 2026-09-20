@@ -1,0 +1,22 @@
+[deploy] RELEASE VERDICT
+[deploy] Build: 7c52a369
+[deploy] Budget: PASS (limit: 25000000 bytes)
+[deploy]   payload GATE (declared, computed from the build): PASS (15575273 / 25000000 bytes, 9424727 bytes headroom)
+[deploy]   | group | gated | families | files | bytes |
+[deploy]   | --- | --- | ---: | ---: | ---: |
+[deploy]   | hero | yes | 8 | 106 | 4590285 |
+[deploy]   | cast | no (demand-paged) | 10 | 272 | 16111577 |
+[deploy]   | plates | yes | 19 | 19 | 4754493 |
+[deploy]   | models | yes | 16 | 16 | 3918764 |
+[deploy]   | audio | yes | 1 | 1 | 8821 |
+[deploy]   | code | yes | 33 | 33 | 2301823 |
+[deploy]   | document | yes | 1 | 1 | 1087 |
+[deploy]   | GATED TOTAL | yes | 78 | 176 | 15575273 |
+[deploy]   | DECLARED TOTAL (gated + demand-paged) | — | — | — | 31686850 |
+[deploy]   first-town payload demand-paged: 16111577 bytes
+[deploy]   first-town payload declared: 31686850 bytes
+[deploy]   probe TRIPWIRE (browser cue window, ceiling 30000000 bytes, host speed not payload): PASS
+[deploy]   probe desktop-chrome: 16101489 / 30000000 bytes
+[deploy]   probe mobile-chrome: 16052799 / 30000000 bytes
+[deploy] Device verdict: WARN missing docs/release/verdict-7c52a369.md
+[deploy] Outcome: dry_run

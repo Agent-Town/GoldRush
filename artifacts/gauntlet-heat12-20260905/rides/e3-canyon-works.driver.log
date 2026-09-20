@@ -1,0 +1,42 @@
+
+########## RIDE e3-canyon-works · seed e3-canyon-works-01 · gen 60 · stake second-attempt · wall 1400s ##########
+--- 1 charter ---
+{"rig":"opus","contract":"e3-canyon-works","seed":"e3-canyon-works-01","seedMode":"bench","stake":"second-attempt","generation":60,"wall":1400,"notebookSha256":"add7a9f5892a0630dc88baefa8302b323f6ccd37f3a7267a6dc61abcec055fa4","charterSha256":"79c17a88e2820f1539520c4c7f15f3808dab6d662d14145e13851f18f704cb9d","bytes":470345,"out":"/private/tmp/heat12-038cc280/artifacts/gauntlet-heat12-20260905/rides/e3-canyon-works/charter.md"}
+--- 2 ride ---
+START opus claude-opus-5 pid=75416 session=204aba5a-159e-4c9b-b1bc-5c10d087968c at=2026-09-05T21:05:12.188Z
+FIRST-OUTPUT opus +195s
+OUTCOME opus secured=false waves=20 gold=200 runsSoFar=2 scored=0 +480s
+OUTCOME opus secured=false waves=20 gold=200 runsSoFar=3 scored=1 +600s
+END opus rc=0 signal=null wall=606s wallHit=false
+ride-wall rc=0 signal=-
+--- 3 land ---
+
+=== 1 finish-ride ===
+{"rig":"opus","contract":"e3-canyon-works","wall":606,"wallHit":false,"rc":0,"tracked":[],"files":14,"outcome":{"secured":false,"waves":20,"gold":200,"runsSoFar":3,"scoredAttempts":1,"tape":"/private/tmp/heat12-038cc280/artifacts/heat12/opus/e3-canyon-works/attempt-1-tape.json","worldModel":"sim-import"},"scoredTapes":[{"file":"attempt-1-tape.json","id":"agent-d5f94574-bea24874-619b-41e4-93a3-54f3718ab9eb","secured":false,"waves":20,"gold":200,"durationTicks":18000,"lastEntryTick":17100,"promotedByRig":true,"discoveredBy":"outcome-file+filename"}],"otherSecured":[],"reportSections":{"outcome":508,"whatTheMapAsked":1736,"winnability":644,"lessons":3055},"usage":{"turns":50,"toolCalls":28,"tokensIn":100,"tokensOut":89092}}
+
+=== NOT SECURED — nothing to submit ===
+{
+ "rig": "opus",
+ "contract": "e3-canyon-works",
+ "wall": 606,
+ "wallHit": false,
+ "rc": 0,
+ "scoredTapes": [
+  {
+   "file": "attempt-1-tape.json",
+   "secured": false,
+   "waves": 20,
+   "gold": 200
+  }
+ ],
+ "outcomeNote": "NEW THIS HEAT: survival is SOLVED on this map (w20/600.000s, hero 78/150, six beacons built, BOTH galleries powered 2/2) — my gens 12 and 37 both died at wave 3, t~100, and reported the map as a survival wall as well as an economy wall. It is not. The wall is the connect DEADLINE alone: canyonConnect reached powered 2/2 but only after wave 6, so failed=true and the run is unsecurable at every later wave (one-way latch). Priced: 6 sentry_beacons at [25,35,45,55,75,95] = 330 gold, Balance.economy.bankCap = 200, so the six CANNOT be bought on one descent; two descents minimum at ~32 s of walking each, against a hard seam ceiling of 2 live seams x 30 capacity / 20 s respawn = 2.07 g/s and an 81 wu opening commute. Measured 180 gold panned at t=180 (the wave-7 boundary)."
+}
+
+land rc=0
+--- 4 notebook ---
+{"notebook":"/Users/robin/Claude/Projects/goldrush-gauntlet/memories/claude__opus-5/NOTEBOOK.md","generation":60,"headerBytes":433,"entryBytes":6305}
+--- 5 matrix ---
+| 24 | e3-canyon-works | `e3-canyon-works-01` | second-attempt | 60 | **not secured** | 20 | 200 | 600.000s | 606s | `attempt-1-tape.json` · `agent-d5f94574-bea24874-619b-41e4-93a3-54f3718ab9eb`<br>fnv1a32:d5528e07 | — | gen 60 |
+{"contract":"e3-canyon-works","secured":false,"tapesOnDisk":10,"scoredTapes":1,"otherSecured":0,"runs":3,"scoredAttempts":1,"wallHit":false,"rc":0,"assay":null,"ranked":null,"winnability":"**No — not through the door from its starting kit, and the wall is the map's bank cap against its\nown one-way deadline, not the grammar, not my budget and (correcting my own two prior rides) not\nsurvival:** the latch needs six `sentry_beacon`s worth **330 gold** while `Balance.economy.bankCap`\nis **200**, so the tour cannot be bought on one descent at any income speed, and two descents at\n≥32 s each plus an 81 wu opening commute plus 330 gold at the seams' hard 2.07 g/s ceiling comes to\n**≥208 s against a 180 s (wave-7) deadline** — measured, 180 gold panned at t = 180 and the grid\ncompleting 2/2 only after the latch had already failed."}
+########## END e3-canyon-works ##########
+

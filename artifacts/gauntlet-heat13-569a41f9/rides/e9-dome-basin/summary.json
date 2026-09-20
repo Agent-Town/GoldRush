@@ -1,0 +1,187 @@
+{
+  "rig": "opus",
+  "contract": "e9-dome-basin",
+  "model": "claude-opus-5",
+  "sessionId": "1a063d41-7b37-48c6-aa9e-19d8d57c66d9",
+  "startedAt": "2026-09-07T14:29:33.227Z",
+  "endedAt": "2026-09-07T14:40:21.150Z",
+  "wallClockSeconds": 648,
+  "wallHit": false,
+  "exitCode": 0,
+  "signal": null,
+  "setupToFirstOutputSeconds": 105,
+  "arenaTrackedChanges": [],
+  "workspaceFiles": [
+    "attempt-1-tape.json",
+    "ctrl.mjs",
+    "gauntlet-outcome.json",
+    "gauntlet-report.md",
+    "probe-idle-summary.json",
+    "probe-idle-tape.json",
+    "probe-idle-views.json",
+    "probe-view0.json",
+    "probe.mjs",
+    "run.mjs",
+    "runner.mjs",
+    "tune-1-summary.json",
+    "tune-1-tape.json",
+    "tune-1-views.json"
+  ],
+  "outcome": {
+    "secured": true,
+    "waves": 20,
+    "timeMs": 600000,
+    "gold": 191,
+    "kills": 883,
+    "calls": 366,
+    "defaultedPicks": 0,
+    "defaultedSecure": 1,
+    "eventLogHash": "fnv1a32:021c60e4",
+    "tape": "/private/tmp/heat13-569a41f9/artifacts/heat13/opus/e9-dome-basin/attempt-1-tape.json",
+    "scored": true,
+    "runsSoFar": 2,
+    "scoredAttempts": 1,
+    "worldModel": "sim-import",
+    "note": "attempt-1-tape.json is byte-identical to tune-1-tape.json: ONE ride, two filenames. The first controller of the heat secured, and the stop rule ends the ride at the first secure, so the securing tune is promoted by name as the scored attempt.",
+    "envelope": {
+      "durationTicks": 18000,
+      "maxTicks": 18002,
+      "lastEntryTick": 17966,
+      "entries": 366,
+      "maxEntries": 3601,
+      "bytes": 1097891,
+      "maxTapeBytes": 1938784,
+      "pass": "all three axes clear; the brief's 592,544 figure is the PRE-F-HEAT12-2 formula. runTapeEnvelopeForContract adds maxOrderEntries*(2400-160) = 601*2240 = 1,346,240 for order-bearing entries, which this contract's own probe corpus motivated."
+    },
+    "assay": {
+      "instrument": "scripts/assay-replay-agent.mjs",
+      "tapeHash": "fnv1a32:15d21e4a",
+      "replayHash": "fnv1a32:15d21e4a",
+      "securedSnapshot": {
+        "waves": 20,
+        "gold": 191,
+        "timeAlive": 600
+      },
+      "note": "The replay reproduces the TAPE header's hash (15d21e4a), not the stdout outcome line's (021c60e4); they are different numbers by design. securedSnapshot equals the declared score, so there is no score_mismatch exposure."
+    },
+    "engineEra": "09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4"
+  },
+  "outcomeError": null,
+  "promotedTapeName": "attempt-1-tape.json",
+  "scoredTapes": [
+    {
+      "file": "attempt-1-tape.json",
+      "id": "agent-b0aac7df-e5137d65-dcc0-444c-a7eb-27c88fe9e5da",
+      "contract": "e9-dome-basin",
+      "seed": "e9-dome-basin-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "1894581f2",
+        "engineHash": "09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 20,
+        "timeAlive": 600,
+        "gold": 191
+      },
+      "entries": 366,
+      "durationTicks": 18000,
+      "lastEntryTick": 17966,
+      "promotedByRig": true,
+      "discoveredBy": "outcome-file+filename"
+    }
+  ],
+  "otherTapes": [
+    {
+      "file": "probe-idle-tape.json",
+      "id": "agent-8f747406-3a8d6812-8a57-4bf2-bf4b-c48044bec486",
+      "contract": "e9-dome-basin",
+      "seed": "e9-dome-basin-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "1894581f2",
+        "engineHash": "09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 2,
+        "timeAlive": 82.6,
+        "gold": 0
+      },
+      "entries": 0,
+      "durationTicks": 2478,
+      "lastEntryTick": null
+    },
+    {
+      "file": "tune-1-tape.json",
+      "id": "agent-b0aac7df-e5137d65-dcc0-444c-a7eb-27c88fe9e5da",
+      "contract": "e9-dome-basin",
+      "seed": "e9-dome-basin-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "1894581f2",
+        "engineHash": "09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 20,
+        "timeAlive": 600,
+        "gold": 191
+      },
+      "entries": 366,
+      "durationTicks": 18000,
+      "lastEntryTick": 17966
+    }
+  ],
+  "otherSecuredTapes": [
+    {
+      "file": "tune-1-tape.json",
+      "id": "agent-b0aac7df-e5137d65-dcc0-444c-a7eb-27c88fe9e5da",
+      "contract": "e9-dome-basin",
+      "seed": "e9-dome-basin-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "1894581f2",
+        "engineHash": "09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4",
+        "era": 5,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 20,
+        "timeAlive": 600,
+        "gold": 191
+      },
+      "entries": 366,
+      "durationTicks": 18000,
+      "lastEntryTick": 17966
+    }
+  ],
+  "report": {
+    "outcome": "**SECURED.** `e9-dome-basin` on bench seed `e9-dome-basin-01` at trail: **waves 20, timeAlive\n600.000 s, gold 191, calls 366**, `defaultedSecure: 1`, `eventLogHash fnv1a32:021c60e4`,\ntape hash `fnv1a32:15d21e4a`. Two sim runs (one idle probe, one controller), **one scored attempt**.\nThe tape I put forward is\n`/private/tmp/heat13-569a41f9/artifacts/heat13/opus/e9-dome-basin/attempt-1-tape.json`, declared in\n`gauntlet-outcome.json`'s `tape` field; it is byte-identical to `tune-1-tape.json` because the first\ncontroller of the heat secured and the stop rule ends the ride there — one ride under two filenames.\nThis is a first-secure: the contract carried no verified row.",
+    "whatTheMapAsked": "It asked **nothing at all about E9 persistent tiles**, and the county's RESKIN measurement is right —\nsharply so, because the engine owns the consumer and this contract declines it. `CanalChoiceSystem`\nis live headless and gates the secure through `autoSecureWaveForRun`, with `CONTEXT_ACTION`\n`redig`/`backfill` as public verbs, but it keys on `twist.persistentCanalChoices` and this manifest\ndeclares **no twist but `clockTicks` and a two-entry enemy roster**. So the three canal stage-gates\nC1 (−28,34), C2 (−12,10) and C3 (4,−24) the briefing tells me to defend, the feeder-canal rail\nthrough them, the ice quarry and the height-four scarp are all `tileParams` scenery: the union of\n`now` keys across every view is the canonical set — `wave · blastReadyInMs · weapon · timers · gold ·\nhero · prospector · works · threats · orders · needsRider · seams · score` — with no `canalChoices`,\nno tile state and nothing that persists across a wave. `stablePrefix.mechanics.rules` carries exactly\ntwo entries, `build_zones` and `hero_orders`, and `interactables` is empty. There is no E9 verb and\nthere is nothing to steward. What it asks instead is one hard geometry question — *where can you\nbuild, relative to the body that must live, and can that body get there* — and after ADR-005 the\nanswer is yes. The fields that carried the run were `now.hero.x/z/hp/maxHp` (a field this map never\nneeded before), `now.works.entries`/`byKind`/`wrecked`, `now.seams[].active/x/z` (inactive seams\npublish `x`/`z`/`anchorIndex` as `null`), `now.gold` against `now.score.goldPanned`,\n`now.threats.alive/wreckers/thieves` and `now.orders[].status/reason`. The orders were `MOVE_HERO`,\n`BUILD`, `HARVEST`, `PICK_UPGRADE`, `BLAST_AT`, `REPAIR_UNDER` and one blank line. My notebook\nremembers this map from generations 32, 40 and 58, and its geometry still plays exactly as\nremembered — same claim, same 28.28 wu subtraction, same idle floor, same 60-enemy cap — while every\ncontrol clause in all three entries is now dead, and the dead ones were the entire difference.",
+    "winnability": "Secured, and the margin was **wide in every direction at once**: the hero finished 175/175 having\ntaken no damage at all across the last twelve waves, the full ladder stood (4 turrets, 6 beacons, 16\npalisades), and gold landed at **191 of a 200 bank cap** — the only free ranking axis, nine short of\nits arithmetic maximum, with the reel clearing its tightest envelope axis (bytes) at 57% of ceiling.",
+    "lessons": "- **Three of my own generations failed this contract on a sentence the grammar ruling deleted, and\n  I nearly inherited it a fourth time.** Gens 32, 40 and 58 each opened from \"the hero is welded at\n  (0,12), nothing can defend it,\" and each spent its heat optimising bait mass around that premise.\n  `MOVE_HERO` makes the premise false. Twelfth heat running: **grade the notebook clause by clause\n  — every geometry clause held here, every control clause was dead, and the dead ones were the\n  whole contract.**\n- **Intersect `harvestAnchors` with `buildZones` before choosing where the hero stands.** All four\n  anchors on this map sit inside `seed-rows-footing`, so one walk at t = 0 collapses the fort, the\n  economy and the defended body into a single pocket: seam commute 33–63 wu → 4–6 wu, gold panned\n  660 → 1,350. I have been computing `stakeMarkers × buildZones × range` for eight generations; the\n  missing term is **`harvestAnchors`**, and now that the hero moves, the pocket is something you\n  *choose* rather than something the map grants.\n- **When the hero can leave, ask first whether the claim is a loss condition at all.** One grep of\n  the headless sim's `endReason` union returns only `preserve_fell` and `vent_guttered` — no\n  claim-loss on this contract — so abandoning (0,12) costs nothing. That check is thirty seconds and\n  it is what licenses the whole plan; without it the walk is a gamble.\n- **Read the envelope FORMULA from source, never the brief's summary of it — and this time the\n  summary was off by 3.3x.** The brief published 592,544 B and cited heat 12 losing this very\n  contract at 621,674 B. The live ceiling is **1,938,784 B**, because `runTapeEnvelopeForContract`\n  bills order-bearing entries at 2,400 rather than 160. My 1,097,891-byte reel is admissible and I\n  would have thrown it away optimising against a number that the county had already fixed —\n  *because of this contract's own findings*. Gen 62 wrote \"a published formula can be the summary of\n  a formula\"; the sharper version is **a hazard the brief warns you about may be a hazard the county\n  has since cured, and the cure is in the function, not the prose.**\n- **Restrict the tier sink to buildables that HAVE a tier row.** `CONTEXT_ACTION upgrade` on\n  `sentry_beacon` answered `REJECTED: not legal here` in nine consecutive views, each time walking\n  the hero 1.5 wu off its post and burning two order slots. `Balance.tiers` has a `turret` row and no\n  beacon row. Check the tier table for the id before emitting the pair, and count\n  `entries.filter(e => e.tier > 1).length` rather than trusting that an emitted order executed.\n- **Apply the bank gate LATE only, and suspend it when hurt.** Generation 74's gate is right at the\n  end of a run and catastrophic at the start: gated from t = 0 it refuses the ladder that wins the\n  contract. `t < secureTime − 140 || (gold − C) + rate × (secureTime − t) ≥ cap + 5`, with the whole\n  thing bypassed while `hp/maxHp < 0.92`, landed 191 of a 200 cap without ever starving the fort.\n  Fifth generation to name this axis and the first to actually bank it.\n- **Ride the skeleton first and change nothing — tenth heat where that is the whole discipline, and\n  the seventh in a row where it secured on ride one.** Two runs total. The reading budget went to the\n  contract JSON, the roster flags, the `endReason` union and the envelope function; the riding budget\n  went to the unmodified gen-6→78 skeleton retargeted to the new grammar. Fifteen of my generations\n  end on \"I proved the parts and never fired the combination\"; the cure keeps turning out to be\n  reading, not riding.\n- **`MOVE_HERO` emitted ONCE and dropped when parked, with the index advanced only on an actual\n  `UNREACHABLE_TERRAIN` record** — never a ladder of candidate posts, which gen 68 measured as a\n  shuttle that ping-pongs the hero and freezes the economy. The hero sat at (27.8, −25.8) for the\n  whole run and the Prospector drifted to it, which is exactly where the retired `HOLD` used to park."
+  },
+  "usage": {
+    "transcript": "/Users/robin/.claude/projects/-private-tmp-heat13-569a41f9/1a063d41-7b37-48c6-aa9e-19d8d57c66d9.jsonl",
+    "assistantTurns": 47,
+    "toolCalls": 23,
+    "tokensIn": 94,
+    "tokensOut": 72439,
+    "cacheReadTokens": 15728253,
+    "cacheWriteTokens": 1400538,
+    "note": "tokensIn excludes cache reads/writes (reported separately); summed from the CLI session transcript, not self-reported by the rig"
+  }
+}

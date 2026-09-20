@@ -1,0 +1,209 @@
+{
+  "rig": "opus",
+  "contract": "e3-blackout-ridge",
+  "model": "claude-opus-5",
+  "sessionId": "1864f4d0-2272-42aa-8a86-d92e626fa0bd",
+  "startedAt": "2026-09-18T01:18:42.125Z",
+  "endedAt": "2026-09-18T01:32:14.042Z",
+  "wallClockSeconds": 812,
+  "wallHit": false,
+  "exitCode": 0,
+  "signal": null,
+  "setupToFirstOutputSeconds": 150,
+  "arenaTrackedChanges": [],
+  "workspaceFiles": [
+    "attempt-1-tape.json",
+    "ctrl-v1.mjs",
+    "gauntlet-outcome.json",
+    "gauntlet-report.md",
+    "probe-summary.json",
+    "probe-table.txt",
+    "probe-tape.json",
+    "probe-views.jsonl",
+    "runbook.json",
+    "runner.mjs",
+    "tune-1-summary.json",
+    "tune-1-table.txt",
+    "tune-1-tape.json",
+    "tune-1-views.jsonl"
+  ],
+  "outcome": {
+    "secured": true,
+    "waves": 12,
+    "timeMs": 360000,
+    "gold": 499,
+    "kills": 69,
+    "calls": 149,
+    "defaultedPicks": 0,
+    "defaultedSecure": 1,
+    "eventLogHash": "fnv1a32:f31073d7",
+    "tape": "/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/arena-heat14-e3949bfa/artifacts/heat14/opus/e3-blackout-ridge/attempt-1-tape.json",
+    "scored": true,
+    "runsSoFar": 2,
+    "scoredAttempts": 1,
+    "worldModel": "sim-import",
+    "note": "attempt-1-tape.json is byte-identical to tune-1-tape.json: ONE ride under two filenames. The first controller secured, and the stop rule ends the heat at the first SECURED outcome, so the securing tune is promoted by name rather than re-ridden.",
+    "contract": "e3-blackout-ridge",
+    "seed": "e3-blackout-ridge-01",
+    "difficulty": "trail",
+    "era": 6,
+    "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+    "buildId": "1a7790ba8",
+    "viewVersion": 2,
+    "tapeHeaderHash": "fnv1a32:88d63803",
+    "assayReplay": {
+      "instrumentControl": "probe-tape.json (zero-order idle) replayed to fnv1a32:a45ba9ac == its own tape header. Instrument verified BEFORE the securing reel was judged.",
+      "reel": "fnv1a32:88d63803 == the tape header's own hash (NOT the stdout outcome line's fnv1a32:f31073d7 — different numbers by design)",
+      "securedSnapshot": {
+        "waves": 12,
+        "gold": 499,
+        "timeAlive": 360
+      },
+      "verdict": "determinism verified locally; securedSnapshot matches the declared gold, so the door's score_mismatch rule has nothing to catch"
+    },
+    "envelope": {
+      "durationTicks": 10800,
+      "lastEntryTick": 10124,
+      "entries": 149,
+      "bytes": 544767,
+      "ceilings": {
+        "maxTicks": 18002,
+        "maxEntries": 3601,
+        "maxTapeBytes": 1938784
+      },
+      "ceilingSource": "runTapeEnvelopeForContract (src/playbook/PlaybookFormat.ts) read from source, NOT the charter's 16 KiB + maxEntries x 160 summary: the live function adds maxOrderEntries x (2400-160), so the real byte ceiling here is 1,938,784 and not 592,544",
+      "verdict": "admissible on all three axes with room (ticks 10124 < 10800 < 18002; entries 149/3601; bytes 544,767/1,938,784)"
+    },
+    "margin": {
+      "heroMinHp": 52,
+      "heroFinalHp": 52,
+      "heroMaxHp": 100,
+      "worksStandingAtBank": 23,
+      "worksWreckedAtBank": 0,
+      "peakWrecked": 2,
+      "threatsAlivePeak": 60,
+      "goldStolen": 0,
+      "goldPanned": 890,
+      "liveBankCap": 500,
+      "goldShortOfCap": 1
+    }
+  },
+  "outcomeError": null,
+  "promotedTapeName": "attempt-1-tape.json",
+  "scoredTapes": [
+    {
+      "file": "attempt-1-tape.json",
+      "id": "agent-79072d86-46daf18f-8166-45d5-a26d-840977315698",
+      "contract": "e3-blackout-ridge",
+      "seed": "e3-blackout-ridge-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "1a7790ba8",
+        "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+        "era": 6,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 12,
+        "timeAlive": 360,
+        "gold": 499
+      },
+      "entries": 149,
+      "durationTicks": 10800,
+      "lastEntryTick": 10124,
+      "promotedByRig": true,
+      "discoveredBy": "outcome-file+filename"
+    }
+  ],
+  "otherTapes": [
+    {
+      "file": "probe-tape.json",
+      "id": "agent-a8e647c2-4d7dcc52-ba28-46a9-b88b-5b015f66d402",
+      "contract": "e3-blackout-ridge",
+      "seed": "e3-blackout-ridge-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "b76620ce0",
+        "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+        "era": 6,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 4,
+        "timeAlive": 134.833,
+        "gold": 0
+      },
+      "entries": 0,
+      "durationTicks": 4045,
+      "lastEntryTick": null
+    },
+    {
+      "file": "tune-1-tape.json",
+      "id": "agent-79072d86-46daf18f-8166-45d5-a26d-840977315698",
+      "contract": "e3-blackout-ridge",
+      "seed": "e3-blackout-ridge-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "1a7790ba8",
+        "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+        "era": 6,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 12,
+        "timeAlive": 360,
+        "gold": 499
+      },
+      "entries": 149,
+      "durationTicks": 10800,
+      "lastEntryTick": 10124
+    }
+  ],
+  "otherSecuredTapes": [
+    {
+      "file": "tune-1-tape.json",
+      "id": "agent-79072d86-46daf18f-8166-45d5-a26d-840977315698",
+      "contract": "e3-blackout-ridge",
+      "seed": "e3-blackout-ridge-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "1a7790ba8",
+        "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+        "era": 6,
+        "viewVersion": 2
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 12,
+        "timeAlive": 360,
+        "gold": 499
+      },
+      "entries": 149,
+      "durationTicks": 10800,
+      "lastEntryTick": 10124
+    }
+  ],
+  "report": {
+    "outcome": "**SECURED.** `waves 12 · timeAlive 360.000 s · gold 499 · kills 69 · calls 149`\n(`eventLogHash fnv1a32:f31073d7`; tape header `fnv1a32:88d63803`).\n\n- **Tape put forward:** `attempt-1-tape.json` — **byte-identical to `tune-1-tape.json`, one ride under two\n  filenames.** The first controller secured and the stop rule ends the heat at the first SECURED outcome,\n  so the securing tune is promoted by name rather than re-ridden. Declared in `gauntlet-outcome.json`'s\n  `\"tape\"` field.\n- **Sim runs: 2** (one idle probe, one controller). **Scored attempts: 1.**\n- **Admissible on all three envelope axes, with room:** `durationTicks 10800`, last accepted order at tick\n  **10124**, 149 entries, 544,767 bytes, against ceilings 18002 / 3601 / **1,938,784**. Note the ceiling:\n  the charter publishes `16 KiB + maxEntries × 160` (= 592,544) and cites a heat-12 casualty at 621,674 B,\n  but the live function adds `maxOrderEntries × (2400 − 160)`, so the real byte ceiling is 3.3× the\n  summary. A rider throttling its control against the published floor optimises against a number the\n  county has already fixed.\n- **Receipt, control-tested first:** the zero-order idle probe replayed to `fnv1a32:a45ba9ac` — its own\n  tape header — verifying the instrument; only then did the securing reel's replay to\n  `fnv1a32:88d63803` mean anything. `securedSnapshot {waves 12, gold 499, timeAlive 360}` matches the\n  declared gold, so the door's `score_mismatch` rule has nothing to catch.\n- **Margin:** hero minimum **52/100** (flat at 52 from wave 6 to the bank — it took no damage at all after\n  t ≈ 180), **23 works standing and 0 wrecked** at the secure, peak wrecked 2 (both mended back),\n  `threats.alive` pinned at its **60** ceiling from t = 150, `goldStolen` **0**, 890 gold panned, **499 of a\n  500 cap**.\n\n---",
+    "whatTheMapAsked": "It asked a real graph question, and the era's signature mechanic — **E3, the grid under sabotage** — is\ngenuinely legible in the *source* and **still not published in the view**, so it is a placement tax rather\nthan a lever a rider can steer. The grid is a literal directed chain: `off-map-current` (36 W) →\n`trunk-west` (−30,−30) → `trunk-middle` (−18,−18) → `trunk-ridge` (−6,−6) → `capacitor-west` (6,4) →\n{`capacitor-east` (16,4), `lamp-yard` (12,20)}, and `capacitor-east` → `lamp-ridge` (24,30), with\n`maxSpanLength: 30` forbidding every shortcut. Relay sites come online only under a standing unwrecked\n`sentry_beacon` within 2.5 wu — **all three ship with one pre-placed**, so the trunk is live at t = 0 — and\nthe two capacitor sites ship **empty**, so the chain is severed at `capacitor-west` and both lamps are dark\nfrom the first tick under a `nightLocked` sky at `nightDepth 0.86`. Its real weight is second-order and\nlarge: because `twist.powerGrid` exists the roster filter strips **`turret` and `lantern_post`**, so the\nwhole arsenal a rider can buy is a six-cap beacon ladder (three already placed, so mine would cost\n`costs[3..5]` = 55/75/95) plus 10-gold timber.\n\n**The grid's state is not in the view.** I checked it on this run's own data rather than inheriting it: the\n`now`-key union across all 151 views is `blastReadyInMs · expiresAtSimMs · gold · hero · needsRider ·\norders · pendingOffer · pendingSecure · prospector · score · seams · threats · timers · wave · weapon ·\nworks`, and a regex for `/power|grid|lamp|capacitor|watt|relay|pylon|current|dark|night/` over `now`\nmatches **0 of 151 views**. There is no node state, no wire state, no watt ledger and no lit/dark field,\nand there is no E3 verb. A rider can pay 150 gold to complete a chain it cannot observe.\n\n**I priced the era lever and declined it**, and the honest reason is the ranked axis, not the mechanic's\nabsence: two `capacitor_bank`s at 75 buy an 18 % wrecker slowdown (`nightSpeedOutsideLight 1.18`) inside\ntwo radius-7 discs, for **30 % of a 500-gold ceiling that IS the score**, on a run whose hero flatlined at\n52/100 from wave 6 without them.\n\n**The map's own question, and the reversal worth reporting.** The re-survey put the claim, the hero start\nand the only loss stake all at (24,30) — inside the `ridge-line` build zone (x 8..34, z 20..40), which also\ncontains **all three harvest anchors** at (8,30), (18,34) and (30,26), 7.2–16.0 wu out and (`activeMax: 3`\nover exactly three anchors) all live simultaneously. That is the most generous pocket I have ridden: the\nfort rings the body it defends and the worker never commutes. The loss is **hero down** (the idle probe\ndied `hp → 0` at **w4 / 134.833 s**), and with no thief on the roster `goldStolen` stayed 0 all run. So the\nwhole contract is \"keep one body alive in one pocket for 360 seconds, as cheaply as possible.\"\n\nMy notebook remembers this map from generations 11 and 86, and **its bones still hold while one of its\ncentral strategic claims is now measured backwards.** Generation 11 wrote that the three trunk frames,\n79 wu away beside the spawn gates, are worth *abandoning* — \"a distant decoy that pulls wreckers off my\nridge\" — and let all three be eaten. The idle probe reproduces exactly that: frames wrecked at t = 53,\n79.6 and 114.7, hero dead at wave 4. **The controlled run reverses the causality.** With a 16-palisade ring\nstanding at the ridge, `sentry_beacon#2` took a single hit at t = 43.6 and **neither of the other two trunk\nframes was ever touched**; all three stood unwrecked at the bank, so the trunk stayed online for the entire\nrun. The ring is what protected the frames, not the frames that protected the ring — and it follows that\nthe capacitors *would* have lit, which makes the price, not the plumbing, the only honest reason to decline\nthem.\n\nFields that carried the run: `now.works.entries` (position, `hp`, **`wrecked`** — the only way to watch the\nring and to compute the live cap from unwrecked stockpiles), `now.works.byKind`/`standing`/`wrecked`,\n`now.seams[].active/x/z/anchorIndex`, `now.gold` against `now.score.goldPanned`, `now.hero.hp/maxHp/x/z`,\n`now.threats.alive/wreckers/thieves`, `now.orders[].status/reason` (the refusal blacklist's source) and\n`now.pendingOffer`/`now.pendingSecure`. Orders: `BUILD`, `HARVEST`, `PICK_UPGRADE`, `BLAST_AT`,\n`REPAIR_UNDER`, `MOVE_HERO`, and one blank line. **There is no E3 verb.**\n\n---",
+    "winnability": "Secured, and the margin was **wide on survival and one gold short of arithmetic perfect**: the hero held a\nflat 52/100 from wave 6 to the bank having taken no damage at all after t ≈ 180, all 23 works stood\nunwrecked with `threats.alive` pinned at its 60 ceiling, and the banked purse landed at **499 against a\nlive cap of 500** — the single missing gold is a partial `REPAIR_UNDER` that left the purse at 4 mod 5, so\nthe next 5-gold pan would have overshot the cap and was refused whole.\n\n---",
+    "lessons": "- **My ladder's pre-placed accounting silently deleted three rungs — and the deletion was the best thing\n  that happened to this ride.** I count \"rungs of this id walked past\" and skip while\n  `standing >= ordinal`; the three PRE-PLACED trunk beacons therefore satisfied my first three\n  `sentry_beacon` rungs, and the run bought **zero rider guns**. That is a real bug (generation 11 already\n  knew the pre-placed frames move you up the *price* curve; the untold half is that they also **satisfy\n  your ladder**), and it was also strictly correct play: 225 gold of beacon against 160 gold of timber, on\n  a board where kills were only **69 in 360 s** — the ring never killed anything, it *held*. Fix the\n  accounting by subtracting pre-placed instances from the satisfied count, and then **check whether the\n  cheap blockade was the better buy anyway before restoring the expensive rung.**\n- **Separate \"which instances exist\" from \"which rungs I own.\"** One counter cannot answer both. The price\n  index wants *every* standing instance (`costs[standing]`); the satisfaction test wants only the ones\n  *I* built. Conflating them is the third distinct way I have now broken a ladder in three heats\n  (gen 81 stalled on an unfillable rung, gen 99 double-counted the instance index, gen 102 let the map's\n  own furniture retire my rungs).\n- **Grade a notebook entry's STRATEGIC clauses as carefully as its geometry, and re-measure the one that\n  reads as a clever sacrifice.** Generation 11's \"a distant pre-placed asset can be worth more abandoned\n  than defended\" reproduces exactly on the idle probe and **inverts** under a real fort: a standing ring\n  keeps the saboteurs off the frames 79 wu away, so the chain I had written off as doomed stayed online for\n  the whole run. An observation made on a ride that *lost* is an observation about losing.\n- **Verify the era mechanic's absence from THIS run's own view, not from memory.** I have written \"the\n  Blackout Ridge grid publishes no state\" twice before, and it would have been cheap to assert it a third\n  time. One command over 151 views made it a measurement (0 matches for\n  `/power|grid|lamp|capacitor|watt|relay|pylon|current/`), and that is what licensed the pricing argument\n  rather than a recollection.\n- **A 10-gold blockade beats a 55-gold gun when the roster has no turret and the loss is HERO DOWN.**\n  Sixteen palisades in a tight ring on the claim, each a 2–5 wu trip from a seam the Prospector was\n  already panning, took the hero from an idle death at wave 4 to a flat 52/100 through wave 12. Price\n  chaff in *trips* as well as gold — a palisade at radius 5 costs almost no panning; the same palisade at\n  radius 10 costs more in foregone income than it costs in gold.\n- **On a fixed-wave secure, stop-spending is the score, and the bank gate + hard floor worked exactly as\n  designed.** Gate armed at t = 120, bypassed while hurt or wrecked, and a **hard `t < 318` floor with no\n  bypass at all** (generation 85 lost its whole gold axis to an `urgent` bypass firing five seconds before\n  the secure tick). Last build landed well inside the floor and the purse climbed 364 → 454 → 499 over the\n  closing minute.\n- **Suppress the mend once the purse is within one pan-tick of the cap.** Credits appear to be refused\n  *whole* rather than clamped, so a purse at 4 mod 5 can never reach a cap at 0 mod 5: my one missing gold\n  is a partial proportional mend. My closing-window mend suppression (last 32 s, unless something is\n  wrecked) is the right shape and one step too coarse — gate it on `cap − gold < 5` as well.\n- **Silence at `pendingSecure` did its four jobs again, fifteenth contract running:** banked the default\n  (`defaultedSecure: 1`), left the last accepted order 676 ticks inside `durationTicks`, held a 151-view run\n  to 149 entries, and — the reason that matters most — it **cannot be rejected**, so the replay cannot\n  diverge the way generation 84's nearly did.\n- **Read the envelope from the function, never the brief's summary — and this heat the brief was the stale\n  document.** The charter warns about a 592,544-byte ceiling and names heat 12's 621,674-byte casualty on\n  `e9-dome-basin`; the live ceiling here is **1,938,784**, because order-bearing entries are billed at\n  2,400. My 544,767-byte reel is comfortable either way, but a rider trusting the summary would throttle\n  its own decision rate for nothing. Fourth generation to say this.\n- **Ride the skeleton first and change nothing — eighteenth heat where that is the whole discipline, and\n  the fifteenth in a row where it secured on ride one.** Two runs total. The reading budget went to the era\n  pins as a diff, the contract JSON, the cap and tier constants, the roster flags and the envelope\n  function; the riding budget went to the unmodified generation-6→101 skeleton plus the one thing this\n  board does differently. Nineteen of my generations end on \"I proved the parts and never fired the\n  combination\"; the cure keeps turning out to be reading, not riding.\n- **The retired verbs cost nothing again and I checked rather than assumed — tenth heat running.** The hero\n  starts on the claim, has no drift, and wants to stay, so silence is the hold and the unemployed\n  Prospector drifts to the hero, which is exactly where `HOLD` used to park it. `MOVE_HERO` was carried\n  only as a displacement guard and **never had to fire** (`hx=24 hz=30` in all 151 views).\n- **A standing in my own name dates the reel, not the map — and this time the era itself retired it.**\n  I was the listed first-securer of `e3-blackout-ridge` from 2026-09-03; era 6 retired every row on the\n  board. Read `assets/engine-era.json` as a per-contract diff, confirm the remembered floor with one\n  ten-second probe, and spend the heat on whatever the diff says is free."
+  },
+  "usage": {
+    "transcript": "/Users/robin/.claude/projects/-private-tmp-claude-501--Users-robin-Claude-Projects-Gold-Rush-fe6b8d27-b064-40eb-934b-1d29d57a71db-scratchpad-arena-heat14-e3949bfa/1864f4d0-2272-42aa-8a86-d92e626fa0bd.jsonl",
+    "assistantTurns": 54,
+    "toolCalls": 28,
+    "tokensIn": 108,
+    "tokensOut": 108056,
+    "cacheReadTokens": 22415511,
+    "cacheWriteTokens": 1315324,
+    "note": "tokensIn excludes cache reads/writes (reported separately); summed from the CLI session transcript, not self-reported by the rig"
+  }
+}

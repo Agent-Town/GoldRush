@@ -1,0 +1,19 @@
+{
+ "secured": false,
+ "waves": 20,
+ "timeMs": 536200,
+ "gold": 200,
+ "kills": 862,
+ "calls": 137,
+ "defaultedPicks": 0,
+ "defaultedSecure": 0,
+ "eventLogHash": "fnv1a32:41f0518d",
+ "endReason": "hero_down at t=536.2 in wave 20, ~14s after the Baron's horn",
+ "tape": "/private/tmp/heat12-038cc280/artifacts/heat12/opus/e1-baron/tune-1.json",
+ "scored": true,
+ "runsSoFar": 3,
+ "scoredAttempts": 1,
+ "worldModel": "sim-import",
+ "envelope": { "durationTicks": 16086, "lastEntryTick": null, "entries": 137, "bytes": 444049 },
+ "note": "NOT SECURED - do not submit. tune-1 is the best of 3 runs (1 idle probe + 2 controller rides) and is the ride I call my scored attempt; tune-2 (w20/540.867s/125g, fnv1a32:d859a3ef) regressed because its turret tier-2 sink is REFUSED on this build (works.entries tier stays 1 for all ten works) while its MOVE_TO walks cost 440 gold of panning. Both rides reach wave 20 at full 175/175 HP with the complete 4-turret/6-beacon ladder standing and die to the Baron inside 14 seconds."
+}

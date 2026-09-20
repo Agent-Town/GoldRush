@@ -1,0 +1,59 @@
+{
+ "secured": true,
+ "waves": 20,
+ "timeMs": 600000,
+ "gold": 295,
+ "kills": 921,
+ "calls": 89,
+ "defaultedPicks": 0,
+ "defaultedSecure": 1,
+ "eventLogHash": "fnv1a32:0aaf72f4",
+ "tape": "/private/tmp/heat13-569a41f9/artifacts/heat13/opus/e7-echo-canyon/attempt-1-tape.json",
+ "scored": true,
+ "runsSoFar": 2,
+ "scoredAttempts": 1,
+ "worldModel": "sim-import",
+ "note": "ONE RIDE UNDER TWO FILENAMES. tune-1 secured on its first controller ride, so under the stop rule it IS the scored attempt; attempt-1-tape.json is a byte-identical copy of tune-1-tape.json (both 332831 bytes, verified equal). Either path is the same reel.",
+ "tapeAlias": "/private/tmp/heat13-569a41f9/artifacts/heat13/opus/e7-echo-canyon/tune-1-tape.json",
+ "tapeEventLogHash": "fnv1a32:d8c34088",
+ "localAssay": {
+  "tool": "scripts/assay-replay-agent.mjs",
+  "verdict": "reproduced",
+  "eventLogHash": "fnv1a32:d8c34088",
+  "outcome": { "secured": true, "waves": 20, "gold": 295, "timeAlive": 600 },
+  "securedSnapshot": { "waves": 20, "gold": 295, "timeAlive": 600 },
+  "note": "The replay reproduces the TAPE header's hash (d8c34088), not the stdout outcome line's (0aaf72f4). Those are different numbers by design; comparing the wrong pair reads as a false mismatch."
+ },
+ "envelope": {
+  "durationTicks": 18000,
+  "maxTicks": 18002,
+  "lastEntryTick": 17705,
+  "entries": 89,
+  "maxEntries": 3601,
+  "bytes": 332831,
+  "conservativeByteFloor": 592544,
+  "verdict": "all three axes clear with margin"
+ },
+ "eraPapers": {
+  "engineHash": "09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4",
+  "era": 5,
+  "viewVersion": 2,
+  "buildId": "bf0bdddd6"
+ },
+ "grammar": {
+  "verbsUsed": ["PLAYBOOK_USE", "HARVEST", "BUILD", "PICK_UPGRADE", "BLAST_AT", "MOVE_HERO", "CONTEXT_ACTION", "(blank line at pendingSecure)"],
+  "retiredVerbsUsed": "none - no MOVE_TO, no HOLD, no FALLBACK_IF anywhere in the reel"
+ },
+ "objective": {
+  "playbookObjective": "mirror",
+  "gate": "E7PlaybookLatch.allowsSecure -> fieldedMirrors > 0",
+  "recordedUseAt": 4.633,
+  "squadFieldedAtWave": 1,
+  "objectiveMetAt": 30.0,
+  "recordedUses": 1,
+  "squadsFielded": 1,
+  "bodiesFielded": 2,
+  "engineeredShape": { "count": 2, "wrecker": false, "thief": true, "roving": false, "hunts": false, "hpScale": 1, "repeat": 0 },
+  "shapeNote": "A build-free, blast-free, motionless demonstration is the cheapest legal shadow: MIN_SQUAD of 2, thief rather than wrecker, no roving speed bonus, no extended hunt range."
+ }
+}

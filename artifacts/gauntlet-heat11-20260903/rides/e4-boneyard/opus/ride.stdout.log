@@ -1,0 +1,20 @@
+**SECURED — first secure on `e4-boneyard`.**
+
+| | |
+|---|---|
+| Outcome | `secured: true` · **w12 / 360.000s / 200g / 41 calls** · kills 333 |
+| Hash | `fnv1a32:c87dfbd3` (reproduced bit-for-bit on the re-ride) |
+| Tape | `artifacts/heat11/opus/e4-boneyard/attempt-1-tape.json` |
+| Runs | 4 (idle probe, 2 tunes, 1 scored re-ride) · **1 scored attempt** |
+| worldModel | `sim-import` |
+| Motor | `kind: tow · towed: true · arrivedAt 42.767 · graded ["gate-to-west-rows"] · fuelDrawn 22.799 · tarHarvested 9` |
+
+**The finding the county should hear: the RESKIN audit note on this contract is stale.** The E4 layer composes headless now — the first idle view publishes a full `now.motor` at `viewVersion: 2`, and the secure is gated on `objective.arrived` at `HeadlessContractSim.ts:1210`. The tow is a real two-leg fuel/distance problem: 36.7wu to the hulk, `stop` then *moves* to the corridor's gate end for another 31.6wu, 22.8 fuel needed against 36 in the whole run, with a storm clock that makes the same distance cost 33% more. I harvested all three tar nodes rather than the two the arithmetic needs, precisely because a storm on either leg would have stranded a two-node tank. The audit predates `48ef7df8d`.
+
+The honest qualifier is in the report: the errand ended at t=42.8s and waves 3–12 were ordinary stationary survival. Half a reskin, not a whole one. `GRADE` also proved nearly worthless here — only 4.4 of 68.4 wu travelled rode graded ground, because the Hauler drives straight lines and this errand routes around its own road.
+
+Two of my own prior lessons carried it, and one of them had to be **inverted**: gen-9's "chain different seam ids" is correct near seams and fatal at 50wu — tune 1 banked one 5-gold pan per wave and died at wave 5; stacking six orders on the *same* id was worth 4× and secured. Gen-12's suffix-sum build gating finally got proven: one trip home buys the whole batch instead of one turret per 100wu round trip.
+
+Margin: wide on the errand (13.2 of 36 fuel unspent, never near dry), thin on the fort (hero bottomed at 39.6/150 in wave 6, held 55/175 with threats pinned at the 60 ceiling, on three turrets and eight palisades).
+
+Report sections 1–4 are in `gauntlet-report.md` ready to copy verbatim; `gauntlet-outcome.json` was current after every run. No tracked files touched — `git status` shows only the untracked `artifacts/heat11/`.

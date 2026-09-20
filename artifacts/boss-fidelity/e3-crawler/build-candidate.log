@@ -1,0 +1,46 @@
+Info: Saved as "crawler.blend"
+INFO Draco mesh compression is available, use library at /Applications/Blender.app/Contents/Resources/5.1/scripts/addons_core/io_scene_gltf2/libextern_draco.dylib
+11:54:41 | INFO: Starting glTF 2.0 export
+11:54:41 | INFO: Extracting primitive: drain_mastMesh
+11:54:41 | INFO: Primitives created: 1
+11:54:41 | INFO: Extracting primitive: tracksMesh
+11:54:41 | INFO: Primitives created: 1
+11:54:41 | INFO: Extracting primitive: capacitor_bankMesh
+11:54:41 | INFO: Primitives created: 1
+11:54:41 | INFO: Finished glTF 2.0 export in 0.017704010009765625 s
+
+{
+  "blend": "/Users/robin/.codex/worktrees/572c/Gold Rush/artifacts/boss-fidelity/e3-crawler/candidate/crawler.blend",
+  "glb": "/Users/robin/.codex/worktrees/572c/Gold Rush/artifacts/boss-fidelity/e3-crawler/candidate/crawler.glb",
+  "sha256": "26112eaa095aa891d57c209e224e81a3a9fc89bc6f56614eb98ee6d5d5016eb6",
+  "sourcePlate": "assets/raw/plate-e3-boss-dynamo-crawler.png",
+  "sourcePlateSha256": "eb52e2b77695536c2216958daae45028f044c6a80757ff4450424f59a3dae086",
+  "surfaceSource": "assets/raw/crawler-atlas-fidelity-e3.png",
+  "surfaceSha256": "206e7d4bc7a5e9fa331e486ad4eb83b70571e50cfe5eb95ef591c88f5c5351d1",
+  "objects": [
+    "drain_mast",
+    "tracks",
+    "capacitor_bank"
+  ],
+  "damageMorphs": [
+    "Damage_ToppledDrainMast",
+    "Damage_ShatteredTracks",
+    "Damage_RupturedCapacitorBank"
+  ],
+  "triangles": 11760,
+  "boundsBlender": {
+    "min": [
+      -1.6,
+      -0.67,
+      0.0
+    ],
+    "max": [
+      1.6,
+      0.67,
+      2.6775
+    ]
+  }
+}
+Blender 5.1.2 (hash ec6e62d40fa9 built 2026-05-19 01:30:33)
+
+Blender quit

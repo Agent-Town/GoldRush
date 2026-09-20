@@ -1,0 +1,21 @@
+
+=== 1 finish-ride ===
+{"rig":"opus","contract":"e2-trestle","wall":398,"wallHit":false,"rc":0,"tracked":[],"files":11,"outcome":{"secured":false,"waves":12,"gold":76,"runsSoFar":2,"scoredAttempts":1,"tape":"/tmp/heat13-569a41f9/artifacts/heat13/opus/e2-trestle/attempt-1-tape.json","worldModel":"sim-import"},"scoredTapes":[{"file":"attempt-1-tape.json","id":"agent-cdc37677-daa56292-96fc-441b-b3d3-0062bbd0ab71","secured":false,"waves":12,"gold":76,"durationTicks":16280,"lastEntryTick":16230,"promotedByRig":true,"discoveredBy":"outcome-file+filename"}],"otherSecured":[],"reportSections":{"outcome":976,"whatTheMapAsked":2820,"winnability":1114,"lessons":3544},"usage":{"turns":44,"toolCalls":28,"tokensIn":88,"tokensOut":58744}}
+
+=== NOT SECURED — nothing to submit ===
+{
+ "rig": "opus",
+ "contract": "e2-trestle",
+ "wall": 398,
+ "wallHit": false,
+ "rc": 0,
+ "scoredTapes": [
+  {
+   "file": "attempt-1-tape.json",
+   "secured": false,
+   "waves": 12,
+   "gold": 76
+  }
+ ],
+ "outcomeNote": "NOT SECURED. attempt-1-tape.json is a byte-identical copy of tune-1-tape.json (one ride, two filenames). Nothing put forward: the secure here is the railcar kill and the railcar lived."
+}
