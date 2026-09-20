@@ -294,6 +294,7 @@ import {
 import { DetailScatter, type DetailScatterClearPoint } from '../world/Scatter';
 import { createDeepwaterClaimTile, deepwaterFrontCarriesWave, deepwaterStormDisablesScheduledWaves, type CorsairSkiffWave } from '../world/DeepwaterClaimTile';
 import { ClaimBoatView } from '../world/ClaimBoatView';
+import { RegattaBuoysView } from '../world/RegattaBuoysView';
 import { FlotillaView } from '../world/FlotillaView';
 import { readTownName } from '../town/TownNaming';
 import { gameApiUrl } from '../app/GameApi';
@@ -971,6 +972,8 @@ export class Game {
     return deckY === undefined ? this.heroVisualYAt(x, z) : deckY + this.heroStart.y;
   };
   private claimBoatView?: ClaimBoatView;
+  /** E5 Regatta slice 2: render-only buoys at the five authored beacons; absent off the course. */
+  private regattaBuoysView?: RegattaBuoysView;
   /**
    * E5 Regatta slice 1 — a RIDER's steering point, injected by the `?debug`-gated
    * `__GR_TEST__.claimBoat.steerTo` seam and by nothing else. It exists because ADR-005 refuses a
@@ -2823,6 +2826,7 @@ export class Game {
     this.pressureArsenalSystem.dispose();
     this.deepwaterArsenal.dispose();
     this.claimBoatView?.dispose();
+    this.regattaBuoysView?.dispose();
     this.flotillaView?.dispose();
     this.e6ArsenalSystem.dispose();
     this.e6TileConsumers.dispose();
@@ -3306,6 +3310,7 @@ export class Game {
       this.terrainView?.update(frame.presentationDeltaSeconds * this.simTimeScale);
     }
     this.claimBoatView?.update();
+    this.regattaBuoysView?.update();
     this.flotillaView?.update();
     this.applyRenderInterpolation(frame.alpha);
     if (this.claimBoatView || this.flotillaView) this.deepwaterArsenal.updatePresentation(this.heroVisualYAt, this.primaryActor.renderPosition);
@@ -4942,6 +4947,14 @@ export class Game {
     if (this.deepwaterClaim && !this.flotillaHulls) {
       this.claimBoatView = new ClaimBoatView(this.canvas, () => this.deepwaterClaim!.boat);
       this.scene.add(this.claimBoatView.group);
+    }
+    // E5 Regatta slice 2: the five authored beacons become buoys a racer can read, with the next
+    // mark told apart from the ones already rounded. Render-only and mounted only where a course
+    // is authored, so no other map gains a draw call.
+    const raceCourse = this.activeContract.tileParams.raceCourse;
+    if (raceCourse && this.regattaRace) {
+      this.regattaBuoysView = new RegattaBuoysView(this.canvas, raceCourse.beacons, () => this.regattaRace?.diagnostics);
+      this.scene.add(this.regattaBuoysView.group);
     }
     if (this.flotillaHulls) {
       this.flotillaView = new FlotillaView(this.canvas, this.flotillaHulls);
