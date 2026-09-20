@@ -387,6 +387,21 @@ const SCULPT_WATER_DRESSING: Record<string, SculptWaterDressing> = {
     shoreMeters: 0.15,
     glints: 'harvest',
   },
+  // Night Shift's channel used only its dark bed paint. Keep the sculpt and the
+  // declared ford; a restrained, sun-lit surface supplies moving water detail.
+  // No emission: the unlit river must still become dark during the night phase.
+  'e1-night-shift': {
+    surface: { kind: 'channel-fill', fill: 0.42 }, color: '#899b9b', opacity: 0.64,
+    fordSkim: 0.08, deepMeters: 0.5, shoreMeters: 0.15,
+    glints: [], rippleStrength: 0.32, textureBlend: 0.06, fordTint: 0.3,
+  },
+  // The sculpt hides legacy water. This is the one visible surface, contained
+  // by the existing bed and ford, with no extra light or simulation authority.
+  'e1-baron': {
+    surface: { kind: 'channel-fill', fill: 0.42 }, color: '#849da1', opacity: 0.62,
+    fordSkim: 0.06, deepMeters: 0.5, shoreMeters: 0.15, visualHalfWidth: 6.25,
+    glints: [], rippleStrength: 0.6, textureBlend: 0.07, fordTint: 0.35,
+  },
   // THE FLOODED GALLERY. Measured, not guessed (logs/session-scratch/e2-hill-mine-band-scan.mjs):
   // the atlas paints the bed near-black across EXACTLY the sim's declared river band — luma 16-26
   // for z in [-5.5, 5.5] against 49-77 on the ochre either side — over a floor that is dead flat at
@@ -1920,13 +1935,103 @@ if (terrain3dGradeAmount > 0.001) {
 `;
 
 function hidePaintedGround(host: Host): HiddenRelief[] { return hidePaintedRelief(host); }
-function applyNightTerrainPools(model: THREE.Object3D, host: Host): void {
+/** Quiet the worked bank shelves while retaining the authored wet lips and tile edge. */
+function calmTwinBanksGround(model: THREE.Object3D): void {
+  if (isMapBeautyDisabled()) return;
+  const materials = new Set<THREE.MeshStandardMaterial>();
+  model.traverse(node => {
+    const mesh = node as THREE.Mesh<THREE.BufferGeometry, THREE.MeshStandardMaterial>;
+    if (mesh.isMesh && !Array.isArray(mesh.material) && mesh.material.isMeshStandardMaterial && mesh.material.map) materials.add(mesh.material);
+  });
+  for (const material of materials) {
+    const compile = material.onBeforeCompile.bind(material);
+    material.onBeforeCompile = (shader, renderer) => {
+      compile(shader, renderer);
+      shader.uniforms.twinBanksDryPigment = { value: new THREE.Color('#ad9c7b') };
+      shader.vertexShader = shader.vertexShader
+        .replace('#include <common>', '#include <common>\nvarying vec2 vTwinBanksWorld;')
+        .replace('#include <begin_vertex>', '#include <begin_vertex>\nvTwinBanksWorld = (modelMatrix * vec4(position, 1.0)).xz;');
+      shader.fragmentShader = shader.fragmentShader
+        .replace('#include <common>', '#include <common>\nvarying vec2 vTwinBanksWorld;\nuniform vec3 twinBanksDryPigment;')
+        .replace('#include <map_fragment>', `#include <map_fragment>
+float twinBanksSouth = 1.0 - smoothstep(0.45, 1.65, length((vTwinBanksWorld - vec2(-13.0, -14.0)) / vec2(13.0, 8.0)));
+float twinBanksNorth = 1.0 - smoothstep(0.45, 1.65, length((vTwinBanksWorld - vec2(13.5, 14.2)) / vec2(13.0, 8.0)));
+float twinBanksDry = smoothstep(6.0, 10.0, abs(vTwinBanksWorld.y));
+float twinBanksEdge = 1.0 - smoothstep(24.0, 31.0, max(abs(vTwinBanksWorld.x), abs(vTwinBanksWorld.y)));
+float twinBanksQuiet = mix(0.20, 0.48, max(twinBanksSouth, twinBanksNorth)) * twinBanksDry * twinBanksEdge;
+diffuseColor.rgb = mix(diffuseColor.rgb, twinBanksDryPigment, twinBanksQuiet);`);
+    };
+    material.customProgramCacheKey = () => 'twin-banks-dry-bank-pigment-v1';
+    material.needsUpdate = true;
+  }
+}
+
+/** Lift only the deepest painted scorch pigment, retaining its edges and grit. */
+function separateBaronGroundScars(model: THREE.Object3D): void {
+  if (isMapBeautyDisabled()) return;
+  const materials = new Set<THREE.MeshStandardMaterial>();
+  model.traverse(node => {
+    const mesh = node as THREE.Mesh<THREE.BufferGeometry, THREE.MeshStandardMaterial>;
+    if (mesh.isMesh && !Array.isArray(mesh.material) && mesh.material.isMeshStandardMaterial && mesh.material.map) materials.add(mesh.material);
+  });
+  for (const material of materials) {
+    const compile = material.onBeforeCompile.bind(material);
+    material.onBeforeCompile = (shader, renderer) => {
+      compile(shader, renderer);
+      shader.uniforms.baronWarmPigment = { value: new THREE.Color('#77614c') };
+      shader.uniforms.baronColdPigment = { value: new THREE.Color('#627078') };
+      shader.vertexShader = shader.vertexShader
+        .replace('#include <common>', '#include <common>\nvarying vec2 vBaronGround;')
+        .replace('#include <begin_vertex>', '#include <begin_vertex>\nvBaronGround = (modelMatrix * vec4(position, 1.0)).xz;');
+      shader.fragmentShader = shader.fragmentShader
+        .replace('#include <common>', '#include <common>\nvarying vec2 vBaronGround;\nuniform vec3 baronWarmPigment;\nuniform vec3 baronColdPigment;')
+        .replace('#include <map_fragment>', `#include <map_fragment>
+float baronInk = 1.0 - smoothstep(0.018, 0.09, dot(diffuseColor.rgb, vec3(0.2126, 0.7152, 0.0722)));
+float baronDry = smoothstep(6.0, 7.5, abs(vBaronGround.y));
+float baronEdge = 1.0 - smoothstep(25.0, 31.0, max(abs(vBaronGround.x), abs(vBaronGround.y)));
+vec3 baronPigment = mix(baronWarmPigment, baronColdPigment, smoothstep(6.0, 10.0, -vBaronGround.y));
+diffuseColor.rgb = mix(diffuseColor.rgb, baronPigment, 0.32 * baronInk * baronDry * baronEdge);`);
+    };
+    material.customProgramCacheKey = () => 'baron-scorch-pigment-v1';
+    material.needsUpdate = true;
+  }
+}
+
+/** Quiet the worked approaches without repainting the gorge or its waterline. */
+function calmTrestleApproaches(model: THREE.Object3D): void {
+  if (isMapBeautyDisabled()) return;
+  const materials = new Set<THREE.MeshStandardMaterial>();
+  model.traverse(node => {
+    const mesh = node as THREE.Mesh<THREE.BufferGeometry, THREE.MeshStandardMaterial>;
+    if (mesh.isMesh && !Array.isArray(mesh.material) && mesh.material.isMeshStandardMaterial && mesh.material.map) materials.add(mesh.material);
+  });
+  for (const material of materials) {
+    const compile = material.onBeforeCompile.bind(material);
+    material.onBeforeCompile = (shader, renderer) => {
+      compile(shader, renderer);
+      shader.uniforms.trestleWorkedPigment = { value: new THREE.Color('#8b7256') };
+      shader.vertexShader = shader.vertexShader
+        .replace('#include <common>', '#include <common>\nvarying vec2 vTrestleGround;')
+        .replace('#include <begin_vertex>', '#include <begin_vertex>\nvTrestleGround = (modelMatrix * vec4(position, 1.0)).xz;');
+      shader.fragmentShader = shader.fragmentShader
+        .replace('#include <common>', '#include <common>\nvarying vec2 vTrestleGround;\nuniform vec3 trestleWorkedPigment;')
+        .replace('#include <map_fragment>', `#include <map_fragment>
+float trestleBank = smoothstep(6.25, 9.0, abs(vTrestleGround.y));
+float trestleEdge = 1.0 - smoothstep(29.0, 42.0, max(abs(vTrestleGround.x), abs(vTrestleGround.y)));
+diffuseColor.rgb = mix(diffuseColor.rgb, trestleWorkedPigment, 0.23 * trestleBank * trestleEdge);`);
+    };
+    material.customProgramCacheKey = () => 'trestle-worked-approaches-v1';
+    material.needsUpdate = true;
+  }
+}
+
+function applyNightTerrainPools(model: THREE.Object3D, host: Host, opaqueLandmark = false): void {
   // Carried pools use the rig's steel-blue family at the prior ground tint's luminance.
   const materials = new Set<THREE.Material>();
   model.traverse((node) => {
     const mesh = node as THREE.Mesh;
     if (!mesh.isMesh) return;
-    mesh.renderOrder = 0.1;
+    if (!opaqueLandmark) mesh.renderOrder = 0.1;
     for (const material of Array.isArray(mesh.material) ? mesh.material : [mesh.material]) materials.add(material);
   });
   const poolSources = Array.from({ length: NIGHT_POOL_SHADER_CAP }, () => new THREE.Vector4());
@@ -1959,13 +2064,17 @@ function applyNightTerrainPools(model: THREE.Object3D, host: Host): void {
       const source = index < poolCount.value ? poolCandidates[index] : undefined;
       poolSources[index]!.set(source?.x ?? 0, source?.z ?? 0, source?.radius ?? 0, isWarmPool(source) ? 1 : 0);
     }
-    host.canvas.dataset.terrain3dPilotNightPoolSources = String(poolCount.value);
+    if (!opaqueLandmark) host.canvas.dataset.terrain3dPilotNightPoolSources = String(poolCount.value);
   };
   for (const material of materials) {
     if (!(material as THREE.MeshStandardMaterial).isMeshStandardMaterial) continue;
     const compile = material.onBeforeCompile.bind(material);
-    material.transparent = true;
-    material.depthWrite = false;
+    // The same physical pools can illuminate a yard standing in them, without
+    // inheriting terrain's transparent compositing or disabling its depth.
+    if (!opaqueLandmark) {
+      material.transparent = true;
+      material.depthWrite = false;
+    }
     material.onBeforeCompile = (shader, renderer) => {
       compile(shader, renderer);
       shader.uniforms.uTerrain3dNightPoolCount = poolCount;
@@ -2015,8 +2124,10 @@ function applyNightTerrainPools(model: THREE.Object3D, host: Host): void {
     const mesh = node as THREE.Mesh;
     if (mesh.isMesh) mesh.onBeforeRender = updateNightPools;
   });
-  host.canvas.dataset.terrain3dPilotNightPools = 'world-shader';
-  host.canvas.dataset.terrain3dPilotNightPoolSources = '0';
+  if (!opaqueLandmark) {
+    host.canvas.dataset.terrain3dPilotNightPools = 'world-shader';
+    host.canvas.dataset.terrain3dPilotNightPoolSources = '0';
+  }
 }
 
 function nightPoolPriority(source: LightSource): number {
@@ -2338,6 +2449,9 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
       nextPonds = createLiveSpringPonds(host, heightAt);
       nextTerrain.name = 'Terrain3dClaimPilot';
       if (host.archiveRestoration) installArchiveRestoration(nextTerrain, host.archiveRestoration);
+      if (host.contractId === 'e1-twin-banks') calmTwinBanksGround(nextTerrain);
+      if (host.contractId === 'e1-baron') separateBaronGroundScars(nextTerrain);
+      if (host.contractId === 'e2-trestle') calmTrestleApproaches(nextTerrain);
       if (host.nightMode) applyNightTerrainPools(nextTerrain, host);
       else {
         host.canvas.dataset.terrain3dPilotNightPools = 'off';
@@ -2484,6 +2598,16 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
               : (LANDMARK_PAINT[host.contractId]?.[mount.id]
                 ?? (contractIntensity !== undefined ? { intensity: contractIntensity, tint: DEFAULT_LANDMARK_PAINT.tint } : DEFAULT_LANDMARK_PAINT));
             keepLandmarkPaintReadable(model, paint, host.contractId);
+          } else if (mount.id === 'lampworks_yard') {
+            // Light-reactive paint, not whole-body emission. The cold seven
+            // gameplay lanterns retain their real wrecked/relit states.
+            model.traverse((node) => {
+              const mesh = node as THREE.Mesh<THREE.BufferGeometry, THREE.MeshStandardMaterial>;
+              if (mesh.isMesh && !Array.isArray(mesh.material) && mesh.material.isMeshStandardMaterial) {
+                mesh.material.color.multiplyScalar(1.65);
+              }
+            });
+            applyNightTerrainPools(model, host, true);
           }
           if (host.contractId === 'e1-baron' && BARON_SWAY_AMPLITUDE[mount.id] !== undefined) {
             installBannerSway(model, BARON_SWAY_AMPLITUDE[mount.id]!);
@@ -2795,13 +2919,20 @@ type LandmarkPaint = { intensity: number; tint: string };
  * body drops below 1.5 and the silhouette edges stay lit.
  */
 const LANDMARK_PAINT: Record<string, Record<string, LandmarkPaint>> = {
-  'e2-trestle': { 'south-boiler-site': { intensity: 1.45, tint: '#d6cfc4' }, 'north-boiler-site': { intensity: 1.45, tint: '#d3ccc4' }, 'mine-spur-kit': { intensity: 1.3, tint: '#e6d6bc' }, },
+  'e2-trestle': {
+    'trestle-crossing': { intensity: 2.6, tint: '#ffffff' },
+    'south-boiler-site': { intensity: 2.5, tint: '#e4e5e7' },
+    'north-boiler-site': { intensity: 2.5, tint: '#e4e5e7' },
+    'mine-spur-kit': { intensity: 2.2, tint: '#efe2cc' },
+    'south-approach-kit': { intensity: 2.2, tint: '#ffffff' },
+    'north-approach-kit': { intensity: 2.2, tint: '#ffffff' },
+  },
   'e2-pressure-garden': { 'garden-pressure-manifold': { intensity: 1.3, tint: '#efe0d2' }, 'water-band-pump-station': { intensity: 1.3, tint: '#efe0d2' }, },
   'e2-incline': { 'upper-ore-cable-house': { intensity: 1.5, tint: '#c2a48c' }, 'west-line-brake-tower': { intensity: 1.28, tint: '#b3a693' }, 'east-line-brake-tower': { intensity: 1.28, tint: '#b3a693' }, },
   'e1-baron': {
-    fortified_far_bank: { intensity: 1.7, tint: '#93a0aa' },
-    siege_line: { intensity: 1.9, tint: '#9ba5ab' },
-    seized_headframe: { intensity: 2.1, tint: '#a9a9a6' },
+    fortified_far_bank: { intensity: 2.5, tint: '#aab5bb' },
+    siege_line: { intensity: 2.2, tint: '#a8b0b4' },
+    seized_headframe: { intensity: 2.4, tint: '#b6b6b0' },
     oxblood_banners: { intensity: 3.4, tint: '#ffd2b4' },
   },
   // THE ROOF THAT SHOUTS (docs/beauty/e2-hill-mine-brief.md U3). Measured at the run camera, the
