@@ -5449,12 +5449,12 @@
             },
             {
               "id": "sol-map-art-corrections-2",
-              "title": "The corrections campaign, run 2 of the corrections (owner 2026-09-20 \"correct all the 23 UNACCEPTED maps, one after the other\"): the 19 maps run 1 did not reach, the Pressure Garden first from its WIP branch, E2 onward, one map per commit; QUEUED ON OR AFTER 2026-09-21 07:10 local (owner: \"Astra subscription is closed to finish now - reset tomorrow\")",
+              "title": "The corrections campaign, run 2 of the corrections (owner 2026-09-20 \"correct all the 23 UNACCEPTED maps, one after the other\"): the 19 maps run 1 did not reach, the Pressure Garden first from its WIP branch, E2 onward, one map per commit; dispatched 2026-09-20 on the new Codex subscription, capped at 3 maps per run",
               "status": "queued",
               "taskFile": "sol-map-art-corrections-2.md",
               "registeredBy": "attended 2026-09-20",
               "lane": "lane-c (Codex gpt-6-astra xhigh); continuation of sol-map-art-corrections-1 under the CODEX-WALL corrections lift",
-              "queuedAt": "authored 2026-09-20; the queue copy waits for the 2026-09-21 reset"
+              "queuedAt": "2026-09-20 (dispatched the same day on the new Codex subscription, owner \"lets start with a first set of maps\"; cap 3 maps per run)"
             },
             {
               "id": "e5-regatta-boat-01",
@@ -5479,6 +5479,14 @@
               "mergedAt": "2026-09-20",
               "review": "reviews/e5-regatta-boat-02.md",
               "drainedBy": "attended 2026-09-20"
+            },
+            {
+              "id": "e5-regatta-boat-03",
+              "title": "A14 slice 3 (owner 2026-09-20 \"A14 - do it\"): rider parity for the Regatta boat — the view publishes the boat and the race, the two refusals join the pinned list, the door document and the manifest name it, the same-game audit equal on the Regatta, the E5 census re-pointed",
+              "status": "building",
+              "taskFile": "e5-regatta-boat-03.md",
+              "registeredBy": "attended 2026-09-20 (the first master registered in the public repo)",
+              "lane": "scratch worktree wt-regatta3 (Claude Opus 5, the owner's Anthropic subscription), port 5336; drained attended"
             },
             {
               "id": "rulings-county-2026-09-19",

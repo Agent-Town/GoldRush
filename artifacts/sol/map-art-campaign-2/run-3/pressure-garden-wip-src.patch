@@ -1,0 +1,380 @@
+diff --git a/assets/pilots/map-rebuild-spike/landmarks/pressure-garden/pressure-garden-landmark-pack-contract.json b/assets/pilots/map-rebuild-spike/landmarks/pressure-garden/pressure-garden-landmark-pack-contract.json
+index 47a4cc161..41466e606 100644
+--- a/assets/pilots/map-rebuild-spike/landmarks/pressure-garden/pressure-garden-landmark-pack-contract.json
++++ b/assets/pilots/map-rebuild-spike/landmarks/pressure-garden/pressure-garden-landmark-pack-contract.json
+@@ -43,7 +43,11 @@
+         ]
+       },
+       "sha256": "879ebc6a32c59269ebd5621b09f9ec3030bc704bbb457d3eeaab272a2f83b81c",
+-      "footprint": {"kind":"rect","w":6.444,"d":1.397}
++      "footprint": {
++        "kind": "rect",
++        "w": 6.444,
++        "d": 1.397
++      }
+     },
+     "west-terrace-pipe-header": {
+       "asset": "landmarks/pressure-garden/west-terrace-pipe-header.glb",
+@@ -68,7 +72,11 @@
+         ]
+       },
+       "sha256": "9399290248b8bef740436b349b33098e4c767a075f42c23e41409d9d051b23c1",
+-      "footprint": {"kind":"rect","w":4.014,"d":1.116}
++      "footprint": {
++        "kind": "rect",
++        "w": 4.014,
++        "d": 1.116
++      }
+     },
+     "east-terrace-pipe-header": {
+       "asset": "landmarks/pressure-garden/east-terrace-pipe-header.glb",
+@@ -93,7 +101,11 @@
+         ]
+       },
+       "sha256": "dcf13b45962743b9a31b6328794f28b16b4a6290b1b53d355981794f4f351c78",
+-      "footprint": {"kind":"rect","w":4.547,"d":1.116}
++      "footprint": {
++        "kind": "rect",
++        "w": 4.547,
++        "d": 1.116
++      }
+     },
+     "coal-seam-service-winch": {
+       "asset": "landmarks/pressure-garden/coal-seam-service-winch.glb",
+@@ -118,7 +130,11 @@
+         ]
+       },
+       "sha256": "013460e0ea735d60da0a3670c9e9f385326f89e553b2b01cd1f1ac26caf2fd3a",
+-      "footprint": {"kind":"rect","w":6.264,"d":4.977}
++      "footprint": {
++        "kind": "rect",
++        "w": 6.264,
++        "d": 4.977
++      }
+     },
+     "water-band-pump-station": {
+       "asset": "landmarks/pressure-garden/water-band-pump-station.glb",
+@@ -144,7 +160,11 @@
+         ]
+       },
+       "sha256": "59f769a9aa726923013403467b9cf71087e165651f1c59f6c37729876099be98",
+-      "footprint": {"kind":"rect","w":6.012,"d":3.577}
++      "footprint": {
++        "kind": "rect",
++        "w": 6.012,
++        "d": 3.577
++      }
+     }
+   },
+   "mounts": [
+@@ -245,5 +265,72 @@
+     }
+   ],
+   "simulation": "none; terrain, collision, movement, placement, water, spawns, and fog remain unchanged",
+-  "mountInterlock": "resolved-3d-d"
++  "mountInterlock": "resolved-3d-d",
++  "landmarkAcceptanceStations": [
++    {
++      "id": "garden-pressure-manifold",
++      "heroPositionXZ": [
++        0,
++        9
++      ],
++      "offsetFromMountXZ": [
++        0,
++        5
++      ],
++      "backMeters": 5,
++      "purpose": "Full-body diagnostic station: both viewports fit, with persistent HUD coverage below 0.03%. The temporary story strip still crosses the upper body in the normal-HUD reference."
++    },
++    {
++      "id": "water-band-pump-station",
++      "heroPositionXZ": [
++        42,
++        7
++      ],
++      "offsetFromMountXZ": [
++        0,
++        13
++      ],
++      "backMeters": 13,
++      "purpose": "Nearest measured dry-bank full-body view: both bounds fit, but phone persistent HUD covers about 45%. Closer axial stations are inside the unchanged river. Camera/UI owner holds this tradeoff."
++    },
++    {
++      "id": "coal-seam-service-winch",
++      "heroPositionXZ": [
++        -42,
++        45
++      ],
++      "offsetFromMountXZ": [
++        0,
++        5
++      ],
++      "backMeters": 5,
++      "purpose": "Full-body diagnostic station on the existing coal terrace: both bounds fit with persistent HUD below 0.03%."
++    },
++    {
++      "id": "west-terrace-pipe-header",
++      "heroPositionXZ": [
++        -47,
++        33
++      ],
++      "offsetFromMountXZ": [
++        3,
++        9
++      ],
++      "backMeters": 9,
++      "purpose": "Full-body diagnostic station within the existing playable boundary. Phone bounds fit with zero persistent HUD coverage; the mount remains beyond the tile edge."
++    },
++    {
++      "id": "east-terrace-pipe-header",
++      "heroPositionXZ": [
++        47.5,
++        33
++      ],
++      "offsetFromMountXZ": [
++        -2.5,
++        9
++      ],
++      "backMeters": 9,
++      "purpose": "Full-body diagnostic station at the existing east movement boundary: phone bounds x170.5\u2013383.5 fit, with 31.46% persistent HUD coverage. The camera/UI owner holds the right-panel obstruction; mount and collision unchanged."
++    }
++  ]
+ }
+diff --git a/assets/pilots/map-rebuild-spike/pressure-garden-terrain-contract.json b/assets/pilots/map-rebuild-spike/pressure-garden-terrain-contract.json
+index eac8d32c1..2265118e3 100644
+--- a/assets/pilots/map-rebuild-spike/pressure-garden-terrain-contract.json
++++ b/assets/pilots/map-rebuild-spike/pressure-garden-terrain-contract.json
+@@ -417,5 +417,72 @@
+     "era": 2,
+     "sourceLadder": "reuse > derive > build-new",
+     "ownership": "separate mounted render-only GLBs; no simulation authority"
+-  }
++  },
++  "landmarkAcceptanceStations": [
++    {
++      "id": "garden-pressure-manifold",
++      "heroPositionXZ": [
++        0,
++        9
++      ],
++      "offsetFromMountXZ": [
++        0,
++        5
++      ],
++      "backMeters": 5,
++      "purpose": "Full-body diagnostic station: both viewports fit, with persistent HUD coverage below 0.03%. The temporary story strip still crosses the upper body in the normal-HUD reference."
++    },
++    {
++      "id": "water-band-pump-station",
++      "heroPositionXZ": [
++        42,
++        7
++      ],
++      "offsetFromMountXZ": [
++        0,
++        13
++      ],
++      "backMeters": 13,
++      "purpose": "Nearest measured dry-bank full-body view: both bounds fit, but phone persistent HUD covers about 45%. Closer axial stations are inside the unchanged river. Camera/UI owner holds this tradeoff."
++    },
++    {
++      "id": "coal-seam-service-winch",
++      "heroPositionXZ": [
++        -42,
++        45
++      ],
++      "offsetFromMountXZ": [
++        0,
++        5
++      ],
++      "backMeters": 5,
++      "purpose": "Full-body diagnostic station on the existing coal terrace: both bounds fit with persistent HUD below 0.03%."
++    },
++    {
++      "id": "west-terrace-pipe-header",
++      "heroPositionXZ": [
++        -47,
++        33
++      ],
++      "offsetFromMountXZ": [
++        3,
++        9
++      ],
++      "backMeters": 9,
++      "purpose": "Full-body diagnostic station within the existing playable boundary. Phone bounds fit with zero persistent HUD coverage; the mount remains beyond the tile edge."
++    },
++    {
++      "id": "east-terrace-pipe-header",
++      "heroPositionXZ": [
++        47.5,
++        33
++      ],
++      "offsetFromMountXZ": [
++        -2.5,
++        9
++      ],
++      "backMeters": 9,
++      "purpose": "Full-body diagnostic station at the existing east movement boundary: phone bounds x170.5\u2013383.5 fit, with 31.46% persistent HUD coverage. The camera/UI owner holds the right-panel obstruction; mount and collision unchanged."
++    }
++  ]
+ }
+diff --git a/src/world/Terrain3dClaimPilot.ts b/src/world/Terrain3dClaimPilot.ts
+index 87e51610b..a41cad1bb 100644
+--- a/src/world/Terrain3dClaimPilot.ts
++++ b/src/world/Terrain3dClaimPilot.ts
+@@ -360,6 +360,7 @@ type SculptWaterDressing = {
+    */
+   glints: 'harvest' | Array<{ x: number; z: number }>;
+   rippleStrength?: number;
++  rippleScale?: number;
+   /** Blend weight for the procedural canvas map. See the note on the hill mine's entry. */
+   textureBlend?: number;
+   /** Skip the baked bed map when the authored bed is a flat pan. */
+@@ -417,7 +418,7 @@ const SCULPT_WATER_DRESSING: Record<string, SculptWaterDressing> = {
+   //     depth) rather than the claim's 0.5.
+   'e2-hill-mine': { surface: { kind: 'channel-fill', fill: 0.42 }, color: '#8a8177', opacity: 0.72, fordSkim: 0.11, deepMeters: 0.12, shoreMeters: 0.05, visualHalfWidth: 5.9, glints: [{ x: -27, z: -5.1 }, { x: 13, z: 5.1 }, { x: 33, z: -5.1 }], rippleStrength: 1.15, textureBlend: 0, },
+   'e2-trestle': { surface: { kind: 'below-gorge-floor', quantile: 0.8, drop: 0.006 }, color: '#7e8480', opacity: 0.86, fordSkim: 0.11, deepMeters: 0.42, shoreMeters: 0.16, glints: [{ x: -15.5, z: -4.3 }, { x: -4.5, z: -4.5 }], rippleStrength: 0.4, textureBlend: 0.05, },
+-  'e2-pressure-garden': { surface: { kind: 'channel-fill', fill: 0.11 }, color: '#d6f0ee', opacity: 0.8, fordSkim: 0.11, deepMeters: 0.5, shoreMeters: 0.15, bed: false, visualHalfWidth: 6.25, glints: [{ x: -30, z: 4.45 }, { x: -12, z: 4.45 }, { x: 12, z: 4.45 }, { x: 30, z: 4.45 }], rippleStrength: 0.75, textureBlend: 0.04, fordTint: 0.44, shoreFadeMeters: 2.2, surfaceLift: true, overhangMeters: 10, emissive: '#0d2a33', collars: [{ mount: 'garden-pressure-manifold', radius: 2.9 }, { mount: 'water-band-pump-station', radius: 2.6 }], },
++  'e2-pressure-garden': { surface: { kind: 'channel-fill', fill: 0.11 }, color: '#daf2ed', opacity: 0.96, fordSkim: 0.11, deepMeters: 0.5, shoreMeters: 0.15, bed: false, visualHalfWidth: 6.25, glints: [{ x: -30, z: 4.45 }, { x: -12, z: 4.45 }, { x: 12, z: 4.45 }, { x: 30, z: 4.45 }], rippleStrength: 0.4, rippleScale: 1.6, textureBlend: 0, fordTint: 0.25, shoreFadeMeters: 1, surfaceLift: true, overhangMeters: 10, collars: [{ mount: 'garden-pressure-manifold', radius: 2.9 }, { mount: 'water-band-pump-station', radius: 2.6 }], },
+   'e2-incline': { surface: { kind: 'channel-fill', fill: 0.42 }, color: '#bb9366', opacity: 0.62, fordSkim: 0.125, deepMeters: 0.145, shoreMeters: 0.07, visualHalfWidth: 6.25, glints: [{ x: -30, z: 4.45 }, { x: 30, z: -4.45 }], rippleStrength: 0.6, textureBlend: 0.2, },
+ };
+ /** The E5 contracts reserve their sea for runtime; the sculpt supplies the visible bed. */
+@@ -859,7 +860,6 @@ const LANDMARK_EMISSIVE_WHOLE_BODY_MIN = 0.12;
+  */
+ // Moth material atlas and frame remap pass the normal-emission census and visual gate (material-light21/gate22).
+ const LANDMARK_EMISSIVE_READABILITY_EXEMPT = new Set([
+-  'e2-pressure-garden',
+   'e6-glow-mesa',
+   'e6-picnic',
+ ]);
+@@ -1081,6 +1081,18 @@ function keepLandmarkPaintReadable(model: THREE.Object3D, paint: LandmarkPaint =
+     // pre-calibration render from a material that may already have been re-installed once.
+     material.userData.landmarkAuthoredEmissive = paint.intensity;
+     material.emissiveIntensity = calibratedLandmarkIntensity(paint.intensity, contractId);
++    if (contractId === 'e2-pressure-garden') {
++      // Recover the atlas's dark iron detail in its diffuse paint, so the body can
++      // leave the legacy-emission exemption without turning its texture into a lamp.
++      const compile = material.onBeforeCompile.bind(material);
++      material.onBeforeCompile = (shader, renderer) => {
++        compile(shader, renderer);
++        shader.fragmentShader = shader.fragmentShader.replace('#include <map_fragment>', `#include <map_fragment>
++diffuseColor.rgb = min(vec3(0.88), pow(max(diffuseColor.rgb, vec3(0.0)), vec3(0.62)) * vec3(0.94, 0.99, 1.06) + vec3(0.014));`);
++      };
++      material.customProgramCacheKey = () => 'pressure-garden-diffuse-iron-v1';
++      material.needsUpdate = true;
++    }
+   });
+ }
+ 
+@@ -1393,6 +1405,7 @@ function mountSculptWater(host: Host, heightAt: (x: number, z: number) => number
+     color: stillwater ? '#a5c5d0' : dressing.color,
+     opacity: stillwater ? 0.62 : dressing.opacity,
+     rippleStrength: stillwater ? 0.04 : dressing.rippleStrength,
++    rippleScale: dressing.rippleScale,
+     textureBlend: stillwater ? 0.06 : dressing.textureBlend,
+     fordTint: dressing.fordTint,
+     shoreFadeMeters: dressing.shoreFadeMeters,
+@@ -2025,6 +2038,47 @@ diffuseColor.rgb = mix(diffuseColor.rgb, trestleWorkedPigment, 0.23 * trestleBan
+   }
+ }
+ 
++/** Prepared boiler aprons and combed earth follow the existing terrace/bed coordinates. */
++function clarifyPressureGardenTerraces(model: THREE.Object3D): void {
++  if (isMapBeautyDisabled()) return;
++  const materials = new Set<THREE.MeshStandardMaterial>();
++  model.traverse(node => {
++    const mesh = node as THREE.Mesh<THREE.BufferGeometry, THREE.MeshStandardMaterial>;
++    if (mesh.isMesh && !Array.isArray(mesh.material) && mesh.material.isMeshStandardMaterial && mesh.material.map) materials.add(mesh.material);
++  });
++  for (const material of materials) {
++    const compile = material.onBeforeCompile.bind(material);
++    material.onBeforeCompile = (shader, renderer) => {
++      compile(shader, renderer);
++      shader.uniforms.gardenWorkedPigment = { value: new THREE.Color('#957957') };
++      shader.uniforms.gardenRowPigment = { value: new THREE.Color('#9d8662') };
++      shader.vertexShader = shader.vertexShader
++        .replace('#include <common>', '#include <common>\nvarying vec2 vGardenGround;')
++        .replace('#include <begin_vertex>', '#include <begin_vertex>\nvGardenGround = (modelMatrix * vec4(position, 1.0)).xz;');
++      shader.fragmentShader = shader.fragmentShader
++        .replace('#include <common>', '#include <common>\nvarying vec2 vGardenGround;\nuniform vec3 gardenWorkedPigment;\nuniform vec3 gardenRowPigment;')
++        .replace('#include <map_fragment>', `#include <map_fragment>
++float gardenX = abs(vGardenGround.x), gardenZ = vGardenGround.y;
++float gardenWidth = 1.0 - smoothstep(38.0, 44.0, gardenX);
++float gardenService = smoothstep(6.25, 9.0, gardenZ) * (1.0 - smoothstep(15.5, 18.0, gardenZ)) * gardenWidth;
++float gardenGrowing = smoothstep(11.5, 13.0, gardenX) * (1.0 - smoothstep(37.0, 38.5, gardenX)) * smoothstep(19.5, 21.0, gardenZ) * (1.0 - smoothstep(28.0, 29.5, gardenZ));
++diffuseColor.rgb = mix(diffuseColor.rgb, gardenWorkedPigment, gardenService * 0.30);
++diffuseColor.rgb = mix(diffuseColor.rgb, gardenRowPigment, gardenGrowing * 0.23);
++float gardenRowPhase = abs(sin(vGardenGround.x * 2.85 + sin(gardenZ * 0.19) * 0.18));
++float gardenRowInk = 1.0 - smoothstep(0.10, 0.20 + fwidth(gardenRowPhase), gardenRowPhase);
++diffuseColor.rgb *= 1.0 - gardenGrowing * gardenRowInk * 0.18;
++float gardenBedX = abs(vGardenGround.x - 12.0 * floor(vGardenGround.x / 12.0 + 0.5));
++float gardenBed = max(gardenBedX / 2.5, abs(gardenZ - 12.0) / 2.0);
++float gardenApron = (1.0 - smoothstep(0.65, 1.20, gardenBed)) * (1.0 - smoothstep(15.0, 16.0, gardenX));
++diffuseColor.rgb = mix(diffuseColor.rgb, gardenWorkedPigment * 1.12, gardenApron * 0.18);
++float gardenCrest = max(1.0 - smoothstep(0.15, 0.65, abs(gardenZ - 22.4)), 1.0 - smoothstep(0.15, 0.65, abs(gardenZ - 35.4)));
++diffuseColor.rgb = mix(diffuseColor.rgb, gardenRowPigment, gardenCrest * gardenWidth * 0.20);`);
++    };
++    material.customProgramCacheKey = () => 'pressure-garden-worked-terraces-v1';
++    material.needsUpdate = true;
++  }
++}
++
+ function applyNightTerrainPools(model: THREE.Object3D, host: Host, opaqueLandmark = false): void {
+   // Carried pools use the rig's steel-blue family at the prior ground tint's luminance.
+   const materials = new Set<THREE.Material>();
+@@ -2452,6 +2506,7 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
+       if (host.contractId === 'e1-twin-banks') calmTwinBanksGround(nextTerrain);
+       if (host.contractId === 'e1-baron') separateBaronGroundScars(nextTerrain);
+       if (host.contractId === 'e2-trestle') calmTrestleApproaches(nextTerrain);
++      if (host.contractId === 'e2-pressure-garden') clarifyPressureGardenTerraces(nextTerrain);
+       if (host.nightMode) applyNightTerrainPools(nextTerrain, host);
+       else {
+         host.canvas.dataset.terrain3dPilotNightPools = 'off';
+@@ -2927,7 +2982,13 @@ const LANDMARK_PAINT: Record<string, Record<string, LandmarkPaint>> = {
+     'south-approach-kit': { intensity: 2.2, tint: '#ffffff' },
+     'north-approach-kit': { intensity: 2.2, tint: '#ffffff' },
+   },
+-  'e2-pressure-garden': { 'garden-pressure-manifold': { intensity: 1.3, tint: '#efe0d2' }, 'water-band-pump-station': { intensity: 1.3, tint: '#efe0d2' }, },
++  'e2-pressure-garden': {
++    'garden-pressure-manifold': { intensity: 3, tint: '#e4e5e7' },
++    'water-band-pump-station': { intensity: 3, tint: '#e4e5e7' },
++    'west-terrace-pipe-header': { intensity: 3, tint: '#e4e5e7' },
++    'east-terrace-pipe-header': { intensity: 3, tint: '#e4e5e7' },
++    'coal-seam-service-winch': { intensity: 3, tint: '#e4e5e7' },
++  },
+   'e2-incline': { 'upper-ore-cable-house': { intensity: 1.5, tint: '#c2a48c' }, 'west-line-brake-tower': { intensity: 1.28, tint: '#b3a693' }, 'east-line-brake-tower': { intensity: 1.28, tint: '#b3a693' }, },
+   'e1-baron': {
+     fortified_far_bank: { intensity: 2.5, tint: '#aab5bb' },
+diff --git a/src/world/Water.ts b/src/world/Water.ts
+index a1194539f..1cecdff86 100644
+--- a/src/world/Water.ts
++++ b/src/world/Water.ts
+@@ -78,6 +78,8 @@ type WaterMaterialConfig = {
+   textureBlend?: number;
+   /** Multiplies the sine-ripple contribution without changing flow speed. */
+   rippleStrength?: number;
++  /** Frequency of crossed ripple fronts; omitted preserves the original channel waves. */
++  rippleScale?: number;
+   /** Strength of the pale ford wash. */
+   fordTint?: number;
+   /** Metres of alpha ramp at the band's outer edge. */
+@@ -139,6 +141,7 @@ export function createLivingWaterMaterial(config: WaterMaterialConfig): THREE.Me
+     config.anchors.map((anchor) => `${anchor.x.toFixed(2)},${anchor.z.toFixed(2)}`).join('_') || 'noglints',
+     `texture${(config.textureBlend ?? 0.12).toFixed(3)}`,
+     `ripple${(config.rippleStrength ?? 1).toFixed(2)}`,
++    ...(config.rippleScale === undefined ? [] : [`ripple-scale${config.rippleScale.toFixed(2)}`]),
+     `ford${(config.fordTint ?? 0.72).toFixed(3)}`,
+     `shorefade${(config.shoreFadeMeters ?? 0.95).toFixed(3)}`,
+     (config.surfaceLift ?? config.bedDepth !== undefined) ? 'lift' : 'nolift',
+@@ -244,7 +247,9 @@ ${config.bedDepth ? `  float bedMetres = texture2D(waterBedMap, vWaterUv).r * wa
+   float rippleAmp = mix(0.06, 0.17, crossNoise) * ${(config.rippleStrength ?? 1).toFixed(2)};
+   float ripple = ${config.openSea
+     ? '(sin(vWaterWorld.x * 2.4 + vWaterWorld.y * 0.9 + sin(vWaterWorld.y * 0.32 - waterTime * 0.6) * 0.8 - waterTime * 2.0) * 0.72 + sin(vWaterWorld.x * 4.1 - vWaterWorld.y * 1.3 + phaseWarp - waterTime * 3.1) * 0.28)'
+-    : 'sin(vWaterWorld.x * rippleFreq + vWaterWorld.y * mix(-0.46, 0.72, crossNoise) + phaseWarp * 4.0 - waterTime * mix(2.1, 4.4, lengthNoise))'} * 0.5 + 0.5;
++    : config.rippleScale !== undefined
++      ? `(sin((vWaterWorld.x * 2.4 + vWaterWorld.y * 0.9) * ${config.rippleScale.toFixed(2)} + sin(vWaterWorld.y * 0.32 - waterTime * 0.6) * 0.8 - waterTime * 2.0) * 0.72 + sin((vWaterWorld.x * 4.1 - vWaterWorld.y * 1.3) * ${config.rippleScale.toFixed(2)} + phaseWarp - waterTime * 3.1) * 0.28)`
++      : 'sin(vWaterWorld.x * rippleFreq + vWaterWorld.y * mix(-0.46, 0.72, crossNoise) + phaseWarp * 4.0 - waterTime * mix(2.1, 4.4, lengthNoise))'} * 0.5 + 0.5;
+   float fineRipple = 0.0;
+   if (waterQuality > 0.7) {
+     fineRipple = sin(vWaterWorld.x * mix(3.7, 6.2, crossNoise) + vWaterWorld.y * mix(0.8, 2.4, lengthNoise) - waterTime * mix(3.8, 6.7, crossNoise) + phaseWarp * 2.0) * 0.5 + 0.5;
