@@ -1,5 +1,7 @@
 import { Balance } from '../game/Balance';
 import { isBuildableId, type BuildableId } from '../game/buildables';
+// Type-only: erased at compile time, so no module edge is added between the door and the E5 tile.
+import type { BoatOrderRefusal } from '../world/DeepwaterClaimTile';
 import type { AgentAbility } from './AgentConsent';
 import type { AgentPermissionLevel } from './PermissionLadder';
 import type { AgentBuildingRef, AgentVec2, GoldRushToolSurface, ToolReceipt } from './ToolSurface';
@@ -194,6 +196,13 @@ export type HeroChannel = {
   riderPiloted: () => boolean;
   /** The engine's terrain answer for a candidate destination: refuse, never stall silently. */
   walkable: (pos: AgentVec2) => boolean;
+  /**
+   * E5 REGATTA, SLICE 1 — the boat's answer for a candidate destination, or null where the engine
+   * composes no steerable boat (which is every map but the Regatta today). Optional so every
+   * existing binder — the browser singleton, the room seat, the guards' hand-rolled channels —
+   * keeps compiling and behaving exactly as before.
+   */
+  boatRefusal?: (pos: AgentVec2) => BoatOrderRefusal | null;
 };
 
 /**
@@ -213,6 +222,24 @@ export const HERO_ORDER_REFUSALS = [
   'UNREACHABLE_APPROACH',
   'HERO_UNAVAILABLE',
 ] as const;
+
+/**
+ * E5 REGATTA, SLICE 1 — the two refusals the steerable Claim-Boat adds, on the STATUS CHANNEL ONLY
+ * (`record.reason`, the same `{ status: 'failed', reason }` shape every other refusal uses). No
+ * view field, no verb, no `skill.md` fence.
+ *
+ * DELIBERATELY NOT APPENDED TO `HERO_ORDER_REFUSALS` ABOVE. That list is the PUBLISHED refusal
+ * vocabulary — `MechanicsManifest.ts:117` puts it on every contract's `hero_orders` rule, and it is
+ * pinned verbatim by `scripts/gr-sim.test.mjs:913` and `e2e/agent-view.spec.ts:149-151`. Publishing
+ * these two is slice 3's own, censused act (the view bump, the fence, the manifest and the E5
+ * census pin move together there); doing it here would move a published surface under an
+ * unrelated guard and break two pins this slice has no business touching.
+ *
+ *   NOT_ABOARD        — ashore, where the hull cannot float, ordered out into navigable water past
+ *                       the gangway. The order only makes sense from the deck.
+ *   UNREACHABLE_WATER — aboard, ordered to a point the hull cannot reach that is not a step ashore.
+ */
+export const BOAT_ORDER_REFUSALS = ['NOT_ABOARD', 'UNREACHABLE_WATER'] as const;
 
 /**
  * F-MCAP-1 (`reviews/mare-claim-air-prevalent.md:34`; owner ruling 2026-09-06, verbatim: "(5)
@@ -576,6 +603,17 @@ export class StandingOrdersExecutor {
       }
       if (!channel.walkable(order.pos)) {
         this.fail(record, 'UNREACHABLE_TERRAIN: MOVE_HERO target is outside walkable terrain.', at);
+        return {};
+      }
+      // E5 Regatta slice 1: ground answers first, then the water. Null on every engine that
+      // composes no steerable boat, so this is inert everywhere but the Regatta.
+      const boat = channel.boatRefusal?.(order.pos) ?? null;
+      if (boat === 'NOT_ABOARD') {
+        this.fail(record, 'NOT_ABOARD: MOVE_HERO names open water and the hero is ashore, out of reach of the gangway.', at);
+        return {};
+      }
+      if (boat === 'UNREACHABLE_WATER') {
+        this.fail(record, 'UNREACHABLE_WATER: MOVE_HERO names water the Claim-Boat cannot reach.', at);
         return {};
       }
       const hero = channel.position();

@@ -96,7 +96,7 @@ import { mechanicsBuildableIds } from '../agent/MechanicsManifest';
 import { buildView, type AgentViewSource } from '../agent/View';
 import type { AgentPermissionLevel } from '../agent/PermissionLadder';
 import { install as installAgentStub, type AgentStub } from '../agent/AgentStub';
-import { bindStandingOrderHero, bindStandingUpgradePicker, snapshotStandingOrders, type StandingOrder } from '../agent/StandingOrders';
+import { bindStandingOrderHero, bindStandingUpgradePicker, snapshotStandingOrders, standingOrderHeroSteering, type StandingOrder } from '../agent/StandingOrders';
 import { isMultiplayerStandingSubmitter, multiplayerStandingParty, resetMultiplayerStandingRoster } from '../agent/DeclaredStack';
 import { ProspectorEmbodiment, type ProspectorPoint } from '../agent/Embodiment';
 import { RegattaRaceSystem } from '../systems/RegattaRaceSystem';
@@ -971,6 +971,15 @@ export class Game {
     return deckY === undefined ? this.heroVisualYAt(x, z) : deckY + this.heroStart.y;
   };
   private claimBoatView?: ClaimBoatView;
+  /**
+   * E5 Regatta slice 1 — a RIDER's steering point, injected by the `?debug`-gated
+   * `__GR_TEST__.claimBoat.steerTo` seam and by nothing else. It exists because ADR-005 refuses a
+   * rider's `MOVE_HERO` at this door on purpose (a human pilots this hero), which leaves the
+   * browser with no way to exercise the rider half of "one body, one intent". It is NOT a control:
+   * it feeds the SAME `DeepwaterClaimTile.helm` argument a `MOVE_HERO` feeds headlessly, is null
+   * in every release build (`__GR_RELEASE_E1__`) and every boot without `?debug`, and adds no verb.
+   */
+  private testBoatSteer: { x: number; z: number } | null = null;
   private flotillaView?: FlotillaView;
   private readonly debugSpawnPosition = new THREE.Vector3();
   private terrainView?: TerrainView;
@@ -2606,6 +2615,18 @@ export class Game {
       Object.assign(window.__GR_TEST__, {
         submitCountyStandingForTest: (tapeBytes: number) =>
           this.postCountyStanding(JSON.stringify({ tape: 'x'.repeat(tapeBytes) })).then((response) => response.ok),
+        // E5 Regatta slice 1. `snapshot` is a read; `steerTo` injects the SAME steering point a
+        // rider's `MOVE_HERO` publishes headlessly, which THIS door refuses by ADR-005 law
+        // (`riderPiloted: false` — the hero here is the human's). A test seam, not a control:
+        // `?debug`-gated like everything else in this object, and it reaches the one helm the keys
+        // reach. `clearSteer` hands the boat back to the keys. Attached through `Object.assign`,
+        // like the county-standing probe above, so `src/vite-env.d.ts` (outside this slice's
+        // firewall) does not have to publish a debug-only shape; specs declare it themselves.
+        claimBoat: {
+          snapshot: () => this.deepwaterClaim?.snapshot().boat ?? null,
+          steerTo: (x: number, z: number) => { this.testBoatSteer = { x, z }; },
+          clearSteer: () => { this.testBoatSteer = null; },
+        },
       });
     }
     this.cameraRig.snapTo(this.localActor.group.position);
@@ -2709,6 +2730,14 @@ export class Game {
       position: () => this.primaryActor.group.position,
       riderPiloted: () => false,
       walkable: ({ x, z }) => this.actorTerrainSample(x, z).walkable,
+      // E5 Regatta slice 1: bound for symmetry with the headless door so the two channels stay one
+      // shape. Unreachable in practice at THIS door — `riderPiloted: false` above refuses every
+      // MOVE_HERO before a target is ever read — and null on every contract without a boat.
+      boatRefusal: ({ x, z }) => this.deepwaterClaim?.boatOrderRefusal(
+        this.primaryActor.group.position,
+        { x, z },
+        (px, pz) => this.actorTerrainSample(px, pz).walkable,
+      ) ?? null,
     });
     this.agentStub.heartbeat();
     if (showIntro) this.showProspectorIntro();
@@ -3353,6 +3382,11 @@ export class Game {
       const intents = this.e8PhysicsIntents(0, this.primaryActor, fallbackIntents, simDelta);
       const beforeX = this.primaryActor.group.position.x;
       const beforeZ = this.primaryActor.group.position.z;
+      // E5 Regatta slice 1: while the hero is aboard the Claim-Boat the boat is the body that
+      // moves, and the hero rides its deck anchor. False on every other contract and on every step
+      // nobody is aboard, so this path is byte-for-byte the old one everywhere else. The move-pin
+      // watchdog is skipped with it: a boat that is turning on the spot is not a pinned hero.
+      if (this.sailClaimBoat(simDelta, intents)) return;
       this.primaryActor.update(
         simDelta,
         intents,
@@ -3378,6 +3412,35 @@ export class Game {
       );
       if (actor === this.localActor) this.watchMovePin(actor, rawIntents, beforeX, beforeZ, simDelta);
     }
+  }
+
+  /**
+   * E5 REGATTA, SLICE 1 — one step of the Claim-Boat's helm, `HeadlessContractSim.sailClaimBoat`'s
+   * twin. Both engines call `DeepwaterClaimTile.helm`, so there is ONE rule and not two
+   * implementations of it; that is the parity claim `scripts/regatta-boat-steer.test.mjs` pins.
+   *
+   * `intents.move` is the human's keys. `standingOrderHeroSteering()` is a rider's live `MOVE_HERO`
+   * point — null at this door by ADR-005 law (the singleton executor binds `riderPiloted: false`,
+   * because the hero here is the human's), so the rider's half of the parity claim is driven in
+   * the headless engine and, in the browser, through the `?debug`-gated `__GR_TEST__.claimBoat`
+   * seam the constructor installs inside its `?debug` harness block. Neither species gains a control
+   * the other lacks: the boat only ever sees the same unit intent and the same steering point.
+   */
+  private sailClaimBoat(simDelta: number, intents: Intents): boolean {
+    const claim = this.deepwaterClaim;
+    if (!claim) return false;
+    const helmed = claim.helm(
+      simDelta,
+      this.primaryActor.group.position,
+      intents.move.lengthSq() > 0 ? { x: intents.move.x, y: intents.move.y } : null,
+      standingOrderHeroSteering() ?? this.testBoatSteer,
+      { walkable: (x, z) => this.actorTerrainSample(x, z).walkable },
+    );
+    if (!helmed) return false;
+    // Carried, not walking: drop the momentum the hero would otherwise coast on ashore.
+    this.primaryActor.velocity.set(0, 0, 0);
+    this.updateActionActorPosition();
+    return true;
   }
 
   private watchMovePin(actor: Hero, intents: Intents, beforeX: number, beforeZ: number, delta: number): void {
@@ -8779,6 +8842,8 @@ export class Game {
     this.waveSystem.reset();
     this.drillYard?.reset();
     this.deepwaterClaim?.reset();
+    // E5 Regatta slice 1: the debug steering point never survives a run. A fresh boat, a fresh helm.
+    this.testBoatSteer = null;
     this.regattaRace?.reset();
     // A2: alongside its siblings, and NOT optional. `deepwaterClaim.reset()` above restores the
     // pads a strike knocked out, so a hunt that kept its integrity map would re-lose a restored
