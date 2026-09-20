@@ -1,0 +1,89 @@
+
+Running 6 tests using 1 worker
+
+(node:97242) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+  ✓  1 [desktop-chrome] › e2e/e5-regatta-race.spec.ts:28:1 › the Regatta is won by the BOAT and secures both bench seeds deterministically (12.8s)
+  ✓  2 [desktop-chrome] › e2e/e5-regatta-race.spec.ts:193:1 › idle Regatta runs lose because nobody ever boards the boat (9.5s)
+e5-regatta plain boot watchErrors suppressed 0 known GLTFLoader blob error(s)
+  ✓  3 [desktop-chrome] › e2e/e5-regatta-race.spec.ts:216:1 › plain boot resolves the Regatta contract without browser errors (2.9s)
+(node:99360) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+  ✓  4 [mobile-chrome] › e2e/e5-regatta-race.spec.ts:28:1 › the Regatta is won by the BOAT and secures both bench seeds deterministically (13.2s)
+  ✓  5 [mobile-chrome] › e2e/e5-regatta-race.spec.ts:193:1 › idle Regatta runs lose because nobody ever boards the boat (10.8s)
+e5-regatta plain boot watchErrors suppressed 0 known GLTFLoader blob error(s)
+  ✓  6 [mobile-chrome] › e2e/e5-regatta-race.spec.ts:216:1 › plain boot resolves the Regatta contract without browser errors (3.9s)
+
+  6 passed (55.7s)
