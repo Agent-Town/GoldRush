@@ -428,7 +428,7 @@ for ((ATTEMPT = 1; ATTEMPT <= VERIFY_ATTEMPTS; ATTEMPT++)); do
         "--filter=-s *"
       )
       # MIRROR_FILTERS_END
-      if rsync -az --delete --timeout=60 "${MIRROR_FILTERS[@]}" ./ ${GR_DROPLET_HOST}:/opt/goldrush/ 2>/dev/null \
+      if rsync -az --copy-unsafe-links --delete --timeout=60 "${MIRROR_FILTERS[@]}" ./ ${GR_DROPLET_HOST}:/opt/goldrush/ 2>/dev/null \
         && ssh -o BatchMode=yes ${GR_DROPLET_HOST} "sed -i 's/^ASSAY_BUILD_ID=.*/ASSAY_BUILD_ID=$PUBLISHED_BUILD/' /etc/goldrush-assay.env && systemctl restart goldrush-ledger goldrush-assay" 2>/dev/null; then
         note "ASSAYER SYNCED: droplet tree + pin $PUBLISHED_BUILD, services restarted"
         # F-DISK-0902: the first allowlisted sync measured 1,456 MB including protected node_modules;
