@@ -1,0 +1,23 @@
+[
+  {
+    "label": "map",
+    "command": [
+      "npx",
+      "playwright",
+      "test",
+      "--workers=1",
+      "--project=desktop-chrome",
+      "--project=mobile-chrome",
+      "--trace=off",
+      "--reporter=line",
+      "--output=artifacts/sol/map-art-campaign-2/_raw/run-4/e2-pressure-garden-map",
+      "e2e/e2-pressure-garden.spec.ts",
+      "e2e/er01-e2-census.spec.ts",
+      "e2e/shore-truth.spec.ts"
+    ],
+    "environment": {},
+    "exit": 1,
+    "seconds": 247.17,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-4/e2-pressure-garden-map.log"
+  }
+]

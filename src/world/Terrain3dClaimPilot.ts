@@ -360,6 +360,7 @@ type SculptWaterDressing = {
    */
   glints: 'harvest' | Array<{ x: number; z: number }>;
   rippleStrength?: number;
+  rippleScale?: number;
   /** Blend weight for the procedural canvas map. See the note on the hill mine's entry. */
   textureBlend?: number;
   /** Skip the baked bed map when the authored bed is a flat pan. */
@@ -417,7 +418,7 @@ const SCULPT_WATER_DRESSING: Record<string, SculptWaterDressing> = {
   //     depth) rather than the claim's 0.5.
   'e2-hill-mine': { surface: { kind: 'channel-fill', fill: 0.42 }, color: '#8a8177', opacity: 0.72, fordSkim: 0.11, deepMeters: 0.12, shoreMeters: 0.05, visualHalfWidth: 5.9, glints: [{ x: -27, z: -5.1 }, { x: 13, z: 5.1 }, { x: 33, z: -5.1 }], rippleStrength: 1.15, textureBlend: 0, },
   'e2-trestle': { surface: { kind: 'below-gorge-floor', quantile: 0.8, drop: 0.006 }, color: '#7e8480', opacity: 0.86, fordSkim: 0.11, deepMeters: 0.42, shoreMeters: 0.16, glints: [{ x: -15.5, z: -4.3 }, { x: -4.5, z: -4.5 }], rippleStrength: 0.4, textureBlend: 0.05, },
-  'e2-pressure-garden': { surface: { kind: 'channel-fill', fill: 0.11 }, color: '#d6f0ee', opacity: 0.8, fordSkim: 0.11, deepMeters: 0.5, shoreMeters: 0.15, bed: false, visualHalfWidth: 6.25, glints: [{ x: -30, z: 4.45 }, { x: -12, z: 4.45 }, { x: 12, z: 4.45 }, { x: 30, z: 4.45 }], rippleStrength: 0.75, textureBlend: 0.04, fordTint: 0.44, shoreFadeMeters: 2.2, surfaceLift: true, overhangMeters: 10, emissive: '#0d2a33', collars: [{ mount: 'garden-pressure-manifold', radius: 2.9 }, { mount: 'water-band-pump-station', radius: 2.6 }], },
+  'e2-pressure-garden': { surface: { kind: 'channel-fill', fill: 0.11 }, color: '#cbdde2', opacity: 0.99, fordSkim: 0.11, deepMeters: 0.5, shoreMeters: 0.15, bed: false, visualHalfWidth: 6.25, glints: [{ x: -30, z: 4.45 }, { x: -12, z: 4.45 }, { x: 12, z: 4.45 }, { x: 30, z: 4.45 }], rippleStrength: 0.4, rippleScale: 1.6, textureBlend: 0, fordTint: 0.25, shoreFadeMeters: 1, surfaceLift: true, overhangMeters: 10, collars: [{ mount: 'garden-pressure-manifold', radius: 2.9 }, { mount: 'water-band-pump-station', radius: 2.6 }], },
   'e2-incline': { surface: { kind: 'channel-fill', fill: 0.42 }, color: '#bb9366', opacity: 0.62, fordSkim: 0.125, deepMeters: 0.145, shoreMeters: 0.07, visualHalfWidth: 6.25, glints: [{ x: -30, z: 4.45 }, { x: 30, z: -4.45 }], rippleStrength: 0.6, textureBlend: 0.2, },
 };
 /** The E5 contracts reserve their sea for runtime; the sculpt supplies the visible bed. */
@@ -859,7 +860,6 @@ const LANDMARK_EMISSIVE_WHOLE_BODY_MIN = 0.12;
  */
 // Moth material atlas and frame remap pass the normal-emission census and visual gate (material-light21/gate22).
 const LANDMARK_EMISSIVE_READABILITY_EXEMPT = new Set([
-  'e2-pressure-garden',
   'e6-glow-mesa',
   'e6-picnic',
 ]);
@@ -1081,6 +1081,19 @@ function keepLandmarkPaintReadable(model: THREE.Object3D, paint: LandmarkPaint =
     // pre-calibration render from a material that may already have been re-installed once.
     material.userData.landmarkAuthoredEmissive = paint.intensity;
     material.emissiveIntensity = calibratedLandmarkIntensity(paint.intensity, contractId);
+    if (contractId === 'e2-pressure-garden' && !material.userData.gardenDiffuseGrade) {
+      material.userData.gardenDiffuseGrade = true;
+      // Recover the atlas's dark iron detail in its diffuse paint, so the body can
+      // leave the legacy-emission exemption without turning its texture into a lamp.
+      const compile = material.onBeforeCompile.bind(material);
+      material.onBeforeCompile = (shader, renderer) => {
+        compile(shader, renderer);
+        shader.fragmentShader = shader.fragmentShader.replace('#include <map_fragment>', `#include <map_fragment>
+diffuseColor.rgb = min(vec3(0.88), pow(max(diffuseColor.rgb, vec3(0.0)), vec3(0.62)) * vec3(0.94, 0.99, 1.06) + vec3(0.014));`);
+      };
+      material.customProgramCacheKey = () => 'pressure-garden-diffuse-iron-v1';
+      material.needsUpdate = true;
+    }
   });
 }
 
@@ -1393,6 +1406,7 @@ function mountSculptWater(host: Host, heightAt: (x: number, z: number) => number
     color: stillwater ? '#a5c5d0' : dressing.color,
     opacity: stillwater ? 0.62 : dressing.opacity,
     rippleStrength: stillwater ? 0.04 : dressing.rippleStrength,
+    rippleScale: dressing.rippleScale,
     textureBlend: stillwater ? 0.06 : dressing.textureBlend,
     fordTint: dressing.fordTint,
     shoreFadeMeters: dressing.shoreFadeMeters,
@@ -2025,6 +2039,47 @@ diffuseColor.rgb = mix(diffuseColor.rgb, trestleWorkedPigment, 0.23 * trestleBan
   }
 }
 
+/** Prepared boiler aprons and combed earth follow the existing terrace/bed coordinates. */
+function clarifyPressureGardenTerraces(model: THREE.Object3D): void {
+  if (isMapBeautyDisabled()) return;
+  const materials = new Set<THREE.MeshStandardMaterial>();
+  model.traverse(node => {
+    const mesh = node as THREE.Mesh<THREE.BufferGeometry, THREE.MeshStandardMaterial>;
+    if (mesh.isMesh && !Array.isArray(mesh.material) && mesh.material.isMeshStandardMaterial && mesh.material.map) materials.add(mesh.material);
+  });
+  for (const material of materials) {
+    const compile = material.onBeforeCompile.bind(material);
+    material.onBeforeCompile = (shader, renderer) => {
+      compile(shader, renderer);
+      shader.uniforms.gardenWorkedPigment = { value: new THREE.Color('#957957') };
+      shader.uniforms.gardenRowPigment = { value: new THREE.Color('#9d8662') };
+      shader.vertexShader = shader.vertexShader
+        .replace('#include <common>', '#include <common>\nvarying vec2 vGardenGround;')
+        .replace('#include <begin_vertex>', '#include <begin_vertex>\nvGardenGround = (modelMatrix * vec4(position, 1.0)).xz;');
+      shader.fragmentShader = shader.fragmentShader
+        .replace('#include <common>', '#include <common>\nvarying vec2 vGardenGround;\nuniform vec3 gardenWorkedPigment;\nuniform vec3 gardenRowPigment;')
+        .replace('#include <map_fragment>', `#include <map_fragment>
+float gardenX = abs(vGardenGround.x), gardenZ = vGardenGround.y;
+float gardenWidth = 1.0 - smoothstep(38.0, 44.0, gardenX);
+float gardenService = smoothstep(6.25, 9.0, gardenZ) * (1.0 - smoothstep(15.5, 18.0, gardenZ)) * gardenWidth;
+float gardenGrowing = smoothstep(11.5, 13.0, gardenX) * (1.0 - smoothstep(37.0, 38.5, gardenX)) * smoothstep(19.5, 21.0, gardenZ) * (1.0 - smoothstep(28.0, 29.5, gardenZ));
+diffuseColor.rgb = mix(diffuseColor.rgb, gardenWorkedPigment, gardenService * 0.30);
+diffuseColor.rgb = mix(diffuseColor.rgb, gardenRowPigment, gardenGrowing * 0.23);
+float gardenRowPhase = abs(sin(vGardenGround.x * 2.85 + sin(gardenZ * 0.19) * 0.18));
+float gardenRowInk = 1.0 - smoothstep(0.10, 0.20 + fwidth(gardenRowPhase), gardenRowPhase);
+diffuseColor.rgb *= 1.0 - gardenGrowing * gardenRowInk * 0.18;
+float gardenBedX = abs(vGardenGround.x - 12.0 * floor(vGardenGround.x / 12.0 + 0.5));
+float gardenBed = max(gardenBedX / 2.5, abs(gardenZ - 12.0) / 2.0);
+float gardenApron = (1.0 - smoothstep(0.65, 1.20, gardenBed)) * (1.0 - smoothstep(15.0, 16.0, gardenX));
+diffuseColor.rgb = mix(diffuseColor.rgb, gardenWorkedPigment * 1.12, gardenApron * 0.18);
+float gardenCrest = max(1.0 - smoothstep(0.15, 0.65, abs(gardenZ - 22.4)), 1.0 - smoothstep(0.15, 0.65, abs(gardenZ - 35.4)));
+diffuseColor.rgb = mix(diffuseColor.rgb, gardenRowPigment, gardenCrest * gardenWidth * 0.20);`);
+    };
+    material.customProgramCacheKey = () => 'pressure-garden-worked-terraces-v1';
+    material.needsUpdate = true;
+  }
+}
+
 function applyNightTerrainPools(model: THREE.Object3D, host: Host, opaqueLandmark = false): void {
   // Carried pools use the rig's steel-blue family at the prior ground tint's luminance.
   const materials = new Set<THREE.Material>();
@@ -2452,6 +2507,7 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
       if (host.contractId === 'e1-twin-banks') calmTwinBanksGround(nextTerrain);
       if (host.contractId === 'e1-baron') separateBaronGroundScars(nextTerrain);
       if (host.contractId === 'e2-trestle') calmTrestleApproaches(nextTerrain);
+      if (host.contractId === 'e2-pressure-garden') clarifyPressureGardenTerraces(nextTerrain);
       if (host.nightMode) applyNightTerrainPools(nextTerrain, host);
       else {
         host.canvas.dataset.terrain3dPilotNightPools = 'off';
@@ -2920,7 +2976,7 @@ type LandmarkPaint = { intensity: number; tint: string };
  */
 const LANDMARK_PAINT: Record<string, Record<string, LandmarkPaint>> = {
   'e2-trestle': { 'trestle-crossing': { intensity: 2.6, tint: '#ffffff' }, 'south-boiler-site': { intensity: 2.5, tint: '#e4e5e7' }, 'north-boiler-site': { intensity: 2.5, tint: '#e4e5e7' }, 'mine-spur-kit': { intensity: 2.2, tint: '#efe2cc' }, 'south-approach-kit': { intensity: 2.2, tint: '#ffffff' }, 'north-approach-kit': { intensity: 2.2, tint: '#ffffff' }, },
-  'e2-pressure-garden': { 'garden-pressure-manifold': { intensity: 1.3, tint: '#efe0d2' }, 'water-band-pump-station': { intensity: 1.3, tint: '#efe0d2' }, },
+  'e2-pressure-garden': { 'garden-pressure-manifold': { intensity: 3, tint: '#e4e5e7' }, 'water-band-pump-station': { intensity: 3, tint: '#e4e5e7' }, 'west-terrace-pipe-header': { intensity: 3, tint: '#e4e5e7' }, 'east-terrace-pipe-header': { intensity: 3, tint: '#e4e5e7' }, 'coal-seam-service-winch': { intensity: 3, tint: '#e4e5e7' }, },
   'e2-incline': { 'upper-ore-cable-house': { intensity: 1.5, tint: '#c2a48c' }, 'west-line-brake-tower': { intensity: 1.28, tint: '#b3a693' }, 'east-line-brake-tower': { intensity: 1.28, tint: '#b3a693' }, },
   'e1-baron': {
     fortified_far_bank: { intensity: 2.5, tint: '#aab5bb' },
