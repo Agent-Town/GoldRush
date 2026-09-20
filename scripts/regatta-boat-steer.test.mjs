@@ -1,4 +1,4 @@
-// THE REGATTA BOAT-STEER GUARD — slice 1 of `specs/agent-play/e5-regatta-steerable-boat.md`
+// THE REGATTA BOAT-STEER GUARD — slices 1 AND 2 of `specs/agent-play/e5-regatta-steerable-boat.md`
 // (owner, 2026-09-20: "A14 - do it"; 2026-09-14: "A14 - I am not sure, driving a boat sounds like
 // fun?"; the parity law it lives under, 2026-09-07: "no, AI and human users have to have the same
 // options and tools, otherwise it is unfair. fairness is crucial.").
@@ -24,8 +24,22 @@
 //      through `__GR_TEST__.advanceSim` (the same 1/30 fixed step). Both must reach the pinned hash:
 //      that equality IS the parity claim of this slice.
 //   5. THE IDLE PATH MOVES. A run that never boards must walk the object graph it walked before the
-//      boat could be steered. Pinned by the 83 null floors (`scripts/null-floor-anchors.mjs --check`)
-//      and re-stated here as a cheap two-run determinism check on an idle ride.
+//      boat could be steered. Re-stated here as a cheap two-run determinism check on an idle ride.
+//      (Slice 2 moved the two Regatta NULL FLOORS on purpose — see the three claims below.)
+//
+// SLICE 2 added three more, all of them about WHO IS RACING (law 3, "the race counts the boat"):
+//
+//   6. THE COURSE STOPS BEING WINNABLE BY THE BOAT. A rider sails the five authored marks by
+//      `MOVE_HERO` and the race FINISHES, with the closest approach to every mark measured and
+//      written to `artifacts/e5-regatta-boat-02/measured-course.json` — the evidence the authored
+//      gate radius of 3 is wide enough to round a hull around.
+//   7. THE FORFEIT GOES SOFT (Q2, ratified 2026-09-19). Once the start beacon is passed, stepping
+//      ashore forfeits the run's race: `forfeited` with its tick, no next mark, and re-boarding
+//      does NOT resume it. The secure rule needs no clause of its own — a forfeited race never
+//      finishes, and an unfinished race was already a non-secure run.
+//   8. THE DISHONEST PATH COMES BACK (F-RB1-1). A body SWIMMING from mark to mark used to pass the
+//      gates, and the boat's MOORING used to pass the start beacon on every idle run because the
+//      mark stands on it. Both are asserted dead here.
 //
 // MINTING: `GR_BOAT_TAPE_MINT=1 node --test scripts/regatta-boat-steer.test.mjs` rewrites
 // `boat-tape.json` from the headless engine. Minting is a deliberate, reviewed act — the tape is
@@ -39,6 +53,8 @@ import { createServer } from 'vite';
 const ROOT = fileURLToPath(new URL('..', import.meta.url));
 const TAPE_PATH = fileURLToPath(new URL('../artifacts/e5-regatta-boat/boat-tape.json', import.meta.url));
 const ARTIFACT_DIR = fileURLToPath(new URL('../artifacts/e5-regatta-boat/', import.meta.url));
+/** Slice 2's own evidence directory; slice 1's stays exactly where it is. */
+const RACE_ARTIFACT_DIR = fileURLToPath(new URL('../artifacts/e5-regatta-boat-02/', import.meta.url));
 const CONTRACT = 'e5-regatta';
 const SEED = 'e5-regatta-01';
 const STEP = 1 / 30;
@@ -85,9 +101,44 @@ async function withVite(run) {
 
 const boatOf = (sim) => sim.deepwater.tile.boat;
 const motionOf = (sim) => sim.deepwater.tile.snapshot().boat.motion;
+const raceOf = (sim) => sim.deepwater.diagnostics.race;
 const orderOf = (sim) => sim.standingOrdersSnapshot().orders.at(-1);
 /** The browser reaches these two positions through `__GR_TEST__.teleport`; this is the same act. */
 const placeHero = (sim, { x, z }) => sim.hero.group.position.set(x, sim.hero.group.position.y, z);
+
+/**
+ * SLICE 2 — how a rider aims at a mark. A buoy is a SOLID (`landmark-collision-contract.json`
+ * mounts a rig or a buoy-line anchor on every one of the five), so `MOVE_HERO` to the mark itself
+ * is refused `UNREACHABLE_APPROACH` — measured, not assumed. The public rider grammar therefore
+ * steers to open water INSIDE the gate radius, two metres off the mark, which is the same rule
+ * `scripts/deepwater-rider-parity.test.mjs` wrote down when the course was walked on foot.
+ */
+const GATE_APPROACH = 2;
+
+/**
+ * The honest race: order the next mark, sail, order the next. Returns what the course did and how
+ * close the HULL'S CENTRE came to each mark — the number the "is radius 3 wide enough" question in
+ * the master is decided on.
+ */
+function sailTheCourse(sim, maxTicks = 12_000) {
+  const closest = new Map();
+  let ordered = null;
+  let ticks = 0;
+  while (!sim.isTerminal && ticks < maxTicks) {
+    const next = raceOf(sim).nextGate;
+    if (!next) break;
+    if (ordered !== next.id) {
+      assert.equal(sim.submitOrders([{ verb: 'MOVE_HERO', pos: { x: next.x, z: next.z + GATE_APPROACH } }]).outcome.ok, true);
+      ordered = next.id;
+    }
+    sim.advanceOneTick();
+    ticks += 1;
+    const m = motionOf(sim);
+    const gap = Math.hypot(m.x - next.x, m.z - next.z);
+    closest.set(next.id, Math.min(closest.get(next.id) ?? Number.POSITIVE_INFINITY, gap));
+  }
+  return { ticks, seconds: ticks * STEP, closest: Object.fromEntries([...closest].map(([id, d]) => [id, Number(d.toFixed(3))])) };
+}
 
 /** The boarding half of the tape, identical in both engines. Leaves the boat at rest on its anchor. */
 function boardByWalkingAboard(sim) {
@@ -354,6 +405,126 @@ test('the same tape reaches the same boat track and the same hash on this engine
     // The claim the browser half completes: `e2e/e5-regatta-boat.spec.ts` replays this same tape
     // through `__GR_TEST__.advanceSim` and asserts this same hash.
     console.log(`[regatta-boat] tape hash ${hash} over ${track.length} samples`);
+  });
+});
+
+test('SLICE 2 — a rider sails the five buoys and the race is won by the BOAT', async () => {
+  await withVite(async (vite) => {
+    const { HeadlessContractSim } = await vite.ssrLoadModule('/src/sim/HeadlessContractSim.ts');
+    const { loadContract } = await vite.ssrLoadModule('/src/meta/ContractFamilies.ts');
+    const course = loadContract(CONTRACT).tileParams.raceCourse;
+
+    const sim = new HeadlessContractSim({ contractId: CONTRACT, seed: SEED });
+    assert.deepEqual(raceOf(sim).gatesPassed, [], 'a boat nobody has boarded has started nothing');
+
+    // Boarding alone passes the START BEACON, because the mark stands on the boat's own mooring.
+    // That is the moment the race becomes this run's to lose (the forfeit clause below).
+    boardByWalkingAboard(sim);
+    assert.equal(boatOf(sim).aboard, 'hero');
+    assert.deepEqual(raceOf(sim).gatesPassed.map(({ id }) => id), ['start-beacon']);
+
+    const raced = sailTheCourse(sim);
+    const race = raceOf(sim);
+    assert.equal(race.finished, true, `the course ended ${JSON.stringify(race)}`);
+    assert.equal(race.forfeited, false, 'a race sailed all the way is not a forfeit');
+    assert.deepEqual(
+      race.gatesPassed.map(({ id }) => id),
+      course.beacons.map(({ id }) => id),
+      'all five authored marks, in their authored order',
+    );
+    assert.equal(race.nextGate, null, 'a finished course has no next mark');
+    assert.equal(motionOf(sim).aboard, 'hero', 'the finish requires the boat WITH the hero aboard');
+
+    // THE COURSE AS RACED, for the report: the five marks, then back to the `heroStart` stake the
+    // system takes as its finish line. The closest approach to each mark is what decides whether
+    // the authored radius of 3 is wide enough for a hull to round a buoy at all.
+    const measured = {
+      finishedAtSeconds: Number(race.finishedAt.toFixed(3)),
+      sailedSeconds: Number(raced.seconds.toFixed(3)),
+      closestApproach: raced.closest,
+      gateRadii: Object.fromEntries(course.beacons.map(({ id, radius }) => [id, radius])),
+      fastWaterMultiplier: race.fastWaterMultiplier,
+    };
+    console.log(`[regatta-race] ${JSON.stringify(measured)}`);
+    mkdirSync(RACE_ARTIFACT_DIR, { recursive: true });
+    writeFileSync(`${RACE_ARTIFACT_DIR}measured-course.json`, `${JSON.stringify(measured, null, 2)}\n`);
+
+    // F-RB1-2 CLOSED: one authored fast-water number, and it is the hull's own.
+    const physics = loadContract(CONTRACT).tileParams.deepwater.claimBoat.physics;
+    assert.equal(race.fastWaterMultiplier, physics.fastWaterMultiplier,
+      'the race and the hull must read the same fast-water number');
+
+    // Every mark was rounded inside its authored radius — with the margin printed above, so a
+    // later reader can see how much room the hull actually had.
+    for (const beacon of course.beacons.slice(1)) {
+      assert.ok(raced.closest[beacon.id] <= beacon.radius,
+        `${beacon.id} was rounded at ${raced.closest[beacon.id]} against a radius of ${beacon.radius}`);
+    }
+  });
+});
+
+test('SLICE 2 — leaving the boat after the start beacon forfeits the race for the run', async () => {
+  await withVite(async (vite) => {
+    const { HeadlessContractSim } = await vite.ssrLoadModule('/src/sim/HeadlessContractSim.ts');
+    const sim = new HeadlessContractSim({ contractId: CONTRACT, seed: SEED });
+    boardByWalkingAboard(sim);
+    assert.deepEqual(raceOf(sim).gatesPassed.map(({ id }) => id), ['start-beacon'], 'the race has started');
+
+    // One plank off the port rail: the rim beyond the hull's clamp is ground a body can stand on
+    // that the hull cannot float in — slice 1's step ashore, unchanged.
+    const afloat = motionOf(sim);
+    const ashore = { x: afloat.x - 4.4 - 1, z: afloat.z };
+    assert.equal(sim.submitOrders([{ verb: 'MOVE_HERO', pos: ashore }]).outcome.ok, true);
+    for (let i = 0; i < 300 && !sim.isTerminal; i += 1) {
+      sim.advanceOneTick();
+      if (raceOf(sim).forfeited) break;
+    }
+    const forfeited = raceOf(sim);
+    assert.equal(motionOf(sim).aboard, null, 'the hero stepped ashore');
+    assert.equal(forfeited.forfeited, true, `the race did not forfeit: ${JSON.stringify(forfeited)}`);
+    assert.ok(Number.isFinite(forfeited.forfeitedAt), 'the forfeit must name its tick');
+    assert.equal(forfeited.nextGate, null, 'a forfeited course has no next mark');
+
+    // AND IT CANNOT BE RESUMED. Back aboard, sail the whole course again: the gates stay where the
+    // forfeit left them and the race never finishes. One body races, and this run left it.
+    placeHero(sim, { x: ashore.x, z: ashore.z });
+    boardByWalkingAboard(sim);
+    const resumed = raceOf(sim);
+    assert.equal(resumed.forfeited, true, 're-boarding must not un-forfeit the race');
+    assert.equal(resumed.finished, false);
+    assert.deepEqual(resumed.gatesPassed.map(({ id }) => id), forfeited.gatesPassed.map(({ id }) => id),
+      'a forfeited course passes no further gate');
+    // The secure rule is the one that was already there: an unfinished race is a non-secure run.
+    assert.equal(resumed.finished, false, 'a forfeited run cannot secure, because it never finishes');
+  });
+});
+
+test('SLICE 2 — a hero who never boards never advances the course', async () => {
+  await withVite(async (vite) => {
+    const { HeadlessContractSim } = await vite.ssrLoadModule('/src/sim/HeadlessContractSim.ts');
+    const { loadContract } = await vite.ssrLoadModule('/src/meta/ContractFamilies.ts');
+    const beacons = loadContract(CONTRACT).tileParams.raceCourse.beacons;
+
+    // THE DISHONEST PATH THIS SLICE CLOSES (F-RB1-1). Before it, a body swimming from mark to mark
+    // passed the gates — this is that exact ride, and now it scores nothing at all.
+    const sim = new HeadlessContractSim({ contractId: CONTRACT, seed: SEED });
+    for (const beacon of beacons.slice(1)) {
+      assert.equal(sim.submitOrders([{ verb: 'MOVE_HERO', pos: { x: beacon.x, z: beacon.z + GATE_APPROACH } }]).outcome.ok, true);
+      for (let i = 0; i < 2_000 && !sim.isTerminal; i += 1) {
+        sim.advanceOneTick();
+        const status = orderOf(sim)?.status;
+        if (status === 'done' || status === 'failed') break;
+      }
+      const hero = sim.hero.group.position;
+      assert.ok(Math.hypot(hero.x - beacon.x, hero.z - beacon.z) <= beacon.radius,
+        `the swimmer must actually reach ${beacon.id} (${hero.x.toFixed(2)}, ${hero.z.toFixed(2)})`);
+      assert.equal(boatOf(sim).aboard, null, 'the swimmer never boards');
+    }
+    const race = raceOf(sim);
+    assert.deepEqual(race.gatesPassed, [], `a swimming hero passed ${JSON.stringify(race.gatesPassed)}`);
+    assert.equal(race.finished, false, 'a swimming hero cannot win the Regatta');
+    assert.equal(race.forfeited, false, 'a hero who never started cannot forfeit — a non-starter is not a forfeit');
+    assert.equal(motionOf(sim).x, -49, 'the mooring stayed on its anchor while the body swam');
   });
 });
 
