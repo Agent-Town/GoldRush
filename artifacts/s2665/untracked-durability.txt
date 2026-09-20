@@ -1,0 +1,117 @@
+UNTRACKED EVIDENCE DURABILITY — the §2E sweep's untracked half (F-2586-1)
+
+  corpus    : 1 tree(s) swept of 9 registered — 1 answered, 0 could-not-answer
+  scope     : MAIN tree only — the §2E duty; add --all-trees for the registry
+  population: untracked + modified-tracked, NO pathspec (F-2389-1); the modified-tracked-only census is F-2569-2
+  prefixes  : artifacts/ reviews/ tasks/runs/ logs/runs-archive/
+  controls  : 29078 tracked · 101544 remote-reachable · 101658 all-ref-reachable
+  subjects  : 50
+
+  ALL FOUR BUCKETS (printed so the predicate is visible, F-2560-1):
+    AT RISK             49 file(s)     432.2 MB  1 tree(s)
+    UNREFERENCED         0 file(s)       0.0 MB  0 tree(s)
+    LOCAL-REF-ONLY       0 file(s)       0.0 MB  0 tree(s)
+    SAFE                 1 file(s)       0.0 MB  1 tree(s)
+
+    ⚠️  A non-SAFE count above is NOT a durability hole by itself — a retention
+        transform may already hold those bytes in another SHAPE (F-2570-1/F-2571-1),
+        and the RETENTION VERDICT that decides it prints at the END of this output.
+        Read it before you push, salvage or file anything: truncating here delivers
+        the ALARM and cuts the ALL-CLEAR (F-2606-1).
+
+    AT RISK splits by POPULATION, and only ONE half is the F-2569-2 desk figure:
+      modified-tracked      0 file(s)       0.0 MB  0 tree(s)  = the DESK figure
+      untracked            49 file(s)     432.2 MB  1 tree(s)  = THIS tool's own subject
+      Do NOT paste the combined AT RISK count onto the desk row — derive the desk
+      figure with `node scripts/modified-tracked-evidence-census.mjs` (F-2585-1).
+
+    UNREFERENCED means: in the object database, held by NO ref. For a file STILL ON
+    DISK the object copy is REDUNDANT and `git gc` costs nothing — the prunable-fuse
+    reading of this bucket is FALSE for these subjects (F-2566-1).
+
+  newest non-SAFE mtime : 2026-09-20T09:50:06.475Z  (0.00 days quiet)
+                          artifacts/s2665/gazette-sweep.txt
+  ⏱️  IN FLIGHT — something is still WRITING these. REPORT, DO NOT TOUCH; find
+      the owner (F-2495-1). Reaching into a live tree to "rescue" bytes is the
+      Mistake #2 direction F-2489-1 forbids.
+
+  retention refs carrying a BACKUP-MANIFEST: 0 (of 12956 ref(s))
+  retention-transform test on ALL 49 non-SAFE subject(s) — F-2571-1 applies it to
+  EVERY non-SAFE bucket, not just LOCAL-REF-ONLY:
+    ✗ NOT PRESERVED 0/0  artifacts/056/desktop-build-menu-icons-blurb.png
+    ✗ NOT PRESERVED 0/0  artifacts/056/desktop-build-menu-palisade.png
+    ✗ NOT PRESERVED 0/0  artifacts/056/mobile-390-build-menu-icons-blurb.png
+    ✗ NOT PRESERVED 0/0  artifacts/s2664/diff-line1.mjs
+    ✗ NOT PRESERVED 0/0  artifacts/s2664/fresh-a.txt
+    ✗ NOT PRESERVED 0/0  artifacts/s2664/handoff.txt
+    ✗ NOT PRESERVED 0/0  artifacts/s2664/row.txt
+    ✗ NOT PRESERVED 0/0  artifacts/s2664/row2.txt
+    ✗ NOT PRESERVED 0/0  artifacts/s2664/stale-a.txt
+    ✗ NOT PRESERVED 0/0  artifacts/s2665/gazette-sweep.txt
+    ✗ NOT PRESERVED 0/0  artifacts/s2665/refmap-before.txt
+    ✗ NOT PRESERVED 0/0  logs/runs-archive/traces/prefetch-bounded-warming/advance-stream-cache-reuse-6f92f--without-route-interception-desktop-chrome/trace.zip
+    ✗ NOT PRESERVED 0/0  logs/runs-archive/traces/prefetch-bounded-warming/advance-stream-cache-reuse-c5d46-se-under-production-headers-desktop-chrome/trace.zip
+    ✗ NOT PRESERVED 0/0  logs/runs-archive/traces/prefetch-bounded-warming/advance-stream-launch-abor-c3f36-he-run-requests-its-own-map-desktop-chrome/trace.zip
+    ✗ NOT PRESERVED 0/0  logs/runs-archive/traces/prefetch-bounded-warming/advance-stream-launch-abor-c3f36-he-run-requests-its-own-map-mobile-chrome/trace.zip
+    ✗ NOT PRESERVED 0/0  logs/runs-archive/traces/prefetch-bounded-warming/asset-diet-town-byte-budge-360a8-al-and-saveData-arms-by-URL-desktop-chrome/trace.zip
+    ✗ NOT PRESERVED 0/0  tasks/runs/20260728-095121-art-e7-town-icons-preflight.md
+    ✗ NOT PRESERVED 0/0  tasks/runs/20260728-101445-art-e7-town-icons.md
+    ✗ NOT PRESERVED 0/0  tasks/runs/20260728-105309-art-e8-town-icons.md
+    ✗ NOT PRESERVED 0/0  tasks/runs/20260728-113153-art-e7-chalk-portrait-preflight.md
+    ✗ NOT PRESERVED 0/0  tasks/runs/20260728-113706-art-e7-chalk-portrait.md
+    ✗ NOT PRESERVED 0/0  tasks/runs/20260728-122506-art-e9-town-icons.md
+    ✗ NOT PRESERVED 0/0  tasks/runs/20260728-125817-art-e9-town-icons.md
+    ✗ NOT PRESERVED 0/0  tasks/runs/20260728-134156-lane-c-asset-diet-skip-duty-split.md
+    ✗ NOT PRESERVED 0/0  tasks/runs/20260728-143726-lane-c-power-budget-instrument-control.md
+    ✗ NOT PRESERVED 0/0  tasks/runs/20260728-154016-lane-c-power-budget-retry-policy.md
+    ✗ NOT PRESERVED 0/0  tasks/runs/20260728-155531-lane-a-build-mode-prompt-spec-realign.md
+    ✗ NOT PRESERVED 0/0  tasks/runs/20260728-164306-lane-a-town-info-note-dead-reckoning.md
+    ✗ NOT PRESERVED 0/0  tasks/runs/20260728-172245-lane-c-eight-winds-wiring-hero.md
+    ✗ NOT PRESERVED 0/0  tasks/runs/20260728-174607-lane-c-eight-winds-master-convention.md
+    ✗ NOT PRESERVED 0/0  tasks/runs/20260728-175802-lane-c-eight-winds-wiring-hero.md
+    ✗ NOT PRESERVED 0/0  tasks/runs/20260728-183927-lane-a-cp04-lever-unlock-seed-realign.md
+    ✗ NOT PRESERVED 0/0  tasks/runs/20260728-194116-lane-c-066-walk8-hero-expectation-realign.md
+    ✗ NOT PRESERVED 0/0  tasks/runs/20260728-194217-lane-b-cp04-charter-name-composition.md
+    ✗ NOT PRESERVED 0/0  tasks/runs/20260728-200755-lane-c-066-walk8-hero-expectation-realign.md
+    ✗ NOT PRESERVED 0/0  tasks/runs/20260728-215214-art-gazette-engravings.md
+    ✗ NOT PRESERVED 0/0  tasks/runs/20260728-223409-lane-c-eight-winds-wiring-enemies.md
+    ✗ NOT PRESERVED 0/0  tasks/runs/20260728-231215-lane-a-gazette-art-wiring.md
+    ✗ NOT PRESERVED 0/0  tasks/runs/20260728-234811-lane-a-gazette-art-wiring-hardening.md
+    ✗ NOT PRESERVED 0/0  tasks/runs/20260729-000631-lane-b-cp04-launch-clear-observability.md
+    ✗ NOT PRESERVED 0/0  tasks/runs/20260729-003051-lane-c-eight-winds-wiring-e2-enemies.md
+    ✗ NOT PRESERVED 0/0  tasks/runs/20260729-010959-lane-c-eight-winds-e2-row-order-survey.md
+    ✗ NOT PRESERVED 0/0  tasks/runs/20260729-014113-lane-a-m3-05c-run-ledger-meta-earned.md
+    ✗ NOT PRESERVED 0/0  tasks/runs/20260729-020242-lane-c-eight-winds-rail-tough-row-settle.md
+    ✗ NOT PRESERVED 0/0  tasks/runs/20260729-022733-lane-a-m3-05d-run-ledger-earned-truth.md
+    ✗ NOT PRESERVED 0/0  tasks/runs/20260729-031802-art-e2-eight-winds-row-repairs.md
+    ✗ NOT PRESERVED 0/0  tasks/runs/20260729-032452-lane-a-m3-05e-ledger-rush-card-evidence.md
+    ✗ NOT PRESERVED 0/0  tasks/runs/20260729-040855-lane-a-m3-05f-ledger-remaining-card-evidence.md
+    ✗ NOT PRESERVED 0/0  tasks/runs/20260729-0442-lane-b-claw-2x-triangle-billing-diagnosis.md
+
+  RETENTION VERDICT: 0/49 non-SAFE subject(s) fully preserved; parts 0/0 origin-reachable
+  bytes NOT streamed — presence is not recoverability (F-2582-1); add --verify-bytes to check
+  ⚖️  A PRESERVED verdict means the alarm is a FALSE URGENCY: do not push bytes that
+      are already on origin, and do not file a durability hole that does not exist.
+
+  ownership : 0 unpreserved file(s) attended-owned (REPORT, never touch — F-2561-1) · 49 FACTORY-SIDE
+  ⚠️  FACTORY-SIDE and unpreserved — these ARE a fire's own to salvage:
+      FIRST apply F-2483-1's fifth test, which NO bucket above can express: is this
+      content already committed IN ANOTHER FORM? The verdict reads retention MANIFESTS
+      only, so it cannot see the ordinary shape — the same bytes inside a TRACKED file
+      at another path (a per-run tail whose every line is already in a cumulative log).
+      One `git show HEAD:<sibling>` settles it; if it is covered the alarm is a FALSE
+      URGENCY, and the right act is to record that judgement, not to mint a ref.
+      node scripts/salvage-art-staging.mjs save/<name> && git push origin save/<name>
+      (a local-only salvage reads as safe and is not — F-1055-1)
+        /Users/robin/Claude/Projects/Gold Rush :: artifacts/056/desktop-build-menu-icons-blurb.png
+        /Users/robin/Claude/Projects/Gold Rush :: artifacts/056/desktop-build-menu-palisade.png
+        /Users/robin/Claude/Projects/Gold Rush :: artifacts/056/mobile-390-build-menu-icons-blurb.png
+        /Users/robin/Claude/Projects/Gold Rush :: artifacts/s2664/diff-line1.mjs
+        /Users/robin/Claude/Projects/Gold Rush :: artifacts/s2664/fresh-a.txt
+        /Users/robin/Claude/Projects/Gold Rush :: artifacts/s2664/handoff.txt
+        /Users/robin/Claude/Projects/Gold Rush :: artifacts/s2664/row.txt
+        /Users/robin/Claude/Projects/Gold Rush :: artifacts/s2664/row2.txt
+
+  BANKED (main tree, s2582 · s2584 · s2585 · s2586 all agree — F-2581-1):
+    AT RISK 0 · UNREFERENCED 2 · LOCAL-REF-ONLY 4 · SAFE 91 · 6/6 preserved · 23/23 parts
+    A divergence here is a finding about your TREE or about this VERIFIER. Read both.
