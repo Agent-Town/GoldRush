@@ -76,6 +76,106 @@ export function readBaseline(file) {
   }
 }
 
+// F-2664-1: CONTENTION IS A STATE, NOT AN EVENT — so it cannot be read off a DELTA.
+//
+// F-2663-1 made it a binding triage read to run this tool before any drain and "READ THE
+// ADDED LIST BY NAME", because an ADDED tree containing your drain is a STOP (§7.6). That
+// is right about the value and wrong about the channel: ADDED is a diff against the banked
+// baseline, and F-2636-1's own duty tells the SAME fire to re-bank with `--update` in the
+// SAME fire. So the contending tree enters the baseline immediately, while the contention
+// it represents persists for hours — and on the NEXT fire the tool prints `✅ UNCHANGED`.
+//
+// MEASURED s2664, one fire after that cure landed: s2663 banked 9 paths INCLUDING
+// `scratchpad/wt-corr2-land`, which held an unlanded `drain: merge sol/map-art-campaign-2`
+// and was being written 4.1 minutes earlier. This tool's WHOLE output was 310 bytes, said
+// `✅ UNCHANGED — the registry set is identical to the banked one (9 paths)`, and did not
+// name that tree ANYWHERE. Meanwhile F-A3-2's temporary store gate had CLEARED, so
+// `drain-block-check` read ✅ CLEAR and the lane sat 3 ahead — the exact collision F-2663-1
+// predicted for "a fire arriving after that".
+//
+// So the declaration below is ALWAYS-ON and independent of the baseline (F-2208-1: a
+// declaration that appears only on a delta re-creates the ambiguity it removes). It
+// DECLARES and does NOT refuse — exit codes are untouched — because a worktree holding
+// unlanded work is LAWFUL, routine attended work, and a red there would be excused into
+// uselessness inside a week (F-1460-1). It is the same restraint F-2366-1 took for BUSY.
+//
+// Containment is asked BY VALUE (`rev-list --count`), never by `merge-base --is-ancestor`:
+// that command uses exit 1 as a legitimate VERDICT, and F-2561-1 measured that the
+// "exit 1 with empty stderr" discriminator is UNAVAILABLE through a wrapper that collapses
+// a failure to `err.message` — node supplies "Command failed:", so a real verdict reads as
+// a crash and three genuinely-unlanded trees get misfiled as unanswerable.
+export function unlandedTrees(root = repoRoot(), mainRef = 'main') {
+  const git = (args) => execFileSync('git', args, { cwd: root, encoding: 'utf8', maxBuffer: 64 << 20 }).trim();
+
+  let mainSha;
+  try {
+    mainSha = git(['rev-parse', '--verify', mainRef]);
+  } catch (err) {
+    // A STRING state, never an empty list: an unresolvable main must fail toward NOTICING
+    // rather than toward "nothing is in flight" (F-2212-1's polarity).
+    return { state: 'unverifiable', detail: `could not resolve ${mainRef}: ${err.message}`, trees: [] };
+  }
+
+  let porcelain;
+  try {
+    porcelain = git(['worktree', 'list', '--porcelain']);
+  } catch (err) {
+    return { state: 'unverifiable', detail: `git worktree list failed: ${err.message}`, trees: [] };
+  }
+
+  const entries = [];
+  let cur = null;
+  for (const line of porcelain.split('\n')) {
+    if (line.startsWith('worktree ')) {
+      cur = { path: line.slice(9) };
+      entries.push(cur);
+    } else if (!cur) continue;
+    else if (line.startsWith('HEAD ')) cur.head = line.slice(5);
+    else if (line.startsWith('branch ')) cur.branch = line.slice(7).replace(/^refs\/heads\//, '');
+    else if (line === 'detached') cur.detached = true;
+  }
+
+  const rootReal = (() => {
+    try {
+      return realpathSync(root);
+    } catch {
+      return resolve(root);
+    }
+  })();
+
+  const trees = [];
+  for (const e of entries) {
+    if (!e.head) continue;
+    let same = false;
+    try {
+      same = realpathSync(e.path) === rootReal;
+    } catch {
+      same = resolve(e.path) === rootReal;
+    }
+    if (same) continue; // the repo root is where a drain LANDS; it is never a contender.
+
+    let ahead;
+    try {
+      ahead = Number(git(['rev-list', '--count', `${mainSha}..${e.head}`]));
+    } catch (err) {
+      // Declared, never dropped: a tree we could not judge is the one most worth naming.
+      trees.push({ path: e.path, head: e.head, branch: e.branch || '(detached)', ahead: null, subject: null, state: 'unverifiable', detail: err.message });
+      continue;
+    }
+    if (!Number.isFinite(ahead) || ahead === 0) continue; // contained in main: already landed.
+
+    let subject = null;
+    try {
+      subject = git(['log', '-1', '--format=%s', e.head]);
+    } catch {
+      subject = null;
+    }
+    trees.push({ path: e.path, head: e.head, branch: e.branch || '(detached)', ahead, subject, state: 'unlanded' });
+  }
+
+  return { state: 'read', trees };
+}
+
 export function diffRegistry(before, after) {
   const b = new Set(before);
   const a = new Set(after);
@@ -153,6 +253,38 @@ function main() {
   say(`  baseline  : ${base.state}${base.state === 'read' ? ` — ${base.worktrees.length} path(s), banked ${base.measured || '?'} by ${base.session || '?'}` : ''}`);
   say(`  baseline @ : ${BASELINE_REL}`);
   if (base.detail) say(`  baseline detail: ${base.detail}`);
+
+  // F-2664-1 — printed BEFORE every verdict branch, so it survives the UNCHANGED early
+  // exit that swallowed it. The COUNT line is unconditional (it is a corpus fact, and its
+  // zero is the all-clear a fire needs); the NAMED list is gated on the list existing,
+  // because an always-on empty section is the noise that decays a declaration into a
+  // formality (F-2366-1).
+  const flight = unlandedTrees(root);
+  if (flight.state !== 'read') {
+    say(`  in flight : UNVERIFIABLE — ${flight.detail}`);
+    say('              Do NOT read this as "nothing is in flight"; nothing was measured.');
+  } else {
+    say(`  in flight : ${flight.trees.length} registered tree(s) hold work that is NOT on main`);
+    if (flight.trees.length) {
+      say('');
+      say('  ⚠️  IN FLIGHT ELSEWHERE — a tree holding YOUR drain is a STOP (F-2663-1, §7.6):');
+      for (const t of flight.trees) {
+        if (t.state === 'unverifiable') {
+          say(`      ? ${t.path}`);
+          say(`          UNVERIFIABLE — ${t.detail}`);
+          continue;
+        }
+        say(`      • ${t.path}`);
+        say(`          ${t.head.slice(0, 9)} · ${t.branch} · ${t.ahead} commit(s) ahead of main`);
+        if (t.subject) say(`          "${t.subject.slice(0, 96)}"`);
+      }
+      say('');
+      say('     ⓘ  Match your drain candidate against the HEADs above BEFORE you gate it. A');
+      say('        path SUGGESTS a subject; a HEAD PROVES one. This list is deliberately');
+      say('        independent of the baseline: contention is a STATE and persists across');
+      say('        fires, while an ADDED delta is consumed by the first --update (F-2664-1).');
+    }
+  }
   say('');
 
   if (base.state === 'unreadable') {

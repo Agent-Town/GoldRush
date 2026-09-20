@@ -235,3 +235,84 @@ test('14. the live registry is read from git, not from the baseline — a real w
   assert.match(r.out, /registry\s+: 2 registered worktree\(s\)/);
   assert.match(r.out, /ADDED \(1\)/);
 });
+
+// ---------------------------------------------------------------------------
+// F-2664-1 — the IN FLIGHT declaration. CONTENTION IS A STATE, NOT AN EVENT.
+// These arms exist because ADDED is a DELTA and the same duty re-banks it in the same
+// fire, so one fire later the contending tree is in the baseline, the delta is empty, and
+// the tool printed a 310-byte '✅ UNCHANGED' that named nothing (measured s2664, live).
+// ---------------------------------------------------------------------------
+
+// The load-bearing arm: the defect was invisible EXACTLY on the UNCHANGED path.
+test('15. a tree holding unlanded work is NAMED on the UNCHANGED path (F-2664-1)', () => {
+  const dir = fresh();
+  const wt = join(dir, 'in-flight');
+  git(dir, ['worktree', 'add', '-q', '-b', 'contender', wt]);
+  writeFileSync(join(wt, 'work.txt'), 'unlanded\n');
+  git(wt, ['add', 'work.txt']);
+  git(wt, ['commit', '-qm', 'drain: merge the thing you were about to drain']);
+  baseline(dir, liveSet(dir)); // baseline ALREADY contains it — the s2664 state exactly
+  const r = cli(dir);
+  assert.ok(r.out.length > 0, 'control: the subject produced output');
+  assert.match(r.out, /✅ UNCHANGED/, 'control: this really is the delta-empty path');
+  assert.match(r.out, /IN FLIGHT ELSEWHERE/, 'the declaration must survive the UNCHANGED exit');
+  assert.ok(r.out.includes(wt), 'the contending tree is named verbatim');
+});
+
+test('16. the named entry carries its HEAD subject — a path suggests, a HEAD proves', () => {
+  const dir = fresh();
+  const wt = join(dir, 'in-flight');
+  git(dir, ['worktree', 'add', '-q', '-b', 'contender', wt]);
+  writeFileSync(join(wt, 'work.txt'), 'unlanded\n');
+  git(wt, ['add', 'work.txt']);
+  git(wt, ['commit', '-qm', 'drain: merge sol/some-lane — a subject only the HEAD knows']);
+  baseline(dir, liveSet(dir));
+  const r = cli(dir);
+  assert.match(r.out, /a subject only the HEAD knows/, 'the HEAD subject is printed');
+  assert.match(r.out, /1 commit\(s\) ahead of main/, 'the ahead count is printed');
+});
+
+// Reverse control for the over-general cure: printing the SECTION unconditionally.
+test('17. a board with nothing in flight prints the COUNT and NO section', () => {
+  const dir = fresh();
+  baseline(dir, liveSet(dir));
+  const r = cli(dir);
+  assert.ok(r.out.length > 0, 'control: the subject produced output');
+  assert.match(r.out, /in flight : 0 registered tree\(s\)/, 'the count is unconditional (F-2208-1)');
+  assert.ok(!/IN FLIGHT ELSEWHERE/.test(r.out), 'an always-on empty section is noise (F-2366-1)');
+});
+
+// Reverse control for the destructive direction: this must DECLARE, never refuse.
+test('18. an in-flight tree does NOT move the exit code — it declares (F-1460-1)', () => {
+  const dir = fresh();
+  const wt = join(dir, 'in-flight');
+  git(dir, ['worktree', 'add', '-q', '-b', 'contender', wt]);
+  writeFileSync(join(wt, 'work.txt'), 'unlanded\n');
+  git(wt, ['add', 'work.txt']);
+  git(wt, ['commit', '-qm', 'in flight']);
+  baseline(dir, liveSet(dir));
+  assert.match(cli(dir).out, /IN FLIGHT ELSEWHERE/, 'control: the declaration really fired');
+  assert.equal(cli(dir).status, 0, 'advisory stays advisory');
+  assert.equal(cli(dir, ['--strict']).status, 0, 'an UNCHANGED set is still 0 under --strict');
+});
+
+// Reverse control for 'list every worktree': containment is asked BY VALUE.
+test('19. a worktree whose HEAD is ON main is NOT listed as in flight', () => {
+  const dir = fresh();
+  const wt = join(dir, 'landed');
+  git(dir, ['worktree', 'add', '-q', '-b', 'landed-branch', wt]); // branched, no new commit
+  baseline(dir, liveSet(dir));
+  const r = cli(dir);
+  assert.match(r.out, /in flight : 0 registered tree\(s\)/, 'a tree at main holds nothing unlanded');
+  assert.ok(!r.out.includes(wt), 'it must not be named');
+});
+
+test('20. an unresolvable main DECLARES unverifiable — never "nothing in flight"', () => {
+  const dir = fresh();
+  baseline(dir, liveSet(dir));
+  git(dir, ['branch', '-m', 'main', 'trunk']); // now `main` does not resolve
+  const r = cli(dir);
+  assert.ok(r.out.length > 0, 'control: the subject produced output');
+  assert.match(r.out, /in flight : UNVERIFIABLE/, 'a failed read is declared, not zeroed');
+  assert.match(r.out, /nothing was measured/i, 'and it says what that does NOT mean');
+});
