@@ -1,3 +1,11 @@
+## ROUNDUP — the Dust Flats, the Long Road and Gusher County come clear
+Stand at the entry of the Dust Flats, the Long Road or Gusher County: the desert
+carries the wheel cuts and paint it was surveyed with, the tall cabin at Gusher
+stops hiding what is behind it, and the charting posts no longer cover the phone.
+merge `74083ce0d` · review `reviews/sol-map-art-corrections-3.md` · ROUNDUP-CLASS: 2026-W38's three standalone slots are spent (3 standalone, 17 batched)
+
+NOT PLAYER-VISIBLE — `8fb118452` appends same-era pin #22 to `assets/engine-era.json`; read the diff and `"era": 6` is unchanged on both sides, only the engine hash rotates, so no era bumped and nothing a rider meets moved.
+
 NOT PLAYER-VISIBLE — s2666 merged a lock line, one BACKLOG finding (F-2666-1) and an annotation retiring the F-2569-2 row’s gate: ledger and law bookkeeping only, no `src/`, no assets, no rendered surface. The sweep offered `0` candidates (examined `5658` first-parent commits, player-path `411`, cited `411`), and my own paths sit outside its scan space by construction.
 
 ## ROUNDUP — three more maps corrected, and a seam in the Canyon closed
