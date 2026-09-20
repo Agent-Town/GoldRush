@@ -1,3 +1,5 @@
+**NOT PLAYER-VISIBLE** — s2663 merged a lock line, one findings row and a re-banked worktree registry; no player path moved. Candidates 0, path-tested against the sweep's own PLAYER_PREFIXES read from the tool rather than transcribed, with both controls asserted first; the full sweep was started and then deliberately stopped mid-run so a live attended drain's gates would not be measured under my contention.
+
 NOT PLAYER-VISIBLE — s2662 merged law, ledger and bookkeeping only: two owed finding rows, a re-banked worktree-registry baseline, one new finding with its law clause, and a lock line. No file under the scan space (src/ assets/ public/ functions/ site/ index.html) was touched, established by path-testing every unjudged first-parent commit since the swap boundary against PLAYER_PREFIXES imported from the sweep itself, with the predicate controlled both ways first: 0 of 11 commits touch it.
 
 ## ROUNDUP — four maps corrected, and the Last Claim judged in Astra’s own words
