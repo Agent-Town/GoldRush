@@ -387,3 +387,18 @@ Four runs per arm/viewport: p95 9.75→9.80 ms desktop / 9.85→9.75 phone, draw
 ### Capped stop — 2026-09-21 run 4
 
 Three maps completed in order; no fourth map started. All remain improved/held for full concept fidelity. The Last Claim remains unaccepted in my judgment: the fallback does not communicate the plate's circular deck, central orrery, ornate rim or three preserve stations; portrait has no architectural context. Its sculpt-pack correction is still on the remaining list. [Ordered continuation, HUD handoff, engine pairs and gate exceptions](run-4/handoff.md).
+
+
+## Fifth run — 2026-09-20 (task sol-map-art-corrections-3)
+
+Capped at three maps, in order: Dust Flats, Long Road, Gusher County. Code base `19421c655efc2cf830f92d76bb7c3637e3a6861b`; store base `068c0dbdbe99f474e099b5eff69da13b0f55851f`. No ahead commits or unowned work; only permitted `logs/guard-stats.jsonl`. No evidence discarded. Install and initial build passed; both required store symlink probes resolve. Store work is isolated on `astra/corrections-3`; engine pins and full node battery remain drain-owned. [Preflight](run-5/preflight.json).
+
+The Last Claim verdict remains mine and remains UNACCEPTED: the plain fallback lacks the circular deck, orrery, ornate rim and preserve-station architecture; the phone has no architectural context. This run does not revisit its art.
+
+Run in progress; per-map receipts follow as each bounded correction clears verification.
+
+### Dust Flats correction — 2026-09-20 run 5
+
+**IMPROVED / HELD.** Ground RMS -79.89% desktop / -73.89% phone, no new geometry/draws; road paint follows the existing 24 m ring and four corridors. The declared 5 m charting-post station reduces phone persistent HUD 31.57% → 0.006% (desktop 0%). Entry landmark context and central-derrick concept remain held for camera/layout and art owners; no full concept acceptance. [Every clause, final boards and gate attribution](run-5/e4-dust-flats/review.md).
+
+Builds, final plain captures, shared lighting/collision, loading/repeat and scoped guards pass. Six own failures reproduce on exact base; the initial story flake passes its final 2/2 retry. Atlas-census base failure and changed-since/full-battery scope conflict remain attributed. Four-run p95 9.30→9.25 / 9.50→9.20 ms; draws 77/52 unchanged. Engine `fd5fb81fed8b9a783e33d43b7fce6068b74179c9c7c815bb774d830a0f01d2c9` → `f314eba93a1f7304139063ecef8cad5ab46806bce335058cefa4abcfb1ef00f3`. Store `d316da20c98b0f8bce1022bfdf9b3a25e212933a`.

@@ -1,0 +1,15 @@
+{
+  "contractChanges": [
+    {
+      "path": "dust-flats-terrain-contract.json",
+      "onlyAcceptanceStationsChanged": true
+    },
+    {
+      "path": "landmarks/dust-flats/dust-flats-landmark-pack-contract.json",
+      "onlyAcceptanceStationsChanged": true
+    }
+  ],
+  "mirroredStationsIdentical": true,
+  "geometryAtlasesSourcesMountsCollisionUnchanged": true,
+  "storeDiff": " .../dust-flats-terrain-contract.json               | 17 +++++++-\n .../dust-flats-landmark-pack-contract.json         | 46 +++++++++++++++++++---\n 2 files changed, 56 insertions(+), 7 deletions(-)\n"
+}

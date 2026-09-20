@@ -1,0 +1,25 @@
+[
+  {
+    "label": "own",
+    "command": [
+      "npx",
+      "playwright",
+      "test",
+      "--workers=1",
+      "--project=desktop-chrome",
+      "--project=mobile-chrome",
+      "--trace=off",
+      "--reporter=line",
+      "--output=artifacts/sol/map-art-campaign-2/_raw/run-5/e4-dust-flats-own",
+      "e2e/e4-dust-flats.spec.ts",
+      "e2e/e4-landyacht-boss.spec.ts",
+      "e2e/e4-roads-and-convoys.spec.ts",
+      "e2e/er01-e4-census.spec.ts",
+      "e2e/ss-05-e4-beats.spec.ts"
+    ],
+    "environment": {},
+    "exit": 1,
+    "seconds": 228.21,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-5/e4-dust-flats-own.log"
+  }
+]
