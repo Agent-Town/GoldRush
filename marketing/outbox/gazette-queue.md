@@ -1,3 +1,17 @@
+## ROUNDUP — three more maps corrected, and a seam in the Canyon closed
+Walk the Pressure Garden, the Incline or the Canyon Works and the ground reads
+as worked land again. Where the Canyon Works once showed daylight through a gap
+in its own rim, the rim is whole.
+merge `d409d0728` · drain `4be40ccb2` · review `reviews/sol-map-art-corrections-2.md` · ROUNDUP-CLASS: the 2026-W38 headline budget (3 standalone) is spent
+
+## ROUNDUP — a rider can watch the boat race, and hears why it cannot board
+The door now tells a rider where the boat sits, which buoy is next and which are
+already passed. Step for the water from dry land and the refusal comes back by
+name: NOT_ABOARD, or UNREACHABLE_WATER.
+merge `53f9b9436` · review `reviews/e5-regatta-boat-03.md` · ROUNDUP-CLASS: the 2026-W38 headline budget (3 standalone) is spent
+
+NOT PLAYER-VISIBLE — the three bookkeeping commits of that same day, each judged by READING it rather than by its subject line (F-2612-1). `78e5c109b` appends engine-era pin #21, whose own `cause` field says "same era" and adds "no sim table, contract data or null floor moved", with the era value unmoved. `04d88f868` is the A3 shrink re-pointing cited commit ids at the rewritten history: sampled in `assets/contracts/null-floors.json`, the ONLY change is `eraStamp` `24dad56f0` -> `05232a3a0`, a citation hash, while every floor value holds. `2ad3ab1ee` turns four art directories into relative symlinks at `../../GoldRush-assets/*` for the public-repo split — the same bytes, reached by a different path, and nothing a rider can see.
+
 **NOT PLAYER-VISIBLE** — s2664 merged an instrument cure, its guard and two findings rows: the worktree registry ledger now declares in-flight trees on every run rather than as a baseline delta, and does so in a fixed number of git calls instead of one per tree. No src, assets, public, functions or site path moved, and the single real drain on the board was left to the attended session already holding it.
 
 **NOT PLAYER-VISIBLE** — s2663 merged a lock line, one findings row and a re-banked worktree registry; no player path moved. Candidates 0, path-tested against the sweep's own PLAYER_PREFIXES read from the tool rather than transcribed, with both controls asserted first; the full sweep was started and then deliberately stopped mid-run so a live attended drain's gates would not be measured under my contention.
