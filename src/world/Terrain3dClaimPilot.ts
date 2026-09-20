@@ -395,6 +395,13 @@ const SCULPT_WATER_DRESSING: Record<string, SculptWaterDressing> = {
     fordSkim: 0.08, deepMeters: 0.5, shoreMeters: 0.15,
     glints: [], rippleStrength: 0.32, textureBlend: 0.06, fordTint: 0.3,
   },
+  // The sculpt hides legacy water. This is the one visible surface, contained
+  // by the existing bed and ford, with no extra light or simulation authority.
+  'e1-baron': {
+    surface: { kind: 'channel-fill', fill: 0.42 }, color: '#849da1', opacity: 0.62,
+    fordSkim: 0.06, deepMeters: 0.5, shoreMeters: 0.15, visualHalfWidth: 6.25,
+    glints: [], rippleStrength: 0.6, textureBlend: 0.07, fordTint: 0.35,
+  },
   // THE FLOODED GALLERY. Measured, not guessed (logs/session-scratch/e2-hill-mine-band-scan.mjs):
   // the atlas paints the bed near-black across EXACTLY the sim's declared river band — luma 16-26
   // for z in [-5.5, 5.5] against 49-77 on the ochre either side — over a floor that is dead flat at
@@ -1959,6 +1966,37 @@ diffuseColor.rgb = mix(diffuseColor.rgb, twinBanksDryPigment, twinBanksQuiet);`)
   }
 }
 
+/** Lift only the deepest painted scorch pigment, retaining its edges and grit. */
+function separateBaronGroundScars(model: THREE.Object3D): void {
+  if (isMapBeautyDisabled()) return;
+  const materials = new Set<THREE.MeshStandardMaterial>();
+  model.traverse(node => {
+    const mesh = node as THREE.Mesh<THREE.BufferGeometry, THREE.MeshStandardMaterial>;
+    if (mesh.isMesh && !Array.isArray(mesh.material) && mesh.material.isMeshStandardMaterial && mesh.material.map) materials.add(mesh.material);
+  });
+  for (const material of materials) {
+    const compile = material.onBeforeCompile.bind(material);
+    material.onBeforeCompile = (shader, renderer) => {
+      compile(shader, renderer);
+      shader.uniforms.baronWarmPigment = { value: new THREE.Color('#77614c') };
+      shader.uniforms.baronColdPigment = { value: new THREE.Color('#627078') };
+      shader.vertexShader = shader.vertexShader
+        .replace('#include <common>', '#include <common>\nvarying vec2 vBaronGround;')
+        .replace('#include <begin_vertex>', '#include <begin_vertex>\nvBaronGround = (modelMatrix * vec4(position, 1.0)).xz;');
+      shader.fragmentShader = shader.fragmentShader
+        .replace('#include <common>', '#include <common>\nvarying vec2 vBaronGround;\nuniform vec3 baronWarmPigment;\nuniform vec3 baronColdPigment;')
+        .replace('#include <map_fragment>', `#include <map_fragment>
+float baronInk = 1.0 - smoothstep(0.018, 0.09, dot(diffuseColor.rgb, vec3(0.2126, 0.7152, 0.0722)));
+float baronDry = smoothstep(6.0, 7.5, abs(vBaronGround.y));
+float baronEdge = 1.0 - smoothstep(25.0, 31.0, max(abs(vBaronGround.x), abs(vBaronGround.y)));
+vec3 baronPigment = mix(baronWarmPigment, baronColdPigment, smoothstep(6.0, 10.0, -vBaronGround.y));
+diffuseColor.rgb = mix(diffuseColor.rgb, baronPigment, 0.32 * baronInk * baronDry * baronEdge);`);
+    };
+    material.customProgramCacheKey = () => 'baron-scorch-pigment-v1';
+    material.needsUpdate = true;
+  }
+}
+
 function applyNightTerrainPools(model: THREE.Object3D, host: Host, opaqueLandmark = false): void {
   // Carried pools use the rig's steel-blue family at the prior ground tint's luminance.
   const materials = new Set<THREE.Material>();
@@ -2384,6 +2422,7 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
       nextTerrain.name = 'Terrain3dClaimPilot';
       if (host.archiveRestoration) installArchiveRestoration(nextTerrain, host.archiveRestoration);
       if (host.contractId === 'e1-twin-banks') calmTwinBanksGround(nextTerrain);
+      if (host.contractId === 'e1-baron') separateBaronGroundScars(nextTerrain);
       if (host.nightMode) applyNightTerrainPools(nextTerrain, host);
       else {
         host.canvas.dataset.terrain3dPilotNightPools = 'off';
@@ -2855,9 +2894,9 @@ const LANDMARK_PAINT: Record<string, Record<string, LandmarkPaint>> = {
   'e2-pressure-garden': { 'garden-pressure-manifold': { intensity: 1.3, tint: '#efe0d2' }, 'water-band-pump-station': { intensity: 1.3, tint: '#efe0d2' }, },
   'e2-incline': { 'upper-ore-cable-house': { intensity: 1.5, tint: '#c2a48c' }, 'west-line-brake-tower': { intensity: 1.28, tint: '#b3a693' }, 'east-line-brake-tower': { intensity: 1.28, tint: '#b3a693' }, },
   'e1-baron': {
-    fortified_far_bank: { intensity: 1.7, tint: '#93a0aa' },
-    siege_line: { intensity: 1.9, tint: '#9ba5ab' },
-    seized_headframe: { intensity: 2.1, tint: '#a9a9a6' },
+    fortified_far_bank: { intensity: 2.5, tint: '#aab5bb' },
+    siege_line: { intensity: 2.2, tint: '#a8b0b4' },
+    seized_headframe: { intensity: 2.4, tint: '#b6b6b0' },
     oxblood_banners: { intensity: 3.4, tint: '#ffd2b4' },
   },
   // THE ROOF THAT SHOUTS (docs/beauty/e2-hill-mine-brief.md U3). Measured at the run camera, the
