@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import { readFileSync } from 'node:fs';
+import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { META_PROGRESS_KEY } from '../src/game/MetaProgress';
 import {
   FIRST_CLAIM_DONE_KEY,
@@ -258,4 +258,204 @@ test('a rider steers the same boat to the same place: the tape replays to the he
 
   await page.screenshot({ path: `artifacts/e5-regatta-boat/rider-tape-${testInfo.project.name}.png` });
   expectNoConsoleErrors(watch, 'e5-regatta rider tape');
+});
+
+/**
+ * E5 REGATTA, SLICE 2 — A HUMAN AT THE KEYS WINS THE RACE, IN A PLAIN BOOT.
+ *
+ * The checkpoint the spec's slice 2 names: "a human wins the race by sailing the five buoys".
+ * No `?debug`, no `__GR_TEST__`, no seam — the hero walks aboard on the keys and the same keys
+ * sail the whole authored course. `?timescale` is read OUTSIDE the debug gate exactly as
+ * `nowaves`/`nopause`/`nolevel` are (`src/core/DebugParams.ts`; only a RELEASE build ignores
+ * them), so the boot stays a boot a player could type: the course is 143 s of sim time at the
+ * hull's authored top speed, and the clock is the only thing this test speeds up.
+ *
+ * What it proves that the headless guard cannot: the BROWSER's own helm, driven by real key
+ * events through the real input controller, reaches the same finish — and the render side agrees,
+ * because `canvas.dataset.regattaBuoys` is written by `RegattaBuoysView` and not by the test.
+ */
+
+/** Keys → world direction (`InputController`): A/D are ∓x, W/S are ∓z. Nearest of eight, 22.5°. */
+const OCTANT = Math.cos(Math.PI * 3 / 8);
+function keysToward(dx: number, dz: number): Set<string> {
+  const length = Math.hypot(dx, dz) || 1;
+  const ux = dx / length;
+  const uz = dz / length;
+  const keys = new Set<string>();
+  if (ux > OCTANT) keys.add('KeyD'); else if (ux < -OCTANT) keys.add('KeyA');
+  if (uz > OCTANT) keys.add('KeyS'); else if (uz < -OCTANT) keys.add('KeyW');
+  return keys;
+}
+
+/**
+ * F-RB2-2 — KEEP THE BOW OFF THE RIM, the one thing a human must learn to finish this course.
+ *
+ * Slice 1's ratified rule is that a move intent towards standable ground within a plank of the
+ * rail is a STEP ASHORE, and `ClaimBoat.gangplankPoint` measures that plank from the HULL CENTRE
+ * out through whichever rail the intent leaves by. Over the bow of a 28.5 m hull that probe reaches
+ * 16.25 m (14.25 + the 2 m plank); over the beam it reaches only 6.4 m. The Regatta's "shore" is
+ * the water beyond the hull's own clamp (±49.75), so a racer holding a PURE NORTH key above
+ * z ≈ 33.5 steps off the bow into open water — and after slice 2 that is a forfeit, five metres
+ * short of a mark that stands at z = 38. Measured, not deduced: the same drive without this rule
+ * forfeits at (−28.8, 34.8) with 4.8 m to run.
+ *
+ * So the drive does what a racer does after one wet race: it never points the bow at the rim. This
+ * replicates the sim's own geometry rather than guessing at it, and it is deliberately CONSERVATIVE
+ * (the sim also requires the landing point to be walkable, which this ignores), so the test can
+ * only ever steer more carefully than the rule demands.
+ */
+const DECK_HALF_X = 4.4;
+const DECK_HALF_Z = 14.25;
+const GANGPLANK = 2;
+const HULL_WATER = 49.75;
+/** How fast the clock runs, how often the racer glances, and how far the hull runs in between. */
+const TIMESCALE = 6;
+const GLANCE_MS = 140;
+const LOOKAHEAD = (GLANCE_MS / 1_000) * TIMESCALE * 2.475;
+
+function unitFor(keys: Set<string>): { x: number; z: number } | null {
+  const ix = (keys.has('KeyD') ? 1 : 0) - (keys.has('KeyA') ? 1 : 0);
+  const iz = (keys.has('KeyS') ? 1 : 0) - (keys.has('KeyW') ? 1 : 0);
+  const length = Math.hypot(ix, iz);
+  return length === 0 ? null : { x: ix / length, z: iz / length };
+}
+
+/**
+ * `ClaimBoat.gangplankPoint` + `ClaimBoat.navigable`, from the hull position the racer will be at
+ * when they NEXT GLANCE — because a key held for 0.84 s of sim time carries the hull two metres,
+ * and a rule checked only where the boat is now is checked a boat-width too late (measured: the
+ * same drive without the look-ahead forfeits at (43.9, 10.9) with the bow 0.05 m over the line).
+ *
+ * Deliberately CONSERVATIVE: the sim also requires the landing point to be WALKABLE, and on the
+ * finish line it is not (the finish-line rig shadows it), so this test steers more carefully than
+ * the rule demands and never leans on a piece of scenery.
+ */
+function bowWouldLeaveTheWater(x: number, z: number, keys: Set<string>): boolean {
+  const unit = unitFor(keys);
+  if (!unit) return false;
+  const toRailX = unit.x === 0 ? Number.POSITIVE_INFINITY : DECK_HALF_X / Math.abs(unit.x);
+  const toRailZ = unit.z === 0 ? Number.POSITIVE_INFINITY : DECK_HALF_Z / Math.abs(unit.z);
+  const reach = Math.min(toRailX, toRailZ) + GANGPLANK + LOOKAHEAD;
+  return Math.abs(x + unit.x * reach) > HULL_WATER || Math.abs(z + unit.z * reach) > HULL_WATER;
+}
+
+/** The nearest heading to the mark that does not put the bow over the rim: 0°, then ±45°, ±90°, ±135°. */
+function steerToward(x: number, z: number, dx: number, dz: number): Set<string> {
+  const bearing = Math.atan2(dz, dx);
+  for (const turn of [0, Math.PI / 4, -Math.PI / 4, Math.PI / 2, -Math.PI / 2, Math.PI * 3 / 4, -Math.PI * 3 / 4]) {
+    const keys = keysToward(Math.cos(bearing + turn), Math.sin(bearing + turn));
+    if (keys.size > 0 && !bowWouldLeaveTheWater(x, z, keys)) return keys;
+  }
+  return new Set();
+}
+
+type RaceView = {
+  nextGate: { id: string; x: number; z: number; radius?: number } | null;
+  gatesPassed: { id: string }[];
+  finished: boolean;
+  forfeited: boolean;
+};
+
+const raceState = (page: import('@playwright/test').Page) => page.evaluate(
+  () => (window as unknown as { __THREE_GAME_DIAGNOSTICS__?: { deepwaterClaim?: { race?: RaceView; boat: { motion: BoatMotion } } } })
+    .__THREE_GAME_DIAGNOSTICS__!.deepwaterClaim!,
+) as Promise<{ race?: RaceView; boat: { motion: BoatMotion } }>;
+
+test('a human at the keys sails the whole authored course and wins the Regatta, in a plain boot', async ({ page }, testInfo) => {
+  test.setTimeout(300_000);
+  const watch = watchErrors(page);
+  await page.addInitScript(({ entries, launchKey, launchValue }) => {
+    try {
+      localStorage.clear();
+      for (const [key, value] of entries) localStorage.setItem(key, value);
+    } catch { /* a browser with storage disabled still boots */ }
+    try {
+      sessionStorage.clear();
+      sessionStorage.setItem(launchKey, launchValue);
+    } catch { /* ditto */ }
+  }, { entries: progressedPlayerEntries(), launchKey: 'gr.contract.launch.v1', launchValue: 'e5-regatta' });
+  await page.goto(`/?contract=e5-regatta&nowaves&nopause&nolevel&timescale=${TIMESCALE}`);
+  await page.waitForFunction(() => ((window as unknown as { __THREE_GAME_DIAGNOSTICS__?: { frame: number } }).__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+  await page.waitForFunction(() => Boolean(
+    (window as unknown as { __THREE_GAME_DIAGNOSTICS__?: { deepwaterClaim?: { race?: unknown } } }).__THREE_GAME_DIAGNOSTICS__?.deepwaterClaim?.race,
+  ));
+
+  const booted = await raceState(page);
+  expect(booted.race!.gatesPassed, 'a boat nobody has boarded has started nothing').toHaveLength(0);
+  expect(booted.race!.forfeited).toBe(false);
+  expect(booted.boat.motion.aboard).toBeNull();
+  // The buoys are drawn before anything is raced, and the start mark is the one to go for.
+  expect(await page.getAttribute('canvas', 'data-regatta-buoys')).toBe(
+    'start-beacon:next,northwest-checkpoint:ahead,midcourse-checkpoint:ahead,northeast-checkpoint:ahead,finish-beacon:ahead|racing',
+  );
+
+  // BOARD HER — over the port rail and back, on the keys (slice 1's own boarding lane: the
+  // start-line buoy stands on the boat's mooring, so a body goes over the side, not fore-and-aft).
+  await page.keyboard.down('KeyA');
+  await page.waitForTimeout(1_200);
+  await page.keyboard.up('KeyA');
+  await page.keyboard.down('KeyD');
+  await expect.poll(async () => (await raceState(page)).boat.motion.aboard, {
+    message: 'walking back onto the deck boards the boat',
+    timeout: 30_000,
+  }).toBe('hero');
+  await page.keyboard.up('KeyD');
+  const started = await raceState(page);
+  expect(started.race!.gatesPassed.map(({ id }) => id), 'boarding passes the start mark it is moored on').toEqual(['start-beacon']);
+
+  // SAIL THE COURSE. One poll ≈ one human glance: read where the boat is, read which mark is next,
+  // hold the nearest of eight key directions towards it. Nothing here touches the sim.
+  const pressed = new Set<string>();
+  const hold = async (want: Set<string>) => {
+    for (const key of [...pressed]) if (!want.has(key)) { await page.keyboard.up(key); pressed.delete(key); }
+    for (const key of want) if (!pressed.has(key)) { await page.keyboard.down(key); pressed.add(key); }
+  };
+  const closest = new Map<string, number>();
+  /** Every glance, so a failure reads as a track and not as a boolean. */
+  const trail: string[] = [];
+  const deadline = Date.now() + 210_000;
+  let state = started;
+  while (Date.now() < deadline) {
+    const race = state.race!;
+    if (race.finished || race.forfeited) break;
+    const gate = race.nextGate!;
+    const { x, z } = state.boat.motion;
+    const gap = Math.hypot(x - gate.x, z - gate.z);
+    closest.set(gate.id, Math.min(closest.get(gate.id) ?? Number.POSITIVE_INFINITY, gap));
+    const want = steerToward(x, z, gate.x - x, gate.z - z);
+    trail.push(`${gate.id}@${x.toFixed(1)},${z.toFixed(1)} d${gap.toFixed(1)} ${[...want].join('+') || '-'} ${state.boat.motion.aboard ?? 'OVERBOARD'}`);
+    await hold(want);
+    await page.waitForTimeout(GLANCE_MS);
+    state = await raceState(page);
+  }
+  await hold(new Set());
+
+  const track = trail.slice(-14).join(' | ');
+  const finished = (await raceState(page)).race!;
+  expect(finished.forfeited, `the race must be won, not abandoned — last glances: ${track}`).toBe(false);
+  expect(finished.finished, `the course ended ${JSON.stringify(finished)} — last glances: ${track}`).toBe(true);
+  expect(finished.gatesPassed.map(({ id }) => id)).toEqual([
+    'start-beacon', 'northwest-checkpoint', 'midcourse-checkpoint', 'northeast-checkpoint', 'finish-beacon',
+  ]);
+  expect(finished.nextGate, 'a finished course has no next mark').toBeNull();
+  expect((await raceState(page)).boat.motion.aboard, 'the finish requires the boat with the hero aboard').toBe('hero');
+
+  // The RENDER side says the same thing, off the canvas, with no seam in between.
+  expect(await page.getAttribute('canvas', 'data-regatta-buoys')).toBe(
+    'start-beacon:passed,northwest-checkpoint:passed,midcourse-checkpoint:passed,northeast-checkpoint:passed,finish-beacon:passed|finished',
+  );
+
+  // The measured course, for the report: how close a HUMAN AT THE KEYS actually came to each mark.
+  mkdirSync('artifacts/e5-regatta-boat-02', { recursive: true });
+  writeFileSync(
+    `artifacts/e5-regatta-boat-02/plain-boot-course-${testInfo.project.name}.json`,
+    `${JSON.stringify({
+      project: testInfo.project.name,
+      timescale: TIMESCALE,
+      closestApproach: Object.fromEntries([...closest].map(([id, gap]) => [id, Number(gap.toFixed(3))])),
+      gatesPassed: finished.gatesPassed.map(({ id }) => id),
+    }, null, 2)}\n`,
+  );
+  await page.screenshot({ path: `artifacts/e5-regatta-boat-02/plain-boot-race-won-${testInfo.project.name}.png` });
+  expectNoConsoleErrors(watch, 'e5-regatta plain-boot race');
 });
