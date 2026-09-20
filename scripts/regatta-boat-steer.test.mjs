@@ -548,3 +548,55 @@ test('a ride that never boards is the idle ride it always was', async () => {
     assert.equal(first.motion.speed, 0, 'an idle ride leaves the boat moored');
   });
 });
+
+/**
+ * SLICE 2, F-RB2-2 — WHY THE AUTHORED GATE RADIUS MOVED FROM 3 TO 6, measured rather than argued.
+ *
+ * Slice 1's ratified rule: a move intent towards standable ground within a plank of the rail is a
+ * step ashore, and `ClaimBoat.gangplankPoint` measures that plank from the HULL CENTRE out through
+ * whichever rail the intent leaves by. Over the bow of a 28.5 m hull that is 16.25 m (14.25 + the
+ * 2 m plank); over the beam it is 6.4 m. On a course that is all open water, "shore" is the water
+ * beyond the hull's own clamp (+/-49.75), so a racer HOLDING A KEY AT A MARK NEAR THE RIM steps
+ * off the bow into the sea — and after slice 2 that is a forfeit rather than a swim.
+ *
+ * At the authored radius of 3 that made the north marks unroundable on a straight approach: the
+ * band starts at z = 33.5 and the mark scores at z = 35. At 6 the mark scores at z = 32, two
+ * metres of sea BEFORE the band. That is the whole reason for the data change, and it is asserted
+ * here so nobody can quietly put it back.
+ */
+test('SLICE 2 — the marks score before the bow-probe reaches the rim (the radius-6 reason)', async () => {
+  await withVite(async (vite) => {
+    const { HeadlessContractSim } = await vite.ssrLoadModule('/src/sim/HeadlessContractSim.ts');
+    const { loadContract } = await vite.ssrLoadModule('/src/meta/ContractFamilies.ts');
+    const beacons = loadContract(CONTRACT).tileParams.raceCourse.beacons;
+    const sim = new HeadlessContractSim({ contractId: CONTRACT, seed: SEED });
+    const boat = boatOf(sim);
+
+    // THE TWO PROBES, off the boat's own geometry.
+    boardByWalkingAboard(sim);
+    const overTheBow = boat.gangplankPoint({ x: 0, y: 1 });
+    const overTheBeam = boat.gangplankPoint({ x: 1, y: 1 });
+    assert.equal(Number((overTheBow.z - motionOf(sim).z).toFixed(2)), 16.25, 'the bow probe is the hull half-length plus a plank');
+    assert.equal(Number((overTheBeam.z - motionOf(sim).z).toFixed(2)), 5.81, 'the beam probe is barely a third of it');
+
+    // THE BAND. North of this line a pure-north key intent lands the body outside the hull's water.
+    const band = boat.water.maxZ - (overTheBow.z - motionOf(sim).z);
+    assert.equal(Number(band.toFixed(2)), 33.50);
+
+    // THE MARKS. Every authored mark must score before its own nearest band, or a racer who points
+    // the bow at it goes overboard instead of rounding it.
+    const north = beacons.filter(({ z }) => z > 0);
+    assert.ok(north.length >= 2, 'the course has marks up by the north rim');
+    for (const mark of north) {
+      assert.ok(mark.z - mark.radius < band,
+        `${mark.id} scores at z ${mark.z - mark.radius} but the bow is over the rim from z ${band}`);
+    }
+    // The finish beacon is the tight one, and it is tight because it stands 0.75 m off the hull's
+    // own east clamp — a residual of F-RB2-2 that no radius fully cures. Stated, not hidden.
+    const finish = beacons.find(({ id }) => id === 'finish-beacon');
+    const eastBand = boat.water.maxX - (boat.gangplankPoint({ x: 1, y: 0 }).x - motionOf(sim).x);
+    assert.equal(Number(eastBand.toFixed(2)), 43.35);
+    assert.ok(finish.x - finish.radius <= eastBand,
+      `the finish beacon scores at x ${finish.x - finish.radius} but the bow is over the rim from x ${eastBand}`);
+  });
+});
