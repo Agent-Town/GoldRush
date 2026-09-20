@@ -330,7 +330,8 @@ for ((ATTEMPT = 1; ATTEMPT <= VERIFY_ATTEMPTS; ATTEMPT++)); do
     # /opt/goldrush/.env.local on a public-IP box. Nothing box-side reads it: both services
     # take EnvironmentFile=/etc/goldrush-{assay,ledger}.env, outside the synced tree (runbook
     # :32,:60). Strictly subtractive, and it leaves the payload/allowlist fork (b)/(c) open.
-    if ssh -o ConnectTimeout=8 -o BatchMode=yes root@<droplet> true 2>/dev/null; then
+    # The droplet address lives ONLY in .env.local (GR_DROPLET_HOST=root@<origin ip>) — the public repo must not carry the origin behind Cloudflare (owner 2026-09-20: the working repo becomes public).
+    if [ -z "${GR_DROPLET_HOST:-}" ]; then note "ASSAYER NOT SYNCED: GR_DROPLET_HOST missing from .env.local"; elif ssh -o ConnectTimeout=8 -o BatchMode=yes ${GR_DROPLET_HOST} true 2>/dev/null; then
       # The mirror is a positive runtime allowlist. A sender-only final exclusion lets --delete
       # remove receiver spillover while the protect rule keeps box-installed node_modules.
       # MIRROR_FILTERS_BEGIN (parsed by deploy-mirror-allowlist.test.mjs)
@@ -427,12 +428,12 @@ for ((ATTEMPT = 1; ATTEMPT <= VERIFY_ATTEMPTS; ATTEMPT++)); do
         "--filter=-s *"
       )
       # MIRROR_FILTERS_END
-      if rsync -az --delete --timeout=60 "${MIRROR_FILTERS[@]}" ./ root@<droplet>:/opt/goldrush/ 2>/dev/null \
-        && ssh -o BatchMode=yes root@<droplet> "sed -i 's/^ASSAY_BUILD_ID=.*/ASSAY_BUILD_ID=$PUBLISHED_BUILD/' /etc/goldrush-assay.env && systemctl restart goldrush-ledger goldrush-assay" 2>/dev/null; then
+      if rsync -az --delete --timeout=60 "${MIRROR_FILTERS[@]}" ./ ${GR_DROPLET_HOST}:/opt/goldrush/ 2>/dev/null \
+        && ssh -o BatchMode=yes ${GR_DROPLET_HOST} "sed -i 's/^ASSAY_BUILD_ID=.*/ASSAY_BUILD_ID=$PUBLISHED_BUILD/' /etc/goldrush-assay.env && systemctl restart goldrush-ledger goldrush-assay" 2>/dev/null; then
         note "ASSAYER SYNCED: droplet tree + pin $PUBLISHED_BUILD, services restarted"
         # F-DISK-0902: the first allowlisted sync measured 1,456 MB including protected node_modules;
         # 2,184 MB is that measured runtime weight plus 50% headroom.
-        MIRROR_MB="$(ssh -o BatchMode=yes root@<droplet> "du -sm /opt/goldrush 2>/dev/null | cut -f1" 2>/dev/null)"
+        MIRROR_MB="$(ssh -o BatchMode=yes ${GR_DROPLET_HOST} "du -sm /opt/goldrush 2>/dev/null | cut -f1" 2>/dev/null)"
         if [ -n "${MIRROR_MB:-}" ]; then
           if [ "$MIRROR_MB" -gt 2184 ]; then note "MIRROR-BLOAT: /opt/goldrush is ${MIRROR_MB} MB after sync (ceiling 2184) — the runtime mirror exceeded its measured weight plus 50%; check the allowlist before the next deploy"; else note "mirror weight after sync: ${MIRROR_MB} MB"; fi
         fi

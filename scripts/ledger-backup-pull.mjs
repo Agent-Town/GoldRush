@@ -1,9 +1,11 @@
-import { existsSync, mkdirSync, readdirSync } from 'node:fs';
+import { existsSync, mkdirSync, readdirSync, readFileSync } from 'node:fs';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 
-const HOST = 'root@<droplet>';
+// The droplet address lives only in .env.local (GR_DROPLET_HOST); never in the tree (owner 2026-09-20: the working repo becomes public).
+const HOST = process.env.GR_DROPLET_HOST || (() => { try { const m = /^GR_DROPLET_HOST=(.+)$/m.exec(readFileSync('.env.local', 'utf8')); return m ? m[1].trim() : undefined; } catch { return undefined; } })();
+if (!HOST) { console.error('ledger-backup-pull: GR_DROPLET_HOST missing from the environment and .env.local'); process.exit(2); }
 const REMOTE_DIR = '/opt/goldrush-ledger/backups';
 const DEFAULT_DEST = fileURLToPath(new URL('../artifacts/ledger-backups/', import.meta.url));
 const destination = process.env.LEDGER_BACKUP_DEST || DEFAULT_DEST;

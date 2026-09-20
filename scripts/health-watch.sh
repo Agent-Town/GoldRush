@@ -344,7 +344,7 @@ SLOWN=0
 if [ -n "$EDGE_DARK" ]; then
   DARKN=$(( ${OLDDARKN:-0} + 1 ))
   if [ "$DARKN" -eq 1 ] || [ $(( DARKN % 6 )) -eq 0 ]; then
-    alert "PUBLIC EDGE DARK: $EDGE — runbook F-OUT-0829: ssh root@<droplet> 'systemctl status nginx goldrush-ledger'"
+    alert "PUBLIC EDGE DARK: $EDGE — runbook F-OUT-0829: ssh ${GR_DROPLET_HOST:-<droplet, see .env.local>} 'systemctl status nginx goldrush-ledger'"
   fi
 elif [ -n "$EDGE_SLOW" ]; then
   SLOWN=$(( ${OLDSLOWN:-0} + 1 ))
