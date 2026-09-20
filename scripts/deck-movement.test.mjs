@@ -90,8 +90,16 @@ test('headless public BOAT_BUILD and REANCHOR orders use the same rider and hull
         assert.notEqual(after.deepwater.flotilla.hulls[0].x, boat.flotilla.hulls[0].x);
       }
     }
+    // RE-WRITTEN e5-regatta-boat-02 (2026-09-20), spec law 3 "the race counts the boat": the gate
+    // is passed by the HULL with a body aboard, never by a body swimming the course. The boat is
+    // moored on the first beacon, so BOARDING passes it — the boat therefore steps off the deck
+    // and back aboard first, and the gate this block watches is the SECOND mark.
     const raceSim = new HeadlessContractSim({ contractId: 'e5-regatta', seed: 'gate-tick-check' });
-    raceSim.advanceOneTick(); // The starting boat is already inside the first beacon.
+    for (const spot of [{ x: -40, z: 0 }, { x: -49, z: 6 }]) {
+      raceSim.hero.group.position.set(spot.x, raceSim.hero.group.position.y, spot.z);
+      raceSim.advanceOneTick();
+    }
+    assert.equal(raceSim.deepwater.tile.boat.aboard, 'hero', 'the gate check must ride the boat');
     const gate = raceSim.currentTurn().view.now.deepwater.race.nextGate;
     assert.equal(raceSim.submitOrders([{ verb: 'MOVE_HERO', pos: { x: gate.x, z: gate.z + 2 } }]).outcome.ok, true);
     let entered = false;
@@ -112,9 +120,16 @@ test('headless public BOAT_BUILD and REANCHOR orders use the same rider and hull
     const { RegattaRaceSystem } = await vite.ssrLoadModule('/src/systems/RegattaRaceSystem.ts');
     const { contracts } = JSON.parse(await readFile(new URL('../assets/contracts/epoch-5-deepwater/contracts.json', import.meta.url)));
     const contract = contracts.find(c => c.id === 'e5-regatta'), race = RegattaRaceSystem.create(contract);
-    for (let i = 0; i < contract.tileParams.raceCourse.beacons.length; i++) race.advance(i + 1, contract.twist.secureWave - 1, [race.diagnostics.nextGate]);
-    race.advance(20, contract.twist.secureWave, [race.diagnostics.nextGate]); assert.equal(race.diagnostics.finished, false);
-    race.advance(21, contract.twist.secureWave - 1, [race.diagnostics.nextGate]); assert.equal(race.diagnostics.finishedAt, 21);
+    // ONE RACER OR NONE, never a list (slice 2): `advance` takes the boat's point itself.
+    for (let i = 0; i < contract.tileParams.raceCourse.beacons.length; i++) race.advance(i + 1, contract.twist.secureWave - 1, race.diagnostics.nextGate);
+    race.advance(20, contract.twist.secureWave, race.diagnostics.nextGate); assert.equal(race.diagnostics.finished, false);
+    race.advance(21, contract.twist.secureWave - 1, race.diagnostics.nextGate); assert.equal(race.diagnostics.finishedAt, 21);
+    // And the forfeit clause, on the same object: a step with no racer after the start ends it.
+    race.reset();
+    race.advance(1, 0, { x: contract.tileParams.raceCourse.beacons[0].x, z: contract.tileParams.raceCourse.beacons[0].z });
+    race.advance(2, 0, null);
+    assert.equal(race.diagnostics.forfeited, true);
+    assert.equal(race.diagnostics.nextGate, null);
   } finally {
     await vite.close();
     if (oldWindow === undefined) delete globalThis.window; else globalThis.window = oldWindow;

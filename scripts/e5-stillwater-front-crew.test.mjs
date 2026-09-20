@@ -75,8 +75,13 @@ test('the other E5 idle rides retain their measured deterministic pins', () => {
     'e5-deepwater-claim-01': 'fnv1a32:9c344f09',
     'e5-deepwater-claim-02': 'fnv1a32:dee7a8dc',
     // Hero-owned rigs change Regatta event positions; terminal wave and kills are unchanged.
-    'e5-regatta-01': 'fnv1a32:d461683d',
-    'e5-regatta-02': 'fnv1a32:1676f150',
+    // RE-PINNED e5-regatta-boat-02 (2026-09-20), same cause as the two Regatta null floors and
+    // `e2e/e5-regatta-race.spec.ts:141`: an idle Regatta run used to pass the START BEACON for
+    // free, because the mark stands on the Claim-Boat's own mooring and the mooring was in the
+    // racer list. Slice 2 races the hull only while a body is aboard, so an order-less run passes
+    // no gate. Still secured false, waves 14, kills 39 — only the event log moved.
+    'e5-regatta-01': 'fnv1a32:8050c83f',
+    'e5-regatta-02': 'fnv1a32:18093696',
     'e5-flotilla-01': 'fnv1a32:815739a6',
     'e5-flotilla-02': 'fnv1a32:ea3e2f0f',
   };
