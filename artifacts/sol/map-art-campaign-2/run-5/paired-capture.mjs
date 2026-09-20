@@ -23,6 +23,7 @@ try {for(const width of [1280,390])for(let cycle=0;cycle<(mode==='performance'?4
   body=body.replace(/\/node_modules\/\.vite\/deps\/([^?"']+)\?v=[a-f0-9]+/g,(url,file)=>deps.get(file)??url);
   if(mode==='stations'&&source==='Terrain3dClaimPilot'){
    assert.equal(body.split('model.name = mount.id;').length,2);
+   body=body.replace('nextPanorama.name = mount.id;', "nextPanorama.name = mount.id; (window.__ART_MODELS__??=new Map()).set('panorama',nextPanorama);");
    body=body.replace('model.name = mount.id;','model.name = mount.id; (window.__ART_MODELS__??=new Map()).set(mount.id,model);window.__ART_THREE__=THREE;');
   }
   await route.fulfill({response,body});
