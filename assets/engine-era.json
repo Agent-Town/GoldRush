@@ -1,7 +1,7 @@
 {
   "era": 6,
   "name": "the Re-surveyed Claims",
-  "engineHash": "8544c803bfa47d4fd29da04b33ac01ed7f37d2fd6af2ba70c5738abc8d32ab35",
+  "engineHash": "fd5fb81fed8b9a783e33d43b7fce6068b74179c9c7c815bb774d830a0f01d2c9",
   "declaredAt": "2026-09-14",
   "note": "Era 6 opens with Astra's map campaign (sol/map-art-inventory-20260908 7c2744e5a) landed by maps-campaign-land-era6 on 2026-09-14: 17 contracts re-parameterised (tileParams on 13, twists on 3, briefings on 5), the door tightened to the contract's own research epoch, 66 src files, the map-rebuild-spike terrain, plaza props and flotilla models. Owner ruling 2026-09-13, verbatim: \"ah, that is all no problem. we don't have players yet so we can just keep going\" and \"we then have to make another run in the future but not immediately\"; the name ratified 2026-09-14 (\"the Re-surveye Claims\" is good for me). Every era-5 reel reads \"This reel rode era 5; the county accepts era 6\" and stands retired, counted. Heat 14 re-rides the boards on this era when the owner says so.",
   "viewSchema": {
@@ -203,6 +203,12 @@
       "engineHash": "8544c803bfa47d4fd29da04b33ac01ed7f37d2fd6af2ba70c5738abc8d32ab35",
       "pinnedAt": "2026-09-20",
       "cause": "same era, pin #20: sol-map-art-corrections-2 (Astra on the owner's new Codex subscription, capped at 3 maps; owner 2026-09-20 \"lets start with a first set of maps and Astra - I want to keep this going. Can you work from E2 over E3 etc. up so I can test things?\"): the Pressure Garden, the Incline, the Canyon Works corrected on the render side and in their pilot sources — the pilot sources now live in Agent-Town/GoldRush-assets (store main 068c0db, landed before this pin; assets/pilots is a symlink into it); no gameplay contract, sim table or null floor moved. reviews/sol-map-art-corrections-2.md",
+      "aliases": []
+    },
+    {
+      "engineHash": "fd5fb81fed8b9a783e33d43b7fce6068b74179c9c7c815bb774d830a0f01d2c9",
+      "pinnedAt": "2026-09-20",
+      "cause": "same era, pin #21: e5-regatta-boat-03 (owner 2026-09-20 \"A14 - do it\"; slice 3 of specs/agent-play/e5-regatta-steerable-boat.md): the view publishes now.regatta on both engines (view schema 2 -> 3), NOT_ABOARD and UNREACHABLE_WATER join the published refusals, the manifest reads the Regatta from the contract; no sim table, contract data or null floor moved; measured with the art store clean on its main after Astra's first corrections set landed. reviews/e5-regatta-boat-03.md",
       "aliases": []
     }
   ],
