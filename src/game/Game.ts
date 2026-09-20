@@ -99,7 +99,7 @@ import { install as installAgentStub, type AgentStub } from '../agent/AgentStub'
 import { bindStandingOrderHero, bindStandingUpgradePicker, snapshotStandingOrders, standingOrderHeroSteering, type StandingOrder } from '../agent/StandingOrders';
 import { isMultiplayerStandingSubmitter, multiplayerStandingParty, resetMultiplayerStandingRoster } from '../agent/DeclaredStack';
 import { ProspectorEmbodiment, type ProspectorPoint } from '../agent/Embodiment';
-import { RegattaRaceSystem } from '../systems/RegattaRaceSystem';
+import { RegattaRaceSystem, regattaRacer } from '../systems/RegattaRaceSystem';
 import { NoiseHuntSystem } from '../systems/NoiseHuntSystem';
 import { AgentRiderBody, type AgentRiderBodyFutureState } from '../mp/AgentRiderBody';
 import { CrowdFlock } from '../entities/CrowdFlock';
@@ -3044,10 +3044,14 @@ export class Game {
       this.syncDeepwaterClaim();
       if (this.actors.some((actor) => actor.group.visible && this.weaponForActor(actor) === 'blast')) this.blastTime += simDelta;
       this.updateActors(simDelta, intents);
+      // E5 REGATTA, SLICE 2 — the race counts the boat (law 3), through the SAME rule the headless
+      // socket uses on the SAME field (`DeepwaterSocket.advanceRace`). This used to race every
+      // visible actor plus the boat's MOORING: a hero swimming the course won it, and the mooring
+      // scored the start beacon it stands on without anybody sailing anywhere.
       this.regattaRace?.advance(
         this.timeAlive,
         this.currentRunWave(),
-        [...this.actors.filter(({ group }) => group.visible).map(({ group }) => group.position), this.deepwaterClaim!.snapshot().boat.anchor],
+        regattaRacer(this.deepwaterClaim!.snapshot().boat.motion),
       );
       this.e6TileConsumers.update(simDelta, this.timeAlive, this.visibleHarvestTargets());
       this.syncPlaybookAnchor();

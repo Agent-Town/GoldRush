@@ -7,7 +7,7 @@ import type { ContractManifest } from '../meta/ContractFamilies';
 import type { CombatSystem } from '../systems/CombatSystem';
 import { FlotillaHullSystem, type FlotillaHullDiagnostics } from '../systems/FlotillaHullSystem';
 import { NoiseHuntSystem, type NoiseHuntDiagnostics } from '../systems/NoiseHuntSystem';
-import { RegattaRaceSystem, type RegattaRaceDiagnostics } from '../systems/RegattaRaceSystem';
+import { RegattaRaceSystem, regattaRacer, type RegattaRaceDiagnostics } from '../systems/RegattaRaceSystem';
 import { createDeepwaterClaimTile, deepwaterFrontCarriesWave, type CorsairSkiffWave, type DeepwaterClaimTile } from '../world/DeepwaterClaimTile';
 
 /**
@@ -146,16 +146,15 @@ export class DeepwaterSocket {
   /**
    * Game.update measures racers after their movement, before the arsenal and wave updates.
    *
-   * ⛔ SLICE 2 CHANGES THIS LINE AND SLICE 1 DELIBERATELY DID NOT. The racer list is still
-   * `[hero, the boat's MOORING]` — `boat.anchor`, which no longer moves when the hull sails (the
-   * hull's live point is `boat.motion`). So today a sailing boat scores through the HERO it
-   * carries, which rides the deck anchor and is therefore the hull's own point: the course reads
-   * the same numbers either way while the hero is aboard. `specs/agent-play/e5-regatta-steerable-boat.md`
-   * slice 3 of the laws ("the race counts the boat") is what replaces `boat.anchor` with
-   * `boat.motion` here and drops the hero from the list; see `artifacts/e5-regatta-boat/report.md`.
+   * SLICE 2 — THE RACE COUNTS THE BOAT (law 3, F-RB1-1 closed). This used to hand the course
+   * `[hero, the boat's MOORING]`: the hero scored gates no boat had reached (a body swimming the
+   * course won it) and `boat.anchor` — which stopped following the hull when slice 1 made her
+   * steerable — scored the start beacon it is moored on, for free, on every idle run. Now the ONE
+   * racer is whatever `regattaRacer` answers for the hull's live `motion`, and the browser twin
+   * (`Game.update`) calls the same function on the same field.
    */
   advanceRace(at: number, wave: number): void {
-    this.race?.advance(at, wave, [this.heroPosition(), this.tile.snapshot().boat.anchor]);
+    this.race?.advance(at, wave, regattaRacer(this.tile.snapshot().boat.motion));
   }
 
   /** Game.recycleDeepwaterCorsairsAtExit: skiffs that reached the far edge leave the board. */
