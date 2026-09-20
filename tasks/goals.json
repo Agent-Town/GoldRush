@@ -5418,6 +5418,15 @@
               "queuedAt": "2026-09-20"
             },
             {
+              "id": "sol-map-art-corrections-2",
+              "title": "The corrections campaign, run 2 of the corrections (owner 2026-09-20 \"correct all the 23 UNACCEPTED maps, one after the other\"): the 19 maps run 1 did not reach, the Pressure Garden first from its WIP branch, E2 onward, one map per commit; QUEUED ON OR AFTER 2026-09-21 07:10 local (owner: \"Astra subscription is closed to finish now - reset tomorrow\")",
+              "status": "queued",
+              "taskFile": "sol-map-art-corrections-2.md",
+              "registeredBy": "attended 2026-09-20",
+              "lane": "lane-c (Codex gpt-6-astra xhigh); continuation of sol-map-art-corrections-1 under the CODEX-WALL corrections lift",
+              "queuedAt": "authored 2026-09-20; the queue copy waits for the 2026-09-21 reset"
+            },
+            {
               "id": "e5-regatta-boat-01",
               "title": "A14 RULED (owner 2026-09-20 \"A14 - do it\"; recommendations ratified 2026-09-19): slice 1 of specs/agent-play/e5-regatta-steerable-boat.md — the Claim-Boat as the steerable body both species sail, embark/disembark by position, refusals on the status channel, a both-engine parity guard and an e2e; the race, the view and the buoys are slices 2–3",
               "status": "merged",
@@ -5432,10 +5441,14 @@
             {
               "id": "e5-regatta-boat-02",
               "title": "A14 slice 2 (owner 2026-09-20 \"A14 - do it\"): the race reads the boat — the boat is the only racer while the hero is aboard, forfeit on disembark (Q2), one fast-water number, the five beacons rendered as buoys (Q3), the two stale Regatta tests re-pinned (F-MAC2-1 rows 1109–1110 retired), the Regatta null floors re-recorded only if the moored anchor no longer passes the start",
-              "status": "building",
+              "status": "merged",
               "taskFile": "e5-regatta-boat-02.md",
               "registeredBy": "attended 2026-09-20",
-              "lane": "scratch worktree wt-regatta2 (Claude Opus 5, the owner's Anthropic subscription), port 5325; drained attended"
+              "lane": "scratch worktree wt-regatta2 (Claude Opus 5, the owner's Anthropic subscription), port 5325; drained attended",
+              "mergeHash": "2a86acf8140a690ebf0b558810bc4ed82cd3e628",
+              "mergedAt": "2026-09-20",
+              "review": "reviews/e5-regatta-boat-02.md",
+              "drainedBy": "attended 2026-09-20"
             },
             {
               "id": "rulings-county-2026-09-19",

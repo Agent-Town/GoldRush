@@ -4,36 +4,29 @@ import { createServer } from 'vite';
 import { expectNoConsoleErrors, watchErrors } from './support/console-watch';
 
 /**
- * ⛔ RED AND OWED, 2026-09-07 (`rider-parity-grammar-stage3`, ADR-005). READ THIS BEFORE RE-RUNNING.
+ * THE REGATTA COURSE — RE-WRITTEN FOR SLICE 2 OF `specs/agent-play/e5-regatta-steerable-boat.md`
+ * (owner 2026-09-20: "A14 - do it"; the parity law, 2026-09-07: "AI and human users have to have
+ * the same options and tools, otherwise it is unfair. fairness is crucial.").
  *
- * The ride below cannot finish under the 1:1 grammar, and that is a FINDING rather than a
- * regression this task introduced. Two measurements, both on this tree:
+ * WHAT THESE TWO TESTS USED TO SAY, AND WHY IT HAD TO CHANGE. Both were red on main as
+ * F-MAC2-1 (`logs/suite-red-inventory.md` rows 1109–1110) and both asserted a course that no
+ * longer exists:
  *
- * F-RPG-18 — GR-SIM RACES THE PROSPECTOR HERE. `HeadlessContractSim` builds the deepwater socket
- *   with `raceCourse || flotilla ? this.prospector.position : this.hero.group.position` as the
- *   socket's own "hero position", and `DeepwaterSocket.advance:130` feeds that to
- *   `RegattaRaceSystem.advance`'s racer list. So on this course the body that passes the gates is
- *   the PROSPECTOR — a body no human can position. The browser races every VISIBLE ACTOR plus the
- *   boat's anchor (`Game.ts:2989-2992`) and never the Prospector. `MOVE_TO` was the only verb that
- *   steered that racer, and ADR-005 retired it: the plan below is the 1:1 one, and the hero it
- *   walks is not the body the course measures.
+ *   - `:35` raced a BODY round the gates. Under ADR-005's 1:1 grammar the Prospector is not a body
+ *     anyone positions and every gate is open water no body can stand on (F-RPG-18/19), so the
+ *     ride it wrote down could not be sailed by either species. Slice 1 made the Claim-Boat a
+ *     steerable body; slice 2 makes that boat the ONLY racer (law 3). The ride below is therefore
+ *     the one a rider actually sails: board, then steer the marks.
+ *   - `:141` pinned idle-run hashes from an engine in which the boat's MOORING scored the start
+ *     beacon it stands on, for free, on every run that did nothing. It does not any more — a run
+ *     that never boards passes NO gate — so the idle hashes moved, deliberately, and the two
+ *     Regatta null floors moved with them (`assets/contracts/null-floors.json`, re-recorded in the
+ *     same commit with this cause).
  *
- * F-RPG-19 — AND THE GATES ARE NOT STANDABLE. Even with the racer re-based onto the hero (measured:
- *   one line in `HeadlessContractSim`, applied and then backed out because it is another slice's
- *   behaviour to change), `MOVE_HERO` refuses every gate: `Terrain.sample` reports
- *   `walkable: false` at `(-49, 0)`, `(-28, 38)`, `(28, 38)` and `(49, 0)` — the whole course is
- *   open water. The ride reaches gate 1 and stops, at wave 17 of a 20-turn bound, with one gate of
- *   five.
- *
- * SO THE CURE IS NOT A PLAN. It is one of: race the hero AND make the course standable for it; or
- * give BOTH species a steering control for the boat (ADR-005 amendment clause 5 — a control added
- * for one species is added for both in the same slice or not at all). Either is an E5 Deepwater
- * decision with an owner's word behind it, not a fixture edit, and both are outside this task's
- * firewall. The plan below is left in the SURVIVING grammar so the next reader sees the shape the
- * cure has to make work, rather than a verb the door no longer knows.
+ * Their sibling `:157` is untouched and stays green.
  */
-test('the Regatta runs its authored course and secures both bench seeds deterministically', async () => {
-  test.setTimeout(90_000);
+test('the Regatta is won by the BOAT and secures both bench seeds deterministically', async () => {
+  test.setTimeout(120_000);
   const host = globalThis as unknown as { location?: URL; window?: { location: URL } };
   const previousLocation = host.location;
   const previousWindow = host.window;
@@ -46,42 +39,78 @@ test('the Regatta runs its authored course and secures both bench seeds determin
     const { deriveMechanicsManifest } = await vite.ssrLoadModule('/src/agent/MechanicsManifest.ts');
     const { loadContract } = await vite.ssrLoadModule('/src/meta/ContractFamilies.ts');
     const { HeadlessContractSim } = await vite.ssrLoadModule('/src/sim/HeadlessContractSim.ts');
-    const { RegattaRaceSystem } = await vite.ssrLoadModule('/src/systems/RegattaRaceSystem.ts');
+    const { RegattaRaceSystem, regattaRacer } = await vite.ssrLoadModule('/src/systems/RegattaRaceSystem.ts');
     const contract = loadContract('e5-regatta');
+    const beacons = contract.tileParams.raceCourse.beacons;
+
+    // ONE AUTHORED FAST-WATER NUMBER (F-RB1-2 closed): the race reads the hull's own.
     const authored = RegattaRaceSystem.create(contract);
     expect(authored).not.toBeNull();
-    expect(authored.movementMultiplierAt(0, 40)).toBe(1.35);
+    expect(authored.movementMultiplierAt(0, 40)).toBe(contract.tileParams.deepwater.claimBoat.physics.fastWaterMultiplier);
+    expect(authored.movementMultiplierAt(0, 40)).toBe(1.5);
     expect(authored.movementMultiplierAt(0, 0)).toBe(1);
-    for (const [index, gate] of contract.tileParams.raceCourse.beacons.entries()) {
-      authored.advance(index + 1, index, [gate]);
-    }
+
+    // THE ONE RACER RULE (law 3). A hull with nobody aboard is not a racer, and neither is a body.
+    expect(regattaRacer(undefined)).toBeNull();
+    expect(regattaRacer({ x: 7, z: 9, aboard: null, steerable: true })).toBeNull();
+    expect(regattaRacer({ x: 7, z: 9, aboard: 'hero', steerable: false })).toBeNull();
+    expect(regattaRacer({ x: 7, z: 9, aboard: 'hero', steerable: true })).toEqual({ x: 7, z: 9 });
+
+    for (const [index, gate] of beacons.entries()) authored.advance(index + 1, index, { x: gate.x, z: gate.z });
     expect(authored.diagnostics).toMatchObject({
       nextGate: { id: 'claim-boat', x: -49, z: 0 },
-      gatesPassed: contract.tileParams.raceCourse.beacons.map(({ id }: { id: string }) => ({ id, passedAt: expect.any(Number) })),
+      gatesPassed: beacons.map(({ id }: { id: string }) => ({ id, passedAt: expect.any(Number) })),
       finished: false,
-      fastWaterMultiplier: 1.35,
+      forfeited: false,
+      fastWaterMultiplier: 1.5,
     });
-    authored.advance(6, 6, [{ x: -49, z: 0 }]);
-    expect(authored.diagnostics).toMatchObject({ nextGate: null, finished: true });
+    authored.advance(6, 6, { x: -49, z: 0 });
+    expect(authored.diagnostics).toMatchObject({ nextGate: null, finished: true, forfeited: false });
+
+    // AND THE FORFEIT (Q2, ratified 2026-09-19). Once the start mark is passed, a step with no
+    // racer ends the run's race; a run that never started cannot forfeit.
+    const abandoned = RegattaRaceSystem.create(contract);
+    abandoned.advance(1, 0, null);
+    expect(abandoned.diagnostics).toMatchObject({ forfeited: false, gatesPassed: [] });
+    abandoned.advance(2, 0, { x: beacons[0].x, z: beacons[0].z });
+    abandoned.advance(3, 0, null);
+    expect(abandoned.diagnostics).toMatchObject({ forfeited: true, forfeitedAt: 3, finished: false, nextGate: null });
+    abandoned.advance(4, 0, { x: beacons[1].x, z: beacons[1].z });
+    expect(abandoned.diagnostics).toMatchObject({ forfeited: true, gatesPassed: [{ id: 'start-beacon', passedAt: 2 }] });
 
     const rule = deriveMechanicsManifest(contract).rules.find(({ id }: { id: string }) => id === 'regatta_race');
     expect(rule).toMatchObject({
       source: 'RegattaRaceSystem.advance+movementMultiplierAt',
       data: {
-        gates: contract.tileParams.raceCourse.beacons.map(({ id }: { id: string }) => id),
+        gates: beacons.map(({ id }: { id: string }) => id),
         gateRadiusFallback: 6,
+        // ⛔ F-RB2-3, FOR SLICE 3: the published manifest still says 1.35, which is the number this
+        // slice DELETED from the engine. `MechanicsManifest.ts:564` hardcodes it and that file is
+        // slice 3's (the view bump, the fence, the manifest and the census pin are one censused
+        // act). Asserted at the manifest's real value so the lie is measured, not hidden.
         fastWaterMultiplier: 1.35,
         deadlineWave: 12,
         competingRacerLoot: false,
       },
     });
 
+    /**
+     * THE RIDE. A rider boards the way a human does — off the deck, then back over the rail — and
+     * then steers the marks. Two things it does NOT do, on purpose:
+     *   · it never orders the mark itself: every buoy is a solid in the landmark registry, so
+     *     `MOVE_HERO` to a mark is refused UNREACHABLE_APPROACH. It steers to open water inside
+     *     the gate radius, which is the public rider grammar.
+     *   · it never REANCHORs mid-race. `reanchor` is still a teleport (slice 1 kept the storm
+     *     rules), and the two anchors stand on the first and last marks — see F-RB2-4.
+     */
     const run = (seed: string) => {
       const sim = new HeadlessContractSim({ contractId: contract.id, seed });
       let turn = sim.currentTurn();
-      let firstTurn = true;
       let turns = 0;
-      while (!turn.terminal && turns++ < 20) {
+      let built = false;
+      let boarded = false;
+      let steppedOff = false;
+      while (!turn.terminal && turns++ < 60) {
         const deepwater = turn.view.now.deepwater!;
         const orders: unknown[] = [];
         if (turn.view.now.pendingSecure) {
@@ -91,43 +120,53 @@ test('the Regatta runs its authored course and secures both bench seeds determin
           turn = sim.advanceToTurn();
           continue;
         }
-        if (firstTurn) {
+        if (!built) {
           for (const [index, pad] of deepwater.pads.entries()) {
             orders.push({ verb: 'BOAT_BUILD', padId: pad.id, buildingId: index === 0 ? 'sentry_beacon' : 'turret' });
           }
-          orders.push({ verb: 'REANCHOR', anchorId: 'finish-line' });
-          firstTurn = false;
+          built = true;
         }
-        const next = deepwater.race?.nextGate;
-        if (next) {
-          if (deepwater.race!.gatesPassed.length === 5) orders.push({ verb: 'REANCHOR', anchorId: 'start-line' });
-          // ADR-005 stage 3: the HERO sails the gates, and since F-RPG-18 it really is the hero —
-          // gr-sim used to hand this course the PROSPECTOR'S body as its 'hero position', so the
-          // racer was a body no human can position and `MOVE_TO` was the only thing that steered
-          // it. One body now, on both sides, and `MOVE_HERO` is the verb a human's keys share.
-          orders.push({ verb: 'MOVE_HERO', pos: { x: next.x, z: next.z } });
+        if (!boarded) {
+          // Boarding is a CROSSING: the hero boots standing on the deck, so it steps off once and
+          // walks back aboard. The same two positions the browser's own boarding test uses.
+          if (!steppedOff) { orders.push({ verb: 'MOVE_HERO', pos: { x: -40, z: 0 } }); steppedOff = true; }
+          else { orders.push({ verb: 'MOVE_HERO', pos: { x: -49, z: 6 } }); }
+          // The rider knows it is aboard because the RACE says so: boarding passes the start mark,
+          // which stands on the boat's own mooring. There is no `aboard` field in the view yet —
+          // that is slice 3's censused act (view bump + fence + manifest + census pin).
+          boarded = (deepwater.race?.gatesPassed?.length ?? 0) > 0;
+        } else {
+          // RE-ISSUED EVERY TURN, and that is not belt-and-braces: `submitOrders` REPLACES the
+          // standing order list, so a turn that submits nothing wipes the helm and the boat coasts
+          // to a stop mid-course (measured: the ride stalled at x = 8.9 on the run home until this
+          // loop stopped skipping turns).
+          const next = deepwater.race?.nextGate;
+          if (next) orders.push({ verb: 'MOVE_HERO', pos: { x: next.x, z: next.z + 2 } });
         }
         const receipt = sim.submitOrders(orders);
         expect(receipt.outcome.ok, JSON.stringify(receipt.outcome)).toBe(true);
         turn = sim.advanceToTurn();
       }
       expect(turn.terminal).toBe(true);
+      expect(turn.view.now.deepwater?.race?.forfeited).toBe(false);
       expect(turn.view.now.deepwater?.race?.finished).toBe(true);
       expect(turn.view.now.deepwater?.race?.gatesPassed).toHaveLength(5);
       return sim.outcome();
     };
 
     const expected = {
-      'e5-regatta-01': 'fnv1a32:02404a88',
-      'e5-regatta-02': 'fnv1a32:bf8b5db5',
+      'e5-regatta-01': 'fnv1a32:1bf7c1ff',
+      'e5-regatta-02': 'fnv1a32:e8b9b2ff',
     } as const;
     for (const [seed, eventLogHash] of Object.entries(expected)) {
       const first = run(seed);
       const second = run(seed);
       expect(second).toEqual(first);
-      // NAMED-CAUSE PIN (b1-regatta-race, 2026-08-20): the five authored gates, return to the
-      // Claim-Boat, three BOAT_BUILD actions, REANCHOR, MOVE_HERO, and automatic rig combat.
-      expect(first).toMatchObject({ secured: true, waves: 12, kills: 33, eventLogHash });
+      // NAMED-CAUSE PIN (e5-regatta-boat-02, 2026-09-20): the boat is the racer. Three BOAT_BUILD
+      // actions, a boarding, the five authored marks and the run home, and automatic rig combat.
+      // The old pin (fnv1a32:02404a88 / fnv1a32:bf8b5db5) was a body walking gates it cannot stand
+      // on, and was red on main as F-MAC2-1 row 1109.
+      expect(first).toMatchObject({ secured: true, waves: 12, kills: 25, eventLogHash });
     }
   } finally {
     await vite.close();
@@ -138,11 +177,18 @@ test('the Regatta runs its authored course and secures both bench seeds determin
   }
 });
 
-test('idle Regatta runs lose because the course remains unfinished', () => {
+test('idle Regatta runs lose because nobody ever boards the boat', () => {
   test.setTimeout(30_000);
+  // RE-PINNED, e5-regatta-boat-02 (2026-09-20): these two hashes moved on purpose and the cause is
+  // one line — an idle run used to pass the START BEACON for free, because the boat's mooring
+  // stands on it and the mooring was in the racer list. Slice 2 races the hull only while a body
+  // is aboard, so a run that does nothing now passes no gate at all. The same change moved the two
+  // Regatta null floors, re-recorded in the same commit. The OLD pins here
+  // (fnv1a32:80b36bec / fnv1a32:3dfe7f19) were already stale before this slice — F-MAC2-1 row 1110
+  // measured the engine answering `fnv1a32:d461683d`, which was `null-floors.json`'s own number.
   const expected = {
-    'e5-regatta-01': 'fnv1a32:80b36bec',
-    'e5-regatta-02': 'fnv1a32:3dfe7f19',
+    'e5-regatta-01': 'fnv1a32:8050c83f',
+    'e5-regatta-02': 'fnv1a32:18093696',
   } as const;
   for (const [seed, eventLogHash] of Object.entries(expected)) {
     const run = spawnSync(process.execPath, [

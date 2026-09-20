@@ -1,0 +1,42 @@
+# Drain review — `e5-regatta-boat-02`: the race reads the boat (A14 slice 2)
+
+**Slice/branch/tip:** `e5-regatta-boat-02` · `feat/e5-regatta-boat-02` @ `94aa43579` (nine commits by a Claude Opus 5 implementer on the owner's Anthropic subscription, scratch worktree, port 5325) · **base** `24dad56f0` · **merge** `2a86acf81` · **drained** attended 2026-09-20 · **master** `tasks/e5-regatta-boat-02.md` · **spec** `specs/agent-play/e5-regatta-steerable-boat.md` slice 2 · **owner** 2026-09-20 "A14 - do it".
+
+## VERDICT: LANDED — the boat is the only racer, deserters forfeit, the course is won by keys and by tape; one design question goes to the owner (F-RB2-2)
+
+## What it does
+`regattaRacer()` in `RegattaRaceSystem` is the hull's live point while a body is aboard and null otherwise; both engines call it on the same field, and `advance` takes one racer or none (F-RB1-1 closed: a swimming hero, a visible actor or the moored anchor no longer score). Leaving the boat after the start forfeits for the run (`forfeited`, `forfeitedAt`, `nextGate: null`; re-boarding does not resume; a non-starter is not a forfeit; the secure rule needed no new clause). The on-foot 1.35 fast-water number is deleted: the contract's 1.5 is read by the race and the hull, and `create()` refuses a course whose racing body authors no physics (F-RB1-2 closed). The five beacons render as procedural can-buoys (`RegattaBuoysView`, next/passed/ahead, a plain-boot readout, no raw art). The course as raced is six gates (five beacons then the start stake), 254 m out and back; the beacon radius widened 3 → 6 by measurement (the step-ashore probe reaches 16.25 m over the bow, so at radius 3 the north marks scored only inside the overboard band and a straight key drive forfeited at 26.7 s; 6 is already the sixth gate's radius and the published fallback). The two F-MAC2-1 Regatta tests were re-written to this rule and re-pinned; inventory rows 1109–1110 retired as additive corrections. Exactly the two Regatta null floors moved (`d461683d → 8050c83f`, `1676f150 → 18093696`), 81 others byte-identical.
+
+Where the player meets it: on `e5-regatta` the buoys show the next mark; a human sails the whole course by the keys and the race finishes; a rider's `MOVE_HERO` orders win it headless in 137.97 s.
+
+## Evidence (the implementer's, re-run at the drain where marked)
+| Check | Result |
+| --- | --- |
+| headless course (asserted) | rider wins in **137.97 s**; the deserter forfeits; the non-boarder never advances |
+| e2e `e5-regatta-boat` / `e5-regatta-race` | 6/6 and 6/6 both projects on the branch; at the drain: `rc=1   5 failed   53 passed (6.1m)  03:06Z` |
+| null floors | exactly the two Regatta floors re-recorded, then **83 of 83**; at the drain: `rc=0 83 of 83 null floors match assets/contracts/null-floors.json (283.4s).` |
+| `regatta-boat-steer` / mask-tables + claim-boat-asset | 9/9 · 32/32; drain named guards: `ℹ pass 110 ℹ fail 0` |
+| frame p95 on `e5-regatta` | −0.5 % (four runs per arm) |
+| tsc / build / e1 (drain) | `0 / 0 / 0` (rc) · payload `34237118 bytes` |
+| law-pointer / halo (drain) | `` · `rc=0 halo re-extraction PASS: 315 cured, 0 held, 760 regenerated-and-cured, 2127 scanned; alpha` |
+| engine hash | `8eb7e135…` on main → `e482aab58b6aa7ef…` on the merged tree (after the cures); same-era pin `#18 `e482aab5``, era guards `ℹ pass 9 ℹ fail 0` |
+| e2e reds | `CONTENDED — 2 concurrent batteries`<br>`✖ all 152 scripts/*.test.mjs fixture owners remove their temp directories (218509.908792ms)`<br>`✖ contention is advisory, correctly counted, and absent when alone (6940.856125ms)`<br>`✖ failing tests:`<br>`✖ rotation registry stays outside the engine identity corpus (856.308667ms)`<br>`✖ the landed registry names the live engine and stays outside its hash corpus (403.276167ms)`<br>`✖ the live board is green under this guard (baseline is honest) (515.943208ms)`<br>**Attribution:** the flotilla rows of F-MAC2-1 (1107–1108), fingerprint-matched; the Regatta rows are closed by this slice. |
+| full `npm run test:node-guards` on the merged tree (drain) | `rc=1 ℹ tests 938 ℹ pass 928 ℹ fail 5 ℹ skipped 5  03:16Z` |
+| battery reds | `CONTENDED — 2 concurrent batteries`<br>`✖ all 152 scripts/*.test.mjs fixture owners remove their temp directories (218509.908792ms)`<br>`✖ contention is advisory, correctly counted, and absent when alone (6940.856125ms)`<br>`✖ failing tests:`<br>`✖ rotation registry stays outside the engine identity corpus (856.308667ms)`<br>`✖ the landed registry names the live engine and stays outside its hash corpus (403.276167ms)`<br>`✖ the live board is green under this guard (baseline is honest) (515.943208ms)`<br>**Attribution:** the contention advisory reddens beside the factory's own fires (green alone); the fixture-owner sweep nests it. |
+| after the pin: `engine-era-guard`, `bench-seeds`, the three cured guards | `ℹ pass 48 ℹ fail 0` |
+
+Transcripts: `artifacts/e5-regatta-boat-02/drain-gates-summary.txt`, `drain-e2e-merged-tree.log`, `drain-battery-merged-tree.log`; the implementer's report `artifacts/e5-regatta-boat-02/report.md` (364 lines, every number banked).
+
+## Merge classification
+Base `24dad56f0`; every touched file **LANE-TOUCHED only** (no main commit since the base): `src/systems/RegattaRaceSystem.ts`, `src/sim/DeepwaterSocket.ts`, `src/game/Game.ts`, NEW `src/world/RegattaBuoysView.ts`, `assets/contracts/epoch-5-deepwater/contracts.json` (radius 6, the physics number as the single source), its mask-table mirror, the two pilot contracts' source pins, `assets/contracts/null-floors.json` (the two Regatta floors), `e2e/e5-regatta-boat.spec.ts`, `e2e/e5-regatta-race.spec.ts`, `scripts/regatta-boat-steer.test.mjs`, `logs/suite-red-inventory.md` (rows 1109–1110), `artifacts/e5-regatta-boat-02/**`. Drain-side: the three guards outside the firewall replaced by the implementer's tested cures (F-RB2-1/1b/1c), the fire.md pointer re-based (F-RB2-5), the pin.
+
+## Findings
+- **F-RB2-1 / 1b / 1c (cured at the drain):** `deepwater-rider-parity` asserted a swimming hero winning the course (the dishonest path this slice closes), `e5-stillwater-front-crew` pinned the old idle hashes, `deck-movement` scored a swimming hero at the first beacon and called `advance` with arrays that now score nothing. Each was outside the master's firewall; each cure was written and run green by the implementer and copied over at the drain.
+- **F-RB2-2 (OWNER'S DESK, design):** disembark fires on a key direction, not a deliberate act, and the step-ashore probe reaches a boat-length ahead — a racer holding the wrong key near a rim goes over the side into open sea and, since this slice, forfeits unwarned. The radius cures the three inner marks, not the finish beacon (0.35 m of clearance on the line). The real cure is a better answer to "what is shore on an all-water map" (slice 1's ratified geometry): (a) disembark only onto standable ground within a short reach, the gangway's, not a boat-length; (b) keep the long probe but forfeit only when the hero actually stands ashore; (c) leave it. Recommendation: (a). Both bands (33.50, 43.35) are pinned by a guard so they cannot move silently. Worth settling before the slice-4 heat.
+- **F-RB2-3 (non-blocking, known):** `e5-flotilla-hulls` `:6`/`:118` are F-MAC2-1's flotilla rows (1107–1108); the Regatta half of F-MAC2-1 is closed by this slice.
+- **F-RB2-4 (for slice 3):** the view still publishes nothing of the boat, the race's forfeit or the buoys; `skill.md`, the manifest and the E5 census follow in slice 3.
+- **F-RB2-6 (non-blocking):** `e5-regatta-boat.spec.ts` drives the boat with wall-clock key holds on a plain boot; on a box running two batteries it reddened once at `:122` (one sim tick of carry between two page reads) and once at `:435` (the keyed course forfeited — F-RB2-2's hazard); green twice alone on a quiet box at the drain. The spec should read hero and boat in one `evaluate` and poll sim state instead of waiting wall-clock seconds; the rim hazard itself is the owner's F-RB2-2.
+- **F-RB2-5 (cured at the drain):** `scripts/fire.md → src/game/Game.ts` rotted by +3 with the race handoff; re-based by measurement.
+
+## What was touched
+Listed above; drain-side: three guard files, `scripts/fire.md` + baseline, `assets/engine-era.json` (pin `#18 `e482aab5``), this review, the goal leaf, the BACKLOG row, the register's A14 entry, STATUS line 1.

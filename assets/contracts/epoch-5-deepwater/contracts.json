@@ -229,11 +229,11 @@
         "raceCourse": {
           "fastWaterZone": { "id": "storm-front-fast-water", "minX": -54, "maxX": 54, "minZ": 34, "maxZ": 54 },
           "beacons": [
-            { "id": "start-beacon", "x": -49, "z": 0, "radius": 3 },
-            { "id": "northwest-checkpoint", "x": -28, "z": 38, "radius": 3 },
-            { "id": "midcourse-checkpoint", "x": 0, "z": 18, "radius": 3 },
-            { "id": "northeast-checkpoint", "x": 28, "z": 38, "radius": 3 },
-            { "id": "finish-beacon", "x": 49, "z": 0, "radius": 3 }
+            { "id": "start-beacon", "x": -49, "z": 0, "radius": 6 },
+            { "id": "northwest-checkpoint", "x": -28, "z": 38, "radius": 6 },
+            { "id": "midcourse-checkpoint", "x": 0, "z": 18, "radius": 6 },
+            { "id": "northeast-checkpoint", "x": 28, "z": 38, "radius": 6 },
+            { "id": "finish-beacon", "x": 49, "z": 0, "radius": 6 }
           ]
         },
         "lanes": { "spawnEdges": ["west"], "territoryRingBiasWaves": 0, "territoryRingLaneBias": 0 }
