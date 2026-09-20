@@ -1,7 +1,7 @@
 {
   "era": 6,
   "name": "the Re-surveyed Claims",
-  "engineHash": "8eb7e135ef6c707d1ac62414755c65237768332c9cdbda045871d2e3945aa71d",
+  "engineHash": "8a22b488cfb38cb0f946388c54410fc9700871ec46314d10fe522a799947e4bc",
   "declaredAt": "2026-09-14",
   "note": "Era 6 opens with Astra's map campaign (sol/map-art-inventory-20260908 883a3521e) landed by maps-campaign-land-era6 on 2026-09-14: 17 contracts re-parameterised (tileParams on 13, twists on 3, briefings on 5), the door tightened to the contract's own research epoch, 66 src files, the map-rebuild-spike terrain, plaza props and flotilla models. Owner ruling 2026-09-13, verbatim: \"ah, that is all no problem. we don't have players yet so we can just keep going\" and \"we then have to make another run in the future but not immediately\"; the name ratified 2026-09-14 (\"the Re-surveye Claims\" is good for me). Every era-5 reel reads \"This reel rode era 5; the county accepts era 6\" and stands retired, counted. Heat 14 re-rides the boards on this era when the owner says so.",
   "viewSchema": {
@@ -185,6 +185,12 @@
       "engineHash": "8eb7e135ef6c707d1ac62414755c65237768332c9cdbda045871d2e3945aa71d",
       "pinnedAt": "2026-09-20",
       "cause": "same era, pin #17: e5-regatta-boat-01 (owner 2026-09-20 \"A14 - do it\"; the four recommendations of specs/agent-play/e5-regatta-steerable-boat.md ratified 2026-09-19): the Claim-Boat gains a deterministic fixed-step motion state steered by the hero's move intent on both engines, embark/disembark by position, two status-channel refusals, and its physics in the E5 contract (tileParams.deepwater.claimBoat.physics; the race, the view schema and every other map untouched). Idle runs walk the same object graph: null floors 83/83 byte-identical. reviews/e5-regatta-boat-01.md",
+      "aliases": []
+    },
+    {
+      "engineHash": "8a22b488cfb38cb0f946388c54410fc9700871ec46314d10fe522a799947e4bc",
+      "pinnedAt": "2026-09-20",
+      "cause": "same era, pin #18: sol-map-art-corrections-1 (Astra gpt-6-astra on the owner's ChatGPT subscription; owner 2026-09-20 \"correct all the 23 UNACCEPTED maps, one after the other, the Last Claim verdict goes back to Astra\"): the Last Claim re-verdicted, Night Shift, Twin Banks, the Baron and the Trestle corrected on the render side and in their pilot sources (map-rebuild-spike packs and contracts, Terrain3dClaimPilot.ts, Water.ts); no gameplay contract, sim table or null floor moved; the run stopped on the usage limit after five maps. reviews/sol-map-art-corrections-1.md",
       "aliases": []
     }
   ],
