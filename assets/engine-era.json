@@ -1,7 +1,7 @@
 {
   "era": 6,
   "name": "the Re-surveyed Claims",
-  "engineHash": "34884b39b6dfc3adea1bc6b89b1643f0820572f9cc3a35634c80181e95d1ce76",
+  "engineHash": "8544c803bfa47d4fd29da04b33ac01ed7f37d2fd6af2ba70c5738abc8d32ab35",
   "declaredAt": "2026-09-14",
   "note": "Era 6 opens with Astra's map campaign (sol/map-art-inventory-20260908 7c2744e5a) landed by maps-campaign-land-era6 on 2026-09-14: 17 contracts re-parameterised (tileParams on 13, twists on 3, briefings on 5), the door tightened to the contract's own research epoch, 66 src files, the map-rebuild-spike terrain, plaza props and flotilla models. Owner ruling 2026-09-13, verbatim: \"ah, that is all no problem. we don't have players yet so we can just keep going\" and \"we then have to make another run in the future but not immediately\"; the name ratified 2026-09-14 (\"the Re-surveye Claims\" is good for me). Every era-5 reel reads \"This reel rode era 5; the county accepts era 6\" and stands retired, counted. Heat 14 re-rides the boards on this era when the owner says so.",
   "viewSchema": {
@@ -197,6 +197,12 @@
       "engineHash": "34884b39b6dfc3adea1bc6b89b1643f0820572f9cc3a35634c80181e95d1ce76",
       "pinnedAt": "2026-09-20",
       "cause": "same era, pin #19: sol-map-art-corrections-1 (Astra gpt-6-astra on the owner's ChatGPT subscription; owner 2026-09-20 \"correct all the 23 UNACCEPTED maps, one after the other, the Last Claim verdict goes back to Astra\"): the Last Claim re-verdicted, Night Shift, Twin Banks, the Baron and the Trestle corrected on the render side and in their pilot sources (map-rebuild-spike packs and contracts, Terrain3dClaimPilot.ts, Water.ts); no gameplay contract, sim table or null floor moved; the run stopped on the usage limit after five maps. Measured on the tree that also carries e5-regatta-boat-02 (pin #18), which landed first. reviews/sol-map-art-corrections-1.md",
+      "aliases": []
+    },
+    {
+      "engineHash": "8544c803bfa47d4fd29da04b33ac01ed7f37d2fd6af2ba70c5738abc8d32ab35",
+      "pinnedAt": "2026-09-20",
+      "cause": "same era, pin #20: sol-map-art-corrections-2 (Astra on the owner's new Codex subscription, capped at 3 maps; owner 2026-09-20 \"lets start with a first set of maps and Astra - I want to keep this going. Can you work from E2 over E3 etc. up so I can test things?\"): the Pressure Garden, the Incline, the Canyon Works corrected on the render side and in their pilot sources — the pilot sources now live in Agent-Town/GoldRush-assets (store main 068c0db, landed before this pin; assets/pilots is a symlink into it); no gameplay contract, sim table or null floor moved. reviews/sol-map-art-corrections-2.md",
       "aliases": []
     }
   ],
