@@ -1997,6 +1997,34 @@ diffuseColor.rgb = mix(diffuseColor.rgb, baronPigment, 0.32 * baronInk * baronDr
   }
 }
 
+/** Quiet the worked approaches without repainting the gorge or its waterline. */
+function calmTrestleApproaches(model: THREE.Object3D): void {
+  if (isMapBeautyDisabled()) return;
+  const materials = new Set<THREE.MeshStandardMaterial>();
+  model.traverse(node => {
+    const mesh = node as THREE.Mesh<THREE.BufferGeometry, THREE.MeshStandardMaterial>;
+    if (mesh.isMesh && !Array.isArray(mesh.material) && mesh.material.isMeshStandardMaterial && mesh.material.map) materials.add(mesh.material);
+  });
+  for (const material of materials) {
+    const compile = material.onBeforeCompile.bind(material);
+    material.onBeforeCompile = (shader, renderer) => {
+      compile(shader, renderer);
+      shader.uniforms.trestleWorkedPigment = { value: new THREE.Color('#8b7256') };
+      shader.vertexShader = shader.vertexShader
+        .replace('#include <common>', '#include <common>\nvarying vec2 vTrestleGround;')
+        .replace('#include <begin_vertex>', '#include <begin_vertex>\nvTrestleGround = (modelMatrix * vec4(position, 1.0)).xz;');
+      shader.fragmentShader = shader.fragmentShader
+        .replace('#include <common>', '#include <common>\nvarying vec2 vTrestleGround;\nuniform vec3 trestleWorkedPigment;')
+        .replace('#include <map_fragment>', `#include <map_fragment>
+float trestleBank = smoothstep(6.25, 9.0, abs(vTrestleGround.y));
+float trestleEdge = 1.0 - smoothstep(29.0, 42.0, max(abs(vTrestleGround.x), abs(vTrestleGround.y)));
+diffuseColor.rgb = mix(diffuseColor.rgb, trestleWorkedPigment, 0.23 * trestleBank * trestleEdge);`);
+    };
+    material.customProgramCacheKey = () => 'trestle-worked-approaches-v1';
+    material.needsUpdate = true;
+  }
+}
+
 function applyNightTerrainPools(model: THREE.Object3D, host: Host, opaqueLandmark = false): void {
   // Carried pools use the rig's steel-blue family at the prior ground tint's luminance.
   const materials = new Set<THREE.Material>();
@@ -2423,6 +2451,7 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
       if (host.archiveRestoration) installArchiveRestoration(nextTerrain, host.archiveRestoration);
       if (host.contractId === 'e1-twin-banks') calmTwinBanksGround(nextTerrain);
       if (host.contractId === 'e1-baron') separateBaronGroundScars(nextTerrain);
+      if (host.contractId === 'e2-trestle') calmTrestleApproaches(nextTerrain);
       if (host.nightMode) applyNightTerrainPools(nextTerrain, host);
       else {
         host.canvas.dataset.terrain3dPilotNightPools = 'off';
@@ -2890,7 +2919,14 @@ type LandmarkPaint = { intensity: number; tint: string };
  * body drops below 1.5 and the silhouette edges stay lit.
  */
 const LANDMARK_PAINT: Record<string, Record<string, LandmarkPaint>> = {
-  'e2-trestle': { 'south-boiler-site': { intensity: 1.45, tint: '#d6cfc4' }, 'north-boiler-site': { intensity: 1.45, tint: '#d3ccc4' }, 'mine-spur-kit': { intensity: 1.3, tint: '#e6d6bc' }, },
+  'e2-trestle': {
+    'trestle-crossing': { intensity: 2.6, tint: '#ffffff' },
+    'south-boiler-site': { intensity: 2.5, tint: '#e4e5e7' },
+    'north-boiler-site': { intensity: 2.5, tint: '#e4e5e7' },
+    'mine-spur-kit': { intensity: 2.2, tint: '#efe2cc' },
+    'south-approach-kit': { intensity: 2.2, tint: '#ffffff' },
+    'north-approach-kit': { intensity: 2.2, tint: '#ffffff' },
+  },
   'e2-pressure-garden': { 'garden-pressure-manifold': { intensity: 1.3, tint: '#efe0d2' }, 'water-band-pump-station': { intensity: 1.3, tint: '#efe0d2' }, },
   'e2-incline': { 'upper-ore-cable-house': { intensity: 1.5, tint: '#c2a48c' }, 'west-line-brake-tower': { intensity: 1.28, tint: '#b3a693' }, 'east-line-brake-tower': { intensity: 1.28, tint: '#b3a693' }, },
   'e1-baron': {
