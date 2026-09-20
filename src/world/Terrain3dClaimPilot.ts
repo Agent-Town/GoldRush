@@ -2114,6 +2114,42 @@ diffuseColor.rgb = mix(diffuseColor.rgb, inclineBallast, 0.22 * inclineCrest * i
   }
 }
 
+/** Quiet the canyon's repeated hatch and carry its earth value into the painted apron. */
+function clarifyCanyonGround(model: THREE.Object3D, panorama = false): void {
+  if (isMapBeautyDisabled()) return;
+  const materials = new Set<THREE.MeshStandardMaterial>();
+  model.traverse(node => {
+    const mesh = node as THREE.Mesh<THREE.BufferGeometry, THREE.MeshStandardMaterial>;
+    if (mesh.isMesh && !Array.isArray(mesh.material) && mesh.material.isMeshStandardMaterial) materials.add(mesh.material);
+  });
+  for (const material of materials) {
+    const compile = material.onBeforeCompile.bind(material);
+    material.onBeforeCompile = (shader, renderer) => {
+      compile(shader, renderer);
+      shader.uniforms.canyonEarth = { value: new THREE.Color('#806a53') };
+      shader.vertexShader = shader.vertexShader
+        .replace('#include <common>', '#include <common>\nvarying vec3 vCanyonGround;')
+        .replace('#include <begin_vertex>', '#include <begin_vertex>\nvCanyonGround = (modelMatrix * vec4(position, 1.0)).xyz;');
+      shader.fragmentShader = shader.fragmentShader
+        .replace('#include <common>', '#include <common>\nvarying vec3 vCanyonGround;\nuniform vec3 canyonEarth;');
+      if (panorama) {
+        // The apron belongs to the panorama mesh, not the heightfield. Preserve sky paint.
+        shader.fragmentShader = shader.fragmentShader.replace('#include <emissivemap_fragment>', `#include <emissivemap_fragment>
+float canyonApron = (1.0 - smoothstep(66.0, 108.0, max(abs(vCanyonGround.x) * 56.0 / 48.0, abs(vCanyonGround.z)))) * (1.0 - smoothstep(1.0, 8.0, vCanyonGround.y));
+totalEmissiveRadiance = mix(totalEmissiveRadiance, canyonEarth * 0.32, canyonApron * 0.65);`);
+      } else {
+        shader.fragmentShader = shader.fragmentShader.replace('#include <map_fragment>', `#include <map_fragment>
+float canyonDry = smoothstep(6.25, 9.0, abs(vCanyonGround.z));
+diffuseColor.rgb = mix(diffuseColor.rgb, canyonEarth, 0.34 * canyonDry);
+float canyonShelf = smoothstep(0.5, 6.0, vCanyonGround.y);
+diffuseColor.rgb *= 1.0 + canyonShelf * 0.10;`);
+      }
+    };
+    material.customProgramCacheKey = () => `canyon-ground-v1-${panorama}`;
+    material.needsUpdate = true;
+  }
+}
+
 function applyNightTerrainPools(model: THREE.Object3D, host: Host, opaqueLandmark = false): void {
   // Carried pools use the rig's steel-blue family at the prior ground tint's luminance.
   const materials = new Set<THREE.Material>();
@@ -2543,6 +2579,7 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
       if (host.contractId === 'e2-trestle') calmTrestleApproaches(nextTerrain);
       if (host.contractId === 'e2-pressure-garden') clarifyPressureGardenTerraces(nextTerrain);
       if (host.contractId === 'e2-incline') clarifyInclineYards(nextTerrain);
+      if (host.contractId === 'e3-canyon-works') clarifyCanyonGround(nextTerrain);
       if (host.nightMode) applyNightTerrainPools(nextTerrain, host);
       else {
         host.canvas.dataset.terrain3dPilotNightPools = 'off';
@@ -2554,6 +2591,7 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
       nextPanorama.rotation.set(...mount.rotation);
       nextPanorama.scale.fromArray(mount.scale);
       preparePanorama(nextPanorama);
+      if (host.contractId === 'e3-canyon-works') clarifyCanyonGround(nextPanorama, true);
       if (selected.contract.waterSurface?.owner === 'runtime DeepwaterClaimTile') {
         host.canvas.dataset.terrain3dPilotSeaApronTriangles = String(routeSeaApron(nextTerrain, nextPanorama, terrainMetrics.bounds));
       }

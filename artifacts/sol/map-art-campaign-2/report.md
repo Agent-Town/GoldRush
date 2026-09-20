@@ -375,3 +375,15 @@ Engine `c8229bd4e2e1bd7d351255ba1460f640c8a67bc9f01c4c335ca17c27517d50a3` → `6
 Four runs per arm: p95 9.00→8.85 ms desktop / 9.15→9.15 phone, draws unchanged 76/58. Builds, 10 own/census checks, shared brightness/collision (16 pass, four skips), loading/repeat, 34 render guards and three named guards pass. Atlas, terrain, panorama, mounts/collision and original body geometry/UVs stay unchanged; all five saved bodies re-export exactly. Changed-since/full-battery conflict remains drain-owned.
 
 Engine `6df23d2f3b41389eb2fa89d042c96a4f593a21c7482f8c0343026f2c82137d9b` → `adead14c0ca88daba465162c0156d527159596f6b9b4ccb85e1732ba14c182bf`. Store `213e6776f85bc729d39fc09e120b12a781b1d697` pushed.
+
+### Canyon Works correction — 2026-09-21 run 4
+
+**IMPROVED / HELD.** FIXED the exposed-background seam: a 1 m panorama gap closes through 97 render-only inner-ring vertices, no extra triangles; seam bright pixels 734/110 → 0/0. Ground RMS falls 41.42% desktop / 32.83% phone; dynamo body median rises 35.28% / 33.51% at unchanged emission 0.45. Tracked atlas recipe reproduces both base and candidate exactly. All landmark geometry, UVs, mounts/collision and terrain geometry remain unchanged. Saved landmark and panorama sources re-export exactly.
+
+FIXED primary-body inspection framing at 3 m: phone HUD 57.27% → 0.002%. Other declared stations stay below 0.26%. HELD phone entry 27.305% and canyon vista (UI/camera/layout); a connected live pylon chain requires built beacons. Straight apron composition and machine construction remain campaign art gaps. [Every clause, boards, independent review and proof](run-4/e3-canyon-works/review.md).
+
+Four runs per arm/viewport: p95 9.75→9.80 ms desktop / 9.85→9.75 phone, draws unchanged 72/54. Builds, 12 core Canyon/crawler checks, two visual-census checks, shared brightness/collision (16 pass, four skips), loading/repeat, 34 render guards and three named guards pass. Escort expected HP39/actual40 and headless census deadline6/actual8 each fail on both projects and reproduce on exact base code+store; no assertions changed. Changed-since/full-battery conflict stays drain-owned. Engine `adead14c0ca88daba465162c0156d527159596f6b9b4ccb85e1732ba14c182bf` → `8544c803bfa47d4fd29da04b33ac01ed7f37d2fd6af2ba70c5738abc8d32ab35`. Store `068c0dbdbe99f474e099b5eff69da13b0f55851f` pushed.
+
+### Capped stop — 2026-09-21 run 4
+
+Three maps completed in order; no fourth map started. All remain improved/held for full concept fidelity. The Last Claim remains unaccepted in my judgment: the fallback does not communicate the plate's circular deck, central orrery, ornate rim or three preserve stations; portrait has no architectural context. Its sculpt-pack correction is still on the remaining list. [Ordered continuation, HUD handoff, engine pairs and gate exceptions](run-4/handoff.md).
