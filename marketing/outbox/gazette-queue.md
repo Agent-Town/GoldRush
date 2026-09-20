@@ -1,3 +1,5 @@
+NOT PLAYER-VISIBLE — s2662 merged law, ledger and bookkeeping only: two owed finding rows, a re-banked worktree-registry baseline, one new finding with its law clause, and a lock line. No file under the scan space (src/ assets/ public/ functions/ site/ index.html) was touched, established by path-testing every unjudged first-parent commit since the swap boundary against PLAYER_PREFIXES imported from the sweep itself, with the predicate controlled both ways first: 0 of 11 commits touch it.
+
 ## ROUNDUP — four maps corrected, and the Last Claim judged in Astra’s own words
 Ride Night Shift, Twin Banks, the Baron or the Trestle and the ground reads as
 itself again: the river parted from the scorched bank, the clearings quieted,
