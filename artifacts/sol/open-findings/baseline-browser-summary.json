@@ -1,0 +1,133 @@
+{
+  "stats": {
+    "startTime": "2026-09-19T14:39:37.289Z",
+    "duration": 152633.84399999998,
+    "expected": 3,
+    "skipped": 0,
+    "unexpected": 9,
+    "flaky": 0
+  },
+  "globalErrors": [],
+  "rows": [
+    {
+      "file": "e1-twin-banks.spec.ts",
+      "line": 88,
+      "title": "loads Twin Banks contract with two fords, two build zones, and one loss stake",
+      "project": "desktop-chrome",
+      "status": "failed",
+      "verdict": "unexpected",
+      "durationMs": 2541,
+      "error": "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: \"river\"\nReceived: \"bank\""
+    },
+    {
+      "file": "e1-twin-banks.spec.ts",
+      "line": 127,
+      "title": "builds sluices and stockpiles on both banks against one gold pool",
+      "project": "desktop-chrome",
+      "status": "failed",
+      "verdict": "unexpected",
+      "durationMs": 9335,
+      "error": "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: true\nReceived: false\n\nCall Log:\n- Timeout 5000ms exceeded while waiting on the predicate"
+    },
+    {
+      "file": "e1-twin-banks.spec.ts",
+      "line": 146,
+      "title": "routes enemies through both west and east fords",
+      "project": "desktop-chrome",
+      "status": "failed",
+      "verdict": "unexpected",
+      "durationMs": 19640,
+      "error": "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: true\nReceived: false\n\nCall Log:\n- Timeout 15000ms exceeded while waiting on the predicate"
+    },
+    {
+      "file": "e1-twin-banks.spec.ts",
+      "line": 88,
+      "title": "loads Twin Banks contract with two fords, two build zones, and one loss stake",
+      "project": "mobile-chrome",
+      "status": "failed",
+      "verdict": "unexpected",
+      "durationMs": 10251,
+      "error": "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: \"river\"\nReceived: \"bank\""
+    },
+    {
+      "file": "e1-twin-banks.spec.ts",
+      "line": 127,
+      "title": "builds sluices and stockpiles on both banks against one gold pool",
+      "project": "mobile-chrome",
+      "status": "failed",
+      "verdict": "unexpected",
+      "durationMs": 12992,
+      "error": "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: true\nReceived: false\n\nCall Log:\n- Timeout 5000ms exceeded while waiting on the predicate"
+    },
+    {
+      "file": "e1-twin-banks.spec.ts",
+      "line": 146,
+      "title": "routes enemies through both west and east fords",
+      "project": "mobile-chrome",
+      "status": "failed",
+      "verdict": "unexpected",
+      "durationMs": 22063,
+      "error": "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: true\nReceived: false\n\nCall Log:\n- Timeout 15000ms exceeded while waiting on the predicate"
+    },
+    {
+      "file": "town-cast-wiring.spec.ts",
+      "line": 51,
+      "title": "plain town boot shows the tavernkeeper and storekeeper walking on anchored feet",
+      "project": "desktop-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 5636,
+      "error": ""
+    },
+    {
+      "file": "town-cast-wiring.spec.ts",
+      "line": 51,
+      "title": "plain town boot shows the tavernkeeper and storekeeper walking on anchored feet",
+      "project": "mobile-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 12466,
+      "error": ""
+    },
+    {
+      "file": "town-fresh-boot-textures.spec.ts",
+      "line": 52,
+      "title": "delayed town textures converge without a reload and bark portrait falls back",
+      "project": "desktop-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 12937,
+      "error": ""
+    },
+    {
+      "file": "town-fresh-boot-textures.spec.ts",
+      "line": 52,
+      "title": "delayed town textures converge without a reload and bark portrait falls back",
+      "project": "mobile-chrome",
+      "status": "failed",
+      "verdict": "unexpected",
+      "durationMs": 13664,
+      "error": "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: \"fallback\"\nReceived: \"loaded\"\n\nCall Log:\n- Timeout 8000ms exceeded while waiting on the predicate"
+    },
+    {
+      "file": "town-t1-square.spec.ts",
+      "line": 98,
+      "title": "menu enters town square, prompts at four shells, exits, then starts normal run",
+      "project": "desktop-chrome",
+      "status": "failed",
+      "verdict": "unexpected",
+      "durationMs": 11476,
+      "error": "Error: expect(locator).toContainText(expected) failed\n\nLocator: getByTestId('town-approach-prompt')\nTimeout: 5000ms\n- Expected substring  - 1\n+ Received string     + 4\n\n- opens soon\n+\n+         Tavern ... the board is warm\n+         Board\n+       \n\nCall log:\n  - Expect \"toContainText\" with timeout 5000ms\n  - waiting for getByTestId('town-approach-prompt')\n    14 \u00d7 locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"town-ui__prompt\" data-testid=\"town-approach-prompt\">\u2026</div>\n       - unexpected value \"\n        Tavern ... the board is warm\n        Board\n      \"\n"
+    },
+    {
+      "file": "town-t1-square.spec.ts",
+      "line": 98,
+      "title": "menu enters town square, prompts at four shells, exits, then starts normal run",
+      "project": "mobile-chrome",
+      "status": "failed",
+      "verdict": "unexpected",
+      "durationMs": 8328,
+      "error": "Error: expect(locator).toContainText(expected) failed\n\nLocator: getByTestId('town-approach-prompt')\nTimeout: 5000ms\n- Expected substring  - 1\n+ Received string     + 4\n\n- opens soon\n+\n+         Tavern ... the board is warm\n+         Board\n+       \n\nCall log:\n  - Expect \"toContainText\" with timeout 5000ms\n  - waiting for getByTestId('town-approach-prompt')\n    9 \u00d7 locator resolved to <div hidden=\"\" role=\"status\" aria-live=\"polite\" class=\"town-ui__prompt\" data-testid=\"town-approach-prompt\">\u2026</div>\n      - unexpected value \"\n        Tavern ... the board is warm\n        Board\n      \"\n    5 \u00d7 locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"town-ui__prompt\" data-testid=\"town-approach-prompt\">\u2026</div>\n      - unexpected value \"\n        Tavern ... the board is warm\n        Board\n      \"\n"
+    }
+  ]
+}

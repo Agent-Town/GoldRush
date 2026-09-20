@@ -1,0 +1,55 @@
+{
+  "camera": "TS-04 locked Town camera at hero start",
+  "route": "/?debug&town3d=tavern",
+  "viewport": {
+    "width": 1280,
+    "height": 800
+  },
+  "dpr": 1,
+  "variants": [
+    {
+      "key": "OLD-B",
+      "label": "half-timber",
+      "file": "artifacts/town-blender-v3/old-b-half-timber-comparison.glb",
+      "sha256": "eb8b7b4ccf37a42a3b9952574557580b11281b186d2f641beecf0c1e8bc2290d",
+      "bytes": 902276,
+      "readout": "old-b-fullwrap.glb → \"tavern\" slot | tris: 10924 ✓ in budget | materials: 1 ✓ | raw 5.1×4.0×3.4 → ×1.06 → 5.5w 4.2h (slot 5.2w) | drop another export to swap it.",
+      "screenshot": "artifacts/town-blender-v3/locked-camera-old-b-half-timber.png",
+      "renderMetrics": {
+        "calls": 78,
+        "geometries": 59,
+        "textures": 21,
+        "webglCallsPerFrame": 77.67,
+        "trianglesPerFrame": 26545,
+        "p95Ms": 9.8
+      }
+    },
+    {
+      "key": "NEW-B",
+      "label": "frontier-saloon",
+      "file": "assets/pilots/tavern-3d/tavern-2-fullwrap.glb",
+      "sha256": "fa3e057e5cd8e87b5da3f0fc32f06a0ab6cd9d81f76e7e8601a2c1bdb9087722",
+      "bytes": 904908,
+      "readout": "tavern-2-fullwrap.glb → \"tavern\" slot | tris: 10864 ✓ in budget | materials: 1 ✓ | raw 5.1×4.0×3.4 → ×1.06 → 5.5w 4.2h (slot 5.2w) | drop another export to swap it.",
+      "screenshot": "artifacts/town-blender-v3/locked-camera-new-b-frontier-saloon.png",
+      "renderMetrics": {
+        "calls": 78,
+        "geometries": 60,
+        "textures": 22,
+        "webglCallsPerFrame": 77.67,
+        "trianglesPerFrame": 26425,
+        "p95Ms": 9.7
+      }
+    }
+  ],
+  "performanceDeltaNewBvsOldB": {
+    "calls": 0,
+    "webglCallsPerFrame": 0,
+    "trianglesPerFrame": -120,
+    "p95Percent": -1.02,
+    "thresholdPercent": 15
+  },
+  "tavernInteraction": "approach prompt + Board PASS after B drop",
+  "consoleErrors": [],
+  "pageErrors": []
+}

@@ -1,0 +1,21 @@
+[
+  {
+    "label": "art-regression",
+    "command": [
+      "npx",
+      "playwright",
+      "test",
+      "--workers=1",
+      "--project=desktop-chrome",
+      "--project=mobile-chrome",
+      "--trace=off",
+      "--reporter=line",
+      "--output=artifacts/sol/map-art-campaign-2/_raw/run-3/e1-night-shift-art-regression",
+      "e2e/night-shift-art-corrections.spec.ts"
+    ],
+    "environment": {},
+    "exit": 0,
+    "seconds": 76.0,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-3/e1-night-shift-art-regression.log"
+  }
+]

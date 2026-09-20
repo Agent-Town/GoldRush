@@ -1,0 +1,33 @@
+leaves probed: 227
+verdicts: {"CLEAR":207,"BLOCKED":6,"CLOSED":14}
+rc: {"rc0":207,"rc1":20}
+
+== SHADOWED (script decided on a DIFFERENT leaf than the one we asked about): 1
+   ask=calibrate-suite-workers [superseded] file=lane-calibrate-suite-workers.md
+       -> reported=calibrate-suite-workers-v2 verdict=BLOCKED rc=1
+
+== BLOCKED leaves (5) probed by own taskFile:
+   e1-hold-the-claim-defeat-fork  rc=1  BLOCKED  reported=e1-hold-the-claim-defeat-fork
+   rf-34-hero-y-restore-roundtrip  rc=1  BLOCKED  reported=rf-34-hero-y-restore-roundtrip
+   vp-02e-jumper-8way-activation  rc=1  BLOCKED  reported=vp-02e-jumper-8way-activation
+   calibrate-suite-workers-v2  rc=1  BLOCKED  reported=calibrate-suite-workers-v2
+   ap-06b-adapter-wiring  rc=1  BLOCKED  reported=ap-06b-adapter-wiring
+
+== TERMINAL-CLOSED leaves (15) probed by own taskFile:
+   stopped     e1-trail-guide-plain-boot-proof  rc=1  CLOSED  reported=e1-trail-guide-plain-boot-proof
+   superseded  factory-power-budget-instrument-control  rc=1  CLOSED  reported=factory-power-budget-instrument-control
+   superseded  factory-cp04-lever-unlock-seed-realign  rc=1  CLOSED  reported=factory-cp04-lever-unlock-seed-realign
+   superseded  factory-cp04-charter-name-composition  rc=1  CLOSED  reported=factory-cp04-charter-name-composition
+   stopped     gazette-welcome-newsie-drift-window  rc=1  CLOSED  reported=gazette-welcome-newsie-drift-window
+   superseded  cw-02-wrecker-target-premise  rc=1  CLOSED  reported=cw-02-wrecker-target-premise
+   superseded  calibrate-suite-workers  rc=1  BLOCKED  reported=calibrate-suite-workers-v2
+   superseded  lane-vp-02b-jumper-slot-red  rc=1  CLOSED  reported=lane-vp-02b-jumper-slot-red
+   superseded  lane-c-f1148-1-trajectory-split  rc=1  CLOSED  reported=lane-c-f1148-1-trajectory-split
+   superseded  autosprite-trial-gate  rc=1  CLOSED  reported=autosprite-trial-gate
+   stopped     eight-winds-wiring-e2-enemies  rc=1  CLOSED  reported=eight-winds-wiring-e2-enemies
+   stopped     anim-8frame-townsfolk  rc=1  CLOSED  reported=anim-8frame-townsfolk
+   stopped     ap-06b-panel-ladder-and-voice  rc=1  CLOSED  reported=ap-06b-panel-ladder-and-voice
+   stopped     agent-rung-honest-gate  rc=1  CLOSED  reported=agent-rung-honest-gate
+   superseded  ap-08-the-view  rc=1  CLOSED  reported=ap-08-the-view
+
+== FALSE CLEAR (must-refuse leaf, rc=0): 0

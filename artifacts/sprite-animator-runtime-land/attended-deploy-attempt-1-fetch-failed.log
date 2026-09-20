@@ -1,0 +1,27 @@
+[deploy] building…
+[deploy] checking first-town asset budget…
+[deploy] MEASURED NOTHING: probe tripwire parsed 0 projects (playwright rc=1) — this is NOT a pass
+[deploy] first-town payload: 48914835 / 52000000 bytes (3085165 bytes headroom)
+[deploy] deploying snapshot /var/folders/cd/p02kvf6s5qgfn47w85hhtzjc0000gn/T//gold-rush-dist.tID8TB to Pages project 'gold-rush'…
+[deploy] FAILED: pages deploy — ✘ [ERROR] fetch failed | If you think this is a bug then please create an issue at https://github.com/cloudflare/workers-sdk/issues/new/choose | Note that there is a newer version of Wrangler available (4.131.2). Consider checking whether u — see logs/deploy.log
+[deploy] RELEASE VERDICT
+[deploy] Build: 0cc9fe38
+[deploy] Budget: PASS (limit: 52000000 bytes)
+[deploy]   payload GATE (declared, computed from the build): PASS (48914835 / 52000000 bytes, 3085165 bytes headroom)
+[deploy]   | group | gated | families | files | bytes |
+[deploy]   | --- | --- | ---: | ---: | ---: |
+[deploy]   | hero | yes | 8 | 106 | 5302556 |
+[deploy]   | cast | yes | 10 | 272 | 32661517 |
+[deploy]   | plates | yes | 19 | 19 | 4572440 |
+[deploy]   | models | yes | 16 | 16 | 3951220 |
+[deploy]   | audio | yes | 1 | 1 | 8821 |
+[deploy]   | code | yes | 33 | 33 | 2417194 |
+[deploy]   | document | yes | 1 | 1 | 1087 |
+[deploy]   | GATED TOTAL | yes | 88 | 448 | 48914835 |
+[deploy]   | DECLARED TOTAL (gated + demand-paged) | — | — | — | 48914835 |
+[deploy]   first-town payload demand-paged: 0 bytes
+[deploy]   first-town payload declared: 48914835 bytes
+[deploy]   probe TRIPWIRE (browser cue window, ceiling 30000000 bytes, host speed not payload): NOT MEASURED (probe rc=1; measured projects=0; report failures=0) — reported, does not gate
+[deploy] Device verdict: WARN missing docs/release/verdict-0cc9fe38.md
+[deploy] Outcome: deploy_failed
+rc=0

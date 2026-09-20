@@ -1,0 +1,25 @@
+pid=NONE (no whole-suite run live)
+log=logs/suite-runs/20260727-0405-whole-suite-w4.log
+json=NEVER WRITTEN (playwright's json reporter only emits at run end; the run was stopped early)
+started=2026-07-26T20:58:28.782Z
+owner=s1101
+workers=4
+stopped=2026-07-27T04:41Z by s1103, deliberately — see below
+note=read this file to find the live/last whole-suite baseline run
+
+WHY s1103 STOPPED IT (do not restart it blind; read F-1103-1 in tasks/BACKLOG.md first)
+- Banked at stop: 328 OK / 100 FAIL = 428 of 2378 tests (18% of the suite), 77 KB, append-only,
+  now committed to git (it was gitignored and disk-only until this fire — see F-1103-2).
+- Measured at stop: loadavg 34.35, 38 chromium procs, 6 playwright workers. That is the SAME
+  contention level s1101 measured at --workers=8 (34.16) and called poison. So --workers=4 was
+  NOT a quiesced instrument; it was saturated too. s1102 believed the box sat at 16-18. It did not.
+- It had ~3.2 h left at its measured rate (~10.3 tests/min), i.e. ~38 fires holding the box.
+- It was no longer measuring what it was started to measure: codex was running full gate batteries
+  for the live 078 corrective into the same box, which is exactly the self-contamination s1101's
+  own report (section D) admits ruined its previous rerun. A red rate collected under that is not
+  a contention ratio, and both s1101 and s1102 already said so in writing.
+- Cost of stopping, stated honestly: the remaining 1950 test results, and the end-of-run JSON,
+  which never existed on disk at any point.
+
+WHAT A VALID RERUN NEEDS (this is the F-1101-1 master, tasks/calibrate-suite-workers.md)
+Calibrate first, then pin. Do not restart at any worker count on an un-quiesced box.

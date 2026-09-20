@@ -1,0 +1,96 @@
+{
+  "label": "after",
+  "perf": {
+    "renderer": {
+      "calls": 46,
+      "triangles": 41886,
+      "geometries": 54,
+      "textures": 15
+    },
+    "frameMs": {
+      "last": 50,
+      "avg": 48.34388235107123,
+      "p95": 50,
+      "sampleCount": 51
+    },
+    "wave": 15,
+    "enemiesAlive": 4,
+    "terrain": {
+      "min": -0.20155721479337813,
+      "max": 1.155837509754222,
+      "segments": 64,
+      "waterY": 0.025,
+      "probes": {
+        "heroStart": 0.10432646582737946,
+        "river": -0.18,
+        "ford": -0.1692588761176975,
+        "nearBank": -0.07455203203267009,
+        "farBank": 0.37565441171795055
+      },
+      "natural": {
+        "range": 1.3573947245476001,
+        "fordApproachDelta": 0.039406774554358814,
+        "routingLaneDelta": 0.5382794082538911,
+        "routingFeatureMax": 0,
+        "probes": {
+          "gully": -0.09764535712345235,
+          "shelf": 0.7839636475382952,
+          "bluff": 0.6333201607165644,
+          "pocket": 0.07168046580014167
+        },
+        "features": {
+          "gully": {
+            "gully": 0.8068446587846654,
+            "shelf": 0,
+            "bluff": 0,
+            "pocket": 0,
+            "routeMask": 1,
+            "calmMask": 1,
+            "heightOffset": -0.2420533976353996
+          },
+          "shelf": {
+            "gully": 0,
+            "shelf": 0.9558869685113812,
+            "bluff": 0,
+            "pocket": 0,
+            "routeMask": 1,
+            "calmMask": 1,
+            "heightOffset": 0.40147252677478007
+          },
+          "bluff": {
+            "gully": 0.4383599442928497,
+            "shelf": 0,
+            "bluff": 0.6567997502922928,
+            "pocket": 0,
+            "routeMask": 1,
+            "calmMask": 1,
+            "heightOffset": 0.1837558968524456
+          },
+          "pocket": {
+            "gully": 0.041378308595094955,
+            "shelf": 0,
+            "bluff": 0,
+            "pocket": 0.9327558105458066,
+            "routeMask": 1,
+            "calmMask": 1,
+            "heightOffset": -0.21761977089860593
+          }
+        }
+      },
+      "heroGround": 0.10432646582737946,
+      "heroVisualY": 0.16432646582737948
+    }
+  },
+  "comparison": {
+    "beforeP95": 50,
+    "afterP95": 50,
+    "p95Ratio": 1,
+    "beforeDrawCalls": 47,
+    "afterDrawCalls": 46,
+    "pass": true
+  },
+  "errors": {
+    "consoleErrors": [],
+    "pageErrors": []
+  }
+}

@@ -1,0 +1,127 @@
+{
+  "off": "1eb2da6edcb64bd62ded1f0093dfeb8f4baa24f74a5bed202b30f0cbf4c908d2",
+  "on": "1eb2da6edcb64bd62ded1f0093dfeb8f4baa24f74a5bed202b30f0cbf4c908d2",
+  "payload": {
+    "sim": {
+      "flat": true,
+      "tile": "frontier-river-claim",
+      "balance": {
+        "uphillMin": 0.6,
+        "downhillMax": 1.1,
+        "slopeMax": 0.35,
+        "wadeDepth": 0.35,
+        "deepDepth": 1
+      },
+      "gt": {
+        "highGroundRangeBonus": 1.5
+      },
+      "lastLos": {
+        "flat": true,
+        "clear": true,
+        "samples": 0,
+        "from": {
+          "x": 0,
+          "z": 0,
+          "h": 0
+        },
+        "to": {
+          "x": 0,
+          "z": 0,
+          "h": 0
+        },
+        "blockedAt": null
+      },
+      "probes": {
+        "heroStart": {
+          "height": 0,
+          "slope": {
+            "dx": 0,
+            "dz": 0
+          },
+          "traversable": true
+        },
+        "ford": {
+          "height": 0,
+          "slope": {
+            "dx": 0,
+            "dz": 0
+          },
+          "traversable": true
+        },
+        "farBank": {
+          "height": 0,
+          "slope": {
+            "dx": 0,
+            "dz": 0
+          },
+          "traversable": true
+        }
+      }
+    },
+    "samples": [
+      {
+        "walkable": true,
+        "speedMul": 1,
+        "zone": "bank"
+      },
+      {
+        "walkable": true,
+        "speedMul": 0.85,
+        "zone": "ford",
+        "waterSource": "river",
+        "waterDepth": 0.35,
+        "waterClass": "wade"
+      },
+      {
+        "walkable": true,
+        "speedMul": 1,
+        "zone": "bank"
+      }
+    ],
+    "enemies": [
+      {
+        "id": 0,
+        "x": -16.00797279170474,
+        "z": -15.677326532932682,
+        "hp": 25.2,
+        "vx": 1.7863105201291063,
+        "vz": 2.0246221192302016,
+        "zone": "bank"
+      },
+      {
+        "id": 1,
+        "x": 16.00797279170474,
+        "z": -15.677326532932682,
+        "hp": 25.2,
+        "vx": -1.7863105201291063,
+        "vz": 2.0246221192302016,
+        "zone": "bank"
+      },
+      {
+        "id": 2,
+        "x": -0.3109443728919707,
+        "z": 18.95841918758007,
+        "hp": 25.2,
+        "vx": -0.11853893319179909,
+        "vz": -2.6973966192085186,
+        "zone": "bank"
+      }
+    ],
+    "economy": {
+      "panned": 0,
+      "sluiced": 0,
+      "granted": 0,
+      "stolen": 0,
+      "reclaimed": 0,
+      "pannedByProspector": 0,
+      "sluicedByProspector": 0,
+      "reclaimedByProspector": 0,
+      "spent": 0,
+      "baseValue": 0,
+      "buildingsBuilt": 0,
+      "beaconsBuilt": 0,
+      "repairSpent": 0,
+      "repairs": 0
+    }
+  }
+}

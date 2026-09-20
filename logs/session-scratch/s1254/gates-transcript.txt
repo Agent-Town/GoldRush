@@ -1,0 +1,221 @@
+s1254 gate battery
+
+===== node-guards =====
+$ npm run test:node-guards
+rc=0 43.5s
+
+> gold-rush@0.1.0 test:node-guards
+> node --test scripts/assert-release-build.test.mjs scripts/bench-seeds.test.mjs scripts/character-direction-assets.test.mjs scripts/citation-title-guard.test.mjs scripts/collection-guards-cwd-invariance.test.mjs scripts/drain-block-check.test.mjs scripts/e3-mask-tables.test.mjs scripts/entry-damage-table.test.mjs scripts/fixture-teardown.test.mjs scripts/gate-caller-audit.test.mjs scripts/glob-fallback-completeness.test.mjs scripts/goal-tracker.test.mjs scripts/probe-base.test.mjs scripts/rehearsal-base.test.mjs scripts/run-guards.test.mjs scripts/run-log-retention.test.mjs scripts/script-tree-parse.test.mjs scripts/site-contract.test.mjs scripts/stream-curate.test.mjs scripts/stream-director.test.mjs scripts/stream-showcase-queue.test.mjs scripts/subject-tree.test.mjs scripts/suite-red-inventory.test.mjs scripts/town-era-props-node-safety.test.mjs scripts/town-spec-collection.test.mjs scripts/whole-suite-collection.test.mjs scripts/worker-type-coverage.test.mjs && node scripts/test-ticker-stats.mjs
+
+✔ a missing dist/ is refused, not cleared (52.1505ms)
+✔ CONTROL: the same fixture with one benign dist file passes — it is the emptiness, not the fixture (62.471ms)
+✔ an empty later-asset blacklist is refused — the leak check would otherwise pass vacuously (65.330625ms)
+✔ the success line reports the denominator, so a vacuous clearance would be legible (99.5165ms)
+✔ POSITIVE CONTROL: a later-epoch manifest id in dist still fails (50.665167ms)
+✔ POSITIVE CONTROL: a leaked later-epoch plate asset in dist still fails (68.895958ms)
+✔ POSITIVE CONTROL: the GR_RELEASE=e1 precondition still refuses a bare invocation (60.045625ms)
+✔ contract ids are globally unique across the ten epoch bundles (0.634458ms)
+✔ bench seed sets cover Frontier and contain only valid known-contract seeds (0.428333ms)
+✔ contract direction files exist under assets/processed (1.102ms)
+✔ contract direction aliases do not overwrite explicit directions (0.418583ms)
+✔ a bare spec:line citation fails the guard (421.74275ms)
+✔ a citation carrying an exact test title passes (402.663458ms)
+✔ a citation carrying an ELIDED test title passes (418.986708ms)
+✔ a quoted title that does not exist in the spec still fails (499.816417ms)
+✔ a grandfathered bare citation passes, and a second copy of it does not (988.24875ms)
+✔ --report never gates (488.593708ms)
+✔ REFUSES when no tracked task markdown exists (denominator 0 docs) (421.919083ms)
+✔ REFUSES when task docs exist but carry zero citations (316.617834ms)
+✔ REFUSES when the baseline it ratchets against is missing (632.167541ms)
+✔ a citation quoting a real NON-TEST source line is carried, not a violation (445.910792ms)
+✔ a quote matching NEITHER a title nor any source line still fails (391.199667ms)
+✔ the verdict names the citations it did NOT gate (374.299333ms)
+✔ --report still never gates, even on a denominator it could not read (324.332ms)
+✔ whole-suite collection guard is cwd-invariant (4507.308ms)
+✔ town-spec collection guard is cwd-invariant (1341.386416ms)
+✔ drain path REFUSES a terminal-closed leaf (F-1248-1) — and clears the same fixture when live (104.798542ms)
+✔ every TERMINAL_CLOSED word is refused on the drain path, and no other word is (517.79775ms)
+✔ an owner BLOCK still outranks everything and still names the owner (unchanged by F-1248-1) (36.99425ms)
+✔ --queue keeps its own wording and its own reason line (56.942792ms)
+✔ a closed leaf whose reason sits under a session-stamped key is still explained (114.6055ms)
+✔ F-1249-1: a session-stamped reason key that varies the STEM is explained, and non-reason keys are not (131.930667ms)
+✔ F-1249-1: a stale blockedReason is never printed as the CLOSURE cause (90.097958ms)
+✔ F-1249-1: the leaf TITLE is printed on both refusal arms, even when a reason key exists (279.383042ms)
+✔ --all reports terminal-closed leaves but its exit code still tracks BLOCKED alone (196.953959ms)
+✔ F-1250-1: an EXACT taskFile match outranks a longer-named sibling (no false CLEAR) (294.792209ms)
+✔ F-1250-1: the reverse — a lawful merged drain is not reddened by a longer closed predecessor (198.148041ms)
+✔ F-1250-1: with NO exact match, longest-wins still decides (the tie-break is kept, not replaced) (152.48475ms)
+✔ F-1250-1 rider: a blocked SIBLING still refuses, but now says which leaf you actually named (184.987208ms)
+✔ a missing leaf is still UNKNOWN-not-a-clearance, and --strict still escalates it (230.252792ms)
+✔ published mask tables exactly track authored contract data (78.819375ms)
+✔ published Moth Season mask stays inside bounds and agrees with authored water (4.068417ms)
+✔ e2-trestle mask stays inside bounds and agrees with authored water (1.557125ms)
+✔ e2-pressure-garden mask stays inside bounds and agrees with authored water (3.514792ms)
+✔ e2-incline mask stays inside bounds and agrees with authored water (3.712625ms)
+✔ e3-canyon-works mask stays inside bounds and agrees with authored water (2.785333ms)
+✔ e3-blackout-ridge mask stays inside bounds and agrees with authored water (3.221291ms)
+✔ e3-moth-season mask stays inside bounds and agrees with authored water (3.624375ms)
+✔ e3-fairground mask stays inside bounds and agrees with authored water (5.092125ms)
+✔ e4-dust-flats mask stays inside bounds and agrees with authored water (5.791875ms)
+✔ e4-long-road mask stays inside bounds and agrees with authored water (0.775042ms)
+✔ e4-gusher-county mask stays inside bounds and agrees with authored water (4.642ms)
+✔ e4-boneyard mask stays inside bounds and agrees with authored water (5.93425ms)
+✔ e5-regatta mask stays inside bounds and agrees with authored water (1.86175ms)
+✔ e5-stillwater mask stays inside bounds and agrees with authored water (2.74425ms)
+✔ e5-flotilla mask stays inside bounds and agrees with authored water (5.80975ms)
+✔ e6-glow-mesa mask stays inside bounds and agrees with authored water (1.34525ms)
+✔ e6-showroom mask stays inside bounds and agrees with authored water (1.152375ms)
+✔ e6-half-life-hollow mask stays inside bounds and agrees with authored water (5.193042ms)
+✔ e6-picnic mask stays inside bounds and agrees with authored water (3.335375ms)
+✔ e7-relay-valley mask stays inside bounds and agrees with authored water (2.319208ms)
+✔ e7-echo-canyon mask stays inside bounds and agrees with authored water (3.098709ms)
+✔ e7-dead-band mask stays inside bounds and agrees with authored water (0.52ms)
+✔ e7-relay-rush mask stays inside bounds and agrees with authored water (1.875125ms)
+✔ e8-mare-claim mask stays inside bounds and agrees with authored water (1.984958ms)
+✔ e9-dome-basin mask stays inside bounds and agrees with authored water (2.159666ms)
+✔ e9-seed-run mask stays inside bounds and agrees with authored water (4.046833ms)
+✔ e9-devils-alley mask stays inside bounds and agrees with authored water (0.661584ms)
+✔ e9-old-canal mask stays inside bounds and agrees with authored water (2.979ms)
+✔ e10-ember-shore mask stays inside bounds and agrees with authored water (7.348833ms)
+✔ entry damage tables include both E1 contracts (0.3735ms)
+✔ night shift wave 3 has reduced entry damage (0.056875ms)
+✔ night shift wave 12 has no entry damage scale (0.059917ms)
+✔ entry damage scaling ends after wave 10 (0.048ms)
+✔ entry damage scales are finite reductions (0.072333ms)
+✔ E1 entry damage tables agree (0.318125ms)
+✔ all 13 scripts/*.test.mjs fixture owners remove their temp directories (43243.024333ms)
+✔ a gate nothing calls is reported as a NEW orphan and exits 1 (326.789791ms)
+✔ grandfathering that orphan with a reason turns the gate green (300.148292ms)
+✔ a gate whose only caller is a *.config.ts webServer command counts as REACHED (311.714542ms)
+✔ a guard named only in a COMMENT is not reached — prose is not a caller (335.404583ms)
+✔ putting it in the GUARDS array clears it — the control for the arm above (372.963458ms)
+✔ a non-gate script (dev, preview, census) is never ratcheted on (526.585167ms)
+✔ an orphan that GAINED a caller is reported so the baseline can tighten (406.34275ms)
+✔ --report never gates, even with a fresh orphan present (364.470875ms)
+✔ REFUSES (rc=2) when package.json has no scripts block (374.779792ms)
+✔ REFUSES (rc=2) when no scripts/*.mjs is tracked (421.194625ms)
+✔ REFUSES (rc=2) when the resolver cannot reach its own anchors (336.118375ms)
+✔ REFUSES (rc=2) when the baseline file is missing — not read as {} (366.430417ms)
+✔ REFUSES (rc=2) when the baseline is unreadable (411.72425ms)
+✔ REFUSES (rc=2) when no subject matches the gate patterns (579.04125ms)
+✔ POSITIVE CONTROL: the real repo passes, with a non-empty measured subject (106.51825ms)
+fallbackTownEraPropManifests: 7 fallback keys = 7 static imports = 7 files
+fallbackManifests (non-release): 10 fallback keys = 10 files
+fallbackFamilyBundles: 1 fallback keys = 1 files
+fallbackCapsBundles: 1 fallback keys = 1 files
+fallbackContractBundles (non-release): 10 fallback keys = 10 files
+✔ node glob fallbacks match every on-disk manifest (non-release branches) (5.47475ms)
+✔ goal tree schema is valid (1.984917ms)
+✔ ten sampled merged leaves have a done receipt and ancestral merge (20935.646208ms)
+✔ rejects an unset PROBE_BASE before launching a browser (279.103209ms)
+✔ rejects an unset PROBE_BASE before checking the browser executable (346.707292ms)
+✔ rejects a positional base URL with a PROBE_BASE directive (318.128792ms)
+✔ rejects an unset base before probing ownership (1.271084ms)
+✔ accepts a listener owned by this checkout (0.104ms)
+✔ rejects a listener owned by another checkout (0.085083ms)
+✔ rejects a port with no listener (1.2215ms)
+✔ rejects an unusable ownership probe (0.106ms)
+✔ runner exit follows guard exit codes (6685.192291ms)
+✔ --only rejects unknown guards and runs one known guard (325.487791ms)
+✔ --only accepts a comma-separated subset in canonical order (759.981958ms)
+✔ --only rejects a list containing an unknown guard rather than narrowing (62.954834ms)
+✔ power-budget rows include p95 only when printed (434.806416ms)
+✔ --changed-since runs the base gate when no path rule matches (1011.46725ms)
+✔ --changed-since adds the worker guards when functions/ moved (2502.684291ms)
+✔ --changed-since exits 2 on a bad ref rather than narrowing to the base gate (191.281084ms)
+✔ --changed-since exits 2 when the untracked listing fails rather than reporting a green (1652.780667ms)
+✔ guards run with GR_GUARD_NO_ARTIFACT so a gate cannot dirty its own tree (152.4225ms)
+✔ a signal-killed guard is never a pass (153.63925ms)
+AT RISK (archive files absent from git ls-files; informational): 234 files, 605.83 MB
+Task-stats high-water: subject 233 rows, baseline 233
+Run log retention: 233 entries checked, 0 unrecoverable
+✔ every recorded run log remains recoverable (960.08375ms)
+✔ every scripts/**/*.mjs parses (2637.748ms)
+✔ every scripts/**/*.sh parses (106.654792ms)
+✔ every rehearsal/**/*.mjs parses (414.578292ms)
+✔ every foundry/**/*.mjs parses (87.263042ms)
+✔ every foundry/**/*.sh parses (12.348583ms)
+✔ site: every local <script src> the pages load actually exists (1.776416ms)
+✔ site: each loaded script parses under the grammar its tag requests (47.148208ms)
+✔ site: each inline <script> parses under the grammar its tag requests (49.601625ms)
+✔ site: every local href/src resolves to a file that exists (1.421125ms)
+✔ site: the denominator still contains a data-* reference and an escaping path (1.220708ms)
+✔ site: every in-page anchor targets an element that exists (0.428541ms)
+✔ site: assay-office duration vocabulary matches functions/api/stats.ts (0.633125ms)
+✔ curation is deterministic, interleaved, and never repeats thin-pool items (2.747166ms)
+✔ intake rejects headless captures and explicit banned files (3.82175ms)
+✔ OBS v5 authentication, scene discovery, and switch request use one websocket (1.900708ms)
+✔ failed preconditions are silent no-ops (0.099791ms)
+✔ missing spec, websocket, or required scenes never enter FACTORY (6.520125ms)
+✔ offline stream leaves FACTORY untouched (2.433166ms)
+✔ green showcase switches FACTORY, dwells, and always restores AUTOPILOT (2.082958ms)
+✔ red showcase skips dwell and restores AUTOPILOT (1.106958ms)
+✔ append is hash-idempotent and keeps one JSON line per entry (40.1635ms)
+✔ downtime accumulates and catch-up shows oldest first without double-show (82.808959ms)
+✔ concurrent appenders preserve every entry and concurrent consumers show once (267.477625ms)
+✔ missing subject directory fires the actionable existence message (16.216833ms)
+✔ subject below its floor reports expected and walked counts (0.940333ms)
+✔ subject exactly at its floor passes (0.83625ms)
+✔ empty present subject fires the floor instead of passing silently (0.410541ms)
+✔ ignoreReadErrors returns only readable paths (2.499125ms)
+✔ default walk fails closed on an unreadable subtree (0.976959ms)
+✔ floor catches files hidden by an ignored read error (0.95475ms)
+✔ reducer output is cwd-invariant (607.379041ms)
+✔ reducer reports configured and actual workers distinctly (281.428958ms)
+✔ reducer reports absent harness config as unrecorded (767.943291ms)
+✔ reducer output is script-root-invariant (1425.35675ms)
+✔ reducer renders absolute raw paths relative to the recorded tree (419.881416ms)
+✔ reducer refuses body statistics when the recorded tree is unavailable (778.9295ms)
+✔ an unresolved masking row never outranks a resolved row (437.598167ms)
+✔ townEraProps resolves its manifests under plain node, not only under Vite (76.567125ms)
+✔ town specs collect without loading Vite-only modules (1661.500083ms)
+✔ whole suite collects without loading Vite-only modules (4426.546708ms)
+✔ every functions/**/*.ts is type-checked (9952.757125ms)
+ℹ tests 156
+ℹ suites 0
+ℹ pass 156
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 43337.852958
+ticker stats checks passed (populated, empty, failures, invalid shape, endpoint diagnostic, poison control, shared URL, JSON)
+
+
+===== task-guards =====
+$ npm run test:task-guards
+rc=0 0.1s
+
+> gold-rush@0.1.0 test:task-guards
+> node scripts/task-guard-audit.mjs
+
+task-guard-audit: 750 masters, 0 invisible (baseline 0).
+  ✅ no NEW invisible master. rc=0
+
+
+===== gate-callers =====
+$ npm run test:gate-callers
+rc=0 0.1s
+
+> gold-rush@0.1.0 test:gate-callers
+> node scripts/gate-caller-audit.mjs
+
+gate-caller-audit — who calls each gate?
+  root                : /Users/robin/Claude/Projects/Gold Rush
+  npm scripts         : 23 (17 gate-shaped)
+  scripts/ files      : 191 (9 guard-shaped)
+  config.ts read      : 30   .github/ files: 0
+  edge vocabulary     : package.json scripts, scripts/**.mjs, scripts/**.sh, *.config.ts, .github/**
+  roots               : 49   reached: 78
+  subjects            : 26   orphans: 5
+  grandfathered       : 5
+  known  npm:test:asset-diet                       s1253 F-1253-1: NO CALLER, but measured GREEN this fire (4/4, rc=0, 52.3s). It is the CORRECT harness for e2e/asset-diet.spec.ts, which the default config also collects against a dev server it cannot satisfy (F-1251-1). Wiring it is gate policy, not a drive-by: owner's desk.
+  known  npm:verify:visual                         DELIBERATELY UNROOTED, and not a coverage hole: a convenience alias for one spec. Verified s1253 by `npx playwright test --list e2e/visual.spec.ts` -- its 5 tests are collected by the DEFAULT config (playwright.config.ts:8 testDir './e2e'), so `npm run test` already gates them. Nothing to wire.
+  known  npm:test:preview                          s1253 F-1253-1: NO CALLER and, as far as any tracked evidence shows, NEVER RUN. Whole e2e suite against the production bundle (docs/DEPLOY.md:19 'Playwright has a preview project (npm run test:preview) that runs the e2e suite against the production bundle'). Cost and likely structural reds make this an owner ruling, not a fire's decision.
+  known  npm:test:release                          s1253 F-1253-1 / F-1126-1's named remainder: NO CALLER. Sole gate over the E1 release door; the chain NOTHING -> test:release -> build:release -> assert-release-build.mjs is unrooted at the top. reviews/approach-convergence-class.md:55 already recommended 'The release suite deserves a place in the drain minimum for any slice that changes first-boot or town-entry flow' and nobody executed it. Adding a ~200s playwright suite to a 124s node battery is a gate-cost decision: owner's desk.
+  known  scripts/anim-pass-dupecheck.mjs           DELIBERATELY UNROOTED: not a gate. A one-off forensic instrument from THE ANIMATION PASS (2026-07-25) that measures mad/diff% between two sprite cells to settle whether a silhouette-hash duplicate suspicion is real. Matches GUARDISH_FILE on the word 'check' only. Verdicts are for a human reading a batch, not for a battery.
+
+PASS — every gate-shaped subject is either reached or grandfathered with a reason.
+
+
+SUMMARY {"node-guards":0,"task-guards":0,"gate-callers":0}

@@ -1,0 +1,9 @@
+No concrete correctness or regression findings in the four-file scope. Tracked changes were compared with HEAD; the helper and test are untracked additions.
+
+- Scatter batching preserves the current profiles’ transforms, tint, roughness, metalness, and sidedness. Clearing visibility remains connected to each prop.
+- Installed three.js **0.184.0** uploads changed indices after the color/shadow callbacks. An in-memory check using its binding/upload code confirmed immediate updates across camera switching, hiding, and restoration.
+- Transparent objects and current unique landmarks remain independent. I found no introduced disposal defect.
+
+All four supplied test cases passed with in-memory transpilation, bypassing Vite startup.
+
+**Acceptance remains open:** this review does not establish measured draw reductions, pixel parity, or timing. No files were edited, browser run, or review delegated.

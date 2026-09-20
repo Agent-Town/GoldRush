@@ -1,0 +1,37 @@
+$ git cherry-pick -n 40ea99a4
+rc=0
+
+---
+$ git status --porcelain
+rc=0
+A  artifacts/profile-first-boot/desktop-chrome-name-only-creation.png
+A  artifacts/profile-first-boot/mobile-chrome-name-only-creation.png
+M  e2e/gazette-first-issue.spec.ts
+M  e2e/gazette-welcome.spec.ts
+M  e2e/profile-first-boot.spec.ts
+M  e2e/release-build.spec.ts
+M  e2e/trail-guide.spec.ts
+ M logs/.goal-tree.html
+M  src/game/ProfileManager.ts
+M  src/game/ProfileStorage.ts
+M  src/game/ProfileTransfer.ts
+M  src/town/TownWelcome.ts
+M  src/ui/menu/StartMenu.ts
+?? logs/session-scratch/s1255/
+
+---
+$ git diff --cached --stat
+rc=0
+ .../desktop-chrome-name-only-creation.png          | Bin 0 -> 1747295 bytes
+ .../mobile-chrome-name-only-creation.png           | Bin 0 -> 1974363 bytes
+ e2e/gazette-first-issue.spec.ts                    |  22 +++++---
+ e2e/gazette-welcome.spec.ts                        |  59 +++++++++++++++++++--
+ e2e/profile-first-boot.spec.ts                     |   6 +++
+ e2e/release-build.spec.ts                          |   1 +
+ e2e/trail-guide.spec.ts                            |  16 +++---
+ src/game/ProfileManager.ts                         |   8 +--
+ src/game/ProfileStorage.ts                         |   2 +
+ src/game/ProfileTransfer.ts                        |   3 ++
+ src/town/TownWelcome.ts                            |   6 +--
+ src/ui/menu/StartMenu.ts                           |   8 +--
+ 12 files changed, 93 insertions(+), 38 deletions(-)

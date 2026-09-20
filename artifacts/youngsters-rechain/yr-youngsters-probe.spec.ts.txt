@@ -1,0 +1,149 @@
+import { mkdir } from 'node:fs/promises';
+import path from 'node:path';
+import { expect, test, type Page, type TestInfo } from '@playwright/test';
+import { META_PROGRESS_KEY } from '../src/game/MetaProgress';
+import { PROFILE_KEY, TOWN_NAME_KEY, profileDataKey, type ProfileState } from '../src/game/ProfileStorage';
+import { STORY_TALES_STORAGE_KEY } from '../src/story/settings';
+import { STORY_SPEAKERS } from '../src/story/speakers';
+
+// youngsters-rechain SCRATCH PROBE (never committed as a spec; retained beside the evidence as .txt).
+// Adapted from artifacts/canon-calls-a8/a8-canon-probe.spec.ts.txt. This batch registers five
+// speakers that NO BEAT KEYS, so unlike the a8 probe there is no card of its own to assert; what a
+// registration can still get wrong is registering a plate that 404s, and that is what this asserts,
+// on a PLAIN boot (no ?debug in the URL) with the roster resolved INSIDE THE PAGE. It also drains the
+// real beat queue so the story card path is exercised on that same plain boot and any console or page
+// error it raises is caught.
+
+const SHOTS = path.resolve('reviews/shots-youngsters-rechain');
+const YOUNGSTER_IDS = [
+  'youngster-a-e2',
+  'youngster-a-e4',
+  'youngster-a-e8',
+  'youngster-b-e2',
+  'youngster-b-e4',
+] as const;
+
+type ErrorBucket = { consoleErrors: string[]; pageErrors: string[] };
+
+function collectErrors(page: Page): ErrorBucket {
+  const bucket: ErrorBucket = { consoleErrors: [], pageErrors: [] };
+  page.on('console', (message) => {
+    if (message.type() === 'error') bucket.consoleErrors.push(message.text());
+  });
+  page.on('pageerror', (error) => bucket.pageErrors.push(error.message));
+  return bucket;
+}
+
+async function seedProfile(page: Page): Promise<void> {
+  await page.goto('/?debug&seed=yr-probe-seed');
+  await page.evaluate(
+    ({ profileKey, talesKey, metaKey }) => {
+      localStorage.clear();
+      sessionStorage.clear();
+      const state: ProfileState = {
+        version: 2,
+        activeId: 'robin',
+        profiles: [
+          { id: 'robin', name: 'Robin', createdAt: 1, updatedAt: 1, difficultyPreset: 'trail', hintsSeen: [] },
+        ],
+      };
+      localStorage.setItem(profileKey, JSON.stringify(state));
+      localStorage.setItem(talesKey, '1');
+      localStorage.setItem(metaKey, JSON.stringify({ version: 1, tracks: { territory: 0, science: 0, hero: 0, agent: 1 } }));
+    },
+    {
+      profileKey: PROFILE_KEY,
+      townKey: profileDataKey('robin', TOWN_NAME_KEY),
+      talesKey: profileDataKey('robin', STORY_TALES_STORAGE_KEY),
+      metaKey: profileDataKey('robin', META_PROGRESS_KEY),
+    },
+  );
+}
+
+test('PLAIN BOOT: every registered portrait decodes, the five re-chained youngsters included', async ({ page }, testInfo) => {
+  test.setTimeout(120_000);
+  await seedProfile(page);
+  const errors = collectErrors(page);
+
+  await page.goto('/');
+  expect(page.url(), 'the probe must assert on a PLAIN boot, no ?debug').not.toContain('debug');
+
+  await page.getByTestId('start-menu-enter-town').click();
+  await page.waitForFunction(() => (window.__GR_TOWN_DIAGNOSTICS__?.frame ?? 0) > 10);
+  await page.getByTestId('town-name-input').fill('Aurora Bend');
+  await page.getByTestId('town-name-submit').click();
+
+  // Drain the real beat queue so the story card path runs on this plain boot. No youngster id is
+  // keyed to a beat, so nothing here is asserted about WHICH beats appear; what is asserted is that
+  // the card renders with a portrait that DECODES, and that draining raises no console/page error.
+  const card = page.getByTestId('story-beat-card');
+  const seen: string[] = [];
+  let firstPortrait: { w: number; h: number; src: string } | null = null;
+  for (let i = 0; i < 4; i++) {
+    if (i === 0) {
+      await expect(card, 'a plain boot must raise at least one story card').toBeVisible({ timeout: 20_000 });
+    } else if (!(await card.isVisible())) {
+      // The queue is as long as it is; running dry is the normal end of a plain-boot drain, not a
+      // failure. Asserting a fixed length here would make this probe a beat-queue test, which is
+      // F-A8-1's exact trap.
+      break;
+    }
+    await expect(card).toHaveClass(/story-beat-card--visible/);
+    seen.push((await card.getAttribute('data-beat-id')) ?? '(null)');
+    if (!firstPortrait) {
+      const portrait = page.getByTestId('story-beat-portrait');
+      firstPortrait = await portrait.evaluate((el) => {
+        const img = el as HTMLImageElement;
+        return { w: img.naturalWidth, h: img.naturalHeight, src: img.getAttribute('src') ?? '' };
+      });
+      await mkdir(SHOTS, { recursive: true });
+      await page.waitForTimeout(240);
+      await page.screenshot({ path: path.join(SHOTS, `plain-boot-card-${testInfo.project.name}.png`) });
+      await card.screenshot({ path: path.join(SHOTS, `plain-boot-card-crop-${testInfo.project.name}.png`) });
+    }
+    await page.mouse.click(6, 6);
+    await expect(card).toHaveCount(0);
+  }
+  // eslint-disable-next-line no-console
+  console.log(`YR PROBE beat queue (${testInfo.project.name}): ${seen.join(' -> ')}`);
+  expect(firstPortrait, 'the plain-boot card must carry a portrait').not.toBeNull();
+  expect(firstPortrait?.w, 'the plain-boot card portrait must decode').toBeGreaterThan(0);
+  // eslint-disable-next-line no-console
+  console.log(`YR PROBE first card portrait (${testInfo.project.name}): ${firstPortrait?.src} natural ${firstPortrait?.w}x${firstPortrait?.h}`);
+
+  // Every registered portrait decodes, the five new youngster plates included. Registering a speaker
+  // whose plate 404s is the failure this asserts against. The roster is resolved INSIDE THE PAGE
+  // (the module's portraitUrl is built from `import.meta.url`, so importing it node-side yields
+  // file:// hrefs the browser cannot load - that is a probe bug, not a product one, and it is why
+  // this config boots a DEV server: only a dev server serves /src/*.ts to a runtime import).
+  const roster = await page.evaluate(async (ids: readonly string[]) => {
+    const mod = await import('/src/story/speakers.ts');
+    const entries = Object.values(mod.STORY_SPEAKERS as Record<string, { id: string; portraitUrl: string }>);
+    const bad: { id: string; url: string }[] = [];
+    const sizes: Record<string, [number, number]> = {};
+    await Promise.all(entries.map((entry) => new Promise<void>((resolve) => {
+      const img = new Image();
+      img.onload = () => {
+        sizes[entry.id] = [img.naturalWidth, img.naturalHeight];
+        if (!img.naturalWidth) bad.push({ id: entry.id, url: entry.portraitUrl });
+        resolve();
+      };
+      img.onerror = () => { bad.push({ id: entry.id, url: entry.portraitUrl }); resolve(); };
+      img.src = entry.portraitUrl;
+    })));
+    const youngsters: Record<string, [number, number] | null> = {};
+    for (const id of ids) youngsters[id] = sizes[id] ?? null;
+    return { count: entries.length, bad, youngsters };
+  }, YOUNGSTER_IDS);
+
+  expect(roster.bad, 'every registered speaker portrait must decode').toEqual([]);
+  // eslint-disable-next-line no-console
+  console.log(`YR PROBE roster (${testInfo.project.name}): ${roster.count} speakers, ${roster.bad.length} broken; youngsters ${JSON.stringify(roster.youngsters)}`);
+  expect(roster.count, 'the registered roster is 88 + the five re-chained youngsters').toBe(Object.keys(STORY_SPEAKERS).length);
+  for (const id of YOUNGSTER_IDS) {
+    expect(roster.youngsters[id], `${id} must decode at 384x384`).toEqual([384, 384]);
+  }
+
+  expect(errors.consoleErrors).toEqual([]);
+  expect(errors.pageErrors).toEqual([]);
+});

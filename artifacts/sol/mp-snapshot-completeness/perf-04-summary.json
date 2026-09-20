@@ -1,0 +1,18 @@
+{
+  "command": "npm exec -- playwright test e2e/perf-04-determinism.spec.ts --project=desktop-chrome --project=mobile-chrome --workers=1 --reporter=line",
+  "passed": 6,
+  "failed": 0,
+  "duration": "8.3m",
+  "projects": [
+    "desktop-chrome",
+    "mobile-chrome"
+  ],
+  "runsPerProject": 2,
+  "ticksPerRun": 18000,
+  "timelineEntriesPerRun": 18000,
+  "futureStateHash": "fnv1a32:d835987d",
+  "economyHash": "fnv1a32:0f6f2150",
+  "economyEvents": 7,
+  "timelinesEqual": true,
+  "futureStateDiff": false
+}

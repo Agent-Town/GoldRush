@@ -1,0 +1,37 @@
+{
+  "project": "mobile-chrome",
+  "flagOff": {
+    "ground": {
+      "enabled": false,
+      "mode": "fallback",
+      "drawCalls": 1,
+      "segments": 40,
+      "vertexStep": 1.6,
+      "vertices": 1681,
+      "triangles": 3200,
+      "heightSource": "visual",
+      "textureSource": "bank-atlas",
+      "textureSeams": "texture seams remain until TR-02"
+    },
+    "frameMsP95": 9.099999999999909,
+    "rendererCalls": 80,
+    "enemiesAlive": 96
+  },
+  "flagOn": {
+    "ground": {
+      "enabled": true,
+      "mode": "continuous-mesh",
+      "drawCalls": 1,
+      "segments": 64,
+      "vertexStep": 1,
+      "vertices": 4225,
+      "triangles": 8192,
+      "heightSource": "visual",
+      "textureSource": "bank-atlas",
+      "textureSeams": "texture seams remain until TR-02"
+    },
+    "frameMsP95": 9.099999999999909,
+    "rendererCalls": 80,
+    "enemiesAlive": 96
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "base": "ddfb210f5e8dacdc3595a9370d8498a7934427a8",
+  "bodies": [
+    {
+      "id": "mine-spur-kit",
+      "vertices": 1044,
+      "faces": 570,
+      "uvLoops": 1800,
+      "movedVertices": 104,
+      "topologyUvsBoundsAndTransformUnchanged": true
+    },
+    {
+      "id": "north-approach-kit",
+      "vertices": 3376,
+      "faces": 1728,
+      "uvLoops": 5268,
+      "movedVertices": 0,
+      "topologyUvsBoundsAndTransformUnchanged": true
+    },
+    {
+      "id": "north-boiler-site",
+      "vertices": 444,
+      "faces": 390,
+      "uvLoops": 1620,
+      "movedVertices": 0,
+      "topologyUvsBoundsAndTransformUnchanged": true
+    },
+    {
+      "id": "south-approach-kit",
+      "vertices": 3376,
+      "faces": 1728,
+      "uvLoops": 5268,
+      "movedVertices": 0,
+      "topologyUvsBoundsAndTransformUnchanged": true
+    },
+    {
+      "id": "south-boiler-site",
+      "vertices": 444,
+      "faces": 390,
+      "uvLoops": 1620,
+      "movedVertices": 0,
+      "topologyUvsBoundsAndTransformUnchanged": true
+    },
+    {
+      "id": "trestle-crossing",
+      "vertices": 616,
+      "faces": 462,
+      "uvLoops": 1848,
+      "movedVertices": 0,
+      "topologyUvsBoundsAndTransformUnchanged": true
+    }
+  ],
+  "unchangedBytes": {
+    "assets/pilots/map-rebuild-spike/trestle-terrain.glb": "c0c381d8de5f344779b6c81d21b93dc644dd9e3163dc69c6e936aab1c8ecec06",
+    "assets/pilots/map-rebuild-spike/trestle-panorama.glb": "d481fdce9a897df3aa8d54d99c69bf9e2812c0a9c07c6c55e5e324ec3276b74b",
+    "assets/pilots/map-rebuild-spike/landmarks/trestle/trestle-landmarks-atlas.png": "b9a045bf9fbbde42d52b59177af8618066195af1e5280bfe377c19cac68955e9",
+    "assets/pilots/map-rebuild-spike/landmark-collision-contract.json": "15ba0ff0a6044e98750c1863723cd1a3468a8b5a7caafb439cc79fd2f1fcd8e7",
+    "assets/pilots/map-rebuild-spike/landmarks/trestle/north-approach-kit.glb": "91847ae813f517f8b5a1dba82c093c2154d9672e753ca00e3639cb984d5ccecd",
+    "assets/pilots/map-rebuild-spike/landmarks/trestle/north-boiler-site.glb": "ac74675b1d0029cd2a5a56ad6be8cf7a6fc589c75fba0e98a167e1eeaae6f549",
+    "assets/pilots/map-rebuild-spike/landmarks/trestle/south-approach-kit.glb": "07b0c714916c8699d1a900eff3f040db1052642896e2a7e5a263b9e742a1b9f6",
+    "assets/pilots/map-rebuild-spike/landmarks/trestle/south-boiler-site.glb": "ca460d593e3ad86b839d1daf134b7b0a30b6110da13cc295e2f26809e4b76c40",
+    "assets/pilots/map-rebuild-spike/landmarks/trestle/trestle-crossing.glb": "c5f9661c6118ecb7a80f0732eeab2067f1b27c1bac545e77154cd85d1d319ff2"
+  },
+  "gameplayAndRailRouteDiffEmpty": true,
+  "movedStockFootprintDistanceToDeclaredRailCenterlines": {
+    "before": 0,
+    "after": 2.1608618086208704
+  },
+  "railClearanceMethod": "Minimum 2D distance from edges of the 13 moved components to both unchanged factory rail polylines, using the original mount yaw and position. This measures scenery separation, not a new collision footprint."
+}

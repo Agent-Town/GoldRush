@@ -1,0 +1,70 @@
+HEAD roster files: 25
+HEAD roster: pass=127 fail=0 rc=0
+my new file alone: pass=7
+arithmetic: 127 + 7 = 134
+measured with my file in the roster: 134
+
+=== HEAD roster raw tail ===
+ms)
+✔ --only accepts a comma-separated subset in canonical order (728.658708ms)
+✔ --only rejects a list containing an unknown guard rather than narrowing (43.124125ms)
+✔ power-budget rows include p95 only when printed (415.265625ms)
+✔ --changed-since runs the base gate when no path rule matches (631.628334ms)
+✔ --changed-since adds the worker guards when functions/ moved (1988.680083ms)
+✔ --changed-since exits 2 on a bad ref rather than narrowing to the base gate (170.251ms)
+✔ --changed-since exits 2 when the untracked listing fails rather than reporting a green (1170.313542ms)
+✔ guards run with GR_GUARD_NO_ARTIFACT so a gate cannot dirty its own tree (149.014208ms)
+✔ a signal-killed guard is never a pass (148.682125ms)
+AT RISK (archive files absent from git ls-files; informational): 231 files, 595.74 MB
+Task-stats high-water: subject 230 rows, baseline 230
+Run log retention: 230 entries checked, 0 unrecoverable
+✔ every recorded run log remains recoverable (614.566125ms)
+✔ every scripts/**/*.mjs parses (1225.845125ms)
+✔ every scripts/**/*.sh parses (54.528417ms)
+✔ every rehearsal/**/*.mjs parses (312.050708ms)
+✔ every foundry/**/*.mjs parses (69.7745ms)
+✔ every foundry/**/*.sh parses (6.977333ms)
+✔ site: every local <script src> the pages load actually exists (1.178917ms)
+✔ site: each loaded script parses under the grammar its tag requests (85.488875ms)
+✔ site: each inline <script> parses under the grammar its tag requests (41.079375ms)
+✔ site: every local href/src resolves to a file that exists (1.363666ms)
+✔ site: the denominator still contains a data-* reference and an escaping path (0.327667ms)
+✔ site: every in-page anchor targets an element that exists (0.356125ms)
+✔ site: assay-office duration vocabulary matches functions/api/stats.ts (0.598375ms)
+✔ curation is deterministic, interleaved, and never repeats thin-pool items (3.241334ms)
+✔ intake rejects headless captures and explicit banned files (2.158459ms)
+✔ OBS v5 authentication, scene discovery, and switch request use one websocket (2.670541ms)
+✔ failed preconditions are silent no-ops (0.109042ms)
+✔ missing spec, websocket, or required scenes never enter FACTORY (9.786667ms)
+✔ offline stream leaves FACTORY untouched (0.573084ms)
+✔ green showcase switches FACTORY, dwells, and always restores AUTOPILOT (0.8125ms)
+✔ red showcase skips dwell and restores AUTOPILOT (1.260416ms)
+✔ append is hash-idempotent and keeps one JSON line per entry (24.016833ms)
+✔ downtime accumulates and catch-up shows oldest first without double-show (32.234458ms)
+✔ concurrent appenders preserve every entry and concurrent consumers show once (365.431708ms)
+✔ missing subject directory fires the actionable existence message (43.922416ms)
+✔ subject below its floor reports expected and walked counts (1.034458ms)
+✔ subject exactly at its floor passes (1.091375ms)
+✔ empty present subject fires the floor instead of passing silently (0.43125ms)
+✔ ignoreReadErrors returns only readable paths (1.172167ms)
+✔ default walk fails closed on an unreadable subtree (1.099833ms)
+✔ floor catches files hidden by an ignored read error (0.984792ms)
+✔ reducer output is cwd-invariant (1050.424208ms)
+✔ reducer reports configured and actual workers distinctly (522.122708ms)
+✔ reducer reports absent harness config as unrecorded (369.3955ms)
+✔ reducer output is script-root-invariant (629.367708ms)
+✔ reducer renders absolute raw paths relative to the recorded tree (339.667208ms)
+✔ reducer refuses body statistics when the recorded tree is unavailable (674.801833ms)
+✔ an unresolved masking row never outranks a resolved row (337.882084ms)
+✔ townEraProps resolves its manifests under plain node, not only under Vite (287.512834ms)
+✔ town specs collect without loading Vite-only modules (1722.198084ms)
+✔ whole suite collects without loading Vite-only modules (3427.204083ms)
+✔ every functions/**/*.ts is type-checked (7819.733167ms)
+ℹ tests 127
+ℹ suites 0
+ℹ pass 127
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 32043.685792

@@ -1,0 +1,576 @@
+(node:46806) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 108 tests using 1 worker
+
+
+(node:47190) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[1/108] [desktop-chrome] › e2e/057-baron-rocket-cart.spec.ts:251:1 › kited Baron telegraphs and launches rockets that damage hero and buildings through CombatSystem
+  1) [desktop-chrome] › e2e/057-baron-rocket-cart.spec.ts:251:1 › kited Baron telegraphs and launches rockets that damage hero and buildings through CombatSystem 
+
+    Error: expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      255 |   const telegraph = await advanceUntil(page, () => rocketSnapshot(page), (snapshot) => snapshot.rocket.telegraphActive);
+      256 |   expect(telegraph.rocket.cartVisible).toBe(true);
+    > 257 |   expect(telegraph.audio.startedBySound['blast-charge-arm'] ?? 0).toBeGreaterThan(0);
+          |                                                                   ^
+      258 |
+      259 |   const midFlight = await advanceUntil(page, () => rocketSnapshot(page), (snapshot) => snapshot.blastsAlive >= 3);
+      260 |   expect(midFlight.rocket.lastOwnerId).toMatch(/^baron_rocket:/);
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-animator-land/e2e/057-baron-rocket-cart.spec.ts:257:67
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/057-baron-rocket-cart-kite-e68cc-ldings-through-CombatSystem-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/057-baron-rocket-cart-kite-e68cc-ldings-through-CombatSystem-desktop-chrome/error-context.md
+
+
+
+(node:48479) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[2/108] [desktop-chrome] › e2e/057-baron-rocket-cart.spec.ts:275:1 › lethal Baron rocket stops the death tick before XP and gold collection
+[3/108] [desktop-chrome] › e2e/057-baron-rocket-cart.spec.ts:334:1 › melee range suppresses the Baron rocket volley
+[4/108] [desktop-chrome] › e2e/057-baron-rocket-cart.spec.ts:359:1 › defeating the Baron captures the cart, shows the medal line, and unlocks captured research
+[5/108] [desktop-chrome] › e2e/057-baron-rocket-cart.spec.ts:415:1 › Sky-Rocket Battery requires Baron capture and preserves veteran profiles
+[6/108] [desktop-chrome] › e2e/057-baron-rocket-cart.spec.ts:444:1 › Baron rocket volley targeting is deterministic for the same seed
+[7/108] [desktop-chrome] › e2e/e3-crawler-boss.spec.ts:73:1 › plays the four Crawler acts and leaves the town its wreck
+[8/108] [desktop-chrome] › e2e/e3-crawler-boss.spec.ts:178:1 › holds later component effects until their preceding acts are complete
+[9/108] [desktop-chrome] › e2e/e3-crawler-boss.spec.ts:209:1 › restores crawler act timers without revealing the offstage Baron
+[10/108] [desktop-chrome] › e2e/e3-crawler-boss.spec.ts:257:1 › does not turn a failed CONNECT objective into a boss victory
+[11/108] [desktop-chrome] › e2e/e5-boss-dredge-queen.spec.ts:131:1 › rides the storm, gates Act 2 on both paddles, spills the hold, and persists W6 per profile
+[12/108] [desktop-chrome] › e2e/e5-boss-dredge-queen.spec.ts:192:1 › interrupts a mid-cycle claw hit without transferring loot
+[13/108] [desktop-chrome] › e2e/e5-boss-dredge-queen.spec.ts:215:1 › damages only inside the telegraphed defensive-claw arc
+[14/108] [desktop-chrome] › e2e/e5-boss-dredge-queen.spec.ts:237:1 › keeps the boss-run frame p95 within 15% of the non-boss tile
+[desktop-chrome] › e2e/e5-boss-dredge-queen.spec.ts:237:1 › keeps the boss-run frame p95 within 15% of the non-boss tile
+Dredge-Queen perf desktop-chrome: non-boss=16.6ms boss=16ms ratio=0.9639
+
+[15/108] [desktop-chrome] › e2e/e6-boss-homemaker.spec.ts:126:1 › unbuilds, tidies, makes one chair, and remains kept without ever hurting the player
+[16/108] [desktop-chrome] › e2e/e7-echo-canyon-mirror.spec.ts:69:1 › a playbook used in Echo Canyon returns as a corrupted squad on the next wave
+[17/108] [desktop-chrome] › e2e/e7-echo-canyon-mirror.spec.ts:128:1 › CONTROL — the Relay Valley, same epoch and same tape, casts no shadow
+[18/108] [desktop-chrome] › e2e/e7-roster.spec.ts:47:1 › E7 contract rows are era-gated while E1 keeps its untagged outlaws
+[19/108] [desktop-chrome] › e2e/e7-roster.spec.ts:118:1 › E7 placeholders preserve roster stats, thief state, and cure-only death outcomes
+[20/108] [desktop-chrome] › e2e/e7-roster.spec.ts:164:1 › plain Signal-era boot stays error-free without the debug harness
+  2) [desktop-chrome] › e2e/e7-roster.spec.ts:164:1 › plain Signal-era boot stays error-free without the debug harness 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      173 |   await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+      174 |   expect(await page.evaluate(() => window.__GR_TEST__)).toBeUndefined();
+    > 175 |   expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.e7Arsenal.enabled)).toBe(true);
+          |                                                                                           ^
+      176 |   expect(errors).toEqual({ console: [], page: [] });
+      177 | });
+      178 |
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-animator-land/e2e/e7-roster.spec.ts:175:91
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e7-roster-plain-Signal-era-d9798-e-without-the-debug-harness-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e7-roster-plain-Signal-era-d9798-e-without-the-debug-harness-desktop-chrome/error-context.md
+
+
+
+(node:50971) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[21/108] [desktop-chrome] › e2e/e8-roster.spec.ts:48:1 › E8 contract rows are era-gated while E1 keeps its untagged outlaws
+[22/108] [desktop-chrome] › e2e/e8-roster.spec.ts:119:1 › E8 placeholders preserve roster stats and cure-arms exits
+[23/108] [desktop-chrome] › e2e/e8-roster.spec.ts:172:1 › plain Orbital-era boot stays error-free without the debug harness
+  3) [desktop-chrome] › e2e/e8-roster.spec.ts:172:1 › plain Orbital-era boot stays error-free without the debug harness 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      181 |   await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+      182 |   expect(await page.evaluate(() => window.__GR_TEST__)).toBeUndefined();
+    > 183 |   expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.e8Arsenal.available)).toBe(true);
+          |                                                                                             ^
+      184 |   expect(errors).toEqual({ console: [], page: [] });
+      185 | });
+      186 |
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-animator-land/e2e/e8-roster.spec.ts:183:93
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e8-roster-plain-Orbital-er-2bc57-e-without-the-debug-harness-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e8-roster-plain-Orbital-er-2bc57-e-without-the-debug-harness-desktop-chrome/error-context.md
+
+
+[24/108] [desktop-chrome] › e2e/e9-boss-old-digger.spec.ts:73:1 › surveys, legally unmakes its path, never attacks, and cannot be killed
+[25/108] [desktop-chrome] › e2e/e9-boss-old-digger.spec.ts:103:1 › boards the live machine, spawns drones, takes hazard ticks, and dismounts safely
+[26/108] [desktop-chrome] › e2e/e9-boss-old-digger.spec.ts:123:3 › THE SWAP uses the prior recording and persists gentle
+[27/108] [desktop-chrome] › e2e/e9-boss-old-digger.spec.ts:123:3 › THE SWAP uses the no-recording survey fallback and persists gentle
+
+(node:51904) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[28/108] [desktop-chrome] › e2e/e9-roster.spec.ts:48:1 › E9 contract rows are era-gated while E1 keeps its untagged outlaws
+[29/108] [desktop-chrome] › e2e/e9-roster.spec.ts:119:1 › E9 placeholders preserve siege/thief flags and cure-arms exits
+[30/108] [desktop-chrome] › e2e/e9-roster.spec.ts:173:1 › plain Red Fields boot stays error-free without the debug harness
+  4) [desktop-chrome] › e2e/e9-roster.spec.ts:173:1 › plain Red Fields boot stays error-free without the debug harness 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      182 |   await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+      183 |   expect(await page.evaluate(() => window.__GR_TEST__)).toBeUndefined();
+    > 184 |   expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.e9Arsenal.eraActive)).toBe(true);
+          |                                                                                             ^
+      185 |   expect(errors).toEqual({ console: [], page: [] });
+      186 | });
+      187 |
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-animator-land/e2e/e9-roster.spec.ts:184:93
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e9-roster-plain-Red-Fields-f1945-e-without-the-debug-harness-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e9-roster-plain-Red-Fields-f1945-e-without-the-debug-harness-desktop-chrome/error-context.md
+
+
+
+(node:52716) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[31/108] [desktop-chrome] › e2e/elder-walk8-woman.spec.ts:37:1 › every Elder cell differs from the bearded sheet it replaces
+
+[desktop-chrome] › e2e/elder-walk8-woman.spec.ts:37:1 › every Elder cell differs from the bearded sheet it replaces
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[32/108] [desktop-chrome] › e2e/elder-walk8-woman.spec.ts:93:1 › a plain town boot walks the Elder on anchored feet at the schoolhouse
+  5) [desktop-chrome] › e2e/elder-walk8-woman.spec.ts:93:1 › a plain town boot walks the Elder on anchored feet at the schoolhouse 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "char-elder-sheet-walk8-r0c0.png"
+    Received: "char-elder-idle-r0c0.png"
+
+      135 |   expect(elder.loop, 'the Elder has no patrol loop today').toBe(false);
+      136 |   expect(elder.moving).toBe(false);
+    > 137 |   expect(elder.frameKey).toBe(`${SHEET}-r0c0.png`);
+          |                          ^
+      138 |
+      139 |   // The footline itself: the cell's own alpha bottom, projected through the billboard, has to land
+      140 |   // on the ground plane. Before the F-A8-5 registration this drifted with every cell's headroom.
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-animator-land/e2e/elder-walk8-woman.spec.ts:137:26
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/elder-walk8-woman-a-plain--049df-red-feet-at-the-schoolhouse-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/elder-walk8-woman-a-plain--049df-red-feet-at-the-schoolhouse-desktop-chrome/error-context.md
+
+
+[33/108] [desktop-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:29:1 › T spawns Claim Jumpers, contact kills hero, R restarts in place
+[34/108] [desktop-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:59:1 › T does not spawn Claim Jumpers without debug consent
+[35/108] [desktop-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:72:1 › nospawn blocks debug packs
+[36/108] [desktop-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:83:1 › double restart recycles enemies without geometry growth
+[37/108] [desktop-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:109:1 › stress=120 stays within pool and draw-call budget
+[38/108] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:111:1 › menu places a palisade and logs build_palisade spend
+[39/108] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:136:1 › build menu shows six ready icons and Balance-backed blurbs
+[40/108] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining
+[41/108] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:205:1 › beacon cost curve stays intact through the menu
+[42/108] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:227:1 › single enemy slides around a finite palisade line without passing through
+[43/108] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:284:1 › 390px build menu is visible, tappable, and clear of HUD controls
+[44/108] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:329:1 › stress draw calls stay under 200 with palisades and beacons
+[45/108] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:105:1 › enemy crossing the river reaches the hero through the ford only
+[46/108] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:123:1 › scheduled waves never place enemies in deep river over three waves
+[47/108] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:139:1 › hero stops in the shallows and keeps weapons armed at the deep channel
+[48/108] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:181:1 › xp from a residual deep-water death is auto-banked with no mote
+[49/108] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:202:1 › far-bank sluice stays untouched when the river flank is open
+
+(node:53854) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[50/108] [desktop-chrome] › e2e/town-cast-wiring.spec.ts:13:1 › town cast contracts name every shipped direction cell
+[51/108] [desktop-chrome] › e2e/town-cast-wiring.spec.ts:27:1 › plain town boot shows the tavernkeeper and storekeeper walking on anchored feet
+[52/108] [desktop-chrome] › e2e/wire-crawler-3d.spec.ts:115:1 › mounts the Crawler GLB, flips all three damage morphs, and disposes on kill
+  6) [desktop-chrome] › e2e/wire-crawler-3d.spec.ts:115:1 › mounts the Crawler GLB, flips all three damage morphs, and disposes on kill 
+
+    Error: renderer count coldBaseline.triangles=149626 outside band [147704, 147710]
+
+       at renderer-count-artifact.ts:39
+
+      37 |         if (value !== expected) throw new Error(`renderer count ${label} expected exact ${expected}, got ${value}`);
+      38 |       } else if (value < expected.tolerance[0] || value > expected.tolerance[1]) {
+    > 39 |         throw new Error(`renderer count ${label}=${value} outside band [${expected.tolerance.join(', ')}]`);
+         |               ^
+      40 |       }
+      41 |     }
+      42 |   }
+        at verifyAndWriteRendererCounts (/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-animator-land/e2e/renderer-count-artifact.ts:39:15)
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-animator-land/e2e/wire-crawler-3d.spec.ts:147:3
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/wire-crawler-3d-mounts-the-e75eb-morphs-and-disposes-on-kill-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/wire-crawler-3d-mounts-the-e75eb-morphs-and-disposes-on-kill-desktop-chrome/error-context.md
+
+
+[53/108] [desktop-chrome] › e2e/wire-crawler-3d.spec.ts:158:1 › LITE keeps the placeholder and never requests the Crawler GLB
+[54/108] [desktop-chrome] › e2e/wire-crawler-3d.spec.ts:174:1 › invalid Crawler GLB bytes keep the placeholder presentation
+
+(node:55587) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[55/108] [mobile-chrome] › e2e/057-baron-rocket-cart.spec.ts:251:1 › kited Baron telegraphs and launches rockets that damage hero and buildings through CombatSystem
+  7) [mobile-chrome] › e2e/057-baron-rocket-cart.spec.ts:251:1 › kited Baron telegraphs and launches rockets that damage hero and buildings through CombatSystem 
+
+    Error: expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      255 |   const telegraph = await advanceUntil(page, () => rocketSnapshot(page), (snapshot) => snapshot.rocket.telegraphActive);
+      256 |   expect(telegraph.rocket.cartVisible).toBe(true);
+    > 257 |   expect(telegraph.audio.startedBySound['blast-charge-arm'] ?? 0).toBeGreaterThan(0);
+          |                                                                   ^
+      258 |
+      259 |   const midFlight = await advanceUntil(page, () => rocketSnapshot(page), (snapshot) => snapshot.blastsAlive >= 3);
+      260 |   expect(midFlight.rocket.lastOwnerId).toMatch(/^baron_rocket:/);
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-animator-land/e2e/057-baron-rocket-cart.spec.ts:257:67
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/057-baron-rocket-cart-kite-e68cc-ldings-through-CombatSystem-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/057-baron-rocket-cart-kite-e68cc-ldings-through-CombatSystem-mobile-chrome/error-context.md
+
+
+
+(node:55717) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[56/108] [mobile-chrome] › e2e/057-baron-rocket-cart.spec.ts:275:1 › lethal Baron rocket stops the death tick before XP and gold collection
+[57/108] [mobile-chrome] › e2e/057-baron-rocket-cart.spec.ts:334:1 › melee range suppresses the Baron rocket volley
+[58/108] [mobile-chrome] › e2e/057-baron-rocket-cart.spec.ts:359:1 › defeating the Baron captures the cart, shows the medal line, and unlocks captured research
+[59/108] [mobile-chrome] › e2e/057-baron-rocket-cart.spec.ts:415:1 › Sky-Rocket Battery requires Baron capture and preserves veteran profiles
+[60/108] [mobile-chrome] › e2e/057-baron-rocket-cart.spec.ts:444:1 › Baron rocket volley targeting is deterministic for the same seed
+[61/108] [mobile-chrome] › e2e/e3-crawler-boss.spec.ts:73:1 › plays the four Crawler acts and leaves the town its wreck
+[62/108] [mobile-chrome] › e2e/e3-crawler-boss.spec.ts:178:1 › holds later component effects until their preceding acts are complete
+[63/108] [mobile-chrome] › e2e/e3-crawler-boss.spec.ts:209:1 › restores crawler act timers without revealing the offstage Baron
+[64/108] [mobile-chrome] › e2e/e3-crawler-boss.spec.ts:257:1 › does not turn a failed CONNECT objective into a boss victory
+[65/108] [mobile-chrome] › e2e/e5-boss-dredge-queen.spec.ts:131:1 › rides the storm, gates Act 2 on both paddles, spills the hold, and persists W6 per profile
+[66/108] [mobile-chrome] › e2e/e5-boss-dredge-queen.spec.ts:192:1 › interrupts a mid-cycle claw hit without transferring loot
+[67/108] [mobile-chrome] › e2e/e5-boss-dredge-queen.spec.ts:215:1 › damages only inside the telegraphed defensive-claw arc
+[68/108] [mobile-chrome] › e2e/e5-boss-dredge-queen.spec.ts:237:1 › keeps the boss-run frame p95 within 15% of the non-boss tile
+[mobile-chrome] › e2e/e5-boss-dredge-queen.spec.ts:237:1 › keeps the boss-run frame p95 within 15% of the non-boss tile
+Dredge-Queen perf mobile-chrome: non-boss=15.9ms boss=15.9ms ratio=1
+
+[69/108] [mobile-chrome] › e2e/e6-boss-homemaker.spec.ts:126:1 › unbuilds, tidies, makes one chair, and remains kept without ever hurting the player
+[70/108] [mobile-chrome] › e2e/e7-echo-canyon-mirror.spec.ts:69:1 › a playbook used in Echo Canyon returns as a corrupted squad on the next wave
+[71/108] [mobile-chrome] › e2e/e7-echo-canyon-mirror.spec.ts:128:1 › CONTROL — the Relay Valley, same epoch and same tape, casts no shadow
+[72/108] [mobile-chrome] › e2e/e7-roster.spec.ts:47:1 › E7 contract rows are era-gated while E1 keeps its untagged outlaws
+[73/108] [mobile-chrome] › e2e/e7-roster.spec.ts:118:1 › E7 placeholders preserve roster stats, thief state, and cure-only death outcomes
+[74/108] [mobile-chrome] › e2e/e7-roster.spec.ts:164:1 › plain Signal-era boot stays error-free without the debug harness
+  8) [mobile-chrome] › e2e/e7-roster.spec.ts:164:1 › plain Signal-era boot stays error-free without the debug harness 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      173 |   await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+      174 |   expect(await page.evaluate(() => window.__GR_TEST__)).toBeUndefined();
+    > 175 |   expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.e7Arsenal.enabled)).toBe(true);
+          |                                                                                           ^
+      176 |   expect(errors).toEqual({ console: [], page: [] });
+      177 | });
+      178 |
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-animator-land/e2e/e7-roster.spec.ts:175:91
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e7-roster-plain-Signal-era-d9798-e-without-the-debug-harness-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e7-roster-plain-Signal-era-d9798-e-without-the-debug-harness-mobile-chrome/error-context.md
+
+
+
+(node:57503) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[75/108] [mobile-chrome] › e2e/e8-roster.spec.ts:48:1 › E8 contract rows are era-gated while E1 keeps its untagged outlaws
+[76/108] [mobile-chrome] › e2e/e8-roster.spec.ts:119:1 › E8 placeholders preserve roster stats and cure-arms exits
+[77/108] [mobile-chrome] › e2e/e8-roster.spec.ts:172:1 › plain Orbital-era boot stays error-free without the debug harness
+  9) [mobile-chrome] › e2e/e8-roster.spec.ts:172:1 › plain Orbital-era boot stays error-free without the debug harness 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      181 |   await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+      182 |   expect(await page.evaluate(() => window.__GR_TEST__)).toBeUndefined();
+    > 183 |   expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.e8Arsenal.available)).toBe(true);
+          |                                                                                             ^
+      184 |   expect(errors).toEqual({ console: [], page: [] });
+      185 | });
+      186 |
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-animator-land/e2e/e8-roster.spec.ts:183:93
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e8-roster-plain-Orbital-er-2bc57-e-without-the-debug-harness-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e8-roster-plain-Orbital-er-2bc57-e-without-the-debug-harness-mobile-chrome/error-context.md
+
+
+[78/108] [mobile-chrome] › e2e/e9-boss-old-digger.spec.ts:73:1 › surveys, legally unmakes its path, never attacks, and cannot be killed
+[79/108] [mobile-chrome] › e2e/e9-boss-old-digger.spec.ts:103:1 › boards the live machine, spawns drones, takes hazard ticks, and dismounts safely
+[80/108] [mobile-chrome] › e2e/e9-boss-old-digger.spec.ts:123:3 › THE SWAP uses the prior recording and persists gentle
+[81/108] [mobile-chrome] › e2e/e9-boss-old-digger.spec.ts:123:3 › THE SWAP uses the no-recording survey fallback and persists gentle
+
+(node:57753) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[82/108] [mobile-chrome] › e2e/e9-roster.spec.ts:48:1 › E9 contract rows are era-gated while E1 keeps its untagged outlaws
+[83/108] [mobile-chrome] › e2e/e9-roster.spec.ts:119:1 › E9 placeholders preserve siege/thief flags and cure-arms exits
+[84/108] [mobile-chrome] › e2e/e9-roster.spec.ts:173:1 › plain Red Fields boot stays error-free without the debug harness
+  10) [mobile-chrome] › e2e/e9-roster.spec.ts:173:1 › plain Red Fields boot stays error-free without the debug harness 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      182 |   await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+      183 |   expect(await page.evaluate(() => window.__GR_TEST__)).toBeUndefined();
+    > 184 |   expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.e9Arsenal.eraActive)).toBe(true);
+          |                                                                                             ^
+      185 |   expect(errors).toEqual({ console: [], page: [] });
+      186 | });
+      187 |
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-animator-land/e2e/e9-roster.spec.ts:184:93
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e9-roster-plain-Red-Fields-f1945-e-without-the-debug-harness-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e9-roster-plain-Red-Fields-f1945-e-without-the-debug-harness-mobile-chrome/error-context.md
+
+
+
+(node:58270) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[85/108] [mobile-chrome] › e2e/elder-walk8-woman.spec.ts:37:1 › every Elder cell differs from the bearded sheet it replaces
+
+[mobile-chrome] › e2e/elder-walk8-woman.spec.ts:37:1 › every Elder cell differs from the bearded sheet it replaces
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[86/108] [mobile-chrome] › e2e/elder-walk8-woman.spec.ts:93:1 › a plain town boot walks the Elder on anchored feet at the schoolhouse
+  11) [mobile-chrome] › e2e/elder-walk8-woman.spec.ts:93:1 › a plain town boot walks the Elder on anchored feet at the schoolhouse 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "char-elder-sheet-walk8-r0c0.png"
+    Received: "char-elder-idle-r0c0.png"
+
+      135 |   expect(elder.loop, 'the Elder has no patrol loop today').toBe(false);
+      136 |   expect(elder.moving).toBe(false);
+    > 137 |   expect(elder.frameKey).toBe(`${SHEET}-r0c0.png`);
+          |                          ^
+      138 |
+      139 |   // The footline itself: the cell's own alpha bottom, projected through the billboard, has to land
+      140 |   // on the ground plane. Before the F-A8-5 registration this drifted with every cell's headroom.
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-animator-land/e2e/elder-walk8-woman.spec.ts:137:26
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/elder-walk8-woman-a-plain--049df-red-feet-at-the-schoolhouse-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/elder-walk8-woman-a-plain--049df-red-feet-at-the-schoolhouse-mobile-chrome/error-context.md
+
+
+[87/108] [mobile-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:29:1 › T spawns Claim Jumpers, contact kills hero, R restarts in place
+[88/108] [mobile-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:59:1 › T does not spawn Claim Jumpers without debug consent
+[89/108] [mobile-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:72:1 › nospawn blocks debug packs
+[90/108] [mobile-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:83:1 › double restart recycles enemies without geometry growth
+[91/108] [mobile-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:109:1 › stress=120 stays within pool and draw-call budget
+[92/108] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:111:1 › menu places a palisade and logs build_palisade spend
+[93/108] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:136:1 › build menu shows six ready icons and Balance-backed blurbs
+[94/108] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining
+[95/108] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:205:1 › beacon cost curve stays intact through the menu
+[96/108] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:227:1 › single enemy slides around a finite palisade line without passing through
+[97/108] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:284:1 › 390px build menu is visible, tappable, and clear of HUD controls
+[98/108] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:329:1 › stress draw calls stay under 200 with palisades and beacons
+[99/108] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:105:1 › enemy crossing the river reaches the hero through the ford only
+[100/108] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:123:1 › scheduled waves never place enemies in deep river over three waves
+[101/108] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:139:1 › hero stops in the shallows and keeps weapons armed at the deep channel
+[102/108] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:181:1 › xp from a residual deep-water death is auto-banked with no mote
+[103/108] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:202:1 › far-bank sluice stays untouched when the river flank is open
+
+(node:59433) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[104/108] [mobile-chrome] › e2e/town-cast-wiring.spec.ts:13:1 › town cast contracts name every shipped direction cell
+[105/108] [mobile-chrome] › e2e/town-cast-wiring.spec.ts:27:1 › plain town boot shows the tavernkeeper and storekeeper walking on anchored feet
+[106/108] [mobile-chrome] › e2e/wire-crawler-3d.spec.ts:115:1 › mounts the Crawler GLB, flips all three damage morphs, and disposes on kill
+  12) [mobile-chrome] › e2e/wire-crawler-3d.spec.ts:115:1 › mounts the Crawler GLB, flips all three damage morphs, and disposes on kill 
+
+    Error: renderer count coldBaseline.triangles=146040 outside band [144118, 144124]
+
+       at renderer-count-artifact.ts:39
+
+      37 |         if (value !== expected) throw new Error(`renderer count ${label} expected exact ${expected}, got ${value}`);
+      38 |       } else if (value < expected.tolerance[0] || value > expected.tolerance[1]) {
+    > 39 |         throw new Error(`renderer count ${label}=${value} outside band [${expected.tolerance.join(', ')}]`);
+         |               ^
+      40 |       }
+      41 |     }
+      42 |   }
+        at verifyAndWriteRendererCounts (/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-animator-land/e2e/renderer-count-artifact.ts:39:15)
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-animator-land/e2e/wire-crawler-3d.spec.ts:147:3
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/wire-crawler-3d-mounts-the-e75eb-morphs-and-disposes-on-kill-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/wire-crawler-3d-mounts-the-e75eb-morphs-and-disposes-on-kill-mobile-chrome/error-context.md
+
+
+[107/108] [mobile-chrome] › e2e/wire-crawler-3d.spec.ts:158:1 › LITE keeps the placeholder and never requests the Crawler GLB
+[108/108] [mobile-chrome] › e2e/wire-crawler-3d.spec.ts:174:1 › invalid Crawler GLB bytes keep the placeholder presentation
+  12 failed
+    [desktop-chrome] › e2e/057-baron-rocket-cart.spec.ts:251:1 › kited Baron telegraphs and launches rockets that damage hero and buildings through CombatSystem 
+    [desktop-chrome] › e2e/e7-roster.spec.ts:164:1 › plain Signal-era boot stays error-free without the debug harness 
+    [desktop-chrome] › e2e/e8-roster.spec.ts:172:1 › plain Orbital-era boot stays error-free without the debug harness 
+    [desktop-chrome] › e2e/e9-roster.spec.ts:173:1 › plain Red Fields boot stays error-free without the debug harness 
+    [desktop-chrome] › e2e/elder-walk8-woman.spec.ts:93:1 › a plain town boot walks the Elder on anchored feet at the schoolhouse 
+    [desktop-chrome] › e2e/wire-crawler-3d.spec.ts:115:1 › mounts the Crawler GLB, flips all three damage morphs, and disposes on kill 
+    [mobile-chrome] › e2e/057-baron-rocket-cart.spec.ts:251:1 › kited Baron telegraphs and launches rockets that damage hero and buildings through CombatSystem 
+    [mobile-chrome] › e2e/e7-roster.spec.ts:164:1 › plain Signal-era boot stays error-free without the debug harness 
+    [mobile-chrome] › e2e/e8-roster.spec.ts:172:1 › plain Orbital-era boot stays error-free without the debug harness 
+    [mobile-chrome] › e2e/e9-roster.spec.ts:173:1 › plain Red Fields boot stays error-free without the debug harness 
+    [mobile-chrome] › e2e/elder-walk8-woman.spec.ts:93:1 › a plain town boot walks the Elder on anchored feet at the schoolhouse 
+    [mobile-chrome] › e2e/wire-crawler-3d.spec.ts:115:1 › mounts the Crawler GLB, flips all three damage morphs, and disposes on kill 
+  96 passed (7.1m)
+rc=1

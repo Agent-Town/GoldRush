@@ -1,0 +1,19 @@
+
+  centroid discrepancy vs the drawn triangles (every triangle of every terrain)
+  terrain     triangles  old max    old p95    new max    new p95    worst point (x, z)
+  The Claim   32768      0.025272   0.000719   2.78e-15   8.88e-16   (29.667, 29.833)
+  Twin Banks  51200      0.022965   0.001956   5.53e-7    6.64e-8    (-19.467, 0.667)
+  Hill Mine   32768      0.103274   0.000250   1.42e-14   8.88e-16   (-16.000, 17.500)
+  Mare Claim  32768      0.666667   0.003457   7.11e-14   1.07e-14   (41.667, -26.667)
+
+✔ the height sampler lands on the drawn triangles, not near them (F-ASTRA-10) (61.599958ms)
+✔ the diagonal is read from the index buffer, never assumed (0.364167ms)
+✔ a cell the mesh never split, or split both ways, is rejected rather than guessed (0.503959ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 940.700542

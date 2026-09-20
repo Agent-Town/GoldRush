@@ -1,0 +1,26 @@
+[
+  {
+    "label": "own-and-pack",
+    "command": [
+      "npx",
+      "playwright",
+      "test",
+      "--workers=1",
+      "--project=desktop-chrome",
+      "--project=mobile-chrome",
+      "--trace=off",
+      "--reporter=line",
+      "--output=artifacts/sol/map-art-campaign-2/_raw/run-3/e2-trestle-own-and-pack",
+      "e2e/e2-trestle.spec.ts",
+      "e2e/landmark-brightness.spec.ts",
+      "e2e/landmark-collision.spec.ts",
+      "e2e/fort-landmark-collision.spec.ts",
+      "e2e/fort-static-routing.spec.ts",
+      "e2e/terrain3d-registry.spec.ts"
+    ],
+    "environment": {},
+    "exit": 1,
+    "seconds": 809.22,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-3/e2-trestle-own-and-pack.log"
+  }
+]

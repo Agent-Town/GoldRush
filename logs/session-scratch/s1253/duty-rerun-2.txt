@@ -1,0 +1,87 @@
+s1253 duty re-run 2 (literal prefixes restored)
+
+##### tsc rc=0 4.5s #####
+
+
+##### test:node-guards rc=0 61.0s #####
+✔ site: assay-office duration vocabulary matches functions/api/stats.ts (0.633291ms)
+✔ curation is deterministic, interleaved, and never repeats thin-pool items (1.969541ms)
+✔ intake rejects headless captures and explicit banned files (5.621708ms)
+✔ OBS v5 authentication, scene discovery, and switch request use one websocket (3.410583ms)
+✔ failed preconditions are silent no-ops (0.136041ms)
+✔ missing spec, websocket, or required scenes never enter FACTORY (12.410166ms)
+✔ offline stream leaves FACTORY untouched (3.1375ms)
+✔ green showcase switches FACTORY, dwells, and always restores AUTOPILOT (2.86275ms)
+✔ red showcase skips dwell and restores AUTOPILOT (4.277ms)
+✔ append is hash-idempotent and keeps one JSON line per entry (70.631916ms)
+✔ downtime accumulates and catch-up shows oldest first without double-show (77.3395ms)
+✔ concurrent appenders preserve every entry and concurrent consumers show once (284.584042ms)
+✔ missing subject directory fires the actionable existence message (4.503834ms)
+✔ subject below its floor reports expected and walked counts (2.311292ms)
+✔ subject exactly at its floor passes (0.87075ms)
+✔ empty present subject fires the floor instead of passing silently (3.536834ms)
+✔ ignoreReadErrors returns only readable paths (1.891292ms)
+✔ default walk fails closed on an unreadable subtree (5.45225ms)
+✔ floor catches files hidden by an ignored read error (0.973458ms)
+✔ reducer output is cwd-invariant (5325.682292ms)
+✔ reducer reports configured and actual workers distinctly (1577.893916ms)
+✔ reducer reports absent harness config as unrecorded (1582.460917ms)
+✔ reducer output is script-root-invariant (1877.776583ms)
+✔ reducer renders absolute raw paths relative to the recorded tree (608.076792ms)
+✔ reducer refuses body statistics when the recorded tree is unavailable (1306.385042ms)
+✔ an unresolved masking row never outranks a resolved row (596.05375ms)
+✔ townEraProps resolves its manifests under plain node, not only under Vite (830.956958ms)
+✔ town specs collect without loading Vite-only modules (7043.438583ms)
+✔ whole suite collects without loading Vite-only modules (11398.834ms)
+✔ every functions/**/*.ts is type-checked (20577.806458ms)
+ℹ tests 156
+ℹ suites 0
+ℹ pass 156
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 60860.776042
+ticker stats checks passed (populated, empty, failures, invalid shape, endpoint diagnostic, poison control, shared URL, JSON)
+
+
+##### test:guards (FULL) rc=1 164.2s #####
+
+> gold-rush@0.1.0 test:guards
+> node scripts/run-guards.mjs
+
+PASS  rc=0  70s  test:node-guards
+FAIL  rc=1  0s  test:power-budget  p95=0.727ms
+PASS  rc=0  5s  test:stats
+PASS  rc=0  2s  test:accounts
+PASS  rc=0  5s  test:mp
+PASS  rc=0  79s  test:deploy-contract
+PASS  rc=0  1s  test:deploy-site-contract
+PASS  rc=0  0s  test:task-guards
+PASS  rc=0  1s  test:citations
+PASS  rc=0  0s  test:gate-callers
+
+--- test:power-budget (rc=1) last 20 lines ---
+power-graph-budget: p95=0.727ms cap=0.500ms samples=160 verdict=FAIL
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: power graph fixed-step p95 0.727ms exceeded 0.500ms
+    at file:///Users/robin/Claude/Projects/Gold%20Rush/scripts/check-power-graph-budget.mjs:44:8
+    at ModuleJob.run (node:internal/modules/esm/module_job:447:25)
+    at async node:internal/modules/esm/loader:646:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v26.4.0
+
+guards: 9/10 passed -- RED: test:power-budget
+
+

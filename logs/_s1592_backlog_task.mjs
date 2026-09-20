@@ -1,0 +1,10 @@
+import fs from 'node:fs';
+const p = 'tasks/BACKLOG.md';
+const L = fs.readFileSync(p, 'utf8').split('\n');
+if (!L[0].includes('F-1592-1 (s1592')) { console.error('row 1 moved'); process.exit(1); }
+
+const row = "🔧 **f1592-3-battery-frame-supply** `tasks/lane-b-f1592-3-battery-frame-supply.md` (lane-b) — **FIRE-AUTHORED s1592, AWAITING DISPATCH** (leaf registered same commit). Discharges **F-1590-2's Arm B** — the batch-position axis, now carried unmeasured across three fires and correctly not reached by `f1591-1`. Lawful as a **fifth** attempt at F-1587-2 under the §7.5 changed-premise rule because the premise changed **on a measurement**: s1592 PROVED the lever, so the question is no longer *what starves frame supply* but *whether the factory's real arrangement does*. ⭐ **THE UPGRADE IS A POSITIVE CONTROL, NOT A BETTER HYPOTHESIS.** Arm P runs the proven CDP throttle at rate 60 and must come back `armed: true` before any other result is interpreted; Arm C is the unloaded baseline; Arm B runs the probe against a **genuine concurrent gate battery** (never a synthetic hog — F-1592-1 proved that is the wrong lever class). **This converts a null from noise into a finding:** without a positive control a null is ambiguous between *\"the load does not starve frame supply\"* and *\"my harness cannot see starvation\"*, and `f1591-1` spent a full lane run in exactly that trap. The master states the three verdict rows explicitly and requires the runner to name which one it landed in. ⚠️ **SHIPS NO CURE BY CONSTRUCTION**, and **DOES-NOT-ARM-IN-PRACTICE is an accepted deliverable** — if the real battery does not starve frame supply, F-1587-2 is not a frame-supply defect in practice and the thread gets re-aimed or closed on evidence. Raising the spec's 30 s timeout stays forbidden (F-1275-1); `MAX_PRESENTATION_DELTA_SECONDS` is firewalled. ⓘ **All three read-first citations proved `1` on main before being written into the master (F-1425-2).** **GATE: merged with the Arm P / Arm C / Arm B table and a named verdict row.**";
+
+L.splice(2, 0, row);
+fs.writeFileSync(p, L.join('\n'));
+console.log('task row added');

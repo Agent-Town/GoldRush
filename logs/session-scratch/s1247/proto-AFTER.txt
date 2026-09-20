@@ -1,0 +1,19 @@
+TREATMENT rc=2
+
+--stderr--
+run-guards: git ls-files --others failed (rc=128). simulated ls-files failure
+
+
+CONTROL rc=0
+run-guards: 1 file(s) changed since HEAD
+  base gate: test:node-guards, test:power-budget, test:task-guards
+  + test:stats, test:accounts, test:mp <- 1 file(s) in functions/** (Cloudflare Pages Functions -- type-checked since s1235; these gate BEHAVIOUR)
+
+PASS  rc=0  0s  test:node-guards
+PASS  rc=0  0s  test:power-budget
+PASS  rc=0  0s  test:stats
+PASS  rc=0  0s  test:accounts
+PASS  rc=0  0s  test:mp
+PASS  rc=0  0s  test:task-guards
+
+guards: 6/6 passed

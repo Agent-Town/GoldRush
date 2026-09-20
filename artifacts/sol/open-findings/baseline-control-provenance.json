@@ -1,0 +1,26 @@
+{
+  "base": "de7eacd1714584ad73cb2d1245e5f907d213b9f1",
+  "sourceTestsUnchanged": [
+    "e2e/e1-twin-banks.spec.ts",
+    "e2e/town-cast-wiring.spec.ts",
+    "e2e/town-fresh-boot-textures.spec.ts",
+    "e2e/town-t1-square.spec.ts"
+  ],
+  "modules": [
+    {
+      "source": "src/world/Scatter.ts",
+      "baseSourceSha256": "1ae48c1d05f098e408c5c55032ae0f3ada91f8a3ca307af6f3c0bfd5d864e814",
+      "frozenCompiledSha256": "abe5d6dadad554bac9b17aae7224f08302599831a28fb4bbce80d87c7b1fd81d",
+      "compiledPath": "_raw/Scatter-before.js"
+    },
+    {
+      "source": "src/town/TownTavernPilot.ts",
+      "baseSourceSha256": "48d93b4c79a1fa13b3488cd2ef1d12ca9b3b0765cd2ef9d675aea779573e28e9",
+      "frozenCompiledSha256": "6b390ae6b6cda4e68a24f7620f8424937c831bb86eeee1c1c09ea813e63556cb",
+      "compiledPath": "_raw/TownTavernPilot-before.js"
+    }
+  ],
+  "method": "Serve frozen pre-edit compiled modules at their original Vite URLs. Normalize only Vite dependency cache query hashes. Other runtime source is unchanged from the base; new batch helper is not imported by controls.",
+  "modulePresenceProof": "baseline-control-hits.jsonl",
+  "instrumentCorrection": "The first route guard wrongly required Scatter for town-only boots. The final control checks Scatter for Twin Banks and TownTavernPilot for town, preserving all existing test assertions."
+}

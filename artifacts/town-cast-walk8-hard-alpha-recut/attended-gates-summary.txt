@@ -1,0 +1,6 @@
+tsc rc rc=0 | release build rc rc=0 | payload: first-town payload: 28670172 bytes rc rc=0 | halo: halo re-extraction PASS: 395 cured, 0 held, 680 regenerated-and-cured, 1401 scanned; alpha and opaque RGB unchanged rc rc=0 | guards4: ℹ pass 40 ℹ fail 0 
+=== battery: ℹ tests 796 ℹ pass 792 ℹ fail 2 ℹ skipped 2 ℹ duration_ms 364709.255209  rc rc=1
+✖ all 140 scripts/*.test.mjs fixture owners remove their temp directories (203331.256875ms)
+✖ failing tests:
+✖ the live board is green under this guard (baseline is honest) (264.236583ms)
+stages: 10

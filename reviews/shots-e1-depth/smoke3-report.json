@@ -1,0 +1,817 @@
+{
+  "label": "smoke3",
+  "contract": "the-claim",
+  "url": "/?debug&contract=the-claim&timescale=1&seed=e1-depth-smoke3",
+  "timescale": 1,
+  "viewport": {
+    "width": 1280,
+    "height": 720
+  },
+  "difficulty": "trail",
+  "secureWave": null,
+  "startGold": 0,
+  "firstRun": {
+    "sawStartMenu": false,
+    "sawGreenhornOffer": false,
+    "greenhornCopy": null,
+    "trailGuideBeats": []
+  },
+  "boot": {
+    "contract": "the-claim",
+    "difficulty": "trail",
+    "secureWave": null,
+    "briefing": "The Contract Begin The Claim The classic river claim. Goals Hold the claim through wave 10. Rules The river splits the claim around one center ford.Pressure comes from all four edges until wave 10 seals the claim; stay for the Rush if you want to press your luck.",
+    "buildables": [
+      {
+        "id": "sentry_beacon",
+        "cost": 25,
+        "max": 6
+      },
+      {
+        "id": "palisade",
+        "cost": 10,
+        "max": 48
+      },
+      {
+        "id": "sluice",
+        "cost": 40,
+        "max": 3
+      },
+      {
+        "id": "stockpile",
+        "cost": 60,
+        "max": 2
+      },
+      {
+        "id": "turret",
+        "cost": 50,
+        "max": 4
+      },
+      {
+        "id": "assay_office",
+        "cost": 80,
+        "max": 1
+      }
+    ],
+    "startGold": 0
+  },
+  "outcome": "budget-exhausted",
+  "wallSeconds": 192,
+  "wavesReached": 6,
+  "sawRush": false,
+  "fpsEstimate": 119.3,
+  "driver": {
+    "ticks": 361,
+    "kiteTicks": 317,
+    "panTicks": 15
+  },
+  "perWave": [
+    {
+      "wave": 0,
+      "hpIn": 100,
+      "maxHp": 100,
+      "goldIn": 0,
+      "level": 1,
+      "panned": 0,
+      "sluiced": 0,
+      "seamsUp": 3,
+      "builds": "none",
+      "wallSeconds": 23,
+      "peakEnemies": 5,
+      "idleFrac": 0
+    },
+    {
+      "wave": 1,
+      "hpIn": 100,
+      "maxHp": 100,
+      "goldIn": 30,
+      "level": 1,
+      "panned": 30,
+      "sluiced": 0,
+      "seamsUp": 2,
+      "builds": "none",
+      "wallSeconds": 30,
+      "peakEnemies": 21,
+      "idleFrac": 0
+    },
+    {
+      "wave": 2,
+      "hpIn": 100,
+      "maxHp": 100,
+      "goldIn": 30,
+      "level": 1,
+      "panned": 30,
+      "sluiced": 0,
+      "seamsUp": 3,
+      "builds": "none",
+      "wallSeconds": 30,
+      "peakEnemies": 41,
+      "idleFrac": 0
+    },
+    {
+      "wave": 3,
+      "hpIn": 100,
+      "maxHp": 100,
+      "goldIn": 30,
+      "level": 1,
+      "panned": 30,
+      "sluiced": 0,
+      "seamsUp": 3,
+      "builds": "none",
+      "wallSeconds": 30,
+      "peakEnemies": 60,
+      "idleFrac": 0
+    },
+    {
+      "wave": 4,
+      "hpIn": 100,
+      "maxHp": 100,
+      "goldIn": 30,
+      "level": 1,
+      "panned": 30,
+      "sluiced": 0,
+      "seamsUp": 3,
+      "builds": "none",
+      "wallSeconds": 30,
+      "peakEnemies": 60,
+      "idleFrac": 0
+    },
+    {
+      "wave": 5,
+      "hpIn": 100,
+      "maxHp": 100,
+      "goldIn": 30,
+      "level": 1,
+      "panned": 30,
+      "sluiced": 0,
+      "seamsUp": 3,
+      "builds": "none",
+      "wallSeconds": 30,
+      "peakEnemies": 60,
+      "idleFrac": 0
+    },
+    {
+      "wave": 6,
+      "hpIn": 100,
+      "maxHp": 100,
+      "goldIn": 30,
+      "level": 1,
+      "panned": 30,
+      "sluiced": 0,
+      "seamsUp": 3,
+      "builds": "none",
+      "wallSeconds": 9,
+      "peakEnemies": 60,
+      "idleFrac": 0
+    }
+  ],
+  "upgradesTaken": [],
+  "buildLog": [
+    {
+      "wave": 0,
+      "id": "palisade",
+      "built": false,
+      "before": 0,
+      "after": 0,
+      "goldBefore": 10,
+      "goldAfter": 15
+    },
+    {
+      "wave": 0,
+      "id": "sentry_beacon",
+      "built": false,
+      "before": 0,
+      "after": 0,
+      "goldBefore": 25,
+      "goldAfter": 30
+    },
+    {
+      "wave": 0,
+      "id": "sentry_beacon",
+      "built": false,
+      "before": 0,
+      "after": 0,
+      "goldBefore": 30,
+      "goldAfter": 30
+    },
+    {
+      "wave": 0,
+      "id": "sentry_beacon",
+      "built": false,
+      "before": 0,
+      "after": 0,
+      "goldBefore": 30,
+      "goldAfter": 30
+    },
+    {
+      "wave": 0,
+      "id": "sentry_beacon",
+      "built": false,
+      "before": 0,
+      "after": 0,
+      "goldBefore": 30,
+      "goldAfter": 30
+    },
+    {
+      "wave": 1,
+      "id": "sentry_beacon",
+      "built": false,
+      "before": 0,
+      "after": 0,
+      "goldBefore": 30,
+      "goldAfter": 30
+    },
+    {
+      "wave": 1,
+      "id": "sentry_beacon",
+      "built": false,
+      "before": 0,
+      "after": 0,
+      "goldBefore": 30,
+      "goldAfter": 30
+    },
+    {
+      "wave": 1,
+      "id": "sentry_beacon",
+      "built": false,
+      "before": 0,
+      "after": 0,
+      "goldBefore": 30,
+      "goldAfter": 30
+    },
+    {
+      "wave": 1,
+      "id": "sentry_beacon",
+      "built": false,
+      "before": 0,
+      "after": 0,
+      "goldBefore": 30,
+      "goldAfter": 30
+    },
+    {
+      "wave": 1,
+      "id": "sentry_beacon",
+      "built": false,
+      "before": 0,
+      "after": 0,
+      "goldBefore": 30,
+      "goldAfter": 30
+    },
+    {
+      "wave": 1,
+      "id": "sentry_beacon",
+      "built": false,
+      "before": 0,
+      "after": 0,
+      "goldBefore": 30,
+      "goldAfter": 30
+    },
+    {
+      "wave": 1,
+      "id": "sentry_beacon",
+      "built": false,
+      "before": 0,
+      "after": 0,
+      "goldBefore": 30,
+      "goldAfter": 30
+    },
+    {
+      "wave": 1,
+      "id": "sentry_beacon",
+      "built": false,
+      "before": 0,
+      "after": 0,
+      "goldBefore": 30,
+      "goldAfter": 30
+    },
+    {
+      "wave": 1,
+      "id": "sentry_beacon",
+      "built": false,
+      "before": 0,
+      "after": 0,
+      "goldBefore": 30,
+      "goldAfter": 30
+    },
+    {
+      "wave": 1,
+      "id": "sentry_beacon",
+      "built": false,
+      "before": 0,
+      "after": 0,
+      "goldBefore": 30,
+      "goldAfter": 30
+    },
+    {
+      "wave": 2,
+      "id": "sentry_beacon",
+      "built": false,
+      "before": 0,
+      "after": 0,
+      "goldBefore": 30,
+      "goldAfter": 30
+    },
+    {
+      "wave": 2,
+      "id": "sentry_beacon",
+      "built": false,
+      "before": 0,
+      "after": 0,
+      "goldBefore": 30,
+      "goldAfter": 30
+    },
+    {
+      "wave": 2,
+      "id": "sentry_beacon",
+      "built": false,
+      "before": 0,
+      "after": 0,
+      "goldBefore": 30,
+      "goldAfter": 30
+    },
+    {
+      "wave": 2,
+      "id": "sentry_beacon",
+      "built": false,
+      "before": 0,
+      "after": 0,
+      "goldBefore": 30,
+      "goldAfter": 30
+    },
+    {
+      "wave": 2,
+      "id": "sentry_beacon",
+      "built": false,
+      "before": 0,
+      "after": 0,
+      "goldBefore": 30,
+      "goldAfter": 30
+    },
+    {
+      "wave": 2,
+      "id": "sentry_beacon",
+      "built": false,
+      "before": 0,
+      "after": 0,
+      "goldBefore": 30,
+      "goldAfter": 30
+    },
+    {
+      "wave": 2,
+      "id": "sentry_beacon",
+      "built": false,
+      "before": 0,
+      "after": 0,
+      "goldBefore": 30,
+      "goldAfter": 30
+    },
+    {
+      "wave": 2,
+      "id": "sentry_beacon",
+      "built": false,
+      "before": 0,
+      "after": 0,
+      "goldBefore": 30,
+      "goldAfter": 30
+    },
+    {
+      "wave": 2,
+      "id": "sentry_beacon",
+      "built": false,
+      "before": 0,
+      "after": 0,
+      "goldBefore": 30,
+      "goldAfter": 30
+    },
+    {
+      "wave": 2,
+      "id": "sentry_beacon",
+      "built": false,
+      "before": 0,
+      "after": 0,
+      "goldBefore": 30,
+      "goldAfter": 30
+    },
+    {
+      "wave": 3,
+      "id": "sentry_beacon",
+      "built": false,
+      "before": 0,
+      "after": 0,
+      "goldBefore": 30,
+      "goldAfter": 30
+    },
+    {
+      "wave": 3,
+      "id": "sentry_beacon",
+      "built": false,
+      "before": 0,
+      "after": 0,
+      "goldBefore": 30,
+      "goldAfter": 30
+    },
+    {
+      "wave": 3,
+      "id": "sentry_beacon",
+      "built": false,
+      "before": 0,
+      "after": 0,
+      "goldBefore": 30,
+      "goldAfter": 30
+    },
+    {
+      "wave": 3,
+      "id": "sentry_beacon",
+      "built": false,
+      "before": 0,
+      "after": 0,
+      "goldBefore": 30,
+      "goldAfter": 30
+    },
+    {
+      "wave": 3,
+      "id": "sentry_beacon",
+      "built": false,
+      "before": 0,
+      "after": 0,
+      "goldBefore": 30,
+      "goldAfter": 30
+    },
+    {
+      "wave": 3,
+      "id": "sentry_beacon",
+      "built": false,
+      "before": 0,
+      "after": 0,
+      "goldBefore": 30,
+      "goldAfter": 30
+    },
+    {
+      "wave": 3,
+      "id": "sentry_beacon",
+      "built": false,
+      "before": 0,
+      "after": 0,
+      "goldBefore": 30,
+      "goldAfter": 30
+    },
+    {
+      "wave": 3,
+      "id": "sentry_beacon",
+      "built": false,
+      "before": 0,
+      "after": 0,
+      "goldBefore": 30,
+      "goldAfter": 30
+    },
+    {
+      "wave": 3,
+      "id": "sentry_beacon",
+      "built": false,
+      "before": 0,
+      "after": 0,
+      "goldBefore": 30,
+      "goldAfter": 30
+    },
+    {
+      "wave": 3,
+      "id": "sentry_beacon",
+      "built": false,
+      "before": 0,
+      "after": 0,
+      "goldBefore": 30,
+      "goldAfter": 30
+    },
+    {
+      "wave": 4,
+      "id": "sentry_beacon",
+      "built": false,
+      "before": 0,
+      "after": 0,
+      "goldBefore": 30,
+      "goldAfter": 30
+    },
+    {
+      "wave": 4,
+      "id": "sentry_beacon",
+      "built": false,
+      "before": 0,
+      "after": 0,
+      "goldBefore": 30,
+      "goldAfter": 30
+    },
+    {
+      "wave": 4,
+      "id": "sentry_beacon",
+      "built": false,
+      "before": 0,
+      "after": 0,
+      "goldBefore": 30,
+      "goldAfter": 30
+    },
+    {
+      "wave": 4,
+      "id": "sentry_beacon",
+      "built": false,
+      "before": 0,
+      "after": 0,
+      "goldBefore": 30,
+      "goldAfter": 30
+    },
+    {
+      "wave": 4,
+      "id": "sentry_beacon",
+      "built": false,
+      "before": 0,
+      "after": 0,
+      "goldBefore": 30,
+      "goldAfter": 30
+    },
+    {
+      "wave": 4,
+      "id": "sentry_beacon",
+      "built": false,
+      "before": 0,
+      "after": 0,
+      "goldBefore": 30,
+      "goldAfter": 30
+    },
+    {
+      "wave": 4,
+      "id": "sentry_beacon",
+      "built": false,
+      "before": 0,
+      "after": 0,
+      "goldBefore": 30,
+      "goldAfter": 30
+    },
+    {
+      "wave": 4,
+      "id": "sentry_beacon",
+      "built": false,
+      "before": 0,
+      "after": 0,
+      "goldBefore": 30,
+      "goldAfter": 30
+    },
+    {
+      "wave": 4,
+      "id": "sentry_beacon",
+      "built": false,
+      "before": 0,
+      "after": 0,
+      "goldBefore": 30,
+      "goldAfter": 30
+    },
+    {
+      "wave": 4,
+      "id": "sentry_beacon",
+      "built": false,
+      "before": 0,
+      "after": 0,
+      "goldBefore": 30,
+      "goldAfter": 30
+    },
+    {
+      "wave": 5,
+      "id": "sentry_beacon",
+      "built": false,
+      "before": 0,
+      "after": 0,
+      "goldBefore": 30,
+      "goldAfter": 30
+    },
+    {
+      "wave": 5,
+      "id": "sentry_beacon",
+      "built": false,
+      "before": 0,
+      "after": 0,
+      "goldBefore": 30,
+      "goldAfter": 30
+    },
+    {
+      "wave": 5,
+      "id": "sentry_beacon",
+      "built": false,
+      "before": 0,
+      "after": 0,
+      "goldBefore": 30,
+      "goldAfter": 30
+    },
+    {
+      "wave": 5,
+      "id": "sentry_beacon",
+      "built": false,
+      "before": 0,
+      "after": 0,
+      "goldBefore": 30,
+      "goldAfter": 30
+    },
+    {
+      "wave": 5,
+      "id": "sentry_beacon",
+      "built": false,
+      "before": 0,
+      "after": 0,
+      "goldBefore": 30,
+      "goldAfter": 30
+    },
+    {
+      "wave": 5,
+      "id": "sentry_beacon",
+      "built": false,
+      "before": 0,
+      "after": 0,
+      "goldBefore": 30,
+      "goldAfter": 30
+    },
+    {
+      "wave": 5,
+      "id": "sentry_beacon",
+      "built": false,
+      "before": 0,
+      "after": 0,
+      "goldBefore": 30,
+      "goldAfter": 30
+    },
+    {
+      "wave": 5,
+      "id": "sentry_beacon",
+      "built": false,
+      "before": 0,
+      "after": 0,
+      "goldBefore": 30,
+      "goldAfter": 30
+    },
+    {
+      "wave": 5,
+      "id": "sentry_beacon",
+      "built": false,
+      "before": 0,
+      "after": 0,
+      "goldBefore": 30,
+      "goldAfter": 30
+    },
+    {
+      "wave": 5,
+      "id": "sentry_beacon",
+      "built": false,
+      "before": 0,
+      "after": 0,
+      "goldBefore": 30,
+      "goldAfter": 30
+    },
+    {
+      "wave": 6,
+      "id": "sentry_beacon",
+      "built": false,
+      "before": 0,
+      "after": 0,
+      "goldBefore": 30,
+      "goldAfter": 30
+    },
+    {
+      "wave": 6,
+      "id": "sentry_beacon",
+      "built": false,
+      "before": 0,
+      "after": 0,
+      "goldBefore": 30,
+      "goldAfter": 30
+    },
+    {
+      "wave": 6,
+      "id": "sentry_beacon",
+      "built": false,
+      "before": 0,
+      "after": 0,
+      "goldBefore": 30,
+      "goldAfter": 30
+    }
+  ],
+  "announcements": [
+    {
+      "wave": 0,
+      "text": "the Prospector: follows and observes. Chip by weapon; claim wins grow it.",
+      "kind": "wave"
+    },
+    {
+      "wave": 0,
+      "text": "Wet powder.",
+      "kind": "wave"
+    },
+    {
+      "wave": 1,
+      "text": "Hold the east ridge for the assay!",
+      "kind": "wave"
+    },
+    {
+      "wave": 1,
+      "text": "West ridge shadows want the gold!",
+      "kind": "wave"
+    },
+    {
+      "wave": 2,
+      "text": "Hold the west ridge for the assay!",
+      "kind": "wave"
+    },
+    {
+      "wave": 2,
+      "text": "South bank dust is moving!",
+      "kind": "wave"
+    },
+    {
+      "wave": 2,
+      "text": "Claim Jumpers from the west ridge!",
+      "kind": "wave"
+    },
+    {
+      "wave": 2,
+      "text": "Beacon coils hum eastward!",
+      "kind": "wave"
+    },
+    {
+      "wave": 3,
+      "text": "Hold the north bank for the assay!",
+      "kind": "wave"
+    },
+    {
+      "wave": 3,
+      "text": "Claim Jumpers from the south bank!",
+      "kind": "wave"
+    },
+    {
+      "wave": 4,
+      "text": "North bank shadows want the gold!",
+      "kind": "wave"
+    },
+    {
+      "wave": 4,
+      "text": "Claim Jumpers from the north bank!",
+      "kind": "wave"
+    },
+    {
+      "wave": 6,
+      "text": "East ridge dust is moving!",
+      "kind": "wave"
+    }
+  ],
+  "end": {
+    "run": {
+      "secured": false,
+      "rush": false,
+      "lastRunEndedReason": null,
+      "meta": {
+        "version": 1,
+        "tracks": {
+          "territory": 0,
+          "science": 0,
+          "hero": 0,
+          "agent": 0
+        }
+      },
+      "victoryPayout": null,
+      "secureWaveReached": null,
+      "securedResultAt": null,
+      "suspend": {
+        "hasSuspend": true,
+        "restored": false,
+        "restoredWave": null,
+        "lastWriteAt": 1784997054262,
+        "lastWriteMs": 0.5,
+        "sizeBytes": 98809
+      }
+    },
+    "wave": 6,
+    "gold": 30,
+    "level": 1,
+    "kills": 5,
+    "xpAudit": {
+      "deaths": 5,
+      "motesSpawned": 5,
+      "motesCollected": 0,
+      "motesCollectedXp": 0,
+      "overflowBanked": 0,
+      "expiredBanked": 0,
+      "autoBanked": 0,
+      "dropped": 0,
+      "xpAwarded": 0,
+      "xpPerKill": 4,
+      "motePool": 64,
+      "expiryBanks": true
+    },
+    "stacks": {},
+    "arsenal": {
+      "turretKills": 0,
+      "blastKills": 0,
+      "toggles": 41
+    },
+    "office": null,
+    "deathOverlay": ""
+  },
+  "errors": {
+    "console": [],
+    "page": []
+  }
+}

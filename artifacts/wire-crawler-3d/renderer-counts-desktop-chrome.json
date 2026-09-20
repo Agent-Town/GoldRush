@@ -1,0 +1,163 @@
+{
+  "provenance": {
+    "n": 12,
+    "commit": "659f4efe0",
+    "project": "desktop-chrome",
+    "headroom": "one extra observed jitter quantum beyond each measured edge: 1 for calls/geometries, 2 for triangles",
+    "rerecorded": {
+      "date": "2026-09-18",
+      "task": "hygiene-battery-lossless-triangles item 3 (F-SAR-7)",
+      "measuredOn": "fix/hygiene-battery-lossless-triangles 964259871, cut from the phase-B merge 62e585bf5; src/ identical to main at that commit",
+      "cause": "src/entities/pools.ts setProceduralVisible() — the sprite-animator runtime land (c7f284ad4, merged dca019e23) changed \"for (const part of this.renderParts) part.visible = visible\" to \"this.renderParts.forEach((part, index) => { part.visible = index === 0 || visible; })\". renderParts[0] is the enemy pool GROUND SHADOW instanced mesh (assets.shadowGeometry x Balance.enemy.poolSize = 96 instances of 20 triangles = 1,920), and it now stays visible when the procedural bodies are hidden behind the generated sprites — deliberately, so a sprite-drawn enemy still has ground contact. LEGITIMATE, not a leak: nothing is constructed twice and nothing is left undisposed; the same instanced mesh simply survives the hide. It costs exactly +1 draw call and +1,920 triangles in every phase, on both projects.",
+      "method": "ATTRIBUTED FIRST, then re-recorded. artifacts/hygiene-battery-lossless-triangles/probes/crawler-cold-census.mjs boots exactly as the spec does and reads both renderer.info and the test-only drawCallCensus(), which charges each draw to the object that issued it. Current tree vs src at 6ae4eafcf (3 runs x 2 projects each, zero console errors): the ONLY changed census row is EnemyPool, 39,360 -> 41,280 triangles and 10 -> 11 calls on its transparent MeshBasicMaterial group, whose renderOrder reads RenderLayers.groundShadows (0.5). Cold totals were byte-stable across runs: desktop 147,706 -> 149,626, mobile 144,120/144,122 -> 146,040. The phase values below were then set to the measured delta and CONFIRMED by the spec itself through e2e/renderer-count-artifact.ts:37 — no value is hand-set, and the first run after the shift passed all six tests on both projects at once.",
+      "confirmingRuns": 4,
+      "runs": "4 of 4 green, isolated project runs",
+      "knownFlake": "e2e/wire-crawler-3d.spec.ts:144 (the presentationBaseline.geometries dispose poll, 5 s) times out on a loaded box: 3 of 15 runs during this re-record, always on that line and never on a renderer count (rendererCountErrors=0 in every run). Unrelated to these numbers: it compares live geometry counts the GLB load races, not a pinned value. Log: artifacts/hygiene-battery-lossless-triangles/crawler-rerecord-confirming.log",
+      "calls": {
+        "coldBaseline": "band unchanged",
+        "mounted": "64 -> 65",
+        "loadedBeforeKill": "64 -> 65",
+        "disposed": "72 -> 73"
+      },
+      "triangles": {
+        "coldBaseline": "147706..147708 -> 149626..149628 (tolerance 147704..147710 -> 149624..149630)",
+        "mounted": "157592 -> 159512",
+        "loadedBeforeKill": "159468 -> 161388",
+        "disposed": "148672 -> 150592"
+      },
+      "unchanged": "every geometries, textures and delta pin, and the presentationBaseline block"
+    },
+    "rerecordedHistory": [
+      {
+        "date": "2026-09-12",
+        "task": "drain-review-boss-fidelity (F-DRB-7)",
+        "measuredOn": "drain/boss-fidelity a0d85ea6c (main 27227acdc + sol/boss-art-fidelity-review 72fb062e8)",
+        "cause": "assets/pilots/crawler-3d/crawler.glb rebuilt by the boss-fidelity branch: src/systems/CrawlerBossSystem.ts:15 CRAWLER_3D_TRIANGLES 11_980 -> 11_760, so the two phases with the crawler ON the field (mounted, loadedBeforeKill) carry exactly 220 fewer triangles; disposed is measured UNCHANGED (the crawler is gone by then, run 1 of the re-record reported it: expected 148452, got 148672), and geometries, textures and every delta are unchanged",
+        "method": "the spec itself on a dev server at 127.0.0.1:5330 (GR_CAPTURE_EXTERNAL_SERVER=1), one worker, fires stopped: mounted.triangles 157812 -> 157592 (desktop) was the number the first run reported through e2e/renderer-count-artifact.ts:37; loadedBeforeKill was set by the same -220; a first -220 guess for disposed was REFUTED by the run (kept at its measured value); then confirmed by green runs recorded in artifacts/drain-review-boss-fidelity/crawler-rerecord.log — desktop 3 of 3 green",
+        "confirmingRuns": 3,
+        "triangles": {
+          "mounted": "157812 -> 157592",
+          "loadedBeforeKill": "159688 -> 159468"
+        }
+      },
+      {
+        "date": "2026-09-05",
+        "task": "renderer-count-artifacts-under-shared-atlas",
+        "measuredOn": "cf91fe5e9 (lane/d; identical to main bf934d54f across src/ and e2e/)",
+        "cause": "src/assets/SharedAtlasPlugin.ts (merged 3a47f1800, 2026-09-05): the shared GLTF loader returns one texture per image content hash across GLBs, so exact renderer.info.memory.textures pins recorded before it read high. Only textures moved. calls, triangles, geometries, the measured tolerance bands and every non-count assertion (morphs, wreckage, dispose-on-kill, geometry deltas) are unchanged, and n/commit above still describe the original band measurement.",
+        "method": "measured by running the spec itself on a dev server at 127.0.0.1:5304; every value below is the number the run reported through e2e/renderer-count-artifact.ts:37, never hand-set",
+        "confirmingRuns": 3,
+        "textures": {
+          "coldBaseline": "32 (unchanged)",
+          "mounted": "37 (unchanged)",
+          "loadedBeforeKill": "40 -> 39",
+          "presentationBaseline": "39 -> 38 (spec-derived as loadedBeforeKill.textures - 1, e2e/wire-crawler-3d.spec.ts:141)",
+          "disposed": "36 -> 35"
+        },
+        "textureDeltas": {
+          "coldBaseline->mounted": "5 (unchanged)",
+          "coldBaseline->loadedBeforeKill": "8 -> 7",
+          "coldBaseline->presentationBaseline": "7 -> 6",
+          "coldBaseline->disposed": "4 -> 3",
+          "mounted->loadedBeforeKill": "3 -> 2",
+          "mounted->presentationBaseline": "2 -> 1",
+          "mounted->disposed": "-1 -> -2",
+          "loadedBeforeKill->presentationBaseline": "-1 (unchanged)",
+          "loadedBeforeKill->disposed": "-4 (unchanged)",
+          "presentationBaseline->disposed": "-3 (unchanged)"
+        },
+        "note": "One texture that appears between mounted and loadedBeforeKill now shares an already-resident image, so the crawler adds two textures on load instead of three and releases one fewer on dispose. The two deltas that span the shared texture at both ends (loadedBeforeKill->presentationBaseline, loadedBeforeKill->disposed) are unchanged because both endpoints moved together."
+      }
+    ]
+  },
+  "phases": {
+    "coldBaseline": {
+      "calls": {
+        "measured": [
+          73,
+          74
+        ],
+        "tolerance": [
+          72,
+          75
+        ]
+      },
+      "triangles": {
+        "measured": [
+          149626,
+          149628
+        ],
+        "tolerance": [
+          149624,
+          149630
+        ]
+      },
+      "geometries": 81,
+      "textures": 32
+    },
+    "mounted": {
+      "calls": 65,
+      "triangles": 159512,
+      "geometries": 88,
+      "textures": 37
+    },
+    "loadedBeforeKill": {
+      "calls": 65,
+      "triangles": 161388,
+      "geometries": 106,
+      "textures": 39
+    },
+    "presentationBaseline": {
+      "geometries": 115,
+      "textures": 38
+    },
+    "disposed": {
+      "calls": 73,
+      "triangles": 150592,
+      "geometries": 115,
+      "textures": 35
+    }
+  },
+  "deltas": {
+    "coldBaseline->mounted": {
+      "geometries": 7,
+      "textures": 5
+    },
+    "coldBaseline->loadedBeforeKill": {
+      "geometries": 25,
+      "textures": 7
+    },
+    "coldBaseline->presentationBaseline": {
+      "geometries": 34,
+      "textures": 6
+    },
+    "coldBaseline->disposed": {
+      "geometries": 34,
+      "textures": 3
+    },
+    "mounted->loadedBeforeKill": {
+      "geometries": 18,
+      "textures": 2
+    },
+    "mounted->presentationBaseline": {
+      "geometries": 27,
+      "textures": 1
+    },
+    "mounted->disposed": {
+      "geometries": 27,
+      "textures": -2
+    },
+    "loadedBeforeKill->presentationBaseline": {
+      "geometries": 9,
+      "textures": -1
+    },
+    "loadedBeforeKill->disposed": {
+      "geometries": 9,
+      "textures": -4
+    },
+    "presentationBaseline->disposed": {
+      "geometries": 0,
+      "textures": -3
+    }
+  }
+}

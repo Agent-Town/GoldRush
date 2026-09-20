@@ -1,0 +1,129 @@
+{
+  "version": 1,
+  "generatedAt": "2026-07-10T12:27:40.481Z",
+  "playlist": "marketing/stream-playlist.json",
+  "mergeHash": "e70d87641291",
+  "durationScale": 0.01,
+  "segments": [
+    {
+      "id": "claim-wave-20",
+      "task": "SC-01: The Claim wave-20 victory proof",
+      "seed": "stream-claim-wave-20",
+      "mergeHash": "e70d87641291",
+      "verdict": "PASS",
+      "startedAt": "2026-07-10T12:25:53.212Z",
+      "durationSeconds": 28.88,
+      "plannedDurationSeconds": 180,
+      "webm": "marketing/raw/stream/claim-wave-20-2026-07-10T12-25-50.webm",
+      "firstFrame": "marketing/raw/stream/claim-wave-20-2026-07-10T12-25-50-first.png",
+      "bytes": 3182300,
+      "assertions": [
+        {
+          "id": "contract",
+          "status": "PASS",
+          "detail": "the-claim"
+        },
+        {
+          "id": "wave-20",
+          "status": "PASS",
+          "detail": "20"
+        },
+        {
+          "id": "enemies-spawned",
+          "status": "PASS",
+          "detail": "8"
+        }
+      ]
+    },
+    {
+      "id": "dry-gulch-spring-rush",
+      "task": "SC-01: Dry Gulch spring rush",
+      "seed": "stream-dry-gulch-spring",
+      "mergeHash": "e70d87641291",
+      "verdict": "PASS",
+      "startedAt": "2026-07-10T12:26:21.775Z",
+      "durationSeconds": 17.72,
+      "plannedDurationSeconds": 180,
+      "webm": "marketing/raw/stream/dry-gulch-spring-rush-2026-07-10T12-25-50.webm",
+      "firstFrame": "marketing/raw/stream/dry-gulch-spring-rush-2026-07-10T12-25-50-first.png",
+      "bytes": 2121578,
+      "assertions": [
+        {
+          "id": "contract",
+          "status": "PASS",
+          "detail": "e1-dry-gulch"
+        },
+        {
+          "id": "dry-gulch-yield",
+          "status": "PASS",
+          "detail": "truthy"
+        },
+        {
+          "id": "enemies-spawned",
+          "status": "PASS",
+          "detail": "8"
+        }
+      ]
+    },
+    {
+      "id": "night-shift-dawn-survival",
+      "task": "SC-01: Night Shift dawn survival",
+      "seed": "stream-night-shift-dawn",
+      "mergeHash": "e70d87641291",
+      "verdict": "PASS",
+      "startedAt": "2026-07-10T12:26:44.787Z",
+      "durationSeconds": 29.36,
+      "plannedDurationSeconds": 240,
+      "webm": "marketing/raw/stream/night-shift-dawn-survival-2026-07-10T12-25-50.webm",
+      "firstFrame": "marketing/raw/stream/night-shift-dawn-survival-2026-07-10T12-25-50-first.png",
+      "bytes": 3250422,
+      "assertions": [
+        {
+          "id": "contract",
+          "status": "PASS",
+          "detail": "e1-night-shift"
+        },
+        {
+          "id": "dawn-wave",
+          "status": "PASS",
+          "detail": "25"
+        },
+        {
+          "id": "light-ramp",
+          "status": "PASS",
+          "detail": "truthy"
+        }
+      ]
+    },
+    {
+      "id": "hill-mine-railcar-fight",
+      "task": "SC-01: Hill Mine railcar fight",
+      "seed": "stream-hill-mine-railcar",
+      "mergeHash": "e70d87641291",
+      "verdict": "PASS",
+      "startedAt": "2026-07-10T12:27:13.792Z",
+      "durationSeconds": 23.48,
+      "plannedDurationSeconds": 240,
+      "webm": "marketing/raw/stream/hill-mine-railcar-fight-2026-07-10T12-25-50.webm",
+      "firstFrame": "marketing/raw/stream/hill-mine-railcar-fight-2026-07-10T12-25-50-first.png",
+      "bytes": 2917645,
+      "assertions": [
+        {
+          "id": "contract",
+          "status": "PASS",
+          "detail": "e2-hill-mine"
+        },
+        {
+          "id": "railcar-live",
+          "status": "PASS",
+          "detail": "3"
+        },
+        {
+          "id": "enemies-spawned",
+          "status": "PASS",
+          "detail": "26"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,199 @@
+{
+  "project": "mobile-chrome",
+  "probes": [
+    {
+      "contract": "the-claim",
+      "before": {
+        "p95": 28.70540018881465,
+        "max": 114.78675881825394,
+        "samples": 28
+      },
+      "after": {
+        "p95": 21.4009345590327,
+        "max": 118.51582172857765,
+        "samples": 28
+      },
+      "fingerprintUnchanged": true
+    },
+    {
+      "contract": "e1-dry-gulch",
+      "before": {
+        "p95": 35.22782990761707,
+        "max": 117.11532777565881,
+        "samples": 27
+      },
+      "after": {
+        "p95": 21.79449471770337,
+        "max": 35.22782990761707,
+        "samples": 26
+      },
+      "fingerprintUnchanged": true
+    },
+    {
+      "contract": "e2-hill-mine",
+      "before": {
+        "p95": 10.44030650891055,
+        "max": 10.44030650891055,
+        "samples": 14
+      },
+      "after": {
+        "p95": 9.1104335791443,
+        "max": 9.1104335791443,
+        "samples": 14
+      },
+      "fingerprintUnchanged": true
+    }
+  ],
+  "perf": [
+    {
+      "contract": "the-claim",
+      "tier": "full",
+      "before": {
+        "frameMsP95": 33.40000000000009,
+        "drawCalls": 41,
+        "groundDrawCalls": 1
+      },
+      "after": {
+        "frameMsP95": 33.40000000000009,
+        "drawCalls": 41,
+        "groundDrawCalls": 1
+      },
+      "drawCallDelta": 0
+    },
+    {
+      "contract": "e1-dry-gulch",
+      "tier": "full",
+      "before": {
+        "frameMsP95": 42.399999999999636,
+        "drawCalls": 39,
+        "groundDrawCalls": 1
+      },
+      "after": {
+        "frameMsP95": 41.59999999999991,
+        "drawCalls": 39,
+        "groundDrawCalls": 1
+      },
+      "drawCallDelta": 0
+    },
+    {
+      "contract": "e1-night-shift",
+      "tier": "full",
+      "before": {
+        "frameMsP95": 41.59999999999991,
+        "drawCalls": 42,
+        "groundDrawCalls": 1
+      },
+      "after": {
+        "frameMsP95": 41.80000000000018,
+        "drawCalls": 42,
+        "groundDrawCalls": 1
+      },
+      "drawCallDelta": 0
+    },
+    {
+      "contract": "e1-twin-banks",
+      "tier": "full",
+      "before": {
+        "frameMsP95": 41.59999999999991,
+        "drawCalls": 40,
+        "groundDrawCalls": 1
+      },
+      "after": {
+        "frameMsP95": 33.40000000000009,
+        "drawCalls": 40,
+        "groundDrawCalls": 1
+      },
+      "drawCallDelta": 0
+    },
+    {
+      "contract": "e2-hill-mine",
+      "tier": "full",
+      "before": {
+        "frameMsP95": 16.80000000000001,
+        "drawCalls": 45,
+        "groundDrawCalls": 1
+      },
+      "after": {
+        "frameMsP95": 9.399999999999977,
+        "drawCalls": 45,
+        "groundDrawCalls": 1
+      },
+      "drawCallDelta": 0
+    },
+    {
+      "contract": "the-claim",
+      "tier": "lite",
+      "before": {
+        "frameMsP95": 33.299999999999955,
+        "drawCalls": 35,
+        "groundDrawCalls": 1
+      },
+      "after": {
+        "frameMsP95": 33.80000000000007,
+        "drawCalls": 34,
+        "groundDrawCalls": 1
+      },
+      "drawCallDelta": -1
+    },
+    {
+      "contract": "e1-dry-gulch",
+      "tier": "lite",
+      "before": {
+        "frameMsP95": 41.799999999999955,
+        "drawCalls": 31,
+        "groundDrawCalls": 1
+      },
+      "after": {
+        "frameMsP95": 41.69999999999982,
+        "drawCalls": 31,
+        "groundDrawCalls": 1
+      },
+      "drawCallDelta": 0
+    },
+    {
+      "contract": "e1-night-shift",
+      "tier": "lite",
+      "before": {
+        "frameMsP95": 41.59999999999991,
+        "drawCalls": 35,
+        "groundDrawCalls": 1
+      },
+      "after": {
+        "frameMsP95": 40.80000000000007,
+        "drawCalls": 35,
+        "groundDrawCalls": 1
+      },
+      "drawCallDelta": 0
+    },
+    {
+      "contract": "e1-twin-banks",
+      "tier": "lite",
+      "before": {
+        "frameMsP95": 41.60000000000002,
+        "drawCalls": 32,
+        "groundDrawCalls": 1
+      },
+      "after": {
+        "frameMsP95": 41.10000000000002,
+        "drawCalls": 32,
+        "groundDrawCalls": 1
+      },
+      "drawCallDelta": 0
+    },
+    {
+      "contract": "e2-hill-mine",
+      "tier": "lite",
+      "before": {
+        "frameMsP95": 16.600000000000023,
+        "drawCalls": 38,
+        "groundDrawCalls": 1
+      },
+      "after": {
+        "frameMsP95": 9.200000000000045,
+        "drawCalls": 38,
+        "groundDrawCalls": 1
+      },
+      "drawCallDelta": 0
+    }
+  ]
+}

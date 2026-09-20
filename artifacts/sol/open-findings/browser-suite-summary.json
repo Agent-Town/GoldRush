@@ -1,0 +1,2133 @@
+{
+  "stats": {
+    "startTime": "2026-09-19T13:59:35.880Z",
+    "duration": 2175574.539,
+    "expected": 185,
+    "skipped": 4,
+    "unexpected": 23,
+    "flaky": 0
+  },
+  "globalErrors": [],
+  "rows": [
+    {
+      "file": "e1-dry-gulch.spec.ts",
+      "line": 79,
+      "title": "loads Dry Gulch via debug param and suppresses bad contract fallback to diagnostics",
+      "project": "desktop-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 13872,
+      "error": ""
+    },
+    {
+      "file": "e1-dry-gulch.spec.ts",
+      "line": 109,
+      "title": "removes river and ford collision while keeping the spring as the only water source",
+      "project": "desktop-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 5078,
+      "error": ""
+    },
+    {
+      "file": "e1-dry-gulch.spec.ts",
+      "line": 128,
+      "title": "sluice placement rejects away from the pond and accepts beside it",
+      "project": "desktop-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 9006,
+      "error": ""
+    },
+    {
+      "file": "e1-dry-gulch.spec.ts",
+      "line": 162,
+      "title": "Dry Gulch seam panning uses the +40% contract yield multiplier",
+      "project": "desktop-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 5074,
+      "error": ""
+    },
+    {
+      "file": "e1-dry-gulch.spec.ts",
+      "line": 189,
+      "title": "contract lane constants allow all four spawn edges",
+      "project": "desktop-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 8195,
+      "error": ""
+    },
+    {
+      "file": "e1-dry-gulch.spec.ts",
+      "line": 222,
+      "title": "seeded Dry Gulch diagnostics are stable",
+      "project": "desktop-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 12559,
+      "error": ""
+    },
+    {
+      "file": "e1-dry-gulch.spec.ts",
+      "line": 79,
+      "title": "loads Dry Gulch via debug param and suppresses bad contract fallback to diagnostics",
+      "project": "mobile-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 12582,
+      "error": ""
+    },
+    {
+      "file": "e1-dry-gulch.spec.ts",
+      "line": 109,
+      "title": "removes river and ford collision while keeping the spring as the only water source",
+      "project": "mobile-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 4974,
+      "error": ""
+    },
+    {
+      "file": "e1-dry-gulch.spec.ts",
+      "line": 128,
+      "title": "sluice placement rejects away from the pond and accepts beside it",
+      "project": "mobile-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 9339,
+      "error": ""
+    },
+    {
+      "file": "e1-dry-gulch.spec.ts",
+      "line": 162,
+      "title": "Dry Gulch seam panning uses the +40% contract yield multiplier",
+      "project": "mobile-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 4873,
+      "error": ""
+    },
+    {
+      "file": "e1-dry-gulch.spec.ts",
+      "line": 189,
+      "title": "contract lane constants allow all four spawn edges",
+      "project": "mobile-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 4628,
+      "error": ""
+    },
+    {
+      "file": "e1-dry-gulch.spec.ts",
+      "line": 222,
+      "title": "seeded Dry Gulch diagnostics are stable",
+      "project": "mobile-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 7923,
+      "error": ""
+    },
+    {
+      "file": "e1-twin-banks.spec.ts",
+      "line": 64,
+      "title": "loads Twin Banks contract with two fords, two build zones, and one loss stake",
+      "project": "desktop-chrome",
+      "status": "failed",
+      "verdict": "unexpected",
+      "durationMs": 7369,
+      "error": "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: \"river\"\nReceived: \"bank\""
+    },
+    {
+      "file": "e1-twin-banks.spec.ts",
+      "line": 103,
+      "title": "builds sluices and stockpiles on both banks against one gold pool",
+      "project": "desktop-chrome",
+      "status": "failed",
+      "verdict": "unexpected",
+      "durationMs": 10508,
+      "error": "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: true\nReceived: false\n\nCall Log:\n- Timeout 5000ms exceeded while waiting on the predicate"
+    },
+    {
+      "file": "e1-twin-banks.spec.ts",
+      "line": 122,
+      "title": "routes enemies through both west and east fords",
+      "project": "desktop-chrome",
+      "status": "failed",
+      "verdict": "unexpected",
+      "durationMs": 22398,
+      "error": "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: true\nReceived: false\n\nCall Log:\n- Timeout 15000ms exceeded while waiting on the predicate"
+    },
+    {
+      "file": "e1-twin-banks.spec.ts",
+      "line": 135,
+      "title": "north marker is not the run loss stake, south overrun still ends the run, and waves use four edges",
+      "project": "desktop-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 15324,
+      "error": ""
+    },
+    {
+      "file": "e1-twin-banks.spec.ts",
+      "line": 175,
+      "title": "seeded Twin Banks diagnostics are stable",
+      "project": "desktop-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 9693,
+      "error": ""
+    },
+    {
+      "file": "e1-twin-banks.spec.ts",
+      "line": 64,
+      "title": "loads Twin Banks contract with two fords, two build zones, and one loss stake",
+      "project": "mobile-chrome",
+      "status": "failed",
+      "verdict": "unexpected",
+      "durationMs": 4003,
+      "error": "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: \"river\"\nReceived: \"bank\""
+    },
+    {
+      "file": "e1-twin-banks.spec.ts",
+      "line": 103,
+      "title": "builds sluices and stockpiles on both banks against one gold pool",
+      "project": "mobile-chrome",
+      "status": "failed",
+      "verdict": "unexpected",
+      "durationMs": 8786,
+      "error": "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: true\nReceived: false\n\nCall Log:\n- Timeout 5000ms exceeded while waiting on the predicate"
+    },
+    {
+      "file": "e1-twin-banks.spec.ts",
+      "line": 122,
+      "title": "routes enemies through both west and east fords",
+      "project": "mobile-chrome",
+      "status": "failed",
+      "verdict": "unexpected",
+      "durationMs": 18649,
+      "error": "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: true\nReceived: false\n\nCall Log:\n- Timeout 15000ms exceeded while waiting on the predicate"
+    },
+    {
+      "file": "e1-twin-banks.spec.ts",
+      "line": 135,
+      "title": "north marker is not the run loss stake, south overrun still ends the run, and waves use four edges",
+      "project": "mobile-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 3955,
+      "error": ""
+    },
+    {
+      "file": "e1-twin-banks.spec.ts",
+      "line": 175,
+      "title": "seeded Twin Banks diagnostics are stable",
+      "project": "mobile-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 5755,
+      "error": ""
+    },
+    {
+      "file": "f-astra-6-plain-boot.spec.ts",
+      "line": 6,
+      "title": "F-ASTRA-6 plain the-claim boot has no console or page errors",
+      "project": "desktop-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 7692,
+      "error": ""
+    },
+    {
+      "file": "f-astra-6-plain-boot.spec.ts",
+      "line": 6,
+      "title": "F-ASTRA-6 plain town boot has no console or page errors",
+      "project": "desktop-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 5908,
+      "error": ""
+    },
+    {
+      "file": "f-astra-6-plain-boot.spec.ts",
+      "line": 6,
+      "title": "F-ASTRA-6 plain e1-dry-gulch boot has no console or page errors",
+      "project": "desktop-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 6556,
+      "error": ""
+    },
+    {
+      "file": "f-astra-6-plain-boot.spec.ts",
+      "line": 6,
+      "title": "F-ASTRA-6 plain e1-twin-banks boot has no console or page errors",
+      "project": "desktop-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 5900,
+      "error": ""
+    },
+    {
+      "file": "f-astra-6-plain-boot.spec.ts",
+      "line": 6,
+      "title": "F-ASTRA-6 plain the-claim boot has no console or page errors",
+      "project": "mobile-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 5843,
+      "error": ""
+    },
+    {
+      "file": "f-astra-6-plain-boot.spec.ts",
+      "line": 6,
+      "title": "F-ASTRA-6 plain town boot has no console or page errors",
+      "project": "mobile-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 5134,
+      "error": ""
+    },
+    {
+      "file": "f-astra-6-plain-boot.spec.ts",
+      "line": 6,
+      "title": "F-ASTRA-6 plain e1-dry-gulch boot has no console or page errors",
+      "project": "mobile-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 5729,
+      "error": ""
+    },
+    {
+      "file": "f-astra-6-plain-boot.spec.ts",
+      "line": 6,
+      "title": "F-ASTRA-6 plain e1-twin-banks boot has no console or page errors",
+      "project": "mobile-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 6120,
+      "error": ""
+    },
+    {
+      "file": "landmark-brightness.spec.ts",
+      "line": 57,
+      "title": "The Claim keeps daylight landmarks opaque, lit, and under the frame budget",
+      "project": "desktop-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 8960,
+      "error": ""
+    },
+    {
+      "file": "landmark-brightness.spec.ts",
+      "line": 96,
+      "title": "Night Shift keeps ground light pools without mutating landmark materials",
+      "project": "desktop-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 6153,
+      "error": ""
+    },
+    {
+      "file": "landmark-brightness.spec.ts",
+      "line": 182,
+      "title": "reference rig: terrain, landmark and hero sprite measured together (F-ASTRA-9 calibration)",
+      "project": "desktop-chrome",
+      "status": "skipped",
+      "verdict": "skipped",
+      "durationMs": 181,
+      "error": ""
+    },
+    {
+      "file": "landmark-brightness.spec.ts",
+      "line": 315,
+      "title": "closed/open mesh census across the landmark packs (F-ASTRA-9)",
+      "project": "desktop-chrome",
+      "status": "skipped",
+      "verdict": "skipped",
+      "durationMs": 147,
+      "error": ""
+    },
+    {
+      "file": "landmark-brightness.spec.ts",
+      "line": 57,
+      "title": "The Claim keeps daylight landmarks opaque, lit, and under the frame budget",
+      "project": "mobile-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 7392,
+      "error": ""
+    },
+    {
+      "file": "landmark-brightness.spec.ts",
+      "line": 96,
+      "title": "Night Shift keeps ground light pools without mutating landmark materials",
+      "project": "mobile-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 4406,
+      "error": ""
+    },
+    {
+      "file": "landmark-brightness.spec.ts",
+      "line": 182,
+      "title": "reference rig: terrain, landmark and hero sprite measured together (F-ASTRA-9 calibration)",
+      "project": "mobile-chrome",
+      "status": "skipped",
+      "verdict": "skipped",
+      "durationMs": 185,
+      "error": ""
+    },
+    {
+      "file": "landmark-brightness.spec.ts",
+      "line": 315,
+      "title": "closed/open mesh census across the landmark packs (F-ASTRA-9)",
+      "project": "mobile-chrome",
+      "status": "skipped",
+      "verdict": "skipped",
+      "durationMs": 145,
+      "error": ""
+    },
+    {
+      "file": "town-assay-office-blender.spec.ts",
+      "line": 140,
+      "title": "Assay Office pilot is lazy, contract-valid, visual-only, and stays inside the frame-time gate",
+      "project": "desktop-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 8272,
+      "error": ""
+    },
+    {
+      "file": "town-assay-office-blender.spec.ts",
+      "line": 192,
+      "title": "LITE tier always keeps the Assay Office facade and never mounts the GLB",
+      "project": "desktop-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 3368,
+      "error": ""
+    },
+    {
+      "file": "town-assay-office-blender.spec.ts",
+      "line": 203,
+      "title": "a failed Assay Office GLB load preserves its facade and interaction",
+      "project": "desktop-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 4876,
+      "error": ""
+    },
+    {
+      "file": "town-assay-office-blender.spec.ts",
+      "line": 218,
+      "title": "owner view mounts every registered pilot including the Assay Office",
+      "project": "desktop-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 5988,
+      "error": ""
+    },
+    {
+      "file": "town-assay-office-blender.spec.ts",
+      "line": 236,
+      "title": "exiting during a delayed Assay Office load cannot mount the model afterward",
+      "project": "desktop-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 3841,
+      "error": ""
+    },
+    {
+      "file": "town-assay-office-blender.spec.ts",
+      "line": 140,
+      "title": "Assay Office pilot is lazy, contract-valid, visual-only, and stays inside the frame-time gate",
+      "project": "mobile-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 7933,
+      "error": ""
+    },
+    {
+      "file": "town-assay-office-blender.spec.ts",
+      "line": 192,
+      "title": "LITE tier always keeps the Assay Office facade and never mounts the GLB",
+      "project": "mobile-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 2378,
+      "error": ""
+    },
+    {
+      "file": "town-assay-office-blender.spec.ts",
+      "line": 203,
+      "title": "a failed Assay Office GLB load preserves its facade and interaction",
+      "project": "mobile-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 4390,
+      "error": ""
+    },
+    {
+      "file": "town-assay-office-blender.spec.ts",
+      "line": 218,
+      "title": "owner view mounts every registered pilot including the Assay Office",
+      "project": "mobile-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 5994,
+      "error": ""
+    },
+    {
+      "file": "town-assay-office-blender.spec.ts",
+      "line": 236,
+      "title": "exiting during a delayed Assay Office load cannot mount the model afterward",
+      "project": "mobile-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 4197,
+      "error": ""
+    },
+    {
+      "file": "town-cast-wiring.spec.ts",
+      "line": 13,
+      "title": "town cast contracts name every shipped direction cell",
+      "project": "desktop-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 10,
+      "error": ""
+    },
+    {
+      "file": "town-cast-wiring.spec.ts",
+      "line": 27,
+      "title": "plain town boot shows the tavernkeeper and storekeeper walking on anchored feet",
+      "project": "desktop-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 7475,
+      "error": ""
+    },
+    {
+      "file": "town-cast-wiring.spec.ts",
+      "line": 13,
+      "title": "town cast contracts name every shipped direction cell",
+      "project": "mobile-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 8,
+      "error": ""
+    },
+    {
+      "file": "town-cast-wiring.spec.ts",
+      "line": 27,
+      "title": "plain town boot shows the tavernkeeper and storekeeper walking on anchored feet",
+      "project": "mobile-chrome",
+      "status": "failed",
+      "verdict": "unexpected",
+      "durationMs": 29155,
+      "error": "Error: expect(received).toMatch(expected)\n\nExpected pattern: /^char-tavernkeeper-sheet-walk8-r[0-3]c[1-7]\\.png$/\nReceived string:  \"\"\n\nCall Log:\n- Timeout 20000ms exceeded while waiting on the predicate"
+    },
+    {
+      "file": "town-chapel-blender.spec.ts",
+      "line": 144,
+      "title": "Chapel pilot is lazy, contract-valid, visual-only, and stays inside the frame-time gate",
+      "project": "desktop-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 8969,
+      "error": ""
+    },
+    {
+      "file": "town-chapel-blender.spec.ts",
+      "line": 197,
+      "title": "LITE tier always keeps the Chapel facade and never mounts the GLB",
+      "project": "desktop-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 3250,
+      "error": ""
+    },
+    {
+      "file": "town-chapel-blender.spec.ts",
+      "line": 208,
+      "title": "a failed Chapel GLB load preserves its facade and interaction",
+      "project": "desktop-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 5079,
+      "error": ""
+    },
+    {
+      "file": "town-chapel-blender.spec.ts",
+      "line": 221,
+      "title": "owner-eye view mounts the Chapel beside every registered 3D building and the 2D cast",
+      "project": "desktop-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 4977,
+      "error": ""
+    },
+    {
+      "file": "town-chapel-blender.spec.ts",
+      "line": 144,
+      "title": "Chapel pilot is lazy, contract-valid, visual-only, and stays inside the frame-time gate",
+      "project": "mobile-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 51206,
+      "error": ""
+    },
+    {
+      "file": "town-chapel-blender.spec.ts",
+      "line": 197,
+      "title": "LITE tier always keeps the Chapel facade and never mounts the GLB",
+      "project": "mobile-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 4564,
+      "error": ""
+    },
+    {
+      "file": "town-chapel-blender.spec.ts",
+      "line": 208,
+      "title": "a failed Chapel GLB load preserves its facade and interaction",
+      "project": "mobile-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 7397,
+      "error": ""
+    },
+    {
+      "file": "town-chapel-blender.spec.ts",
+      "line": 221,
+      "title": "owner-eye view mounts the Chapel beside every registered 3D building and the 2D cast",
+      "project": "mobile-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 9611,
+      "error": ""
+    },
+    {
+      "file": "town-claim-office-blender.spec.ts",
+      "line": 144,
+      "title": "Claim Office pilot is lazy, contract-valid, visual-only, and stays inside the frame-time gate",
+      "project": "desktop-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 9171,
+      "error": ""
+    },
+    {
+      "file": "town-claim-office-blender.spec.ts",
+      "line": 195,
+      "title": "LITE tier always keeps the Claim Office facade and never mounts the GLB",
+      "project": "desktop-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 2940,
+      "error": ""
+    },
+    {
+      "file": "town-claim-office-blender.spec.ts",
+      "line": 206,
+      "title": "a failed Claim Office GLB load preserves its facade and interaction",
+      "project": "desktop-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 4244,
+      "error": ""
+    },
+    {
+      "file": "town-claim-office-blender.spec.ts",
+      "line": 219,
+      "title": "owner-eye view mounts the Claim Office beside every registered 3D building and 2D cast",
+      "project": "desktop-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 3698,
+      "error": ""
+    },
+    {
+      "file": "town-claim-office-blender.spec.ts",
+      "line": 144,
+      "title": "Claim Office pilot is lazy, contract-valid, visual-only, and stays inside the frame-time gate",
+      "project": "mobile-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 10878,
+      "error": ""
+    },
+    {
+      "file": "town-claim-office-blender.spec.ts",
+      "line": 195,
+      "title": "LITE tier always keeps the Claim Office facade and never mounts the GLB",
+      "project": "mobile-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 2514,
+      "error": ""
+    },
+    {
+      "file": "town-claim-office-blender.spec.ts",
+      "line": 206,
+      "title": "a failed Claim Office GLB load preserves its facade and interaction",
+      "project": "mobile-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 4397,
+      "error": ""
+    },
+    {
+      "file": "town-claim-office-blender.spec.ts",
+      "line": 219,
+      "title": "owner-eye view mounts the Claim Office beside every registered 3D building and 2D cast",
+      "project": "mobile-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 4401,
+      "error": ""
+    },
+    {
+      "file": "town-dynamo-hall-blender.spec.ts",
+      "line": 97,
+      "title": "complete Dynamo Hall loads one bounded painted mesh without changing its interaction",
+      "project": "desktop-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 8002,
+      "error": ""
+    },
+    {
+      "file": "town-dynamo-hall-blender.spec.ts",
+      "line": 116,
+      "title": "LITE never mounts the Dynamo Hall GLB",
+      "project": "desktop-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 2262,
+      "error": ""
+    },
+    {
+      "file": "town-dynamo-hall-blender.spec.ts",
+      "line": 124,
+      "title": "a pre-T2 profile never renders or mounts the 3D Dynamo Hall",
+      "project": "desktop-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 2599,
+      "error": ""
+    },
+    {
+      "file": "town-dynamo-hall-blender.spec.ts",
+      "line": 133,
+      "title": "a failed Dynamo Hall load preserves the complete-stage visual and crank",
+      "project": "desktop-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 3495,
+      "error": ""
+    },
+    {
+      "file": "town-dynamo-hall-blender.spec.ts",
+      "line": 140,
+      "title": "owner eye shows the complete Dynamo Hall with every registered 3D building",
+      "project": "desktop-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 4000,
+      "error": ""
+    },
+    {
+      "file": "town-dynamo-hall-blender.spec.ts",
+      "line": 146,
+      "title": "exiting during lazy pilot load stays disposed",
+      "project": "desktop-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 2723,
+      "error": ""
+    },
+    {
+      "file": "town-dynamo-hall-blender.spec.ts",
+      "line": 97,
+      "title": "complete Dynamo Hall loads one bounded painted mesh without changing its interaction",
+      "project": "mobile-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 8123,
+      "error": ""
+    },
+    {
+      "file": "town-dynamo-hall-blender.spec.ts",
+      "line": 116,
+      "title": "LITE never mounts the Dynamo Hall GLB",
+      "project": "mobile-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 2673,
+      "error": ""
+    },
+    {
+      "file": "town-dynamo-hall-blender.spec.ts",
+      "line": 124,
+      "title": "a pre-T2 profile never renders or mounts the 3D Dynamo Hall",
+      "project": "mobile-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 3306,
+      "error": ""
+    },
+    {
+      "file": "town-dynamo-hall-blender.spec.ts",
+      "line": 133,
+      "title": "a failed Dynamo Hall load preserves the complete-stage visual and crank",
+      "project": "mobile-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 5083,
+      "error": ""
+    },
+    {
+      "file": "town-dynamo-hall-blender.spec.ts",
+      "line": 140,
+      "title": "owner eye shows the complete Dynamo Hall with every registered 3D building",
+      "project": "mobile-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 5706,
+      "error": ""
+    },
+    {
+      "file": "town-dynamo-hall-blender.spec.ts",
+      "line": 146,
+      "title": "exiting during lazy pilot load stays disposed",
+      "project": "mobile-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 4118,
+      "error": ""
+    },
+    {
+      "file": "town-era-switch.spec.ts",
+      "line": 120,
+      "title": "E1 mounts base only; E2 mounts its variant, shared anchor plumes, and era accent",
+      "project": "desktop-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 5187,
+      "error": ""
+    },
+    {
+      "file": "town-era-switch.spec.ts",
+      "line": 153,
+      "title": "a missing E2 sibling falls back to base without errors",
+      "project": "desktop-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 2087,
+      "error": ""
+    },
+    {
+      "file": "town-era-switch.spec.ts",
+      "line": 167,
+      "title": "LITE keeps facades and never fetches models or mounts plumes",
+      "project": "desktop-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 1343,
+      "error": ""
+    },
+    {
+      "file": "town-era-switch.spec.ts",
+      "line": 183,
+      "title": "E1 keeps every mounted building upright",
+      "project": "desktop-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 1870,
+      "error": ""
+    },
+    {
+      "file": "town-era-switch.spec.ts",
+      "line": 183,
+      "title": "E2 keeps every mounted building upright",
+      "project": "desktop-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 1740,
+      "error": ""
+    },
+    {
+      "file": "town-era-switch.spec.ts",
+      "line": 183,
+      "title": "E3 keeps every mounted building upright",
+      "project": "desktop-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 1799,
+      "error": ""
+    },
+    {
+      "file": "town-era-switch.spec.ts",
+      "line": 199,
+      "title": "E5 flood reset starts a fresh era-prop chain",
+      "project": "desktop-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 2674,
+      "error": ""
+    },
+    {
+      "file": "town-era-switch.spec.ts",
+      "line": 120,
+      "title": "E1 mounts base only; E2 mounts its variant, shared anchor plumes, and era accent",
+      "project": "mobile-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 8530,
+      "error": ""
+    },
+    {
+      "file": "town-era-switch.spec.ts",
+      "line": 153,
+      "title": "a missing E2 sibling falls back to base without errors",
+      "project": "mobile-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 2709,
+      "error": ""
+    },
+    {
+      "file": "town-era-switch.spec.ts",
+      "line": 167,
+      "title": "LITE keeps facades and never fetches models or mounts plumes",
+      "project": "mobile-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 2061,
+      "error": ""
+    },
+    {
+      "file": "town-era-switch.spec.ts",
+      "line": 183,
+      "title": "E1 keeps every mounted building upright",
+      "project": "mobile-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 3700,
+      "error": ""
+    },
+    {
+      "file": "town-era-switch.spec.ts",
+      "line": 183,
+      "title": "E2 keeps every mounted building upright",
+      "project": "mobile-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 3322,
+      "error": ""
+    },
+    {
+      "file": "town-era-switch.spec.ts",
+      "line": 183,
+      "title": "E3 keeps every mounted building upright",
+      "project": "mobile-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 3161,
+      "error": ""
+    },
+    {
+      "file": "town-era-switch.spec.ts",
+      "line": 199,
+      "title": "E5 flood reset starts a fresh era-prop chain",
+      "project": "mobile-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 4537,
+      "error": ""
+    },
+    {
+      "file": "town-fresh-boot-textures.spec.ts",
+      "line": 28,
+      "title": "delayed town textures converge without a reload and bark portrait falls back",
+      "project": "desktop-chrome",
+      "status": "failed",
+      "verdict": "unexpected",
+      "durationMs": 12287,
+      "error": "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: \"fallback\"\nReceived: \"loaded\"\n\nCall Log:\n- Timeout 8000ms exceeded while waiting on the predicate"
+    },
+    {
+      "file": "town-fresh-boot-textures.spec.ts",
+      "line": 28,
+      "title": "delayed town textures converge without a reload and bark portrait falls back",
+      "project": "mobile-chrome",
+      "status": "failed",
+      "verdict": "unexpected",
+      "durationMs": 12912,
+      "error": "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: \"fallback\"\nReceived: \"loaded\"\n\nCall Log:\n- Timeout 8000ms exceeded while waiting on the predicate"
+    },
+    {
+      "file": "town-general-store-blender.spec.ts",
+      "line": 146,
+      "title": "General Store pilot is lazy, contract-valid, visual-only, and stays inside the frame-time gate",
+      "project": "desktop-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 7621,
+      "error": ""
+    },
+    {
+      "file": "town-general-store-blender.spec.ts",
+      "line": 197,
+      "title": "LITE tier always keeps the General Store facade and never mounts the GLB",
+      "project": "desktop-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 1753,
+      "error": ""
+    },
+    {
+      "file": "town-general-store-blender.spec.ts",
+      "line": 208,
+      "title": "a failed General Store GLB load preserves its facade and interaction",
+      "project": "desktop-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 4185,
+      "error": ""
+    },
+    {
+      "file": "town-general-store-blender.spec.ts",
+      "line": 221,
+      "title": "owner calibration view mounts the General Store beside the shipped Tavern and 2D cast",
+      "project": "desktop-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 2749,
+      "error": ""
+    },
+    {
+      "file": "town-general-store-blender.spec.ts",
+      "line": 146,
+      "title": "General Store pilot is lazy, contract-valid, visual-only, and stays inside the frame-time gate",
+      "project": "mobile-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 8317,
+      "error": ""
+    },
+    {
+      "file": "town-general-store-blender.spec.ts",
+      "line": 197,
+      "title": "LITE tier always keeps the General Store facade and never mounts the GLB",
+      "project": "mobile-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 2040,
+      "error": ""
+    },
+    {
+      "file": "town-general-store-blender.spec.ts",
+      "line": 208,
+      "title": "a failed General Store GLB load preserves its facade and interaction",
+      "project": "mobile-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 5108,
+      "error": ""
+    },
+    {
+      "file": "town-general-store-blender.spec.ts",
+      "line": 221,
+      "title": "owner calibration view mounts the General Store beside the shipped Tavern and 2D cast",
+      "project": "mobile-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 4551,
+      "error": ""
+    },
+    {
+      "file": "town-inhabitant-zoom.spec.ts",
+      "line": 15,
+      "title": "town wheel and mobile pinch show inhabitants close up without scaling prompts",
+      "project": "desktop-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 4551,
+      "error": ""
+    },
+    {
+      "file": "town-inhabitant-zoom.spec.ts",
+      "line": 15,
+      "title": "town wheel and mobile pinch show inhabitants close up without scaling prompts",
+      "project": "mobile-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 6203,
+      "error": ""
+    },
+    {
+      "file": "town-plate-blender.spec.ts",
+      "line": 59,
+      "title": "Town plate is lazy, contract-valid, keeps actors planar, and mounts in the owner all-view",
+      "project": "desktop-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 8527,
+      "error": ""
+    },
+    {
+      "file": "town-plate-blender.spec.ts",
+      "line": 113,
+      "title": "LITE keeps painted ground and never mounts the Town plate",
+      "project": "desktop-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 1163,
+      "error": ""
+    },
+    {
+      "file": "town-plate-blender.spec.ts",
+      "line": 124,
+      "title": "invalid Town plate bytes restore painted ground and dispose cleanly",
+      "project": "desktop-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 1803,
+      "error": ""
+    },
+    {
+      "file": "town-plate-blender.spec.ts",
+      "line": 59,
+      "title": "Town plate is lazy, contract-valid, keeps actors planar, and mounts in the owner all-view",
+      "project": "mobile-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 12144,
+      "error": ""
+    },
+    {
+      "file": "town-plate-blender.spec.ts",
+      "line": 113,
+      "title": "LITE keeps painted ground and never mounts the Town plate",
+      "project": "mobile-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 2857,
+      "error": ""
+    },
+    {
+      "file": "town-plate-blender.spec.ts",
+      "line": 124,
+      "title": "invalid Town plate bytes restore painted ground and dispose cleanly",
+      "project": "mobile-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 4080,
+      "error": ""
+    },
+    {
+      "file": "town-plaza-props-blender.spec.ts",
+      "line": 43,
+      "title": "plaza props stay lazy by default and mount every layout instance with one fetch per family",
+      "project": "desktop-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 3641,
+      "error": ""
+    },
+    {
+      "file": "town-plaza-props-blender.spec.ts",
+      "line": 64,
+      "title": "LITE props keep model instances unmounted",
+      "project": "desktop-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 1189,
+      "error": ""
+    },
+    {
+      "file": "town-plaza-props-blender.spec.ts",
+      "line": 69,
+      "title": "invalid prop bytes preserve primitive fallback and disposal is clean",
+      "project": "desktop-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 2099,
+      "error": ""
+    },
+    {
+      "file": "town-plaza-props-blender.spec.ts",
+      "line": 43,
+      "title": "plaza props stay lazy by default and mount every layout instance with one fetch per family",
+      "project": "mobile-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 5485,
+      "error": ""
+    },
+    {
+      "file": "town-plaza-props-blender.spec.ts",
+      "line": 64,
+      "title": "LITE props keep model instances unmounted",
+      "project": "mobile-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 2696,
+      "error": ""
+    },
+    {
+      "file": "town-plaza-props-blender.spec.ts",
+      "line": 69,
+      "title": "invalid prop bytes preserve primitive fallback and disposal is clean",
+      "project": "mobile-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 4029,
+      "error": ""
+    },
+    {
+      "file": "town-scale-zoom.spec.ts",
+      "line": 13,
+      "title": "town grows, both scenes zoom without moving HUD or planar door picking, and zoom persists",
+      "project": "desktop-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 11881,
+      "error": ""
+    },
+    {
+      "file": "town-scale-zoom.spec.ts",
+      "line": 13,
+      "title": "town grows, both scenes zoom without moving HUD or planar door picking, and zoom persists",
+      "project": "mobile-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 19662,
+      "error": ""
+    },
+    {
+      "file": "town-schoolhouse-blender.spec.ts",
+      "line": 144,
+      "title": "Schoolhouse pilot is lazy, contract-valid, visual-only, and stays inside the frame-time gate",
+      "project": "desktop-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 6436,
+      "error": ""
+    },
+    {
+      "file": "town-schoolhouse-blender.spec.ts",
+      "line": 196,
+      "title": "LITE tier always keeps the Schoolhouse facade and never mounts the GLB",
+      "project": "desktop-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 1716,
+      "error": ""
+    },
+    {
+      "file": "town-schoolhouse-blender.spec.ts",
+      "line": 207,
+      "title": "a failed Schoolhouse GLB load preserves its facade and interaction",
+      "project": "desktop-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 2553,
+      "error": ""
+    },
+    {
+      "file": "town-schoolhouse-blender.spec.ts",
+      "line": 222,
+      "title": "owner view mounts the Schoolhouse beside every registered 3D building and 2D cast",
+      "project": "desktop-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 2397,
+      "error": ""
+    },
+    {
+      "file": "town-schoolhouse-blender.spec.ts",
+      "line": 144,
+      "title": "Schoolhouse pilot is lazy, contract-valid, visual-only, and stays inside the frame-time gate",
+      "project": "mobile-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 10757,
+      "error": ""
+    },
+    {
+      "file": "town-schoolhouse-blender.spec.ts",
+      "line": 196,
+      "title": "LITE tier always keeps the Schoolhouse facade and never mounts the GLB",
+      "project": "mobile-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 3902,
+      "error": ""
+    },
+    {
+      "file": "town-schoolhouse-blender.spec.ts",
+      "line": 207,
+      "title": "a failed Schoolhouse GLB load preserves its facade and interaction",
+      "project": "mobile-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 6030,
+      "error": ""
+    },
+    {
+      "file": "town-schoolhouse-blender.spec.ts",
+      "line": 222,
+      "title": "owner view mounts the Schoolhouse beside every registered 3D building and 2D cast",
+      "project": "mobile-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 5514,
+      "error": ""
+    },
+    {
+      "file": "town-stamp-mill-blender.spec.ts",
+      "line": 163,
+      "title": "normal connections prefetch both bulk town halls inside the town priority-1 set",
+      "project": "desktop-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 889,
+      "error": ""
+    },
+    {
+      "file": "town-stamp-mill-blender.spec.ts",
+      "line": 207,
+      "title": "Stamp Mill pilot is lazy, contract-valid, visual-only, and stays inside the frame-time gate",
+      "project": "desktop-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 5767,
+      "error": ""
+    },
+    {
+      "file": "town-stamp-mill-blender.spec.ts",
+      "line": 256,
+      "title": "LITE tier always keeps the Stamp Mill facade and never mounts the GLB",
+      "project": "desktop-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 1732,
+      "error": ""
+    },
+    {
+      "file": "town-stamp-mill-blender.spec.ts",
+      "line": 267,
+      "title": "a failed Stamp Mill GLB load preserves its facade and interaction",
+      "project": "desktop-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 1806,
+      "error": ""
+    },
+    {
+      "file": "town-stamp-mill-blender.spec.ts",
+      "line": 280,
+      "title": "a pre-complete Stamp Mill never mounts its 3D model",
+      "project": "desktop-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 1811,
+      "error": ""
+    },
+    {
+      "file": "town-stamp-mill-blender.spec.ts",
+      "line": 289,
+      "title": "owner calibration view mounts the Stamp Mill beside the shipped Tavern and 2D cast",
+      "project": "desktop-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 2621,
+      "error": ""
+    },
+    {
+      "file": "town-stamp-mill-blender.spec.ts",
+      "line": 163,
+      "title": "normal connections prefetch both bulk town halls inside the town priority-1 set",
+      "project": "mobile-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 2806,
+      "error": ""
+    },
+    {
+      "file": "town-stamp-mill-blender.spec.ts",
+      "line": 207,
+      "title": "Stamp Mill pilot is lazy, contract-valid, visual-only, and stays inside the frame-time gate",
+      "project": "mobile-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 8103,
+      "error": ""
+    },
+    {
+      "file": "town-stamp-mill-blender.spec.ts",
+      "line": 256,
+      "title": "LITE tier always keeps the Stamp Mill facade and never mounts the GLB",
+      "project": "mobile-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 3295,
+      "error": ""
+    },
+    {
+      "file": "town-stamp-mill-blender.spec.ts",
+      "line": 267,
+      "title": "a failed Stamp Mill GLB load preserves its facade and interaction",
+      "project": "mobile-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 4011,
+      "error": ""
+    },
+    {
+      "file": "town-stamp-mill-blender.spec.ts",
+      "line": 280,
+      "title": "a pre-complete Stamp Mill never mounts its 3D model",
+      "project": "mobile-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 3217,
+      "error": ""
+    },
+    {
+      "file": "town-stamp-mill-blender.spec.ts",
+      "line": 289,
+      "title": "owner calibration view mounts the Stamp Mill beside the shipped Tavern and 2D cast",
+      "project": "mobile-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 4808,
+      "error": ""
+    },
+    {
+      "file": "town-t1-square.spec.ts",
+      "line": 74,
+      "title": "menu enters town square, prompts at four shells, exits, then starts normal run",
+      "project": "desktop-chrome",
+      "status": "failed",
+      "verdict": "unexpected",
+      "durationMs": 7596,
+      "error": "Error: expect(locator).toContainText(expected) failed\n\nLocator: getByTestId('town-approach-prompt')\nTimeout: 5000ms\n- Expected substring  - 1\n+ Received string     + 4\n\n- opens soon\n+\n+         Tavern ... the board is warm\n+         Board\n+       \n\nCall log:\n  - Expect \"toContainText\" with timeout 5000ms\n  - waiting for getByTestId('town-approach-prompt')\n    9 \u00d7 locator resolved to <div hidden=\"\" role=\"status\" aria-live=\"polite\" class=\"town-ui__prompt\" data-testid=\"town-approach-prompt\">\u2026</div>\n      - unexpected value \"\n        Tavern ... the board is warm\n        Board\n      \"\n    5 \u00d7 locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"town-ui__prompt\" data-testid=\"town-approach-prompt\">\u2026</div>\n      - unexpected value \"\n        Tavern ... the board is warm\n        Board\n      \"\n"
+    },
+    {
+      "file": "town-t1-square.spec.ts",
+      "line": 113,
+      "title": "town exit is reachable and square renders at 390px",
+      "project": "desktop-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 1473,
+      "error": ""
+    },
+    {
+      "file": "town-t1-square.spec.ts",
+      "line": 74,
+      "title": "menu enters town square, prompts at four shells, exits, then starts normal run",
+      "project": "mobile-chrome",
+      "status": "failed",
+      "verdict": "unexpected",
+      "durationMs": 9736,
+      "error": "Error: expect(locator).toContainText(expected) failed\n\nLocator: getByTestId('town-approach-prompt')\nTimeout: 5000ms\n- Expected substring  - 1\n+ Received string     + 4\n\n- opens soon\n+\n+         Tavern ... the board is warm\n+         Board\n+       \n\nCall log:\n  - Expect \"toContainText\" with timeout 5000ms\n  - waiting for getByTestId('town-approach-prompt')\n    8 \u00d7 locator resolved to <div hidden=\"\" role=\"status\" aria-live=\"polite\" class=\"town-ui__prompt\" data-testid=\"town-approach-prompt\">\u2026</div>\n      - unexpected value \"\n        Tavern ... the board is warm\n        Board\n      \"\n    6 \u00d7 locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"town-ui__prompt\" data-testid=\"town-approach-prompt\">\u2026</div>\n      - unexpected value \"\n        Tavern ... the board is warm\n        Board\n      \"\n"
+    },
+    {
+      "file": "town-t1-square.spec.ts",
+      "line": 113,
+      "title": "town exit is reachable and square renders at 390px",
+      "project": "mobile-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 2152,
+      "error": ""
+    },
+    {
+      "file": "town-t2-naming.spec.ts",
+      "line": 83,
+      "title": "fresh town naming persists, renames, and appears in recap and run ledger",
+      "project": "desktop-chrome",
+      "status": "timedOut",
+      "verdict": "unexpected",
+      "durationMs": 120592,
+      "error": "Test timeout of 120000ms exceeded."
+    },
+    {
+      "file": "town-t2-naming.spec.ts",
+      "line": 140,
+      "title": "profile created before naming gets its own founding prompt",
+      "project": "desktop-chrome",
+      "status": "timedOut",
+      "verdict": "unexpected",
+      "durationMs": 120251,
+      "error": "Test timeout of 120000ms exceeded."
+    },
+    {
+      "file": "town-t2-naming.spec.ts",
+      "line": 169,
+      "title": "founding input is usable at 390px",
+      "project": "desktop-chrome",
+      "status": "timedOut",
+      "verdict": "unexpected",
+      "durationMs": 120219,
+      "error": "Test timeout of 120000ms exceeded."
+    },
+    {
+      "file": "town-t2-naming.spec.ts",
+      "line": 83,
+      "title": "fresh town naming persists, renames, and appears in recap and run ledger",
+      "project": "mobile-chrome",
+      "status": "timedOut",
+      "verdict": "unexpected",
+      "durationMs": 120416,
+      "error": "Test timeout of 120000ms exceeded."
+    },
+    {
+      "file": "town-t2-naming.spec.ts",
+      "line": 140,
+      "title": "profile created before naming gets its own founding prompt",
+      "project": "mobile-chrome",
+      "status": "timedOut",
+      "verdict": "unexpected",
+      "durationMs": 120434,
+      "error": "Test timeout of 120000ms exceeded."
+    },
+    {
+      "file": "town-t2-naming.spec.ts",
+      "line": 169,
+      "title": "founding input is usable at 390px",
+      "project": "mobile-chrome",
+      "status": "timedOut",
+      "verdict": "unexpected",
+      "durationMs": 120439,
+      "error": "Test timeout of 120000ms exceeded."
+    },
+    {
+      "file": "town-t3-board.spec.ts",
+      "line": 156,
+      "title": "contract board renders manifest rows, locks, conditions, and per-contract bests",
+      "project": "desktop-chrome",
+      "status": "failed",
+      "verdict": "unexpected",
+      "durationMs": 40000,
+      "error": "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: \"tavern\"\nReceived: null\n\nCall Log:\n- Timeout 8000ms exceeded while waiting on the predicate"
+    },
+    {
+      "file": "town-t3-board.spec.ts",
+      "line": 222,
+      "title": "board launch loads Dry Gulch and New Claim hashes to the default contract config",
+      "project": "desktop-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 27745,
+      "error": ""
+    },
+    {
+      "file": "town-t3-board.spec.ts",
+      "line": 246,
+      "title": "post-run overrun returns straight to the town board and records a contract result",
+      "project": "desktop-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 12794,
+      "error": ""
+    },
+    {
+      "file": "town-t3-board.spec.ts",
+      "line": 268,
+      "title": "contract catalog navigation remembers the last chapter",
+      "project": "desktop-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 6543,
+      "error": ""
+    },
+    {
+      "file": "town-t3-board.spec.ts",
+      "line": 287,
+      "title": "contract board shows the full contract picture and remembers the Ride Together disclosure",
+      "project": "desktop-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 6837,
+      "error": ""
+    },
+    {
+      "file": "town-t3-board.spec.ts",
+      "line": 326,
+      "title": "contract board swipes and keeps tap targets usable at 390px",
+      "project": "desktop-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 5719,
+      "error": ""
+    },
+    {
+      "file": "town-t3-board.spec.ts",
+      "line": 156,
+      "title": "contract board renders manifest rows, locks, conditions, and per-contract bests",
+      "project": "mobile-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 12342,
+      "error": ""
+    },
+    {
+      "file": "town-t3-board.spec.ts",
+      "line": 222,
+      "title": "board launch loads Dry Gulch and New Claim hashes to the default contract config",
+      "project": "mobile-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 10134,
+      "error": ""
+    },
+    {
+      "file": "town-t3-board.spec.ts",
+      "line": 246,
+      "title": "post-run overrun returns straight to the town board and records a contract result",
+      "project": "mobile-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 5319,
+      "error": ""
+    },
+    {
+      "file": "town-t3-board.spec.ts",
+      "line": 268,
+      "title": "contract catalog navigation remembers the last chapter",
+      "project": "mobile-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 3638,
+      "error": ""
+    },
+    {
+      "file": "town-t3-board.spec.ts",
+      "line": 287,
+      "title": "contract board shows the full contract picture and remembers the Ride Together disclosure",
+      "project": "mobile-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 4347,
+      "error": ""
+    },
+    {
+      "file": "town-t3-board.spec.ts",
+      "line": 326,
+      "title": "contract board swipes and keeps tap targets usable at 390px",
+      "project": "mobile-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 4058,
+      "error": ""
+    },
+    {
+      "file": "town-t4-growth.spec.ts",
+      "line": 146,
+      "title": "fresh and seeded territory tiers render only earned town buildings",
+      "project": "desktop-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 17265,
+      "error": ""
+    },
+    {
+      "file": "town-t4-growth.spec.ts",
+      "line": 183,
+      "title": "Stamp Mill town vignette mirrors megaproject stage state",
+      "project": "desktop-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 21543,
+      "error": ""
+    },
+    {
+      "file": "town-t4-growth.spec.ts",
+      "line": 234,
+      "title": "growth beats fire once per profile",
+      "project": "desktop-chrome",
+      "status": "failed",
+      "verdict": "unexpected",
+      "durationMs": 10649,
+      "error": "Error: expect(locator).toHaveAttribute(expected) failed\n\nLocator:  getByTestId('story-beat-card')\nExpected: \"town-growth-general-store\"\nReceived: \"first-boot\"\nTimeout:  5000ms\n\nCall log:\n  - Expect \"toHaveAttribute\" with timeout 5000ms\n  - waiting for getByTestId('story-beat-card')\n    13 \u00d7 locator resolved to <article role=\"status\" data-art-key=\"\" aria-live=\"polite\" data-ceremony-step=\"\" data-beat-id=\"first-boot\" data-speaker=\"tavernkeeper\" data-testid=\"story-beat-card\" class=\"story-beat-card story-beat-card--visible\">\u2026</article>\n       - unexpected value \"first-boot\"\n"
+    },
+    {
+      "file": "town-t4-growth.spec.ts",
+      "line": 251,
+      "title": "grown town remains readable at 390px",
+      "project": "desktop-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 8875,
+      "error": ""
+    },
+    {
+      "file": "town-t4-growth.spec.ts",
+      "line": 146,
+      "title": "fresh and seeded territory tiers render only earned town buildings",
+      "project": "mobile-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 11614,
+      "error": ""
+    },
+    {
+      "file": "town-t4-growth.spec.ts",
+      "line": 183,
+      "title": "Stamp Mill town vignette mirrors megaproject stage state",
+      "project": "mobile-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 17469,
+      "error": ""
+    },
+    {
+      "file": "town-t4-growth.spec.ts",
+      "line": 234,
+      "title": "growth beats fire once per profile",
+      "project": "mobile-chrome",
+      "status": "failed",
+      "verdict": "unexpected",
+      "durationMs": 9942,
+      "error": "Error: expect(locator).toHaveAttribute(expected) failed\n\nLocator:  getByTestId('story-beat-card')\nExpected: \"town-growth-general-store\"\nReceived: \"ledger-page:the_claim\"\nTimeout:  5000ms\n\nCall log:\n  - Expect \"toHaveAttribute\" with timeout 5000ms\n  - waiting for getByTestId('story-beat-card')\n    14 \u00d7 locator resolved to <article role=\"status\" data-art-key=\"\" aria-live=\"polite\" data-speaker=\"clerk\" data-ceremony-step=\"\" data-testid=\"story-beat-card\" data-beat-id=\"ledger-page:the_claim\" class=\"story-beat-card story-beat-card--visible\">\u2026</article>\n       - unexpected value \"ledger-page:the_claim\"\n"
+    },
+    {
+      "file": "town-t4-growth.spec.ts",
+      "line": 251,
+      "title": "grown town remains readable at 390px",
+      "project": "mobile-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 2656,
+      "error": ""
+    },
+    {
+      "file": "town-t5-townsfolk.spec.ts",
+      "line": 218,
+      "title": "townsfolk bark data is epoch-scoped and short",
+      "project": "desktop-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 14,
+      "error": ""
+    },
+    {
+      "file": "town-t5-townsfolk.spec.ts",
+      "line": 228,
+      "title": "seeded growth tiers show the correct townsfolk roster with no run sim diagnostics",
+      "project": "desktop-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 15228,
+      "error": ""
+    },
+    {
+      "file": "town-t5-townsfolk.spec.ts",
+      "line": 261,
+      "title": "approach barks identify sampled speakers and the Prospector greets by town name",
+      "project": "desktop-chrome",
+      "status": "failed",
+      "verdict": "unexpected",
+      "durationMs": 22437,
+      "error": "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: \"elder\"\nReceived: \"prospector\"\n\nCall Log:\n- Timeout 8000ms exceeded while waiting on the predicate"
+    },
+    {
+      "file": "town-t5-townsfolk.spec.ts",
+      "line": 281,
+      "title": "youngsters ride the town ring road",
+      "project": "desktop-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 9009,
+      "error": ""
+    },
+    {
+      "file": "town-t5-townsfolk.spec.ts",
+      "line": 299,
+      "title": "mobile bark card is readable above the stick zone and captures concept comparison",
+      "project": "desktop-chrome",
+      "status": "failed",
+      "verdict": "unexpected",
+      "durationMs": 7826,
+      "error": "Error: ENOENT: no such file or directory, open '/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/assets/raw/concept-town-square.png'"
+    },
+    {
+      "file": "town-t5-townsfolk.spec.ts",
+      "line": 328,
+      "title": "a plain boot walks the Elder off her schoolhouse post (A13)",
+      "project": "desktop-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 10818,
+      "error": ""
+    },
+    {
+      "file": "town-t5-townsfolk.spec.ts",
+      "line": 380,
+      "title": "the youngsters wear their town names on their story cards (A17)",
+      "project": "desktop-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 9,
+      "error": ""
+    },
+    {
+      "file": "town-t5-townsfolk.spec.ts",
+      "line": 218,
+      "title": "townsfolk bark data is epoch-scoped and short",
+      "project": "mobile-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 11,
+      "error": ""
+    },
+    {
+      "file": "town-t5-townsfolk.spec.ts",
+      "line": 228,
+      "title": "seeded growth tiers show the correct townsfolk roster with no run sim diagnostics",
+      "project": "mobile-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 7002,
+      "error": ""
+    },
+    {
+      "file": "town-t5-townsfolk.spec.ts",
+      "line": 261,
+      "title": "approach barks identify sampled speakers and the Prospector greets by town name",
+      "project": "mobile-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 13160,
+      "error": ""
+    },
+    {
+      "file": "town-t5-townsfolk.spec.ts",
+      "line": 281,
+      "title": "youngsters ride the town ring road",
+      "project": "mobile-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 5206,
+      "error": ""
+    },
+    {
+      "file": "town-t5-townsfolk.spec.ts",
+      "line": 299,
+      "title": "mobile bark card is readable above the stick zone and captures concept comparison",
+      "project": "mobile-chrome",
+      "status": "failed",
+      "verdict": "unexpected",
+      "durationMs": 4013,
+      "error": "Error: ENOENT: no such file or directory, open '/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/assets/raw/concept-town-square.png'"
+    },
+    {
+      "file": "town-t5-townsfolk.spec.ts",
+      "line": 328,
+      "title": "a plain boot walks the Elder off her schoolhouse post (A13)",
+      "project": "mobile-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 6907,
+      "error": ""
+    },
+    {
+      "file": "town-t5-townsfolk.spec.ts",
+      "line": 380,
+      "title": "the youngsters wear their town names on their story cards (A17)",
+      "project": "mobile-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 3,
+      "error": ""
+    },
+    {
+      "file": "town-t6-surfaces.spec.ts",
+      "line": 90,
+      "title": "plain menu thins to town, profile, settings",
+      "project": "desktop-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 2079,
+      "error": ""
+    },
+    {
+      "file": "town-t6-surfaces.spec.ts",
+      "line": 102,
+      "title": "Schoolhouse opens the existing Research chart and returns to the square",
+      "project": "desktop-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 5049,
+      "error": ""
+    },
+    {
+      "file": "town-t6-surfaces.spec.ts",
+      "line": 119,
+      "title": "Assay porch opens the existing crafting order status panel",
+      "project": "desktop-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 4907,
+      "error": ""
+    },
+    {
+      "file": "town-t6-surfaces.spec.ts",
+      "line": 135,
+      "title": "run launch remains reachable through the tavern board",
+      "project": "desktop-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 10846,
+      "error": ""
+    },
+    {
+      "file": "town-t6-surfaces.spec.ts",
+      "line": 155,
+      "title": "town surfaces stay readable at 390px",
+      "project": "desktop-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 6297,
+      "error": ""
+    },
+    {
+      "file": "town-t6-surfaces.spec.ts",
+      "line": 90,
+      "title": "plain menu thins to town, profile, settings",
+      "project": "mobile-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 1526,
+      "error": ""
+    },
+    {
+      "file": "town-t6-surfaces.spec.ts",
+      "line": 102,
+      "title": "Schoolhouse opens the existing Research chart and returns to the square",
+      "project": "mobile-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 3545,
+      "error": ""
+    },
+    {
+      "file": "town-t6-surfaces.spec.ts",
+      "line": 119,
+      "title": "Assay porch opens the existing crafting order status panel",
+      "project": "mobile-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 3928,
+      "error": ""
+    },
+    {
+      "file": "town-t6-surfaces.spec.ts",
+      "line": 135,
+      "title": "run launch remains reachable through the tavern board",
+      "project": "mobile-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 7302,
+      "error": ""
+    },
+    {
+      "file": "town-t6-surfaces.spec.ts",
+      "line": 155,
+      "title": "town surfaces stay readable at 390px",
+      "project": "mobile-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 6791,
+      "error": ""
+    },
+    {
+      "file": "town-tavern-blender.spec.ts",
+      "line": 144,
+      "title": "Tavern pilot is lazy, contract-valid, visual-only, and stays inside the frame-time gate",
+      "project": "desktop-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 8076,
+      "error": ""
+    },
+    {
+      "file": "town-tavern-blender.spec.ts",
+      "line": 195,
+      "title": "LITE tier always keeps the facade and never mounts the GLB",
+      "project": "desktop-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 1731,
+      "error": ""
+    },
+    {
+      "file": "town-tavern-blender.spec.ts",
+      "line": 206,
+      "title": "a failed GLB load preserves the facade and Tavern interaction",
+      "project": "desktop-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 5647,
+      "error": ""
+    },
+    {
+      "file": "town-tavern-blender.spec.ts",
+      "line": 144,
+      "title": "Tavern pilot is lazy, contract-valid, visual-only, and stays inside the frame-time gate",
+      "project": "mobile-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 9672,
+      "error": ""
+    },
+    {
+      "file": "town-tavern-blender.spec.ts",
+      "line": 195,
+      "title": "LITE tier always keeps the facade and never mounts the GLB",
+      "project": "mobile-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 2757,
+      "error": ""
+    },
+    {
+      "file": "town-tavern-blender.spec.ts",
+      "line": 206,
+      "title": "a failed GLB load preserves the facade and Tavern interaction",
+      "project": "mobile-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 7393,
+      "error": ""
+    },
+    {
+      "file": "town-ts-02b-facades.spec.ts",
+      "line": 78,
+      "title": "built town mounts 2.5D facade keys and all six surfaces remain walkable",
+      "project": "desktop-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 12030,
+      "error": ""
+    },
+    {
+      "file": "town-ts-02b-facades.spec.ts",
+      "line": 97,
+      "title": "built town facades frame correctly at 390px",
+      "project": "desktop-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 1132,
+      "error": ""
+    },
+    {
+      "file": "town-ts-02b-facades.spec.ts",
+      "line": 78,
+      "title": "built town mounts 2.5D facade keys and all six surfaces remain walkable",
+      "project": "mobile-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 13891,
+      "error": ""
+    },
+    {
+      "file": "town-ts-02b-facades.spec.ts",
+      "line": 97,
+      "title": "built town facades frame correctly at 390px",
+      "project": "mobile-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 2104,
+      "error": ""
+    },
+    {
+      "file": "town-ts-03-prop-ring.spec.ts",
+      "line": 73,
+      "title": "TS-03 prop ring renders the arrival props, dry Pan Monument, Pony Express plot, and stays inside draw-call budget",
+      "project": "desktop-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 9585,
+      "error": ""
+    },
+    {
+      "file": "town-ts-03-prop-ring.spec.ts",
+      "line": 73,
+      "title": "TS-03 prop ring renders the arrival props, dry Pan Monument, Pony Express plot, and stays inside draw-call budget",
+      "project": "mobile-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 8993,
+      "error": ""
+    },
+    {
+      "file": "w1-04-detail.spec.ts",
+      "line": 31,
+      "title": "instanced detail scatter exposes density diagnostics and mobile reduction",
+      "project": "desktop-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 10771,
+      "error": ""
+    },
+    {
+      "file": "w1-04-detail.spec.ts",
+      "line": 55,
+      "title": "detail placement keeps build pads, ford water, and routing lanes clear",
+      "project": "desktop-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 4897,
+      "error": ""
+    },
+    {
+      "file": "w1-04-detail.spec.ts",
+      "line": 69,
+      "title": "scatter is seed-stable across boots and varies by seed",
+      "project": "desktop-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 12350,
+      "error": ""
+    },
+    {
+      "file": "w1-04-detail.spec.ts",
+      "line": 31,
+      "title": "instanced detail scatter exposes density diagnostics and mobile reduction",
+      "project": "mobile-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 8894,
+      "error": ""
+    },
+    {
+      "file": "w1-04-detail.spec.ts",
+      "line": 55,
+      "title": "detail placement keeps build pads, ford water, and routing lanes clear",
+      "project": "mobile-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 3703,
+      "error": ""
+    },
+    {
+      "file": "w1-04-detail.spec.ts",
+      "line": 69,
+      "title": "scatter is seed-stable across boots and varies by seed",
+      "project": "mobile-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 9377,
+      "error": ""
+    }
+  ]
+}

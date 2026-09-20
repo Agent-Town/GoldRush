@@ -1,0 +1,51 @@
+s1256: F-1206-1 discriminated — the trail-guide plain-boot proof died three times on a test helper that never once hit its own tolerance
+
+The leaf was §5-parked by s1206 behind an explicit precondition: do not author a
+fourth cure until F-1206-1 separates "the recorder went deaf" from "the feed was
+genuinely empty". s1206 tried that A/B twice and never reached the subject state.
+Ran it here against today's main. The answer is neither.
+
+MEASURED (logs/session-scratch/s1256/, five arm drivers + append-only transcript):
+
+  --workers=1                       2/2 PASS   <- the trap: s1205's own control was
+                                                 this config and it passed while the
+                                                 defect was live
+  canonical (default workers,
+  both projects, --repeat-each=2)   4/4 RED    at three different lines: :196 beat-2
+                                                 (x2), :200 economy.gold 0, :219
+                                                 harvest.channeling false
+  instrumented                      recorder held 3 entries, feedLive matched its
+                                                 last exactly, feedNodePresent true
+                                                 -> reading (a) refuted; channeling
+                                                 false / gold 0 / distToSeam 1.89-2.02
+                                                 -> the beat never fired at all
+  cure 1 (iterate alignment)        3/4 RED    REFUTED: hit its 12-pass cap still
+                                                 1.2-2.15 out; a seam centre is
+                                                 unoccupiable, not merely overshot
+  cure 2 (stop when harvesting)     4/4 PASS   replicated 4/4 independently (8/8)
+
+Root cause: the parked spec's own moveHeroTo missed its 0.12 tolerance in 13/13
+observed moves -- 0.237 to 2.153 -- on PASSING runs as well as failing ones. The
+proof has been passing by luck whenever the miss landed inside harvest range. Two
+of the four canonical failures never touch hud-agent-feed, so no overtaking premise
+could ever have explained them.
+
+The cure already exists hardened in-repo: e2e/release-build.spec.ts:311 presses and
+releases inside the page with a braking lead, and :306 drives to the very same seam
+(-9, 6.7) then asserts channeling at :307, green 26/26. The product is fine; the
+spec re-implemented a solved problem badly.
+
+Also caught: the parked spec is stale in three lines -- GG-04 (c5a00849) deleted the
+greenhorn question it asserts VISIBLE -- so authored verbatim, attempt 4 would have
+red on a removed control and read as a fourth failure of the beat premise.
+
+LANDS: tasks/lane-b-trail-guide-plain-boot-seam-approach.md (attempt 4, queued
+lane-b, zero src/ bytes, scope-4 STOP if the beat track still reds) - leaf
+e1-trail-guide-plain-boot-proof REPOINTED not duplicated (stopped -> queued) -
+F-1256-1 in BACKLOG - regenerated plain-boot screenshots from the measurement arms.
+
+Guards: node-guards 156/156 (predicted baseline, no arms added) - task-guards 752
+masters / 0 invisible - citations rc=0 (it caught a bare :311 of mine and was right)
+- gate-callers rc=0 - goal-tracker 2/2 - drain-block-check CLEAR on the new master.
+Lane-b safety verified by execution, not inherited: worktree clean, all four ahead
+commits carry drained/shipped done-moves.

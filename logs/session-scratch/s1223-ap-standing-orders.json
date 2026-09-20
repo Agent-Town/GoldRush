@@ -1,0 +1,664 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.4.0/bin/node",
+      "/Users/robin/Claude/Projects/Gold Rush/node_modules/.bin/playwright",
+      "test",
+      "e2e/ap-standing-orders.spec.ts",
+      "--workers=4",
+      "--repeat-each=4",
+      "--reporter=json"
+    ],
+    "configFile": "/Users/robin/Claude/Projects/Gold Rush/playwright.config.ts",
+    "rootDir": "/Users/robin/Claude/Projects/Gold Rush/e2e",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 4
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/robin/Claude/Projects/Gold Rush/test-results",
+        "repeatEach": 4,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 4
+        },
+        "id": "desktop-chrome",
+        "name": "desktop-chrome",
+        "testDir": "/Users/robin/Claude/Projects/Gold Rush/e2e",
+        "testIgnore": [
+          "**/*.rig.ts"
+        ],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/robin/Claude/Projects/Gold Rush/test-results",
+        "repeatEach": 4,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 4
+        },
+        "id": "mobile-chrome",
+        "name": "mobile-chrome",
+        "testDir": "/Users/robin/Claude/Projects/Gold Rush/e2e",
+        "testIgnore": [
+          "**/*.rig.ts"
+        ],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/robin/Claude/Projects/Gold Rush/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 4
+        },
+        "id": "desktop-webkit",
+        "name": "desktop-webkit",
+        "testDir": "/Users/robin/Claude/Projects/Gold Rush/e2e",
+        "testIgnore": [
+          "**/*.rig.ts"
+        ],
+        "testMatch": [
+          "/058-device-tiers\\.spec\\.ts/"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 4,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "ap-standing-orders.spec.ts",
+      "file": "ap-standing-orders.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "seeded standing orders obey priority, gates, legal actions, surprises, and the live rung",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 11244,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-07-29T13:52:13.383Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bc4ebfce92d79d8fdd69-d92802c5539f829b6808",
+          "file": "ap-standing-orders.spec.ts",
+          "line": 80,
+          "column": 1
+        },
+        {
+          "title": "manual early-wave seam resets an expired countdown before forcing the transition",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 11084,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-07-29T13:52:25.003Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bc4ebfce92d79d8fdd69-6fbcaf225625b0b9f5f1",
+          "file": "ap-standing-orders.spec.ts",
+          "line": 193,
+          "column": 1
+        },
+        {
+          "title": "seeded standing orders obey priority, gates, legal actions, surprises, and the live rung",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 11421,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-07-29T13:52:13.384Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bc4ebfce92d79d8fdd69-8460931d29d50bce5d64",
+          "file": "ap-standing-orders.spec.ts",
+          "line": 80,
+          "column": 1
+        },
+        {
+          "title": "manual early-wave seam resets an expired countdown before forcing the transition",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 11319,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-07-29T13:52:25.184Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bc4ebfce92d79d8fdd69-1d3c56de77411057b6d1",
+          "file": "ap-standing-orders.spec.ts",
+          "line": 193,
+          "column": 1
+        },
+        {
+          "title": "seeded standing orders obey priority, gates, legal actions, surprises, and the live rung",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 2,
+                  "status": "passed",
+                  "duration": 11252,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-07-29T13:52:13.386Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bc4ebfce92d79d8fdd69-0062993deef02b808031",
+          "file": "ap-standing-orders.spec.ts",
+          "line": 80,
+          "column": 1
+        },
+        {
+          "title": "manual early-wave seam resets an expired countdown before forcing the transition",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 2,
+                  "status": "passed",
+                  "duration": 11832,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-07-29T13:52:25.016Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bc4ebfce92d79d8fdd69-23d55ae6967b685c7a67",
+          "file": "ap-standing-orders.spec.ts",
+          "line": 193,
+          "column": 1
+        },
+        {
+          "title": "seeded standing orders obey priority, gates, legal actions, surprises, and the live rung",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 3,
+                  "status": "passed",
+                  "duration": 12006,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-07-29T13:52:13.383Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bc4ebfce92d79d8fdd69-5bd776659403d51ab017",
+          "file": "ap-standing-orders.spec.ts",
+          "line": 80,
+          "column": 1
+        },
+        {
+          "title": "manual early-wave seam resets an expired countdown before forcing the transition",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 3,
+                  "status": "passed",
+                  "duration": 11153,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-07-29T13:52:25.745Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bc4ebfce92d79d8fdd69-5ed2cab6cb8d674c46a5",
+          "file": "ap-standing-orders.spec.ts",
+          "line": 193,
+          "column": 1
+        },
+        {
+          "title": "seeded standing orders obey priority, gates, legal actions, surprises, and the live rung",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 12145,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-07-29T13:52:36.873Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bc4ebfce92d79d8fdd69-a61593ff783cfac56413",
+          "file": "ap-standing-orders.spec.ts",
+          "line": 80,
+          "column": 1
+        },
+        {
+          "title": "manual early-wave seam resets an expired countdown before forcing the transition",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 11651,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-07-29T13:52:49.505Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bc4ebfce92d79d8fdd69-749ebf8ebde8be683ef6",
+          "file": "ap-standing-orders.spec.ts",
+          "line": 193,
+          "column": 1
+        },
+        {
+          "title": "seeded standing orders obey priority, gates, legal actions, surprises, and the live rung",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 11640,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-07-29T13:52:37.189Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bc4ebfce92d79d8fdd69-eb5e645769d904a4d65e",
+          "file": "ap-standing-orders.spec.ts",
+          "line": 80,
+          "column": 1
+        },
+        {
+          "title": "manual early-wave seam resets an expired countdown before forcing the transition",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 11758,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-07-29T13:52:49.224Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bc4ebfce92d79d8fdd69-23a03f225f652dc53983",
+          "file": "ap-standing-orders.spec.ts",
+          "line": 193,
+          "column": 1
+        },
+        {
+          "title": "seeded standing orders obey priority, gates, legal actions, surprises, and the live rung",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 2,
+                  "status": "passed",
+                  "duration": 12257,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-07-29T13:52:37.454Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bc4ebfce92d79d8fdd69-a5634d8e3dfba1d3563c",
+          "file": "ap-standing-orders.spec.ts",
+          "line": 80,
+          "column": 1
+        },
+        {
+          "title": "manual early-wave seam resets an expired countdown before forcing the transition",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 2,
+                  "status": "passed",
+                  "duration": 11231,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-07-29T13:52:50.231Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bc4ebfce92d79d8fdd69-5da9c91e98048c443910",
+          "file": "ap-standing-orders.spec.ts",
+          "line": 193,
+          "column": 1
+        },
+        {
+          "title": "seeded standing orders obey priority, gates, legal actions, surprises, and the live rung",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 3,
+                  "status": "passed",
+                  "duration": 11851,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-07-29T13:52:37.543Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bc4ebfce92d79d8fdd69-8c56b0161e970cb87f0f",
+          "file": "ap-standing-orders.spec.ts",
+          "line": 80,
+          "column": 1
+        },
+        {
+          "title": "manual early-wave seam resets an expired countdown before forcing the transition",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 3,
+                  "status": "passed",
+                  "duration": 11356,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-07-29T13:52:49.931Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bc4ebfce92d79d8fdd69-11d08a7a662aca590a61",
+          "file": "ap-standing-orders.spec.ts",
+          "line": 193,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-07-29T13:52:13.162Z",
+    "duration": 48418.473,
+    "expected": 16,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

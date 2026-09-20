@@ -1,0 +1,85 @@
+
+Running 6 tests using 1 worker
+
+  ✓  1 [desktop-chrome] › e2e/e2-arsenal.spec.ts:54:1 › pressure arsenal fires through existing resolvers and the captured battery requires the Baron medal (2.8s)
+  ✘  2 [desktop-chrome] › e2e/e2-arsenal.spec.ts:87:1 › Auto-Pan upkeep and boiler battery bands consume the fixed-step pressure store (3.7s)
+  ✓  3 [desktop-chrome] › e2e/e2-arsenal.spec.ts:116:1 › Auto-Pan stays within the uncommon StatSim budget deterministically (2.4s)
+  ✓  4 [mobile-chrome] › e2e/e2-arsenal.spec.ts:54:1 › pressure arsenal fires through existing resolvers and the captured battery requires the Baron medal (3.5s)
+  ✘  5 [mobile-chrome] › e2e/e2-arsenal.spec.ts:87:1 › Auto-Pan upkeep and boiler battery bands consume the fixed-step pressure store (3.9s)
+  ✓  6 [mobile-chrome] › e2e/e2-arsenal.spec.ts:116:1 › Auto-Pan stays within the uncommon StatSim budget deterministically (2.1s)
+
+
+  1) [desktop-chrome] › e2e/e2-arsenal.spec.ts:87:1 › Auto-Pan upkeep and boiler battery bands consume the fixed-step pressure store 
+
+    Error: expect(received).resolves.toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+       98 |   expect(await page.evaluate(() => window.__GR_TEST__?.economyLog().some((event: any) => event.type === 'resource_spent' && event.sink === 'auto_pan'))).toBe(true);
+       99 |
+    > 100 |   await expect(page.evaluate(() => window.__GR_TEST__?.placeFree('turret', 0, 10))).resolves.toBe(true);
+          |                                                                                              ^
+      101 |   await page.evaluate(() => window.__GR_TEST__?.advanceSim(0.1));
+      102 |   const workingRate = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.hp.find((entry) => entry.id === 'turret')?.effectiveFireRate ?? 0);
+      103 |   await page.evaluate(() => {
+        at /private/tmp/gr-s1281-control/e2e/e2-arsenal.spec.ts:100:94
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e2-arsenal-Auto-Pan-upkeep-d3328-e-fixed-step-pressure-store-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e2-arsenal-Auto-Pan-upkeep-d3328-e-fixed-step-pressure-store-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e2-arsenal-Auto-Pan-upkeep-d3328-e-fixed-step-pressure-store-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e2-arsenal-Auto-Pan-upkeep-d3328-e-fixed-step-pressure-store-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [mobile-chrome] › e2e/e2-arsenal.spec.ts:87:1 › Auto-Pan upkeep and boiler battery bands consume the fixed-step pressure store 
+
+    Error: expect(received).resolves.toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+       98 |   expect(await page.evaluate(() => window.__GR_TEST__?.economyLog().some((event: any) => event.type === 'resource_spent' && event.sink === 'auto_pan'))).toBe(true);
+       99 |
+    > 100 |   await expect(page.evaluate(() => window.__GR_TEST__?.placeFree('turret', 0, 10))).resolves.toBe(true);
+          |                                                                                              ^
+      101 |   await page.evaluate(() => window.__GR_TEST__?.advanceSim(0.1));
+      102 |   const workingRate = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.hp.find((entry) => entry.id === 'turret')?.effectiveFireRate ?? 0);
+      103 |   await page.evaluate(() => {
+        at /private/tmp/gr-s1281-control/e2e/e2-arsenal.spec.ts:100:94
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e2-arsenal-Auto-Pan-upkeep-d3328-e-fixed-step-pressure-store-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e2-arsenal-Auto-Pan-upkeep-d3328-e-fixed-step-pressure-store-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e2-arsenal-Auto-Pan-upkeep-d3328-e-fixed-step-pressure-store-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e2-arsenal-Auto-Pan-upkeep-d3328-e-fixed-step-pressure-store-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [desktop-chrome] › e2e/e2-arsenal.spec.ts:87:1 › Auto-Pan upkeep and boiler battery bands consume the fixed-step pressure store 
+    [mobile-chrome] › e2e/e2-arsenal.spec.ts:87:1 › Auto-Pan upkeep and boiler battery bands consume the fixed-step pressure store 
+  4 passed (24.4s)
+(node:55225) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:55244) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:55324) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:55341) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:55390) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)

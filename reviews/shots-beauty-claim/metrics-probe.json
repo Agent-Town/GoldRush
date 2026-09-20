@@ -1,0 +1,68 @@
+{
+  "phase": "probe",
+  "at": "2026-08-02T17:50:20.971Z",
+  "shots": {
+    "boot": {
+      "file": "reviews/shots-beauty-claim/probe-boot-desktop.png",
+      "pilot": {
+        "state": "ready",
+        "renderSource": "glb",
+        "meshes": "1",
+        "triangles": "32768",
+        "materials": "1",
+        "vertices": "16641",
+        "landmarks": "5",
+        "landmarkSkipped": "0",
+        "hiddenRelief": "6",
+        "hiddenLayers": "TerrainVistaRing|TerrainReliefMesh|terrain.river|terrain.ford|FordSteppingStones|SpringPonds",
+        "sculptWater": "living-water-quad",
+        "motes": "absent",
+        "contact": "4",
+        "landmarkEmissive": "1.45",
+        "water": {
+          "material": "LivingWaterShader",
+          "riverPresent": true,
+          "fordPresent": true,
+          "riverTime": 3.253,
+          "fordTime": 3.253,
+          "quality": 1,
+          "mobile": false,
+          "foam": true,
+          "glints": 6,
+          "fordStones": 7,
+          "gravelBars": 0,
+          "visualHalfWidth": 6.25,
+          "springPonds": 0,
+          "waterPhaseVariance": 0.43,
+          "depth": {
+            "river": 1.25,
+            "ford": 0.35,
+            "wade": 0.35,
+            "deep": 1
+          }
+        },
+        "contract": "the-claim",
+        "performanceTier": "full"
+      }
+    },
+    "wideZoomOut": {
+      "file": "reviews/shots-beauty-claim/probe-wide-zoomout.png",
+      "camera": {
+        "scene": "run",
+        "distanceScale": 1.6,
+        "targetDistanceScale": 1.6,
+        "minDistanceScale": 0.7,
+        "maxDistanceScale": 1.6,
+        "baseDistance": 31.958254019892887,
+        "targetDistance": 51.133206431828626,
+        "actualDistance": 51.133206044777914
+      }
+    }
+  },
+  "errors": {
+    "desktop": {
+      "console": [],
+      "page": []
+    }
+  }
+}

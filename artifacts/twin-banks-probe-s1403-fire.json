@@ -1,0 +1,7108 @@
+{
+  "env": {
+    "node": "v26.4.0",
+    "execPath": "/opt/homebrew/Cellar/node/26.4.0/bin/node",
+    "platform": "darwin/arm64",
+    "shell": "/bin/zsh",
+    "fireShell": true,
+    "tz": null
+  },
+  "contractId": "e1-twin-banks",
+  "seed": "e1-twin-banks-01",
+  "outcome": {
+    "secured": true,
+    "waves": 20,
+    "timeMs": 600000,
+    "gold": 0,
+    "kills": 189,
+    "calls": 0,
+    "eventLogHash": "fnv1a32:bfd79d2a"
+  },
+  "replayEvents": [
+    {
+      "type": "run_started",
+      "at": 0,
+      "runId": 1
+    },
+    {
+      "type": "enemy_killed",
+      "at": 17.200000000000014,
+      "enemyId": 1,
+      "xp": 4
+    },
+    {
+      "type": "announcement",
+      "at": 27.5,
+      "wave": 1,
+      "text": "Claim Jumpers from the south bank!"
+    },
+    {
+      "type": "announcement",
+      "at": 28,
+      "wave": 1,
+      "text": "Brass warning on the north bank!"
+    },
+    {
+      "type": "enemy_killed",
+      "at": 28.633333333333916,
+      "enemyId": 2,
+      "xp": 4
+    },
+    {
+      "type": "wave_started",
+      "at": 30,
+      "wave": 1
+    },
+    {
+      "type": "enemy_killed",
+      "at": 33.166666666667346,
+      "enemyId": 7,
+      "xp": 4
+    },
+    {
+      "type": "enemy_killed",
+      "at": 34.63333333333393,
+      "enemyId": 2,
+      "xp": 4
+    },
+    {
+      "type": "announcement",
+      "at": 35.5,
+      "wave": 1,
+      "text": "Hold the east ridge for the assay!"
+    },
+    {
+      "type": "enemy_killed",
+      "at": 35.933333333333856,
+      "enemyId": 9,
+      "xp": 4
+    },
+    {
+      "type": "announcement",
+      "at": 36,
+      "wave": 1,
+      "text": "North bank shadows want the gold!"
+    },
+    {
+      "type": "enemy_killed",
+      "at": 37.60000000000043,
+      "enemyId": 5,
+      "xp": 4
+    },
+    {
+      "type": "enemy_killed",
+      "at": 45.399999999999984,
+      "enemyId": 11,
+      "xp": 4
+    },
+    {
+      "type": "enemy_killed",
+      "at": 46.76666666666657,
+      "enemyId": 2,
+      "xp": 4
+    },
+    {
+      "type": "enemy_killed",
+      "at": 48.23333333333316,
+      "enemyId": 10,
+      "xp": 4
+    },
+    {
+      "type": "enemy_killed",
+      "at": 54.59999999999946,
+      "enemyId": 7,
+      "xp": 4
+    },
+    {
+      "type": "enemy_killed",
+      "at": 56.03333333333271,
+      "enemyId": 5,
+      "xp": 4
+    },
+    {
+      "type": "enemy_killed",
+      "at": 57.3999999999993,
+      "enemyId": 9,
+      "xp": 4
+    },
+    {
+      "type": "announcement",
+      "at": 57.5,
+      "wave": 2,
+      "text": "Claim Jumpers from the north bank!"
+    },
+    {
+      "type": "announcement",
+      "at": 58,
+      "wave": 2,
+      "text": "Brass warning on the west ridge!"
+    },
+    {
+      "type": "enemy_killed",
+      "at": 58.93333333333255,
+      "enemyId": 13,
+      "xp": 4
+    },
+    {
+      "type": "wave_started",
+      "at": 60,
+      "wave": 2
+    },
+    {
+      "type": "enemy_killed",
+      "at": 61.89999999999905,
+      "enemyId": 11,
+      "xp": 4
+    },
+    {
+      "type": "enemy_killed",
+      "at": 63.233333333332304,
+      "enemyId": 7,
+      "xp": 4
+    },
+    {
+      "type": "enemy_killed",
+      "at": 64.83333333333222,
+      "enemyId": 2,
+      "xp": 4
+    },
+    {
+      "type": "announcement",
+      "at": 65.5,
+      "wave": 2,
+      "text": "Hold the south bank for the assay!"
+    },
+    {
+      "type": "announcement",
+      "at": 66,
+      "wave": 2,
+      "text": "East ridge dust is moving!"
+    },
+    {
+      "type": "enemy_killed",
+      "at": 66.16666666666548,
+      "enemyId": 9,
+      "xp": 4
+    },
+    {
+      "type": "enemy_killed",
+      "at": 67.63333333333206,
+      "enemyId": 10,
+      "xp": 4
+    },
+    {
+      "type": "enemy_killed",
+      "at": 72.66666666666511,
+      "enemyId": 7,
+      "xp": 4
+    },
+    {
+      "type": "enemy_killed",
+      "at": 74.0333333333317,
+      "enemyId": 2,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 75.36666666666495,
+      "amount": 8,
+      "hp": 10092,
+      "maxHp": 10100,
+      "sourceId": 5
+    },
+    {
+      "type": "enemy_killed",
+      "at": 75.39999999999829,
+      "enemyId": 5,
+      "xp": 4
+    },
+    {
+      "type": "enemy_killed",
+      "at": 76.93333333333153,
+      "enemyId": 15,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 77.76666666666482,
+      "amount": 8,
+      "hp": 10084,
+      "maxHp": 10100,
+      "sourceId": 13
+    },
+    {
+      "type": "hero_damaged",
+      "at": 78.33333333333145,
+      "amount": 8,
+      "hp": 10076,
+      "maxHp": 10100,
+      "sourceId": 14
+    },
+    {
+      "type": "enemy_killed",
+      "at": 78.39999999999812,
+      "enemyId": 13,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 79.16666666666474,
+      "amount": 8,
+      "hp": 10068,
+      "maxHp": 10100,
+      "sourceId": 14
+    },
+    {
+      "type": "hero_damaged",
+      "at": 79.99999999999802,
+      "amount": 8,
+      "hp": 10060,
+      "maxHp": 10100,
+      "sourceId": 14
+    },
+    {
+      "type": "enemy_killed",
+      "at": 80.399999999998,
+      "enemyId": 11,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 80.83333333333131,
+      "amount": 8,
+      "hp": 10052,
+      "maxHp": 10100,
+      "sourceId": 14
+    },
+    {
+      "type": "enemy_killed",
+      "at": 81.39999999999795,
+      "enemyId": 14,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 81.43333333333128,
+      "amount": 8,
+      "hp": 10044,
+      "maxHp": 10100,
+      "sourceId": 7
+    },
+    {
+      "type": "hero_damaged",
+      "at": 82.26666666666456,
+      "amount": 8,
+      "hp": 10036,
+      "maxHp": 10100,
+      "sourceId": 7
+    },
+    {
+      "type": "hero_damaged",
+      "at": 83.09999999999785,
+      "amount": 8,
+      "hp": 10028,
+      "maxHp": 10100,
+      "sourceId": 7
+    },
+    {
+      "type": "enemy_killed",
+      "at": 83.39999999999783,
+      "enemyId": 7,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 84.26666666666445,
+      "amount": 8,
+      "hp": 10020,
+      "maxHp": 10100,
+      "sourceId": 18
+    },
+    {
+      "type": "enemy_killed",
+      "at": 84.39999999999777,
+      "enemyId": 18,
+      "xp": 4
+    },
+    {
+      "type": "announcement",
+      "at": 87.5,
+      "wave": 3,
+      "text": "Claim Jumpers from the south bank!"
+    },
+    {
+      "type": "announcement",
+      "at": 88,
+      "wave": 3,
+      "text": "Beacon coils hum eastward!"
+    },
+    {
+      "type": "wave_started",
+      "at": 90,
+      "wave": 3
+    },
+    {
+      "type": "enemy_killed",
+      "at": 91.0999999999974,
+      "enemyId": 14,
+      "xp": 4
+    },
+    {
+      "type": "enemy_killed",
+      "at": 92.46666666666398,
+      "enemyId": 7,
+      "xp": 4
+    },
+    {
+      "type": "enemy_killed",
+      "at": 93.89999999999723,
+      "enemyId": 15,
+      "xp": 4
+    },
+    {
+      "type": "enemy_killed",
+      "at": 95.46666666666381,
+      "enemyId": 20,
+      "xp": 4
+    },
+    {
+      "type": "announcement",
+      "at": 95.5,
+      "wave": 3,
+      "text": "Hold the east ridge for the assay!"
+    },
+    {
+      "type": "announcement",
+      "at": 96,
+      "wave": 3,
+      "text": "North bank shadows want the gold!"
+    },
+    {
+      "type": "hero_damaged",
+      "at": 96.53333333333042,
+      "amount": 8,
+      "hp": 10012,
+      "maxHp": 10100,
+      "sourceId": 21
+    },
+    {
+      "type": "enemy_killed",
+      "at": 96.79999999999707,
+      "enemyId": 21,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 97.49999999999703,
+      "amount": 8,
+      "hp": 10004,
+      "maxHp": 10100,
+      "sourceId": 19
+    },
+    {
+      "type": "enemy_killed",
+      "at": 98.29999999999698,
+      "enemyId": 19,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 98.43333333333031,
+      "amount": 8,
+      "hp": 9996,
+      "maxHp": 10100,
+      "sourceId": 22
+    },
+    {
+      "type": "hero_damaged",
+      "at": 98.96666666666361,
+      "amount": 8,
+      "hp": 9988,
+      "maxHp": 10100,
+      "sourceId": 24
+    },
+    {
+      "type": "hero_damaged",
+      "at": 99.56666666666358,
+      "amount": 8,
+      "hp": 9980,
+      "maxHp": 10100,
+      "sourceId": 18
+    },
+    {
+      "type": "enemy_killed",
+      "at": 99.7999999999969,
+      "enemyId": 22,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 100.39999999999687,
+      "amount": 8,
+      "hp": 9972,
+      "maxHp": 10100,
+      "sourceId": 18
+    },
+    {
+      "type": "hero_damaged",
+      "at": 101.23333333333015,
+      "amount": 8,
+      "hp": 9964,
+      "maxHp": 10100,
+      "sourceId": 18
+    },
+    {
+      "type": "enemy_killed",
+      "at": 101.79999999999679,
+      "enemyId": 18,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 102.29999999999676,
+      "amount": 8,
+      "hp": 9956,
+      "maxHp": 10100,
+      "sourceId": 24
+    },
+    {
+      "type": "enemy_killed",
+      "at": 102.79999999999673,
+      "enemyId": 23,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 103.13333333333004,
+      "amount": 8,
+      "hp": 9948,
+      "maxHp": 10100,
+      "sourceId": 24
+    },
+    {
+      "type": "hero_damaged",
+      "at": 103.96666666666333,
+      "amount": 8,
+      "hp": 9940,
+      "maxHp": 10100,
+      "sourceId": 24
+    },
+    {
+      "type": "enemy_killed",
+      "at": 104.29999999999664,
+      "enemyId": 24,
+      "xp": 4
+    },
+    {
+      "type": "enemy_killed",
+      "at": 105.86666666666322,
+      "enemyId": 7,
+      "xp": 4
+    },
+    {
+      "type": "enemy_killed",
+      "at": 108.66666666666306,
+      "enemyId": 22,
+      "xp": 4
+    },
+    {
+      "type": "enemy_killed",
+      "at": 110.86666666666294,
+      "enemyId": 23,
+      "xp": 4
+    },
+    {
+      "type": "enemy_killed",
+      "at": 112.59999999999617,
+      "enemyId": 25,
+      "xp": 4
+    },
+    {
+      "type": "enemy_killed",
+      "at": 113.96666666666276,
+      "enemyId": 20,
+      "xp": 4
+    },
+    {
+      "type": "enemy_killed",
+      "at": 115.39999999999601,
+      "enemyId": 21,
+      "xp": 4
+    },
+    {
+      "type": "enemy_killed",
+      "at": 116.93333333332926,
+      "enemyId": 24,
+      "xp": 4
+    },
+    {
+      "type": "announcement",
+      "at": 117.5,
+      "wave": 4,
+      "text": "Claim Jumpers from the south bank!"
+    },
+    {
+      "type": "announcement",
+      "at": 118,
+      "wave": 4,
+      "text": "Beacon coils hum eastward!"
+    },
+    {
+      "type": "enemy_killed",
+      "at": 118.33333333332918,
+      "enemyId": 18,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 118.73333333332916,
+      "amount": 8,
+      "hp": 9932,
+      "maxHp": 10100,
+      "sourceId": 22
+    },
+    {
+      "type": "hero_damaged",
+      "at": 119.56666666666244,
+      "amount": 8,
+      "hp": 9924,
+      "maxHp": 10100,
+      "sourceId": 22
+    },
+    {
+      "type": "enemy_killed",
+      "at": 119.79999999999576,
+      "enemyId": 22,
+      "xp": 4
+    },
+    {
+      "type": "wave_started",
+      "at": 120,
+      "wave": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 120.69999999999571,
+      "amount": 8,
+      "hp": 9916,
+      "maxHp": 10100,
+      "sourceId": 23
+    },
+    {
+      "type": "enemy_killed",
+      "at": 121.29999999999568,
+      "enemyId": 23,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 122.03333333332897,
+      "amount": 8,
+      "hp": 9908,
+      "maxHp": 10100,
+      "sourceId": 20
+    },
+    {
+      "type": "enemy_killed",
+      "at": 122.79999999999559,
+      "enemyId": 20,
+      "xp": 4
+    },
+    {
+      "type": "enemy_killed",
+      "at": 124.96666666666214,
+      "enemyId": 22,
+      "xp": 4
+    },
+    {
+      "type": "announcement",
+      "at": 125.5,
+      "wave": 4,
+      "text": "Hold the west ridge for the assay!"
+    },
+    {
+      "type": "announcement",
+      "at": 126,
+      "wave": 4,
+      "text": "East ridge dust is moving!"
+    },
+    {
+      "type": "hero_damaged",
+      "at": 126.23333333332873,
+      "amount": 8,
+      "hp": 9900,
+      "maxHp": 10100,
+      "sourceId": 27
+    },
+    {
+      "type": "hero_damaged",
+      "at": 126.79999999999536,
+      "amount": 8,
+      "hp": 9892,
+      "maxHp": 10100,
+      "sourceId": 26
+    },
+    {
+      "type": "enemy_killed",
+      "at": 126.79999999999536,
+      "enemyId": 27,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 127.63333333332865,
+      "amount": 8,
+      "hp": 9884,
+      "maxHp": 10100,
+      "sourceId": 26
+    },
+    {
+      "type": "hero_damaged",
+      "at": 128.46666666666195,
+      "amount": 8,
+      "hp": 9876,
+      "maxHp": 10100,
+      "sourceId": 26
+    },
+    {
+      "type": "enemy_killed",
+      "at": 128.79999999999526,
+      "enemyId": 25,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 129.29999999999524,
+      "amount": 8,
+      "hp": 9868,
+      "maxHp": 10100,
+      "sourceId": 26
+    },
+    {
+      "type": "hero_damaged",
+      "at": 129.86666666666187,
+      "amount": 8,
+      "hp": 9860,
+      "maxHp": 10100,
+      "sourceId": 31
+    },
+    {
+      "type": "hero_damaged",
+      "at": 130.69999999999516,
+      "amount": 8,
+      "hp": 9852,
+      "maxHp": 10100,
+      "sourceId": 31
+    },
+    {
+      "type": "enemy_killed",
+      "at": 130.79999999999515,
+      "enemyId": 26,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 131.53333333332844,
+      "amount": 8,
+      "hp": 9844,
+      "maxHp": 10100,
+      "sourceId": 31
+    },
+    {
+      "type": "hero_damaged",
+      "at": 132.36666666666173,
+      "amount": 8,
+      "hp": 9836,
+      "maxHp": 10100,
+      "sourceId": 31
+    },
+    {
+      "type": "enemy_killed",
+      "at": 132.79999999999504,
+      "enemyId": 28,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 133.19999999999501,
+      "amount": 8,
+      "hp": 9828,
+      "maxHp": 10100,
+      "sourceId": 31
+    },
+    {
+      "type": "hero_damaged",
+      "at": 134.0333333333283,
+      "amount": 8,
+      "hp": 9820,
+      "maxHp": 10100,
+      "sourceId": 31
+    },
+    {
+      "type": "hero_damaged",
+      "at": 134.8666666666616,
+      "amount": 8,
+      "hp": 9812,
+      "maxHp": 10100,
+      "sourceId": 31
+    },
+    {
+      "type": "enemy_killed",
+      "at": 135.2999999999949,
+      "enemyId": 24,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 135.69999999999487,
+      "amount": 8,
+      "hp": 9804,
+      "maxHp": 10100,
+      "sourceId": 31
+    },
+    {
+      "type": "hero_damaged",
+      "at": 136.53333333332816,
+      "amount": 8,
+      "hp": 9796,
+      "maxHp": 10100,
+      "sourceId": 31
+    },
+    {
+      "type": "enemy_killed",
+      "at": 136.7999999999948,
+      "enemyId": 18,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 137.36666666666144,
+      "amount": 8,
+      "hp": 9788,
+      "maxHp": 10100,
+      "sourceId": 31
+    },
+    {
+      "type": "enemy_killed",
+      "at": 137.83333333332808,
+      "enemyId": 31,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 138.2666666666614,
+      "amount": 8,
+      "hp": 9780,
+      "maxHp": 10100,
+      "sourceId": 34
+    },
+    {
+      "type": "hero_damaged",
+      "at": 139.09999999999468,
+      "amount": 8,
+      "hp": 9772,
+      "maxHp": 10100,
+      "sourceId": 34
+    },
+    {
+      "type": "enemy_killed",
+      "at": 139.83333333332797,
+      "enemyId": 34,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 140.76666666666125,
+      "amount": 8,
+      "hp": 9764,
+      "maxHp": 10100,
+      "sourceId": 28
+    },
+    {
+      "type": "hero_damaged",
+      "at": 141.59999999999454,
+      "amount": 8,
+      "hp": 9756,
+      "maxHp": 10100,
+      "sourceId": 28
+    },
+    {
+      "type": "enemy_killed",
+      "at": 141.83333333332786,
+      "enemyId": 28,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 143.19999999999445,
+      "amount": 8,
+      "hp": 9748,
+      "maxHp": 10100,
+      "sourceId": 35
+    },
+    {
+      "type": "enemy_killed",
+      "at": 143.83333333332774,
+      "enemyId": 35,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 144.1999999999944,
+      "amount": 8,
+      "hp": 9740,
+      "maxHp": 10100,
+      "sourceId": 24
+    },
+    {
+      "type": "hero_damaged",
+      "at": 145.03333333332768,
+      "amount": 8,
+      "hp": 9732,
+      "maxHp": 10100,
+      "sourceId": 24
+    },
+    {
+      "type": "enemy_killed",
+      "at": 145.83333333332763,
+      "enemyId": 24,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 146.99999999999423,
+      "amount": 8,
+      "hp": 9724,
+      "maxHp": 10100,
+      "sourceId": 18
+    },
+    {
+      "type": "announcement",
+      "at": 147.5,
+      "wave": 5,
+      "text": "Claim Jumpers from the south bank!"
+    },
+    {
+      "type": "hero_damaged",
+      "at": 147.83333333332752,
+      "amount": 8,
+      "hp": 9716,
+      "maxHp": 10100,
+      "sourceId": 18
+    },
+    {
+      "type": "enemy_killed",
+      "at": 147.83333333332752,
+      "enemyId": 18,
+      "xp": 4
+    },
+    {
+      "type": "announcement",
+      "at": 148,
+      "wave": 5,
+      "text": "Beacon coils hum eastward!"
+    },
+    {
+      "type": "hero_damaged",
+      "at": 148.63333333332747,
+      "amount": 8,
+      "hp": 9708,
+      "maxHp": 10100,
+      "sourceId": 31
+    },
+    {
+      "type": "hero_damaged",
+      "at": 149.46666666666076,
+      "amount": 8,
+      "hp": 9700,
+      "maxHp": 10100,
+      "sourceId": 31
+    },
+    {
+      "type": "enemy_killed",
+      "at": 149.8333333333274,
+      "enemyId": 31,
+      "xp": 4
+    },
+    {
+      "type": "wave_started",
+      "at": 150,
+      "wave": 5
+    },
+    {
+      "type": "hero_damaged",
+      "at": 150.09999999999405,
+      "amount": 8,
+      "hp": 9692,
+      "maxHp": 10100,
+      "sourceId": 34
+    },
+    {
+      "type": "hero_damaged",
+      "at": 150.93333333332734,
+      "amount": 8,
+      "hp": 9684,
+      "maxHp": 10100,
+      "sourceId": 34
+    },
+    {
+      "type": "hero_damaged",
+      "at": 151.76666666666063,
+      "amount": 8,
+      "hp": 9676,
+      "maxHp": 10100,
+      "sourceId": 34
+    },
+    {
+      "type": "enemy_killed",
+      "at": 151.8333333333273,
+      "enemyId": 34,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 152.4666666666606,
+      "amount": 8,
+      "hp": 9668,
+      "maxHp": 10100,
+      "sourceId": 28
+    },
+    {
+      "type": "hero_damaged",
+      "at": 153.29999999999387,
+      "amount": 8,
+      "hp": 9660,
+      "maxHp": 10100,
+      "sourceId": 28
+    },
+    {
+      "type": "hero_damaged",
+      "at": 154.13333333332716,
+      "amount": 8,
+      "hp": 9652,
+      "maxHp": 10100,
+      "sourceId": 28
+    },
+    {
+      "type": "enemy_killed",
+      "at": 154.33333333332715,
+      "enemyId": 28,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 154.9333333333271,
+      "amount": 8,
+      "hp": 9644,
+      "maxHp": 10100,
+      "sourceId": 24
+    },
+    {
+      "type": "announcement",
+      "at": 155.5,
+      "wave": 5,
+      "text": "Hold the east ridge for the assay!"
+    },
+    {
+      "type": "hero_damaged",
+      "at": 155.7666666666604,
+      "amount": 8,
+      "hp": 9636,
+      "maxHp": 10100,
+      "sourceId": 24
+    },
+    {
+      "type": "announcement",
+      "at": 156,
+      "wave": 5,
+      "text": "South bank dust is moving!"
+    },
+    {
+      "type": "hero_damaged",
+      "at": 156.59999999999368,
+      "amount": 8,
+      "hp": 9628,
+      "maxHp": 10100,
+      "sourceId": 24
+    },
+    {
+      "type": "hero_damaged",
+      "at": 157.23333333332698,
+      "amount": 8,
+      "hp": 9620,
+      "maxHp": 10100,
+      "sourceId": 39
+    },
+    {
+      "type": "hero_damaged",
+      "at": 157.79999999999362,
+      "amount": 8,
+      "hp": 9612,
+      "maxHp": 10100,
+      "sourceId": 38
+    },
+    {
+      "type": "hero_damaged",
+      "at": 158.33333333332692,
+      "amount": 8,
+      "hp": 9604,
+      "maxHp": 10100,
+      "sourceId": 43
+    },
+    {
+      "type": "enemy_killed",
+      "at": 158.8333333333269,
+      "enemyId": 31,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 158.89999999999355,
+      "amount": 8,
+      "hp": 9596,
+      "maxHp": 10100,
+      "sourceId": 39
+    },
+    {
+      "type": "enemy_killed",
+      "at": 159.33333333332686,
+      "enemyId": 24,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 159.4666666666602,
+      "amount": 8,
+      "hp": 9588,
+      "maxHp": 10100,
+      "sourceId": 38
+    },
+    {
+      "type": "enemy_killed",
+      "at": 159.83333333332683,
+      "enemyId": 35,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 159.9999999999935,
+      "amount": 8,
+      "hp": 9580,
+      "maxHp": 10100,
+      "sourceId": 43
+    },
+    {
+      "type": "hero_damaged",
+      "at": 160.56666666666013,
+      "amount": 8,
+      "hp": 9572,
+      "maxHp": 10100,
+      "sourceId": 39
+    },
+    {
+      "type": "hero_damaged",
+      "at": 161.13333333332676,
+      "amount": 8,
+      "hp": 9564,
+      "maxHp": 10100,
+      "sourceId": 38
+    },
+    {
+      "type": "hero_damaged",
+      "at": 161.66666666666006,
+      "amount": 8,
+      "hp": 9556,
+      "maxHp": 10100,
+      "sourceId": 43
+    },
+    {
+      "type": "hero_damaged",
+      "at": 162.2333333333267,
+      "amount": 8,
+      "hp": 9548,
+      "maxHp": 10100,
+      "sourceId": 39
+    },
+    {
+      "type": "hero_damaged",
+      "at": 162.79999999999333,
+      "amount": 8,
+      "hp": 9540,
+      "maxHp": 10100,
+      "sourceId": 38
+    },
+    {
+      "type": "enemy_killed",
+      "at": 162.83333333332666,
+      "enemyId": 32,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 163.33333333332664,
+      "amount": 8,
+      "hp": 9532,
+      "maxHp": 10100,
+      "sourceId": 43
+    },
+    {
+      "type": "hero_damaged",
+      "at": 163.89999999999327,
+      "amount": 8,
+      "hp": 9524,
+      "maxHp": 10100,
+      "sourceId": 39
+    },
+    {
+      "type": "enemy_killed",
+      "at": 164.33333333332658,
+      "enemyId": 38,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 164.49999999999324,
+      "amount": 8,
+      "hp": 9516,
+      "maxHp": 10100,
+      "sourceId": 40
+    },
+    {
+      "type": "hero_damaged",
+      "at": 165.23333333332653,
+      "amount": 8,
+      "hp": 9508,
+      "maxHp": 10100,
+      "sourceId": 37
+    },
+    {
+      "type": "hero_damaged",
+      "at": 165.76666666665983,
+      "amount": 8,
+      "hp": 9500,
+      "maxHp": 10100,
+      "sourceId": 51
+    },
+    {
+      "type": "hero_damaged",
+      "at": 166.3666666666598,
+      "amount": 8,
+      "hp": 9492,
+      "maxHp": 10100,
+      "sourceId": 48
+    },
+    {
+      "type": "hero_damaged",
+      "at": 166.8999999999931,
+      "amount": 8,
+      "hp": 9484,
+      "maxHp": 10100,
+      "sourceId": 37
+    },
+    {
+      "type": "hero_damaged",
+      "at": 167.4333333333264,
+      "amount": 8,
+      "hp": 9476,
+      "maxHp": 10100,
+      "sourceId": 51
+    },
+    {
+      "type": "enemy_killed",
+      "at": 167.83333333332638,
+      "enemyId": 37,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 168.03333333332637,
+      "amount": 8,
+      "hp": 9468,
+      "maxHp": 10100,
+      "sourceId": 48
+    },
+    {
+      "type": "hero_damaged",
+      "at": 168.599999999993,
+      "amount": 8,
+      "hp": 9460,
+      "maxHp": 10100,
+      "sourceId": 28
+    },
+    {
+      "type": "hero_damaged",
+      "at": 169.4333333333263,
+      "amount": 8,
+      "hp": 9452,
+      "maxHp": 10100,
+      "sourceId": 28
+    },
+    {
+      "type": "hero_damaged",
+      "at": 170.09999999999292,
+      "amount": 8,
+      "hp": 9444,
+      "maxHp": 10100,
+      "sourceId": 40
+    },
+    {
+      "type": "hero_damaged",
+      "at": 170.73333333332621,
+      "amount": 8,
+      "hp": 9436,
+      "maxHp": 10100,
+      "sourceId": 34
+    },
+    {
+      "type": "enemy_killed",
+      "at": 170.86666666665954,
+      "enemyId": 28,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 171.26666666665952,
+      "amount": 8,
+      "hp": 9428,
+      "maxHp": 10100,
+      "sourceId": 45
+    },
+    {
+      "type": "hero_damaged",
+      "at": 171.9999999999928,
+      "amount": 8,
+      "hp": 9420,
+      "maxHp": 10100,
+      "sourceId": 44
+    },
+    {
+      "type": "hero_damaged",
+      "at": 172.59999999999278,
+      "amount": 8,
+      "hp": 9412,
+      "maxHp": 10100,
+      "sourceId": 36
+    },
+    {
+      "type": "hero_damaged",
+      "at": 173.23333333332607,
+      "amount": 8,
+      "hp": 9404,
+      "maxHp": 10100,
+      "sourceId": 34
+    },
+    {
+      "type": "hero_damaged",
+      "at": 173.76666666665938,
+      "amount": 8,
+      "hp": 9396,
+      "maxHp": 10100,
+      "sourceId": 45
+    },
+    {
+      "type": "enemy_killed",
+      "at": 173.86666666665937,
+      "enemyId": 36,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 174.49999999999267,
+      "amount": 8,
+      "hp": 9388,
+      "maxHp": 10100,
+      "sourceId": 44
+    },
+    {
+      "type": "hero_damaged",
+      "at": 175.09999999999263,
+      "amount": 8,
+      "hp": 9380,
+      "maxHp": 10100,
+      "sourceId": 40
+    },
+    {
+      "type": "enemy_killed",
+      "at": 175.36666666665928,
+      "enemyId": 39,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 175.73333333332593,
+      "amount": 8,
+      "hp": 9372,
+      "maxHp": 10100,
+      "sourceId": 34
+    },
+    {
+      "type": "hero_damaged",
+      "at": 176.26666666665923,
+      "amount": 8,
+      "hp": 9364,
+      "maxHp": 10100,
+      "sourceId": 45
+    },
+    {
+      "type": "hero_damaged",
+      "at": 176.99999999999253,
+      "amount": 8,
+      "hp": 9356,
+      "maxHp": 10100,
+      "sourceId": 44
+    },
+    {
+      "type": "announcement",
+      "at": 177.5,
+      "wave": 6,
+      "text": "Claim Jumpers from the south bank!"
+    },
+    {
+      "type": "hero_damaged",
+      "at": 177.56666666665916,
+      "amount": 8,
+      "hp": 9348,
+      "maxHp": 10100,
+      "sourceId": 41
+    },
+    {
+      "type": "announcement",
+      "at": 178,
+      "wave": 6,
+      "text": "Brass warning on the north bank!"
+    },
+    {
+      "type": "hero_damaged",
+      "at": 178.2333333333258,
+      "amount": 8,
+      "hp": 9340,
+      "maxHp": 10100,
+      "sourceId": 34
+    },
+    {
+      "type": "enemy_killed",
+      "at": 178.3666666666591,
+      "enemyId": 43,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 178.7666666666591,
+      "amount": 8,
+      "hp": 9332,
+      "maxHp": 10100,
+      "sourceId": 45
+    },
+    {
+      "type": "hero_damaged",
+      "at": 179.49999999999238,
+      "amount": 8,
+      "hp": 9324,
+      "maxHp": 10100,
+      "sourceId": 44
+    },
+    {
+      "type": "wave_started",
+      "at": 180,
+      "wave": 6
+    },
+    {
+      "type": "hero_damaged",
+      "at": 180.09999999999235,
+      "amount": 8,
+      "hp": 9316,
+      "maxHp": 10100,
+      "sourceId": 40
+    },
+    {
+      "type": "enemy_killed",
+      "at": 180.366666666659,
+      "enemyId": 44,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 180.63333333332565,
+      "amount": 8,
+      "hp": 9308,
+      "maxHp": 10100,
+      "sourceId": 48
+    },
+    {
+      "type": "enemy_killed",
+      "at": 180.86666666665897,
+      "enemyId": 34,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 181.1999999999923,
+      "amount": 8,
+      "hp": 9300,
+      "maxHp": 10100,
+      "sourceId": 50
+    },
+    {
+      "type": "enemy_killed",
+      "at": 181.36666666665894,
+      "enemyId": 37,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 181.7333333333256,
+      "amount": 8,
+      "hp": 9292,
+      "maxHp": 10100,
+      "sourceId": 41
+    },
+    {
+      "type": "hero_damaged",
+      "at": 182.2666666666589,
+      "amount": 8,
+      "hp": 9284,
+      "maxHp": 10100,
+      "sourceId": 28
+    },
+    {
+      "type": "hero_damaged",
+      "at": 182.86666666665886,
+      "amount": 8,
+      "hp": 9276,
+      "maxHp": 10100,
+      "sourceId": 50
+    },
+    {
+      "type": "hero_damaged",
+      "at": 183.4333333333255,
+      "amount": 8,
+      "hp": 9268,
+      "maxHp": 10100,
+      "sourceId": 40
+    },
+    {
+      "type": "hero_damaged",
+      "at": 184.09999999999212,
+      "amount": 8,
+      "hp": 9260,
+      "maxHp": 10100,
+      "sourceId": 51
+    },
+    {
+      "type": "enemy_killed",
+      "at": 184.36666666665877,
+      "enemyId": 31,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 184.63333333332542,
+      "amount": 8,
+      "hp": 9252,
+      "maxHp": 10100,
+      "sourceId": 49
+    },
+    {
+      "type": "hero_damaged",
+      "at": 185.19999999999206,
+      "amount": 8,
+      "hp": 9244,
+      "maxHp": 10100,
+      "sourceId": 41
+    },
+    {
+      "type": "announcement",
+      "at": 185.5,
+      "wave": 6,
+      "text": "Hold the east ridge for the assay!"
+    },
+    {
+      "type": "hero_damaged",
+      "at": 185.7666666666587,
+      "amount": 8,
+      "hp": 9236,
+      "maxHp": 10100,
+      "sourceId": 51
+    },
+    {
+      "type": "announcement",
+      "at": 186,
+      "wave": 6,
+      "text": "South bank dust is moving!"
+    },
+    {
+      "type": "hero_damaged",
+      "at": 186.299999999992,
+      "amount": 8,
+      "hp": 9228,
+      "maxHp": 10100,
+      "sourceId": 49
+    },
+    {
+      "type": "hero_damaged",
+      "at": 186.8333333333253,
+      "amount": 8,
+      "hp": 9220,
+      "maxHp": 10100,
+      "sourceId": 43
+    },
+    {
+      "type": "hero_damaged",
+      "at": 187.43333333332527,
+      "amount": 8,
+      "hp": 9212,
+      "maxHp": 10100,
+      "sourceId": 51
+    },
+    {
+      "type": "enemy_killed",
+      "at": 187.86666666665857,
+      "enemyId": 36,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 187.9999999999919,
+      "amount": 8,
+      "hp": 9204,
+      "maxHp": 10100,
+      "sourceId": 49
+    },
+    {
+      "type": "enemy_killed",
+      "at": 188.36666666665855,
+      "enemyId": 28,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 188.69999999999186,
+      "amount": 8,
+      "hp": 9196,
+      "maxHp": 10100,
+      "sourceId": 50
+    },
+    {
+      "type": "hero_damaged",
+      "at": 189.2666666666585,
+      "amount": 8,
+      "hp": 9188,
+      "maxHp": 10100,
+      "sourceId": 40
+    },
+    {
+      "type": "enemy_killed",
+      "at": 189.3666666666585,
+      "enemyId": 40,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 189.83333333332513,
+      "amount": 8,
+      "hp": 9180,
+      "maxHp": 10100,
+      "sourceId": 41
+    },
+    {
+      "type": "hero_damaged",
+      "at": 190.36666666665843,
+      "amount": 8,
+      "hp": 9172,
+      "maxHp": 10100,
+      "sourceId": 50
+    },
+    {
+      "type": "hero_damaged",
+      "at": 190.99999999999173,
+      "amount": 8,
+      "hp": 9164,
+      "maxHp": 10100,
+      "sourceId": 39
+    },
+    {
+      "type": "hero_damaged",
+      "at": 191.5999999999917,
+      "amount": 8,
+      "hp": 9156,
+      "maxHp": 10100,
+      "sourceId": 51
+    },
+    {
+      "type": "hero_damaged",
+      "at": 192.16666666665833,
+      "amount": 8,
+      "hp": 9148,
+      "maxHp": 10100,
+      "sourceId": 49
+    },
+    {
+      "type": "enemy_killed",
+      "at": 192.36666666665832,
+      "enemyId": 41,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 192.8666666666583,
+      "amount": 8,
+      "hp": 9140,
+      "maxHp": 10100,
+      "sourceId": 50
+    },
+    {
+      "type": "hero_damaged",
+      "at": 193.4999999999916,
+      "amount": 8,
+      "hp": 9132,
+      "maxHp": 10100,
+      "sourceId": 39
+    },
+    {
+      "type": "enemy_killed",
+      "at": 193.86666666665823,
+      "enemyId": 43,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 194.06666666665822,
+      "amount": 8,
+      "hp": 9124,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 194.59999999999152,
+      "amount": 8,
+      "hp": 9116,
+      "maxHp": 10100,
+      "sourceId": 45
+    },
+    {
+      "type": "enemy_killed",
+      "at": 194.86666666665818,
+      "enemyId": 45,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 195.16666666665816,
+      "amount": 8,
+      "hp": 9108,
+      "maxHp": 10100,
+      "sourceId": 39
+    },
+    {
+      "type": "hero_damaged",
+      "at": 195.76666666665812,
+      "amount": 8,
+      "hp": 9100,
+      "maxHp": 10100,
+      "sourceId": 51
+    },
+    {
+      "type": "enemy_killed",
+      "at": 195.86666666665812,
+      "enemyId": 39,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 196.33333333332476,
+      "amount": 8,
+      "hp": 9092,
+      "maxHp": 10100,
+      "sourceId": 49
+    },
+    {
+      "type": "hero_damaged",
+      "at": 196.8999999999914,
+      "amount": 8,
+      "hp": 9084,
+      "maxHp": 10100,
+      "sourceId": 31
+    },
+    {
+      "type": "hero_damaged",
+      "at": 197.4333333333247,
+      "amount": 8,
+      "hp": 9076,
+      "maxHp": 10100,
+      "sourceId": 51
+    },
+    {
+      "type": "hero_damaged",
+      "at": 197.99999999999133,
+      "amount": 8,
+      "hp": 9068,
+      "maxHp": 10100,
+      "sourceId": 49
+    },
+    {
+      "type": "hero_damaged",
+      "at": 198.56666666665797,
+      "amount": 8,
+      "hp": 9060,
+      "maxHp": 10100,
+      "sourceId": 31
+    },
+    {
+      "type": "enemy_killed",
+      "at": 198.86666666665795,
+      "enemyId": 31,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 199.09999999999127,
+      "amount": 8,
+      "hp": 9052,
+      "maxHp": 10100,
+      "sourceId": 51
+    },
+    {
+      "type": "hero_damaged",
+      "at": 199.6666666666579,
+      "amount": 8,
+      "hp": 9044,
+      "maxHp": 10100,
+      "sourceId": 57
+    },
+    {
+      "type": "hero_damaged",
+      "at": 200.36666666665786,
+      "amount": 8,
+      "hp": 9036,
+      "maxHp": 10100,
+      "sourceId": 50
+    },
+    {
+      "type": "hero_damaged",
+      "at": 200.96666666665783,
+      "amount": 8,
+      "hp": 9028,
+      "maxHp": 10100,
+      "sourceId": 34
+    },
+    {
+      "type": "hero_damaged",
+      "at": 201.59999999999113,
+      "amount": 8,
+      "hp": 9020,
+      "maxHp": 10100,
+      "sourceId": 51
+    },
+    {
+      "type": "hero_damaged",
+      "at": 202.16666666665776,
+      "amount": 8,
+      "hp": 9012,
+      "maxHp": 10100,
+      "sourceId": 57
+    },
+    {
+      "type": "hero_damaged",
+      "at": 202.86666666665772,
+      "amount": 8,
+      "hp": 9004,
+      "maxHp": 10100,
+      "sourceId": 50
+    },
+    {
+      "type": "hero_damaged",
+      "at": 203.4666666666577,
+      "amount": 8,
+      "hp": 8996,
+      "maxHp": 10100,
+      "sourceId": 34
+    },
+    {
+      "type": "hero_damaged",
+      "at": 204.09999999999098,
+      "amount": 8,
+      "hp": 8988,
+      "maxHp": 10100,
+      "sourceId": 51
+    },
+    {
+      "type": "hero_damaged",
+      "at": 204.66666666665762,
+      "amount": 8,
+      "hp": 8980,
+      "maxHp": 10100,
+      "sourceId": 57
+    },
+    {
+      "type": "hero_damaged",
+      "at": 205.26666666665758,
+      "amount": 8,
+      "hp": 8972,
+      "maxHp": 10100,
+      "sourceId": 49
+    },
+    {
+      "type": "hero_damaged",
+      "at": 205.7999999999909,
+      "amount": 8,
+      "hp": 8964,
+      "maxHp": 10100,
+      "sourceId": 56
+    },
+    {
+      "type": "enemy_killed",
+      "at": 205.86666666665755,
+      "enemyId": 36,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 206.3333333333242,
+      "amount": 8,
+      "hp": 8956,
+      "maxHp": 10100,
+      "sourceId": 57
+    },
+    {
+      "type": "enemy_killed",
+      "at": 206.36666666665752,
+      "enemyId": 34,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 207.03333333332415,
+      "amount": 8,
+      "hp": 8948,
+      "maxHp": 10100,
+      "sourceId": 50
+    },
+    {
+      "type": "announcement",
+      "at": 207.5,
+      "wave": 7,
+      "text": "Claim Jumpers from the east ridge!"
+    },
+    {
+      "type": "hero_damaged",
+      "at": 207.59999999999079,
+      "amount": 8,
+      "hp": 8940,
+      "maxHp": 10100,
+      "sourceId": 49
+    },
+    {
+      "type": "announcement",
+      "at": 208,
+      "wave": 7,
+      "text": "Brass warning on the north bank!"
+    },
+    {
+      "type": "hero_damaged",
+      "at": 208.16666666665742,
+      "amount": 8,
+      "hp": 8932,
+      "maxHp": 10100,
+      "sourceId": 58
+    },
+    {
+      "type": "hero_damaged",
+      "at": 208.69999999999072,
+      "amount": 8,
+      "hp": 8924,
+      "maxHp": 10100,
+      "sourceId": 50
+    },
+    {
+      "type": "hero_damaged",
+      "at": 209.26666666665736,
+      "amount": 8,
+      "hp": 8916,
+      "maxHp": 10100,
+      "sourceId": 49
+    },
+    {
+      "type": "hero_damaged",
+      "at": 209.833333333324,
+      "amount": 8,
+      "hp": 8908,
+      "maxHp": 10100,
+      "sourceId": 58
+    },
+    {
+      "type": "wave_started",
+      "at": 210,
+      "wave": 7
+    },
+    {
+      "type": "enemy_killed",
+      "at": 210.3666666666573,
+      "enemyId": 37,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 210.39999999999063,
+      "amount": 8,
+      "hp": 8900,
+      "maxHp": 10100,
+      "sourceId": 50
+    },
+    {
+      "type": "hero_damaged",
+      "at": 210.93333333332393,
+      "amount": 8,
+      "hp": 8892,
+      "maxHp": 10100,
+      "sourceId": 49
+    },
+    {
+      "type": "hero_damaged",
+      "at": 211.49999999999056,
+      "amount": 8,
+      "hp": 8884,
+      "maxHp": 10100,
+      "sourceId": 58
+    },
+    {
+      "type": "hero_damaged",
+      "at": 212.0666666666572,
+      "amount": 8,
+      "hp": 8876,
+      "maxHp": 10100,
+      "sourceId": 50
+    },
+    {
+      "type": "hero_damaged",
+      "at": 212.5999999999905,
+      "amount": 8,
+      "hp": 8868,
+      "maxHp": 10100,
+      "sourceId": 49
+    },
+    {
+      "type": "hero_damaged",
+      "at": 213.26666666665713,
+      "amount": 8,
+      "hp": 8860,
+      "maxHp": 10100,
+      "sourceId": 51
+    },
+    {
+      "type": "hero_damaged",
+      "at": 213.89999999999043,
+      "amount": 8,
+      "hp": 8852,
+      "maxHp": 10100,
+      "sourceId": 46
+    },
+    {
+      "type": "enemy_killed",
+      "at": 214.36666666665707,
+      "enemyId": 28,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 214.46666666665706,
+      "amount": 8,
+      "hp": 8844,
+      "maxHp": 10100,
+      "sourceId": 45
+    },
+    {
+      "type": "hero_damaged",
+      "at": 215.0333333333237,
+      "amount": 8,
+      "hp": 8836,
+      "maxHp": 10100,
+      "sourceId": 41
+    },
+    {
+      "type": "announcement",
+      "at": 215.5,
+      "wave": 7,
+      "text": "Hold the south bank for the assay!"
+    },
+    {
+      "type": "hero_damaged",
+      "at": 215.566666666657,
+      "amount": 8,
+      "hp": 8828,
+      "maxHp": 10100,
+      "sourceId": 46
+    },
+    {
+      "type": "announcement",
+      "at": 216,
+      "wave": 7,
+      "text": "East ridge dust is moving!"
+    },
+    {
+      "type": "hero_damaged",
+      "at": 216.13333333332363,
+      "amount": 8,
+      "hp": 8820,
+      "maxHp": 10100,
+      "sourceId": 45
+    },
+    {
+      "type": "enemy_killed",
+      "at": 216.36666666665695,
+      "enemyId": 49,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 216.69999999999027,
+      "amount": 8,
+      "hp": 8812,
+      "maxHp": 10100,
+      "sourceId": 41
+    },
+    {
+      "type": "enemy_killed",
+      "at": 216.86666666665693,
+      "enemyId": 31,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 217.23333333332357,
+      "amount": 8,
+      "hp": 8804,
+      "maxHp": 10100,
+      "sourceId": 46
+    },
+    {
+      "type": "hero_damaged",
+      "at": 217.7999999999902,
+      "amount": 8,
+      "hp": 8796,
+      "maxHp": 10100,
+      "sourceId": 45
+    },
+    {
+      "type": "hero_damaged",
+      "at": 218.36666666665684,
+      "amount": 8,
+      "hp": 8788,
+      "maxHp": 10100,
+      "sourceId": 41
+    },
+    {
+      "type": "enemy_killed",
+      "at": 218.8666666666568,
+      "enemyId": 46,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 219.09999999999013,
+      "amount": 8,
+      "hp": 8780,
+      "maxHp": 10100,
+      "sourceId": 51
+    },
+    {
+      "type": "enemy_killed",
+      "at": 219.36666666665678,
+      "enemyId": 41,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 219.93333333332342,
+      "amount": 8,
+      "hp": 8772,
+      "maxHp": 10100,
+      "sourceId": 51
+    },
+    {
+      "type": "hero_damaged",
+      "at": 220.7666666666567,
+      "amount": 8,
+      "hp": 8764,
+      "maxHp": 10100,
+      "sourceId": 51
+    },
+    {
+      "type": "enemy_killed",
+      "at": 221.36666666665667,
+      "enemyId": 34,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 221.59999999999,
+      "amount": 8,
+      "hp": 8756,
+      "maxHp": 10100,
+      "sourceId": 51
+    },
+    {
+      "type": "hero_damaged",
+      "at": 222.43333333332328,
+      "amount": 8,
+      "hp": 8748,
+      "maxHp": 10100,
+      "sourceId": 51
+    },
+    {
+      "type": "hero_damaged",
+      "at": 223.26666666665656,
+      "amount": 8,
+      "hp": 8740,
+      "maxHp": 10100,
+      "sourceId": 51
+    },
+    {
+      "type": "enemy_killed",
+      "at": 223.36666666665656,
+      "enemyId": 50,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 223.9333333333232,
+      "amount": 8,
+      "hp": 8732,
+      "maxHp": 10100,
+      "sourceId": 31
+    },
+    {
+      "type": "hero_damaged",
+      "at": 224.4666666666565,
+      "amount": 8,
+      "hp": 8724,
+      "maxHp": 10100,
+      "sourceId": 45
+    },
+    {
+      "type": "hero_damaged",
+      "at": 225.03333333332313,
+      "amount": 8,
+      "hp": 8716,
+      "maxHp": 10100,
+      "sourceId": 53
+    },
+    {
+      "type": "hero_damaged",
+      "at": 225.59999999998976,
+      "amount": 8,
+      "hp": 8708,
+      "maxHp": 10100,
+      "sourceId": 31
+    },
+    {
+      "type": "hero_damaged",
+      "at": 226.13333333332307,
+      "amount": 8,
+      "hp": 8700,
+      "maxHp": 10100,
+      "sourceId": 45
+    },
+    {
+      "type": "hero_damaged",
+      "at": 226.6999999999897,
+      "amount": 8,
+      "hp": 8692,
+      "maxHp": 10100,
+      "sourceId": 53
+    },
+    {
+      "type": "hero_damaged",
+      "at": 227.26666666665633,
+      "amount": 8,
+      "hp": 8684,
+      "maxHp": 10100,
+      "sourceId": 31
+    },
+    {
+      "type": "hero_damaged",
+      "at": 227.79999999998964,
+      "amount": 8,
+      "hp": 8676,
+      "maxHp": 10100,
+      "sourceId": 45
+    },
+    {
+      "type": "hero_damaged",
+      "at": 228.36666666665627,
+      "amount": 8,
+      "hp": 8668,
+      "maxHp": 10100,
+      "sourceId": 53
+    },
+    {
+      "type": "enemy_killed",
+      "at": 228.36666666665627,
+      "enemyId": 37,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 228.9333333333229,
+      "amount": 8,
+      "hp": 8660,
+      "maxHp": 10100,
+      "sourceId": 31
+    },
+    {
+      "type": "enemy_killed",
+      "at": 229.36666666665622,
+      "enemyId": 28,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 229.4666666666562,
+      "amount": 8,
+      "hp": 8652,
+      "maxHp": 10100,
+      "sourceId": 45
+    },
+    {
+      "type": "hero_damaged",
+      "at": 230.03333333332284,
+      "amount": 8,
+      "hp": 8644,
+      "maxHp": 10100,
+      "sourceId": 53
+    },
+    {
+      "type": "hero_damaged",
+      "at": 230.59999999998948,
+      "amount": 8,
+      "hp": 8636,
+      "maxHp": 10100,
+      "sourceId": 31
+    },
+    {
+      "type": "enemy_killed",
+      "at": 230.86666666665613,
+      "enemyId": 43,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 231.13333333332278,
+      "amount": 8,
+      "hp": 8628,
+      "maxHp": 10100,
+      "sourceId": 45
+    },
+    {
+      "type": "hero_damaged",
+      "at": 231.69999999998942,
+      "amount": 8,
+      "hp": 8620,
+      "maxHp": 10100,
+      "sourceId": 53
+    },
+    {
+      "type": "hero_damaged",
+      "at": 232.26666666665605,
+      "amount": 8,
+      "hp": 8612,
+      "maxHp": 10100,
+      "sourceId": 31
+    },
+    {
+      "type": "hero_damaged",
+      "at": 232.79999999998935,
+      "amount": 8,
+      "hp": 8604,
+      "maxHp": 10100,
+      "sourceId": 45
+    },
+    {
+      "type": "hero_damaged",
+      "at": 233.366666666656,
+      "amount": 8,
+      "hp": 8596,
+      "maxHp": 10100,
+      "sourceId": 53
+    },
+    {
+      "type": "hero_damaged",
+      "at": 233.93333333332262,
+      "amount": 8,
+      "hp": 8588,
+      "maxHp": 10100,
+      "sourceId": 31
+    },
+    {
+      "type": "enemy_killed",
+      "at": 234.36666666665593,
+      "enemyId": 31,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 234.46666666665593,
+      "amount": 8,
+      "hp": 8580,
+      "maxHp": 10100,
+      "sourceId": 45
+    },
+    {
+      "type": "hero_damaged",
+      "at": 234.99999999998923,
+      "amount": 8,
+      "hp": 8572,
+      "maxHp": 10100,
+      "sourceId": 50
+    },
+    {
+      "type": "hero_damaged",
+      "at": 235.53333333332253,
+      "amount": 8,
+      "hp": 8564,
+      "maxHp": 10100,
+      "sourceId": 58
+    },
+    {
+      "type": "enemy_killed",
+      "at": 235.86666666665585,
+      "enemyId": 45,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 236.09999999998917,
+      "amount": 8,
+      "hp": 8556,
+      "maxHp": 10100,
+      "sourceId": 57
+    },
+    {
+      "type": "hero_damaged",
+      "at": 236.63333333332247,
+      "amount": 8,
+      "hp": 8548,
+      "maxHp": 10100,
+      "sourceId": 56
+    },
+    {
+      "type": "hero_damaged",
+      "at": 237.1999999999891,
+      "amount": 8,
+      "hp": 8540,
+      "maxHp": 10100,
+      "sourceId": 58
+    },
+    {
+      "type": "announcement",
+      "at": 237.5,
+      "wave": 8,
+      "text": "Claim Jumpers from the north bank!"
+    },
+    {
+      "type": "hero_damaged",
+      "at": 237.76666666665574,
+      "amount": 8,
+      "hp": 8532,
+      "maxHp": 10100,
+      "sourceId": 57
+    },
+    {
+      "type": "announcement",
+      "at": 238,
+      "wave": 8,
+      "text": "Beacon coils hum eastward!"
+    },
+    {
+      "type": "hero_damaged",
+      "at": 238.29999999998904,
+      "amount": 8,
+      "hp": 8524,
+      "maxHp": 10100,
+      "sourceId": 56
+    },
+    {
+      "type": "hero_damaged",
+      "at": 238.96666666665567,
+      "amount": 8,
+      "hp": 8516,
+      "maxHp": 10100,
+      "sourceId": 46
+    },
+    {
+      "type": "hero_damaged",
+      "at": 239.59999999998897,
+      "amount": 8,
+      "hp": 8508,
+      "maxHp": 10100,
+      "sourceId": 48
+    },
+    {
+      "type": "wave_started",
+      "at": 240,
+      "wave": 8
+    },
+    {
+      "type": "hero_damaged",
+      "at": 240.1666666666556,
+      "amount": 8,
+      "hp": 8500,
+      "maxHp": 10100,
+      "sourceId": 55
+    },
+    {
+      "type": "hero_damaged",
+      "at": 240.76666666665557,
+      "amount": 8,
+      "hp": 8492,
+      "maxHp": 10100,
+      "sourceId": 51
+    },
+    {
+      "type": "hero_damaged",
+      "at": 241.29999999998887,
+      "amount": 8,
+      "hp": 8484,
+      "maxHp": 10100,
+      "sourceId": 37
+    },
+    {
+      "type": "hero_damaged",
+      "at": 241.83333333332217,
+      "amount": 8,
+      "hp": 8476,
+      "maxHp": 10100,
+      "sourceId": 55
+    },
+    {
+      "type": "enemy_killed",
+      "at": 242.36666666665548,
+      "enemyId": 28,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 242.43333333332214,
+      "amount": 8,
+      "hp": 8468,
+      "maxHp": 10100,
+      "sourceId": 51
+    },
+    {
+      "type": "hero_damaged",
+      "at": 242.96666666665544,
+      "amount": 8,
+      "hp": 8460,
+      "maxHp": 10100,
+      "sourceId": 37
+    },
+    {
+      "type": "hero_damaged",
+      "at": 243.49999999998875,
+      "amount": 8,
+      "hp": 8452,
+      "maxHp": 10100,
+      "sourceId": 55
+    },
+    {
+      "type": "hero_damaged",
+      "at": 244.0999999999887,
+      "amount": 8,
+      "hp": 8444,
+      "maxHp": 10100,
+      "sourceId": 51
+    },
+    {
+      "type": "hero_damaged",
+      "at": 244.633333333322,
+      "amount": 8,
+      "hp": 8436,
+      "maxHp": 10100,
+      "sourceId": 37
+    },
+    {
+      "type": "hero_damaged",
+      "at": 245.16666666665532,
+      "amount": 8,
+      "hp": 8428,
+      "maxHp": 10100,
+      "sourceId": 55
+    },
+    {
+      "type": "announcement",
+      "at": 245.5,
+      "wave": 8,
+      "text": "Hold the north bank for the assay!"
+    },
+    {
+      "type": "hero_damaged",
+      "at": 245.76666666665528,
+      "amount": 8,
+      "hp": 8420,
+      "maxHp": 10100,
+      "sourceId": 51
+    },
+    {
+      "type": "enemy_killed",
+      "at": 245.8999999999886,
+      "enemyId": 37,
+      "xp": 4
+    },
+    {
+      "type": "announcement",
+      "at": 246,
+      "wave": 8,
+      "text": "South bank dust is moving!"
+    },
+    {
+      "type": "hero_damaged",
+      "at": 246.2999999999886,
+      "amount": 8,
+      "hp": 8412,
+      "maxHp": 10100,
+      "sourceId": 49
+    },
+    {
+      "type": "hero_damaged",
+      "at": 246.8333333333219,
+      "amount": 8,
+      "hp": 8404,
+      "maxHp": 10100,
+      "sourceId": 55
+    },
+    {
+      "type": "hero_damaged",
+      "at": 247.43333333332185,
+      "amount": 8,
+      "hp": 8396,
+      "maxHp": 10100,
+      "sourceId": 51
+    },
+    {
+      "type": "hero_damaged",
+      "at": 247.96666666665516,
+      "amount": 8,
+      "hp": 8388,
+      "maxHp": 10100,
+      "sourceId": 49
+    },
+    {
+      "type": "enemy_killed",
+      "at": 248.39999999998847,
+      "enemyId": 43,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 248.49999999998846,
+      "amount": 8,
+      "hp": 8380,
+      "maxHp": 10100,
+      "sourceId": 55
+    },
+    {
+      "type": "hero_damaged",
+      "at": 249.09999999998843,
+      "amount": 8,
+      "hp": 8372,
+      "maxHp": 10100,
+      "sourceId": 51
+    },
+    {
+      "type": "enemy_killed",
+      "at": 249.3999999999884,
+      "enemyId": 46,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 249.63333333332173,
+      "amount": 8,
+      "hp": 8364,
+      "maxHp": 10100,
+      "sourceId": 49
+    },
+    {
+      "type": "hero_damaged",
+      "at": 250.16666666665503,
+      "amount": 8,
+      "hp": 8356,
+      "maxHp": 10100,
+      "sourceId": 55
+    },
+    {
+      "type": "hero_damaged",
+      "at": 250.766666666655,
+      "amount": 8,
+      "hp": 8348,
+      "maxHp": 10100,
+      "sourceId": 51
+    },
+    {
+      "type": "enemy_killed",
+      "at": 250.89999999998832,
+      "enemyId": 51,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 251.2999999999883,
+      "amount": 8,
+      "hp": 8340,
+      "maxHp": 10100,
+      "sourceId": 49
+    },
+    {
+      "type": "enemy_killed",
+      "at": 251.3999999999883,
+      "enemyId": 34,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 251.8333333333216,
+      "amount": 8,
+      "hp": 8332,
+      "maxHp": 10100,
+      "sourceId": 55
+    },
+    {
+      "type": "hero_damaged",
+      "at": 252.4666666666549,
+      "amount": 8,
+      "hp": 8324,
+      "maxHp": 10100,
+      "sourceId": 56
+    },
+    {
+      "type": "hero_damaged",
+      "at": 253.0999999999882,
+      "amount": 8,
+      "hp": 8316,
+      "maxHp": 10100,
+      "sourceId": 45
+    },
+    {
+      "type": "enemy_killed",
+      "at": 253.39999999998818,
+      "enemyId": 48,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 253.7333333333215,
+      "amount": 8,
+      "hp": 8308,
+      "maxHp": 10100,
+      "sourceId": 57
+    },
+    {
+      "type": "hero_damaged",
+      "at": 254.2666666666548,
+      "amount": 8,
+      "hp": 8300,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 254.96666666665476,
+      "amount": 8,
+      "hp": 8292,
+      "maxHp": 10100,
+      "sourceId": 56
+    },
+    {
+      "type": "hero_damaged",
+      "at": 255.59999999998806,
+      "amount": 8,
+      "hp": 8284,
+      "maxHp": 10100,
+      "sourceId": 45
+    },
+    {
+      "type": "hero_damaged",
+      "at": 256.2333333333215,
+      "amount": 8,
+      "hp": 8276,
+      "maxHp": 10100,
+      "sourceId": 57
+    },
+    {
+      "type": "hero_damaged",
+      "at": 256.833333333322,
+      "amount": 8,
+      "hp": 8268,
+      "maxHp": 10100,
+      "sourceId": 55
+    },
+    {
+      "type": "hero_damaged",
+      "at": 257.46666666665584,
+      "amount": 8,
+      "hp": 8260,
+      "maxHp": 10100,
+      "sourceId": 56
+    },
+    {
+      "type": "enemy_killed",
+      "at": 257.8999999999895,
+      "enemyId": 50,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 258.0999999999897,
+      "amount": 8,
+      "hp": 8252,
+      "maxHp": 10100,
+      "sourceId": 45
+    },
+    {
+      "type": "hero_damaged",
+      "at": 258.63333333332343,
+      "amount": 8,
+      "hp": 8244,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "enemy_killed",
+      "at": 258.8999999999903,
+      "enemyId": 53,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 259.1666666666572,
+      "amount": 8,
+      "hp": 8236,
+      "maxHp": 10100,
+      "sourceId": 46
+    },
+    {
+      "type": "enemy_killed",
+      "at": 259.3999999999907,
+      "enemyId": 45,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 259.96666666665783,
+      "amount": 8,
+      "hp": 8228,
+      "maxHp": 10100,
+      "sourceId": 54
+    },
+    {
+      "type": "enemy_killed",
+      "at": 260.3999999999915,
+      "enemyId": 49,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 260.6666666666584,
+      "amount": 8,
+      "hp": 8220,
+      "maxHp": 10100,
+      "sourceId": 34
+    },
+    {
+      "type": "hero_damaged",
+      "at": 261.19999999999214,
+      "amount": 8,
+      "hp": 8212,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 261.833333333326,
+      "amount": 8,
+      "hp": 8204,
+      "maxHp": 10100,
+      "sourceId": 55
+    },
+    {
+      "type": "hero_damaged",
+      "at": 262.4666666666598,
+      "amount": 8,
+      "hp": 8196,
+      "maxHp": 10100,
+      "sourceId": 54
+    },
+    {
+      "type": "hero_damaged",
+      "at": 263.1666666666604,
+      "amount": 8,
+      "hp": 8188,
+      "maxHp": 10100,
+      "sourceId": 34
+    },
+    {
+      "type": "hero_damaged",
+      "at": 263.69999999999413,
+      "amount": 8,
+      "hp": 8180,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "enemy_killed",
+      "at": 263.8999999999943,
+      "enemyId": 46,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 264.33333333332797,
+      "amount": 8,
+      "hp": 8172,
+      "maxHp": 10100,
+      "sourceId": 55
+    },
+    {
+      "type": "hero_damaged",
+      "at": 264.9666666666618,
+      "amount": 8,
+      "hp": 8164,
+      "maxHp": 10100,
+      "sourceId": 37
+    },
+    {
+      "type": "hero_damaged",
+      "at": 265.66666666666237,
+      "amount": 8,
+      "hp": 8156,
+      "maxHp": 10100,
+      "sourceId": 34
+    },
+    {
+      "type": "hero_damaged",
+      "at": 266.1999999999961,
+      "amount": 8,
+      "hp": 8148,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "enemy_killed",
+      "at": 266.3999999999963,
+      "enemyId": 34,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 266.7333333333299,
+      "amount": 8,
+      "hp": 8140,
+      "maxHp": 10100,
+      "sourceId": 54
+    },
+    {
+      "type": "hero_damaged",
+      "at": 267.4666666666638,
+      "amount": 8,
+      "hp": 8132,
+      "maxHp": 10100,
+      "sourceId": 37
+    },
+    {
+      "type": "announcement",
+      "at": 267.5,
+      "wave": 9,
+      "text": "Claim Jumpers from the north bank!"
+    },
+    {
+      "type": "announcement",
+      "at": 268,
+      "wave": 9,
+      "text": "Beacon coils hum eastward!"
+    },
+    {
+      "type": "hero_damaged",
+      "at": 268.2999999999978,
+      "amount": 8,
+      "hp": 8124,
+      "maxHp": 10100,
+      "sourceId": 37
+    },
+    {
+      "type": "hero_damaged",
+      "at": 269.1333333333318,
+      "amount": 8,
+      "hp": 8116,
+      "maxHp": 10100,
+      "sourceId": 37
+    },
+    {
+      "type": "hero_damaged",
+      "at": 269.9666666666658,
+      "amount": 8,
+      "hp": 8108,
+      "maxHp": 10100,
+      "sourceId": 37
+    },
+    {
+      "type": "wave_started",
+      "at": 270,
+      "wave": 9
+    },
+    {
+      "type": "hero_damaged",
+      "at": 270.7999999999998,
+      "amount": 8,
+      "hp": 8100,
+      "maxHp": 10100,
+      "sourceId": 37
+    },
+    {
+      "type": "hero_damaged",
+      "at": 271.6333333333338,
+      "amount": 8,
+      "hp": 8092,
+      "maxHp": 10100,
+      "sourceId": 37
+    },
+    {
+      "type": "hero_damaged",
+      "at": 272.4666666666678,
+      "amount": 8,
+      "hp": 8084,
+      "maxHp": 10100,
+      "sourceId": 37
+    },
+    {
+      "type": "hero_damaged",
+      "at": 273.3000000000018,
+      "amount": 8,
+      "hp": 8076,
+      "maxHp": 10100,
+      "sourceId": 37
+    },
+    {
+      "type": "hero_damaged",
+      "at": 274.13333333333577,
+      "amount": 8,
+      "hp": 8068,
+      "maxHp": 10100,
+      "sourceId": 37
+    },
+    {
+      "type": "enemy_killed",
+      "at": 274.9333333333364,
+      "enemyId": 28,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 274.96666666666977,
+      "amount": 8,
+      "hp": 8060,
+      "maxHp": 10100,
+      "sourceId": 37
+    },
+    {
+      "type": "announcement",
+      "at": 275.5,
+      "wave": 9,
+      "text": "Hold the north bank for the assay!"
+    },
+    {
+      "type": "hero_damaged",
+      "at": 275.5000000000035,
+      "amount": 8,
+      "hp": 8052,
+      "maxHp": 10100,
+      "sourceId": 34
+    },
+    {
+      "type": "announcement",
+      "at": 276,
+      "wave": 9,
+      "text": "West ridge shadows want the gold!"
+    },
+    {
+      "type": "hero_damaged",
+      "at": 276.0333333333373,
+      "amount": 8,
+      "hp": 8044,
+      "maxHp": 10100,
+      "sourceId": 48
+    },
+    {
+      "type": "hero_damaged",
+      "at": 276.63333333333776,
+      "amount": 8,
+      "hp": 8036,
+      "maxHp": 10100,
+      "sourceId": 37
+    },
+    {
+      "type": "hero_damaged",
+      "at": 277.1666666666715,
+      "amount": 8,
+      "hp": 8028,
+      "maxHp": 10100,
+      "sourceId": 34
+    },
+    {
+      "type": "hero_damaged",
+      "at": 277.7000000000053,
+      "amount": 8,
+      "hp": 8020,
+      "maxHp": 10100,
+      "sourceId": 58
+    },
+    {
+      "type": "hero_damaged",
+      "at": 278.30000000000575,
+      "amount": 8,
+      "hp": 8012,
+      "maxHp": 10100,
+      "sourceId": 37
+    },
+    {
+      "type": "enemy_killed",
+      "at": 278.4333333333392,
+      "enemyId": 54,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 278.8333333333395,
+      "amount": 8,
+      "hp": 8004,
+      "maxHp": 10100,
+      "sourceId": 34
+    },
+    {
+      "type": "hero_damaged",
+      "at": 279.36666666667327,
+      "amount": 8,
+      "hp": 7996,
+      "maxHp": 10100,
+      "sourceId": 58
+    },
+    {
+      "type": "hero_damaged",
+      "at": 279.96666666667375,
+      "amount": 8,
+      "hp": 7988,
+      "maxHp": 10100,
+      "sourceId": 37
+    },
+    {
+      "type": "enemy_killed",
+      "at": 280.4333333333408,
+      "enemyId": 55,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 280.5000000000075,
+      "amount": 8,
+      "hp": 7980,
+      "maxHp": 10100,
+      "sourceId": 34
+    },
+    {
+      "type": "enemy_killed",
+      "at": 280.9333333333412,
+      "enemyId": 37,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 281.03333333334126,
+      "amount": 8,
+      "hp": 7972,
+      "maxHp": 10100,
+      "sourceId": 58
+    },
+    {
+      "type": "enemy_killed",
+      "at": 281.4333333333416,
+      "enemyId": 34,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 281.63333333334174,
+      "amount": 8,
+      "hp": 7964,
+      "maxHp": 10100,
+      "sourceId": 56
+    },
+    {
+      "type": "hero_damaged",
+      "at": 282.46666666667574,
+      "amount": 8,
+      "hp": 7956,
+      "maxHp": 10100,
+      "sourceId": 56
+    },
+    {
+      "type": "hero_damaged",
+      "at": 283.30000000000973,
+      "amount": 8,
+      "hp": 7948,
+      "maxHp": 10100,
+      "sourceId": 56
+    },
+    {
+      "type": "hero_damaged",
+      "at": 284.1333333333437,
+      "amount": 8,
+      "hp": 7940,
+      "maxHp": 10100,
+      "sourceId": 56
+    },
+    {
+      "type": "hero_damaged",
+      "at": 284.9666666666777,
+      "amount": 8,
+      "hp": 7932,
+      "maxHp": 10100,
+      "sourceId": 56
+    },
+    {
+      "type": "hero_damaged",
+      "at": 285.8000000000117,
+      "amount": 8,
+      "hp": 7924,
+      "maxHp": 10100,
+      "sourceId": 56
+    },
+    {
+      "type": "enemy_killed",
+      "at": 285.93333333334516,
+      "enemyId": 45,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 286.6333333333457,
+      "amount": 8,
+      "hp": 7916,
+      "maxHp": 10100,
+      "sourceId": 56
+    },
+    {
+      "type": "hero_damaged",
+      "at": 287.4666666666797,
+      "amount": 8,
+      "hp": 7908,
+      "maxHp": 10100,
+      "sourceId": 56
+    },
+    {
+      "type": "enemy_killed",
+      "at": 287.93333333334675,
+      "enemyId": 48,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 288.3000000000137,
+      "amount": 8,
+      "hp": 7900,
+      "maxHp": 10100,
+      "sourceId": 56
+    },
+    {
+      "type": "hero_damaged",
+      "at": 289.1333333333477,
+      "amount": 8,
+      "hp": 7892,
+      "maxHp": 10100,
+      "sourceId": 56
+    },
+    {
+      "type": "hero_damaged",
+      "at": 289.9666666666817,
+      "amount": 8,
+      "hp": 7884,
+      "maxHp": 10100,
+      "sourceId": 56
+    },
+    {
+      "type": "hero_damaged",
+      "at": 290.8000000000157,
+      "amount": 8,
+      "hp": 7876,
+      "maxHp": 10100,
+      "sourceId": 56
+    },
+    {
+      "type": "hero_damaged",
+      "at": 291.6333333333497,
+      "amount": 8,
+      "hp": 7868,
+      "maxHp": 10100,
+      "sourceId": 56
+    },
+    {
+      "type": "hero_damaged",
+      "at": 292.4666666666837,
+      "amount": 8,
+      "hp": 7860,
+      "maxHp": 10100,
+      "sourceId": 56
+    },
+    {
+      "type": "hero_damaged",
+      "at": 293.3000000000177,
+      "amount": 8,
+      "hp": 7852,
+      "maxHp": 10100,
+      "sourceId": 56
+    },
+    {
+      "type": "hero_damaged",
+      "at": 294.1333333333517,
+      "amount": 8,
+      "hp": 7844,
+      "maxHp": 10100,
+      "sourceId": 56
+    },
+    {
+      "type": "hero_damaged",
+      "at": 294.8000000000189,
+      "amount": 8,
+      "hp": 7836,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 295.366666666686,
+      "amount": 8,
+      "hp": 7828,
+      "maxHp": 10100,
+      "sourceId": 55
+    },
+    {
+      "type": "hero_damaged",
+      "at": 296.0333333333532,
+      "amount": 8,
+      "hp": 7820,
+      "maxHp": 10100,
+      "sourceId": 58
+    },
+    {
+      "type": "enemy_killed",
+      "at": 296.4333333333535,
+      "enemyId": 53,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 296.6333333333537,
+      "amount": 8,
+      "hp": 7812,
+      "maxHp": 10100,
+      "sourceId": 56
+    },
+    {
+      "type": "hero_damaged",
+      "at": 297.3000000000209,
+      "amount": 8,
+      "hp": 7804,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "enemy_killed",
+      "at": 297.4333333333543,
+      "enemyId": 28,
+      "xp": 4
+    },
+    {
+      "type": "announcement",
+      "at": 297.5,
+      "wave": 10,
+      "text": "Claim Jumpers from the south bank!"
+    },
+    {
+      "type": "hero_damaged",
+      "at": 297.866666666688,
+      "amount": 8,
+      "hp": 7796,
+      "maxHp": 10100,
+      "sourceId": 55
+    },
+    {
+      "type": "announcement",
+      "at": 298,
+      "wave": 10,
+      "text": "Brass warning on the west ridge!"
+    },
+    {
+      "type": "hero_damaged",
+      "at": 298.5333333333552,
+      "amount": 8,
+      "hp": 7788,
+      "maxHp": 10100,
+      "sourceId": 45
+    },
+    {
+      "type": "hero_damaged",
+      "at": 299.13333333335567,
+      "amount": 8,
+      "hp": 7780,
+      "maxHp": 10100,
+      "sourceId": 56
+    },
+    {
+      "type": "hero_damaged",
+      "at": 299.8666666666896,
+      "amount": 8,
+      "hp": 7772,
+      "maxHp": 10100,
+      "sourceId": 48
+    },
+    {
+      "type": "wave_started",
+      "at": 300,
+      "wave": 10
+    },
+    {
+      "type": "hero_damaged",
+      "at": 300.40000000002334,
+      "amount": 8,
+      "hp": 7764,
+      "maxHp": 10100,
+      "sourceId": 54
+    },
+    {
+      "type": "enemy_killed",
+      "at": 300.9333333333571,
+      "enemyId": 34,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 301.0333333333572,
+      "amount": 8,
+      "hp": 7756,
+      "maxHp": 10100,
+      "sourceId": 45
+    },
+    {
+      "type": "hero_damaged",
+      "at": 301.63333333335765,
+      "amount": 8,
+      "hp": 7748,
+      "maxHp": 10100,
+      "sourceId": 56
+    },
+    {
+      "type": "hero_damaged",
+      "at": 302.3666666666916,
+      "amount": 8,
+      "hp": 7740,
+      "maxHp": 10100,
+      "sourceId": 48
+    },
+    {
+      "type": "hero_damaged",
+      "at": 302.90000000002533,
+      "amount": 8,
+      "hp": 7732,
+      "maxHp": 10100,
+      "sourceId": 54
+    },
+    {
+      "type": "enemy_killed",
+      "at": 303.4333333333591,
+      "enemyId": 45,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 303.53333333335917,
+      "amount": 8,
+      "hp": 7724,
+      "maxHp": 10100,
+      "sourceId": 58
+    },
+    {
+      "type": "hero_damaged",
+      "at": 304.13333333335964,
+      "amount": 8,
+      "hp": 7716,
+      "maxHp": 10100,
+      "sourceId": 56
+    },
+    {
+      "type": "hero_damaged",
+      "at": 304.86666666669356,
+      "amount": 8,
+      "hp": 7708,
+      "maxHp": 10100,
+      "sourceId": 48
+    },
+    {
+      "type": "enemy_killed",
+      "at": 304.9333333333603,
+      "enemyId": 48,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 305.4000000000273,
+      "amount": 8,
+      "hp": 7700,
+      "maxHp": 10100,
+      "sourceId": 54
+    },
+    {
+      "type": "announcement",
+      "at": 305.5,
+      "wave": 10,
+      "text": "Hold the east ridge for the assay!"
+    },
+    {
+      "type": "enemy_killed",
+      "at": 305.9333333333611,
+      "enemyId": 54,
+      "xp": 4
+    },
+    {
+      "type": "announcement",
+      "at": 306,
+      "wave": 10,
+      "text": "North bank shadows want the gold!"
+    },
+    {
+      "type": "hero_damaged",
+      "at": 306.03333333336116,
+      "amount": 8,
+      "hp": 7692,
+      "maxHp": 10100,
+      "sourceId": 53
+    },
+    {
+      "type": "hero_damaged",
+      "at": 306.63333333336163,
+      "amount": 8,
+      "hp": 7684,
+      "maxHp": 10100,
+      "sourceId": 56
+    },
+    {
+      "type": "hero_damaged",
+      "at": 307.46666666669563,
+      "amount": 8,
+      "hp": 7676,
+      "maxHp": 10100,
+      "sourceId": 56
+    },
+    {
+      "type": "hero_damaged",
+      "at": 308.3000000000296,
+      "amount": 8,
+      "hp": 7668,
+      "maxHp": 10100,
+      "sourceId": 56
+    },
+    {
+      "type": "hero_damaged",
+      "at": 309.1333333333636,
+      "amount": 8,
+      "hp": 7660,
+      "maxHp": 10100,
+      "sourceId": 56
+    },
+    {
+      "type": "hero_damaged",
+      "at": 309.9666666666976,
+      "amount": 8,
+      "hp": 7652,
+      "maxHp": 10100,
+      "sourceId": 56
+    },
+    {
+      "type": "hero_damaged",
+      "at": 310.8000000000316,
+      "amount": 8,
+      "hp": 7644,
+      "maxHp": 10100,
+      "sourceId": 56
+    },
+    {
+      "type": "hero_damaged",
+      "at": 311.6333333333656,
+      "amount": 8,
+      "hp": 7636,
+      "maxHp": 10100,
+      "sourceId": 56
+    },
+    {
+      "type": "enemy_killed",
+      "at": 311.93333333336585,
+      "enemyId": 53,
+      "xp": 4
+    },
+    {
+      "type": "enemy_killed",
+      "at": 312.43333333336625,
+      "enemyId": 55,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 312.4666666666996,
+      "amount": 8,
+      "hp": 7628,
+      "maxHp": 10100,
+      "sourceId": 56
+    },
+    {
+      "type": "hero_damaged",
+      "at": 313.3000000000336,
+      "amount": 8,
+      "hp": 7620,
+      "maxHp": 10100,
+      "sourceId": 56
+    },
+    {
+      "type": "hero_damaged",
+      "at": 314.1333333333676,
+      "amount": 8,
+      "hp": 7612,
+      "maxHp": 10100,
+      "sourceId": 56
+    },
+    {
+      "type": "enemy_killed",
+      "at": 314.43333333336784,
+      "enemyId": 56,
+      "xp": 4
+    },
+    {
+      "type": "enemy_killed",
+      "at": 314.93333333336824,
+      "enemyId": 28,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 315.2000000000351,
+      "amount": 8,
+      "hp": 7604,
+      "maxHp": 10100,
+      "sourceId": 58
+    },
+    {
+      "type": "hero_damaged",
+      "at": 315.9000000000357,
+      "amount": 8,
+      "hp": 7596,
+      "maxHp": 10100,
+      "sourceId": 45
+    },
+    {
+      "type": "hero_damaged",
+      "at": 316.73333333336967,
+      "amount": 8,
+      "hp": 7588,
+      "maxHp": 10100,
+      "sourceId": 45
+    },
+    {
+      "type": "hero_damaged",
+      "at": 317.56666666670367,
+      "amount": 8,
+      "hp": 7580,
+      "maxHp": 10100,
+      "sourceId": 45
+    },
+    {
+      "type": "hero_damaged",
+      "at": 318.23333333337087,
+      "amount": 8,
+      "hp": 7572,
+      "maxHp": 10100,
+      "sourceId": 54
+    },
+    {
+      "type": "hero_damaged",
+      "at": 318.7666666667046,
+      "amount": 8,
+      "hp": 7564,
+      "maxHp": 10100,
+      "sourceId": 48
+    },
+    {
+      "type": "hero_damaged",
+      "at": 319.3000000000384,
+      "amount": 8,
+      "hp": 7556,
+      "maxHp": 10100,
+      "sourceId": 34
+    },
+    {
+      "type": "hero_damaged",
+      "at": 319.90000000003886,
+      "amount": 8,
+      "hp": 7548,
+      "maxHp": 10100,
+      "sourceId": 54
+    },
+    {
+      "type": "hero_damaged",
+      "at": 320.4333333333726,
+      "amount": 8,
+      "hp": 7540,
+      "maxHp": 10100,
+      "sourceId": 48
+    },
+    {
+      "type": "enemy_killed",
+      "at": 320.4333333333726,
+      "enemyId": 45,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 320.9666666667064,
+      "amount": 8,
+      "hp": 7532,
+      "maxHp": 10100,
+      "sourceId": 34
+    },
+    {
+      "type": "hero_damaged",
+      "at": 321.56666666670685,
+      "amount": 8,
+      "hp": 7524,
+      "maxHp": 10100,
+      "sourceId": 54
+    },
+    {
+      "type": "hero_damaged",
+      "at": 322.1000000000406,
+      "amount": 8,
+      "hp": 7516,
+      "maxHp": 10100,
+      "sourceId": 48
+    },
+    {
+      "type": "hero_damaged",
+      "at": 322.63333333337437,
+      "amount": 8,
+      "hp": 7508,
+      "maxHp": 10100,
+      "sourceId": 34
+    },
+    {
+      "type": "hero_damaged",
+      "at": 323.23333333337484,
+      "amount": 8,
+      "hp": 7500,
+      "maxHp": 10100,
+      "sourceId": 54
+    },
+    {
+      "type": "hero_damaged",
+      "at": 323.7666666667086,
+      "amount": 8,
+      "hp": 7492,
+      "maxHp": 10100,
+      "sourceId": 48
+    },
+    {
+      "type": "hero_damaged",
+      "at": 324.30000000004236,
+      "amount": 8,
+      "hp": 7484,
+      "maxHp": 10100,
+      "sourceId": 34
+    },
+    {
+      "type": "hero_damaged",
+      "at": 324.90000000004284,
+      "amount": 8,
+      "hp": 7476,
+      "maxHp": 10100,
+      "sourceId": 54
+    },
+    {
+      "type": "hero_damaged",
+      "at": 325.4333333333766,
+      "amount": 8,
+      "hp": 7468,
+      "maxHp": 10100,
+      "sourceId": 48
+    },
+    {
+      "type": "enemy_killed",
+      "at": 325.4333333333766,
+      "enemyId": 34,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 326.0333333333771,
+      "amount": 8,
+      "hp": 7460,
+      "maxHp": 10100,
+      "sourceId": 58
+    },
+    {
+      "type": "hero_damaged",
+      "at": 326.56666666671083,
+      "amount": 8,
+      "hp": 7452,
+      "maxHp": 10100,
+      "sourceId": 54
+    },
+    {
+      "type": "enemy_killed",
+      "at": 326.9333333333778,
+      "enemyId": 48,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 327.13333333337795,
+      "amount": 8,
+      "hp": 7444,
+      "maxHp": 10100,
+      "sourceId": 56
+    },
+    {
+      "type": "announcement",
+      "at": 327.5,
+      "wave": 11,
+      "text": "Claim Jumpers from the north bank!"
+    },
+    {
+      "type": "hero_damaged",
+      "at": 327.70000000004507,
+      "amount": 8,
+      "hp": 7436,
+      "maxHp": 10100,
+      "sourceId": 58
+    },
+    {
+      "type": "announcement",
+      "at": 328,
+      "wave": 11,
+      "text": "Stake lights on the south bank!"
+    },
+    {
+      "type": "hero_damaged",
+      "at": 328.2333333333788,
+      "amount": 8,
+      "hp": 7428,
+      "maxHp": 10100,
+      "sourceId": 54
+    },
+    {
+      "type": "hero_damaged",
+      "at": 328.80000000004594,
+      "amount": 8,
+      "hp": 7420,
+      "maxHp": 10100,
+      "sourceId": 56
+    },
+    {
+      "type": "hero_damaged",
+      "at": 329.36666666671306,
+      "amount": 8,
+      "hp": 7412,
+      "maxHp": 10100,
+      "sourceId": 58
+    },
+    {
+      "type": "hero_damaged",
+      "at": 329.9000000000468,
+      "amount": 8,
+      "hp": 7404,
+      "maxHp": 10100,
+      "sourceId": 54
+    },
+    {
+      "type": "wave_started",
+      "at": 330,
+      "wave": 11
+    },
+    {
+      "type": "enemy_killed",
+      "at": 330.4333333333806,
+      "enemyId": 53,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 330.46666666671393,
+      "amount": 8,
+      "hp": 7396,
+      "maxHp": 10100,
+      "sourceId": 56
+    },
+    {
+      "type": "hero_damaged",
+      "at": 331.03333333338105,
+      "amount": 8,
+      "hp": 7388,
+      "maxHp": 10100,
+      "sourceId": 58
+    },
+    {
+      "type": "hero_damaged",
+      "at": 331.5666666667148,
+      "amount": 8,
+      "hp": 7380,
+      "maxHp": 10100,
+      "sourceId": 54
+    },
+    {
+      "type": "hero_damaged",
+      "at": 332.1333333333819,
+      "amount": 8,
+      "hp": 7372,
+      "maxHp": 10100,
+      "sourceId": 56
+    },
+    {
+      "type": "hero_damaged",
+      "at": 332.70000000004904,
+      "amount": 8,
+      "hp": 7364,
+      "maxHp": 10100,
+      "sourceId": 58
+    },
+    {
+      "type": "hero_damaged",
+      "at": 333.2333333333828,
+      "amount": 8,
+      "hp": 7356,
+      "maxHp": 10100,
+      "sourceId": 54
+    },
+    {
+      "type": "hero_damaged",
+      "at": 333.8000000000499,
+      "amount": 8,
+      "hp": 7348,
+      "maxHp": 10100,
+      "sourceId": 56
+    },
+    {
+      "type": "hero_damaged",
+      "at": 334.36666666671704,
+      "amount": 8,
+      "hp": 7340,
+      "maxHp": 10100,
+      "sourceId": 58
+    },
+    {
+      "type": "hero_damaged",
+      "at": 334.9000000000508,
+      "amount": 8,
+      "hp": 7332,
+      "maxHp": 10100,
+      "sourceId": 54
+    },
+    {
+      "type": "enemy_killed",
+      "at": 334.93333333338416,
+      "enemyId": 56,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 335.4666666667179,
+      "amount": 8,
+      "hp": 7324,
+      "maxHp": 10100,
+      "sourceId": 34
+    },
+    {
+      "type": "announcement",
+      "at": 335.5,
+      "wave": 11,
+      "text": "Hold the north bank for the assay!"
+    },
+    {
+      "type": "announcement",
+      "at": 336,
+      "wave": 11,
+      "text": "South bank dust is moving!"
+    },
+    {
+      "type": "hero_damaged",
+      "at": 336.03333333338503,
+      "amount": 8,
+      "hp": 7316,
+      "maxHp": 10100,
+      "sourceId": 58
+    },
+    {
+      "type": "hero_damaged",
+      "at": 336.5666666667188,
+      "amount": 8,
+      "hp": 7308,
+      "maxHp": 10100,
+      "sourceId": 54
+    },
+    {
+      "type": "hero_damaged",
+      "at": 337.1333333333859,
+      "amount": 8,
+      "hp": 7300,
+      "maxHp": 10100,
+      "sourceId": 34
+    },
+    {
+      "type": "hero_damaged",
+      "at": 337.700000000053,
+      "amount": 8,
+      "hp": 7292,
+      "maxHp": 10100,
+      "sourceId": 58
+    },
+    {
+      "type": "hero_damaged",
+      "at": 338.2333333333868,
+      "amount": 8,
+      "hp": 7284,
+      "maxHp": 10100,
+      "sourceId": 54
+    },
+    {
+      "type": "hero_damaged",
+      "at": 338.8000000000539,
+      "amount": 8,
+      "hp": 7276,
+      "maxHp": 10100,
+      "sourceId": 34
+    },
+    {
+      "type": "hero_damaged",
+      "at": 339.366666666721,
+      "amount": 8,
+      "hp": 7268,
+      "maxHp": 10100,
+      "sourceId": 58
+    },
+    {
+      "type": "hero_damaged",
+      "at": 339.9000000000548,
+      "amount": 8,
+      "hp": 7260,
+      "maxHp": 10100,
+      "sourceId": 54
+    },
+    {
+      "type": "hero_damaged",
+      "at": 340.4666666667219,
+      "amount": 8,
+      "hp": 7252,
+      "maxHp": 10100,
+      "sourceId": 34
+    },
+    {
+      "type": "hero_damaged",
+      "at": 341.033333333389,
+      "amount": 8,
+      "hp": 7244,
+      "maxHp": 10100,
+      "sourceId": 58
+    },
+    {
+      "type": "enemy_killed",
+      "at": 341.4333333333893,
+      "enemyId": 34,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 341.56666666672277,
+      "amount": 8,
+      "hp": 7236,
+      "maxHp": 10100,
+      "sourceId": 54
+    },
+    {
+      "type": "hero_damaged",
+      "at": 342.2666666667233,
+      "amount": 8,
+      "hp": 7228,
+      "maxHp": 10100,
+      "sourceId": 55
+    },
+    {
+      "type": "hero_damaged",
+      "at": 342.8666666667238,
+      "amount": 8,
+      "hp": 7220,
+      "maxHp": 10100,
+      "sourceId": 48
+    },
+    {
+      "type": "enemy_killed",
+      "at": 343.4333333333909,
+      "enemyId": 48,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 343.533333333391,
+      "amount": 8,
+      "hp": 7212,
+      "maxHp": 10100,
+      "sourceId": 58
+    },
+    {
+      "type": "hero_damaged",
+      "at": 344.06666666672476,
+      "amount": 8,
+      "hp": 7204,
+      "maxHp": 10100,
+      "sourceId": 54
+    },
+    {
+      "type": "hero_damaged",
+      "at": 344.7666666667253,
+      "amount": 8,
+      "hp": 7196,
+      "maxHp": 10100,
+      "sourceId": 55
+    },
+    {
+      "type": "enemy_killed",
+      "at": 344.9333333333921,
+      "enemyId": 54,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 345.40000000005915,
+      "amount": 8,
+      "hp": 7188,
+      "maxHp": 10100,
+      "sourceId": 57
+    },
+    {
+      "type": "hero_damaged",
+      "at": 346.033333333393,
+      "amount": 8,
+      "hp": 7180,
+      "maxHp": 10100,
+      "sourceId": 58
+    },
+    {
+      "type": "hero_damaged",
+      "at": 346.866666666727,
+      "amount": 8,
+      "hp": 7172,
+      "maxHp": 10100,
+      "sourceId": 58
+    },
+    {
+      "type": "enemy_killed",
+      "at": 347.4333333333941,
+      "enemyId": 57,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 347.700000000061,
+      "amount": 8,
+      "hp": 7164,
+      "maxHp": 10100,
+      "sourceId": 58
+    },
+    {
+      "type": "hero_damaged",
+      "at": 348.533333333395,
+      "amount": 8,
+      "hp": 7156,
+      "maxHp": 10100,
+      "sourceId": 58
+    },
+    {
+      "type": "hero_damaged",
+      "at": 349.366666666729,
+      "amount": 8,
+      "hp": 7148,
+      "maxHp": 10100,
+      "sourceId": 58
+    },
+    {
+      "type": "enemy_killed",
+      "at": 349.4333333333957,
+      "enemyId": 55,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 350.20000000006297,
+      "amount": 8,
+      "hp": 7140,
+      "maxHp": 10100,
+      "sourceId": 58
+    },
+    {
+      "type": "hero_damaged",
+      "at": 351.03333333339697,
+      "amount": 8,
+      "hp": 7132,
+      "maxHp": 10100,
+      "sourceId": 58
+    },
+    {
+      "type": "hero_damaged",
+      "at": 351.86666666673096,
+      "amount": 8,
+      "hp": 7124,
+      "maxHp": 10100,
+      "sourceId": 58
+    },
+    {
+      "type": "hero_damaged",
+      "at": 352.70000000006496,
+      "amount": 8,
+      "hp": 7116,
+      "maxHp": 10100,
+      "sourceId": 58
+    },
+    {
+      "type": "hero_damaged",
+      "at": 353.53333333339896,
+      "amount": 8,
+      "hp": 7108,
+      "maxHp": 10100,
+      "sourceId": 58
+    },
+    {
+      "type": "hero_damaged",
+      "at": 354.36666666673295,
+      "amount": 8,
+      "hp": 7100,
+      "maxHp": 10100,
+      "sourceId": 58
+    },
+    {
+      "type": "enemy_killed",
+      "at": 354.4333333333997,
+      "enemyId": 53,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 354.93333333340007,
+      "amount": 8,
+      "hp": 7092,
+      "maxHp": 10100,
+      "sourceId": 54
+    },
+    {
+      "type": "hero_damaged",
+      "at": 355.5000000000672,
+      "amount": 8,
+      "hp": 7084,
+      "maxHp": 10100,
+      "sourceId": 34
+    },
+    {
+      "type": "hero_damaged",
+      "at": 356.03333333340095,
+      "amount": 8,
+      "hp": 7076,
+      "maxHp": 10100,
+      "sourceId": 58
+    },
+    {
+      "type": "hero_damaged",
+      "at": 356.60000000006806,
+      "amount": 8,
+      "hp": 7068,
+      "maxHp": 10100,
+      "sourceId": 54
+    },
+    {
+      "type": "hero_damaged",
+      "at": 357.1666666667352,
+      "amount": 8,
+      "hp": 7060,
+      "maxHp": 10100,
+      "sourceId": 34
+    },
+    {
+      "type": "announcement",
+      "at": 357.5,
+      "wave": 12,
+      "text": "Claim Jumpers from the west ridge!"
+    },
+    {
+      "type": "hero_damaged",
+      "at": 357.70000000006894,
+      "amount": 8,
+      "hp": 7052,
+      "maxHp": 10100,
+      "sourceId": 58
+    },
+    {
+      "type": "announcement",
+      "at": 358,
+      "wave": 12,
+      "text": "Beacon coils hum eastward!"
+    },
+    {
+      "type": "hero_damaged",
+      "at": 358.26666666673606,
+      "amount": 8,
+      "hp": 7044,
+      "maxHp": 10100,
+      "sourceId": 54
+    },
+    {
+      "type": "hero_damaged",
+      "at": 358.8333333334032,
+      "amount": 8,
+      "hp": 7036,
+      "maxHp": 10100,
+      "sourceId": 34
+    },
+    {
+      "type": "hero_damaged",
+      "at": 359.36666666673693,
+      "amount": 8,
+      "hp": 7028,
+      "maxHp": 10100,
+      "sourceId": 58
+    },
+    {
+      "type": "hero_damaged",
+      "at": 359.93333333340405,
+      "amount": 8,
+      "hp": 7020,
+      "maxHp": 10100,
+      "sourceId": 54
+    },
+    {
+      "type": "wave_started",
+      "at": 360,
+      "wave": 12
+    },
+    {
+      "type": "hero_damaged",
+      "at": 360.50000000007117,
+      "amount": 8,
+      "hp": 7012,
+      "maxHp": 10100,
+      "sourceId": 34
+    },
+    {
+      "type": "hero_damaged",
+      "at": 361.0333333334049,
+      "amount": 8,
+      "hp": 7004,
+      "maxHp": 10100,
+      "sourceId": 58
+    },
+    {
+      "type": "hero_damaged",
+      "at": 361.5666666667387,
+      "amount": 8,
+      "hp": 6996,
+      "maxHp": 10100,
+      "sourceId": 55
+    },
+    {
+      "type": "enemy_killed",
+      "at": 361.93333333340564,
+      "enemyId": 34,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 362.4000000000727,
+      "amount": 8,
+      "hp": 6988,
+      "maxHp": 10100,
+      "sourceId": 55
+    },
+    {
+      "type": "hero_damaged",
+      "at": 363.2333333334067,
+      "amount": 8,
+      "hp": 6980,
+      "maxHp": 10100,
+      "sourceId": 55
+    },
+    {
+      "type": "enemy_killed",
+      "at": 363.43333333340684,
+      "enemyId": 48,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 364.0666666667407,
+      "amount": 8,
+      "hp": 6972,
+      "maxHp": 10100,
+      "sourceId": 55
+    },
+    {
+      "type": "hero_damaged",
+      "at": 364.90000000007467,
+      "amount": 8,
+      "hp": 6964,
+      "maxHp": 10100,
+      "sourceId": 55
+    },
+    {
+      "type": "announcement",
+      "at": 365.5,
+      "wave": 12,
+      "text": "Hold the west ridge for the assay!"
+    },
+    {
+      "type": "hero_damaged",
+      "at": 365.73333333340867,
+      "amount": 8,
+      "hp": 6956,
+      "maxHp": 10100,
+      "sourceId": 55
+    },
+    {
+      "type": "enemy_killed",
+      "at": 365.9333333334088,
+      "enemyId": 54,
+      "xp": 4
+    },
+    {
+      "type": "announcement",
+      "at": 366,
+      "wave": 12,
+      "text": "North bank shadows want the gold!"
+    },
+    {
+      "type": "hero_damaged",
+      "at": 366.56666666674266,
+      "amount": 8,
+      "hp": 6948,
+      "maxHp": 10100,
+      "sourceId": 55
+    },
+    {
+      "type": "hero_damaged",
+      "at": 367.40000000007666,
+      "amount": 8,
+      "hp": 6940,
+      "maxHp": 10100,
+      "sourceId": 55
+    },
+    {
+      "type": "hero_damaged",
+      "at": 368.23333333341066,
+      "amount": 8,
+      "hp": 6932,
+      "maxHp": 10100,
+      "sourceId": 55
+    },
+    {
+      "type": "enemy_killed",
+      "at": 368.9333333334112,
+      "enemyId": 53,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 369.06666666674465,
+      "amount": 8,
+      "hp": 6924,
+      "maxHp": 10100,
+      "sourceId": 55
+    },
+    {
+      "type": "hero_damaged",
+      "at": 369.90000000007865,
+      "amount": 8,
+      "hp": 6916,
+      "maxHp": 10100,
+      "sourceId": 55
+    },
+    {
+      "type": "hero_damaged",
+      "at": 370.73333333341265,
+      "amount": 8,
+      "hp": 6908,
+      "maxHp": 10100,
+      "sourceId": 55
+    },
+    {
+      "type": "hero_damaged",
+      "at": 371.56666666674664,
+      "amount": 8,
+      "hp": 6900,
+      "maxHp": 10100,
+      "sourceId": 55
+    },
+    {
+      "type": "hero_damaged",
+      "at": 372.40000000008064,
+      "amount": 8,
+      "hp": 6892,
+      "maxHp": 10100,
+      "sourceId": 55
+    },
+    {
+      "type": "hero_damaged",
+      "at": 373.23333333341463,
+      "amount": 8,
+      "hp": 6884,
+      "maxHp": 10100,
+      "sourceId": 55
+    },
+    {
+      "type": "hero_damaged",
+      "at": 374.06666666674863,
+      "amount": 8,
+      "hp": 6876,
+      "maxHp": 10100,
+      "sourceId": 55
+    },
+    {
+      "type": "hero_damaged",
+      "at": 374.9000000000826,
+      "amount": 8,
+      "hp": 6868,
+      "maxHp": 10100,
+      "sourceId": 55
+    },
+    {
+      "type": "enemy_killed",
+      "at": 374.933333333416,
+      "enemyId": 55,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 376.03333333341686,
+      "amount": 8,
+      "hp": 6860,
+      "maxHp": 10100,
+      "sourceId": 58
+    },
+    {
+      "type": "hero_damaged",
+      "at": 376.86666666675086,
+      "amount": 8,
+      "hp": 6852,
+      "maxHp": 10100,
+      "sourceId": 58
+    },
+    {
+      "type": "enemy_killed",
+      "at": 377.433333333418,
+      "enemyId": 56,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 377.70000000008486,
+      "amount": 8,
+      "hp": 6844,
+      "maxHp": 10100,
+      "sourceId": 58
+    },
+    {
+      "type": "hero_damaged",
+      "at": 378.53333333341885,
+      "amount": 8,
+      "hp": 6836,
+      "maxHp": 10100,
+      "sourceId": 58
+    },
+    {
+      "type": "hero_damaged",
+      "at": 379.36666666675285,
+      "amount": 8,
+      "hp": 6828,
+      "maxHp": 10100,
+      "sourceId": 58
+    },
+    {
+      "type": "hero_damaged",
+      "at": 380.20000000008685,
+      "amount": 8,
+      "hp": 6820,
+      "maxHp": 10100,
+      "sourceId": 58
+    },
+    {
+      "type": "enemy_killed",
+      "at": 380.43333333342036,
+      "enemyId": 57,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 381.03333333342084,
+      "amount": 8,
+      "hp": 6812,
+      "maxHp": 10100,
+      "sourceId": 58
+    },
+    {
+      "type": "hero_damaged",
+      "at": 381.86666666675484,
+      "amount": 8,
+      "hp": 6804,
+      "maxHp": 10100,
+      "sourceId": 58
+    },
+    {
+      "type": "hero_damaged",
+      "at": 382.70000000008883,
+      "amount": 8,
+      "hp": 6796,
+      "maxHp": 10100,
+      "sourceId": 58
+    },
+    {
+      "type": "hero_damaged",
+      "at": 383.53333333342283,
+      "amount": 8,
+      "hp": 6788,
+      "maxHp": 10100,
+      "sourceId": 58
+    },
+    {
+      "type": "hero_damaged",
+      "at": 384.3666666667568,
+      "amount": 8,
+      "hp": 6780,
+      "maxHp": 10100,
+      "sourceId": 58
+    },
+    {
+      "type": "hero_damaged",
+      "at": 384.93333333342395,
+      "amount": 8,
+      "hp": 6772,
+      "maxHp": 10100,
+      "sourceId": 55
+    },
+    {
+      "type": "enemy_killed",
+      "at": 384.9666666667573,
+      "enemyId": 34,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 385.5333333334244,
+      "amount": 8,
+      "hp": 6764,
+      "maxHp": 10100,
+      "sourceId": 53
+    },
+    {
+      "type": "hero_damaged",
+      "at": 386.233333333425,
+      "amount": 8,
+      "hp": 6756,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 386.8666666667588,
+      "amount": 8,
+      "hp": 6748,
+      "maxHp": 10100,
+      "sourceId": 58
+    },
+    {
+      "type": "enemy_killed",
+      "at": 386.9666666667589,
+      "enemyId": 53,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 387.43333333342594,
+      "amount": 8,
+      "hp": 6740,
+      "maxHp": 10100,
+      "sourceId": 55
+    },
+    {
+      "type": "announcement",
+      "at": 387.5,
+      "wave": 13,
+      "text": "Claim Jumpers from the east ridge!"
+    },
+    {
+      "type": "announcement",
+      "at": 388,
+      "wave": 13,
+      "text": "Stake lights on the south bank!"
+    },
+    {
+      "type": "hero_damaged",
+      "at": 388.26666666675993,
+      "amount": 8,
+      "hp": 6732,
+      "maxHp": 10100,
+      "sourceId": 55
+    },
+    {
+      "type": "hero_damaged",
+      "at": 389.1000000000939,
+      "amount": 8,
+      "hp": 6724,
+      "maxHp": 10100,
+      "sourceId": 55
+    },
+    {
+      "type": "hero_damaged",
+      "at": 389.9333333334279,
+      "amount": 8,
+      "hp": 6716,
+      "maxHp": 10100,
+      "sourceId": 55
+    },
+    {
+      "type": "wave_started",
+      "at": 390,
+      "wave": 13
+    },
+    {
+      "type": "hero_damaged",
+      "at": 390.7666666667619,
+      "amount": 8,
+      "hp": 6708,
+      "maxHp": 10100,
+      "sourceId": 55
+    },
+    {
+      "type": "enemy_killed",
+      "at": 391.00000000009544,
+      "enemyId": 55,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 391.8666666667628,
+      "amount": 8,
+      "hp": 6700,
+      "maxHp": 10100,
+      "sourceId": 58
+    },
+    {
+      "type": "hero_damaged",
+      "at": 392.7000000000968,
+      "amount": 8,
+      "hp": 6692,
+      "maxHp": 10100,
+      "sourceId": 58
+    },
+    {
+      "type": "hero_damaged",
+      "at": 393.5333333334308,
+      "amount": 8,
+      "hp": 6684,
+      "maxHp": 10100,
+      "sourceId": 58
+    },
+    {
+      "type": "hero_damaged",
+      "at": 394.3666666667648,
+      "amount": 8,
+      "hp": 6676,
+      "maxHp": 10100,
+      "sourceId": 58
+    },
+    {
+      "type": "enemy_killed",
+      "at": 395.0000000000986,
+      "enemyId": 56,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 395.2000000000988,
+      "amount": 8,
+      "hp": 6668,
+      "maxHp": 10100,
+      "sourceId": 58
+    },
+    {
+      "type": "announcement",
+      "at": 395.5,
+      "wave": 13,
+      "text": "Hold the west ridge for the assay!"
+    },
+    {
+      "type": "announcement",
+      "at": 396,
+      "wave": 13,
+      "text": "North bank shadows want the gold!"
+    },
+    {
+      "type": "hero_damaged",
+      "at": 396.0333333334328,
+      "amount": 8,
+      "hp": 6660,
+      "maxHp": 10100,
+      "sourceId": 58
+    },
+    {
+      "type": "hero_damaged",
+      "at": 396.56666666676654,
+      "amount": 8,
+      "hp": 6652,
+      "maxHp": 10100,
+      "sourceId": 53
+    },
+    {
+      "type": "hero_damaged",
+      "at": 397.40000000010053,
+      "amount": 8,
+      "hp": 6644,
+      "maxHp": 10100,
+      "sourceId": 53
+    },
+    {
+      "type": "hero_damaged",
+      "at": 398.23333333343453,
+      "amount": 8,
+      "hp": 6636,
+      "maxHp": 10100,
+      "sourceId": 53
+    },
+    {
+      "type": "hero_damaged",
+      "at": 399.0666666667685,
+      "amount": 8,
+      "hp": 6628,
+      "maxHp": 10100,
+      "sourceId": 53
+    },
+    {
+      "type": "hero_damaged",
+      "at": 399.9000000001025,
+      "amount": 8,
+      "hp": 6620,
+      "maxHp": 10100,
+      "sourceId": 53
+    },
+    {
+      "type": "hero_damaged",
+      "at": 400.7333333334365,
+      "amount": 8,
+      "hp": 6612,
+      "maxHp": 10100,
+      "sourceId": 53
+    },
+    {
+      "type": "hero_damaged",
+      "at": 401.5666666667705,
+      "amount": 8,
+      "hp": 6604,
+      "maxHp": 10100,
+      "sourceId": 53
+    },
+    {
+      "type": "hero_damaged",
+      "at": 402.4000000001045,
+      "amount": 8,
+      "hp": 6596,
+      "maxHp": 10100,
+      "sourceId": 53
+    },
+    {
+      "type": "enemy_killed",
+      "at": 403.03333333343835,
+      "enemyId": 53,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 403.53333333343875,
+      "amount": 8,
+      "hp": 6588,
+      "maxHp": 10100,
+      "sourceId": 58
+    },
+    {
+      "type": "hero_damaged",
+      "at": 404.36666666677274,
+      "amount": 8,
+      "hp": 6580,
+      "maxHp": 10100,
+      "sourceId": 58
+    },
+    {
+      "type": "enemy_killed",
+      "at": 404.53333333343954,
+      "enemyId": 57,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 405.20000000010674,
+      "amount": 8,
+      "hp": 6572,
+      "maxHp": 10100,
+      "sourceId": 58
+    },
+    {
+      "type": "hero_damaged",
+      "at": 406.03333333344074,
+      "amount": 8,
+      "hp": 6564,
+      "maxHp": 10100,
+      "sourceId": 58
+    },
+    {
+      "type": "hero_damaged",
+      "at": 406.86666666677473,
+      "amount": 8,
+      "hp": 6556,
+      "maxHp": 10100,
+      "sourceId": 58
+    },
+    {
+      "type": "enemy_killed",
+      "at": 407.03333333344153,
+      "enemyId": 58,
+      "xp": 4
+    },
+    {
+      "type": "enemy_killed",
+      "at": 407.53333333344193,
+      "enemyId": 34,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 407.9000000001089,
+      "amount": 8,
+      "hp": 6548,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 408.7333333334429,
+      "amount": 8,
+      "hp": 6540,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 409.5666666667769,
+      "amount": 8,
+      "hp": 6532,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "enemy_killed",
+      "at": 410.0333333334439,
+      "enemyId": 59,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 413.6333333334468,
+      "amount": 8,
+      "hp": 6524,
+      "maxHp": 10100,
+      "sourceId": 53
+    },
+    {
+      "type": "hero_damaged",
+      "at": 414.4666666667808,
+      "amount": 8,
+      "hp": 6516,
+      "maxHp": 10100,
+      "sourceId": 53
+    },
+    {
+      "type": "enemy_killed",
+      "at": 414.83333333344774,
+      "enemyId": 53,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 415.0333333334479,
+      "amount": 8,
+      "hp": 6508,
+      "maxHp": 10100,
+      "sourceId": 57
+    },
+    {
+      "type": "hero_damaged",
+      "at": 415.8666666667819,
+      "amount": 8,
+      "hp": 6500,
+      "maxHp": 10100,
+      "sourceId": 57
+    },
+    {
+      "type": "hero_damaged",
+      "at": 416.6333333334492,
+      "amount": 8,
+      "hp": 6492,
+      "maxHp": 10100,
+      "sourceId": 34
+    },
+    {
+      "type": "hero_damaged",
+      "at": 417.46666666678317,
+      "amount": 8,
+      "hp": 6484,
+      "maxHp": 10100,
+      "sourceId": 34
+    },
+    {
+      "type": "announcement",
+      "at": 417.5,
+      "wave": 14,
+      "text": "Claim Jumpers from the north bank!"
+    },
+    {
+      "type": "announcement",
+      "at": 418,
+      "wave": 14,
+      "text": "Stake lights on the south bank!"
+    },
+    {
+      "type": "hero_damaged",
+      "at": 418.30000000011717,
+      "amount": 8,
+      "hp": 6476,
+      "maxHp": 10100,
+      "sourceId": 34
+    },
+    {
+      "type": "hero_damaged",
+      "at": 419.13333333345116,
+      "amount": 8,
+      "hp": 6468,
+      "maxHp": 10100,
+      "sourceId": 34
+    },
+    {
+      "type": "hero_damaged",
+      "at": 419.96666666678516,
+      "amount": 8,
+      "hp": 6460,
+      "maxHp": 10100,
+      "sourceId": 34
+    },
+    {
+      "type": "wave_started",
+      "at": 420,
+      "wave": 14
+    },
+    {
+      "type": "hero_damaged",
+      "at": 420.80000000011916,
+      "amount": 8,
+      "hp": 6452,
+      "maxHp": 10100,
+      "sourceId": 34
+    },
+    {
+      "type": "enemy_killed",
+      "at": 421.3333333334529,
+      "enemyId": 34,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 421.70000000011987,
+      "amount": 8,
+      "hp": 6444,
+      "maxHp": 10100,
+      "sourceId": 57
+    },
+    {
+      "type": "hero_damaged",
+      "at": 422.53333333345387,
+      "amount": 8,
+      "hp": 6436,
+      "maxHp": 10100,
+      "sourceId": 57
+    },
+    {
+      "type": "hero_damaged",
+      "at": 423.36666666678786,
+      "amount": 8,
+      "hp": 6428,
+      "maxHp": 10100,
+      "sourceId": 57
+    },
+    {
+      "type": "enemy_killed",
+      "at": 423.8333333334549,
+      "enemyId": 57,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 424.2666666667886,
+      "amount": 8,
+      "hp": 6420,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 425.1000000001226,
+      "amount": 8,
+      "hp": 6412,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "announcement",
+      "at": 425.5,
+      "wave": 14,
+      "text": "Hold the south bank for the assay!"
+    },
+    {
+      "type": "hero_damaged",
+      "at": 425.9333333334566,
+      "amount": 8,
+      "hp": 6404,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "announcement",
+      "at": 426,
+      "wave": 14,
+      "text": "East ridge dust is moving!"
+    },
+    {
+      "type": "hero_damaged",
+      "at": 426.76666666679057,
+      "amount": 8,
+      "hp": 6396,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 427.60000000012457,
+      "amount": 8,
+      "hp": 6388,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 428.43333333345856,
+      "amount": 8,
+      "hp": 6380,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 429.26666666679256,
+      "amount": 8,
+      "hp": 6372,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 430.10000000012656,
+      "amount": 8,
+      "hp": 6364,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 430.93333333346055,
+      "amount": 8,
+      "hp": 6356,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 431.76666666679455,
+      "amount": 8,
+      "hp": 6348,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "enemy_killed",
+      "at": 431.83333333346127,
+      "enemyId": 53,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 432.60000000012855,
+      "amount": 8,
+      "hp": 6340,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 433.43333333346254,
+      "amount": 8,
+      "hp": 6332,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 434.16666666679646,
+      "amount": 8,
+      "hp": 6324,
+      "maxHp": 10100,
+      "sourceId": 34
+    },
+    {
+      "type": "hero_damaged",
+      "at": 434.7000000001302,
+      "amount": 8,
+      "hp": 6316,
+      "maxHp": 10100,
+      "sourceId": 57
+    },
+    {
+      "type": "hero_damaged",
+      "at": 435.3000000001307,
+      "amount": 8,
+      "hp": 6308,
+      "maxHp": 10100,
+      "sourceId": 58
+    },
+    {
+      "type": "hero_damaged",
+      "at": 435.83333333346445,
+      "amount": 8,
+      "hp": 6300,
+      "maxHp": 10100,
+      "sourceId": 34
+    },
+    {
+      "type": "hero_damaged",
+      "at": 436.3666666667982,
+      "amount": 8,
+      "hp": 6292,
+      "maxHp": 10100,
+      "sourceId": 57
+    },
+    {
+      "type": "hero_damaged",
+      "at": 436.9666666667987,
+      "amount": 8,
+      "hp": 6284,
+      "maxHp": 10100,
+      "sourceId": 58
+    },
+    {
+      "type": "hero_damaged",
+      "at": 437.50000000013245,
+      "amount": 8,
+      "hp": 6276,
+      "maxHp": 10100,
+      "sourceId": 34
+    },
+    {
+      "type": "hero_damaged",
+      "at": 438.0333333334662,
+      "amount": 8,
+      "hp": 6268,
+      "maxHp": 10100,
+      "sourceId": 57
+    },
+    {
+      "type": "hero_damaged",
+      "at": 438.6333333334667,
+      "amount": 8,
+      "hp": 6260,
+      "maxHp": 10100,
+      "sourceId": 58
+    },
+    {
+      "type": "enemy_killed",
+      "at": 438.8666666668002,
+      "enemyId": 34,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 439.2666666668005,
+      "amount": 8,
+      "hp": 6252,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 440.1000000001345,
+      "amount": 8,
+      "hp": 6244,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 440.9333333334685,
+      "amount": 8,
+      "hp": 6236,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 441.7666666668025,
+      "amount": 8,
+      "hp": 6228,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 442.6000000001365,
+      "amount": 8,
+      "hp": 6220,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 443.4333333334705,
+      "amount": 8,
+      "hp": 6212,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "enemy_killed",
+      "at": 443.8666666668042,
+      "enemyId": 57,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 444.2666666668045,
+      "amount": 8,
+      "hp": 6204,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 445.1000000001385,
+      "amount": 8,
+      "hp": 6196,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 445.9333333334725,
+      "amount": 8,
+      "hp": 6188,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 446.7666666668065,
+      "amount": 8,
+      "hp": 6180,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "announcement",
+      "at": 447.5,
+      "wave": 15,
+      "text": "Claim Jumpers from the north bank!"
+    },
+    {
+      "type": "hero_damaged",
+      "at": 447.6000000001405,
+      "amount": 8,
+      "hp": 6172,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "announcement",
+      "at": 448,
+      "wave": 15,
+      "text": "Brass warning on the west ridge!"
+    },
+    {
+      "type": "hero_damaged",
+      "at": 448.4333333334745,
+      "amount": 8,
+      "hp": 6164,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "enemy_killed",
+      "at": 448.86666666680816,
+      "enemyId": 53,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 449.2666666668085,
+      "amount": 8,
+      "hp": 6156,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "wave_started",
+      "at": 450,
+      "wave": 15
+    },
+    {
+      "type": "hero_damaged",
+      "at": 450.1000000001425,
+      "amount": 8,
+      "hp": 6148,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 450.93333333347647,
+      "amount": 8,
+      "hp": 6140,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 451.76666666681047,
+      "amount": 8,
+      "hp": 6132,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 452.60000000014446,
+      "amount": 8,
+      "hp": 6124,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 453.43333333347846,
+      "amount": 8,
+      "hp": 6116,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "enemy_killed",
+      "at": 453.86666666681214,
+      "enemyId": 34,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 454.26666666681245,
+      "amount": 8,
+      "hp": 6108,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 455.10000000014645,
+      "amount": 8,
+      "hp": 6100,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "announcement",
+      "at": 455.5,
+      "wave": 15,
+      "text": "Hold the west ridge for the assay!"
+    },
+    {
+      "type": "hero_damaged",
+      "at": 455.93333333348045,
+      "amount": 8,
+      "hp": 6092,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "announcement",
+      "at": 456,
+      "wave": 15,
+      "text": "South bank dust is moving!"
+    },
+    {
+      "type": "hero_damaged",
+      "at": 456.76666666681444,
+      "amount": 8,
+      "hp": 6084,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 457.60000000014844,
+      "amount": 8,
+      "hp": 6076,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 458.43333333348244,
+      "amount": 8,
+      "hp": 6068,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "enemy_killed",
+      "at": 458.9000000001495,
+      "enemyId": 57,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 459.26666666681643,
+      "amount": 8,
+      "hp": 6060,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 459.966666666817,
+      "amount": 8,
+      "hp": 6052,
+      "maxHp": 10100,
+      "sourceId": 53
+    },
+    {
+      "type": "hero_damaged",
+      "at": 460.800000000151,
+      "amount": 8,
+      "hp": 6044,
+      "maxHp": 10100,
+      "sourceId": 53
+    },
+    {
+      "type": "hero_damaged",
+      "at": 461.633333333485,
+      "amount": 8,
+      "hp": 6036,
+      "maxHp": 10100,
+      "sourceId": 53
+    },
+    {
+      "type": "enemy_killed",
+      "at": 462.40000000015226,
+      "enemyId": 58,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 462.466666666819,
+      "amount": 8,
+      "hp": 6028,
+      "maxHp": 10100,
+      "sourceId": 53
+    },
+    {
+      "type": "hero_damaged",
+      "at": 463.300000000153,
+      "amount": 8,
+      "hp": 6020,
+      "maxHp": 10100,
+      "sourceId": 53
+    },
+    {
+      "type": "hero_damaged",
+      "at": 464.133333333487,
+      "amount": 8,
+      "hp": 6012,
+      "maxHp": 10100,
+      "sourceId": 53
+    },
+    {
+      "type": "hero_damaged",
+      "at": 464.96666666682097,
+      "amount": 8,
+      "hp": 6004,
+      "maxHp": 10100,
+      "sourceId": 53
+    },
+    {
+      "type": "hero_damaged",
+      "at": 465.80000000015497,
+      "amount": 8,
+      "hp": 5996,
+      "maxHp": 10100,
+      "sourceId": 53
+    },
+    {
+      "type": "enemy_killed",
+      "at": 465.90000000015505,
+      "enemyId": 53,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 466.7666666668224,
+      "amount": 8,
+      "hp": 5988,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "enemy_killed",
+      "at": 467.40000000015624,
+      "enemyId": 59,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 469.1000000001576,
+      "amount": 8,
+      "hp": 5980,
+      "maxHp": 10100,
+      "sourceId": 57
+    },
+    {
+      "type": "hero_damaged",
+      "at": 469.9333333334916,
+      "amount": 8,
+      "hp": 5972,
+      "maxHp": 10100,
+      "sourceId": 57
+    },
+    {
+      "type": "hero_damaged",
+      "at": 470.7666666668256,
+      "amount": 8,
+      "hp": 5964,
+      "maxHp": 10100,
+      "sourceId": 57
+    },
+    {
+      "type": "hero_damaged",
+      "at": 471.6000000001596,
+      "amount": 8,
+      "hp": 5956,
+      "maxHp": 10100,
+      "sourceId": 57
+    },
+    {
+      "type": "hero_damaged",
+      "at": 472.13333333349334,
+      "amount": 8,
+      "hp": 5948,
+      "maxHp": 10100,
+      "sourceId": 58
+    },
+    {
+      "type": "enemy_killed",
+      "at": 472.9000000001606,
+      "enemyId": 57,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 472.96666666682734,
+      "amount": 8,
+      "hp": 5940,
+      "maxHp": 10100,
+      "sourceId": 58
+    },
+    {
+      "type": "hero_damaged",
+      "at": 473.80000000016133,
+      "amount": 8,
+      "hp": 5932,
+      "maxHp": 10100,
+      "sourceId": 58
+    },
+    {
+      "type": "hero_damaged",
+      "at": 474.63333333349533,
+      "amount": 8,
+      "hp": 5924,
+      "maxHp": 10100,
+      "sourceId": 58
+    },
+    {
+      "type": "hero_damaged",
+      "at": 475.4666666668293,
+      "amount": 8,
+      "hp": 5916,
+      "maxHp": 10100,
+      "sourceId": 58
+    },
+    {
+      "type": "hero_damaged",
+      "at": 476.3000000001633,
+      "amount": 8,
+      "hp": 5908,
+      "maxHp": 10100,
+      "sourceId": 58
+    },
+    {
+      "type": "hero_damaged",
+      "at": 477.1333333334973,
+      "amount": 8,
+      "hp": 5900,
+      "maxHp": 10100,
+      "sourceId": 58
+    },
+    {
+      "type": "announcement",
+      "at": 477.5,
+      "wave": 16,
+      "text": "Claim Jumpers from the west ridge!"
+    },
+    {
+      "type": "hero_damaged",
+      "at": 477.9666666668313,
+      "amount": 8,
+      "hp": 5892,
+      "maxHp": 10100,
+      "sourceId": 58
+    },
+    {
+      "type": "announcement",
+      "at": 478,
+      "wave": 16,
+      "text": "Brass warning on the north bank!"
+    },
+    {
+      "type": "hero_damaged",
+      "at": 478.8000000001653,
+      "amount": 8,
+      "hp": 5884,
+      "maxHp": 10100,
+      "sourceId": 58
+    },
+    {
+      "type": "hero_damaged",
+      "at": 479.6333333334993,
+      "amount": 8,
+      "hp": 5876,
+      "maxHp": 10100,
+      "sourceId": 58
+    },
+    {
+      "type": "wave_started",
+      "at": 480,
+      "wave": 16
+    },
+    {
+      "type": "hero_damaged",
+      "at": 480.4666666668333,
+      "amount": 8,
+      "hp": 5868,
+      "maxHp": 10100,
+      "sourceId": 58
+    },
+    {
+      "type": "enemy_killed",
+      "at": 480.900000000167,
+      "enemyId": 53,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 481.3000000001673,
+      "amount": 8,
+      "hp": 5860,
+      "maxHp": 10100,
+      "sourceId": 58
+    },
+    {
+      "type": "hero_damaged",
+      "at": 482.1333333335013,
+      "amount": 8,
+      "hp": 5852,
+      "maxHp": 10100,
+      "sourceId": 58
+    },
+    {
+      "type": "hero_damaged",
+      "at": 482.9666666668353,
+      "amount": 8,
+      "hp": 5844,
+      "maxHp": 10100,
+      "sourceId": 58
+    },
+    {
+      "type": "hero_damaged",
+      "at": 483.8000000001693,
+      "amount": 8,
+      "hp": 5836,
+      "maxHp": 10100,
+      "sourceId": 58
+    },
+    {
+      "type": "enemy_killed",
+      "at": 483.90000000016937,
+      "enemyId": 58,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 484.66666666683665,
+      "amount": 8,
+      "hp": 5828,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "announcement",
+      "at": 485.5,
+      "wave": 16,
+      "text": "Hold the east ridge for the assay!"
+    },
+    {
+      "type": "hero_damaged",
+      "at": 485.50000000017064,
+      "amount": 8,
+      "hp": 5820,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "announcement",
+      "at": 486,
+      "wave": 16,
+      "text": "North bank shadows want the gold!"
+    },
+    {
+      "type": "hero_damaged",
+      "at": 486.33333333350464,
+      "amount": 8,
+      "hp": 5812,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 487.16666666683864,
+      "amount": 8,
+      "hp": 5804,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 488.00000000017263,
+      "amount": 8,
+      "hp": 5796,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 488.83333333350663,
+      "amount": 8,
+      "hp": 5788,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "enemy_killed",
+      "at": 489.40000000017375,
+      "enemyId": 57,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 489.6666666668406,
+      "amount": 8,
+      "hp": 5780,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 490.5000000001746,
+      "amount": 8,
+      "hp": 5772,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 491.3333333335086,
+      "amount": 8,
+      "hp": 5764,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 492.1666666668426,
+      "amount": 8,
+      "hp": 5756,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 493.0000000001766,
+      "amount": 8,
+      "hp": 5748,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 493.8333333335106,
+      "amount": 8,
+      "hp": 5740,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 494.6666666668446,
+      "amount": 8,
+      "hp": 5732,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "enemy_killed",
+      "at": 494.9000000001781,
+      "enemyId": 59,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 495.36666666684516,
+      "amount": 8,
+      "hp": 5724,
+      "maxHp": 10100,
+      "sourceId": 53
+    },
+    {
+      "type": "hero_damaged",
+      "at": 496.20000000017916,
+      "amount": 8,
+      "hp": 5716,
+      "maxHp": 10100,
+      "sourceId": 53
+    },
+    {
+      "type": "hero_damaged",
+      "at": 497.03333333351316,
+      "amount": 8,
+      "hp": 5708,
+      "maxHp": 10100,
+      "sourceId": 53
+    },
+    {
+      "type": "hero_damaged",
+      "at": 497.86666666684715,
+      "amount": 8,
+      "hp": 5700,
+      "maxHp": 10100,
+      "sourceId": 53
+    },
+    {
+      "type": "hero_damaged",
+      "at": 498.70000000018115,
+      "amount": 8,
+      "hp": 5692,
+      "maxHp": 10100,
+      "sourceId": 53
+    },
+    {
+      "type": "hero_damaged",
+      "at": 499.53333333351515,
+      "amount": 8,
+      "hp": 5684,
+      "maxHp": 10100,
+      "sourceId": 53
+    },
+    {
+      "type": "hero_damaged",
+      "at": 500.36666666684914,
+      "amount": 8,
+      "hp": 5676,
+      "maxHp": 10100,
+      "sourceId": 53
+    },
+    {
+      "type": "enemy_killed",
+      "at": 500.93333333351626,
+      "enemyId": 53,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 501.36666666684994,
+      "amount": 8,
+      "hp": 5668,
+      "maxHp": 10100,
+      "sourceId": 58
+    },
+    {
+      "type": "hero_damaged",
+      "at": 502.20000000018393,
+      "amount": 8,
+      "hp": 5660,
+      "maxHp": 10100,
+      "sourceId": 58
+    },
+    {
+      "type": "hero_damaged",
+      "at": 503.03333333351793,
+      "amount": 8,
+      "hp": 5652,
+      "maxHp": 10100,
+      "sourceId": 58
+    },
+    {
+      "type": "hero_damaged",
+      "at": 503.8666666668519,
+      "amount": 8,
+      "hp": 5644,
+      "maxHp": 10100,
+      "sourceId": 58
+    },
+    {
+      "type": "hero_damaged",
+      "at": 504.7000000001859,
+      "amount": 8,
+      "hp": 5636,
+      "maxHp": 10100,
+      "sourceId": 58
+    },
+    {
+      "type": "hero_damaged",
+      "at": 505.5333333335199,
+      "amount": 8,
+      "hp": 5628,
+      "maxHp": 10100,
+      "sourceId": 58
+    },
+    {
+      "type": "hero_damaged",
+      "at": 506.3666666668539,
+      "amount": 8,
+      "hp": 5620,
+      "maxHp": 10100,
+      "sourceId": 58
+    },
+    {
+      "type": "hero_damaged",
+      "at": 507.2000000001879,
+      "amount": 8,
+      "hp": 5612,
+      "maxHp": 10100,
+      "sourceId": 58
+    },
+    {
+      "type": "enemy_killed",
+      "at": 507.43333333352143,
+      "enemyId": 57,
+      "xp": 4
+    },
+    {
+      "type": "announcement",
+      "at": 507.5,
+      "wave": 17,
+      "text": "Claim Jumpers from the north bank!"
+    },
+    {
+      "type": "announcement",
+      "at": 508,
+      "wave": 17,
+      "text": "Beacon coils hum eastward!"
+    },
+    {
+      "type": "hero_damaged",
+      "at": 508.0333333335219,
+      "amount": 8,
+      "hp": 5604,
+      "maxHp": 10100,
+      "sourceId": 58
+    },
+    {
+      "type": "hero_damaged",
+      "at": 508.8666666668559,
+      "amount": 8,
+      "hp": 5596,
+      "maxHp": 10100,
+      "sourceId": 58
+    },
+    {
+      "type": "hero_damaged",
+      "at": 509.7000000001899,
+      "amount": 8,
+      "hp": 5588,
+      "maxHp": 10100,
+      "sourceId": 58
+    },
+    {
+      "type": "wave_started",
+      "at": 510,
+      "wave": 17
+    },
+    {
+      "type": "hero_damaged",
+      "at": 510.5333333335239,
+      "amount": 8,
+      "hp": 5580,
+      "maxHp": 10100,
+      "sourceId": 58
+    },
+    {
+      "type": "hero_damaged",
+      "at": 511.1333333335244,
+      "amount": 8,
+      "hp": 5572,
+      "maxHp": 10100,
+      "sourceId": 53
+    },
+    {
+      "type": "hero_damaged",
+      "at": 511.9666666668584,
+      "amount": 8,
+      "hp": 5564,
+      "maxHp": 10100,
+      "sourceId": 53
+    },
+    {
+      "type": "hero_damaged",
+      "at": 512.800000000191,
+      "amount": 8,
+      "hp": 5556,
+      "maxHp": 10100,
+      "sourceId": 53
+    },
+    {
+      "type": "enemy_killed",
+      "at": 513.4333333335237,
+      "enemyId": 58,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 513.6333333335235,
+      "amount": 8,
+      "hp": 5548,
+      "maxHp": 10100,
+      "sourceId": 53
+    },
+    {
+      "type": "hero_damaged",
+      "at": 514.4666666668561,
+      "amount": 8,
+      "hp": 5540,
+      "maxHp": 10100,
+      "sourceId": 53
+    },
+    {
+      "type": "hero_damaged",
+      "at": 515.3000000001887,
+      "amount": 8,
+      "hp": 5532,
+      "maxHp": 10100,
+      "sourceId": 53
+    },
+    {
+      "type": "announcement",
+      "at": 515.5,
+      "wave": 17,
+      "text": "Hold the north bank for the assay!"
+    },
+    {
+      "type": "announcement",
+      "at": 516,
+      "wave": 17,
+      "text": "West ridge shadows want the gold!"
+    },
+    {
+      "type": "hero_damaged",
+      "at": 516.1333333335213,
+      "amount": 8,
+      "hp": 5524,
+      "maxHp": 10100,
+      "sourceId": 53
+    },
+    {
+      "type": "hero_damaged",
+      "at": 516.9666666668538,
+      "amount": 8,
+      "hp": 5516,
+      "maxHp": 10100,
+      "sourceId": 53
+    },
+    {
+      "type": "hero_damaged",
+      "at": 517.8000000001864,
+      "amount": 8,
+      "hp": 5508,
+      "maxHp": 10100,
+      "sourceId": 53
+    },
+    {
+      "type": "hero_damaged",
+      "at": 518.633333333519,
+      "amount": 8,
+      "hp": 5500,
+      "maxHp": 10100,
+      "sourceId": 53
+    },
+    {
+      "type": "enemy_killed",
+      "at": 518.9333333335187,
+      "enemyId": 53,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 519.7000000001847,
+      "amount": 8,
+      "hp": 5492,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 520.5333333335172,
+      "amount": 8,
+      "hp": 5484,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 521.3666666668498,
+      "amount": 8,
+      "hp": 5476,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 522.2000000001824,
+      "amount": 8,
+      "hp": 5468,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 523.033333333515,
+      "amount": 8,
+      "hp": 5460,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 523.8666666668476,
+      "amount": 8,
+      "hp": 5452,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 524.7000000001801,
+      "amount": 8,
+      "hp": 5444,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 525.5333333335127,
+      "amount": 8,
+      "hp": 5436,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "enemy_killed",
+      "at": 525.9666666668456,
+      "enemyId": 57,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 526.3666666668453,
+      "amount": 8,
+      "hp": 5428,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 527.2000000001779,
+      "amount": 8,
+      "hp": 5420,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 528.0333333335104,
+      "amount": 8,
+      "hp": 5412,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 528.866666666843,
+      "amount": 8,
+      "hp": 5404,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 529.7000000001756,
+      "amount": 8,
+      "hp": 5396,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 530.5333333335082,
+      "amount": 8,
+      "hp": 5388,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 531.3666666668407,
+      "amount": 8,
+      "hp": 5380,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 532.2000000001733,
+      "amount": 8,
+      "hp": 5372,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 533.0333333335059,
+      "amount": 8,
+      "hp": 5364,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 533.8666666668385,
+      "amount": 8,
+      "hp": 5356,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 534.700000000171,
+      "amount": 8,
+      "hp": 5348,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 535.5333333335036,
+      "amount": 8,
+      "hp": 5340,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 536.3666666668362,
+      "amount": 8,
+      "hp": 5332,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 537.2000000001688,
+      "amount": 8,
+      "hp": 5324,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "announcement",
+      "at": 537.5,
+      "wave": 18,
+      "text": "Claim Jumpers from the south bank!"
+    },
+    {
+      "type": "announcement",
+      "at": 538,
+      "wave": 18,
+      "text": "Brass warning on the north bank!"
+    },
+    {
+      "type": "hero_damaged",
+      "at": 538.0333333335013,
+      "amount": 8,
+      "hp": 5316,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 538.8666666668339,
+      "amount": 8,
+      "hp": 5308,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 539.7000000001665,
+      "amount": 8,
+      "hp": 5300,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "wave_started",
+      "at": 540,
+      "wave": 18
+    },
+    {
+      "type": "hero_damaged",
+      "at": 540.5333333334991,
+      "amount": 8,
+      "hp": 5292,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 541.3666666668316,
+      "amount": 8,
+      "hp": 5284,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "enemy_killed",
+      "at": 541.4666666668315,
+      "enemyId": 53,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 542.2000000001642,
+      "amount": 8,
+      "hp": 5276,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 543.0333333334968,
+      "amount": 8,
+      "hp": 5268,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 543.8666666668294,
+      "amount": 8,
+      "hp": 5260,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "enemy_killed",
+      "at": 544.4666666668288,
+      "enemyId": 57,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 544.7000000001619,
+      "amount": 8,
+      "hp": 5252,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "announcement",
+      "at": 545.5,
+      "wave": 18,
+      "text": "Hold the east ridge for the assay!"
+    },
+    {
+      "type": "hero_damaged",
+      "at": 545.5333333334945,
+      "amount": 8,
+      "hp": 5244,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "announcement",
+      "at": 546,
+      "wave": 18,
+      "text": "South bank dust is moving!"
+    },
+    {
+      "type": "hero_damaged",
+      "at": 546.3666666668271,
+      "amount": 8,
+      "hp": 5236,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 547.2000000001597,
+      "amount": 8,
+      "hp": 5228,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 548.0333333334922,
+      "amount": 8,
+      "hp": 5220,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 548.8666666668248,
+      "amount": 8,
+      "hp": 5212,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 549.7000000001574,
+      "amount": 8,
+      "hp": 5204,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "enemy_killed",
+      "at": 550.4666666668234,
+      "enemyId": 58,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 550.53333333349,
+      "amount": 8,
+      "hp": 5196,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 551.3666666668225,
+      "amount": 8,
+      "hp": 5188,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "enemy_killed",
+      "at": 551.966666666822,
+      "enemyId": 59,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 555.3333333334856,
+      "amount": 8,
+      "hp": 5180,
+      "maxHp": 10100,
+      "sourceId": 53
+    },
+    {
+      "type": "hero_damaged",
+      "at": 556.1666666668182,
+      "amount": 8,
+      "hp": 5172,
+      "maxHp": 10100,
+      "sourceId": 53
+    },
+    {
+      "type": "hero_damaged",
+      "at": 557.0000000001507,
+      "amount": 8,
+      "hp": 5164,
+      "maxHp": 10100,
+      "sourceId": 53
+    },
+    {
+      "type": "hero_damaged",
+      "at": 557.8333333334833,
+      "amount": 8,
+      "hp": 5156,
+      "maxHp": 10100,
+      "sourceId": 53
+    },
+    {
+      "type": "hero_damaged",
+      "at": 558.6666666668159,
+      "amount": 8,
+      "hp": 5148,
+      "maxHp": 10100,
+      "sourceId": 53
+    },
+    {
+      "type": "hero_damaged",
+      "at": 559.5000000001485,
+      "amount": 8,
+      "hp": 5140,
+      "maxHp": 10100,
+      "sourceId": 53
+    },
+    {
+      "type": "enemy_killed",
+      "at": 559.8000000001482,
+      "enemyId": 53,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 560.5333333334809,
+      "amount": 8,
+      "hp": 5132,
+      "maxHp": 10100,
+      "sourceId": 58
+    },
+    {
+      "type": "hero_damaged",
+      "at": 561.2333333334802,
+      "amount": 8,
+      "hp": 5124,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 562.0666666668128,
+      "amount": 8,
+      "hp": 5116,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 562.9000000001454,
+      "amount": 8,
+      "hp": 5108,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 563.733333333478,
+      "amount": 8,
+      "hp": 5100,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 564.5666666668105,
+      "amount": 8,
+      "hp": 5092,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 565.4000000001431,
+      "amount": 8,
+      "hp": 5084,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 566.2333333334757,
+      "amount": 8,
+      "hp": 5076,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 567.0666666668083,
+      "amount": 8,
+      "hp": 5068,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "enemy_killed",
+      "at": 567.3000000001414,
+      "enemyId": 57,
+      "xp": 4
+    },
+    {
+      "type": "announcement",
+      "at": 567.5,
+      "wave": 19,
+      "text": "Claim Jumpers from the north bank!"
+    },
+    {
+      "type": "hero_damaged",
+      "at": 567.9000000001408,
+      "amount": 8,
+      "hp": 5060,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "announcement",
+      "at": 568,
+      "wave": 19,
+      "text": "Stake lights on the south bank!"
+    },
+    {
+      "type": "hero_damaged",
+      "at": 568.7333333334734,
+      "amount": 8,
+      "hp": 5052,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 569.566666666806,
+      "amount": 8,
+      "hp": 5044,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "wave_started",
+      "at": 570,
+      "wave": 19
+    },
+    {
+      "type": "hero_damaged",
+      "at": 570.4000000001386,
+      "amount": 8,
+      "hp": 5036,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 571.2333333334711,
+      "amount": 8,
+      "hp": 5028,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 572.0666666668037,
+      "amount": 8,
+      "hp": 5020,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 572.9000000001363,
+      "amount": 8,
+      "hp": 5012,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 573.7333333334689,
+      "amount": 8,
+      "hp": 5004,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 574.5666666668014,
+      "amount": 8,
+      "hp": 4996,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "enemy_killed",
+      "at": 574.8000000001346,
+      "enemyId": 58,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 575.400000000134,
+      "amount": 8,
+      "hp": 4988,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "announcement",
+      "at": 575.5,
+      "wave": 19,
+      "text": "Hold the north bank for the assay!"
+    },
+    {
+      "type": "announcement",
+      "at": 576,
+      "wave": 19,
+      "text": "West ridge shadows want the gold!"
+    },
+    {
+      "type": "hero_damaged",
+      "at": 576.2333333334666,
+      "amount": 8,
+      "hp": 4980,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 577.0666666667992,
+      "amount": 8,
+      "hp": 4972,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 577.9000000001317,
+      "amount": 8,
+      "hp": 4964,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 578.7333333334643,
+      "amount": 8,
+      "hp": 4956,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 579.5666666667969,
+      "amount": 8,
+      "hp": 4948,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 580.4000000001295,
+      "amount": 8,
+      "hp": 4940,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 581.233333333462,
+      "amount": 8,
+      "hp": 4932,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 582.0666666667946,
+      "amount": 8,
+      "hp": 4924,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "enemy_killed",
+      "at": 582.3000000001277,
+      "enemyId": 53,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 582.9000000001272,
+      "amount": 8,
+      "hp": 4916,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 583.7333333334598,
+      "amount": 8,
+      "hp": 4908,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 584.5666666667923,
+      "amount": 8,
+      "hp": 4900,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 585.4000000001249,
+      "amount": 8,
+      "hp": 4892,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 586.2333333334575,
+      "amount": 8,
+      "hp": 4884,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 587.0666666667901,
+      "amount": 8,
+      "hp": 4876,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 587.9000000001226,
+      "amount": 8,
+      "hp": 4868,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 588.7333333334552,
+      "amount": 8,
+      "hp": 4860,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 589.5666666667878,
+      "amount": 8,
+      "hp": 4852,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 590.4000000001204,
+      "amount": 8,
+      "hp": 4844,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "enemy_killed",
+      "at": 590.80000000012,
+      "enemyId": 57,
+      "xp": 4
+    },
+    {
+      "type": "hero_damaged",
+      "at": 591.233333333453,
+      "amount": 8,
+      "hp": 4836,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 592.0666666667855,
+      "amount": 8,
+      "hp": 4828,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 592.9000000001181,
+      "amount": 8,
+      "hp": 4820,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 593.7333333334507,
+      "amount": 8,
+      "hp": 4812,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 594.5666666667832,
+      "amount": 8,
+      "hp": 4804,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 595.4000000001158,
+      "amount": 8,
+      "hp": 4796,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 596.2333333334484,
+      "amount": 8,
+      "hp": 4788,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 597.066666666781,
+      "amount": 8,
+      "hp": 4780,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "announcement",
+      "at": 597.5,
+      "wave": 20,
+      "text": "Claim Jumpers from the south bank!"
+    },
+    {
+      "type": "hero_damaged",
+      "at": 597.9000000001136,
+      "amount": 8,
+      "hp": 4772,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "announcement",
+      "at": 598,
+      "wave": 20,
+      "text": "Brass warning on the north bank!"
+    },
+    {
+      "type": "hero_damaged",
+      "at": 598.7333333334461,
+      "amount": 8,
+      "hp": 4764,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "hero_damaged",
+      "at": 599.5666666667787,
+      "amount": 8,
+      "hp": 4756,
+      "maxHp": 10100,
+      "sourceId": 59
+    },
+    {
+      "type": "wave_started",
+      "at": 600,
+      "wave": 20
+    },
+    {
+      "type": "run_secured",
+      "at": 600.0000000001116,
+      "runId": 1,
+      "secureWave": 20,
+      "resultAt": 600000,
+      "summary": {
+        "wavesSurvived": 20,
+        "goldPanned": 0,
+        "goldPannedByProspector": 0,
+        "goldStolen": 0,
+        "goldReclaimed": 0,
+        "goldReclaimedByProspector": 0,
+        "buildingsBuilt": 0,
+        "secureWaveReached": 20,
+        "deepestWave": 20
+      }
+    }
+  ],
+  "economy": [
+    {
+      "at": 0,
+      "type": "run_reset"
+    }
+  ],
+  "final": {
+    "hero": {
+      "x": 0,
+      "y": 0.06,
+      "z": -12
+    },
+    "hp": 4756,
+    "aliveEnemies": 60,
+    "buildings": []
+  }
+}

@@ -1,0 +1,442 @@
+{
+ "label": "e2-trestle-card",
+ "carry": "remainder-noretry",
+ "answers": [
+  {
+   "at": {
+    "turn": 0
+   },
+   "orders": [
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": -24,
+      "z": -20
+     }
+    }
+   ],
+   "note": "arm the panner, earn at anchor1"
+  },
+  {
+   "at": {
+    "gold": 10
+   },
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 8,
+      "z": -9
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 8,
+      "z": -9
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "REPAIR_UNDER",
+     "pct": 60
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ],
+   "note": "palisade #1 at (8, -9) (afforded 10), then earn at anchor2"
+  },
+  {
+   "at": {
+    "gold": 25
+   },
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 8,
+      "z": -16
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "sentry_beacon",
+     "where": {
+      "x": 8,
+      "z": -16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "REPAIR_UNDER",
+     "pct": 60
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    }
+   ],
+   "note": "sentry_beacon #2 at (8, -16) (afforded 25), then earn at anchor4"
+  },
+  {
+   "at": {
+    "gold": 50
+   },
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 14,
+      "z": -10
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": 14,
+      "z": -10
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "REPAIR_UNDER",
+     "pct": 60
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ],
+   "note": "turret #3 at (14, -10) (afforded 50), then earn at anchor2"
+  },
+  {
+   "at": {
+    "gold": 70
+   },
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 8,
+      "z": -22
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": 8,
+      "z": -22
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "REPAIR_UNDER",
+     "pct": 60
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    }
+   ],
+   "note": "turret #4 at (8, -22) (afforded 70), then earn at anchor4"
+  },
+  {
+   "at": {
+    "gold": 95
+   },
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 10,
+      "z": -9
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": 10,
+      "z": -9
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "REPAIR_UNDER",
+     "pct": 60
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ],
+   "note": "turret #5 at (10, -9) (afforded 95), then earn at anchor2"
+  },
+  {
+   "at": {
+    "gold": 125
+   },
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 10,
+      "z": -16
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": 10,
+      "z": -16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "REPAIR_UNDER",
+     "pct": 60
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    }
+   ],
+   "note": "turret #6 at (10, -16) (afforded 125), then earn at anchor4"
+  },
+  {
+   "at": {
+    "wave": 2
+   },
+   "orders": [
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ],
+   "note": "rotate to anchor2"
+  },
+  {
+   "at": {
+    "wave": 3
+   },
+   "orders": [
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": -24,
+      "z": 20
+     }
+    }
+   ],
+   "note": "rotate to anchor3"
+  },
+  {
+   "at": {
+    "wave": 4
+   },
+   "orders": [
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    }
+   ],
+   "note": "rotate to anchor4"
+  },
+  {
+   "at": {
+    "wave": 5
+   },
+   "orders": [
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": -24,
+      "z": -20
+     }
+    }
+   ],
+   "note": "rotate to anchor1"
+  },
+  {
+   "at": {
+    "wave": 6
+   },
+   "orders": [
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ],
+   "note": "rotate to anchor2"
+  },
+  {
+   "at": {
+    "wave": 7
+   },
+   "orders": [
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": -24,
+      "z": 20
+     }
+    }
+   ],
+   "note": "rotate to anchor3"
+  },
+  {
+   "at": {
+    "wave": 8
+   },
+   "orders": [
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    }
+   ],
+   "note": "rotate to anchor4"
+  },
+  {
+   "at": {
+    "wave": 9
+   },
+   "orders": [
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": -24,
+      "z": -20
+     }
+    }
+   ],
+   "note": "rotate to anchor1"
+  },
+  {
+   "at": {
+    "wave": 10
+   },
+   "orders": [
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ],
+   "note": "rotate to anchor2"
+  },
+  {
+   "at": {
+    "wave": 11
+   },
+   "orders": [
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": -24,
+      "z": 20
+     }
+    }
+   ],
+   "note": "rotate to anchor3"
+  },
+  {
+   "at": {
+    "wave": 12
+   },
+   "orders": [
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    }
+   ],
+   "note": "rotate to anchor4"
+  },
+  {
+   "at": {
+    "wave": 13
+   },
+   "orders": [
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": -24,
+      "z": -20
+     }
+    }
+   ],
+   "note": "rotate to anchor1"
+  },
+  {
+   "at": {
+    "wave": 14
+   },
+   "orders": [
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ],
+   "note": "rotate to anchor2"
+  }
+ ]
+}

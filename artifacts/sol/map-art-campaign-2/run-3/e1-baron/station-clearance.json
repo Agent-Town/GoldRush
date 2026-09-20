@@ -1,0 +1,57 @@
+{
+  "method": "Static clearance against the existing registry using LandmarkCollision.ts rotated-AABB construction and Balance.hero.radius=0.5; not a new collision rule.",
+  "rows": [
+    {
+      "station": "fort-5m",
+      "heroXZ": [
+        0,
+        -5.8
+      ],
+      "nearest": {
+        "id": "siege_line",
+        "distanceToBlockerAabb": 0.8727145590137702,
+        "heroRadiusClearance": 0.37271455901377015
+      },
+      "clearOfLandmarkBlockersAtHeroRadius05": true
+    },
+    {
+      "station": "rig-3m",
+      "heroXZ": [
+        -13,
+        16
+      ],
+      "nearest": {
+        "id": "seized_headframe",
+        "distanceToBlockerAabb": 1.6785970433782487,
+        "heroRadiusClearance": 1.1785970433782487
+      },
+      "clearOfLandmarkBlockersAtHeroRadius05": true
+    },
+    {
+      "station": "fort-3m-rejected",
+      "heroXZ": [
+        0,
+        -7.8
+      ],
+      "nearest": {
+        "id": "siege_line",
+        "distanceToBlockerAabb": 0.0,
+        "heroRadiusClearance": -0.5
+      },
+      "clearOfLandmarkBlockersAtHeroRadius05": false
+    },
+    {
+      "station": "cart-5m",
+      "heroXZ": [
+        12.5,
+        19
+      ],
+      "nearest": {
+        "id": "rocket_cart",
+        "distanceToBlockerAabb": 4.2620000000000005,
+        "heroRadiusClearance": 3.7620000000000005
+      },
+      "clearOfLandmarkBlockersAtHeroRadius05": true
+    }
+  ]
+}

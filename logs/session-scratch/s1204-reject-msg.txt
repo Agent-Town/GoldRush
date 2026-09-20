@@ -1,0 +1,40 @@
+s1204: BLOCK trail-guide-plain-boot at the gate (F-1204-3) + queue the corrective
+
+NOT MERGED. The slice is right and owner-pushed, but it is flaky at the repo's
+canonical worker count, and it adds zero src bytes -- so every failure is in its
+own waits and there is no product value to weigh against the flake.
+
+Measured on the merged tree, same box, same command:
+  desktop alone, 1 worker ............................ PASS (25.5s)
+  canonical (both projects, 2 tests, 2 workers) ...... 1 fail / 1 pass
+  both projects, --repeat-each=2 (4 tests) ........... 4/4 FAIL
+  same with GG-01 src reverted (control arm) ......... 4/4 FAIL
+
+GG-01 was the obvious suspect -- it auto-opens the Herald on first town entry
+and sets ui.inert, and this spec walks that flow -- and the control cleared it.
+The mechanism is playwright.config.ts:13 (repo-wide 5s expect timeout): the
+author raised :64/:170/:191 but left :189 and :166 at the default, and those two
+are exactly what fails.
+
+The first cure was too narrow and measuring refuted it: raising :189 alone (its
+own sibling at :191 already carries 15s) would have left :166 failing through a
+different helper. The corrective therefore orders a CLASS fix and asks the
+implementer to justify the completeness of the set they cover.
+
+RETENTION: nothing deleted. All 13 files stay in git at lane/m4 d7d8ba03, now
+also pinned at archive/lane-m4-trail-guide-d7d8ba03 (the live runner claimed
+lane-b seconds after the corrective was queued, and a lane pre-flight resets
+--hard). A working copy is in logs/session-scratch/s1204-unmerged-trail-guide/.
+archive/lane-perf-gg01-c4c23952 likewise pins the grafted GG-01 tip, whose 5
+screenshots main replaced with ones regenerated on the merged tree.
+
+Goal leaf e1-trail-guide-plain-boot-proof REPOINTED to the corrective rather
+than duplicated -- a second leaf would have left this one queued forever against
+a task that will never merge (Mistake #5). goal-tracker 2/2, drain-block-check
+resolves the new taskFile CLEAR.
+
+Also re-queued lane-d-collection-guards-spawnsync-truncation: its STOP premise
+("lane/perf holds unique undrained Gazette work") was discharged by the GG-01
+graft, so the reset it refused to do is now safe.
+
+Review: reviews/trail-guide-plain-boot.md

@@ -1,0 +1,113 @@
+{
+ "label": "bait-v1",
+ "carry": "remainder-noretry",
+ "answers": [
+  {
+   "at": {
+    "turn": 0
+   },
+   "orders": [
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ],
+   "note": "arm panner"
+  },
+  {
+   "at": {
+    "wave": 2
+   },
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ],
+   "note": "3 palisade decoys at NE"
+  },
+  {
+   "at": {
+    "wave": 4
+   },
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 8,
+      "z": -16
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": 8,
+      "z": -16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ],
+   "note": "turret behind the decoys"
+  }
+ ]
+}

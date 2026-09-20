@@ -1,0 +1,413 @@
+{
+  "phase": "u3",
+  "at": "2026-08-02T17:43:08.066Z",
+  "shots": {
+    "runCamera": {
+      "file": "reviews/shots-beauty-claim/u3-run-camera.png",
+      "camera": {
+        "scene": "run",
+        "distanceScale": 1,
+        "targetDistanceScale": 1,
+        "minDistanceScale": 0.7,
+        "maxDistanceScale": 1.6,
+        "baseDistance": 31.958254019892887,
+        "targetDistance": 31.958254019892887,
+        "actualDistance": 31.958254019867486
+      },
+      "pilot": {
+        "state": "ready",
+        "renderSource": "glb",
+        "meshes": "1",
+        "triangles": "32768",
+        "materials": "1",
+        "vertices": "16641",
+        "landmarks": "5",
+        "landmarkSkipped": "0",
+        "hiddenRelief": "6",
+        "hiddenLayers": "TerrainVistaRing|TerrainReliefMesh|terrain.river|terrain.ford|FordSteppingStones|SpringPonds",
+        "sculptWater": "living-water-quad",
+        "motes": "absent",
+        "contact": "4",
+        "landmarkEmissive": "1.45",
+        "water": {
+          "material": "LivingWaterShader",
+          "riverPresent": true,
+          "fordPresent": true,
+          "riverTime": 3.983,
+          "fordTime": 3.983,
+          "quality": 1,
+          "mobile": false,
+          "foam": true,
+          "glints": 6,
+          "fordStones": 7,
+          "gravelBars": 0,
+          "visualHalfWidth": 6.25,
+          "springPonds": 0,
+          "waterPhaseVariance": 0.43,
+          "depth": {
+            "river": 1.25,
+            "ford": 0.35,
+            "wade": 0.35,
+            "deep": 1
+          }
+        },
+        "contract": "the-claim",
+        "performanceTier": "full"
+      },
+      "perf": {
+        "rafP95Ms": 10.5,
+        "rafMedianMs": 8.3,
+        "gameP95Ms": 10.2,
+        "gameAvgMs": 8.33,
+        "drawCalls": 83,
+        "triangles": 108004,
+        "textures": 30,
+        "geometries": 87
+      },
+      "perfAb": {
+        "nobeauty": {
+          "rafP95Ms": 10.2,
+          "rafMedianMs": 8.3,
+          "gameP95Ms": 10.1,
+          "gameAvgMs": 8.33,
+          "drawCalls": 81,
+          "triangles": 107906,
+          "textures": 28,
+          "geometries": 85,
+          "pilot": "absent"
+        },
+        "beauty": {
+          "rafP95Ms": 10,
+          "rafMedianMs": 8.3,
+          "gameP95Ms": 10,
+          "gameAvgMs": 8.33,
+          "drawCalls": 83,
+          "triangles": 108004,
+          "textures": 30,
+          "geometries": 87,
+          "pilot": "living-water-quad"
+        },
+        "ratioP95": 0.98,
+        "loadAverage": [
+          32.05,
+          47.17,
+          76.76
+        ]
+      }
+    },
+    "runCameraHud": {
+      "file": "reviews/shots-beauty-claim/u3-run-camera-hud.png"
+    },
+    "boot": {
+      "file": "reviews/shots-beauty-claim/u3-boot-desktop.png",
+      "pilot": {
+        "state": "ready",
+        "renderSource": "glb",
+        "meshes": "1",
+        "triangles": "32768",
+        "materials": "1",
+        "vertices": "16641",
+        "landmarks": "5",
+        "landmarkSkipped": "0",
+        "hiddenRelief": "6",
+        "hiddenLayers": "TerrainVistaRing|TerrainReliefMesh|terrain.river|terrain.ford|FordSteppingStones|SpringPonds",
+        "sculptWater": "living-water-quad",
+        "motes": "absent",
+        "contact": "4",
+        "landmarkEmissive": "1.45",
+        "water": {
+          "material": "LivingWaterShader",
+          "riverPresent": true,
+          "fordPresent": true,
+          "riverTime": 2.88,
+          "fordTime": 2.88,
+          "quality": 1,
+          "mobile": false,
+          "foam": true,
+          "glints": 6,
+          "fordStones": 7,
+          "gravelBars": 0,
+          "visualHalfWidth": 6.25,
+          "springPonds": 0,
+          "waterPhaseVariance": 0.43,
+          "depth": {
+            "river": 1.25,
+            "ford": 0.35,
+            "wade": 0.35,
+            "deep": 1
+          }
+        },
+        "contract": "the-claim",
+        "performanceTier": "full"
+      }
+    },
+    "wideZoomOut": {
+      "file": "reviews/shots-beauty-claim/u3-wide-zoomout.png",
+      "camera": {
+        "scene": "run",
+        "distanceScale": 1.6,
+        "targetDistanceScale": 1.6,
+        "minDistanceScale": 0.7,
+        "maxDistanceScale": 1.6,
+        "baseDistance": 31.958254019892887,
+        "targetDistance": 51.133206431828626,
+        "actualDistance": 51.13320612571125
+      }
+    },
+    "ford": {
+      "file": "reviews/shots-beauty-claim/u3-ford-crossing.png",
+      "water": {
+        "material": "LivingWaterShader",
+        "riverPresent": true,
+        "fordPresent": true,
+        "riverTime": 5.68,
+        "fordTime": 5.68,
+        "quality": 1,
+        "mobile": false,
+        "foam": true,
+        "glints": 6,
+        "fordStones": 7,
+        "gravelBars": 0,
+        "visualHalfWidth": 6.25,
+        "springPonds": 0,
+        "waterPhaseVariance": 0.43,
+        "depth": {
+          "river": 1.25,
+          "ford": 0.35,
+          "wade": 0.35,
+          "deep": 1
+        }
+      },
+      "perf": {
+        "rafP95Ms": 10.4,
+        "rafMedianMs": 8.3,
+        "gameP95Ms": 9.9,
+        "gameAvgMs": 8.33,
+        "drawCalls": 95,
+        "triangles": 108132,
+        "textures": 36,
+        "geometries": 87
+      }
+    },
+    "secured": {
+      "file": "reviews/shots-beauty-claim/u3-wave10-secured-rush-choice.png"
+    },
+    "rushActive": {
+      "file": "reviews/shots-beauty-claim/u3-rush-active.png",
+      "run": {
+        "secured": true,
+        "rush": true,
+        "lastRunEndedReason": null,
+        "meta": {
+          "version": 1,
+          "tracks": {
+            "territory": 1,
+            "science": 1,
+            "hero": 1,
+            "agent": 1
+          }
+        },
+        "victoryPayout": {
+          "territory": 1,
+          "science": 1,
+          "hero": 1,
+          "agent": 1
+        },
+        "secureWaveReached": 10,
+        "securedResultAt": 1785692636915,
+        "suspend": {
+          "hasSuspend": true,
+          "restored": false,
+          "restoredWave": null,
+          "lastWriteAt": 1785692638175,
+          "lastWriteMs": 0.2,
+          "sizeBytes": 5819
+        }
+      },
+      "pilot": {
+        "state": "ready",
+        "renderSource": "glb",
+        "meshes": "1",
+        "triangles": "32768",
+        "materials": "1",
+        "vertices": "16641",
+        "landmarks": "5",
+        "landmarkSkipped": "0",
+        "hiddenRelief": "6",
+        "hiddenLayers": "TerrainVistaRing|TerrainReliefMesh|terrain.river|terrain.ford|FordSteppingStones|SpringPonds",
+        "sculptWater": "living-water-quad",
+        "motes": "absent",
+        "contact": "4",
+        "landmarkEmissive": "1.45",
+        "water": {
+          "material": "LivingWaterShader",
+          "riverPresent": true,
+          "fordPresent": true,
+          "riverTime": 4.849,
+          "fordTime": 4.849,
+          "quality": 1,
+          "mobile": false,
+          "foam": true,
+          "glints": 6,
+          "fordStones": 7,
+          "gravelBars": 0,
+          "visualHalfWidth": 6.25,
+          "springPonds": 0,
+          "waterPhaseVariance": 0.43,
+          "depth": {
+            "river": 1.25,
+            "ford": 0.35,
+            "wade": 0.35,
+            "deep": 1
+          }
+        },
+        "contract": "the-claim",
+        "performanceTier": "full"
+      }
+    },
+    "bootMobile": {
+      "file": "reviews/shots-beauty-claim/u3-boot-mobile.png",
+      "pilot": {
+        "state": "ready",
+        "renderSource": "glb",
+        "meshes": "1",
+        "triangles": "32768",
+        "materials": "1",
+        "vertices": "16641",
+        "landmarks": "5",
+        "landmarkSkipped": "0",
+        "hiddenRelief": "6",
+        "hiddenLayers": "TerrainVistaRing|TerrainReliefMesh|terrain.river|terrain.ford|FordSteppingStones|SpringPonds",
+        "sculptWater": "living-water-quad",
+        "motes": "absent",
+        "contact": "4",
+        "landmarkEmissive": "1.45",
+        "water": {
+          "material": "LivingWaterShader",
+          "riverPresent": true,
+          "fordPresent": true,
+          "riverTime": 3.051,
+          "fordTime": 3.051,
+          "quality": 0.55,
+          "mobile": true,
+          "foam": true,
+          "glints": 6,
+          "fordStones": 7,
+          "gravelBars": 0,
+          "visualHalfWidth": 6.25,
+          "springPonds": 0,
+          "waterPhaseVariance": 0.237,
+          "depth": {
+            "river": 1.25,
+            "ford": 0.35,
+            "wade": 0.35,
+            "deep": 1
+          }
+        },
+        "contract": "the-claim",
+        "performanceTier": "full"
+      }
+    },
+    "runCameraMobile": {
+      "file": "reviews/shots-beauty-claim/u3-run-camera-mobile.png",
+      "pilot": {
+        "state": "ready",
+        "renderSource": "glb",
+        "meshes": "1",
+        "triangles": "32768",
+        "materials": "1",
+        "vertices": "16641",
+        "landmarks": "5",
+        "landmarkSkipped": "0",
+        "hiddenRelief": "6",
+        "hiddenLayers": "TerrainVistaRing|TerrainReliefMesh|terrain.river|terrain.ford|FordSteppingStones|SpringPonds",
+        "sculptWater": "living-water-quad",
+        "motes": "absent",
+        "contact": "4",
+        "landmarkEmissive": "1.45",
+        "water": {
+          "material": "LivingWaterShader",
+          "riverPresent": true,
+          "fordPresent": true,
+          "riverTime": 3.785,
+          "fordTime": 3.785,
+          "quality": 0.55,
+          "mobile": true,
+          "foam": true,
+          "glints": 6,
+          "fordStones": 7,
+          "gravelBars": 0,
+          "visualHalfWidth": 6.25,
+          "springPonds": 0,
+          "waterPhaseVariance": 0.237,
+          "depth": {
+            "river": 1.25,
+            "ford": 0.35,
+            "wade": 0.35,
+            "deep": 1
+          }
+        },
+        "contract": "the-claim",
+        "performanceTier": "full"
+      },
+      "perf": {
+        "rafP95Ms": 12.6,
+        "rafMedianMs": 8.3,
+        "gameP95Ms": 10.1,
+        "gameAvgMs": 8.33,
+        "drawCalls": 58,
+        "triangles": 103792,
+        "textures": 25,
+        "geometries": 74
+      },
+      "perfAb": {
+        "nobeauty": {
+          "rafP95Ms": 11.5,
+          "rafMedianMs": 8.2,
+          "gameP95Ms": 10,
+          "gameAvgMs": 8.34,
+          "drawCalls": 56,
+          "triangles": 103694,
+          "textures": 23,
+          "geometries": 72,
+          "pilot": "absent"
+        },
+        "beauty": {
+          "rafP95Ms": 12.5,
+          "rafMedianMs": 8.2,
+          "gameP95Ms": 10,
+          "gameAvgMs": 8.33,
+          "drawCalls": 59,
+          "triangles": 103794,
+          "textures": 25,
+          "geometries": 74,
+          "pilot": "living-water-quad"
+        },
+        "ratioP95": 1.087,
+        "loadAverage": [
+          40.84,
+          46.89,
+          74.78
+        ]
+      }
+    }
+  },
+  "errors": {
+    "desktop": {
+      "console": [],
+      "page": []
+    },
+    "ford": {
+      "console": [],
+      "page": []
+    },
+    "rush": {
+      "console": [],
+      "page": []
+    },
+    "mobile": {
+      "console": [],
+      "page": []
+    }
+  }
+}

@@ -1,0 +1,19 @@
+baseline node-guards at HEAD (s1249 tip, before this fire): 124 tests / 124 pass / rc=0
+  -> s1249 handoff reported 123; the measured figure at its own tip is 124.
+  -> next fire: start delta arithmetic from 124, not 123.
+
+AFTER this fire: 128 tests / 128 pass / rc=0  (+4 = exactly the four F-1250-1 arms)
+
+tsc --noEmit           rc=0   3.8s
+npm run build          rc=0  15.5s
+task-guard-audit       rc=0   747 masters, 0 invisible (baseline 0)
+run-guards             rc=0 122.3s   8/8 PASS
+  node-guards 32s | power-budget p95=0.316ms | stats 4s | accounts 2s
+  mp 3s | deploy-contract 80s | deploy-site-contract 1s | task-guards 0s
+
+ASSAYER: assets/crafting-queue/pending/ listed, EMPTY (0 orders).
+ART audit: NOT run and NOT owed - this fire touched no art slot.
+TK-01: not due. ticker-digest-2026-07-29.md exists; no 07-30 file; coverage day
+  07-30 still open (08:30 local). Next due after 06:00 local 07-31.
+GZ-01: no item - commit touches zero src/, assets/ or public/ bytes.
+DEPLOY: skipped - no gameplay bytes.

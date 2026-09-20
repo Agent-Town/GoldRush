@@ -1,0 +1,1105 @@
+{
+  "slice": "sprite-cell-manifests",
+  "owner": "now it loads veerrry slowly (2026-09-06 evening)",
+  "design": "eager: true on the two char-*.png ?url globs; the glob record IS the manifest",
+  "instrument": {
+    "cueWindow": "scripts/deploy.sh:95-:110 shape (GR_ASSET_DIET_BUNDLE=1 GR_ASSET_DIET_REUSE_BUILD=1, playwright.preview.config.ts, \"town cue-window budget through player entry\"), GR_RELEASE=e1 build, scratch preview port 5293",
+    "timings": "standalone chromium probe on the same preview server, CDP Network.emulateNetworkConditions, cold cache per run, 3 runs per project per arm"
+  },
+  "bundle": {
+    "before": {
+      "jsChunks": 921,
+      "jsChunkBytes": 5648482,
+      "perCellUrlChunks": 785,
+      "perCellUrlChunkBytes": 95433,
+      "entryChunkBytes": 1143893,
+      "spriteAnimatorChunkBytes": 216260
+    },
+    "after": {
+      "jsChunks": 135,
+      "jsChunkBytes": 5366611,
+      "perCellUrlChunks": 0,
+      "perCellUrlChunkBytes": 0,
+      "entryChunkBytes": 1135958,
+      "spriteAnimatorChunkBytes": 131640
+    }
+  },
+  "cueWindow": {
+    "desktop-chrome": {
+      "before": {
+        "responses": 407,
+        "totalBytes": 17142187,
+        "jsResponses": 205,
+        "jsBytes": 23362,
+        "cellUrlModules": 172,
+        "cellUrlModuleBytes": 20720,
+        "pngResponses": 182,
+        "pngBytes": 10776344,
+        "sheetCellResponses": 169,
+        "families": [
+          "AssayBench.js",
+          "CameraRig.js",
+          "EraBackdrop.js",
+          "LandmarkCollision.js",
+          "Loop.js",
+          "Medals.js",
+          "Renderer.js",
+          "SoundSystem.js",
+          "SpriteAnimator.js",
+          "StartMenu.js",
+          "Terrain3dClaimPilot.js",
+          "TownNaming.js",
+          "TownScene.css",
+          "TownScene.js",
+          "TownTavernPilot.js",
+          "WorldInfoNotes.js",
+          "_gold-rush-release-e1-ceremony-scripts.js",
+          "active_headframe.js",
+          "assay-office.glb",
+          "bld-chapel.png",
+          "bld-claim-office.png",
+          "bld-general-store.png",
+          "bld-schoolhouse.png",
+          "bld-tavern.png",
+          "ceremonyPostscripts.js",
+          "chapel.glb",
+          "char-assay-clerk-sheet-walk8-a.js",
+          "char-assay-clerk-sheet-walk8-a.png",
+          "char-elder-sheet-walk8.js",
+          "char-elder-sheet-walk8.png",
+          "char-hero-sheet-back-f.js",
+          "char-hero-sheet-back-f.png",
+          "char-hero-sheet-front-f.js",
+          "char-hero-sheet-front-f.png",
+          "char-hero-sheet-rotation-f.js",
+          "char-hero-sheet-rotation-f.png",
+          "char-hero-sheet-rotation2-f.js",
+          "char-hero-sheet-rotation2-f.png",
+          "char-hero-sheet-side-actions-f.js",
+          "char-hero-sheet-side-actions-f.png",
+          "char-hero-sheet-side-f.js",
+          "char-hero-sheet-side-f.png",
+          "char-hero-sheet-walk8.js",
+          "char-hero-sheet-walk8.png",
+          "char-hero-sheet-walkdiag8.js",
+          "char-hero-sheet-walkdiag8.png",
+          "char-newsie-mei-sheet-walk8.js",
+          "char-newsie-mei-sheet-walk8.png",
+          "char-preacher-sheet-walk8-a.js",
+          "char-preacher-sheet-walk8-a.png",
+          "char-prospector-portrait.png",
+          "char-prospector-sheet-hover8.js",
+          "char-prospector-sheet-hover8.png",
+          "char-schoolteacher-sheet-walk8-a.js",
+          "char-schoolteacher-sheet-walk8-a.png",
+          "char-storekeeper-sheet-walk8.js",
+          "char-storekeeper-sheet-walk8.png",
+          "char-tavernkeeper-sheet-walk8.js",
+          "char-tavernkeeper-sheet-walk8.png",
+          "char-youngster-f-sheet-walk8.js",
+          "char-youngster-f-sheet-walk8.png",
+          "char-youngster-m-sheet-walk8.js",
+          "char-youngster-m-sheet-walk8.png",
+          "claim-office.glb",
+          "claim_stake.js",
+          "covered_wagon.glb",
+          "dispose.js",
+          "era-e1-frontier-loop.js",
+          "era-e1-frontier-loop.mp3",
+          "favicon-32.png",
+          "general-store.glb",
+          "hero-homesteader-f.png",
+          "index.css",
+          "index.html",
+          "index.js",
+          "kit-era-1.js",
+          "kit-era-1.png",
+          "maintained_claim_house.js",
+          "menu-tap.js",
+          "menu-tap.mp3",
+          "pan_monument.glb",
+          "payload.js",
+          "riparian_dressing_pack.js",
+          "rolldown-runtime.js",
+          "runBeacon.js",
+          "schoolhouse.glb",
+          "story.css",
+          "story.js",
+          "the-claim-panorama.glb",
+          "the-claim-terrain.glb",
+          "title-theme.js",
+          "title-theme.mp3",
+          "town-plate.glb",
+          "town-v3-tavern.glb",
+          "townEraProps.js",
+          "townsfolk-tavernkeeper.png",
+          "ui-menu-panel.png",
+          "ui-title-emblem.png",
+          "version.json",
+          "water_trough.glb",
+          "working_camp.js"
+        ],
+        "jsFamilies": [
+          "AssayBench.js",
+          "CameraRig.js",
+          "EraBackdrop.js",
+          "LandmarkCollision.js",
+          "Loop.js",
+          "Medals.js",
+          "Renderer.js",
+          "SoundSystem.js",
+          "SpriteAnimator.js",
+          "StartMenu.js",
+          "Terrain3dClaimPilot.js",
+          "TownNaming.js",
+          "TownScene.js",
+          "TownTavernPilot.js",
+          "WorldInfoNotes.js",
+          "_gold-rush-release-e1-ceremony-scripts.js",
+          "active_headframe.js",
+          "ceremonyPostscripts.js",
+          "char-assay-clerk-sheet-walk8-a.js",
+          "char-elder-sheet-walk8.js",
+          "char-hero-sheet-back-f.js",
+          "char-hero-sheet-front-f.js",
+          "char-hero-sheet-rotation-f.js",
+          "char-hero-sheet-rotation2-f.js",
+          "char-hero-sheet-side-actions-f.js",
+          "char-hero-sheet-side-f.js",
+          "char-hero-sheet-walk8.js",
+          "char-hero-sheet-walkdiag8.js",
+          "char-newsie-mei-sheet-walk8.js",
+          "char-preacher-sheet-walk8-a.js",
+          "char-prospector-sheet-hover8.js",
+          "char-schoolteacher-sheet-walk8-a.js",
+          "char-storekeeper-sheet-walk8.js",
+          "char-tavernkeeper-sheet-walk8.js",
+          "char-youngster-f-sheet-walk8.js",
+          "char-youngster-m-sheet-walk8.js",
+          "claim_stake.js",
+          "dispose.js",
+          "era-e1-frontier-loop.js",
+          "index.js",
+          "kit-era-1.js",
+          "maintained_claim_house.js",
+          "menu-tap.js",
+          "payload.js",
+          "riparian_dressing_pack.js",
+          "rolldown-runtime.js",
+          "runBeacon.js",
+          "story.js",
+          "title-theme.js",
+          "townEraProps.js",
+          "working_camp.js"
+        ],
+        "pngFamilies": [
+          "bld-chapel.png",
+          "bld-claim-office.png",
+          "bld-general-store.png",
+          "bld-schoolhouse.png",
+          "bld-tavern.png",
+          "char-assay-clerk-sheet-walk8-a.png",
+          "char-elder-sheet-walk8.png",
+          "char-hero-sheet-back-f.png",
+          "char-hero-sheet-front-f.png",
+          "char-hero-sheet-rotation-f.png",
+          "char-hero-sheet-rotation2-f.png",
+          "char-hero-sheet-side-actions-f.png",
+          "char-hero-sheet-side-f.png",
+          "char-hero-sheet-walk8.png",
+          "char-hero-sheet-walkdiag8.png",
+          "char-newsie-mei-sheet-walk8.png",
+          "char-preacher-sheet-walk8-a.png",
+          "char-prospector-portrait.png",
+          "char-prospector-sheet-hover8.png",
+          "char-schoolteacher-sheet-walk8-a.png",
+          "char-storekeeper-sheet-walk8.png",
+          "char-tavernkeeper-sheet-walk8.png",
+          "char-youngster-f-sheet-walk8.png",
+          "char-youngster-m-sheet-walk8.png",
+          "favicon-32.png",
+          "hero-homesteader-f.png",
+          "kit-era-1.png",
+          "townsfolk-tavernkeeper.png",
+          "ui-menu-panel.png",
+          "ui-title-emblem.png"
+        ]
+      },
+      "after": {
+        "responses": 273,
+        "totalBytes": 21612952,
+        "jsResponses": 32,
+        "jsBytes": 2484,
+        "cellUrlModules": 0,
+        "cellUrlModuleBytes": 0,
+        "pngResponses": 221,
+        "pngBytes": 15267987,
+        "sheetCellResponses": 208,
+        "families": [
+          "AssayBench.js",
+          "CameraRig.js",
+          "EraBackdrop.js",
+          "LandmarkCollision.js",
+          "Loop.js",
+          "Medals.js",
+          "Renderer.js",
+          "SoundSystem.js",
+          "SpriteAnimator.js",
+          "StartMenu.js",
+          "Terrain3dClaimPilot.js",
+          "TownNaming.js",
+          "TownScene.css",
+          "TownScene.js",
+          "TownTavernPilot.js",
+          "WorldInfoNotes.js",
+          "_gold-rush-release-e1-ceremony-scripts.js",
+          "active_headframe.js",
+          "assay-office.glb",
+          "bld-chapel.png",
+          "bld-claim-office.png",
+          "bld-general-store.png",
+          "bld-schoolhouse.png",
+          "bld-tavern.png",
+          "ceremonyPostscripts.js",
+          "chapel.glb",
+          "char-assay-clerk-sheet-walk8-a.png",
+          "char-elder-sheet-walk8.png",
+          "char-hero-sheet-attack8.png",
+          "char-hero-sheet-back-f.png",
+          "char-hero-sheet-front-f.png",
+          "char-hero-sheet-rotation-f.png",
+          "char-hero-sheet-rotation2-f.png",
+          "char-hero-sheet-side-actions-f.png",
+          "char-hero-sheet-side-f.png",
+          "char-hero-sheet-walk8.png",
+          "char-hero-sheet-walkdiag8.png",
+          "char-hero-sheet-work8.png",
+          "char-newsie-mei-sheet-walk8.png",
+          "char-preacher-sheet-walk8-a.png",
+          "char-prospector-portrait.png",
+          "char-prospector-sheet-hover8.png",
+          "char-schoolteacher-sheet-walk8-a.png",
+          "char-storekeeper-sheet-walk8.png",
+          "char-tavernkeeper-sheet-walk8.png",
+          "char-youngster-f-sheet-walk8.png",
+          "char-youngster-m-sheet-walk8.png",
+          "claim-office.glb",
+          "claim_stake.js",
+          "covered_wagon.glb",
+          "dispose.js",
+          "era-e1-frontier-loop.js",
+          "era-e1-frontier-loop.mp3",
+          "favicon-32.png",
+          "general-store.glb",
+          "hero-homesteader-f.png",
+          "index.css",
+          "index.html",
+          "index.js",
+          "kit-era-1.js",
+          "kit-era-1.png",
+          "maintained_claim_house.js",
+          "menu-tap.js",
+          "menu-tap.mp3",
+          "pan_monument.glb",
+          "payload.js",
+          "riparian_dressing_pack.js",
+          "runBeacon.js",
+          "schoolhouse.glb",
+          "story.css",
+          "story.js",
+          "the-claim-panorama.glb",
+          "the-claim-terrain.glb",
+          "title-theme.js",
+          "title-theme.mp3",
+          "town-plate.glb",
+          "town-v3-tavern.glb",
+          "townEraProps.js",
+          "townsfolk-tavernkeeper.png",
+          "ui-menu-panel.png",
+          "ui-title-emblem.png",
+          "version.json",
+          "water_trough.glb",
+          "working_camp.js"
+        ],
+        "jsFamilies": [
+          "AssayBench.js",
+          "CameraRig.js",
+          "EraBackdrop.js",
+          "LandmarkCollision.js",
+          "Loop.js",
+          "Medals.js",
+          "Renderer.js",
+          "SoundSystem.js",
+          "SpriteAnimator.js",
+          "StartMenu.js",
+          "Terrain3dClaimPilot.js",
+          "TownNaming.js",
+          "TownScene.js",
+          "TownTavernPilot.js",
+          "WorldInfoNotes.js",
+          "_gold-rush-release-e1-ceremony-scripts.js",
+          "active_headframe.js",
+          "ceremonyPostscripts.js",
+          "claim_stake.js",
+          "dispose.js",
+          "era-e1-frontier-loop.js",
+          "index.js",
+          "kit-era-1.js",
+          "maintained_claim_house.js",
+          "menu-tap.js",
+          "payload.js",
+          "riparian_dressing_pack.js",
+          "runBeacon.js",
+          "story.js",
+          "title-theme.js",
+          "townEraProps.js",
+          "working_camp.js"
+        ],
+        "pngFamilies": [
+          "bld-chapel.png",
+          "bld-claim-office.png",
+          "bld-general-store.png",
+          "bld-schoolhouse.png",
+          "bld-tavern.png",
+          "char-assay-clerk-sheet-walk8-a.png",
+          "char-elder-sheet-walk8.png",
+          "char-hero-sheet-attack8.png",
+          "char-hero-sheet-back-f.png",
+          "char-hero-sheet-front-f.png",
+          "char-hero-sheet-rotation-f.png",
+          "char-hero-sheet-rotation2-f.png",
+          "char-hero-sheet-side-actions-f.png",
+          "char-hero-sheet-side-f.png",
+          "char-hero-sheet-walk8.png",
+          "char-hero-sheet-walkdiag8.png",
+          "char-hero-sheet-work8.png",
+          "char-newsie-mei-sheet-walk8.png",
+          "char-preacher-sheet-walk8-a.png",
+          "char-prospector-portrait.png",
+          "char-prospector-sheet-hover8.png",
+          "char-schoolteacher-sheet-walk8-a.png",
+          "char-storekeeper-sheet-walk8.png",
+          "char-tavernkeeper-sheet-walk8.png",
+          "char-youngster-f-sheet-walk8.png",
+          "char-youngster-m-sheet-walk8.png",
+          "favicon-32.png",
+          "hero-homesteader-f.png",
+          "kit-era-1.png",
+          "townsfolk-tavernkeeper.png",
+          "ui-menu-panel.png",
+          "ui-title-emblem.png"
+        ]
+      },
+      "pngFamiliesLost": [],
+      "pngFamiliesGained": [
+        "char-hero-sheet-attack8.png",
+        "char-hero-sheet-work8.png"
+      ],
+      "jsFamiliesLost": [
+        "char-assay-clerk-sheet-walk8-a.js",
+        "char-elder-sheet-walk8.js",
+        "char-hero-sheet-back-f.js",
+        "char-hero-sheet-front-f.js",
+        "char-hero-sheet-rotation-f.js",
+        "char-hero-sheet-rotation2-f.js",
+        "char-hero-sheet-side-actions-f.js",
+        "char-hero-sheet-side-f.js",
+        "char-hero-sheet-walk8.js",
+        "char-hero-sheet-walkdiag8.js",
+        "char-newsie-mei-sheet-walk8.js",
+        "char-preacher-sheet-walk8-a.js",
+        "char-prospector-sheet-hover8.js",
+        "char-schoolteacher-sheet-walk8-a.js",
+        "char-storekeeper-sheet-walk8.js",
+        "char-tavernkeeper-sheet-walk8.js",
+        "char-youngster-f-sheet-walk8.js",
+        "char-youngster-m-sheet-walk8.js",
+        "rolldown-runtime.js"
+      ]
+    },
+    "mobile-chrome": {
+      "before": {
+        "responses": 412,
+        "totalBytes": 17323124,
+        "jsResponses": 206,
+        "jsBytes": 23485,
+        "cellUrlModules": 173,
+        "cellUrlModuleBytes": 20843,
+        "pngResponses": 186,
+        "pngBytes": 10957158,
+        "sheetCellResponses": 173,
+        "families": [
+          "AssayBench.js",
+          "CameraRig.js",
+          "EraBackdrop.js",
+          "LandmarkCollision.js",
+          "Loop.js",
+          "Medals.js",
+          "Renderer.js",
+          "SoundSystem.js",
+          "SpriteAnimator.js",
+          "StartMenu.js",
+          "Terrain3dClaimPilot.js",
+          "TownNaming.js",
+          "TownScene.css",
+          "TownScene.js",
+          "TownTavernPilot.js",
+          "WorldInfoNotes.js",
+          "_gold-rush-release-e1-ceremony-scripts.js",
+          "active_headframe.js",
+          "assay-office.glb",
+          "bld-chapel.png",
+          "bld-claim-office.png",
+          "bld-general-store.png",
+          "bld-schoolhouse.png",
+          "bld-tavern.png",
+          "ceremonyPostscripts.js",
+          "chapel.glb",
+          "char-assay-clerk-sheet-walk8-a.js",
+          "char-assay-clerk-sheet-walk8-a.png",
+          "char-elder-sheet-walk8.js",
+          "char-elder-sheet-walk8.png",
+          "char-hero-sheet-back-f.js",
+          "char-hero-sheet-back-f.png",
+          "char-hero-sheet-front-f.js",
+          "char-hero-sheet-front-f.png",
+          "char-hero-sheet-rotation-f.js",
+          "char-hero-sheet-rotation-f.png",
+          "char-hero-sheet-rotation2-f.js",
+          "char-hero-sheet-rotation2-f.png",
+          "char-hero-sheet-side-actions-f.js",
+          "char-hero-sheet-side-actions-f.png",
+          "char-hero-sheet-side-f.js",
+          "char-hero-sheet-side-f.png",
+          "char-hero-sheet-walk8.js",
+          "char-hero-sheet-walk8.png",
+          "char-hero-sheet-walkdiag8.js",
+          "char-hero-sheet-walkdiag8.png",
+          "char-newsie-mei-sheet-walk8.js",
+          "char-newsie-mei-sheet-walk8.png",
+          "char-preacher-sheet-walk8-a.js",
+          "char-preacher-sheet-walk8-a.png",
+          "char-prospector-portrait.png",
+          "char-prospector-sheet-hover8.js",
+          "char-prospector-sheet-hover8.png",
+          "char-schoolteacher-sheet-walk8-a.js",
+          "char-schoolteacher-sheet-walk8-a.png",
+          "char-storekeeper-sheet-walk8.js",
+          "char-storekeeper-sheet-walk8.png",
+          "char-tavernkeeper-sheet-walk8.js",
+          "char-tavernkeeper-sheet-walk8.png",
+          "char-youngster-f-sheet-walk8.js",
+          "char-youngster-f-sheet-walk8.png",
+          "char-youngster-m-sheet-walk8.js",
+          "char-youngster-m-sheet-walk8.png",
+          "claim-office.glb",
+          "claim_stake.js",
+          "covered_wagon.glb",
+          "dispose.js",
+          "era-e1-frontier-loop.js",
+          "era-e1-frontier-loop.mp3",
+          "favicon-32.png",
+          "general-store.glb",
+          "hero-homesteader-f.png",
+          "index.css",
+          "index.html",
+          "index.js",
+          "kit-era-1.js",
+          "kit-era-1.png",
+          "maintained_claim_house.js",
+          "menu-tap.js",
+          "menu-tap.mp3",
+          "pan_monument.glb",
+          "payload.js",
+          "riparian_dressing_pack.js",
+          "rolldown-runtime.js",
+          "runBeacon.js",
+          "schoolhouse.glb",
+          "story.css",
+          "story.js",
+          "the-claim-panorama.glb",
+          "the-claim-terrain.glb",
+          "title-theme.js",
+          "title-theme.mp3",
+          "town-plate.glb",
+          "town-v3-tavern.glb",
+          "townEraProps.js",
+          "townsfolk-tavernkeeper.png",
+          "ui-menu-panel.png",
+          "ui-title-emblem.png",
+          "version.json",
+          "water_trough.glb",
+          "working_camp.js"
+        ],
+        "jsFamilies": [
+          "AssayBench.js",
+          "CameraRig.js",
+          "EraBackdrop.js",
+          "LandmarkCollision.js",
+          "Loop.js",
+          "Medals.js",
+          "Renderer.js",
+          "SoundSystem.js",
+          "SpriteAnimator.js",
+          "StartMenu.js",
+          "Terrain3dClaimPilot.js",
+          "TownNaming.js",
+          "TownScene.js",
+          "TownTavernPilot.js",
+          "WorldInfoNotes.js",
+          "_gold-rush-release-e1-ceremony-scripts.js",
+          "active_headframe.js",
+          "ceremonyPostscripts.js",
+          "char-assay-clerk-sheet-walk8-a.js",
+          "char-elder-sheet-walk8.js",
+          "char-hero-sheet-back-f.js",
+          "char-hero-sheet-front-f.js",
+          "char-hero-sheet-rotation-f.js",
+          "char-hero-sheet-rotation2-f.js",
+          "char-hero-sheet-side-actions-f.js",
+          "char-hero-sheet-side-f.js",
+          "char-hero-sheet-walk8.js",
+          "char-hero-sheet-walkdiag8.js",
+          "char-newsie-mei-sheet-walk8.js",
+          "char-preacher-sheet-walk8-a.js",
+          "char-prospector-sheet-hover8.js",
+          "char-schoolteacher-sheet-walk8-a.js",
+          "char-storekeeper-sheet-walk8.js",
+          "char-tavernkeeper-sheet-walk8.js",
+          "char-youngster-f-sheet-walk8.js",
+          "char-youngster-m-sheet-walk8.js",
+          "claim_stake.js",
+          "dispose.js",
+          "era-e1-frontier-loop.js",
+          "index.js",
+          "kit-era-1.js",
+          "maintained_claim_house.js",
+          "menu-tap.js",
+          "payload.js",
+          "riparian_dressing_pack.js",
+          "rolldown-runtime.js",
+          "runBeacon.js",
+          "story.js",
+          "title-theme.js",
+          "townEraProps.js",
+          "working_camp.js"
+        ],
+        "pngFamilies": [
+          "bld-chapel.png",
+          "bld-claim-office.png",
+          "bld-general-store.png",
+          "bld-schoolhouse.png",
+          "bld-tavern.png",
+          "char-assay-clerk-sheet-walk8-a.png",
+          "char-elder-sheet-walk8.png",
+          "char-hero-sheet-back-f.png",
+          "char-hero-sheet-front-f.png",
+          "char-hero-sheet-rotation-f.png",
+          "char-hero-sheet-rotation2-f.png",
+          "char-hero-sheet-side-actions-f.png",
+          "char-hero-sheet-side-f.png",
+          "char-hero-sheet-walk8.png",
+          "char-hero-sheet-walkdiag8.png",
+          "char-newsie-mei-sheet-walk8.png",
+          "char-preacher-sheet-walk8-a.png",
+          "char-prospector-portrait.png",
+          "char-prospector-sheet-hover8.png",
+          "char-schoolteacher-sheet-walk8-a.png",
+          "char-storekeeper-sheet-walk8.png",
+          "char-tavernkeeper-sheet-walk8.png",
+          "char-youngster-f-sheet-walk8.png",
+          "char-youngster-m-sheet-walk8.png",
+          "favicon-32.png",
+          "hero-homesteader-f.png",
+          "kit-era-1.png",
+          "townsfolk-tavernkeeper.png",
+          "ui-menu-panel.png",
+          "ui-title-emblem.png"
+        ]
+      },
+      "after": {
+        "responses": 272,
+        "totalBytes": 21564262,
+        "jsResponses": 32,
+        "jsBytes": 2484,
+        "cellUrlModules": 0,
+        "cellUrlModuleBytes": 0,
+        "pngResponses": 220,
+        "pngBytes": 15219297,
+        "sheetCellResponses": 207,
+        "families": [
+          "AssayBench.js",
+          "CameraRig.js",
+          "EraBackdrop.js",
+          "LandmarkCollision.js",
+          "Loop.js",
+          "Medals.js",
+          "Renderer.js",
+          "SoundSystem.js",
+          "SpriteAnimator.js",
+          "StartMenu.js",
+          "Terrain3dClaimPilot.js",
+          "TownNaming.js",
+          "TownScene.css",
+          "TownScene.js",
+          "TownTavernPilot.js",
+          "WorldInfoNotes.js",
+          "_gold-rush-release-e1-ceremony-scripts.js",
+          "active_headframe.js",
+          "assay-office.glb",
+          "bld-chapel.png",
+          "bld-claim-office.png",
+          "bld-general-store.png",
+          "bld-schoolhouse.png",
+          "bld-tavern.png",
+          "ceremonyPostscripts.js",
+          "chapel.glb",
+          "char-assay-clerk-sheet-walk8-a.png",
+          "char-elder-sheet-walk8.png",
+          "char-hero-sheet-attack8.png",
+          "char-hero-sheet-back-f.png",
+          "char-hero-sheet-front-f.png",
+          "char-hero-sheet-rotation-f.png",
+          "char-hero-sheet-rotation2-f.png",
+          "char-hero-sheet-side-actions-f.png",
+          "char-hero-sheet-side-f.png",
+          "char-hero-sheet-walk8.png",
+          "char-hero-sheet-walkdiag8.png",
+          "char-hero-sheet-work8.png",
+          "char-newsie-mei-sheet-walk8.png",
+          "char-preacher-sheet-walk8-a.png",
+          "char-prospector-portrait.png",
+          "char-prospector-sheet-hover8.png",
+          "char-schoolteacher-sheet-walk8-a.png",
+          "char-storekeeper-sheet-walk8.png",
+          "char-tavernkeeper-sheet-walk8.png",
+          "char-youngster-f-sheet-walk8.png",
+          "char-youngster-m-sheet-walk8.png",
+          "claim-office.glb",
+          "claim_stake.js",
+          "covered_wagon.glb",
+          "dispose.js",
+          "era-e1-frontier-loop.js",
+          "era-e1-frontier-loop.mp3",
+          "favicon-32.png",
+          "general-store.glb",
+          "hero-homesteader-f.png",
+          "index.css",
+          "index.html",
+          "index.js",
+          "kit-era-1.js",
+          "kit-era-1.png",
+          "maintained_claim_house.js",
+          "menu-tap.js",
+          "menu-tap.mp3",
+          "pan_monument.glb",
+          "payload.js",
+          "riparian_dressing_pack.js",
+          "runBeacon.js",
+          "schoolhouse.glb",
+          "story.css",
+          "story.js",
+          "the-claim-panorama.glb",
+          "the-claim-terrain.glb",
+          "title-theme.js",
+          "title-theme.mp3",
+          "town-plate.glb",
+          "town-v3-tavern.glb",
+          "townEraProps.js",
+          "townsfolk-tavernkeeper.png",
+          "ui-menu-panel.png",
+          "ui-title-emblem.png",
+          "version.json",
+          "water_trough.glb",
+          "working_camp.js"
+        ],
+        "jsFamilies": [
+          "AssayBench.js",
+          "CameraRig.js",
+          "EraBackdrop.js",
+          "LandmarkCollision.js",
+          "Loop.js",
+          "Medals.js",
+          "Renderer.js",
+          "SoundSystem.js",
+          "SpriteAnimator.js",
+          "StartMenu.js",
+          "Terrain3dClaimPilot.js",
+          "TownNaming.js",
+          "TownScene.js",
+          "TownTavernPilot.js",
+          "WorldInfoNotes.js",
+          "_gold-rush-release-e1-ceremony-scripts.js",
+          "active_headframe.js",
+          "ceremonyPostscripts.js",
+          "claim_stake.js",
+          "dispose.js",
+          "era-e1-frontier-loop.js",
+          "index.js",
+          "kit-era-1.js",
+          "maintained_claim_house.js",
+          "menu-tap.js",
+          "payload.js",
+          "riparian_dressing_pack.js",
+          "runBeacon.js",
+          "story.js",
+          "title-theme.js",
+          "townEraProps.js",
+          "working_camp.js"
+        ],
+        "pngFamilies": [
+          "bld-chapel.png",
+          "bld-claim-office.png",
+          "bld-general-store.png",
+          "bld-schoolhouse.png",
+          "bld-tavern.png",
+          "char-assay-clerk-sheet-walk8-a.png",
+          "char-elder-sheet-walk8.png",
+          "char-hero-sheet-attack8.png",
+          "char-hero-sheet-back-f.png",
+          "char-hero-sheet-front-f.png",
+          "char-hero-sheet-rotation-f.png",
+          "char-hero-sheet-rotation2-f.png",
+          "char-hero-sheet-side-actions-f.png",
+          "char-hero-sheet-side-f.png",
+          "char-hero-sheet-walk8.png",
+          "char-hero-sheet-walkdiag8.png",
+          "char-hero-sheet-work8.png",
+          "char-newsie-mei-sheet-walk8.png",
+          "char-preacher-sheet-walk8-a.png",
+          "char-prospector-portrait.png",
+          "char-prospector-sheet-hover8.png",
+          "char-schoolteacher-sheet-walk8-a.png",
+          "char-storekeeper-sheet-walk8.png",
+          "char-tavernkeeper-sheet-walk8.png",
+          "char-youngster-f-sheet-walk8.png",
+          "char-youngster-m-sheet-walk8.png",
+          "favicon-32.png",
+          "hero-homesteader-f.png",
+          "kit-era-1.png",
+          "townsfolk-tavernkeeper.png",
+          "ui-menu-panel.png",
+          "ui-title-emblem.png"
+        ]
+      },
+      "pngFamiliesLost": [],
+      "pngFamiliesGained": [
+        "char-hero-sheet-attack8.png",
+        "char-hero-sheet-work8.png"
+      ],
+      "jsFamiliesLost": [
+        "char-assay-clerk-sheet-walk8-a.js",
+        "char-elder-sheet-walk8.js",
+        "char-hero-sheet-back-f.js",
+        "char-hero-sheet-front-f.js",
+        "char-hero-sheet-rotation-f.js",
+        "char-hero-sheet-rotation2-f.js",
+        "char-hero-sheet-side-actions-f.js",
+        "char-hero-sheet-side-f.js",
+        "char-hero-sheet-walk8.js",
+        "char-hero-sheet-walkdiag8.js",
+        "char-newsie-mei-sheet-walk8.js",
+        "char-preacher-sheet-walk8-a.js",
+        "char-prospector-sheet-hover8.js",
+        "char-schoolteacher-sheet-walk8-a.js",
+        "char-storekeeper-sheet-walk8.js",
+        "char-tavernkeeper-sheet-walk8.js",
+        "char-youngster-f-sheet-walk8.js",
+        "char-youngster-m-sheet-walk8.js",
+        "rolldown-runtime.js"
+      ]
+    }
+  },
+  "timings": {
+    "8mbps-100ms": {
+      "desktop-chrome": {
+        "before": {
+          "townReadyMs": [
+            6376,
+            6308,
+            6017
+          ],
+          "requests": [
+            {
+              "all": 190,
+              "js": 100
+            },
+            {
+              "all": 192,
+              "js": 100
+            },
+            {
+              "all": 190,
+              "js": 99
+            }
+          ]
+        },
+        "after": {
+          "townReadyMs": [
+            6651,
+            6480,
+            6482
+          ],
+          "requests": [
+            {
+              "all": 136,
+              "js": 32
+            },
+            {
+              "all": 136,
+              "js": 32
+            },
+            {
+              "all": 136,
+              "js": 32
+            }
+          ]
+        }
+      },
+      "mobile-chrome": {
+        "before": {
+          "townReadyMs": [
+            6393,
+            6396,
+            6403
+          ],
+          "requests": [
+            {
+              "all": 189,
+              "js": 100
+            },
+            {
+              "all": 189,
+              "js": 100
+            },
+            {
+              "all": 188,
+              "js": 99
+            }
+          ]
+        },
+        "after": {
+          "townReadyMs": [
+            6475,
+            6658,
+            6644
+          ],
+          "requests": [
+            {
+              "all": 136,
+              "js": 32
+            },
+            {
+              "all": 136,
+              "js": 32
+            },
+            {
+              "all": 135,
+              "js": 32
+            }
+          ]
+        }
+      }
+    },
+    "latency-100ms-unthrottled": {
+      "desktop-chrome": {
+        "before": {
+          "townReadyMs": [
+            1512,
+            1517,
+            1501
+          ],
+          "requests": [
+            {
+              "all": 129,
+              "js": 71
+            },
+            {
+              "all": 128,
+              "js": 70
+            },
+            {
+              "all": 129,
+              "js": 71
+            }
+          ]
+        },
+        "after": {
+          "townReadyMs": [
+            1218,
+            1211,
+            1199
+          ],
+          "requests": [
+            {
+              "all": 97,
+              "js": 32
+            },
+            {
+              "all": 97,
+              "js": 32
+            },
+            {
+              "all": 97,
+              "js": 32
+            }
+          ]
+        }
+      },
+      "mobile-chrome": {
+        "before": {
+          "townReadyMs": [
+            1507,
+            1517,
+            1511
+          ],
+          "requests": [
+            {
+              "all": 129,
+              "js": 71
+            },
+            {
+              "all": 129,
+              "js": 71
+            },
+            {
+              "all": 128,
+              "js": 70
+            }
+          ]
+        },
+        "after": {
+          "townReadyMs": [
+            1205,
+            1197,
+            1210
+          ],
+          "requests": [
+            {
+              "all": 100,
+              "js": 32
+            },
+            {
+              "all": 97,
+              "js": 32
+            },
+            {
+              "all": 97,
+              "js": 32
+            }
+          ]
+        }
+      }
+    },
+    "8mbps-100ms-settled": {
+      "desktop-chrome": {
+        "before": {
+          "townReadyMs": [
+            6381,
+            6318,
+            6003
+          ],
+          "settledMs": [
+            34245,
+            34173,
+            34156
+          ],
+          "requests": [
+            {
+              "all": 637,
+              "js": 309
+            },
+            {
+              "all": 637,
+              "js": 309
+            },
+            {
+              "all": 637,
+              "js": 309
+            }
+          ]
+        },
+        "after": {
+          "townReadyMs": [
+            6637,
+            6488,
+            6610
+          ],
+          "settledMs": [
+            33004,
+            32975,
+            33126
+          ],
+          "requests": [
+            {
+              "all": 360,
+              "js": 32
+            },
+            {
+              "all": 360,
+              "js": 32
+            },
+            {
+              "all": 361,
+              "js": 32
+            }
+          ]
+        }
+      },
+      "mobile-chrome": {
+        "before": {
+          "townReadyMs": [
+            6014,
+            6395,
+            6308
+          ],
+          "settledMs": [
+            36216,
+            34164,
+            34267
+          ],
+          "requests": [
+            {
+              "all": 638,
+              "js": 309
+            },
+            {
+              "all": 637,
+              "js": 309
+            },
+            {
+              "all": 637,
+              "js": 309
+            }
+          ]
+        },
+        "after": {
+          "townReadyMs": [
+            6760,
+            6480,
+            6472
+          ],
+          "settledMs": [
+            33292,
+            32973,
+            32993
+          ],
+          "requests": [
+            {
+              "all": 361,
+              "js": 32
+            },
+            {
+              "all": 360,
+              "js": 32
+            },
+            {
+              "all": 360,
+              "js": 32
+            }
+          ]
+        }
+      }
+    }
+  }
+}

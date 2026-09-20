@@ -1,0 +1,57 @@
+s1253 orphan gate runs — started 2026-07-30T03:11:27.108Z
+
+=== release :: npm run test:release -- --workers=1  env={} ===
+--- stdout tail ---
+
+> gold-rush@0.1.0 test:release
+> playwright test --config playwright.release.config.ts --workers=1
+
+
+Running 26 tests using 1 worker
+
+  ✓   1 [desktop-chrome] › e2e/release-build.spec.ts:21:1 › first player reaches textured town actors and places a Dry Gulch spring sluice (38.7s)
+  ✓   2 [desktop-chrome] › e2e/release-build.spec.ts:99:3 › the-claim boots through the E1 release door (1.9s)
+  ✓   3 [desktop-chrome] › e2e/release-build.spec.ts:99:3 › e1-dry-gulch boots through the E1 release door (2.0s)
+  ✓   4 [desktop-chrome] › e2e/release-build.spec.ts:99:3 › e1-night-shift boots through the E1 release door (2.1s)
+  ✓   5 [desktop-chrome] › e2e/release-build.spec.ts:99:3 › e1-twin-banks boots through the E1 release door (1.9s)
+  ✓   6 [desktop-chrome] › e2e/release-build.spec.ts:99:3 › e1-baron boots through the E1 release door (1.8s)
+  ✓   7 [desktop-chrome] › e2e/release-build.spec.ts:109:1 › the schoolhouse ledger opens clean on a progressed frontier save (1.4s)
+  ✓   8 [desktop-chrome] › e2e/release-build.spec.ts:127:1 › debug and era query seams are inert (1.9s)
+  ✓   9 [desktop-chrome] › e2e/release-build.spec.ts:150:1 › an imported later ledger heals to the frontier and plays (2.0s)
+  ✓  10 [desktop-chrome] › e2e/release-build.spec.ts:185:1 › later flagship URLs decline to the Claim (3.0s)
+  ✓  11 [desktop-chrome] › e2e/release-build.spec.ts:195:1 › a forged locked launch declines to the Claim (1.7s)
+  ✓  12 [desktop-chrome] › e2e/release-build.spec.ts:204:1 › a legitimate suspend resumes its unlocked contract (1.9s)
+
+  ✓  13 [desktop-chrome] › e2e/release-build.spec.ts:215:1 › dist has no later manifest ids or plate/GLB assets (174ms)
+  ✓  14 [mobile-chrome] › e2e/release-build.spec.ts:21:1 › first player reaches textured town actors and places a Dry Gulch spring sluice (39.3s)
+  ✓  15 [mobile-chrome] › e2e/release-build.spec.ts:99:3 › the-claim boots through the E1 release door (1.8s)
+  ✓  16 [mobile-chrome] › e2e/release-build.spec.ts:99:3 › e1-dry-gulch boots through the E1 release door (2.1s)
+  ✓  17 [mobile-chrome] › e2e/release-build.spec.ts:99:3 › e1-night-shift boots through the E1 release door (2.5s)
+  ✓  18 [mobile-chrome] › e2e/release-build.spec.ts:99:3 › e1-twin-banks boots through the E1 release door (2.6s)
+  ✓  19 [mobile-chrome] › e2e/release-build.spec.ts:99:3 › e1-baron boots through the E1 release door (2.8s)
+  ✓  20 [mobile-chrome] › e2e/release-build.spec.ts:109:1 › the schoolhouse ledger opens clean on a progressed frontier save (1.8s)
+  ✓  21 [mobile-chrome] › e2e/release-build.spec.ts:127:1 › debug and era query seams are inert (2.6s)
+  ✓  22 [mobile-chrome] › e2e/release-build.spec.ts:150:1 › an imported later ledger heals to the frontier and plays (2.8s)
+  ✓  23 [mobile-chrome] › e2e/release-build.spec.ts:185:1 › later flagship URLs decline to the Claim (4.0s)
+  ✓  24 [mobile-chrome] › e2e/release-build.spec.ts:195:1 › a forged locked launch declines to the Claim (2.3s)
+  ✓  25 [mobile-chrome] › e2e/release-build.spec.ts:204:1 › a legitimate suspend resumes its unlocked contract (3.1s)
+
+  ✓  26 [mobile-chrome] › e2e/release-build.spec.ts:215:1 › dist has no later manifest ids or plate/GLB assets (277ms)
+
+  26 passed (2.3m)
+
+--- stderr tail ---
+[WebServer] [plugin builtin:vite-reporter] 
+[WebServer] (!) Some chunks are larger than 900 kB after minification. Consider:
+[WebServer] - Using dynamic import() to code-split the application
+[WebServer] - Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+[WebServer] - Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+(node:32406) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:32810) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:33597) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+>>> RC=0  signal=null  138.3s

@@ -1,0 +1,90 @@
+(node:55722) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 3 tests using 1 worker
+
+
+(node:55787) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[1/3] [desktop-chrome] › e2e/e7-roster.spec.ts:164:1 › plain Signal-era boot stays error-free without the debug harness
+  1) [desktop-chrome] › e2e/e7-roster.spec.ts:164:1 › plain Signal-era boot stays error-free without the debug harness 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      173 |   await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+      174 |   expect(await page.evaluate(() => window.__GR_TEST__)).toBeUndefined();
+    > 175 |   expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.e7Arsenal.enabled)).toBe(true);
+          |                                                                                           ^
+      176 |   expect(errors).toEqual({ console: [], page: [] });
+      177 | });
+      178 |
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-roster/e2e/e7-roster.spec.ts:175:91
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e7-roster-plain-Signal-era-d9798-e-without-the-debug-harness-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e7-roster-plain-Signal-era-d9798-e-without-the-debug-harness-desktop-chrome/error-context.md
+
+
+
+(node:55898) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[2/3] [desktop-chrome] › e2e/e8-roster.spec.ts:172:1 › plain Orbital-era boot stays error-free without the debug harness
+  2) [desktop-chrome] › e2e/e8-roster.spec.ts:172:1 › plain Orbital-era boot stays error-free without the debug harness 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      181 |   await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+      182 |   expect(await page.evaluate(() => window.__GR_TEST__)).toBeUndefined();
+    > 183 |   expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.e8Arsenal.available)).toBe(true);
+          |                                                                                             ^
+      184 |   expect(errors).toEqual({ console: [], page: [] });
+      185 | });
+      186 |
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-roster/e2e/e8-roster.spec.ts:183:93
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e8-roster-plain-Orbital-er-2bc57-e-without-the-debug-harness-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e8-roster-plain-Orbital-er-2bc57-e-without-the-debug-harness-desktop-chrome/error-context.md
+
+
+
+(node:56005) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[3/3] [desktop-chrome] › e2e/e9-roster.spec.ts:173:1 › plain Red Fields boot stays error-free without the debug harness
+  3) [desktop-chrome] › e2e/e9-roster.spec.ts:173:1 › plain Red Fields boot stays error-free without the debug harness 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      182 |   await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+      183 |   expect(await page.evaluate(() => window.__GR_TEST__)).toBeUndefined();
+    > 184 |   expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.e9Arsenal.eraActive)).toBe(true);
+          |                                                                                             ^
+      185 |   expect(errors).toEqual({ console: [], page: [] });
+      186 | });
+      187 |
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-roster/e2e/e9-roster.spec.ts:184:93
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e9-roster-plain-Red-Fields-f1945-e-without-the-debug-harness-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e9-roster-plain-Red-Fields-f1945-e-without-the-debug-harness-desktop-chrome/error-context.md
+
+
+  3 failed
+    [desktop-chrome] › e2e/e7-roster.spec.ts:164:1 › plain Signal-era boot stays error-free without the debug harness 
+    [desktop-chrome] › e2e/e8-roster.spec.ts:172:1 › plain Orbital-era boot stays error-free without the debug harness 
+    [desktop-chrome] › e2e/e9-roster.spec.ts:173:1 › plain Red Fields boot stays error-free without the debug harness 

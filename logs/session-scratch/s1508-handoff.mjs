@@ -1,0 +1,41 @@
+import fs from 'node:fs';
+const p = 'STATUS.md';
+const lines = fs.readFileSync(p, 'utf8').split('\n');
+const lockLine = lines[0];
+if (!lockLine.startsWith('ACTIVE')) throw new Error('line-1 is not my ACTIVE lock: ' + lockLine.slice(0, 60));
+
+const handoff = [
+  'Last updated: 2026-08-07T05:05Z s1508 handoff, lock CLEARED —',
+  '🟩 **NO DRAINS OWED (every done-move already drained); A DRY BOARD REFILLED, AND HALF OF THE PREVIOUS FIRE\'S #1 PRIORITY OVERTURNED BY READING A DATE.**',
+  '🔬 **F-1508-1 — `e2e/072-era-activation.spec.ts:226` IS NOT A REGRESSION, SO THE BISECT F-1507-2 ORDERED WOULD HAVE FOUND AN INTENDED COMMIT.**',
+  'F-1507-2 named two `CLEAN-IN-INVENTORY` specs reproducibly red on main and reasoned — correctly, by the F-1506-2 rule — that a red today is therefore a bisectable regression. I verified the premise first and it held: both reds reproduce on `80c79324c` at `--workers=1` (`072-era-activation:226` desktop; `landmark-collision:68` both projects).',
+  '⚠️ **But `CLEAN-IN-INVENTORY` means *green on the snapshot\'s date*, and the verdict line never prints that date.** Measured: the inventory snapshot is **2026-07-29** (`logs/suite-red-inventory.md:577`) · `e1-drill-yard` entered `assets/contracts/epoch-1-frontier/contracts.json` on **2026-08-01** at **`f0bf5251b`** (`git log -S`) · `listContracts()` has not changed since **2026-07-07** (`d56804ae3`).',
+  '⇒ The registry code has not moved in a month; the manifest legitimately grew a sixth contract **three days after the ledger ran**. The spec\'s pasted `E1_CONTRACTS = [five ids]` at `:23` is the defect — the "broadcast an expected value your merge changes" class. **The first-bad commit was already named without any bisect, and its change was intended and shipped.**',
+  '✅ **Editing this spec is the CURE, not laundering** — shipped precedent `f1504-1` (`9559633aa`) inverted exactly this stale-assertion class in the sibling `e2e/drill-yard.spec.ts`. ⓘ The Drill Yard really is fresh-boot visible: `e2e/drill-yard.spec.ts:80-100` does a plain `page.goto(\'/\')` and asserts the card visible with `data-training-ground="true"`, deliberately OUTSIDE the epoch-1 chapter — so the manifest, not the spec, is right.',
+  '📮 **AUTHORED + DISPATCHED `lane-f1508-1-e1-contracts-stale-broadcast.md` → lane-a**, in the F-1424-3 order: master+leaf+BACKLOG committed **first** (`244e13448`), lane fast-forwarded **second** (`cb7a09e79..244e13448`, now `0/0` vs main and containing that very commit), citation keys grepped **1 on main and 1 in the lane** for all three, `cp` **third**. The master derives the list from the manifest and **requires a manufactured-defect probe** proving the `toEqual` still catches later-epoch leakage (s1299/s1300) — because a derived expectation would otherwise be vacuous, which is the one way this cure could quietly go wrong.',
+  '🟡 **F-1508-2 — the lookup tool has two false-verdict surfaces, and one cost me my first reading.** ⑴ A bare spec name silently answers `NOT-IN-INVENTORY` (*never ran*) instead of `CLEAN-IN-INVENTORY` (*ran and passed*): `specPath()` (`:15-19`) falls back to `e2e/${basename}` **without appending `.spec.ts`**, and **exits 1 either way**, so an exit-code reader cannot tell. My first query on both specs returned the opposite of the truth. ⑵ The verdict never carries the snapshot date — which is precisely what turns "clean" into "clean nine days ago", and is the omission that produced F-1507-2\'s misreading.',
+  '📋 **Triage, stated so it can be checked:** every `tasks/done/` entry is already `drained-` (no drain owed) · `tasks/failed/` newest is 2026-07-27 · no `CODEX-WALL` · assayer `pending/` **empty** (listed, not inherited) · the two banked masters I checked for the idle lanes (`lane-a-drill-yard-practice-derivation`, `er-02-steamworks-rehearsal-commission`) are both `status:"merged"` and correctly NOT re-queued (Mistake #8).',
+  '**Duties:** ticker digest 2026-08-06 **not due** — it is 05:05, the duty is the first fire after 06:00, latest on disk is 2026-08-05 (verified by listing) · gazette **not owed** (the filter law wants a real-change merge; this fire merged nothing) · deploy **skipped** for the same reason · art-staging audit **not owed** (ART slot untouched) · `gate-s1455/` untouched (owner-gated, F-1494-1) · backup `git push origin main` run after this commit · `test:ledger-guards` run as the last act (F-1300-4).',
+  '📌 **NEXT FIRE — (A) the surviving half of F-1507-2 is now the whole of it and is the cheapest real work:** `e2e/landmark-collision.spec.ts:68` *"enemy blocker routing is deterministic and goes around a county landmark"* reds on **both** projects, `expect(first.some(({x}) => Math.abs(x - landmark.x) > landmark.halfX)).toBe(true)` → **false**, i.e. the scripted enemy path never deviates in x — it goes straight through instead of around. That is a routing change, and F-1460-1 records `4ab48743` (f1452-1 fort-solidity) **regating enemy routing on `route.blocker`** — a named, dated, mechanically consistent first endpoint, **still a HYPOTHESIS: neither s1507 nor I tested it.** Bisect in the f1506-2 shape (validate the predicate on both endpoints FIRST); forbid refreshing the inventory and forbid editing the spec — unlike 072, this one has no dated evidence that the assertion went stale. **(B) lanes b, c and d are idle with empty queues — PIPELINE-DRY: lane-b, lane-c, lane-d.** I hit the one-authored-master-per-fire limit on (A)\'s sibling; the landmark bisect is the obvious next authoring, and it needs no spec or owner word. **(C)** the 2026-08-06 ticker digest, first fire after 06:00. **(D) F-1508-2** is a ~10-line cure to `red-inventory-lookup.mjs` (refuse a nonexistent spec path; print the snapshot date on the verdict line) and would have prevented this fire\'s misreading and the previous fire\'s. **(E) F-1507-3** — replace a runtime-sampled timing bound with the invariant it exists for.',
+  '🔺 **OWNER\'S DESK — 14 awaiting a word (0 added this fire; both of mine are fire-authorable).**',
+  '🔺 **F-1507-1 — UNIFY THE LANE AND FIRE ONTO `.nvmrc`\'s 26.4.0?** Lanes gate on **v23.11.1**, fires on **v26.4.0**; the two differ in `--test-timeout` granularity, in `Math.pow` by 1 ULP (F-1404-2) and in process warnings. **REC: one line in `~/.zshrc` — `nvm use 23` → `nvm use` — which is YOUR file, so no fire has touched it.**',
+  '🔺 **F-1501-3** motion-pilot staging: `art-staging-audit` reads **AT RISK 582 files / 527.89 MB**. **REC: (a) commit the pose-library PNGs and leave the 49 regenerable MP4s, or (c) rule the staging EXEMPT from §10b.**',
+  '🔺 **f1328-1 — still the cheapest word on the list. REC: close it.**',
+  '🔺 **F-1499-2 — DOES A HEADLESS RIDER GET A BODY?** Both AGENT-READY E2 contracts are unwinnable while the headless hero is `IDLE_INTENTS` forever. **REC: grow the body.**',
+  '🔺 **F-MTS-2** `AgentGameAdapter` has no verb for two epochs\' defining action. **REC: rule on CAPTURE first.**',
+  '🔺 **F-MILK-SS-3** Dust Flats says *"four surveyed fields"* and authors **three**. **REC: take the one-word prose fix.**',
+  '🔺 **F-MSD-1** 13 of 25 campaign maps cannot be opened. **REC: verdict the 12 that can.**',
+  '🔺 **F-MSD-2** five reuse maps ship 25 bespoke landmark `.glb` the game can never mount.',
+  '🔺 **F-1494-1** remove `gate-s1455/` and reclaim 14 GB? Provably lossless. **REC: remove.**',
+  '🔺 **F-1493-3** Hill Mine Railcar dying at wave 14 under a 100,000-HP rig — acceptable tuning? **REC: accept.**',
+  '🔺 **F-1475-1** e3-fairground diagnostics-only construction path — **REC: (c) a `diagnostic:true` boot flag**; F-1495-1 prices it at **30 contracts** unblocked.',
+  '🔺 **F-1096-2** rf-34 hero-Y: (A) merge as-is [rec] or (B) terrain-visualY authoritative.',
+  '🔺 **F-1166-1** vp-02e jumper: (a) accept coarse [rec] or (b) real 8-way art.',
+  '🔺 **F-1294-1** calibrate-suite-workers-v2 — worth a v3? [rec: RETIRE].',
+  '**Robin owes (unchanged, never blocking):** turret-feel + water-feel playtests, Mac full-regression evidence, favicon 16px eyeball.',
+].join(' ');
+
+lines[0] = handoff;
+lines.splice(1, 0, '- **s1508 lock line (archived):** ' + lockLine);
+fs.writeFileSync(p, lines.join('\n'));
+console.log('handoff written, length', handoff.length);

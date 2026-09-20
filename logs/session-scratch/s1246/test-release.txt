@@ -1,0 +1,84 @@
+[WebServer] [plugin builtin:vite-reporter] 
+[WebServer] (!) Some chunks are larger than 900 kB after minification. Consider:
+[WebServer] - Using dynamic import() to code-split the application
+[WebServer] - Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+[WebServer] - Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+(node:23784) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 26 tests using 2 workers
+
+(node:23947) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:23946) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 [mobile-chrome] › e2e/release-build.spec.ts:21:1 › first player reaches textured town actors and places a Dry Gulch spring sluice (38.1s)
+  ✓   2 [desktop-chrome] › e2e/release-build.spec.ts:21:1 › first player reaches textured town actors and places a Dry Gulch spring sluice (38.6s)
+  ✓   3 [mobile-chrome] › e2e/release-build.spec.ts:99:3 › the-claim boots through the E1 release door (1.5s)
+  ✓   4 [desktop-chrome] › e2e/release-build.spec.ts:99:3 › the-claim boots through the E1 release door (1.7s)
+  ✓   5 [mobile-chrome] › e2e/release-build.spec.ts:99:3 › e1-dry-gulch boots through the E1 release door (1.9s)
+  ✓   6 [desktop-chrome] › e2e/release-build.spec.ts:99:3 › e1-dry-gulch boots through the E1 release door (1.9s)
+  ✓   7 [mobile-chrome] › e2e/release-build.spec.ts:99:3 › e1-night-shift boots through the E1 release door (1.8s)
+  ✓   8 [desktop-chrome] › e2e/release-build.spec.ts:99:3 › e1-night-shift boots through the E1 release door (2.1s)
+  ✓   9 [mobile-chrome] › e2e/release-build.spec.ts:99:3 › e1-twin-banks boots through the E1 release door (1.6s)
+  ✓  10 [desktop-chrome] › e2e/release-build.spec.ts:99:3 › e1-twin-banks boots through the E1 release door (1.8s)
+  ✓  11 [mobile-chrome] › e2e/release-build.spec.ts:99:3 › e1-baron boots through the E1 release door (1.5s)
+  ✓  13 [mobile-chrome] › e2e/release-build.spec.ts:109:1 › the schoolhouse ledger opens clean on a progressed frontier save (1.3s)
+  ✓  12 [desktop-chrome] › e2e/release-build.spec.ts:99:3 › e1-baron boots through the E1 release door (1.8s)
+  ✓  14 [mobile-chrome] › e2e/release-build.spec.ts:127:1 › debug and era query seams are inert (1.5s)
+  ✓  15 [desktop-chrome] › e2e/release-build.spec.ts:109:1 › the schoolhouse ledger opens clean on a progressed frontier save (1.3s)
+  ✓  16 [mobile-chrome] › e2e/release-build.spec.ts:150:1 › an imported later ledger heals to the frontier and plays (1.7s)
+  ✓  17 [desktop-chrome] › e2e/release-build.spec.ts:127:1 › debug and era query seams are inert (1.7s)
+  ✓  19 [desktop-chrome] › e2e/release-build.spec.ts:150:1 › an imported later ledger heals to the frontier and plays (1.9s)
+  ✓  18 [mobile-chrome] › e2e/release-build.spec.ts:185:1 › later flagship URLs decline to the Claim (2.3s)
+  ✓  21 [mobile-chrome] › e2e/release-build.spec.ts:195:1 › a forged locked launch declines to the Claim (1.5s)
+  ✓  22 [mobile-chrome] › e2e/release-build.spec.ts:204:1 › a legitimate suspend resumes its unlocked contract (1.7s)
+
+  ✓  23 [mobile-chrome] › e2e/release-build.spec.ts:215:1 › dist has no later manifest ids or plate/GLB assets (199ms)
+  ✘  20 [desktop-chrome] › e2e/release-build.spec.ts:185:1 › later flagship URLs decline to the Claim (3.4s)
+(node:24887) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  24 [desktop-chrome] › e2e/release-build.spec.ts:195:1 › a forged locked launch declines to the Claim (1.8s)
+  ✓  25 [desktop-chrome] › e2e/release-build.spec.ts:204:1 › a legitimate suspend resumes its unlocked contract (1.8s)
+
+  ✓  26 [desktop-chrome] › e2e/release-build.spec.ts:215:1 › dist has no later manifest ids or plate/GLB assets (175ms)
+
+
+  1) [desktop-chrome] › e2e/release-build.spec.ts:185:1 › later flagship URLs decline to the Claim ─
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 3
+
+    - Array []
+    + Array [
+    +   "THREE.GLTFLoader: Couldn't load texture blob:http://127.0.0.1:5190/fcab3b53-b375-453e-91df-98ca124446d1",
+    + ]
+
+      190 |     await waitForContract(page, 'the-claim');
+      191 |   }
+    > 192 |   expect(errors).toEqual([]);
+          |                  ^
+      193 | });
+      194 |
+      195 | test('a forged locked launch declines to the Claim', async ({ page }) => {
+        at /Users/robin/Claude/Projects/Gold Rush/e2e/release-build.spec.ts:192:18
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/release-build-later-flagship-URLs-decline-to-the-Claim-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/release-build-later-flagship-URLs-decline-to-the-Claim-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/release-build-later-flagship-URLs-decline-to-the-Claim-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/release-build-later-flagship-URLs-decline-to-the-Claim-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [desktop-chrome] › e2e/release-build.spec.ts:185:1 › later flagship URLs decline to the Claim ──
+  25 passed (1.1m)

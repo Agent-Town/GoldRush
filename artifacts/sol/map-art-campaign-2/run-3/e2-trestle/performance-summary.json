@@ -1,0 +1,261 @@
+{
+  "method": "Four interleaved actual-source/GLB runs per arm and viewport, with all full-tier runtime verdicts zero. Same <15 ms fast-mode split as the prior maps; unmatched slow samples are disclosed, not credited as a matched-mode pass. All pooled medians also remain within +15%.",
+  "scenes": [
+    {
+      "mode": "frozen",
+      "width": 1280,
+      "before": {
+        "p95Runs": [
+          8.699999999999818,
+          8.400000000000546,
+          8.5,
+          11.5
+        ],
+        "pooledMedian": 8.599999999999909,
+        "fastMedian": 8.599999999999909,
+        "slowRuns": [],
+        "callsRange": [
+          92,
+          93
+        ],
+        "triangleRange": [
+          114746,
+          114748
+        ]
+      },
+      "after": {
+        "p95Runs": [
+          8.400000000000546,
+          9.100000000000364,
+          9.300000000000182,
+          8.899999999999636
+        ],
+        "pooledMedian": 9.0,
+        "fastMedian": 9.0,
+        "slowRuns": [],
+        "callsRange": [
+          92,
+          93
+        ],
+        "triangleRange": [
+          114746,
+          114748
+        ]
+      },
+      "fastChangePercent": 4.651162790698771,
+      "pooledChangePercent": 4.651162790698771,
+      "within15PercentFastAndPooled": true
+    },
+    {
+      "mode": "frozen",
+      "width": 390,
+      "before": {
+        "p95Runs": [
+          9.5,
+          8.5,
+          9.199999999999818,
+          8.800000000000182
+        ],
+        "pooledMedian": 9.0,
+        "fastMedian": 9.0,
+        "slowRuns": [],
+        "callsRange": [
+          66,
+          66
+        ],
+        "triangleRange": [
+          111874,
+          111874
+        ]
+      },
+      "after": {
+        "p95Runs": [
+          9.100000000000364,
+          9.300000000000182,
+          9,
+          9
+        ],
+        "pooledMedian": 9.050000000000182,
+        "fastMedian": 9.050000000000182,
+        "slowRuns": [],
+        "callsRange": [
+          66,
+          66
+        ],
+        "triangleRange": [
+          111874,
+          111874
+        ]
+      },
+      "fastChangePercent": 0.5555555555575742,
+      "pooledChangePercent": 0.5555555555575742,
+      "within15PercentFastAndPooled": true
+    },
+    {
+      "mode": "crossing",
+      "width": 1280,
+      "before": {
+        "p95Runs": [
+          9,
+          10.200000000000728,
+          8.600000000000364,
+          8.5
+        ],
+        "pooledMedian": 8.800000000000182,
+        "fastMedian": 8.800000000000182,
+        "slowRuns": [],
+        "callsRange": [
+          120,
+          122
+        ],
+        "triangleRange": [
+          118576,
+          118580
+        ],
+        "cartZWindows": [
+          [
+            -2.3999999999998756,
+            4.800000000000483
+          ],
+          [
+            -2.3999999999998756,
+            5.1200000000004975
+          ],
+          [
+            -2.3199999999998715,
+            4.880000000000487
+          ],
+          [
+            -2.3999999999998756,
+            4.800000000000483
+          ]
+        ]
+      },
+      "after": {
+        "p95Runs": [
+          8.899999999999636,
+          15.799999999999272,
+          9.199999999999818,
+          9
+        ],
+        "pooledMedian": 9.099999999999909,
+        "fastMedian": 9,
+        "slowRuns": [
+          15.799999999999272
+        ],
+        "callsRange": [
+          120,
+          122
+        ],
+        "triangleRange": [
+          118576,
+          118580
+        ],
+        "cartZWindows": [
+          [
+            -2.3199999999998715,
+            4.880000000000487
+          ],
+          [
+            -2.3199999999998715,
+            5.520000000000516
+          ],
+          [
+            -2.2399999999998674,
+            4.96000000000049
+          ],
+          [
+            -2.3199999999998715,
+            4.880000000000487
+          ]
+        ]
+      },
+      "fastChangePercent": 2.2727272727251613,
+      "pooledChangePercent": 3.409090909087742,
+      "within15PercentFastAndPooled": true
+    },
+    {
+      "mode": "crossing",
+      "width": 390,
+      "before": {
+        "p95Runs": [
+          8.700000000000728,
+          8.899999999999636,
+          17.399999999999636,
+          9.899999999999636
+        ],
+        "pooledMedian": 9.399999999999636,
+        "fastMedian": 8.899999999999636,
+        "slowRuns": [
+          17.399999999999636
+        ],
+        "callsRange": [
+          81,
+          83
+        ],
+        "triangleRange": [
+          115754,
+          115758
+        ],
+        "cartZWindows": [
+          [
+            -2.3199999999998715,
+            4.880000000000487
+          ],
+          [
+            -2.3199999999998715,
+            4.880000000000487
+          ],
+          [
+            -2.3199999999998715,
+            5.7600000000005265
+          ],
+          [
+            -2.2399999999998674,
+            4.96000000000049
+          ]
+        ]
+      },
+      "after": {
+        "p95Runs": [
+          8.899999999999636,
+          9.300000000000182,
+          9.300000000000182,
+          8.799999999999272
+        ],
+        "pooledMedian": 9.099999999999909,
+        "fastMedian": 9.099999999999909,
+        "slowRuns": [],
+        "callsRange": [
+          81,
+          83
+        ],
+        "triangleRange": [
+          115754,
+          115758
+        ],
+        "cartZWindows": [
+          [
+            -2.3199999999998715,
+            4.880000000000487
+          ],
+          [
+            -2.2399999999998674,
+            4.880000000000487
+          ],
+          [
+            -2.3199999999998715,
+            4.880000000000487
+          ],
+          [
+            -2.3999999999998756,
+            4.800000000000483
+          ]
+        ]
+      },
+      "fastChangePercent": 2.2471910112391136,
+      "pooledChangePercent": -3.191489361699351,
+      "within15PercentFastAndPooled": true
+    }
+  ]
+}

@@ -1,0 +1,1463 @@
+TAP version 13
+# Subtest: agent consent keeps the ruled pan and build rungs plus shipped repair rung
+ok 1 - agent consent keeps the ruled pan and build rungs plus shipped repair rung
+  ---
+  duration_ms: 0.75825
+  type: 'test'
+  ...
+# Subtest: tool surface keeps auto-pan and place-building at their ruled rungs
+ok 2 - tool surface keeps auto-pan and place-building at their ruled rungs
+  ---
+  duration_ms: 0.097209
+  type: 'test'
+  ...
+# Subtest: standing orders keep harvest at rung 2 and build at rung 3
+ok 3 - standing orders keep harvest at rung 2 and build at rung 3
+  ---
+  duration_ms: 0.118792
+  type: 'test'
+  ...
+# Subtest: a missing dist/ is refused, not cleared
+ok 4 - a missing dist/ is refused, not cleared
+  ---
+  duration_ms: 40.801375
+  type: 'test'
+  ...
+# Subtest: CONTROL: the same fixture with one benign dist file passes — it is the emptiness, not the fixture
+ok 5 - CONTROL: the same fixture with one benign dist file passes — it is the emptiness, not the fixture
+  ---
+  duration_ms: 43.83625
+  type: 'test'
+  ...
+# Subtest: an empty later-asset blacklist is refused — the leak check would otherwise pass vacuously
+ok 6 - an empty later-asset blacklist is refused — the leak check would otherwise pass vacuously
+  ---
+  duration_ms: 60.189375
+  type: 'test'
+  ...
+# Subtest: the success line reports the denominator, so a vacuous clearance would be legible
+ok 7 - the success line reports the denominator, so a vacuous clearance would be legible
+  ---
+  duration_ms: 41.668917
+  type: 'test'
+  ...
+# Subtest: POSITIVE CONTROL: a later-epoch manifest id in dist still fails
+ok 8 - POSITIVE CONTROL: a later-epoch manifest id in dist still fails
+  ---
+  duration_ms: 41.731709
+  type: 'test'
+  ...
+# Subtest: POSITIVE CONTROL: a leaked later-epoch plate asset in dist still fails
+ok 9 - POSITIVE CONTROL: a leaked later-epoch plate asset in dist still fails
+  ---
+  duration_ms: 46.897916
+  type: 'test'
+  ...
+# Subtest: POSITIVE CONTROL: the GR_RELEASE=e1 precondition still refuses a bare invocation
+ok 10 - POSITIVE CONTROL: the GR_RELEASE=e1 precondition still refuses a bare invocation
+  ---
+  duration_ms: 35.56325
+  type: 'test'
+  ...
+# Subtest: contract ids are globally unique across the ten epoch bundles
+ok 11 - contract ids are globally unique across the ten epoch bundles
+  ---
+  duration_ms: 0.576958
+  type: 'test'
+  ...
+# Subtest: bench seed sets cover Frontier and contain only valid known-contract seeds
+ok 12 - bench seed sets cover Frontier and contain only valid known-contract seeds
+  ---
+  duration_ms: 0.131584
+  type: 'test'
+  ...
+# Subtest: reds on the pre-strike ledger that manufactured the owner directive, greens on the struck one
+ok 13 - reds on the pre-strike ledger that manufactured the owner directive, greens on the struck one
+  ---
+  duration_ms: 479.675583
+  type: 'test'
+  ...
+# Subtest: a closure APPENDED below the panel row does not clear the panel — which is the whole defect
+ok 14 - a closure APPENDED below the panel row does not clear the panel — which is the whole defect
+  ---
+  duration_ms: 75.913875
+  type: 'test'
+  ...
+# Subtest: striking the ORIGINAL line clears the panel — the fix the guard prescribes actually works
+ok 15 - striking the ORIGINAL line clears the panel — the fix the guard prescribes actually works
+  ---
+  duration_ms: 50.484459
+  type: 'test'
+  ...
+# Subtest: an open finding on the panel is left alone
+ok 16 - an open finding on the panel is left alone
+  ---
+  duration_ms: 59.888
+  type: 'test'
+  ...
+# Subtest: REFUSES rather than passes when the panel moves out from under it
+ok 17 - REFUSES rather than passes when the panel moves out from under it
+  ---
+  duration_ms: 47.269375
+  type: 'test'
+  ...
+# Subtest: the wide closure vocabulary is opt-in and does not leak into the default census
+ok 18 - the wide closure vocabulary is opt-in and does not leak into the default census
+  ---
+  duration_ms: 0.443792
+  type: 'test'
+  ...
+# Subtest: contract direction files exist under assets/processed
+ok 19 - contract direction files exist under assets/processed
+  ---
+  duration_ms: 0.95175
+  type: 'test'
+  ...
+# Subtest: contract direction aliases do not overwrite explicit directions
+ok 20 - contract direction aliases do not overwrite explicit directions
+  ---
+  duration_ms: 0.742209
+  type: 'test'
+  ...
+# Subtest: a bare spec:line citation fails the guard
+ok 21 - a bare spec:line citation fails the guard
+  ---
+  duration_ms: 197.587208
+  type: 'test'
+  ...
+# Subtest: a citation carrying an exact test title passes
+ok 22 - a citation carrying an exact test title passes
+  ---
+  duration_ms: 268.167
+  type: 'test'
+  ...
+# Subtest: a citation carrying an ELIDED test title passes
+ok 23 - a citation carrying an ELIDED test title passes
+  ---
+  duration_ms: 204.47525
+  type: 'test'
+  ...
+# Subtest: a quoted title that does not exist in the spec still fails
+ok 24 - a quoted title that does not exist in the spec still fails
+  ---
+  duration_ms: 343.269625
+  type: 'test'
+  ...
+# Subtest: a grandfathered bare citation passes, and a second copy of it does not
+ok 25 - a grandfathered bare citation passes, and a second copy of it does not
+  ---
+  duration_ms: 822.565916
+  type: 'test'
+  ...
+# Subtest: --report never gates
+ok 26 - --report never gates
+  ---
+  duration_ms: 440.043167
+  type: 'test'
+  ...
+# Subtest: REFUSES when no tracked task markdown exists (denominator 0 docs)
+ok 27 - REFUSES when no tracked task markdown exists (denominator 0 docs)
+  ---
+  duration_ms: 439.746292
+  type: 'test'
+  ...
+# Subtest: REFUSES when task docs exist but carry zero citations
+ok 28 - REFUSES when task docs exist but carry zero citations
+  ---
+  duration_ms: 362.139791
+  type: 'test'
+  ...
+# Subtest: REFUSES when the baseline it ratchets against is missing
+ok 29 - REFUSES when the baseline it ratchets against is missing
+  ---
+  duration_ms: 574.116291
+  type: 'test'
+  ...
+# Subtest: a citation quoting a real NON-TEST source line is carried, not a violation
+ok 30 - a citation quoting a real NON-TEST source line is carried, not a violation
+  ---
+  duration_ms: 480.186292
+  type: 'test'
+  ...
+# Subtest: a quote matching NEITHER a title nor any source line still fails
+ok 31 - a quote matching NEITHER a title nor any source line still fails
+  ---
+  duration_ms: 448.782334
+  type: 'test'
+  ...
+# Subtest: the verdict names the citations it did NOT gate
+ok 32 - the verdict names the citations it did NOT gate
+  ---
+  duration_ms: 418.978084
+  type: 'test'
+  ...
+# Subtest: --report still never gates, even on a denominator it could not read
+ok 33 - --report still never gates, even on a denominator it could not read
+  ---
+  duration_ms: 351.457917
+  type: 'test'
+  ...
+# Subtest: whole-suite collection guard is cwd-invariant
+not ok 34 - whole-suite collection guard is cwd-invariant
+  ---
+  duration_ms: 5217.024875
+  type: 'test'
+  location: '/Users/robin/Claude/Projects/Gold Rush/scripts/collection-guards-cwd-invariance.test.mjs:17:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    ✖ whole suite collects without loading Vite-only modules (5126.589834ms)
+    ℹ tests 1
+    ℹ suites 0
+    ℹ pass 0
+    ℹ fail 1
+    ℹ cancelled 0
+    ℹ skipped 0
+    ℹ todo 0
+    ℹ duration_ms 5175.33825
+    
+    ✖ failing tests:
+    
+    test at ../../../../../../Users/robin/Claude/Projects/Gold Rush/scripts/whole-suite-collection.test.mjs:33:1
+    ✖ whole suite collects without loading Vite-only modules (5126.589834ms)
+      AssertionError [ERR_ASSERTION]: child exit 1
+      stderr:
+      (node:17409) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+      (Use `node --trace-warnings ...` to show where the warning was created)
+      [asset-diet] SKIPPED: asset diet measures the BUILT production bundle; set GR_ASSET_DIET_BUNDLE=1 via: npm run test:asset-diet
+      
+      TypeError: Cannot read properties of undefined (reading 'goals')
+      
+         at charter-press.rig.ts:70
+      
+        68 |     },
+        69 |     () => {
+      > 70 |       contract.briefing.goals[Math.floor(rng() * contract.briefing.goals.length)] = '   ';
+           |                         ^
+        71 |       return 'blank:briefing.goal';
+        72 |     },
+        73 |     () => {
+          at Array.contract.tileParams.lanes.spawnEdges (/Users/robin/Claude/Projects/Gold Rush/e2e/charter-press.rig.ts:70:25)
+          at applyMutation (/Users/robin/Claude/Projects/Gold Rush/e2e/charter-press.rig.ts:115:47)
+          at charterMutants (/Users/robin/Claude/Projects/Gold Rush/e2e/charter-press.rig.ts:43:65)
+          at /Users/robin/Claude/Projects/Gold Rush/e2e/cp02-charter-boot.spec.ts:15:22
+      
+      stdout:
+      Listing tests:
+      Total: 0 tests in 0 files
+      
+      
+      1 !== 0
+      
+          at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/Gold%20Rush/scripts/whole-suite-collection.test.mjs:37:10)
+          at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+          at async Test.run (node:internal/test_runner/test:1389:7)
+          at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+        generatedMessage: false,
+        code: 'ERR_ASSERTION',
+        actual: 1,
+        expected: 0,
+        operator: 'strictEqual',
+        diff: 'simple'
+      }
+    
+    
+    1 !== 0
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 0
+  actual: 1
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/robin/Claude/Projects/Gold%20Rush/scripts/collection-guards-cwd-invariance.test.mjs:19:10)
+    Test.runInAsyncScope (node:async_hooks:226:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.start (node:internal/test_runner/test:1242:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)
+  ...
+# Subtest: town-spec collection guard is cwd-invariant
+ok 35 - town-spec collection guard is cwd-invariant
+  ---
+  duration_ms: 1533.118333
+  type: 'test'
+  ...
+# Subtest: console error watching stays in one literal-prefix source
+ok 36 - console error watching stays in one literal-prefix source
+  ---
+  duration_ms: 18.058416
+  type: 'test'
+  ...
+# Subtest: drain path REFUSES a terminal-closed leaf (F-1248-1) — and clears the same fixture when live
+ok 37 - drain path REFUSES a terminal-closed leaf (F-1248-1) — and clears the same fixture when live
+  ---
+  duration_ms: 72.987542
+  type: 'test'
+  ...
+# Subtest: every TERMINAL_CLOSED word is refused on the drain path, and no other word is
+ok 38 - every TERMINAL_CLOSED word is refused on the drain path, and no other word is
+  ---
+  duration_ms: 466.740834
+  type: 'test'
+  ...
+# Subtest: an owner BLOCK still outranks everything and still names the owner (unchanged by F-1248-1)
+ok 39 - an owner BLOCK still outranks everything and still names the owner (unchanged by F-1248-1)
+  ---
+  duration_ms: 42.963625
+  type: 'test'
+  ...
+# Subtest: --queue keeps its own wording and its own reason line
+ok 40 - --queue keeps its own wording and its own reason line
+  ---
+  duration_ms: 52.194
+  type: 'test'
+  ...
+# Subtest: F-1311-2: --queue refuses a fresh bare citation and names the repair
+ok 41 - F-1311-2: --queue refuses a fresh bare citation and names the repair
+  ---
+  duration_ms: 292.335625
+  type: 'test'
+  ...
+# Subtest: F-1311-2: --queue accepts the same citation with its test title
+ok 42 - F-1311-2: --queue accepts the same citation with its test title
+  ---
+  duration_ms: 367.044833
+  type: 'test'
+  ...
+# Subtest: F-1311-2: --queue respects the grandfathered baseline
+ok 43 - F-1311-2: --queue respects the grandfathered baseline
+  ---
+  duration_ms: 400.602875
+  type: 'test'
+  ...
+# Subtest: F-1311-2: the drain arm remains unchanged for a fresh bare citation
+ok 44 - F-1311-2: the drain arm remains unchanged for a fresh bare citation
+  ---
+  duration_ms: 143.438417
+  type: 'test'
+  ...
+# Subtest: a closed leaf whose reason sits under a session-stamped key is still explained
+ok 45 - a closed leaf whose reason sits under a session-stamped key is still explained
+  ---
+  duration_ms: 265.879042
+  type: 'test'
+  ...
+# Subtest: F-1249-1: a session-stamped reason key that varies the STEM is explained, and non-reason keys are not
+ok 46 - F-1249-1: a session-stamped reason key that varies the STEM is explained, and non-reason keys are not
+  ---
+  duration_ms: 321.606375
+  type: 'test'
+  ...
+# Subtest: F-1249-1: a stale blockedReason is never printed as the CLOSURE cause
+ok 47 - F-1249-1: a stale blockedReason is never printed as the CLOSURE cause
+  ---
+  duration_ms: 227.045541
+  type: 'test'
+  ...
+# Subtest: F-1249-1: the leaf TITLE is printed on both refusal arms, even when a reason key exists
+ok 48 - F-1249-1: the leaf TITLE is printed on both refusal arms, even when a reason key exists
+  ---
+  duration_ms: 313.825292
+  type: 'test'
+  ...
+# Subtest: --all reports terminal-closed leaves but its exit code still tracks BLOCKED alone
+ok 49 - --all reports terminal-closed leaves but its exit code still tracks BLOCKED alone
+  ---
+  duration_ms: 177.447709
+  type: 'test'
+  ...
+# Subtest: F-1250-1: an EXACT taskFile match outranks a longer-named sibling (no false CLEAR)
+ok 50 - F-1250-1: an EXACT taskFile match outranks a longer-named sibling (no false CLEAR)
+  ---
+  duration_ms: 272.3715
+  type: 'test'
+  ...
+# Subtest: F-1250-1: the reverse — a lawful merged drain is not reddened by a longer closed predecessor
+ok 51 - F-1250-1: the reverse — a lawful merged drain is not reddened by a longer closed predecessor
+  ---
+  duration_ms: 182.958208
+  type: 'test'
+  ...
+# Subtest: F-1250-1: with NO exact match, longest-wins still decides (the tie-break is kept, not replaced)
+ok 52 - F-1250-1: with NO exact match, longest-wins still decides (the tie-break is kept, not replaced)
+  ---
+  duration_ms: 54.887292
+  type: 'test'
+  ...
+# Subtest: F-1250-1 rider: a blocked SIBLING still refuses, but now says which leaf you actually named
+ok 53 - F-1250-1 rider: a blocked SIBLING still refuses, but now says which leaf you actually named
+  ---
+  duration_ms: 226.850584
+  type: 'test'
+  ...
+# Subtest: a missing leaf is still UNKNOWN-not-a-clearance, and --strict still escalates it
+ok 54 - a missing leaf is still UNKNOWN-not-a-clearance, and --strict still escalates it
+  ---
+  duration_ms: 206.624541
+  type: 'test'
+  ...
+# Subtest: --queue REFUSES a master a runner already holds (F-1322-1) — and clears it once the slot frees
+ok 55 - --queue REFUSES a master a runner already holds (F-1322-1) — and clears it once the slot frees
+  ---
+  duration_ms: 422.408625
+  type: 'test'
+  ...
+# Subtest: the live-run match is the runner's exact shape, not a name suffix
+ok 56 - the live-run match is the runner's exact shape, not a name suffix
+  ---
+  duration_ms: 481.754042
+  type: 'test'
+  ...
+# Subtest: an UNDRAINED done-move WARNS but never refuses — s1320's lawful §7.5 re-dispatch must pass
+ok 57 - an UNDRAINED done-move WARNS but never refuses — s1320's lawful §7.5 re-dispatch must pass
+  ---
+  duration_ms: 1041.020917
+  type: 'test'
+  ...
+# Subtest: the DRAIN path is untouched by both arms — a done-move is what a drain is FOR
+ok 58 - the DRAIN path is untouched by both arms — a done-move is what a drain is FOR
+  ---
+  duration_ms: 46.4055
+  type: 'test'
+  ...
+# Subtest: published mask tables exactly track authored contract data
+ok 59 - published mask tables exactly track authored contract data
+  ---
+  duration_ms: 57.43525
+  type: 'test'
+  ...
+# Subtest: published Moth Season mask stays inside bounds and agrees with authored water
+ok 60 - published Moth Season mask stays inside bounds and agrees with authored water
+  ---
+  duration_ms: 1.134166
+  type: 'test'
+  ...
+# Subtest: e2-trestle mask stays inside bounds and agrees with authored water
+ok 61 - e2-trestle mask stays inside bounds and agrees with authored water
+  ---
+  duration_ms: 0.985416
+  type: 'test'
+  ...
+# Subtest: e2-pressure-garden mask stays inside bounds and agrees with authored water
+ok 62 - e2-pressure-garden mask stays inside bounds and agrees with authored water
+  ---
+  duration_ms: 1.122833
+  type: 'test'
+  ...
+# Subtest: e2-incline mask stays inside bounds and agrees with authored water
+ok 63 - e2-incline mask stays inside bounds and agrees with authored water
+  ---
+  duration_ms: 2.283584
+  type: 'test'
+  ...
+# Subtest: e3-canyon-works mask stays inside bounds and agrees with authored water
+ok 64 - e3-canyon-works mask stays inside bounds and agrees with authored water
+  ---
+  duration_ms: 0.727458
+  type: 'test'
+  ...
+# Subtest: e3-blackout-ridge mask stays inside bounds and agrees with authored water
+ok 65 - e3-blackout-ridge mask stays inside bounds and agrees with authored water
+  ---
+  duration_ms: 2.785667
+  type: 'test'
+  ...
+# Subtest: e3-moth-season mask stays inside bounds and agrees with authored water
+ok 66 - e3-moth-season mask stays inside bounds and agrees with authored water
+  ---
+  duration_ms: 1.184792
+  type: 'test'
+  ...
+# Subtest: e3-fairground mask stays inside bounds and agrees with authored water
+ok 67 - e3-fairground mask stays inside bounds and agrees with authored water
+  ---
+  duration_ms: 0.387667
+  type: 'test'
+  ...
+# Subtest: e4-dust-flats mask stays inside bounds and agrees with authored water
+ok 68 - e4-dust-flats mask stays inside bounds and agrees with authored water
+  ---
+  duration_ms: 0.588875
+  type: 'test'
+  ...
+# Subtest: e4-long-road mask stays inside bounds and agrees with authored water
+ok 69 - e4-long-road mask stays inside bounds and agrees with authored water
+  ---
+  duration_ms: 1.692917
+  type: 'test'
+  ...
+# Subtest: e4-gusher-county mask stays inside bounds and agrees with authored water
+ok 70 - e4-gusher-county mask stays inside bounds and agrees with authored water
+  ---
+  duration_ms: 0.885
+  type: 'test'
+  ...
+# Subtest: e4-boneyard mask stays inside bounds and agrees with authored water
+ok 71 - e4-boneyard mask stays inside bounds and agrees with authored water
+  ---
+  duration_ms: 0.6045
+  type: 'test'
+  ...
+# Subtest: e5-regatta mask stays inside bounds and agrees with authored water
+ok 72 - e5-regatta mask stays inside bounds and agrees with authored water
+  ---
+  duration_ms: 1.95525
+  type: 'test'
+  ...
+# Subtest: e5-stillwater mask stays inside bounds and agrees with authored water
+ok 73 - e5-stillwater mask stays inside bounds and agrees with authored water
+  ---
+  duration_ms: 0.476625
+  type: 'test'
+  ...
+# Subtest: e5-flotilla mask stays inside bounds and agrees with authored water
+ok 74 - e5-flotilla mask stays inside bounds and agrees with authored water
+  ---
+  duration_ms: 2.634583
+  type: 'test'
+  ...
+# Subtest: e6-glow-mesa mask stays inside bounds and agrees with authored water
+ok 75 - e6-glow-mesa mask stays inside bounds and agrees with authored water
+  ---
+  duration_ms: 0.6115
+  type: 'test'
+  ...
+# Subtest: e6-showroom mask stays inside bounds and agrees with authored water
+ok 76 - e6-showroom mask stays inside bounds and agrees with authored water
+  ---
+  duration_ms: 1.139834
+  type: 'test'
+  ...
+# Subtest: e6-half-life-hollow mask stays inside bounds and agrees with authored water
+ok 77 - e6-half-life-hollow mask stays inside bounds and agrees with authored water
+  ---
+  duration_ms: 0.747291
+  type: 'test'
+  ...
+# Subtest: e6-picnic mask stays inside bounds and agrees with authored water
+ok 78 - e6-picnic mask stays inside bounds and agrees with authored water
+  ---
+  duration_ms: 0.540625
+  type: 'test'
+  ...
+# Subtest: e7-relay-valley mask stays inside bounds and agrees with authored water
+ok 79 - e7-relay-valley mask stays inside bounds and agrees with authored water
+  ---
+  duration_ms: 1.167458
+  type: 'test'
+  ...
+# Subtest: e7-echo-canyon mask stays inside bounds and agrees with authored water
+ok 80 - e7-echo-canyon mask stays inside bounds and agrees with authored water
+  ---
+  duration_ms: 0.563459
+  type: 'test'
+  ...
+# Subtest: e7-dead-band mask stays inside bounds and agrees with authored water
+ok 81 - e7-dead-band mask stays inside bounds and agrees with authored water
+  ---
+  duration_ms: 1.278417
+  type: 'test'
+  ...
+# Subtest: e7-relay-rush mask stays inside bounds and agrees with authored water
+ok 82 - e7-relay-rush mask stays inside bounds and agrees with authored water
+  ---
+  duration_ms: 0.654834
+  type: 'test'
+  ...
+# Subtest: e8-mare-claim mask stays inside bounds and agrees with authored water
+ok 83 - e8-mare-claim mask stays inside bounds and agrees with authored water
+  ---
+  duration_ms: 0.311458
+  type: 'test'
+  ...
+# Subtest: e9-dome-basin mask stays inside bounds and agrees with authored water
+ok 84 - e9-dome-basin mask stays inside bounds and agrees with authored water
+  ---
+  duration_ms: 1.468875
+  type: 'test'
+  ...
+# Subtest: e9-seed-run mask stays inside bounds and agrees with authored water
+ok 85 - e9-seed-run mask stays inside bounds and agrees with authored water
+  ---
+  duration_ms: 0.969333
+  type: 'test'
+  ...
+# Subtest: e9-devils-alley mask stays inside bounds and agrees with authored water
+ok 86 - e9-devils-alley mask stays inside bounds and agrees with authored water
+  ---
+  duration_ms: 0.849875
+  type: 'test'
+  ...
+# Subtest: e9-old-canal mask stays inside bounds and agrees with authored water
+ok 87 - e9-old-canal mask stays inside bounds and agrees with authored water
+  ---
+  duration_ms: 0.865833
+  type: 'test'
+  ...
+# Subtest: e10-ember-shore mask stays inside bounds and agrees with authored water
+ok 88 - e10-ember-shore mask stays inside bounds and agrees with authored water
+  ---
+  duration_ms: 0.479375
+  type: 'test'
+  ...
+# Subtest: entry damage tables include both E1 contracts
+ok 89 - entry damage tables include both E1 contracts
+  ---
+  duration_ms: 0.563875
+  type: 'test'
+  ...
+# Subtest: night shift wave 3 has reduced entry damage
+ok 90 - night shift wave 3 has reduced entry damage
+  ---
+  duration_ms: 0.061916
+  type: 'test'
+  ...
+# Subtest: night shift wave 12 has no entry damage scale
+ok 91 - night shift wave 12 has no entry damage scale
+  ---
+  duration_ms: 0.06475
+  type: 'test'
+  ...
+# Subtest: entry damage scaling ends after wave 10
+ok 92 - entry damage scaling ends after wave 10
+  ---
+  duration_ms: 0.052166
+  type: 'test'
+  ...
+# Subtest: entry damage scales are finite reductions
+ok 93 - entry damage scales are finite reductions
+  ---
+  duration_ms: 0.063708
+  type: 'test'
+  ...
+# Subtest: E1 entry damage tables agree
+ok 94 - E1 entry damage tables agree
+  ---
+  duration_ms: 0.330834
+  type: 'test'
+  ...
+# Subtest: real history has exactly the four former double-state findings and current BACKLOG has none
+ok 95 - real history has exactly the four former double-state findings and current BACKLOG has none
+  ---
+  duration_ms: 122.262
+  type: 'test'
+  ...
+# Subtest: prose citations are not declarations, only struck declarations close, and duplicate opens stay open
+ok 96 - prose citations are not declarations, only struck declarations close, and duplicate opens stay open
+  ---
+  duration_ms: 45.4725
+  type: 'test'
+  ...
+# Subtest: fire shell (CLAUDE_CONFIG_DIR present) resolves playwright workers to 1
+ok 97 - fire shell (CLAUDE_CONFIG_DIR present) resolves playwright workers to 1
+  ---
+  duration_ms: 272.790209
+  type: 'test'
+  ...
+# Subtest: non-fire shell (CLAUDE_CONFIG_DIR absent) keeps playwright parallelism
+ok 98 - non-fire shell (CLAUDE_CONFIG_DIR absent) keeps playwright parallelism
+  ---
+  duration_ms: 1145.18325
+  type: 'test'
+  ...
+# Subtest: all 17 scripts/*.test.mjs fixture owners remove their temp directories
+not ok 99 - all 17 scripts/*.test.mjs fixture owners remove their temp directories
+  ---
+  duration_ms: 40686.402833
+  type: 'test'
+  location: '/Users/robin/Claude/Projects/Gold Rush/scripts/fixture-teardown.test.mjs:24:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    scripts/whole-suite-collection.test.mjs child failed:
+    ✖ whole suite collects without loading Vite-only modules (3794.765917ms)
+    ℹ tests 1
+    ℹ suites 0
+    ℹ pass 0
+    ℹ fail 1
+    ℹ cancelled 0
+    ℹ skipped 0
+    ℹ todo 0
+    ℹ duration_ms 3830.254125
+    
+    ✖ failing tests:
+    
+    test at scripts/whole-suite-collection.test.mjs:33:1
+    ✖ whole suite collects without loading Vite-only modules (3794.765917ms)
+      AssertionError [ERR_ASSERTION]: child exit 1
+      stderr:
+      (node:25965) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+      (Use `node --trace-warnings ...` to show where the warning was created)
+      [asset-diet] SKIPPED: asset diet measures the BUILT production bundle; set GR_ASSET_DIET_BUNDLE=1 via: npm run test:asset-diet
+      
+      TypeError: Cannot read properties of undefined (reading 'goals')
+      
+         at charter-press.rig.ts:70
+      
+        68 |     },
+        69 |     () => {
+      > 70 |       contract.briefing.goals[Math.floor(rng() * contract.briefing.goals.length)] = '   ';
+           |                         ^
+        71 |       return 'blank:briefing.goal';
+        72 |     },
+        73 |     () => {
+          at Array.contract.tileParams.lanes.spawnEdges (/Users/robin/Claude/Projects/Gold Rush/e2e/charter-press.rig.ts:70:25)
+          at applyMutation (/Users/robin/Claude/Projects/Gold Rush/e2e/charter-press.rig.ts:115:47)
+          at charterMutants (/Users/robin/Claude/Projects/Gold Rush/e2e/charter-press.rig.ts:43:65)
+          at /Users/robin/Claude/Projects/Gold Rush/e2e/cp02-charter-boot.spec.ts:15:22
+      
+      stdout:
+      Listing tests:
+      Total: 0 tests in 0 files
+      
+      
+      1 !== 0
+      
+          at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/Gold%20Rush/scripts/whole-suite-collection.test.mjs:37:10)
+          at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+          at async Test.run (node:internal/test_runner/test:1389:7)
+          at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+        generatedMessage: false,
+        code: 'ERR_ASSERTION',
+        actual: 1,
+        expected: 0,
+        operator: 'strictEqual',
+        diff: 'simple'
+      }
+    
+    
+    1 !== 0
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 0
+  actual: 1
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/robin/Claude/Projects/Gold%20Rush/scripts/fixture-teardown.test.mjs:40:14)
+    Test.runInAsyncScope (node:async_hooks:226:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.start (node:internal/test_runner/test:1242:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)
+  ...
+# Subtest: a second battery APPENDS — it never destroys the first arm evidence
+ok 100 - a second battery APPENDS — it never destroys the first arm evidence
+  ---
+  duration_ms: 139.667375
+  type: 'test'
+  ...
+# Subtest: playwright jobs get --workers=1 injected
+ok 101 - playwright jobs get --workers=1 injected
+  ---
+  duration_ms: 0.406458
+  type: 'test'
+  ...
+# Subtest: an explicit --workers is respected, so a deliberate parallelism control is not overridden
+ok 102 - an explicit --workers is respected, so a deliberate parallelism control is not overridden
+  ---
+  duration_ms: 0.079292
+  type: 'test'
+  ...
+# Subtest: non-playwright jobs are left exactly as given
+ok 103 - non-playwright jobs are left exactly as given
+  ---
+  duration_ms: 0.050792
+  type: 'test'
+  ...
+# Subtest: a failing job produces a non-zero overall verdict
+ok 104 - a failing job produces a non-zero overall verdict
+  ---
+  duration_ms: 111.367292
+  type: 'test'
+  ...
+# Subtest: a command that cannot spawn is recorded as a failure, not a pass
+ok 105 - a command that cannot spawn is recorded as a failure, not a pass
+  ---
+  duration_ms: 43.804875
+  type: 'test'
+  ...
+# Subtest: misuse exits 2 rather than reporting a vacuous green
+ok 106 - misuse exits 2 rather than reporting a vacuous green
+  ---
+  duration_ms: 162.819375
+  type: 'test'
+  ...
+# Subtest: a gate nothing calls is reported as a NEW orphan and exits 1
+ok 107 - a gate nothing calls is reported as a NEW orphan and exits 1
+  ---
+  duration_ms: 191.859459
+  type: 'test'
+  ...
+# Subtest: grandfathering that orphan with a reason turns the gate green
+ok 108 - grandfathering that orphan with a reason turns the gate green
+  ---
+  duration_ms: 193.2295
+  type: 'test'
+  ...
+# Subtest: a gate whose only caller is a *.config.ts webServer command counts as REACHED
+ok 109 - a gate whose only caller is a *.config.ts webServer command counts as REACHED
+  ---
+  duration_ms: 174.914666
+  type: 'test'
+  ...
+# Subtest: a guard named only in a COMMENT is not reached — prose is not a caller
+ok 110 - a guard named only in a COMMENT is not reached — prose is not a caller
+  ---
+  duration_ms: 180.076625
+  type: 'test'
+  ...
+# Subtest: putting it in the GUARDS array clears it — the control for the arm above
+ok 111 - putting it in the GUARDS array clears it — the control for the arm above
+  ---
+  duration_ms: 358.145709
+  type: 'test'
+  ...
+# Subtest: a non-gate script (dev, preview, census) is never ratcheted on
+ok 112 - a non-gate script (dev, preview, census) is never ratcheted on
+  ---
+  duration_ms: 433.575041
+  type: 'test'
+  ...
+# Subtest: an orphan that GAINED a caller is reported so the baseline can tighten
+ok 113 - an orphan that GAINED a caller is reported so the baseline can tighten
+  ---
+  duration_ms: 328.653459
+  type: 'test'
+  ...
+# Subtest: --report never gates, even with a fresh orphan present
+ok 114 - --report never gates, even with a fresh orphan present
+  ---
+  duration_ms: 350.9265
+  type: 'test'
+  ...
+# Subtest: REFUSES (rc=2) when package.json has no scripts block
+ok 115 - REFUSES (rc=2) when package.json has no scripts block
+  ---
+  duration_ms: 397.268792
+  type: 'test'
+  ...
+# Subtest: REFUSES (rc=2) when no scripts/*.mjs is tracked
+ok 116 - REFUSES (rc=2) when no scripts/*.mjs is tracked
+  ---
+  duration_ms: 306.9445
+  type: 'test'
+  ...
+# Subtest: REFUSES (rc=2) when the resolver cannot reach its own anchors
+ok 117 - REFUSES (rc=2) when the resolver cannot reach its own anchors
+  ---
+  duration_ms: 341.270042
+  type: 'test'
+  ...
+# Subtest: REFUSES (rc=2) when the baseline file is missing — not read as {}
+ok 118 - REFUSES (rc=2) when the baseline file is missing — not read as {}
+  ---
+  duration_ms: 341.406
+  type: 'test'
+  ...
+# Subtest: REFUSES (rc=2) when the baseline is unreadable
+ok 119 - REFUSES (rc=2) when the baseline is unreadable
+  ---
+  duration_ms: 416.970208
+  type: 'test'
+  ...
+# Subtest: REFUSES (rc=2) when no subject matches the gate patterns
+ok 120 - REFUSES (rc=2) when no subject matches the gate patterns
+  ---
+  duration_ms: 619.356875
+  type: 'test'
+  ...
+# Subtest: POSITIVE CONTROL: the real repo passes, with a non-empty measured subject
+ok 121 - POSITIVE CONTROL: the real repo passes, with a non-empty measured subject
+  ---
+  duration_ms: 196.116166
+  type: 'test'
+  ...
+# fallbackTownEraPropManifests: 7 fallback keys = 7 static imports = 7 files
+# fallbackManifests (non-release): 10 fallback keys = 10 files
+# fallbackFamilyBundles: 1 fallback keys = 1 files
+# fallbackCapsBundles: 1 fallback keys = 1 files
+# fallbackContractBundles (non-release): 10 fallback keys = 10 files
+# Subtest: node glob fallbacks match every on-disk manifest (non-release branches)
+ok 122 - node glob fallbacks match every on-disk manifest (non-release branches)
+  ---
+  duration_ms: 3.117625
+  type: 'test'
+  ...
+# Subtest: every terminal-closed goal leaf can state why it closed
+ok 123 - every terminal-closed goal leaf can state why it closed
+  ---
+  duration_ms: 0.87375
+  type: 'test'
+  ...
+# Subtest: the mirrored resolver vocabulary still matches drain-block-check.mjs
+ok 124 - the mirrored resolver vocabulary still matches drain-block-check.mjs
+  ---
+  duration_ms: 0.759042
+  type: 'test'
+  ...
+# Subtest: goal tree schema is valid
+ok 125 - goal tree schema is valid
+  ---
+  duration_ms: 1.640209
+  type: 'test'
+  ...
+# Subtest: ten sampled merged leaves have a done receipt and ancestral merge
+ok 126 - ten sampled merged leaves have a done receipt and ancestral merge
+  ---
+  duration_ms: 19745.544
+  type: 'test'
+  ...
+# Subtest: gr-sim replays the same contract, seed, and orders byte-for-byte
+ok 127 - gr-sim replays the same contract, seed, and orders byte-for-byte
+  ---
+  duration_ms: 13276.00725
+  type: 'test'
+  ...
+# Subtest: gr-sim deterministically runs the Claim objective
+ok 128 - gr-sim deterministically runs the Claim objective
+  ---
+  duration_ms: 4206.323041
+  type: 'test'
+  ...
+# Subtest: gr-sim places Night Shift fixtures from the contract
+ok 129 - gr-sim places Night Shift fixtures from the contract
+  ---
+  duration_ms: 5484.743667
+  type: 'test'
+  ...
+# Subtest: a correctly-pointed law passes once baselined
+ok 130 - a correctly-pointed law passes once baselined
+  ---
+  duration_ms: 86.5175
+  type: 'test'
+  ...
+# Subtest: CODE-SIDE ROT: the cited line moves under a fixed coordinate -> POINTER DRIFT (the fire.md :315 shape)
+ok 131 - CODE-SIDE ROT: the cited line moves under a fixed coordinate -> POINTER DRIFT (the fire.md :315 shape)
+  ---
+  duration_ms: 94.344708
+  type: 'test'
+  ...
+# Subtest: LAW-SIDE ROT: the law is edited to a stale coordinate -> red until re-verified (the F-1276-2 shape)
+ok 132 - LAW-SIDE ROT: the law is edited to a stale coordinate -> red until re-verified (the F-1276-2 shape)
+  ---
+  duration_ms: 102.840084
+  type: 'test'
+  ...
+# Subtest: a pointer past EOF is caught as OUT OF RANGE, not silently skipped
+ok 133 - a pointer past EOF is caught as OUT OF RANGE, not silently skipped
+  ---
+  duration_ms: 56.29425
+  type: 'test'
+  ...
+# Subtest: a pointer to a file that does not exist fails rather than being ignored
+ok 134 - a pointer to a file that does not exist fails rather than being ignored
+  ---
+  duration_ms: 92.004416
+  type: 'test'
+  ...
+# Subtest: prose that is not a file:line is not mistaken for a pointer
+ok 135 - prose that is not a file:line is not mistaken for a pointer
+  ---
+  duration_ms: 44.649417
+  type: 'test'
+  ...
+# Subtest: a MISSING law surface is itself a red — the law cannot be checked if it is gone
+ok 136 - a MISSING law surface is itself a red — the law cannot be checked if it is gone
+  ---
+  duration_ms: 61.825958
+  type: 'test'
+  ...
+# Subtest: THE REAL TREE: every law-surface pointer in this repo currently holds
+ok 137 - THE REAL TREE: every law-surface pointer in this repo currently holds
+  ---
+  duration_ms: 105.871667
+  type: 'test'
+  ...
+# Subtest: MARKDOWN TARGET: a law surface citing another .md by coordinate is checked, not skipped (F-1278-2)
+ok 138 - MARKDOWN TARGET: a law surface citing another .md by coordinate is checked, not skipped (F-1278-2)
+  ---
+  duration_ms: 366.168083
+  type: 'test'
+  ...
+# Subtest: GOAL LEDGER ROT: a live non-terminal blockedReason pointer moves -> red names the leaf
+ok 139 - GOAL LEDGER ROT: a live non-terminal blockedReason pointer moves -> red names the leaf
+  ---
+  duration_ms: 427.744042
+  type: 'test'
+  ...
+# Subtest: BACKLOG COORDINATE BAN: live leaves red, --update cannot bury it, terminal history stays out
+ok 140 - BACKLOG COORDINATE BAN: live leaves red, --update cannot bury it, terminal history stays out
+  ---
+  duration_ms: 585.103834
+  type: 'test'
+  ...
+# Subtest: rejects an unset PROBE_BASE before launching a browser
+ok 141 - rejects an unset PROBE_BASE before launching a browser
+  ---
+  duration_ms: 227.647083
+  type: 'test'
+  ...
+# Subtest: rejects an unset PROBE_BASE before checking the browser executable
+ok 142 - rejects an unset PROBE_BASE before checking the browser executable
+  ---
+  duration_ms: 1396.959916
+  type: 'test'
+  ...
+# Subtest: rejects a positional base URL with a PROBE_BASE directive
+ok 143 - rejects a positional base URL with a PROBE_BASE directive
+  ---
+  duration_ms: 1195.843458
+  type: 'test'
+  ...
+# Subtest: rejects an unset base before probing ownership
+ok 144 - rejects an unset base before probing ownership
+  ---
+  duration_ms: 0.61775
+  type: 'test'
+  ...
+# Subtest: accepts a listener owned by this checkout
+ok 145 - accepts a listener owned by this checkout
+  ---
+  duration_ms: 0.073084
+  type: 'test'
+  ...
+# Subtest: rejects a listener owned by another checkout
+ok 146 - rejects a listener owned by another checkout
+  ---
+  duration_ms: 0.070459
+  type: 'test'
+  ...
+# Subtest: rejects a port with no listener
+ok 147 - rejects a port with no listener
+  ---
+  duration_ms: 1.001709
+  type: 'test'
+  ...
+# Subtest: rejects an unusable ownership probe
+ok 148 - rejects an unusable ownership probe
+  ---
+  duration_ms: 0.139542
+  type: 'test'
+  ...
+# Subtest: a blocked leaf citing a RULED finding is stale
+ok 149 - a blocked leaf citing a RULED finding is stale
+  ---
+  duration_ms: 3.322834
+  type: 'test'
+  ...
+# Subtest: a blocked leaf citing an UNRULED finding is not stale
+ok 150 - a blocked leaf citing an UNRULED finding is not stale
+  ---
+  duration_ms: 0.099334
+  type: 'test'
+  ...
+# Subtest: "RULING REQUIRED" prose does not count as a ruling — only "<id> RULED" does
+ok 151 - "RULING REQUIRED" prose does not count as a ruling — only "<id> RULED" does
+  ---
+  duration_ms: 0.059208
+  type: 'test'
+  ...
+# Subtest: terminal-closed statuses refuse work too, so their reasons are checked
+ok 152 - terminal-closed statuses refuse work too, so their reasons are checked
+  ---
+  duration_ms: 0.070167
+  type: 'test'
+  ...
+# Subtest: a merged leaf is not a refusal, however its reason reads
+ok 153 - a merged leaf is not a refusal, however its reason reads
+  ---
+  duration_ms: 0.059709
+  type: 'test'
+  ...
+# Subtest: a leaf is any node carrying taskFile — NOT a childless node
+ok 154 - a leaf is any node carrying taskFile — NOT a childless node
+  ---
+  duration_ms: 0.053458
+  type: 'test'
+  ...
+# Subtest: denominator agrees with drain-block-check on the live tree
+ok 155 - denominator agrees with drain-block-check on the live tree
+  ---
+  duration_ms: 2.061542
+  type: 'test'
+  ...
+# Subtest: the live tree carries no stale refusal
+ok 156 - the live tree carries no stale refusal
+  ---
+  duration_ms: 5.407792
+  type: 'test'
+  ...
+# Subtest: runner exit follows guard exit codes
+ok 157 - runner exit follows guard exit codes
+  ---
+  duration_ms: 7278.01025
+  type: 'test'
+  ...
+# Subtest: --only rejects unknown guards and runs one known guard
+ok 158 - --only rejects unknown guards and runs one known guard
+  ---
+  duration_ms: 292.027583
+  type: 'test'
+  ...
+# Subtest: --only accepts a comma-separated subset in canonical order
+ok 159 - --only accepts a comma-separated subset in canonical order
+  ---
+  duration_ms: 826.570167
+  type: 'test'
+  ...
+# Subtest: --only rejects a list containing an unknown guard rather than narrowing
+ok 160 - --only rejects a list containing an unknown guard rather than narrowing
+  ---
+  duration_ms: 78.154833
+  type: 'test'
+  ...
+# Subtest: power-budget rows include p95 only when printed
+ok 161 - power-budget rows include p95 only when printed
+  ---
+  duration_ms: 532.936333
+  type: 'test'
+  ...
+# Subtest: --changed-since runs the base gate when no path rule matches
+ok 162 - --changed-since runs the base gate when no path rule matches
+  ---
+  duration_ms: 1146.227041
+  type: 'test'
+  ...
+# Subtest: --changed-since adds the worker guards when functions/ moved
+ok 163 - --changed-since adds the worker guards when functions/ moved
+  ---
+  duration_ms: 2846.803959
+  type: 'test'
+  ...
+# Subtest: --changed-since exits 2 on a bad ref rather than narrowing to the base gate
+ok 164 - --changed-since exits 2 on a bad ref rather than narrowing to the base gate
+  ---
+  duration_ms: 209.951334
+  type: 'test'
+  ...
+# Subtest: --changed-since exits 2 when the untracked listing fails rather than reporting a green
+ok 165 - --changed-since exits 2 when the untracked listing fails rather than reporting a green
+  ---
+  duration_ms: 1779.113875
+  type: 'test'
+  ...
+# Subtest: guards run with GR_GUARD_NO_ARTIFACT so a gate cannot dirty its own tree
+ok 166 - guards run with GR_GUARD_NO_ARTIFACT so a gate cannot dirty its own tree
+  ---
+  duration_ms: 200.452042
+  type: 'test'
+  ...
+# Subtest: a signal-killed guard is never a pass
+ok 167 - a signal-killed guard is never a pass
+  ---
+  duration_ms: 194.900208
+  type: 'test'
+  ...
+# AT RISK (archive files absent from git ls-files; informational): 289 files, 748.82 MB
+# Task-stats high-water: subject 288 rows, baseline 283
+# Run log retention: 288 entries checked, 0 unrecoverable
+# Subtest: every recorded run log remains recoverable
+ok 168 - every recorded run log remains recoverable
+  ---
+  duration_ms: 481.744042
+  type: 'test'
+  ...
+# Subtest: every scripts/**/*.mjs parses
+ok 169 - every scripts/**/*.mjs parses
+  ---
+  duration_ms: 1912.622333
+  type: 'test'
+  ...
+# Subtest: every scripts/**/*.sh parses
+ok 170 - every scripts/**/*.sh parses
+  ---
+  duration_ms: 183.475042
+  type: 'test'
+  ...
+# Subtest: every rehearsal/**/*.mjs parses
+ok 171 - every rehearsal/**/*.mjs parses
+  ---
+  duration_ms: 462.836792
+  type: 'test'
+  ...
+# Subtest: every foundry/**/*.mjs parses
+ok 172 - every foundry/**/*.mjs parses
+  ---
+  duration_ms: 47.095208
+  type: 'test'
+  ...
+# Subtest: every foundry/**/*.sh parses
+ok 173 - every foundry/**/*.sh parses
+  ---
+  duration_ms: 9.531
+  type: 'test'
+  ...
+# Subtest: site: every local <script src> the pages load actually exists
+ok 174 - site: every local <script src> the pages load actually exists
+  ---
+  duration_ms: 1.169917
+  type: 'test'
+  ...
+# Subtest: site: each loaded script parses under the grammar its tag requests
+ok 175 - site: each loaded script parses under the grammar its tag requests
+  ---
+  duration_ms: 45.616125
+  type: 'test'
+  ...
+# Subtest: site: each inline <script> parses under the grammar its tag requests
+ok 176 - site: each inline <script> parses under the grammar its tag requests
+  ---
+  duration_ms: 54.322292
+  type: 'test'
+  ...
+# Subtest: site: every local href/src resolves to a file that exists
+ok 177 - site: every local href/src resolves to a file that exists
+  ---
+  duration_ms: 6.247208
+  type: 'test'
+  ...
+# Subtest: site: the denominator still contains a data-* reference and an escaping path
+ok 178 - site: the denominator still contains a data-* reference and an escaping path
+  ---
+  duration_ms: 0.405042
+  type: 'test'
+  ...
+# Subtest: site: every in-page anchor targets an element that exists
+ok 179 - site: every in-page anchor targets an element that exists
+  ---
+  duration_ms: 2.312041
+  type: 'test'
+  ...
+# Subtest: site: assay-office duration vocabulary matches functions/api/stats.ts
+ok 180 - site: assay-office duration vocabulary matches functions/api/stats.ts
+  ---
+  duration_ms: 0.631458
+  type: 'test'
+  ...
+# Subtest: curation is deterministic, interleaved, and never repeats thin-pool items
+ok 181 - curation is deterministic, interleaved, and never repeats thin-pool items
+  ---
+  duration_ms: 30.438208
+  type: 'test'
+  ...
+# Subtest: intake rejects headless captures and explicit banned files
+ok 182 - intake rejects headless captures and explicit banned files
+  ---
+  duration_ms: 2.773875
+  type: 'test'
+  ...
+# Subtest: OBS v5 authentication, scene discovery, and switch request use one websocket
+ok 183 - OBS v5 authentication, scene discovery, and switch request use one websocket
+  ---
+  duration_ms: 20.7035
+  type: 'test'
+  ...
+# Subtest: failed preconditions are silent no-ops
+ok 184 - failed preconditions are silent no-ops
+  ---
+  duration_ms: 0.117917
+  type: 'test'
+  ...
+# Subtest: missing spec, websocket, or required scenes never enter FACTORY
+ok 185 - missing spec, websocket, or required scenes never enter FACTORY
+  ---
+  duration_ms: 127.454667
+  type: 'test'
+  ...
+# Subtest: offline stream leaves FACTORY untouched
+ok 186 - offline stream leaves FACTORY untouched
+  ---
+  duration_ms: 3.181833
+  type: 'test'
+  ...
+# Subtest: green showcase switches FACTORY, dwells, and always restores AUTOPILOT
+ok 187 - green showcase switches FACTORY, dwells, and always restores AUTOPILOT
+  ---
+  duration_ms: 2.051125
+  type: 'test'
+  ...
+# Subtest: red showcase skips dwell and restores AUTOPILOT
+ok 188 - red showcase skips dwell and restores AUTOPILOT
+  ---
+  duration_ms: 1.15325
+  type: 'test'
+  ...
+# Subtest: append is hash-idempotent and keeps one JSON line per entry
+ok 189 - append is hash-idempotent and keeps one JSON line per entry
+  ---
+  duration_ms: 180.799
+  type: 'test'
+  ...
+# Subtest: downtime accumulates and catch-up shows oldest first without double-show
+ok 190 - downtime accumulates and catch-up shows oldest first without double-show
+  ---
+  duration_ms: 25.977125
+  type: 'test'
+  ...
+# Subtest: concurrent appenders preserve every entry and concurrent consumers show once
+ok 191 - concurrent appenders preserve every entry and concurrent consumers show once
+  ---
+  duration_ms: 378.20925
+  type: 'test'
+  ...
+# Subtest: missing subject directory fires the actionable existence message
+ok 192 - missing subject directory fires the actionable existence message
+  ---
+  duration_ms: 3.050625
+  type: 'test'
+  ...
+# Subtest: subject below its floor reports expected and walked counts
+ok 193 - subject below its floor reports expected and walked counts
+  ---
+  duration_ms: 0.955291
+  type: 'test'
+  ...
+# Subtest: subject exactly at its floor passes
+ok 194 - subject exactly at its floor passes
+  ---
+  duration_ms: 0.949916
+  type: 'test'
+  ...
+# Subtest: empty present subject fires the floor instead of passing silently
+ok 195 - empty present subject fires the floor instead of passing silently
+  ---
+  duration_ms: 0.487417
+  type: 'test'
+  ...
+# Subtest: ignoreReadErrors returns only readable paths
+ok 196 - ignoreReadErrors returns only readable paths
+  ---
+  duration_ms: 1.313583
+  type: 'test'
+  ...
+# Subtest: default walk fails closed on an unreadable subtree
+ok 197 - default walk fails closed on an unreadable subtree
+  ---
+  duration_ms: 0.951583
+  type: 'test'
+  ...
+# Subtest: floor catches files hidden by an ignored read error
+ok 198 - floor catches files hidden by an ignored read error
+  ---
+  duration_ms: 1.271541
+  type: 'test'
+  ...
+# Subtest: reducer output is cwd-invariant
+ok 199 - reducer output is cwd-invariant
+  ---
+  duration_ms: 1965.864
+  type: 'test'
+  ...
+# Subtest: reducer reports configured and actual workers distinctly
+ok 200 - reducer reports configured and actual workers distinctly
+  ---
+  duration_ms: 396.746542
+  type: 'test'
+  ...
+# Subtest: reducer reports absent harness config as unrecorded
+ok 201 - reducer reports absent harness config as unrecorded
+  ---
+  duration_ms: 502.764792
+  type: 'test'
+  ...
+# Subtest: reducer output is script-root-invariant
+ok 202 - reducer output is script-root-invariant
+  ---
+  duration_ms: 921.395459
+  type: 'test'
+  ...
+# Subtest: reducer renders absolute raw paths relative to the recorded tree
+ok 203 - reducer renders absolute raw paths relative to the recorded tree
+  ---
+  duration_ms: 460.032042
+  type: 'test'
+  ...
+# Subtest: reducer refuses body statistics when the recorded tree is unavailable
+ok 204 - reducer refuses body statistics when the recorded tree is unavailable
+  ---
+  duration_ms: 825.148792
+  type: 'test'
+  ...
+# Subtest: an unresolved masking row never outranks a resolved row
+ok 205 - an unresolved masking row never outranks a resolved row
+  ---
+  duration_ms: 422.279417
+  type: 'test'
+  ...
+# Subtest: townEraProps resolves its manifests under plain node, not only under Vite
+ok 206 - townEraProps resolves its manifests under plain node, not only under Vite
+  ---
+  duration_ms: 329.850542
+  type: 'test'
+  ...
+# Subtest: town specs collect without loading Vite-only modules
+ok 207 - town specs collect without loading Vite-only modules
+  ---
+  duration_ms: 2193.211042
+  type: 'test'
+  ...
+# Subtest: whole suite collects without loading Vite-only modules
+not ok 208 - whole suite collects without loading Vite-only modules
+  ---
+  duration_ms: 4616.837041
+  type: 'test'
+  location: '/Users/robin/Claude/Projects/Gold Rush/scripts/whole-suite-collection.test.mjs:33:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    child exit 1
+    stderr:
+    (node:18797) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+    (Use `node --trace-warnings ...` to show where the warning was created)
+    [asset-diet] SKIPPED: asset diet measures the BUILT production bundle; set GR_ASSET_DIET_BUNDLE=1 via: npm run test:asset-diet
+    
+    TypeError: Cannot read properties of undefined (reading 'goals')
+    
+       at charter-press.rig.ts:70
+    
+      68 |     },
+      69 |     () => {
+    > 70 |       contract.briefing.goals[Math.floor(rng() * contract.briefing.goals.length)] = '   ';
+         |                         ^
+      71 |       return 'blank:briefing.goal';
+      72 |     },
+      73 |     () => {
+        at Array.contract.tileParams.lanes.spawnEdges (/Users/robin/Claude/Projects/Gold Rush/e2e/charter-press.rig.ts:70:25)
+        at applyMutation (/Users/robin/Claude/Projects/Gold Rush/e2e/charter-press.rig.ts:115:47)
+        at charterMutants (/Users/robin/Claude/Projects/Gold Rush/e2e/charter-press.rig.ts:43:65)
+        at /Users/robin/Claude/Projects/Gold Rush/e2e/cp02-charter-boot.spec.ts:15:22
+    
+    stdout:
+    Listing tests:
+    Total: 0 tests in 0 files
+    
+    
+    1 !== 0
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 0
+  actual: 1
+  operator: 'strictEqual'
+  stack: |-
+    Array.contract.tileParams.lanes.spawnEdges (/Users/robin/Claude/Projects/Gold Rush/e2e/charter-press.rig.ts:70:25)
+    applyMutation (/Users/robin/Claude/Projects/Gold Rush/e2e/charter-press.rig.ts:115:47)
+    charterMutants (/Users/robin/Claude/Projects/Gold Rush/e2e/charter-press.rig.ts:43:65)
+    /Users/robin/Claude/Projects/Gold Rush/e2e/cp02-charter-boot.spec.ts:15:22
+    TestContext.<anonymous> (file:///Users/robin/Claude/Projects/Gold%20Rush/scripts/whole-suite-collection.test.mjs:37:10)
+    process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+  ...
+# Subtest: every functions/**/*.ts is type-checked
+ok 209 - every functions/**/*.ts is type-checked
+  ---
+  duration_ms: 10089.529917
+  type: 'test'
+  ...
+1..209
+# tests 209
+# suites 0
+# pass 206
+# fail 3
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 40742.527958

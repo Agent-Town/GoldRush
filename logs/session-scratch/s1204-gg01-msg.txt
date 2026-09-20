@@ -1,0 +1,30 @@
+gg-01: the Greenhorn's Gazette ships text-first — pinned issue #1 is the tutorial
+
+3-way graft of lane/perf c4c23952 onto main (only src/town/TownScene.ts was
+contested: main +84/-3 from town-zoom fa5bcc4d vs lane +40/-5; seven hunks
+hand-applied because cherry-pick is fire-gated). Graft proved lossless in both
+directions: worktree-vs-lane == main's town-zoom delta exactly (84/3), and
+worktree-vs-main == the lane's GG-01 delta exactly (40/5). The branch's other
+commit (278ad24c) was already in main — tip-graft residue, verified by an empty
+diff, not assumed.
+
+Fresh profiles get an "Issue No. 1 / Claim Herald" badge; the greenhorn "yes"
+auto-opens the issue on first town entry only; it stays reopenable from the
+badge or the newsie's bark. Six typeset panels reserve data-panel art slots for
+GG-03. Copy is canon-clean: frontier rig, never a firearm; the bandits are
+"victims, never villains".
+
+GATES: tsc clean · build green 1.52s · own spec 4/4 desktop+mobile 9.1s on a
+PLAIN boot (page.goto('/'), no ?debug — Mistake #10) with zero console/page
+errors asserted in-spec at :72/:89 · adjacent gazette-art-wiring, 044-start-screen
+(the greenhorn hook) and town-scale-zoom (most exposed to the graft) all green.
+
+Adjacent reds measured, not assumed: gz-h1-newsie:114 is the standing Pip-Quick
+vs Chen-Mei naming red (F-1185-1), fingerprint-matched to the inventory at the
+same line. town-t2-naming:82 is NOT in the inventory and dies in the flow this
+slice touches, so it got a both-arms control: 3/3 red on the merged tree and
+3/3 red on clean main with the subject reverted, identical failure mode
+(start-menu timeout, before any Herald code runs). The merge moves it by zero.
+Filed as F-1204-1 — a deterministic red hiding outside the inventory.
+
+Review: reviews/gazette-first-issue.md

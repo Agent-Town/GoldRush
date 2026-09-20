@@ -1,0 +1,33 @@
+s1253 mutation transcript
+subject sha256(16) BEFORE: 267da97664cb43aa
+
+=== BASELINE (unmutated subject) ===
+rc=0  pass=15  fail=0
+
+M1 — drop the *.config.ts root seeding — the vocabulary gap that fooled my own first draft
+   expected to be caught by: the config.ts webServer arm
+   measured: rc=1  pass=13  fail=2
+
+M2 — stop stripping comments — a guard NAMED in prose reads as called (the s1252 defect exactly)
+   expected to be caught by: the "prose is not a caller" arm
+   measured: rc=1  pass=14  fail=1
+
+M3 — read a missing baseline as {} — F-1252-1: a ratchet without its baseline is not a ratchet
+   expected to be caught by: the missing-baseline refusal arm
+   measured: rc=1  pass=14  fail=1
+
+M4 — remove the anchor self-check — the resolver may report orphans without proving it resolved anything
+   expected to be caught by: the anchor refusal arm
+   measured: rc=1  pass=13  fail=2
+
+M5 — ratchet on EVERY npm script, not just gate-shaped ones — trains fires to ignore the guard
+   expected to be caught by: the "dev/preview/census are not gates" arm
+   measured: rc=1  pass=13  fail=2
+
+M6 — green over a package.json with no scripts block — the vacuous pass, F-1251-2 class
+   expected to be caught by: the no-scripts-block refusal arm
+   measured: rc=1  pass=14  fail=1
+
+=== RESTORE ===
+sha256(16) AFTER : 267da97664cb43aa   identical=true
+post-restore arms: rc=0 pass=15 fail=0

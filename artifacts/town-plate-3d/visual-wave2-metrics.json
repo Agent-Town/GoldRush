@@ -1,0 +1,50 @@
+{
+  "kind": "screenshot-parity-diff",
+  "generatedAt": "2026-07-13T07:38:56.987Z",
+  "note": "Lower parityDistance means the candidate is closer to the reference for this fixed pair. This is a distance metric, not an acceptance gate.",
+  "pairCount": 1,
+  "worstPair": "town",
+  "results": [
+    {
+      "id": "town",
+      "current": "../../../../../../tmp/town-wave2-reference/town.png",
+      "candidate": "../../../../../../tmp/town-wave2-candidate/town.png",
+      "dimensions": {
+        "width": 1280,
+        "height": 800
+      },
+      "parityDistance": 0.02051,
+      "grayscale": {
+        "mae": 3.79054,
+        "rmse": 8.19806,
+        "diffRatio16": 0.02918,
+        "diffRatio32": 0.00633,
+        "diffRatio64": 0.00398,
+        "pixelmatchRatio": 0.01174
+      },
+      "contentProxies": {
+        "blackRatioCurrent": 0,
+        "blackRatioCandidate": 0,
+        "terrainLikeRatioCurrent": 0.89205,
+        "terrainLikeRatioCandidate": 0.88813,
+        "avgLuminanceCurrent": 150.68349,
+        "avgLuminanceCandidate": 149.82499,
+        "avgLuminanceDelta": -0.8585,
+        "edgeEnergyCurrent": 0.06922,
+        "edgeEnergyCandidate": 0.07251,
+        "edgeEnergyRatio": 1.0475,
+        "edgeDiffRatio32": 0.02127
+      },
+      "artifacts": {
+        "sideBySide": "town-wave2-metrics/town-side-by-side.png",
+        "currentGray": "town-wave2-metrics/town-current-gray.png",
+        "candidateGray": "town-wave2-metrics/town-candidate-gray.png",
+        "absDiff": "town-wave2-metrics/town-absdiff.png",
+        "pixelmatch": "town-wave2-metrics/town-pixelmatch.png",
+        "currentEdges": "town-wave2-metrics/town-current-edges.png",
+        "candidateEdges": "town-wave2-metrics/town-candidate-edges.png",
+        "edgeDiff": "town-wave2-metrics/town-edge-diff.png"
+      }
+    }
+  ]
+}

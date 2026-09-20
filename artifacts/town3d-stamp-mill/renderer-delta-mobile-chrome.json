@@ -1,0 +1,29 @@
+{
+  "project": "mobile-chrome",
+  "camera": "TS-04 locked Town camera at hero start",
+  "before": {
+    "calls": 114,
+    "geometries": 81,
+    "textures": 44,
+    "triangles": 11340,
+    "webglCallsPerFrame": 114,
+    "trianglesPerFrame": 11340,
+    "p95Ms": 9.2
+  },
+  "after": {
+    "calls": 110,
+    "geometries": 77,
+    "textures": 46,
+    "triangles": 14110,
+    "webglCallsPerFrame": 110.91,
+    "trianglesPerFrame": 14112,
+    "p95Ms": 9.3
+  },
+  "delta": {
+    "calls": -4,
+    "webglCallsPerFrame": -3.09,
+    "trianglesPerFrame": 2772,
+    "p95Percent": 1.09,
+    "p95Ratio": 1.0109
+  }
+}

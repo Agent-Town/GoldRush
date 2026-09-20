@@ -1,0 +1,209 @@
+
+Running 30 tests using 1 worker
+
+mutation control watchErrors suppressed 1 known GLTFLoader blob error(s)
+  ✓   1 [desktop-chrome] › e2e/agent-view.spec.ts:252:1 › the zero-error rider suppresses only the known transient (170ms)
+  ✘   2 [desktop-chrome] › e2e/agent-view.spec.ts:263:1 › all five E1 mechanics manifests match their byte-stable fixture (1ms)
+manifest view watchErrors suppressed 0 known GLTFLoader blob error(s)
+  ✓   3 [desktop-chrome] › e2e/agent-view.spec.ts:293:1 › the derived manifest rides THE VIEW and every E1 briefing speaks it (4.5s)
+seeded rider watchErrors suppressed 0 known GLTFLoader blob error(s)
+  ✓   4 [desktop-chrome] › e2e/agent-view.spec.ts:352:1 › the seeded rider view stays cache-shaped and grows one honest wave at a time (1.9s)
+  ✓   5 [desktop-chrome] › e2e/e1-baron.spec.ts:317:1 › default contract does not preload Baron art (1.9s)
+  ✘   6 [desktop-chrome] › e2e/e1-baron.spec.ts:343:1 › contract board requires science plus two secured claims and always shows an earned medal (20.4s)
+  ✓   7 [desktop-chrome] › e2e/e1-baron.spec.ts:389:1 › board launch uses the live Baron contract for cadence and wave 20 spawn (7.5s)
+  ✓   8 [desktop-chrome] › e2e/e1-baron.spec.ts:411:1 › Baron manifest loads and taunts fire at waves 5, 12, and 18 (13.5s)
+  ✓   9 [desktop-chrome] › e2e/e1-baron.spec.ts:489:1 › wave 20 spawns the Baron with elite stats, banner, escorts, and stable seed data (10.9s)
+  ✓  10 [desktop-chrome] › e2e/e1-baron.spec.ts:526:1 › Baron damage visibly drains bar segments and the launcher stays carried (2.4s)
+  ✓  11 [desktop-chrome] › e2e/e1-baron.spec.ts:557:1 › standard rig damage defeats the Baron, doubles science, and persists the medal (9.6s)
+  ✓  12 [desktop-chrome] › e2e/e1-baron.spec.ts:607:1 › fast Baron kill preserves the queued arrival card before secure (5.0s)
+  ✓  13 [desktop-chrome] › e2e/e1-baron.spec.ts:644:1 › Baron art fallback keeps the placeholder path green when generated art fails (2.2s)
+  ✓  14 [desktop-chrome] › e2e/e1-baron.spec.ts:675:1 › same-frame overrun and Baron kill does not award the medal (2.6s)
+  ✓  15 [desktop-chrome] › e2e/e1-baron.spec.ts:704:1 › loss to the Baron contract remains the normal overrun ledger with no medal (2.1s)
+mutation control watchErrors suppressed 1 known GLTFLoader blob error(s)
+  ✓  16 [mobile-chrome] › e2e/agent-view.spec.ts:252:1 › the zero-error rider suppresses only the known transient (178ms)
+  ✘  17 [mobile-chrome] › e2e/agent-view.spec.ts:263:1 › all five E1 mechanics manifests match their byte-stable fixture (1ms)
+manifest view watchErrors suppressed 0 known GLTFLoader blob error(s)
+  ✓  18 [mobile-chrome] › e2e/agent-view.spec.ts:293:1 › the derived manifest rides THE VIEW and every E1 briefing speaks it (4.6s)
+seeded rider watchErrors suppressed 0 known GLTFLoader blob error(s)
+  ✓  19 [mobile-chrome] › e2e/agent-view.spec.ts:352:1 › the seeded rider view stays cache-shaped and grows one honest wave at a time (2.0s)
+  ✓  20 [mobile-chrome] › e2e/e1-baron.spec.ts:317:1 › default contract does not preload Baron art (2.1s)
+  ✘  21 [mobile-chrome] › e2e/e1-baron.spec.ts:343:1 › contract board requires science plus two secured claims and always shows an earned medal (19.4s)
+  ✓  22 [mobile-chrome] › e2e/e1-baron.spec.ts:389:1 › board launch uses the live Baron contract for cadence and wave 20 spawn (7.0s)
+  ✓  23 [mobile-chrome] › e2e/e1-baron.spec.ts:411:1 › Baron manifest loads and taunts fire at waves 5, 12, and 18 (12.7s)
+  ✓  24 [mobile-chrome] › e2e/e1-baron.spec.ts:489:1 › wave 20 spawns the Baron with elite stats, banner, escorts, and stable seed data (12.1s)
+  ✓  25 [mobile-chrome] › e2e/e1-baron.spec.ts:526:1 › Baron damage visibly drains bar segments and the launcher stays carried (3.0s)
+  ✓  26 [mobile-chrome] › e2e/e1-baron.spec.ts:557:1 › standard rig damage defeats the Baron, doubles science, and persists the medal (10.3s)
+  ✓  27 [mobile-chrome] › e2e/e1-baron.spec.ts:607:1 › fast Baron kill preserves the queued arrival card before secure (4.8s)
+  ✓  28 [mobile-chrome] › e2e/e1-baron.spec.ts:644:1 › Baron art fallback keeps the placeholder path green when generated art fails (2.1s)
+  ✓  29 [mobile-chrome] › e2e/e1-baron.spec.ts:675:1 › same-frame overrun and Baron kill does not award the medal (2.5s)
+  ✓  30 [mobile-chrome] › e2e/e1-baron.spec.ts:704:1 › loss to the Baron contract remains the normal overrun ledger with no medal (2.1s)
+
+
+  1) [desktop-chrome] › e2e/agent-view.spec.ts:263:1 › all five E1 mechanics manifests match their byte-stable fixture 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 0
+    + Received  + 1
+
+      Array [
+        "the-claim",
+    +   "e1-drill-yard",
+        "e1-dry-gulch",
+        "e1-night-shift",
+        "e1-twin-banks",
+        "e1-baron",
+      ]
+
+      266 |   const manifests = ids.map(deriveMechanicsManifest);
+      267 |
+    > 268 |   expect(ids).toEqual(['the-claim', 'e1-dry-gulch', 'e1-night-shift', 'e1-twin-banks', 'e1-baron']);
+          |               ^
+      269 |   expect(manifests).toEqual(fixtures);
+      270 |   expect(JSON.stringify(manifests)).toBe(JSON.stringify(fixtures));
+      271 |   for (const id of ids) expect(JSON.stringify(deriveMechanicsManifest(id))).toBe(JSON.stringify(deriveMechanicsManifest(id)));
+        at /Users/robin/Claude/Projects/Gold Rush/e2e/agent-view.spec.ts:268:15
+
+    Error Context: test-results/agent-view-all-five-E1-mec-fba99-h-their-byte-stable-fixture-desktop-chrome/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/agent-view-all-five-E1-mec-fba99-h-their-byte-stable-fixture-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/agent-view-all-five-E1-mec-fba99-h-their-byte-stable-fixture-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [desktop-chrome] › e2e/e1-baron.spec.ts:343:1 › contract board requires science plus two secured claims and always shows an earned medal 
+
+    Error: expect(locator).toHaveCount(expected) failed
+
+    Locator:  getByTestId('contract-card-list').locator('[data-contract-id]')
+    Expected: 5
+    Received: 6
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveCount" with timeout 5000ms
+      - waiting for getByTestId('contract-card-list').locator('[data-contract-id]')
+        14 × locator resolved to 6 elements
+           - unexpected value "6"
+
+
+      348 |   await openBoard(page);
+      349 |   // 330ba7bb: the Frontier chapter renders all five E1 cards together.
+    > 350 |   await expect(page.getByTestId('contract-card-list').locator('[data-contract-id]')).toHaveCount(5);
+          |                                                                                      ^
+      351 |   await openBaronBoardPage(page);
+      352 |   await expect(page.getByTestId('contract-card-e1-baron')).toHaveAttribute('data-contract-locked', 'true');
+      353 |   await expect(page.getByTestId('contract-stakes-e1-baron')).toHaveCount(0);
+        at /Users/robin/Claude/Projects/Gold Rush/e2e/e1-baron.spec.ts:350:86
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e1-baron-contract-board-re-4250c-lways-shows-an-earned-medal-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e1-baron-contract-board-re-4250c-lways-shows-an-earned-medal-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e1-baron-contract-board-re-4250c-lways-shows-an-earned-medal-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e1-baron-contract-board-re-4250c-lways-shows-an-earned-medal-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [mobile-chrome] › e2e/agent-view.spec.ts:263:1 › all five E1 mechanics manifests match their byte-stable fixture 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 0
+    + Received  + 1
+
+      Array [
+        "the-claim",
+    +   "e1-drill-yard",
+        "e1-dry-gulch",
+        "e1-night-shift",
+        "e1-twin-banks",
+        "e1-baron",
+      ]
+
+      266 |   const manifests = ids.map(deriveMechanicsManifest);
+      267 |
+    > 268 |   expect(ids).toEqual(['the-claim', 'e1-dry-gulch', 'e1-night-shift', 'e1-twin-banks', 'e1-baron']);
+          |               ^
+      269 |   expect(manifests).toEqual(fixtures);
+      270 |   expect(JSON.stringify(manifests)).toBe(JSON.stringify(fixtures));
+      271 |   for (const id of ids) expect(JSON.stringify(deriveMechanicsManifest(id))).toBe(JSON.stringify(deriveMechanicsManifest(id)));
+        at /Users/robin/Claude/Projects/Gold Rush/e2e/agent-view.spec.ts:268:15
+
+    Error Context: test-results/agent-view-all-five-E1-mec-fba99-h-their-byte-stable-fixture-mobile-chrome/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/agent-view-all-five-E1-mec-fba99-h-their-byte-stable-fixture-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/agent-view-all-five-E1-mec-fba99-h-their-byte-stable-fixture-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [mobile-chrome] › e2e/e1-baron.spec.ts:343:1 › contract board requires science plus two secured claims and always shows an earned medal 
+
+    Error: expect(locator).toHaveCount(expected) failed
+
+    Locator:  getByTestId('contract-card-list').locator('[data-contract-id]')
+    Expected: 5
+    Received: 6
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveCount" with timeout 5000ms
+      - waiting for getByTestId('contract-card-list').locator('[data-contract-id]')
+        13 × locator resolved to 6 elements
+           - unexpected value "6"
+
+
+      348 |   await openBoard(page);
+      349 |   // 330ba7bb: the Frontier chapter renders all five E1 cards together.
+    > 350 |   await expect(page.getByTestId('contract-card-list').locator('[data-contract-id]')).toHaveCount(5);
+          |                                                                                      ^
+      351 |   await openBaronBoardPage(page);
+      352 |   await expect(page.getByTestId('contract-card-e1-baron')).toHaveAttribute('data-contract-locked', 'true');
+      353 |   await expect(page.getByTestId('contract-stakes-e1-baron')).toHaveCount(0);
+        at /Users/robin/Claude/Projects/Gold Rush/e2e/e1-baron.spec.ts:350:86
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e1-baron-contract-board-re-4250c-lways-shows-an-earned-medal-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e1-baron-contract-board-re-4250c-lways-shows-an-earned-medal-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e1-baron-contract-board-re-4250c-lways-shows-an-earned-medal-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e1-baron-contract-board-re-4250c-lways-shows-an-earned-medal-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4 failed
+    [desktop-chrome] › e2e/agent-view.spec.ts:263:1 › all five E1 mechanics manifests match their byte-stable fixture 
+    [desktop-chrome] › e2e/e1-baron.spec.ts:343:1 › contract board requires science plus two secured claims and always shows an earned medal 
+    [mobile-chrome] › e2e/agent-view.spec.ts:263:1 › all five E1 mechanics manifests match their byte-stable fixture 
+    [mobile-chrome] › e2e/e1-baron.spec.ts:343:1 › contract board requires science plus two secured claims and always shows an earned medal 
+  26 passed (3.3m)
+(node:52403) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:52426) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:52441) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:53660) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:53844) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:53887) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:55069) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)

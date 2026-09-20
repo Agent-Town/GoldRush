@@ -1,0 +1,1451 @@
+{
+  "subjects": [
+    "e2e/ap-standing-orders.spec.ts:80",
+    "e2e/gazette-welcome.spec.ts:44",
+    "e2e/locked-win.spec.ts:65",
+    "e2e/tl-01-run-telemetry.spec.ts:229"
+  ],
+  "workers": [
+    4
+  ],
+  "runs": [
+    {
+      "cycle": 1,
+      "workers": 4,
+      "configuredWorkers": 4,
+      "actualWorkers": 4,
+      "head": "534c7d2859eff07d4fdcfe5573eca092a7750916",
+      "startedAt": "2026-07-29T12:42:58.236Z",
+      "endedAt": "2026-07-29T12:44:00.961Z",
+      "loadavgStart": [
+        7.69384765625,
+        11.94970703125,
+        12.52880859375
+      ],
+      "loadavgEnd": [
+        10.41552734375,
+        12.32275390625,
+        12.64990234375
+      ],
+      "exitCode": 1,
+      "executions": [
+        {
+          "subject": "e2e/ap-standing-orders.spec.ts:80",
+          "project": "desktop-chrome",
+          "title": "seeded standing orders obey priority, gates, legal actions, surprises, and the live rung",
+          "status": "pass",
+          "resultStatus": "passed",
+          "durationMs": 9078
+        },
+        {
+          "subject": "e2e/ap-standing-orders.spec.ts:80",
+          "project": "mobile-chrome",
+          "title": "seeded standing orders obey priority, gates, legal actions, surprises, and the live rung",
+          "status": "pass",
+          "resultStatus": "passed",
+          "durationMs": 7506
+        },
+        {
+          "subject": "e2e/gazette-welcome.spec.ts:44",
+          "project": "desktop-chrome",
+          "title": "the Gazette welcome fires once, walks skippably, and retriggers through the newsie",
+          "status": "pass",
+          "resultStatus": "passed",
+          "durationMs": 8214
+        },
+        {
+          "subject": "e2e/gazette-welcome.spec.ts:44",
+          "project": "mobile-chrome",
+          "title": "the Gazette welcome fires once, walks skippably, and retriggers through the newsie",
+          "status": "fail",
+          "resultStatus": "failed",
+          "durationMs": 25242
+        },
+        {
+          "subject": "e2e/locked-win.spec.ts:65",
+          "project": "desktop-chrome",
+          "title": "wave 10 banks the win; a wave 12 Rush death keeps it and records both wave marks",
+          "status": "fail",
+          "resultStatus": "failed",
+          "durationMs": 12633
+        },
+        {
+          "subject": "e2e/locked-win.spec.ts:65",
+          "project": "mobile-chrome",
+          "title": "wave 10 banks the win; a wave 12 Rush death keeps it and records both wave marks",
+          "status": "fail",
+          "resultStatus": "failed",
+          "durationMs": 9602
+        },
+        {
+          "subject": "e2e/tl-01-run-telemetry.spec.ts:229",
+          "project": "desktop-chrome",
+          "title": "plain no-debug secure return keeps telemetry invisible to gameplay",
+          "status": "fail",
+          "resultStatus": "failed",
+          "durationMs": 34605
+        },
+        {
+          "subject": "e2e/tl-01-run-telemetry.spec.ts:229",
+          "project": "mobile-chrome",
+          "title": "plain no-debug secure return keeps telemetry invisible to gameplay",
+          "status": "fail",
+          "resultStatus": "failed",
+          "durationMs": 33893
+        }
+      ]
+    },
+    {
+      "cycle": 2,
+      "workers": 4,
+      "configuredWorkers": 4,
+      "actualWorkers": 4,
+      "head": "534c7d2859eff07d4fdcfe5573eca092a7750916",
+      "startedAt": "2026-07-29T12:44:01.020Z",
+      "endedAt": "2026-07-29T12:45:02.881Z",
+      "loadavgStart": [
+        10.41552734375,
+        12.32275390625,
+        12.64990234375
+      ],
+      "loadavgEnd": [
+        9.13818359375,
+        11.74267578125,
+        12.41748046875
+      ],
+      "exitCode": 1,
+      "executions": [
+        {
+          "subject": "e2e/ap-standing-orders.spec.ts:80",
+          "project": "desktop-chrome",
+          "title": "seeded standing orders obey priority, gates, legal actions, surprises, and the live rung",
+          "status": "pass",
+          "resultStatus": "passed",
+          "durationMs": 7921
+        },
+        {
+          "subject": "e2e/ap-standing-orders.spec.ts:80",
+          "project": "mobile-chrome",
+          "title": "seeded standing orders obey priority, gates, legal actions, surprises, and the live rung",
+          "status": "pass",
+          "resultStatus": "passed",
+          "durationMs": 7074
+        },
+        {
+          "subject": "e2e/gazette-welcome.spec.ts:44",
+          "project": "desktop-chrome",
+          "title": "the Gazette welcome fires once, walks skippably, and retriggers through the newsie",
+          "status": "pass",
+          "resultStatus": "passed",
+          "durationMs": 8535
+        },
+        {
+          "subject": "e2e/gazette-welcome.spec.ts:44",
+          "project": "mobile-chrome",
+          "title": "the Gazette welcome fires once, walks skippably, and retriggers through the newsie",
+          "status": "pass",
+          "resultStatus": "passed",
+          "durationMs": 15525
+        },
+        {
+          "subject": "e2e/locked-win.spec.ts:65",
+          "project": "desktop-chrome",
+          "title": "wave 10 banks the win; a wave 12 Rush death keeps it and records both wave marks",
+          "status": "fail",
+          "resultStatus": "failed",
+          "durationMs": 12560
+        },
+        {
+          "subject": "e2e/locked-win.spec.ts:65",
+          "project": "mobile-chrome",
+          "title": "wave 10 banks the win; a wave 12 Rush death keeps it and records both wave marks",
+          "status": "fail",
+          "resultStatus": "failed",
+          "durationMs": 9639
+        },
+        {
+          "subject": "e2e/tl-01-run-telemetry.spec.ts:229",
+          "project": "desktop-chrome",
+          "title": "plain no-debug secure return keeps telemetry invisible to gameplay",
+          "status": "fail",
+          "resultStatus": "failed",
+          "durationMs": 33640
+        },
+        {
+          "subject": "e2e/tl-01-run-telemetry.spec.ts:229",
+          "project": "mobile-chrome",
+          "title": "plain no-debug secure return keeps telemetry invisible to gameplay",
+          "status": "fail",
+          "resultStatus": "failed",
+          "durationMs": 33931
+        }
+      ]
+    },
+    {
+      "cycle": 3,
+      "workers": 4,
+      "configuredWorkers": 4,
+      "actualWorkers": 4,
+      "head": "534c7d2859eff07d4fdcfe5573eca092a7750916",
+      "startedAt": "2026-07-29T12:45:02.930Z",
+      "endedAt": "2026-07-29T12:46:04.427Z",
+      "loadavgStart": [
+        9.13818359375,
+        11.74267578125,
+        12.41748046875
+      ],
+      "loadavgEnd": [
+        10.04443359375,
+        11.779296875,
+        12.39697265625
+      ],
+      "exitCode": 1,
+      "executions": [
+        {
+          "subject": "e2e/ap-standing-orders.spec.ts:80",
+          "project": "desktop-chrome",
+          "title": "seeded standing orders obey priority, gates, legal actions, surprises, and the live rung",
+          "status": "pass",
+          "resultStatus": "passed",
+          "durationMs": 9196
+        },
+        {
+          "subject": "e2e/ap-standing-orders.spec.ts:80",
+          "project": "mobile-chrome",
+          "title": "seeded standing orders obey priority, gates, legal actions, surprises, and the live rung",
+          "status": "pass",
+          "resultStatus": "passed",
+          "durationMs": 6701
+        },
+        {
+          "subject": "e2e/gazette-welcome.spec.ts:44",
+          "project": "desktop-chrome",
+          "title": "the Gazette welcome fires once, walks skippably, and retriggers through the newsie",
+          "status": "pass",
+          "resultStatus": "passed",
+          "durationMs": 8627
+        },
+        {
+          "subject": "e2e/gazette-welcome.spec.ts:44",
+          "project": "mobile-chrome",
+          "title": "the Gazette welcome fires once, walks skippably, and retriggers through the newsie",
+          "status": "pass",
+          "resultStatus": "passed",
+          "durationMs": 8759
+        },
+        {
+          "subject": "e2e/locked-win.spec.ts:65",
+          "project": "desktop-chrome",
+          "title": "wave 10 banks the win; a wave 12 Rush death keeps it and records both wave marks",
+          "status": "fail",
+          "resultStatus": "failed",
+          "durationMs": 12459
+        },
+        {
+          "subject": "e2e/locked-win.spec.ts:65",
+          "project": "mobile-chrome",
+          "title": "wave 10 banks the win; a wave 12 Rush death keeps it and records both wave marks",
+          "status": "fail",
+          "resultStatus": "failed",
+          "durationMs": 10593
+        },
+        {
+          "subject": "e2e/tl-01-run-telemetry.spec.ts:229",
+          "project": "desktop-chrome",
+          "title": "plain no-debug secure return keeps telemetry invisible to gameplay",
+          "status": "fail",
+          "resultStatus": "failed",
+          "durationMs": 34790
+        },
+        {
+          "subject": "e2e/tl-01-run-telemetry.spec.ts:229",
+          "project": "mobile-chrome",
+          "title": "plain no-debug secure return keeps telemetry invisible to gameplay",
+          "status": "fail",
+          "resultStatus": "failed",
+          "durationMs": 32853
+        }
+      ]
+    },
+    {
+      "cycle": 4,
+      "workers": 4,
+      "configuredWorkers": 4,
+      "actualWorkers": 4,
+      "head": "534c7d2859eff07d4fdcfe5573eca092a7750916",
+      "startedAt": "2026-07-29T12:46:04.473Z",
+      "endedAt": "2026-07-29T12:47:06.878Z",
+      "loadavgStart": [
+        10.04443359375,
+        11.779296875,
+        12.39697265625
+      ],
+      "loadavgEnd": [
+        13.3388671875,
+        12.8330078125,
+        12.7734375
+      ],
+      "exitCode": 1,
+      "executions": [
+        {
+          "subject": "e2e/ap-standing-orders.spec.ts:80",
+          "project": "desktop-chrome",
+          "title": "seeded standing orders obey priority, gates, legal actions, surprises, and the live rung",
+          "status": "pass",
+          "resultStatus": "passed",
+          "durationMs": 9226
+        },
+        {
+          "subject": "e2e/ap-standing-orders.spec.ts:80",
+          "project": "mobile-chrome",
+          "title": "seeded standing orders obey priority, gates, legal actions, surprises, and the live rung",
+          "status": "pass",
+          "resultStatus": "passed",
+          "durationMs": 6958
+        },
+        {
+          "subject": "e2e/gazette-welcome.spec.ts:44",
+          "project": "desktop-chrome",
+          "title": "the Gazette welcome fires once, walks skippably, and retriggers through the newsie",
+          "status": "pass",
+          "resultStatus": "passed",
+          "durationMs": 8424
+        },
+        {
+          "subject": "e2e/gazette-welcome.spec.ts:44",
+          "project": "mobile-chrome",
+          "title": "the Gazette welcome fires once, walks skippably, and retriggers through the newsie",
+          "status": "pass",
+          "resultStatus": "passed",
+          "durationMs": 9585
+        },
+        {
+          "subject": "e2e/locked-win.spec.ts:65",
+          "project": "desktop-chrome",
+          "title": "wave 10 banks the win; a wave 12 Rush death keeps it and records both wave marks",
+          "status": "fail",
+          "resultStatus": "failed",
+          "durationMs": 12546
+        },
+        {
+          "subject": "e2e/locked-win.spec.ts:65",
+          "project": "mobile-chrome",
+          "title": "wave 10 banks the win; a wave 12 Rush death keeps it and records both wave marks",
+          "status": "fail",
+          "resultStatus": "failed",
+          "durationMs": 9752
+        },
+        {
+          "subject": "e2e/tl-01-run-telemetry.spec.ts:229",
+          "project": "desktop-chrome",
+          "title": "plain no-debug secure return keeps telemetry invisible to gameplay",
+          "status": "fail",
+          "resultStatus": "failed",
+          "durationMs": 34124
+        },
+        {
+          "subject": "e2e/tl-01-run-telemetry.spec.ts:229",
+          "project": "mobile-chrome",
+          "title": "plain no-debug secure return keeps telemetry invisible to gameplay",
+          "status": "fail",
+          "resultStatus": "failed",
+          "durationMs": 33577
+        }
+      ]
+    },
+    {
+      "cycle": 5,
+      "workers": 4,
+      "configuredWorkers": 4,
+      "actualWorkers": 4,
+      "head": "534c7d2859eff07d4fdcfe5573eca092a7750916",
+      "startedAt": "2026-07-29T12:47:06.922Z",
+      "endedAt": "2026-07-29T12:48:17.060Z",
+      "loadavgStart": [
+        13.3388671875,
+        12.8330078125,
+        12.7734375
+      ],
+      "loadavgEnd": [
+        16.66796875,
+        13.88134765625,
+        13.16796875
+      ],
+      "exitCode": 1,
+      "executions": [
+        {
+          "subject": "e2e/ap-standing-orders.spec.ts:80",
+          "project": "desktop-chrome",
+          "title": "seeded standing orders obey priority, gates, legal actions, surprises, and the live rung",
+          "status": "pass",
+          "resultStatus": "passed",
+          "durationMs": 12665
+        },
+        {
+          "subject": "e2e/ap-standing-orders.spec.ts:80",
+          "project": "mobile-chrome",
+          "title": "seeded standing orders obey priority, gates, legal actions, surprises, and the live rung",
+          "status": "pass",
+          "resultStatus": "passed",
+          "durationMs": 10408
+        },
+        {
+          "subject": "e2e/gazette-welcome.spec.ts:44",
+          "project": "desktop-chrome",
+          "title": "the Gazette welcome fires once, walks skippably, and retriggers through the newsie",
+          "status": "pass",
+          "resultStatus": "passed",
+          "durationMs": 12472
+        },
+        {
+          "subject": "e2e/gazette-welcome.spec.ts:44",
+          "project": "mobile-chrome",
+          "title": "the Gazette welcome fires once, walks skippably, and retriggers through the newsie",
+          "status": "pass",
+          "resultStatus": "passed",
+          "durationMs": 12262
+        },
+        {
+          "subject": "e2e/locked-win.spec.ts:65",
+          "project": "desktop-chrome",
+          "title": "wave 10 banks the win; a wave 12 Rush death keeps it and records both wave marks",
+          "status": "fail",
+          "resultStatus": "failed",
+          "durationMs": 16464
+        },
+        {
+          "subject": "e2e/locked-win.spec.ts:65",
+          "project": "mobile-chrome",
+          "title": "wave 10 banks the win; a wave 12 Rush death keeps it and records both wave marks",
+          "status": "fail",
+          "resultStatus": "failed",
+          "durationMs": 10488
+        },
+        {
+          "subject": "e2e/tl-01-run-telemetry.spec.ts:229",
+          "project": "desktop-chrome",
+          "title": "plain no-debug secure return keeps telemetry invisible to gameplay",
+          "status": "fail",
+          "resultStatus": "failed",
+          "durationMs": 35997
+        },
+        {
+          "subject": "e2e/tl-01-run-telemetry.spec.ts:229",
+          "project": "mobile-chrome",
+          "title": "plain no-debug secure return keeps telemetry invisible to gameplay",
+          "status": "fail",
+          "resultStatus": "failed",
+          "durationMs": 33827
+        }
+      ]
+    },
+    {
+      "cycle": 6,
+      "workers": 4,
+      "configuredWorkers": 4,
+      "actualWorkers": 4,
+      "head": "534c7d2859eff07d4fdcfe5573eca092a7750916",
+      "startedAt": "2026-07-29T12:48:17.119Z",
+      "endedAt": "2026-07-29T12:49:22.699Z",
+      "loadavgStart": [
+        16.66796875,
+        13.88134765625,
+        13.16796875
+      ],
+      "loadavgEnd": [
+        14.13623046875,
+        14.0859375,
+        13.31982421875
+      ],
+      "exitCode": 1,
+      "executions": [
+        {
+          "subject": "e2e/ap-standing-orders.spec.ts:80",
+          "project": "desktop-chrome",
+          "title": "seeded standing orders obey priority, gates, legal actions, surprises, and the live rung",
+          "status": "pass",
+          "resultStatus": "passed",
+          "durationMs": 13147
+        },
+        {
+          "subject": "e2e/ap-standing-orders.spec.ts:80",
+          "project": "mobile-chrome",
+          "title": "seeded standing orders obey priority, gates, legal actions, surprises, and the live rung",
+          "status": "pass",
+          "resultStatus": "passed",
+          "durationMs": 8618
+        },
+        {
+          "subject": "e2e/gazette-welcome.spec.ts:44",
+          "project": "desktop-chrome",
+          "title": "the Gazette welcome fires once, walks skippably, and retriggers through the newsie",
+          "status": "pass",
+          "resultStatus": "passed",
+          "durationMs": 10810
+        },
+        {
+          "subject": "e2e/gazette-welcome.spec.ts:44",
+          "project": "mobile-chrome",
+          "title": "the Gazette welcome fires once, walks skippably, and retriggers through the newsie",
+          "status": "pass",
+          "resultStatus": "passed",
+          "durationMs": 10448
+        },
+        {
+          "subject": "e2e/locked-win.spec.ts:65",
+          "project": "desktop-chrome",
+          "title": "wave 10 banks the win; a wave 12 Rush death keeps it and records both wave marks",
+          "status": "fail",
+          "resultStatus": "failed",
+          "durationMs": 16627
+        },
+        {
+          "subject": "e2e/locked-win.spec.ts:65",
+          "project": "mobile-chrome",
+          "title": "wave 10 banks the win; a wave 12 Rush death keeps it and records both wave marks",
+          "status": "fail",
+          "resultStatus": "failed",
+          "durationMs": 9666
+        },
+        {
+          "subject": "e2e/tl-01-run-telemetry.spec.ts:229",
+          "project": "desktop-chrome",
+          "title": "plain no-debug secure return keeps telemetry invisible to gameplay",
+          "status": "fail",
+          "resultStatus": "failed",
+          "durationMs": 34924
+        },
+        {
+          "subject": "e2e/tl-01-run-telemetry.spec.ts:229",
+          "project": "mobile-chrome",
+          "title": "plain no-debug secure return keeps telemetry invisible to gameplay",
+          "status": "fail",
+          "resultStatus": "failed",
+          "durationMs": 32513
+        }
+      ]
+    },
+    {
+      "cycle": 7,
+      "workers": 4,
+      "configuredWorkers": 4,
+      "actualWorkers": 4,
+      "head": "534c7d2859eff07d4fdcfe5573eca092a7750916",
+      "startedAt": "2026-07-29T12:49:22.752Z",
+      "endedAt": "2026-07-29T12:50:23.885Z",
+      "loadavgStart": [
+        14.13623046875,
+        14.0859375,
+        13.31982421875
+      ],
+      "loadavgEnd": [
+        13.99853515625,
+        14.2890625,
+        13.4658203125
+      ],
+      "exitCode": 1,
+      "executions": [
+        {
+          "subject": "e2e/ap-standing-orders.spec.ts:80",
+          "project": "desktop-chrome",
+          "title": "seeded standing orders obey priority, gates, legal actions, surprises, and the live rung",
+          "status": "pass",
+          "resultStatus": "passed",
+          "durationMs": 8653
+        },
+        {
+          "subject": "e2e/ap-standing-orders.spec.ts:80",
+          "project": "mobile-chrome",
+          "title": "seeded standing orders obey priority, gates, legal actions, surprises, and the live rung",
+          "status": "pass",
+          "resultStatus": "passed",
+          "durationMs": 7022
+        },
+        {
+          "subject": "e2e/gazette-welcome.spec.ts:44",
+          "project": "desktop-chrome",
+          "title": "the Gazette welcome fires once, walks skippably, and retriggers through the newsie",
+          "status": "pass",
+          "resultStatus": "passed",
+          "durationMs": 8291
+        },
+        {
+          "subject": "e2e/gazette-welcome.spec.ts:44",
+          "project": "mobile-chrome",
+          "title": "the Gazette welcome fires once, walks skippably, and retriggers through the newsie",
+          "status": "pass",
+          "resultStatus": "passed",
+          "durationMs": 16200
+        },
+        {
+          "subject": "e2e/locked-win.spec.ts:65",
+          "project": "desktop-chrome",
+          "title": "wave 10 banks the win; a wave 12 Rush death keeps it and records both wave marks",
+          "status": "fail",
+          "resultStatus": "failed",
+          "durationMs": 13008
+        },
+        {
+          "subject": "e2e/locked-win.spec.ts:65",
+          "project": "mobile-chrome",
+          "title": "wave 10 banks the win; a wave 12 Rush death keeps it and records both wave marks",
+          "status": "fail",
+          "resultStatus": "failed",
+          "durationMs": 9916
+        },
+        {
+          "subject": "e2e/tl-01-run-telemetry.spec.ts:229",
+          "project": "desktop-chrome",
+          "title": "plain no-debug secure return keeps telemetry invisible to gameplay",
+          "status": "fail",
+          "resultStatus": "failed",
+          "durationMs": 34141
+        },
+        {
+          "subject": "e2e/tl-01-run-telemetry.spec.ts:229",
+          "project": "mobile-chrome",
+          "title": "plain no-debug secure return keeps telemetry invisible to gameplay",
+          "status": "fail",
+          "resultStatus": "failed",
+          "durationMs": 32884
+        }
+      ]
+    },
+    {
+      "cycle": 8,
+      "workers": 4,
+      "configuredWorkers": 4,
+      "actualWorkers": 4,
+      "head": "534c7d2859eff07d4fdcfe5573eca092a7750916",
+      "startedAt": "2026-07-29T12:50:23.929Z",
+      "endedAt": "2026-07-29T12:51:26.443Z",
+      "loadavgStart": [
+        13.99853515625,
+        14.2890625,
+        13.4658203125
+      ],
+      "loadavgEnd": [
+        10.853515625,
+        13.5654296875,
+        13.26416015625
+      ],
+      "exitCode": 1,
+      "executions": [
+        {
+          "subject": "e2e/ap-standing-orders.spec.ts:80",
+          "project": "desktop-chrome",
+          "title": "seeded standing orders obey priority, gates, legal actions, surprises, and the live rung",
+          "status": "pass",
+          "resultStatus": "passed",
+          "durationMs": 8292
+        },
+        {
+          "subject": "e2e/ap-standing-orders.spec.ts:80",
+          "project": "mobile-chrome",
+          "title": "seeded standing orders obey priority, gates, legal actions, surprises, and the live rung",
+          "status": "pass",
+          "resultStatus": "passed",
+          "durationMs": 6909
+        },
+        {
+          "subject": "e2e/gazette-welcome.spec.ts:44",
+          "project": "desktop-chrome",
+          "title": "the Gazette welcome fires once, walks skippably, and retriggers through the newsie",
+          "status": "pass",
+          "resultStatus": "passed",
+          "durationMs": 8292
+        },
+        {
+          "subject": "e2e/gazette-welcome.spec.ts:44",
+          "project": "mobile-chrome",
+          "title": "the Gazette welcome fires once, walks skippably, and retriggers through the newsie",
+          "status": "fail",
+          "resultStatus": "failed",
+          "durationMs": 25171
+        },
+        {
+          "subject": "e2e/locked-win.spec.ts:65",
+          "project": "desktop-chrome",
+          "title": "wave 10 banks the win; a wave 12 Rush death keeps it and records both wave marks",
+          "status": "fail",
+          "resultStatus": "failed",
+          "durationMs": 12579
+        },
+        {
+          "subject": "e2e/locked-win.spec.ts:65",
+          "project": "mobile-chrome",
+          "title": "wave 10 banks the win; a wave 12 Rush death keeps it and records both wave marks",
+          "status": "fail",
+          "resultStatus": "failed",
+          "durationMs": 9519
+        },
+        {
+          "subject": "e2e/tl-01-run-telemetry.spec.ts:229",
+          "project": "desktop-chrome",
+          "title": "plain no-debug secure return keeps telemetry invisible to gameplay",
+          "status": "fail",
+          "resultStatus": "failed",
+          "durationMs": 33735
+        },
+        {
+          "subject": "e2e/tl-01-run-telemetry.spec.ts:229",
+          "project": "mobile-chrome",
+          "title": "plain no-debug secure return keeps telemetry invisible to gameplay",
+          "status": "fail",
+          "resultStatus": "failed",
+          "durationMs": 34219
+        }
+      ]
+    },
+    {
+      "cycle": 9,
+      "workers": 4,
+      "configuredWorkers": 4,
+      "actualWorkers": 4,
+      "head": "534c7d2859eff07d4fdcfe5573eca092a7750916",
+      "startedAt": "2026-07-29T12:51:26.508Z",
+      "endedAt": "2026-07-29T12:52:29.029Z",
+      "loadavgStart": [
+        10.853515625,
+        13.5654296875,
+        13.26416015625
+      ],
+      "loadavgEnd": [
+        13.81201171875,
+        14.314453125,
+        13.59033203125
+      ],
+      "exitCode": 1,
+      "executions": [
+        {
+          "subject": "e2e/ap-standing-orders.spec.ts:80",
+          "project": "desktop-chrome",
+          "title": "seeded standing orders obey priority, gates, legal actions, surprises, and the live rung",
+          "status": "pass",
+          "resultStatus": "passed",
+          "durationMs": 9218
+        },
+        {
+          "subject": "e2e/ap-standing-orders.spec.ts:80",
+          "project": "mobile-chrome",
+          "title": "seeded standing orders obey priority, gates, legal actions, surprises, and the live rung",
+          "status": "pass",
+          "resultStatus": "passed",
+          "durationMs": 7820
+        },
+        {
+          "subject": "e2e/gazette-welcome.spec.ts:44",
+          "project": "desktop-chrome",
+          "title": "the Gazette welcome fires once, walks skippably, and retriggers through the newsie",
+          "status": "pass",
+          "resultStatus": "passed",
+          "durationMs": 8275
+        },
+        {
+          "subject": "e2e/gazette-welcome.spec.ts:44",
+          "project": "mobile-chrome",
+          "title": "the Gazette welcome fires once, walks skippably, and retriggers through the newsie",
+          "status": "pass",
+          "resultStatus": "passed",
+          "durationMs": 9900
+        },
+        {
+          "subject": "e2e/locked-win.spec.ts:65",
+          "project": "desktop-chrome",
+          "title": "wave 10 banks the win; a wave 12 Rush death keeps it and records both wave marks",
+          "status": "fail",
+          "resultStatus": "failed",
+          "durationMs": 14016
+        },
+        {
+          "subject": "e2e/locked-win.spec.ts:65",
+          "project": "mobile-chrome",
+          "title": "wave 10 banks the win; a wave 12 Rush death keeps it and records both wave marks",
+          "status": "fail",
+          "resultStatus": "failed",
+          "durationMs": 9611
+        },
+        {
+          "subject": "e2e/tl-01-run-telemetry.spec.ts:229",
+          "project": "desktop-chrome",
+          "title": "plain no-debug secure return keeps telemetry invisible to gameplay",
+          "status": "fail",
+          "resultStatus": "failed",
+          "durationMs": 35963
+        },
+        {
+          "subject": "e2e/tl-01-run-telemetry.spec.ts:229",
+          "project": "mobile-chrome",
+          "title": "plain no-debug secure return keeps telemetry invisible to gameplay",
+          "status": "fail",
+          "resultStatus": "failed",
+          "durationMs": 32908
+        }
+      ]
+    },
+    {
+      "cycle": 10,
+      "workers": 4,
+      "configuredWorkers": 4,
+      "actualWorkers": 4,
+      "head": "534c7d2859eff07d4fdcfe5573eca092a7750916",
+      "startedAt": "2026-07-29T12:52:29.089Z",
+      "endedAt": "2026-07-29T12:53:40.702Z",
+      "loadavgStart": [
+        13.81201171875,
+        14.314453125,
+        13.59033203125
+      ],
+      "loadavgEnd": [
+        11.67138671875,
+        13.9228515625,
+        13.52099609375
+      ],
+      "exitCode": 1,
+      "executions": [
+        {
+          "subject": "e2e/ap-standing-orders.spec.ts:80",
+          "project": "desktop-chrome",
+          "title": "seeded standing orders obey priority, gates, legal actions, surprises, and the live rung",
+          "status": "pass",
+          "resultStatus": "passed",
+          "durationMs": 14620
+        },
+        {
+          "subject": "e2e/ap-standing-orders.spec.ts:80",
+          "project": "mobile-chrome",
+          "title": "seeded standing orders obey priority, gates, legal actions, surprises, and the live rung",
+          "status": "pass",
+          "resultStatus": "passed",
+          "durationMs": 9904
+        },
+        {
+          "subject": "e2e/gazette-welcome.spec.ts:44",
+          "project": "desktop-chrome",
+          "title": "the Gazette welcome fires once, walks skippably, and retriggers through the newsie",
+          "status": "pass",
+          "resultStatus": "passed",
+          "durationMs": 15973
+        },
+        {
+          "subject": "e2e/gazette-welcome.spec.ts:44",
+          "project": "mobile-chrome",
+          "title": "the Gazette welcome fires once, walks skippably, and retriggers through the newsie",
+          "status": "pass",
+          "resultStatus": "passed",
+          "durationMs": 18814
+        },
+        {
+          "subject": "e2e/locked-win.spec.ts:65",
+          "project": "desktop-chrome",
+          "title": "wave 10 banks the win; a wave 12 Rush death keeps it and records both wave marks",
+          "status": "fail",
+          "resultStatus": "failed",
+          "durationMs": 17720
+        },
+        {
+          "subject": "e2e/locked-win.spec.ts:65",
+          "project": "mobile-chrome",
+          "title": "wave 10 banks the win; a wave 12 Rush death keeps it and records both wave marks",
+          "status": "fail",
+          "resultStatus": "failed",
+          "durationMs": 9721
+        },
+        {
+          "subject": "e2e/tl-01-run-telemetry.spec.ts:229",
+          "project": "desktop-chrome",
+          "title": "plain no-debug secure return keeps telemetry invisible to gameplay",
+          "status": "fail",
+          "resultStatus": "failed",
+          "durationMs": 35758
+        },
+        {
+          "subject": "e2e/tl-01-run-telemetry.spec.ts:229",
+          "project": "mobile-chrome",
+          "title": "plain no-debug secure return keeps telemetry invisible to gameplay",
+          "status": "fail",
+          "resultStatus": "failed",
+          "durationMs": 33604
+        }
+      ]
+    },
+    {
+      "cycle": 11,
+      "workers": 4,
+      "configuredWorkers": 4,
+      "actualWorkers": 4,
+      "head": "534c7d2859eff07d4fdcfe5573eca092a7750916",
+      "startedAt": "2026-07-29T12:53:40.756Z",
+      "endedAt": "2026-07-29T12:54:51.634Z",
+      "loadavgStart": [
+        11.67138671875,
+        13.9228515625,
+        13.52099609375
+      ],
+      "loadavgEnd": [
+        29.78076171875,
+        19.39404296875,
+        15.6484375
+      ],
+      "exitCode": 1,
+      "executions": [
+        {
+          "subject": "e2e/ap-standing-orders.spec.ts:80",
+          "project": "desktop-chrome",
+          "title": "seeded standing orders obey priority, gates, legal actions, surprises, and the live rung",
+          "status": "pass",
+          "resultStatus": "passed",
+          "durationMs": 11493
+        },
+        {
+          "subject": "e2e/ap-standing-orders.spec.ts:80",
+          "project": "mobile-chrome",
+          "title": "seeded standing orders obey priority, gates, legal actions, surprises, and the live rung",
+          "status": "pass",
+          "resultStatus": "passed",
+          "durationMs": 11736
+        },
+        {
+          "subject": "e2e/gazette-welcome.spec.ts:44",
+          "project": "desktop-chrome",
+          "title": "the Gazette welcome fires once, walks skippably, and retriggers through the newsie",
+          "status": "pass",
+          "resultStatus": "passed",
+          "durationMs": 10750
+        },
+        {
+          "subject": "e2e/gazette-welcome.spec.ts:44",
+          "project": "mobile-chrome",
+          "title": "the Gazette welcome fires once, walks skippably, and retriggers through the newsie",
+          "status": "pass",
+          "resultStatus": "passed",
+          "durationMs": 15516
+        },
+        {
+          "subject": "e2e/locked-win.spec.ts:65",
+          "project": "desktop-chrome",
+          "title": "wave 10 banks the win; a wave 12 Rush death keeps it and records both wave marks",
+          "status": "fail",
+          "resultStatus": "failed",
+          "durationMs": 15072
+        },
+        {
+          "subject": "e2e/locked-win.spec.ts:65",
+          "project": "mobile-chrome",
+          "title": "wave 10 banks the win; a wave 12 Rush death keeps it and records both wave marks",
+          "status": "fail",
+          "resultStatus": "failed",
+          "durationMs": 12103
+        },
+        {
+          "subject": "e2e/tl-01-run-telemetry.spec.ts:229",
+          "project": "desktop-chrome",
+          "title": "plain no-debug secure return keeps telemetry invisible to gameplay",
+          "status": "fail",
+          "resultStatus": "failed",
+          "durationMs": 38623
+        },
+        {
+          "subject": "e2e/tl-01-run-telemetry.spec.ts:229",
+          "project": "mobile-chrome",
+          "title": "plain no-debug secure return keeps telemetry invisible to gameplay",
+          "status": "fail",
+          "resultStatus": "failed",
+          "durationMs": 34278
+        }
+      ]
+    },
+    {
+      "cycle": 12,
+      "workers": 4,
+      "configuredWorkers": 4,
+      "actualWorkers": 4,
+      "head": "534c7d2859eff07d4fdcfe5573eca092a7750916",
+      "startedAt": "2026-07-29T12:54:51.686Z",
+      "endedAt": "2026-07-29T12:55:54.900Z",
+      "loadavgStart": [
+        29.78076171875,
+        19.39404296875,
+        15.6484375
+      ],
+      "loadavgEnd": [
+        18.8349609375,
+        18.26953125,
+        15.50439453125
+      ],
+      "exitCode": 1,
+      "executions": [
+        {
+          "subject": "e2e/ap-standing-orders.spec.ts:80",
+          "project": "desktop-chrome",
+          "title": "seeded standing orders obey priority, gates, legal actions, surprises, and the live rung",
+          "status": "pass",
+          "resultStatus": "passed",
+          "durationMs": 9140
+        },
+        {
+          "subject": "e2e/ap-standing-orders.spec.ts:80",
+          "project": "mobile-chrome",
+          "title": "seeded standing orders obey priority, gates, legal actions, surprises, and the live rung",
+          "status": "pass",
+          "resultStatus": "passed",
+          "durationMs": 7502
+        },
+        {
+          "subject": "e2e/gazette-welcome.spec.ts:44",
+          "project": "desktop-chrome",
+          "title": "the Gazette welcome fires once, walks skippably, and retriggers through the newsie",
+          "status": "pass",
+          "resultStatus": "passed",
+          "durationMs": 8405
+        },
+        {
+          "subject": "e2e/gazette-welcome.spec.ts:44",
+          "project": "mobile-chrome",
+          "title": "the Gazette welcome fires once, walks skippably, and retriggers through the newsie",
+          "status": "pass",
+          "resultStatus": "passed",
+          "durationMs": 9699
+        },
+        {
+          "subject": "e2e/locked-win.spec.ts:65",
+          "project": "desktop-chrome",
+          "title": "wave 10 banks the win; a wave 12 Rush death keeps it and records both wave marks",
+          "status": "fail",
+          "resultStatus": "failed",
+          "durationMs": 12689
+        },
+        {
+          "subject": "e2e/locked-win.spec.ts:65",
+          "project": "mobile-chrome",
+          "title": "wave 10 banks the win; a wave 12 Rush death keeps it and records both wave marks",
+          "status": "fail",
+          "resultStatus": "failed",
+          "durationMs": 9561
+        },
+        {
+          "subject": "e2e/tl-01-run-telemetry.spec.ts:229",
+          "project": "desktop-chrome",
+          "title": "plain no-debug secure return keeps telemetry invisible to gameplay",
+          "status": "fail",
+          "resultStatus": "failed",
+          "durationMs": 33406
+        },
+        {
+          "subject": "e2e/tl-01-run-telemetry.spec.ts:229",
+          "project": "mobile-chrome",
+          "title": "plain no-debug secure return keeps telemetry invisible to gameplay",
+          "status": "fail",
+          "resultStatus": "failed",
+          "durationMs": 33697
+        }
+      ]
+    },
+    {
+      "cycle": 13,
+      "workers": 4,
+      "configuredWorkers": 4,
+      "actualWorkers": 4,
+      "head": "534c7d2859eff07d4fdcfe5573eca092a7750916",
+      "startedAt": "2026-07-29T12:55:54.960Z",
+      "endedAt": "2026-07-29T12:57:08.408Z",
+      "loadavgStart": [
+        18.8349609375,
+        18.26953125,
+        15.50439453125
+      ],
+      "loadavgEnd": [
+        14.5400390625,
+        17.6552734375,
+        15.525390625
+      ],
+      "exitCode": 1,
+      "executions": [
+        {
+          "subject": "e2e/ap-standing-orders.spec.ts:80",
+          "project": "desktop-chrome",
+          "title": "seeded standing orders obey priority, gates, legal actions, surprises, and the live rung",
+          "status": "pass",
+          "resultStatus": "passed",
+          "durationMs": 14231
+        },
+        {
+          "subject": "e2e/ap-standing-orders.spec.ts:80",
+          "project": "mobile-chrome",
+          "title": "seeded standing orders obey priority, gates, legal actions, surprises, and the live rung",
+          "status": "pass",
+          "resultStatus": "passed",
+          "durationMs": 12117
+        },
+        {
+          "subject": "e2e/gazette-welcome.spec.ts:44",
+          "project": "desktop-chrome",
+          "title": "the Gazette welcome fires once, walks skippably, and retriggers through the newsie",
+          "status": "pass",
+          "resultStatus": "passed",
+          "durationMs": 15032
+        },
+        {
+          "subject": "e2e/gazette-welcome.spec.ts:44",
+          "project": "mobile-chrome",
+          "title": "the Gazette welcome fires once, walks skippably, and retriggers through the newsie",
+          "status": "pass",
+          "resultStatus": "passed",
+          "durationMs": 14762
+        },
+        {
+          "subject": "e2e/locked-win.spec.ts:65",
+          "project": "desktop-chrome",
+          "title": "wave 10 banks the win; a wave 12 Rush death keeps it and records both wave marks",
+          "status": "fail",
+          "resultStatus": "failed",
+          "durationMs": 16748
+        },
+        {
+          "subject": "e2e/locked-win.spec.ts:65",
+          "project": "mobile-chrome",
+          "title": "wave 10 banks the win; a wave 12 Rush death keeps it and records both wave marks",
+          "status": "fail",
+          "resultStatus": "failed",
+          "durationMs": 12764
+        },
+        {
+          "subject": "e2e/tl-01-run-telemetry.spec.ts:229",
+          "project": "desktop-chrome",
+          "title": "plain no-debug secure return keeps telemetry invisible to gameplay",
+          "status": "fail",
+          "resultStatus": "failed",
+          "durationMs": 40874
+        },
+        {
+          "subject": "e2e/tl-01-run-telemetry.spec.ts:229",
+          "project": "mobile-chrome",
+          "title": "plain no-debug secure return keeps telemetry invisible to gameplay",
+          "status": "fail",
+          "resultStatus": "failed",
+          "durationMs": 33173
+        }
+      ]
+    },
+    {
+      "cycle": 14,
+      "workers": 4,
+      "configuredWorkers": 4,
+      "actualWorkers": 4,
+      "head": "534c7d2859eff07d4fdcfe5573eca092a7750916",
+      "startedAt": "2026-07-29T12:57:08.453Z",
+      "endedAt": "2026-07-29T12:58:10.119Z",
+      "loadavgStart": [
+        14.5400390625,
+        17.6552734375,
+        15.525390625
+      ],
+      "loadavgEnd": [
+        12.37060546875,
+        16.99609375,
+        15.47216796875
+      ],
+      "exitCode": 1,
+      "executions": [
+        {
+          "subject": "e2e/ap-standing-orders.spec.ts:80",
+          "project": "desktop-chrome",
+          "title": "seeded standing orders obey priority, gates, legal actions, surprises, and the live rung",
+          "status": "pass",
+          "resultStatus": "passed",
+          "durationMs": 9022
+        },
+        {
+          "subject": "e2e/ap-standing-orders.spec.ts:80",
+          "project": "mobile-chrome",
+          "title": "seeded standing orders obey priority, gates, legal actions, surprises, and the live rung",
+          "status": "pass",
+          "resultStatus": "passed",
+          "durationMs": 7414
+        },
+        {
+          "subject": "e2e/gazette-welcome.spec.ts:44",
+          "project": "desktop-chrome",
+          "title": "the Gazette welcome fires once, walks skippably, and retriggers through the newsie",
+          "status": "pass",
+          "resultStatus": "passed",
+          "durationMs": 8697
+        },
+        {
+          "subject": "e2e/gazette-welcome.spec.ts:44",
+          "project": "mobile-chrome",
+          "title": "the Gazette welcome fires once, walks skippably, and retriggers through the newsie",
+          "status": "pass",
+          "resultStatus": "passed",
+          "durationMs": 9226
+        },
+        {
+          "subject": "e2e/locked-win.spec.ts:65",
+          "project": "desktop-chrome",
+          "title": "wave 10 banks the win; a wave 12 Rush death keeps it and records both wave marks",
+          "status": "fail",
+          "resultStatus": "failed",
+          "durationMs": 13093
+        },
+        {
+          "subject": "e2e/locked-win.spec.ts:65",
+          "project": "mobile-chrome",
+          "title": "wave 10 banks the win; a wave 12 Rush death keeps it and records both wave marks",
+          "status": "fail",
+          "resultStatus": "failed",
+          "durationMs": 9412
+        },
+        {
+          "subject": "e2e/tl-01-run-telemetry.spec.ts:229",
+          "project": "desktop-chrome",
+          "title": "plain no-debug secure return keeps telemetry invisible to gameplay",
+          "status": "fail",
+          "resultStatus": "failed",
+          "durationMs": 34034
+        },
+        {
+          "subject": "e2e/tl-01-run-telemetry.spec.ts:229",
+          "project": "mobile-chrome",
+          "title": "plain no-debug secure return keeps telemetry invisible to gameplay",
+          "status": "fail",
+          "resultStatus": "failed",
+          "durationMs": 32474
+        }
+      ]
+    },
+    {
+      "cycle": 15,
+      "workers": 4,
+      "configuredWorkers": 4,
+      "actualWorkers": 4,
+      "head": "534c7d2859eff07d4fdcfe5573eca092a7750916",
+      "startedAt": "2026-07-29T12:58:10.168Z",
+      "endedAt": "2026-07-29T12:59:12.269Z",
+      "loadavgStart": [
+        12.37060546875,
+        16.99609375,
+        15.47216796875
+      ],
+      "loadavgEnd": [
+        8.75244140625,
+        15.2216796875,
+        14.9169921875
+      ],
+      "exitCode": 1,
+      "executions": [
+        {
+          "subject": "e2e/ap-standing-orders.spec.ts:80",
+          "project": "desktop-chrome",
+          "title": "seeded standing orders obey priority, gates, legal actions, surprises, and the live rung",
+          "status": "pass",
+          "resultStatus": "passed",
+          "durationMs": 8534
+        },
+        {
+          "subject": "e2e/ap-standing-orders.spec.ts:80",
+          "project": "mobile-chrome",
+          "title": "seeded standing orders obey priority, gates, legal actions, surprises, and the live rung",
+          "status": "pass",
+          "resultStatus": "passed",
+          "durationMs": 6989
+        },
+        {
+          "subject": "e2e/gazette-welcome.spec.ts:44",
+          "project": "desktop-chrome",
+          "title": "the Gazette welcome fires once, walks skippably, and retriggers through the newsie",
+          "status": "pass",
+          "resultStatus": "passed",
+          "durationMs": 8328
+        },
+        {
+          "subject": "e2e/gazette-welcome.spec.ts:44",
+          "project": "mobile-chrome",
+          "title": "the Gazette welcome fires once, walks skippably, and retriggers through the newsie",
+          "status": "pass",
+          "resultStatus": "passed",
+          "durationMs": 8886
+        },
+        {
+          "subject": "e2e/locked-win.spec.ts:65",
+          "project": "desktop-chrome",
+          "title": "wave 10 banks the win; a wave 12 Rush death keeps it and records both wave marks",
+          "status": "fail",
+          "resultStatus": "failed",
+          "durationMs": 12654
+        },
+        {
+          "subject": "e2e/locked-win.spec.ts:65",
+          "project": "mobile-chrome",
+          "title": "wave 10 banks the win; a wave 12 Rush death keeps it and records both wave marks",
+          "status": "fail",
+          "resultStatus": "failed",
+          "durationMs": 9386
+        },
+        {
+          "subject": "e2e/tl-01-run-telemetry.spec.ts:229",
+          "project": "desktop-chrome",
+          "title": "plain no-debug secure return keeps telemetry invisible to gameplay",
+          "status": "fail",
+          "resultStatus": "failed",
+          "durationMs": 34184
+        },
+        {
+          "subject": "e2e/tl-01-run-telemetry.spec.ts:229",
+          "project": "mobile-chrome",
+          "title": "plain no-debug secure return keeps telemetry invisible to gameplay",
+          "status": "fail",
+          "resultStatus": "failed",
+          "durationMs": 33751
+        }
+      ]
+    },
+    {
+      "cycle": 16,
+      "workers": 4,
+      "configuredWorkers": 4,
+      "actualWorkers": 4,
+      "head": "534c7d2859eff07d4fdcfe5573eca092a7750916",
+      "startedAt": "2026-07-29T12:59:12.316Z",
+      "endedAt": "2026-07-29T13:00:14.420Z",
+      "loadavgStart": [
+        8.75244140625,
+        15.2216796875,
+        14.9169921875
+      ],
+      "loadavgEnd": [
+        10.978515625,
+        14.68310546875,
+        14.74072265625
+      ],
+      "exitCode": 1,
+      "executions": [
+        {
+          "subject": "e2e/ap-standing-orders.spec.ts:80",
+          "project": "desktop-chrome",
+          "title": "seeded standing orders obey priority, gates, legal actions, surprises, and the live rung",
+          "status": "pass",
+          "resultStatus": "passed",
+          "durationMs": 8874
+        },
+        {
+          "subject": "e2e/ap-standing-orders.spec.ts:80",
+          "project": "mobile-chrome",
+          "title": "seeded standing orders obey priority, gates, legal actions, surprises, and the live rung",
+          "status": "pass",
+          "resultStatus": "passed",
+          "durationMs": 7334
+        },
+        {
+          "subject": "e2e/gazette-welcome.spec.ts:44",
+          "project": "desktop-chrome",
+          "title": "the Gazette welcome fires once, walks skippably, and retriggers through the newsie",
+          "status": "pass",
+          "resultStatus": "passed",
+          "durationMs": 8365
+        },
+        {
+          "subject": "e2e/gazette-welcome.spec.ts:44",
+          "project": "mobile-chrome",
+          "title": "the Gazette welcome fires once, walks skippably, and retriggers through the newsie",
+          "status": "pass",
+          "resultStatus": "passed",
+          "durationMs": 8964
+        },
+        {
+          "subject": "e2e/locked-win.spec.ts:65",
+          "project": "desktop-chrome",
+          "title": "wave 10 banks the win; a wave 12 Rush death keeps it and records both wave marks",
+          "status": "fail",
+          "resultStatus": "failed",
+          "durationMs": 12452
+        },
+        {
+          "subject": "e2e/locked-win.spec.ts:65",
+          "project": "mobile-chrome",
+          "title": "wave 10 banks the win; a wave 12 Rush death keeps it and records both wave marks",
+          "status": "fail",
+          "resultStatus": "failed",
+          "durationMs": 9516
+        },
+        {
+          "subject": "e2e/tl-01-run-telemetry.spec.ts:229",
+          "project": "desktop-chrome",
+          "title": "plain no-debug secure return keeps telemetry invisible to gameplay",
+          "status": "fail",
+          "resultStatus": "failed",
+          "durationMs": 33671
+        },
+        {
+          "subject": "e2e/tl-01-run-telemetry.spec.ts:229",
+          "project": "mobile-chrome",
+          "title": "plain no-debug secure return keeps telemetry invisible to gameplay",
+          "status": "fail",
+          "resultStatus": "failed",
+          "durationMs": 33378
+        }
+      ]
+    }
+  ],
+  "port": 5280,
+  "output": "logs/session-scratch/s1219-wave-early/actual-w4",
+  "initialHead": "534c7d2859eff07d4fdcfe5573eca092a7750916",
+  "baseURL": "http://127.0.0.1:5280",
+  "rateRows": [
+    {
+      "subject": "e2e/ap-standing-orders.spec.ts:80",
+      "project": "desktop-chrome",
+      "workers": 4,
+      "failures": 0,
+      "executions": 16
+    },
+    {
+      "subject": "e2e/ap-standing-orders.spec.ts:80",
+      "project": "mobile-chrome",
+      "workers": 4,
+      "failures": 0,
+      "executions": 16
+    },
+    {
+      "subject": "e2e/gazette-welcome.spec.ts:44",
+      "project": "desktop-chrome",
+      "workers": 4,
+      "failures": 0,
+      "executions": 16
+    },
+    {
+      "subject": "e2e/gazette-welcome.spec.ts:44",
+      "project": "mobile-chrome",
+      "workers": 4,
+      "failures": 2,
+      "executions": 16
+    },
+    {
+      "subject": "e2e/locked-win.spec.ts:65",
+      "project": "desktop-chrome",
+      "workers": 4,
+      "failures": 16,
+      "executions": 16
+    },
+    {
+      "subject": "e2e/locked-win.spec.ts:65",
+      "project": "mobile-chrome",
+      "workers": 4,
+      "failures": 16,
+      "executions": 16
+    },
+    {
+      "subject": "e2e/tl-01-run-telemetry.spec.ts:229",
+      "project": "desktop-chrome",
+      "workers": 4,
+      "failures": 16,
+      "executions": 16
+    },
+    {
+      "subject": "e2e/tl-01-run-telemetry.spec.ts:229",
+      "project": "mobile-chrome",
+      "workers": 4,
+      "failures": 16,
+      "executions": 16
+    }
+  ]
+}

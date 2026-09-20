@@ -1,0 +1,17 @@
+✔ rotation registry stays outside the engine identity corpus (65.102916ms)
+✔ contract ids are globally unique across the ten epoch bundles (0.142875ms)
+✔ bench seed sets cover Frontier and contain only valid known-contract seeds (0.168209ms)
+✔ rotation mint is deterministic, week-sensitive, and requires a salt (124.961958ms)
+✔ the landed registry names the live engine and stays outside its hash corpus (74.567917ms)
+✔ same-era re-pins append, and removing an earlier pin reds (8.735958ms)
+✔ tooling edits stay outside the engine identity while src edits rotate it (4.50775ms)
+✔ a new-basis alias keeps its old-basis pin in the current era (3.749625ms)
+✔ an era bump starts a fresh lineage (5.143208ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 284.391

@@ -1,0 +1,23 @@
+[
+  {
+    "label": "registry-budget-retry",
+    "command": [
+      "npx",
+      "playwright",
+      "test",
+      "--workers=1",
+      "--project=desktop-chrome",
+      "--project=mobile-chrome",
+      "--trace=off",
+      "--reporter=line",
+      "--output=artifacts/sol/map-art-campaign-2/_raw/run-3/e2-trestle-registry-budget-retry",
+      "--grep",
+      "each registered terrain and panorama",
+      "e2e/terrain3d-registry.spec.ts"
+    ],
+    "environment": {},
+    "exit": 1,
+    "seconds": 258.23,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-3/e2-trestle-registry-budget-retry.log"
+  }
+]

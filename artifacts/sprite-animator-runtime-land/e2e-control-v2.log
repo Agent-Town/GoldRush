@@ -1,0 +1,234 @@
+(node:84047) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 10 tests using 1 worker
+
+
+(node:84114) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[1/10] [desktop-chrome] › e2e/057-baron-rocket-cart.spec.ts:251:1 › kited Baron telegraphs and launches rockets that damage hero and buildings through CombatSystem
+  1) [desktop-chrome] › e2e/057-baron-rocket-cart.spec.ts:251:1 › kited Baron telegraphs and launches rockets that damage hero and buildings through CombatSystem 
+
+    Error: expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      255 |   const telegraph = await advanceUntil(page, () => rocketSnapshot(page), (snapshot) => snapshot.rocket.telegraphActive);
+      256 |   expect(telegraph.rocket.cartVisible).toBe(true);
+    > 257 |   expect(telegraph.audio.startedBySound['blast-charge-arm'] ?? 0).toBeGreaterThan(0);
+          |                                                                   ^
+      258 |
+      259 |   const midFlight = await advanceUntil(page, () => rocketSnapshot(page), (snapshot) => snapshot.blastsAlive >= 3);
+      260 |   expect(midFlight.rocket.lastOwnerId).toMatch(/^baron_rocket:/);
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-control-main/e2e/057-baron-rocket-cart.spec.ts:257:67
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/057-baron-rocket-cart-kite-e68cc-ldings-through-CombatSystem-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/057-baron-rocket-cart-kite-e68cc-ldings-through-CombatSystem-desktop-chrome/error-context.md
+
+
+
+(node:84250) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[2/10] [desktop-chrome] › e2e/e7-roster.spec.ts:158:1 › plain Signal-era boot stays error-free without the debug harness
+  2) [desktop-chrome] › e2e/e7-roster.spec.ts:158:1 › plain Signal-era boot stays error-free without the debug harness 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      167 |   await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+      168 |   expect(await page.evaluate(() => window.__GR_TEST__)).toBeUndefined();
+    > 169 |   expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.e7Arsenal.enabled)).toBe(true);
+          |                                                                                           ^
+      170 |   expect(errors).toEqual({ console: [], page: [] });
+      171 | });
+      172 |
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-control-main/e2e/e7-roster.spec.ts:169:91
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e7-roster-plain-Signal-era-d9798-e-without-the-debug-harness-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e7-roster-plain-Signal-era-d9798-e-without-the-debug-harness-desktop-chrome/error-context.md
+
+
+
+(node:84372) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[3/10] [desktop-chrome] › e2e/e8-roster.spec.ts:166:1 › plain Orbital-era boot stays error-free without the debug harness
+  3) [desktop-chrome] › e2e/e8-roster.spec.ts:166:1 › plain Orbital-era boot stays error-free without the debug harness 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      175 |   await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+      176 |   expect(await page.evaluate(() => window.__GR_TEST__)).toBeUndefined();
+    > 177 |   expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.e8Arsenal.available)).toBe(true);
+          |                                                                                             ^
+      178 |   expect(errors).toEqual({ console: [], page: [] });
+      179 | });
+      180 |
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-control-main/e2e/e8-roster.spec.ts:177:93
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e8-roster-plain-Orbital-er-2bc57-e-without-the-debug-harness-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e8-roster-plain-Orbital-er-2bc57-e-without-the-debug-harness-desktop-chrome/error-context.md
+
+
+
+(node:84489) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[4/10] [desktop-chrome] › e2e/e9-roster.spec.ts:167:1 › plain Red Fields boot stays error-free without the debug harness
+  4) [desktop-chrome] › e2e/e9-roster.spec.ts:167:1 › plain Red Fields boot stays error-free without the debug harness 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      176 |   await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+      177 |   expect(await page.evaluate(() => window.__GR_TEST__)).toBeUndefined();
+    > 178 |   expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.e9Arsenal.eraActive)).toBe(true);
+          |                                                                                             ^
+      179 |   expect(errors).toEqual({ console: [], page: [] });
+      180 | });
+      181 |
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-control-main/e2e/e9-roster.spec.ts:178:93
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e9-roster-plain-Red-Fields-f1945-e-without-the-debug-harness-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e9-roster-plain-Red-Fields-f1945-e-without-the-debug-harness-desktop-chrome/error-context.md
+
+
+[5/10] [desktop-chrome] › e2e/wire-crawler-3d.spec.ts:115:1 › mounts the Crawler GLB, flips all three damage morphs, and disposes on kill
+
+(node:84877) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[6/10] [mobile-chrome] › e2e/057-baron-rocket-cart.spec.ts:251:1 › kited Baron telegraphs and launches rockets that damage hero and buildings through CombatSystem
+  5) [mobile-chrome] › e2e/057-baron-rocket-cart.spec.ts:251:1 › kited Baron telegraphs and launches rockets that damage hero and buildings through CombatSystem 
+
+    Error: expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      255 |   const telegraph = await advanceUntil(page, () => rocketSnapshot(page), (snapshot) => snapshot.rocket.telegraphActive);
+      256 |   expect(telegraph.rocket.cartVisible).toBe(true);
+    > 257 |   expect(telegraph.audio.startedBySound['blast-charge-arm'] ?? 0).toBeGreaterThan(0);
+          |                                                                   ^
+      258 |
+      259 |   const midFlight = await advanceUntil(page, () => rocketSnapshot(page), (snapshot) => snapshot.blastsAlive >= 3);
+      260 |   expect(midFlight.rocket.lastOwnerId).toMatch(/^baron_rocket:/);
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-control-main/e2e/057-baron-rocket-cart.spec.ts:257:67
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/057-baron-rocket-cart-kite-e68cc-ldings-through-CombatSystem-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/057-baron-rocket-cart-kite-e68cc-ldings-through-CombatSystem-mobile-chrome/error-context.md
+
+
+
+(node:85007) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[7/10] [mobile-chrome] › e2e/e7-roster.spec.ts:158:1 › plain Signal-era boot stays error-free without the debug harness
+  6) [mobile-chrome] › e2e/e7-roster.spec.ts:158:1 › plain Signal-era boot stays error-free without the debug harness 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      167 |   await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+      168 |   expect(await page.evaluate(() => window.__GR_TEST__)).toBeUndefined();
+    > 169 |   expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.e7Arsenal.enabled)).toBe(true);
+          |                                                                                           ^
+      170 |   expect(errors).toEqual({ console: [], page: [] });
+      171 | });
+      172 |
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-control-main/e2e/e7-roster.spec.ts:169:91
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e7-roster-plain-Signal-era-d9798-e-without-the-debug-harness-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e7-roster-plain-Signal-era-d9798-e-without-the-debug-harness-mobile-chrome/error-context.md
+
+
+
+(node:85121) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[8/10] [mobile-chrome] › e2e/e8-roster.spec.ts:166:1 › plain Orbital-era boot stays error-free without the debug harness
+  7) [mobile-chrome] › e2e/e8-roster.spec.ts:166:1 › plain Orbital-era boot stays error-free without the debug harness 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      175 |   await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+      176 |   expect(await page.evaluate(() => window.__GR_TEST__)).toBeUndefined();
+    > 177 |   expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.e8Arsenal.available)).toBe(true);
+          |                                                                                             ^
+      178 |   expect(errors).toEqual({ console: [], page: [] });
+      179 | });
+      180 |
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-control-main/e2e/e8-roster.spec.ts:177:93
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e8-roster-plain-Orbital-er-2bc57-e-without-the-debug-harness-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e8-roster-plain-Orbital-er-2bc57-e-without-the-debug-harness-mobile-chrome/error-context.md
+
+
+
+(node:85238) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[9/10] [mobile-chrome] › e2e/e9-roster.spec.ts:167:1 › plain Red Fields boot stays error-free without the debug harness
+  8) [mobile-chrome] › e2e/e9-roster.spec.ts:167:1 › plain Red Fields boot stays error-free without the debug harness 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      176 |   await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+      177 |   expect(await page.evaluate(() => window.__GR_TEST__)).toBeUndefined();
+    > 178 |   expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.e9Arsenal.eraActive)).toBe(true);
+          |                                                                                             ^
+      179 |   expect(errors).toEqual({ console: [], page: [] });
+      180 | });
+      181 |
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-control-main/e2e/e9-roster.spec.ts:178:93
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e9-roster-plain-Red-Fields-f1945-e-without-the-debug-harness-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e9-roster-plain-Red-Fields-f1945-e-without-the-debug-harness-mobile-chrome/error-context.md
+
+
+[10/10] [mobile-chrome] › e2e/wire-crawler-3d.spec.ts:115:1 › mounts the Crawler GLB, flips all three damage morphs, and disposes on kill
+  8 failed
+    [desktop-chrome] › e2e/057-baron-rocket-cart.spec.ts:251:1 › kited Baron telegraphs and launches rockets that damage hero and buildings through CombatSystem 
+    [desktop-chrome] › e2e/e7-roster.spec.ts:158:1 › plain Signal-era boot stays error-free without the debug harness 
+    [desktop-chrome] › e2e/e8-roster.spec.ts:166:1 › plain Orbital-era boot stays error-free without the debug harness 
+    [desktop-chrome] › e2e/e9-roster.spec.ts:167:1 › plain Red Fields boot stays error-free without the debug harness 
+    [mobile-chrome] › e2e/057-baron-rocket-cart.spec.ts:251:1 › kited Baron telegraphs and launches rockets that damage hero and buildings through CombatSystem 
+    [mobile-chrome] › e2e/e7-roster.spec.ts:158:1 › plain Signal-era boot stays error-free without the debug harness 
+    [mobile-chrome] › e2e/e8-roster.spec.ts:166:1 › plain Orbital-era boot stays error-free without the debug harness 
+    [mobile-chrome] › e2e/e9-roster.spec.ts:167:1 › plain Red Fields boot stays error-free without the debug harness 
+  2 passed (37.4s)
+rc=1

@@ -1,0 +1,12 @@
+import fs from 'node:fs';
+const p = 'STATUS.md';
+const L = fs.readFileSync(p, 'utf8').split('\n');
+
+const oldA = "🧭 **NEXT FIRE: (A)** **FINISH THE DISPATCH — this is the one owed act, and it is owed deliberately.** Per F-1424-3 the master+leaf+ledger are committed (step 1 ✓) and the lane refresh is REQUESTED (`tasks/janitor/s1592-refresh-lane-b.req`, step 2 initiated). **lane-b is 8+ commits behind and does NOT contain `artifacts/f1592-1-cdp-throttle-lever/`, which two of the master's three read-first citations point at** — so dispatching before the refresh lands is exactly the F-1424-3 failure (a runner that STOPs on a citation grep, blaming the wrong subject). **Confirm the .req was CONSUMED as `janitor-`, NOT `janitor-REJECTED-`, then re-grep the three keys IN THE LANE, then `cp`.**";
+
+const newA = "📮 **DISPATCH COMPLETED IN-FIRE — the runner consumed the refresh before I finished the handoff, so I finished the sequence rather than leaving it owed.** Per F-1424-3, in order: master+leaf+ledger committed FIRST (`99675efe5`) · lane-b refreshed SECOND via `tasks/janitor/s1592-refresh-lane-b.req`, **confirmed CONSUMED as `janitor-1786242542-…`, NOT `janitor-REJECTED-`** · the three read-first keys re-greped THIRD and each proved **`1` IN THE LANE** (they had already proved `1` on main before being written, F-1425-2) · `cp` LAST. Lane-b measured `ahead=0 behind=1` at dispatch, and `lane-usable` certified the 1-commit gap as **bookkeeping only — no run-surface file differs from main**, so nothing in it can stop the task. `citation-title-guard` re-run AFTER the `cp`: **PASS at 562 citations scanned**, no bare `spec:line` in the new master. 🧭 **NEXT FIRE: (A)** **`f1592-3` is LIVE on lane-b — drain it when it lands, and read its acceptance carefully, because it is unusual in the same two ways its predecessor was.** It must **NOT** contain a cure (designed, not a shortfall), and **`DOES-NOT-ARM-IN-PRACTICE` is a legitimate verdict, not a failure** — but it is only meaningful if **Arm P (the positive control) came back `armed: true` FIRST**. If Arm P did not arm, the run says nothing about the factory and the correct response is to fix the harness, not to re-aim the hypothesis.";
+
+if (!L[0].includes(oldA)) { console.error('item (A) text not found verbatim'); process.exit(1); }
+L[0] = L[0].replace(oldA, newA);
+fs.writeFileSync(p, L.join('\n'));
+console.log('item (A) corrected; dispatch recorded');

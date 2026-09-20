@@ -1,0 +1,904 @@
+{
+  "label": "nightshift2",
+  "contract": "e1-night-shift",
+  "base": "http://127.0.0.1:5247",
+  "url": "/?debug&contract=e1-night-shift&timescale=1&seed=e1-depth-nightshift2",
+  "timescale": 1,
+  "viewport": {
+    "width": 1280,
+    "height": 720
+  },
+  "difficulty": "trail",
+  "secureWave": null,
+  "startGold": 0,
+  "firstRun": {
+    "sawStartMenu": false,
+    "sawGreenhornOffer": false,
+    "greenhornCopy": null,
+    "trailGuideBeats": []
+  },
+  "boot": {
+    "contract": "e1-night-shift",
+    "difficulty": "trail",
+    "secureWave": null,
+    "briefing": "The Contract Begin Night Shift The claim, gone dark, dotted with cold lanterns. Goals Survive to DAWN at wave 25. Rules Beyond your light, the night owns the claim.Relight cold lanterns or build new posts to see threats.Turrets still target in the dark.",
+    "buildables": [
+      {
+        "id": "sentry_beacon",
+        "cost": 25,
+        "max": 6
+      },
+      {
+        "id": "palisade",
+        "cost": 10,
+        "max": 48
+      },
+      {
+        "id": "sluice",
+        "cost": 40,
+        "max": 3
+      },
+      {
+        "id": "stockpile",
+        "cost": 60,
+        "max": 2
+      },
+      {
+        "id": "turret",
+        "cost": 50,
+        "max": 4
+      },
+      {
+        "id": "lantern_post",
+        "cost": 15,
+        "max": 8
+      },
+      {
+        "id": "assay_office",
+        "cost": 80,
+        "max": 1
+      }
+    ],
+    "startGold": 0
+  },
+  "outcome": "secured",
+  "wallSeconds": 754,
+  "wavesReached": 25,
+  "sawRush": false,
+  "fpsEstimate": 119.5,
+  "driver": {
+    "ticks": 2202,
+    "kiteTicks": 1756,
+    "panTicks": 35
+  },
+  "perWave": [
+    {
+      "wave": 0,
+      "hpIn": 100,
+      "maxHp": 100,
+      "goldIn": 0,
+      "level": 1,
+      "panned": 0,
+      "sluiced": 0,
+      "seamsUp": 2,
+      "at": {
+        "x": 0,
+        "z": 12
+      },
+      "seamAt": "-9,7 | 25,7",
+      "builds": "none",
+      "wallSeconds": 23,
+      "peakEnemies": 6,
+      "idleFrac": 0,
+      "zones": {
+        "bank": 58
+      }
+    },
+    {
+      "wave": 1,
+      "hpIn": 100,
+      "maxHp": 100,
+      "goldIn": 0,
+      "level": 1,
+      "panned": 30,
+      "sluiced": 0,
+      "seamsUp": 1,
+      "at": {
+        "x": 24.9,
+        "z": 7.5
+      },
+      "seamAt": "25,7",
+      "builds": "palisadex3",
+      "wallSeconds": 30,
+      "peakEnemies": 10,
+      "idleFrac": 0,
+      "zones": {
+        "bank": 49,
+        "shallows": 2,
+        "river": 29
+      }
+    },
+    {
+      "wave": 2,
+      "hpIn": 92,
+      "maxHp": 100,
+      "goldIn": 0,
+      "level": 2,
+      "panned": 60,
+      "sluiced": 0,
+      "seamsUp": 2,
+      "at": {
+        "x": -19.1,
+        "z": -4.3
+      },
+      "seamAt": "-22,-7 | -9,7",
+      "builds": "palisadex6",
+      "wallSeconds": 30,
+      "peakEnemies": 25,
+      "idleFrac": 0,
+      "zones": {
+        "river": 70,
+        "shallows": 17
+      }
+    },
+    {
+      "wave": 3,
+      "hpIn": 53,
+      "maxHp": 125,
+      "goldIn": 5,
+      "level": 3,
+      "panned": 65,
+      "sluiced": 0,
+      "seamsUp": 2,
+      "at": {
+        "x": -22.2,
+        "z": -0.4
+      },
+      "seamAt": "-22,-7 | -9,7",
+      "builds": "palisadex6",
+      "wallSeconds": 30,
+      "peakEnemies": 49,
+      "idleFrac": 0,
+      "zones": {
+        "river": 82
+      }
+    },
+    {
+      "wave": 4,
+      "hpIn": 53,
+      "maxHp": 125,
+      "goldIn": 5,
+      "level": 3,
+      "panned": 65,
+      "sluiced": 0,
+      "seamsUp": 2,
+      "at": {
+        "x": -22.2,
+        "z": -0.3
+      },
+      "seamAt": "-22,-7 | -9,7",
+      "builds": "palisadex6",
+      "wallSeconds": 30,
+      "peakEnemies": 60,
+      "idleFrac": 0,
+      "zones": {
+        "river": 89
+      }
+    },
+    {
+      "wave": 5,
+      "hpIn": 53,
+      "maxHp": 125,
+      "goldIn": 5,
+      "level": 3,
+      "panned": 65,
+      "sluiced": 0,
+      "seamsUp": 2,
+      "at": {
+        "x": -22.2,
+        "z": 0.7
+      },
+      "seamAt": "-22,-7 | -9,7",
+      "builds": "palisadex6",
+      "wallSeconds": 30,
+      "peakEnemies": 60,
+      "idleFrac": 0,
+      "zones": {
+        "river": 90
+      }
+    },
+    {
+      "wave": 6,
+      "hpIn": 53,
+      "maxHp": 125,
+      "goldIn": 5,
+      "level": 3,
+      "panned": 65,
+      "sluiced": 0,
+      "seamsUp": 2,
+      "at": {
+        "x": -22.2,
+        "z": -0.6
+      },
+      "seamAt": "-22,-7 | -9,7",
+      "builds": "palisadex6",
+      "wallSeconds": 30,
+      "peakEnemies": 60,
+      "idleFrac": 0,
+      "zones": {
+        "river": 90
+      }
+    },
+    {
+      "wave": 7,
+      "hpIn": 53,
+      "maxHp": 125,
+      "goldIn": 5,
+      "level": 3,
+      "panned": 65,
+      "sluiced": 0,
+      "seamsUp": 2,
+      "at": {
+        "x": -22.2,
+        "z": 0.5
+      },
+      "seamAt": "-22,-7 | -9,7",
+      "builds": "palisadex6",
+      "wallSeconds": 30,
+      "peakEnemies": 60,
+      "idleFrac": 0,
+      "zones": {
+        "river": 90
+      }
+    },
+    {
+      "wave": 8,
+      "hpIn": 53,
+      "maxHp": 125,
+      "goldIn": 5,
+      "level": 3,
+      "panned": 65,
+      "sluiced": 0,
+      "seamsUp": 2,
+      "at": {
+        "x": -22.2,
+        "z": -0.4
+      },
+      "seamAt": "-22,-7 | -9,7",
+      "builds": "palisadex6",
+      "wallSeconds": 30,
+      "peakEnemies": 60,
+      "idleFrac": 0,
+      "zones": {
+        "river": 91
+      }
+    },
+    {
+      "wave": 9,
+      "hpIn": 53,
+      "maxHp": 125,
+      "goldIn": 5,
+      "level": 3,
+      "panned": 65,
+      "sluiced": 0,
+      "seamsUp": 2,
+      "at": {
+        "x": -22.2,
+        "z": -0.1
+      },
+      "seamAt": "-22,-7 | -9,7",
+      "builds": "palisadex6",
+      "wallSeconds": 30,
+      "peakEnemies": 60,
+      "idleFrac": 0,
+      "zones": {
+        "river": 90
+      }
+    },
+    {
+      "wave": 10,
+      "hpIn": 53,
+      "maxHp": 125,
+      "goldIn": 5,
+      "level": 3,
+      "panned": 65,
+      "sluiced": 0,
+      "seamsUp": 2,
+      "at": {
+        "x": -22.2,
+        "z": -0.2
+      },
+      "seamAt": "-22,-7 | -9,7",
+      "builds": "palisadex6",
+      "wallSeconds": 30,
+      "peakEnemies": 60,
+      "idleFrac": 0,
+      "zones": {
+        "river": 90
+      }
+    },
+    {
+      "wave": 11,
+      "hpIn": 53,
+      "maxHp": 125,
+      "goldIn": 5,
+      "level": 3,
+      "panned": 65,
+      "sluiced": 0,
+      "seamsUp": 2,
+      "at": {
+        "x": -22.2,
+        "z": -0.4
+      },
+      "seamAt": "-22,-7 | -9,7",
+      "builds": "palisadex6",
+      "wallSeconds": 30,
+      "peakEnemies": 60,
+      "idleFrac": 0,
+      "zones": {
+        "river": 91
+      }
+    },
+    {
+      "wave": 12,
+      "hpIn": 53,
+      "maxHp": 125,
+      "goldIn": 5,
+      "level": 3,
+      "panned": 65,
+      "sluiced": 0,
+      "seamsUp": 2,
+      "at": {
+        "x": -22.2,
+        "z": 0.3
+      },
+      "seamAt": "-22,-7 | -9,7",
+      "builds": "palisadex6",
+      "wallSeconds": 30,
+      "peakEnemies": 60,
+      "idleFrac": 0,
+      "zones": {
+        "river": 90
+      }
+    },
+    {
+      "wave": 13,
+      "hpIn": 53,
+      "maxHp": 125,
+      "goldIn": 5,
+      "level": 3,
+      "panned": 65,
+      "sluiced": 0,
+      "seamsUp": 2,
+      "at": {
+        "x": -22.2,
+        "z": 0.5
+      },
+      "seamAt": "-22,-7 | -9,7",
+      "builds": "palisadex6",
+      "wallSeconds": 30,
+      "peakEnemies": 60,
+      "idleFrac": 0,
+      "zones": {
+        "river": 90
+      }
+    },
+    {
+      "wave": 14,
+      "hpIn": 53,
+      "maxHp": 125,
+      "goldIn": 5,
+      "level": 3,
+      "panned": 65,
+      "sluiced": 0,
+      "seamsUp": 2,
+      "at": {
+        "x": -22.2,
+        "z": 0.5
+      },
+      "seamAt": "-22,-7 | -9,7",
+      "builds": "palisadex6",
+      "wallSeconds": 30,
+      "peakEnemies": 60,
+      "idleFrac": 0,
+      "zones": {
+        "river": 91
+      }
+    },
+    {
+      "wave": 15,
+      "hpIn": 53,
+      "maxHp": 125,
+      "goldIn": 5,
+      "level": 3,
+      "panned": 65,
+      "sluiced": 0,
+      "seamsUp": 2,
+      "at": {
+        "x": -22.2,
+        "z": 0
+      },
+      "seamAt": "-22,-7 | -9,7",
+      "builds": "palisadex6",
+      "wallSeconds": 30,
+      "peakEnemies": 60,
+      "idleFrac": 0,
+      "zones": {
+        "river": 90
+      }
+    },
+    {
+      "wave": 16,
+      "hpIn": 53,
+      "maxHp": 125,
+      "goldIn": 5,
+      "level": 3,
+      "panned": 65,
+      "sluiced": 0,
+      "seamsUp": 2,
+      "at": {
+        "x": -22.2,
+        "z": 0.3
+      },
+      "seamAt": "-22,-7 | -9,7",
+      "builds": "palisadex6",
+      "wallSeconds": 30,
+      "peakEnemies": 60,
+      "idleFrac": 0,
+      "zones": {
+        "river": 90
+      }
+    },
+    {
+      "wave": 17,
+      "hpIn": 53,
+      "maxHp": 125,
+      "goldIn": 5,
+      "level": 3,
+      "panned": 65,
+      "sluiced": 0,
+      "seamsUp": 2,
+      "at": {
+        "x": -22.2,
+        "z": -0.7
+      },
+      "seamAt": "-22,-7 | -9,7",
+      "builds": "palisadex6",
+      "wallSeconds": 30,
+      "peakEnemies": 60,
+      "idleFrac": 0,
+      "zones": {
+        "river": 90
+      }
+    },
+    {
+      "wave": 18,
+      "hpIn": 53,
+      "maxHp": 125,
+      "goldIn": 5,
+      "level": 3,
+      "panned": 65,
+      "sluiced": 0,
+      "seamsUp": 2,
+      "at": {
+        "x": -22.2,
+        "z": -0.5
+      },
+      "seamAt": "-22,-7 | -9,7",
+      "builds": "palisadex6",
+      "wallSeconds": 30,
+      "peakEnemies": 60,
+      "idleFrac": 0,
+      "zones": {
+        "river": 91
+      }
+    },
+    {
+      "wave": 19,
+      "hpIn": 53,
+      "maxHp": 125,
+      "goldIn": 5,
+      "level": 3,
+      "panned": 65,
+      "sluiced": 0,
+      "seamsUp": 2,
+      "at": {
+        "x": -22.2,
+        "z": -1.2
+      },
+      "seamAt": "-22,-7 | -9,7",
+      "builds": "palisadex6",
+      "wallSeconds": 30,
+      "peakEnemies": 60,
+      "idleFrac": 0,
+      "zones": {
+        "river": 90
+      }
+    },
+    {
+      "wave": 20,
+      "hpIn": 53,
+      "maxHp": 125,
+      "goldIn": 5,
+      "level": 3,
+      "panned": 65,
+      "sluiced": 0,
+      "seamsUp": 2,
+      "at": {
+        "x": -22.2,
+        "z": 0.1
+      },
+      "seamAt": "-22,-7 | -9,7",
+      "builds": "palisadex6",
+      "wallSeconds": 30,
+      "peakEnemies": 60,
+      "idleFrac": 0,
+      "zones": {
+        "river": 90
+      }
+    },
+    {
+      "wave": 21,
+      "hpIn": 53,
+      "maxHp": 125,
+      "goldIn": 5,
+      "level": 3,
+      "panned": 65,
+      "sluiced": 0,
+      "seamsUp": 2,
+      "at": {
+        "x": -22.2,
+        "z": 0.3
+      },
+      "seamAt": "-22,-7 | -9,7",
+      "builds": "palisadex6",
+      "wallSeconds": 30,
+      "peakEnemies": 60,
+      "idleFrac": 0,
+      "zones": {
+        "river": 91
+      }
+    },
+    {
+      "wave": 22,
+      "hpIn": 53,
+      "maxHp": 125,
+      "goldIn": 5,
+      "level": 3,
+      "panned": 65,
+      "sluiced": 0,
+      "seamsUp": 2,
+      "at": {
+        "x": -22.2,
+        "z": -0.4
+      },
+      "seamAt": "-22,-7 | -9,7",
+      "builds": "palisadex6",
+      "wallSeconds": 30,
+      "peakEnemies": 60,
+      "idleFrac": 0,
+      "zones": {
+        "river": 90
+      }
+    },
+    {
+      "wave": 23,
+      "hpIn": 53,
+      "maxHp": 125,
+      "goldIn": 5,
+      "level": 3,
+      "panned": 65,
+      "sluiced": 0,
+      "seamsUp": 2,
+      "at": {
+        "x": -22.2,
+        "z": -0.2
+      },
+      "seamAt": "-22,-7 | -9,7",
+      "builds": "palisadex6",
+      "wallSeconds": 30,
+      "peakEnemies": 60,
+      "idleFrac": 0,
+      "zones": {
+        "river": 90
+      }
+    },
+    {
+      "wave": 24,
+      "hpIn": 53,
+      "maxHp": 125,
+      "goldIn": 5,
+      "level": 3,
+      "panned": 65,
+      "sluiced": 0,
+      "seamsUp": 2,
+      "at": {
+        "x": -22.2,
+        "z": 0.3
+      },
+      "seamAt": "-22,-7 | -9,7",
+      "builds": "palisadex6",
+      "wallSeconds": 30,
+      "peakEnemies": 60,
+      "idleFrac": 0,
+      "zones": {
+        "river": 91
+      }
+    },
+    {
+      "wave": 25,
+      "hpIn": 53,
+      "maxHp": 125,
+      "goldIn": 5,
+      "level": 3,
+      "panned": 65,
+      "sluiced": 0,
+      "seamsUp": 2,
+      "at": {
+        "x": -22.2,
+        "z": 0.1
+      },
+      "seamAt": "-22,-7 | -9,7",
+      "builds": "palisadex6",
+      "wallSeconds": 0,
+      "peakEnemies": 60,
+      "idleFrac": null,
+      "zones": {}
+    }
+  ],
+  "upgradesTaken": [
+    {
+      "wave": 1,
+      "level": 2,
+      "offer": [
+        "wide_ring",
+        "heavy_spark",
+        "pan_legend"
+      ],
+      "took": "heavy_spark"
+    },
+    {
+      "wave": 2,
+      "level": 3,
+      "offer": [
+        "pan_legend",
+        "tinkers_plating",
+        "prospectors_luck"
+      ],
+      "took": "tinkers_plating"
+    }
+  ],
+  "buildLog": [
+    {
+      "wave": 0,
+      "id": "palisade",
+      "built": true,
+      "before": 0,
+      "after": 1,
+      "goldBefore": 10,
+      "goldAfter": 0,
+      "at": {
+        "valid": true,
+        "x": -7,
+        "z": 10
+      }
+    },
+    {
+      "wave": 0,
+      "id": "palisade",
+      "built": true,
+      "before": 1,
+      "after": 2,
+      "goldBefore": 10,
+      "goldAfter": 0,
+      "at": {
+        "valid": true,
+        "x": -8,
+        "z": 11
+      }
+    },
+    {
+      "wave": 0,
+      "id": "palisade",
+      "built": true,
+      "before": 2,
+      "after": 3,
+      "goldBefore": 10,
+      "goldAfter": 0,
+      "at": {
+        "valid": true,
+        "x": -9,
+        "z": 8
+      }
+    },
+    {
+      "wave": 1,
+      "id": "palisade",
+      "built": true,
+      "before": 3,
+      "after": 4,
+      "goldBefore": 15,
+      "goldAfter": 5,
+      "at": {
+        "valid": true,
+        "x": 22,
+        "z": 9
+      }
+    },
+    {
+      "wave": 1,
+      "id": "palisade",
+      "built": true,
+      "before": 4,
+      "after": 5,
+      "goldBefore": 15,
+      "goldAfter": 10,
+      "at": {
+        "valid": true,
+        "x": 28,
+        "z": 9
+      }
+    },
+    {
+      "wave": 1,
+      "id": "palisade",
+      "built": true,
+      "before": 5,
+      "after": 6,
+      "goldBefore": 10,
+      "goldAfter": 0,
+      "at": {
+        "valid": true,
+        "x": 23,
+        "z": 7
+      }
+    }
+  ],
+  "announcements": [
+    {
+      "wave": 0,
+      "text": "the Prospector: follows and observes. Chip by weapon; claim wins grow it.",
+      "kind": "wave"
+    },
+    {
+      "wave": 0,
+      "text": "Claim Jumpers from the south bank!",
+      "kind": "wave"
+    },
+    {
+      "wave": 0,
+      "text": "Beacon coils hum eastward!",
+      "kind": "wave"
+    },
+    {
+      "wave": 1,
+      "text": "Hold the west ridge for the assay!",
+      "kind": "wave"
+    },
+    {
+      "wave": 1,
+      "text": "North bank shadows want the gold!",
+      "kind": "wave"
+    },
+    {
+      "wave": 1,
+      "text": "Wet powder.",
+      "kind": "wave"
+    },
+    {
+      "wave": 1,
+      "text": "Claim Jumpers from the west ridge!",
+      "kind": "wave"
+    },
+    {
+      "wave": 1,
+      "text": "Brass warning on the north bank!",
+      "kind": "wave"
+    },
+    {
+      "wave": 2,
+      "text": "Claim Jumpers from the north bank!",
+      "kind": "wave"
+    },
+    {
+      "wave": 2,
+      "text": "Stake lights on the south bank!",
+      "kind": "wave"
+    },
+    {
+      "wave": 4,
+      "text": "Wrecking crew sighted - north bank.",
+      "kind": "wave"
+    },
+    {
+      "wave": 4,
+      "text": "Wrecking crew sighted - south bank.",
+      "kind": "wave"
+    },
+    {
+      "wave": 4,
+      "text": "Brass warning on the west ridge!",
+      "kind": "wave"
+    },
+    {
+      "wave": 5,
+      "text": "Wrecking crew sighted - east ridge.",
+      "kind": "wave"
+    },
+    {
+      "wave": 6,
+      "text": "Wrecking crew sighted - west ridge.",
+      "kind": "wave"
+    },
+    {
+      "wave": 14,
+      "text": "Claim Jumpers from the east ridge!",
+      "kind": "wave"
+    }
+  ],
+  "end": {
+    "run": {
+      "secured": true,
+      "rush": false,
+      "lastRunEndedReason": null,
+      "meta": {
+        "version": 1,
+        "tracks": {
+          "territory": 1,
+          "science": 1,
+          "hero": 1,
+          "agent": 1
+        }
+      },
+      "victoryPayout": {
+        "territory": 1,
+        "science": 1,
+        "hero": 1,
+        "agent": 1
+      },
+      "secureWaveReached": 25,
+      "securedResultAt": 1785026446285,
+      "suspend": {
+        "hasSuspend": false,
+        "restored": false,
+        "restoredWave": null,
+        "lastWriteAt": 1785026446286,
+        "lastWriteMs": 0.5,
+        "sizeBytes": 104808
+      }
+    },
+    "wave": 25,
+    "gold": 5,
+    "level": 3,
+    "kills": 21,
+    "xpAudit": {
+      "deaths": 21,
+      "motesSpawned": 21,
+      "motesCollected": 11,
+      "motesCollectedXp": 44,
+      "overflowBanked": 0,
+      "expiredBanked": 0,
+      "autoBanked": 0,
+      "dropped": 0,
+      "xpAwarded": 44,
+      "xpPerKill": 4,
+      "motePool": 64,
+      "expiryBanks": true
+    },
+    "stacks": {
+      "heavy_spark": 1,
+      "tinkers_plating": 1
+    },
+    "arsenal": {
+      "turretKills": 0,
+      "blastKills": 0,
+      "toggles": 2
+    },
+    "office": " Claim Office The Prospector tips his hat: “Struck it proper, partner.” Territory +1 Stamped Science +1 Stamped Hero +1 Stamped Agent +1 Stamped Next claim: palisade ring ready; the gaps are your kill-lanes. ",
+    "deathOverlay": ""
+  },
+  "errors": {
+    "console": [],
+    "page": []
+  }
+}

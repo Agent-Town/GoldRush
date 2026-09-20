@@ -1,0 +1,225 @@
+commit=d1f549d5fd51d8b127eb83cdf658dce0e5db8374
+parents=86c3688d8bb27a28d4a438c5355d4060ea3415ba
+author_date=2026-07-19T11:07:13+07:00
+commit_date=2026-07-19T11:07:13+07:00
+subject=runner(lane-a): lane-landmark-collision.md
+diff --git a/src/world/Terrain.ts b/src/world/Terrain.ts
+index 513583db..ca3aacce 100644
+--- a/src/world/Terrain.ts
++++ b/src/world/Terrain.ts
+@@ -18,16 +18,17 @@ import {
+   type ContractWaterZone,
+   type ContractStakeMarker,
+   type ContractWaterSource,
+ } from '../meta/ContractFamilies';
+ import { hasElevationTile, isTraversable as isSimTraversable, simHeight } from '../sim/TileHeight';
+ import { normalizeSeed } from '../core/Rng';
+ import { disposeObject3D } from '../utils/dispose';
+ import { createContinuousGroundMesh, type ContinuousGroundMeshStats } from './ContinuousGroundMesh';
++import { blockerContains, landmarkBlockersFor, type LandmarkBlocker } from './LandmarkCollision';
+ import { createClaimProps } from './props';
+ import {
+   createFordStones,
+   createLivingWaterMaterial,
+   dryWaterDiagnostics,
+   updateWaterMaterial,
+   waterDiagnostics,
+   type WaterDiagnostics,
+@@ -70,16 +71,17 @@ export type FordRange = {
+   id: string;
+   minX: number;
+   maxX: number;
+   centerX: number;
+   halfWidth: number;
+ };
+ 
+ const ACTIVE_CONTRACT = activeContract();
++const LANDMARK_BLOCKERS = landmarkBlockersFor(ACTIVE_CONTRACT.id);
+ const ACTIVE_TILE = activeTileDescriptor();
+ export const DEFAULT_CLAIM_SIZE = 64;
+ export const CLAIM_SIZE = ACTIVE_CONTRACT.tileParams.size ?? DEFAULT_CLAIM_SIZE;
+ export const CLAIM_HALF = CLAIM_SIZE / 2;
+ export const CLAIM_WIDTH = ACTIVE_CONTRACT.tileParams.dimensions?.width ?? CLAIM_SIZE;
+ export const CLAIM_HEIGHT = ACTIVE_CONTRACT.tileParams.dimensions?.height ?? CLAIM_SIZE;
+ export const CLAIM_HALF_X = CLAIM_WIDTH / 2;
+ export const CLAIM_HALF_Z = CLAIM_HEIGHT / 2;
+@@ -160,39 +162,47 @@ const DEFAULT_NODE_ANCHORS: Vec2[] = [
+ ];
+ export const nodeAnchors: Vec2[] = ACTIVE_CONTRACT.tileParams.harvestAnchors ?? DEFAULT_NODE_ANCHORS;
+ 
+ export function sample(x: number, z: number): TerrainSample {
+   if (x < bounds.minX || x > bounds.maxX || z < bounds.minZ || z > bounds.maxZ) {
+     return { walkable: false, speedMul: 0, zone: 'out' };
+   }
+   if (ELEVATION_TILE && !isSimTraversable(x, z)) return { walkable: false, speedMul: 0, zone: 'out' };
++  const landmarkBlocked = LANDMARK_BLOCKERS.some((blocker) => blockerContains(blocker, x, z, Balance.hero.radius + 0.08));
++  const withLandmarkCollision = (terrain: TerrainSample): TerrainSample => landmarkBlocked
++    ? { ...terrain, walkable: false, speedMul: 0 }
++    : terrain;
+ 
+   const spring = springPondAt(x, z);
+-  if (spring) return waterSample('shallows', 'springPond', 'spring_pond');
++  if (spring) return withLandmarkCollision(waterSample('shallows', 'springPond', 'spring_pond'));
+ 
+   if (WATER_MASK) {
+     const region = WATER_MASK.regions.find((candidate) => distanceToWaterMaskRegion(x, z, candidate) <= 0);
+-    return region ? waterSample(region.zone, region.zone, 'river') : { walkable: true, speedMul: 1, zone: 'bank' };
++    return withLandmarkCollision(region ? waterSample(region.zone, region.zone, 'river') : { walkable: true, speedMul: 1, zone: 'bank' });
+   }
+ 
+-  if (!ACTIVE_CONTRACT.tileParams.river) return { walkable: true, speedMul: 1, zone: 'bank' };
++  if (!ACTIVE_CONTRACT.tileParams.river) return withLandmarkCollision({ walkable: true, speedMul: 1, zone: 'bank' });
+ 
+   const inFord = fordAt(x, z) !== null;
+-  if (ACTIVE_CONTRACT.tileParams.ford && inFord) return waterSample('ford', 'ford', 'river');
++  if (ACTIVE_CONTRACT.tileParams.ford && inFord) return withLandmarkCollision(waterSample('ford', 'ford', 'river'));
+ 
+   const inRiver = z >= RIVER_MIN_Z && z <= RIVER_MAX_Z;
+-  if (inRiver) return waterSample('river', 'river', 'river');
++  if (inRiver) return withLandmarkCollision(waterSample('river', 'river', 'river'));
+ 
+   const inShallows =
+     (z > RIVER_MAX_Z && z <= RIVER_MAX_Z + SHALLOWS_WIDTH) ||
+     (z < RIVER_MIN_Z && z >= RIVER_MIN_Z - SHALLOWS_WIDTH);
+-  if (inShallows) return waterSample('shallows', 'shallows', 'river');
++  if (inShallows) return withLandmarkCollision(waterSample('shallows', 'shallows', 'river'));
+ 
+-  return { walkable: true, speedMul: 1, zone: 'bank' };
++  return withLandmarkCollision({ walkable: true, speedMul: 1, zone: 'bank' });
++}
++
++export function landmarkBlockers(): readonly LandmarkBlocker[] {
++  return LANDMARK_BLOCKERS;
+ }
+ 
+ export function waterDepth(zone: ContractWaterZone): number {
+   return TILE_WATER?.depths?.[zone] ?? DEFAULT_WATER_DEPTH[zone];
+ }
+ 
+ function waterSpeedMul(zone: ContractWaterZone): number {
+   return TILE_WATER?.speedMul?.[zone] ?? DEFAULT_WATER_SPEED[zone];
+@@ -217,17 +227,18 @@ export function spawnEdges(): Vec2[] {
+     { x: 0, z: bounds.minZ },
+     { x: 0, z: bounds.maxZ },
+     { x: bounds.maxX, z: 0 },
+     { x: bounds.minX, z: 0 },
+   ];
+ }
+ 
+ export function isBuildable(x: number, z: number): boolean {
+-  if (sample(x, z).zone !== 'bank') return false;
++  const terrain = sample(x, z);
++  if (!terrain.walkable || terrain.zone !== 'bank') return false;
+   const zones = ACTIVE_CONTRACT.tileParams.buildZones ?? [];
+   return zones.length === 0 || zones.some((zone) => x >= zone.minX && x <= zone.maxX && z >= zone.minZ && z <= zone.maxZ);
+ }
+ 
+ export function riverGeometry(): { minX: number; maxX: number; minZ: number; maxZ: number } {
+   return {
+     minX: bounds.minX,
+     maxX: bounds.maxX,
+import registryText from '../../assets/pilots/map-rebuild-spike/landmark-collision-contract.json?raw';
+
+export type LandmarkFootprint =
+  | { kind: 'rect'; w: number; d: number }
+  | { kind: 'radius'; radius: number };
+
+export type LandmarkBlocker = {
+  id: string;
+  x: number;
+  z: number;
+  halfX: number;
+  halfZ: number;
+};
+
+type LandmarkRecord = {
+  id: string;
+  position: [number, number];
+  rotation: number;
+  scale: [number, number];
+  footprint: LandmarkFootprint;
+};
+const registry = JSON.parse(registryText) as { version: 1; maps: Record<string, LandmarkRecord[]> };
+const aliases: Record<string, string> = {
+  'e5-stillwater': 'deepwater-claim',
+  'e5-flotilla': 'deepwater-claim',
+  'e6-picnic': 'glow-mesa',
+  'e7-dead-band': 'relay-valley',
+  'e7-relay-rush': 'relay-valley',
+  'e8-far-side': 'mare-claim',
+  'e8-eclipse': 'mare-claim',
+};
+
+export function landmarkBlockersFor(contractId: string): LandmarkBlocker[] {
+  const map = aliases[contractId] ?? contractId.replace(/^e\d+-/, '');
+  return (registry.maps[map] ?? []).map((mount) => {
+    const scaleX = Math.abs(mount.scale[0]);
+    const scaleZ = Math.abs(mount.scale[1]);
+    let halfX: number;
+    let halfZ: number;
+    if (mount.footprint.kind === 'radius') {
+      halfX = halfZ = mount.footprint.radius * Math.max(scaleX, scaleZ);
+    } else {
+      const cos = Math.abs(Math.cos(mount.rotation));
+      const sin = Math.abs(Math.sin(mount.rotation));
+      halfX = (mount.footprint.w * scaleX * cos + mount.footprint.d * scaleZ * sin) / 2;
+      halfZ = (mount.footprint.w * scaleX * sin + mount.footprint.d * scaleZ * cos) / 2;
+    }
+    return { id: `${map}:${mount.id}`, x: mount.position[0], z: mount.position[1], halfX, halfZ };
+  });
+}
+
+export function blockerContains(blocker: LandmarkBlocker, x: number, z: number, pad = 0): boolean {
+  return Math.abs(x - blocker.x) <= blocker.halfX + pad && Math.abs(z - blocker.z) <= blocker.halfZ + pad;
+}
+    "hill-mine": [
+      {
+        "id": "boiler-house-site",
+        "position": [
+          0,
+          12
+        ],
+        "rotation": 0,
+        "scale": [
+          1.25,
+          1.25
+        ],
+        "footprint": {
+          "kind": "radius",
+          "radius": 2.687
+        }
+      },
+| hill-mine | mine-mouth-and-ruined-headframe | walkable | no proposal |
+| hill-mine | boiler-house-site | radius 2.687 | authored |
+| hill-mine | flooded-gallery | walkable | no proposal |
+| hill-mine | switchback-rail-kit | walkable | no proposal |
+| hill-mine | tailings-and-scree-pack | rect 7.126 x 5.554 | authored |
+test('authored footprints stop the hero on The Claim and a county map while an unfootprinted mount stays walkable', async ({ page }) => {
+  test.setTimeout(60_000);
+  const errors = collectErrors(page);
+
+  await bootRun(page, 'the-claim');
+  const claimHouse = await blocker(page, 'maintained_claim_house');
+  await expect(page.evaluate(({ x, z }) => window.__GR_TEST__?.terrainSample(x, z).walkable, claimHouse)).resolves.toBe(false);
+  await expectHeroStoppedBy(page, claimHouse);
+  await expect(page.evaluate(() => window.__GR_TEST__?.terrainSample(6.5, 10.5).walkable)).resolves.toBe(true);
+
+  await bootRun(page, 'e1-dry-gulch');
+  const farmhouse = await blocker(page, 'abandoned_farmhouse');
+  await expectHeroStoppedBy(page, farmhouse);
+  expect(errors).toEqual({ console: [], page: [] });
+test_last_change=90e7cc6841cdbe514a3f3aa203135e652fd9b4fa 2026-07-12T10:46:03+07:00 runner(lane-c): e2-arsenal.md
+90e7cc684 (Claude (Cowork orchestrator) 2026-07-12T10:46:03+07:00  87) test('Auto-Pan upkeep and boiler battery bands consume the fixed-step pressure store', async ({ page }, testInfo) => {
+90e7cc684 (Claude (Cowork orchestrator) 2026-07-12T10:46:03+07:00  88)   const errors = await open(page, testInfo, true);
+90e7cc684 (Claude (Cowork orchestrator) 2026-07-12T10:46:03+07:00  89)   await page.evaluate(() => {
+90e7cc684 (Claude (Cowork orchestrator) 2026-07-12T10:46:03+07:00  90)     window.__GR_TEST__?.setUpgradeStacks({ auto_pan: 1 });
+90e7cc684 (Claude (Cowork orchestrator) 2026-07-12T10:46:03+07:00  91)     window.__GR_TEST__?.grantPressure(50);
+90e7cc684 (Claude (Cowork orchestrator) 2026-07-12T10:46:03+07:00  92)     const seam = window.__THREE_GAME_DIAGNOSTICS__?.harvest.activeNodes.find((node) => node.active);
+90e7cc684 (Claude (Cowork orchestrator) 2026-07-12T10:46:03+07:00  93)     if (seam) window.__GR_TEST__?.teleport(seam.position.x, seam.position.z);
+90e7cc684 (Claude (Cowork orchestrator) 2026-07-12T10:46:03+07:00  94)     window.__GR_TEST__?.advanceSim(1.5);
+90e7cc684 (Claude (Cowork orchestrator) 2026-07-12T10:46:03+07:00  95)   });
+90e7cc684 (Claude (Cowork orchestrator) 2026-07-12T10:46:03+07:00  96)   const autoPan = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.pressureArsenal);
+90e7cc684 (Claude (Cowork orchestrator) 2026-07-12T10:46:03+07:00  97)   expect(autoPan?.autoPanSeconds).toBeGreaterThan(0);
+90e7cc684 (Claude (Cowork orchestrator) 2026-07-12T10:46:03+07:00  98)   expect(await page.evaluate(() => window.__GR_TEST__?.economyLog().some((event: any) => event.type === 'resource_spent' && event.sink === 'auto_pan'))).toBe(true);
+90e7cc684 (Claude (Cowork orchestrator) 2026-07-12T10:46:03+07:00  99) 
+90e7cc684 (Claude (Cowork orchestrator) 2026-07-12T10:46:03+07:00 100)   await expect(page.evaluate(() => window.__GR_TEST__?.placeFree('turret', 0, 10))).resolves.toBe(true);

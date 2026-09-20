@@ -1,0 +1,72 @@
+{
+  "law": "reuse > derive > build-new; era-stamped; grit-dressed",
+  "packs": {
+    "twin-banks": {
+      "era": 1,
+      "atlasSha256": "bb1cf6fb8d1d1f5606421ce937f2dc048f55859ae7caf2dd602b78cb2246e301",
+      "assets": {
+        "north_bank_homestead": {
+          "sourceTier": "derive",
+          "triangles": 1220,
+          "sha256": "c865d072ec63d5702742a2fe85ba7a3da118eed7156eee35d11cd12c4fb0d63f",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "declaredBoundsMatch": true,
+          "source": "landmarks/twin-banks/north_bank_homestead.blend",
+          "sourceKind": "per-body"
+        },
+        "south_bank_homestead": {
+          "sourceTier": "derive",
+          "triangles": 1220,
+          "sha256": "ca53c230f05e183e53ae094166b8bf5bc4194358e81794649ab38f5b2a4960da",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "declaredBoundsMatch": true,
+          "source": "landmarks/twin-banks/south_bank_homestead.blend",
+          "sourceKind": "per-body"
+        },
+        "north_bank_winch": {
+          "sourceTier": "build-new",
+          "triangles": 788,
+          "sha256": "a8a19d4b4a2aca59ce39cba9444d4a2ed46eb6eb04d25d02061e8cd5620d7afc",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "declaredBoundsMatch": true,
+          "source": "landmarks/twin-banks/north_bank_winch.blend",
+          "sourceKind": "per-body"
+        },
+        "south_bank_winch": {
+          "sourceTier": "build-new",
+          "triangles": 788,
+          "sha256": "ed70b7f976221940740975d1cc58cd22481829face6eccd0bb764f3ce0d60204",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "declaredBoundsMatch": true,
+          "source": "landmarks/twin-banks/south_bank_winch.blend",
+          "sourceKind": "per-body"
+        },
+        "floodplain_dressing_pack": {
+          "sourceTier": "derive",
+          "triangles": 2384,
+          "sha256": "545093bd6532d451ddec7899a4d642f1963316d3f2ea854e7a0c659052309805",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "declaredBoundsMatch": true,
+          "source": "landmarks/twin-banks/floodplain_dressing_pack.blend",
+          "sourceKind": "per-body"
+        }
+      }
+    }
+  },
+  "totals": {
+    "packs": 1,
+    "assets": 5,
+    "sourceTiers": {
+      "reuse": 0,
+      "derive": 3,
+      "build-new": 2
+    }
+  },
+  "boards": {},
+  "simulation": "unchanged; every landmark is a separate render-only GLB mounted by contract"
+}

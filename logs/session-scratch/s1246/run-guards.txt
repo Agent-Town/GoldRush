@@ -1,0 +1,14 @@
+
+> gold-rush@0.1.0 test:guards
+> node scripts/run-guards.mjs
+
+PASS  rc=0  30s  test:node-guards
+PASS  rc=0  0s  test:power-budget  p95=0.314ms
+PASS  rc=0  4s  test:stats
+PASS  rc=0  2s  test:accounts
+PASS  rc=0  3s  test:mp
+PASS  rc=0  80s  test:deploy-contract
+PASS  rc=0  1s  test:deploy-site-contract
+PASS  rc=0  0s  test:task-guards
+
+guards: 8/8 passed

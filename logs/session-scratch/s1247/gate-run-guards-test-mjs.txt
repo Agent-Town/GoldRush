@@ -1,0 +1,19 @@
+✔ runner exit follows guard exit codes (1573.49425ms)
+✔ --only rejects unknown guards and runs one known guard (156.665042ms)
+✔ --only accepts a comma-separated subset in canonical order (438.460125ms)
+✔ --only rejects a list containing an unknown guard rather than narrowing (25.560125ms)
+✔ power-budget rows include p95 only when printed (243.27525ms)
+✔ --changed-since runs the base gate when no path rule matches (379.134042ms)
+✔ --changed-since adds the worker guards when functions/ moved (1322.269416ms)
+✔ --changed-since exits 2 on a bad ref rather than narrowing to the base gate (128.364167ms)
+✔ --changed-since exits 2 when the untracked listing fails rather than reporting a green (950.570583ms)
+✔ guards run with GR_GUARD_NO_ARTIFACT so a gate cannot dirty its own tree (121.525208ms)
+✔ a signal-killed guard is never a pass (119.527583ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5492.59775

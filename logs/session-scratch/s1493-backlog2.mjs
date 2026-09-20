@@ -1,0 +1,14 @@
+import fs from 'node:fs';
+
+const path = 'tasks/BACKLOG.md';
+const L = fs.readFileSync(path, 'utf8').split('\n');
+const anchor = L.findIndex((l) => l.includes('F-1493-3 (s1493 — OWNER, NON-BLOCKING'));
+if (anchor < 0) throw new Error('anchor row not found — refusing to edit blind');
+
+const add = [
+  '- ✅ **F-1492-4 CLOSED s1493 — the skill.md rot guard now carries its own positive control, mechanised rather than remembered.** s1492 proved the guard bites by manufacturing a defect BY HAND through the `SKILLMD_PATH` redirect and recorded the result in `reviews/skillmd-the-door-doc.md`. **A proof that lives in prose is re-run by nobody**, and a passing guard never executes its violation path — so the three green tests were not evidence about the red. `scripts/skillmd-guard.test.mjs` now spawns a child against a `skill.md` with **exactly one grammar line dropped** (the smallest drift a forgotten verb can produce) and asserts the child reds **on the grammar test specifically**, not merely that it reds. The control is itself proven load-bearing: neutering the drift to a no-op makes it fail with `a skill.md missing a grammar line did NOT red the guard` (probe reverted, file restored **byte-identical**, sha256 `d37b4bfabde4e491`). Battery after: `test:node-guards` **340 tests / 337 pass / 0 fail / 3 skipped, rc=0** (`artifacts/s1493-node-guards.txt`).',
+  '- 🟢 **F-1493-4 (s1493, MEASURED WHILE BUILDING F-1492-4’s CONTROL — A SPAWNED-CHILD PROBE INHERITS `NODE_TEST_CONTEXT` AND EXITS 0 WITH FAILING ASSERTIONS, SO IT IS VACUOUS IN EXACTLY THE CONTEXT THAT MATTERS).** Any guard whose subject is read at module load can only be positively controlled by spawning a child (an in-process env swap is read too late). But when the parent is itself running under `node --test`, `NODE_TEST_CONTEXT` is set in its env; a child that inherits it believes it is a test-runner child, **reports its results over IPC to a parent that is not listening, and exits 0 even though its assertions failed.** Measured directly, same file, same drift: `NODE_TEST_CONTEXT=child-v8` → **status 0** · `=child` → **status 0** · unset → **status 1**. ⚠️ **The failure mode is the dangerous polarity**: the naive control passes when a human runs the file by hand and is **silently vacuous inside `test:node-guards`** — green in the only context that matters, for the wrong reason, and it would have been read as "the guard bites". Cure: `delete env.NODE_TEST_CONTEXT` before spawning, with the reason stated at the call site so nobody “simplifies” it away. **Applies to every future spawned-child positive control, not just this one** — grep `spawnSync` in `scripts/*.test.mjs` before writing the next one.',
+];
+L.splice(anchor + 1, 0, ...add);
+fs.writeFileSync(path, L.join('\n'));
+console.log('BACKLOG updated: F-1492-4 closed, F-1493-4 declared');

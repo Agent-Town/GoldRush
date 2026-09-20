@@ -1,0 +1,23 @@
+
+> gold-rush@0.1.0 test:accounts
+> node scripts/test-accounts.mjs
+
+file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-animator-land/scripts/test-accounts.mjs:310
+      if (child.exitCode !== null || Date.now() - started > 20_000) throw new Error(`account registry did not start: ${output}`);
+                                                                          ^
+
+Error: account registry did not start: [31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mThe entry-point file at "../../../functions/api/_account-registry.ts" was not found.[0m
+
+  
+  This might mean that your entry-point file needs to be generated (which is the general case when a framework is being used).
+  If that's the case please run your project's build command and try again.
+
+
+
+    at startAccountRegistry (file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-animator-land/scripts/test-accounts.mjs:310:75)
+    at async startWrangler (file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-animator-land/scripts/test-accounts.mjs:219:30)
+    at async checkDevFlow (file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-animator-land/scripts/test-accounts.mjs:76:18)
+    at async main (file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-animator-land/scripts/test-accounts.mjs:55:7)
+    at async file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-animator-land/scripts/test-accounts.mjs:20:8
+
+Node.js v26.4.0

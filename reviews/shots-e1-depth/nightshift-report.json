@@ -1,0 +1,505 @@
+{
+  "label": "nightshift",
+  "contract": "e1-night-shift",
+  "base": "http://127.0.0.1:5247",
+  "url": "/?debug&contract=e1-night-shift&timescale=2&seed=e1-depth-nightshift",
+  "timescale": 2,
+  "viewport": {
+    "width": 1280,
+    "height": 720
+  },
+  "difficulty": "trail",
+  "secureWave": null,
+  "startGold": 0,
+  "firstRun": {
+    "sawStartMenu": false,
+    "sawGreenhornOffer": false,
+    "greenhornCopy": null,
+    "trailGuideBeats": []
+  },
+  "boot": {
+    "contract": "e1-night-shift",
+    "difficulty": "trail",
+    "secureWave": null,
+    "briefing": "The Contract Begin Night Shift The claim, gone dark, dotted with cold lanterns. Goals Survive to DAWN at wave 25. Rules Beyond your light, the night owns the claim.Relight cold lanterns or build new posts to see threats.Turrets still target in the dark.",
+    "buildables": [
+      {
+        "id": "sentry_beacon",
+        "cost": 25,
+        "max": 6
+      },
+      {
+        "id": "palisade",
+        "cost": 10,
+        "max": 48
+      },
+      {
+        "id": "sluice",
+        "cost": 40,
+        "max": 3
+      },
+      {
+        "id": "stockpile",
+        "cost": 60,
+        "max": 2
+      },
+      {
+        "id": "turret",
+        "cost": 50,
+        "max": 4
+      },
+      {
+        "id": "lantern_post",
+        "cost": 15,
+        "max": 8
+      },
+      {
+        "id": "assay_office",
+        "cost": 80,
+        "max": 1
+      }
+    ],
+    "startGold": 0
+  },
+  "outcome": "dead",
+  "wallSeconds": 69,
+  "wavesReached": 4,
+  "sawRush": false,
+  "fpsEstimate": 119.9,
+  "driver": {
+    "ticks": 130,
+    "kiteTicks": 15,
+    "panTicks": 34
+  },
+  "perWave": [
+    {
+      "wave": 0,
+      "hpIn": 100,
+      "maxHp": 100,
+      "goldIn": 0,
+      "level": 1,
+      "panned": 0,
+      "sluiced": 0,
+      "seamsUp": 2,
+      "at": {
+        "x": 0,
+        "z": 12
+      },
+      "seamAt": "-2,-6 | 18,-7",
+      "builds": "none",
+      "wallSeconds": 9,
+      "peakEnemies": 5,
+      "idleFrac": 0,
+      "zones": {
+        "bank": 13,
+        "shallows": 1,
+        "ford": 5
+      }
+    },
+    {
+      "wave": 1,
+      "hpIn": 100,
+      "maxHp": 100,
+      "goldIn": 5,
+      "level": 1,
+      "panned": 30,
+      "sluiced": 0,
+      "seamsUp": 1,
+      "at": {
+        "x": -2.3,
+        "z": -6.6
+      },
+      "seamAt": "18,-7",
+      "builds": "sentry_beaconx1",
+      "wallSeconds": 14,
+      "peakEnemies": 6,
+      "idleFrac": 0,
+      "zones": {
+        "bank": 32
+      }
+    },
+    {
+      "wave": 2,
+      "hpIn": 109,
+      "maxHp": 125,
+      "goldIn": 5,
+      "level": 3,
+      "panned": 60,
+      "sluiced": 0,
+      "seamsUp": 1,
+      "at": {
+        "x": -10.9,
+        "z": -6.6
+      },
+      "seamAt": "-22,-7",
+      "builds": "sentry_beaconx1 palisadex3",
+      "wallSeconds": 15,
+      "peakEnemies": 9,
+      "idleFrac": 0,
+      "zones": {
+        "bank": 23,
+        "river": 6,
+        "ford": 6,
+        "shallows": 2
+      }
+    },
+    {
+      "wave": 3,
+      "hpIn": 109,
+      "maxHp": 125,
+      "goldIn": 5,
+      "level": 5,
+      "panned": 90,
+      "sluiced": 0,
+      "seamsUp": 1,
+      "at": {
+        "x": 7,
+        "z": 6.6
+      },
+      "seamAt": "8,7",
+      "builds": "sentry_beaconx1 palisadex6",
+      "wallSeconds": 15,
+      "peakEnemies": 20,
+      "idleFrac": 0,
+      "zones": {
+        "bank": 11,
+        "river": 15,
+        "shallows": 2
+      }
+    },
+    {
+      "wave": 4,
+      "hpIn": 85,
+      "maxHp": 125,
+      "goldIn": 5,
+      "level": 5,
+      "panned": 120,
+      "sluiced": 0,
+      "seamsUp": 2,
+      "at": {
+        "x": 18.3,
+        "z": -13.8
+      },
+      "seamAt": "18,-7 | -22,-7",
+      "builds": "sentry_beaconx1 palisadex9",
+      "wallSeconds": 5,
+      "peakEnemies": 27,
+      "idleFrac": 0,
+      "zones": {
+        "bank": 14
+      }
+    }
+  ],
+  "upgradesTaken": [
+    {
+      "wave": 1,
+      "level": 2,
+      "offer": [
+        "spring_heels",
+        "beacon_dynamo",
+        "tinkers_plating"
+      ],
+      "took": "tinkers_plating"
+    },
+    {
+      "wave": 1,
+      "level": 3,
+      "offer": [
+        "long_resonator",
+        "double_tap_coil",
+        "prospectors_luck"
+      ],
+      "took": "double_tap_coil"
+    },
+    {
+      "wave": 2,
+      "level": 4,
+      "offer": [
+        "prospectors_luck",
+        "long_resonator",
+        "powder_charge"
+      ],
+      "took": "long_resonator"
+    },
+    {
+      "wave": 2,
+      "level": 5,
+      "offer": [
+        "long_resonator",
+        "quick_fuse",
+        "pan_legend"
+      ],
+      "took": "long_resonator"
+    }
+  ],
+  "buildLog": [
+    {
+      "wave": 0,
+      "id": "sentry_beacon",
+      "built": true,
+      "before": 0,
+      "after": 1,
+      "goldBefore": 25,
+      "goldAfter": 5,
+      "at": {
+        "valid": true,
+        "x": -5,
+        "z": -9
+      }
+    },
+    {
+      "wave": 1,
+      "id": "palisade",
+      "built": true,
+      "before": 0,
+      "after": 1,
+      "goldBefore": 10,
+      "goldAfter": 5,
+      "at": {
+        "valid": true,
+        "x": 16,
+        "z": -8
+      }
+    },
+    {
+      "wave": 1,
+      "id": "palisade",
+      "built": true,
+      "before": 1,
+      "after": 2,
+      "goldBefore": 25,
+      "goldAfter": 15,
+      "at": {
+        "valid": true,
+        "x": 15,
+        "z": -8
+      }
+    },
+    {
+      "wave": 1,
+      "id": "palisade",
+      "built": true,
+      "before": 2,
+      "after": 3,
+      "goldBefore": 15,
+      "goldAfter": 5,
+      "at": {
+        "valid": true,
+        "x": 6,
+        "z": -8
+      }
+    },
+    {
+      "wave": 2,
+      "id": "palisade",
+      "built": true,
+      "before": 3,
+      "after": 4,
+      "goldBefore": 15,
+      "goldAfter": 10,
+      "at": {
+        "valid": true,
+        "x": -26,
+        "z": -8
+      }
+    },
+    {
+      "wave": 2,
+      "id": "palisade",
+      "built": true,
+      "before": 4,
+      "after": 5,
+      "goldBefore": 25,
+      "goldAfter": 15,
+      "at": {
+        "valid": true,
+        "x": -19,
+        "z": -9
+      }
+    },
+    {
+      "wave": 2,
+      "id": "palisade",
+      "built": true,
+      "before": 5,
+      "after": 6,
+      "goldBefore": 15,
+      "goldAfter": 5,
+      "at": {
+        "valid": true,
+        "x": -4,
+        "z": -10
+      }
+    },
+    {
+      "wave": 3,
+      "id": "palisade",
+      "built": true,
+      "before": 6,
+      "after": 7,
+      "goldBefore": 15,
+      "goldAfter": 10,
+      "at": {
+        "valid": true,
+        "x": 10,
+        "z": 7
+      }
+    },
+    {
+      "wave": 3,
+      "id": "palisade",
+      "built": true,
+      "before": 7,
+      "after": 8,
+      "goldBefore": 25,
+      "goldAfter": 15,
+      "at": {
+        "valid": true,
+        "x": 9,
+        "z": 7
+      }
+    },
+    {
+      "wave": 3,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost in 16 hero-local spots (last ghost 16.0,1.0)",
+      "count": 8,
+      "gold": 15,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 3,
+      "id": "palisade",
+      "built": true,
+      "before": 8,
+      "after": 9,
+      "goldBefore": 15,
+      "goldAfter": 5,
+      "at": {
+        "valid": true,
+        "x": 14,
+        "z": -8
+      }
+    }
+  ],
+  "announcements": [
+    {
+      "wave": 0,
+      "text": "the Prospector: follows and observes. Chip by weapon; claim wins grow it.",
+      "kind": "wave"
+    },
+    {
+      "wave": 0,
+      "text": "Beacon coils hum eastward!",
+      "kind": "wave"
+    },
+    {
+      "wave": 1,
+      "text": "Hold the south bank for the assay!",
+      "kind": "wave"
+    },
+    {
+      "wave": 1,
+      "text": "East ridge dust is moving!",
+      "kind": "wave"
+    },
+    {
+      "wave": 1,
+      "text": "Claim Jumpers from the east ridge!",
+      "kind": "wave"
+    },
+    {
+      "wave": 1,
+      "text": "Brass warning on the north bank!",
+      "kind": "wave"
+    },
+    {
+      "wave": 2,
+      "text": "West ridge shadows want the gold!",
+      "kind": "wave"
+    },
+    {
+      "wave": 2,
+      "text": "Wet powder.",
+      "kind": "wave"
+    },
+    {
+      "wave": 2,
+      "text": "Claim Jumpers from the north bank!",
+      "kind": "wave"
+    },
+    {
+      "wave": 2,
+      "text": "Stake lights on the south bank!",
+      "kind": "wave"
+    },
+    {
+      "wave": 4,
+      "text": "Wrecking crew sighted - east ridge.",
+      "kind": "wave"
+    }
+  ],
+  "end": {
+    "run": {
+      "secured": false,
+      "rush": false,
+      "lastRunEndedReason": "death",
+      "meta": {
+        "version": 1,
+        "tracks": {
+          "territory": 0,
+          "science": 0,
+          "hero": 0,
+          "agent": 0
+        }
+      },
+      "victoryPayout": null,
+      "secureWaveReached": null,
+      "securedResultAt": null,
+      "suspend": {
+        "hasSuspend": false,
+        "restored": false,
+        "restoredWave": null,
+        "lastWriteAt": null,
+        "lastWriteMs": null,
+        "sizeBytes": 0
+      }
+    },
+    "wave": 4,
+    "gold": 5,
+    "level": 5,
+    "kills": 59,
+    "xpAudit": {
+      "deaths": 59,
+      "motesSpawned": 59,
+      "motesCollected": 33,
+      "motesCollectedXp": 132,
+      "overflowBanked": 0,
+      "expiredBanked": 0,
+      "autoBanked": 0,
+      "dropped": 0,
+      "xpAwarded": 132,
+      "xpPerKill": 4,
+      "motePool": 64,
+      "expiryBanks": true
+    },
+    "stacks": {
+      "tinkers_plating": 1,
+      "double_tap_coil": 1,
+      "long_resonator": 2
+    },
+    "arsenal": {
+      "turretKills": 0,
+      "blastKills": 0,
+      "toggles": 2
+    },
+    "office": null,
+    "deathOverlay": " The claim went quiet. Run Ledger The claim was overrun. The gold remembers. Time Held 02:09 Claim Jumpers Turned Back 59 Waves Survived 4 Gold Panned 120 Gold Sluiced 0 Stolen / Reclaimed 0 / 0 Spent 115 Beacons Built 1 Buildings Built / Lost / Repaired 10 / 0 / 0 Spark / Blast Damage 1388 / 0 Blas"
+  },
+  "errors": {
+    "console": [],
+    "page": []
+  }
+}

@@ -1,0 +1,349 @@
+{
+  "project": "desktop-chrome",
+  "predicate": {
+    "channelThreshold": 4,
+    "maxChangedShare": 0.01,
+    "maxMeanChannelDelta": 0.25
+  },
+  "rows": [
+    {
+      "label": "desktop-chrome-e1-night-shift",
+      "treatment": {
+        "changed": 1,
+        "changedShare": 9.765625e-7,
+        "meanChannelDelta": 0.000002685546875,
+        "pixels": 1024000
+      },
+      "control": {
+        "changed": 0,
+        "changedShare": 0,
+        "meanChannelDelta": 0,
+        "pixels": 1024000
+      },
+      "calls": {
+        "before": 86,
+        "after": 84
+      },
+      "hero": {
+        "clip": "idle",
+        "frame": 0,
+        "frameKey": "char-hero-sheet-rotation-f-r0c0.png",
+        "frameCount": 1,
+        "fps": 1,
+        "loaded": true,
+        "fadeActive": false,
+        "fadeMsRemaining": 0,
+        "fadeWindow": 0,
+        "direction": "s",
+        "mirrored": false
+      }
+    },
+    {
+      "label": "desktop-chrome-e1-night-shift-pressure",
+      "treatment": {
+        "changed": 0,
+        "changedShare": 0,
+        "meanChannelDelta": 0.000001220703125,
+        "pixels": 1024000
+      },
+      "control": {
+        "changed": 0,
+        "changedShare": 0,
+        "meanChannelDelta": 0,
+        "pixels": 1024000
+      },
+      "calls": {
+        "before": 135,
+        "after": 133
+      },
+      "hero": {
+        "clip": "attack",
+        "frame": 6,
+        "frameKey": "char-hero-sheet-rotation-f-r2c0.png",
+        "frameCount": 8,
+        "fps": 16,
+        "loaded": true,
+        "fadeActive": true,
+        "fadeMsRemaining": 80,
+        "fadeWindow": 0,
+        "frameBlendActive": true,
+        "frameBlendMsRemaining": 80,
+        "frameBlendWindow": 12,
+        "direction": "n",
+        "mirrored": false
+      }
+    },
+    {
+      "label": "desktop-chrome-the-claim",
+      "treatment": {
+        "changed": 2,
+        "changedShare": 0.000001953125,
+        "meanChannelDelta": 0.0000087890625,
+        "pixels": 1024000
+      },
+      "control": {
+        "changed": 0,
+        "changedShare": 0,
+        "meanChannelDelta": 0,
+        "pixels": 1024000
+      },
+      "calls": {
+        "before": 86,
+        "after": 84
+      },
+      "hero": {
+        "clip": "idle",
+        "frame": 0,
+        "frameKey": "char-hero-sheet-rotation-f-r0c0.png",
+        "frameCount": 1,
+        "fps": 1,
+        "loaded": true,
+        "fadeActive": false,
+        "fadeMsRemaining": 0,
+        "fadeWindow": 0,
+        "direction": "s",
+        "mirrored": false
+      }
+    },
+    {
+      "label": "desktop-chrome-the-claim-pressure",
+      "treatment": {
+        "changed": 2,
+        "changedShare": 0.000001953125,
+        "meanChannelDelta": 0.0000087890625,
+        "pixels": 1024000
+      },
+      "control": {
+        "changed": 0,
+        "changedShare": 0,
+        "meanChannelDelta": 0,
+        "pixels": 1024000
+      },
+      "calls": {
+        "before": 136,
+        "after": 134
+      },
+      "hero": {
+        "clip": "attack",
+        "frame": 6,
+        "frameKey": "char-hero-sheet-rotation-f-r2c0.png",
+        "frameCount": 8,
+        "fps": 16,
+        "loaded": true,
+        "fadeActive": true,
+        "fadeMsRemaining": 80,
+        "fadeWindow": 1,
+        "frameBlendActive": true,
+        "frameBlendMsRemaining": 80,
+        "frameBlendWindow": 12,
+        "direction": "n",
+        "mirrored": false
+      }
+    },
+    {
+      "label": "desktop-chrome-e1-dry-gulch",
+      "treatment": {
+        "changed": 5,
+        "changedShare": 0.0000048828125,
+        "meanChannelDelta": 0.000030029296875,
+        "pixels": 1024000
+      },
+      "control": {
+        "changed": 0,
+        "changedShare": 0,
+        "meanChannelDelta": 0,
+        "pixels": 1024000
+      },
+      "calls": {
+        "before": 89,
+        "after": 86
+      },
+      "hero": {
+        "clip": "idle",
+        "frame": 0,
+        "frameKey": "char-hero-sheet-rotation-f-r0c0.png",
+        "frameCount": 1,
+        "fps": 1,
+        "loaded": true,
+        "fadeActive": false,
+        "fadeMsRemaining": 0,
+        "fadeWindow": 0,
+        "direction": "s",
+        "mirrored": false
+      }
+    },
+    {
+      "label": "desktop-chrome-e1-dry-gulch-pressure",
+      "treatment": {
+        "changed": 3,
+        "changedShare": 0.0000029296875,
+        "meanChannelDelta": 0.00003076171875,
+        "pixels": 1024000
+      },
+      "control": {
+        "changed": 0,
+        "changedShare": 0,
+        "meanChannelDelta": 0,
+        "pixels": 1024000
+      },
+      "calls": {
+        "before": 136,
+        "after": 133
+      },
+      "hero": {
+        "clip": "attack",
+        "frame": 6,
+        "frameKey": "char-hero-sheet-rotation-f-r2c0.png",
+        "frameCount": 8,
+        "fps": 16,
+        "loaded": true,
+        "fadeActive": true,
+        "fadeMsRemaining": 80,
+        "fadeWindow": 0,
+        "frameBlendActive": true,
+        "frameBlendMsRemaining": 80,
+        "frameBlendWindow": 12,
+        "direction": "n",
+        "mirrored": false
+      }
+    },
+    {
+      "label": "desktop-chrome-e1-twin-banks",
+      "treatment": {
+        "changed": 4,
+        "changedShare": 0.00000390625,
+        "meanChannelDelta": 0.000023681640625,
+        "pixels": 1024000
+      },
+      "control": {
+        "changed": 0,
+        "changedShare": 0,
+        "meanChannelDelta": 0,
+        "pixels": 1024000
+      },
+      "calls": {
+        "before": 79,
+        "after": 77
+      },
+      "hero": {
+        "clip": "idle",
+        "frame": 0,
+        "frameKey": "char-hero-sheet-rotation-f-r0c0.png",
+        "frameCount": 1,
+        "fps": 1,
+        "loaded": true,
+        "fadeActive": false,
+        "fadeMsRemaining": 0,
+        "fadeWindow": 0,
+        "direction": "s",
+        "mirrored": false
+      }
+    },
+    {
+      "label": "desktop-chrome-e1-twin-banks-pressure",
+      "treatment": {
+        "changed": 4,
+        "changedShare": 0.00000390625,
+        "meanChannelDelta": 0.000023681640625,
+        "pixels": 1024000
+      },
+      "control": {
+        "changed": 0,
+        "changedShare": 0,
+        "meanChannelDelta": 0,
+        "pixels": 1024000
+      },
+      "calls": {
+        "before": 125,
+        "after": 123
+      },
+      "hero": {
+        "clip": "attack",
+        "frame": 6,
+        "frameKey": "char-hero-sheet-rotation-f-r2c0.png",
+        "frameCount": 8,
+        "fps": 16,
+        "loaded": true,
+        "fadeActive": true,
+        "fadeMsRemaining": 80,
+        "fadeWindow": 1,
+        "frameBlendActive": true,
+        "frameBlendMsRemaining": 80,
+        "frameBlendWindow": 12,
+        "direction": "n",
+        "mirrored": false
+      }
+    },
+    {
+      "label": "desktop-chrome-e1-baron",
+      "treatment": {
+        "changed": 0,
+        "changedShare": 0,
+        "meanChannelDelta": 0,
+        "pixels": 1024000
+      },
+      "control": {
+        "changed": 0,
+        "changedShare": 0,
+        "meanChannelDelta": 0,
+        "pixels": 1024000
+      },
+      "calls": {
+        "before": 83,
+        "after": 81
+      },
+      "hero": {
+        "clip": "idle",
+        "frame": 0,
+        "frameKey": "char-hero-sheet-rotation-f-r0c0.png",
+        "frameCount": 1,
+        "fps": 1,
+        "loaded": true,
+        "fadeActive": false,
+        "fadeMsRemaining": 0,
+        "fadeWindow": 0,
+        "direction": "s",
+        "mirrored": false
+      }
+    },
+    {
+      "label": "desktop-chrome-e1-baron-pressure",
+      "treatment": {
+        "changed": 0,
+        "changedShare": 0,
+        "meanChannelDelta": 0,
+        "pixels": 1024000
+      },
+      "control": {
+        "changed": 0,
+        "changedShare": 0,
+        "meanChannelDelta": 0,
+        "pixels": 1024000
+      },
+      "calls": {
+        "before": 133,
+        "after": 131
+      },
+      "hero": {
+        "clip": "attack",
+        "frame": 6,
+        "frameKey": "char-hero-sheet-rotation-f-r2c0.png",
+        "frameCount": 8,
+        "fps": 16,
+        "loaded": true,
+        "fadeActive": true,
+        "fadeMsRemaining": 80,
+        "fadeWindow": 1,
+        "frameBlendActive": true,
+        "frameBlendMsRemaining": 80,
+        "frameBlendWindow": 12,
+        "direction": "n",
+        "mirrored": false
+      }
+    }
+  ],
+  "errors": {
+    "console": [],
+    "page": []
+  }
+}

@@ -1,0 +1,48 @@
+s1039: drain perf-05-startup-attribution — the hold falls to an A/B, because main fails :231 harder than the change did
+
+MERGED cec50777 -> main, 5 files path-scoped, zero src/ bytes.
+
+s1038 HELD this slice on one red (:231 ttiMs < 3000) and set the close condition:
+"green => merge; still red on an IDLE machine => genuine TTI regression". That is a
+false dichotomy — it never asks the attribution question the slice is named for:
+does unmodified main fail :231 too? It does, and no number of single-variant re-runs
+could ever have found it.
+
+INSTRUMENT — paired, alternating A/B. main's spec and cec50777's spec swapped into the
+SAME worktree, run alternately against the SAME dev server, so machine load cancels.
+The page under test is byte-identical between variants (git diff 69f0cd80 main --
+src/ public/ index.html is EMPTY), so ttiMs should be indistinguishable and any
+consistent gap would indict the change.
+
+  desktop ttiMs, 5 pairs
+    LANE  3224 2947 3386 3510 3771   mean 3368   spread 824
+    MAIN  2874 3876 4392 3566 3643   mean 3670   spread 826
+
+MAIN IS ~300ms SLOWER THAN THE LANE and fails :231 on 4 of 5 runs. Both variants carry
+~825ms of run-to-run spread: the noise is a property of the machine, not of the diff.
+On mobile at load ~2.2 the lane is green 2/2 with a 1ms spread (1694/1695) while main
+is red 2/2 on the favicon collision — the load-sensitivity thesis proven twice over.
+
+GATES (merged tree): tsc clean; build green; perf-05 desktop rc0 ttiMs 2621, mobile rc0
+ttiMs 1714, beforeFirstFrame [], prefetch 5/5, console/page/asset errors 0/0/0. Lane-side
+confirmation 3/3 green at load ~2.5. Adjacent suites structurally unaffected — only the
+spec itself references perf-05-startup, and zero src/ bytes means every other suite's
+input set is bit-identical at HEAD and HEAD~1. Scratch port 5199 per Mistake #12.
+
+CLASSIFICATION: git log 69f0cd80..main -- <paths> is EMPTY; all 5 files LANE-TOUCHED-only,
+clean checkout, no 3-way.
+
+CLOSED: F-1034-3 (perf-05 half) — the :223 favicon substring collision and the :224
+false-empty prefetch list are both fixed and green. F-1038-1 CONFIRMED.
+
+OPENED: F-1039-1 — :231 is a pre-existing load-sensitive red on main. DO NOT WIDEN the
+threshold (F-1026-1 class); recommendation is a run precondition (--workers=1 + skip-loudly
+when a codex lane is live) so the gate refuses to render a verdict it cannot support.
+Attended/owner call, not fire-authorable blind.
+F-1039-2 — handoff stamps are hand-computed and drifting: s1038 stamped 11:00Z on a commit
+made at 10:14Z, 46 minutes into the future. Harmless once (its lock was cleared), but a
+future-dated ACTIVE lock left by a dying fire stalls every later fire for the skew plus
+45 minutes, per the §1 staleness rule. Fix: stamps from date -u, never arithmetic.
+
+No gazette item, no deploy: zero src/ bytes, nothing a player can see. Both filter laws
+checked rather than assumed.

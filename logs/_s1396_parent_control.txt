@@ -1,0 +1,128 @@
+
+Running 34 tests using 1 worker
+
+  ✓   1 [desktop-chrome] › e2e/072-era-activation.spec.ts:226:1 › fresh E1 profile stays unchanged and the pre-flip determinism hash is identical (2.0s)
+  ✓   2 [desktop-chrome] › e2e/072-era-activation.spec.ts:259:1 › the ready mill waits for the Baron (owner ruling 2026-07-12) (3.2s)
+  ✓   3 [desktop-chrome] › e2e/072-era-activation.spec.ts:270:1 › the completed Stamp Mill activates E2 once, stages the ceremony, and makes Hill Mine playable after reload (13.0s)
+  ✓   4 [desktop-chrome] › e2e/072-era-activation.spec.ts:354:1 › the E2 ceremony can be skipped without undoing activation (3.8s)
+  ✓   5 [desktop-chrome] › e2e/072-era-activation.spec.ts:369:1 › the Stamp Mill site raises E2 once and removes the action after activation (3.9s)
+  ✓   6 [desktop-chrome] › e2e/cp01-charter-roundtrip.spec.ts:27:3 › CP-01 round-trip gate › the epoch ships the five expected fixtures (0ms)
+  ✓   7 [desktop-chrome] › e2e/cp01-charter-roundtrip.spec.ts:38:5 › CP-01 round-trip gate › round-trip: the-claim (2ms)
+  ✓   8 [desktop-chrome] › e2e/cp01-charter-roundtrip.spec.ts:38:5 › CP-01 round-trip gate › round-trip: e1-dry-gulch (2ms)
+  ✓   9 [desktop-chrome] › e2e/cp01-charter-roundtrip.spec.ts:38:5 › CP-01 round-trip gate › round-trip: e1-night-shift (2ms)
+  ✓  10 [desktop-chrome] › e2e/cp01-charter-roundtrip.spec.ts:38:5 › CP-01 round-trip gate › round-trip: e1-twin-banks (1ms)
+  ✓  11 [desktop-chrome] › e2e/cp01-charter-roundtrip.spec.ts:38:5 › CP-01 round-trip gate › round-trip: e1-baron (1ms)
+  ✓  12 [desktop-chrome] › e2e/cp01-charter-roundtrip.spec.ts:60:3 › CP-01 round-trip gate › the envelope stays outside the contract format (1ms)
+  ✓  13 [desktop-chrome] › e2e/cp01-charter-roundtrip.spec.ts:76:3 › CP-01 round-trip gate › editing the charter contract does not disturb the source contract (0ms)
+  ✓  14 [desktop-chrome] › e2e/cp01-charter-roundtrip.spec.ts:85:3 › CP-01 round-trip gate › a damaged shelf record is rejected with prose reasons (2ms)
+  ✘  15 [desktop-chrome] › e2e/cp03-press-loop.spec.ts:25:1 › the Press loop: edit, stamp, shelve, launch a real run, and return (52.0s)
+  ✓  16 [desktop-chrome] › e2e/cp03-press-loop.spec.ts:99:1 › a plain boot never sees the Press and writes nothing (612ms)
+  ✓  17 [desktop-chrome] › e2e/cp03-press-loop.spec.ts:113:1 › a staged charter entry without a Press launch never reaches a run (3.2s)
+  -  18 [mobile-chrome] › e2e/072-era-activation.spec.ts:226:1 › fresh E1 profile stays unchanged and the pre-flip determinism hash is identical
+  ✓  19 [mobile-chrome] › e2e/072-era-activation.spec.ts:259:1 › the ready mill waits for the Baron (owner ruling 2026-07-12) (3.2s)
+  ✓  20 [mobile-chrome] › e2e/072-era-activation.spec.ts:270:1 › the completed Stamp Mill activates E2 once, stages the ceremony, and makes Hill Mine playable after reload (14.8s)
+  ✓  21 [mobile-chrome] › e2e/072-era-activation.spec.ts:354:1 › the E2 ceremony can be skipped without undoing activation (3.9s)
+  ✓  22 [mobile-chrome] › e2e/072-era-activation.spec.ts:369:1 › the Stamp Mill site raises E2 once and removes the action after activation (4.2s)
+  ✓  23 [mobile-chrome] › e2e/cp01-charter-roundtrip.spec.ts:27:3 › CP-01 round-trip gate › the epoch ships the five expected fixtures (0ms)
+  ✓  24 [mobile-chrome] › e2e/cp01-charter-roundtrip.spec.ts:38:5 › CP-01 round-trip gate › round-trip: the-claim (2ms)
+  ✓  25 [mobile-chrome] › e2e/cp01-charter-roundtrip.spec.ts:38:5 › CP-01 round-trip gate › round-trip: e1-dry-gulch (1ms)
+  ✓  26 [mobile-chrome] › e2e/cp01-charter-roundtrip.spec.ts:38:5 › CP-01 round-trip gate › round-trip: e1-night-shift (2ms)
+  ✓  27 [mobile-chrome] › e2e/cp01-charter-roundtrip.spec.ts:38:5 › CP-01 round-trip gate › round-trip: e1-twin-banks (1ms)
+  ✓  28 [mobile-chrome] › e2e/cp01-charter-roundtrip.spec.ts:38:5 › CP-01 round-trip gate › round-trip: e1-baron (1ms)
+  ✓  29 [mobile-chrome] › e2e/cp01-charter-roundtrip.spec.ts:60:3 › CP-01 round-trip gate › the envelope stays outside the contract format (1ms)
+  ✓  30 [mobile-chrome] › e2e/cp01-charter-roundtrip.spec.ts:76:3 › CP-01 round-trip gate › editing the charter contract does not disturb the source contract (0ms)
+  ✓  31 [mobile-chrome] › e2e/cp01-charter-roundtrip.spec.ts:85:3 › CP-01 round-trip gate › a damaged shelf record is rejected with prose reasons (2ms)
+  ✘  32 [mobile-chrome] › e2e/cp03-press-loop.spec.ts:25:1 › the Press loop: edit, stamp, shelve, launch a real run, and return (48.6s)
+  ✓  33 [mobile-chrome] › e2e/cp03-press-loop.spec.ts:99:1 › a plain boot never sees the Press and writes nothing (826ms)
+  ✓  34 [mobile-chrome] › e2e/cp03-press-loop.spec.ts:113:1 › a staged charter entry without a Press launch never reaches a run (2.4s)
+
+
+  1) [desktop-chrome] › e2e/cp03-press-loop.spec.ts:25:1 › the Press loop: edit, stamp, shelve, launch a real run, and return 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  getByTestId('contract-briefing-name')
+    Expected: "Twin Banks, Re-pressed"
+    Received: "The Claim"
+    Timeout:  30000ms
+
+    Call log:
+      - Expect "toHaveText" with timeout 30000ms
+      - waiting for getByTestId('contract-briefing-name')
+        59 × locator resolved to <h2 data-testid="contract-briefing-name">The Claim</h2>
+           - unexpected value "The Claim"
+
+
+      62 |   await page.getByTestId('press-launch-0').click();
+      63 |   await page.waitForURL((url) => url.searchParams.get('contract') === 'e1-twin-banks' && !url.searchParams.has('editor'));
+    > 64 |   await expect(page.getByTestId('contract-briefing-name')).toHaveText(CHARTER_NAME, { timeout: 30_000 });
+         |                                                            ^
+      65 |   await page.screenshot({ path: path.join(SHOT_DIR, `charter-run-briefing-${testInfo.project.name}.png`) });
+      66 |   await page.getByTestId('contract-briefing-dismiss').click();
+      67 |   await page.waitForTimeout(1_000);
+        at /Users/robin/Claude/Projects/Gold Rush/probe-s1396/e2e/cp03-press-loop.spec.ts:64:60
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/cp03-press-loop-the-Press--fb91e-aunch-a-real-run-and-return-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/cp03-press-loop-the-Press--fb91e-aunch-a-real-run-and-return-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/cp03-press-loop-the-Press--fb91e-aunch-a-real-run-and-return-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/cp03-press-loop-the-Press--fb91e-aunch-a-real-run-and-return-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [mobile-chrome] › e2e/cp03-press-loop.spec.ts:25:1 › the Press loop: edit, stamp, shelve, launch a real run, and return 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  getByTestId('contract-briefing-name')
+    Expected: "Twin Banks, Re-pressed"
+    Received: "The Claim"
+    Timeout:  30000ms
+
+    Call log:
+      - Expect "toHaveText" with timeout 30000ms
+      - waiting for getByTestId('contract-briefing-name')
+        60 × locator resolved to <h2 data-testid="contract-briefing-name">The Claim</h2>
+           - unexpected value "The Claim"
+
+
+      62 |   await page.getByTestId('press-launch-0').click();
+      63 |   await page.waitForURL((url) => url.searchParams.get('contract') === 'e1-twin-banks' && !url.searchParams.has('editor'));
+    > 64 |   await expect(page.getByTestId('contract-briefing-name')).toHaveText(CHARTER_NAME, { timeout: 30_000 });
+         |                                                            ^
+      65 |   await page.screenshot({ path: path.join(SHOT_DIR, `charter-run-briefing-${testInfo.project.name}.png`) });
+      66 |   await page.getByTestId('contract-briefing-dismiss').click();
+      67 |   await page.waitForTimeout(1_000);
+        at /Users/robin/Claude/Projects/Gold Rush/probe-s1396/e2e/cp03-press-loop.spec.ts:64:60
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/cp03-press-loop-the-Press--fb91e-aunch-a-real-run-and-return-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/cp03-press-loop-the-Press--fb91e-aunch-a-real-run-and-return-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/cp03-press-loop-the-Press--fb91e-aunch-a-real-run-and-return-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/cp03-press-loop-the-Press--fb91e-aunch-a-real-run-and-return-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [desktop-chrome] › e2e/cp03-press-loop.spec.ts:25:1 › the Press loop: edit, stamp, shelve, launch a real run, and return 
+    [mobile-chrome] › e2e/cp03-press-loop.spec.ts:25:1 › the Press loop: edit, stamp, shelve, launch a real run, and return 
+  1 skipped
+  31 passed (3.2m)
+(node:24464) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:24534) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:27036) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)

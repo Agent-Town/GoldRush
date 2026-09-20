@@ -1,0 +1,42 @@
+fix: collection guards capture Playwright --list via file-backed spawn, not spawnSync (F-1202-1 cured)
+
+Both collection guards captured `playwright test --list` with spawnSync, which
+silently returns TRUNCATED stdout while reporting status 0 — the node-guards
+battery had gone 0/6 red to 4/11 red on a race that reports success.
+
+The shipped cure is stronger than the master's: the child's stdout/stderr are
+redirected to file descriptors under mkdtemp, so there is NO PIPE TO RACE rather
+than a pipe that races less. The implementing run measured the master's own
+prototyped `execFile` cure STILL TRUNCATING under current load and replaced it
+(F-1205-1) — an earlier fire's 0/8 was undersampled, not wrong: execFile still
+reads through a pipe. The { status, stdout, stderr } shape is preserved, so the
+tail() diagnostic and all three original assertions — including both
+/Total: [1-9]\d* tests/ regexes, which are forbidden to touch per F-1201-1 —
+survive byte-unchanged. Each guard gains one completeness assertion whose
+failure message names truncation in words.
+
+Gates on the merged tree (s1205): tsc clean · build green 1.58s ·
+test:node-guards 9 batteries 0 red — 5 quiet (15.2/16.9/16.7/17.8/18.5s),
+1 with counts read in full (tests 74 · pass 74 · fail 0), and 3 UNDER
+CONCURRENT BUILD LOAD (18.4/18.5/18.9s), because a load-dependent race that
+passes on an idle machine has not been tested · root-invariance green from
+scripts/ AND from a tmpdir outside the repo entirely · run-guards --only
+test:node-guards PASS rc=0 · mutation m1 re-run by the drain (not inherited):
+slicing stdout to 150,000 chars fails with "stdout capture is truncated: Total
+summary is not the last non-empty line", subject restored byte-identical.
+
+Merge: base 98c62443 is an ancestor of main and `git log 98c62443..main` over
+both paths is EMPTY — main never moved either file, so both are LANE-TOUCHED-ONLY
+and the graft is a straight checkout, verified byte-exact against lane/perf tip
+641140f6 before and after the control.
+
+Zero src/ and zero e2e/ bytes, so no screenshots or boot probe are required —
+stated rather than silently omitted.
+
+Findings (all non-blocking, in reviews/collection-guards-spawnsync-truncation.md):
+F-1205-1 the runner rightly refuted the master's prototyped cure; F-1205-2 the
+new assertion is a DIAGNOSTIC discriminator, not new detection coverage — the
+old regex already failed on real truncation, it just misnamed the cause;
+F-1205-3 the anchored last-line form would redden benignly if Playwright ever
+prints after its Total summary (watch item); F-1205-4 battery wall-time is ~17s
+here vs the report's 5.9s, so the honest claim is "not slower", not "faster".

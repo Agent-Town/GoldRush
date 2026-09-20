@@ -1,0 +1,48 @@
+{
+  "kind": "locked-camera-tavern-old-b-vs-new-b-visual-telemetry",
+  "camera": "TS-04 locked Town camera at hero start",
+  "pair": {
+    "A": "artifacts/town-blender-v3/locked-camera-old-b-half-timber.png",
+    "B": "artifacts/town-blender-v3/locked-camera-new-b-frontier-saloon.png"
+  },
+  "fullFrame": {
+    "label": "full frame",
+    "dimensions": {
+      "width": 1280,
+      "height": 800
+    },
+    "visualDistance": 0.006,
+    "note": "Distance locates change; it is not an acceptance score.",
+    "mae": 0.57141,
+    "rmse": 5.41615,
+    "diffRatio16": 0.00979,
+    "diffRatio32": 0.005,
+    "diffRatio64": 0.00202,
+    "avgLuminanceA": 168.89426,
+    "avgLuminanceB": 169.0523,
+    "edgeEnergyA": 5.89814,
+    "edgeEnergyB": 5.9147,
+    "edgeEnergyRatio": 1.00281,
+    "edgeDiffRatio32": 0.00826
+  },
+  "tavernCrop": {
+    "label": "identical 440x340 Tavern and townsfolk crop",
+    "dimensions": {
+      "width": 440,
+      "height": 340
+    },
+    "visualDistance": 0.02917,
+    "note": "Distance locates change; it is not an acceptance score.",
+    "mae": 2.76999,
+    "rmse": 10.92653,
+    "diffRatio16": 0.04972,
+    "diffRatio32": 0.02378,
+    "diffRatio64": 0.00725,
+    "avgLuminanceA": 139.88625,
+    "avgLuminanceB": 140.84516,
+    "edgeEnergyA": 9.28662,
+    "edgeEnergyB": 9.43808,
+    "edgeEnergyRatio": 1.01631,
+    "edgeDiffRatio32": 0.03938
+  }
+}

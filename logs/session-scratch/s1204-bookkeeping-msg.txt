@@ -1,0 +1,19 @@
+s1204: register gg-01 merged at d2fc1b06 (leaf + BACKLOG + GZ-01)
+
+Goal Registration Law: leaf gg-01-greenhorn-gazette-wiring flipped
+queued -> shipped with mergeHash d2fc1b061eb0f25547ab801f4b171e7dda7f9fb9,
+drainedBy s1204, review reviews/gazette-first-issue.md.
+goal-tracker 2/2, schema valid.
+
+BACKLOG carries the shipped record plus two findings:
+F-1204-1 (town-t2-naming.spec.ts:82 is deterministically red on clean main
+but missing from logs/suite-red-inventory.md — proved by a both-arms control,
+3/3 red on each, identical start-menu timeout before any Herald code runs;
+NOT a flake, 3/3 red in isolation under --repeat-each=3) and F-1204-2 (the
+F-1203-3 screenshot churn reproduces outside the town family; 6 unrelated
+tracked PNGs reverted, none committed).
+
+GZ-01: "The Herald Prints Issue No. 1" queued to marketing/outbox.
+
+Scratch kept per the RETENTION LAW: the clean-main control arm's saved
+copies (logs/session-scratch/s1204-graft/) and the commit-message sources.

@@ -1,0 +1,419 @@
+[
+  {
+    "contract": "the-claim",
+    "panorama": "the-claim-panorama",
+    "requests": [
+      "the-claim-terrain.glb",
+      "the-claim-panorama.glb",
+      "active_headframe.glb",
+      "maintained_claim_house.glb",
+      "working_camp.glb",
+      "claim_stake.glb",
+      "riparian_dressing_pack.glb"
+    ],
+    "landmarks": 5,
+    "grounded": [
+      {
+        "id": "active_headframe",
+        "delta": 0
+      },
+      {
+        "id": "maintained_claim_house",
+        "delta": 0
+      },
+      {
+        "id": "working_camp",
+        "delta": 0
+      }
+    ],
+    "water": [
+      {
+        "x": 0,
+        "z": 0,
+        "walkable": true,
+        "speedMul": 0.85,
+        "zone": "ford",
+        "waterSource": "river",
+        "waterDepth": 0.35,
+        "waterClass": "wade"
+      },
+      {
+        "x": 12,
+        "z": 0,
+        "walkable": true,
+        "speedMul": 0.55,
+        "zone": "river",
+        "waterSource": "river",
+        "waterDepth": 1.25,
+        "waterClass": "deep"
+      },
+      {
+        "x": 12,
+        "z": 5.5,
+        "walkable": true,
+        "speedMul": 0.8,
+        "zone": "shallows",
+        "waterSource": "river",
+        "waterDepth": 0.2,
+        "waterClass": "wade"
+      }
+    ],
+    "heights": [
+      1.4651145935058594,
+      1.6898043155670166,
+      0.7364298105239868,
+      0.8833067417144775,
+      0.3108261525630951
+    ]
+  },
+  {
+    "contract": "e1-dry-gulch",
+    "panorama": "dry-gulch-panorama",
+    "requests": [
+      "dry-gulch-terrain.glb",
+      "dry-gulch-panorama.glb",
+      "abandoned_farmhouse.glb",
+      "ruined_mining_operation.glb",
+      "cactus_thicket.glb",
+      "bison_skeleton.glb",
+      "isolated_spring.glb"
+    ],
+    "landmarks": 5,
+    "grounded": [
+      {
+        "id": "ruined_mining_operation",
+        "delta": 0
+      },
+      {
+        "id": "abandoned_farmhouse",
+        "delta": 0
+      },
+      {
+        "id": "cactus_thicket",
+        "delta": 0
+      }
+    ],
+    "water": [
+      {
+        "x": -18,
+        "z": -18,
+        "walkable": true,
+        "speedMul": 0.8,
+        "zone": "shallows",
+        "waterSource": "spring_pond",
+        "waterDepth": 0.2,
+        "waterClass": "wade"
+      },
+      {
+        "x": 0,
+        "z": 0,
+        "walkable": true,
+        "speedMul": 1,
+        "zone": "bank"
+      }
+    ],
+    "heights": [
+      0.5000975728034973,
+      1.4519250392913818,
+      0.31407487392425537,
+      0.788232684135437,
+      0.3227446377277374
+    ]
+  },
+  {
+    "contract": "e1-twin-banks",
+    "panorama": "twin-banks-panorama",
+    "requests": [
+      "twin-banks-terrain.glb",
+      "twin-banks-panorama.glb",
+      "north_bank_homestead.glb",
+      "south_bank_homestead.glb",
+      "north_bank_winch.glb",
+      "south_bank_winch.glb",
+      "floodplain_dressing_pack.glb"
+    ],
+    "landmarks": 5,
+    "grounded": [
+      {
+        "id": "north_bank_homestead",
+        "delta": 0
+      },
+      {
+        "id": "south_bank_homestead",
+        "delta": 0
+      },
+      {
+        "id": "north_bank_winch",
+        "delta": 0
+      }
+    ],
+    "water": [
+      {
+        "x": -16,
+        "z": 0,
+        "walkable": true,
+        "speedMul": 0.85,
+        "zone": "ford",
+        "waterSource": "river",
+        "waterDepth": 0.35,
+        "waterClass": "wade"
+      },
+      {
+        "x": 16,
+        "z": 0,
+        "walkable": true,
+        "speedMul": 0.85,
+        "zone": "ford",
+        "waterSource": "river",
+        "waterDepth": 0.35,
+        "waterClass": "wade"
+      },
+      {
+        "x": 0,
+        "z": 0,
+        "walkable": false,
+        "speedMul": 0,
+        "zone": "river",
+        "waterSource": "river",
+        "waterDepth": 1.25,
+        "waterClass": "deep"
+      }
+    ],
+    "heights": [
+      0.5960150957107544,
+      1.0379362106323242,
+      0.48452484607696533,
+      0.6357488632202148,
+      0.5515987873077393
+    ]
+  },
+  {
+    "contract": "e1-night-shift",
+    "panorama": "night-shift-panorama",
+    "requests": [
+      "night-shift-terrain.glb",
+      "night-shift-panorama.glb",
+      "seven_lantern_terraces.glb",
+      "lampworks_yard.glb",
+      "dark_rock_shoulders.glb",
+      "central_ford.glb",
+      "night_work_road.glb"
+    ],
+    "landmarks": 5,
+    "grounded": [
+      {
+        "id": "seven_lantern_terraces",
+        "delta": 0
+      },
+      {
+        "id": "lampworks_yard",
+        "delta": 0
+      },
+      {
+        "id": "dark_rock_shoulders",
+        "delta": 0
+      }
+    ],
+    "water": [
+      {
+        "x": 0,
+        "z": 0,
+        "walkable": true,
+        "speedMul": 0.85,
+        "zone": "ford",
+        "waterSource": "river",
+        "waterDepth": 0.35,
+        "waterClass": "wade"
+      },
+      {
+        "x": 12,
+        "z": 0,
+        "walkable": true,
+        "speedMul": 0.55,
+        "zone": "river",
+        "waterSource": "river",
+        "waterDepth": 1.25,
+        "waterClass": "deep"
+      }
+    ],
+    "heights": [
+      1.4272863864898682,
+      2.1631298065185547,
+      0.8105242848396301,
+      1.8855897188186646,
+      0.5163317918777466
+    ]
+  },
+  {
+    "contract": "e1-baron",
+    "panorama": "baron-panorama",
+    "requests": [
+      "baron-terrain.glb",
+      "baron-panorama.glb",
+      "fortified_far_bank.glb",
+      "seized_headframe.glb",
+      "rocket_cart.glb",
+      "siege_line.glb",
+      "oxblood_banners.glb"
+    ],
+    "landmarks": 5,
+    "grounded": [
+      {
+        "id": "fortified_far_bank",
+        "delta": 0
+      },
+      {
+        "id": "seized_headframe",
+        "delta": 0
+      },
+      {
+        "id": "rocket_cart",
+        "delta": 0
+      }
+    ],
+    "water": [
+      {
+        "x": 0,
+        "z": 0,
+        "walkable": true,
+        "speedMul": 0.85,
+        "zone": "ford",
+        "waterSource": "river",
+        "waterDepth": 0.35,
+        "waterClass": "wade"
+      },
+      {
+        "x": 12,
+        "z": 0,
+        "walkable": true,
+        "speedMul": 0.55,
+        "zone": "river",
+        "waterSource": "river",
+        "waterDepth": 1.25,
+        "waterClass": "deep"
+      }
+    ],
+    "heights": [
+      0.5306053757667542,
+      0.5894749164581299,
+      1.2975201606750488,
+      0.5723432898521423,
+      0.513093113899231
+    ]
+  },
+  {
+    "contract": "e2-hill-mine",
+    "panorama": "hill-mine-panorama",
+    "requests": [
+      "hill-mine-terrain.glb",
+      "hill-mine-panorama.glb",
+      "mine-mouth-and-ruined-headframe.glb",
+      "boiler-house-site.glb",
+      "flooded-gallery.glb",
+      "switchback-rail-kit.glb",
+      "tailings-and-scree-pack.glb"
+    ],
+    "landmarks": 5,
+    "grounded": [
+      {
+        "id": "mine-mouth-and-ruined-headframe",
+        "delta": 0
+      },
+      {
+        "id": "boiler-house-site",
+        "delta": 0
+      },
+      {
+        "id": "flooded-gallery",
+        "delta": 0
+      }
+    ],
+    "water": [
+      {
+        "x": 0,
+        "z": 0,
+        "walkable": true,
+        "speedMul": 0.8,
+        "zone": "ford",
+        "waterSource": "river",
+        "waterDepth": 0.35,
+        "waterClass": "wade"
+      },
+      {
+        "x": -12,
+        "z": 0,
+        "walkable": false,
+        "speedMul": 0,
+        "zone": "river",
+        "waterSource": "river",
+        "waterDepth": 1.25,
+        "waterClass": "deep"
+      }
+    ],
+    "heights": [
+      1.4884690443674724,
+      2.931238253911336,
+      -0.4084139135148792,
+      1.1090128024419157,
+      1.317937970161438
+    ]
+  },
+  {
+    "contract": "e2-trestle",
+    "panorama": "trestle-panorama",
+    "requests": [
+      "trestle-terrain.glb",
+      "trestle-panorama.glb",
+      "trestle-crossing.glb",
+      "south-boiler-site.glb",
+      "north-boiler-site.glb",
+      "south-approach-kit.glb",
+      "north-approach-kit.glb",
+      "mine-spur-kit.glb"
+    ],
+    "landmarks": 6,
+    "grounded": [
+      {
+        "id": "trestle-crossing",
+        "delta": 0
+      },
+      {
+        "id": "south-boiler-site",
+        "delta": 0
+      },
+      {
+        "id": "north-boiler-site",
+        "delta": 0
+      }
+    ],
+    "water": [
+      {
+        "x": 0,
+        "z": 0,
+        "walkable": true,
+        "speedMul": 0.8,
+        "zone": "ford",
+        "waterSource": "river",
+        "waterDepth": 0.3,
+        "waterClass": "wade"
+      },
+      {
+        "x": 12,
+        "z": 0,
+        "walkable": false,
+        "speedMul": 0,
+        "zone": "river",
+        "waterSource": "river",
+        "waterDepth": 1.25,
+        "waterClass": "deep"
+      }
+    ],
+    "heights": [
+      0.16138425966103875,
+      0.9018609523773196,
+      -0.005791051520241506,
+      0.844791928927104,
+      0.16049745678901672
+    ]
+  }
+]

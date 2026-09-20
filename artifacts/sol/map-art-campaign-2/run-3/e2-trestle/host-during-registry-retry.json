@@ -1,0 +1,31 @@
+{
+  "capturedAt": "2026-09-20T01:50:30.613675+00:00",
+  "commands": [
+    {
+      "command": [
+        "uptime"
+      ],
+      "exit": 0,
+      "stdout": "8:50  up 23 days, 16:50, 10 users, load averages: 37.80 38.90 25.97",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "sysctl",
+        "vm.swapusage"
+      ],
+      "exit": 0,
+      "stdout": "vm.swapusage: total = 7168.00M  used = 6205.69M  free = 962.31M  (encrypted)",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "memory_pressure",
+        "-Q"
+      ],
+      "exit": 0,
+      "stdout": "The system has 137438953472 (8388608 pages with a page size of 16384).\nSystem-wide memory free percentage: 86%",
+      "stderr": ""
+    }
+  ]
+}

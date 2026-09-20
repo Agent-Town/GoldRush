@@ -1,0 +1,86 @@
+{
+  "tag": "fire",
+  "instrument": "v3 (s1274, F-1269-2)",
+  "node": "v26.4.0",
+  "cores": 16,
+  "cpuModel": "Apple M4 Max",
+  "reps": [
+    {
+      "rep": 1,
+      "loadavgBefore": [
+        2.16,
+        4.34,
+        5.09
+      ],
+      "steps": {
+        "1": 3.98,
+        "2": 3.97,
+        "3": 4.28,
+        "6": 6.16,
+        "8": 7.32
+      },
+      "throughput": {
+        "1": 1,
+        "2": 2.01,
+        "3": 2.79,
+        "6": 3.88,
+        "8": 4.35
+      }
+    },
+    {
+      "rep": 2,
+      "loadavgBefore": [
+        3.97,
+        4.58,
+        5.15
+      ],
+      "steps": {
+        "1": 4.05,
+        "2": 4.05,
+        "3": 4.2,
+        "6": 5.9,
+        "8": 7.55
+      },
+      "throughput": {
+        "1": 1,
+        "2": 2,
+        "3": 2.89,
+        "6": 4.12,
+        "8": 4.29
+      }
+    }
+  ],
+  "widestArmObservation": {
+    "wall": 7.553509125,
+    "plan": {
+      "expectedArmSeconds": 7.55,
+      "sampleAtFraction": 0.5,
+      "topInvokedAtMs": 2775,
+      "predictedSampleFraction": 0.5
+    },
+    "sample": {
+      "idlePercent": 44.12,
+      "childCpuPercents": [
+        "63.5",
+        "63.4",
+        "63.4",
+        "63.4",
+        "63.4",
+        "63.4",
+        "63.4",
+        "63.3"
+      ],
+      "childRowsSeen": 8,
+      "topRaw": "Processes: 1409 total, 10 running, 1399 sleeping, 6479 threads \n2026/07/31 00:13:53\nLoad Avg: 4.59, 4.64, 5.15 \nCPU usage: 52.88% user, 2.99% sys, 44.12% idle \nSharedLibs: 1632M resident, 200M data, 287M linkedit.\nMemRegions: 0 total, 0B resident, 1050M private, 21G shared.\nPhysMem: 100G used (6046M wired, 19G compressor), 27G unused.\nVM: 600T vsize, 6144M framework vsize, 586736(0) swapins, 1397593(0) swapouts.\nNetworks: packets: 1573672437/8239G in, 1741093808/8440G out.\nDisks: 466095484/5735G read, 640657333/20T written.\n\nPID    COMMAND          %CPU\n39162  node             63.5\n39165  node             63.4\n39164  node             63.4\n39163  node             63.4\n39166  node             63.4\n39167  node             63.4\n39168  node             63.4\n39169  node             63.3",
+      "valid": true,
+      "verdict": "IN-ARM: 8 child row(s) observed, 8/8 still alive when top returned",
+      "timing": {
+        "topInvokedAtMs": 2779,
+        "topReturnedAtMs": 5075,
+        "topLatencyMs": 2296,
+        "childrenAliveAtTopInvoke": 8,
+        "childrenAliveAtTopReturn": 8
+      }
+    }
+  }
+}

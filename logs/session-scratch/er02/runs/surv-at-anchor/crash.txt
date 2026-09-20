@@ -1,0 +1,11 @@
+(node:84565) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+file:///Users/robin/Claude/Projects/gr-milk-steamworks-rehearsal/scripts/gr-sim.mjs:47
+      throw new Error(`gr-sim wave ceiling exceeded: contract=${options.contract} mode=${options.mode ?? 'default'} seed=${options.seed} wave=${turn.view.now.wave} ceiling=${waveCeiling}`);
+            ^
+
+Error: gr-sim wave ceiling exceeded: contract=e2-trestle mode=default seed=e2-trestle-01 wave=15 ceiling=14
+    at file:///Users/robin/Claude/Projects/gr-milk-steamworks-rehearsal/scripts/gr-sim.mjs:47:13
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+Node.js v26.4.0

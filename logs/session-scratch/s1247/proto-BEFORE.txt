@@ -1,0 +1,12 @@
+rc=0
+run-guards: 0 file(s) changed since HEAD
+  base gate: test:node-guards, test:power-budget, test:task-guards
+  (no path rule matched -- base gate only)
+
+PASS  rc=0  0s  test:node-guards
+PASS  rc=0  0s  test:power-budget
+PASS  rc=0  0s  test:task-guards
+
+guards: 3/3 passed
+
+--stderr--

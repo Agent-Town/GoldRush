@@ -1,0 +1,131 @@
+// s1263 MEASUREMENT PROBE — not a gate, not a guard. Deleted from e2e/ after the run;
+// the copy of record lives in logs/session-scratch/s1263/. It measures, at the final
+// welcome beat: (a) the cross-CDP observation window the shipped assertion actually uses,
+// and (b) the full in-page newsie trajectory, so any candidate frame-count window can be
+// evaluated offline instead of guessed. Basis: F-1262-4 / F-1262-5.
+import { writeFile, mkdir } from 'node:fs/promises';
+import path from 'node:path';
+import { expect, test, type Page } from '@playwright/test';
+import { townPlazaSlot } from '../src/town/townLayout';
+
+const OUT_DIR = path.resolve('logs/session-scratch/s1263');
+const BEATS = [
+  ['tavern-board', townPlazaSlot('tavern').approach],
+  ['the-works', townPlazaSlot('general_store').approach],
+  ['schoolhouse-chart', townPlazaSlot('schoolhouse').approach],
+] as const;
+
+test.describe.configure({ timeout: 120_000 });
+
+async function newsiePos(page: Page): Promise<{ x: number; z: number }> {
+  return page.evaluate(() => {
+    const actor = window.__GR_TOWN_DIAGNOSTICS__!.actors.find((a) => a.id === 'newsie')!;
+    return { x: actor.position.x, z: actor.position.z };
+  });
+}
+
+test('s1263 probe: newsie drift window at the final welcome beat', async ({ page }, testInfo) => {
+  test.setTimeout(120_000);
+  await page.addInitScript(() => {
+    localStorage.clear();
+    sessionStorage.clear();
+  });
+
+  await page.goto('/');
+  await page.getByTestId('profile-name-input').fill('Mina');
+  await page.getByTestId('profile-create').click();
+  await page.waitForFunction(() => (window.__GR_TOWN_DIAGNOSTICS__?.frame ?? 0) > 10);
+  await page.getByTestId('town-name-input').fill('Sunrise Bend');
+  await page.getByTestId('town-name-submit').click();
+  await expect(page.getByTestId('story-beat-card')).toHaveAttribute('data-beat-id', 'founding-welcome');
+  await page.mouse.click(6, 6);
+  await expect(page.getByTestId('town-bark-card')).toHaveAttribute('data-first-claim', 'true');
+  await page.keyboard.press('ArrowRight');
+
+  const welcome = page.locator('[data-welcome-phase]');
+  await expect(welcome).toHaveAttribute('data-welcome-phase', 'delivery', { timeout: 8_000 });
+  await page.getByTestId('town-welcome-take-paper').click();
+  await expect(page.getByTestId('gazette-first-issue')).toBeVisible();
+  await page.getByTestId('claim-herald-close').click();
+
+  let measurement: unknown = null;
+
+  for (const [index, [id, anchor]] of BEATS.entries()) {
+    await expect(welcome).toHaveAttribute('data-welcome-beat', id);
+    await page.evaluate(({ x, z }) => window.__GR_TOWN_DIAGNOSTICS__!.teleport(x, z), anchor);
+    await expect(welcome).toHaveAttribute('data-welcome-arrived', 'true');
+
+    if (index !== BEATS.length - 1) {
+      await page.getByTestId('town-welcome-next').click();
+      continue;
+    }
+
+    // ---- ARM A: the shipped assertion's own window (cross-CDP), instrumented but not asserted.
+    // ---- ARM B: an in-page rAF sampler installed BEFORE the click, so the window starts
+    //             where the behaviour does rather than after a round-trip.
+    const beforeCdp = await newsiePos(page);
+    await page.evaluate(() => {
+      const read = () => {
+        const diagnostics = window.__GR_TOWN_DIAGNOSTICS__!;
+        const actor = diagnostics.actors.find((a) => a.id === 'newsie')!;
+        return {
+          frame: diagnostics.frame,
+          follows: diagnostics.welcomeFollowsPlayer,
+          t: performance.now(),
+          x: actor.position.x,
+          z: actor.position.z,
+        };
+      };
+      const record = { installedAt: performance.now(), samples: [read()] as ReturnType<typeof read>[] };
+      (window as unknown as { __GR_S1263__: typeof record }).__GR_S1263__ = record;
+      const step = () => {
+        record.samples.push(read());
+        if (record.samples.length < 300) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    });
+
+    const tClick = Date.now();
+    await page.getByTestId('town-welcome-next').click();
+    const tClickDone = Date.now();
+    await expect
+      .poll(() => page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__!.welcomeFollowsPlayer))
+      .toBe(false);
+    const tPollDone = Date.now();
+    const afterCdp = await newsiePos(page);
+    const tAfterSample = Date.now();
+
+    // Let the in-page sampler run out so the tail of the walk-home is on record too.
+    await page.waitForFunction(
+      () => (window as unknown as { __GR_S1263__: { samples: unknown[] } }).__GR_S1263__.samples.length >= 300,
+      undefined,
+      { timeout: 30_000 },
+    );
+    const trajectory = await page.evaluate(
+      () => (window as unknown as { __GR_S1263__: unknown }).__GR_S1263__,
+    );
+
+    measurement = {
+      project: testInfo.project.name,
+      workers: process.env.GR_PROBE_LABEL ?? 'unlabelled',
+      crossCdp: {
+        beforeCdp,
+        afterCdp,
+        displacement: Math.hypot(afterCdp.x - beforeCdp.x, afterCdp.z - beforeCdp.z),
+        msClickRoundTrip: tClickDone - tClick,
+        msPollToFalse: tPollDone - tClickDone,
+        msPollDoneToAfterSample: tAfterSample - tPollDone,
+        msTotalWindow: tAfterSample - tClick,
+      },
+      trajectory,
+    };
+  }
+
+  await mkdir(OUT_DIR, { recursive: true });
+  const label = process.env.GR_PROBE_LABEL ?? 'unlabelled';
+  await writeFile(
+    path.join(OUT_DIR, `probe-${label}-${testInfo.project.name}-${testInfo.repeatEachIndex}.json`),
+    JSON.stringify(measurement, null, 1),
+  );
+  expect(measurement).not.toBeNull();
+});

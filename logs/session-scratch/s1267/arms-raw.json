@@ -1,0 +1,170 @@
+{
+  "subject": "e2e/gazette-welcome.spec.ts:88 toBeLessThan(1)",
+  "mainAt": "a17307e6",
+  "arms": [
+    {
+      "key": "fire-concurrent",
+      "shell": "fire (launchd headless claude, node v26.4.0)",
+      "cwd": "(repo root)",
+      "rate": "22 / 24",
+      "runs": [
+        {
+          "run": 1,
+          "reporterLine": "Running 6 tests using 6 workers",
+          "failed": 6,
+          "passed": 0,
+          "wallSeconds": 79.28,
+          "loadavgBefore": "1.57 2.89 4.18",
+          "driftReds": 6,
+          "driftReceived": [
+            3.1506348566598446,
+            3.081314654494084,
+            2.396330528120026,
+            1.1524755962709146,
+            2.58897663179875,
+            2.712802978470792
+          ],
+          "nonDriftFailures": []
+        },
+        {
+          "run": 2,
+          "reporterLine": "Running 6 tests using 6 workers",
+          "failed": 6,
+          "passed": 0,
+          "wallSeconds": 79.97,
+          "loadavgBefore": "25.03 10.96 7.20",
+          "driftReds": 6,
+          "driftReceived": [
+            2.4302263269086684,
+            3.324530041975858,
+            5.635494654420319,
+            2.069685966517626,
+            3.7451301713024616,
+            4.069520856317117
+          ],
+          "nonDriftFailures": []
+        },
+        {
+          "run": 3,
+          "reporterLine": "Running 6 tests using 6 workers",
+          "failed": 6,
+          "passed": 0,
+          "wallSeconds": 77.58,
+          "loadavgBefore": "30.79 16.79 9.80",
+          "driftReds": 6,
+          "driftReceived": [
+            3.155202053751867,
+            2.0682843131445923,
+            5.737054993635672,
+            3.090064724241225,
+            1.7015581094984678,
+            3.3261539351028238
+          ],
+          "nonDriftFailures": []
+        },
+        {
+          "run": 4,
+          "reporterLine": "Running 6 tests using 6 workers",
+          "failed": 6,
+          "passed": 0,
+          "wallSeconds": 106.51,
+          "loadavgBefore": "29.73 20.49 11.85",
+          "driftReds": 4,
+          "driftReceived": [
+            3.230386973723117,
+            4.374574264999967,
+            2.2472205054244236,
+            4.5260357930533415
+          ],
+          "nonDriftFailures": [
+            {
+              "expected": "Expected: \"newsie\"",
+              "received": "Received: \"tavernkeeper\""
+            },
+            {
+              "expected": "Expected: \"newsie\"",
+              "received": "Received: \"tavernkeeper\""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "lanedir-concurrent",
+      "shell": "fire (launchd headless claude, node v26.4.0)",
+      "cwd": "worktrees/lane-b",
+      "rate": "21 / 24",
+      "runs": [
+        {
+          "run": 1,
+          "reporterLine": "Running 6 tests using 6 workers",
+          "failed": 5,
+          "passed": 1,
+          "wallSeconds": 80.82,
+          "loadavgBefore": "13.59 19.60 12.92",
+          "driftReds": 5,
+          "driftReceived": [
+            1.4112760183606887,
+            3.0116108646370634,
+            1.928004149373128,
+            3.4132975258538476,
+            2.996664812754339
+          ],
+          "nonDriftFailures": []
+        },
+        {
+          "run": 2,
+          "reporterLine": "Running 6 tests using 6 workers",
+          "failed": 6,
+          "passed": 0,
+          "wallSeconds": 107.65,
+          "loadavgBefore": "30.12 24.16 15.30",
+          "driftReds": 6,
+          "driftReceived": [
+            1.8493782739072069,
+            1.9479476378999514,
+            3.6268443583920167,
+            1.5754364474646383,
+            1.1738824472663345,
+            3.3766847646767384
+          ],
+          "nonDriftFailures": []
+        },
+        {
+          "run": 3,
+          "reporterLine": "Running 6 tests using 6 workers",
+          "failed": 5,
+          "passed": 1,
+          "wallSeconds": 108.04,
+          "loadavgBefore": "30.37 27.86 17.95",
+          "driftReds": 5,
+          "driftReceived": [
+            1.0577334257741882,
+            1.0125709851659783,
+            1.2200000000000002,
+            1.9809088823063015,
+            3.3614877658560656
+          ],
+          "nonDriftFailures": []
+        },
+        {
+          "run": 4,
+          "reporterLine": "Running 6 tests using 6 workers",
+          "failed": 5,
+          "passed": 1,
+          "wallSeconds": 94.02,
+          "loadavgBefore": "31.41 31.36 20.63",
+          "driftReds": 5,
+          "driftReceived": [
+            2.0718349355100663,
+            1.5986244086714048,
+            4.000312487793922,
+            2.9066303514551,
+            3.429650127928504
+          ],
+          "nonDriftFailures": []
+        }
+      ]
+    }
+  ]
+}

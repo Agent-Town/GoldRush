@@ -1,0 +1,45 @@
+s1293: F-1293-1 — the proposed experiment was already run three times, and the disposition was written on the leaf four fires ago
+
+s1292 §F(2) flagged as a free win that the two stopped gazette-drift masters
+may be chasing an instrument artifact, and correctly said "measure it".
+Measured by READING: the experiment it proposes IS F-1270-1, whose subject is
+e2e/gazette-welcome.spec.ts and whose reds are the drift assertion itself
+(w=1 -> 0/18, 6 workers -> 17/18, interleaved, one fire shell, one hour).
+Joined by s1264 (both shells, same worktree: lane 6/6 GREEN, fire 6/6 RED)
+and s1267/F-1267-1 (shell x directory crossed: lane shell 0/24 in the same
+directory the fire shell reds 21/24 in). A fourth run adds nothing, and
+post-d1a0846d it would measure 1-vs-1 anyway (F-1270-3).
+
+The correction that matters: "the red is an artifact" does not imply "the
+assertion is fine". The defect is established by reading and needs no red --
+the samples straddle a click AND an expect.poll while the newsie walks at
+delta*7 = 7 u/s (TownScene.ts:2613, re-verified at source), so the <1 bound
+is an assertion that the round-trip closed in ~143 ms. Closing the pair as a
+flake would have left a latency test in the suite.
+
+stoppedNote_s1264 had already written the right disposition -- re-frame as
+hygiene with a proof -- and no fire executed it.
+
+DISCHARGED: tasks/lane-b-gazette-welcome-drift-observation-frame-v3.md.
+The §7.5 changed premise is the strongest kind: the measure-first gate is
+DELETED, not re-aimed, because it is proven unpassable where the task runs.
+Deleting it bare would risk a vacuous assertion -- the exact hazard the gate
+existed to prevent -- so it is REPLACED by scope 1 (re-prove the four
+arithmetic facts at source; STOP if the Loop gains options, which would void
+the clamp guarantee) and scope 4 (prove the new assertion can still go RED by
+two mutation arms, each restored byte-identically, each required to leave the
+other assertion green). Acceptance is the mutation arms, not green.
+
+Bookkeeping: both leaves read status "stopped" while already carrying a
+supersededBy_ key -- the half-retired shape that kept two dead masters in the
+non-terminal bucket of every dry-board walk. Both now read "superseded";
+all prior note text retained verbatim per the Retention Law.
+
+Gates: findings census 156/130/26 -> 157/131/26, double-state 0, PASS
+(+1 subject/+1 closed, reconciles exactly against my one row);
+goals.json parses; canonical 2-space formatting preserved.
+Source re-verifications: Loop.ts:27 (0.05), :111 (clamp), :116 (update),
+TownScene.ts:306 (Loop with no options), :2613 (delta*7), :155/:162
+(TownDiagnostics public), and the spec's sample/click/poll ordering.
+
+Co-Authored-By: Claude <noreply@anthropic.com>

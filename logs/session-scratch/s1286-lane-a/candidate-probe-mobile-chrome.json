@@ -1,0 +1,118 @@
+[
+  {
+    "label": "rejected-old-coordinate",
+    "x": 0,
+    "z": 10,
+    "placeResult": false,
+    "definitionPresent": true,
+    "enabled": true,
+    "countFor": 0,
+    "maxCountFor": 4,
+    "snappedTarget": {
+      "x": 0,
+      "y": 0,
+      "z": 10
+    },
+    "matchesPlacement": false,
+    "overlapsExisting": false,
+    "placementKind": "bank",
+    "terrain": {
+      "walkable": false,
+      "speedMul": 0,
+      "zone": "bank"
+    },
+    "terrainBuildable": false,
+    "tileTraversable": true,
+    "buildZoneMatches": [
+      {
+        "id": "base-t1",
+        "bank": "north",
+        "minX": -30,
+        "maxX": 30,
+        "minZ": 8,
+        "maxZ": 16
+      }
+    ],
+    "collisionPad": 0.58,
+    "blockerMeasurements": [
+      {
+        "id": "hill-mine:boiler-house-site",
+        "x": 0,
+        "z": 12,
+        "halfX": 3.3587499999999997,
+        "halfZ": 3.3587499999999997,
+        "containsUnpadded": true,
+        "containsPadded": true,
+        "paddedEdgeClearance": -1.9387499999999998
+      },
+      {
+        "id": "hill-mine:tailings-and-scree-pack",
+        "x": 35,
+        "z": 34,
+        "halfX": 4.922476305706629,
+        "halfZ": 4.09783168678978,
+        "containsUnpadded": false,
+        "containsPadded": false,
+        "paddedEdgeClearance": 35.26258771586997
+      }
+    ]
+  },
+  {
+    "label": "chosen-open-coordinate",
+    "x": 10,
+    "z": 12,
+    "placeResult": true,
+    "definitionPresent": true,
+    "enabled": true,
+    "countFor": 0,
+    "maxCountFor": 4,
+    "snappedTarget": {
+      "x": 10,
+      "y": 0,
+      "z": 12
+    },
+    "matchesPlacement": true,
+    "overlapsExisting": false,
+    "placementKind": "bank",
+    "terrain": {
+      "walkable": true,
+      "speedMul": 1,
+      "zone": "bank"
+    },
+    "terrainBuildable": true,
+    "tileTraversable": true,
+    "buildZoneMatches": [
+      {
+        "id": "base-t1",
+        "bank": "north",
+        "minX": -30,
+        "maxX": 30,
+        "minZ": 8,
+        "maxZ": 16
+      }
+    ],
+    "collisionPad": 0.58,
+    "blockerMeasurements": [
+      {
+        "id": "hill-mine:boiler-house-site",
+        "x": 0,
+        "z": 12,
+        "halfX": 3.3587499999999997,
+        "halfZ": 3.3587499999999997,
+        "containsUnpadded": false,
+        "containsPadded": false,
+        "paddedEdgeClearance": 6.06125
+      },
+      {
+        "id": "hill-mine:tailings-and-scree-pack",
+        "x": 35,
+        "z": 34,
+        "halfX": 4.922476305706629,
+        "halfZ": 4.09783168678978,
+        "containsUnpadded": false,
+        "containsPadded": false,
+        "paddedEdgeClearance": 26.080853998301425
+      }
+    ]
+  }
+]

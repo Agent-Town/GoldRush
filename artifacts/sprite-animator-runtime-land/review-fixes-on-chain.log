@@ -1,0 +1,85 @@
+✔ browser-only: matching peer, remote after local (1.033667ms)
+✔ browser-only: mismatching peer, remote after local (0.196167ms)
+✔ browser-only: matching peer, remote before local (0.123375ms)
+✔ browser-only: mismatching peer, remote before local (0.106083ms)
+✔ mixed: matching peer, remote after local (0.122625ms)
+✔ mixed: mismatching peer, remote after local (0.114125ms)
+✔ mixed: matching peer, remote before local (0.1155ms)
+✔ mixed: mismatching peer, remote before local (0.098792ms)
+✔ headless-only: matching peer, remote after local (0.094333ms)
+✔ headless-only: mismatching peer, remote after local (0.128666ms)
+✔ headless-only: matching peer, remote before local (0.07175ms)
+✔ headless-only: mismatching peer, remote before local (0.050458ms)
+✔ a thin seat, unknown ID, or self hash cannot satisfy or poison the browser quorum (0.095541ms)
+✔ one browser with thin seats ignores their incompatible hashes (0.069041ms)
+✔ headless-only rooms require each headless peer (0.060333ms)
+✔ thin seats keep hash exchange disabled (0.345ms)
+✔ an outstanding comparison keeps the roster of its sampled tick after a peer leaves (0.305209ms)
+✔ later ticks use the smaller roster and ignore a departed peer (0.103542ms)
+✔ snapshot compression keeps the sampled quorum even when the roster changes before encoding finishes (6.676792ms)
+party retention checks passed (party sizes 1–4, top-100/leftover bounds, replay survival, archives, rotations)
+✔ scripts/review-party-retention.test.mjs (666.923292ms)
+(node:52680) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ the untouched default saves and remains readable on the manual shelf (3.452792ms)
+✔ legal town names and the fallback fit every supported wave digit count (15.601834ms)
+✔ manual input keeps its punctuation, reserved-name, profanity, and duplicate checks (0.306834ms)
+✖ terminal views wait for every seat relay deadline and survive the secured reset (86.337791ms)
+(node:52682) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+✔ later-era mounts stop on wreck or suspension and return on repair with stable relay IDs (1678.0285ms)
+ℹ tests 25
+ℹ suites 0
+ℹ pass 24
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3786
+
+✖ failing tests:
+
+test at scripts/review-terminal-views.test.mjs:38:1
+✖ terminal views wait for every seat relay deadline and survive the secured reset (86.337791ms)
+  TypeError: this.host.wave is not a function
+      at ProbeManager.endSecuredRun (eval at <anonymous> (file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-animator-land/scripts/review-terminal-views.test.mjs:55:26), <anonymous>:11:72)
+      at TestContext.<anonymous> (file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-animator-land/scripts/review-terminal-views.test.mjs:118:30)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+rc=1

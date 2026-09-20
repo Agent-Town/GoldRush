@@ -1,0 +1,1533 @@
+
+=== s1224 citation-drift audit ===
+main HEAD           : 68ed1002cd040bf6200b435f577277df2ca77c48
+master files scanned: 1728
+citations found     : 517
+  of which in a known-reds context: 8
+
+verdicts:
+  STABLE                 264
+  UNRESOLVED-BASELINE    214
+  DRIFTED                39
+
+--- 253 non-stable citations ---
+
+[UNRESOLVED-BASELINE] [KNOWN-RED CONTEXT] e2e/release-build.spec.ts:296
+   master: tasks/done/drained-s1210-0b8db8f9-20260729-105317-lane-b-approach-convergence-class.md
+   intro : (not found)
+   then  : no-intro
+   now   : "dist has no later manifest ids or plate/GLB assets"
+
+[UNRESOLVED-BASELINE] [KNOWN-RED CONTEXT] e2e/tl-01-run-telemetry.spec.ts:229
+   master: tasks/done/shipped-s1088-lane-entry-damage-net-dc483d74.md
+   intro : (not found)
+   then  : no-intro
+   now   : "plain no-debug secure return keeps telemetry invisible to gameplay"
+
+[UNRESOLVED-BASELINE] [KNOWN-RED CONTEXT] e2e/gz-h1-newsie.spec.ts:114
+   master: tasks/done/stopped-premise-not-reproduced-drained-s1209-20260729-113240-lane-gg-03b-gazette-panel-weight.md
+   intro : (not found)
+   then  : no-intro
+   now   : "newsie barks latest headline and opens the Claim Herald"
+
+[DRIFTED] e2e/vp-02b-rotation-resolver.spec.ts:112
+   master: tasks/008-vp-02b-rotation-resolver.md
+   intro : b829807be30f
+   then  : "hero locomotion resolves all 8 contract directions"
+   now   : null
+
+[DRIFTED] e2e/mp-02-lockstep.spec.ts:67
+   master: tasks/067-mp-resync-two-actors.md
+   intro : dab81127af75
+   then  : "hash mismatch pauses, shows the wire card, and restores from relay snapshot"
+   now   : "consecutive action pulses survive the filled input-delay window exactly once"
+
+[DRIFTED] e2e/044-start-screen.spec.ts:120
+   master: tasks/081-continue-button-regression.md
+   intro : 4143db5ffd30
+   then  : "Continue appears only for an existing suspend slot and enters the run path"
+   now   : "Settings volume writes through"
+
+[DRIFTED] e2e/trail-guide.spec.ts:113
+   master: tasks/BACKLOG.md
+   intro : 9e97be2b6321
+   then  : "first boot asks the greenhorn question once and sets the preset"
+   now   : "fresh profile sees the first three trail beats once, in order, and reload stays quiet"
+
+[DRIFTED] e2e/044-start-screen.spec.ts:120
+   master: tasks/BACKLOG.md
+   intro : f9ebd5ce34a2
+   then  : "Continue appears only for an existing suspend slot and enters the run path"
+   now   : "Settings volume writes through"
+
+[DRIFTED] e2e/town-t6-surfaces.spec.ts:89
+   master: tasks/BACKLOG.md
+   intro : f9ebd5ce34a2
+   then  : "plain menu thins to town, profile, settings"
+   now   : null
+
+[DRIFTED] e2e/mp-02-lockstep.spec.ts:67
+   master: tasks/BACKLOG.md
+   intro : 9be2c9aa1d2b
+   then  : "two clients advance 500 ticks with identical lockstep hashes"
+   now   : "consecutive action pulses survive the filled input-delay window exactly once"
+
+[DRIFTED] e2e/e5-deepwater-claim.spec.ts:29
+   master: tasks/BACKLOG.md
+   intro : e06e7c8aa4c2
+   then  : "boots the Deepwater contract with deck pads, depth gates, and a storm-scheduled corsair wave"
+   now   : null
+
+[DRIFTED] e2e/m2-05-base-damage-repair.spec.ts:328
+   master: tasks/BACKLOG.md
+   intro : d9eb4253635c
+   then  : "wreck and repair cycles leave shooter and renderer counts at baseline"
+   now   : "real waves spawn zero wreckers without buildables and nowreck disables them with buildables present"
+
+[DRIFTED] e2e/release-build.spec.ts:165
+   master: tasks/BACKLOG.md
+   intro : 816593b221d7
+   then  : "later flagship URLs decline to the Claim"
+   now   : "an imported later ledger heals to the frontier and plays"
+
+[DRIFTED] e2e/m3-05b-run-ledger.spec.ts:82
+   master: tasks/BACKLOG.md
+   intro : 9b739d8dadc7
+   then  : "Claim Office opens a responsive Run Ledger and a profile reset returns its warm empty state"
+   now   : "a secured run records its payout and sanitizes optional meta on read"
+
+[DRIFTED] e2e/vp-02b-rotation-resolver.spec.ts:149
+   master: tasks/BACKLOG.md
+   intro : 7c012e2e573b
+   then  : "idle snaps to rotation idle hemispheres after movement"
+   now   : "resolver hysteresis holds across small boundary oscillation"
+
+[DRIFTED] e2e/vp-02-sprite-animation.spec.ts:560
+   master: tasks/BACKLOG.md
+   intro : f015c911a399
+   then  : "east heading uses explicit rotation2 files with unmirrored pixels"
+   now   : "hero walk frameKey alternates while each 8-way heading is held"
+
+[DRIFTED] e2e/trail-guide.spec.ts:113
+   master: tasks/DRAFT-e1-trail-guide-plain-boot-proof.md
+   intro : 2a8e6e3cdab3
+   then  : "first boot asks the greenhorn question once and sets the preset"
+   now   : "fresh profile sees the first three trail beats once, in order, and reload stays quiet"
+
+[DRIFTED] e2e/task-025-bandits-dont-swim.spec.ts:145
+   master: tasks/done/20260708-080611-fix-task-025-wet-powder-announcement-race.md
+   intro : bfadfc206d98
+   then  : "hero still wades but wet powder disables and then restores weapons"
+   now   : "hero stops in the shallows and keeps weapons armed at the deep channel"
+
+[DRIFTED] e2e/task-025-bandits-dont-swim.spec.ts:145
+   master: tasks/done/20260708-080611-fix-task-025-wet-powder-announcement-race.md
+   intro : bfadfc206d98
+   then  : "hero still wades but wet powder disables and then restores weapons"
+   now   : "hero stops in the shallows and keeps weapons armed at the deep channel"
+
+[UNRESOLVED-BASELINE] e2e/044-start-screen.spec.ts:120
+   master: tasks/done/20260711-061449-081-continue-button-regression.md
+   intro : (not found)
+   then  : no-intro
+   now   : "Settings volume writes through"
+
+[UNRESOLVED-BASELINE] e2e/contract-briefings.spec.ts:356
+   master: tasks/done/20260726-090912-e1-briefing-truth-unmasked.md
+   intro : (not found)
+   then  : no-intro
+   now   : "pause panel repeats the active contract briefing"
+
+[UNRESOLVED-BASELINE] e2e/contract-briefings.spec.ts:363
+   master: tasks/done/20260726-090912-e1-briefing-truth-unmasked.md
+   intro : (not found)
+   then  : no-intro
+   now   : "plain no-debug board launch still briefs The Claim"
+
+[UNRESOLVED-BASELINE] e2e/restore-validation.spec.ts:656
+   master: tasks/done/OWNER-GATED-F-1096-2-do-not-drain-20260727-011937-lane-hero-y-restore-roundtrip.md
+   intro : (not found)
+   then  : no-intro
+   now   : "active megaproject wrecker references survive strict normalization and restore"
+
+[UNRESOLVED-BASELINE] e2e/restore-validation.spec.ts:656
+   master: tasks/done/OWNER-GATED-F-1096-2-do-not-drain-20260727-011937-lane-hero-y-restore-roundtrip.md
+   intro : (not found)
+   then  : no-intro
+   now   : "active megaproject wrecker references survive strict normalization and restore"
+
+[UNRESOLVED-BASELINE] e2e/release-build.spec.ts:308
+   master: tasks/done/drained-s1210-0b8db8f9-20260729-105317-lane-b-approach-convergence-class.md
+   intro : (not found)
+   then  : no-intro
+   now   : "dist has no later manifest ids or plate/GLB assets"
+
+[UNRESOLVED-BASELINE] e2e/release-build.spec.ts:297
+   master: tasks/done/drained-s1210-0b8db8f9-20260729-105317-lane-b-approach-convergence-class.md
+   intro : (not found)
+   then  : no-intro
+   now   : "dist has no later manifest ids or plate/GLB assets"
+
+[UNRESOLVED-BASELINE] e2e/release-build.spec.ts:297
+   master: tasks/done/drained-s1210-0b8db8f9-20260729-105317-lane-b-approach-convergence-class.md
+   intro : (not found)
+   then  : no-intro
+   now   : "dist has no later manifest ids or plate/GLB assets"
+
+[UNRESOLVED-BASELINE] e2e/ap-standing-orders.spec.ts:67
+   master: tasks/done/drained-s1215-54f166b9-20260729-154037-ap-view-collection-firewall.md
+   intro : (not found)
+   then  : no-intro
+   now   : null
+
+[UNRESOLVED-BASELINE] e2e/gazette-welcome.spec.ts:44
+   master: tasks/done/drained-s1218-987df988-20260729-173239-lane-d-concurrency-class-failure-rate.md
+   intro : (not found)
+   then  : no-intro
+   now   : "the Gazette welcome fires once, walks skippably, and retriggers through the newsie"
+
+[UNRESOLVED-BASELINE] e2e/ap-standing-orders.spec.ts:80
+   master: tasks/done/drained-s1218-987df988-20260729-173239-lane-d-concurrency-class-failure-rate.md
+   intro : (not found)
+   then  : no-intro
+   now   : "seeded standing orders obey priority, gates, legal actions, surprises, and the live rung"
+
+[UNRESOLVED-BASELINE] e2e/locked-win.spec.ts:65
+   master: tasks/done/drained-s1218-987df988-20260729-173239-lane-d-concurrency-class-failure-rate.md
+   intro : (not found)
+   then  : no-intro
+   now   : "wave 10 banks the win; a wave 12 Rush death keeps it and records both wave marks"
+
+[UNRESOLVED-BASELINE] e2e/tl-01-run-telemetry.spec.ts:229
+   master: tasks/done/drained-s1218-987df988-20260729-173239-lane-d-concurrency-class-failure-rate.md
+   intro : (not found)
+   then  : no-intro
+   now   : "plain no-debug secure return keeps telemetry invisible to gameplay"
+
+[UNRESOLVED-BASELINE] e2e/ap-standing-orders.spec.ts:80
+   master: tasks/done/drained-s1222-a0aae876-20260729-190953-lane-d-standing-orders-wave-early-seam.md
+   intro : (not found)
+   then  : no-intro
+   now   : "seeded standing orders obey priority, gates, legal actions, surprises, and the live rung"
+
+[UNRESOLVED-BASELINE] e2e/ap-standing-orders.spec.ts:80
+   master: tasks/done/drained-s1222-a0aae876-20260729-190953-lane-d-standing-orders-wave-early-seam.md
+   intro : (not found)
+   then  : no-intro
+   now   : "seeded standing orders obey priority, gates, legal actions, surprises, and the live rung"
+
+[UNRESOLVED-BASELINE] e2e/ap-standing-orders.spec.ts:80
+   master: tasks/done/drained-s1222-a0aae876-20260729-190953-lane-d-standing-orders-wave-early-seam.md
+   intro : (not found)
+   then  : no-intro
+   now   : "seeded standing orders obey priority, gates, legal actions, surprises, and the live rung"
+
+[UNRESOLVED-BASELINE] e2e/lb-01-county-standings.spec.ts:140
+   master: tasks/done/drained-s1222-af226e93-20260729-193045-lane-b-lb-03-bench-seed-sets.md
+   intro : (not found)
+   then  : no-intro
+   now   : "endpoint stores optional self-declared stack and keeps the public board stack-blind"
+
+[UNRESOLVED-BASELINE] e2e/m2-05-base-damage-repair.spec.ts:319
+   master: tasks/done/noop-s1033-superseded-20260725-140651-lane-m2-05-readiness-seam.md
+   intro : (not found)
+   then  : no-intro
+   now   : "real waves spawn zero wreckers without buildables and nowreck disables them with buildables present"
+
+[UNRESOLVED-BASELINE] e2e/run3d-turret.spec.ts:61
+   master: tasks/done/noop-s1033-superseded-20260725-140651-lane-m2-05-readiness-seam.md
+   intro : (not found)
+   then  : no-intro
+   now   : "all loads once, mirrors instances, and unmounts a demolished turret"
+
+[UNRESOLVED-BASELINE] e2e/run3d-assay-bench.spec.ts:61
+   master: tasks/done/noop-s1033-superseded-20260725-140651-lane-m2-05-readiness-seam.md
+   intro : (not found)
+   then  : no-intro
+   now   : "all loads once, preserves interaction, and unmounts on demolish"
+
+[UNRESOLVED-BASELINE] e2e/m2-05-base-damage-repair.spec.ts:93
+   master: tasks/done/noop-s1036-authorized-measurement-stop-reproduced-by-fire-20260725-155352-lane-m2-05-geometry-settle.md
+   intro : (not found)
+   then  : no-intro
+   now   : null
+
+[UNRESOLVED-BASELINE] e2e/m2-05-base-damage-repair.spec.ts:233
+   master: tasks/done/noop-s1040-repair-dwell-lawful-stop-class-moved-to-260-requeue-owed.md
+   intro : (not found)
+   then  : no-intro
+   now   : "repair dwell spends exact sink, restores function, and keeps replay equal to HUD"
+
+[UNRESOLVED-BASELINE] e2e/world-info-notes.spec.ts:289
+   master: tasks/done/shipped-011e85fc-20260728-164306-lane-a-town-info-note-dead-reckoning.md
+   intro : (not found)
+   then  : no-intro
+   now   : "megaproject site registers a note without replacing the signboard readout"
+
+[UNRESOLVED-BASELINE] e2e/world-info-notes.spec.ts:132
+   master: tasks/done/shipped-011e85fc-20260728-164306-lane-a-town-info-note-dead-reckoning.md
+   intro : (not found)
+   then  : no-intro
+   now   : null
+
+[UNRESOLVED-BASELINE] e2e/ceremony-framework.spec.ts:119
+   master: tasks/done/shipped-011e85fc-20260728-164306-lane-a-town-info-note-dead-reckoning.md
+   intro : (not found)
+   then  : no-intro
+   now   : null
+
+[UNRESOLVED-BASELINE] e2e/world-info-notes.spec.ts:321
+   master: tasks/done/shipped-011e85fc-20260728-164306-lane-a-town-info-note-dead-reckoning.md
+   intro : (not found)
+   then  : no-intro
+   now   : "390px world note clears the touch stick zone"
+
+[UNRESOLVED-BASELINE] e2e/world-info-notes.spec.ts:195
+   master: tasks/done/shipped-011e85fc-20260728-164306-lane-a-town-info-note-dead-reckoning.md
+   intro : (not found)
+   then  : no-intro
+   now   : "run-world notes explain seams, stake, ford, prospector, and soften after two approaches"
+
+[UNRESOLVED-BASELINE] e2e/vp-02b-rotation-resolver.spec.ts:149
+   master: tasks/done/shipped-07eed37b-20260727-174702-lane-vp-02d-side-idle-resolver.md
+   intro : (not found)
+   then  : no-intro
+   now   : "resolver hysteresis holds across small boundary oscillation"
+
+[UNRESOLVED-BASELINE] e2e/055-baron-kill-stop.spec.ts:150
+   master: tasks/done/shipped-09102598-20260727-133154-lane-055-standard-note-assertion-and-briefing.md
+   intro : (not found)
+   then  : no-intro
+   now   : "Baron kill-stop freezes sim, advances render, plants the standard, then the note persists"
+
+[UNRESOLVED-BASELINE] e2e/050-audio-mix-and-access.spec.ts:41
+   master: tasks/done/shipped-0f929bdf-20260729-032245-lane-a-m3-05e-ledger-rush-card-evidence.md
+   intro : (not found)
+   then  : no-intro
+   now   : null
+
+[UNRESOLVED-BASELINE] e2e/045-megaproject.spec.ts:51
+   master: tasks/done/shipped-0f929bdf-20260729-032245-lane-a-m3-05e-ledger-rush-card-evidence.md
+   intro : (not found)
+   then  : no-intro
+   now   : null
+
+[UNRESOLVED-BASELINE] e2e/044-start-screen.spec.ts:37
+   master: tasks/done/shipped-0f929bdf-20260729-032245-lane-a-m3-05e-ledger-rush-card-evidence.md
+   intro : (not found)
+   then  : no-intro
+   now   : null
+
+[UNRESOLVED-BASELINE] e2e/058-device-tiers.spec.ts:73
+   master: tasks/done/shipped-0f929bdf-20260729-032245-lane-a-m3-05e-ledger-rush-card-evidence.md
+   intro : (not found)
+   then  : no-intro
+   now   : null
+
+[UNRESOLVED-BASELINE] e2e/task-024-blast-aim-presets.spec.ts:130
+   master: tasks/done/shipped-20260726-184130-lane-blocked-storage-boot.md
+   intro : (not found)
+   then  : no-intro
+   now   : "difficulty preset falls back to default when profile storage is blocked"
+
+[UNRESOLVED-BASELINE] e2e/task-024-blast-aim-presets.spec.ts:130
+   master: tasks/done/shipped-20260726-184130-lane-blocked-storage-boot.md
+   intro : (not found)
+   then  : no-intro
+   now   : "difficulty preset falls back to default when profile storage is blocked"
+
+[UNRESOLVED-BASELINE] e2e/task-024-blast-aim-presets.spec.ts:130
+   master: tasks/done/shipped-20260726-190222-lane-blocked-storage-boot-2.md
+   intro : (not found)
+   then  : no-intro
+   now   : "difficulty preset falls back to default when profile storage is blocked"
+
+[UNRESOLVED-BASELINE] e2e/lane-c-activations-assay-office.spec.ts:44
+   master: tasks/done/shipped-208cd209-20260728-033401-lane-c-activations-derivation-hardening.md
+   intro : (not found)
+   then  : no-intro
+   now   : null
+
+[UNRESOLVED-BASELINE] e2e/lane-c-activations-assay-office.spec.ts:106
+   master: tasks/done/shipped-208cd209-20260728-033401-lane-c-activations-derivation-hardening.md
+   intro : (not found)
+   then  : no-intro
+   now   : null
+
+[UNRESOLVED-BASELINE] e2e/066-walk8-engine.spec.ts:54
+   master: tasks/done/shipped-29bac3d9-20260728-175802-lane-c-eight-winds-wiring-hero.md
+   intro : (not found)
+   then  : no-intro
+   now   : null
+
+[UNRESOLVED-BASELINE] e2e/066-walk8-engine.spec.ts:54
+   master: tasks/done/shipped-29bac3d9-20260728-175802-lane-c-eight-winds-wiring-hero.md
+   intro : (not found)
+   then  : no-intro
+   now   : null
+
+[UNRESOLVED-BASELINE] e2e/cp04-lever.spec.ts:130
+   master: tasks/done/shipped-390e585b-20260729-000631-lane-b-cp04-launch-clear-observability.md
+   intro : (not found)
+   then  : no-intro
+   now   : "a plain boot remains inert"
+
+[UNRESOLVED-BASELINE] e2e/cp04-lever.spec.ts:106
+   master: tasks/done/shipped-390e585b-20260729-000631-lane-b-cp04-launch-clear-observability.md
+   intro : (not found)
+   then  : no-intro
+   now   : "the Lever is three choices and one press, then launches through the charter seam"
+
+[UNRESOLVED-BASELINE] e2e/072-era-activation.spec.ts:145
+   master: tasks/done/shipped-425d2a9a-20260727-070008-lane-town-plaza-slot-diagnostics.md
+   intro : (not found)
+   then  : no-intro
+   now   : null
+
+[UNRESOLVED-BASELINE] e2e/m2-04-gold-stealing.spec.ts:43
+   master: tasks/done/shipped-4f3223f8-20260728-045936-lane-d-f1152-1-confirmbuild-cause.md
+   intro : (not found)
+   then  : no-intro
+   now   : null
+
+[UNRESOLVED-BASELINE] e2e/m3-05b-run-ledger.spec.ts:98
+   master: tasks/done/shipped-5027c211-20260729-022016-lane-a-m3-05d-run-ledger-earned-truth.md
+   intro : (not found)
+   then  : no-intro
+   now   : "a secured run records its payout and sanitizes optional meta on read"
+
+[UNRESOLVED-BASELINE] e2e/e2-pressure-garden.spec.ts:69
+   master: tasks/done/shipped-5f7e43e6-20260727-075023-lane-board-chapter-tab-adoption.md
+   intro : (not found)
+   then  : no-intro
+   now   : "Pressure Garden unlocks after Trestle and teaches the pressure loop"
+
+[UNRESOLVED-BASELINE] e2e/e2-trestle.spec.ts:69
+   master: tasks/done/shipped-5f7e43e6-20260727-075023-lane-board-chapter-tab-adoption.md
+   intro : (not found)
+   then  : no-intro
+   now   : "The Trestle unlocks after Hill Mine and runs the shipped crossing systems"
+
+[UNRESOLVED-BASELINE] e2e/e2-incline.spec.ts:61
+   master: tasks/done/shipped-5f7e43e6-20260727-075023-lane-board-chapter-tab-adoption.md
+   intro : (not found)
+   then  : no-intro
+   now   : "The Incline boots shipped data: upper cart, lower boss rail, and legal sluice bank"
+
+[UNRESOLVED-BASELINE] e2e/cw-02-escort.spec.ts:68
+   master: tasks/done/shipped-5f7e43e6-20260727-075023-lane-board-chapter-tab-adoption.md
+   intro : (not found)
+   then  : no-intro
+   now   : "board-selected Canyon escort delivers one capacitor crate through a repaired brown-out"
+
+[UNRESOLVED-BASELINE] e2e/town-t3-board.spec.ts:121
+   master: tasks/done/shipped-5f7e43e6-20260727-075023-lane-board-chapter-tab-adoption.md
+   intro : (not found)
+   then  : no-intro
+   now   : null
+
+[UNRESOLVED-BASELINE] e2e/066-walk8-engine.spec.ts:194
+   master: tasks/done/shipped-639df50b-20260728-200755-lane-c-066-walk8-hero-expectation-realign.md
+   intro : (not found)
+   then  : no-intro
+   now   : "hero walks on the activated walk8 sheet at the ratified cadence"
+
+[UNRESOLVED-BASELINE] e2e/cw-02-escort.spec.ts:134
+   master: tasks/done/shipped-667c739e-20260727-111948-lane-cw-02-wrecker-movement-diagnosis.md
+   intro : (not found)
+   then  : no-intro
+   now   : "board-selected Canyon escort delivers one capacitor crate through a repaired brown-out"
+
+[UNRESOLVED-BASELINE] e2e/m2-04-gold-stealing.spec.ts:43
+   master: tasks/done/shipped-6824ca94-20260728-062125-lane-d-f1153-1-teleport-position-refresh.md
+   intro : (not found)
+   then  : no-intro
+   now   : null
+
+[UNRESOLVED-BASELINE] e2e/board-card-images.spec.ts:17
+   master: tasks/done/shipped-70ce6e50-20260727-092922-lane-board-card-images-steer.md
+   intro : (not found)
+   then  : no-intro
+   now   : "all contract chapters use their own board-card URL"
+
+[UNRESOLVED-BASELINE] e2e/town-t1-square.spec.ts:47
+   master: tasks/done/shipped-70ce6e50-20260727-092922-lane-board-card-images-steer.md
+   intro : (not found)
+   then  : no-intro
+   now   : null
+
+[UNRESOLVED-BASELINE] e2e/m2-04-gold-stealing.spec.ts:17
+   master: tasks/done/shipped-745e8fc6-20260728-040524-lane-c-f1148-1-trajectory-spec-rig.md
+   intro : (not found)
+   then  : no-intro
+   now   : null
+
+[UNRESOLVED-BASELINE] e2e/e2-stamp-mill.spec.ts:202
+   master: tasks/done/shipped-7a457025-20260728-092401-lane-d-suite-red-inventory.md
+   intro : (not found)
+   then  : no-intro
+   now   : "Stamp Mill manifest builds to the door without switching epochs"
+
+[UNRESOLVED-BASELINE] e2e/asset-diet.spec.ts:15
+   master: tasks/done/shipped-7c28335c-20260728-134156-lane-c-asset-diet-skip-duty-split.md
+   intro : (not found)
+   then  : no-intro
+   now   : null
+
+[UNRESOLVED-BASELINE] e2e/asset-diet.spec.ts:101
+   master: tasks/done/shipped-7c28335c-20260728-134156-lane-c-asset-diet-skip-duty-split.md
+   intro : (not found)
+   then  : no-intro
+   now   : "honest town and claim cues appear while GLBs are throttled and leave at ready"
+
+[UNRESOLVED-BASELINE] e2e/asset-diet.spec.ts:14
+   master: tasks/done/shipped-7c28335c-20260728-134156-lane-c-asset-diet-skip-duty-split.md
+   intro : (not found)
+   then  : no-intro
+   now   : null
+
+[UNRESOLVED-BASELINE] e2e/asset-diet.spec.ts:101
+   master: tasks/done/shipped-7c28335c-20260728-134156-lane-c-asset-diet-skip-duty-split.md
+   intro : (not found)
+   then  : no-intro
+   now   : "honest town and claim cues appear while GLBs are throttled and leave at ready"
+
+[UNRESOLVED-BASELINE] e2e/m2-04-gold-stealing.spec.ts:59
+   master: tasks/done/shipped-83f4c761-20260728-002215-lane-c-trail-guide-residue-triggers.md
+   intro : (not found)
+   then  : no-intro
+   now   : null
+
+[UNRESOLVED-BASELINE] e2e/map-census.spec.ts:105
+   master: tasks/done/shipped-8bfa549c-20260727-231314-lane-census-glow-mesa-corrective-retire.md
+   intro : (not found)
+   then  : no-intro
+   now   : "${contract.id} mobile spot"
+
+[UNRESOLVED-BASELINE] e2e/map-census.spec.ts:290
+   master: tasks/done/shipped-8bfa549c-20260727-231314-lane-census-glow-mesa-corrective-retire.md
+   intro : (not found)
+   then  : no-intro
+   now   : "${contract.id} mobile spot"
+
+[UNRESOLVED-BASELINE] e2e/map-census.spec.ts:109
+   master: tasks/done/shipped-8bfa549c-20260727-231314-lane-census-glow-mesa-corrective-retire.md
+   intro : (not found)
+   then  : no-intro
+   now   : "${contract.id} mobile spot"
+
+[UNRESOLVED-BASELINE] e2e/vp-02-sprite-animation.spec.ts:174
+   master: tasks/done/shipped-8cab8791-20260727-223821-lane-vp02-capture-error-surface.md
+   intro : (not found)
+   then  : no-intro
+   now   : null
+
+[UNRESOLVED-BASELINE] e2e/vp-02-sprite-animation.spec.ts:566
+   master: tasks/done/shipped-8cab8791-20260727-223821-lane-vp02-capture-error-surface.md
+   intro : (not found)
+   then  : no-intro
+   now   : "east heading uses explicit rotation2 files with unmirrored pixels"
+
+[UNRESOLVED-BASELINE] e2e/vp-02-sprite-animation.spec.ts:579
+   master: tasks/done/shipped-8cab8791-20260727-223821-lane-vp02-capture-error-surface.md
+   intro : (not found)
+   then  : no-intro
+   now   : "east heading uses explicit rotation2 files with unmirrored pixels"
+
+[UNRESOLVED-BASELINE] e2e/055-baron-kill-stop.spec.ts:150
+   master: tasks/done/shipped-987e5f4d-20260727-125715-lane-055-baron-standard-note-diagnosis.md
+   intro : (not found)
+   then  : no-intro
+   now   : "Baron kill-stop freezes sim, advances render, plants the standard, then the note persists"
+
+[UNRESOLVED-BASELINE] e2e/town-t3-board.spec.ts:203
+   master: tasks/done/shipped-a659020a-20260727-065051-lane-contract-art-key-adoption.md
+   intro : (not found)
+   then  : no-intro
+   now   : "contract board renders manifest rows, locks, conditions, and per-contract bests"
+
+[UNRESOLVED-BASELINE] e2e/e2-pressure-garden.spec.ts:73
+   master: tasks/done/shipped-a659020a-20260727-065051-lane-contract-art-key-adoption.md
+   intro : (not found)
+   then  : no-intro
+   now   : "Pressure Garden unlocks after Trestle and teaches the pressure loop"
+
+[UNRESOLVED-BASELINE] e2e/e2-trestle.spec.ts:73
+   master: tasks/done/shipped-a659020a-20260727-065051-lane-contract-art-key-adoption.md
+   intro : (not found)
+   then  : no-intro
+   now   : "The Trestle unlocks after Hill Mine and runs the shipped crossing systems"
+
+[UNRESOLVED-BASELINE] e2e/town-t3-board.spec.ts:25
+   master: tasks/done/shipped-a659020a-20260727-065051-lane-contract-art-key-adoption.md
+   intro : (not found)
+   then  : no-intro
+   now   : null
+
+[UNRESOLVED-BASELINE] e2e/e2-pressure-garden.spec.ts:73
+   master: tasks/done/shipped-a659020a-20260727-065051-lane-contract-art-key-adoption.md
+   intro : (not found)
+   then  : no-intro
+   now   : "Pressure Garden unlocks after Trestle and teaches the pressure loop"
+
+[UNRESOLVED-BASELINE] e2e/e2-trestle.spec.ts:73
+   master: tasks/done/shipped-a659020a-20260727-065051-lane-contract-art-key-adoption.md
+   intro : (not found)
+   then  : no-intro
+   now   : "The Trestle unlocks after Hill Mine and runs the shipped crossing systems"
+
+[UNRESOLVED-BASELINE] e2e/board-era-chapters.spec.ts:43
+   master: tasks/done/shipped-b43b31ad-20260727-083348-lane-board-chapter-seed-scope.md
+   intro : (not found)
+   then  : no-intro
+   now   : null
+
+[UNRESOLVED-BASELINE] e2e/gazette-art-wiring.spec.ts:103
+   master: tasks/done/shipped-b5be7ab3-20260729-121204-lane-gg-03c-herald-art-dev-path-weight.md
+   intro : (not found)
+   then  : no-intro
+   now   : "plain-boot Claim Herald shows the correct live cut for every item"
+
+[UNRESOLVED-BASELINE] e2e/task-037-assay-bench-ungate.spec.ts:120
+   master: tasks/done/shipped-b7219ed8-20260727-220242-lane-t037-ghost-settle-confirm.md
+   intro : (not found)
+   then  : no-intro
+   now   : null
+
+[UNRESOLVED-BASELINE] e2e/task-037-assay-bench-ungate.spec.ts:99
+   master: tasks/done/shipped-b7219ed8-20260727-220242-lane-t037-ghost-settle-confirm.md
+   intro : (not found)
+   then  : no-intro
+   now   : null
+
+[UNRESOLVED-BASELINE] e2e/m2-04-gold-stealing.spec.ts:211
+   master: tasks/done/shipped-bb7f14c3-20260728-015037-lane-c-m2-04-palisade-budget-bisect.md
+   intro : (not found)
+   then  : no-intro
+   now   : "thief routes around a finite palisade line to steal"
+
+[UNRESOLVED-BASELINE] e2e/m2-04-gold-stealing.spec.ts:42
+   master: tasks/done/shipped-bb7f14c3-20260728-015037-lane-c-m2-04-palisade-budget-bisect.md
+   intro : (not found)
+   then  : no-intro
+   now   : null
+
+[UNRESOLVED-BASELINE] e2e/m2-04-gold-stealing.spec.ts:211
+   master: tasks/done/shipped-bb7f14c3-20260728-015037-lane-c-m2-04-palisade-budget-bisect.md
+   intro : (not found)
+   then  : no-intro
+   now   : "thief routes around a finite palisade line to steal"
+
+[UNRESOLVED-BASELINE] e2e/gazette-art-wiring.spec.ts:111
+   master: tasks/done/shipped-bc18218c-20260728-234125-lane-a-gazette-art-wiring-hardening.md
+   intro : (not found)
+   then  : no-intro
+   now   : "plain-boot Claim Herald shows the correct live cut for every item"
+
+[UNRESOLVED-BASELINE] e2e/gazette-art-wiring.spec.ts:103
+   master: tasks/done/shipped-bc18218c-20260728-234125-lane-a-gazette-art-wiring-hardening.md
+   intro : (not found)
+   then  : no-intro
+   now   : "plain-boot Claim Herald shows the correct live cut for every item"
+
+[UNRESOLVED-BASELINE] e2e/world-info-notes.spec.ts:21
+   master: tasks/done/shipped-bef39c4b-20260728-140032-lane-a-world-info-build-fixture-realign.md
+   intro : (not found)
+   then  : no-intro
+   now   : null
+
+[UNRESOLVED-BASELINE] e2e/world-info-notes.spec.ts:286
+   master: tasks/done/shipped-bef39c4b-20260728-140032-lane-a-world-info-build-fixture-realign.md
+   intro : (not found)
+   then  : no-intro
+   now   : "megaproject site registers a note without replacing the signboard readout"
+
+[UNRESOLVED-BASELINE] e2e/066-walk8-engine.spec.ts:54
+   master: tasks/done/shipped-c3d8470e-20260728-222106-lane-c-eight-winds-wiring-enemies.md
+   intro : (not found)
+   then  : no-intro
+   now   : null
+
+[UNRESOLVED-BASELINE] e2e/lane-c-activations-assay-office.spec.ts:24
+   master: tasks/done/shipped-c727a5b7-20260728-022415-lane-c-activations-frame-matrix-from-contract.md
+   intro : (not found)
+   then  : no-intro
+   now   : null
+
+[UNRESOLVED-BASELINE] e2e/lane-c-activations-assay-office.spec.ts:88
+   master: tasks/done/shipped-c727a5b7-20260728-022415-lane-c-activations-frame-matrix-from-contract.md
+   intro : (not found)
+   then  : no-intro
+   now   : null
+
+[UNRESOLVED-BASELINE] e2e/lane-c-activations-assay-office.spec.ts:24
+   master: tasks/done/shipped-c727a5b7-20260728-022415-lane-c-activations-frame-matrix-from-contract.md
+   intro : (not found)
+   then  : no-intro
+   now   : null
+
+[UNRESOLVED-BASELINE] e2e/town-t6-surfaces.spec.ts:20
+   master: tasks/done/shipped-cc663f52-20260727-192457-082-town-t6-ledger-nav-align.md
+   intro : (not found)
+   then  : no-intro
+   now   : null
+
+[UNRESOLVED-BASELINE] e2e/town-t6-surfaces.spec.ts:96
+   master: tasks/done/shipped-cc663f52-20260727-192457-082-town-t6-ledger-nav-align.md
+   intro : (not found)
+   then  : no-intro
+   now   : "plain menu thins to town, profile, settings"
+
+[UNRESOLVED-BASELINE] e2e/044-start-screen.spec.ts:45
+   master: tasks/done/shipped-cc663f52-20260727-192457-082-town-t6-ledger-nav-align.md
+   intro : (not found)
+   then  : no-intro
+   now   : "plain boot shows the Storybook start menu without Continue"
+
+[UNRESOLVED-BASELINE] e2e/town-t6-surfaces.spec.ts:96
+   master: tasks/done/shipped-cc663f52-20260727-192457-082-town-t6-ledger-nav-align.md
+   intro : (not found)
+   then  : no-intro
+   now   : "plain menu thins to town, profile, settings"
+
+[UNRESOLVED-BASELINE] e2e/bug-office-desk.spec.ts:54
+   master: tasks/done/shipped-dbde043f-20260727-203516-lane-town-t6-assay-supersession.md
+   intro : (not found)
+   then  : no-intro
+   now   : null
+
+[UNRESOLVED-BASELINE] e2e/bug-office-desk.spec.ts:101
+   master: tasks/done/shipped-dbde043f-20260727-203516-lane-town-t6-assay-supersession.md
+   intro : (not found)
+   then  : no-intro
+   now   : "the Assay Office door files a complaint with uploaded evidence, ticket, and bounty"
+
+[UNRESOLVED-BASELINE] e2e/bt-00-demolish.spec.ts:67
+   master: tasks/done/shipped-e42ed4ef-20260728-152358-lane-a-build-mode-prompt-spec-realign.md
+   intro : (not found)
+   then  : no-intro
+   now   : null
+
+[UNRESOLVED-BASELINE] e2e/bt-01-tiers.spec.ts:68
+   master: tasks/done/shipped-e42ed4ef-20260728-152358-lane-a-build-mode-prompt-spec-realign.md
+   intro : (not found)
+   then  : no-intro
+   now   : null
+
+[UNRESOLVED-BASELINE] e2e/world-info-notes.spec.ts:286
+   master: tasks/done/shipped-e42ed4ef-20260728-152358-lane-a-build-mode-prompt-spec-realign.md
+   intro : (not found)
+   then  : no-intro
+   now   : "megaproject site registers a note without replacing the signboard readout"
+
+[UNRESOLVED-BASELINE] e2e/en-01-claim-ledger.spec.ts:76
+   master: tasks/done/shipped-e52b4fde-20260727-080912-lane-approach-steer-to-arrival.md
+   intro : (not found)
+   then  : no-intro
+   now   : null
+
+[UNRESOLVED-BASELINE] e2e/en-02-e1-coverage.spec.ts:183
+   master: tasks/done/shipped-e52b4fde-20260727-080912-lane-approach-steer-to-arrival.md
+   intro : (not found)
+   then  : no-intro
+   now   : null
+
+[UNRESOLVED-BASELINE] e2e/en-02-e1-coverage.spec.ts:189
+   master: tasks/done/shipped-e52b4fde-20260727-080912-lane-approach-steer-to-arrival.md
+   intro : (not found)
+   then  : no-intro
+   now   : null
+
+[UNRESOLVED-BASELINE] e2e/072-era-activation.spec.ts:145
+   master: tasks/done/shipped-e52b4fde-20260727-080912-lane-approach-steer-to-arrival.md
+   intro : (not found)
+   then  : no-intro
+   now   : null
+
+[UNRESOLVED-BASELINE] e2e/072-era-activation.spec.ts:152
+   master: tasks/done/shipped-e52b4fde-20260727-080912-lane-approach-steer-to-arrival.md
+   intro : (not found)
+   then  : no-intro
+   now   : null
+
+[UNRESOLVED-BASELINE] e2e/gz-h1-newsie.spec.ts:79
+   master: tasks/done/shipped-e52b4fde-20260727-080912-lane-approach-steer-to-arrival.md
+   intro : (not found)
+   then  : no-intro
+   now   : null
+
+[UNRESOLVED-BASELINE] e2e/town-t1-square.spec.ts:53
+   master: tasks/done/shipped-e52b4fde-20260727-080912-lane-approach-steer-to-arrival.md
+   intro : (not found)
+   then  : no-intro
+   now   : null
+
+[UNRESOLVED-BASELINE] e2e/town-t2-naming.spec.ts:48
+   master: tasks/done/shipped-e52b4fde-20260727-080912-lane-approach-steer-to-arrival.md
+   intro : (not found)
+   then  : no-intro
+   now   : null
+
+[UNRESOLVED-BASELINE] e2e/wd02-barks.spec.ts:68
+   master: tasks/done/shipped-e52b4fde-20260727-080912-lane-approach-steer-to-arrival.md
+   intro : (not found)
+   then  : no-intro
+   now   : null
+
+[UNRESOLVED-BASELINE] e2e/e3-research-tree.spec.ts:66
+   master: tasks/done/shipped-e52b4fde-20260727-080912-lane-approach-steer-to-arrival.md
+   intro : (not found)
+   then  : no-intro
+   now   : "the active Voltage chart renders its uncertified bank without purchasable picks"
+
+[UNRESOLVED-BASELINE] e2e/trail-guide.spec.ts:53
+   master: tasks/done/shipped-e52b4fde-20260727-080912-lane-approach-steer-to-arrival.md
+   intro : (not found)
+   then  : no-intro
+   now   : null
+
+[UNRESOLVED-BASELINE] e2e/release-build.spec.ts:21
+   master: tasks/done/shipped-e5d3c26c-20260729-130537-lane-gg-01b-welcome-release-gate.md
+   intro : (not found)
+   then  : no-intro
+   now   : "first player reaches textured town actors and places a Dry Gulch spring sluice"
+
+[UNRESOLVED-BASELINE] e2e/release-build.spec.ts:21
+   master: tasks/done/shipped-e5d3c26c-20260729-130537-lane-gg-01b-welcome-release-gate.md
+   intro : (not found)
+   then  : no-intro
+   now   : "first player reaches textured town actors and places a Dry Gulch spring sluice"
+
+[UNRESOLVED-BASELINE] e2e/vp-02b-rotation-resolver.spec.ts:24
+   master: tasks/done/shipped-e6961aee-20260727-185435-lane-vp-02e-diagonal-clip-resolution.md
+   intro : (not found)
+   then  : no-intro
+   now   : null
+
+[UNRESOLVED-BASELINE] e2e/vp-02b-rotation-resolver.spec.ts:113
+   master: tasks/done/shipped-e6961aee-20260727-185435-lane-vp-02e-diagonal-clip-resolution.md
+   intro : (not found)
+   then  : no-intro
+   now   : "hero locomotion resolves all 8 contract directions"
+
+[UNRESOLVED-BASELINE] e2e/vp-02b-rotation-resolver.spec.ts:292
+   master: tasks/done/shipped-eb387ec4-20260727-200724-lane-vp-02f-stale-and-flaky-assertions.md
+   intro : (not found)
+   then  : no-intro
+   now   : "captures rotation scale-pulse review shots"
+
+[UNRESOLVED-BASELINE] e2e/vp-02-sprite-animation.spec.ts:388
+   master: tasks/done/shipped-eb387ec4-20260727-200724-lane-vp-02f-stale-and-flaky-assertions.md
+   intro : (not found)
+   then  : no-intro
+   now   : "missing sheet cells fall back to the existing one-frame billboard without drift"
+
+[UNRESOLVED-BASELINE] e2e/vp-02b-rotation-resolver.spec.ts:24
+   master: tasks/done/shipped-eb387ec4-20260727-200724-lane-vp-02f-stale-and-flaky-assertions.md
+   intro : (not found)
+   then  : no-intro
+   now   : null
+
+[UNRESOLVED-BASELINE] e2e/vp-02b-rotation-resolver.spec.ts:233
+   master: tasks/done/shipped-eb387ec4-20260727-200724-lane-vp-02f-stale-and-flaky-assertions.md
+   intro : (not found)
+   then  : no-intro
+   now   : "action clips stay on coarse orientation cells and jumper diagnostics stay old shape"
+
+[UNRESOLVED-BASELINE] e2e/vp-02-sprite-animation.spec.ts:705
+   master: tasks/done/shipped-eb387ec4-20260727-200724-lane-vp-02f-stale-and-flaky-assertions.md
+   intro : (not found)
+   then  : no-intro
+   now   : "orientation swap crossfades once and adds no draw call at rest"
+
+[UNRESOLVED-BASELINE] e2e/vp-02-sprite-animation.spec.ts:547
+   master: tasks/done/shipped-eb387ec4-20260727-200724-lane-vp-02f-stale-and-flaky-assertions.md
+   intro : (not found)
+   then  : no-intro
+   now   : "hero walk frameKey alternates while each 8-way heading is held"
+
+[UNRESOLVED-BASELINE] e2e/vp-02-sprite-animation.spec.ts:174
+   master: tasks/done/shipped-ef3731b8-20260727-213334-lane-vp-02g-west-capture-null-rate.md
+   intro : (not found)
+   then  : no-intro
+   now   : null
+
+[UNRESOLVED-BASELINE] e2e/vp-02-sprite-animation.spec.ts:549
+   master: tasks/done/shipped-ef3731b8-20260727-213334-lane-vp-02g-west-capture-null-rate.md
+   intro : (not found)
+   then  : no-intro
+   now   : "hero walk frameKey alternates while each 8-way heading is held"
+
+[UNRESOLVED-BASELINE] e2e/vp-02-sprite-animation.spec.ts:131
+   master: tasks/done/shipped-ef3731b8-20260727-213334-lane-vp-02g-west-capture-null-rate.md
+   intro : (not found)
+   then  : no-intro
+   now   : null
+
+[UNRESOLVED-BASELINE] e2e/gt-02-slope.spec.ts:207
+   master: tasks/done/shipped-fd4ee249-20260728-191926-lane-gt-03b-goal-side-steer.md
+   intro : (not found)
+   then  : no-intro
+   now   : "cliff slide resolver never wedges reachable hero positions"
+
+[UNRESOLVED-BASELINE] e2e/gt-03-enemy-elevation.spec.ts:205
+   master: tasks/done/shipped-fd4ee249-20260728-191926-lane-gt-03b-goal-side-steer.md
+   intro : (not found)
+   then  : no-intro
+   now   : "cliff blocks enemies and local routing sends them around the ridge"
+
+[UNRESOLVED-BASELINE] e2e/e10-static-boss.spec.ts:19
+   master: tasks/done/shipped-s1025-rig-repair-4d04e3b8.md
+   intro : (not found)
+   then  : no-intro
+   now   : null
+
+[UNRESOLVED-BASELINE] e2e/e5-deepwater-claim.spec.ts:9
+   master: tasks/done/shipped-s1034-resource-timing-false-greens-022c842e.md
+   intro : (not found)
+   then  : no-intro
+   now   : null
+
+[UNRESOLVED-BASELINE] e2e/mu-02-music.spec.ts:45
+   master: tasks/done/shipped-s1034-resource-timing-false-greens-022c842e.md
+   intro : (not found)
+   then  : no-intro
+   now   : "title music waits for a gesture and music volume persists"
+
+[UNRESOLVED-BASELINE] e2e/mu-03-era-audio.spec.ts:14
+   master: tasks/done/shipped-s1034-resource-timing-false-greens-022c842e.md
+   intro : (not found)
+   then  : no-intro
+   now   : null
+
+[UNRESOLVED-BASELINE] e2e/e5-water-spike.spec.ts:84
+   master: tasks/done/shipped-s1034-resource-timing-false-greens-022c842e.md
+   intro : (not found)
+   then  : no-intro
+   now   : "plain debug boot leaves the deepwater chunk dormant"
+
+[UNRESOLVED-BASELINE] e2e/e5-deepwater-claim.spec.ts:10
+   master: tasks/done/shipped-s1034-resource-timing-false-greens-022c842e.md
+   intro : (not found)
+   then  : no-intro
+   now   : null
+
+[UNRESOLVED-BASELINE] e2e/m2-05-base-damage-repair.spec.ts:319
+   master: tasks/done/shipped-s1035-m2-05-readiness-seam.md
+   intro : (not found)
+   then  : no-intro
+   now   : "real waves spawn zero wreckers without buildables and nowreck disables them with buildables present"
+
+[UNRESOLVED-BASELINE] e2e/run3d-turret.spec.ts:61
+   master: tasks/done/shipped-s1035-m2-05-readiness-seam.md
+   intro : (not found)
+   then  : no-intro
+   now   : "all loads once, mirrors instances, and unmounts a demolished turret"
+
+[UNRESOLVED-BASELINE] e2e/run3d-assay-bench.spec.ts:61
+   master: tasks/done/shipped-s1035-m2-05-readiness-seam.md
+   intro : (not found)
+   then  : no-intro
+   now   : "all loads once, preserves interaction, and unmounts on demolish"
+
+[UNRESOLVED-BASELINE] e2e/m2-05-base-damage-repair.spec.ts:93
+   master: tasks/done/shipped-s1040-m2-05-geometry-settle-99bd76fd.md
+   intro : (not found)
+   then  : no-intro
+   now   : null
+
+[UNRESOLVED-BASELINE] e2e/e5-deepwater-claim.spec.ts:29
+   master: tasks/done/shipped-s1046-retired-ghost-e5-deepwater-resource-guard-7a020e66.md
+   intro : (not found)
+   then  : no-intro
+   now   : null
+
+[UNRESOLVED-BASELINE] e2e/asset-diet.spec.ts:92
+   master: tasks/done/shipped-s1047-retired-ghost-asset-diet-gate-honesty-9ba65911.md
+   intro : (not found)
+   then  : no-intro
+   now   : "honest town and claim cues appear while GLBs are throttled and leave at ready"
+
+[UNRESOLVED-BASELINE] e2e/m2-01-build-menu.spec.ts:84
+   master: tasks/done/shipped-s1047-retired-ghost-m2-01-fixture-coordinate-df51d877.md
+   intro : (not found)
+   then  : no-intro
+   now   : null
+
+[UNRESOLVED-BASELINE] e2e/asset-diet.spec.ts:102
+   master: tasks/done/shipped-s1048-asset-diet-budget-runnable-e718b7cc.md
+   intro : (not found)
+   then  : no-intro
+   now   : "honest town and claim cues appear while GLBs are throttled and leave at ready"
+
+[UNRESOLVED-BASELINE] e2e/asset-diet.spec.ts:16
+   master: tasks/done/shipped-s1048-asset-diet-budget-runnable-e718b7cc.md
+   intro : (not found)
+   then  : no-intro
+   now   : null
+
+[UNRESOLVED-BASELINE] e2e/asset-diet.spec.ts:102
+   master: tasks/done/shipped-s1048-asset-diet-budget-runnable-e718b7cc.md
+   intro : (not found)
+   then  : no-intro
+   now   : "honest town and claim cues appear while GLBs are throttled and leave at ready"
+
+[UNRESOLVED-BASELINE] e2e/task-037-assay-bench-ungate.spec.ts:142
+   master: tasks/done/shipped-s1063-lane-d-rf-03b-specs-supersession-review-rf-03b.md
+   intro : (not found)
+   then  : no-intro
+   now   : null
+
+[UNRESOLVED-BASELINE] e2e/town-assay-office-blender.spec.ts:186
+   master: tasks/done/shipped-s1063-lane-d-rf-03b-specs-supersession-review-rf-03b.md
+   intro : (not found)
+   then  : no-intro
+   now   : "Assay Office pilot is lazy, contract-valid, visual-only, and stays inside the frame-time gate"
+
+[UNRESOLVED-BASELINE] e2e/e7-boss.spec.ts:8
+   master: tasks/done/shipped-s1063-lane-e7-e10-claimable-1135df1a-NOREVIEW.md
+   intro : (not found)
+   then  : no-intro
+   now   : null
+
+[UNRESOLVED-BASELINE] e2e/e10-static-boss.spec.ts:3
+   master: tasks/done/shipped-s1063-lane-e7-e10-claimable-1135df1a-NOREVIEW.md
+   intro : (not found)
+   then  : no-intro
+   now   : null
+
+[UNRESOLVED-BASELINE] e2e/task-024-blast-aim-presets.spec.ts:130
+   master: tasks/done/shipped-s1084-blocked-storage-boot-3.md
+   intro : (not found)
+   then  : no-intro
+   now   : "difficulty preset falls back to default when profile storage is blocked"
+
+[UNRESOLVED-BASELINE] e2e/task-024-blast-aim-presets.spec.ts:130
+   master: tasks/done/shipped-s1085-blocked-storage-access-throw.md
+   intro : (not found)
+   then  : no-intro
+   now   : "difficulty preset falls back to default when profile storage is blocked"
+
+[UNRESOLVED-BASELINE] e2e/bug-office-api.spec.ts:91
+   master: tasks/done/shipped-s1087-20260726-212451-lane-ratelimit-hoist.md
+   intro : (not found)
+   then  : no-intro
+   now   : "rate-limits the sixth report from one IP"
+
+[UNRESOLVED-BASELINE] e2e/tl-01-run-telemetry.spec.ts:391
+   master: tasks/done/shipped-s1087-20260726-212451-lane-ratelimit-hoist.md
+   intro : (not found)
+   then  : no-intro
+   now   : "server route rate-limits bound telemetry by client IP"
+
+[UNRESOLVED-BASELINE] e2e/safari-swap.spec.ts:40
+   master: tasks/done/shipped-s1093-20260726-234021-lane-town-glob-collection-a222242f.md
+   intro : (not found)
+   then  : no-intro
+   now   : "Safari swap removes the run HUD and keeps town buildings solid"
+
+[UNRESOLVED-BASELINE] e2e/never-trap.spec.ts:107
+   master: tasks/done/shipped-s1093-20260726-234021-lane-town-glob-collection-a222242f.md
+   intro : (not found)
+   then  : no-intro
+   now   : "hero and enemies escape a run landmark center within bounded ticks"
+
+[UNRESOLVED-BASELINE] e2e/task-024-blast-aim-presets.spec.ts:130
+   master: tasks/done/shipped-s1094-20260727-001818-lane-startmenu-storage-contract-53d260ff.md
+   intro : (not found)
+   then  : no-intro
+   now   : "difficulty preset falls back to default when profile storage is blocked"
+
+[UNRESOLVED-BASELINE] e2e/profile-first-boot.spec.ts:41
+   master: tasks/done/shipped-s1094-20260727-001818-lane-startmenu-storage-contract-53d260ff.md
+   intro : (not found)
+   then  : no-intro
+   now   : "cleared-storage boot asks who is prospecting and creates no Robin ghost"
+
+[UNRESOLVED-BASELINE] e2e/profile-first-boot.spec.ts:41
+   master: tasks/done/shipped-s1094-20260727-001818-lane-startmenu-storage-contract-53d260ff.md
+   intro : (not found)
+   then  : no-intro
+   now   : "cleared-storage boot asks who is prospecting and creates no Robin ghost"
+
+[UNRESOLVED-BASELINE] e2e/task-024-blast-aim-presets.spec.ts:129
+   master: tasks/done/shipped-s1094-20260727-001818-lane-startmenu-storage-contract-53d260ff.md
+   intro : (not found)
+   then  : no-intro
+   now   : "difficulty presets apply the hard-mode bundle and persist by profile key"
+
+[UNRESOLVED-BASELINE] e2e/m4-10-agent-actions-integrity.spec.ts:112
+   master: tasks/done/stopped-case-b-ladder-breach-F1218-1-s1218-20260729-181305-lane-c-ap-06b-panel-ladder-and-voice.md
+   intro : (not found)
+   then  : no-intro
+   now   : "panel only offers registered ToolSurface capabilities"
+
+[UNRESOLVED-BASELINE] e2e/m4-09-agent-rung-clarity.spec.ts:107
+   master: tasks/done/stopped-case-b-ladder-breach-F1218-1-s1218-20260729-181305-lane-c-ap-06b-panel-ladder-and-voice.md
+   intro : (not found)
+   then  : no-intro
+   now   : "rung 0 panel shows the canonical ladder, progress, and blocked repair reason"
+
+[UNRESOLVED-BASELINE] e2e/m4-06-embodiment.spec.ts:384
+   master: tasks/done/stopped-case-b-ladder-breach-F1218-1-s1218-20260729-181305-lane-c-ap-06b-panel-ladder-and-voice.md
+   intro : (not found)
+   then  : no-intro
+   now   : "debug receipt moves the Prospector toward a panning target and floats ledger voice"
+
+[UNRESOLVED-BASELINE] e2e/m4-09-agent-rung-clarity.spec.ts:89
+   master: tasks/done/stopped-case-b-ladder-breach-F1218-1-s1218-20260729-181305-lane-c-ap-06b-panel-ladder-and-voice.md
+   intro : (not found)
+   then  : no-intro
+   now   : "rung 0 panel shows the canonical ladder, progress, and blocked repair reason"
+
+[UNRESOLVED-BASELINE] e2e/m4-10-agent-actions-integrity.spec.ts:103
+   master: tasks/done/stopped-case-b-ladder-breach-F1218-1-s1218-20260729-181305-lane-c-ap-06b-panel-ladder-and-voice.md
+   intro : (not found)
+   then  : no-intro
+   now   : "panel only offers registered ToolSurface capabilities"
+
+[UNRESOLVED-BASELINE] e2e/m4-06-embodiment.spec.ts:364
+   master: tasks/done/stopped-case-b-ladder-breach-F1218-1-s1218-20260729-181305-lane-c-ap-06b-panel-ladder-and-voice.md
+   intro : (not found)
+   then  : no-intro
+   now   : "debug receipt moves the Prospector toward a panning target and floats ledger voice"
+
+[UNRESOLVED-BASELINE] e2e/en-01-claim-ledger.spec.ts:76
+   master: tasks/done/stopped-firewall-s1108-awaits-town-plaza-slot-diagnostics-20260727-065051-lane-approach-steer-to-arrival.md
+   intro : (not found)
+   then  : no-intro
+   now   : null
+
+[UNRESOLVED-BASELINE] e2e/en-02-e1-coverage.spec.ts:183
+   master: tasks/done/stopped-firewall-s1108-awaits-town-plaza-slot-diagnostics-20260727-065051-lane-approach-steer-to-arrival.md
+   intro : (not found)
+   then  : no-intro
+   now   : null
+
+[UNRESOLVED-BASELINE] e2e/en-02-e1-coverage.spec.ts:189
+   master: tasks/done/stopped-firewall-s1108-awaits-town-plaza-slot-diagnostics-20260727-065051-lane-approach-steer-to-arrival.md
+   intro : (not found)
+   then  : no-intro
+   now   : null
+
+[UNRESOLVED-BASELINE] e2e/072-era-activation.spec.ts:145
+   master: tasks/done/stopped-firewall-s1108-awaits-town-plaza-slot-diagnostics-20260727-065051-lane-approach-steer-to-arrival.md
+   intro : (not found)
+   then  : no-intro
+   now   : null
+
+[UNRESOLVED-BASELINE] e2e/072-era-activation.spec.ts:152
+   master: tasks/done/stopped-firewall-s1108-awaits-town-plaza-slot-diagnostics-20260727-065051-lane-approach-steer-to-arrival.md
+   intro : (not found)
+   then  : no-intro
+   now   : null
+
+[UNRESOLVED-BASELINE] e2e/gz-h1-newsie.spec.ts:79
+   master: tasks/done/stopped-firewall-s1108-awaits-town-plaza-slot-diagnostics-20260727-065051-lane-approach-steer-to-arrival.md
+   intro : (not found)
+   then  : no-intro
+   now   : null
+
+[UNRESOLVED-BASELINE] e2e/town-t1-square.spec.ts:53
+   master: tasks/done/stopped-firewall-s1108-awaits-town-plaza-slot-diagnostics-20260727-065051-lane-approach-steer-to-arrival.md
+   intro : (not found)
+   then  : no-intro
+   now   : null
+
+[UNRESOLVED-BASELINE] e2e/town-t2-naming.spec.ts:48
+   master: tasks/done/stopped-firewall-s1108-awaits-town-plaza-slot-diagnostics-20260727-065051-lane-approach-steer-to-arrival.md
+   intro : (not found)
+   then  : no-intro
+   now   : null
+
+[UNRESOLVED-BASELINE] e2e/wd02-barks.spec.ts:68
+   master: tasks/done/stopped-firewall-s1108-awaits-town-plaza-slot-diagnostics-20260727-065051-lane-approach-steer-to-arrival.md
+   intro : (not found)
+   then  : no-intro
+   now   : null
+
+[UNRESOLVED-BASELINE] e2e/e3-research-tree.spec.ts:66
+   master: tasks/done/stopped-firewall-s1108-awaits-town-plaza-slot-diagnostics-20260727-065051-lane-approach-steer-to-arrival.md
+   intro : (not found)
+   then  : no-intro
+   now   : "the active Voltage chart renders its uncertified bank without purchasable picks"
+
+[UNRESOLVED-BASELINE] e2e/trail-guide.spec.ts:53
+   master: tasks/done/stopped-firewall-s1108-awaits-town-plaza-slot-diagnostics-20260727-065051-lane-approach-steer-to-arrival.md
+   intro : (not found)
+   then  : no-intro
+   now   : null
+
+[UNRESOLVED-BASELINE] e2e/en-01-claim-ledger.spec.ts:76
+   master: tasks/done/stopped-firewall-s1110-lift-landed-on-plaza-slots-not-buildings-DO-NOT-REQUEUE-UNCHANGED-20260727-073534-lane-approach-steer-to-arrival.md
+   intro : (not found)
+   then  : no-intro
+   now   : null
+
+[UNRESOLVED-BASELINE] e2e/en-02-e1-coverage.spec.ts:183
+   master: tasks/done/stopped-firewall-s1110-lift-landed-on-plaza-slots-not-buildings-DO-NOT-REQUEUE-UNCHANGED-20260727-073534-lane-approach-steer-to-arrival.md
+   intro : (not found)
+   then  : no-intro
+   now   : null
+
+[UNRESOLVED-BASELINE] e2e/en-02-e1-coverage.spec.ts:189
+   master: tasks/done/stopped-firewall-s1110-lift-landed-on-plaza-slots-not-buildings-DO-NOT-REQUEUE-UNCHANGED-20260727-073534-lane-approach-steer-to-arrival.md
+   intro : (not found)
+   then  : no-intro
+   now   : null
+
+[UNRESOLVED-BASELINE] e2e/072-era-activation.spec.ts:145
+   master: tasks/done/stopped-firewall-s1110-lift-landed-on-plaza-slots-not-buildings-DO-NOT-REQUEUE-UNCHANGED-20260727-073534-lane-approach-steer-to-arrival.md
+   intro : (not found)
+   then  : no-intro
+   now   : null
+
+[UNRESOLVED-BASELINE] e2e/072-era-activation.spec.ts:152
+   master: tasks/done/stopped-firewall-s1110-lift-landed-on-plaza-slots-not-buildings-DO-NOT-REQUEUE-UNCHANGED-20260727-073534-lane-approach-steer-to-arrival.md
+   intro : (not found)
+   then  : no-intro
+   now   : null
+
+[UNRESOLVED-BASELINE] e2e/gz-h1-newsie.spec.ts:79
+   master: tasks/done/stopped-firewall-s1110-lift-landed-on-plaza-slots-not-buildings-DO-NOT-REQUEUE-UNCHANGED-20260727-073534-lane-approach-steer-to-arrival.md
+   intro : (not found)
+   then  : no-intro
+   now   : null
+
+[UNRESOLVED-BASELINE] e2e/town-t1-square.spec.ts:53
+   master: tasks/done/stopped-firewall-s1110-lift-landed-on-plaza-slots-not-buildings-DO-NOT-REQUEUE-UNCHANGED-20260727-073534-lane-approach-steer-to-arrival.md
+   intro : (not found)
+   then  : no-intro
+   now   : null
+
+[UNRESOLVED-BASELINE] e2e/town-t2-naming.spec.ts:48
+   master: tasks/done/stopped-firewall-s1110-lift-landed-on-plaza-slots-not-buildings-DO-NOT-REQUEUE-UNCHANGED-20260727-073534-lane-approach-steer-to-arrival.md
+   intro : (not found)
+   then  : no-intro
+   now   : null
+
+[UNRESOLVED-BASELINE] e2e/wd02-barks.spec.ts:68
+   master: tasks/done/stopped-firewall-s1110-lift-landed-on-plaza-slots-not-buildings-DO-NOT-REQUEUE-UNCHANGED-20260727-073534-lane-approach-steer-to-arrival.md
+   intro : (not found)
+   then  : no-intro
+   now   : null
+
+[UNRESOLVED-BASELINE] e2e/e3-research-tree.spec.ts:66
+   master: tasks/done/stopped-firewall-s1110-lift-landed-on-plaza-slots-not-buildings-DO-NOT-REQUEUE-UNCHANGED-20260727-073534-lane-approach-steer-to-arrival.md
+   intro : (not found)
+   then  : no-intro
+   now   : "the active Voltage chart renders its uncertified bank without purchasable picks"
+
+[UNRESOLVED-BASELINE] e2e/trail-guide.spec.ts:53
+   master: tasks/done/stopped-firewall-s1110-lift-landed-on-plaza-slots-not-buildings-DO-NOT-REQUEUE-UNCHANGED-20260727-073534-lane-approach-steer-to-arrival.md
+   intro : (not found)
+   then  : no-intro
+   now   : null
+
+[UNRESOLVED-BASELINE] e2e/055-baron-kill-stop.spec.ts:121
+   master: tasks/done/stopped-lawful-s1124-quiescence-gate-REQUEUEABLE-when-idle-20260727-141048-lane-calibrate-suite-workers-v2.md
+   intro : (not found)
+   then  : no-intro
+   now   : null
+
+[UNRESOLVED-BASELINE] e2e/055-baron-kill-stop.spec.ts:121
+   master: tasks/done/stopped-lawful-s1125-quiescence-gate-OWNER-BLOCKED-do-not-requeue-20260727-145012-lane-calibrate-suite-workers-v2.md
+   intro : (not found)
+   then  : no-intro
+   now   : null
+
+[UNRESOLVED-BASELINE] e2e/vp-02b-rotation-resolver.spec.ts:149
+   master: tasks/done/stopped-lawful-s1132-preflight-undeclared-dirt-SUPERSEDED-by-attempt2-20260727-174331-lane-vp-02d-side-idle-resolver.md
+   intro : (not found)
+   then  : no-intro
+   now   : "resolver hysteresis holds across small boundary oscillation"
+
+[UNRESOLVED-BASELINE] e2e/vp-02b-rotation-resolver.spec.ts:233
+   master: tasks/done/stopped-lawful-s1144-scope1-gate-fired-20260727-234321-lane-vp-02b-jumper-slot-red.md
+   intro : (not found)
+   then  : no-intro
+   now   : "action clips stay on coarse orientation cells and jumper diagnostics stay old shape"
+
+[UNRESOLVED-BASELINE] e2e/vp-02b-rotation-resolver.spec.ts:233
+   master: tasks/done/stopped-lawful-s1144-scope1-gate-fired-20260727-234321-lane-vp-02b-jumper-slot-red.md
+   intro : (not found)
+   then  : no-intro
+   now   : "action clips stay on coarse orientation cells and jumper diagnostics stay old shape"
+
+[UNRESOLVED-BASELINE] e2e/cast-motion-wiring.spec.ts:68
+   master: tasks/done/stopped-lawful-s1162-premise-refuted-subjects-never-walk-20260728-105705-lane-b-anim-8frame-townsfolk.md
+   intro : (not found)
+   then  : no-intro
+   now   : "the plaza cast stands, walks, and faces truthfully without borrowed sheets"
+
+[UNRESOLVED-BASELINE] e2e/066-walk8-engine.spec.ts:54
+   master: tasks/done/stopped-lawful-s1176-blocked-by-26-cell-master-divergence-20260728-171947-lane-c-eight-winds-wiring-hero.md
+   intro : (not found)
+   then  : no-intro
+   now   : null
+
+[UNRESOLVED-BASELINE] e2e/066-walk8-engine.spec.ts:54
+   master: tasks/done/stopped-lawful-s1176-blocked-by-26-cell-master-divergence-20260728-171947-lane-c-eight-winds-wiring-hero.md
+   intro : (not found)
+   then  : no-intro
+   now   : null
+
+[UNRESOLVED-BASELINE] e2e/release-build.spec.ts:202
+   master: tasks/done/stopped-lawful-s1179-refuted-at-scope-1d-20260728-182840-lane-a-cp04-lever-unlock-seed-realign.md
+   intro : (not found)
+   then  : no-intro
+   now   : "a forged locked launch declines to the Claim"
+
+[UNRESOLVED-BASELINE] e2e/cp04-lever.spec.ts:117
+   master: tasks/done/stopped-lawful-s1179-refuted-at-scope-1d-20260728-182840-lane-a-cp04-lever-unlock-seed-realign.md
+   intro : (not found)
+   then  : no-intro
+   now   : "the Lever is three choices and one press, then launches through the charter seam"
+
+[UNRESOLVED-BASELINE] e2e/066-walk8-engine.spec.ts:194
+   master: tasks/done/stopped-lawful-s1180-preflight-refused-reset-over-undrained-m3-05b-20260728-194116-lane-c-066-walk8-hero-expectation-realign.md
+   intro : (not found)
+   then  : no-intro
+   now   : "hero walks on the activated walk8 sheet at the ratified cadence"
+
+[UNRESOLVED-BASELINE] e2e/cp04-lever.spec.ts:130
+   master: tasks/done/stopped-lawful-s1180-scope-1c-gate-not-entered-20260728-194217-lane-b-cp04-charter-name-composition.md
+   intro : (not found)
+   then  : no-intro
+   now   : "a plain boot remains inert"
+
+[UNRESOLVED-BASELINE] e2e/cp04-lever.spec.ts:61
+   master: tasks/done/stopped-lawful-s1180-scope-1c-gate-not-entered-20260728-194217-lane-b-cp04-charter-name-composition.md
+   intro : (not found)
+   then  : no-intro
+   now   : "the Lever is three choices and one press, then launches through the charter seam"
+
+[UNRESOLVED-BASELINE] e2e/cp04-lever.spec.ts:118
+   master: tasks/done/stopped-lawful-s1180-scope-1c-gate-not-entered-20260728-194217-lane-b-cp04-charter-name-composition.md
+   intro : (not found)
+   then  : no-intro
+   now   : "a plain boot remains inert"
+
+[UNRESOLVED-BASELINE] e2e/gazette-art-wiring.spec.ts:103
+   master: tasks/done/stopped-preflight-premise-not-yet-merged-requeued-s1209-20260729-115559-lane-gg-03c-herald-art-dev-path-weight.md
+   intro : (not found)
+   then  : no-intro
+   now   : "plain-boot Claim Herald shows the correct live cut for every item"
+
+[UNRESOLVED-BASELINE] e2e/task-024-blast-aim-presets.spec.ts:130
+   master: tasks/done/stopped-preflight-s1093-20260727-000128-lane-startmenu-storage-contract.md
+   intro : (not found)
+   then  : no-intro
+   now   : "difficulty preset falls back to default when profile storage is blocked"
+
+[UNRESOLVED-BASELINE] e2e/profile-first-boot.spec.ts:41
+   master: tasks/done/stopped-preflight-s1093-20260727-000128-lane-startmenu-storage-contract.md
+   intro : (not found)
+   then  : no-intro
+   now   : "cleared-storage boot asks who is prospecting and creates no Robin ghost"
+
+[UNRESOLVED-BASELINE] e2e/profile-first-boot.spec.ts:41
+   master: tasks/done/stopped-preflight-s1093-20260727-000128-lane-startmenu-storage-contract.md
+   intro : (not found)
+   then  : no-intro
+   now   : "cleared-storage boot asks who is prospecting and creates no Robin ghost"
+
+[UNRESOLVED-BASELINE] e2e/task-024-blast-aim-presets.spec.ts:129
+   master: tasks/done/stopped-preflight-s1093-20260727-000128-lane-startmenu-storage-contract.md
+   intro : (not found)
+   then  : no-intro
+   now   : "difficulty presets apply the hard-mode bundle and persist by profile key"
+
+[UNRESOLVED-BASELINE] e2e/072-era-activation.spec.ts:145
+   master: tasks/done/stopped-preflight-s1108-debris-commit-cleared-requeued-20260727-065838-lane-town-plaza-slot-diagnostics.md
+   intro : (not found)
+   then  : no-intro
+   now   : null
+
+[UNRESOLVED-BASELINE] e2e/gazette-welcome.spec.ts:44
+   master: tasks/done/stopped-premise-not-reproduced-F1215-2-s1215-20260729-161534-lane-d-gazette-welcome-newsie-drift-window.md
+   intro : (not found)
+   then  : no-intro
+   now   : "the Gazette welcome fires once, walks skippably, and retriggers through the newsie"
+
+[UNRESOLVED-BASELINE] e2e/gazette-welcome.spec.ts:81
+   master: tasks/done/stopped-premise-not-reproduced-F1215-2-s1215-20260729-161534-lane-d-gazette-welcome-newsie-drift-window.md
+   intro : (not found)
+   then  : no-intro
+   now   : "the Gazette welcome fires once, walks skippably, and retriggers through the newsie"
+
+[UNRESOLVED-BASELINE] e2e/gazette-art-wiring.spec.ts:74
+   master: tasks/done/stopped-premise-not-reproduced-drained-s1209-20260729-113240-lane-gg-03b-gazette-panel-weight.md
+   intro : (not found)
+   then  : no-intro
+   now   : null
+
+[UNRESOLVED-BASELINE] e2e/m2-05-base-damage-repair.spec.ts:319
+   master: tasks/done/superseded-s1046-retired-ghost-m2-05-wreck-repair-drift.md
+   intro : (not found)
+   then  : no-intro
+   now   : "real waves spawn zero wreckers without buildables and nowreck disables them with buildables present"
+
+[DRIFTED] e2e/contract-briefings.spec.ts:356
+   master: tasks/e1-briefing-truth-unmasked.md
+   intro : 12bc90999189
+   then  : "plain no-debug board launch still briefs The Claim"
+   now   : "pause panel repeats the active contract briefing"
+
+[UNRESOLVED-BASELINE] e2e/perf-05-startup.spec.ts:15
+   master: tasks/failed/shipped-s1039-perf-05-startup-attribution-63161278.md
+   intro : (not found)
+   then  : no-intro
+   now   : null
+
+[UNRESOLVED-BASELINE] e2e/mp-02-lockstep.spec.ts:67
+   master: tasks/failed/shipped-s1064-20260710-060755-067-mp-resync-two-actors-e2677a87.md
+   intro : (not found)
+   then  : no-intro
+   now   : "consecutive action pulses survive the filled input-delay window exactly once"
+
+[UNRESOLVED-BASELINE] e2e/mp-02-lockstep.spec.ts:67
+   master: tasks/failed/shipped-s1064-20260710-063429-067-mp-resync-two-actors-e2677a87.md
+   intro : (not found)
+   then  : no-intro
+   now   : "consecutive action pulses survive the filled input-delay window exactly once"
+
+[UNRESOLVED-BASELINE] e2e/m2-05-base-damage-repair.spec.ts:93
+   master: tasks/failed/shipped-s1064-20260725-162316-m2-05-geometry-settle-99bd76fd.md
+   intro : (not found)
+   then  : no-intro
+   now   : null
+
+[DRIFTED] e2e/task-025-bandits-dont-swim.spec.ts:185
+   master: tasks/fix-task-025-wet-powder-announcement-race.md
+   intro : 9c76a55ab32e
+   then  : "hero still wades but wet powder disables and then restores weapons"
+   now   : "xp from a residual deep-water death is auto-banked with no mote"
+
+[DRIFTED] e2e/task-025-bandits-dont-swim.spec.ts:145
+   master: tasks/fix-task-025-wet-powder-announcement-race.md
+   intro : 096654735c35
+   then  : "hero still wades but wet powder disables and then restores weapons"
+   now   : "hero stops in the shallows and keeps weapons armed at the deep channel"
+
+[DRIFTED] e2e/task-025-bandits-dont-swim.spec.ts:145
+   master: tasks/fix-task-025-wet-powder-announcement-race.md
+   intro : 096654735c35
+   then  : "hero still wades but wet powder disables and then restores weapons"
+   now   : "hero stops in the shallows and keeps weapons armed at the deep channel"
+
+[DRIFTED] e2e/release-build.spec.ts:202
+   master: tasks/lane-a-cp04-lever-unlock-seed-realign.md
+   intro : 831a8ea5e7c0
+   then  : "dist has no later manifest ids or plate/GLB assets"
+   now   : "a forged locked launch declines to the Claim"
+
+[DRIFTED] e2e/m3-05b-run-ledger.spec.ts:82
+   master: tasks/lane-a-m3-05-run-history.md
+   intro : 9b739d8dadc7
+   then  : "Claim Office opens a responsive Run Ledger and a profile reset returns its warm empty state"
+   now   : "a secured run records its payout and sanitizes optional meta on read"
+
+[DRIFTED] e2e/world-info-notes.spec.ts:289
+   master: tasks/lane-a-town-info-note-dead-reckoning.md
+   intro : 781acfe02a66
+   then  : "town shells use info notes beside opens-soon prompts"
+   now   : "megaproject site registers a note without replacing the signboard readout"
+
+[DRIFTED] e2e/world-info-notes.spec.ts:195
+   master: tasks/lane-a-town-info-note-dead-reckoning.md
+   intro : 781acfe02a66
+   then  : "building notes sit with existing assay and upgrade prompts"
+   now   : "run-world notes explain seams, stake, ford, prospector, and soften after two approaches"
+
+[DRIFTED] e2e/world-info-notes.spec.ts:286
+   master: tasks/lane-a-world-info-build-fixture-realign.md
+   intro : ae7fbb7fc552
+   then  : "town shells use info notes beside opens-soon prompts"
+   now   : "megaproject site registers a note without replacing the signboard readout"
+
+[DRIFTED] e2e/066-walk8-engine.spec.ts:194
+   master: tasks/lane-c-066-walk8-hero-expectation-realign.md
+   intro : aceed90e10f5
+   then  : "hero stays on walk4 while walk8 cells are registered"
+   now   : "hero walks on the activated walk8 sheet at the ratified cadence"
+
+[DRIFTED] e2e/lane-c-activations-assay-office.spec.ts:106
+   master: tasks/lane-c-activations-derivation-hardening.md
+   intro : 1f9d956ff99a
+   then  : "claim jumpers walk through the 8-way rotation matrix"
+   now   : null
+
+[DRIFTED] e2e/lane-c-activations-assay-office.spec.ts:88
+   master: tasks/lane-c-activations-frame-matrix-from-contract.md
+   intro : 5ec1a0dc95e3
+   then  : "claim jumpers walk through the 8-way rotation matrix"
+   now   : null
+
+[DRIFTED] e2e/task-037-assay-bench-ungate.spec.ts:142
+   master: tasks/lane-d-rf-03b-specs-supersession.md
+   intro : b94c2f6759a0
+   then  : "normal play shows the Assay Office prompt and opens the bench without debug"
+   now   : null
+
+[DRIFTED] e2e/e5-deepwater-claim.spec.ts:29
+   master: tasks/lane-e5-deepwater-resource-guard.md
+   intro : e06e7c8aa4c2
+   then  : "boots the Deepwater contract with deck pads, depth gates, and a storm-scheduled corsair wave"
+   now   : null
+
+[DRIFTED] e2e/m2-05-base-damage-repair.spec.ts:319
+   master: tasks/lane-m2-05-readiness-seam.md
+   intro : d9eb4253635c
+   then  : "wreck and repair cycles leave shooter and renderer counts at baseline"
+   now   : "real waves spawn zero wreckers without buildables and nowreck disables them with buildables present"
+
+[DRIFTED] e2e/m2-05-base-damage-repair.spec.ts:319
+   master: tasks/lane-m2-05-wreck-repair-drift.md
+   intro : 3039bc5c648b
+   then  : "wreck and repair cycles leave shooter and renderer counts at baseline"
+   now   : "real waves spawn zero wreckers without buildables and nowreck disables them with buildables present"
+
+[DRIFTED] e2e/mu-02-music.spec.ts:45
+   master: tasks/lane-resource-timing-false-greens.md
+   intro : 6542f3b22d76
+   then  : "E1 music is lazy and active in-run on desktop and mobile"
+   now   : "title music waits for a gesture and music volume persists"
+
+[DRIFTED] e2e/never-trap.spec.ts:107
+   master: tasks/lane-town-glob-collection.md
+   intro : afcd322f100b
+   then  : "town building and Pan Monument centers always release movement input"
+   now   : "hero and enemies escape a run landmark center within bounded ticks"
+
+[DRIFTED] e2e/vp-02b-rotation-resolver.spec.ts:149
+   master: tasks/lane-vp-02d-side-idle-resolver.md
+   intro : d0869fbb62c4
+   then  : "idle snaps to rotation idle hemispheres after movement"
+   now   : "resolver hysteresis holds across small boundary oscillation"
+
+[DRIFTED] e2e/vp-02-sprite-animation.spec.ts:388
+   master: tasks/lane-vp-02f-stale-and-flaky-assertions.md
+   intro : 5279f5698175
+   then  : "warmed test clip swaps do not grow renderer memory or draw calls"
+   now   : "missing sheet cells fall back to the existing one-frame billboard without drift"
+
+[DRIFTED] e2e/vp-02-sprite-animation.spec.ts:705
+   master: tasks/lane-vp-02f-stale-and-flaky-assertions.md
+   intro : 5279f5698175
+   then  : "captures VP-02 desktop and narrow screenshots"
+   now   : "orientation swap crossfades once and adds no draw call at rest"
+
+[DRIFTED] e2e/vp-02-sprite-animation.spec.ts:547
+   master: tasks/lane-vp-02f-stale-and-flaky-assertions.md
+   intro : 5279f5698175
+   then  : "east heading uses explicit rotation2 files with unmirrored pixels"
+   now   : "hero walk frameKey alternates while each 8-way heading is held"
+
+[DRIFTED] e2e/vp-02-sprite-animation.spec.ts:549
+   master: tasks/lane-vp-02g-west-capture-null-rate.md
+   intro : 486cd3ce6e3c
+   then  : "east heading uses explicit rotation2 files with unmirrored pixels"
+   now   : "hero walk frameKey alternates while each 8-way heading is held"
+
+wrote logs/session-scratch/s1227-citation-drift.json

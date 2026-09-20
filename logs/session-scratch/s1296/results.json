@@ -1,0 +1,67 @@
+[
+  {
+    "spec": "e2e/ts-04-living-pass.spec.ts",
+    "rc": 1,
+    "wall": 161.62,
+    "workers": "Running 4 tests using 1 worker",
+    "tally": "  2 failed |   2 passed (2.7m)",
+    "fails": [
+      "1) [desktop-chrome] › e2e/ts-04-living-pass.spec.ts:60:1 › TS-04 actors follow baked trails for a 30s scene capture with no storage or sim writes",
+      "2) [mobile-chrome] › e2e/ts-04-living-pass.spec.ts:60:1 › TS-04 actors follow baked trails for a 30s scene capture with no storage or sim writes"
+    ],
+    "load": "7.73→6.78"
+  },
+  {
+    "spec": "e2e/town-t5-townsfolk.spec.ts",
+    "rc": 1,
+    "wall": 136.328,
+    "workers": "Running 10 tests using 1 worker",
+    "tally": "  2 failed |   8 passed (2.3m)",
+    "fails": [
+      "1) [desktop-chrome] › e2e/town-t5-townsfolk.spec.ts:203:1 › approach barks identify sampled speakers and the Prospector greets by town name",
+      "2) [mobile-chrome] › e2e/town-t5-townsfolk.spec.ts:203:1 › approach barks identify sampled speakers and the Prospector greets by town name"
+    ],
+    "load": "6.78→5.71"
+  },
+  {
+    "spec": "e2e/cast-motion-wiring.spec.ts",
+    "rc": 0,
+    "wall": 83.263,
+    "workers": "Running 2 tests using 1 worker",
+    "tally": "  2 passed (1.4m)",
+    "fails": [],
+    "load": "5.71→4.46"
+  },
+  {
+    "spec": "e2e/town-plate-blender.spec.ts",
+    "rc": 1,
+    "wall": 21.15,
+    "workers": "Running 6 tests using 1 worker",
+    "tally": "  4 failed |   2 passed (20.8s)",
+    "fails": [
+      "1) [desktop-chrome] › e2e/town-plate-blender.spec.ts:59:1 › Town plate is lazy, contract-valid, keeps actors planar, and mounts in the owner all-view",
+      "2) [desktop-chrome] › e2e/town-plate-blender.spec.ts:114:1 › LITE keeps painted ground and never fetches the Town plate",
+      "3) [mobile-chrome] › e2e/town-plate-blender.spec.ts:59:1 › Town plate is lazy, contract-valid, keeps actors planar, and mounts in the owner all-view",
+      "4) [mobile-chrome] › e2e/town-plate-blender.spec.ts:114:1 › LITE keeps painted ground and never fetches the Town plate"
+    ],
+    "load": "4.46→4.69"
+  },
+  {
+    "spec": "e2e/release-build.spec.ts",
+    "rc": 1,
+    "wall": 373.918,
+    "workers": "Running 26 tests using 1 worker",
+    "tally": "  8 failed |   18 passed (6.2m)",
+    "fails": [
+      "1) [desktop-chrome] › e2e/release-build.spec.ts:128:1 › debug and era query seams are inert ──────",
+      "2) [desktop-chrome] › e2e/release-build.spec.ts:151:1 › an imported later ledger heals to the frontier and plays",
+      "3) [desktop-chrome] › e2e/release-build.spec.ts:186:1 › later flagship URLs decline to the Claim ─",
+      "4) [desktop-chrome] › e2e/release-build.spec.ts:216:1 › dist has no later manifest ids or plate/GLB assets",
+      "5) [mobile-chrome] › e2e/release-build.spec.ts:128:1 › debug and era query seams are inert ───────",
+      "6) [mobile-chrome] › e2e/release-build.spec.ts:151:1 › an imported later ledger heals to the frontier and plays",
+      "7) [mobile-chrome] › e2e/release-build.spec.ts:186:1 › later flagship URLs decline to the Claim ──",
+      "8) [mobile-chrome] › e2e/release-build.spec.ts:216:1 › dist has no later manifest ids or plate/GLB assets"
+    ],
+    "load": "4.69→23.60"
+  }
+]

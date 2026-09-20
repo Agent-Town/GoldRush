@@ -1,0 +1,25 @@
+baseline sha256 28c31df1981d1650
+
+M1 revert exact-match-first to the old pure longest-wins sort
+  predicted : the two exact-match arms + the rider disclosure arm go red
+  rc=1  pass=11 fail=3
+  RED  F-1250-1: an EXACT taskFile match outranks a longer-named sibling
+  RED  F-1250-1: the reverse — a lawful merged drain is not reddened by a longer closed predecessor
+  RED  F-1250-1 rider: a blocked SIBLING still refuses, but now says which leaf you actually named
+  RED  F-1250-1: an EXACT taskFile match outranks a longer-named sibling
+  RED  F-1250-1: the reverse — a lawful merged drain is not reddened by a longer closed predecessor
+  RED  F-1250-1 rider: a blocked SIBLING still refuses, but now says which leaf you actually named
+
+M2 drop the "you asked about" blocked-sibling disclosure
+  predicted : only the rider arm goes red
+  rc=1  pass=13 fail=1
+  RED  F-1250-1 rider: a blocked SIBLING still refuses, but now says which leaf you actually named
+  RED  F-1250-1 rider: a blocked SIBLING still refuses, but now says which leaf you actually named
+
+M3 drop the "also matched" disclosure on the CLOSED arm
+  predicted : only the exact-match false-CLEAR arm goes red
+  rc=1  pass=13 fail=1
+  RED  F-1250-1: an EXACT taskFile match outranks a longer-named sibling
+  RED  F-1250-1: an EXACT taskFile match outranks a longer-named sibling
+
+restored sha256 28c31df1981d1650 (must equal baseline)

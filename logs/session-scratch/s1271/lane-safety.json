@@ -1,0 +1,111 @@
+{
+  "premise": {
+    "isFireShellCount": 2,
+    "workersLines": [
+      "8:// `--workers=1` a correctness requirement of every fire-side playwright command, because the",
+      "10:// obtained workers each chromium is starved and timing-sensitive assertions go red. Interleaved,",
+      "18:// from ~/.zshrc and ~/.zprofile), so they keep full parallelism — the lane shell runs 6 workers",
+      "21:// ⚠️ MEASURING WORKER COUNT? Pass the flag EXPLICITLY on both arms. A CLI `--workers=N` overrides",
+      "30:  workers: isFireShell ? 1 : undefined,"
+    ],
+    "headConfigBlob": "047b266298f99d302825e667078a55e6bd099c83",
+    "mainConfigBlob": "047b266298f99d302825e667078a55e6bd099c83",
+    "head": "82a84a7d2758a6e34feb30b5d91a0b196cac37e3",
+    "headBehindMain": 0
+  },
+  "environment": {
+    "CLAUDE_CONFIG_DIR": null,
+    "CLAUDE_CONFIG_DIRDefined": false,
+    "SHELL": "/bin/zsh",
+    "cwd": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b",
+    "cpus": 16,
+    "node": "v23.11.1",
+    "loadavg": [
+      2.6787109375,
+      3.09765625,
+      3.59326171875
+    ]
+  },
+  "runs": [
+    {
+      "seq": 1,
+      "arm": "A",
+      "command": "npx playwright test e2e/gazette-welcome.spec.ts --project=desktop-chrome --project=mobile-chrome --repeat-each=3 -g fires once --reporter=list",
+      "workersObtained": 6,
+      "exitCode": 0,
+      "passed": 6,
+      "failed": 0,
+      "wallSeconds": 14.04,
+      "loadavgBefore": [
+        2.6787109375,
+        3.09765625,
+        3.59326171875
+      ],
+      "loadavgAfter": [
+        6.83544921875,
+        4.00439453125,
+        3.908203125
+      ]
+    },
+    {
+      "seq": 2,
+      "arm": "B",
+      "command": "npx playwright test e2e/gazette-welcome.spec.ts --project=desktop-chrome --project=mobile-chrome --repeat-each=3 -g fires once --reporter=list --workers=1",
+      "workersObtained": 1,
+      "exitCode": 0,
+      "passed": 6,
+      "failed": 0,
+      "wallSeconds": 63.69,
+      "loadavgBefore": [
+        6.83544921875,
+        4.00439453125,
+        3.908203125
+      ],
+      "loadavgAfter": [
+        5.00634765625,
+        4.06201171875,
+        3.93798828125
+      ]
+    },
+    {
+      "seq": 3,
+      "arm": "A",
+      "command": "npx playwright test e2e/gazette-welcome.spec.ts --project=desktop-chrome --project=mobile-chrome --repeat-each=3 -g fires once --reporter=list",
+      "workersObtained": 6,
+      "exitCode": 0,
+      "passed": 6,
+      "failed": 0,
+      "wallSeconds": 15.89,
+      "loadavgBefore": [
+        5.00634765625,
+        4.06201171875,
+        3.93798828125
+      ],
+      "loadavgAfter": [
+        9.42626953125,
+        5.09912109375,
+        4.310546875
+      ]
+    },
+    {
+      "seq": 4,
+      "arm": "B",
+      "command": "npx playwright test e2e/gazette-welcome.spec.ts --project=desktop-chrome --project=mobile-chrome --repeat-each=3 -g fires once --reporter=list --workers=1",
+      "workersObtained": 1,
+      "exitCode": 0,
+      "passed": 6,
+      "failed": 0,
+      "wallSeconds": 50.06,
+      "loadavgBefore": [
+        9.42626953125,
+        5.09912109375,
+        4.310546875
+      ],
+      "loadavgAfter": [
+        7.9013671875,
+        5.32177734375,
+        4.4345703125
+      ]
+    }
+  ]
+}

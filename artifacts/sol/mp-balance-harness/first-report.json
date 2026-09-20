@@ -1,0 +1,61 @@
+{
+  "seed": "mp-balance-v1",
+  "stepSeconds": 0.03333333333333333,
+  "durationSeconds": 600,
+  "seedCorpus": [
+    "mp-balance-v1:1",
+    "mp-balance-v1:2",
+    "mp-balance-v1:3",
+    "mp-balance-v1:4",
+    "mp-balance-v1:5",
+    "mp-balance-v1:6",
+    "mp-balance-v1:7",
+    "mp-balance-v1:8",
+    "mp-balance-v1:9"
+  ],
+  "assumptions": {
+    "difficultyPreset": "trail",
+    "contract": "The Claim",
+    "survivalEndsAt": "first-rider-death",
+    "harvest": "per-rider-progress-channels",
+    "harvestRiderEffect": "parallel-on-separate-seams-first-claim-on-shared-seam",
+    "harvestAvailability": "seeded-58-to-72-percent-duty-cycles",
+    "aggregation": "median-over-common-seed-corpus",
+    "combatResolution": "stationary-instant-hit-base-spark-rig-at-range",
+    "riderFormation": "solo-centered-multiplayer-1.2-radius",
+    "waveSpawns": "seeded-distinct-edges-with-live-group-spread",
+    "enemyTargeting": "nearest-stationary-rider-from-seeded-edge-spawn",
+    "goldAccounting": "gross-panned-no-bank-cap",
+    "enemyRoster": "base-claim-jumpers-no-variants-or-baron",
+    "excluded": [
+      "upgrades",
+      "buildings",
+      "prospector",
+      "candidate-rider-scaling"
+    ]
+  },
+  "balanceFingerprint": "fnv1a32:739cb920",
+  "rows": [
+    {
+      "riderCount": 1,
+      "survival": { "medianSeconds": 78.933, "minSeconds": 77.433, "maxSeconds": 82.6, "censoredRuns": 0, "delta": 0 },
+      "gold": { "teamPerMinute": 107, "teamDelta": 0, "perRiderPerMinute": 107, "perRiderDelta": 0 }
+    },
+    {
+      "riderCount": 2,
+      "survival": { "medianSeconds": 141.767, "minSeconds": 140.767, "maxSeconds": 142, "censoredRuns": 0, "delta": 0.796042 },
+      "gold": { "teamPerMinute": 156.5, "teamDelta": 0.462617, "perRiderPerMinute": 78.25, "perRiderDelta": -0.268692 }
+    },
+    {
+      "riderCount": 3,
+      "survival": { "medianSeconds": 195.867, "minSeconds": 192.133, "maxSeconds": 200.467, "censoredRuns": 0, "delta": 1.481434 },
+      "gold": { "teamPerMinute": 162, "teamDelta": 0.514019, "perRiderPerMinute": 54, "perRiderDelta": -0.495327 }
+    },
+    {
+      "riderCount": 4,
+      "survival": { "medianSeconds": 226.9, "minSeconds": 218.833, "maxSeconds": 248.167, "censoredRuns": 0, "delta": 1.87459 },
+      "gold": { "teamPerMinute": 168, "teamDelta": 0.570093, "perRiderPerMinute": 42, "perRiderDelta": -0.607477 }
+    }
+  ],
+  "stableHash": "fnv1a32:113ffdf1"
+}

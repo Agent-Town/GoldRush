@@ -1,0 +1,37 @@
+feat: GG-03e — the Herald's eighth class engraving (ceremony) + decode proof
+
+Graft of lane/m3 dd08bc1a onto clean main. Zero MAIN-MOVED files
+(git log dfed3765..main over all 15 paths = empty), applied byte-identical
+to the branch tree for all 15 (sha256-verified, logs/session-scratch/s1257/graft.mjs).
+
+WHAT IT ACTUALLY DOES — narrower than its master claimed (F-1256-2):
+the master's defining premise ("no herald-engraving-*.webp exists, the map
+resolves to nothing, the Herald is silently text-only for every class") was
+FALSE; s1256 measured all seven as tracked on main since b5be7ab3. So this
+slice is NOT the wiring of the Herald's engravings — those already shipped.
+It is: +1 class (ceremony) on HeraldClass and in the map, +1 plate, a
+decode() assertion, the roster-count invariant 13->14, and a re-encode of
+the seven plates that already worked. NOT a no-op; player-INVISIBLE.
+
+GATES (merged tree):
+- npx tsc --noEmit rc=0
+- npm run build green; [asset-diet] Herald dev-path 1,158,214 B / 1,500,000 B
+  ceiling (341,786 B headroom); herald spot cuts 375,470 B. Both reproduce the
+  run's reported numbers exactly. NEITHER budget constant was touched.
+- gazette-art-wiring + gazette-first-issue: 8/8 both projects (33.8s),
+  zero console/page errors asserted inside the spec, plain boot, no ?debug.
+- Adjacent by grep over the herald import closure (gz-02-news-page, wd02-barks,
+  gz-h1-newsie): 14 passed, 2 failed.
+- The 2 reds are "newsie barks latest headline and opens the Claim Herald"
+  (both projects) = suite-red-inventory row 40, 8/19 = 42.1% BOTH, cited BY
+  TITLE. Not inherited: a clean-main control (graft parked, subject absence
+  verified at the index) reproduced it identically -- same test, same :106,
+  same toHaveText, same received "Chen Mei"/"Juniper". RED WITHOUT THE SLICE.
+- All 8 map entries resolve through the real build (8 herald-engraving-*.webp
+  in dist/assets). asset-diet's filesReachedByHeraldGlobs parses heraldReader
+  and throws on any missing/unexpected name, so the master's "wrong mapping =
+  green build, text-only Herald" trap is covered at BUILD time; the 13->14
+  edit was required by the eighth file, not a widened cap.
+- 384x384 unchanged on all seven re-encodes (webp headers parsed, old vs new).
+
+reviews/gg-03e-herald-class-map-engravings.md

@@ -1,0 +1,56 @@
+subject sha256(16) BEFORE : a5f1579cd5690271
+
+--- baseline (cure in place) ---
+rc=0 pass=13 fail=0
+
+===== M0 — the WHOLE pre-fix file (HEAD) =====
+rc=1 pass=7 fail=6
+   ✖ REFUSES when no tracked task markdown exists
+   ✖ REFUSES when task docs exist but carry zero citations
+   ✖ REFUSES when the baseline it ratchets against is missing
+   ✖ a citation quoting a real NON-TEST source line is carried, not a violation
+   ✖ the verdict names the citations it did NOT gate
+   ✖ --report still never gates, even on a denominator it could not read
+   ✖ REFUSES when no tracked task markdown exists
+   ✖ REFUSES when task docs exist but carry zero citations
+   ✖ REFUSES when the baseline it ratchets against is missing
+   ✖ a citation quoting a real NON-TEST source line is carried, not a violation
+   ✖ the verdict names the citations it did NOT gate
+   ✖ --report still never gates, even on a denominator it could not read
+
+===== M1 — drop the empty-denominator (0 task docs) refusal =====
+rc=1 pass=12 fail=1
+   ✖ REFUSES when no tracked task markdown exists
+   ✖ REFUSES when no tracked task markdown exists
+
+===== M2 — drop the zero-citations refusal =====
+rc=1 pass=12 fail=1
+   ✖ REFUSES when task docs exist but carry zero citations
+   ✖ REFUSES when task docs exist but carry zero citations
+
+===== M3 — drop the missing-baseline refusal =====
+rc=1 pass=12 fail=1
+   ✖ REFUSES when the baseline it ratchets against is missing
+   ✖ REFUSES when the baseline it ratchets against is missing
+
+===== M4 — drop the CARRIES-LINE (non-test source line) resolution =====
+rc=1 pass=12 fail=1
+   ✖ a citation quoting a real NON-TEST source line is carried, not a violation
+   ✖ a citation quoting a real NON-TEST source line is carried, not a violation
+
+===== M5 — drop the NOT GATED remainder line from the gate verdict =====
+rc=1 pass=12 fail=1
+   ✖ the verdict names the citations it did NOT gate
+   ✖ the verdict names the citations it did NOT gate
+
+subject sha256(16) AFTER  : a5f1579cd5690271
+RESTORED BYTE-IDENTICAL   : true
+
+--- summary ---
+baseline: 13 pass / 0 fail
+M0: 6 red  [REFUSES when no tracked task markdown exists | REFUSES when task docs exist but carry zero citations | REFUSES when the baseline it ratchets against is missing | a citation quoting a real NON-TEST source line is carried, not a violation | the verdict names the citations it did NOT gate | --report still never gates, even on a denominator it could not read | REFUSES when no tracked task markdown exists | REFUSES when task docs exist but carry zero citations | REFUSES when the baseline it ratchets against is missing | a citation quoting a real NON-TEST source line is carried, not a violation | the verdict names the citations it did NOT gate | --report still never gates, even on a denominator it could not read]
+M1: 1 red  [REFUSES when no tracked task markdown exists | REFUSES when no tracked task markdown exists]
+M2: 1 red  [REFUSES when task docs exist but carry zero citations | REFUSES when task docs exist but carry zero citations]
+M3: 1 red  [REFUSES when the baseline it ratchets against is missing | REFUSES when the baseline it ratchets against is missing]
+M4: 1 red  [a citation quoting a real NON-TEST source line is carried, not a violation | a citation quoting a real NON-TEST source line is carried, not a violation]
+M5: 1 red  [the verdict names the citations it did NOT gate | the verdict names the citations it did NOT gate]

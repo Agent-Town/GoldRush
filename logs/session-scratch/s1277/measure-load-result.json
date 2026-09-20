@@ -1,0 +1,82 @@
+{
+  "loaders": 12,
+  "cores": 16,
+  "cells": [
+    {
+      "arm": "default",
+      "round": 1,
+      "rc": 0,
+      "wallMs": 66114,
+      "pass": 178,
+      "fail": 0,
+      "failed": [],
+      "logPath": "/Users/robin/Claude/Projects/Gold Rush/logs/session-scratch/s1277/load-default-1.log"
+    },
+    {
+      "arm": "c1",
+      "round": 1,
+      "rc": 0,
+      "wallMs": 134450,
+      "pass": 178,
+      "fail": 0,
+      "failed": [],
+      "logPath": "/Users/robin/Claude/Projects/Gold Rush/logs/session-scratch/s1277/load-c1-1.log"
+    },
+    {
+      "arm": "default",
+      "round": 2,
+      "rc": 0,
+      "wallMs": 68144,
+      "pass": 178,
+      "fail": 0,
+      "failed": [],
+      "logPath": "/Users/robin/Claude/Projects/Gold Rush/logs/session-scratch/s1277/load-default-2.log"
+    },
+    {
+      "arm": "c1",
+      "round": 2,
+      "rc": 0,
+      "wallMs": 153636,
+      "pass": 178,
+      "fail": 0,
+      "failed": [],
+      "logPath": "/Users/robin/Claude/Projects/Gold Rush/logs/session-scratch/s1277/load-c1-2.log"
+    },
+    {
+      "arm": "default",
+      "round": 3,
+      "rc": 0,
+      "wallMs": 74064,
+      "pass": 178,
+      "fail": 0,
+      "failed": [],
+      "logPath": "/Users/robin/Claude/Projects/Gold Rush/logs/session-scratch/s1277/load-default-3.log"
+    },
+    {
+      "arm": "c1",
+      "round": 3,
+      "rc": 0,
+      "wallMs": 158618,
+      "pass": 178,
+      "fail": 0,
+      "failed": [],
+      "logPath": "/Users/robin/Claude/Projects/Gold Rush/logs/session-scratch/s1277/load-c1-3.log"
+    }
+  ],
+  "summary": {
+    "default": {
+      "runs": 3,
+      "rcZero": 3,
+      "redRuns": 0,
+      "meanWallS": 69.44,
+      "distinctReds": []
+    },
+    "c1": {
+      "runs": 3,
+      "rcZero": 3,
+      "redRuns": 0,
+      "meanWallS": 148.9,
+      "distinctReds": []
+    }
+  }
+}

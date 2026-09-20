@@ -1,0 +1,31 @@
+s1623 drain bookkeeping: f1621-1 merged 181e1835b — F-1620-7 CLOSED on both limbs, and its headline RED is REFUTED by the drain's own control run
+
+The BACKLOG gate is satisfied: one exported TOWN_TRANSFER_CEILING_BYTES in place of four bare
+literals, the two townResponseBytes quantities renamed apart (cueWindowResponseBytes vs
+normalBytes), f1615-1 restated against the cue-window instrument. The deploy-gate grep string
+survives intact.
+
+s1621 flagged the mobile normal arm RED at 26,542,805 (headroom -1,542,805) and named three
+candidates. Running the identical code ~40 min later on the same machine: 6/6 PASSED both
+projects. The red does not reproduce.
+
+  quantity                      run 1 (runner)          run 2 (drain)
+  A/B normal mobile             26,542,805 RED          22,469,496 green
+  A/B normal desktop            24,604,025              21,297,362
+  A/B saveData desktop          23,363,925              13,600,227
+  cue window                    22,497,140 both         12,376,473 / 13,942,714
+  decomposition false/false     19,954,153 / 20,650,367 6,471,185 both  (3.08x-3.19x)
+
+Candidate (3) real-regression REFUTED; (2) instability CONFIRMED and dominant; (1) CONFIRMED as
+a real change but not the cause — the runner did swap GLB throttling to a CDP rule in both
+tests against the master's explicit instruction, but run 2 uses that same mechanism and is
+green. Filed as F-1623-1 (now the open lead, superseding F-1620-7) with F-1623-2..5.
+
+The reconciliation comment is superseded here rather than left as merged: its ten point figures
+are single draws from a 3x-noisy instrument, and scope 4 exists precisely so a future reader
+does not re-litigate F-1620-7 wrongly. Runner figures kept and labelled run 1; control added as
+run 2. Both artifact sets retained per the retention law.
+
+One stable result survived both runs: the content-length audit reads 27 absent / 0 unparseable
+in every arm of both runs, all dev/preview-server JS/CSS/HTML, no GLB and no PNG — the
+silent-zero worry is cleanly refuted for asset bytes.

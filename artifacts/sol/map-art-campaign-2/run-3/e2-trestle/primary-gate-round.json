@@ -1,0 +1,35 @@
+[
+  {
+    "args": [
+      "e2-trestle",
+      "e2e",
+      "own-and-pack",
+      "e2e/e2-trestle.spec.ts",
+      "e2e/landmark-brightness.spec.ts",
+      "e2e/landmark-collision.spec.ts",
+      "e2e/fort-landmark-collision.spec.ts",
+      "e2e/fort-static-routing.spec.ts",
+      "e2e/terrain3d-registry.spec.ts"
+    ],
+    "exit": 1
+  },
+  {
+    "args": [
+      "e2-trestle",
+      "e2e",
+      "census",
+      "--grep",
+      "e2-trestle",
+      "e2e/map-census.spec.ts",
+      "e2e/er01-e2-census.spec.ts"
+    ],
+    "exit": 0
+  },
+  {
+    "args": [
+      "e2-trestle",
+      "probes"
+    ],
+    "exit": 0
+  }
+]

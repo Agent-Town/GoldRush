@@ -1,0 +1,1219 @@
+
+> gold-rush@0.1.0 build
+> tsc && vite build && node scripts/asset-diet.mjs
+
+vite v8.0.13 building client environment for production...
+[2Ktransforming...✓ 1275 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                                                                           1.08 kB │ gzip:   0.51 kB
+dist/assets/menu-tap-DMz5CpTr-diet-b60c3eb5.mp3                                           8.82 kB
+dist/assets/save-tick-CxuEzus4-diet-b60c3eb5.mp3                                          8.82 kB
+dist/assets/invalid-CjTH51il-diet-b60c3eb5.mp3                                           10.49 kB
+dist/assets/build-place-CPgxh9CD-diet-b60c3eb5.mp3                                       12.16 kB
+dist/assets/chirp-acknowledge-DcSL2kP3-diet-b60c3eb5.mp3                                 12.16 kB
+dist/assets/chirp-refuse-CbGLOIGZ-diet-b60c3eb5.mp3                                      12.16 kB
+dist/assets/spark-bolt-hit-B7cQc6VD-diet-b60c3eb5.mp3                                    12.16 kB
+dist/assets/turret-fire-BtaMB8RD-diet-b60c3eb5.mp3                                       12.16 kB
+dist/assets/agent-works-ZeMZN2bu-diet-b60c3eb5.mp3                                       13.83 kB
+dist/assets/founding-stamp-thunk-LrQMhCat-diet-b60c3eb5.mp3                              13.83 kB
+dist/assets/gold-chime-BO80qT5L-diet-b60c3eb5.mp3                                        13.83 kB
+dist/assets/ledger-open-MW76KJsZ-diet-b60c3eb5.mp3                                       13.83 kB
+dist/assets/palisade-hit-E4hWomWo-diet-b60c3eb5.mp3                                      13.83 kB
+dist/assets/spark-bolt-fire-BQ8ybg8h-diet-b60c3eb5.mp3                                   13.83 kB
+dist/assets/research-pick-C2KA88UW-diet-b60c3eb5.mp3                                     15.09 kB
+dist/assets/stockpile-deposit-BRUN-tEB-diet-b60c3eb5.mp3                                 15.09 kB
+dist/assets/palisade-crack-VvvYcTgw-diet-b60c3eb5.mp3                                    17.18 kB
+dist/assets/pan-swish-2I4JWZIB-diet-b60c3eb5.mp3                                         17.18 kB
+dist/assets/slot-save-confirm-T42JEhXS-diet-b60c3eb5.mp3                                 17.18 kB
+dist/assets/tier-up-BKof9-Ld-diet-b60c3eb5.mp3                                           17.18 kB
+dist/assets/blast-charge-arm-B0YaTajY-diet-b60c3eb5.mp3                                  20.10 kB
+dist/assets/blast-charge-boom-BSfk_auF-diet-b60c3eb5.mp3                                 20.10 kB
+dist/assets/sign-in-chime-CiNrxw6U-diet-b60c3eb5.mp3                                     20.10 kB
+dist/assets/wind-gust-BC-IK8qp-diet-b60c3eb5.mp3                                         21.35 kB
+dist/assets/demolish-DR09iHP3-diet-b60c3eb5.mp3                                          23.03 kB
+dist/assets/research-pick-sting-Diyl-iL6-diet-b60c3eb5.mp3                               24.70 kB
+dist/assets/palisade-collapse-Dkq4yD_Q-diet-b60c3eb5.mp3                                 29.30 kB
+dist/assets/wave-start-horn-D2de_fqw-diet-b60c3eb5.mp3                                   29.30 kB
+dist/assets/char-hero-sheet-walk8-r1c1-C5c6Mvob-diet-b60c3eb5.png                        30.95 kB
+dist/assets/char-hero-sheet-walk8-r1c6-DuQcJ-Z5-diet-b60c3eb5.png                        31.54 kB
+dist/assets/herald-engraving-schoolhouse-1wrGopoz-diet-b60c3eb5.webp                     31.56 kB
+dist/assets/town-enter-chime-f_8ClOsM-diet-b60c3eb5.mp3                                  33.06 kB
+dist/assets/char-hero-sheet-walk8-r2c5-Cyu7GwXs-diet-b60c3eb5.png                        33.07 kB
+dist/assets/char-hero-sheet-walk8-r1c4-DUzj08Gx-diet-b60c3eb5.png                        33.47 kB
+dist/assets/char-hero-sheet-walk8-r2c2-BdZ1sM9c-diet-b60c3eb5.png                        33.83 kB
+dist/assets/char-hero-sheet-rotation2-f-r1c3-U0TG2Wvm-diet-b60c3eb5.png                  34.09 kB
+dist/assets/water_trough-GmocFW04-diet-b60c3eb5.glb                                      34.34 kB
+dist/assets/char-hero-sheet-walk8-r1c2-DgehIsSa-diet-b60c3eb5.png                        34.58 kB
+dist/assets/rail-element-CJyfaPwd-diet-b60c3eb5.glb                                      35.04 kB
+dist/assets/char-hero-sheet-walk8-r1c3-CwSAUom4-diet-b60c3eb5.png                        35.19 kB
+dist/assets/char-hero-sheet-walk8-r1c5-acIPWqkd-diet-b60c3eb5.png                        35.34 kB
+dist/assets/char-prospector-sheet-hover4-b-r2c3-DbVy7MCl-diet-b60c3eb5.png               35.38 kB
+dist/assets/char-hero-sheet-walk8-r1c0-DhUccty4-diet-b60c3eb5.png                        35.43 kB
+dist/assets/char-prospector-sheet-hover4-b-r2c0-Bx0CvZPK-diet-b60c3eb5.png               35.66 kB
+dist/assets/char-prospector-sheet-hover4-b-r2c1-jlExksFw-diet-b60c3eb5.png               35.67 kB
+dist/assets/char-prospector-sheet-hover4-b-r2c2-BKyKBhK0-diet-b60c3eb5.png               36.32 kB
+dist/assets/char-hero-sheet-rotation2-f-r1c2-BMPHb76p-diet-b60c3eb5.png                  36.44 kB
+dist/assets/char-hero-sheet-walk8-r2c0-DPCeJ5oq-diet-b60c3eb5.png                        36.69 kB
+dist/assets/char-hero-sheet-walk8-r1c7-DNbB2Jlu-diet-b60c3eb5.png                        37.88 kB
+dist/assets/char-jumper-sheet-walk8-r3c0-Cy18C-zD-diet-b60c3eb5.png                      38.01 kB
+dist/assets/char-hero-sheet-walk8-r2c1-DcJ8HfcR-diet-b60c3eb5.png                        38.01 kB
+dist/assets/char-hero-sheet-walk8-r2c7-Bki9oNEz-diet-b60c3eb5.png                        38.39 kB
+dist/assets/char-hero-sheet-walk8-r2c4-mfx7Dvjz-diet-b60c3eb5.png                        38.49 kB
+dist/assets/char-hero-sheet-walkdiag8-r2c5-DXVN_HTO-diet-b60c3eb5.png                    38.76 kB
+dist/assets/char-hero-sheet-walkdiag8-r1c5-D9BfKK0V-diet-b60c3eb5.png                    39.27 kB
+dist/assets/char-hero-sheet-walkdiag8-r2c7-kXRkm58t-diet-b60c3eb5.png                    39.47 kB
+dist/assets/char-jumper-sheet-walk8-r3c3-oZxCf6PA-diet-b60c3eb5.png                      39.62 kB
+dist/assets/char-hero-sheet-walkdiag8-r2c3-NpxDIfYw-diet-b60c3eb5.png                    39.79 kB
+dist/assets/char-hero-sheet-walkdiag8-r2c6-fMPa7_ya-diet-b60c3eb5.png                    39.86 kB
+dist/assets/char-hero-sheet-walk8-r2c3-DBd8r0My-diet-b60c3eb5.png                        39.94 kB
+dist/assets/char-hero-sheet-walk8-r2c6-CVlfAN5a-diet-b60c3eb5.png                        40.01 kB
+dist/assets/char-prospector-sheet-hover8-r2c3-DVnMtCqV-diet-b60c3eb5.png                 40.10 kB
+dist/assets/char-jumper-sheet-walk8-r3c6-DevYSOMG-diet-b60c3eb5.png                      40.20 kB
+dist/assets/char-hero-sheet-walkdiag8-r2c1-qcHqgEDB-diet-b60c3eb5.png                    40.20 kB
+dist/assets/char-hero-sheet-walkdiag8-r0c4-D_f66Znz-diet-b60c3eb5.png                    40.32 kB
+dist/assets/char-hero-sheet-walkdiag8-r2c2-BHZQ1s0P-diet-b60c3eb5.png                    40.32 kB
+dist/assets/char-hero-sheet-walk8-r0c3-BiTZZn4U-diet-b60c3eb5.png                        40.42 kB
+dist/assets/char-jumper-sheet-walk8-r3c1-B3-3Hdit-diet-b60c3eb5.png                      40.58 kB
+dist/assets/baron-arrival-sting-DRqnFRv3-diet-b60c3eb5.mp3                               40.58 kB
+dist/assets/char-prospector-sheet-hover8-r2c1-B28ExyX9-diet-b60c3eb5.png                 40.65 kB
+dist/assets/char-jumper-sheet-walk8-r3c2-Cs62vaAe-diet-b60c3eb5.png                      40.71 kB
+dist/assets/char-prospector-sheet-hover8-r2c5-B8LvKVfR-diet-b60c3eb5.png                 40.74 kB
+dist/assets/char-prospector-sheet-hover8-r2c0-lUGohRgo-diet-b60c3eb5.png                 40.75 kB
+dist/assets/char-jumper-sheet-walk8-r3c4-BM24Zq_Z-diet-b60c3eb5.png                      40.81 kB
+dist/assets/char-jumper-sheet-walk8-r3c7-CDYSLexg-diet-b60c3eb5.png                      41.13 kB
+dist/assets/char-hero-sheet-walkdiag8-r2c0-BqTox89V-diet-b60c3eb5.png                    41.16 kB
+dist/assets/char-hero-sheet-walkdiag8-r0c5-Dc9rurdO-diet-b60c3eb5.png                    41.16 kB
+dist/assets/char-hero-sheet-walk8-r0c2-BAXBAKgO-diet-b60c3eb5.png                        41.20 kB
+dist/assets/char-hero-sheet-walk8-r0c1-DsSA6LQ_-diet-b60c3eb5.png                        41.32 kB
+dist/assets/char-jumper-sheet-walk8-r3c5-EGmOAIx4-diet-b60c3eb5.png                      41.42 kB
+dist/assets/char-hero-sheet-walk8-r0c6-B5rfa2tp-diet-b60c3eb5.png                        41.44 kB
+dist/assets/char-hero-sheet-walkdiag8-r0c3-HABE-_TR-diet-b60c3eb5.png                    41.45 kB
+dist/assets/char-prospector-sheet-hover8-r2c7-BATofvDn-diet-b60c3eb5.png                 41.49 kB
+dist/assets/char-hero-sheet-walk8-r0c4-BZjbSKVF-diet-b60c3eb5.png                        41.69 kB
+dist/assets/char-hero-sheet-walk8-r0c5-D7I0xvGk-diet-b60c3eb5.png                        41.80 kB
+dist/assets/char-prospector-sheet-hover4-b-r1c0-J4GAgPc9-diet-b60c3eb5.png               42.13 kB
+dist/assets/char-hero-sheet-walk8-r0c0-Q3M_RTfu-diet-b60c3eb5.png                        42.13 kB
+dist/assets/herald-engraving-board-DHArlOfD-diet-b60c3eb5.webp                           42.19 kB
+dist/assets/char-hero-sheet-walkdiag8-r1c7-oNeC3kM5-diet-b60c3eb5.png                    42.23 kB
+dist/assets/char-jumper-sheet-walk8-r0c2-DdBYlslm-diet-b60c3eb5.png                      42.56 kB
+dist/assets/char-hero-sheet-walkdiag8-r1c4-BQ77a14f-diet-b60c3eb5.png                    42.64 kB
+dist/assets/char-prospector-sheet-hover4-b-r1c1-Bp1at7d9-diet-b60c3eb5.png               42.73 kB
+dist/assets/char-hero-sheet-walkdiag8-r3c7-C8SXSd7B-diet-b60c3eb5.png                    42.89 kB
+dist/assets/char-hero-sheet-walkdiag8-r3c5-CwxOr56T-diet-b60c3eb5.png                    42.93 kB
+dist/assets/char-prospector-sheet-hover4-a-r2c3-D5d-XaPC-diet-b60c3eb5.png               42.98 kB
+dist/assets/char-prospector-sheet-hover4-a-r2c1-Bfg4kWEw-diet-b60c3eb5.png               43.09 kB
+dist/assets/char-jumper-sheet-walk8-r0c1--EuImZG--diet-b60c3eb5.png                      43.11 kB
+dist/assets/char-prospector-sheet-hover4-a-r2c0-I9bOkLHD-diet-b60c3eb5.png               43.15 kB
+dist/assets/char-hero-sheet-walk8-r3c6-BPr4s43g-diet-b60c3eb5.png                        43.18 kB
+dist/assets/char-hero-sheet-walkdiag8-r3c4-Eb-CxfcQ-diet-b60c3eb5.png                    43.21 kB
+dist/assets/char-hero-sheet-walk8-r3c0-CBSOQiej-diet-b60c3eb5.png                        43.23 kB
+dist/assets/char-prospector-sheet-hover8-r3c3-DuTNeWDS-diet-b60c3eb5.png                 43.28 kB
+dist/assets/char-hero-sheet-walk8-r0c7-mz3mX4mr-diet-b60c3eb5.png                        43.41 kB
+dist/assets/char-prospector-sheet-hover4-b-r1c2-D3YfZ97T-diet-b60c3eb5.png               43.44 kB
+dist/assets/char-prospector-sheet-hover8-r2c4-C-apYupi-diet-b60c3eb5.png                 43.48 kB
+dist/assets/char-jumper-sheet-walk8-r0c3-yb7cpuvP-diet-b60c3eb5.png                      43.53 kB
+dist/assets/char-hero-sheet-walk8-r3c3-DEV-Q0Ct-diet-b60c3eb5.png                        43.55 kB
+dist/assets/char-prospector-sheet-hover4-b-r1c3-C7F2sLQ0-diet-b60c3eb5.png               43.61 kB
+dist/assets/herald-engraving-boss-DfqvBqDe-diet-b60c3eb5.webp                            43.66 kB
+dist/assets/char-hero-sheet-walkdiag8-r1c6-DtmrhLVj-diet-b60c3eb5.png                    43.69 kB
+dist/assets/char-prospector-sheet-hover8-r2c6-Bg-wK2-L-diet-b60c3eb5.png                 43.75 kB
+dist/assets/char-prospector-sheet-hover8-r2c2-DW7AbXL9-diet-b60c3eb5.png                 43.78 kB
+dist/assets/char-prospector-sheet-hover8-r1c2-B7OR1k8q-diet-b60c3eb5.png                 43.93 kB
+dist/assets/char-hero-sheet-walk8-r3c5-9TnFCbU_-diet-b60c3eb5.png                        44.06 kB
+dist/assets/char-hero-sheet-walk8-r3c4-CuB6gGm3-diet-b60c3eb5.png                        44.09 kB
+dist/assets/char-jumper-sheet-walk8-r0c5-BFwzLy-v-diet-b60c3eb5.png                      44.18 kB
+dist/assets/char-prospector-sheet-hover4-a-r2c2-Cfamg3iw-diet-b60c3eb5.png               44.24 kB
+dist/assets/char-hero-sheet-walkdiag8-r1c0-BohOyMPL-diet-b60c3eb5.png                    44.26 kB
+dist/assets/char-hero-sheet-walkdiag8-r1c2-D-5y5tpf-diet-b60c3eb5.png                    44.26 kB
+dist/assets/char-prospector-sheet-hover8-r3c7-GQ5FxGuP-diet-b60c3eb5.png                 44.27 kB
+dist/assets/char-hero-sheet-walkdiag8-r2c4-D-ai3hfy-diet-b60c3eb5.png                    44.30 kB
+dist/assets/char-hero-sheet-walkdiag8-r0c6-CJw4hHiG-diet-b60c3eb5.png                    44.36 kB
+dist/assets/char-hero-sheet-walkdiag8-r1c3-6K2GKsHd-diet-b60c3eb5.png                    44.40 kB
+dist/assets/char-hero-sheet-walk8-r3c7-LWgj33Js-diet-b60c3eb5.png                        44.40 kB
+dist/assets/char-hero-sheet-walkdiag8-r0c0-B2bRmv4w-diet-b60c3eb5.png                    44.43 kB
+dist/assets/herald-engraving-ceremony-CmBg_S4V-diet-b60c3eb5.webp                        44.51 kB
+dist/assets/char-prospector-sheet-hover8-r1c1-B-c_owSR-diet-b60c3eb5.png                 44.82 kB
+dist/assets/char-prospector-sheet-hover8-r3c2-IXWbGT5V-diet-b60c3eb5.png                 44.86 kB
+dist/assets/char-hero-sheet-walkdiag8-r0c1-Bbmx9aO4-diet-b60c3eb5.png                    44.94 kB
+dist/assets/char-hero-sheet-walkdiag8-r3c3-B9WDXMD7-diet-b60c3eb5.png                    44.96 kB
+dist/assets/char-hero-sheet-walkdiag8-r1c1-BTP26ABx-diet-b60c3eb5.png                    44.98 kB
+dist/assets/char-hero-sheet-walkdiag8-r0c7-BqEzE0II-diet-b60c3eb5.png                    45.02 kB
+dist/assets/char-hero-sheet-walk8-r3c1-ClCTSYPZ-diet-b60c3eb5.png                        45.13 kB
+dist/assets/char-prospector-sheet-hover4-a-r3c3-Crji05qe-diet-b60c3eb5.png               45.30 kB
+dist/assets/char-hero-sheet-walk8-r3c2-BLGhf_hf-diet-b60c3eb5.png                        45.35 kB
+dist/assets/char-prospector-sheet-hover4-b-r3c3-VCZJCN6a-diet-b60c3eb5.png               45.38 kB
+dist/assets/char-hero-sheet-walkdiag8-r3c0-BGyer-kV-diet-b60c3eb5.png                    45.61 kB
+dist/assets/char-prospector-sheet-hover8-r3c4-Csv60xUm-diet-b60c3eb5.png                 45.61 kB
+dist/assets/char-hero-sheet-walkdiag8-r0c2-BPGrJh-z-diet-b60c3eb5.png                    45.64 kB
+dist/assets/char-prospector-sheet-hover8-r1c5-P1x2_8NC-diet-b60c3eb5.png                 45.67 kB
+dist/assets/char-prospector-sheet-hover8-r3c6-D9hLAYEZ-diet-b60c3eb5.png                 45.71 kB
+dist/assets/char-hero-sheet-walkdiag8-r3c1-BFawnVmp-diet-b60c3eb5.png                    45.95 kB
+dist/assets/prospector-hover-loop-DJnx17Oq-diet-b60c3eb5.mp3                             46.01 kB
+dist/assets/char-prospector-sheet-hover8-r1c0-DOOz0Sgm-diet-b60c3eb5.png                 46.04 kB
+dist/assets/char-prospector-sheet-hover4-b-r3c0-CZ1jqYy--diet-b60c3eb5.png               46.23 kB
+dist/assets/char-hero-sheet-walkdiag8-r3c2-kBfp0R4F-diet-b60c3eb5.png                    46.23 kB
+dist/assets/char-prospector-sheet-hover4-a-r3c0-6SqBM0yP-diet-b60c3eb5.png               46.27 kB
+dist/assets/char-hero-sheet-walkdiag8-r3c6-B5mRx0E2-diet-b60c3eb5.png                    46.29 kB
+dist/assets/char-prospector-sheet-hover4-b-r3c2-3n9-DM-P-diet-b60c3eb5.png               46.32 kB
+dist/assets/char-jumper-sheet-walk8-r0c6-zb2ZRw4J-diet-b60c3eb5.png                      46.33 kB
+dist/assets/char-jumper-sheet-walk8-r0c7-fGtKU_QY-diet-b60c3eb5.png                      46.35 kB
+dist/assets/char-hero-sheet-rotation2-f-r0c3-BlVAxsG9-diet-b60c3eb5.png                  46.36 kB
+dist/assets/char-prospector-sheet-hover8-r1c4-D4K-yBsB-diet-b60c3eb5.png                 46.41 kB
+dist/assets/char-jumper-sheet-walk8-r0c0-B5B7oEo4-diet-b60c3eb5.png                      46.50 kB
+dist/assets/char-prospector-sheet-hover8-r3c0-DS8s4uGN-diet-b60c3eb5.png                 46.60 kB
+dist/assets/char-prospector-sheet-hover8-r1c7-BLa5VU5M-diet-b60c3eb5.png                 46.69 kB
+dist/assets/char-jumper-sheet-walk8-r0c4-kE6mDDKM-diet-b60c3eb5.png                      46.85 kB
+dist/assets/char-prospector-sheet-hover8-r1c3-CI25Lw8s-diet-b60c3eb5.png                 46.91 kB
+dist/assets/char-prospector-sheet-hover4-a-r3c1-DmMLHDGW-diet-b60c3eb5.png               46.94 kB
+dist/assets/char-prospector-sheet-hover4-b-r3c1-DYt0qmCM-diet-b60c3eb5.png               47.06 kB
+dist/assets/char-prospector-sheet-hover4-a-r3c2-B0zXIgm3-diet-b60c3eb5.png               47.12 kB
+dist/assets/char-prospector-sheet-hover8-r1c6-Bf-uYbz4-diet-b60c3eb5.png                 47.14 kB
+dist/assets/char-prospector-sheet-hover8-r3c1-CRFsFBAZ-diet-b60c3eb5.png                 47.18 kB
+dist/assets/char-prospector-sheet-hover8-r0c5-DUcdtcAB-diet-b60c3eb5.png                 47.24 kB
+dist/assets/char-prospector-sheet-hover8-r0c3-BdDJsd0S-diet-b60c3eb5.png                 47.24 kB
+dist/assets/char-prospector-sheet-hover8-r3c5-D4To1GG9-diet-b60c3eb5.png                 47.33 kB
+dist/assets/herald-engraving-ledger-n7jHYQlB-diet-b60c3eb5.webp                          47.36 kB
+dist/assets/char-prospector-sheet-hover8-r0c1-CYuO49GX-diet-b60c3eb5.png                 47.39 kB
+dist/assets/char-prospector-sheet-hover8-r0c2-D14fyyRS-diet-b60c3eb5.png                 47.49 kB
+dist/assets/char-prospector-sheet-hover8-r0c7-D1HRDwqa-diet-b60c3eb5.png                 47.61 kB
+dist/assets/char-prospector-sheet-hover8-r0c4-BaWTuVRw-diet-b60c3eb5.png                 47.74 kB
+dist/assets/char-prospector-sheet-hover4-a-r1c1-Dew0XTU5-diet-b60c3eb5.png               47.80 kB
+dist/assets/char-prospector-sheet-hover8-r0c6-B20cHOUF-diet-b60c3eb5.png                 48.16 kB
+dist/assets/char-prospector-sheet-hover4-a-r1c3-rsQYwhHa-diet-b60c3eb5.png               48.34 kB
+dist/assets/char-prospector-sheet-hover4-a-r1c0-DnlVTRqg-diet-b60c3eb5.png               48.37 kB
+dist/assets/char-hero-sheet-rotation2-f-r1c1-kqE9WcPF-diet-b60c3eb5.png                  48.43 kB
+dist/assets/char-prospector-sheet-hover4-a-r0c1-DepA6yuz-diet-b60c3eb5.png               48.45 kB
+dist/assets/char-prospector-sheet-hover4-b-r0c3-DL15dBuO-diet-b60c3eb5.png               48.48 kB
+dist/assets/char-prospector-sheet-hover4-a-r0c0-lfx_AtwE-diet-b60c3eb5.png               48.49 kB
+dist/assets/char-prospector-sheet-hover4-a-r0c3-DlMumzT--diet-b60c3eb5.png               48.68 kB
+dist/assets/char-prospector-sheet-hover8-r0c0-CUJUiS_0-diet-b60c3eb5.png                 48.73 kB
+dist/assets/defeat-sting-BvoSPKeR-diet-b60c3eb5.mp3                                      48.94 kB
+dist/assets/epoch-door-sting-B7W9AZTL-diet-b60c3eb5.mp3                                  48.94 kB
+dist/assets/victory-sting-BqX18h28-diet-b60c3eb5.mp3                                     48.94 kB
+dist/assets/char-prospector-sheet-hover4-b-r0c2-DvxfFsat-diet-b60c3eb5.png               48.97 kB
+dist/assets/char-prospector-sheet-hover4-a-r0c2-FU4dVJxD-diet-b60c3eb5.png               49.05 kB
+dist/assets/char-prospector-sheet-hover4-b-r0c0-BIHCBUfo-diet-b60c3eb5.png               49.40 kB
+dist/assets/char-hero-sheet-rotation2-f-r0c2-BlX0f4rV-diet-b60c3eb5.png                  49.50 kB
+dist/assets/char-prospector-sheet-hover4-a-r1c2-DjerSNLF-diet-b60c3eb5.png               49.55 kB
+dist/assets/char-jumper-sheet-walk8-r1c7-DCVraIg9-diet-b60c3eb5.png                      49.63 kB
+dist/assets/char-prospector-sheet-hover4-b-r0c1-Cl8lq9sz-diet-b60c3eb5.png               49.64 kB
+dist/assets/char-hero-sheet-rotation-f-r1c3-BsBCN3cn-diet-b60c3eb5.png                   50.13 kB
+dist/assets/char-jumper-sheet-walk8-r1c4-Bk7szSEw-diet-b60c3eb5.png                      50.34 kB
+dist/assets/char-hero-sheet-rotation2-f-r1c0-DzWzQ3se-diet-b60c3eb5.png                  50.81 kB
+dist/assets/char-jumper-sheet-walk8-r1c5-DfS4FwlR-diet-b60c3eb5.png                      51.24 kB
+dist/assets/char-jumper-sheet-walk8-r2c6-DbxLE_UC-diet-b60c3eb5.png                      51.47 kB
+dist/assets/char-jumper-sheet-walk8-r1c2-C8jBQ0Xm-diet-b60c3eb5.png                      51.54 kB
+dist/assets/herald-engraving-town-growth-B77PkDNL-diet-b60c3eb5.webp                     51.66 kB
+dist/assets/char-jumper-sheet-walk8-r2c4-BGqALpWe-diet-b60c3eb5.png                      51.78 kB
+dist/assets/char-jumper-sheet-walk8-r2c1-CwreGdo_-diet-b60c3eb5.png                      51.96 kB
+dist/assets/char-jumper-sheet-walk8-r1c0-DnhR0gSs-diet-b60c3eb5.png                      52.08 kB
+dist/assets/char-jumper-sheet-walk8-r2c3-COFvB3k9-diet-b60c3eb5.png                      52.17 kB
+dist/assets/char-jumper-sheet-walk8-r1c3-DJ84TfzC-diet-b60c3eb5.png                      52.22 kB
+dist/assets/char-hero-sheet-rotation-f-r1c0-CTPQPgU6-diet-b60c3eb5.png                   52.35 kB
+dist/assets/char-jumper-sheet-rotation-r2c3-B08Kbyy5-diet-b60c3eb5.png                   52.50 kB
+dist/assets/char-jumper-sheet-walk8-r2c5-C74zi4-8-diet-b60c3eb5.png                      52.52 kB
+dist/assets/char-jumper-sheet-walk8-r2c0-DDsZJKl2-diet-b60c3eb5.png                      53.21 kB
+dist/assets/char-jumper-sheet-walk8-r2c7-DpGdKmkK-diet-b60c3eb5.png                      53.42 kB
+dist/assets/char-hero-sheet-rotation2-f-r0c1-B03qLtCA-diet-b60c3eb5.png                  53.49 kB
+dist/assets/char-hero-sheet-rotation-f-r1c1-se-bKQJV-diet-b60c3eb5.png                   53.58 kB
+dist/assets/char-jumper-sheet-walk8-r2c2-CsvLtwoK-diet-b60c3eb5.png                      53.75 kB
+dist/assets/char-hero-sheet-rotation2-f-r0c0-BaWqdCjS-diet-b60c3eb5.png                  53.76 kB
+dist/assets/char-jumper-sheet-walk8-r1c6-C387Dc78-diet-b60c3eb5.png                      53.84 kB
+dist/assets/herald-engraving-river-DbGckkQV-diet-b60c3eb5.webp                           53.91 kB
+dist/assets/char-jumper-sheet-walk8-r1c1-BcVdHxN6-diet-b60c3eb5.png                      53.98 kB
+dist/assets/char-jumper-sheet-rotation-r2c0-DyfMG1w0-diet-b60c3eb5.png                   54.14 kB
+dist/assets/covered_wagon-DoD5oKIb-diet-b60c3eb5.glb                                     54.27 kB
+dist/assets/char-hero-sheet-side-actions-f-r1c2-BBRFvKTw-diet-b60c3eb5.png               55.43 kB
+dist/assets/char-jumper-sheet-rotation-r2c1-B0gZIDwW-diet-b60c3eb5.png                   55.57 kB
+dist/assets/char-hero-sheet-side-actions-f-r1c1-gXasKlVc-diet-b60c3eb5.png               56.62 kB
+dist/assets/char-hero-sheet-rotation-f-r1c2-DnC71R4h-diet-b60c3eb5.png                   57.28 kB
+dist/assets/char-jumper-sheet-rotation-r0c3-s-tMbGgj-diet-b60c3eb5.png                   57.37 kB
+dist/assets/char-hero-sheet-rotation-f-r2c2-BK-qH9cq-diet-b60c3eb5.png                   57.41 kB
+dist/assets/char-hero-sheet-rotation-f-r2c3-Do3v2rli-diet-b60c3eb5.png                   57.44 kB
+dist/assets/char-jumper-sheet-rotation-r0c0-2IzYKdzz-diet-b60c3eb5.png                   57.46 kB
+dist/assets/char-jumper-sheet-rotation-r0c2-BZBGRFs6-diet-b60c3eb5.png                   57.74 kB
+dist/assets/char-jumper-sheet-rotation-r2c2-uzCzHRfp-diet-b60c3eb5.png                   57.83 kB
+dist/assets/sluice-water-loop-DoISZtZd-diet-b60c3eb5.mp3                                 58.14 kB
+dist/assets/char-hero-sheet-rotation-f-r2c0-CtDXOMyX-diet-b60c3eb5.png                   58.29 kB
+dist/assets/char-hero-sheet-rotation-f-r2c1-Dq-r5wRJ-diet-b60c3eb5.png                   58.61 kB
+dist/assets/char-hero-sheet-rotation-f-r0c0-QtN8lYOq-diet-b60c3eb5.png                   58.80 kB
+dist/assets/pan_monument-DXhG2mKX-diet-b60c3eb5.glb                                      59.51 kB
+dist/assets/char-jumper-sheet-rotation-r0c1-DvcaoYjY-diet-b60c3eb5.png                   59.70 kB
+dist/assets/char-hero-sheet-walk4-b-f-r1c3-BHdCa2WM-diet-b60c3eb5.png                    59.72 kB
+dist/assets/char-hero-sheet-walk4-b-f-r1c2-BTsj3EnV-diet-b60c3eb5.png                    60.39 kB
+dist/assets/char-hero-sheet-walk4-b-f-r0c2-C-GW_THA-diet-b60c3eb5.png                    60.43 kB
+dist/assets/char-jumper-sheet-rotation-r1c0-CFWhJTpm-diet-b60c3eb5.png                   60.50 kB
+dist/assets/char-hero-sheet-walk4-b-f-r1c1-CabfGucC-diet-b60c3eb5.png                    60.52 kB
+dist/assets/char-hero-sheet-walk4-b-f-r0c3-BsijO3v0-diet-b60c3eb5.png                    60.52 kB
+dist/assets/herald-engraving-trail-Die3zt8F-diet-b60c3eb5.webp                           60.58 kB
+dist/assets/char-jumper-sheet-rotation-r1c1-CVN652oK-diet-b60c3eb5.png                   60.70 kB
+dist/assets/char-jumper-sheet-rotation-r1c3-B6L9iCsP-diet-b60c3eb5.png                   60.80 kB
+dist/assets/char-hero-sheet-rotation-f-r0c3-IC5wZbtG-diet-b60c3eb5.png                   60.90 kB
+dist/assets/char-hero-sheet-rotation-f-r0c2-DgGCeWfo-diet-b60c3eb5.png                   60.95 kB
+dist/assets/char-jumper-sheet-rotation-r1c2-BCLem7hu-diet-b60c3eb5.png                   61.03 kB
+dist/assets/char-hero-sheet-walk4-b-f-r0c0-JsWOrNwZ-diet-b60c3eb5.png                    61.04 kB
+dist/assets/river-ambience-loop-BZul2Hc_-diet-b60c3eb5.mp3                               61.06 kB
+dist/assets/char-hero-sheet-rotation-f-r0c1-BNLd8QO_-diet-b60c3eb5.png                   61.35 kB
+dist/assets/char-baron-sheet-walkdiag8-r2c5-CNTYkDG5-diet-b60c3eb5.png                   61.60 kB
+dist/assets/char-hero-sheet-walk4-b-f-r3c3-CXyvPqna-diet-b60c3eb5.png                    61.72 kB
+dist/assets/char-baron-sheet-walk8-r1c6-BuWRz7pN-diet-b60c3eb5.png                       62.08 kB
+dist/assets/char-hero-sheet-side-actions-f-r0c0-DgQPyKa5-diet-b60c3eb5.png               62.50 kB
+dist/assets/char-hero-sheet-walk4-b-f-r3c1-Bq2iXwGu-diet-b60c3eb5.png                    62.65 kB
+dist/assets/char-hero-sheet-walk4-a-f-r0c2-CVN59wX_-diet-b60c3eb5.png                    62.69 kB
+dist/assets/char-hero-sheet-walk4-b-f-r0c1-Db5UZZ4H-diet-b60c3eb5.png                    63.19 kB
+dist/assets/char-hero-sheet-walk4-b-f-r3c2-BSzAPlBt-diet-b60c3eb5.png                    63.38 kB
+dist/assets/char-jumper-sheet-walk4-b-r0c3-B_FjKfhT-diet-b60c3eb5.png                    63.51 kB
+dist/assets/char-hero-sheet-walk4-b-f-r1c0-UQWGwTWD-diet-b60c3eb5.png                    63.63 kB
+dist/assets/char-baron-sheet-walkdiag8-r2c7-CsjWyPMX-diet-b60c3eb5.png                   64.13 kB
+dist/assets/char-baron-sheet-walk8-r3c5-df7jjb44-diet-b60c3eb5.png                       64.27 kB
+dist/assets/char-hero-sheet-side-actions-f-r1c0-BOytfrx7-diet-b60c3eb5.png               64.68 kB
+dist/assets/baron-defeat-fanfare-C4iOYq3E-diet-b60c3eb5.mp3                              65.24 kB
+dist/assets/desert-day-loop-BisSeUtA-diet-b60c3eb5.mp3                                   65.24 kB
+dist/assets/desert-dusk-loop-B81LoTwA-diet-b60c3eb5.mp3                                  65.24 kB
+dist/assets/river-bed-v2-loop-DzxHvq0Z-diet-b60c3eb5.mp3                                 65.24 kB
+dist/assets/tavern-interior-loop-gETHo_e_-diet-b60c3eb5.mp3                              65.24 kB
+dist/assets/town-square-loop-CjEVTDUi-diet-b60c3eb5.mp3                                  65.24 kB
+dist/assets/char-baron-sheet-walk8-r1c3-D_aTCT6q-diet-b60c3eb5.png                       65.32 kB
+dist/assets/char-hero-sheet-side-f-r0c0-DHR_PKDM-diet-b60c3eb5.png                       65.33 kB
+dist/assets/char-baron-sheet-walk8-r3c3-B127GDQx-diet-b60c3eb5.png                       65.48 kB
+dist/assets/char-jumper-sheet-walk4-b-r3c0-BkTihxOm-diet-b60c3eb5.png                    65.57 kB
+dist/assets/char-hero-sheet-walk4-b-f-r2c1-CpxR1IDR-diet-b60c3eb5.png                    65.63 kB
+dist/assets/char-baron-sheet-walk8-r1c2-C9faf2u8-diet-b60c3eb5.png                       65.69 kB
+dist/assets/char-hero-sheet-walk4-a-f-r3c2-CurTHrom-diet-b60c3eb5.png                    65.70 kB
+dist/assets/char-jumper-sheet-walk4-b-r3c2-BtRu3LHU-diet-b60c3eb5.png                    65.72 kB
+dist/assets/char-baron-sheet-walk4-b-r1c3-BmLP-ldw-diet-b60c3eb5.png                     65.72 kB
+dist/assets/char-baron-sheet-walk8-r1c5-D99u2jJb-diet-b60c3eb5.png                       65.78 kB
+dist/assets/char-baron-sheet-walkdiag8-r2c6-BAG-vzeX-diet-b60c3eb5.png                   65.83 kB
+dist/assets/char-hero-sheet-walk4-b-f-r3c0-ZGEtdhUT-diet-b60c3eb5.png                    65.92 kB
+dist/assets/char-baron-sheet-walk4-b-r2c2-CudnAQWz-diet-b60c3eb5.png                     65.93 kB
+dist/assets/char-baron-sheet-walk8-r1c0-C5MIyWBP-diet-b60c3eb5.png                       65.98 kB
+dist/assets/char-jumper-sheet-walk4-a-r3c3-Dd8Agl6D-diet-b60c3eb5.png                    66.05 kB
+dist/assets/char-baron-sheet-walk8-r3c7-CsF7awOP-diet-b60c3eb5.png                       66.13 kB
+dist/assets/char-jumper-sheet-walk4-b-r0c2-ab6iAUZJ-diet-b60c3eb5.png                    66.17 kB
+dist/assets/char-baron-sheet-walk8-r3c6-D3VIrqKX-diet-b60c3eb5.png                       66.19 kB
+dist/assets/char-jumper-sheet-walk4-a-r3c1-3m_76qaQ-diet-b60c3eb5.png                    66.21 kB
+dist/assets/char-hero-sheet-walk4-b-f-r2c2-CNGSydTn-diet-b60c3eb5.png                    66.24 kB
+dist/assets/char-baron-sheet-walk8-r3c2-DhsPu6n1-diet-b60c3eb5.png                       66.29 kB
+dist/assets/char-baron-sheet-walk8-r3c4-J9Lu-bVe-diet-b60c3eb5.png                       66.31 kB
+dist/assets/char-baron-sheet-walk8-r2c2-YdZWFdRd-diet-b60c3eb5.png                       66.32 kB
+dist/assets/char-baron-sheet-walk8-r1c1-C5j5wRU8-diet-b60c3eb5.png                       66.39 kB
+dist/assets/char-hero-sheet-walk4-b-f-r2c3-LeI1tt6j-diet-b60c3eb5.png                    66.47 kB
+dist/assets/char-jumper-sheet-walk4-b-r2c2-5sOtzMCP-diet-b60c3eb5.png                    66.51 kB
+dist/assets/char-hero-sheet-walk4-a-f-r2c3-DxhA2OGD-diet-b60c3eb5.png                    66.51 kB
+dist/assets/char-jumper-sheet-walk4-a-r3c0-CkoVy5cc-diet-b60c3eb5.png                    66.53 kB
+dist/assets/char-jumper-sheet-walk4-a-r3c2-DfhORNbM-diet-b60c3eb5.png                    66.61 kB
+dist/assets/char-baron-sheet-walk4-b-r2c1-CELVrV9c-diet-b60c3eb5.png                     66.82 kB
+dist/assets/char-jumper-sheet-walk4-b-r3c1-DqYgYfrC-diet-b60c3eb5.png                    66.83 kB
+dist/assets/char-hero-sheet-walk4-b-f-r2c0-eVlE9Mqv-diet-b60c3eb5.png                    66.87 kB
+dist/assets/char-baron-sheet-walk4-b-r2c0-DgwWm59a-diet-b60c3eb5.png                     66.87 kB
+dist/assets/char-hero-sheet-walk4-a-f-r1c3-DyBuJZhL-diet-b60c3eb5.png                    66.95 kB
+dist/assets/char-baron-sheet-walk8-r1c7-wKvDQmZ9-diet-b60c3eb5.png                       67.12 kB
+dist/assets/char-hero-sheet-walk4-a-f-r0c0-ZVSMWPjJ-diet-b60c3eb5.png                    67.21 kB
+dist/assets/char-baron-sheet-walkdiag8-r2c1-DUnpXzYG-diet-b60c3eb5.png                   67.22 kB
+dist/assets/char-jumper-sheet-walk4-b-r1c3-PsF7kKU4-diet-b60c3eb5.png                    67.24 kB
+dist/assets/char-jumper-sheet-walk4-a-r0c3-DD0ziVZe-diet-b60c3eb5.png                    67.31 kB
+dist/assets/char-baron-sheet-walk4-b-r2c3-9Mjs-aVl-diet-b60c3eb5.png                     67.32 kB
+dist/assets/char-jumper-sheet-walk4-a-r0c2-D4WG8bYT-diet-b60c3eb5.png                    67.37 kB
+dist/assets/char-baron-sheet-walkdiag8-r2c3-B2ygck-v-diet-b60c3eb5.png                   67.39 kB
+dist/assets/char-hero-sheet-walk4-a-f-r2c2-Bv_pFbE5-diet-b60c3eb5.png                    67.39 kB
+dist/assets/char-hero-sheet-walk4-a-f-r1c2-BR-3qcWX-diet-b60c3eb5.png                    67.52 kB
+dist/assets/char-baron-sheet-walk4-b-r1c2-BmnXKkkc-diet-b60c3eb5.png                     67.52 kB
+dist/assets/char-jumper-sheet-walk4-b-r1c2-tgCKH7_l-diet-b60c3eb5.png                    67.54 kB
+dist/assets/char-jumper-sheet-walk4-a-r2c1-BXaxVF6r-diet-b60c3eb5.png                    67.56 kB
+dist/assets/char-jumper-sheet-walk4-b-r3c3-Dx45FKJ6-diet-b60c3eb5.png                    67.59 kB
+dist/assets/char-hero-sheet-walk4-a-f-r3c3-CETLJzIQ-diet-b60c3eb5.png                    67.82 kB
+dist/assets/char-hero-sheet-walk4-a-f-r0c3-4JQllswB-diet-b60c3eb5.png                    67.92 kB
+dist/assets/char-baron-sheet-walkdiag8-r2c2-DO7kx7mv-diet-b60c3eb5.png                   68.01 kB
+dist/assets/char-jumper-sheet-walk4-b-r0c1-Ck_5K9pi-diet-b60c3eb5.png                    68.02 kB
+dist/assets/char-jumper-sheet-walk4-b-r1c1-BOXZ8gda-diet-b60c3eb5.png                    68.16 kB
+dist/assets/char-baron-sheet-walk4-b-r1c0-Dyz0h6x6-diet-b60c3eb5.png                     68.18 kB
+dist/assets/char-jumper-sheet-walk4-b-r2c3-YPNGhaby-diet-b60c3eb5.png                    68.30 kB
+dist/assets/char-baron-sheet-walkdiag8-r1c6-CDlPlSdx-diet-b60c3eb5.png                   68.33 kB
+dist/assets/char-hero-sheet-walk4-a-f-r1c0-BQ5i05nd-diet-b60c3eb5.png                    68.36 kB
+dist/assets/char-jumper-sheet-walk4-a-r2c2-CH5cpsNC-diet-b60c3eb5.png                    68.47 kB
+dist/assets/char-baron-sheet-walkdiag8-r2c0-DjYreah7-diet-b60c3eb5.png                   68.55 kB
+dist/assets/char-baron-sheet-walkdiag8-r1c7-BfFtioHC-diet-b60c3eb5.png                   68.67 kB
+dist/assets/char-baron-sheet-walk8-r3c1-CusIkPZd-diet-b60c3eb5.png                       68.89 kB
+dist/assets/char-hero-sheet-walk4-a-f-r2c0-BQtCKgM6-diet-b60c3eb5.png                    69.02 kB
+dist/assets/char-baron-sheet-walk8-r3c0-BVKGTypI-diet-b60c3eb5.png                       69.04 kB
+dist/assets/char-baron-sheet-walkdiag8-r2c4-DgwC0WKv-diet-b60c3eb5.png                   69.06 kB
+dist/assets/char-baron-sheet-walk4-b-r1c1-D4qEU6OD-diet-b60c3eb5.png                     69.22 kB
+dist/assets/char-hero-sheet-walk4-a-f-r2c1-4fpzx2kI-diet-b60c3eb5.png                    69.31 kB
+dist/assets/char-baron-sheet-walk8-r2c3-voQGHczu-diet-b60c3eb5.png                       69.57 kB
+dist/assets/char-baron-sheet-walkdiag8-r1c1-DIQikXDe-diet-b60c3eb5.png                   69.83 kB
+dist/assets/char-baron-sheet-walk8-r1c4-DAg_Z0bP-diet-b60c3eb5.png                       69.87 kB
+dist/assets/char-jumper-sheet-walk4-b-r1c0-BUQAxz3Y-diet-b60c3eb5.png                    69.89 kB
+dist/assets/char-baron-sheet-walkdiag8-r1c5-DjYuddLV-diet-b60c3eb5.png                   69.95 kB
+dist/assets/char-hero-sheet-front-f-r1c1-C0vWCLAS-diet-b60c3eb5.png                      69.96 kB
+dist/assets/char-hero-sheet-walk4-a-f-r3c0-Bw5KH62r-diet-b60c3eb5.png                    70.04 kB
+dist/assets/char-hero-sheet-walk4-a-f-r0c1-Cx8ZYrbA-diet-b60c3eb5.png                    70.04 kB
+dist/assets/char-hero-sheet-walk4-a-f-r1c1-Dc-EnA_O-diet-b60c3eb5.png                    70.10 kB
+dist/assets/char-baron-sheet-walk8-r2c1-ce-cDPSJ-diet-b60c3eb5.png                       70.13 kB
+dist/assets/char-baron-sheet-walk8-r2c5-BkxNzVRw-diet-b60c3eb5.png                       70.22 kB
+dist/assets/char-jumper-sheet-walk4-a-r1c2-dnsoIfS1-diet-b60c3eb5.png                    70.42 kB
+dist/assets/char-baron-sheet-walk8-r2c6-C1JcFlGq-diet-b60c3eb5.png                       70.48 kB
+dist/assets/char-hero-sheet-back-f-r1c0-CImOsw_9-diet-b60c3eb5.png                       70.56 kB
+dist/assets/char-hero-sheet-side-actions-f-r0c1-B-8uzJLd-diet-b60c3eb5.png               70.77 kB
+dist/assets/char-jumper-sheet-walk4-b-r0c0-CYSanghk-diet-b60c3eb5.png                    70.79 kB
+dist/assets/char-baron-sheet-walkdiag8-r1c2-y5zkg8dg-diet-b60c3eb5.png                   70.92 kB
+dist/assets/char-jumper-sheet-walk4-a-r0c0-D9TkqVty-diet-b60c3eb5.png                    70.96 kB
+dist/assets/char-hero-sheet-side-actions-f-r0c2-KxEJv39b-diet-b60c3eb5.png               71.03 kB
+dist/assets/char-jumper-sheet-walk4-a-r0c1-CENJQkfh-diet-b60c3eb5.png                    71.07 kB
+dist/assets/char-hero-sheet-front-r0c0-BcS5NtFa-diet-b60c3eb5.png                        71.11 kB
+dist/assets/char-baron-sheet-walk8-r2c4-DZdgczYn-diet-b60c3eb5.png                       71.22 kB
+dist/assets/char-jumper-sheet-walk4-a-r1c1-Co0Uqzgy-diet-b60c3eb5.png                    71.53 kB
+dist/assets/char-jumper-sheet-walk4-b-r2c1-BIrDLcgx-diet-b60c3eb5.png                    71.77 kB
+dist/assets/char-jumper-sheet-walk4-a-r2c0-D4Ktb3Xs-diet-b60c3eb5.png                    71.97 kB
+dist/assets/char-hero-sheet-back-f-r1c1-Dfqp-ftL-diet-b60c3eb5.png                       72.19 kB
+dist/assets/char-baron-sheet-walk4-a-r1c3-Ceee5Qld-diet-b60c3eb5.png                     72.28 kB
+dist/assets/char-baron-sheet-walk8-r2c7-6n3niVR4-diet-b60c3eb5.png                       72.36 kB
+dist/assets/char-hero-sheet-walk4-a-f-r3c1-0vPDRc0S-diet-b60c3eb5.png                    72.63 kB
+dist/assets/char-baron-sheet-walkdiag8-r0c0-DPpByjiT-diet-b60c3eb5.png                   72.79 kB
+dist/assets/char-baron-sheet-walk8-r0c6-CzQLHpln-diet-b60c3eb5.png                       72.81 kB
+dist/assets/char-baron-sheet-walk8-r2c0-XrAIElbB-diet-b60c3eb5.png                       72.85 kB
+dist/assets/char-jumper-sheet-walk4-a-r1c0-BtMH7aAQ-diet-b60c3eb5.png                    72.88 kB
+dist/assets/char-baron-sheet-walk8-r0c1-CzizBXER-diet-b60c3eb5.png                       73.05 kB
+dist/assets/char-baron-sheet-walkdiag8-r0c4-RPL0YaD4-diet-b60c3eb5.png                   73.06 kB
+dist/assets/char-baron-sheet-walk4-a-r2c3-Bl_UefF6-diet-b60c3eb5.png                     73.21 kB
+dist/assets/char-jumper-sheet-walk4-b-r2c0-COheYuzD-diet-b60c3eb5.png                    73.27 kB
+dist/assets/char-baron-sheet-walkdiag8-r0c3-Dp8vBXw4-diet-b60c3eb5.png                   73.29 kB
+dist/assets/char-hero-sheet-back-f-r0c0-BSsAeqnI-diet-b60c3eb5.png                       73.31 kB
+dist/assets/char-jumper-sheet-walk4-a-r2c3-B8QP9GuX-diet-b60c3eb5.png                    73.33 kB
+dist/assets/char-baron-sheet-walkdiag8-r1c3-DwIDxqDC-diet-b60c3eb5.png                   73.36 kB
+dist/assets/char-baron-sheet-walkdiag8-r0c1-BxOvFLzc-diet-b60c3eb5.png                   73.41 kB
+dist/assets/char-baron-sheet-walkdiag8-r1c4-_nQ8WMjh-diet-b60c3eb5.png                   73.46 kB
+dist/assets/char-baron-sheet-walkdiag8-r0c7-BqcIuiE9-diet-b60c3eb5.png                   73.50 kB
+dist/assets/char-baron-sheet-walk8-r0c4-CxzSj3Hs-diet-b60c3eb5.png                       73.65 kB
+dist/assets/char-schoolteacher-sheet-walk8-a-r0c2-CzKiBFal-diet-b60c3eb5.png             73.75 kB
+dist/assets/char-schoolteacher-sheet-walk8-a-r3c1-DwOS_BW7-diet-b60c3eb5.png             73.88 kB
+dist/assets/char-baron-sheet-walk4-b-r0c0-6StyqGkU-diet-b60c3eb5.png                     74.02 kB
+dist/assets/char-hero-sheet-front-f-r1c2-bdykDZaZ-diet-b60c3eb5.png                      74.07 kB
+dist/assets/char-baron-sheet-walk8-r0c3-0_XZ1UVg-diet-b60c3eb5.png                       74.40 kB
+dist/assets/char-baron-sheet-walkdiag8-r0c6-BaejcCMD-diet-b60c3eb5.png                   74.47 kB
+dist/assets/char-baron-sheet-walkdiag8-r0c5-CI2fnxXw-diet-b60c3eb5.png                   74.50 kB
+dist/assets/char-hero-sheet-back-f-r1c2-CZLWX9Lo-diet-b60c3eb5.png                       74.52 kB
+dist/assets/char-baron-sheet-walk4-a-r2c1-B83baHHq-diet-b60c3eb5.png                     74.61 kB
+dist/assets/char-hero-sheet-back-f-r0c2-DVOXysPU-diet-b60c3eb5.png                       74.81 kB
+dist/assets/char-jumper-sheet-walk4-a-r1c3-0JjqSqUV-diet-b60c3eb5.png                    75.06 kB
+dist/assets/char-hero-sheet-front-f-r1c0-DpI-Opau-diet-b60c3eb5.png                      75.06 kB
+dist/assets/char-baron-sheet-walk4-a-r1c1-BPxyeV6Y-diet-b60c3eb5.png                     75.09 kB
+dist/assets/char-baron-sheet-walk4-a-r1c2-CnD-mydo-diet-b60c3eb5.png                     75.10 kB
+dist/assets/char-schoolteacher-sheet-walk8-a-r3c3-Ci5TeviA-diet-b60c3eb5.png             75.23 kB
+dist/assets/char-baron-sheet-walkdiag8-r0c2-D2HBVNTl-diet-b60c3eb5.png                   75.29 kB
+dist/assets/char-baron-sheet-walk4-a-r3c1-C9fnAD8r-diet-b60c3eb5.png                     75.64 kB
+dist/assets/char-baron-sheet-walkdiag8-r1c0-Dn31nZPC-diet-b60c3eb5.png                   76.02 kB
+dist/assets/char-baron-sheet-walk4-a-r2c2-D6088cu_-diet-b60c3eb5.png                     76.14 kB
+dist/assets/char-baron-sheet-walk4-a-r1c0-DeLTosdY-diet-b60c3eb5.png                     76.45 kB
+dist/assets/char-jumper-sheet-front-r1c1-DHyh3vuH-diet-b60c3eb5.png                      76.52 kB
+dist/assets/char-schoolteacher-sheet-walk8-a-r2c0-4JneOmVv-diet-b60c3eb5.png             76.62 kB
+dist/assets/char-baron-sheet-walk4-a-r3c0-zVsImZlD-diet-b60c3eb5.png                     76.67 kB
+dist/assets/char-hero-sheet-front-f-r0c0-BrhLgP5D-diet-b60c3eb5.png                      76.94 kB
+dist/assets/char-schoolteacher-sheet-walk8-a-r1c0-D9t-kei0-diet-b60c3eb5.png             77.01 kB
+dist/assets/char-baron-sheet-walk4-a-r2c0-FThg7liM-diet-b60c3eb5.png                     77.13 kB
+dist/assets/char-schoolteacher-sheet-walk8-a-r0c3-HoeqrCvr-diet-b60c3eb5.png             77.15 kB
+dist/assets/char-baron-sheet-walk8-r0c7-Be6Pqqu0-diet-b60c3eb5.png                       77.30 kB
+dist/assets/char-hero-sheet-back-f-r0c1-CZIs_syN-diet-b60c3eb5.png                       77.59 kB
+dist/assets/char-baron-sheet-walk8-r0c2-CxgB65be-diet-b60c3eb5.png                       77.67 kB
+dist/assets/char-schoolteacher-sheet-walk8-a-r3c0-bT623rYs-diet-b60c3eb5.png             77.68 kB
+dist/assets/char-baron-sheet-walk8-r0c5-Cya7ZInT-diet-b60c3eb5.png                       77.76 kB
+dist/assets/char-baron-sheet-walk4-a-r3c3-BBvrxEBf-diet-b60c3eb5.png                     77.93 kB
+dist/assets/char-baron-sheet-walk4-a-r3c2-BZYmRWOA-diet-b60c3eb5.png                     78.51 kB
+dist/assets/char-schoolteacher-sheet-walk8-a-r2c1-D9We28IG-diet-b60c3eb5.png             79.12 kB
+dist/assets/char-baron-sheet-walk8-r0c0-C2BEQWUG-diet-b60c3eb5.png                       79.44 kB
+dist/assets/char-schoolteacher-sheet-walk8-a-r0c1-C34ut6p5-diet-b60c3eb5.png             79.72 kB
+dist/assets/char-hero-sheet-front-f-r0c1-Cw7207bN-diet-b60c3eb5.png                      79.73 kB
+dist/assets/char-schoolteacher-sheet-walk8-a-r1c3-BAz1zHTp-diet-b60c3eb5.png             79.87 kB
+dist/assets/char-jumper-sheet-front-r1c0-BId_mlJy-diet-b60c3eb5.png                      79.88 kB
+dist/assets/char-hero-sheet-front-f-r0c2-D8AzHpw2-diet-b60c3eb5.png                      80.47 kB
+dist/assets/char-schoolteacher-sheet-walk8-a-r1c2-CRfMQqeh-diet-b60c3eb5.png             81.02 kB
+dist/assets/char-schoolteacher-sheet-walk8-a-r0c0-iaqiuphX-diet-b60c3eb5.png             81.13 kB
+dist/assets/char-jumper-sheet-front-r0c0-Dt80Lycq-diet-b60c3eb5.png                      81.25 kB
+dist/assets/char-schoolteacher-sheet-walk8-a-r3c2-BaCfYQrn-diet-b60c3eb5.png             81.33 kB
+dist/assets/char-jumper-sheet-front-r0c2-C6OguOip-diet-b60c3eb5.png                      81.42 kB
+dist/assets/char-jumper-sheet-front-r1c2-BwpLiTvR-diet-b60c3eb5.png                      81.62 kB
+dist/assets/char-hero-sheet-work8-east-clean-v1-r1c1-D8nvm2nU-diet-b60c3eb5.png          81.95 kB
+dist/assets/char-schoolteacher-sheet-walk8-a-r2c3-J5tw-tlG-diet-b60c3eb5.png             82.65 kB
+dist/assets/char-schoolteacher-sheet-walk8-a-r2c2-CMssyO1d-diet-b60c3eb5.png             83.08 kB
+dist/assets/char-baron-sheet-walk4-a-r0c3-DyJsCORD-diet-b60c3eb5.png                     83.10 kB
+dist/assets/char-jumper-sheet-front-r0c1-DImp-R97-diet-b60c3eb5.png                      83.72 kB
+dist/assets/char-hero-sheet-work8-east-clean-v1-r1c0-yXqQXA6T-diet-b60c3eb5.png          84.16 kB
+dist/assets/char-hero-sheet-work8-east-clean-v1-r1c2-xzI6wohK-diet-b60c3eb5.png          84.20 kB
+dist/assets/char-prospector-gilded-sheet-hover8-r0c0-4SNNsSBU-diet-b60c3eb5.png          84.84 kB
+dist/assets/char-hero-sheet-work8-east-clean-v1-r0c1-CUxns8VN-diet-b60c3eb5.png          85.14 kB
+dist/assets/char-hero-sheet-side-f-r0c1-C-98uLBh-diet-b60c3eb5.png                       85.19 kB
+dist/assets/char-baron-sheet-walk4-a-r0c2-ji-IDlO_-diet-b60c3eb5.png                     85.26 kB
+dist/assets/char-jumper-sheet-back-r1c1-DcXrG9fb-diet-b60c3eb5.png                       85.81 kB
+dist/assets/char-prospector-complainant-sheet-hover8-r0c0-D452LJ_l-diet-b60c3eb5.png     85.93 kB
+dist/assets/char-baron-sheet-walk4-a-r0c0-BPDeWz91-diet-b60c3eb5.png                     85.94 kB
+dist/assets/char-hero-sheet-work8-east-clean-v1-r0c2-DVYjjmOO-diet-b60c3eb5.png          86.02 kB
+dist/assets/char-baron-sheet-walk4-a-r0c1-DLHBo0Ey-diet-b60c3eb5.png                     86.58 kB
+dist/assets/char-schoolteacher-sheet-walk8-a-r1c1-D42PvqTb-diet-b60c3eb5.png             86.68 kB
+dist/assets/char-jumper-sheet-back-r1c0-BQ_ujXw--diet-b60c3eb5.png                       86.69 kB
+dist/assets/char-hero-sheet-work8-east-clean-v1-r0c0-CzCzAXhH-diet-b60c3eb5.png          86.81 kB
+dist/assets/char-jumper-sheet-back-r0c2-DaFIoo5o-diet-b60c3eb5.png                       87.64 kB
+dist/assets/char-hero-sheet-work8-north-clean-v1-r1c2-BxGgtZhX-diet-b60c3eb5.png         87.66 kB
+dist/assets/char-hero-sheet-side-f-r1c0-DJeBQIQh-diet-b60c3eb5.png                       87.80 kB
+dist/assets/char-jumper-sheet-back-r0c0-CugxlCXz-diet-b60c3eb5.png                       88.42 kB
+dist/assets/char-hero-sheet-side-f-r1c1-D2frQ3yu-diet-b60c3eb5.png                       89.37 kB
+dist/assets/char-hero-sheet-work8-north-clean-v1-r0c3-BW1wlh3W-diet-b60c3eb5.png         89.73 kB
+dist/assets/char-jumper-sheet-back-r1c2-Dfxkhi9v-diet-b60c3eb5.png                       90.84 kB
+dist/assets/char-hero-sheet-work8-north-clean-v1-r0c0-BbCJNW-Y-diet-b60c3eb5.png         91.38 kB
+dist/assets/char-jumper-sheet-back-r0c1-Dp5Kc46o-diet-b60c3eb5.png                       91.47 kB
+dist/assets/char-hero-sheet-work8-north-clean-v1-r0c2-hsKeo-4_-diet-b60c3eb5.png         91.90 kB
+dist/assets/char-hero-sheet-work8-north-clean-v1-r1c1-Cd7tpW0s-diet-b60c3eb5.png         92.24 kB
+dist/assets/char-hero-sheet-work8-north-clean-v1-r1c0-BvzPYolV-diet-b60c3eb5.png         93.06 kB
+dist/assets/char-hero-sheet-work8-north-clean-v1-r0c1-NmT5O_JM-diet-b60c3eb5.png         93.52 kB
+dist/assets/gazette-panel-the-arms-vMOAs65x-diet-b60c3eb5.webp                           96.12 kB
+dist/assets/char-newsie-mei-sheet-walk8-r1c5-DNdOdWg3-diet-b60c3eb5.png                  96.14 kB
+dist/assets/char-bandit-thief-sheet-walk8-r2c2-Ds3VIfnC-diet-b60c3eb5.png                97.90 kB
+dist/assets/char-newsie-mei-sheet-walk8-r1c3-BnjoY7Y5-diet-b60c3eb5.png                  98.51 kB
+dist/assets/char-storekeeper-sheet-walk8-r1c2-D5DzW7fl-diet-b60c3eb5.png                100.55 kB
+dist/assets/char-preacher-sheet-walk8-a-r3c3-BLwqIX1G-diet-b60c3eb5.png                 100.93 kB
+dist/assets/char-preacher-sheet-walk8-a-r2c3-g04ezNfW-diet-b60c3eb5.png                 101.65 kB
+dist/assets/char-newsie-mei-sheet-walk8-r1c7-BsZ4dM0T-diet-b60c3eb5.png                 101.90 kB
+dist/assets/char-bandit-thief-sheet-walk8-r2c5-DSkvHSu--diet-b60c3eb5.png               102.33 kB
+dist/assets/char-jumper-sheet-side-r1c1-DWS1YNYD-diet-b60c3eb5.png                      103.05 kB
+dist/assets/char-jumper-sheet-side-r0c0-WgbiT4iC-diet-b60c3eb5.png                      103.25 kB
+dist/assets/char-newsie-mei-sheet-walk8-r2c3-nM2ekFBi-diet-b60c3eb5.png                 103.67 kB
+dist/assets/char-newsie-mei-sheet-walk8-r1c1-CB0opX2m-diet-b60c3eb5.png                 104.88 kB
+dist/assets/char-bandit-thief-sheet-walk8-r1c2-CF0-YMal-diet-b60c3eb5.png               105.23 kB
+dist/assets/char-bandit-thief-sheet-walkdiag8-r3c3-Bb5qRWKM-diet-b60c3eb5.png           105.35 kB
+dist/assets/char-preacher-sheet-walk8-a-r1c1-CXqerDeC-diet-b60c3eb5.png                 105.48 kB
+dist/assets/char-youngster-m-sheet-walk8-r1c7-DMImvswB-diet-b60c3eb5.png                105.89 kB
+dist/assets/char-bandit-thief-sheet-walkdiag8-r3c7-B6FCb1Fb-diet-b60c3eb5.png           105.92 kB
+dist/assets/char-jumper-sheet-side-r1c0-CpRq_HW5-diet-b60c3eb5.png                      106.68 kB
+dist/assets/char-preacher-sheet-walk8-a-r3c0-DPDJzS7m-diet-b60c3eb5.png                 106.87 kB
+dist/assets/char-preacher-sheet-walk8-a-r2c1-CS9NYnDw-diet-b60c3eb5.png                 107.12 kB
+dist/assets/char-bandit-thief-sheet-walkdiag8-r2c1-Cfw0yWLt-diet-b60c3eb5.png           107.50 kB
+dist/assets/char-storekeeper-sheet-walk8-r1c6-C8HjVaDP-diet-b60c3eb5.png                107.61 kB
+dist/assets/char-storekeeper-sheet-walk8-r2c2-ni3A6dAC-diet-b60c3eb5.png                107.72 kB
+dist/assets/char-preacher-sheet-walk8-a-r2c0-DcVxD0du-diet-b60c3eb5.png                 107.99 kB
+dist/assets/char-bandit-thief-sheet-walkdiag8-r2c4-Bc5vdtx_-diet-b60c3eb5.png           108.32 kB
+dist/assets/char-bandit-thief-sheet-walkdiag8-r3c6-9qPPajq8-diet-b60c3eb5.png           108.89 kB
+dist/assets/char-bandit-thief-sheet-walkdiag8-r2c6-BwKUhJAP-diet-b60c3eb5.png           108.92 kB
+dist/assets/char-bandit-thief-sheet-walkdiag8-r2c7-C0LwNvq1-diet-b60c3eb5.png           108.99 kB
+dist/assets/char-preacher-sheet-walk8-a-r1c3-DZPilDAD-diet-b60c3eb5.png                 109.01 kB
+dist/assets/char-bandit-thief-sheet-walk8-r1c3-BJYsOcES-diet-b60c3eb5.png               109.10 kB
+dist/assets/char-jumper-sheet-side-r0c1-awN5qgmK-diet-b60c3eb5.png                      109.21 kB
+dist/assets/char-bandit-thief-sheet-walk8-r2c6-zu9RTBbc-diet-b60c3eb5.png               109.39 kB
+dist/assets/char-newsie-mei-sheet-walk8-r2c5-DmpQNO3O-diet-b60c3eb5.png                 109.43 kB
+dist/assets/char-preacher-sheet-walk8-a-r3c1-C_tYLnpN-diet-b60c3eb5.png                 109.82 kB
+dist/assets/ui-menu-panel-C2N8bZCn-diet-b60c3eb5.png                                    110.16 kB
+dist/assets/char-storekeeper-sheet-walk8-r2c6-D6zAurwF-diet-b60c3eb5.png                110.42 kB
+dist/assets/char-newsie-mei-sheet-walk8-r0c1-COT9Titm-diet-b60c3eb5.png                 110.59 kB
+dist/assets/char-youngster-m-sheet-walk8-r1c2-CnSw87kO-diet-b60c3eb5.png                110.88 kB
+dist/assets/char-bandit-thief-sheet-walkdiag8-r0c1-D_bjvosa-diet-b60c3eb5.png           110.89 kB
+dist/assets/char-newsie-mei-sheet-walk8-r3c3-7jLRDHAl-diet-b60c3eb5.png                 111.21 kB
+dist/assets/char-newsie-mei-sheet-walk8-r3c4-gFSiJ94R-diet-b60c3eb5.png                 111.40 kB
+dist/assets/char-bandit-thief-sheet-walkdiag8-r2c0-kryr7OdT-diet-b60c3eb5.png           111.51 kB
+dist/assets/char-storekeeper-sheet-walk8-r1c5-DSH5RIBv-diet-b60c3eb5.png                111.54 kB
+dist/assets/char-preacher-sheet-walk8-a-r3c2-BpFCwqC9-diet-b60c3eb5.png                 111.60 kB
+dist/assets/char-bandit-thief-sheet-walkdiag8-r3c2-BbIJPvxo-diet-b60c3eb5.png           112.55 kB
+dist/assets/char-newsie-mei-sheet-walk8-r2c2-DkvMUXOg-diet-b60c3eb5.png                 112.55 kB
+dist/assets/char-bandit-thief-sheet-walk8-r3c1-CbyBKJK_-diet-b60c3eb5.png               112.83 kB
+dist/assets/char-newsie-mei-sheet-walk8-r3c5-ZcE-IbKa-diet-b60c3eb5.png                 112.88 kB
+dist/assets/char-bandit-thief-sheet-walkdiag8-r2c3-BCaYAFhk-diet-b60c3eb5.png           113.20 kB
+dist/assets/char-newsie-mei-sheet-walk8-r0c6-M3VHGck3-diet-b60c3eb5.png                 113.20 kB
+dist/assets/char-bandit-thief-sheet-walkdiag8-r3c1-CbBcNQnP-diet-b60c3eb5.png           113.23 kB
+dist/assets/char-bandit-thief-sheet-walk8-r1c4-CdqPvXEV-diet-b60c3eb5.png               113.26 kB
+dist/assets/char-newsie-mei-sheet-walk8-r3c2-BYWYgl0h-diet-b60c3eb5.png                 113.52 kB
+dist/assets/char-storekeeper-sheet-walk8-r1c1-DryLKPjp-diet-b60c3eb5.png                113.63 kB
+dist/assets/char-bandit-thief-sheet-walk8-r3c5-BdoKzdqw-diet-b60c3eb5.png               113.79 kB
+dist/assets/char-newsie-mei-sheet-walk8-r2c4-B8pmnEgR-diet-b60c3eb5.png                 113.79 kB
+dist/assets/char-bandit-thief-sheet-walkdiag8-r2c5-DgTDFR87-diet-b60c3eb5.png           113.96 kB
+dist/assets/char-bandit-thief-sheet-walk8-r3c0-CNisVG2H-diet-b60c3eb5.png               114.04 kB
+dist/assets/char-bandit-thief-sheet-walk8-r3c6-D2EvToHB-diet-b60c3eb5.png               114.40 kB
+dist/assets/char-newsie-mei-sheet-walk8-r0c3-C8_L7sAg-diet-b60c3eb5.png                 114.52 kB
+dist/assets/char-youngster-f-sheet-walk8-r2c6-CwFZFXQa-diet-b60c3eb5.png                114.75 kB
+dist/assets/char-bandit-thief-sheet-walkdiag8-r3c0-IU-YG8Da-diet-b60c3eb5.png           115.19 kB
+dist/assets/char-tavernkeeper-sheet-walk8-r1c2-DeV-58dx-diet-b60c3eb5.png               115.29 kB
+dist/assets/char-elder-sheet-walk8-r2c6-B1rk3DCR-diet-b60c3eb5.png                      115.35 kB
+dist/assets/char-preacher-sheet-walk8-a-r2c2-ZQbHmwQ4-diet-b60c3eb5.png                 115.45 kB
+dist/assets/char-newsie-mei-sheet-walk8-r0c0-DLTSfO6k-diet-b60c3eb5.png                 115.52 kB
+dist/assets/char-youngster-f-sheet-walk8-r1c7-D1AFik3e-diet-b60c3eb5.png                115.54 kB
+dist/assets/char-bandit-thief-sheet-walkdiag8-r0c5-CCavdQfF-diet-b60c3eb5.png           115.55 kB
+dist/assets/char-assay-clerk-sheet-walk8-a-r2c1-2cxc5eKJ-diet-b60c3eb5.png              115.65 kB
+dist/assets/char-newsie-mei-sheet-walk8-r2c1-Clqe_HYT-diet-b60c3eb5.png                 115.77 kB
+dist/assets/char-assay-clerk-sheet-walk8-a-r1c0-CJ06Orun-diet-b60c3eb5.png              115.81 kB
+dist/assets/char-bandit-thief-sheet-walk8-r3c2-CDUGmJlZ-diet-b60c3eb5.png               116.01 kB
+dist/assets/char-bandit-thief-sheet-walk8-r0c6-BijCvctM-diet-b60c3eb5.png               116.02 kB
+dist/assets/char-bandit-thief-sheet-walk8-r2c3-BVWy5k6J-diet-b60c3eb5.png               116.18 kB
+dist/assets/char-bandit-thief-sheet-walk8-r3c3-D7F6HveM-diet-b60c3eb5.png               116.47 kB
+dist/assets/char-elder-sheet-walk8-r1c5-CoVGlFbR-diet-b60c3eb5.png                      116.50 kB
+dist/assets/char-bandit-thief-sheet-walkdiag8-r2c2-Dseu0K2n-diet-b60c3eb5.png           116.58 kB
+dist/assets/char-bandit-thief-sheet-walkdiag8-r0c6-B9LNP1BF-diet-b60c3eb5.png           116.60 kB
+dist/assets/char-bandit-base-sheet-walkdiag8-r2c3-sgTnP-gt-diet-b60c3eb5.png            116.80 kB
+dist/assets/char-youngster-m-sheet-walk8-r2c6-Dwi_P4QJ-diet-b60c3eb5.png                117.02 kB
+dist/assets/char-bandit-thief-sheet-walk8-r0c4-5VqECo5I-diet-b60c3eb5.png               117.10 kB
+dist/assets/char-bandit-thief-sheet-walk8-r0c1-CMisY0wV-diet-b60c3eb5.png               117.20 kB
+dist/assets/char-assay-clerk-sheet-walk8-a-r1c3-Bk27ZrOB-diet-b60c3eb5.png              117.25 kB
+dist/assets/char-bandit-thief-sheet-walk8-r3c4-XbLatxSI-diet-b60c3eb5.png               117.35 kB
+dist/assets/char-bandit-thief-sheet-walkdiag8-r0c3-QWncE15z-diet-b60c3eb5.png           117.40 kB
+dist/assets/char-tavernkeeper-sheet-walk8-r1c6-BNt0dX5f-diet-b60c3eb5.png               117.52 kB
+dist/assets/char-newsie-mei-sheet-walk8-r0c5-a5yXHsWU-diet-b60c3eb5.png                 117.61 kB
+dist/assets/char-youngster-m-sheet-walk8-r2c3-OhhGoMN0-diet-b60c3eb5.png                117.97 kB
+dist/assets/char-bandit-thief-sheet-walk8-r3c7-6clbbt_l-diet-b60c3eb5.png               118.19 kB
+dist/assets/char-bandit-base-sheet-walkdiag8-r2c4-DEggpF2B-diet-b60c3eb5.png            118.25 kB
+dist/assets/char-preacher-sheet-walk8-a-r1c0-BzBSAqLD-diet-b60c3eb5.png                 118.32 kB
+dist/assets/char-bandit-base-sheet-walkdiag8-r2c7-qNSDhOvc-diet-b60c3eb5.png            118.34 kB
+dist/assets/char-youngster-m-sheet-walk8-r2c2-5UAUDrxP-diet-b60c3eb5.png                118.50 kB
+dist/assets/char-bandit-thief-sheet-walk8-r1c1-CHxZ0U8p-diet-b60c3eb5.png               118.55 kB
+dist/assets/char-bandit-thief-sheet-walk8-r0c3-Dkkivn5F-diet-b60c3eb5.png               118.61 kB
+dist/assets/char-bandit-base-sheet-walkdiag8-r2c1-DNwLdr0Y-diet-b60c3eb5.png            118.62 kB
+dist/assets/char-bandit-thief-sheet-walkdiag8-r3c4-BITKNM_b-diet-b60c3eb5.png           118.86 kB
+dist/assets/char-bandit-thief-sheet-walk8-r0c7-DcbALSMn-diet-b60c3eb5.png               118.97 kB
+dist/assets/char-assay-clerk-sheet-walk8-a-r1c2-FdCJzLpI-diet-b60c3eb5.png              119.23 kB
+dist/assets/char-youngster-m-sheet-walk8-r1c6-D448vrts-diet-b60c3eb5.png                119.43 kB
+dist/assets/char-bandit-thief-sheet-walk8-r0c5-CDEC3uRE-diet-b60c3eb5.png               119.53 kB
+dist/assets/char-newsie-mei-sheet-walk8-r0c4-CRBTfNuP-diet-b60c3eb5.png                 119.61 kB
+dist/assets/char-newsie-mei-sheet-walk8-r0c2-C-7nXUbl-diet-b60c3eb5.png                 119.65 kB
+dist/assets/char-assay-clerk-sheet-walk8-a-r2c3-rG8dgFeF-diet-b60c3eb5.png              119.69 kB
+dist/assets/char-bandit-thief-sheet-walkdiag8-r0c4-DRREccRP-diet-b60c3eb5.png           119.71 kB
+dist/assets/char-elder-sheet-walk8-r1c1-C3TzsLRY-diet-b60c3eb5.png                      119.73 kB
+dist/assets/char-preacher-sheet-walk8-a-r0c2-Dk_bhQIG-diet-b60c3eb5.png                 119.83 kB
+dist/assets/char-bandit-thief-sheet-walkdiag8-r0c7-DV5CQi_R-diet-b60c3eb5.png           120.15 kB
+dist/assets/char-youngster-f-sheet-walk8-r1c2-DRuXl393-diet-b60c3eb5.png                120.27 kB
+dist/assets/char-assay-clerk-sheet-walk8-a-r1c1-CEe68vEV-diet-b60c3eb5.png              120.28 kB
+dist/assets/char-youngster-f-sheet-walk8-r2c2-CAvkCvJt-diet-b60c3eb5.png                120.51 kB
+dist/assets/char-newsie-mei-sheet-walk8-r3c1-Diq7rhUA-diet-b60c3eb5.png                 120.77 kB
+dist/assets/char-bandit-thief-sheet-walk8-r2c0-DbgWGGe8-diet-b60c3eb5.png               120.83 kB
+dist/assets/char-bandit-thief-sheet-walkdiag8-r3c5-N63EtBo7-diet-b60c3eb5.png           120.85 kB
+dist/assets/char-elder-sheet-walk8-r2c1-BIsb0EwD-diet-b60c3eb5.png                      120.99 kB
+dist/assets/char-bandit-thief-sheet-walk8-r0c2-KSqbCT3u-diet-b60c3eb5.png               121.14 kB
+dist/assets/char-preacher-sheet-walk8-a-r0c0-D85XB2_d-diet-b60c3eb5.png                 121.16 kB
+dist/assets/char-bandit-thief-sheet-walk8-r0c0-CGguC4YX-diet-b60c3eb5.png               121.19 kB
+dist/assets/char-newsie-mei-sheet-walk8-r3c6-mgHYgSCI-diet-b60c3eb5.png                 121.21 kB
+dist/assets/char-bandit-base-sheet-walkdiag8-r1c7-DTcUuo3_-diet-b60c3eb5.png            121.41 kB
+dist/assets/char-preacher-sheet-walk8-a-r0c3-lyZrwXwQ-diet-b60c3eb5.png                 121.94 kB
+dist/assets/char-preacher-sheet-walk8-a-r1c2-kVjBfF_0-diet-b60c3eb5.png                 121.95 kB
+dist/assets/char-bandit-base-sheet-walkdiag8-r2c5-utIPU5I0-diet-b60c3eb5.png            122.36 kB
+dist/assets/char-bandit-thief-sheet-walkdiag8-r0c2-xZ7FXTpb-diet-b60c3eb5.png           122.41 kB
+dist/assets/char-newsie-mei-sheet-walk8-r2c7-DXA_BRle-diet-b60c3eb5.png                 122.48 kB
+dist/assets/char-assay-clerk-sheet-walk8-a-r3c2-BJGd3EER-diet-b60c3eb5.png              122.49 kB
+dist/assets/char-youngster-m-sheet-walk8-r2c7-Bx3xaEx4-diet-b60c3eb5.png                122.62 kB
+dist/assets/char-newsie-mei-sheet-walk8-r3c7-DpjL_e4K-diet-b60c3eb5.png                 122.66 kB
+dist/assets/char-youngster-f-sheet-walk8-r2c7-DOO1Po2g-diet-b60c3eb5.png                122.89 kB
+dist/assets/char-bandit-thief-sheet-walk8-r2c1-CodkIymw-diet-b60c3eb5.png               123.07 kB
+dist/assets/char-storekeeper-sheet-walk8-r2c3-C5rztHl1-diet-b60c3eb5.png                123.21 kB
+dist/assets/char-bandit-base-sheet-walkdiag8-r2c2-CfAwPQaL-diet-b60c3eb5.png            123.37 kB
+dist/assets/char-bandit-base-sheet-walkdiag8-r2c6-I25wHgeK-diet-b60c3eb5.png            123.61 kB
+dist/assets/char-bandit-base-sheet-walkdiag8-r2c0-Bo5nzJqv-diet-b60c3eb5.png            124.21 kB
+dist/assets/char-bandit-base-sheet-walkdiag8-r3c3-DJb2lJZP-diet-b60c3eb5.png            124.38 kB
+dist/assets/char-assay-clerk-sheet-walk8-a-r3c0-DP57V1Q--diet-b60c3eb5.png              124.39 kB
+dist/assets/char-bandit-thief-sheet-walk8-r2c4-BW98ZrhE-diet-b60c3eb5.png               124.43 kB
+dist/assets/char-newsie-mei-sheet-walk8-r3c0-jnHTIuR6-diet-b60c3eb5.png                 125.26 kB
+dist/assets/char-youngster-m-sheet-walk8-r1c3-DCvbK6NF-diet-b60c3eb5.png                125.30 kB
+dist/assets/char-storekeeper-sheet-walk8-r1c7-_M2xAMWO-diet-b60c3eb5.png                125.70 kB
+dist/assets/char-elder-sheet-walk8-r3c7-Dy8GVaxa-diet-b60c3eb5.png                      125.86 kB
+dist/assets/char-bandit-thief-sheet-walkdiag8-r0c0-CUqXoY78-diet-b60c3eb5.png           125.90 kB
+dist/assets/char-youngster-f-sheet-walk8-r1c3-D9Bt2ZYc-diet-b60c3eb5.png                125.98 kB
+dist/assets/char-bandit-base-sheet-walkdiag8-r3c1-DUcs1pi0-diet-b60c3eb5.png            126.00 kB
+dist/assets/char-tavernkeeper-sheet-walk8-r2c3-5ztz1dro-diet-b60c3eb5.png               126.25 kB
+dist/assets/char-storekeeper-sheet-walk8-r2c5-BxhY6yDK-diet-b60c3eb5.png                126.28 kB
+dist/assets/char-youngster-f-sheet-walk8-r3c2-Dq3koytH-diet-b60c3eb5.png                126.31 kB
+dist/assets/char-tavernkeeper-sheet-walk8-r1c5-D8CBS7G3-diet-b60c3eb5.png               126.39 kB
+dist/assets/char-assay-clerk-sheet-walk8-a-r3c3-Ber6AFvd-diet-b60c3eb5.png              127.09 kB
+dist/assets/char-youngster-f-sheet-walk8-r3c1-DSRribQs-diet-b60c3eb5.png                127.16 kB
+dist/assets/char-youngster-f-sheet-walk8-r1c6-9RqVSJPZ-diet-b60c3eb5.png                127.18 kB
+dist/assets/char-bandit-base-sheet-walkdiag8-r3c2-BuoKwC7v-diet-b60c3eb5.png            127.21 kB
+dist/assets/char-bandit-base-sheet-walk8-r3c3-BrIWonkp-diet-b60c3eb5.png                127.36 kB
+dist/assets/char-bandit-base-sheet-walkdiag8-r1c2-i3ig7qoi-diet-b60c3eb5.png            127.36 kB
+dist/assets/char-storekeeper-sheet-walk8-r1c3-BDCuN5QW-diet-b60c3eb5.png                127.51 kB
+dist/assets/char-newsie-mei-sheet-walk8-r0c7-ce4muCBe-diet-b60c3eb5.png                 127.75 kB
+dist/assets/char-bandit-base-sheet-walkdiag8-r1c6-D0Yqt_60-diet-b60c3eb5.png            127.88 kB
+dist/assets/char-tavernkeeper-sheet-walk8-r1c7-BCw94FPM-diet-b60c3eb5.png               127.91 kB
+dist/assets/char-bandit-base-sheet-walkdiag8-r1c3-CrOb15H4-diet-b60c3eb5.png            127.95 kB
+dist/assets/char-preacher-sheet-walk8-a-r0c1-is87CN_Z-diet-b60c3eb5.png                 128.71 kB
+dist/assets/char-youngster-m-sheet-walk8-r0c5-nVZZcSSY-diet-b60c3eb5.png                129.00 kB
+dist/assets/char-bandit-base-sheet-walkdiag8-r1c4-tcisGv-I-diet-b60c3eb5.png            129.16 kB
+dist/assets/char-youngster-f-sheet-walk8-r3c0-BiJ6cnvo-diet-b60c3eb5.png                129.38 kB
+dist/assets/gazette-panel-the-works-f1Mh6_5J-diet-b60c3eb5.webp                         129.40 kB
+dist/assets/char-newsie-mei-sheet-walk8-r1c2-DbLCrOAI-diet-b60c3eb5.png                 129.55 kB
+dist/assets/char-elder-sheet-walk8-r3c5-D8LswyPR-diet-b60c3eb5.png                      129.71 kB
+dist/assets/char-bandit-thief-sheet-walk8-r2c7-BSKrlcWU-diet-b60c3eb5.png               129.81 kB
+dist/assets/char-youngster-m-sheet-walk8-r3c7-D0-eJzqG-diet-b60c3eb5.png                129.89 kB
+dist/assets/char-bandit-base-sheet-walkdiag8-r1c5-Dtdf0oNr-diet-b60c3eb5.png            129.97 kB
+dist/assets/char-assay-clerk-sheet-walk8-a-r2c0-D_bGssel-diet-b60c3eb5.png              130.21 kB
+dist/assets/char-bandit-base-sheet-walk8-r2c1-KhSiS_Ee-diet-b60c3eb5.png                130.31 kB
+dist/assets/gazette-panel-town-serves-ByDoy6sk-diet-b60c3eb5.webp                       130.37 kB
+dist/assets/char-bandit-thief-sheet-walk8-r1c6-D-Vnl-QQ-diet-b60c3eb5.png               130.37 kB
+dist/assets/char-newsie-mei-sheet-walk8-r2c0-BVDbvygR-diet-b60c3eb5.png                 130.39 kB
+dist/assets/char-bandit-base-sheet-walk8-r2c5-CmFJ3Bo4-diet-b60c3eb5.png                130.39 kB
+dist/assets/char-bandit-base-sheet-walkdiag8-r3c4-D_ZpP5wi-diet-b60c3eb5.png            130.39 kB
+dist/assets/char-bandit-base-sheet-walkdiag8-r3c6-C-rjJbiW-diet-b60c3eb5.png            130.40 kB
+dist/assets/char-bandit-base-sheet-walk8-r3c6-CO_MSAc2-diet-b60c3eb5.png                130.41 kB
+dist/assets/ui-title-emblem-JPOMFghu-diet-b60c3eb5.png                                  130.56 kB
+dist/assets/char-youngster-f-sheet-walk8-r2c3-DtI7hPF8-diet-b60c3eb5.png                130.69 kB
+dist/assets/char-bandit-base-sheet-walkdiag8-r3c7-CPsHdrt8-diet-b60c3eb5.png            130.87 kB
+dist/assets/char-thief-se-finish-v2-r0c2-ePIj4EMp-diet-b60c3eb5.png                     130.95 kB
+dist/assets/char-assay-clerk-sheet-walk8-a-r2c2-BaVPuclX-diet-b60c3eb5.png              131.04 kB
+dist/assets/char-bandit-base-sheet-walk8-r2c2-AMbsGzX9-diet-b60c3eb5.png                131.42 kB
+dist/assets/char-elder-sheet-walk8-r2c3-BLwJGxBK-diet-b60c3eb5.png                      131.45 kB
+dist/assets/char-bandit-base-sheet-walkdiag8-r0c2-Clv8dB3D-diet-b60c3eb5.png            131.48 kB
+dist/assets/char-bandit-base-sheet-walkdiag8-r0c1-BwWJhzgX-diet-b60c3eb5.png            131.74 kB
+dist/assets/char-youngster-m-sheet-walk8-r3c3-BFaq5svL-diet-b60c3eb5.png                132.01 kB
+dist/assets/char-bandit-base-sheet-walkdiag8-r1c1-CwMFn2wF-diet-b60c3eb5.png            132.02 kB
+dist/assets/char-elder-sheet-walk8-r3c4-CFGhTBhJ-diet-b60c3eb5.png                      132.17 kB
+dist/assets/char-storekeeper-sheet-walk8-r1c4-CT6fqgCp-diet-b60c3eb5.png                132.20 kB
+dist/assets/char-storekeeper-sheet-walk8-r1c0-UzTWJXjz-diet-b60c3eb5.png                132.52 kB
+dist/assets/char-bandit-thief-sheet-walk8-r1c5-BfygrZJd-diet-b60c3eb5.png               132.80 kB
+dist/assets/char-bandit-base-sheet-walkdiag8-r3c5-Bz0uOoev-diet-b60c3eb5.png            132.91 kB
+dist/assets/char-youngster-m-sheet-walk8-r1c1-BzrmJqmO-diet-b60c3eb5.png                133.07 kB
+dist/assets/char-assay-clerk-sheet-walk8-a-r3c1-mkKQWoW3-diet-b60c3eb5.png              133.35 kB
+dist/assets/char-bandit-base-sheet-walk8-r3c0-DRMr5h7N-diet-b60c3eb5.png                133.55 kB
+dist/assets/char-bandit-base-sheet-walkdiag8-r0c4-Bm-kO0XO-diet-b60c3eb5.png            133.65 kB
+dist/assets/char-elder-sheet-walk8-r2c7-RUsc_E8k-diet-b60c3eb5.png                      133.83 kB
+dist/assets/char-elder-sheet-walk8-r3c1-DhHpLpXy-diet-b60c3eb5.png                      133.87 kB
+dist/assets/char-elder-sheet-walk8-r0c2-xotc3Gsm-diet-b60c3eb5.png                      134.03 kB
+dist/assets/char-tavernkeeper-sheet-walk8-r1c3-BQ_hDKWp-diet-b60c3eb5.png               134.08 kB
+dist/assets/char-bandit-base-sheet-walkdiag8-r1c0-Dh_y5u6b-diet-b60c3eb5.png            134.39 kB
+dist/assets/char-newsie-mei-sheet-walk8-r1c4-AGL5tzsJ-diet-b60c3eb5.png                 134.67 kB
+dist/assets/char-assay-clerk-sheet-walk8-a-r0c3-Ddq6ODUG-diet-b60c3eb5.png              134.73 kB
+dist/assets/char-youngster-f-sheet-walk8-r3c3---NBDuhw-diet-b60c3eb5.png                134.75 kB
+dist/assets/char-storekeeper-sheet-walk8-r3c7-B767KCTI-diet-b60c3eb5.png                134.86 kB
+dist/assets/char-storekeeper-sheet-walk8-r3c3-DMU5PIfZ-diet-b60c3eb5.png                134.92 kB
+dist/assets/char-elder-sheet-walk8-r2c2-De_-trOp-diet-b60c3eb5.png                      135.05 kB
+dist/assets/char-bandit-thief-sheet-walk8-r1c7-DfAZtYWs-diet-b60c3eb5.png               135.18 kB
+dist/assets/char-bandit-base-sheet-walkdiag8-r3c0-F0C4R90x-diet-b60c3eb5.png            135.49 kB
+dist/assets/char-bandit-base-sheet-walk8-r1c1-Py7Bjx9B-diet-b60c3eb5.png                135.52 kB
+dist/assets/char-elder-sheet-walk8-r1c2-B_u0xlA8-diet-b60c3eb5.png                      135.61 kB
+dist/assets/char-bandit-base-sheet-walk8-r2c6-BUgmiqgK-diet-b60c3eb5.png                135.66 kB
+dist/assets/char-hero-sheet-work8-west-recovered-v1-r0c4-KtzajLC3-diet-b60c3eb5.png     135.73 kB
+dist/assets/char-youngster-f-sheet-walk8-r0c1-DQLOrUsK-diet-b60c3eb5.png                135.87 kB
+dist/assets/char-bandit-base-sheet-walkdiag8-r0c3-BbIiigFq-diet-b60c3eb5.png            135.94 kB
+dist/assets/char-tavernkeeper-sheet-walk8-r3c7-Xxd503xK-diet-b60c3eb5.png               135.96 kB
+dist/assets/char-thief-se-finish-v2-r1c2-CJFVF5ES-diet-b60c3eb5.png                     136.13 kB
+dist/assets/char-hero-sheet-work8-west-recovered-v1-r0c0-Bxc_3pAu-diet-b60c3eb5.png     136.23 kB
+dist/assets/char-elder-sheet-walk8-r3c2-BjFRdyi2-diet-b60c3eb5.png                      136.27 kB
+dist/assets/char-bandit-base-sheet-walk8-r1c5-vwS-RWMM-diet-b60c3eb5.png                136.36 kB
+dist/assets/char-youngster-m-sheet-walk8-r3c6-gXt5VLic-diet-b60c3eb5.png                136.53 kB
+dist/assets/char-newsie-mei-sheet-walk8-r1c6-C4Usm_kW-diet-b60c3eb5.png                 136.73 kB
+dist/assets/char-storekeeper-sheet-walk8-r2c7-CpyfpxGg-diet-b60c3eb5.png                136.90 kB
+dist/assets/char-elder-sheet-walk8-r3c6-DB1C8LtB-diet-b60c3eb5.png                      136.91 kB
+dist/assets/char-bandit-base-sheet-walkdiag8-r0c6-YeIcW7Jx-diet-b60c3eb5.png            137.02 kB
+dist/assets/char-tavernkeeper-sheet-walk8-r1c4-WTh67EyL-diet-b60c3eb5.png               137.02 kB
+dist/assets/char-assay-clerk-sheet-walk8-a-r0c2-oX2bxclU-diet-b60c3eb5.png              137.63 kB
+dist/assets/char-hero-sheet-work8-west-recovered-v1-r0c5-B-3NeLet-diet-b60c3eb5.png     137.70 kB
+dist/assets/char-hero-sheet-work8-west-recovered-v1-r0c6-CoJnufN2-diet-b60c3eb5.png     137.84 kB
+dist/assets/char-youngster-f-sheet-walk8-r3c7-CZedvRaD-diet-b60c3eb5.png                137.89 kB
+dist/assets/char-bandit-thief-sheet-walk8-r1c0-C5KoSfed-diet-b60c3eb5.png               137.92 kB
+dist/assets/char-newsie-mei-sheet-walk8-r1c0-4g45puxb-diet-b60c3eb5.png                 138.09 kB
+dist/assets/char-assay-clerk-sheet-walk8-a-r0c1-ygqWSDT9-diet-b60c3eb5.png              138.24 kB
+dist/assets/char-tavernkeeper-sheet-walk8-r2c2-Bn7Py2_f-diet-b60c3eb5.png               138.25 kB
+dist/assets/char-storekeeper-sheet-walk8-r3c1-RywtDbGQ-diet-b60c3eb5.png                138.28 kB
+dist/assets/char-elder-sheet-walk8-r0c7-BNrYsTfq-diet-b60c3eb5.png                      138.49 kB
+dist/assets/char-bandit-base-sheet-walk8-r2c3-BzuVa7ls-diet-b60c3eb5.png                138.59 kB
+dist/assets/char-hero-sheet-work8-west-recovered-v1-r0c1-BoZbPcbh-diet-b60c3eb5.png     138.69 kB
+dist/assets/char-thief-se-finish-v2-r1c1-DRlixKre-diet-b60c3eb5.png                     139.08 kB
+dist/assets/char-storekeeper-sheet-walk8-r3c0-aQ9hgf7O-diet-b60c3eb5.png                139.18 kB
+dist/assets/char-thief-se-finish-v2-r1c3-BvsYF9Vv-diet-b60c3eb5.png                     139.20 kB
+dist/assets/char-bandit-base-sheet-walk8-r3c2-gbYwiOMz-diet-b60c3eb5.png                139.37 kB
+dist/assets/char-youngster-f-sheet-walk8-r2c5-CCQFB7Xa-diet-b60c3eb5.png                139.43 kB
+dist/assets/char-storekeeper-sheet-walk8-r3c5-DcmXLr9w-diet-b60c3eb5.png                139.56 kB
+dist/assets/char-hero-sheet-work8-west-recovered-v1-r0c7-DOygRLRN-diet-b60c3eb5.png     139.83 kB
+dist/assets/gazette-panel-freeing-fevered-BZJt3fzd-diet-b60c3eb5.webp                   139.84 kB
+dist/assets/char-youngster-f-sheet-walk8-r0c6-Q4BXL1Xa-diet-b60c3eb5.png                139.86 kB
+dist/assets/char-newsie-mei-sheet-walk8-r2c6-beLLaO9J-diet-b60c3eb5.png                 139.91 kB
+dist/assets/char-elder-sheet-walk8-r3c0-BcRl7ihj-diet-b60c3eb5.png                      140.01 kB
+dist/assets/char-youngster-m-sheet-walk8-r0c7-4Ih_4n2S-diet-b60c3eb5.png                140.03 kB
+dist/assets/char-bandit-base-sheet-walkdiag8-r0c0-D9ScUu9D-diet-b60c3eb5.png            140.27 kB
+dist/assets/char-tavernkeeper-sheet-walk8-r2c5-BARGYxv1-diet-b60c3eb5.png               140.46 kB
+dist/assets/char-youngster-m-sheet-walk8-r0c6-CRL7ROBQ-diet-b60c3eb5.png                140.55 kB
+dist/assets/char-bandit-base-sheet-walk8-r3c1-Bu8QnpLb-diet-b60c3eb5.png                140.62 kB
+dist/assets/char-youngster-f-sheet-walk8-r0c5-DPPDeuHh-diet-b60c3eb5.png                140.72 kB
+dist/assets/char-assay-clerk-sheet-walk8-a-r0c0-MWdXF0hN-diet-b60c3eb5.png              140.82 kB
+dist/assets/char-thief-se-finish-v2-r0c0-BPoV7bC9-diet-b60c3eb5.png                     140.88 kB
+dist/assets/char-youngster-f-sheet-walk8-r3c6-BTifK3mi-diet-b60c3eb5.png                140.88 kB
+dist/assets/char-storekeeper-sheet-walk8-r3c2-Czy6NZ-r-diet-b60c3eb5.png                140.95 kB
+dist/assets/char-thief-se-finish-v2-r0c1-BYvCsgn--diet-b60c3eb5.png                     140.97 kB
+dist/assets/char-youngster-f-sheet-walk8-r1c1-PsdaZfKP-diet-b60c3eb5.png                141.12 kB
+dist/assets/char-bandit-base-sheet-walk8-r1c7-Cec-f_FV-diet-b60c3eb5.png                141.26 kB
+dist/assets/char-youngster-f-sheet-walk8-r3c5-Cve5dlmY-diet-b60c3eb5.png                141.35 kB
+dist/assets/char-bandit-base-sheet-walkdiag8-r0c5-CKUihA2B-diet-b60c3eb5.png            141.38 kB
+dist/assets/char-bandit-base-sheet-walk8-r3c7-BWYU8Xv8-diet-b60c3eb5.png                141.51 kB
+dist/assets/char-tavernkeeper-sheet-walk8-r1c1-DyqWvx-S-diet-b60c3eb5.png               141.68 kB
+dist/assets/char-elder-sheet-walk8-r0c3-Sjn3rIkL-diet-b60c3eb5.png                      141.89 kB
+dist/assets/char-elder-sheet-walk8-r1c4-BYj1DtPv-diet-b60c3eb5.png                      141.94 kB
+dist/assets/char-storekeeper-sheet-walk8-r2c4-BoJIYeGA-diet-b60c3eb5.png                142.03 kB
+dist/assets/char-bandit-base-sheet-walk8-r3c4-CCJGsTo--diet-b60c3eb5.png                142.23 kB
+dist/assets/char-youngster-f-sheet-walk8-r2c1-CrxdL8Cr-diet-b60c3eb5.png                142.28 kB
+dist/assets/char-elder-sheet-walk8-r0c5-C4YA8zwX-diet-b60c3eb5.png                      142.30 kB
+dist/assets/char-youngster-m-sheet-walk8-r3c1--OAjSVEH-diet-b60c3eb5.png                142.45 kB
+dist/assets/char-youngster-m-sheet-walk8-r3c2-BQEirGVM-diet-b60c3eb5.png                142.60 kB
+dist/assets/char-youngster-m-sheet-walk8-r3c0-D8LM_Hdo-diet-b60c3eb5.png                142.69 kB
+dist/assets/char-storekeeper-sheet-walk8-r3c4-DO8TrCDT-diet-b60c3eb5.png                142.73 kB
+dist/assets/char-elder-sheet-walk8-r3c3-C6J3o-ag-diet-b60c3eb5.png                      142.75 kB
+dist/assets/char-bandit-base-sheet-walk8-r1c3-BQT5MpSy-diet-b60c3eb5.png                142.78 kB
+dist/assets/char-elder-sheet-walk8-r2c5-DEQqK6Np-diet-b60c3eb5.png                      142.87 kB
+dist/assets/char-bandit-base-sheet-walk8-r3c5-Dl6MLJVL-diet-b60c3eb5.png                142.99 kB
+dist/assets/char-youngster-f-sheet-walk8-r3c4-CMCbXAnW-diet-b60c3eb5.png                143.07 kB
+dist/assets/char-youngster-m-sheet-walk8-r0c1-CHtxhQl9-diet-b60c3eb5.png                143.11 kB
+dist/assets/char-youngster-m-sheet-walk8-r3c5-BKB57x8n-diet-b60c3eb5.png                143.12 kB
+dist/assets/char-tavernkeeper-sheet-walk8-r3c0-Dm2pENuw-diet-b60c3eb5.png               143.13 kB
+dist/assets/char-elder-sheet-walk8-r2c4-Doi_9-EY-diet-b60c3eb5.png                      143.14 kB
+dist/assets/char-elder-sheet-walk8-r0c0-CtTFbwsk-diet-b60c3eb5.png                      143.21 kB
+dist/assets/char-tavernkeeper-sheet-walk8-r2c6-RNty8MTd-diet-b60c3eb5.png               143.23 kB
+dist/assets/char-youngster-f-sheet-walk8-r0c7-Yt__8E61-diet-b60c3eb5.png                143.46 kB
+dist/assets/gazette-panel-seams-gold-mMgwuz5s-diet-b60c3eb5.webp                        143.48 kB
+dist/assets/gazette-panel-claim-goal-CqNTiCQQ-diet-b60c3eb5.webp                        143.51 kB
+dist/assets/char-youngster-f-sheet-walk8-r1c0-BJJZZPrJ-diet-b60c3eb5.png                143.59 kB
+dist/assets/char-elder-sheet-walk8-r0c4-DALD0kSA-diet-b60c3eb5.png                      143.59 kB
+dist/assets/char-bandit-base-sheet-walkdiag8-r0c7-CyOqVW0p-diet-b60c3eb5.png            143.63 kB
+dist/assets/char-elder-sheet-walk8-r1c6-DMHXLT01-diet-b60c3eb5.png                      143.75 kB
+dist/assets/char-thief-se-finish-v2-r1c0-NPYm_LPT-diet-b60c3eb5.png                     143.83 kB
+dist/assets/char-youngster-m-sheet-walk8-r0c0-CuV148Bv-diet-b60c3eb5.png                143.92 kB
+dist/assets/char-storekeeper-sheet-walk8-r3c6-Ch_riR73-diet-b60c3eb5.png                144.16 kB
+dist/assets/char-bandit-base-sheet-walk8-r0c6-DR3g3AGM-diet-b60c3eb5.png                144.28 kB
+dist/assets/char-storekeeper-sheet-walk8-r2c1-CqzTHwkZ-diet-b60c3eb5.png                144.29 kB
+dist/assets/char-youngster-m-sheet-walk8-r0c3-BFvlbgtj-diet-b60c3eb5.png                144.35 kB
+dist/assets/char-youngster-f-sheet-walk8-r0c0-DGKqhH6s-diet-b60c3eb5.png                144.59 kB
+dist/assets/char-elder-sheet-walk8-r0c6-C7xotm7H-diet-b60c3eb5.png                      144.61 kB
+dist/assets/char-youngster-f-sheet-walk8-r0c4-Dd_jAf4B-diet-b60c3eb5.png                144.66 kB
+dist/assets/char-tavernkeeper-sheet-walk8-r2c4-DCLqIPi9-diet-b60c3eb5.png               144.74 kB
+dist/assets/char-youngster-f-sheet-walk8-r0c2-5jp-tH9l-diet-b60c3eb5.png                144.80 kB
+dist/assets/char-youngster-m-sheet-walk8-r0c4-Dtgz7-fN-diet-b60c3eb5.png                144.83 kB
+dist/assets/char-hero-sheet-work8-west-recovered-v1-r0c3-vt_2m2Az-diet-b60c3eb5.png     144.88 kB
+dist/assets/char-hero-sheet-work8-west-recovered-v1-r0c2-ZClDsmFE-diet-b60c3eb5.png     144.95 kB
+dist/assets/char-tavernkeeper-sheet-walk8-r2c7-s3hRaFTK-diet-b60c3eb5.png               145.35 kB
+dist/assets/char-tavernkeeper-sheet-walk8-r2c1-DCKfFYPS-diet-b60c3eb5.png               145.46 kB
+dist/assets/char-tavernkeeper-sheet-walk8-r3c5-Bmg4QoNM-diet-b60c3eb5.png               146.02 kB
+dist/assets/char-elder-sheet-walk8-r0c1-DMYtuMIh-diet-b60c3eb5.png                      146.32 kB
+dist/assets/char-youngster-m-sheet-walk8-r3c4-BJN5hxM5-diet-b60c3eb5.png                146.66 kB
+dist/assets/char-bandit-base-sheet-walk8-r2c7-B5T8GRLS-diet-b60c3eb5.png                146.73 kB
+dist/assets/char-bandit-base-sheet-walk8-r0c1-BVqJ6DZ9-diet-b60c3eb5.png                146.95 kB
+dist/assets/char-elder-sheet-walk8-r1c3-CdG5z2l2-diet-b60c3eb5.png                      147.36 kB
+dist/assets/char-youngster-m-sheet-walk8-r1c5-DBKIQiZP-diet-b60c3eb5.png                147.88 kB
+dist/assets/char-youngster-f-sheet-walk8-r1c5-7-6VFIBi-diet-b60c3eb5.png                148.20 kB
+dist/assets/char-tavernkeeper-sheet-walk8-r3c3-C8egYXEe-diet-b60c3eb5.png               148.27 kB
+dist/assets/char-elder-sheet-walk8-r1c7-EDcdUjeM-diet-b60c3eb5.png                      148.61 kB
+dist/assets/char-bandit-base-sheet-walk8-r0c7-DrrPFOAm-diet-b60c3eb5.png                148.97 kB
+dist/assets/char-tavernkeeper-sheet-walk8-r3c4-DbeIJkCb-diet-b60c3eb5.png               149.16 kB
+dist/assets/char-bandit-base-sheet-walk8-r1c2-DKFrm8oZ-diet-b60c3eb5.png                149.27 kB
+dist/assets/char-bandit-base-sheet-walk8-r0c3-CH60636k-diet-b60c3eb5.png                149.78 kB
+dist/assets/char-youngster-f-sheet-walk8-r0c3-F7C1rzPr-diet-b60c3eb5.png                149.98 kB
+dist/assets/char-youngster-m-sheet-walk8-r1c0-DPFk3JjF-diet-b60c3eb5.png                150.09 kB
+dist/assets/char-youngster-f-sheet-walk8-r1c4-CaYBNFvZ-diet-b60c3eb5.png                150.19 kB
+dist/assets/char-elder-sheet-walk8-r1c0-CHw1HmS7-diet-b60c3eb5.png                      150.58 kB
+dist/assets/char-tavernkeeper-sheet-walk8-r2c0-CyvoDSLp-diet-b60c3eb5.png               151.10 kB
+dist/assets/char-thief-se-finish-v2-r0c3-BgY0Nu7I-diet-b60c3eb5.png                     151.20 kB
+dist/assets/char-storekeeper-sheet-walk8-r2c0-C0KZSvXd-diet-b60c3eb5.png                151.51 kB
+dist/assets/char-youngster-m-sheet-walk8-r2c5-Dua-jAkq-diet-b60c3eb5.png                151.60 kB
+dist/assets/char-elder-sheet-walk8-r2c0-C3w2cvBP-diet-b60c3eb5.png                      152.29 kB
+dist/assets/char-bandit-base-sheet-walk8-r1c6-DS3IF2OU-diet-b60c3eb5.png                152.51 kB
+dist/assets/char-youngster-m-sheet-walk8-r0c2-Dt_DCJt_-diet-b60c3eb5.png                153.05 kB
+dist/assets/char-tavernkeeper-sheet-walk8-r3c6-C-tVkr-E-diet-b60c3eb5.png               153.25 kB
+dist/assets/char-bandit-base-sheet-walk8-r0c4-CIDb_QfV-diet-b60c3eb5.png                153.31 kB
+dist/assets/char-tavernkeeper-sheet-walk8-r3c2-DzJKeU7u-diet-b60c3eb5.png               153.77 kB
+dist/assets/char-youngster-f-sheet-walk8-r2c4-uMLvpsgg-diet-b60c3eb5.png                154.71 kB
+dist/assets/char-youngster-m-sheet-walk8-r2c0-GvEon9ii-diet-b60c3eb5.png                154.98 kB
+dist/assets/char-bandit-base-sheet-walk8-r0c5-AqUw5Z4_-diet-b60c3eb5.png                155.16 kB
+dist/assets/char-bandit-base-sheet-walk8-r0c0-CmyCQl4Y-diet-b60c3eb5.png                155.20 kB
+dist/assets/char-bandit-base-sheet-walk8-r2c4--RSUU52n-diet-b60c3eb5.png                155.67 kB
+dist/assets/char-storekeeper-sheet-walk8-r0c5-DvgW-ob5-diet-b60c3eb5.png                156.15 kB
+dist/assets/char-bandit-base-sheet-walk8-r2c0-DB9mOD7n-diet-b60c3eb5.png                156.42 kB
+dist/assets/char-storekeeper-sheet-walk8-r0c3-BcXN1PJy-diet-b60c3eb5.png                156.75 kB
+dist/assets/char-tavernkeeper-sheet-walk8-r3c1-45kcvZGK-diet-b60c3eb5.png               156.87 kB
+dist/assets/char-storekeeper-sheet-walk8-r0c7-C-TT_ImN-diet-b60c3eb5.png                157.19 kB
+dist/assets/char-storekeeper-sheet-walk8-r0c6-m8NbhAmB-diet-b60c3eb5.png                157.34 kB
+dist/assets/char-bandit-base-sheet-walk8-r1c0-Bsbplll9-diet-b60c3eb5.png                158.01 kB
+dist/assets/lantern-post-DBKwGdtm-diet-b60c3eb5.glb                                     158.30 kB
+dist/assets/char-storekeeper-sheet-walk8-r0c2-CVbsLJir-diet-b60c3eb5.png                158.45 kB
+dist/assets/char-storekeeper-sheet-walk8-r0c1-BDrQOaZZ-diet-b60c3eb5.png                159.00 kB
+dist/assets/char-storekeeper-sheet-walk8-r0c4-D_HilTyg-diet-b60c3eb5.png                159.43 kB
+dist/assets/char-youngster-f-sheet-walk8-r2c0-D1jF583f-diet-b60c3eb5.png                159.52 kB
+dist/assets/char-bandit-base-sheet-walk8-r0c2-xezlKjef-diet-b60c3eb5.png                160.06 kB
+dist/assets/char-youngster-m-sheet-walk8-r1c4-DX9aSzC1-diet-b60c3eb5.png                160.60 kB
+dist/assets/char-youngster-m-sheet-walk8-r2c4-BIaxowSs-diet-b60c3eb5.png                160.72 kB
+dist/assets/char-hero-sheet-work8-south-clean-v7-r0c3-ChnmZnku-diet-b60c3eb5.png        161.12 kB
+dist/assets/char-storekeeper-sheet-walk8-r0c0-CFtMGc17-diet-b60c3eb5.png                161.88 kB
+dist/assets/char-hero-sheet-work8-south-clean-v7-r1c1-Dpe6h2j6-diet-b60c3eb5.png        162.31 kB
+dist/assets/char-tavernkeeper-sheet-walk8-r1c0-BSPjyxjc-diet-b60c3eb5.png               162.58 kB
+dist/assets/townsfolk-youngster-b-CiArGjB5-diet-b60c3eb5.png                            163.28 kB
+dist/assets/char-hero-sheet-work8-south-clean-v7-r0c2-CBtPfHKF-diet-b60c3eb5.png        163.59 kB
+dist/assets/char-hero-sheet-work8-south-clean-v7-r0c0-Dsyixzrm-diet-b60c3eb5.png        163.71 kB
+dist/assets/char-bandit-base-sheet-walk8-r1c4-C1Jnxb1j-diet-b60c3eb5.png                164.02 kB
+dist/assets/char-hero-sheet-work8-south-clean-v7-r1c2-BRR5JSol-diet-b60c3eb5.png        164.52 kB
+dist/assets/char-hero-sheet-work8-south-clean-v7-r0c1-BGyWF1zk-diet-b60c3eb5.png        164.54 kB
+dist/assets/char-youngster-m-sheet-walk8-r2c1-BTsOe-o--diet-b60c3eb5.png                166.99 kB
+dist/assets/char-hero-sheet-work8-south-clean-v7-r1c3-O5pU6KnA-diet-b60c3eb5.png        167.47 kB
+dist/assets/char-tavernkeeper-sheet-walk8-r0c2-BOSOMZ9M-diet-b60c3eb5.png               167.82 kB
+dist/assets/char-hero-sheet-work8-south-clean-v7-r1c0-CihG4xKh-diet-b60c3eb5.png        168.34 kB
+dist/assets/char-tavernkeeper-sheet-walk8-r0c6-CXYDXQK8-diet-b60c3eb5.png               168.78 kB
+dist/assets/char-tavernkeeper-sheet-walk8-r0c3-DXywg3kI-diet-b60c3eb5.png               169.32 kB
+dist/assets/char-tavernkeeper-sheet-walk8-r0c0-CFEzSv3t-diet-b60c3eb5.png               176.67 kB
+dist/assets/char-tavernkeeper-sheet-walk8-r0c4-4jyCofxI-diet-b60c3eb5.png               177.24 kB
+dist/assets/char-tavernkeeper-sheet-walk8-r0c7-Cgemf-ed-diet-b60c3eb5.png               177.45 kB
+dist/assets/char-tavernkeeper-sheet-walk8-r0c5-QglJngOg-diet-b60c3eb5.png               178.26 kB
+dist/assets/char-tavernkeeper-sheet-walk8-r0c1-oj3R3RIJ-diet-b60c3eb5.png               179.39 kB
+dist/assets/char-hero-sheet-attack8-r2-east-clean-v1-r1c0-Cj5JNeU8-diet-b60c3eb5.png    186.77 kB
+dist/assets/char-hero-sheet-attack8-r2-east-clean-v1-r1c2-Dl4S1mCw-diet-b60c3eb5.png    189.91 kB
+dist/assets/char-hero-sheet-attack8-r2-east-clean-v1-r1c1-CQBdtP3D-diet-b60c3eb5.png    190.81 kB
+dist/assets/char-hero-sheet-attack8-r2-east-clean-v1-r0c1-CM2gO86z-diet-b60c3eb5.png    192.24 kB
+dist/assets/char-hero-sheet-attack8-r2-east-clean-v1-r0c2-CbMjWzbw-diet-b60c3eb5.png    192.65 kB
+dist/assets/char-baron-ne-clean-v2-r1c0-RwH2I2U2-diet-b60c3eb5.png                      195.07 kB
+dist/assets/char-hero-sheet-attack8-r2-east-clean-v1-r0c0-BmRt6VM0-diet-b60c3eb5.png    195.17 kB
+dist/assets/char-baron-ne-clean-v2-r0c3-B4E888Zn-diet-b60c3eb5.png                      197.77 kB
+dist/assets/hero-homesteader-f-Czx9d310-diet-b60c3eb5.png                               200.21 kB
+dist/assets/char-baron-ne-clean-v2-r1c2-CSnpCIwP-diet-b60c3eb5.png                      201.69 kB
+dist/assets/char-baron-ne-clean-v2-r0c2-Ds1Dp4ne-diet-b60c3eb5.png                      202.29 kB
+dist/assets/char-baron-ne-clean-v2-r1c1-hm4lwZBb-diet-b60c3eb5.png                      202.34 kB
+dist/assets/char-baron-ne-clean-v2-r1c3-DItNO0r3-diet-b60c3eb5.png                      203.46 kB
+dist/assets/prop-drill-bell-post-Ciz0dW0L-diet-b60c3eb5.png                             205.52 kB
+dist/assets/char-baron-w-clean-v2-r1c2-iXaSd_8K-diet-b60c3eb5.png                       206.06 kB
+dist/assets/char-baron-w-clean-v2-r0c3-B3eVM_sd-diet-b60c3eb5.png                       206.13 kB
+dist/assets/char-baron-ne-clean-v2-r0c0-DWfxJ38I-diet-b60c3eb5.png                      206.45 kB
+dist/assets/char-baron-ne-clean-v2-r0c1-BRFoelCa-diet-b60c3eb5.png                      206.58 kB
+dist/assets/townsfolk-preacher-BX-w9MrT-diet-b60c3eb5.png                               207.00 kB
+dist/assets/bld-signal-turret-D1uYrKuR-diet-b60c3eb5.png                                209.16 kB
+dist/assets/townsfolk-youngster-a-CekpUy_J-diet-b60c3eb5.png                            211.07 kB
+dist/assets/char-baron-w-clean-v2-r0c2-C97kKFWM-diet-b60c3eb5.png                       212.15 kB
+dist/assets/char-baron-w-clean-v2-r0c0-RO0wYnmc-diet-b60c3eb5.png                       215.22 kB
+dist/assets/char-baron-w-clean-v2-r0c1-DTp9Kv-I-diet-b60c3eb5.png                       216.28 kB
+dist/assets/char-baron-w-clean-v2-r1c1-nNiId447-diet-b60c3eb5.png                       217.22 kB
+dist/assets/townsfolk-assay-clerk-BVAGJlUJ-diet-b60c3eb5.png                            219.69 kB
+dist/assets/char-baron-w-clean-v2-r1c3-BMnK4D0e-diet-b60c3eb5.png                       222.66 kB
+dist/assets/enemy-claim-jumper-Pzu2ez2p-diet-b60c3eb5.png                               225.67 kB
+dist/assets/townsfolk-storekeeper-DXgc6msx-diet-b60c3eb5.png                            226.31 kB
+dist/assets/prop-straw-man-stand-1eScTsbw-diet-b60c3eb5.png                             228.59 kB
+dist/assets/char-baron-w-clean-v2-r1c0-hVx1BGWw-diet-b60c3eb5.png                       236.50 kB
+dist/assets/townsfolk-schoolteacher-c6T_KEJX-diet-b60c3eb5.png                          238.16 kB
+dist/assets/bld-palisade-CqelEfI1-diet-b60c3eb5.png                                     242.24 kB
+dist/assets/townsfolk-tavernkeeper-BdRhE19Y-diet-b60c3eb5.png                           249.07 kB
+dist/assets/bld-sluice-works-CFTm3u73-diet-b60c3eb5.png                                 252.39 kB
+dist/assets/char-prospector-portrait-DJ70VMry-diet-b60c3eb5.png                         277.42 kB
+dist/assets/townsfolk-schoolteacher-e10-CJk-6bfp-diet-b60c3eb5.png                      280.15 kB
+dist/assets/prop-baron-banner-BX8J3mNR-diet-b60c3eb5.png                                281.20 kB
+dist/assets/bld-stockpile-yard-DZqfsp0_-diet-b60c3eb5.png                               283.24 kB
+dist/assets/townsfolk-preacher-e6-DAV2O9-E-diet-b60c3eb5.png                            283.99 kB
+dist/assets/townsfolk-youngster-b-e4-BiVur-fA-diet-b60c3eb5.png                         285.61 kB
+dist/assets/townsfolk-preacher-e7-DzYP_nJk-diet-b60c3eb5.png                            287.26 kB
+dist/assets/townsfolk-schoolteacher-e9-z4lfaQwu-diet-b60c3eb5.png                       287.77 kB
+dist/assets/townsfolk-preacher-e10-u2O8A46y-diet-b60c3eb5.png                           288.22 kB
+dist/assets/townsfolk-youngster-b-e2-d56cE1y7-diet-b60c3eb5.png                         288.69 kB
+dist/assets/townsfolk-schoolteacher-e8-Csfw5fyE-diet-b60c3eb5.png                       288.75 kB
+dist/assets/townsfolk-preacher-e8-Br6LqxV9-diet-b60c3eb5.png                            289.38 kB
+dist/assets/bld-schoolhouse-BcISs6yK-diet-b60c3eb5.png                                  289.66 kB
+dist/assets/townsfolk-newsie-e8-BtDXMqlE-diet-b60c3eb5.png                              290.06 kB
+dist/assets/townsfolk-newsie-e7-BIrTjhAH-diet-b60c3eb5.png                              290.47 kB
+dist/assets/townsfolk-newsie-e10-DDwdlaxL-diet-b60c3eb5.png                             291.50 kB
+dist/assets/townsfolk-newsie-e6-wTozMxl0-diet-b60c3eb5.png                              293.00 kB
+dist/assets/townsfolk-schoolteacher-e7-CgO1LrA8-diet-b60c3eb5.png                       293.50 kB
+dist/assets/townsfolk-preacher-e3-KdN4FeLg-diet-b60c3eb5.png                            293.74 kB
+dist/assets/townsfolk-clerk-e10-D4GyEPwc-diet-b60c3eb5.png                              294.47 kB
+dist/assets/townsfolk-preacher-e9-B-uMxLfn-diet-b60c3eb5.png                            295.00 kB
+dist/assets/townsfolk-schoolteacher-e6-ChEJuUmk-diet-b60c3eb5.png                       295.13 kB
+dist/assets/townsfolk-newsie-e9-RIt73FJr-diet-b60c3eb5.png                              295.44 kB
+dist/assets/townsfolk-clerk-e8-DY0Tg309-diet-b60c3eb5.png                               296.71 kB
+dist/assets/bld-tavern-DCu2FZsq-diet-b60c3eb5.png                                       296.79 kB
+dist/assets/townsfolk-preacher-e5-CzK-gxV9-diet-b60c3eb5.png                            298.25 kB
+dist/assets/townsfolk-clerk-e3-DcpoDepR-diet-b60c3eb5.png                               298.25 kB
+dist/assets/prop-drill-faucet-station-OlCVHjRB-diet-b60c3eb5.png                        298.78 kB
+dist/assets/townsfolk-clerk-e6-D7ZLBvVR-diet-b60c3eb5.png                               299.44 kB
+dist/assets/bld-claim-office-CyCDgQ6J-diet-b60c3eb5.png                                 300.05 kB
+dist/assets/townsfolk-clerk-e5-DnajLsCh-diet-b60c3eb5.png                               300.40 kB
+dist/assets/townsfolk-preacher-e2-BpSp-j3k-diet-b60c3eb5.png                            301.08 kB
+dist/assets/townsfolk-tavernkeeper-e2-BJfjbVGq-diet-b60c3eb5.png                        301.57 kB
+dist/assets/townsfolk-newsie-e5-BHqXCXGr-diet-b60c3eb5.png                              301.92 kB
+dist/assets/bld-general-store-amGH-xk_-diet-b60c3eb5.png                                302.27 kB
+dist/assets/townsfolk-tavernkeeper-e10-CE4LqYTv-diet-b60c3eb5.png                       302.95 kB
+dist/assets/townsfolk-newsie-e4-BWauyZOx-diet-b60c3eb5.png                              303.13 kB
+dist/assets/townsfolk-charter-keeper-e10-BH6zYheq-diet-b60c3eb5.png                     303.82 kB
+dist/assets/townsfolk-tavernkeeper-e9-BLx780km-diet-b60c3eb5.png                        303.92 kB
+dist/assets/townsfolk-clerk-e4-DwWUjkKq-diet-b60c3eb5.png                               304.02 kB
+dist/assets/bld-chapel-D_0V_cd7-diet-b60c3eb5.png                                       304.39 kB
+dist/assets/townsfolk-clerk-e7-D91lP2zN-diet-b60c3eb5.png                               304.50 kB
+dist/assets/townsfolk-schoolteacher-e5-BdLBagcP-diet-b60c3eb5.png                       304.63 kB
+dist/assets/node-gold-seam-CnWo61Jp-diet-b60c3eb5.png                                   305.10 kB
+dist/assets/townsfolk-clerk-e2-ChggPlaz-diet-b60c3eb5.png                               305.14 kB
+dist/assets/townsfolk-youngster-a-e4-IHhdw5vj-diet-b60c3eb5.png                         305.16 kB
+dist/assets/townsfolk-newsie-e3-jLS4rXap-diet-b60c3eb5.png                              305.28 kB
+dist/assets/townsfolk-schoolteacher-e4-DyyE2Oh_-diet-b60c3eb5.png                       305.63 kB
+dist/assets/townsfolk-tavernkeeper-e6-CZMLFsRj-diet-b60c3eb5.png                        306.04 kB
+dist/assets/townsfolk-tavernkeeper-e8-RH217RCX-diet-b60c3eb5.png                        306.37 kB
+dist/assets/townsfolk-schoolteacher-e2-BFebASgV-diet-b60c3eb5.png                       306.57 kB
+dist/assets/townsfolk-harbormaster-e5-DE3TOfi6-diet-b60c3eb5.png                        307.59 kB
+dist/assets/townsfolk-youngster-a-e8-A9guWju5-diet-b60c3eb5.png                         308.06 kB
+dist/assets/townsfolk-clerk-e9-CWNluu3L-diet-b60c3eb5.png                               308.53 kB
+dist/assets/townsfolk-baron-e10-DTFzbZib-diet-b60c3eb5.png                              308.54 kB
+dist/assets/townsfolk-pearl-diver-e5-CjwGi6fY-diet-b60c3eb5.png                         308.92 kB
+dist/assets/townsfolk-schoolteacher-e3-DA6cnJFO-diet-b60c3eb5.png                       309.50 kB
+dist/assets/townsfolk-tavernkeeper-e7-CACookYT-diet-b60c3eb5.png                        309.58 kB
+dist/assets/townsfolk-salvage-king-e8-WpJYk-cO-diet-b60c3eb5.png                        310.00 kB
+dist/assets/townsfolk-typesetter-e2-81LzHAVX-diet-b60c3eb5.png                          310.32 kB
+dist/assets/townsfolk-youngster-a-e2-BBN6-bFM-diet-b60c3eb5.png                         310.32 kB
+dist/assets/townsfolk-elder-e2-C77t0q5J-diet-b60c3eb5.png                               310.36 kB
+dist/assets/townsfolk-tavernkeeper-e4-CM8OOEl9-diet-b60c3eb5.png                        312.97 kB
+dist/assets/townsfolk-tavernkeeper-e5-Bj_pn8b_-diet-b60c3eb5.png                        313.20 kB
+dist/assets/townsfolk-quack-e10-B3u_sKDX-diet-b60c3eb5.png                              314.36 kB
+dist/assets/townsfolk-newsie-e2-CZS1nMst-diet-b60c3eb5.png                              314.37 kB
+dist/assets/icon-damage-DZUv2BnQ-diet-b60c3eb5.png                                      314.64 kB
+dist/assets/townsfolk-shipwright-e5-DiEDPpiI-diet-b60c3eb5.png                          314.85 kB
+dist/assets/townsfolk-pressman-e2-COEbSyXH-diet-b60c3eb5.png                            315.51 kB
+dist/assets/townsfolk-tavernkeeper-e3-EsIhgCde-diet-b60c3eb5.png                        315.51 kB
+dist/assets/townsfolk-boilerwright-e2-CBR8rpG7-diet-b60c3eb5.png                        318.79 kB
+dist/assets/townsfolk-he3-assayer-e8-BiM2zoN6-diet-b60c3eb5.png                         319.74 kB
+dist/assets/townsfolk-old-digger-DrLw-hMc-diet-b60c3eb5.png                             320.91 kB
+dist/assets/townsfolk-cannery-hand-e5-BI0TQhck-diet-b60c3eb5.png                        326.31 kB
+dist/assets/icon-range-DVj413_p-diet-b60c3eb5.png                                       327.55 kB
+dist/assets/icon-beacon-Dtl_Qmxn-diet-b60c3eb5.png                                      328.61 kB
+dist/assets/townsfolk-elder-CsmE7z5j-diet-b60c3eb5.png                                  329.45 kB
+dist/assets/icon-volley-BY2Au2Kk-diet-b60c3eb5.png                                      332.63 kB
+dist/assets/townsfolk-eldest-heir-e10-BE8bmwoO-diet-b60c3eb5.png                        333.59 kB
+dist/assets/townsfolk-tide-teller-e5-xdgMM6nE-diet-b60c3eb5.png                         333.69 kB
+dist/assets/townsfolk-dome-gardener-e8-CrC5Ub2B-diet-b60c3eb5.png                       334.93 kB
+dist/assets/townsfolk-civic-agent-e7-CLxkMeHH-diet-b60c3eb5.png                         337.52 kB
+dist/assets/townsfolk-moon-born-child-e8-Dq_ldHfC-diet-b60c3eb5.png                     338.66 kB
+dist/assets/townsfolk-moon-born-child-e9-CXrz4_dI-diet-b60c3eb5.png                     341.47 kB
+dist/assets/townsfolk-kitchen-chemist-e6-yLC3mjd5-diet-b60c3eb5.png                     342.82 kB
+dist/assets/bld-sentry-beacon-vVUkzSC9-diet-b60c3eb5.png                                343.61 kB
+dist/assets/townsfolk-weather-warden-e9-BHKjEpnN-diet-b60c3eb5.png                      344.30 kB
+dist/assets/townsfolk-launch-master-e8-DCN0fF0S-diet-b60c3eb5.png                       347.63 kB
+dist/assets/palisade-B4vjb3yv-diet-b60c3eb5.glb                                         347.70 kB
+dist/assets/townsfolk-suit-fitter-e8-DuQC3ytG-diet-b60c3eb5.png                         347.89 kB
+dist/assets/assay-bench-Bjbx1XJa-diet-b60c3eb5.glb                                      350.02 kB
+dist/assets/townsfolk-depot-clerk-e6-DZtaqo2P-diet-b60c3eb5.png                         350.78 kB
+dist/assets/townsfolk-reactor-steward-e6-BZSDqCz_-diet-b60c3eb5.png                     350.90 kB
+dist/assets/sentry-beacon-DBPVij-2-diet-b60c3eb5.glb                                    351.62 kB
+dist/assets/townsfolk-appliance-wrangler-e6-BALlCSqG-diet-b60c3eb5.png                  354.72 kB
+dist/assets/townsfolk-newsie-e1-CiFqOx_e-diet-b60c3eb5.png                              355.21 kB
+dist/assets/townsfolk-greenkeeper-e9-BRKHTxae-diet-b60c3eb5.png                         357.04 kB
+dist/assets/townsfolk-canal-reeve-e9-BErajmNI-diet-b60c3eb5.png                         357.39 kB
+dist/assets/townsfolk-combine-defector-e7-BmnUKHdr-diet-b60c3eb5.png                    358.45 kB
+dist/assets/townsfolk-switchboard-chief-e7-Dj8ATcnC-diet-b60c3eb5.png                   358.89 kB
+dist/assets/townsfolk-drone-keeper-e7-D4vurkIS-diet-b60c3eb5.png                        358.90 kB
+dist/assets/townsfolk-diner-carhop-e6-WmLJ9a5j-diet-b60c3eb5.png                        361.84 kB
+dist/assets/townsfolk-combine-defector-e6-AIzwMtMC-diet-b60c3eb5.png                    363.73 kB
+dist/assets/townsfolk-ice-quarry-chief-e9-BUYxo1jZ-diet-b60c3eb5.png                    365.25 kB
+dist/assets/townsfolk-playbook-librarian-e7-DND_MU3E-diet-b60c3eb5.png                  368.81 kB
+dist/assets/gold-seam-BrGpPA7y-diet-b60c3eb5.glb                                        372.77 kB
+dist/assets/townsfolk-tape-courier-e7-z-1aCqCS-diet-b60c3eb5.png                        376.33 kB
+dist/assets/icon-prospecting-Gli3x4zT-diet-b60c3eb5.png                                 378.08 kB
+dist/assets/icon-mobility-CVm6uM1H-diet-b60c3eb5.png                                    382.17 kB
+dist/assets/icon-blast-DivDiVnC-diet-b60c3eb5.png                                       391.66 kB
+dist/assets/turret-DHjcPTUp-diet-b60c3eb5.glb                                           419.32 kB
+dist/assets/icon-gold-CEuAcerh-diet-b60c3eb5.png                                        420.77 kB
+dist/assets/icon-firerate-CF_Xno5I-diet-b60c3eb5.png                                    433.15 kB
+dist/assets/terrain-river-tile-DEUgMoOp-diet-b60c3eb5.png                               436.91 kB
+dist/assets/terrain-bank-tile-CrWGkPgg-diet-b60c3eb5.png                                439.63 kB
+dist/assets/terrain-bank-tile-c-C4rfR6nJ-diet-b60c3eb5.png                              440.99 kB
+dist/assets/icon-plating-CLk5tPna-diet-b60c3eb5.png                                     444.88 kB
+dist/assets/terrain-bank-tile-b-B8wQl3Sc-diet-b60c3eb5.png                              446.32 kB
+dist/assets/sluice-C0nN0uF0-diet-b60c3eb5.glb                                           447.05 kB
+dist/assets/icon-panning-Cn-r1OIM-diet-b60c3eb5.png                                     460.11 kB
+dist/assets/icon-mend-BE5Vdm6P-diet-b60c3eb5.png                                        466.92 kB
+dist/assets/twin-banks-panorama-iMEXVcqG-diet-b60c3eb5.glb                              469.76 kB
+dist/assets/night-shift-panorama-DiCUCJUt-diet-b60c3eb5.glb                             474.33 kB
+dist/assets/stockpile-BGhyDRv3-diet-b60c3eb5.glb                                        483.02 kB
+dist/assets/kit-era-1-DCE1unfr-diet-b60c3eb5.png                                        513.85 kB
+dist/assets/the-claim-panorama-DkzE3d2l-diet-b60c3eb5.glb                               517.82 kB
+dist/assets/dry-gulch-panorama-BSQAYWzK-diet-b60c3eb5.glb                               520.50 kB
+dist/assets/terrain-e5-open-sea-tile-DDxrboXl-diet-b60c3eb5.png                         524.87 kB
+dist/assets/baron-panorama-CdAE75QJ-diet-b60c3eb5.glb                                   527.68 kB
+dist/assets/town-v3-tavern-CXl1aOfB-diet-b60c3eb5.glb                                   912.17 kB
+dist/assets/turret-raft-CCxzlZql-diet-b60c3eb5.glb                                    1,105.67 kB
+dist/assets/still-room-barge-D2ASugyO-diet-b60c3eb5.glb                               1,116.40 kB
+dist/assets/baron-props-Cbl_5FKK-diet-b60c3eb5.glb                                    1,123.18 kB
+dist/assets/kitchen-scow-Da4vAOyH-diet-b60c3eb5.glb                                   1,142.21 kB
+dist/assets/stamp-mill-CxhOFdRx-diet-b60c3eb5.glb                                     1,177.73 kB
+dist/assets/title-theme-CXP4b20O-diet-b60c3eb5.mp3                                    1,200.58 kB
+dist/assets/chapel-DqOSe4LC-diet-b60c3eb5.glb                                         1,212.64 kB
+dist/assets/general-store-Crb4mVFW-diet-b60c3eb5.glb                                  1,219.54 kB
+dist/assets/claim-office-CY6Ib5so-diet-b60c3eb5.glb                                   1,226.84 kB
+dist/assets/schoolhouse-BR3cnoTX-diet-b60c3eb5.glb                                    1,386.26 kB
+dist/assets/assay-office-xAW04uBp-diet-b60c3eb5.glb                                   1,455.12 kB
+dist/assets/central_ford-pBulIvwD-diet-b60c3eb5.glb                                   1,675.04 kB
+dist/assets/dark_rock_shoulders-BNEe-d2--diet-b60c3eb5.glb                            1,689.34 kB
+dist/assets/seven_lantern_terraces-B8zARycm-diet-b60c3eb5.glb                         1,768.13 kB
+dist/assets/era-e1-frontier-loop-CQyR4akc-diet-b60c3eb5.mp3                           1,800.88 kB
+dist/assets/night_work_road-FBsbILbJ-diet-b60c3eb5.glb                                1,820.91 kB
+dist/assets/lampworks_yard-DjQlydU8-diet-b60c3eb5.glb                                 1,869.97 kB
+dist/assets/BrowserAgentTapeWorker-D5eQSAa1-diet-b60c3eb5.js                          1,948.24 kB
+dist/assets/claim_stake-BE40PHzn-diet-b60c3eb5.glb                                    1,953.52 kB
+dist/assets/riparian_dressing_pack-CBXMqPR1-diet-b60c3eb5.glb                         1,968.36 kB
+dist/assets/active_headframe-DesxPCzn-diet-b60c3eb5.glb                               1,988.73 kB
+dist/assets/working_camp-CfQdJbCn-diet-b60c3eb5.glb                                   1,996.64 kB
+dist/assets/maintained_claim_house-BiR5eTdl-diet-b60c3eb5.glb                         2,023.33 kB
+dist/assets/seized_headframe-mYsm1fuj-diet-b60c3eb5.glb                               2,023.38 kB
+dist/assets/siege_line-CThzBthu-diet-b60c3eb5.glb                                     2,026.24 kB
+dist/assets/rocket_cart-BU-Z6eLz-diet-b60c3eb5.glb                                    2,044.36 kB
+dist/assets/north_bank_winch-BZIiV255-diet-b60c3eb5.glb                               2,056.03 kB
+dist/assets/south_bank_winch-CZb1uB2L-diet-b60c3eb5.glb                               2,056.04 kB
+dist/assets/isolated_spring-Die-pcd1-diet-b60c3eb5.glb                                2,059.10 kB
+dist/assets/floodplain_dressing_pack-ZeKKqcxn-diet-b60c3eb5.glb                       2,070.18 kB
+dist/assets/oxblood_banners-CufJxYvG-diet-b60c3eb5.glb                                2,072.22 kB
+dist/assets/fortified_far_bank-CmUvy-Ta-diet-b60c3eb5.glb                             2,073.82 kB
+dist/assets/ruined_mining_operation-d-TxRCLW-diet-b60c3eb5.glb                        2,082.46 kB
+dist/assets/cactus_thicket-zQRx8AM9-diet-b60c3eb5.glb                                 2,085.84 kB
+dist/assets/abandoned_farmhouse-Ch77gdPW-diet-b60c3eb5.glb                            2,085.97 kB
+dist/assets/north_bank_homestead-CiaBVGnD-diet-b60c3eb5.glb                           2,092.16 kB
+dist/assets/south_bank_homestead-DI6SgfI6-diet-b60c3eb5.glb                           2,092.16 kB
+dist/assets/bison_skeleton-B36gdcOu-diet-b60c3eb5.glb                                 2,108.02 kB
+dist/assets/claim-boat-PIbR2jGX-diet-b60c3eb5.glb                                     2,197.62 kB
+dist/assets/plate-contract-night-shift-A2FcTN4o-diet-b60c3eb5.png                     3,221.92 kB
+dist/assets/boss-land-yacht-damage-BFgGAINy-diet-b60c3eb5.png                         3,247.38 kB
+dist/assets/boss-land-yacht-Dcavh7kM-diet-b60c3eb5.png                                3,367.42 kB
+dist/assets/plate-contract-dry-gulch-B5KJWqCA-diet-b60c3eb5.png                       3,567.31 kB
+dist/assets/plate-contract-baron-h_KIWdXg-diet-b60c3eb5.png                           3,598.30 kB
+dist/assets/plate-contract-the-claim-DRhIUQPD-diet-b60c3eb5.png                       3,760.63 kB
+dist/assets/plate-contract-twin-banks-DdxH86rY-diet-b60c3eb5.png                      3,942.18 kB
+dist/assets/salvage-claw-detail-opus5-wxzcUjxD-diet-b60c3eb5.glb                      4,323.57 kB
+dist/assets/dry-gulch-terrain-D6tl2kN--diet-b60c3eb5.glb                              4,658.35 kB
+dist/assets/night-shift-terrain-DbDYIAEb-diet-b60c3eb5.glb                            7,041.72 kB
+dist/assets/baron-terrain-BCMhESct-diet-b60c3eb5.glb                                  7,745.66 kB
+dist/assets/town-plate-Bf7CMFbQ-diet-b60c3eb5.glb                                     8,061.51 kB
+dist/assets/the-claim-terrain-CPmx4txo-diet-b60c3eb5.glb                              8,126.13 kB
+dist/assets/twin-banks-terrain-wfls7mwN-diet-b60c3eb5.glb                             8,585.01 kB
+dist/assets/story-DUNHFs8m-diet-b60c3eb5.css                                              6.11 kB │ gzip:   1.96 kB
+dist/assets/Game-DlwNjKIt-diet-b60c3eb5.css                                               8.19 kB │ gzip:   2.37 kB
+dist/assets/reader-DokW6jM9-diet-b60c3eb5.css                                            15.79 kB │ gzip:   3.56 kB
+dist/assets/TownScene-Bu2a8tt9-diet-b60c3eb5.css                                         35.86 kB │ gzip:   7.12 kB
+dist/assets/index-CizJ6O5e-diet-b60c3eb5.css                                             80.41 kB │ gzip:  15.52 kB
+dist/assets/invalid-DQRdoRSy-diet-b60c3eb5.js                                             0.09 kB │ gzip:   0.11 kB
+dist/assets/tier-up-DVsuUinj-diet-b60c3eb5.js                                             0.09 kB │ gzip:   0.11 kB
+dist/assets/demolish-Dd05QdJS-diet-b60c3eb5.js                                            0.09 kB │ gzip:   0.11 kB
+dist/assets/menu-tap-Ivzi3Dtp-diet-b60c3eb5.js                                            0.09 kB │ gzip:   0.11 kB
+dist/assets/icon-gold-rnFQxuuU-diet-b60c3eb5.js                                           0.09 kB │ gzip:   0.11 kB
+dist/assets/icon-mend-DiY97z0U-diet-b60c3eb5.js                                           0.09 kB │ gzip:   0.11 kB
+dist/assets/kit-era-1-tAyQVsXC-diet-b60c3eb5.js                                           0.09 kB │ gzip:   0.11 kB
+dist/assets/pan-swish-BeuCIDx8-diet-b60c3eb5.js                                           0.09 kB │ gzip:   0.11 kB
+dist/assets/save-tick-CUuET8Ek-diet-b60c3eb5.js                                           0.09 kB │ gzip:   0.11 kB
+dist/assets/wind-gust-D8PmfOeS-diet-b60c3eb5.js                                           0.09 kB │ gzip:   0.11 kB
+dist/assets/gold-chime-BSrSDsFI-diet-b60c3eb5.js                                          0.10 kB │ gzip:   0.11 kB
+dist/assets/icon-blast-ELM7BFPD-diet-b60c3eb5.js                                          0.10 kB │ gzip:   0.11 kB
+dist/assets/icon-range-DC6T3oRH-diet-b60c3eb5.js                                          0.10 kB │ gzip:   0.11 kB
+dist/assets/siege_line-C6Z_SaRe-diet-b60c3eb5.js                                          0.10 kB │ gzip:   0.11 kB
+dist/assets/agent-works-BYpMMONB-diet-b60c3eb5.js                                         0.10 kB │ gzip:   0.11 kB
+dist/assets/build-place-DjKnREn5-diet-b60c3eb5.js                                         0.10 kB │ gzip:   0.11 kB
+dist/assets/claim_stake-BVk4-uZz-diet-b60c3eb5.js                                         0.10 kB │ gzip:   0.11 kB
+dist/assets/icon-beacon-DcgdPJdc-diet-b60c3eb5.js                                         0.10 kB │ gzip:   0.11 kB
+dist/assets/icon-damage-BYjedhxl-diet-b60c3eb5.js                                         0.10 kB │ gzip:   0.11 kB
+dist/assets/icon-volley-5dweLgmi-diet-b60c3eb5.js                                         0.10 kB │ gzip:   0.11 kB
+dist/assets/ledger-open-DBMtyIEV-diet-b60c3eb5.js                                         0.10 kB │ gzip:   0.11 kB
+dist/assets/rocket_cart-XKXQFFmU-diet-b60c3eb5.js                                         0.10 kB │ gzip:   0.11 kB
+dist/assets/title-theme-DrKgFGJW-diet-b60c3eb5.js                                         0.10 kB │ gzip:   0.11 kB
+dist/assets/turret-fire-RP5tgJ3E-diet-b60c3eb5.js                                         0.10 kB │ gzip:   0.11 kB
+dist/assets/bld-palisade-DjVV0jWU-diet-b60c3eb5.js                                        0.10 kB │ gzip:   0.12 kB
+dist/assets/central_ford-DcHrp13l-diet-b60c3eb5.js                                        0.10 kB │ gzip:   0.12 kB
+dist/assets/chirp-refuse-3oGeq2Mo-diet-b60c3eb5.js                                        0.10 kB │ gzip:   0.12 kB
+dist/assets/defeat-sting-D2j8aIY5-diet-b60c3eb5.js                                        0.10 kB │ gzip:   0.12 kB
+dist/assets/icon-panning-Dl2HQEDb-diet-b60c3eb5.js                                        0.10 kB │ gzip:   0.12 kB
+dist/assets/icon-plating-BvqiRILQ-diet-b60c3eb5.js                                        0.10 kB │ gzip:   0.12 kB
+dist/assets/palisade-hit-DzVl4LhI-diet-b60c3eb5.js                                        0.10 kB │ gzip:   0.12 kB
+dist/assets/working_camp-EFzLEUwz-diet-b60c3eb5.js                                        0.10 kB │ gzip:   0.12 kB
+dist/assets/icon-firerate-Bg3AN55W-diet-b60c3eb5.js                                       0.10 kB │ gzip:   0.12 kB
+dist/assets/icon-mobility-VfNGmjXL-diet-b60c3eb5.js                                       0.10 kB │ gzip:   0.12 kB
+dist/assets/research-pick-BwfGBIkd-diet-b60c3eb5.js                                       0.10 kB │ gzip:   0.12 kB
+dist/assets/sign-in-chime-Y_AkZm_k-diet-b60c3eb5.js                                       0.10 kB │ gzip:   0.12 kB
+dist/assets/victory-sting-OJuL0TL8-diet-b60c3eb5.js                                       0.10 kB │ gzip:   0.12 kB
+dist/assets/bison_skeleton-Bz4DSpi0-diet-b60c3eb5.js                                      0.10 kB │ gzip:   0.12 kB
+dist/assets/cactus_thicket-CRGlpZtL-diet-b60c3eb5.js                                      0.10 kB │ gzip:   0.12 kB
+dist/assets/lampworks_yard-DRk_ruAQ-diet-b60c3eb5.js                                      0.10 kB │ gzip:   0.12 kB
+dist/assets/palisade-crack-lR7UALSU-diet-b60c3eb5.js                                      0.10 kB │ gzip:   0.12 kB
+dist/assets/spark-bolt-hit-CY7whMbe-diet-b60c3eb5.js                                      0.10 kB │ gzip:   0.12 kB
+dist/assets/desert-day-loop-d1Z2nz8d-diet-b60c3eb5.js                                     0.10 kB │ gzip:   0.12 kB
+dist/assets/isolated_spring-DFDi2Xyq-diet-b60c3eb5.js                                     0.10 kB │ gzip:   0.12 kB
+dist/assets/night_work_road-caa5XsEP-diet-b60c3eb5.js                                     0.10 kB │ gzip:   0.12 kB
+dist/assets/oxblood_banners-vLoch0Jx-diet-b60c3eb5.js                                     0.10 kB │ gzip:   0.12 kB
+dist/assets/spark-bolt-fire-_66TJxCW-diet-b60c3eb5.js                                     0.10 kB │ gzip:   0.12 kB
+dist/assets/wave-start-horn-BapsMhiM-diet-b60c3eb5.js                                     0.10 kB │ gzip:   0.12 kB
+dist/assets/active_headframe-B2TE67TT-diet-b60c3eb5.js                                    0.10 kB │ gzip:   0.12 kB
+dist/assets/blast-charge-arm-BRgsytcR-diet-b60c3eb5.js                                    0.10 kB │ gzip:   0.12 kB
+dist/assets/bld-claim-office-D2qxEWH0-diet-b60c3eb5.js                                    0.10 kB │ gzip:   0.12 kB
+dist/assets/bld-sluice-works-DfDBc2h1-diet-b60c3eb5.js                                    0.10 kB │ gzip:   0.12 kB
+dist/assets/desert-dusk-loop-DWAdh36k-diet-b60c3eb5.js                                    0.10 kB │ gzip:   0.12 kB
+dist/assets/epoch-door-sting-CjIfbbae-diet-b60c3eb5.js                                    0.10 kB │ gzip:   0.12 kB
+dist/assets/icon-prospecting-DDuNGbeK-diet-b60c3eb5.js                                    0.10 kB │ gzip:   0.12 kB
+dist/assets/north_bank_winch-CYt3s0d4-diet-b60c3eb5.js                                    0.10 kB │ gzip:   0.12 kB
+dist/assets/seized_headframe-CAZANr4s-diet-b60c3eb5.js                                    0.10 kB │ gzip:   0.12 kB
+dist/assets/south_bank_winch-r5GtwC95-diet-b60c3eb5.js                                    0.10 kB │ gzip:   0.12 kB
+dist/assets/town-enter-chime-CpIcZJ-X-diet-b60c3eb5.js                                    0.10 kB │ gzip:   0.12 kB
+dist/assets/town-square-loop-BDaqSEZW-diet-b60c3eb5.js                                    0.10 kB │ gzip:   0.12 kB
+dist/assets/blast-charge-boom-CphYvrnW-diet-b60c3eb5.js                                   0.10 kB │ gzip:   0.12 kB
+dist/assets/bld-sentry-beacon-DVKucEl6-diet-b60c3eb5.js                                   0.10 kB │ gzip:   0.12 kB
+dist/assets/bld-signal-turret-CtU1XgKg-diet-b60c3eb5.js                                   0.10 kB │ gzip:   0.12 kB
+dist/assets/chirp-acknowledge-DVOs9n00-diet-b60c3eb5.js                                   0.10 kB │ gzip:   0.12 kB
+dist/assets/palisade-collapse-58dPZTC4-diet-b60c3eb5.js                                   0.10 kB │ gzip:   0.12 kB
+dist/assets/river-bed-v2-loop-CHTJsYh4-diet-b60c3eb5.js                                   0.10 kB │ gzip:   0.12 kB
+dist/assets/slot-save-confirm-C8KcUhGt-diet-b60c3eb5.js                                   0.10 kB │ gzip:   0.12 kB
+dist/assets/sluice-water-loop-BTn4nzmX-diet-b60c3eb5.js                                   0.10 kB │ gzip:   0.12 kB
+dist/assets/stockpile-deposit-CIBTlnzg-diet-b60c3eb5.js                                   0.10 kB │ gzip:   0.12 kB
+dist/assets/terrain-bank-tile-inTvWrBX-diet-b60c3eb5.js                                   0.10 kB │ gzip:   0.12 kB
+dist/assets/bld-stockpile-yard-BuNt116r-diet-b60c3eb5.js                                  0.10 kB │ gzip:   0.12 kB
+dist/assets/fortified_far_bank-4xw1fgdB-diet-b60c3eb5.js                                  0.10 kB │ gzip:   0.12 kB
+dist/assets/abandoned_farmhouse-1Lq8qjyF-diet-b60c3eb5.js                                 0.10 kB │ gzip:   0.12 kB
+dist/assets/baron-arrival-sting-DzLDhamE-diet-b60c3eb5.js                                 0.10 kB │ gzip:   0.12 kB
+dist/assets/dark_rock_shoulders-Div6vsmU-diet-b60c3eb5.js                                 0.10 kB │ gzip:   0.12 kB
+dist/assets/research-pick-sting-CeeutkjD-diet-b60c3eb5.js                                 0.10 kB │ gzip:   0.12 kB
+dist/assets/river-ambience-loop-CNiQ_-2r-diet-b60c3eb5.js                                 0.10 kB │ gzip:   0.12 kB
+dist/assets/terrain-bank-tile-b-Bj-Ml81S-diet-b60c3eb5.js                                 0.10 kB │ gzip:   0.12 kB
+dist/assets/terrain-bank-tile-c-D2-_Nr7S-diet-b60c3eb5.js                                 0.10 kB │ gzip:   0.12 kB
+dist/assets/baron-defeat-fanfare-CWnigy9I-diet-b60c3eb5.js                                0.11 kB │ gzip:   0.12 kB
+dist/assets/era-e1-frontier-loop-Z7OkRegH-diet-b60c3eb5.js                                0.11 kB │ gzip:   0.12 kB
+dist/assets/founding-stamp-thunk-gLaBCmfI-diet-b60c3eb5.js                                0.11 kB │ gzip:   0.12 kB
+dist/assets/north_bank_homestead-HowD8OFF-diet-b60c3eb5.js                                0.11 kB │ gzip:   0.12 kB
+dist/assets/south_bank_homestead-DtAzMnVQ-diet-b60c3eb5.js                                0.11 kB │ gzip:   0.12 kB
+dist/assets/tavern-interior-loop-DdUrtqxt-diet-b60c3eb5.js                                0.11 kB │ gzip:   0.12 kB
+dist/assets/prospector-hover-loop-DT-csZUY-diet-b60c3eb5.js                               0.11 kB │ gzip:   0.12 kB
+dist/assets/maintained_claim_house-C1DoBQ1P-diet-b60c3eb5.js                              0.11 kB │ gzip:   0.12 kB
+dist/assets/riparian_dressing_pack-BdsHskGo-diet-b60c3eb5.js                              0.11 kB │ gzip:   0.13 kB
+dist/assets/seven_lantern_terraces-CkJhVdQj-diet-b60c3eb5.js                              0.11 kB │ gzip:   0.12 kB
+dist/assets/ruined_mining_operation-8UtKdMMa-diet-b60c3eb5.js                             0.11 kB │ gzip:   0.12 kB
+dist/assets/floodplain_dressing_pack-B3cYvt5f-diet-b60c3eb5.js                            0.11 kB │ gzip:   0.13 kB
+dist/assets/rolldown-runtime-wP4DYAV5-diet-b60c3eb5.js                                    0.15 kB │ gzip:   0.15 kB
+dist/assets/townEraProps-CqV4XFxB-diet-b60c3eb5.js                                        0.27 kB │ gzip:   0.22 kB
+dist/assets/EraBackdrop-DZTJMD2s-diet-b60c3eb5.js                                         0.42 kB │ gzip:   0.31 kB
+dist/assets/buildingShapeSnapshot-BlL7kgP0-diet-b60c3eb5.js                               0.74 kB │ gzip:   0.50 kB
+dist/assets/Medals-DXSqDbGp-diet-b60c3eb5.js                                              0.84 kB │ gzip:   0.44 kB
+dist/assets/ceremonyPostscripts-DqpW_cAo-diet-b60c3eb5.js                                 1.21 kB │ gzip:   0.69 kB
+dist/assets/Renderer-uNAw0olO-diet-b60c3eb5.js                                            1.29 kB │ gzip:   0.73 kB
+dist/assets/LanternBoot-Bhki8yJf-diet-b60c3eb5.js                                         1.79 kB │ gzip:   0.91 kB
+dist/assets/CameraRig-VS_7WtM6-diet-b60c3eb5.js                                           2.33 kB │ gzip:   0.87 kB
+dist/assets/TownNaming-Br_hV6JU-diet-b60c3eb5.js                                          2.37 kB │ gzip:   1.04 kB
+dist/assets/Loop-DUTbLgt5-diet-b60c3eb5.js                                                2.58 kB │ gzip:   0.82 kB
+dist/assets/payload-BGv_HgVR-diet-b60c3eb5.js                                             2.70 kB │ gzip:   1.32 kB
+dist/assets/_gold-rush-release-e1-ceremony-scripts-B3UnSDLS-diet-b60c3eb5.js              3.37 kB │ gzip:   1.80 kB
+dist/assets/Run3dPilot-BdhMSHuz-diet-b60c3eb5.js                                          5.59 kB │ gzip:   2.22 kB
+dist/assets/CraftingQueueStatic-CqOBCNIU-diet-b60c3eb5.js                                 6.79 kB │ gzip:   1.61 kB
+dist/assets/LanternWorldStage-Csc2b39R-diet-b60c3eb5.js                                   9.84 kB │ gzip:   4.00 kB
+dist/assets/Vfx-Cz0TCunO-diet-b60c3eb5.js                                                11.04 kB │ gzip:   3.88 kB
+dist/assets/StartMenu-Dehe4te0-diet-b60c3eb5.js                                          13.69 kB │ gzip:   4.11 kB
+dist/assets/TownTavernPilot-CobK0IyY-diet-b60c3eb5.js                                    13.91 kB │ gzip:   4.70 kB
+dist/assets/SoundSystem-BG8MyYl6-diet-b60c3eb5.js                                        20.80 kB │ gzip:   5.22 kB
+dist/assets/AssayBench-CS10BefM-diet-b60c3eb5.js                                         21.51 kB │ gzip:   6.31 kB
+dist/assets/LanternShow-Qa_Akbrl-diet-b60c3eb5.js                                        33.43 kB │ gzip:  11.21 kB
+dist/assets/LanternController-BFL8P_ai-diet-b60c3eb5.js                                  51.50 kB │ gzip:  19.59 kB
+dist/assets/reader-emUSXQYB-diet-b60c3eb5.js                                             57.31 kB │ gzip:  18.49 kB
+dist/assets/LandmarkCollision-Cb3NqCVN-diet-b60c3eb5.js                                  73.53 kB │ gzip:   8.30 kB
+dist/assets/story-DvqivqwK-diet-b60c3eb5.js                                              88.79 kB │ gzip:  23.27 kB
+dist/assets/runBeacon-Bz3x6bE2-diet-b60c3eb5.js                                          91.64 kB │ gzip:  30.15 kB
+dist/assets/Terrain3dClaimPilot-CXuGvv7J-diet-b60c3eb5.js                               104.90 kB │ gzip:  27.68 kB
+dist/assets/WorldInfoNotes-IG6LAKX6-diet-b60c3eb5.js                                    145.51 kB │ gzip:  47.53 kB
+dist/assets/dispose-DMBnYOKf-diet-b60c3eb5.js                                           170.25 kB │ gzip:  56.22 kB
+dist/assets/SpriteAnimator-pcyS_zZp-diet-b60c3eb5.js                                    189.54 kB │ gzip:  29.63 kB
+dist/assets/TownScene-CFWB1hUj-diet-b60c3eb5.js                                         192.57 kB │ gzip:  55.33 kB
+dist/assets/Game-DnH0dDp6-diet-b60c3eb5.js                                            1,065.02 kB │ gzip: 291.44 kB
+dist/assets/index-CWjEVKue-diet-b60c3eb5.js                                           1,203.94 kB │ gzip: 309.64 kB
+
+✓ built in 1.01s
+[plugin builtin:vite-reporter] 
+(!) Some chunks are larger than 900 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+[asset-diet] Herald dev-path art 1158214 bytes (1500000 byte ceiling).
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+[asset-diet] 60 manifest GLBs 119187524 -> 16979984 bytes (86% cut); 7 plate-class PNGs 24705170 -> 3437116 bytes (86% cut); herald spot cuts 375470 bytes.
+[asset-diet] GLB bytes by manifest family:
+| Family | GLBs | Before bytes | After bytes | Cut | Policy |
+| --- | ---: | ---: | ---: | ---: | --- |
+| terrain | 5 | 36156888 | 4406152 | 88% | compress |
+| landmarks | 25 | 49782056 | 6769992 | 86% | compress |
+| panoramas | 5 | 2510108 | 436048 | 83% | compress |
+| town-buildings | 8 | 16651832 | 2452664 | 85% | compress |
+| town-era-variants | 0 | 0 | 0 | 0% | compress |
+| props | 16 | 9763068 | 2020176 | 79% | compress |
+| rail-element | 1 | 35048 | 35048 | 0% | skip: Run3dPilot instances raw geometry without the node transform required by Meshopt quantization; preserve sleeper size and grounding until that consumer is fixed. |
+| bosses | 1 | 4323572 | 894952 | 79% | compress |
+| finale | 0 | 0 | 0 | 0% | compress |
+GR_RELEASE=e1 npm run build rc=0

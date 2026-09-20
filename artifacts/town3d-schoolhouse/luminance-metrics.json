@@ -1,0 +1,18 @@
+{
+  "camera": "TS-04 locked Town camera at hero start",
+  "source": "desktop-chrome-after-glb.png",
+  "method": "ImageMagick sRGB grayscale mean over fixed tight non-ground roof regions",
+  "schoolhouse": {
+    "crop": { "x": 25, "y": 530, "width": 30, "height": 25 },
+    "meanLuminance": 0.213777
+  },
+  "paintedNeighbor": {
+    "building": "Tavern LITE facade",
+    "crop": { "x": 280, "y": 270, "width": 30, "height": 25 },
+    "meanLuminance": 0.212683
+  },
+  "absoluteDelta": 0.001094,
+  "deltaPercentOfPaintedNeighbor": 0.51,
+  "limitPercent": 5,
+  "passes": true
+}

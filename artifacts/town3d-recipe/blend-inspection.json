@@ -1,0 +1,93 @@
+{
+  "blender": "5.1.2",
+  "source": "/Users/robin/Claude/Projects/Gold Rush/assets/pilots/tavern-3d/tavern-2-fullwrap.blend",
+  "destination": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/artifacts/town3d-recipe/tavern-2-fullwrap-reexport.glb",
+  "objects": [
+    {
+      "name": "Tavern_2_FullWrap_Painted",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        5.127999782562256,
+        3.3931474685668945,
+        3.9600000381469727
+      ],
+      "hidden_render": false,
+      "triangles": 10864,
+      "vertices": 5886,
+      "polygons": 6141,
+      "uv_layers": [
+        "UVMap"
+      ],
+      "materials": [
+        "Tavern_FullWrap_Painted"
+      ],
+      "modifiers": []
+    }
+  ],
+  "materials": [
+    {
+      "name": "Tavern_FullWrap_Painted",
+      "nodes": [
+        {
+          "name": "Material Output",
+          "type": "ShaderNodeOutputMaterial"
+        },
+        {
+          "name": "Principled BSDF",
+          "type": "ShaderNodeBsdfPrincipled",
+          "metallic": 0.0,
+          "roughness": 0.8999999761581421
+        },
+        {
+          "name": "Image Texture",
+          "type": "ShaderNodeTexImage",
+          "image": "Tavern_FullWrap_Painted_Atlas_1024",
+          "projection": "FLAT",
+          "extension": "REPEAT",
+          "interpolation": "Linear"
+        }
+      ],
+      "links": [
+        "Image Texture.Color -> Principled BSDF.Base Color",
+        "Principled BSDF.BSDF -> Material Output.Surface"
+      ]
+    }
+  ],
+  "images": [
+    {
+      "name": "Render Result",
+      "size": [
+        0,
+        0
+      ],
+      "packed": false,
+      "source": "VIEWER",
+      "colorspace": ""
+    },
+    {
+      "name": "Tavern_FullWrap_Painted_Atlas_1024",
+      "size": [
+        1024,
+        1024
+      ],
+      "packed": true,
+      "source": "FILE",
+      "colorspace": "sRGB"
+    },
+    {
+      "name": "Viewer Node",
+      "size": [
+        256,
+        256
+      ],
+      "packed": false,
+      "source": "VIEWER",
+      "colorspace": ""
+    }
+  ]
+}

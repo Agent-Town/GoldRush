@@ -1,0 +1,73 @@
+{
+  "baseSha": "3fe1e493fb11b6685f1ffc76b65dd81ebff8dd6b",
+  "target": "The complete Mesa must announce E7 at gameplay distance through a broadcast skyline, public program library, drone coop, signal refinery, Exchange, relay tower, and six named E6 carry/upgrade verdicts.",
+  "freshReferenceRule": "current-era boards rerendered after fetch on this exact base; no prior PNG input",
+  "dependencies": {
+    "mesaAndE6": "origin/sol/mesa-town-plate + origin/sol/mesa-town-e6-pilot/wide",
+    "e7Pilot": {
+      "branchTip": "3947af4943f784a1e26d4ed1ae9b8aed47da2293",
+      "assets": {
+        "net_cafe": [
+          "assets/pilots/tavern-3d/tavern.e7.glb",
+          "950253635d46da078c84fa02b01ea0381eb2fb7646b63bd75ac0734d87bcf605"
+        ],
+        "exchange": [
+          "assets/pilots/exchange-3d/exchange.glb",
+          "122460f1d0a6c37d38f1e2d1a80fb75c2e2a8c61aa9008866d5d5d48e1288161"
+        ],
+        "relay_tower": [
+          "assets/pilots/relay-tower-3d/relay-tower.glb",
+          "d048511881038a144d1d1b6dd2cfbd2b8b067c496d3359bd3f8af5185c8b9eea"
+        ]
+      }
+    }
+  },
+  "placements": {
+    "playbookLibrary": [
+      -14.2,
+      -6.4,
+      0.12
+    ],
+    "droneCoop": [
+      14.2,
+      -6.0,
+      -0.1
+    ],
+    "signalRefinery": [
+      0.0,
+      16.2,
+      3.141592653589793
+    ],
+    "acceptedPilot": {
+      "exchange": [
+        -7.55,
+        9.4,
+        0.06
+      ],
+      "relayTower": [
+        7.55,
+        9.15,
+        -0.08
+      ]
+    }
+  },
+  "comparisonMetrics": {
+    "mae": 7.999378681182861,
+    "rmse": 24.41436195373535,
+    "diffRatio16": 0.129017578125,
+    "diffRatio32": 0.091486328125,
+    "diffRatio64": 0.0540537109375,
+    "thresholdMismatchProxy": "diffRatio16 (pixelmatch unavailable; no dependency installed)",
+    "edgeEnergyBase": 3.2806122303009033,
+    "edgeEnergyCandidate": 3.6526987552642822,
+    "edgeEnergyRatio": 1.1134198904037476,
+    "edgeDiffRatio32": 0.0093916015625,
+    "avgLuminanceBase": 140.29725646972656,
+    "avgLuminanceCandidate": 133.4881134033203,
+    "avgLuminanceDelta": -6.80914306640625
+  },
+  "visualReview": {
+    "required": "locked complete E6/E7 A/B, feature crop, six four-angle audits, three inheritance A/Bs",
+    "independentSubagent": "not run: this session explicitly forbids delegation; limitation recorded"
+  }
+}

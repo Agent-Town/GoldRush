@@ -1,0 +1,1151 @@
+gate battery transcript (append-only — see scripts/gate-battery.mjs)
+
+
+######## BATTERY 2026-08-08T23:09:08.566Z — town-music drain (s1587) ########
+cwd=/Users/robin/Claude/Projects/Gold Rush/gate-s1587
+env+ GR_CAPTURE_EXTERNAL_SERVER=1 GR_CAPTURE_BASE_URL=http://127.0.0.1:5234
+
+===== own spec: beauty-town =====
+$ npx playwright test e2e/beauty-town.spec.ts --workers=1
+rc=1 82.0s
+
+Running 8 tests using 1 worker
+
+  ✘  1 [desktop-chrome] › e2e/beauty-town.spec.ts:14:1 › the day town boots with ground contact, wear and parcel dressing — and no night dressing (41.8s)
+  ✓  2 [desktop-chrome] › e2e/beauty-town.spec.ts:63:1 › the plain town plays its era music after a gesture and exposes persistent audio settings (2.6s)
+  ✓  3 [desktop-chrome] › e2e/beauty-town.spec.ts:105:1 › ?townDusk reaches the town from a plain URL and lights windows, strings and lanterns (6.2s)
+  ✓  4 [desktop-chrome] › e2e/beauty-town.spec.ts:158:1 › Voltage town earns a cooler, steady arc-light accent from the era table (1.1s)
+  ✓  5 [mobile-chrome] › e2e/beauty-town.spec.ts:14:1 › the day town boots with ground contact, wear and parcel dressing — and no night dressing (5.6s)
+  ✓  6 [mobile-chrome] › e2e/beauty-town.spec.ts:63:1 › the plain town plays its era music after a gesture and exposes persistent audio settings (2.7s)
+  ✓  7 [mobile-chrome] › e2e/beauty-town.spec.ts:105:1 › ?townDusk reaches the town from a plain URL and lights windows, strings and lanterns (6.6s)
+  ✓  8 [mobile-chrome] › e2e/beauty-town.spec.ts:158:1 › Voltage town earns a cooler, steady arc-light accent from the era table (1.1s)
+
+
+  1) [desktop-chrome] › e2e/beauty-town.spec.ts:14:1 › the day town boots with ground contact, wear and parcel dressing — and no night dressing 
+
+    TimeoutError: page.waitForFunction: Timeout 30000ms exceeded.
+
+      242 |
+      243 | async function saveEraLightShot(page: Page, project: string, mood: 'day' | 'dusk'): Promise<void> {
+    > 244 |   await page.waitForFunction(() => {
+          |              ^
+      245 |     const town = window.__GR_TOWN_DIAGNOSTICS__;
+      246 |     return (town?.elapsed ?? 0) > 4;
+      247 |   }, undefined, { timeout: 30_000 });
+        at saveEraLightShot (/Users/robin/Claude/Projects/Gold Rush/gate-s1587/e2e/beauty-town.spec.ts:244:14)
+        at /Users/robin/Claude/Projects/Gold Rush/gate-s1587/e2e/beauty-town.spec.ts:21:9
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/beauty-town-the-day-town-b-b89e8-ing-—-and-no-night-dressing-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/beauty-town-the-day-town-b-b89e8-ing-—-and-no-night-dressing-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/beauty-town-the-day-town-b-b89e8-ing-—-and-no-night-dressing-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/beauty-town-the-day-town-b-b89e8-ing-—-and-no-night-dressing-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [desktop-chrome] › e2e/beauty-town.spec.ts:14:1 › the day town boots with ground contact, wear and parcel dressing — and no night dressing 
+  7 passed (1.4m)
+(node:80662) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:80687) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:82389) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:82489) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+SUMMARY {"own spec: beauty-town":1}
+OVERALL rc=1
+
+
+######## BATTERY 2026-08-08T23:11:01.319Z — town-music control: warm re-run of the day-town test ########
+cwd=/Users/robin/Claude/Projects/Gold Rush/gate-s1587
+env+ GR_CAPTURE_EXTERNAL_SERVER=1 GR_CAPTURE_BASE_URL=http://127.0.0.1:5234
+
+===== warm re-run desktop =====
+$ npx playwright test e2e/beauty-town.spec.ts:14 --project=desktop-chrome --workers=1
+rc=0 6.2s
+
+Running 1 test using 1 worker
+
+  ✓  1 [desktop-chrome] › e2e/beauty-town.spec.ts:14:1 › the day town boots with ground contact, wear and parcel dressing — and no night dressing (5.0s)
+
+  1 passed (5.7s)
+(node:83867) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:83892) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+SUMMARY {"warm re-run desktop":0}
+OVERALL rc=0
+
+
+######## BATTERY 2026-08-08T23:11:21.155Z — town-music adjacent suites ########
+cwd=/Users/robin/Claude/Projects/Gold Rush/gate-s1587
+env+ GR_CAPTURE_EXTERNAL_SERVER=1 GR_CAPTURE_BASE_URL=http://127.0.0.1:5234
+
+===== run-side audio =====
+$ npx playwright test e2e/mu-02-music.spec.ts e2e/mu-03-era-audio.spec.ts e2e/music-survives-pause.spec.ts e2e/050-audio-mix-and-access.spec.ts e2e/051-audio-governor.spec.ts e2e/audio-integration.spec.ts --workers=1
+rc=1 258.9s
+
+Running 40 tests using 1 worker
+
+  ✓   1 [desktop-chrome] › e2e/050-audio-mix-and-access.spec.ts:49:1 › pause overlay volume and mute persist and sync with Settings (3.6s)
+  ✓   2 [desktop-chrome] › e2e/050-audio-mix-and-access.spec.ts:90:1 › M toggles mute mid-run with ledger toast (2.3s)
+  ✓   3 [desktop-chrome] › e2e/050-audio-mix-and-access.spec.ts:105:1 › spark rapid fire is throttled in render audio diagnostics (2.2s)
+  ✓   4 [desktop-chrome] › e2e/050-audio-mix-and-access.spec.ts:126:1 › audio fetch failures stay silent no-ops (2.3s)
+  ✓   5 [desktop-chrome] › e2e/051-audio-governor.spec.ts:85:1 › 20-source sluice mix uses one deduped water loop with source-count scaling (2.3s)
+  ✓   6 [desktop-chrome] › e2e/051-audio-governor.spec.ts:100:1 › global voice cap holds and UI displaces low-priority ambience (2.2s)
+  ✓   7 [desktop-chrome] › e2e/051-audio-governor.spec.ts:132:1 › gold and hit families share global cooldowns (2.2s)
+  ✓   8 [desktop-chrome] › e2e/051-audio-governor.spec.ts:153:1 › audio-absent stress releases governor slots cleanly (2.2s)
+  ✓   9 [desktop-chrome] › e2e/audio-integration.spec.ts:61:1 › boot stays audio-locked until gesture, then seeded panning requests sound (2.3s)
+  ✘  10 [desktop-chrome] › e2e/audio-integration.spec.ts:80:1 › settings volume and mute persist across reload (40.4s)
+  ✘  11 [desktop-chrome] › e2e/audio-integration.spec.ts:118:1 › legacy audio preferences migrate into profile storage (16.5s)
+  ✓  12 [desktop-chrome] › e2e/audio-integration.spec.ts:155:1 › first-use bursts respect the per-sound pool cap (2.4s)
+  ✓  13 [desktop-chrome] › e2e/audio-integration.spec.ts:173:1 › missing audio names are silent no-ops (2.2s)
+  ✓  14 [desktop-chrome] › e2e/mu-02-music.spec.ts:20:1 › title music waits for a gesture and music volume persists (1.6s)
+  ✓  15 [desktop-chrome] › e2e/mu-02-music.spec.ts:46:1 › E1 music is lazy and active in-run on desktop and mobile (2.3s)
+  ✓  16 [desktop-chrome] › e2e/mu-02-music.spec.ts:60:1 › shot bursts do not restart the E1 music loop (3.1s)
+  ✓  17 [desktop-chrome] › e2e/mu-03-era-audio.spec.ts:27:1 › E2 contract uses the Steamworks loop without boot-critical audio (2.5s)
+  ✓  18 [desktop-chrome] › e2e/mu-03-era-audio.spec.ts:31:1 › E1 contract keeps the frontier loop (2.6s)
+  ✓  19 [desktop-chrome] › e2e/mu-03-era-audio.spec.ts:35:1 › title autoplay gate, music volume, and mute still hold (1.3s)
+  ✓  20 [desktop-chrome] › e2e/music-survives-pause.spec.ts:7:1 › the era loop rides through pause without restarting (4.9s)
+  ✓  21 [mobile-chrome] › e2e/050-audio-mix-and-access.spec.ts:49:1 › pause overlay volume and mute persist and sync with Settings (3.7s)
+  ✓  22 [mobile-chrome] › e2e/050-audio-mix-and-access.spec.ts:90:1 › M toggles mute mid-run with ledger toast (2.6s)
+  ✓  23 [mobile-chrome] › e2e/050-audio-mix-and-access.spec.ts:105:1 › spark rapid fire is throttled in render audio diagnostics (2.2s)
+  ✓  24 [mobile-chrome] › e2e/050-audio-mix-and-access.spec.ts:126:1 › audio fetch failures stay silent no-ops (2.3s)
+  ✓  25 [mobile-chrome] › e2e/051-audio-governor.spec.ts:85:1 › 20-source sluice mix uses one deduped water loop with source-count scaling (2.2s)
+  ✓  26 [mobile-chrome] › e2e/051-audio-governor.spec.ts:100:1 › global voice cap holds and UI displaces low-priority ambience (2.2s)
+  ✓  27 [mobile-chrome] › e2e/051-audio-governor.spec.ts:132:1 › gold and hit families share global cooldowns (2.2s)
+  ✓  28 [mobile-chrome] › e2e/051-audio-governor.spec.ts:153:1 › audio-absent stress releases governor slots cleanly (2.3s)
+  ✓  29 [mobile-chrome] › e2e/audio-integration.spec.ts:61:1 › boot stays audio-locked until gesture, then seeded panning requests sound (2.2s)
+  ✘  30 [mobile-chrome] › e2e/audio-integration.spec.ts:80:1 › settings volume and mute persist across reload (40.9s)
+  ✘  31 [mobile-chrome] › e2e/audio-integration.spec.ts:118:1 › legacy audio preferences migrate into profile storage (16.6s)
+  ✘  32 [mobile-chrome] › e2e/audio-integration.spec.ts:155:1 › first-use bursts respect the per-sound pool cap (4.5s)
+  ✓  33 [mobile-chrome] › e2e/audio-integration.spec.ts:173:1 › missing audio names are silent no-ops (2.3s)
+  ✓  34 [mobile-chrome] › e2e/mu-02-music.spec.ts:20:1 › title music waits for a gesture and music volume persists (1.7s)
+  ✓  35 [mobile-chrome] › e2e/mu-02-music.spec.ts:46:1 › E1 music is lazy and active in-run on desktop and mobile (2.0s)
+  ✓  36 [mobile-chrome] › e2e/mu-02-music.spec.ts:60:1 › shot bursts do not restart the E1 music loop (2.8s)
+  ✓  37 [mobile-chrome] › e2e/mu-03-era-audio.spec.ts:27:1 › E2 contract uses the Steamworks loop without boot-critical audio (2.5s)
+  ✓  38 [mobile-chrome] › e2e/mu-03-era-audio.spec.ts:31:1 › E1 contract keeps the frontier loop (2.6s)
+  ✓  39 [mobile-chrome] › e2e/mu-03-era-audio.spec.ts:35:1 › title autoplay gate, music volume, and mute still hold (1.8s)
+  ✓  40 [mobile-chrome] › e2e/music-survives-pause.spec.ts:7:1 › the era loop rides through pause without restarting (4.9s)
+
+
+  1) [desktop-chrome] › e2e/audio-integration.spec.ts:80:1 › settings volume and mute persist across reload 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for getByTestId('start-menu-settings')
+
+
+      87 |   await page.reload();
+      88 |
+    > 89 |   await page.getByTestId('start-menu-settings').click();
+         |                                                 ^
+      90 |   await mkdir(SHOT_DIR, { recursive: true });
+      91 |   await page.screenshot({ path: `${SHOT_DIR}/${testInfo.project.name}-settings.png`, fullPage: true });
+      92 |
+        at /Users/robin/Claude/Projects/Gold Rush/gate-s1587/e2e/audio-integration.spec.ts:89:49
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/audio-integration-settings-422a5--mute-persist-across-reload-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/audio-integration-settings-422a5--mute-persist-across-reload-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/audio-integration-settings-422a5--mute-persist-across-reload-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/audio-integration-settings-422a5--mute-persist-across-reload-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [desktop-chrome] › e2e/audio-integration.spec.ts:118:1 › legacy audio preferences migrate into profile storage 
+
+    Error: expect(locator).toHaveValue(expected) failed
+
+    Locator:  getByTestId('start-menu-volume')
+    Expected: "35"
+    Received: "80"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveValue" with timeout 5000ms
+      - waiting for getByTestId('start-menu-volume')
+        14 × locator resolved to <input min="0" step="5" max="100" value="80" type="range" data-testid="start-menu-volume"/>
+           - unexpected value "80"
+
+
+      139 |   await page.getByTestId('start-menu-settings').click();
+      140 |
+    > 141 |   await expect(page.getByTestId('start-menu-volume')).toHaveValue('35');
+          |                                                       ^
+      142 |   await expect(page.getByTestId('start-menu-mute')).toBeChecked();
+      143 |   await expect(
+      144 |     page.evaluate(
+        at /Users/robin/Claude/Projects/Gold Rush/gate-s1587/e2e/audio-integration.spec.ts:141:55
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/audio-integration-legacy-a-6f86c-igrate-into-profile-storage-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/audio-integration-legacy-a-6f86c-igrate-into-profile-storage-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/audio-integration-legacy-a-6f86c-igrate-into-profile-storage-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/audio-integration-legacy-a-6f86c-igrate-into-profile-storage-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [mobile-chrome] › e2e/audio-integration.spec.ts:80:1 › settings volume and mute persist across reload 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for getByTestId('start-menu-settings')
+
+
+      87 |   await page.reload();
+      88 |
+    > 89 |   await page.getByTestId('start-menu-settings').click();
+         |                                                 ^
+      90 |   await mkdir(SHOT_DIR, { recursive: true });
+      91 |   await page.screenshot({ path: `${SHOT_DIR}/${testInfo.project.name}-settings.png`, fullPage: true });
+      92 |
+        at /Users/robin/Claude/Projects/Gold Rush/gate-s1587/e2e/audio-integration.spec.ts:89:49
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/audio-integration-settings-422a5--mute-persist-across-reload-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/audio-integration-settings-422a5--mute-persist-across-reload-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/audio-integration-settings-422a5--mute-persist-across-reload-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/audio-integration-settings-422a5--mute-persist-across-reload-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [mobile-chrome] › e2e/audio-integration.spec.ts:118:1 › legacy audio preferences migrate into profile storage 
+
+    Error: expect(locator).toHaveValue(expected) failed
+
+    Locator:  getByTestId('start-menu-volume')
+    Expected: "35"
+    Received: "80"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveValue" with timeout 5000ms
+      - waiting for getByTestId('start-menu-volume')
+        13 × locator resolved to <input min="0" step="5" max="100" value="80" type="range" data-testid="start-menu-volume"/>
+           - unexpected value "80"
+
+
+      139 |   await page.getByTestId('start-menu-settings').click();
+      140 |
+    > 141 |   await expect(page.getByTestId('start-menu-volume')).toHaveValue('35');
+          |                                                       ^
+      142 |   await expect(page.getByTestId('start-menu-mute')).toBeChecked();
+      143 |   await expect(
+      144 |     page.evaluate(
+        at /Users/robin/Claude/Projects/Gold Rush/gate-s1587/e2e/audio-integration.spec.ts:141:55
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/audio-integration-legacy-a-6f86c-igrate-into-profile-storage-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/audio-integration-legacy-a-6f86c-igrate-into-profile-storage-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/audio-integration-legacy-a-6f86c-igrate-into-profile-storage-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/audio-integration-legacy-a-6f86c-igrate-into-profile-storage-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  5) [mobile-chrome] › e2e/audio-integration.spec.ts:155:1 › first-use bursts respect the per-sound pool cap 
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 4
+    Received:    5
+
+      167 |   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.audio.started ?? 0)).toBeGreaterThan(before);
+      168 |   const started = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.audio.started ?? 0);
+    > 169 |   expect(started - before).toBeLessThanOrEqual(4);
+          |                            ^
+      170 |   assertNoErrors(errors);
+      171 | });
+      172 |
+        at /Users/robin/Claude/Projects/Gold Rush/gate-s1587/e2e/audio-integration.spec.ts:169:28
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/audio-integration-first-us-cbeea-pect-the-per-sound-pool-cap-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/audio-integration-first-us-cbeea-pect-the-per-sound-pool-cap-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/audio-integration-first-us-cbeea-pect-the-per-sound-pool-cap-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/audio-integration-first-us-cbeea-pect-the-per-sound-pool-cap-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  5 failed
+    [desktop-chrome] › e2e/audio-integration.spec.ts:80:1 › settings volume and mute persist across reload 
+    [desktop-chrome] › e2e/audio-integration.spec.ts:118:1 › legacy audio preferences migrate into profile storage 
+    [mobile-chrome] › e2e/audio-integration.spec.ts:80:1 › settings volume and mute persist across reload 
+    [mobile-chrome] › e2e/audio-integration.spec.ts:118:1 › legacy audio preferences migrate into profile storage 
+    [mobile-chrome] › e2e/audio-integration.spec.ts:155:1 › first-use bursts respect the per-sound pool cap 
+  35 passed (4.3m)
+(node:83997) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:84027) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:85506) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:86315) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:86892) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:88353) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:88463) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:88534) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+===== town + skill minimums =====
+$ npx playwright test e2e/town-era-switch.spec.ts e2e/task-025-bandits-dont-swim.spec.ts e2e/m1-01-claim-jumpers-death.spec.ts e2e/m2-01-build-menu.spec.ts --workers=1
+rc=0 223.9s
+
+Running 46 tests using 1 worker
+
+  ✓   1 [desktop-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:29:1 › T spawns Claim Jumpers, contact kills hero, R restarts in place (9.7s)
+  ✓   2 [desktop-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:59:1 › nospawn blocks debug packs (2.1s)
+  ✓   3 [desktop-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:70:1 › double restart recycles enemies without geometry growth (8.4s)
+  ✓   4 [desktop-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:96:1 › stress=120 stays within pool and draw-call budget (3.0s)
+  ✓   5 [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:111:1 › menu places a palisade and logs build_palisade spend (3.1s)
+  ✓   6 [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:136:1 › build menu shows six ready icons and Balance-backed blurbs (3.3s)
+  ✓   7 [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining (2.8s)
+  ✓   8 [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:204:1 › beacon cost curve stays intact through the menu (3.2s)
+  ✓   9 [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:226:1 › single enemy slides around a finite palisade line without passing through (4.7s)
+  ✓  10 [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:283:1 › 390px build menu is visible, tappable, and clear of HUD controls (8.8s)
+  ✓  11 [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:328:1 › stress draw calls stay under 200 with palisades and beacons (6.7s)
+  ✓  12 [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:105:1 › enemy crossing the river reaches the hero through the ford only (3.2s)
+  ✓  13 [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:123:1 › scheduled waves never place enemies in deep river over three waves (6.3s)
+  ✓  14 [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:139:1 › hero stops in the shallows and keeps weapons armed at the deep channel (3.9s)
+  ✓  15 [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:181:1 › xp from a residual deep-water death is auto-banked with no mote (4.3s)
+  ✓  16 [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:202:1 › far-bank sluice stays untouched when the river flank is open (6.1s)
+  ✓  17 [desktop-chrome] › e2e/town-era-switch.spec.ts:120:1 › E1 mounts base only; E2 mounts its variant, shared anchor plumes, and era accent (7.3s)
+  ✓  18 [desktop-chrome] › e2e/town-era-switch.spec.ts:153:1 › a missing E2 sibling falls back to base without errors (2.1s)
+  ✓  19 [desktop-chrome] › e2e/town-era-switch.spec.ts:167:1 › LITE keeps facades and never fetches models or mounts plumes (1.5s)
+  ✓  20 [desktop-chrome] › e2e/town-era-switch.spec.ts:183:3 › E1 keeps every mounted building upright (2.2s)
+  ✓  21 [desktop-chrome] › e2e/town-era-switch.spec.ts:183:3 › E2 keeps every mounted building upright (2.6s)
+  ✓  22 [desktop-chrome] › e2e/town-era-switch.spec.ts:183:3 › E3 keeps every mounted building upright (2.8s)
+  ✓  23 [desktop-chrome] › e2e/town-era-switch.spec.ts:199:1 › E5 flood reset starts a fresh era-prop chain (3.9s)
+  ✓  24 [mobile-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:29:1 › T spawns Claim Jumpers, contact kills hero, R restarts in place (12.5s)
+  ✓  25 [mobile-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:59:1 › nospawn blocks debug packs (3.3s)
+  ✓  26 [mobile-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:70:1 › double restart recycles enemies without geometry growth (11.1s)
+  ✓  27 [mobile-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:96:1 › stress=120 stays within pool and draw-call budget (4.3s)
+  ✓  28 [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:111:1 › menu places a palisade and logs build_palisade spend (4.7s)
+  ✓  29 [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:136:1 › build menu shows six ready icons and Balance-backed blurbs (4.7s)
+  ✓  30 [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining (4.2s)
+  ✓  31 [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:204:1 › beacon cost curve stays intact through the menu (4.3s)
+  ✓  32 [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:226:1 › single enemy slides around a finite palisade line without passing through (7.2s)
+  ✓  33 [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:283:1 › 390px build menu is visible, tappable, and clear of HUD controls (9.9s)
+  ✓  34 [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:328:1 › stress draw calls stay under 200 with palisades and beacons (10.1s)
+  ✓  35 [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:105:1 › enemy crossing the river reaches the hero through the ford only (4.7s)
+  ✓  36 [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:123:1 › scheduled waves never place enemies in deep river over three waves (6.3s)
+  ✓  37 [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:139:1 › hero stops in the shallows and keeps weapons armed at the deep channel (4.2s)
+  ✓  38 [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:181:1 › xp from a residual deep-water death is auto-banked with no mote (3.3s)
+  ✓  39 [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:202:1 › far-bank sluice stays untouched when the river flank is open (4.7s)
+  ✓  40 [mobile-chrome] › e2e/town-era-switch.spec.ts:120:1 › E1 mounts base only; E2 mounts its variant, shared anchor plumes, and era accent (6.2s)
+  ✓  41 [mobile-chrome] › e2e/town-era-switch.spec.ts:153:1 › a missing E2 sibling falls back to base without errors (1.8s)
+  ✓  42 [mobile-chrome] › e2e/town-era-switch.spec.ts:167:1 › LITE keeps facades and never fetches models or mounts plumes (1.3s)
+  ✓  43 [mobile-chrome] › e2e/town-era-switch.spec.ts:183:3 › E1 keeps every mounted building upright (2.4s)
+  ✓  44 [mobile-chrome] › e2e/town-era-switch.spec.ts:183:3 › E2 keeps every mounted building upright (2.4s)
+  ✓  45 [mobile-chrome] › e2e/town-era-switch.spec.ts:183:3 › E3 keeps every mounted building upright (2.3s)
+  ✓  46 [mobile-chrome] › e2e/town-era-switch.spec.ts:199:1 › E5 flood reset starts a fresh era-prop chain (3.1s)
+
+  46 passed (3.7m)
+(node:89493) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:89539) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:91412) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+SUMMARY {"run-side audio":1,"town + skill minimums":0}
+OVERALL rc=1
+
+
+######## BATTERY 2026-08-08T23:20:34.264Z — CONTROL @ pre-merge c66d90f64: audio-integration ########
+cwd=/Users/robin/Claude/Projects/Gold Rush/control-s1587
+env+ GR_CAPTURE_EXTERNAL_SERVER=1 GR_CAPTURE_BASE_URL=http://127.0.0.1:5231
+
+===== control audio-integration =====
+$ npx playwright test e2e/audio-integration.spec.ts --workers=1
+rc=1 184.3s
+
+Running 10 tests using 1 worker
+
+  ✓   1 [desktop-chrome] › e2e/audio-integration.spec.ts:61:1 › boot stays audio-locked until gesture, then seeded panning requests sound (2.8s)
+  ✘   2 [desktop-chrome] › e2e/audio-integration.spec.ts:80:1 › settings volume and mute persist across reload (42.6s)
+  ✘   3 [desktop-chrome] › e2e/audio-integration.spec.ts:118:1 › legacy audio preferences migrate into profile storage (16.7s)
+  ✓   4 [desktop-chrome] › e2e/audio-integration.spec.ts:155:1 › first-use bursts respect the per-sound pool cap (2.8s)
+  ✓   5 [desktop-chrome] › e2e/audio-integration.spec.ts:173:1 › missing audio names are silent no-ops (2.4s)
+  ✓   6 [mobile-chrome] › e2e/audio-integration.spec.ts:61:1 › boot stays audio-locked until gesture, then seeded panning requests sound (2.9s)
+  ✘   7 [mobile-chrome] › e2e/audio-integration.spec.ts:80:1 › settings volume and mute persist across reload (40.7s)
+  ✘   8 [mobile-chrome] › e2e/audio-integration.spec.ts:118:1 › legacy audio preferences migrate into profile storage (16.4s)
+  ✓   9 [mobile-chrome] › e2e/audio-integration.spec.ts:155:1 › first-use bursts respect the per-sound pool cap (2.5s)
+  ✓  10 [mobile-chrome] › e2e/audio-integration.spec.ts:173:1 › missing audio names are silent no-ops (2.7s)
+
+
+  1) [desktop-chrome] › e2e/audio-integration.spec.ts:80:1 › settings volume and mute persist across reload 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for getByTestId('start-menu-settings')
+
+
+      87 |   await page.reload();
+      88 |
+    > 89 |   await page.getByTestId('start-menu-settings').click();
+         |                                                 ^
+      90 |   await mkdir(SHOT_DIR, { recursive: true });
+      91 |   await page.screenshot({ path: `${SHOT_DIR}/${testInfo.project.name}-settings.png`, fullPage: true });
+      92 |
+        at /Users/robin/Claude/Projects/Gold Rush/control-s1587/e2e/audio-integration.spec.ts:89:49
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/audio-integration-settings-422a5--mute-persist-across-reload-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/audio-integration-settings-422a5--mute-persist-across-reload-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/audio-integration-settings-422a5--mute-persist-across-reload-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/audio-integration-settings-422a5--mute-persist-across-reload-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [desktop-chrome] › e2e/audio-integration.spec.ts:118:1 › legacy audio preferences migrate into profile storage 
+
+    Error: expect(locator).toHaveValue(expected) failed
+
+    Locator:  getByTestId('start-menu-volume')
+    Expected: "35"
+    Received: "80"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveValue" with timeout 5000ms
+      - waiting for getByTestId('start-menu-volume')
+        13 × locator resolved to <input min="0" step="5" max="100" value="80" type="range" data-testid="start-menu-volume"/>
+           - unexpected value "80"
+
+
+      139 |   await page.getByTestId('start-menu-settings').click();
+      140 |
+    > 141 |   await expect(page.getByTestId('start-menu-volume')).toHaveValue('35');
+          |                                                       ^
+      142 |   await expect(page.getByTestId('start-menu-mute')).toBeChecked();
+      143 |   await expect(
+      144 |     page.evaluate(
+        at /Users/robin/Claude/Projects/Gold Rush/control-s1587/e2e/audio-integration.spec.ts:141:55
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/audio-integration-legacy-a-6f86c-igrate-into-profile-storage-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/audio-integration-legacy-a-6f86c-igrate-into-profile-storage-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/audio-integration-legacy-a-6f86c-igrate-into-profile-storage-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/audio-integration-legacy-a-6f86c-igrate-into-profile-storage-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [mobile-chrome] › e2e/audio-integration.spec.ts:80:1 › settings volume and mute persist across reload 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for getByTestId('start-menu-settings')
+
+
+      87 |   await page.reload();
+      88 |
+    > 89 |   await page.getByTestId('start-menu-settings').click();
+         |                                                 ^
+      90 |   await mkdir(SHOT_DIR, { recursive: true });
+      91 |   await page.screenshot({ path: `${SHOT_DIR}/${testInfo.project.name}-settings.png`, fullPage: true });
+      92 |
+        at /Users/robin/Claude/Projects/Gold Rush/control-s1587/e2e/audio-integration.spec.ts:89:49
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/audio-integration-settings-422a5--mute-persist-across-reload-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/audio-integration-settings-422a5--mute-persist-across-reload-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/audio-integration-settings-422a5--mute-persist-across-reload-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/audio-integration-settings-422a5--mute-persist-across-reload-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [mobile-chrome] › e2e/audio-integration.spec.ts:118:1 › legacy audio preferences migrate into profile storage 
+
+    Error: expect(locator).toHaveValue(expected) failed
+
+    Locator:  getByTestId('start-menu-volume')
+    Expected: "35"
+    Received: "80"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveValue" with timeout 5000ms
+      - waiting for getByTestId('start-menu-volume')
+        13 × locator resolved to <input min="0" step="5" max="100" value="80" type="range" data-testid="start-menu-volume"/>
+           - unexpected value "80"
+
+
+      139 |   await page.getByTestId('start-menu-settings').click();
+      140 |
+    > 141 |   await expect(page.getByTestId('start-menu-volume')).toHaveValue('35');
+          |                                                       ^
+      142 |   await expect(page.getByTestId('start-menu-mute')).toBeChecked();
+      143 |   await expect(
+      144 |     page.evaluate(
+        at /Users/robin/Claude/Projects/Gold Rush/control-s1587/e2e/audio-integration.spec.ts:141:55
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/audio-integration-legacy-a-6f86c-igrate-into-profile-storage-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/audio-integration-legacy-a-6f86c-igrate-into-profile-storage-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/audio-integration-legacy-a-6f86c-igrate-into-profile-storage-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/audio-integration-legacy-a-6f86c-igrate-into-profile-storage-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4 failed
+    [desktop-chrome] › e2e/audio-integration.spec.ts:80:1 › settings volume and mute persist across reload 
+    [desktop-chrome] › e2e/audio-integration.spec.ts:118:1 › legacy audio preferences migrate into profile storage 
+    [mobile-chrome] › e2e/audio-integration.spec.ts:80:1 › settings volume and mute persist across reload 
+    [mobile-chrome] › e2e/audio-integration.spec.ts:118:1 › legacy audio preferences migrate into profile storage 
+  6 passed (3.1m)
+(node:94872) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:94909) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:97132) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:97277) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:97322) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:98692) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:98889) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+SUMMARY {"control audio-integration":1}
+OVERALL rc=1
+
+
+######## BATTERY 2026-08-08T23:24:04.904Z — MERGED tree, matched conditions: audio-integration ALONE ########
+cwd=/Users/robin/Claude/Projects/Gold Rush/gate-s1587
+env+ GR_CAPTURE_EXTERNAL_SERVER=1 GR_CAPTURE_BASE_URL=http://127.0.0.1:5234
+
+===== merged audio-integration alone =====
+$ npx playwright test e2e/audio-integration.spec.ts --workers=1
+rc=1 182.5s
+
+Running 10 tests using 1 worker
+
+  ✓   1 [desktop-chrome] › e2e/audio-integration.spec.ts:61:1 › boot stays audio-locked until gesture, then seeded panning requests sound (2.5s)
+  ✘   2 [desktop-chrome] › e2e/audio-integration.spec.ts:80:1 › settings volume and mute persist across reload (40.5s)
+  ✘   3 [desktop-chrome] › e2e/audio-integration.spec.ts:118:1 › legacy audio preferences migrate into profile storage (16.2s)
+  ✓   4 [desktop-chrome] › e2e/audio-integration.spec.ts:155:1 › first-use bursts respect the per-sound pool cap (2.4s)
+  ✓   5 [desktop-chrome] › e2e/audio-integration.spec.ts:173:1 › missing audio names are silent no-ops (2.0s)
+  ✓   6 [mobile-chrome] › e2e/audio-integration.spec.ts:61:1 › boot stays audio-locked until gesture, then seeded panning requests sound (2.4s)
+  ✘   7 [mobile-chrome] › e2e/audio-integration.spec.ts:80:1 › settings volume and mute persist across reload (41.0s)
+  ✘   8 [mobile-chrome] › e2e/audio-integration.spec.ts:118:1 › legacy audio preferences migrate into profile storage (16.6s)
+  ✘   9 [mobile-chrome] › e2e/audio-integration.spec.ts:155:1 › first-use bursts respect the per-sound pool cap (4.3s)
+  ✓  10 [mobile-chrome] › e2e/audio-integration.spec.ts:173:1 › missing audio names are silent no-ops (2.3s)
+
+
+  1) [desktop-chrome] › e2e/audio-integration.spec.ts:80:1 › settings volume and mute persist across reload 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for getByTestId('start-menu-settings')
+
+
+      87 |   await page.reload();
+      88 |
+    > 89 |   await page.getByTestId('start-menu-settings').click();
+         |                                                 ^
+      90 |   await mkdir(SHOT_DIR, { recursive: true });
+      91 |   await page.screenshot({ path: `${SHOT_DIR}/${testInfo.project.name}-settings.png`, fullPage: true });
+      92 |
+        at /Users/robin/Claude/Projects/Gold Rush/gate-s1587/e2e/audio-integration.spec.ts:89:49
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/audio-integration-settings-422a5--mute-persist-across-reload-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/audio-integration-settings-422a5--mute-persist-across-reload-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/audio-integration-settings-422a5--mute-persist-across-reload-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/audio-integration-settings-422a5--mute-persist-across-reload-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [desktop-chrome] › e2e/audio-integration.spec.ts:118:1 › legacy audio preferences migrate into profile storage 
+
+    Error: expect(locator).toHaveValue(expected) failed
+
+    Locator:  getByTestId('start-menu-volume')
+    Expected: "35"
+    Received: "80"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveValue" with timeout 5000ms
+      - waiting for getByTestId('start-menu-volume')
+        13 × locator resolved to <input min="0" step="5" max="100" value="80" type="range" data-testid="start-menu-volume"/>
+           - unexpected value "80"
+
+
+      139 |   await page.getByTestId('start-menu-settings').click();
+      140 |
+    > 141 |   await expect(page.getByTestId('start-menu-volume')).toHaveValue('35');
+          |                                                       ^
+      142 |   await expect(page.getByTestId('start-menu-mute')).toBeChecked();
+      143 |   await expect(
+      144 |     page.evaluate(
+        at /Users/robin/Claude/Projects/Gold Rush/gate-s1587/e2e/audio-integration.spec.ts:141:55
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/audio-integration-legacy-a-6f86c-igrate-into-profile-storage-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/audio-integration-legacy-a-6f86c-igrate-into-profile-storage-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/audio-integration-legacy-a-6f86c-igrate-into-profile-storage-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/audio-integration-legacy-a-6f86c-igrate-into-profile-storage-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [mobile-chrome] › e2e/audio-integration.spec.ts:80:1 › settings volume and mute persist across reload 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for getByTestId('start-menu-settings')
+
+
+      87 |   await page.reload();
+      88 |
+    > 89 |   await page.getByTestId('start-menu-settings').click();
+         |                                                 ^
+      90 |   await mkdir(SHOT_DIR, { recursive: true });
+      91 |   await page.screenshot({ path: `${SHOT_DIR}/${testInfo.project.name}-settings.png`, fullPage: true });
+      92 |
+        at /Users/robin/Claude/Projects/Gold Rush/gate-s1587/e2e/audio-integration.spec.ts:89:49
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/audio-integration-settings-422a5--mute-persist-across-reload-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/audio-integration-settings-422a5--mute-persist-across-reload-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/audio-integration-settings-422a5--mute-persist-across-reload-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/audio-integration-settings-422a5--mute-persist-across-reload-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [mobile-chrome] › e2e/audio-integration.spec.ts:118:1 › legacy audio preferences migrate into profile storage 
+
+    Error: expect(locator).toHaveValue(expected) failed
+
+    Locator:  getByTestId('start-menu-volume')
+    Expected: "35"
+    Received: "80"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveValue" with timeout 5000ms
+      - waiting for getByTestId('start-menu-volume')
+        13 × locator resolved to <input min="0" step="5" max="100" value="80" type="range" data-testid="start-menu-volume"/>
+           - unexpected value "80"
+
+
+      139 |   await page.getByTestId('start-menu-settings').click();
+      140 |
+    > 141 |   await expect(page.getByTestId('start-menu-volume')).toHaveValue('35');
+          |                                                       ^
+      142 |   await expect(page.getByTestId('start-menu-mute')).toBeChecked();
+      143 |   await expect(
+      144 |     page.evaluate(
+        at /Users/robin/Claude/Projects/Gold Rush/gate-s1587/e2e/audio-integration.spec.ts:141:55
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/audio-integration-legacy-a-6f86c-igrate-into-profile-storage-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/audio-integration-legacy-a-6f86c-igrate-into-profile-storage-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/audio-integration-legacy-a-6f86c-igrate-into-profile-storage-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/audio-integration-legacy-a-6f86c-igrate-into-profile-storage-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  5) [mobile-chrome] › e2e/audio-integration.spec.ts:155:1 › first-use bursts respect the per-sound pool cap 
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 4
+    Received:    5
+
+      167 |   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.audio.started ?? 0)).toBeGreaterThan(before);
+      168 |   const started = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.audio.started ?? 0);
+    > 169 |   expect(started - before).toBeLessThanOrEqual(4);
+          |                            ^
+      170 |   assertNoErrors(errors);
+      171 | });
+      172 |
+        at /Users/robin/Claude/Projects/Gold Rush/gate-s1587/e2e/audio-integration.spec.ts:169:28
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/audio-integration-first-us-cbeea-pect-the-per-sound-pool-cap-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/audio-integration-first-us-cbeea-pect-the-per-sound-pool-cap-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/audio-integration-first-us-cbeea-pect-the-per-sound-pool-cap-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/audio-integration-first-us-cbeea-pect-the-per-sound-pool-cap-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  5 failed
+    [desktop-chrome] › e2e/audio-integration.spec.ts:80:1 › settings volume and mute persist across reload 
+    [desktop-chrome] › e2e/audio-integration.spec.ts:118:1 › legacy audio preferences migrate into profile storage 
+    [mobile-chrome] › e2e/audio-integration.spec.ts:80:1 › settings volume and mute persist across reload 
+    [mobile-chrome] › e2e/audio-integration.spec.ts:118:1 › legacy audio preferences migrate into profile storage 
+    [mobile-chrome] › e2e/audio-integration.spec.ts:155:1 › first-use bursts respect the per-sound pool cap 
+  5 passed (3.0m)
+(node:270) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:295) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:1800) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:1994) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:2084) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:3447) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:3599) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:3666) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+SUMMARY {"merged audio-integration alone":1}
+OVERALL rc=1
+
+
+######## BATTERY 2026-08-08T23:28:08.294Z — pool-cap repeat x7 — MERGED vs CONTROL, mobile ########
+cwd=/Users/robin/Claude/Projects/Gold Rush/gate-s1587
+env+ GR_CAPTURE_EXTERNAL_SERVER=1 GR_CAPTURE_BASE_URL=http://127.0.0.1:5234
+
+===== MERGED pool-cap x7 mobile =====
+$ npx playwright test e2e/audio-integration.spec.ts:155 --project=mobile-chrome --repeat-each=7 --workers=1
+rc=1 36.5s
+
+Running 7 tests using 1 worker
+
+  ✘  1 [mobile-chrome] › e2e/audio-integration.spec.ts:155:1 › first-use bursts respect the per-sound pool cap (4.3s)
+  ✘  2 [mobile-chrome] › e2e/audio-integration.spec.ts:155:1 › first-use bursts respect the per-sound pool cap (4.3s)
+  ✘  3 [mobile-chrome] › e2e/audio-integration.spec.ts:155:1 › first-use bursts respect the per-sound pool cap (4.3s)
+  ✘  4 [mobile-chrome] › e2e/audio-integration.spec.ts:155:1 › first-use bursts respect the per-sound pool cap (4.4s)
+  ✓  5 [mobile-chrome] › e2e/audio-integration.spec.ts:155:1 › first-use bursts respect the per-sound pool cap (2.6s)
+  ✓  6 [mobile-chrome] › e2e/audio-integration.spec.ts:155:1 › first-use bursts respect the per-sound pool cap (2.5s)
+  ✓  7 [mobile-chrome] › e2e/audio-integration.spec.ts:155:1 › first-use bursts respect the per-sound pool cap (2.5s)
+
+
+  1) [mobile-chrome] › e2e/audio-integration.spec.ts:155:1 › first-use bursts respect the per-sound pool cap 
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 4
+    Received:    5
+
+      167 |   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.audio.started ?? 0)).toBeGreaterThan(before);
+      168 |   const started = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.audio.started ?? 0);
+    > 169 |   expect(started - before).toBeLessThanOrEqual(4);
+          |                            ^
+      170 |   assertNoErrors(errors);
+      171 | });
+      172 |
+        at /Users/robin/Claude/Projects/Gold Rush/gate-s1587/e2e/audio-integration.spec.ts:169:28
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/audio-integration-first-us-cbeea-pect-the-per-sound-pool-cap-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/audio-integration-first-us-cbeea-pect-the-per-sound-pool-cap-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/audio-integration-first-us-cbeea-pect-the-per-sound-pool-cap-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/audio-integration-first-us-cbeea-pect-the-per-sound-pool-cap-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [mobile-chrome] › e2e/audio-integration.spec.ts:155:1 › first-use bursts respect the per-sound pool cap 
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 4
+    Received:    5
+
+      167 |   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.audio.started ?? 0)).toBeGreaterThan(before);
+      168 |   const started = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.audio.started ?? 0);
+    > 169 |   expect(started - before).toBeLessThanOrEqual(4);
+          |                            ^
+      170 |   assertNoErrors(errors);
+      171 | });
+      172 |
+        at /Users/robin/Claude/Projects/Gold Rush/gate-s1587/e2e/audio-integration.spec.ts:169:28
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/audio-integration-first-us-cbeea-pect-the-per-sound-pool-cap-mobile-chrome-repeat1/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/audio-integration-first-us-cbeea-pect-the-per-sound-pool-cap-mobile-chrome-repeat1/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/audio-integration-first-us-cbeea-pect-the-per-sound-pool-cap-mobile-chrome-repeat1/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/audio-integration-first-us-cbeea-pect-the-per-sound-pool-cap-mobile-chrome-repeat1/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [mobile-chrome] › e2e/audio-integration.spec.ts:155:1 › first-use bursts respect the per-sound pool cap 
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 4
+    Received:    5
+
+      167 |   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.audio.started ?? 0)).toBeGreaterThan(before);
+      168 |   const started = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.audio.started ?? 0);
+    > 169 |   expect(started - before).toBeLessThanOrEqual(4);
+          |                            ^
+      170 |   assertNoErrors(errors);
+      171 | });
+      172 |
+        at /Users/robin/Claude/Projects/Gold Rush/gate-s1587/e2e/audio-integration.spec.ts:169:28
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/audio-integration-first-us-cbeea-pect-the-per-sound-pool-cap-mobile-chrome-repeat2/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/audio-integration-first-us-cbeea-pect-the-per-sound-pool-cap-mobile-chrome-repeat2/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/audio-integration-first-us-cbeea-pect-the-per-sound-pool-cap-mobile-chrome-repeat2/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/audio-integration-first-us-cbeea-pect-the-per-sound-pool-cap-mobile-chrome-repeat2/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [mobile-chrome] › e2e/audio-integration.spec.ts:155:1 › first-use bursts respect the per-sound pool cap 
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 4
+    Received:    5
+
+      167 |   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.audio.started ?? 0)).toBeGreaterThan(before);
+      168 |   const started = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.audio.started ?? 0);
+    > 169 |   expect(started - before).toBeLessThanOrEqual(4);
+          |                            ^
+      170 |   assertNoErrors(errors);
+      171 | });
+      172 |
+        at /Users/robin/Claude/Projects/Gold Rush/gate-s1587/e2e/audio-integration.spec.ts:169:28
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/audio-integration-first-us-cbeea-pect-the-per-sound-pool-cap-mobile-chrome-repeat3/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/audio-integration-first-us-cbeea-pect-the-per-sound-pool-cap-mobile-chrome-repeat3/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/audio-integration-first-us-cbeea-pect-the-per-sound-pool-cap-mobile-chrome-repeat3/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/audio-integration-first-us-cbeea-pect-the-per-sound-pool-cap-mobile-chrome-repeat3/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4 failed
+    [mobile-chrome] › e2e/audio-integration.spec.ts:155:1 › first-use bursts respect the per-sound pool cap 
+    [mobile-chrome] › e2e/audio-integration.spec.ts:155:1 › first-use bursts respect the per-sound pool cap 
+    [mobile-chrome] › e2e/audio-integration.spec.ts:155:1 › first-use bursts respect the per-sound pool cap 
+    [mobile-chrome] › e2e/audio-integration.spec.ts:155:1 › first-use bursts respect the per-sound pool cap 
+  3 passed (36.0s)
+(node:5192) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:5217) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:5260) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:5329) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:5379) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:5530) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:6225) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:6395) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+SUMMARY {"MERGED pool-cap x7 mobile":1}
+OVERALL rc=1
+
+
+######## BATTERY 2026-08-08T23:28:50.181Z — pool-cap repeat x7 — CONTROL pre-merge, mobile ########
+cwd=/Users/robin/Claude/Projects/Gold Rush/control-s1587
+env+ GR_CAPTURE_EXTERNAL_SERVER=1 GR_CAPTURE_BASE_URL=http://127.0.0.1:5231
+
+===== CONTROL pool-cap x7 mobile =====
+$ npx playwright test e2e/audio-integration.spec.ts:155 --project=mobile-chrome --repeat-each=7 --workers=1
+rc=1 34.7s
+
+Running 7 tests using 1 worker
+
+  ✘  1 [mobile-chrome] › e2e/audio-integration.spec.ts:155:1 › first-use bursts respect the per-sound pool cap (4.2s)
+  ✘  2 [mobile-chrome] › e2e/audio-integration.spec.ts:155:1 › first-use bursts respect the per-sound pool cap (4.2s)
+  ✓  3 [mobile-chrome] › e2e/audio-integration.spec.ts:155:1 › first-use bursts respect the per-sound pool cap (2.3s)
+  ✓  4 [mobile-chrome] › e2e/audio-integration.spec.ts:155:1 › first-use bursts respect the per-sound pool cap (2.2s)
+  ✘  5 [mobile-chrome] › e2e/audio-integration.spec.ts:155:1 › first-use bursts respect the per-sound pool cap (4.2s)
+  ✘  6 [mobile-chrome] › e2e/audio-integration.spec.ts:155:1 › first-use bursts respect the per-sound pool cap (4.2s)
+  ✓  7 [mobile-chrome] › e2e/audio-integration.spec.ts:155:1 › first-use bursts respect the per-sound pool cap (2.3s)
+
+
+  1) [mobile-chrome] › e2e/audio-integration.spec.ts:155:1 › first-use bursts respect the per-sound pool cap 
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 4
+    Received:    5
+
+      167 |   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.audio.started ?? 0)).toBeGreaterThan(before);
+      168 |   const started = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.audio.started ?? 0);
+    > 169 |   expect(started - before).toBeLessThanOrEqual(4);
+          |                            ^
+      170 |   assertNoErrors(errors);
+      171 | });
+      172 |
+        at /Users/robin/Claude/Projects/Gold Rush/control-s1587/e2e/audio-integration.spec.ts:169:28
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/audio-integration-first-us-cbeea-pect-the-per-sound-pool-cap-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/audio-integration-first-us-cbeea-pect-the-per-sound-pool-cap-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/audio-integration-first-us-cbeea-pect-the-per-sound-pool-cap-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/audio-integration-first-us-cbeea-pect-the-per-sound-pool-cap-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [mobile-chrome] › e2e/audio-integration.spec.ts:155:1 › first-use bursts respect the per-sound pool cap 
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 4
+    Received:    5
+
+      167 |   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.audio.started ?? 0)).toBeGreaterThan(before);
+      168 |   const started = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.audio.started ?? 0);
+    > 169 |   expect(started - before).toBeLessThanOrEqual(4);
+          |                            ^
+      170 |   assertNoErrors(errors);
+      171 | });
+      172 |
+        at /Users/robin/Claude/Projects/Gold Rush/control-s1587/e2e/audio-integration.spec.ts:169:28
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/audio-integration-first-us-cbeea-pect-the-per-sound-pool-cap-mobile-chrome-repeat1/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/audio-integration-first-us-cbeea-pect-the-per-sound-pool-cap-mobile-chrome-repeat1/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/audio-integration-first-us-cbeea-pect-the-per-sound-pool-cap-mobile-chrome-repeat1/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/audio-integration-first-us-cbeea-pect-the-per-sound-pool-cap-mobile-chrome-repeat1/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [mobile-chrome] › e2e/audio-integration.spec.ts:155:1 › first-use bursts respect the per-sound pool cap 
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 4
+    Received:    5
+
+      167 |   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.audio.started ?? 0)).toBeGreaterThan(before);
+      168 |   const started = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.audio.started ?? 0);
+    > 169 |   expect(started - before).toBeLessThanOrEqual(4);
+          |                            ^
+      170 |   assertNoErrors(errors);
+      171 | });
+      172 |
+        at /Users/robin/Claude/Projects/Gold Rush/control-s1587/e2e/audio-integration.spec.ts:169:28
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/audio-integration-first-us-cbeea-pect-the-per-sound-pool-cap-mobile-chrome-repeat4/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/audio-integration-first-us-cbeea-pect-the-per-sound-pool-cap-mobile-chrome-repeat4/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/audio-integration-first-us-cbeea-pect-the-per-sound-pool-cap-mobile-chrome-repeat4/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/audio-integration-first-us-cbeea-pect-the-per-sound-pool-cap-mobile-chrome-repeat4/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [mobile-chrome] › e2e/audio-integration.spec.ts:155:1 › first-use bursts respect the per-sound pool cap 
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 4
+    Received:    5
+
+      167 |   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.audio.started ?? 0)).toBeGreaterThan(before);
+      168 |   const started = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.audio.started ?? 0);
+    > 169 |   expect(started - before).toBeLessThanOrEqual(4);
+          |                            ^
+      170 |   assertNoErrors(errors);
+      171 | });
+      172 |
+        at /Users/robin/Claude/Projects/Gold Rush/control-s1587/e2e/audio-integration.spec.ts:169:28
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/audio-integration-first-us-cbeea-pect-the-per-sound-pool-cap-mobile-chrome-repeat5/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/audio-integration-first-us-cbeea-pect-the-per-sound-pool-cap-mobile-chrome-repeat5/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/audio-integration-first-us-cbeea-pect-the-per-sound-pool-cap-mobile-chrome-repeat5/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/audio-integration-first-us-cbeea-pect-the-per-sound-pool-cap-mobile-chrome-repeat5/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4 failed
+    [mobile-chrome] › e2e/audio-integration.spec.ts:155:1 › first-use bursts respect the per-sound pool cap 
+    [mobile-chrome] › e2e/audio-integration.spec.ts:155:1 › first-use bursts respect the per-sound pool cap 
+    [mobile-chrome] › e2e/audio-integration.spec.ts:155:1 › first-use bursts respect the per-sound pool cap 
+    [mobile-chrome] › e2e/audio-integration.spec.ts:155:1 › first-use bursts respect the per-sound pool cap 
+  3 passed (34.3s)
+(node:6812) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:6837) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:6879) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:6944) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:6984) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:7026) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:7079) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:7155) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+SUMMARY {"CONTROL pool-cap x7 mobile":1}
+OVERALL rc=1

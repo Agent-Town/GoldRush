@@ -1,0 +1,108 @@
+✖ all 140 scripts/*.test.mjs fixture owners remove their temp directories (149822.552125ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 149898.748
+
+✖ failing tests:
+
+test at scripts/fixture-teardown.test.mjs:32:1
+✖ all 140 scripts/*.test.mjs fixture owners remove their temp directories (149822.552125ms)
+  AssertionError [ERR_ASSERTION]: scripts/desk-declaration-guard.test.mjs child failed:
+  ✔ a desk item WITH a declaring row passes (53.674625ms)
+  ✔ MANUFACTURED: a desk item with NO row anywhere exits 1 and names the id (43.375583ms)
+  ✔ MANUFACTURED: the F-1328-3 shape — MENTIONED inside another finding row is NOT declared (40.65625ms)
+  ✔ a row whose id sits past the 90-char subject zone does NOT declare it (41.988667ms)
+  ✔ the leading GLYPH is irrelevant — F-1334-1 refuted marker equality (207.681ms)
+  ✔ the markdown list bullet is stripped: bulleted and unbulleted rows read alike (101.188833ms)
+  ✔ GROUND TRUTH — the real s1529 backtick header must NOT read as "no desk" (42.027209ms)
+  ✔ REFUSES (exit 2) rather than greening when there is no OWNER DESK segment (30.400833ms)
+  ✔ REFUSES (exit 2) when the desk segment holds zero keyed items (30.272666ms)
+  ✔ REFUSES (exit 2) when BACKLOG.md is missing (29.212459ms)
+  ✔ the entrypoint actually RUNS — a space in the repo path must not no-op it (41.071625ms)
+  ✖ the live board is green under this guard (baseline is honest) (158.236666ms)
+  ✔ MANUFACTURED F-1471-3: an ARCHIVED desk never satisfies the guard (29.371792ms)
+  ✔ MANUFACTURED F-1471-3: an archived desk must not MASK an undeclared LIVE item (42.019125ms)
+  ✔ all five desk spellings are read — the majority form was invisible (206.409334ms)
+  ✔ an ACTIVE lock line SKIPs (exit 0) — the desk is written at handoff time (41.313667ms)
+  ✔ a lock line that MENTIONS the desk in prose is still a lock, not a desk (41.499333ms)
+  ✔ MANUFACTURED: a prose mention upstream loses to the REAL desk in the tail (40.494667ms)
+  ✔ a handoff whose desk header has no F-IDs after it REFUSES (exit 2) (32.527041ms)
+  ✔ a SLUG-keyed desk item WITH a declaring row passes (52.893375ms)
+  ✔ MANUFACTURED F-1534-2: a SLUG desk item with NO row exits 1 and names the slug (41.541667ms)
+  ✔ the F-1328-3 shape on the SLUG axis: a slug CITED in another row is not declared (41.764167ms)
+  ✔ F-1535-1: a backtick in an item's PROSE is not a desk item (the flat-scan trap) (51.088833ms)
+  ✔ F-1535-1: an item keyed by an F-ID that also cites its slug is ONE F-keyed item (52.451584ms)
+  ✔ a desk of ONLY slug items does not trip the zero-keyed-items refusal (52.461291ms)
+  ✔ the grandfather list may only SHRINK — never grows past the s1334 baseline (0.251209ms)
+  ✔ every grandfathered id is still on the desk — the list must not rot (23.620125ms)
+  ✔ MANUFACTURED: with the list EMPTY the guard is strict — no id is excused (42.470292ms)
+  ℹ tests 28
+  ℹ suites 0
+  ℹ pass 27
+  ℹ fail 1
+  ℹ cancelled 0
+  ℹ skipped 0
+  ℹ todo 0
+  ℹ duration_ms 1656.999125
+  
+  ✖ failing tests:
+  
+  test at scripts/desk-declaration-guard.test.mjs:163:1
+  ✖ the live board is green under this guard (baseline is honest) (158.236666ms)
+    AssertionError [ERR_ASSERTION]: === desk-declaration-guard ===
+    corpus tree       : linked-worktree
+    desk F-IDs        : 7
+    desk slugs        : 0
+    🔺 desk segments  : 6
+    unexamined        : 0
+    with a BACKLOG row: 7
+    undeclared        : 0 (grandfathered 0)
+    
+    desk-declaration-guard: REFUSING — this is a linked worktree and its STATUS.md
+      line-1 is NOT the one main carries.
+      Both corpora here are TRACKED, so this tree is frozen at its branch point and
+      the desk(s) above are a self-consistent reading of the WRONG handoff. A PASS
+      would certify a board this run never read (F-2232-1 / F-2241-1 / F-2242-1, each
+      proven by manufacturing: a real defect on main read byte-identically to a clean
+      board from here).
+      Re-run from the main worktree, or pass --root <main worktree>.
+    
+    
+    2 !== 0
+    
+        at TestContext.<anonymous> (file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-cells/scripts/desk-declaration-guard.test.mjs:167:10)
+        at Test.runInAsyncScope (node:async_hooks:226:14)
+        at Test.run (node:internal/test_runner/test:1382:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+        at Test.postRun (node:internal/test_runner/test:1522:19)
+        at Test.run (node:internal/test_runner/test:1447:12)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+      generatedMessage: false,
+      code: 'ERR_ASSERTION',
+      actual: 2,
+      expected: 0,
+      operator: 'strictEqual',
+      diff: 'simple'
+    }
+  
+  
+  1 !== 0
+  
+      at TestContext.<anonymous> (file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-cells/scripts/fixture-teardown.test.mjs:48:14)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+rc=1

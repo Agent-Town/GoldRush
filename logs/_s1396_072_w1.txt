@@ -1,0 +1,66 @@
+
+Running 10 tests using 1 worker
+
+  ✘   1 [desktop-chrome] › e2e/072-era-activation.spec.ts:226:1 › fresh E1 profile stays unchanged and the pre-flip determinism hash is identical (913ms)
+  ✓   2 [desktop-chrome] › e2e/072-era-activation.spec.ts:259:1 › the ready mill waits for the Baron (owner ruling 2026-07-12) (3.5s)
+  ✓   3 [desktop-chrome] › e2e/072-era-activation.spec.ts:270:1 › the completed Stamp Mill activates E2 once, stages the ceremony, and makes Hill Mine playable after reload (14.4s)
+  ✓   4 [desktop-chrome] › e2e/072-era-activation.spec.ts:354:1 › the E2 ceremony can be skipped without undoing activation (3.9s)
+  ✓   5 [desktop-chrome] › e2e/072-era-activation.spec.ts:369:1 › the Stamp Mill site raises E2 once and removes the action after activation (3.9s)
+  -   6 [mobile-chrome] › e2e/072-era-activation.spec.ts:226:1 › fresh E1 profile stays unchanged and the pre-flip determinism hash is identical
+  ✓   7 [mobile-chrome] › e2e/072-era-activation.spec.ts:259:1 › the ready mill waits for the Baron (owner ruling 2026-07-12) (3.2s)
+  ✓   8 [mobile-chrome] › e2e/072-era-activation.spec.ts:270:1 › the completed Stamp Mill activates E2 once, stages the ceremony, and makes Hill Mine playable after reload (12.9s)
+  ✓   9 [mobile-chrome] › e2e/072-era-activation.spec.ts:354:1 › the E2 ceremony can be skipped without undoing activation (4.1s)
+  ✓  10 [mobile-chrome] › e2e/072-era-activation.spec.ts:369:1 › the Stamp Mill site raises E2 once and removes the action after activation (4.1s)
+
+
+  1) [desktop-chrome] › e2e/072-era-activation.spec.ts:226:1 › fresh E1 profile stays unchanged and the pre-flip determinism hash is identical 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 0
+    + Received  + 1
+
+      Array [
+        "the-claim",
+    +   "e1-drill-yard",
+        "e1-dry-gulch",
+        "e1-night-shift",
+        "e1-twin-banks",
+        "e1-baron",
+      ]
+
+      239 |       return registry.listContracts().map((contract) => contract.id);
+      240 |     }),
+    > 241 |   ).toEqual(E1_CONTRACTS);
+          |     ^
+      242 |
+      243 |   const absent = await preflipFingerprint(browser, false);
+      244 |   const explicit = await preflipFingerprint(browser, true);
+        at /Users/robin/Claude/Projects/Gold Rush/e2e/072-era-activation.spec.ts:241:5
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/072-era-activation-fresh-E-e286c-terminism-hash-is-identical-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/072-era-activation-fresh-E-e286c-terminism-hash-is-identical-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/072-era-activation-fresh-E-e286c-terminism-hash-is-identical-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/072-era-activation-fresh-E-e286c-terminism-hash-is-identical-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [desktop-chrome] › e2e/072-era-activation.spec.ts:226:1 › fresh E1 profile stays unchanged and the pre-flip determinism hash is identical 
+  1 skipped
+  8 passed (53.5s)
+(node:20985) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:21036) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:21141) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:21469) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)

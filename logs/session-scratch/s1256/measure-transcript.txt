@@ -1,0 +1,630 @@
+s1256 parked-spec re-measurement transcript (append-only)
+
+
+######## ARM 2026-07-30T05:46:09.162Z asIs=false repeatEach=1 project=both loadavg=3.05 3.32 4.73 ########
+parked spec sha256=f13241fbfb2395ca bytes=10684
+patched spec sha256=9dde9ce91a135479 bytes=10689 (greenhorn block replaced, 1 site)
+placed tmp-s1256-trail-guide-plain-boot.spec.ts (UNTRACKED, removed at exit)
+scratch dev server READY on http://127.0.0.1:5199
+$ npx playwright test e2e/tmp-s1256-trail-guide-plain-boot.spec.ts --workers=1   (GR_CAPTURE_BASE_URL=http://127.0.0.1:5199, external server)
+
+===== rc=0 53.4s loadavg_after=8.36 4.84 5.21 =====
+
+Running 2 tests using 1 worker
+
+  ✓  1 [desktop-chrome] › e2e/tmp-s1256-trail-guide-plain-boot.spec.ts:151:1 › plain fresh boot teaches the first claim once (25.9s)
+  ✓  2 [mobile-chrome] › e2e/tmp-s1256-trail-guide-plain-boot.spec.ts:151:1 › plain fresh boot teaches the first claim once (25.7s)
+
+  2 passed (53.0s)
+(node:43646) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:43647) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:44320) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+
+######## ARM 2026-07-30T05:47:54.276Z asIs=false repeatEach=2 project=both loadavg=5.68 4.64 5.11 ########
+parked spec sha256=f13241fbfb2395ca bytes=10684
+patched spec sha256=9dde9ce91a135479 bytes=10689 (greenhorn block replaced, 1 site)
+placed tmp-s1256-trail-guide-plain-boot.spec.ts (UNTRACKED, removed at exit)
+scratch dev server READY on http://127.0.0.1:5199
+$ npx playwright test e2e/tmp-s1256-trail-guide-plain-boot.spec.ts --repeat-each=2   (GR_CAPTURE_BASE_URL=http://127.0.0.1:5199, external server)
+
+===== rc=1 98.8s loadavg_after=14.81 8.39 6.53 =====
+
+Running 4 tests using 4 workers
+
+  ✘  1 [mobile-chrome] › e2e/tmp-s1256-trail-guide-plain-boot.spec.ts:151:1 › plain fresh boot teaches the first claim once (1.1m)
+  ✘  2 [mobile-chrome] › e2e/tmp-s1256-trail-guide-plain-boot.spec.ts:151:1 › plain fresh boot teaches the first claim once (1.2m)
+  ✘  4 [desktop-chrome] › e2e/tmp-s1256-trail-guide-plain-boot.spec.ts:151:1 › plain fresh boot teaches the first claim once (1.2m)
+  ✘  3 [desktop-chrome] › e2e/tmp-s1256-trail-guide-plain-boot.spec.ts:151:1 › plain fresh boot teaches the first claim once (1.4m)
+
+
+  1) [desktop-chrome] › e2e/tmp-s1256-trail-guide-plain-boot.spec.ts:151:1 › plain fresh boot teaches the first claim once 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+    Call Log:
+    - Timeout 20000ms exceeded while waiting on the predicate
+
+      217 |   await expect(page.getByTestId('hud-agent-feed')).not.toContainText(taughtCopy);
+      218 |   await moveHeroTo(page, await nearestSeam(page));
+    > 219 |   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.harvest.channeling ?? false)).toBe(true);
+          |                                                                                                                ^
+      220 |   await expect(page.getByTestId('hud-agent-feed')).not.toContainText(taughtCopy);
+      221 |   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.economy.gold ?? 0)).toBeGreaterThan(0);
+      222 |   await expect(page.getByTestId('hud-agent-feed')).not.toContainText(taughtCopy);
+        at /Users/robin/Claude/Projects/Gold Rush/e2e/tmp-s1256-trail-guide-plain-boot.spec.ts:219:112
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/tmp-s1256-trail-guide-plai-d0558-eaches-the-first-claim-once-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/tmp-s1256-trail-guide-plai-d0558-eaches-the-first-claim-once-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/tmp-s1256-trail-guide-plai-d0558-eaches-the-first-claim-once-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/tmp-s1256-trail-guide-plai-d0558-eaches-the-first-claim-once-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [desktop-chrome] › e2e/tmp-s1256-trail-guide-plain-boot.spec.ts:151:1 › plain fresh boot teaches the first claim once 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    Expected: ArrayContaining [StringContaining "Raise a sluice beside water"]
+    Received: ["Take the claim at your own pace. Move with the trail; stand by a river glint and your pan will find the seam.", ""]
+
+    Call Log:
+    - Timeout 20000ms exceeded while waiting on the predicate
+
+      63 |   await expect.poll(() => page.evaluate(
+      64 |     () => (window as typeof window & { __trailGuideFeedHistory?: string[] }).__trailGuideFeedHistory ?? [],
+    > 65 |   )).toEqual(expect.arrayContaining([expect.stringContaining(copy)]));
+         |      ^
+      66 |   expect(await guideHints(page)).toEqual(GUIDE_BEATS.slice(0, index + 1).map(([beatId]) => `story:${beatId}`));
+      67 |   await shot(page, testInfo, `beat-${index + 1}-${id}`);
+      68 | }
+        at expectGuideBeat (/Users/robin/Claude/Projects/Gold Rush/e2e/tmp-s1256-trail-guide-plain-boot.spec.ts:65:6)
+        at /Users/robin/Claude/Projects/Gold Rush/e2e/tmp-s1256-trail-guide-plain-boot.spec.ts:196:9
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/tmp-s1256-trail-guide-plai-d0558-eaches-the-first-claim-once-desktop-chrome-repeat1/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/tmp-s1256-trail-guide-plai-d0558-eaches-the-first-claim-once-desktop-chrome-repeat1/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/tmp-s1256-trail-guide-plai-d0558-eaches-the-first-claim-once-desktop-chrome-repeat1/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/tmp-s1256-trail-guide-plai-d0558-eaches-the-first-claim-once-desktop-chrome-repeat1/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [mobile-chrome] › e2e/tmp-s1256-trail-guide-plain-boot.spec.ts:151:1 › plain fresh boot teaches the first claim once 
+
+    Error: expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+    Call Log:
+    - Timeout 20000ms exceeded while waiting on the predicate
+
+      198 |   await expect(page.getByTestId('hud-agent-feed')).not.toContainText(GUIDE_BEATS[1][1]);
+      199 |
+    > 200 |   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.economy.gold ?? 0)).toBeGreaterThan(0);
+          |                                                                                                      ^
+      201 |   await expectGuideBeat(page, testInfo, 2);
+      202 |   await page.getByTestId('hud-build').click();
+      203 |   await page.getByTestId('hud-build').evaluate((button) => (button as HTMLButtonElement).click());
+        at /Users/robin/Claude/Projects/Gold Rush/e2e/tmp-s1256-trail-guide-plain-boot.spec.ts:200:102
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/tmp-s1256-trail-guide-plai-d0558-eaches-the-first-claim-once-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/tmp-s1256-trail-guide-plai-d0558-eaches-the-first-claim-once-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/tmp-s1256-trail-guide-plai-d0558-eaches-the-first-claim-once-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/tmp-s1256-trail-guide-plai-d0558-eaches-the-first-claim-once-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [mobile-chrome] › e2e/tmp-s1256-trail-guide-plain-boot.spec.ts:151:1 › plain fresh boot teaches the first claim once 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    Expected: ArrayContaining [StringContaining "Raise a sluice beside water"]
+    Received: ["Take the claim at your own pace. Move with the trail; stand by a river glint and your pan will find the seam.", ""]
+
+    Call Log:
+    - Timeout 20000ms exceeded while waiting on the predicate
+
+      63 |   await expect.poll(() => page.evaluate(
+      64 |     () => (window as typeof window & { __trailGuideFeedHistory?: string[] }).__trailGuideFeedHistory ?? [],
+    > 65 |   )).toEqual(expect.arrayContaining([expect.stringContaining(copy)]));
+         |      ^
+      66 |   expect(await guideHints(page)).toEqual(GUIDE_BEATS.slice(0, index + 1).map(([beatId]) => `story:${beatId}`));
+      67 |   await shot(page, testInfo, `beat-${index + 1}-${id}`);
+      68 | }
+        at expectGuideBeat (/Users/robin/Claude/Projects/Gold Rush/e2e/tmp-s1256-trail-guide-plain-boot.spec.ts:65:6)
+        at /Users/robin/Claude/Projects/Gold Rush/e2e/tmp-s1256-trail-guide-plain-boot.spec.ts:196:9
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/tmp-s1256-trail-guide-plai-d0558-eaches-the-first-claim-once-mobile-chrome-repeat1/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/tmp-s1256-trail-guide-plai-d0558-eaches-the-first-claim-once-mobile-chrome-repeat1/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/tmp-s1256-trail-guide-plai-d0558-eaches-the-first-claim-once-mobile-chrome-repeat1/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/tmp-s1256-trail-guide-plai-d0558-eaches-the-first-claim-once-mobile-chrome-repeat1/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4 failed
+    [desktop-chrome] › e2e/tmp-s1256-trail-guide-plain-boot.spec.ts:151:1 › plain fresh boot teaches the first claim once 
+    [desktop-chrome] › e2e/tmp-s1256-trail-guide-plain-boot.spec.ts:151:1 › plain fresh boot teaches the first claim once 
+    [mobile-chrome] › e2e/tmp-s1256-trail-guide-plain-boot.spec.ts:151:1 › plain fresh boot teaches the first claim once 
+    [mobile-chrome] › e2e/tmp-s1256-trail-guide-plain-boot.spec.ts:151:1 › plain fresh boot teaches the first claim once 
+(node:45326) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:45327) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:45329) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:45330) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:45328) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+
+######## INSTRUMENTED ARM 2026-07-30T05:51:10.668Z loadavg=4.67 6.67 6.06 ########
+instrumented spec sha256=453188d694d0e82b bytes=12407 (assertions unchanged; diagnostics added)
+scratch dev server READY on http://127.0.0.1:5199
+$ npx playwright test e2e/tmp-s1256-trail-guide-instrumented.spec.ts --repeat-each=2   (default workers — the canonical arm)
+
+===== rc=1 77.0s =====
+
+Running 4 tests using 4 workers
+
+[s1256] moveHeroTo aimed={"x":-9,"z":6.7} landed={"x":-7.580574773294289,"y":0.404249548411457,"z":7.0970753859418245} miss=1.474
+[s1256] moveHeroTo aimed={"x":-9,"z":6.7} landed={"x":-7.7999998686496825,"y":0.40301947341516303,"z":6.929830022197234} miss=1.222
+[s1256] moveHeroTo aimed={"x":-9,"z":6.7} landed={"x":-7.9506039351335165,"y":0.40950751506745176,"z":8.294167940380687} miss=1.909
+[s1256] moveHeroTo aimed={"x":-9,"z":6.7} landed={"x":-7.969868789916212,"y":0.40944421076409376,"z":8.14987248574933} miss=1.779
+[s1256] moveHeroTo aimed={"x":-9,"z":6.7} landed={"x":-8.395089265192667,"y":-0.043694603310622665,"z":7.761274056990595} miss=1.222
+[s1256] moveHeroTo aimed={"x":-9,"z":6.7} landed={"x":-8.42902576636554,"y":-0.05438278464660891,"z":7.4601478300182436} miss=0.951
+[s1256] DIAG@beat2 {"hero":{"x":-7.9506039351335165,"y":-0.012442689799583462,"z":8.423754632074516},"nearestSeam":{"x":-9,"z":6.7},"distToNearestSeam":2.0180590012572996,"activeSeams":2,"channeling":false,"gold":0,"moves":[{"target":{"x":-9,"z":6.7},"landed":{"x":-7.9506039351335165,"y":0.40950751506745176,"z":8.294167940380687},"miss":1.9085605893172117}],"feedHistory":["Take the claim at your own pace. Move with the trail; stand by a river glint and your pan will find the seam.","","That horn marks their road in. Walls turn the rush; a turret watches the gap you leave."],"feedLive":"That horn marks their road in. Walls turn the rush; a turret watches the gap you leave.","feedNodePresent":true}
+[s1256] DIAG@beat2 {"hero":{"x":-7.969868789916212,"y":-0.017852834040432378,"z":8.279425797215842},"nearestSeam":{"x":-9,"z":6.7},"distToNearestSeam":1.885671275408199,"activeSeams":2,"channeling":false,"gold":0,"moves":[{"target":{"x":-9,"z":6.7},"landed":{"x":-7.969868789916212,"y":0.40944421076409376,"z":8.14987248574933},"miss":1.778566989157741}],"feedHistory":["Take the claim at your own pace. Move with the trail; stand by a river glint and your pan will find the seam.","","That horn marks their road in. Walls turn the rush; a turret watches the gap you leave."],"feedLive":"That horn marks their road in. Walls turn the rush; a turret watches the gap you leave.","feedNodePresent":true}
+  ✓  4 [mobile-chrome] › e2e/tmp-s1256-trail-guide-instrumented.spec.ts:193:1 › plain fresh boot teaches the first claim once (45.9s)
+  ✓  2 [desktop-chrome] › e2e/tmp-s1256-trail-guide-instrumented.spec.ts:193:1 › plain fresh boot teaches the first claim once (46.8s)
+  ✘  3 [mobile-chrome] › e2e/tmp-s1256-trail-guide-instrumented.spec.ts:193:1 › plain fresh boot teaches the first claim once (1.0m)
+  ✘  1 [desktop-chrome] › e2e/tmp-s1256-trail-guide-instrumented.spec.ts:193:1 › plain fresh boot teaches the first claim once (1.1m)
+
+
+  1) [desktop-chrome] › e2e/tmp-s1256-trail-guide-instrumented.spec.ts:193:1 › plain fresh boot teaches the first claim once 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    Expected: ArrayContaining [StringContaining "Raise a sluice beside water"]
+    Received: ["Take the claim at your own pace. Move with the trail; stand by a river glint and your pan will find the seam.", "", "That horn marks their road in. Walls turn the rush; a turret watches the gap you leave."]
+
+    Call Log:
+    - Timeout 20000ms exceeded while waiting on the predicate
+
+      63 |   await expect.poll(() => page.evaluate(
+      64 |     () => (window as typeof window & { __trailGuideFeedHistory?: string[] }).__trailGuideFeedHistory ?? [],
+    > 65 |   )).toEqual(expect.arrayContaining([expect.stringContaining(copy)]));
+         |      ^
+      66 |   expect(await guideHints(page)).toEqual(GUIDE_BEATS.slice(0, index + 1).map(([beatId]) => `story:${beatId}`));
+      67 |   await shot(page, testInfo, `beat-${index + 1}-${id}`);
+      68 | }
+        at expectGuideBeat (/Users/robin/Claude/Projects/Gold Rush/e2e/tmp-s1256-trail-guide-instrumented.spec.ts:65:6)
+        at body (/Users/robin/Claude/Projects/Gold Rush/e2e/tmp-s1256-trail-guide-instrumented.spec.ts:236:41)
+        at s1256Guard (/Users/robin/Claude/Projects/Gold Rush/e2e/tmp-s1256-trail-guide-instrumented.spec.ts:186:11)
+        at /Users/robin/Claude/Projects/Gold Rush/e2e/tmp-s1256-trail-guide-instrumented.spec.ts:236:9
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/tmp-s1256-trail-guide-inst-c6275-eaches-the-first-claim-once-desktop-chrome-repeat1/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/tmp-s1256-trail-guide-inst-c6275-eaches-the-first-claim-once-desktop-chrome-repeat1/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/tmp-s1256-trail-guide-inst-c6275-eaches-the-first-claim-once-desktop-chrome-repeat1/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/tmp-s1256-trail-guide-inst-c6275-eaches-the-first-claim-once-desktop-chrome-repeat1/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [mobile-chrome] › e2e/tmp-s1256-trail-guide-instrumented.spec.ts:193:1 › plain fresh boot teaches the first claim once 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    Expected: ArrayContaining [StringContaining "Raise a sluice beside water"]
+    Received: ["Take the claim at your own pace. Move with the trail; stand by a river glint and your pan will find the seam.", "", "That horn marks their road in. Walls turn the rush; a turret watches the gap you leave."]
+
+    Call Log:
+    - Timeout 20000ms exceeded while waiting on the predicate
+
+      63 |   await expect.poll(() => page.evaluate(
+      64 |     () => (window as typeof window & { __trailGuideFeedHistory?: string[] }).__trailGuideFeedHistory ?? [],
+    > 65 |   )).toEqual(expect.arrayContaining([expect.stringContaining(copy)]));
+         |      ^
+      66 |   expect(await guideHints(page)).toEqual(GUIDE_BEATS.slice(0, index + 1).map(([beatId]) => `story:${beatId}`));
+      67 |   await shot(page, testInfo, `beat-${index + 1}-${id}`);
+      68 | }
+        at expectGuideBeat (/Users/robin/Claude/Projects/Gold Rush/e2e/tmp-s1256-trail-guide-instrumented.spec.ts:65:6)
+        at body (/Users/robin/Claude/Projects/Gold Rush/e2e/tmp-s1256-trail-guide-instrumented.spec.ts:236:41)
+        at s1256Guard (/Users/robin/Claude/Projects/Gold Rush/e2e/tmp-s1256-trail-guide-instrumented.spec.ts:186:11)
+        at /Users/robin/Claude/Projects/Gold Rush/e2e/tmp-s1256-trail-guide-instrumented.spec.ts:236:9
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/tmp-s1256-trail-guide-inst-c6275-eaches-the-first-claim-once-mobile-chrome-repeat1/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/tmp-s1256-trail-guide-inst-c6275-eaches-the-first-claim-once-mobile-chrome-repeat1/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/tmp-s1256-trail-guide-inst-c6275-eaches-the-first-claim-once-mobile-chrome-repeat1/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/tmp-s1256-trail-guide-inst-c6275-eaches-the-first-claim-once-mobile-chrome-repeat1/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [desktop-chrome] › e2e/tmp-s1256-trail-guide-instrumented.spec.ts:193:1 › plain fresh boot teaches the first claim once 
+    [mobile-chrome] › e2e/tmp-s1256-trail-guide-instrumented.spec.ts:193:1 › plain fresh boot teaches the first claim once 
+  2 passed (1.3m)
+(node:47374) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:47375) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:47376) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:47377) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:47378) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+
+######## CURE-PROTOTYPE ARM 2026-07-30T05:53:44.137Z loadavg=7.92 9.56 7.53 ########
+cure spec sha256=6f236fb4d18569a4 bytes=11301 (moveHeroTo iterated; every assertion untouched)
+scratch dev server READY on http://127.0.0.1:5199
+$ npx playwright test e2e/tmp-s1256-trail-guide-cure.spec.ts --repeat-each=2   (canonical arm: default workers, both projects)
+
+===== rc=1 100.6s loadavg_after=14.51 12.24 8.84 =====
+
+Running 4 tests using 4 workers
+
+[s1256] moveHeroTo passes=6 aimed={"x":-9,"z":6.7} landed={"x":-9.085687178552744,"y":-0.08048911305604953,"z":6.920665927644428} miss=0.237
+[s1256] moveHeroTo passes=12 aimed={"x":-9,"z":6.7} landed={"x":-9.058993825808463,"y":-0.05359677640404446,"z":7.9176143365816785} miss=1.219
+[s1256] moveHeroTo passes=9 aimed={"x":-9,"z":6.7} landed={"x":-8.022957639917834,"y":-0.04110168461820711,"z":7.6430209486218725} miss=1.358
+[s1256] moveHeroTo passes=10 aimed={"x":-9,"z":6.7} landed={"x":-7.62864325039932,"y":-0.009406089471860418,"z":8.359216648217005} miss=2.153
+[s1256] moveHeroTo passes=10 aimed={"x":-9,"z":6.7} landed={"x":-7.6116828395733975,"y":-0.045538206678938875,"z":7.3251165956072155} miss=1.523
+  ✓  1 [desktop-chrome] › e2e/tmp-s1256-trail-guide-cure.spec.ts:164:1 › plain fresh boot teaches the first claim once (1.2m)
+[s1256] moveHeroTo passes=9 aimed={"x":-9,"z":6.7} landed={"x":-8.019661439369099,"y":-0.048841155170609024,"z":7.40858743047387} miss=1.210
+[s1256] moveHeroTo passes=11 aimed={"x":-9,"z":6.7} landed={"x":-8.358412675357949,"y":-0.06030005526210676,"z":7.209634925098467} miss=0.819
+  ✓  4 [mobile-chrome] › e2e/tmp-s1256-trail-guide-cure.spec.ts:164:1 › plain fresh boot teaches the first claim once (1.3m)
+  ✓  2 [desktop-chrome] › e2e/tmp-s1256-trail-guide-cure.spec.ts:164:1 › plain fresh boot teaches the first claim once (1.4m)
+  ✘  3 [mobile-chrome] › e2e/tmp-s1256-trail-guide-cure.spec.ts:164:1 › plain fresh boot teaches the first claim once (1.5m)
+
+
+  1) [mobile-chrome] › e2e/tmp-s1256-trail-guide-cure.spec.ts:164:1 › plain fresh boot teaches the first claim once 
+
+    Error: expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+    Call Log:
+    - Timeout 20000ms exceeded while waiting on the predicate
+
+      209 |   await expect(page.getByTestId('hud-agent-feed')).not.toContainText(GUIDE_BEATS[1][1]);
+      210 |
+    > 211 |   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.economy.gold ?? 0)).toBeGreaterThan(0);
+          |                                                                                                      ^
+      212 |   await expectGuideBeat(page, testInfo, 2);
+      213 |   await page.getByTestId('hud-build').click();
+      214 |   await page.getByTestId('hud-build').evaluate((button) => (button as HTMLButtonElement).click());
+        at /Users/robin/Claude/Projects/Gold Rush/e2e/tmp-s1256-trail-guide-cure.spec.ts:211:102
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/tmp-s1256-trail-guide-cure-03d5c-eaches-the-first-claim-once-mobile-chrome-repeat1/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/tmp-s1256-trail-guide-cure-03d5c-eaches-the-first-claim-once-mobile-chrome-repeat1/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/tmp-s1256-trail-guide-cure-03d5c-eaches-the-first-claim-once-mobile-chrome-repeat1/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/tmp-s1256-trail-guide-cure-03d5c-eaches-the-first-claim-once-mobile-chrome-repeat1/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [mobile-chrome] › e2e/tmp-s1256-trail-guide-cure.spec.ts:164:1 › plain fresh boot teaches the first claim once 
+  3 passed (1.7m)
+(node:49296) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:49309) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:49307) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:49308) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:49310) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+
+######## CURE-PROTOTYPE-2 ARM 2026-07-30T05:57:37.070Z loadavg=4.53 9.15 8.08 ########
+cure2 spec sha256=6c24ac8b1d6c9506 bytes=11516
+scratch dev server READY on http://127.0.0.1:5199
+$ npx playwright test e2e/tmp-s1256-trail-guide-cure2.spec.ts --repeat-each=2   (canonical arm)
+
+===== rc=0 54.6s loadavg_after=28.53 15.43 10.51 =====
+
+Running 4 tests using 4 workers
+
+[s1256] moveHeroTo passes=1 miss=1.285 harvesting=true
+[s1256] moveHeroTo passes=2 miss=1.178 harvesting=true
+[s1256] moveHeroTo passes=3 miss=1.417 harvesting=true
+[s1256] moveHeroTo passes=4 miss=0.785 harvesting=true
+[s1256] moveHeroTo passes=2 miss=1.030 harvesting=true
+[s1256] moveHeroTo passes=1 miss=0.848 harvesting=true
+  ✓  1 [mobile-chrome] › e2e/tmp-s1256-trail-guide-cure2.spec.ts:172:1 › plain fresh boot teaches the first claim once (49.7s)
+[s1256] moveHeroTo passes=1 miss=1.507 harvesting=true
+[s1256] moveHeroTo passes=1 miss=1.268 harvesting=true
+  ✓  4 [mobile-chrome] › e2e/tmp-s1256-trail-guide-cure2.spec.ts:172:1 › plain fresh boot teaches the first claim once (51.1s)
+  ✓  3 [desktop-chrome] › e2e/tmp-s1256-trail-guide-cure2.spec.ts:172:1 › plain fresh boot teaches the first claim once (53.2s)
+  ✓  2 [desktop-chrome] › e2e/tmp-s1256-trail-guide-cure2.spec.ts:172:1 › plain fresh boot teaches the first claim once (53.2s)
+
+  4 passed (54.2s)
+(node:52713) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:52717) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:52715) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:52718) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:52716) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+
+######## CURE-PROTOTYPE-2 ARM 2026-07-30T05:58:46.668Z loadavg=22.43 14.72 10.34 ########
+cure2 spec sha256=6c24ac8b1d6c9506 bytes=11516
+scratch dev server READY on http://127.0.0.1:5199
+$ npx playwright test e2e/tmp-s1256-trail-guide-cure2.spec.ts --repeat-each=2   (canonical arm)
+
+===== rc=0 54.8s loadavg_after=27.96 17.77 11.75 =====
+
+Running 4 tests using 4 workers
+
+[s1256] moveHeroTo passes=1 miss=1.005 harvesting=true
+[s1256] moveHeroTo passes=2 miss=1.576 harvesting=true
+[s1256] moveHeroTo passes=2 miss=1.465 harvesting=true
+[s1256] moveHeroTo passes=3 miss=1.529 harvesting=true
+[s1256] moveHeroTo passes=1 miss=0.836 harvesting=true
+  ✓  1 [desktop-chrome] › e2e/tmp-s1256-trail-guide-cure2.spec.ts:172:1 › plain fresh boot teaches the first claim once (45.9s)
+[s1256] moveHeroTo passes=1 miss=0.294 harvesting=true
+[s1256] moveHeroTo passes=2 miss=0.726 harvesting=true
+[s1256] moveHeroTo passes=2 miss=0.708 harvesting=true
+  ✓  3 [mobile-chrome] › e2e/tmp-s1256-trail-guide-cure2.spec.ts:172:1 › plain fresh boot teaches the first claim once (51.6s)
+  ✓  2 [mobile-chrome] › e2e/tmp-s1256-trail-guide-cure2.spec.ts:172:1 › plain fresh boot teaches the first claim once (51.7s)
+  ✓  4 [desktop-chrome] › e2e/tmp-s1256-trail-guide-cure2.spec.ts:172:1 › plain fresh boot teaches the first claim once (53.5s)
+
+  4 passed (54.4s)
+(node:53715) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:53718) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:53719) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:53717) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:53716) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+===== node --test scripts/assert-release-build.test.mjs scripts/bench-seeds.test.mjs scripts/character-direction-assets.test.mjs scripts/citation-title-guard.test.mjs scripts/collection-guards-cwd-invariance.test.mjs scripts/drain-block-check.test.mjs scripts/e3-mask-tables.test.mjs scripts/entry-damage-table.test.mjs scripts/fixture-teardown.test.mjs scripts/gate-caller-audit.test.mjs scripts/glob-fallback-completeness.test.mjs scripts/goal-tracker.test.mjs scripts/probe-base.test.mjs scripts/rehearsal-base.test.mjs scripts/run-guards.test.mjs scripts/run-log-retention.test.mjs scripts/script-tree-parse.test.mjs scripts/site-contract.test.mjs scripts/stream-curate.test.mjs scripts/stream-director.test.mjs scripts/stream-showcase-queue.test.mjs scripts/subject-tree.test.mjs scripts/suite-red-inventory.test.mjs scripts/town-era-props-node-safety.test.mjs scripts/town-spec-collection.test.mjs scripts/whole-suite-collection.test.mjs scripts/worker-type-coverage.test.mjs =====
+rc=0 32.3s
+✔ a missing dist/ is refused, not cleared (38.26375ms)
+✔ CONTROL: the same fixture with one benign dist file passes — it is the emptiness, not the fixture (68.3435ms)
+✔ an empty later-asset blacklist is refused — the leak check would otherwise pass vacuously (52.032333ms)
+✔ the success line reports the denominator, so a vacuous clearance would be legible (61.440208ms)
+✔ POSITIVE CONTROL: a later-epoch manifest id in dist still fails (67.743083ms)
+✔ POSITIVE CONTROL: a leaked later-epoch plate asset in dist still fails (53.879041ms)
+✔ POSITIVE CONTROL: the GR_RELEASE=e1 precondition still refuses a bare invocation (41.320125ms)
+✔ contract ids are globally unique across the ten epoch bundles (0.574583ms)
+✔ bench seed sets cover Frontier and contain only valid known-contract seeds (0.115708ms)
+✔ contract direction files exist under assets/processed (0.937916ms)
+✔ contract direction aliases do not overwrite explicit directions (1.518ms)
+✔ a bare spec:line citation fails the guard (243.534834ms)
+✔ a citation carrying an exact test title passes (228.193958ms)
+✔ a citation carrying an ELIDED test title passes (265.012791ms)
+✔ a quoted title that does not exist in the spec still fails (434.86925ms)
+✔ a grandfathered bare citation passes, and a second copy of it does not (729.824333ms)
+✔ --report never gates (344.497875ms)
+✔ REFUSES when no tracked task markdown exists (denominator 0 docs) (309.133ms)
+✔ REFUSES when task docs exist but carry zero citations (319.388125ms)
+✔ REFUSES when the baseline it ratchets against is missing (493.528208ms)
+✔ a citation quoting a real NON-TEST source line is carried, not a violation (288.3235ms)
+✔ a quote matching NEITHER a title nor any source line still fails (342.695125ms)
+✔ the verdict names the citations it did NOT gate (391.656417ms)
+✔ --report still never gates, even on a denominator it could not read (247.7065ms)
+✔ whole-suite collection guard is cwd-invariant (4602.082083ms)
+✔ town-spec collection guard is cwd-invariant (913.338709ms)
+✔ drain path REFUSES a terminal-closed leaf (F-1248-1) — and clears the same fixture when live (85.673542ms)
+✔ every TERMINAL_CLOSED word is refused on the drain path, and no other word is (491.821125ms)
+✔ an owner BLOCK still outranks everything and still names the owner (unchanged by F-1248-1) (39.811291ms)
+✔ --queue keeps its own wording and its own reason line (56.433292ms)
+✔ a closed leaf whose reason sits under a session-stamped key is still explained (87.726291ms)
+✔ F-1249-1: a session-stamped reason key that varies the STEM is explained, and non-reason keys are not (224.517917ms)
+✔ F-1249-1: a stale blockedReason is never printed as the CLOSURE cause (187.147084ms)
+✔ F-1249-1: the leaf TITLE is printed on both refusal arms, even when a reason key exists (293.483291ms)
+✔ --all reports terminal-closed leaves but its exit code still tracks BLOCKED alone (113.407083ms)
+✔ F-1250-1: an EXACT taskFile match outranks a longer-named sibling (no false CLEAR) (301.5875ms)
+✔ F-1250-1: the reverse — a lawful merged drain is not reddened by a longer closed predecessor (152.615ms)
+✔ F-1250-1: with NO exact match, longest-wins still decides (the tie-break is kept, not replaced) (87.95775ms)
+✔ F-1250-1 rider: a blocked SIBLING still refuses, but now says which leaf you actually named (133.390667ms)
+✔ a missing leaf is still UNKNOWN-not-a-clearance, and --strict still escalates it (151.229458ms)
+✔ published mask tables exactly track authored contract data (49.956917ms)
+✔ published Moth Season mask stays inside bounds and agrees with authored water (4.111666ms)
+✔ e2-trestle mask stays inside bounds and agrees with authored water (3.51725ms)
+✔ e2-pressure-garden mask stays inside bounds and agrees with authored water (2.357209ms)
+✔ e2-incline mask stays inside bounds and agrees with authored water (4.726708ms)
+✔ e3-canyon-works mask stays inside bounds and agrees with authored water (3.404ms)
+✔ e3-blackout-ridge mask stays inside bounds and agrees with authored water (2.859041ms)
+✔ e3-moth-season mask stays inside bounds and agrees with authored water (2.716541ms)
+✔ e3-fairground mask stays inside bounds and agrees with authored water (2.110542ms)
+✔ e4-dust-flats mask stays inside bounds and agrees with authored water (7.924458ms)
+✔ e4-long-road mask stays inside bounds and agrees with authored water (2.363834ms)
+✔ e4-gusher-county mask stays inside bounds and agrees with authored water (0.660375ms)
+✔ e4-boneyard mask stays inside bounds and agrees with authored water (0.747375ms)
+✔ e5-regatta mask stays inside bounds and agrees with authored water (0.284792ms)
+✔ e5-stillwater mask stays inside bounds and agrees with authored water (0.435417ms)
+✔ e5-flotilla mask stays inside bounds and agrees with authored water (0.826416ms)
+✔ e6-glow-mesa mask stays inside bounds and agrees with authored water (0.557375ms)
+✔ e6-showroom mask stays inside bounds and agrees with authored water (2.684042ms)
+✔ e6-half-life-hollow mask stays inside bounds and agrees with authored water (0.407916ms)
+✔ e6-picnic mask stays inside bounds and agrees with authored water (0.353958ms)
+✔ e7-relay-valley mask stays inside bounds and agrees with authored water (0.822709ms)
+✔ e7-echo-canyon mask stays inside bounds and agrees with authored water (0.367917ms)
+✔ e7-dead-band mask stays inside bounds and agrees with authored water (0.373584ms)
+✔ e7-relay-rush mask stays inside bounds and agrees with authored water (0.251625ms)
+✔ e8-mare-claim mask stays inside bounds and agrees with authored water (0.272125ms)
+✔ e9-dome-basin mask stays inside bounds and agrees with authored water (0.404042ms)
+✔ e9-seed-run mask stays inside bounds and agrees with authored water (1.068917ms)
+✔ e9-devils-alley mask stays inside bounds and agrees with authored water (0.278292ms)
+✔ e9-old-canal mask stays inside bounds and agrees with authored water (0.348958ms)
+✔ e10-ember-shore mask stays inside bounds and agrees with authored water (0.293083ms)
+✔ entry damage tables include both E1 contracts (0.392ms)
+✔ night shift wave 3 has reduced entry damage (0.063042ms)
+✔ night shift wave 12 has no entry damage scale (0.054958ms)
+✔ entry damage scaling ends after wave 10 (0.054042ms)
+✔ entry damage scales are finite reductions (0.060833ms)
+✔ E1 entry damage tables agree (0.31425ms)
+✔ all 13 scripts/*.test.mjs fixture owners remove their temp directories (32225.464292ms)
+✔ a gate nothing calls is reported as a NEW orphan and exits 1 (189.813667ms)
+✔ grandfathering that orphan with a reason turns the gate green (165.961375ms)
+✔ a gate whose only caller is a *.config.ts webServer command counts as REACHED (195.392417ms)
+✔ a guard named only in a COMMENT is not reached — prose is not a caller (229.454125ms)
+✔ putting it in the GUARDS array clears it — the control for the arm above (294.21ms)
+✔ a non-gate script (dev, preview, census) is never ratcheted on (297.897333ms)
+✔ an orphan that GAINED a caller is reported so the baseline can tighten (276.534667ms)
+✔ --report never gates, even with a fresh orphan present (288.565417ms)
+✔ REFUSES (rc=2) when package.json has no scripts block (314.991833ms)
+✔ REFUSES (rc=2) when no scripts/*.mjs is tracked (267.621208ms)
+✔ REFUSES (rc=2) when the resolver cannot reach its own anchors (287.233834ms)
+✔ REFUSES (rc=2) when the baseline file is missing — not read as {} (297.200209ms)
+✔ REFUSES (rc=2) when the baseline is unreadable (298.993458ms)
+✔ REFUSES (rc=2) when no subject matches the gate patterns (551.067291ms)
+✔ POSITIVE CONTROL: the real repo passes, with a non-empty measured subject (129.321709ms)
+fallbackTownEraPropManifests: 7 fallback keys = 7 static imports = 7 files
+fallbackManifests (non-release): 10 fallback keys = 10 files
+fallbackFamilyBundles: 1 fallback keys = 1 files
+fallbackCapsBundles: 1 fallback keys = 1 files
+fallbackContractBundles (non-release): 10 fallback keys = 10 files
+✔ node glob fallbacks match every on-disk manifest (non-release branches) (3.167375ms)
+✔ goal tree schema is valid (1.814333ms)
+✔ ten sampled merged leaves have a done receipt and ancestral merge (13979.421583ms)
+✔ rejects an unset PROBE_BASE before launching a browser (554.113666ms)
+✔ rejects an unset PROBE_BASE before checking the browser executable (804.212042ms)
+✔ rejects a positional base URL with a PROBE_BASE directive (543.812542ms)
+✔ rejects an unset base before probing ownership (0.633125ms)
+✔ accepts a listener owned by this checkout (0.077875ms)
+✔ rejects a listener owned by another checkout (0.0755ms)
+✔ rejects a port with no listener (0.493334ms)
+✔ rejects an unusable ownership probe (0.069584ms)
+✔ runner exit follows guard exit codes (5621.825542ms)
+✔ --only rejects unknown guards and runs one known guard (233.416208ms)
+✔ --only accepts a comma-separated subset in canonical order (766.349208ms)
+✔ --only rejects a list containing an unknown guard rather than narrowing (40.74925ms)
+✔ power-budget rows include p95 only when printed (380.315666ms)
+✔ --changed-since runs the base gate when no path rule matches (823.310125ms)
+✔ --changed-since adds the worker guards when functions/ moved (2184.393209ms)
+✔ --changed-since exits 2 on a bad ref rather than narrowing to the base gate (170.529708ms)
+✔ --changed-since exits 2 when the untracked listing fails rather than reporting a green (1529.717084ms)
+✔ guards run with GR_GUARD_NO_ARTIFACT so a gate cannot dirty its own tree (136.036333ms)
+✔ a signal-killed guard is never a pass (134.503667ms)
+AT RISK (archive files absent from git ls-files; informational): 236 files, 609.05 MB
+Task-stats high-water: subject 235 rows, baseline 234
+Run log retention: 235 entries checked, 0 unrecoverable
+✔ every recorded run log remains recoverable (577.543375ms)
+✔ every scripts/**/*.mjs parses (1114.319ms)
+✔ every scripts/**/*.sh parses (29.803583ms)
+✔ every rehearsal/**/*.mjs parses (307.168708ms)
+✔ every foundry/**/*.mjs parses (49.684333ms)
+✔ every foundry/**/*.sh parses (10.759625ms)
+✔ site: every local <script src> the pages load actually exists (2.712667ms)
+✔ site: each loaded script parses under the grammar its tag requests (37.039834ms)
+✔ site: each inline <script> parses under the grammar its tag requests (62.850625ms)
+✔ site: every local href/src resolves to a file that exists (2.044708ms)
+✔ site: the denominator still contains a data-* reference and an escaping path (0.446708ms)
+✔ site: every in-page anchor targets an element that exists (0.960167ms)
+✔ site: assay-office duration vocabulary matches functions/api/stats.ts (1.218209ms)
+✔ curation is deterministic, interleaved, and never repeats thin-pool items (6.917ms)
+✔ intake rejects headless captures and explicit banned files (2.639875ms)
+✔ OBS v5 authentication, scene discovery, and switch request use one websocket (26.81325ms)
+✔ failed preconditions are silent no-ops (0.118041ms)
+✔ missing spec, websocket, or required scenes never enter FACTORY (53.055583ms)
+✔ offline stream leaves FACTORY untouched (25.871458ms)
+✔ green showcase switches FACTORY, dwells, and always restores AUTOPILOT (4.926167ms)
+✔ red showcase skips dwell and restores AUTOPILOT (2.664375ms)
+✔ append is hash-idempotent and keeps one JSON line per entry (102.086541ms)
+✔ downtime accumulates and catch-up shows oldest first without double-show (27.583375ms)
+✔ concurrent appenders preserve every entry and concurrent consumers show once (294.166542ms)
+✔ missing subject directory fires the actionable existence message (51.136833ms)
+✔ subject below its floor reports expected and walked counts (0.652334ms)
+✔ subject exactly at its floor passes (0.648041ms)
+✔ empty present subject fires the floor instead of passing silently (0.362292ms)
+✔ ignoreReadErrors returns only readable paths (1.011667ms)
+✔ default walk fails closed on an unreadable subtree (0.78925ms)
+✔ floor catches files hidden by an ignored read error (0.827583ms)
+✔ reducer output is cwd-invariant (1362.728625ms)
+✔ reducer reports configured and actual workers distinctly (469.346208ms)
+✔ reducer reports absent harness config as unrecorded (380.210125ms)
+✔ reducer output is script-root-invariant (723.56125ms)
+✔ reducer renders absolute raw paths relative to the recorded tree (361.57125ms)
+✔ reducer refuses body statistics when the recorded tree is unavailable (652.868708ms)
+✔ an unresolved masking row never outranks a resolved row (348.963125ms)
+✔ townEraProps resolves its manifests under plain node, not only under Vite (163.69475ms)
+✔ town specs collect without loading Vite-only modules (1891.125875ms)
+✔ whole suite collects without loading Vite-only modules (4143.856667ms)
+✔ every functions/**/*.ts is type-checked (8053.211667ms)
+ℹ tests 156
+ℹ suites 0
+ℹ pass 156
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 32274.427167
+
+
+===== node scripts/test-ticker-stats.mjs =====
+rc=0 0.0s
+ticker stats checks passed (populated, empty, failures, invalid shape, endpoint diagnostic, poison control, shared URL, JSON)
+

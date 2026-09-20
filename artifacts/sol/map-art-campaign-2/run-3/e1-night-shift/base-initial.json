@@ -1,0 +1,43 @@
+{
+  "base": "fb48bbfdc",
+  "paths": {
+    "assets/pilots/map-rebuild-spike/landmarks/night-shift/night-shift-landmark-pack-contract.json": {
+      "candidateSha256": "6c343a840f80e941aadebd8b38928b81ef8c78681bc7c7793d5bf930b96e2cf2",
+      "baseSha256": "7b34f6347f5d042aede43dc3a61a8ab54c07d825109030472e883afd258774f3"
+    },
+    "assets/pilots/map-rebuild-spike/night-shift-terrain-contract.json": {
+      "candidateSha256": "a492cf2afe76b51af846b17f9e5e1bd667a84cce4f29bba5a49a70a52167a877",
+      "baseSha256": "d86fae3641d3797ea383c98725758f43336b5655e903ef9051787c022dba7ffe"
+    },
+    "src/world/Terrain3dClaimPilot.ts": {
+      "candidateSha256": "d6ea6f12b28b7e047e91534b5ae8d55ba97ea5114e105c00a00853fb99eb4d35",
+      "baseSha256": "cb3a8cfd5a0249baefaf6dd4ef200c3808c9955a07eb9de3b9ecb052c225b1b1"
+    }
+  },
+  "pattern": "loads Night Shift contract|cold lantern relight|lantern post is Night Shift gated|live water shores match",
+  "specs": [
+    "e2e/e1-night-shift.spec.ts",
+    "e2e/shore-truth.spec.ts"
+  ],
+  "candidateEngine": "3a437c987c30b1738307197d4e0ebbe64520e8ddbfbbff947378930f8590a041",
+  "baseEngine": "2ad0aa1e14a1b7f639bc9c797ae5e14839d11c7b34b70f3f7ac7ca9479fbf6f4",
+  "command": [
+    "npx",
+    "playwright",
+    "test",
+    "--workers=1",
+    "--project=desktop-chrome",
+    "--project=mobile-chrome",
+    "--trace=off",
+    "--reporter=line",
+    "--output=artifacts/sol/map-art-campaign-2/_raw/run-3/e1-night-shift-base-initial/test-results",
+    "--grep",
+    "loads Night Shift contract|cold lantern relight|lantern post is Night Shift gated|live water shores match",
+    "e2e/e1-night-shift.spec.ts",
+    "e2e/shore-truth.spec.ts"
+  ],
+  "exit": 1,
+  "restoredEngine": "3a437c987c30b1738307197d4e0ebbe64520e8ddbfbbff947378930f8590a041",
+  "candidateRestoredExactly": true,
+  "log": "artifacts/sol/map-art-campaign-2/_raw/run-3/e1-night-shift-base-initial/tests.log"
+}

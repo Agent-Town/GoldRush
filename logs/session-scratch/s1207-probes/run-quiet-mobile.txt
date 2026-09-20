@@ -1,0 +1,81 @@
+
+Running 1 test using 1 worker
+
+
+[1/1] [mobile-chrome] › e2e/trail-guide-f1206-1-discriminator.spec.ts:236:1 › F-1206-1: separate "recorder deaf" from "feed empty"
+[mobile-chrome] › e2e/trail-guide-f1206-1-discriminator.spec.ts:236:1 › F-1206-1: separate "recorder deaf" from "feed empty"
+
+===== F-1206-1 ARRIVAL (inside the claim, before any beat) =====
+
+arrived-in-claim: true  (activeId=the-claim)   <-- if false, ANY zero below is about the probe, not the feed
+
+feed nodes in DOM now: 1   recorder bound to 1 distinct node(s)
+
+bound node still connected: true   bound node === current node: true
+
+live text right now: "Take the claim at your own pace. Move with the trail; stand by a river glint and your pan will find the seam."
+
+RECORDER (1 entries): [
+  "Take the claim at your own pace. Move with the trail; stand by a river glint and your pan will find the seam."
+]
+
+POLL (2 changes over 6 ticks):
+
+   +104ms  ""
+
+   +632ms  "Take the claim at your own pace. Move with the trail; stand by a river glint and your pan will find the seam."
+
+===== end ARRIVAL (inside the claim, before any beat) =====
+
+
+
+===== F-1206-1 FINAL (all four beats attempted) =====
+
+arrived-in-claim: true  (activeId=the-claim)   <-- if false, ANY zero below is about the probe, not the feed
+
+feed nodes in DOM now: 1   recorder bound to 1 distinct node(s)
+
+bound node still connected: true   bound node === current node: true
+
+live text right now: "Every line here names its price and its work. Set what the claim is short of, not what looks grandest."
+
+RECORDER (7 entries): [
+  "Take the claim at your own pace. Move with the trail; stand by a river glint and your pan will find the seam.",
+  "",
+  "There is your first color. Raise a sluice beside water and it will keep washing while your boots are elsewhere.",
+  "",
+  "Gold in the pouch can raise the claim. Open Build and set timber where it will do honest work.",
+  "",
+  "Every line here names its price and its work. Set what the claim is short of, not what looks grandest."
+]
+
+POLL (6 changes over 66 ticks):
+
+   +104ms  ""
+
+   +632ms  "Take the claim at your own pace. Move with the trail; stand by a river glint and your pan will find the seam."
+
+   +1705ms  ""
+
+   +4904ms  "There is your first color. Raise a sluice beside water and it will keep washing while your boots are elsewhere."
+
+   +5211ms  ""
+
+   +6408ms  "Gold in the pouch can raise the claim. Open Build and set timber where it will do honest work."
+
+===== end FINAL (all four beats attempted) =====
+
+
+>>> BEATS SEEN BY RECORDER: [true,true,true,true]
+
+>>> hintsSeen in profile: ["story:ledger-page:the_claim","world-info:town_schoolhouse:1","world-info:town_tavern:1","story:founding-welcome","story:trail-guide-first-run","world-info:claim_stake:1","world-info:prospector:1","world-info:prospector:2","world-info:gold_seam:1","story:trail-guide-first-nugget","story:trail-guide-first-gold","story:trail-guide-first-build-menu","world-info:gold_seam:2"]
+
+>>> NOTE: this spec never fails on a beat. It reports. The dump above is the deliverable.
+
+  1 passed (12.7s)
+
+---STDERR---
+(node:42795) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:42796) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)

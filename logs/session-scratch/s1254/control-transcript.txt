@@ -1,0 +1,103 @@
+CONTROL ARM — grafted src/game/Game.ts sha256[0:16] = c6bae7f2b747041f
+reverted to HEAD sha256[0:16] = b20bd87d302ee5f5
+
+===== spec-against-PRE-SLICE-Game.ts =====
+rc=1
+
+Running 2 tests using 1 worker
+
+  ✘  1 [desktop-chrome] › e2e/trail-guide-beat-priority.spec.ts:59:1 › first-run Guide holds through a bark storm, then the newest bark surfaces (24.7s)
+  ✘  2 [mobile-chrome] › e2e/trail-guide-beat-priority.spec.ts:59:1 › first-run Guide holds through a bark storm, then the newest bark surfaces (22.0s)
+
+
+  1) [desktop-chrome] › e2e/trail-guide-beat-priority.spec.ts:59:1 › first-run Guide holds through a bark storm, then the newest bark surfaces 
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: getByTestId('hud-agent-feed')
+    Expected substring: "Move with the trail"
+    Received string:    "The trail has taught you something. Pick the card that suits the claim you mean to keep."
+    Timeout: 5000ms
+
+    Call log:
+      - Expect "toContainText" with timeout 5000ms
+      - waiting for getByTestId('hud-agent-feed')
+        13 × locator resolved to <span data-guide="true" aria-live="polite" data-recording="true" class="hud-agent-feed" data-hud-agent-feed="" data-testid="hud-agent-feed">The trail has taught you something. Pick the card…</span>
+           - unexpected value "The trail has taught you something. Pick the card that suits the claim you mean to keep."
+
+
+      84 |     )
+      85 |     .toBe(true);
+    > 86 |   await expect(feed).toContainText('Move with the trail');
+         |                      ^
+      87 |
+      88 |   const screenshot = `artifacts/trail-guide-beat-priority/${testInfo.project.name}-storm.png`;
+      89 |   await page.screenshot({ path: screenshot, fullPage: true });
+        at /Users/robin/Claude/Projects/Gold Rush/e2e/trail-guide-beat-priority.spec.ts:86:22
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/trail-guide-beat-priority--6263f-en-the-newest-bark-surfaces-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/trail-guide-beat-priority--6263f-en-the-newest-bark-surfaces-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/trail-guide-beat-priority--6263f-en-the-newest-bark-surfaces-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/trail-guide-beat-priority--6263f-en-the-newest-bark-surfaces-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [mobile-chrome] › e2e/trail-guide-beat-priority.spec.ts:59:1 › first-run Guide holds through a bark storm, then the newest bark surfaces 
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: getByTestId('hud-agent-feed')
+    Expected substring: "Move with the trail"
+    Received string:    "The trail has taught you something. Pick the card that suits the claim you mean to keep."
+    Timeout: 5000ms
+
+    Call log:
+      - Expect "toContainText" with timeout 5000ms
+      - waiting for getByTestId('hud-agent-feed')
+        13 × locator resolved to <span data-guide="true" aria-live="polite" data-recording="true" class="hud-agent-feed" data-hud-agent-feed="" data-testid="hud-agent-feed">The trail has taught you something. Pick the card…</span>
+           - unexpected value "The trail has taught you something. Pick the card that suits the claim you mean to keep."
+
+
+      84 |     )
+      85 |     .toBe(true);
+    > 86 |   await expect(feed).toContainText('Move with the trail');
+         |                      ^
+      87 |
+      88 |   const screenshot = `artifacts/trail-guide-beat-priority/${testInfo.project.name}-storm.png`;
+      89 |   await page.screenshot({ path: screenshot, fullPage: true });
+        at /Users/robin/Claude/Projects/Gold Rush/e2e/trail-guide-beat-priority.spec.ts:86:22
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/trail-guide-beat-priority--6263f-en-the-newest-bark-surfaces-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/trail-guide-beat-priority--6263f-en-the-newest-bark-surfaces-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/trail-guide-beat-priority--6263f-en-the-newest-bark-surfaces-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/trail-guide-beat-priority--6263f-en-the-newest-bark-surfaces-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [desktop-chrome] › e2e/trail-guide-beat-priority.spec.ts:59:1 › first-run Guide holds through a bark storm, then the newest bark surfaces 
+    [mobile-chrome] › e2e/trail-guide-beat-priority.spec.ts:59:1 › first-run Guide holds through a bark storm, then the newest bark surfaces 
+(node:94398) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:94425) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:95147) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+CONTROL VERDICT: rc=1 (expected NON-ZERO — the spec must fail without the slice)
+restored sha256[0:16] = c6bae7f2b747041f — identical: true

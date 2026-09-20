@@ -1,0 +1,54 @@
+gg-04: the town greets every new face — profile creation is name-only and the welcome auto-arms for fresh ledgers alone
+
+Owner ruling, specs/greenhorn-gazette/README.md §THE MANDATORY WELCOME. The
+"First time prospecting?" radio leaves profile creation (name only, default
+Trail preset); the welcome arms itself for genuinely fresh profiles and stays
+quiet for imported or pre-existing ones.
+
+The load-bearing change is an INVERSION, not an addition: TownWelcome.beginFirst
+now fires only when gr.townWelcome.seen.v1 === '0', where it previously fired on
+the key's ABSENCE. createProfile writes '0' at both creation branches; the two
+ProfileTransfer normalize paths force '1', so no imported ledger can arm the
+welcome uninvited (asserted with a hostile import carrying the key as 0).
+Consequence, recorded deliberately: pre-existing profiles have no key at all and
+therefore never see the welcome — that is the ruling's "never uninvited", not a
+regression.
+
+Retrigger is untouched: TownScene's replayWalk path never consults the key.
+
+DRAINED BY CHERRY-PICK OF 40ea99a4 ALONE. The branch parent 6c44c6f3
+(ap-06b-panel-ladder-and-voice) is a terminal-closed leaf that
+drain-block-check refuses with "CLOSED", so the branch could not be merged;
+only this commit's own delta was taken, verified byte-identical to
+`git diff 6c44c6f3 40ea99a4` (19,317 B, sha256 d5ae48dd03638dbb both sides).
+Zero MAIN-MOVED files: `git diff e3355002 main` over all ten code paths is
+EMPTY, so no 3-way was needed.
+
+GATES (all on the merged tree): tsc rc=0 4.4s · build rc=0 26.6s · own specs
+38/38 both projects 246s at --workers=1 (profile-first-boot, gazette-welcome,
+gazette-first-issue, trail-guide) · release suite under its own config 26/26
+rc=0 161s, the spec the master's self-check names · adjacent 83 passed
+(m3-06-demo-profiles, task-024, save-slots, board-gating-and-profiles,
+044-start-screen, restore-validation) · node-guards 156/156 · task-guards 750
+masters/0 invisible · citations rc=0 · gate-callers rc=0 · goal-tracker 2/2 ·
+drain-block-check 14/14. Zero console/page errors asserted INSIDE the specs;
+plain boot page.goto('/') with no ?debug, so Mistake #10 is answered by the
+spec rather than by opinion.
+
+THREE REDS, ALL DISCHARGED BY MEASUREMENT, NOT BY INVENTORY LOOKUP:
+restore-validation:656 both projects — clean-main CONTROL run with the graft
+parked and the subject restored byte-identical reds 2/2 with the IDENTICAL
+reason (root.hero.position.y 0.14559222393281415 != 0.2763519114255905),
+matching inventory rows 201/202 at 88.1%; run as a control precisely because
+this slice does execute inside normalizeDatum, so a title match alone was not
+sufficient. save-slots:142 mobile — 2/2 GREEN in isolation on the merged tree
+(13.0s/17.3s) against a 33.4s timeout inside a 7.6m battery, desktop green in
+that same battery; a load flake, and F-1255-1 records that it is in no
+inventory. test:power-budget — F-1253-2's known load ceiling, 0.669ms
+in-battery vs 3/3 quiet PASS at 0.352-0.361ms, and this slice touches zero
+src/systems/ bytes.
+
+BACKLOG citation re-pointed IN THIS COMMIT because this merge invalidated it:
+GG-04 renames both tests the owner's-desk item cited, so
+trail-guide.spec.ts:201 carries a new title and :223 moved to :221.
+test:citations caught it and was right.

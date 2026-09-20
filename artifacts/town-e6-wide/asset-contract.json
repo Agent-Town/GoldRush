@@ -1,0 +1,974 @@
+{
+  "blender": "5.1.2",
+  "scope": "E6 Mesa Town wide building and transform set",
+  "laws": {
+    "source": "specs/epoch-saga/e6-atomic-bundle.md \u00a7A1 and \u00a7A2",
+    "transforms": "Sunline, Glow Fence, and Isotope Institute preserve their inherited footprints",
+    "materials": "one embedded painted atlas per GLB; no emission or helpers",
+    "budget": "15,000 triangles per asset",
+    "anchors": "none invented; E6 bundle defines no emitter-anchor family"
+  },
+  "assets": {
+    "appliance_pen": {
+      "checked": {
+        "sha256": "be11b90d1cf912256f840d852abc61bbf3082c072f01cfe3ce432505c2095e3d",
+        "bytes": 1181208,
+        "meshes": 1,
+        "primitives": 1,
+        "nodes": [
+          "AppliancePenE6"
+        ],
+        "anchors": [],
+        "triangles": 4766,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "imageDimensions": [
+          [
+            1024,
+            1024
+          ]
+        ],
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -2.25,
+            0,
+            -1.65
+          ],
+          "max": [
+            2.25,
+            2.114036,
+            1.65
+          ],
+          "size": [
+            4.5,
+            2.114036,
+            3.3
+          ],
+          "center": [
+            0.0,
+            1.057018,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.9200000166893005,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "reexported": {
+        "sha256": "be11b90d1cf912256f840d852abc61bbf3082c072f01cfe3ce432505c2095e3d",
+        "bytes": 1181208,
+        "meshes": 1,
+        "primitives": 1,
+        "nodes": [
+          "AppliancePenE6"
+        ],
+        "anchors": [],
+        "triangles": 4766,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "imageDimensions": [
+          [
+            1024,
+            1024
+          ]
+        ],
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -2.25,
+            0,
+            -1.65
+          ],
+          "max": [
+            2.25,
+            2.114036,
+            1.65
+          ],
+          "size": [
+            4.5,
+            2.114036,
+            3.3
+          ],
+          "center": [
+            0.0,
+            1.057018,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.9200000166893005,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "byteIdentical": true,
+      "semanticIdentical": {
+        "meshes": true,
+        "primitives": true,
+        "nodes": true,
+        "anchors": true,
+        "triangles": true,
+        "materials": true,
+        "images": true,
+        "embeddedImages": true,
+        "imageDimensions": true,
+        "cameras": true,
+        "lights": true,
+        "animations": true,
+        "bounds": true,
+        "materialContract": true
+      },
+      "footprintGate": {
+        "actualXZ": [
+          4.5,
+          3.3
+        ],
+        "maximumXZ": [
+          4.6,
+          3.4
+        ],
+        "passed": true
+      }
+    },
+    "decay_clock": {
+      "checked": {
+        "sha256": "2b87660a3c7ee81a85c8b49b8697054f00f12cc3ff6046c6bf8be3910063f6ca",
+        "bytes": 1244632,
+        "meshes": 1,
+        "primitives": 1,
+        "nodes": [
+          "DecayClockE6"
+        ],
+        "anchors": [],
+        "triangles": 6000,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "imageDimensions": [
+          [
+            1024,
+            1024
+          ]
+        ],
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -1.66,
+            0,
+            -1.36
+          ],
+          "max": [
+            1.66,
+            6.54,
+            1.36
+          ],
+          "size": [
+            3.32,
+            6.54,
+            2.72
+          ],
+          "center": [
+            0.0,
+            3.27,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.9200000166893005,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "reexported": {
+        "sha256": "2b87660a3c7ee81a85c8b49b8697054f00f12cc3ff6046c6bf8be3910063f6ca",
+        "bytes": 1244632,
+        "meshes": 1,
+        "primitives": 1,
+        "nodes": [
+          "DecayClockE6"
+        ],
+        "anchors": [],
+        "triangles": 6000,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "imageDimensions": [
+          [
+            1024,
+            1024
+          ]
+        ],
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -1.66,
+            0,
+            -1.36
+          ],
+          "max": [
+            1.66,
+            6.54,
+            1.36
+          ],
+          "size": [
+            3.32,
+            6.54,
+            2.72
+          ],
+          "center": [
+            0.0,
+            3.27,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.9200000166893005,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "byteIdentical": true,
+      "semanticIdentical": {
+        "meshes": true,
+        "primitives": true,
+        "nodes": true,
+        "anchors": true,
+        "triangles": true,
+        "materials": true,
+        "images": true,
+        "embeddedImages": true,
+        "imageDimensions": true,
+        "cameras": true,
+        "lights": true,
+        "animations": true,
+        "bounds": true,
+        "materialContract": true
+      },
+      "footprintGate": {
+        "actualXZ": [
+          3.32,
+          2.72
+        ],
+        "maximumXZ": [
+          4.4,
+          3.2
+        ],
+        "passed": true
+      }
+    },
+    "catalog_warehouse": {
+      "checked": {
+        "sha256": "f72109125d3c036a3ac8a06004fa212f02539c762076dd9959c30cd578fcce24",
+        "bytes": 1245048,
+        "meshes": 1,
+        "primitives": 1,
+        "nodes": [
+          "CatalogWarehouseE6"
+        ],
+        "anchors": [],
+        "triangles": 5670,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "imageDimensions": [
+          [
+            1024,
+            1024
+          ]
+        ],
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -2.793385,
+            0,
+            -1.8625
+          ],
+          "max": [
+            2.793385,
+            4.345,
+            1.88
+          ],
+          "size": [
+            5.58677,
+            4.345,
+            3.7425
+          ],
+          "center": [
+            0.0,
+            2.1725,
+            0.00875
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.9200000166893005,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "reexported": {
+        "sha256": "f72109125d3c036a3ac8a06004fa212f02539c762076dd9959c30cd578fcce24",
+        "bytes": 1245048,
+        "meshes": 1,
+        "primitives": 1,
+        "nodes": [
+          "CatalogWarehouseE6"
+        ],
+        "anchors": [],
+        "triangles": 5670,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "imageDimensions": [
+          [
+            1024,
+            1024
+          ]
+        ],
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -2.793385,
+            0,
+            -1.8625
+          ],
+          "max": [
+            2.793385,
+            4.345,
+            1.88
+          ],
+          "size": [
+            5.58677,
+            4.345,
+            3.7425
+          ],
+          "center": [
+            0.0,
+            2.1725,
+            0.00875
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.9200000166893005,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "byteIdentical": true,
+      "semanticIdentical": {
+        "meshes": true,
+        "primitives": true,
+        "nodes": true,
+        "anchors": true,
+        "triangles": true,
+        "materials": true,
+        "images": true,
+        "embeddedImages": true,
+        "imageDimensions": true,
+        "cameras": true,
+        "lights": true,
+        "animations": true,
+        "bounds": true,
+        "materialContract": true
+      },
+      "footprintGate": {
+        "actualXZ": [
+          5.58677,
+          3.7425
+        ],
+        "maximumXZ": [
+          5.6,
+          3.8
+        ],
+        "passed": true
+      }
+    },
+    "sunline_mount": {
+      "checked": {
+        "sha256": "44d17919c60e294bbe977736a01ce93bf1a9f72a8ed85ca4b167a305b5cf1bbe",
+        "bytes": 463840,
+        "meshes": 1,
+        "primitives": 1,
+        "nodes": [
+          "SunlineMountE6"
+        ],
+        "anchors": [],
+        "triangles": 1346,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "imageDimensions": [
+          [
+            512,
+            512
+          ]
+        ],
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -0.675,
+            0,
+            -0.675
+          ],
+          "max": [
+            0.675,
+            1.99,
+            0.675
+          ],
+          "size": [
+            1.35,
+            1.99,
+            1.35
+          ],
+          "center": [
+            0.0,
+            0.995,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.9200000166893005,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "reexported": {
+        "sha256": "44d17919c60e294bbe977736a01ce93bf1a9f72a8ed85ca4b167a305b5cf1bbe",
+        "bytes": 463840,
+        "meshes": 1,
+        "primitives": 1,
+        "nodes": [
+          "SunlineMountE6"
+        ],
+        "anchors": [],
+        "triangles": 1346,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "imageDimensions": [
+          [
+            512,
+            512
+          ]
+        ],
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -0.675,
+            0,
+            -0.675
+          ],
+          "max": [
+            0.675,
+            1.99,
+            0.675
+          ],
+          "size": [
+            1.35,
+            1.99,
+            1.35
+          ],
+          "center": [
+            0.0,
+            0.995,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.9200000166893005,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "byteIdentical": true,
+      "semanticIdentical": {
+        "meshes": true,
+        "primitives": true,
+        "nodes": true,
+        "anchors": true,
+        "triangles": true,
+        "materials": true,
+        "images": true,
+        "embeddedImages": true,
+        "imageDimensions": true,
+        "cameras": true,
+        "lights": true,
+        "animations": true,
+        "bounds": true,
+        "materialContract": true
+      },
+      "footprintGate": {
+        "actualXZ": [
+          1.35,
+          1.35
+        ],
+        "maximumXZ": [
+          1.35,
+          1.35
+        ],
+        "passed": true
+      },
+      "sourceIntegrity": {
+        "blendSha256": "ef7a77c7c5d991cf0153a9f81a0a4bdae32ee4d5664b1d2c731e0c68c4f040cb",
+        "glbSha256": "2973dcbf4bf51d4c153398c847e6ed1a3d03d0116e901cd5a04091dd7202aab7",
+        "sourceBounds": {
+          "min": [
+            -0.675,
+            0.06,
+            -0.675
+          ],
+          "max": [
+            0.675,
+            2.05,
+            0.675
+          ],
+          "size": [
+            1.35,
+            1.99,
+            1.35
+          ],
+          "center": [
+            0.0,
+            1.055,
+            0.0
+          ]
+        }
+      }
+    },
+    "glow_fence": {
+      "checked": {
+        "sha256": "686e72c52051d6f5b54b0cfec18fcc76502476bb7f0397870255f3e42807451c",
+        "bytes": 444600,
+        "meshes": 1,
+        "primitives": 1,
+        "nodes": [
+          "GlowFenceE6"
+        ],
+        "anchors": [],
+        "triangles": 1012,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "imageDimensions": [
+          [
+            512,
+            512
+          ]
+        ],
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -0.23,
+            0,
+            -1.5
+          ],
+          "max": [
+            0.23,
+            1.04,
+            1.5
+          ],
+          "size": [
+            0.46,
+            1.04,
+            3.0
+          ],
+          "center": [
+            0.0,
+            0.52,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.9200000166893005,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "reexported": {
+        "sha256": "686e72c52051d6f5b54b0cfec18fcc76502476bb7f0397870255f3e42807451c",
+        "bytes": 444600,
+        "meshes": 1,
+        "primitives": 1,
+        "nodes": [
+          "GlowFenceE6"
+        ],
+        "anchors": [],
+        "triangles": 1012,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "imageDimensions": [
+          [
+            512,
+            512
+          ]
+        ],
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -0.23,
+            0,
+            -1.5
+          ],
+          "max": [
+            0.23,
+            1.04,
+            1.5
+          ],
+          "size": [
+            0.46,
+            1.04,
+            3.0
+          ],
+          "center": [
+            0.0,
+            0.52,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.9200000166893005,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "byteIdentical": true,
+      "semanticIdentical": {
+        "meshes": true,
+        "primitives": true,
+        "nodes": true,
+        "anchors": true,
+        "triangles": true,
+        "materials": true,
+        "images": true,
+        "embeddedImages": true,
+        "imageDimensions": true,
+        "cameras": true,
+        "lights": true,
+        "animations": true,
+        "bounds": true,
+        "materialContract": true
+      },
+      "footprintGate": {
+        "actualXZ": [
+          0.46,
+          3.0
+        ],
+        "maximumXZ": [
+          0.46,
+          3.0
+        ],
+        "passed": true
+      },
+      "sourceIntegrity": {
+        "blendSha256": "c55d7520a59286c30a4db3ac39d495d2d6d577c07b61a891e049b4a2e4725941",
+        "glbSha256": "a9841ee934fcc0035571caa4b73fc9bd9fc4827697ade631b43fe3f9c8928878",
+        "sourceBounds": {
+          "min": [
+            -0.23,
+            0,
+            -1.5
+          ],
+          "max": [
+            0.23,
+            1.04,
+            1.5
+          ],
+          "size": [
+            0.46,
+            1.04,
+            3.0
+          ],
+          "center": [
+            0.0,
+            0.52,
+            0.0
+          ]
+        }
+      }
+    },
+    "isotope_institute": {
+      "checked": {
+        "sha256": "f3de54fb073729e1b251f0809b9ea65b2f869afd9c731430454636c03351bfb3",
+        "bytes": 1760972,
+        "meshes": 1,
+        "primitives": 1,
+        "nodes": [
+          "IsotopeInstituteE6"
+        ],
+        "anchors": [],
+        "triangles": 7392,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "imageDimensions": [
+          [
+            1024,
+            1024
+          ]
+        ],
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -1.98,
+            0,
+            -1.68
+          ],
+          "max": [
+            1.98,
+            6.53,
+            1.695
+          ],
+          "size": [
+            3.96,
+            6.53,
+            3.375
+          ],
+          "center": [
+            0.0,
+            3.265,
+            0.0075
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.9200000166893005,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "reexported": {
+        "sha256": "f3de54fb073729e1b251f0809b9ea65b2f869afd9c731430454636c03351bfb3",
+        "bytes": 1760972,
+        "meshes": 1,
+        "primitives": 1,
+        "nodes": [
+          "IsotopeInstituteE6"
+        ],
+        "anchors": [],
+        "triangles": 7392,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "imageDimensions": [
+          [
+            1024,
+            1024
+          ]
+        ],
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -1.98,
+            0,
+            -1.68
+          ],
+          "max": [
+            1.98,
+            6.53,
+            1.695
+          ],
+          "size": [
+            3.96,
+            6.53,
+            3.375
+          ],
+          "center": [
+            0.0,
+            3.265,
+            0.0075
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.9200000166893005,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "byteIdentical": true,
+      "semanticIdentical": {
+        "meshes": true,
+        "primitives": true,
+        "nodes": true,
+        "anchors": true,
+        "triangles": true,
+        "materials": true,
+        "images": true,
+        "embeddedImages": true,
+        "imageDimensions": true,
+        "cameras": true,
+        "lights": true,
+        "animations": true,
+        "bounds": true,
+        "materialContract": true
+      },
+      "footprintGate": {
+        "actualXZ": [
+          3.96,
+          3.375
+        ],
+        "maximumXZ": [
+          4.4,
+          3.4
+        ],
+        "passed": true
+      },
+      "sourceIntegrity": {
+        "blendSha256": "6cb1105354fb87625153e7445217892154081adf4a7bf4b27426db9bbf4dcc64",
+        "glbSha256": "941076bc0b4fdd4a50709785c65de18df2398b0472cc87998ab58d1a20db2c7d",
+        "sourceBounds": {
+          "min": [
+            -1.98,
+            0,
+            -1.68
+          ],
+          "max": [
+            1.98,
+            5.6,
+            1.695
+          ],
+          "size": [
+            3.96,
+            5.6,
+            3.375
+          ],
+          "center": [
+            0.0,
+            2.8,
+            0.0075
+          ]
+        }
+      }
+    }
+  },
+  "visualEvidence": {
+    "path": "artifacts/town-e6-wide/visual-evidence-contract.json",
+    "baseSha": "1a58335f65645b8491e50763e10a32d12d8696f1",
+    "diffRatio16": 0.0937060546875,
+    "edgeEnergyRatio": 1.3512823581695557,
+    "renderCount": 12
+  }
+}

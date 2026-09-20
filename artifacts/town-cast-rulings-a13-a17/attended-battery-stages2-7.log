@@ -1,0 +1,132 @@
+ticker stats checks passed (populated, empty, failures, invalid shape, endpoint diagnostic, poison control, shared URL, JSON)
+
+> gold-rush@0.1.0 test:findings-state
+> node scripts/findings-state-guard.mjs
+
+declared subjects : 656
+declared closed   : 472
+declared open     : 184
+double-state      : 0
+wide-open advisory : 373 skipped marker-led rows; 7 F-IDs open only there; 0 narrow closed-only
+findings-state-guard: PASS
+
+> gold-rush@0.1.0 test:blocker-panel
+> node scripts/blocker-panel-closed-guard.mjs
+
+panel rows        : 37
+rows with an F-ID : 36
+census closed     : 582
+closed-on-panel   : 0
+blocker-panel-closed-guard: PASS
+
+> gold-rush@0.1.0 test:ruling-propagation
+> node scripts/ruling-propagation-guard.mjs
+
+ruling-propagation: 6 findings recorded RULED · 66 goal leaves still refuse work · 0 stale
+  reason corpus     : 58/66 refusals state their basis under a key this guard reads · 8 DECLARED UNREAD
+      unread: stopped     b4v3-picnic-active-defense  [note_s2131, note]
+      unread: stopped     b4v2-picnic-stake-pressure  [note_s2090, note_s2088, note_s2089, note_s2139, note]
+      unread: stopped     f2251-1-county-board-red  [note_s2251b, note]
+      unread: superseded  art-jumper-rotation-retake  [note_s_att_20260824, note_s2249, note]
+      unread: superseded  lane-vp-02b-jumper-slot-red  [authorNotes, drainNotes]
+      unread: superseded  lane-c-f1148-1-trajectory-split  [authorNotes, drainNotes]
+      unread: superseded  jumper-8way-wiring  [note_s_att_20260824]
+      unread: superseded  ap-orders-adapter-wiring  [note]
+PASS — no READABLE refusal cites a finding the owner has already ruled. 8 refusal(s) state their basis in a narrative field this guard does not scan; their text is above.
+
+> gold-rush@0.1.0 test:desk-declaration
+> node scripts/desk-declaration-guard.mjs scripts/e10-squall-scheduler.test.mjs scripts/board-tape-gold.test.mjs scripts/contract-hero-grit-override.test.mjs scripts/run-tape-envelope-budget.test.mjs scripts/e10-preserve-consumer.test.mjs scripts/hero-move-verb.test.mjs scripts/e8-regolith-gate-override.test.mjs scripts/first-town-request-families.test.mjs scripts/relay-rush-reel.test.mjs scripts/e8-crossing-gate-override.test.mjs scripts/sprite-cell-url-inlining.test.mjs scripts/eclipse-winnable.test.mjs scripts/profile-data-key-sweep.test.mjs scripts/gr-sim-resume-tape-safety.test.mjs scripts/hero-clip-groups.test.mjs scripts/e8-air-suit-human.test.mjs scripts/rider-parity-reach.test.mjs scripts/repair-under-radius.test.mjs scripts/rider-parity-retirement.test.mjs scripts/rider-parity-context-press.test.mjs
+
+=== desk-declaration-guard ===
+corpus tree       : linked-worktree
+desk F-IDs        : 7
+desk slugs        : 0
+🔺 desk segments  : 6
+unexamined        : 0
+with a BACKLOG row: 7
+undeclared        : 0 (grandfathered 0)
+PASS — every non-grandfathered desk item has a declaring row.
+nul-audit: corpus 21905 text subject(s) — 21590 read, 315 empty.
+nul-audit: excluded 14016 known-binary, 106 UNCLASSIFIED of 36027 tracked file(s).
+  ⓘ  UNCLASSIFIED (not audited, not known-binary): .cpuprofile×29 .bak×12 (no extension)×12 .exit×6 .pid×5 .summary×5 .viewlog×4 .stale×4 .req×4 .hold×3 .sha256×3 .db-shm×2 .db-wal×2 .stderr×2 .timer×2 .stranded-1e057810×1 .lock×1 .attested×1 .progress×1 .disabled×1 .blocked-seen×1 .salvaged×1 .sha×1 .probe×1 .cured×1 .mts×1
+     Add each to TEXT_EXT or BINARY_EXT — this list is how a new suffix
+     announces itself instead of silently leaving the corpus.
+nul-audit: CLEAN — no raw NUL bytes in tracked text sources.
+
+> gold-rush@0.1.0 test:review-fixes
+> node --test --test-concurrency=1 scripts/review-mixed-hashes.test.mjs scripts/review-party-retention.test.mjs scripts/review-save-names.test.mjs scripts/review-wrecked-turrets.test.mjs
+
+✔ browser-only: matching peer, remote after local (0.986542ms)
+✔ browser-only: mismatching peer, remote after local (0.188334ms)
+✔ browser-only: matching peer, remote before local (0.120792ms)
+✔ browser-only: mismatching peer, remote before local (0.103417ms)
+✔ mixed: matching peer, remote after local (0.127541ms)
+✔ mixed: mismatching peer, remote after local (0.109541ms)
+✔ mixed: matching peer, remote before local (0.101708ms)
+✔ mixed: mismatching peer, remote before local (0.091ms)
+✔ headless-only: matching peer, remote after local (0.085667ms)
+✔ headless-only: mismatching peer, remote after local (0.1415ms)
+✔ headless-only: matching peer, remote before local (0.069ms)
+✔ headless-only: mismatching peer, remote before local (0.048333ms)
+✔ a thin seat, unknown ID, or self hash cannot satisfy or poison the browser quorum (0.081833ms)
+✔ one browser with thin seats ignores their incompatible hashes (0.064875ms)
+✔ headless-only rooms require each headless peer (0.054875ms)
+✔ thin seats keep hash exchange disabled (0.301125ms)
+✔ an outstanding comparison keeps the roster of its sampled tick after a peer leaves (0.28125ms)
+✔ later ticks use the smaller roster and ignore a departed peer (0.10125ms)
+✔ snapshot compression keeps the sampled quorum even when the roster changes before encoding finishes (6.178083ms)
+party retention checks passed (party sizes 1–4, top-100/leftover bounds, replay survival, archives, rotations)
+✔ scripts/review-party-retention.test.mjs (659.1815ms)
+(node:33906) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ the untouched default saves and remains readable on the manual shelf (3.533417ms)
+✔ legal town names and the fallback fit every supported wave digit count (16.740375ms)
+✔ manual input keeps its punctuation, reserved-name, profanity, and duplicate checks (0.323916ms)
+(node:33908) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+✔ later-era mounts stop on wreck or suspension and return on repair with stable relay IDs (2245.428167ms)
+ℹ tests 24
+ℹ suites 0
+ℹ pass 24
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4005.419834
+rc=0

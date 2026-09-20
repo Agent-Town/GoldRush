@@ -1,0 +1,24 @@
+ 1451 total, 9 running, 1442 sleeping, 7319 threads 
+2026/07/30 20:37:35
+Load Avg: 9.35, 4.54, 6.45 
+CPU usage: 37.74% user, 11.48% sys, 50.77% idle 
+SharedLibs: 1631M resident, 200M data, 206M linkedit.
+MemRegions: 0 total, 0B resident, 1117M private, 22G shared.
+PhysMem: 113G used (8002M wired, 19G compressor), 14G unused.
+VM: 632T vsize, 6144M framework vsize, 586736(0) swapins, 1397593(0) swapouts.
+Networks: packets: 1565060698/8160G in, 1732374121/8361G out.
+Disks: 464852486/5728G read, 638919866/20T written.
+
+PID    COMMAND          %CPU #TH    STATE   
+97830  node             78.7 13/2   running 
+97829  node             75.0 13/1   running 
+98130  node             52.1 13     sleeping
+98134  Google Chrome fo 48.7 46/1   running 
+98145  Google Chrome fo 40.5 65/2   running 
+0      kernel_task      22.8 822/17 running 
+64183  com.apple.Virtua 20.2 37     sleeping
+97805  node             19.9 53     sleeping
+97875  Google Chrome fo 17.4 19     sleeping
+97873  Google Chrome fo 17.2 19     sleeping
+98140  Google Chrome fo 16.3 21/3   running 
+97896  Google Chrome fo 15.4 44     sleeping

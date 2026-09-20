@@ -1,0 +1,76 @@
+s1253 duty re-run (post teardown fix)
+
+##### test:node-guards rc=1 33.9s #####
+✔ reducer output is script-root-invariant (1696.21725ms)
+✔ reducer renders absolute raw paths relative to the recorded tree (674.107875ms)
+✔ reducer refuses body statistics when the recorded tree is unavailable (1573.362833ms)
+✔ an unresolved masking row never outranks a resolved row (675.362875ms)
+✔ townEraProps resolves its manifests under plain node, not only under Vite (152.100167ms)
+✔ town specs collect without loading Vite-only modules (4405.402042ms)
+✔ whole suite collects without loading Vite-only modules (8958.488666ms)
+✔ every functions/**/*.ts is type-checked (19652.656917ms)
+ℹ tests 156
+ℹ suites 0
+ℹ pass 155
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 33763.55
+
+✖ failing tests:
+
+test at scripts/fixture-teardown.test.mjs:24:1
+✖ all 13 scripts/*.test.mjs fixture owners remove their temp directories (15610.850459ms)
+  AssertionError [ERR_ASSERTION]: scripts/gate-caller-audit.test.mjs calls mkdtemp but yielded 0 extractable literal prefixes
+      at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/Gold%20Rush/scripts/fixture-teardown.test.mjs:31:12)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+
+##### test:guards (FULL) rc=1 121.7s #####
+FAIL  rc=1  30s  test:node-guards
+PASS  rc=0  0s  test:power-budget  p95=0.342ms
+PASS  rc=0  4s  test:stats
+PASS  rc=0  2s  test:accounts
+PASS  rc=0  4s  test:mp
+PASS  rc=0  79s  test:deploy-contract
+PASS  rc=0  1s  test:deploy-site-contract
+PASS  rc=0  0s  test:task-guards
+PASS  rc=0  0s  test:citations
+PASS  rc=0  0s  test:gate-callers
+
+--- test:node-guards (rc=1) last 20 lines ---
+ℹ todo 0
+ℹ duration_ms 30191.83025
+
+✖ failing tests:
+
+test at scripts/fixture-teardown.test.mjs:24:1
+✖ all 13 scripts/*.test.mjs fixture owners remove their temp directories (16347.397167ms)
+  AssertionError [ERR_ASSERTION]: scripts/gate-caller-audit.test.mjs calls mkdtemp but yielded 0 extractable literal prefixes
+      at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/Gold%20Rush/scripts/fixture-teardown.test.mjs:31:12)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+guards: 9/10 passed -- RED: test:node-guards
+
+

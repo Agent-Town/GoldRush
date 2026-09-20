@@ -1,0 +1,9 @@
+{
+  "paleRgb": "83,70,67",
+  "targetRgb": "84,69,40",
+  "chromaSignalSteps": 16,
+  "neededSteps": 44,
+  "chromaGain": 2.75,
+  "outputBandStep": 2.75,
+  "note": "post-ACES 8-bit regrade must expand a 16-step chroma signal to 44 steps: ~2.75-step output banding across a smooth gradient; the shader seam does the same operation on float HDR pre-tonemap with zero quantisation. Plus: framebuffer copy per frame at night (the cost class LightRig sheds FIRST and never runs at night today), screen-space pool projection plumbing, and it regrades sprite pixels inside the disc where e1-night-shift VISIBLE_LIGHT floors (0.35) sit."
+}

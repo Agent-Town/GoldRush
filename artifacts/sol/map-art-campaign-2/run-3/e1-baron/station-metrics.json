@@ -1,0 +1,335 @@
+{
+  "method": "Binary geometry masks with actual persistent HUD panels, pause control, world-info note and touch controls retained. Story cards and wave/agent announcements excluded only from the labelled diagnostic mask; normal-HUD frames are retained. Percentages count on-screen body pixels; sub-0.1% edge differences are not claimed as meaningful occlusion.",
+  "rows": [
+    {
+      "arm": "before",
+      "width": 1280,
+      "focus": "fortified_far_bank",
+      "back": "entry",
+      "hero": {
+        "x": 0,
+        "y": 0.573093113899231,
+        "z": 12
+      },
+      "water": [],
+      "bodyPixels": 22192,
+      "persistentHudCoveragePercent": 0.0
+    },
+    {
+      "arm": "before",
+      "width": 1280,
+      "focus": "fortified_far_bank",
+      "back": 5,
+      "hero": {
+        "x": 0,
+        "y": 0.4017898654937749,
+        "z": -5.8
+      },
+      "water": [],
+      "bodyPixels": 130066,
+      "persistentHudCoveragePercent": 0.0015376808697122998
+    },
+    {
+      "arm": "before",
+      "width": 1280,
+      "focus": "seized_headframe",
+      "back": 3,
+      "hero": {
+        "x": -13,
+        "y": 0.5370255386829377,
+        "z": 16
+      },
+      "water": [],
+      "bodyPixels": 17174,
+      "persistentHudCoveragePercent": 0.0
+    },
+    {
+      "arm": "before",
+      "width": 1280,
+      "focus": "oxblood_banners",
+      "back": "entry",
+      "hero": {
+        "x": 0,
+        "y": 0.573093113899231,
+        "z": 12
+      },
+      "water": [],
+      "bodyPixels": 3167,
+      "persistentHudCoveragePercent": 0.0
+    },
+    {
+      "arm": "after",
+      "width": 1280,
+      "focus": "fortified_far_bank",
+      "back": "entry",
+      "hero": {
+        "x": 0,
+        "y": 0.573093113899231,
+        "z": 12
+      },
+      "water": [
+        {
+          "name": "SculptLivingWater",
+          "visible": true,
+          "y": -0.0455359983444214,
+          "depthTest": true,
+          "depthWrite": false
+        }
+      ],
+      "bodyPixels": 22192,
+      "persistentHudCoveragePercent": 0.0
+    },
+    {
+      "arm": "after",
+      "width": 1280,
+      "focus": "fortified_far_bank",
+      "back": 5,
+      "hero": {
+        "x": 0,
+        "y": 0.4017898654937749,
+        "z": -5.8
+      },
+      "water": [
+        {
+          "name": "SculptLivingWater",
+          "visible": true,
+          "y": -0.0455359983444214,
+          "depthTest": true,
+          "depthWrite": false
+        }
+      ],
+      "bodyPixels": 130063,
+      "persistentHudCoveragePercent": 0.0
+    },
+    {
+      "arm": "after",
+      "width": 1280,
+      "focus": "seized_headframe",
+      "back": 3,
+      "hero": {
+        "x": -13,
+        "y": 0.5370255386829377,
+        "z": 16
+      },
+      "water": [
+        {
+          "name": "SculptLivingWater",
+          "visible": true,
+          "y": -0.0455359983444214,
+          "depthTest": true,
+          "depthWrite": false
+        }
+      ],
+      "bodyPixels": 17174,
+      "persistentHudCoveragePercent": 0.0
+    },
+    {
+      "arm": "after",
+      "width": 1280,
+      "focus": "oxblood_banners",
+      "back": "entry",
+      "hero": {
+        "x": 0,
+        "y": 0.573093113899231,
+        "z": 12
+      },
+      "water": [
+        {
+          "name": "SculptLivingWater",
+          "visible": true,
+          "y": -0.0455359983444214,
+          "depthTest": true,
+          "depthWrite": false
+        }
+      ],
+      "bodyPixels": 9386,
+      "persistentHudCoveragePercent": 0.0,
+      "primaryStandard": {
+        "projectedBounds": {
+          "minX": 506.13549721812615,
+          "maxX": 581.3709241660952,
+          "minY": 348.3180595990032,
+          "maxY": 449.31557437523406
+        },
+        "maskRect": [
+          500,
+          342,
+          588,
+          456
+        ],
+        "pixels": 2938,
+        "persistentHudCoveragePercent": 0.0,
+        "motionOver650ms": {
+          "changedAbove10RgbPercent": 10.287081339712918,
+          "meanAbsoluteMaxRgbDelta": 4.2625598086124405,
+          "limitation": "Fixed primary-standard region, original camera and frozen sim. Screen-space indication includes incidental background changes; the unchanged source-bound sway shader is the animation owner."
+        }
+      }
+    },
+    {
+      "arm": "before",
+      "width": 390,
+      "focus": "fortified_far_bank",
+      "back": "entry",
+      "hero": {
+        "x": 0,
+        "y": 0.573093113899231,
+        "z": 12
+      },
+      "water": [],
+      "bodyPixels": 3202,
+      "persistentHudCoveragePercent": 100.0
+    },
+    {
+      "arm": "before",
+      "width": 390,
+      "focus": "fortified_far_bank",
+      "back": 5,
+      "hero": {
+        "x": 0,
+        "y": 0.4017898654937749,
+        "z": -5.8
+      },
+      "water": [],
+      "bodyPixels": 46780,
+      "persistentHudCoveragePercent": 3.251389482684908
+    },
+    {
+      "arm": "before",
+      "width": 390,
+      "focus": "seized_headframe",
+      "back": 3,
+      "hero": {
+        "x": -13,
+        "y": 0.5370255386829377,
+        "z": 16
+      },
+      "water": [],
+      "bodyPixels": 19128,
+      "persistentHudCoveragePercent": 0.010455876202425763
+    },
+    {
+      "arm": "before",
+      "width": 390,
+      "focus": "oxblood_banners",
+      "back": "entry",
+      "hero": {
+        "x": 0,
+        "y": 0.573093113899231,
+        "z": 12
+      },
+      "water": [],
+      "bodyPixels": 3366,
+      "persistentHudCoveragePercent": 66.13190730837789
+    },
+    {
+      "arm": "after",
+      "width": 390,
+      "focus": "fortified_far_bank",
+      "back": "entry",
+      "hero": {
+        "x": 0,
+        "y": 0.573093113899231,
+        "z": 12
+      },
+      "water": [
+        {
+          "name": "SculptLivingWater",
+          "visible": true,
+          "y": -0.0455359983444214,
+          "depthTest": true,
+          "depthWrite": false
+        }
+      ],
+      "bodyPixels": 3202,
+      "persistentHudCoveragePercent": 100.0
+    },
+    {
+      "arm": "after",
+      "width": 390,
+      "focus": "fortified_far_bank",
+      "back": 5,
+      "hero": {
+        "x": 0,
+        "y": 0.4017898654937749,
+        "z": -5.8
+      },
+      "water": [
+        {
+          "name": "SculptLivingWater",
+          "visible": true,
+          "y": -0.0455359983444214,
+          "depthTest": true,
+          "depthWrite": false
+        }
+      ],
+      "bodyPixels": 46780,
+      "persistentHudCoveragePercent": 3.251389482684908
+    },
+    {
+      "arm": "after",
+      "width": 390,
+      "focus": "seized_headframe",
+      "back": 3,
+      "hero": {
+        "x": -13,
+        "y": 0.5370255386829377,
+        "z": 16
+      },
+      "water": [
+        {
+          "name": "SculptLivingWater",
+          "visible": true,
+          "y": -0.0455359983444214,
+          "depthTest": true,
+          "depthWrite": false
+        }
+      ],
+      "bodyPixels": 19126,
+      "persistentHudCoveragePercent": 0.0
+    },
+    {
+      "arm": "after",
+      "width": 390,
+      "focus": "oxblood_banners",
+      "back": "entry",
+      "hero": {
+        "x": 0,
+        "y": 0.573093113899231,
+        "z": 12
+      },
+      "water": [
+        {
+          "name": "SculptLivingWater",
+          "visible": true,
+          "y": -0.0455359983444214,
+          "depthTest": true,
+          "depthWrite": false
+        }
+      ],
+      "bodyPixels": 8313,
+      "persistentHudCoveragePercent": 26.76530734993384,
+      "primaryStandard": {
+        "projectedBounds": {
+          "minX": 53.7733255972559,
+          "maxX": 133.1465596747025,
+          "minY": 367.47576841869443,
+          "maxY": 474.0284438588606
+        },
+        "maskRect": [
+          47,
+          361,
+          140,
+          481
+        ],
+        "pixels": 3285,
+        "persistentHudCoveragePercent": 0.0,
+        "motionOver650ms": {
+          "changedAbove10RgbPercent": 14.229390681003585,
+          "meanAbsoluteMaxRgbDelta": 5.235304659498208,
+          "limitation": "Fixed primary-standard region, original camera and frozen sim. Screen-space indication includes incidental background changes; the unchanged source-bound sway shader is the animation owner."
+        }
+      }
+    }
+  ]
+}

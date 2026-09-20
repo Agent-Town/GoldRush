@@ -1,0 +1,14 @@
+import fs from 'node:fs';
+
+const INSERT = ' 🟥 **AND THE LAST ACT FOUND A GUARD THAT HAD BEEN PASSING ON A THREE-DAY-STALE DESK — F-1471-3, the most reusable thing in this fire.** `test:ledger-guards` went **rc=1** on `desk-declaration-guard`, which had returned a confident `desk F-IDs: 145 · undeclared: 0 · PASS` during the drain battery two hours earlier. Both numbers were honest; they were about **different lines**. `scripts/desk-declaration-guard.mjs:93` takes the **first** STATUS.md line containing the literal `OWNER DESK`, and fires write the possessive **OWNER-apostrophe-S DESK**, which does not contain that substring — so line-1 never matched and it fell through to the newest **archived** bullet using the bare form: **line 106, s1414 desk of 2026-08-03.** ⚠️ **IT FAILS OPEN, WHICH IS EXACTLY WHY IT SURVIVED: archived desks are by construction already declared**, so the guard reports a clean board every time it reads the wrong one. It surfaced only because this handoff happened to write the bare form, at which point the live desk resolved (**7 F-IDs**) and **4 undeclared items appeared instantly** — F-1461-1/4/5/6, every one of them buried inside ANOTHER finding row and **three inside rows marked ✅ SHIPPED**, the F-1328-3 shape the guard exists to catch. 💡 **The guard own header at `:55` already states the principle it violates** (*"a guard that cannot find the desk list, or finds zero F-IDs in it, must NOT pass"*): it refuses on **zero** F-IDs but has no refusal for **finding the wrong line**, and a stale desk is indistinguishable from a fresh one by count alone. ✅ **All four given declaring rows this fire; guard re-run reads the LIVE desk 7/7, PASS.** 🚫 **DO NOT "fix" this by standardising the prose** — that re-hides it behind a convention no mechanism enforces. The cure is to match both forms **and refuse unless the matched line is line-1**. ⚠️ **UNTIL THAT LANDS, A FIRE THAT WRITES THE POSSESSIVE FORM SILENTLY BLINDS THIS GUARD AGAIN.**';
+
+const p = 'STATUS.md';
+const lines = fs.readFileSync(p, 'utf8').split('\n');
+const marker = ' **NEXT: (A)**';
+const i = lines[0].indexOf(marker);
+if (i < 0) { console.error('marker not found'); process.exit(1); }
+if (lines[0].includes('F-1471-3')) { console.log('already amended'); process.exit(0); }
+lines[0] = lines[0].slice(0, i) + INSERT + lines[0].slice(i);
+lines[0] = lines[0].replace('**(F)** F-1461-1 + F-1461-5 runner fixes (attended, inert until the runner restarts).', '**(F)** F-1461-1 + F-1461-5 runner fixes (attended, inert until the runner restarts). **(G)** 🟥 **F-1471-3 — cure the desk guard fail-open** (match both desk spellings AND refuse unless the matched line is line-1; prove it fails CLOSED on a fixture).');
+fs.writeFileSync(p, lines.join('\n'));
+console.log('amended; line-1 chars', lines[0].length);

@@ -1,0 +1,109 @@
+✖ all 140 scripts/*.test.mjs fixture owners remove their temp directories (677552.017417ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 677626.019
+
+✖ failing tests:
+
+test at scripts/fixture-teardown.test.mjs:32:1
+✖ all 140 scripts/*.test.mjs fixture owners remove their temp directories (677552.017417ms)
+  AssertionError [ERR_ASSERTION]: scripts/law-pointer-guard.test.mjs child failed:
+  ✔ a correctly-pointed law passes once baselined (69.849917ms)
+  ✔ CODE-SIDE ROT: the cited line moves under a fixed coordinate -> POINTER DRIFT (the fire.md :315 shape) (68.361875ms)
+  ✔ LAW-SIDE ROT: the law is edited to a stale coordinate -> red until re-verified (the F-1276-2 shape) (68.637ms)
+  ✔ a pointer past EOF is caught as OUT OF RANGE, not silently skipped (34.410209ms)
+  ✔ a pointer to a file that does not exist fails rather than being ignored (35.091417ms)
+  ✔ prose that is not a file:line is not mistaken for a pointer (34.88325ms)
+  ✔ a MISSING law surface is itself a red — the law cannot be checked if it is gone (37.108625ms)
+  ✖ THE REAL TREE: every law-surface pointer in this repo currently holds (288.066083ms)
+  ✔ MARKDOWN TARGET: a law surface citing another .md by coordinate is checked, not skipped (F-1278-2) (102.159167ms)
+  ✔ BOUNDARY: a NEW law surface outside the closed SURFACES list is NAMED (pre-cure it is invisible) (103.307ms)
+  ✔ BOUNDARY: a DECLARED exclusion prints its reason instead of the undeclared prompt (71.25425ms)
+  ✔ BOUNDARY: the live/frozen split is DERIVED from the file, so a new handoff cannot rot it (103.455584ms)
+  ✔ BOUNDARY: a law-surface-shaped file with NO citations is reported as costless, not as a problem (66.808958ms)
+  ✔ BOUNDARY: a file already IN SURFACES is never named as unscanned, and a red still reds (100.406709ms)
+  ✔ GOAL LEDGER ROT: a live non-terminal blockedReason pointer moves -> red names the leaf (105.645ms)
+  ✔ BACKLOG COORDINATE BAN: live leaves red, --update cannot bury it, terminal history stays out (169.893042ms)
+  ✔ DEAD INSTRUMENT: a law ordering fires to run a tool that does not exist is a red (F-2198-1) (36.318208ms)
+  ✔ a bare citation to a tool that EXISTS resolves and does not red (34.484583ms)
+  ✔ a citation WITH a coordinate stays POINTER-owned and is not counted as an instrument (67.16375ms)
+  ✔ SCAN SPACE: declared on the HAPPY path too — a declaration that appears only on failure re-creates the ambiguity it removes (F-2208-1) (99.934375ms)
+  ✔ SCAN SPACE: DERIVED from the families it enumerates, never transcribed (133.215208ms)
+  ✔ SCAN SPACE (reverse control): the edge is DECLARED, not widened — a law-shaped .md outside the families stays unscanned (66.87925ms)
+  ℹ tests 22
+  ℹ suites 0
+  ℹ pass 21
+  ℹ fail 1
+  ℹ cancelled 0
+  ℹ skipped 0
+  ℹ todo 0
+  ℹ duration_ms 1942.078208
+  
+  ✖ failing tests:
+  
+  test at scripts/law-pointer-guard.test.mjs:135:1
+  ✖ THE REAL TREE: every law-surface pointer in this repo currently holds (288.066083ms)
+    AssertionError [ERR_ASSERTION]: law-pointer-guard is RED on the real tree:
+    law-pointer-guard — do the law surfaces still point at what they claim?
+      surfaces      : 7  (6 law surface(s) + tasks/goals.json)
+      scan space    : 3 famil(ies), 13 candidate(s) — <root>/*.md (6), scripts/*.md (2), .claude/skills/*/SKILL.md (5)
+                      a law surface OUTSIDE these is invisible to BOTH lists (F-2342-1)
+      NOT SCANNED   : 7 law-surface-shaped file(s) outside the closed SURFACES list —
+          STATUS.md  (3762 citation(s), 2 in LIVE law bullets)
+            reason: Its lettered `s9<letter>` law bullets ARE live law (fire.md §0 orders every fire to read them), but almost every citation it carries sits in frozen `- **sNNNN handoff` archives whose coordinates are DELIBERATELY stale — the RETENTION LAW restates rather than deletes, so the drift IS the provenance. Guarding those would red forever and be excused into uselessness inside a week (F-1460-1, the `cross-engine` fate). Measured s2197: both live law-bullet pointers were accurate.
+          TASK-8DIR.md  (no citations — exclusion costs nothing)
+          TASK.md  (no citations — exclusion costs nothing)
+          codex-art-run-map-repairs-claim-boat.md  (no citations — exclusion costs nothing)
+          scripts/run-crafting-pipeline.md  (no citations — exclusion costs nothing)
+          .claude/skills/higgsfield-brandkit/SKILL.md  (no citations — exclusion costs nothing)
+          .claude/skills/higgsfield-generate/SKILL.md  (no citations — exclusion costs nothing)
+      pointers      : 73  (checked 71, illustrative 2, known-rotten 0)
+      instruments   : 80  (resolved 80, dead 0, illustrative 0)
+    
+    FAIL — 1 law-surface problem(s):
+      POINTER DRIFT scripts/fire.md -> fixture-teardown.test.mjs:35
+          was: "const run = spawnSync(process.execPath, ['--test', '--test-reporter=spec', file], {"
+          now: ""
+          The cited line changed. Re-read it: does it still support the claim? Re-base or repoint, then --update.
+    
+    A rotted pointer does not condemn its claim — but in a law it manufactures a false accusation. Re-read, then re-base.
+    
+    
+    1 !== 0
+    
+        at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/Gold%20Rush/scripts/law-pointer-guard.test.mjs:137:10)
+        at Test.runInAsyncScope (node:async_hooks:226:14)
+        at Test.run (node:internal/test_runner/test:1382:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+        at Test.postRun (node:internal/test_runner/test:1522:19)
+        at Test.run (node:internal/test_runner/test:1447:12)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+      generatedMessage: false,
+      code: 'ERR_ASSERTION',
+      actual: 1,
+      expected: 0,
+      operator: 'strictEqual',
+      diff: 'simple'
+    }
+  
+  
+  1 !== 0
+  
+      at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/Gold%20Rush/scripts/fixture-teardown.test.mjs:48:14)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+rc=1

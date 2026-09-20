@@ -1,0 +1,247 @@
+CMD=npx playwright test e2e/release-build.spec.ts
+(no --config: uses playwright.config.ts)
+RC=1
+SECONDS=201.1
+=== STDOUT ===
+
+Running 26 tests using 2 workers
+
+  ✓   2 [mobile-chrome] › e2e/release-build.spec.ts:21:1 › first player reaches textured town actors and places a Dry Gulch spring sluice (43.0s)
+  ✓   3 [mobile-chrome] › e2e/release-build.spec.ts:99:3 › the-claim boots through the E1 release door (1.8s)
+  ✓   1 [desktop-chrome] › e2e/release-build.spec.ts:21:1 › first player reaches textured town actors and places a Dry Gulch spring sluice (45.2s)
+  ✓   4 [mobile-chrome] › e2e/release-build.spec.ts:99:3 › e1-dry-gulch boots through the E1 release door (2.7s)
+  ✓   5 [desktop-chrome] › e2e/release-build.spec.ts:99:3 › the-claim boots through the E1 release door (2.4s)
+  ✓   6 [mobile-chrome] › e2e/release-build.spec.ts:99:3 › e1-night-shift boots through the E1 release door (3.0s)
+  ✓   7 [desktop-chrome] › e2e/release-build.spec.ts:99:3 › e1-dry-gulch boots through the E1 release door (3.1s)
+  ✓   8 [mobile-chrome] › e2e/release-build.spec.ts:99:3 › e1-twin-banks boots through the E1 release door (2.9s)
+  ✓   9 [desktop-chrome] › e2e/release-build.spec.ts:99:3 › e1-night-shift boots through the E1 release door (3.9s)
+  ✓  10 [mobile-chrome] › e2e/release-build.spec.ts:99:3 › e1-baron boots through the E1 release door (2.9s)
+  ✓  11 [desktop-chrome] › e2e/release-build.spec.ts:99:3 › e1-twin-banks boots through the E1 release door (3.5s)
+  ✓  12 [mobile-chrome] › e2e/release-build.spec.ts:109:1 › the schoolhouse ledger opens clean on a progressed frontier save (2.7s)
+  ✓  13 [desktop-chrome] › e2e/release-build.spec.ts:99:3 › e1-baron boots through the E1 release door (3.5s)
+  ✓  15 [desktop-chrome] › e2e/release-build.spec.ts:109:1 › the schoolhouse ledger opens clean on a progressed frontier save (3.0s)
+  ✘  14 [mobile-chrome] › e2e/release-build.spec.ts:127:1 › debug and era query seams are inert (44.5s)
+  ✘  16 [desktop-chrome] › e2e/release-build.spec.ts:127:1 › debug and era query seams are inert (45.4s)
+  ✘  17 [mobile-chrome] › e2e/release-build.spec.ts:150:1 › an imported later ledger heals to the frontier and plays (4.8s)
+  ✘  18 [desktop-chrome] › e2e/release-build.spec.ts:150:1 › an imported later ledger heals to the frontier and plays (6.4s)
+  ✘  19 [mobile-chrome] › e2e/release-build.spec.ts:185:1 › later flagship URLs decline to the Claim (43.9s)
+  ✓  21 [mobile-chrome] › e2e/release-build.spec.ts:195:1 › a forged locked launch declines to the Claim (2.4s)
+  ✓  22 [mobile-chrome] › e2e/release-build.spec.ts:204:1 › a legitimate suspend resumes its unlocked contract (2.9s)
+
+  ✓  23 [mobile-chrome] › e2e/release-build.spec.ts:215:1 › dist has no later manifest ids or plate/GLB assets (219ms)
+  ✘  20 [desktop-chrome] › e2e/release-build.spec.ts:185:1 › later flagship URLs decline to the Claim (44.7s)
+  ✓  24 [desktop-chrome] › e2e/release-build.spec.ts:195:1 › a forged locked launch declines to the Claim (2.2s)
+  ✓  25 [desktop-chrome] › e2e/release-build.spec.ts:204:1 › a legitimate suspend resumes its unlocked contract (2.5s)
+
+  ✓  26 [desktop-chrome] › e2e/release-build.spec.ts:215:1 › dist has no later manifest ids or plate/GLB assets (202ms)
+
+
+  1) [desktop-chrome] › e2e/release-build.spec.ts:127:1 › debug and era query seams are inert ──────
+
+    Test timeout of 30000ms exceeded.
+
+    Error: page.waitForFunction: Test timeout of 30000ms exceeded.
+
+      269 |
+      270 | async function waitForContract(page: Page, contractId: string): Promise<void> {
+    > 271 |   await page.waitForFunction((id) =>
+          |              ^
+      272 |     window.__THREE_GAME_DIAGNOSTICS__?.contract.activeId === id && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10,
+      273 |   contractId);
+      274 | }
+        at waitForContract (/Users/robin/Claude/Projects/Gold Rush/e2e/release-build.spec.ts:271:14)
+        at /Users/robin/Claude/Projects/Gold Rush/e2e/release-build.spec.ts:131:9
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/release-build-debug-and-era-query-seams-are-inert-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/release-build-debug-and-era-query-seams-are-inert-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/release-build-debug-and-era-query-seams-are-inert-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/release-build-debug-and-era-query-seams-are-inert-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [desktop-chrome] › e2e/release-build.spec.ts:150:1 › an imported later ledger heals to the frontier and plays 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "epoch-1-frontier"
+    Received: "epoch-7-signal"
+
+      178 |   await page.goto('/?contract=the-claim');
+      179 |   await waitForContract(page, 'the-claim');
+    > 180 |   expect(await page.evaluate((key) => localStorage.getItem(key), profileDataKey(importedId, ACTIVE_EPOCH_KEY))).toBe(FRONTIER);
+          |                                                                                                                 ^
+      181 |   expect(await page.evaluate((key) => localStorage.getItem(key), profileDataKey(importedId, futureResearchKey))).not.toBeNull();
+      182 |   expect(errors).toEqual([]);
+      183 | });
+        at /Users/robin/Claude/Projects/Gold Rush/e2e/release-build.spec.ts:180:113
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/release-build-an-imported--6759a-s-to-the-frontier-and-plays-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/release-build-an-imported--6759a-s-to-the-frontier-and-plays-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/release-build-an-imported--6759a-s-to-the-frontier-and-plays-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/release-build-an-imported--6759a-s-to-the-frontier-and-plays-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [desktop-chrome] › e2e/release-build.spec.ts:185:1 › later flagship URLs decline to the Claim ─
+
+    Test timeout of 30000ms exceeded.
+
+    Error: page.waitForFunction: Test timeout of 30000ms exceeded.
+
+      269 |
+      270 | async function waitForContract(page: Page, contractId: string): Promise<void> {
+    > 271 |   await page.waitForFunction((id) =>
+          |              ^
+      272 |     window.__THREE_GAME_DIAGNOSTICS__?.contract.activeId === id && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10,
+      273 |   contractId);
+      274 | }
+        at waitForContract (/Users/robin/Claude/Projects/Gold Rush/e2e/release-build.spec.ts:271:14)
+        at /Users/robin/Claude/Projects/Gold Rush/e2e/release-build.spec.ts:190:11
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/release-build-later-flagship-URLs-decline-to-the-Claim-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/release-build-later-flagship-URLs-decline-to-the-Claim-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/release-build-later-flagship-URLs-decline-to-the-Claim-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/release-build-later-flagship-URLs-decline-to-the-Claim-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [mobile-chrome] › e2e/release-build.spec.ts:127:1 › debug and era query seams are inert ───────
+
+    Test timeout of 30000ms exceeded.
+
+    Error: page.waitForFunction: Test timeout of 30000ms exceeded.
+
+      269 |
+      270 | async function waitForContract(page: Page, contractId: string): Promise<void> {
+    > 271 |   await page.waitForFunction((id) =>
+          |              ^
+      272 |     window.__THREE_GAME_DIAGNOSTICS__?.contract.activeId === id && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10,
+      273 |   contractId);
+      274 | }
+        at waitForContract (/Users/robin/Claude/Projects/Gold Rush/e2e/release-build.spec.ts:271:14)
+        at /Users/robin/Claude/Projects/Gold Rush/e2e/release-build.spec.ts:131:9
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/release-build-debug-and-era-query-seams-are-inert-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/release-build-debug-and-era-query-seams-are-inert-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/release-build-debug-and-era-query-seams-are-inert-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/release-build-debug-and-era-query-seams-are-inert-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  5) [mobile-chrome] › e2e/release-build.spec.ts:150:1 › an imported later ledger heals to the frontier and plays 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "epoch-1-frontier"
+    Received: "epoch-7-signal"
+
+      178 |   await page.goto('/?contract=the-claim');
+      179 |   await waitForContract(page, 'the-claim');
+    > 180 |   expect(await page.evaluate((key) => localStorage.getItem(key), profileDataKey(importedId, ACTIVE_EPOCH_KEY))).toBe(FRONTIER);
+          |                                                                                                                 ^
+      181 |   expect(await page.evaluate((key) => localStorage.getItem(key), profileDataKey(importedId, futureResearchKey))).not.toBeNull();
+      182 |   expect(errors).toEqual([]);
+      183 | });
+        at /Users/robin/Claude/Projects/Gold Rush/e2e/release-build.spec.ts:180:113
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/release-build-an-imported--6759a-s-to-the-frontier-and-plays-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/release-build-an-imported--6759a-s-to-the-frontier-and-plays-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/release-build-an-imported--6759a-s-to-the-frontier-and-plays-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/release-build-an-imported--6759a-s-to-the-frontier-and-plays-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  6) [mobile-chrome] › e2e/release-build.spec.ts:185:1 › later flagship URLs decline to the Claim ──
+
+    Test timeout of 30000ms exceeded.
+
+    Error: page.waitForFunction: Test timeout of 30000ms exceeded.
+
+      269 |
+      270 | async function waitForContract(page: Page, contractId: string): Promise<void> {
+    > 271 |   await page.waitForFunction((id) =>
+          |              ^
+      272 |     window.__THREE_GAME_DIAGNOSTICS__?.contract.activeId === id && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10,
+      273 |   contractId);
+      274 | }
+        at waitForContract (/Users/robin/Claude/Projects/Gold Rush/e2e/release-build.spec.ts:271:14)
+        at /Users/robin/Claude/Projects/Gold Rush/e2e/release-build.spec.ts:190:11
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/release-build-later-flagship-URLs-decline-to-the-Claim-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/release-build-later-flagship-URLs-decline-to-the-Claim-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/release-build-later-flagship-URLs-decline-to-the-Claim-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/release-build-later-flagship-URLs-decline-to-the-Claim-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  6 failed
+    [desktop-chrome] › e2e/release-build.spec.ts:127:1 › debug and era query seams are inert ───────
+    [desktop-chrome] › e2e/release-build.spec.ts:150:1 › an imported later ledger heals to the frontier and plays 
+    [desktop-chrome] › e2e/release-build.spec.ts:185:1 › later flagship URLs decline to the Claim ──
+    [mobile-chrome] › e2e/release-build.spec.ts:127:1 › debug and era query seams are inert ────────
+    [mobile-chrome] › e2e/release-build.spec.ts:150:1 › an imported later ledger heals to the frontier and plays 
+    [mobile-chrome] › e2e/release-build.spec.ts:185:1 › later flagship URLs decline to the Claim ───
+  20 passed (3.3m)
+
+=== STDERR ===
+(node:83330) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:83351) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:83352) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:84539) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:84589) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:84603) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:84667) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:85485) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:85511) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+

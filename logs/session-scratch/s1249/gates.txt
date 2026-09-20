@@ -1,0 +1,123 @@
+tsc --noEmit rc=0 (3.6s)
+--- stdout tail ---
+
+--- stderr tail ---
+
+
+=====
+
+test:node-guards rc=0 (29.0s)
+--- stdout tail ---
+ms)
+✔ every foundry/**/*.mjs parses (35.354291ms)
+✔ every foundry/**/*.sh parses (6.125875ms)
+✔ site: every local <script src> the pages load actually exists (2.566292ms)
+✔ site: each loaded script parses under the grammar its tag requests (61.455833ms)
+✔ site: each inline <script> parses under the grammar its tag requests (53.821042ms)
+✔ site: every local href/src resolves to a file that exists (1.382875ms)
+✔ site: the denominator still contains a data-* reference and an escaping path (0.430709ms)
+✔ site: every in-page anchor targets an element that exists (0.794834ms)
+✔ site: assay-office duration vocabulary matches functions/api/stats.ts (0.692125ms)
+✔ curation is deterministic, interleaved, and never repeats thin-pool items (4.219833ms)
+✔ intake rejects headless captures and explicit banned files (2.999417ms)
+✔ OBS v5 authentication, scene discovery, and switch request use one websocket (2.794875ms)
+✔ failed preconditions are silent no-ops (0.109583ms)
+✔ missing spec, websocket, or required scenes never enter FACTORY (6.765167ms)
+✔ offline stream leaves FACTORY untouched (1.149416ms)
+✔ green showcase switches FACTORY, dwells, and always restores AUTOPILOT (1.112167ms)
+✔ red showcase skips dwell and restores AUTOPILOT (1.338333ms)
+✔ append is hash-idempotent and keeps one JSON line per entry (13.38625ms)
+✔ downtime accumulates and catch-up shows oldest first without double-show (26.95225ms)
+✔ concurrent appenders preserve every entry and concurrent consumers show once (273.714917ms)
+✔ missing subject directory fires the actionable existence message (6.375791ms)
+✔ subject below its floor reports expected and walked counts (0.75575ms)
+✔ subject exactly at its floor passes (2.351667ms)
+✔ empty present subject fires the floor instead of passing silently (0.848416ms)
+✔ ignoreReadErrors returns only readable paths (1.424792ms)
+✔ default walk fails closed on an unreadable subtree (1.131833ms)
+✔ floor catches files hidden by an ignored read error (1.94825ms)
+✔ reducer output is cwd-invariant (793.273125ms)
+✔ reducer reports configured and actual workers distinctly (184.006333ms)
+✔ reducer reports absent harness config as unrecorded (194.022625ms)
+✔ reducer output is script-root-invariant (332.217416ms)
+✔ reducer renders absolute raw paths relative to the recorded tree (162.560167ms)
+✔ reducer refuses body statistics when the recorded tree is unavailable (321.564958ms)
+✔ an unresolved masking row never outranks a resolved row (157.9165ms)
+✔ townEraProps resolves its manifests under plain node, not only under Vite (175.743875ms)
+✔ town specs collect without loading Vite-only modules (1096.522708ms)
+✔ whole suite collects without loading Vite-only modules (2098.713583ms)
+✔ every functions/**/*.ts is type-checked (4848.12325ms)
+ℹ tests 123
+ℹ suites 0
+ℹ pass 123
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 28917.686333
+ticker stats checks passed (populated, empty, failures, invalid shape, endpoint diagnostic, poison control, shared URL, JSON)
+
+--- stderr tail ---
+
+
+=====
+
+build rc=0 (13.9s)
+9d04.js                                8.02 kB │ gzip:   3.35 kB
+dist/assets/StartMenu-BjfZSix2-diet-abbb9d04.js                                               13.83 kB │ gzip:   4.12 kB
+dist/assets/reader-BU2An2uG-diet-abbb9d04.js                                                  14.72 kB │ gzip:   5.55 kB
+dist/assets/AssayBench-Dd_fdQpW-diet-abbb9d04.js                                              21.53 kB │ gzip:   6.31 kB
+dist/assets/SoundSystem-D62GaIqR-diet-abbb9d04.js                                             21.57 kB │ gzip:   5.11 kB
+dist/assets/PlaybookLab-VolcCohI-diet-abbb9d04.js                                             22.15 kB │ gzip:   7.57 kB
+dist/assets/story-uZbtHlzo-diet-abbb9d04.js                                                   22.32 kB │ gzip:   6.53 kB
+dist/assets/TownTavernPilot-DWOl3Jpx-diet-abbb9d04.js                                         30.56 kB │ gzip:   7.50 kB
+dist/assets/Terrain-CO_ZiXO1-diet-abbb9d04.js                                                 48.35 kB │ gzip:  16.13 kB
+dist/assets/LandmarkCollision-CZTHb_Be-diet-abbb9d04.js                                       49.66 kB │ gzip:   7.33 kB
+dist/assets/DescriptorInspector-BieBqivz-diet-abbb9d04.js                                     54.48 kB │ gzip:  16.96 kB
+dist/assets/WorldInfoNotes-B_IxHX7S-diet-abbb9d04.js                                          58.15 kB │ gzip:  19.40 kB
+dist/assets/scripts-CnSplZgX-diet-abbb9d04.js                                                 65.70 kB │ gzip:  24.29 kB
+dist/assets/TownScene-Fq8ZfxdG-diet-abbb9d04.js                                              142.55 kB │ gzip:  40.81 kB
+dist/assets/AssetLoading-Db2nHE_s-diet-abbb9d04.js                                           166.38 kB │ gzip:  54.51 kB
+dist/assets/SpriteAnimator-BbzXwIKo-diet-abbb9d04.js                                         286.61 kB │ gzip:  33.00 kB
+dist/assets/Terrain3dClaimPilot-j-m-1ztL-diet-abbb9d04.js                                    423.17 kB │ gzip:  65.54 kB
+dist/assets/Game-BueKHwMI-diet-abbb9d04.js                                                   891.93 kB │ gzip: 238.59 kB
+dist/assets/index-DZtDNEiM-diet-abbb9d04.js                                                1,313.92 kB │ gzip: 311.41 kB
+
+✓ built in 1.44s
+[asset-diet] Herald dev-path art 1099906 bytes (1500000 byte ceiling).
+[asset-diet] 235 terrain/landmark GLBs 592176964 -> 92768500 bytes (84% cut); 53 plate-class PNGs 183518013 -> 24346570 bytes (87% cut); herald spot cuts 317162 bytes.
+
+STDERR:[plugin builtin:vite-reporter] 
+(!) Some chunks are larger than 900 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+
+
+=====
+
+test:task-guards rc=0 (0.1s)
+
+> gold-rush@0.1.0 test:task-guards
+> node scripts/task-guard-audit.mjs
+
+task-guard-audit: 747 masters, 0 invisible (baseline 0).
+  ✅ no NEW invisible master. rc=0
+
+STDERR:
+
+=====
+
+run-guards rc=0 (120.2s)
+PASS  rc=0  29s  test:node-guards
+PASS  rc=0  0s  test:power-budget  p95=0.334ms
+PASS  rc=0  4s  test:stats
+PASS  rc=0  2s  test:accounts
+PASS  rc=0  4s  test:mp
+PASS  rc=0  80s  test:deploy-contract
+PASS  rc=0  1s  test:deploy-site-contract
+PASS  rc=0  0s  test:task-guards
+
+guards: 8/8 passed
+
+STDERR:

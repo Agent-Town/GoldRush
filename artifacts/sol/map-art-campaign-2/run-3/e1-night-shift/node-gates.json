@@ -1,0 +1,18 @@
+{
+  "namedGuardRunner": {
+    "command": "GR_GUARD_NO_ARTIFACT=1 node scripts/run-guards.mjs --only test:task-guards,test:citations,test:gate-callers",
+    "exit": 0,
+    "passed": 3,
+    "limitation": "--only and --changed-since are mutually exclusive. The changed-since path unconditionally selects the full node battery, explicitly reserved for the drain by this task. This named subset is not represented as the full changed-since gate."
+  },
+  "renderGuards": {
+    "command": "node --test scripts/glb-contract-guard.test.mjs scripts/terrain-height-sampler.test.mjs scripts/landmark-walk-surfaces.test.mjs scripts/open-sea-water.test.mjs",
+    "exit": 0,
+    "passed": 28
+  },
+  "finalTypeScript": {
+    "command": "npx tsc --noEmit",
+    "exit": 0,
+    "includesNewSpec": true
+  }
+}

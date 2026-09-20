@@ -1,0 +1,155 @@
+{
+  "provenance": {
+    "n": 10,
+    "commit": "659f4efe0",
+    "project": "desktop-chrome",
+    "headroom": "one extra observed jitter quantum beyond each measured edge: 1 for calls/geometries, 2 for triangles",
+    "rerecorded": {
+      "date": "2026-09-05",
+      "task": "renderer-count-artifacts-under-shared-atlas",
+      "measuredOn": "cf91fe5e9 (lane/d; identical to main bf934d54f across src/ and e2e/)",
+      "cause": "src/assets/SharedAtlasPlugin.ts (merged 3a47f1800, 2026-09-05): the shared GLTF loader returns one texture per image content hash across GLBs, so exact renderer.info.memory.textures pins recorded before it read high. Only textures moved. calls, triangles, geometries, the measured tolerance bands and every non-count assertion (morphs, wreckage, dispose-on-kill, geometry deltas) are unchanged, and n/commit above still describe the original band measurement.",
+      "method": "measured by running the spec itself on a dev server at 127.0.0.1:5304; every value below is the number the run reported through e2e/renderer-count-artifact.ts:37, never hand-set",
+      "confirmingRuns": 3,
+      "textures": {
+        "baseline": "39 -> 37",
+        "mounted": "42 -> 39",
+        "despawned": "38 -> 35",
+        "combatDeath": "38 -> 35"
+      },
+      "textureDeltas": {
+        "baseline->mounted": "3 -> 2",
+        "baseline->despawned": "-1 -> -2",
+        "baseline->combatDeath": "-1 -> -2",
+        "mounted->despawned": "-4 (unchanged)",
+        "mounted->combatDeath": "-4 (unchanged)",
+        "despawned->combatDeath": "0 (unchanged)"
+      },
+      "note": "baseline->mounted fell from 3 to 2: one of the railcar GLB textures now shares an image already resident at baseline, so mounting the model allocates two textures instead of three. Re-recorded exactly at the measured value, never widened to a band. mounted->despawned stays -4, so the dispose contract is intact."
+    }
+  },
+  "phases": {
+    "baseline": {
+      "calls": {
+        "measured": [
+          86,
+          87
+        ],
+        "tolerance": [
+          85,
+          88
+        ]
+      },
+      "triangles": {
+        "measured": [
+          116720,
+          116722
+        ],
+        "tolerance": [
+          116718,
+          116724
+        ]
+      },
+      "geometries": {
+        "measured": [
+          93,
+          94
+        ],
+        "tolerance": [
+          92,
+          95
+        ]
+      },
+      "textures": 37
+    },
+    "mounted": {
+      "calls": 64,
+      "triangles": 124212,
+      "geometries": {
+        "measured": [
+          101,
+          102
+        ],
+        "tolerance": [
+          100,
+          103
+        ]
+      },
+      "textures": 39
+    },
+    "despawned": {
+      "calls": 57,
+      "triangles": 113216,
+      "geometries": {
+        "measured": [
+          98,
+          99
+        ],
+        "tolerance": [
+          97,
+          100
+        ]
+      },
+      "textures": 35
+    },
+    "combatDeath": {
+      "calls": {
+        "measured": [
+          57,
+          58
+        ],
+        "tolerance": [
+          56,
+          59
+        ]
+      },
+      "triangles": {
+        "measured": [
+          113216,
+          113218
+        ],
+        "tolerance": [
+          113214,
+          113220
+        ]
+      },
+      "geometries": {
+        "measured": [
+          98,
+          99
+        ],
+        "tolerance": [
+          97,
+          100
+        ]
+      },
+      "textures": 35
+    }
+  },
+  "deltas": {
+    "baseline->mounted": {
+      "geometries": 8,
+      "textures": 2
+    },
+    "baseline->despawned": {
+      "geometries": 5,
+      "textures": -2
+    },
+    "baseline->combatDeath": {
+      "geometries": 5,
+      "textures": -2
+    },
+    "mounted->despawned": {
+      "geometries": -3,
+      "textures": -4
+    },
+    "mounted->combatDeath": {
+      "geometries": -3,
+      "textures": -4
+    },
+    "despawned->combatDeath": {
+      "geometries": 0,
+      "textures": 0
+    }
+  }
+}

@@ -1,0 +1,647 @@
+{
+ "version": 1,
+ "id": "er02-e2-trestle-card",
+ "createdAt": null,
+ "kept": true,
+ "contract": "e2-trestle",
+ "seed": "e2-trestle-02",
+ "difficulty": "trail",
+ "simVersion": null,
+ "inputLog": null,
+ "orderLog": [
+  {
+   "turn": 0,
+   "wave": 0,
+   "riderCall": true,
+   "orders": [
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": -24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 1,
+   "wave": 1,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": -24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 2,
+   "wave": 2,
+   "riderCall": true,
+   "orders": [
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 3,
+   "wave": 3,
+   "riderCall": true,
+   "orders": [
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": -24,
+      "z": 20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 4,
+   "wave": 4,
+   "riderCall": true,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 8,
+      "z": -9
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 8,
+      "z": -9
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "REPAIR_UNDER",
+     "pct": 60
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 5,
+   "wave": 4,
+   "riderCall": true,
+   "orders": [
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 6,
+   "wave": 4,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 7,
+   "wave": 4,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 8,
+   "wave": 4,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 9,
+   "wave": 5,
+   "riderCall": true,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 8,
+      "z": -16
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "sentry_beacon",
+     "where": {
+      "x": 8,
+      "z": -16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "REPAIR_UNDER",
+     "pct": 60
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 10,
+   "wave": 5,
+   "riderCall": true,
+   "orders": [
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": -24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 11,
+   "wave": 5,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": -24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 12,
+   "wave": 6,
+   "riderCall": true,
+   "orders": [
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 13,
+   "wave": 7,
+   "riderCall": true,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 14,
+      "z": -10
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": 14,
+      "z": -10
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "REPAIR_UNDER",
+     "pct": 60
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 14,
+   "wave": 7,
+   "riderCall": true,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 8,
+      "z": -22
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": 8,
+      "z": -22
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "REPAIR_UNDER",
+     "pct": 60
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 15,
+   "wave": 7,
+   "riderCall": true,
+   "orders": [
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": -24,
+      "z": 20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 16,
+   "wave": 7,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": -24,
+      "z": 20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 17,
+   "wave": 7,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": -24,
+      "z": 20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 18,
+   "wave": 7,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": -24,
+      "z": 20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 19,
+   "wave": 7,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": -24,
+      "z": 20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 20,
+   "wave": 8,
+   "riderCall": true,
+   "orders": [
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 21,
+   "wave": 9,
+   "riderCall": true,
+   "orders": [
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": -24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 22,
+   "wave": 10,
+   "riderCall": true,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 10,
+      "z": -9
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": 10,
+      "z": -9
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "REPAIR_UNDER",
+     "pct": 60
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 23,
+   "wave": 10,
+   "riderCall": true,
+   "orders": [
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 24,
+   "wave": 10,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 25,
+   "wave": 10,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 26,
+   "wave": 11,
+   "riderCall": true,
+   "orders": [
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": -24,
+      "z": 20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 27,
+   "wave": 12,
+   "riderCall": true,
+   "orders": [
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 28,
+   "wave": 13,
+   "riderCall": true,
+   "orders": [
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": -24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 29,
+   "wave": 14,
+   "riderCall": true,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 10,
+      "z": -16
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": 10,
+      "z": -16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "REPAIR_UNDER",
+     "pct": 60
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 30,
+   "wave": 14,
+   "riderCall": true,
+   "orders": [
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 31,
+   "wave": 14,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 32,
+   "wave": 14,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 33,
+   "wave": 14,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 34,
+   "wave": 14,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  }
+ ],
+ "eventLogHash": null,
+ "outcome": {
+  "reason": "death",
+  "secured": false,
+  "waves": 15,
+  "timeAlive": 450,
+  "gold": 63
+ }
+}

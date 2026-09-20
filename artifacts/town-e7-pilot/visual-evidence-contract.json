@@ -1,0 +1,92 @@
+{
+  "baseSha": "88ea5d9bca59dca64f35766b466cc2755751dcbb",
+  "target": "E7 must read as a signal era on the same Mesa: new pylon and Exchange carry the ensemble, while the Atomic Diner visibly accretes into a Net Cafe without losing its identity.",
+  "freshReferenceRule": "all current-era PNGs rerendered from tracked files on this base; no old PNG input",
+  "dependencies": {
+    "mesa": {
+      "branchTip": "60242186e7bd7e72050146d06533d56922e2fc4e",
+      "sha256": "067c8c652134258379315a41200caf423ff3e9cb70a1b9d8f2607ee691aafdc3",
+      "usage": "evidence only"
+    },
+    "e6Pilot": {
+      "branchTip": "cfdff259c5d3f271f2022b23341d1da4a6f0c4f2",
+      "assets": {
+        "atomic_diner": [
+          "assets/pilots/tavern-3d/tavern.e6.glb",
+          "68ec4ed82ec24c42386a2abf6ff0fc4738556be4e380a9f06bc7e3de4478fd74"
+        ],
+        "reactor_dome": [
+          "assets/pilots/reactor-dome-3d/reactor-dome.glb",
+          "64c81b9b6e622890556cb057f3de230ff76f66731d370e08a2f2f19dda61b5ea"
+        ],
+        "isotope_kitchen": [
+          "assets/pilots/isotope-kitchen-3d/isotope-kitchen.glb",
+          "9664b671eb91bfae861ff70b11014ba2f393c0adb150a0b35a330c38afedf7b6"
+        ]
+      },
+      "usage": "evidence and inheritance"
+    },
+    "e6Wide": {
+      "branchTip": "bcc9764bd320460c6de99e901a4e979694341030",
+      "assets": {
+        "appliance_pen": [
+          "assets/pilots/appliance-pen-3d/appliance-pen.glb",
+          "be11b90d1cf912256f840d852abc61bbf3082c072f01cfe3ce432505c2095e3d"
+        ],
+        "decay_clock": [
+          "assets/pilots/decay-clock-3d/decay-clock.glb",
+          "2b87660a3c7ee81a85c8b49b8697054f00f12cc3ff6046c6bf8be3910063f6ca"
+        ],
+        "catalog_warehouse": [
+          "assets/pilots/catalog-warehouse-3d/catalog-warehouse.glb",
+          "f72109125d3c036a3ac8a06004fa212f02539c762076dd9959c30cd578fcce24"
+        ],
+        "sunline_mount": [
+          "assets/pilots/run3d/turret.e6.glb",
+          "44d17919c60e294bbe977736a01ce93bf1a9f72a8ed85ca4b167a305b5cf1bbe"
+        ],
+        "glow_fence": [
+          "assets/pilots/run3d/palisade.e6.glb",
+          "686e72c52051d6f5b54b0cfec18fcc76502476bb7f0397870255f3e42807451c"
+        ],
+        "isotope_institute": [
+          "assets/pilots/schoolhouse-3d/schoolhouse.e6.glb",
+          "f3de54fb073729e1b251f0809b9ea65b2f869afd9c731430454636c03351bfb3"
+        ]
+      },
+      "usage": "evidence only"
+    }
+  },
+  "placements": {
+    "netCafe": "inherited tavern / Atomic Diner site",
+    "exchange": [
+      -7.55,
+      9.4,
+      0.06
+    ],
+    "relayTower": [
+      7.55,
+      9.15,
+      -0.08
+    ]
+  },
+  "comparisonMetrics": {
+    "mae": 5.632284164428711,
+    "rmse": 22.556894302368164,
+    "diffRatio16": 0.0772783203125,
+    "diffRatio32": 0.056078125,
+    "diffRatio64": 0.0408447265625,
+    "thresholdMismatchProxy": "diffRatio16 (pixelmatch unavailable; no dependency installed)",
+    "edgeEnergyBase": 3.039499521255493,
+    "edgeEnergyCandidate": 3.5198795795440674,
+    "edgeEnergyRatio": 1.158045768737793,
+    "edgeDiffRatio32": 0.0139873046875,
+    "avgLuminanceBase": 144.86941528320312,
+    "avgLuminanceCandidate": 140.24862670898438,
+    "avgLuminanceDelta": -4.62078857421875
+  },
+  "visualReview": {
+    "required": "locked A/B, feature crop, three four-angle turntables, Net Cafe identity A/B",
+    "independentSubagent": "not run: this session explicitly forbids delegation; limitation recorded"
+  }
+}

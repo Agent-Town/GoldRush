@@ -1,0 +1,53 @@
+{
+  "method": "Existing LandmarkCollision.ts rotated-AABB rule and unchanged hero radius 0.5. No new collision authority.",
+  "rows": [
+    {
+      "station": "trestle-crossing",
+      "heroXZ": [
+        0,
+        7
+      ],
+      "nearest": {
+        "id": "north-boiler-site",
+        "distanceToBlockerAabb": 9.478740137117796,
+        "heroRadiusClearance": 8.978740137117796
+      }
+    },
+    {
+      "station": "south-boiler-site",
+      "heroXZ": [
+        12,
+        -9
+      ],
+      "nearest": {
+        "id": "south-boiler-site",
+        "distanceToBlockerAabb": 0.6942775765746934,
+        "heroRadiusClearance": 0.19427757657469336
+      }
+    },
+    {
+      "station": "mine-spur-kit",
+      "heroXZ": [
+        -14,
+        -10
+      ],
+      "nearest": {
+        "id": "north-boiler-site",
+        "distanceToBlockerAabb": 19.747378342421012,
+        "heroRadiusClearance": 19.247378342421012
+      }
+    },
+    {
+      "station": "south-approach-kit",
+      "heroXZ": [
+        0,
+        -13
+      ],
+      "nearest": {
+        "id": "south-boiler-site",
+        "distanceToBlockerAabb": 9.034118927694612,
+        "heroRadiusClearance": 8.534118927694612
+      }
+    }
+  ]
+}

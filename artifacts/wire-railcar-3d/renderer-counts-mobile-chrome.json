@@ -1,0 +1,94 @@
+{
+  "provenance": {
+    "n": 8,
+    "commit": "14028bd8eb637877971c0525aa39c11ab4de5787",
+    "project": "mobile-chrome",
+    "headroom": "one extra observed jitter quantum beyond each measured edge: 1 for calls/geometries, 2 for triangles",
+    "rerecorded": {
+      "date": "2026-09-05",
+      "task": "renderer-count-artifacts-under-shared-atlas",
+      "measuredOn": "cf91fe5e9 (lane/d; identical to main bf934d54f across src/ and e2e/)",
+      "cause": "src/assets/SharedAtlasPlugin.ts (merged 3a47f1800, 2026-09-05): the shared GLTF loader returns one texture per image content hash across GLBs, so exact renderer.info.memory.textures pins recorded before it read high. Only textures moved. calls, triangles, geometries, the measured tolerance bands and every non-count assertion (morphs, wreckage, dispose-on-kill, geometry deltas) are unchanged, and n/commit above still describe the original band measurement.",
+      "method": "measured by running the spec itself on a dev server at 127.0.0.1:5304; every value below is the number the run reported through e2e/renderer-count-artifact.ts:37, never hand-set",
+      "confirmingRuns": 4,
+      "textures": {
+        "baseline": "37 -> 35",
+        "mounted": "41 -> 39",
+        "despawned": "37 -> 35",
+        "combatDeath": "37 -> 35"
+      },
+      "textureDeltas": "all six unchanged: the whole 390px scene shifted down by exactly 2, so every difference between phases survives",
+      "note": "Unlike desktop, the 390px tier deduped only scene textures resident from baseline onward, not a railcar GLB texture, so no delta moved."
+    }
+  },
+  "phases": {
+    "baseline": {
+      "calls": 67,
+      "triangles": 113084,
+      "geometries": 84,
+      "textures": 35
+    },
+    "mounted": {
+      "calls": 60,
+      "triangles": 120992,
+      "geometries": 92,
+      "textures": 39
+    },
+    "despawned": {
+      "calls": 53,
+      "triangles": 109996,
+      "geometries": 89,
+      "textures": 35
+    },
+    "combatDeath": {
+      "calls": {
+        "measured": [
+          53,
+          54
+        ],
+        "tolerance": [
+          52,
+          55
+        ]
+      },
+      "triangles": {
+        "measured": [
+          109996,
+          109998
+        ],
+        "tolerance": [
+          109994,
+          110000
+        ]
+      },
+      "geometries": 89,
+      "textures": 35
+    }
+  },
+  "deltas": {
+    "baseline->mounted": {
+      "geometries": 8,
+      "textures": 4
+    },
+    "baseline->despawned": {
+      "geometries": 5,
+      "textures": 0
+    },
+    "baseline->combatDeath": {
+      "geometries": 5,
+      "textures": 0
+    },
+    "mounted->despawned": {
+      "geometries": -3,
+      "textures": -4
+    },
+    "mounted->combatDeath": {
+      "geometries": -3,
+      "textures": -4
+    },
+    "despawned->combatDeath": {
+      "geometries": 0,
+      "textures": 0
+    }
+  }
+}

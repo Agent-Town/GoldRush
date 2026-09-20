@@ -1,0 +1,220 @@
+{
+  "project": "mobile-chrome",
+  "camera": {
+    "fov": 42,
+    "offset": [
+      0,
+      26.2,
+      18.3
+    ],
+    "lookAt": [
+      0,
+      0.45,
+      -3.35
+    ]
+  },
+  "rows": [
+    {
+      "subject": "baron-banner",
+      "tier": 0.35,
+      "scale": [
+        3.44,
+        3.44
+      ],
+      "screenshot": "mobile-chrome-baron-banner-alpha-0-35.png",
+      "oneStep": {
+        "foregroundPixels": 34916,
+        "bbox": [
+          266,
+          867,
+          519,
+          1141
+        ]
+      },
+      "twoStep": {
+        "foregroundPixels": 34919,
+        "bbox": [
+          266,
+          867,
+          519,
+          1141
+        ]
+      },
+      "foregroundDelta": 3,
+      "comparison": {
+        "changedPixels": 19607,
+        "changedShareOfLargerArm": 0.5614994702024686,
+        "meanChannelDelta": 0.12512658484222466
+      }
+    },
+    {
+      "subject": "baron-banner",
+      "tier": 0.04,
+      "scale": [
+        3.44,
+        3.44
+      ],
+      "screenshot": "mobile-chrome-baron-banner-alpha-0-04.png",
+      "oneStep": {
+        "foregroundPixels": 35680,
+        "bbox": [
+          266,
+          866,
+          521,
+          1142
+        ]
+      },
+      "twoStep": {
+        "foregroundPixels": 35374,
+        "bbox": [
+          266,
+          867,
+          521,
+          1142
+        ]
+      },
+      "foregroundDelta": -306,
+      "comparison": {
+        "changedPixels": 19865,
+        "changedShareOfLargerArm": 0.5567544843049327,
+        "meanChannelDelta": 0.12708687770891564
+      }
+    },
+    {
+      "subject": "assay-table",
+      "tier": 0.35,
+      "scale": [
+        3.4,
+        3.4
+      ],
+      "screenshot": "mobile-chrome-assay-table-alpha-0-35.png",
+      "oneStep": {
+        "foregroundPixels": 24041,
+        "bbox": [
+          283,
+          606,
+          498,
+          825
+        ]
+      },
+      "twoStep": {
+        "foregroundPixels": 24077,
+        "bbox": [
+          283,
+          606,
+          498,
+          825
+        ]
+      },
+      "foregroundDelta": 36,
+      "comparison": {
+        "changedPixels": 10889,
+        "changedShareOfLargerArm": 0.45225734103085935,
+        "meanChannelDelta": 0.06925330133268522
+      }
+    },
+    {
+      "subject": "assay-table",
+      "tier": 0.04,
+      "scale": [
+        3.4,
+        3.4
+      ],
+      "screenshot": "mobile-chrome-assay-table-alpha-0-04.png",
+      "oneStep": {
+        "foregroundPixels": 24598,
+        "bbox": [
+          283,
+          605,
+          499,
+          825
+        ]
+      },
+      "twoStep": {
+        "foregroundPixels": 24524,
+        "bbox": [
+          283,
+          605,
+          499,
+          825
+        ]
+      },
+      "foregroundDelta": -74,
+      "comparison": {
+        "changedPixels": 11022,
+        "changedShareOfLargerArm": 0.4480852101796894,
+        "meanChannelDelta": 0.07069560902499292
+      }
+    },
+    {
+      "subject": "signal-turret",
+      "tier": 0.35,
+      "scale": [
+        0.78,
+        0.52
+      ],
+      "screenshot": "mobile-chrome-signal-turret-alpha-0-35.png",
+      "oneStep": {
+        "foregroundPixels": 419,
+        "bbox": [
+          379,
+          649,
+          399,
+          682
+        ]
+      },
+      "twoStep": {
+        "foregroundPixels": 417,
+        "bbox": [
+          379,
+          649,
+          399,
+          682
+        ]
+      },
+      "foregroundDelta": -2,
+      "comparison": {
+        "changedPixels": 111,
+        "changedShareOfLargerArm": 0.2649164677804296,
+        "meanChannelDelta": 0.0009640701583829546
+      }
+    },
+    {
+      "subject": "signal-turret",
+      "tier": 0.04,
+      "scale": [
+        0.78,
+        0.52
+      ],
+      "screenshot": "mobile-chrome-signal-turret-alpha-0-04.png",
+      "oneStep": {
+        "foregroundPixels": 485,
+        "bbox": [
+          378,
+          648,
+          400,
+          683
+        ]
+      },
+      "twoStep": {
+        "foregroundPixels": 492,
+        "bbox": [
+          378,
+          648,
+          400,
+          683
+        ]
+      },
+      "foregroundDelta": 7,
+      "comparison": {
+        "changedPixels": 141,
+        "changedShareOfLargerArm": 0.2865853658536585,
+        "meanChannelDelta": 0.0011025539757767247
+      }
+    }
+  ],
+  "errors": {
+    "console": [],
+    "page": []
+  }
+}

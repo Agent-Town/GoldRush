@@ -1,0 +1,78 @@
+{
+  "project": "desktop-chrome",
+  "seam": {
+    "p95": 9.9498743710662,
+    "max": 94.77341399358788,
+    "samples": 556,
+    "rejected": 71
+  },
+  "identities": [
+    {
+      "contract": "the-claim",
+      "color": [
+        165.66,
+        121.01,
+        58.28
+      ]
+    },
+    {
+      "contract": "e1-dry-gulch",
+      "color": [
+        173.19,
+        112.19,
+        45.69
+      ]
+    },
+    {
+      "contract": "e1-twin-banks",
+      "color": [
+        149.07,
+        112.67,
+        50.59
+      ]
+    },
+    {
+      "contract": "e1-night-shift",
+      "color": [
+        139.93,
+        104.85,
+        51.23
+      ]
+    }
+  ],
+  "minIdentityDistance": 12.05,
+  "tr01Perf": {
+    "ground": {
+      "enabled": true,
+      "mode": "continuous-mesh",
+      "drawCalls": 1,
+      "segments": 64,
+      "vertexStep": 1,
+      "vertices": 4225,
+      "triangles": 8192,
+      "heightSource": "visual",
+      "textureSource": "bank-atlas",
+      "textureSeams": "texture seams remain until TR-02"
+    },
+    "frameMsP95": 33.59999999999991,
+    "rendererCalls": 130,
+    "enemiesAlive": 96
+  },
+  "tr02Perf": {
+    "ground": {
+      "enabled": true,
+      "mode": "continuous-mesh",
+      "drawCalls": 1,
+      "segments": 64,
+      "vertexStep": 1,
+      "vertices": 4225,
+      "triangles": 8192,
+      "heightSource": "visual",
+      "textureSource": "bank-atlas-splat",
+      "textureSeams": "per-pixel splat gradients"
+    },
+    "frameMsP95": 40.30000000000018,
+    "rendererCalls": 131,
+    "enemiesAlive": 96
+  }
+}

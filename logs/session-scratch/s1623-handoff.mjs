@@ -1,0 +1,44 @@
+import fs from 'node:fs';
+
+const p = 'STATUS.md';
+const t = fs.readFileSync(p, 'utf8');
+const i = t.indexOf('\n');
+const l1 = t.slice(0, i);
+const rest = t.slice(i + 1);
+
+if (!l1.startsWith('ACTIVE 2026-08-10T09:31Z (s1623 fire)')) {
+  console.error('line-1 is not my lock line — ABORT');
+  process.exit(1);
+}
+
+const desk = [
+  '🔺 **OWNER’S DESK — 15 awaiting a word.**',
+  '🔺 **F-1620-6** — the Field Book table clips columns at desktop width while the space beside it sits empty; **(A)** narrow the sidebar track, **(B)** let the table span both tracks below the card *(recommended — the only one that actually stops clipping the details your stated audience came for)*, **(C)** collapse columns at narrow widths only *(does not address this finding, which is a desktop observation)*. One letter unblocks a small lane-b slice the same day.',
+  '🔺 **F-1617-1** · 🔺 **F-DOOR-6** · 🔺 **F-1608-2** · 🔺 **F-1193-3** · 🔺 **F-1501-3** · 🔺 **F-1601-1** · 🔺 **F-1510-1** · 🔺 **F-E2S-3** · 🔺 **F-1536-2** · 🔺 **F-1591-1** · 🔺 **F-1507-1** · 🔺 **F-E2S-4** · 🔺 **F-1101-1** · 🔺 **F-1166-1** — all fifteen carried from s1621 and **re-checked this fire with `desk-state-audit --status` against the inherited line-1: `CLOSED=0 · OPEN=0 · BOTH=0 · OPEN-DESK-ONLY=15 · UNRECORDED=0`**, so nothing was carried that should have been dropped and none is a ghost.',
+].join(' ');
+
+const body = [
+  'Last updated: 2026-08-10T09:53Z s1623 handoff, lock CLEARED —',
+  '🎯 **ONE DRAIN, AND IT REFUTED ITS OWN HEADLINE.** `181e1835b` f1621-1 (town-budget instrument reconciliation, lane-a) — gated in detached worktree `gate-s1623` per §3.0b, all `--workers=1`, merged-and-committed as ONE act per F-1589-5.',
+  '📋 **BOARD ON ARRIVAL (09:29):** lock CLEARED (s1621, owning commit `b06e83818` — judged by the COMMIT per §1.1) · all six queues empty · lanes a/c/d `ahead=0` USABLE, lane-b BUSY · no `tasks/CODEX-WALL` · assayer `pending/` **0** · ART untouched, no staging audit owed · one undrained done-move on lane-a.',
+  '⚠️ **A concurrent attended Cowork session held the s1622 number and was committing to main throughout** (`30b23f355` authoring stack-directory one minute before I took the lock; `fc62c7f65` a bench verdict mid-fire) — so I am **s1623**, every BACKLOG edit re-resolved its anchor by CONTENT immediately before writing, and the drain was gated in a detached worktree precisely because of it.',
+  '⭐ **[F-1623-1] THE HEADLINE: s1621 FLAGGED f1621-1’s MOBILE ARM RED AT 26,542,805 AND ASKED THE NEXT FIRE TO ELIMINATE THREE CANDIDATES IN ORDER. THE DRAIN RAN THE SLICE’S OWN CODE AS A CONTROL ~40 MIN LATER ON THE SAME MACHINE AND GOT 6/6 PASSED ON BOTH PROJECTS — THE RED DOES NOT REPRODUCE.**',
+  '📊 run 1 (runner 09:18) → run 2 (drain 09:42), identical code: A/B `normal` mobile **26,542,805 RED → 22,469,496 green** · desktop **24,604,025 → 21,297,362** · `saveData` desktop **23,363,925 → 13,600,227** · cue window **22,497,140 both → 12,376,473 dsk / 13,942,714 mob** · decomposition `false/false` **19,954,153 / 20,650,367 → 6,471,185 both, a 3.08×–3.19× swing.**',
+  '➡️ **VERDICT ON THE THREE CANDIDATES: (3) real-regression REFUTED** (no `src/**` in the diff, asset content-hashes identical across every arm, number came back green unchanged) · **(2) instability CONFIRMED and dominant** · **(1) CONFIRMED as a real change but NOT the cause** — the runner did swap GLB throttling from `page.route(’**/*.glb’)` to a CDP `Network.emulateNetworkConditionsByRule` rule in **both** tests, including the release-gate one, against the master’s explicit *"the arms that carry assertions must not change configuration"* (**F-1623-2**, non-blocking, recorded) — but run 2 uses that same new mechanism and is green.',
+  '🎯 **THE LOAD-BEARING CONSEQUENCE: `expect(normalBytes).toBeLessThan(TOWN_TRANSFER_CEILING_BYTES)` is presently a COIN-FLIP and carries no information about the bundle.** It is *inherited* from f1619-2 `79782c6b4`, not introduced here, and it is **contained** — the file is `test.skip`ped unless `GR_ASSET_DIET_BUNDLE=1`, and `scripts/deploy.sh` greps `--grep "honest town and claim cues"` (the cue-window test only), so **main is NOT left red and no deploy reads the flaky arm.** ✅ The s1621 ban on re-pinning stands and is now better justified.',
+  '✅ **[F-1620-7] CLOSED ON BOTH LIMBS by this merge** — one exported `TOWN_TRANSFER_CEILING_BYTES` replaces four bare literals, the two `townResponseBytes` quantities are renamed apart (`cueWindowResponseBytes` vs `normalBytes`), f1615-1 is restated against the cue-window instrument, and the `scripts/deploy.sh` grep string survives intact. ⚠️ **But every figure in that row is now known to be a single draw from a 3×-noisy instrument, so the "9.5 MB spread between three instruments" is of the same order as the noise of ONE of them.** The reconciliation is *named*, not yet *achieved*.',
+  'ⓘ **[F-1623-3] ONE RESULT WAS STABLE ACROSS BOTH RUNS AND IT IS A CLEAN REFUTATION:** the `content-length` audit reads **27 absent / 0 unparseable** in every arm of both runs — all dev/preview-server JS/CSS/HTML, **no GLB and no PNG**. The master’s worry that a silent zero made the headroom optimistic is answered: not from that cause.',
+  '🔎 **[F-1623-4] AND A READING LESSON: the runner’s final report tabulated MOBILE’s four decomposition cells under the DESKTOP label** (desktop’s real cells are `19,954,153 / 20,560,252 / 26,125,408 / 26,542,805`, giving `+6,171,255` where the report says `+1,981,581`). The artifacts and the in-file comment were correct; only the prose message was wrong. **Any attribution built on the report table is invalid** — caught by reading the artifacts instead of the report (Mistake #4, drain-side).',
+  '📝 **[F-1623-5] THE DRAIN SUPERSEDED THE SLICE’S OWN RECONCILIATION COMMENT rather than merge it as written.** Scope 4 existed so a future reader would not re-litigate F-1620-7; as merged it stated ten point figures from one run of a 3× instrument. Runner figures **kept and labelled `run 1`**, control added as `run 2`, instability stated up front. **Both artifact sets retained** per the retention law: `town-budget-<project>.md` (runner) + `town-budget-<project>-s1623-control.md` (drain).',
+  '🛠️ **ONE MASTER AUTHORED AND DISPATCHED (lane-a, `63d542565`):** `f1623-1-town-transfer-determinism` closes F-1623-1 on its stated terms — a settled stopping point (no in-flight same-origin request for 1500 ms, 20 s cap) in place of the racing `assetLoadingState === "ready"` flip, a total/unique/duplicate split per arm, and a three-run stability table in a new `artifacts/asset-diet/town-transfer-stability.md`. Test-only; `src/assets/AdvanceStream.ts` is READ-ONLY because it is the subject. **REFUTED is pre-authorised; a widened tolerance or a dropped run is not.** Dispatch order followed per F-1424-3 (master+leaf committed → lane refreshed → both citation keys proved `1` in the lane → `cp`).',
+  '📌 **NEXT FIRE — (A) DRAIN lane-b `stack-directory`, and it OUTRANKS everything below: it is OWNER-REQUESTED** (2026-08-10 verbatim: *"Can we link from the harnesses and models also to a page on the internet where people can find more information about it?"*), player-visible, and finished at 09:29 while I was mid-drain. `main..lane/b` = `6922eed5f`, +88/−11 across `src/encyclopedia/{stackDirectory.ts,reader.ts,reader.css}`, `stackDirectory.test.mjs`, `e2e/field-book.spec.ts`, plus two `reviews/shots-stack-directory/` screenshots. I did **not** run `drain-block-check` on it — do that first. **It IS player-visible, so it owes a GZ-01 gazette item at its drain** (mine did not: instrumentation only).',
+  '**(B)** f1623-1 on lane-a when the runner finishes it — it can be gated against a stability table for the first time. **(C)** lanes c/d idle with empty queues (`ahead=0`, behind 20 and 316) — refill or author.',
+  '⏱️ **BUDGET NOTE, stated so it is not mistaken for a stall:** I stopped at ONE drain at ~26 min with lane-b’s output already waiting, because the second drain would have run past the ~35-min budget. That is the law choosing brevity, not a blocker — lane-b is ready and unclaimed.',
+  '🧾 **Duties:** TK-01 daily digest **already discharged** by s1618 (`f76b187c6`, 2026-08-09 coverage compiled 06:56 today) — none owed. GZ-01: **none owed by this fire** (the review names no player-visible change). Assayer `pending/` empty. ART untouched. `test:ledger-guards` run as the last act. Backup pushed to origin.',
+  '👤 **Robin owes (unchanged, never blocking):** the F-1620-6 letter above, lane-d attempt-3 verdict, turret-feel + water-feel playtests, Mac full-regression evidence, favicon 16px eyeball.',
+  desk,
+].join(' ');
+
+const archive = '- **s1623 lock line (archived):** ' + l1 + '\n';
+fs.writeFileSync(p, body + '\n' + archive + rest);
+console.log('handoff written, line-1 length', body.length);

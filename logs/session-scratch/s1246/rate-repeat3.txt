@@ -1,0 +1,189 @@
+[WebServer] [plugin builtin:vite-reporter] 
+[WebServer] (!) Some chunks are larger than 900 kB after minification. Consider:
+[WebServer] - Using dynamic import() to code-split the application
+[WebServer] - Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+[WebServer] - Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+(node:25748) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 6 tests using 6 workers
+
+(node:25821) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:25818) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:25817) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:25819) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:25820) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:25822) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  6 [mobile-chrome] › e2e/release-build.spec.ts:185:1 › later flagship URLs decline to the Claim (4.1s)
+  ✘  5 [mobile-chrome] › e2e/release-build.spec.ts:185:1 › later flagship URLs decline to the Claim (4.5s)
+  ✘  1 [mobile-chrome] › e2e/release-build.spec.ts:185:1 › later flagship URLs decline to the Claim (4.6s)
+  ✓  4 [desktop-chrome] › e2e/release-build.spec.ts:185:1 › later flagship URLs decline to the Claim (5.7s)
+  ✘  3 [desktop-chrome] › e2e/release-build.spec.ts:185:1 › later flagship URLs decline to the Claim (6.0s)
+  ✘  2 [desktop-chrome] › e2e/release-build.spec.ts:185:1 › later flagship URLs decline to the Claim (6.3s)
+
+
+  1) [desktop-chrome] › e2e/release-build.spec.ts:185:1 › later flagship URLs decline to the Claim ─
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 6
+
+    - Array []
+    + Array [
+    +   "THREE.GLTFLoader: Couldn't load texture blob:http://127.0.0.1:5190/af2fe87c-26c0-4bf1-8eb2-200b27648782",
+    +   "THREE.GLTFLoader: Couldn't load texture blob:http://127.0.0.1:5190/cf7af2d9-b1d3-4974-9ba5-27287e7ef8c1",
+    +   "THREE.GLTFLoader: Couldn't load texture blob:http://127.0.0.1:5190/a2268790-4141-4f09-9d7c-6a26f7088a08",
+    +   "THREE.GLTFLoader: Couldn't load texture blob:http://127.0.0.1:5190/f1569563-a96e-4143-b5c0-3dda7454c1eb",
+    + ]
+
+      190 |     await waitForContract(page, 'the-claim');
+      191 |   }
+    > 192 |   expect(errors).toEqual([]);
+          |                  ^
+      193 | });
+      194 |
+      195 | test('a forged locked launch declines to the Claim', async ({ page }) => {
+        at /Users/robin/Claude/Projects/Gold Rush/e2e/release-build.spec.ts:192:18
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/release-build-later-flagship-URLs-decline-to-the-Claim-desktop-chrome-repeat1/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/release-build-later-flagship-URLs-decline-to-the-Claim-desktop-chrome-repeat1/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/release-build-later-flagship-URLs-decline-to-the-Claim-desktop-chrome-repeat1/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/release-build-later-flagship-URLs-decline-to-the-Claim-desktop-chrome-repeat1/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [desktop-chrome] › e2e/release-build.spec.ts:185:1 › later flagship URLs decline to the Claim ─
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 7
+
+    - Array []
+    + Array [
+    +   "THREE.GLTFLoader: Couldn't load texture blob:http://127.0.0.1:5190/328a05ee-4570-4235-aef2-32235ed84d1a",
+    +   "THREE.GLTFLoader: Couldn't load texture blob:http://127.0.0.1:5190/e975995a-0584-4cda-91df-5d5d969113f4",
+    +   "THREE.GLTFLoader: Couldn't load texture blob:http://127.0.0.1:5190/b710b105-db98-4c13-aef8-9db8912a1959",
+    +   "THREE.GLTFLoader: Couldn't load texture blob:http://127.0.0.1:5190/1e7085dc-e017-4b4b-a7ef-dbe828390fe7",
+    +   "THREE.GLTFLoader: Couldn't load texture blob:http://127.0.0.1:5190/b3b82539-a540-4fb7-960e-277b6d61ebee",
+    + ]
+
+      190 |     await waitForContract(page, 'the-claim');
+      191 |   }
+    > 192 |   expect(errors).toEqual([]);
+          |                  ^
+      193 | });
+      194 |
+      195 | test('a forged locked launch declines to the Claim', async ({ page }) => {
+        at /Users/robin/Claude/Projects/Gold Rush/e2e/release-build.spec.ts:192:18
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/release-build-later-flagship-URLs-decline-to-the-Claim-desktop-chrome-repeat2/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/release-build-later-flagship-URLs-decline-to-the-Claim-desktop-chrome-repeat2/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/release-build-later-flagship-URLs-decline-to-the-Claim-desktop-chrome-repeat2/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/release-build-later-flagship-URLs-decline-to-the-Claim-desktop-chrome-repeat2/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [mobile-chrome] › e2e/release-build.spec.ts:185:1 › later flagship URLs decline to the Claim ──
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 6
+
+    - Array []
+    + Array [
+    +   "THREE.GLTFLoader: Couldn't load texture blob:http://127.0.0.1:5190/a9b6f16e-b43b-421e-9331-2a8a4d1f6d31",
+    +   "THREE.GLTFLoader: Couldn't load texture blob:http://127.0.0.1:5190/5d4ba8dd-0e08-401c-b670-0a74e7d05441",
+    +   "THREE.GLTFLoader: Couldn't load texture blob:http://127.0.0.1:5190/2686a157-8d9f-45ac-b51c-f0db7acfa32b",
+    +   "THREE.GLTFLoader: Couldn't load texture blob:http://127.0.0.1:5190/e3c0ad5a-50cb-4564-a0f2-2aad33f496ed",
+    + ]
+
+      190 |     await waitForContract(page, 'the-claim');
+      191 |   }
+    > 192 |   expect(errors).toEqual([]);
+          |                  ^
+      193 | });
+      194 |
+      195 | test('a forged locked launch declines to the Claim', async ({ page }) => {
+        at /Users/robin/Claude/Projects/Gold Rush/e2e/release-build.spec.ts:192:18
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/release-build-later-flagship-URLs-decline-to-the-Claim-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/release-build-later-flagship-URLs-decline-to-the-Claim-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/release-build-later-flagship-URLs-decline-to-the-Claim-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/release-build-later-flagship-URLs-decline-to-the-Claim-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [mobile-chrome] › e2e/release-build.spec.ts:185:1 › later flagship URLs decline to the Claim ──
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 6
+
+    - Array []
+    + Array [
+    +   "THREE.GLTFLoader: Couldn't load texture blob:http://127.0.0.1:5190/e343af64-2b96-453c-aeef-ea73079f0b8a",
+    +   "THREE.GLTFLoader: Couldn't load texture blob:http://127.0.0.1:5190/0a3bae85-fc17-467a-bca3-453a726337ab",
+    +   "THREE.GLTFLoader: Couldn't load texture blob:http://127.0.0.1:5190/adfb279e-0756-4347-8eea-56b1ea66c2d3",
+    +   "THREE.GLTFLoader: Couldn't load texture blob:http://127.0.0.1:5190/82b673b8-f3b8-48d2-b5db-8ab29805b1a0",
+    + ]
+
+      190 |     await waitForContract(page, 'the-claim');
+      191 |   }
+    > 192 |   expect(errors).toEqual([]);
+          |                  ^
+      193 | });
+      194 |
+      195 | test('a forged locked launch declines to the Claim', async ({ page }) => {
+        at /Users/robin/Claude/Projects/Gold Rush/e2e/release-build.spec.ts:192:18
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/release-build-later-flagship-URLs-decline-to-the-Claim-mobile-chrome-repeat1/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/release-build-later-flagship-URLs-decline-to-the-Claim-mobile-chrome-repeat1/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/release-build-later-flagship-URLs-decline-to-the-Claim-mobile-chrome-repeat1/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/release-build-later-flagship-URLs-decline-to-the-Claim-mobile-chrome-repeat1/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4 failed
+    [desktop-chrome] › e2e/release-build.spec.ts:185:1 › later flagship URLs decline to the Claim ──
+    [desktop-chrome] › e2e/release-build.spec.ts:185:1 › later flagship URLs decline to the Claim ──
+    [mobile-chrome] › e2e/release-build.spec.ts:185:1 › later flagship URLs decline to the Claim ───
+    [mobile-chrome] › e2e/release-build.spec.ts:185:1 › later flagship URLs decline to the Claim ───
+  2 passed (14.3s)

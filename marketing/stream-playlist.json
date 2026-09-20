@@ -1,0 +1,151 @@
+{
+  "version": 1,
+  "segments": [
+    {
+      "id": "claim-wave-20",
+      "task": "SC-01: The Claim wave-20 victory proof",
+      "seed": "stream-claim-wave-20",
+      "durationMs": 180000,
+      "debugParams": {
+        "debug": true,
+        "timescale": 3,
+        "nolevel": true,
+        "nopause": true,
+        "nosteal": true,
+        "nowreck": true
+      },
+      "setup": [
+        { "type": "grantGold", "amount": 1200 },
+        { "type": "placeFree", "id": "palisade", "x": -4, "z": 12, "rotationSteps": 1 },
+        { "type": "placeFree", "id": "palisade", "x": 4, "z": 12, "rotationSteps": 1 },
+        { "type": "placeFree", "id": "turret", "x": -3, "z": 10 },
+        { "type": "placeFree", "id": "turret", "x": 3, "z": 10 },
+        { "type": "placeFree", "id": "sentry_beacon", "x": 0, "z": 10 },
+        { "type": "teleport", "x": 0, "z": 14 },
+        { "type": "setBalance", "path": "enemy.contactDamage", "value": 0 },
+        { "type": "setBalance", "path": "waves.trickleInterval", "value": 9999 },
+        { "type": "setWave", "wave": 19 },
+        { "type": "startWave", "wave": 20 },
+        { "type": "spawnPack", "count": 8, "radius": 8 }
+      ],
+      "script": [
+        { "type": "autopilotSimple", "moveMs": 2400, "restMs": 450, "pattern": ["KeyA", "KeyD", "KeyW", "KeyS"] }
+      ],
+      "assertions": [
+        { "id": "contract", "type": "contract", "equals": "the-claim" },
+        { "id": "wave-20", "type": "minWave", "value": 20 },
+        { "id": "enemies-spawned", "type": "minEnemiesSpawned", "value": 1 }
+      ]
+    },
+    {
+      "id": "dry-gulch-spring-rush",
+      "task": "SC-01: Dry Gulch spring rush",
+      "seed": "stream-dry-gulch-spring",
+      "durationMs": 180000,
+      "debugParams": {
+        "debug": true,
+        "contract": "e1-dry-gulch",
+        "timescale": 4,
+        "nolevel": true,
+        "nopause": true,
+        "nosteal": true,
+        "nowreck": true
+      },
+      "setup": [
+        { "type": "grantGold", "amount": 1400 },
+        { "type": "placeFree", "id": "sluice", "x": -18, "z": -18, "optional": true },
+        { "type": "placeFree", "id": "stockpile", "x": -13, "z": -14 },
+        { "type": "placeFree", "id": "turret", "x": -14, "z": -10 },
+        { "type": "placeFree", "id": "sentry_beacon", "x": -16, "z": -12 },
+        { "type": "teleport", "x": -15, "z": -12 },
+        { "type": "setBalance", "path": "enemy.contactDamage", "value": 0 },
+        { "type": "startWave", "wave": 8 },
+        { "type": "spawnPack", "count": 8, "radius": 8 }
+      ],
+      "script": [
+        { "type": "autopilotSimple", "moveMs": 2200, "restMs": 500, "pattern": ["KeyW", "KeyD", "KeyS", "KeyA"] }
+      ],
+      "assertions": [
+        { "id": "contract", "type": "contract", "equals": "e1-dry-gulch" },
+        { "id": "dry-gulch-yield", "type": "diagnosticPathTruthy", "path": "contract.seamYieldMult" },
+        { "id": "enemies-spawned", "type": "minEnemiesSpawned", "value": 1 }
+      ]
+    },
+    {
+      "id": "night-shift-dawn-survival",
+      "task": "SC-01: Night Shift dawn survival",
+      "seed": "stream-night-shift-dawn",
+      "durationMs": 240000,
+      "debugParams": {
+        "debug": true,
+        "contract": "e1-night-shift",
+        "timescale": 5,
+        "nolevel": true,
+        "nopause": true,
+        "nosteal": true,
+        "nowreck": true
+      },
+      "setup": [
+        { "type": "grantGold", "amount": 1400 },
+        { "type": "placeFree", "id": "sentry_beacon", "x": 0, "z": 11 },
+        { "type": "placeFree", "id": "turret", "x": -3, "z": 10 },
+        { "type": "placeFree", "id": "turret", "x": 3, "z": 10 },
+        { "type": "teleport", "x": 0, "z": 14 },
+        { "type": "setBalance", "path": "enemy.contactDamage", "value": 0 },
+        { "type": "setWave", "wave": 24 },
+        { "type": "startWave", "wave": 25 },
+        { "type": "spawnPack", "count": 8, "radius": 8 }
+      ],
+      "script": [
+        { "type": "autopilotSimple", "moveMs": 2600, "restMs": 550, "pattern": ["KeyD", "KeyA", "KeyW", "KeyS"] }
+      ],
+      "assertions": [
+        { "id": "contract", "type": "contract", "equals": "e1-night-shift" },
+        { "id": "dawn-wave", "type": "minWave", "value": 25 },
+        { "id": "light-ramp", "type": "diagnosticPathTruthy", "path": "contract.lightRamp" }
+      ]
+    },
+    {
+      "id": "hill-mine-railcar-fight",
+      "task": "SC-01: Hill Mine railcar fight",
+      "seed": "stream-hill-mine-railcar",
+      "durationMs": 240000,
+      "debugParams": {
+        "debug": true,
+        "contract": "e2-hill-mine",
+        "timescale": 4,
+        "nolevel": true,
+        "nopause": true,
+        "nosteal": true,
+        "nowreck": true
+      },
+      "setup": [
+        { "type": "grantGold", "amount": 1600 },
+        { "type": "placeFree", "id": "turret", "x": -2, "z": 10 },
+        { "type": "placeFree", "id": "turret", "x": 2, "z": 10 },
+        { "type": "placeFree", "id": "sentry_beacon", "x": 0, "z": 10 },
+        { "type": "teleport", "x": 0, "z": 13 },
+        { "type": "setBalance", "path": "enemy.contactDamage", "value": 0 },
+        { "type": "setBalance", "path": "waves.waveInterval", "value": 0.35 },
+        { "type": "setBalance", "path": "waves.trickleInterval", "value": 999 },
+        { "type": "setBalance", "path": "waves.pulseBase", "value": 0 },
+        { "type": "setBalance", "path": "waves.pulsePerWave", "value": 0 },
+        { "type": "setBalance", "path": "waves.pulsesPerWave", "value": 1 },
+        { "type": "setBalance", "path": "waves.edgesPerPulse", "value": 1 },
+        { "type": "setBalance", "path": "waves.aliveCap", "value": 40 },
+        { "type": "setManualSim", "enabled": true },
+        { "type": "setWave", "wave": 11 },
+        { "type": "advanceSim", "seconds": 1.2, "stepSeconds": 0.03333333333333333 },
+        { "type": "setManualSim", "enabled": false }
+      ],
+      "script": [
+        { "type": "autopilotSimple", "moveMs": 2400, "restMs": 500, "pattern": ["KeyA", "KeyW", "KeyD", "KeyS"] }
+      ],
+      "assertions": [
+        { "id": "contract", "type": "contract", "equals": "e2-hill-mine" },
+        { "id": "railcar-live", "type": "minEliteEnemies", "eliteKind": "railcar", "value": 3 },
+        { "id": "enemies-spawned", "type": "minEnemiesSpawned", "value": 3 }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,758 @@
+{
+  "layoutSource": "src/town/townLayout.ts",
+  "layoutSha256": "6d000feac3c0e2e14051f287205e5450b3b701bec4c44e513613a34ea39017d0",
+  "stampFootprintSource": "src/town/TownScene.ts",
+  "dynamoFootprintSource": "assets/contracts/epoch-2-steamworks/manifest.json",
+  "plateExtent": [
+    44.0,
+    44.0
+  ],
+  "grid": [
+    65,
+    65
+  ],
+  "triangles": 17596,
+  "slots": [
+    {
+      "id": "tavern",
+      "position": [
+        -7.1,
+        -7.1
+      ],
+      "approach": [
+        -4.9,
+        -4.9
+      ],
+      "footprint": [
+        5.2,
+        3.4
+      ]
+    },
+    {
+      "id": "claim_office",
+      "position": [
+        7.1,
+        -7.1
+      ],
+      "approach": [
+        4.9,
+        -4.9
+      ],
+      "footprint": [
+        4.4,
+        3.2
+      ]
+    },
+    {
+      "id": "general_store",
+      "position": [
+        0.0,
+        -10.2
+      ],
+      "approach": [
+        0.0,
+        -7.2
+      ],
+      "footprint": [
+        4.8,
+        3.3
+      ]
+    },
+    {
+      "id": "schoolhouse",
+      "position": [
+        -9.4,
+        3.4
+      ],
+      "approach": [
+        -6.6,
+        2.4
+      ],
+      "footprint": [
+        4.4,
+        3.4
+      ]
+    },
+    {
+      "id": "assay_office",
+      "position": [
+        9.4,
+        3.4
+      ],
+      "approach": [
+        6.6,
+        2.4
+      ],
+      "footprint": [
+        4.6,
+        3.4
+      ]
+    },
+    {
+      "id": "chapel",
+      "position": [
+        -4.8,
+        9.0
+      ],
+      "approach": [
+        -3.35,
+        6.35
+      ],
+      "footprint": [
+        4.2,
+        3.2
+      ]
+    },
+    {
+      "id": "stamp-mill",
+      "position": [
+        4.8,
+        9.0
+      ],
+      "approach": [
+        3.45,
+        6.5
+      ],
+      "footprint": [
+        6.2,
+        1.65
+      ]
+    },
+    {
+      "id": "dynamo-hall",
+      "position": [
+        10.0,
+        10.0
+      ],
+      "approach": [
+        10.0,
+        7.0
+      ],
+      "footprint": [
+        5.5,
+        3.5
+      ]
+    }
+  ],
+  "routes": {
+    "ringRoad": [
+      [
+        0.0,
+        6.0
+      ],
+      [
+        2.2961005941905386,
+        5.54327719506772
+      ],
+      [
+        4.242640687119285,
+        4.242640687119286
+      ],
+      [
+        5.54327719506772,
+        2.296100594190539
+      ],
+      [
+        6.0,
+        3.6739403974420594e-16
+      ],
+      [
+        5.54327719506772,
+        -2.2961005941905386
+      ],
+      [
+        4.242640687119286,
+        -4.242640687119285
+      ],
+      [
+        2.2961005941905395,
+        -5.54327719506772
+      ],
+      [
+        7.347880794884119e-16,
+        -6.0
+      ],
+      [
+        -2.296100594190538,
+        -5.543277195067721
+      ],
+      [
+        -4.242640687119285,
+        -4.242640687119286
+      ],
+      [
+        -5.543277195067719,
+        -2.296100594190542
+      ],
+      [
+        -6.0,
+        -1.102182119232618e-15
+      ],
+      [
+        -5.54327719506772,
+        2.29610059419054
+      ],
+      [
+        -4.242640687119286,
+        4.242640687119284
+      ],
+      [
+        -2.296100594190542,
+        5.543277195067719
+      ]
+    ],
+    "radial": {
+      "tavern": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          -0.7498843595546039,
+          -0.8834489737787297
+        ],
+        [
+          -1.526481641954033,
+          -1.740185024712634
+        ],
+        [
+          -2.329791847198287,
+          -2.5702081528017136
+        ],
+        [
+          -3.1598149752873663,
+          -3.373518358045968
+        ],
+        [
+          -4.016551026221271,
+          -4.150115640445397
+        ],
+        [
+          -4.9,
+          -4.9
+        ]
+      ],
+      "claim_office": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.7498843595546039,
+          -0.8834489737787297
+        ],
+        [
+          1.526481641954033,
+          -1.740185024712634
+        ],
+        [
+          2.329791847198287,
+          -2.5702081528017136
+        ],
+        [
+          3.1598149752873663,
+          -3.373518358045968
+        ],
+        [
+          4.016551026221271,
+          -4.150115640445397
+        ],
+        [
+          4.9,
+          -4.9
+        ]
+      ],
+      "general_store": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.09444444444444446,
+          -1.2
+        ],
+        [
+          0.15111111111111114,
+          -2.4
+        ],
+        [
+          0.17,
+          -3.6
+        ],
+        [
+          0.15111111111111114,
+          -4.8
+        ],
+        [
+          0.09444444444444444,
+          -6.000000000000001
+        ],
+        [
+          0.0,
+          -7.2
+        ]
+      ],
+      "schoolhouse": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          -1.0677242662640334,
+          0.4887582677739079
+        ],
+        [
+          -2.1483588260224535,
+          0.9420132284382527
+        ],
+        [
+          -3.24190367927526,
+          1.3597648819930344
+        ],
+        [
+          -4.348358826022453,
+          1.7420132284382528
+        ],
+        [
+          -5.4677242662640335,
+          2.088758267773908
+        ],
+        [
+          -6.6,
+          2.4
+        ]
+      ],
+      "assay_office": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          1.0677242662640334,
+          0.4887582677739079
+        ],
+        [
+          2.1483588260224535,
+          0.9420132284382527
+        ],
+        [
+          3.24190367927526,
+          1.3597648819930344
+        ],
+        [
+          4.348358826022453,
+          1.7420132284382528
+        ],
+        [
+          5.4677242662640335,
+          2.088758267773908
+        ],
+        [
+          6.6,
+          2.4
+        ]
+      ],
+      "chapel": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          -0.4748005659376934,
+          1.102401801171978
+        ],
+        [
+          -0.9830142388336428,
+          2.187176215208498
+        ],
+        [
+          -1.524641018687848,
+          3.2543232421095603
+        ],
+        [
+          -2.0996809055003096,
+          4.303842881875164
+        ],
+        [
+          -2.708133899271027,
+          5.3357351345053114
+        ],
+        [
+          -3.35,
+          6.35
+        ]
+      ],
+      "stamp-mill": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.491578015409218,
+          1.1276111559238253
+        ],
+        [
+          1.016524824654749,
+          2.237511182811454
+        ],
+        [
+          1.5748404277365924,
+          3.3297000806628856
+        ],
+        [
+          2.166524824654749,
+          4.4041778494781205
+        ],
+        [
+          2.7915780154092187,
+          5.460944489257159
+        ],
+        [
+          3.45,
+          6.5
+        ]
+      ],
+      "gate": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.09444444444444446,
+          2.4166666666666665
+        ],
+        [
+          0.15111111111111114,
+          4.833333333333333
+        ],
+        [
+          0.17,
+          7.25
+        ],
+        [
+          0.15111111111111114,
+          9.666666666666666
+        ],
+        [
+          0.09444444444444444,
+          12.083333333333336
+        ],
+        [
+          0.0,
+          14.5
+        ]
+      ]
+    }
+  },
+  "flatWalk": {
+    "law": "walk routes and plaza remain within +/-0.05m",
+    "layoutSource": "src/town/townLayout.ts",
+    "layoutSha256": "6d000feac3c0e2e14051f287205e5450b3b701bec4c44e513613a34ea39017d0",
+    "routeSamples": 4122,
+    "routeMaxAbs": 0.037230038198761306,
+    "plazaSamples": 740,
+    "plazaMaxAbs": 0.03721010234283337,
+    "routes": {
+      "ring-road": {
+        "samples": 1488,
+        "min": -0.037230038198761306,
+        "max": -0.0,
+        "maxAbs": 0.037230038198761306
+      },
+      "tavern": {
+        "samples": 288,
+        "min": -0.03713044983393161,
+        "max": 0.007929865513283726,
+        "maxAbs": 0.03713044983393161
+      },
+      "claim_office": {
+        "samples": 288,
+        "min": -0.03713044983393161,
+        "max": 0.007929865513283726,
+        "maxAbs": 0.03713044983393161
+      },
+      "general_store": {
+        "samples": 306,
+        "min": -0.03697364796720181,
+        "max": 0.007809350628946422,
+        "maxAbs": 0.03697364796720181
+      },
+      "schoolhouse": {
+        "samples": 288,
+        "min": -0.03718443704072323,
+        "max": 0.007679156844335544,
+        "maxAbs": 0.03718443704072323
+      },
+      "assay_office": {
+        "samples": 288,
+        "min": -0.03718443704072323,
+        "max": 0.007679156844335544,
+        "maxAbs": 0.03718443704072323
+      },
+      "chapel": {
+        "samples": 294,
+        "min": -0.0372281111946657,
+        "max": 0.007969170485333419,
+        "maxAbs": 0.0372281111946657
+      },
+      "stamp-mill": {
+        "samples": 306,
+        "min": -0.037229149176491824,
+        "max": 0.007967754272067825,
+        "maxAbs": 0.037229149176491824
+      },
+      "gate": {
+        "samples": 576,
+        "min": -0.0372137163142282,
+        "max": 0.007747962629790653,
+        "maxAbs": 0.0372137163142282
+      }
+    },
+    "pads": {
+      "tavern": {
+        "samples": 63,
+        "maxAbs": 0.0
+      },
+      "claim_office": {
+        "samples": 63,
+        "maxAbs": 0.0
+      },
+      "general_store": {
+        "samples": 63,
+        "maxAbs": 0.0
+      },
+      "schoolhouse": {
+        "samples": 63,
+        "maxAbs": 0.0
+      },
+      "assay_office": {
+        "samples": 63,
+        "maxAbs": 0.0
+      },
+      "chapel": {
+        "samples": 63,
+        "maxAbs": 0.0
+      },
+      "stamp-mill": {
+        "samples": 63,
+        "maxAbs": 0.0
+      },
+      "dynamo-hall": {
+        "samples": 63,
+        "maxAbs": 0.0
+      }
+    }
+  },
+  "decoration": {
+    "law": "decor geometry stays inside audited circular footprints; pads, routes, shipped props, and plaza stage remain clear",
+    "layoutSource": "src/town/townLayout.ts",
+    "layoutSha256": "6d000feac3c0e2e14051f287205e5450b3b701bec4c44e513613a34ea39017d0",
+    "clusterCount": 8,
+    "partCountBeforeJoin": 170,
+    "minimumRouteClearance": 3.6844,
+    "minimumPadClearance": 0.17,
+    "minimumExistingPropClearance": 0.2532,
+    "minimumPlazaStageClearance": 6.7062,
+    "minimumPairClearance": 3.281837978653423,
+    "closestPairs": [
+      {
+        "clearance": 3.2818,
+        "left": "tavern-workyard",
+        "right": "school-garden-yard"
+      },
+      {
+        "clearance": 3.7872,
+        "left": "assay-sample-yard",
+        "right": "stamp-mill-supply-yard"
+      },
+      {
+        "clearance": 4.7034,
+        "left": "assay-sample-yard",
+        "right": "dynamo-utility-yard"
+      },
+      {
+        "clearance": 6.0965,
+        "left": "school-garden-yard",
+        "right": "chapel-flower-yard"
+      },
+      {
+        "clearance": 6.3943,
+        "left": "claim-notice-yard",
+        "right": "store-delivery-yard"
+      },
+      {
+        "clearance": 7.094,
+        "left": "stamp-mill-supply-yard",
+        "right": "dynamo-utility-yard"
+      }
+    ],
+    "clusters": [
+      {
+        "id": "tavern-workyard",
+        "parcel": "tavern",
+        "center": [
+          -9.8436,
+          -4.6393,
+          0.088754
+        ],
+        "rotation": -0.785398,
+        "footprintRadius": 0.91,
+        "routeClearance": 3.972,
+        "padClearance": 0.17,
+        "existingPropClearance": 1.547,
+        "plazaStageClearance": 6.872,
+        "vocabulary": [
+          "hitching-posts",
+          "kegs",
+          "bucket",
+          "rope-coil",
+          "feed-sack"
+        ]
+      },
+      {
+        "id": "claim-notice-yard",
+        "parcel": "claim_office",
+        "center": [
+          9.6173,
+          -4.9221,
+          -0.104929
+        ],
+        "rotation": 0.785398,
+        "footprintRadius": 0.9,
+        "routeClearance": 3.8174,
+        "padClearance": 0.22,
+        "existingPropClearance": 1.9947,
+        "plazaStageClearance": 6.8037,
+        "vocabulary": [
+          "notice-board",
+          "crates",
+          "rope-coils"
+        ]
+      },
+      {
+        "id": "store-delivery-yard",
+        "parcel": "general_store",
+        "center": [
+          3.56,
+          -10.5,
+          0.043058
+        ],
+        "rotation": -0.0,
+        "footprintRadius": 0.94,
+        "routeClearance": 3.9142,
+        "padClearance": 0.22,
+        "existingPropClearance": 2.9639,
+        "plazaStageClearance": 7.0471,
+        "vocabulary": [
+          "crates",
+          "sacks",
+          "barrels",
+          "planks"
+        ]
+      },
+      {
+        "id": "school-garden-yard",
+        "parcel": "schoolhouse",
+        "center": [
+          -10.6606,
+          0.3461,
+          0.09511
+        ],
+        "rotation": -1.91382,
+        "footprintRadius": 0.86,
+        "routeClearance": 3.6905,
+        "padClearance": 0.24,
+        "existingPropClearance": 1.1897,
+        "plazaStageClearance": 6.7062,
+        "vocabulary": [
+          "planters",
+          "buckets",
+          "lantern-post"
+        ]
+      },
+      {
+        "id": "assay-sample-yard",
+        "parcel": "assay_office",
+        "center": [
+          8.391,
+          6.6712,
+          -0.130538
+        ],
+        "rotation": 1.91382,
+        "footprintRadius": 0.91,
+        "routeClearance": 3.7215,
+        "padClearance": 0.21,
+        "existingPropClearance": 0.8004,
+        "plazaStageClearance": 6.7098,
+        "vocabulary": [
+          "crates",
+          "buckets",
+          "rope-coils",
+          "lantern-post"
+        ]
+      },
+      {
+        "id": "chapel-flower-yard",
+        "parcel": "chapel",
+        "center": [
+          -7.7287,
+          7.6027,
+          -0.106065
+        ],
+        "rotation": -2.640925,
+        "footprintRadius": 0.87,
+        "routeClearance": 3.6844,
+        "padClearance": 0.27,
+        "existingPropClearance": 1.4058,
+        "plazaStageClearance": 6.8713,
+        "vocabulary": [
+          "planters",
+          "lantern-post",
+          "bucket"
+        ]
+      },
+      {
+        "id": "stamp-mill-supply-yard",
+        "parcel": "stamp-mill",
+        "center": [
+          5.2509,
+          11.0977,
+          -0.092561
+        ],
+        "rotation": 2.646459,
+        "footprintRadius": 0.73,
+        "routeClearance": 4.2078,
+        "padClearance": 0.505,
+        "existingPropClearance": 0.2532,
+        "plazaStageClearance": 8.4472,
+        "vocabulary": [
+          "planks",
+          "barrels",
+          "crates",
+          "rope-coils"
+        ]
+      },
+      {
+        "id": "dynamo-utility-yard",
+        "parcel": "dynamo-hall",
+        "center": [
+          13.94,
+          10.12,
+          0.068327
+        ],
+        "rotation": -3.141593,
+        "footprintRadius": 0.92,
+        "routeClearance": 9.7324,
+        "padClearance": 0.27,
+        "existingPropClearance": 0.7701,
+        "plazaStageClearance": 13.2061,
+        "vocabulary": [
+          "crates",
+          "rope-coils",
+          "lantern-post",
+          "planks"
+        ]
+      }
+    ]
+  }
+}

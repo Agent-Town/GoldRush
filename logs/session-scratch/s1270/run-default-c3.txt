@@ -1,0 +1,212 @@
+(node:65424) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 6 tests using 6 workers
+
+(node:65446) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:65447) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:65450) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:65449) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:65445) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:65448) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  6 [desktop-chrome] › e2e/gazette-welcome.spec.ts:45:1 › the Gazette welcome fires once, walks skippably, and retriggers through the newsie (29.7s)
+  ✘  4 [desktop-chrome] › e2e/gazette-welcome.spec.ts:45:1 › the Gazette welcome fires once, walks skippably, and retriggers through the newsie (32.4s)
+  ✘  5 [desktop-chrome] › e2e/gazette-welcome.spec.ts:45:1 › the Gazette welcome fires once, walks skippably, and retriggers through the newsie (34.2s)
+  ✘  1 [mobile-chrome] › e2e/gazette-welcome.spec.ts:45:1 › the Gazette welcome fires once, walks skippably, and retriggers through the newsie (41.1s)
+  ✘  3 [mobile-chrome] › e2e/gazette-welcome.spec.ts:45:1 › the Gazette welcome fires once, walks skippably, and retriggers through the newsie (43.9s)
+  ✘  2 [mobile-chrome] › e2e/gazette-welcome.spec.ts:45:1 › the Gazette welcome fires once, walks skippably, and retriggers through the newsie (46.0s)
+
+
+  1) [desktop-chrome] › e2e/gazette-welcome.spec.ts:45:1 › the Gazette welcome fires once, walks skippably, and retriggers through the newsie 
+
+    Error: expect(received).toBeLessThan(expected)
+
+    Expected: < 1
+    Received:   1.8602419197512996
+
+      86 |       await expect.poll(() => page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__!.welcomeFollowsPlayer)).toBe(false);
+      87 |       const newsieAfter = await page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__!.actors.find((actor) => actor.id === 'newsie')!.position);
+    > 88 |       expect(Math.hypot(newsieAfter.x - newsieBefore.x, newsieAfter.z - newsieBefore.z)).toBeLessThan(1);
+         |                                                                                          ^
+      89 |     }
+      90 |   }
+      91 |   await expect(welcome).toHaveCount(0);
+        at /Users/robin/Claude/Projects/Gold Rush/e2e/gazette-welcome.spec.ts:88:90
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/gazette-welcome-the-Gazett-ed0b6-triggers-through-the-newsie-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/gazette-welcome-the-Gazett-ed0b6-triggers-through-the-newsie-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/gazette-welcome-the-Gazett-ed0b6-triggers-through-the-newsie-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/gazette-welcome-the-Gazett-ed0b6-triggers-through-the-newsie-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [desktop-chrome] › e2e/gazette-welcome.spec.ts:45:1 › the Gazette welcome fires once, walks skippably, and retriggers through the newsie 
+
+    Error: expect(received).toBeLessThan(expected)
+
+    Expected: < 1
+    Received:   2.2343231637343783
+
+      86 |       await expect.poll(() => page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__!.welcomeFollowsPlayer)).toBe(false);
+      87 |       const newsieAfter = await page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__!.actors.find((actor) => actor.id === 'newsie')!.position);
+    > 88 |       expect(Math.hypot(newsieAfter.x - newsieBefore.x, newsieAfter.z - newsieBefore.z)).toBeLessThan(1);
+         |                                                                                          ^
+      89 |     }
+      90 |   }
+      91 |   await expect(welcome).toHaveCount(0);
+        at /Users/robin/Claude/Projects/Gold Rush/e2e/gazette-welcome.spec.ts:88:90
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/gazette-welcome-the-Gazett-ed0b6-triggers-through-the-newsie-desktop-chrome-repeat1/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/gazette-welcome-the-Gazett-ed0b6-triggers-through-the-newsie-desktop-chrome-repeat1/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/gazette-welcome-the-Gazett-ed0b6-triggers-through-the-newsie-desktop-chrome-repeat1/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/gazette-welcome-the-Gazett-ed0b6-triggers-through-the-newsie-desktop-chrome-repeat1/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [desktop-chrome] › e2e/gazette-welcome.spec.ts:45:1 › the Gazette welcome fires once, walks skippably, and retriggers through the newsie 
+
+    Error: expect(received).toBeLessThan(expected)
+
+    Expected: < 1
+    Received:   3.228157369150395
+
+      86 |       await expect.poll(() => page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__!.welcomeFollowsPlayer)).toBe(false);
+      87 |       const newsieAfter = await page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__!.actors.find((actor) => actor.id === 'newsie')!.position);
+    > 88 |       expect(Math.hypot(newsieAfter.x - newsieBefore.x, newsieAfter.z - newsieBefore.z)).toBeLessThan(1);
+         |                                                                                          ^
+      89 |     }
+      90 |   }
+      91 |   await expect(welcome).toHaveCount(0);
+        at /Users/robin/Claude/Projects/Gold Rush/e2e/gazette-welcome.spec.ts:88:90
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/gazette-welcome-the-Gazett-ed0b6-triggers-through-the-newsie-desktop-chrome-repeat2/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/gazette-welcome-the-Gazett-ed0b6-triggers-through-the-newsie-desktop-chrome-repeat2/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/gazette-welcome-the-Gazett-ed0b6-triggers-through-the-newsie-desktop-chrome-repeat2/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/gazette-welcome-the-Gazett-ed0b6-triggers-through-the-newsie-desktop-chrome-repeat2/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [mobile-chrome] › e2e/gazette-welcome.spec.ts:45:1 › the Gazette welcome fires once, walks skippably, and retriggers through the newsie 
+
+    Error: expect(received).toBeLessThan(expected)
+
+    Expected: < 1
+    Received:   6.790029455017113
+
+      86 |       await expect.poll(() => page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__!.welcomeFollowsPlayer)).toBe(false);
+      87 |       const newsieAfter = await page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__!.actors.find((actor) => actor.id === 'newsie')!.position);
+    > 88 |       expect(Math.hypot(newsieAfter.x - newsieBefore.x, newsieAfter.z - newsieBefore.z)).toBeLessThan(1);
+         |                                                                                          ^
+      89 |     }
+      90 |   }
+      91 |   await expect(welcome).toHaveCount(0);
+        at /Users/robin/Claude/Projects/Gold Rush/e2e/gazette-welcome.spec.ts:88:90
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/gazette-welcome-the-Gazett-ed0b6-triggers-through-the-newsie-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/gazette-welcome-the-Gazett-ed0b6-triggers-through-the-newsie-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/gazette-welcome-the-Gazett-ed0b6-triggers-through-the-newsie-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/gazette-welcome-the-Gazett-ed0b6-triggers-through-the-newsie-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  5) [mobile-chrome] › e2e/gazette-welcome.spec.ts:45:1 › the Gazette welcome fires once, walks skippably, and retriggers through the newsie 
+
+    Error: expect(received).toBeLessThan(expected)
+
+    Expected: < 1
+    Received:   3.9243343384579252
+
+      86 |       await expect.poll(() => page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__!.welcomeFollowsPlayer)).toBe(false);
+      87 |       const newsieAfter = await page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__!.actors.find((actor) => actor.id === 'newsie')!.position);
+    > 88 |       expect(Math.hypot(newsieAfter.x - newsieBefore.x, newsieAfter.z - newsieBefore.z)).toBeLessThan(1);
+         |                                                                                          ^
+      89 |     }
+      90 |   }
+      91 |   await expect(welcome).toHaveCount(0);
+        at /Users/robin/Claude/Projects/Gold Rush/e2e/gazette-welcome.spec.ts:88:90
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/gazette-welcome-the-Gazett-ed0b6-triggers-through-the-newsie-mobile-chrome-repeat1/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/gazette-welcome-the-Gazett-ed0b6-triggers-through-the-newsie-mobile-chrome-repeat1/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/gazette-welcome-the-Gazett-ed0b6-triggers-through-the-newsie-mobile-chrome-repeat1/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/gazette-welcome-the-Gazett-ed0b6-triggers-through-the-newsie-mobile-chrome-repeat1/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  6) [mobile-chrome] › e2e/gazette-welcome.spec.ts:45:1 › the Gazette welcome fires once, walks skippably, and retriggers through the newsie 
+
+    Error: expect(received).toBeLessThan(expected)
+
+    Expected: < 1
+    Received:   2.8324018076537087
+
+      86 |       await expect.poll(() => page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__!.welcomeFollowsPlayer)).toBe(false);
+      87 |       const newsieAfter = await page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__!.actors.find((actor) => actor.id === 'newsie')!.position);
+    > 88 |       expect(Math.hypot(newsieAfter.x - newsieBefore.x, newsieAfter.z - newsieBefore.z)).toBeLessThan(1);
+         |                                                                                          ^
+      89 |     }
+      90 |   }
+      91 |   await expect(welcome).toHaveCount(0);
+        at /Users/robin/Claude/Projects/Gold Rush/e2e/gazette-welcome.spec.ts:88:90
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/gazette-welcome-the-Gazett-ed0b6-triggers-through-the-newsie-mobile-chrome-repeat2/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/gazette-welcome-the-Gazett-ed0b6-triggers-through-the-newsie-mobile-chrome-repeat2/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/gazette-welcome-the-Gazett-ed0b6-triggers-through-the-newsie-mobile-chrome-repeat2/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/gazette-welcome-the-Gazett-ed0b6-triggers-through-the-newsie-mobile-chrome-repeat2/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  6 failed
+    [desktop-chrome] › e2e/gazette-welcome.spec.ts:45:1 › the Gazette welcome fires once, walks skippably, and retriggers through the newsie 
+    [desktop-chrome] › e2e/gazette-welcome.spec.ts:45:1 › the Gazette welcome fires once, walks skippably, and retriggers through the newsie 
+    [desktop-chrome] › e2e/gazette-welcome.spec.ts:45:1 › the Gazette welcome fires once, walks skippably, and retriggers through the newsie 
+    [mobile-chrome] › e2e/gazette-welcome.spec.ts:45:1 › the Gazette welcome fires once, walks skippably, and retriggers through the newsie 
+    [mobile-chrome] › e2e/gazette-welcome.spec.ts:45:1 › the Gazette welcome fires once, walks skippably, and retriggers through the newsie 
+    [mobile-chrome] › e2e/gazette-welcome.spec.ts:45:1 › the Gazette welcome fires once, walks skippably, and retriggers through the newsie 

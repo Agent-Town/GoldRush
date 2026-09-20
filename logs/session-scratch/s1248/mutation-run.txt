@@ -1,0 +1,82 @@
+✖ drain path REFUSES a terminal-closed leaf (F-1248-1) — and clears the same fixture when live (28.351625ms)
+✖ every TERMINAL_CLOSED word is refused on the drain path, and no other word is (25.118625ms)
+✔ an owner BLOCK still outranks everything and still names the owner (unchanged by F-1248-1) (25.174792ms)
+✔ --queue keeps its own wording and its own reason line (25.241417ms)
+✖ a closed leaf whose reason sits under a session-stamped key is still explained (24.911208ms)
+✔ --all reports terminal-closed leaves but its exit code still tracks BLOCKED alone (50.059167ms)
+✔ a missing leaf is still UNKNOWN-not-a-clearance, and --strict still escalates it (53.138541ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 4
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 269.653125
+
+✖ failing tests:
+
+test at scripts/drain-block-check.test.mjs:53:1
+✖ drain path REFUSES a terminal-closed leaf (F-1248-1) — and clears the same fixture when live (28.351625ms)
+  AssertionError [ERR_ASSERTION]: expected rc=1, got rc=0
+    ✅ CLEAR — lane-c-agent-rung-honest-gate.md [agent-rung-honest-gate] status="stopped"
+  
+  
+  0 !== 1
+  
+      at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/Gold%20Rush/scripts/drain-block-check.test.mjs:60:10)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at scripts/drain-block-check.test.mjs:77:1
+✖ every TERMINAL_CLOSED word is refused on the drain path, and no other word is (25.118625ms)
+  AssertionError [ERR_ASSERTION]: status="stopped" must refuse the drain, got rc=0
+    ✅ CLEAR — lane-c-agent-rung-honest-gate.md [agent-rung-honest-gate] status="stopped"
+  
+  
+  0 !== 1
+  
+      at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/Gold%20Rush/scripts/drain-block-check.test.mjs:85:12)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at scripts/drain-block-check.test.mjs:122:1
+✖ a closed leaf whose reason sits under a session-stamped key is still explained (24.911208ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0 !== 1
+  
+      at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/Gold%20Rush/scripts/drain-block-check.test.mjs:129:10)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

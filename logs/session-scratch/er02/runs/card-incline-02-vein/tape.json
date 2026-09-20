@@ -1,0 +1,293 @@
+{
+ "version": 1,
+ "id": "er02-e2-incline-card",
+ "createdAt": null,
+ "kept": true,
+ "contract": "e2-incline",
+ "seed": "e2-incline-02",
+ "difficulty": "vein-hunter",
+ "simVersion": null,
+ "inputLog": null,
+ "orderLog": [
+  {
+   "turn": 0,
+   "wave": 0,
+   "riderCall": true,
+   "orders": [
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": -30,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 1,
+   "wave": 1,
+   "riderCall": true,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": -6,
+      "z": -12
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": -6,
+      "z": -12
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "REPAIR_UNDER",
+     "pct": 60
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 30,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 2,
+   "wave": 1,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "REPAIR_UNDER",
+     "pct": 60
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 30,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 3,
+   "wave": 1,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": -6,
+      "z": -12
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": -6,
+      "z": -12
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "REPAIR_UNDER",
+     "pct": 60
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 30,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 4,
+   "wave": 1,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": -6,
+      "z": -12
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": -6,
+      "z": -12
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "REPAIR_UNDER",
+     "pct": 60
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 30,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 5,
+   "wave": 1,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "REPAIR_UNDER",
+     "pct": 60
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 30,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 6,
+   "wave": 1,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": -6,
+      "z": -12
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": -6,
+      "z": -12
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 30,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 7,
+   "wave": 1,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": -6,
+      "z": -12
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": -6,
+      "z": -12
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "REPAIR_UNDER",
+     "pct": 60
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 30,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 8,
+   "wave": 2,
+   "riderCall": true,
+   "orders": [
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 30,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 9,
+   "wave": 2,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 30,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 10,
+   "wave": 2,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 30,
+      "z": -20
+     }
+    }
+   ]
+  }
+ ],
+ "eventLogHash": "fnv1a32:f074cc3c",
+ "outcome": {
+  "reason": "death",
+  "secured": false,
+  "waves": 2,
+  "timeAlive": 75.9,
+  "gold": 17
+ }
+}

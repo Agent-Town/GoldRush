@@ -1,0 +1,240 @@
+SUBJECT sha256(post-fix, pre-mutation) = 701d3b02d0b4c5bd
+
+
+########## M0 whole pre-fix subject
+RC=1  pass=4 fail=3
+RED ARMS:
+  - a missing dist/ is refused, not cleared
+  - an empty later-asset blacklist is refused — the leak check would otherwise pass vacuously
+  - the success line reports the denominator, so a vacuous clearance would be legible
+  - a missing dist/ is refused, not cleared
+  - an empty later-asset blacklist is refused — the leak check would otherwise pass vacuously
+  - the success line reports the denominator, so a vacuous clearance would be legible
+
+--- raw ---
+✖ a missing dist/ is refused, not cleared (25.656417ms)
+✔ CONTROL: the same fixture with one benign dist file passes — it is the emptiness, not the fixture (27.649ms)
+✖ an empty later-asset blacklist is refused — the leak check would otherwise pass vacuously (28.183541ms)
+✖ the success line reports the denominator, so a vacuous clearance would be legible (26.33975ms)
+✔ POSITIVE CONTROL: a later-epoch manifest id in dist still fails (25.514209ms)
+✔ POSITIVE CONTROL: a leaked later-epoch plate asset in dist still fails (25.976042ms)
+✔ POSITIVE CONTROL: the GR_RELEASE=e1 precondition still refuses a bare invocation (25.237042ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 4
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 218.985542
+
+✖ failing tests:
+
+test at scripts/assert-release-build.test.mjs:65:1
+✖ a missing dist/ is refused, not cleared (25.656417ms)
+  AssertionError [ERR_ASSERTION]: a guard with nothing to read must not exit 0. Got:
+  [release-build] E1-only: 0 files, 0 bytes, zero later manifest ids or plate/GLB assets
+  
+      at file:///Users/robin/Claude/Projects/Gold%20Rush/scripts/assert-release-build.test.mjs:68:12
+      at withFixture (file:///Users/robin/Claude/Projects/Gold%20Rush/scripts/assert-release-build.test.mjs:55:5)
+      at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/Gold%20Rush/scripts/assert-release-build.test.mjs:66:3)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 0,
+    operator: 'notStrictEqual',
+    diff: 'simple'
+  }
+
+test at scripts/assert-release-build.test.mjs:86:1
+✖ an empty later-asset blacklist is refused — the leak check would otherwise pass vacuously (28.183541ms)
+  AssertionError [ERR_ASSERTION]: an empty denominator must not read as a clean bill. Got:
+  [release-build] E1-only: 2 files, 65 bytes, zero later manifest ids or plate/GLB assets
+  
+      at file:///Users/robin/Claude/Projects/Gold%20Rush/scripts/assert-release-build.test.mjs:89:12
+      at withFixture (file:///Users/robin/Claude/Projects/Gold%20Rush/scripts/assert-release-build.test.mjs:55:5)
+      at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/Gold%20Rush/scripts/assert-release-build.test.mjs:87:3)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 0,
+    operator: 'notStrictEqual',
+    diff: 'simple'
+  }
+
+test at scripts/assert-release-build.test.mjs:94:1
+✖ the success line reports the denominator, so a vacuous clearance would be legible (26.33975ms)
+  AssertionError [ERR_ASSERTION]: [release-build] E1-only: 2 files, 65 bytes, zero later manifest ids or plate/GLB assets
+  
+      at file:///Users/robin/Claude/Projects/Gold%20Rush/scripts/assert-release-build.test.mjs:98:12
+      at withFixture (file:///Users/robin/Claude/Projects/Gold%20Rush/scripts/assert-release-build.test.mjs:55:5)
+      at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/Gold%20Rush/scripts/assert-release-build.test.mjs:95:3)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: '[release-build] E1-only: 2 files, 65 bytes, zero later manifest ids or plate/GLB assets\n',
+    expected: /checked against 1 later-asset stems/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+
+########## M1 drop the missing-dist refusal
+RC=1  pass=6 fail=1
+RED ARMS:
+  - a missing dist/ is refused, not cleared
+  - a missing dist/ is refused, not cleared
+
+--- raw ---
+✖ a missing dist/ is refused, not cleared (27.462666ms)
+✔ CONTROL: the same fixture with one benign dist file passes — it is the emptiness, not the fixture (27.834ms)
+✔ an empty later-asset blacklist is refused — the leak check would otherwise pass vacuously (26.326541ms)
+✔ the success line reports the denominator, so a vacuous clearance would be legible (26.280042ms)
+✔ POSITIVE CONTROL: a later-epoch manifest id in dist still fails (26.96975ms)
+✔ POSITIVE CONTROL: a leaked later-epoch plate asset in dist still fails (26.276041ms)
+✔ POSITIVE CONTROL: the GR_RELEASE=e1 precondition still refuses a bare invocation (25.084625ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 6
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 221.211167
+
+✖ failing tests:
+
+test at scripts/assert-release-build.test.mjs:65:1
+✖ a missing dist/ is refused, not cleared (27.462666ms)
+  AssertionError [ERR_ASSERTION]: a guard with nothing to read must not exit 0. Got:
+  [release-build] E1-only: 0 files, 0 bytes, zero later manifest ids or plate/GLB assets (checked against 1 later-asset stems)
+  
+      at file:///Users/robin/Claude/Projects/Gold%20Rush/scripts/assert-release-build.test.mjs:68:12
+      at withFixture (file:///Users/robin/Claude/Projects/Gold%20Rush/scripts/assert-release-build.test.mjs:55:5)
+      at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/Gold%20Rush/scripts/assert-release-build.test.mjs:66:3)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 0,
+    operator: 'notStrictEqual',
+    diff: 'simple'
+  }
+
+
+########## M2 drop the empty-denominator refusal
+RC=1  pass=6 fail=1
+RED ARMS:
+  - an empty later-asset blacklist is refused — the leak check would otherwise pass vacuously
+  - an empty later-asset blacklist is refused — the leak check would otherwise pass vacuously
+
+--- raw ---
+✔ a missing dist/ is refused, not cleared (26.050791ms)
+✔ CONTROL: the same fixture with one benign dist file passes — it is the emptiness, not the fixture (26.739958ms)
+✖ an empty later-asset blacklist is refused — the leak check would otherwise pass vacuously (26.783083ms)
+✔ the success line reports the denominator, so a vacuous clearance would be legible (28.990125ms)
+✔ POSITIVE CONTROL: a later-epoch manifest id in dist still fails (26.415542ms)
+✔ POSITIVE CONTROL: a leaked later-epoch plate asset in dist still fails (24.863208ms)
+✔ POSITIVE CONTROL: the GR_RELEASE=e1 precondition still refuses a bare invocation (25.96325ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 6
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 220.358667
+
+✖ failing tests:
+
+test at scripts/assert-release-build.test.mjs:86:1
+✖ an empty later-asset blacklist is refused — the leak check would otherwise pass vacuously (26.783083ms)
+  AssertionError [ERR_ASSERTION]: an empty denominator must not read as a clean bill. Got:
+  [release-build] E1-only: 2 files, 65 bytes, zero later manifest ids or plate/GLB assets (checked against 0 later-asset stems)
+  
+      at file:///Users/robin/Claude/Projects/Gold%20Rush/scripts/assert-release-build.test.mjs:89:12
+      at withFixture (file:///Users/robin/Claude/Projects/Gold%20Rush/scripts/assert-release-build.test.mjs:55:5)
+      at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/Gold%20Rush/scripts/assert-release-build.test.mjs:87:3)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 0,
+    operator: 'notStrictEqual',
+    diff: 'simple'
+  }
+
+
+########## M3 drop the denominator from the success line
+RC=1  pass=6 fail=1
+RED ARMS:
+  - the success line reports the denominator, so a vacuous clearance would be legible
+  - the success line reports the denominator, so a vacuous clearance would be legible
+
+--- raw ---
+✔ a missing dist/ is refused, not cleared (25.774375ms)
+✔ CONTROL: the same fixture with one benign dist file passes — it is the emptiness, not the fixture (26.153625ms)
+✔ an empty later-asset blacklist is refused — the leak check would otherwise pass vacuously (25.372708ms)
+✖ the success line reports the denominator, so a vacuous clearance would be legible (27.891292ms)
+✔ POSITIVE CONTROL: a later-epoch manifest id in dist still fails (25.975584ms)
+✔ POSITIVE CONTROL: a leaked later-epoch plate asset in dist still fails (28.089333ms)
+✔ POSITIVE CONTROL: the GR_RELEASE=e1 precondition still refuses a bare invocation (24.873833ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 6
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 218.2675
+
+✖ failing tests:
+
+test at scripts/assert-release-build.test.mjs:94:1
+✖ the success line reports the denominator, so a vacuous clearance would be legible (27.891292ms)
+  AssertionError [ERR_ASSERTION]: [release-build] E1-only: 2 files, 65 bytes, zero later manifest ids or plate/GLB assets
+  
+      at file:///Users/robin/Claude/Projects/Gold%20Rush/scripts/assert-release-build.test.mjs:98:12
+      at withFixture (file:///Users/robin/Claude/Projects/Gold%20Rush/scripts/assert-release-build.test.mjs:55:5)
+      at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/Gold%20Rush/scripts/assert-release-build.test.mjs:95:3)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: '[release-build] E1-only: 2 files, 65 bytes, zero later manifest ids or plate/GLB assets\n',
+    expected: /checked against 1 later-asset stems/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+
+
+SUBJECT sha256(restored) = 701d3b02d0b4c5bd
+RESTORED BYTE-IDENTICAL = true

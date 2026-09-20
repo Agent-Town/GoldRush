@@ -1,0 +1,46 @@
+{
+  "config": { "version": "1.61.1" },
+  "suites": [
+    {
+      "title": "058-device-tiers.spec.ts",
+      "file": "058-device-tiers.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "fixture both-bucket failure",
+          "ok": false,
+          "line": 10,
+          "tests": [
+            {
+              "projectName": "desktop-chrome",
+              "status": "unexpected",
+              "expectedStatus": "passed",
+              "results": [
+                {
+                  "status": "failed",
+                  "duration": 1234,
+                  "error": { "message": "Error: fixture boom", "stack": "Error: fixture boom\n    at (058-device-tiers.spec.ts:12:5)" },
+                  "errors": [ { "message": "Error: fixture boom" } ]
+                }
+              ]
+            },
+            {
+              "projectName": "mobile-chrome",
+              "status": "unexpected",
+              "expectedStatus": "passed",
+              "results": [
+                {
+                  "status": "failed",
+                  "duration": 2345,
+                  "error": { "message": "Error: fixture boom", "stack": "Error: fixture boom\n    at (058-device-tiers.spec.ts:12:5)" },
+                  "errors": [ { "message": "Error: fixture boom" } ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

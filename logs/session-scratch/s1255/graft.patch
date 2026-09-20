@@ -1,0 +1,365 @@
+diff --git a/e2e/gazette-first-issue.spec.ts b/e2e/gazette-first-issue.spec.ts
+index 98f55433..07644beb 100644
+--- a/e2e/gazette-first-issue.spec.ts
++++ b/e2e/gazette-first-issue.spec.ts
+@@ -24,14 +24,13 @@ function collectErrors(page: Page): ErrorBucket {
+   return errors;
+ }
+ 
+-async function createProfile(page: Page, greenhorn: boolean): Promise<void> {
++async function createProfile(page: Page, name: string): Promise<void> {
+   await page.addInitScript(() => {
+     localStorage.clear();
+     sessionStorage.clear();
+   });
+   await page.goto('/');
+-  if (greenhorn) await page.getByLabel('Yes - ease me onto the trail').check();
+-  await page.getByTestId('profile-name-input').fill(greenhorn ? 'Mina' : 'June');
++  await page.getByTestId('profile-name-input').fill(name);
+   await page.getByTestId('profile-create').click();
+   await page.waitForFunction(() => (window.__GR_TOWN_DIAGNOSTICS__?.frame ?? 0) > 10);
+ }
+@@ -58,7 +57,7 @@ async function screenshot(page: Page, testInfo: TestInfo, name: string): Promise
+ 
+ test('fresh profile gets the pinned first issue badge and can reopen it', async ({ page }, testInfo) => {
+   const errors = collectErrors(page);
+-  await createProfile(page, false);
++  await createProfile(page, 'June');
+ 
+   const badge = page.getByTestId('town-herald-badge');
+   await expect(badge).toBeVisible();
+@@ -77,14 +76,21 @@ test('fresh profile gets the pinned first issue badge and can reopen it', async
+   expect(errors).toEqual({ consoleErrors: [], pageErrors: [] });
+ });
+ 
+-test('greenhorn offer opens issue one only on the first town entry', async ({ page }) => {
++test('mandatory welcome opens issue one only on the first town entry', async ({ page }) => {
+   const errors = collectErrors(page);
+-  await createProfile(page, true);
++  await createProfile(page, 'Mina');
+ 
+-  await expectFirstIssue(page);
+-  await page.getByTestId('claim-herald-close').click();
+   await page.getByTestId('town-name-input').fill('Sunrise Bend');
+   await page.getByTestId('town-name-submit').click();
++  await expect(page.getByTestId('story-beat-card')).toHaveAttribute('data-beat-id', 'founding-welcome');
++  await page.mouse.click(6, 6);
++  await expect(page.getByTestId('town-bark-card')).toHaveAttribute('data-first-claim', 'true');
++  await page.keyboard.press('ArrowRight');
++  await expect(page.locator('[data-welcome-phase="delivery"]')).toBeVisible();
++  await page.getByTestId('town-welcome-take-paper').click();
++  await expectFirstIssue(page);
++  await page.getByTestId('claim-herald-close').click();
++  await page.getByTestId('town-welcome-skip').click();
+   await page.getByTestId('town-exit').click();
+   await page.getByTestId('start-menu-enter-town').click();
+   await page.waitForFunction(() => (window.__GR_TOWN_DIAGNOSTICS__?.frame ?? 0) > 10);
+diff --git a/e2e/gazette-welcome.spec.ts b/e2e/gazette-welcome.spec.ts
+index 6de0225f..ca5e1a5c 100644
+--- a/e2e/gazette-welcome.spec.ts
++++ b/e2e/gazette-welcome.spec.ts
+@@ -1,7 +1,8 @@
+ import { mkdir } from 'node:fs/promises';
+ import path from 'node:path';
+ import { expect, test, type Page, type TestInfo } from '@playwright/test';
+-import { PROFILE_KEY, TOWN_WELCOME_SEEN_KEY, profileDataKey, type ProfileState } from '../src/game/ProfileStorage';
++import { META_PROGRESS_KEY } from '../src/game/MetaProgress';
++import { PROFILE_KEY, TOWN_NAME_KEY, TOWN_WELCOME_SEEN_KEY, profileDataKey, type ProfileState } from '../src/game/ProfileStorage';
+ import { townPlazaSlot } from '../src/town/townLayout';
+ 
+ const ARTIFACT_DIR = path.resolve('artifacts/gazette-welcome');
+@@ -144,16 +145,16 @@ test('skip retires the unread nag on later entries', async ({ page }) => {
+   expect(errors).toEqual({ consoleErrors: [], pageErrors: [] });
+ });
+ 
+-test('greenhorns continue from their opened paper straight to the walk', async ({ page }) => {
++test('a fresh profile that reads the badge early continues straight to the walk', async ({ page }) => {
+   await page.addInitScript(() => {
+     localStorage.clear();
+     sessionStorage.clear();
+   });
+   const errors = collectErrors(page);
+   await page.goto('/');
+-  await page.getByLabel('Yes - ease me onto the trail').check();
+   await page.getByTestId('profile-name-input').fill('Mina');
+   await page.getByTestId('profile-create').click();
++  await page.getByTestId('town-herald-badge').click();
+   await expect(page.getByTestId('gazette-first-issue')).toBeVisible();
+   await page.getByTestId('claim-herald-close').click();
+   await page.getByTestId('town-name-input').fill('Sunrise Bend');
+@@ -167,6 +168,58 @@ test('greenhorns continue from their opened paper straight to the walk', async (
+   expect(errors).toEqual({ consoleErrors: [], pageErrors: [] });
+ });
+ 
++test('an imported ledger never starts the welcome uninvited', async ({ page }) => {
++  await page.addInitScript(({ profileKey, townKey }) => {
++    localStorage.clear();
++    sessionStorage.clear();
++    const state: ProfileState = {
++      version: 2,
++      activeId: 'robin',
++      profiles: [{ id: 'robin', name: 'Robin', createdAt: 1, updatedAt: 1, difficultyPreset: 'trail', hintsSeen: [] }],
++    };
++    localStorage.setItem(profileKey, JSON.stringify(state));
++    localStorage.setItem(`${profileKey}.robin.${townKey}`, 'Quartz Hill');
++  }, { profileKey: PROFILE_KEY, townKey: TOWN_NAME_KEY });
++  const errors = collectErrors(page);
++  await page.goto('/');
++  await page.getByTestId('start-menu-profile').click();
++  await page.getByTestId('profile-import-file').setInputFiles({
++    name: 'imported-ledger.json',
++    mimeType: 'application/json',
++    buffer: Buffer.from(JSON.stringify({
++      kind: 'goldrush.profile.ledger',
++      version: 1,
++      exportedAt: '2026-07-30T00:00:00.000Z',
++      profile: {
++        id: 'archivist',
++        name: 'Archivist',
++        createdAt: 1,
++        updatedAt: 1,
++        difficultyPreset: 'trail',
++        hintsSeen: [],
++        trailGuide: true,
++      },
++      data: {
++        [META_PROGRESS_KEY]: { version: 1, tracks: { territory: 1, science: 1, hero: 0, agent: 0 } },
++        [TOWN_WELCOME_SEEN_KEY]: 0,
++      },
++    })),
++  });
++  await page.getByTestId('profile-import-apply').click();
++  await page.getByTestId('profile-back').click();
++  await page.getByTestId('start-menu-enter-town').click();
++  await page.waitForFunction(() => (window.__GR_TOWN_DIAGNOSTICS__?.frame ?? 0) > 10);
++  await page.getByTestId('town-name-input').fill('Archive Bend');
++  await page.getByTestId('town-name-submit').click();
++  await expect(page.getByTestId('story-beat-card')).toHaveAttribute('data-beat-id', 'founding-welcome');
++  await page.mouse.click(6, 6);
++  await page.waitForTimeout(1_000);
++  await expect(page.locator('[data-welcome-phase]')).toHaveCount(0);
++  const profileId = await page.evaluate((profileKey) => (JSON.parse(localStorage.getItem(profileKey)!) as ProfileState).activeId, PROFILE_KEY);
++  await expect(page.evaluate((key) => localStorage.getItem(key), profileDataKey(profileId, TOWN_WELCOME_SEEN_KEY))).resolves.toBe('1');
++  expect(errors).toEqual({ consoleErrors: [], pageErrors: [] });
++});
++
+ test('opening the Herald badge during delivery continues into the walk', async ({ page }) => {
+   await page.addInitScript(() => {
+     localStorage.clear();
+diff --git a/e2e/profile-first-boot.spec.ts b/e2e/profile-first-boot.spec.ts
+index af56e33e..41adecd7 100644
+--- a/e2e/profile-first-boot.spec.ts
++++ b/e2e/profile-first-boot.spec.ts
+@@ -44,7 +44,9 @@ test('cleared-storage boot asks who is prospecting and creates no Robin ghost',
+   await page.goto('/');
+ 
+   await expect(page.getByTestId('profile-title')).toContainText("Who's prospecting?");
++  await expect(page.getByTestId('greenhorn-question')).toHaveCount(0);
+   await expect(page.getByTestId('start-menu-new-claim')).toHaveCount(0);
++  await shot(page, testInfo, 'name-only-creation');
+   await page.getByTestId('profile-name-input').fill('Mina');
+   await page.getByTestId('profile-create').click();
+   await expect(page.getByTestId('start-menu')).toHaveCount(0);
+@@ -54,11 +56,15 @@ test('cleared-storage boot asks who is prospecting and creates no Robin ghost',
+   await page.getByTestId('town-name-submit').click();
+   await expect(page.getByTestId('story-beat-card')).toHaveAttribute('data-beat-id', 'founding-welcome');
+   await page.mouse.click(6, 6);
++  await expect(page.getByTestId('town-bark-card')).toHaveAttribute('data-first-claim', 'true');
++  await page.keyboard.press('ArrowRight');
++  await expect(page.locator('[data-welcome-phase="delivery"]')).toBeVisible();
+ 
+   const state = await readProfileState(page);
+   expect(state.activeId).toBe('mina');
+   expect(state.profiles.map((profile) => profile.name)).toEqual(['Mina']);
+   expect(state.profiles.some((profile) => profile.name === 'Robin')).toBe(false);
++  expect(state.profiles[0]).toMatchObject({ difficultyPreset: 'trail', trailGuide: true });
+   await shot(page, testInfo, 'first-boot-created');
+   assertNoErrors(errors);
+ });
+diff --git a/e2e/release-build.spec.ts b/e2e/release-build.spec.ts
+index 42ef6316..1d21939f 100644
+--- a/e2e/release-build.spec.ts
++++ b/e2e/release-build.spec.ts
+@@ -28,6 +28,7 @@ test('first player reaches textured town actors and places a Dry Gulch spring sl
+     sessionStorage.setItem('gr.release-build.first-player', '1');
+   });
+   await page.goto('/');
++  await expect(page.getByTestId('greenhorn-question')).toHaveCount(0);
+   await page.getByTestId('profile-name-input').fill('Mina');
+   await page.getByTestId('profile-create').click();
+   await waitForTown(page);
+diff --git a/e2e/trail-guide.spec.ts b/e2e/trail-guide.spec.ts
+index 728b3ba0..71ca33bf 100644
+--- a/e2e/trail-guide.spec.ts
++++ b/e2e/trail-guide.spec.ts
+@@ -198,7 +198,7 @@ test('veteran profile receives no Trail Guide barks', async ({ page }) => {
+   expect(errors).toEqual({ consoleErrors: [], pageErrors: [] });
+ });
+ 
+-test('first boot asks the greenhorn question once and sets the preset', async ({ page }) => {
++test('first boot asks only for a name and uses the default preset', async ({ page }) => {
+   await page.addInitScript(() => {
+     localStorage.clear();
+     sessionStorage.clear();
+@@ -206,21 +206,19 @@ test('first boot asks the greenhorn question once and sets the preset', async ({
+   const errors = collectErrors(page);
+   await page.goto('/');
+ 
+-  await expect(page.getByTestId('greenhorn-question')).toContainText('First time prospecting?');
+-  await page.getByLabel('Yes - ease me onto the trail').check();
++  await expect(page.getByTestId('greenhorn-question')).toHaveCount(0);
+   await page.getByTestId('profile-name-input').fill('Mina');
+   await page.getByTestId('profile-create').click();
+-  await expect(page.getByTestId('greenhorn-question')).toHaveCount(0);
+ 
+   const profile = await page.evaluate((key) => {
+     const state = JSON.parse(localStorage.getItem(key) ?? '{}') as ProfileState;
+     return state.profiles.find((entry) => entry.id === state.activeId);
+   }, PROFILE_KEY);
+-  expect(profile).toMatchObject({ name: 'Mina', difficultyPreset: 'greenhorn', trailGuide: true });
++  expect(profile).toMatchObject({ name: 'Mina', difficultyPreset: 'trail', trailGuide: true });
+   expect(errors).toEqual({ consoleErrors: [], pageErrors: [] });
+ });
+ 
+-test('profile-title first boot offers the same greenhorn choice once', async ({ page }) => {
++test('profile-title first boot also asks only for a name', async ({ page }) => {
+   await page.addInitScript(() => {
+     localStorage.clear();
+     sessionStorage.clear();
+@@ -228,16 +226,14 @@ test('profile-title first boot offers the same greenhorn choice once', async ({
+   const errors = collectErrors(page);
+   await page.goto('/?profiles');
+ 
+-  await expect(page.getByTestId('greenhorn-question')).toContainText('First time prospecting?');
+-  await page.getByLabel('Yes - ease me onto the trail').check();
++  await expect(page.getByTestId('greenhorn-question')).toHaveCount(0);
+   await page.getByTestId('profile-name-input').fill('Mina');
+   await page.getByTestId('profile-create').click();
+-  await expect(page.getByTestId('greenhorn-question')).toHaveCount(0);
+ 
+   const profile = await page.evaluate((key) => {
+     const state = JSON.parse(localStorage.getItem(key) ?? '{}') as ProfileState;
+     return state.profiles.find((entry) => entry.id === state.activeId);
+   }, PROFILE_KEY);
+-  expect(profile).toMatchObject({ name: 'Mina', difficultyPreset: 'greenhorn', trailGuide: true });
++  expect(profile).toMatchObject({ name: 'Mina', difficultyPreset: 'trail', trailGuide: true });
+   expect(errors).toEqual({ consoleErrors: [], pageErrors: [] });
+ });
+diff --git a/src/game/ProfileManager.ts b/src/game/ProfileManager.ts
+index af34f7a8..c66a5ad5 100644
+--- a/src/game/ProfileManager.ts
++++ b/src/game/ProfileManager.ts
+@@ -149,11 +149,6 @@ export class ProfileManager {
+           ${this.message ? `<p class="gr-profile-message" data-testid="profile-message">${escapeHtml(this.message)}</p>` : ''}
+           <form class="gr-profile-create gr-profile-create--first" data-testid="profile-create-form">
+             <input data-testid="profile-name-input" name="profileName" maxlength="24" autocomplete="off" placeholder="Claim-holder name" />
+-            <fieldset class="gr-profile-greenhorn" data-testid="greenhorn-question">
+-              <legend>First time prospecting?</legend>
+-              <label><input type="radio" name="greenhornOffer" value="yes" /> Yes - ease me onto the trail</label>
+-              <label><input type="radio" name="greenhornOffer" value="no" checked /> No - give me the regular trail</label>
+-            </fieldset>
+             <button class="death-overlay__button gr-profile-create__button" type="submit" data-testid="profile-create">Open ledger</button>
+           </form>
+           ${this.renderAccountCard()}
+@@ -355,8 +350,7 @@ export class ProfileManager {
+     this.root?.querySelector<HTMLFormElement>('[data-testid="profile-create-form"]')?.addEventListener('submit', (event) => {
+       event.preventDefault();
+       const input = this.root?.querySelector<HTMLInputElement>('[data-testid="profile-name-input"]');
+-      const preset = this.root?.querySelector<HTMLInputElement>('[name="greenhornOffer"]:checked')?.value === 'yes' ? 'greenhorn' : 'trail';
+-      const profile = this.createProfile(input?.value ?? '', preset);
++      const profile = this.createProfile(input?.value ?? '');
+       if (profile && input) input.value = '';
+       else {
+         this.message = 'Use a ledger name the family can read.';
+diff --git a/src/game/ProfileStorage.ts b/src/game/ProfileStorage.ts
+index 35204a2e..cdfb6a72 100644
+--- a/src/game/ProfileStorage.ts
++++ b/src/game/ProfileStorage.ts
+@@ -184,6 +184,7 @@ export function createProfile(storage: ProfileStorage, name: string, difficultyP
+     saveProfileState(storage, next);
+     migrateLegacyData(storage, profile.id);
+     saveProfileDatum(storage, profile.id, DIFFICULTY_PRESET_STORAGE_KEY, profile.difficultyPreset);
++    saveProfileDatum(storage, profile.id, TOWN_WELCOME_SEEN_KEY, '0');
+     return profile;
+   }
+ 
+@@ -201,6 +202,7 @@ export function createProfile(storage: ProfileStorage, name: string, difficultyP
+   state.activeId = profile.id;
+   saveProfileState(storage, state);
+   saveProfileDatum(storage, profile.id, DIFFICULTY_PRESET_STORAGE_KEY, profile.difficultyPreset);
++  saveProfileDatum(storage, profile.id, TOWN_WELCOME_SEEN_KEY, '0');
+   return profile;
+ }
+ 
+diff --git a/src/game/ProfileTransfer.ts b/src/game/ProfileTransfer.ts
+index 267a3e3d..a0626aa0 100644
+--- a/src/game/ProfileTransfer.ts
++++ b/src/game/ProfileTransfer.ts
+@@ -6,6 +6,7 @@ import { gunzipJsonBase64, gzipTextBase64 } from '../core/GzipJson';
+ import {
+   PROFILE_KEY,
+   RUN_SUSPEND_KEY,
++  TOWN_WELCOME_SEEN_KEY,
+   activeProfile,
+   importProfileRecord,
+   isTileStateDataKey,
+@@ -280,6 +281,7 @@ function encodeDatum(value: unknown): string {
+ }
+ 
+ function normalizeDatum(storage: ProfileStorage, profileId: string, key: string, value: unknown): unknown | null {
++  if (key === TOWN_WELCOME_SEEN_KEY) return '1';
+   if (isTileStateDataKey(key)) return normalizeTileStateDatum(value);
+   if (key === 'gr.run.v1') return normalizeRunSuspendDatum(value);
+   if (key === SAVE_SLOTS_KEY) return mergeSaveSlotsForRestore(safeGet(storage, profileDataKey(profileId, SAVE_SLOTS_KEY)), value);
+@@ -287,6 +289,7 @@ function normalizeDatum(storage: ProfileStorage, profileId: string, key: string,
+ }
+ 
+ function normalizeImportDatum(key: string, value: unknown): unknown | null {
++  if (key === TOWN_WELCOME_SEEN_KEY) return '1';
+   if (isTileStateDataKey(key)) return normalizeTileStateDatum(value);
+   if (key === 'gr.run.v1') return normalizeRunSuspendDatum(value);
+   if (key === SAVE_SLOTS_KEY) return mergeSaveSlotsForRestore(null, value);
+diff --git a/src/town/TownWelcome.ts b/src/town/TownWelcome.ts
+index 3380d3e7..7f2e3170 100644
+--- a/src/town/TownWelcome.ts
++++ b/src/town/TownWelcome.ts
+@@ -47,10 +47,10 @@ export class TownWelcome {
+ 
+   beginFirst(paperAlreadyRead = false, storage = browserStorage()): boolean {
+     try {
+-      if (storage?.getItem(TOWN_WELCOME_SEEN_KEY) === '1') return false;
+-      storage?.setItem(TOWN_WELCOME_SEEN_KEY, '1');
++      if (storage?.getItem(TOWN_WELCOME_SEEN_KEY) !== '0') return false;
++      storage.setItem(TOWN_WELCOME_SEEN_KEY, '1');
+     } catch {
+-      // A storage failure may lose persistence, but must not trap the welcome.
++      return false;
+     }
+     this.phase = paperAlreadyRead ? 'walk' : 'delivery';
+     this.deliveryReady = false;
+diff --git a/src/ui/menu/StartMenu.ts b/src/ui/menu/StartMenu.ts
+index c054436c..d6304230 100644
+--- a/src/ui/menu/StartMenu.ts
++++ b/src/ui/menu/StartMenu.ts
+@@ -182,11 +182,6 @@ export class StartMenu {
+         ${this.profileMessage ? `<p class="gr-profile-message" data-testid="profile-message">${escapeHtml(this.profileMessage)}</p>` : ''}
+         <form class="gr-profile-create gr-profile-create--first" data-testid="profile-create-form">
+           <input data-testid="profile-name-input" name="profileName" maxlength="24" autocomplete="off" placeholder="Claim-holder name" />
+-          <fieldset class="gr-profile-greenhorn" data-testid="greenhorn-question">
+-            <legend>First time prospecting?</legend>
+-            <label><input type="radio" name="greenhornOffer" value="yes" /> Yes - ease me onto the trail</label>
+-            <label><input type="radio" name="greenhornOffer" value="no" checked /> No - give me the regular trail</label>
+-          </fieldset>
+           <button class="death-overlay__button gr-profile-create__button" type="submit" data-testid="profile-create">Open ledger</button>
+         </form>
+       </section>
+@@ -234,8 +229,7 @@ export class StartMenu {
+   private createFirstProfile(): void {
+     if (!this.storage) return;
+     const input = this.root.querySelector<HTMLInputElement>('[data-testid="profile-name-input"]');
+-    const preset = this.root.querySelector<HTMLInputElement>('[name="greenhornOffer"]:checked')?.value === 'yes' ? 'greenhorn' : 'trail';
+-    const profile = createProfile(this.storage, input?.value ?? '', preset);
++    const profile = createProfile(this.storage, input?.value ?? '');
+     if (!profile) {
+       this.profileMessage = 'Use a ledger name the family can read.';
+       this.render();

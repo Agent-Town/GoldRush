@@ -1,0 +1,210 @@
+{
+  "version": 1,
+  "shots": [
+    {
+      "id": "dawn-valley-pan",
+      "seed": "mkt-dawn-valley-pan",
+      "durationMs": 2400,
+      "description": "The carved claim at dawn, with a slow follow-cam drift across the valley.",
+      "cameraFocus": "Hero drifts east from the west bank so the camera pans over the river claim.",
+      "debugParams": {
+        "debug": true,
+        "timescale": 1,
+        "nowaves": true,
+        "nolevel": true,
+        "nopause": true,
+        "nokill": true,
+        "nosteal": true,
+        "nowreck": true
+      },
+      "setup": [
+        { "type": "teleport", "x": -12, "z": 14 },
+        { "type": "waitFrames", "frames": 24 }
+      ],
+      "during": [
+        { "type": "holdKey", "key": "KeyD", "ms": 1200 },
+        { "type": "releaseMoveKeys" }
+      ],
+      "qualityNote": "First pass reads as honest gameplay follow-cam, not a true cinematic crane move."
+    },
+    {
+      "id": "wave-break-at-the-gaps",
+      "seed": "mkt-wave-break-046",
+      "durationMs": 2400,
+      "description": "A task-046-style funnel: enemies break against wall gaps under teal rig and turret fire.",
+      "cameraFocus": "North-bank kill gap, hero centered behind palisades and turrets.",
+      "debugParams": {
+        "debug": true,
+        "timescale": 4,
+        "nowaves": true,
+        "nolevel": true,
+        "nopause": true,
+        "nosteal": true,
+        "nowreck": true
+      },
+      "setup": [
+        { "type": "grantGold", "amount": 900 },
+        { "type": "setBalance", "path": "enemy.contactDamage", "value": 0 },
+        { "type": "setBalance", "path": "enemy.hp", "value": 42 },
+        { "type": "setBalance", "path": "enemy.speed", "value": 1.45 },
+        { "type": "placeBuildable", "id": "palisade", "x": -4, "z": 12, "rotated": true },
+        { "type": "placeBuildable", "id": "palisade", "x": 4, "z": 12, "rotated": true },
+        { "type": "placeBuildable", "id": "turret", "x": -3, "z": 10 },
+        { "type": "placeBuildable", "id": "turret", "x": 3, "z": 10 },
+        { "type": "placeBuildable", "id": "sentry_beacon", "x": 0, "z": 10 },
+        { "type": "teleport", "x": 0, "z": 14 },
+        { "type": "scriptEnemyFile", "count": 22, "startX": 0, "startZ": 25, "targetX": 0, "targetZ": 10, "spacing": 0.42, "speed": 2.4 },
+        { "type": "waitForEnemies", "count": 14 },
+        { "type": "wait", "ms": 700 }
+      ],
+      "during": [
+        { "type": "wait", "ms": 900 }
+      ],
+      "qualityNote": "Good systems proof; enemy silhouettes remain raw gameplay scale for trailer use."
+    },
+    {
+      "id": "prospector-at-work",
+      "seed": "mkt-prospector-at-work",
+      "durationMs": 2500,
+      "description": "The Prospector collects XP while the permission panel is open.",
+      "cameraFocus": "HUD chip and Prospector panel, with live receipt feed after collection.",
+      "meta": { "territory": 0, "science": 0, "hero": 0, "agent": 1 },
+      "debugParams": {
+        "debug": true,
+        "timescale": 16,
+        "nowaves": true,
+        "nolevel": true,
+        "nopause": true,
+        "nosteal": true,
+        "nowreck": true
+      },
+      "setup": [
+        { "type": "setBalance", "path": "enemy.contactDamage", "value": 0 },
+        { "type": "setBalance", "path": "enemy.hp", "value": 6 },
+        { "type": "teleport", "x": 0, "z": 12 },
+        { "type": "spawnPack", "count": 4, "radius": 4 },
+        { "type": "waitForXpMotes", "count": 1 },
+        { "type": "waitForReceipt", "tool": "et.goldrush.collect_xp" },
+        { "type": "press", "key": "KeyG" }
+      ],
+      "during": [
+        { "type": "wait", "ms": 900 }
+      ],
+      "qualityNote": "Panel is readable; the actual Prospector motion is subtle without post callouts."
+    },
+    {
+      "id": "blast-over-rubble",
+      "seed": "mkt-blast-rubble",
+      "durationMs": 2400,
+      "description": "Blast Charge VFX detonates over a wrecked palisade to prove layering over rubble.",
+      "cameraFocus": "Rubble at the north bank, blast arc and detonation centered.",
+      "debugParams": {
+        "debug": true,
+        "timescale": 1,
+        "nowaves": true,
+        "nolevel": true,
+        "nopause": true,
+        "nosteal": true
+      },
+      "setup": [
+        { "type": "setBalance", "path": "enemy.hp", "value": 10 },
+        { "type": "setBalance", "path": "enemy.speed", "value": 0 },
+        { "type": "setBalance", "path": "enemy.contactDamage", "value": 0 },
+        { "type": "setBalance", "path": "blast.airTime", "value": 1.2 },
+        { "type": "setBalance", "path": "blast.cooldown", "value": 0.25 },
+        { "type": "grantGold", "amount": 80 },
+        { "type": "placeBuildable", "id": "palisade", "x": 0, "z": 9 },
+        { "type": "wreck", "id": "palisade", "index": 0 },
+        { "type": "teleport", "x": 0, "z": 6 },
+        { "type": "toggleBlast" },
+        { "type": "setBlastAim", "x": 0, "z": 9 },
+        { "type": "spawnEnemyAt", "x": 0, "z": 9 },
+        { "type": "waitForBlastsAlive", "count": 1 }
+      ],
+      "during": [
+        { "type": "wait", "ms": 900 }
+      ],
+      "qualityNote": "Strong VFX proof; the rubble beat is short and will want trailer timing."
+    },
+    {
+      "id": "demolish-sad-plank",
+      "seed": "mkt-demolish-sad-plank",
+      "durationMs": 2200,
+      "description": "The context bar shows the teardown refund, then the single plank disappears.",
+      "cameraFocus": "Palisade context bar and refund pop.",
+      "debugParams": {
+        "debug": true,
+        "timescale": 6,
+        "nowaves": true,
+        "nolevel": true,
+        "nopause": true,
+        "nokill": true,
+        "nosteal": true
+      },
+      "setup": [
+        { "type": "grantGold", "amount": 100 },
+        { "type": "placeBuildable", "id": "palisade", "x": 0, "z": 9 },
+        { "type": "teleport", "x": 0, "z": 9 },
+        { "type": "waitForTestId", "testId": "building-context-prompt" }
+      ],
+      "during": [
+        { "type": "clickTestId", "testId": "demolish-confirm" },
+        { "type": "wait", "ms": 800 }
+      ],
+      "qualityNote": "The refund beat is clear; the gag is still UI-led until post crops it tight."
+    },
+    {
+      "id": "science-chart-open",
+      "seed": "mkt-science-chart",
+      "durationMs": 2200,
+      "description": "The Elder's Survey Chart open on the start menu.",
+      "cameraFocus": "Research ledger, selected route, and Steamworks horizon.",
+      "meta": { "territory": 0, "science": 3, "hero": 0, "agent": 0 },
+      "research": {
+        "taken": ["assay_grading", "mother_lode_survey", "chain_spark_primer"],
+        "proposalSalt": 0,
+        "pinnedTarget": "claim_map_table"
+      },
+      "debugParams": {},
+      "setup": [
+        { "type": "openResearchChart" },
+        { "type": "selectResearchNode", "id": "claim_map_table" }
+      ],
+      "during": [
+        { "type": "wait", "ms": 800 }
+      ],
+      "qualityNote": "Readable in 16:9; dense for 9:16 and likely needs a crop in post."
+    },
+    {
+      "id": "sluice-line-economy",
+      "seed": "mkt-sluice-line",
+      "durationMs": 2400,
+      "description": "Tiered sluices work the river while the stockpile makes the economy visible.",
+      "cameraFocus": "Three sluices along the river edge with gold and cap HUD visible.",
+      "debugParams": {
+        "debug": true,
+        "timescale": 8,
+        "nowaves": true,
+        "nolevel": true,
+        "nopause": true,
+        "nokill": true,
+        "nosteal": true,
+        "nowreck": true
+      },
+      "setup": [
+        { "type": "grantGold", "amount": 900 },
+        { "type": "placeBuildable", "id": "sluice", "x": -3, "z": 7, "upgradeTo": 2 },
+        { "type": "placeBuildable", "id": "sluice", "x": 0, "z": 7, "upgradeTo": 3 },
+        { "type": "placeBuildable", "id": "sluice", "x": 3, "z": 7 },
+        { "type": "placeBuildable", "id": "stockpile", "x": 3, "z": 12 },
+        { "type": "waitSim", "seconds": 11 },
+        { "type": "teleport", "x": 0, "z": 11 },
+        { "type": "wait", "ms": 300 }
+      ],
+      "during": [
+        { "type": "wait", "ms": 800 }
+      ],
+      "qualityNote": "Economy is visible; sluice/water motion is still the current gameplay pass."
+    }
+  ]
+}

@@ -1,0 +1,65 @@
+(node:99295) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 6 tests using 1 worker
+
+(node:99317) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 [desktop-chrome] › e2e/gazette-welcome.spec.ts:45:1 › the Gazette welcome fires once, walks skippably, and retriggers through the newsie (7.6s)
+(node:99375) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  2 [desktop-chrome] › e2e/gazette-welcome.spec.ts:45:1 › the Gazette welcome fires once, walks skippably, and retriggers through the newsie (7.2s)
+(node:99405) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  3 [desktop-chrome] › e2e/gazette-welcome.spec.ts:45:1 › the Gazette welcome fires once, walks skippably, and retriggers through the newsie (7.1s)
+(node:99451) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  4 [mobile-chrome] › e2e/gazette-welcome.spec.ts:45:1 › the Gazette welcome fires once, walks skippably, and retriggers through the newsie (7.9s)
+(node:99992) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  5 [mobile-chrome] › e2e/gazette-welcome.spec.ts:45:1 › the Gazette welcome fires once, walks skippably, and retriggers through the newsie (8.1s)
+(node:257) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  6 [mobile-chrome] › e2e/gazette-welcome.spec.ts:45:1 › the Gazette welcome fires once, walks skippably, and retriggers through the newsie (24.2s)
+
+
+  1) [mobile-chrome] › e2e/gazette-welcome.spec.ts:45:1 › the Gazette welcome fires once, walks skippably, and retriggers through the newsie 
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator: locator('[data-welcome-phase]')
+    Expected: "tavern-board"
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toHaveAttribute" with timeout 5000ms
+      - waiting for locator('[data-welcome-phase]')
+
+
+      110 |
+      111 |   await page.getByTestId('town-show-around-again').click();
+    > 112 |   await expect(welcome).toHaveAttribute('data-welcome-beat', 'tavern-board');
+          |                         ^
+      113 |   await page.getByTestId('town-welcome-skip').click();
+      114 |   await expect(welcome).toHaveCount(0);
+      115 |
+        at /Users/robin/Claude/Projects/Gold Rush/e2e/gazette-welcome.spec.ts:112:25
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/gazette-welcome-the-Gazett-ed0b6-triggers-through-the-newsie-mobile-chrome-repeat2/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/gazette-welcome-the-Gazett-ed0b6-triggers-through-the-newsie-mobile-chrome-repeat2/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/gazette-welcome-the-Gazett-ed0b6-triggers-through-the-newsie-mobile-chrome-repeat2/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/gazette-welcome-the-Gazett-ed0b6-triggers-through-the-newsie-mobile-chrome-repeat2/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [mobile-chrome] › e2e/gazette-welcome.spec.ts:45:1 › the Gazette welcome fires once, walks skippably, and retriggers through the newsie 
+  5 passed (1.3m)

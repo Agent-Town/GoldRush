@@ -1,0 +1,57 @@
+{
+  "base": "43a73b54a",
+  "paths": {
+    "assets/pilots/map-rebuild-spike/landmarks/landmark-source-ledger.json": {
+      "candidateSha256": "787a671ecb3219f0f71f028716938ef261bd4757cbabf92ad1d0e03f5af058ba",
+      "baseSha256": "193c15fd7f228c4a767b8f958ac9936b869588efdc03a03faea4bf6fd67b68d2"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/twin-banks/floodplain_dressing_pack.blend": {
+      "candidateSha256": "1351959df25930e7ecc80f38d10fe6591f258d0b1c9c3226d283406f32179f60",
+      "baseSha256": "3ffee78e821441835f219456072dfc487b920b83b73dc1316dc7a6787339372e"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/twin-banks/floodplain_dressing_pack.glb": {
+      "candidateSha256": "545093bd6532d451ddec7899a4d642f1963316d3f2ea854e7a0c659052309805",
+      "baseSha256": "99d712d2586e7ce60b4db1e459166dfe99b3c19f013dbc0e18428ec6803e7f72"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/twin-banks/twin-banks-landmark-pack-contract.json": {
+      "candidateSha256": "f22823b2f2b9bab2ace57336dd760c222ba03853b466e68d1b2a15aea54c7222",
+      "baseSha256": "6a03dc96a75b155886232a35de6d21ae58d153985fbd83749c37783244e24528"
+    },
+    "assets/pilots/map-rebuild-spike/twin-banks-terrain-contract.json": {
+      "candidateSha256": "f866d81317d1156dc610dbf4b4092b69f722b3b08a199c91b4b3ff0fb1d66226",
+      "baseSha256": "605402322ad106460dfaf56c14dd01c8cc9de88e6732529f55023380b287ae8c"
+    },
+    "src/world/Terrain3dClaimPilot.ts": {
+      "candidateSha256": "4ad3572b1565495e311d53823fb7d36b0f69db0da75b981e70ef92b7689e6f43",
+      "baseSha256": "d6ea6f12b28b7e047e91534b5ae8d55ba97ea5114e105c00a00853fb99eb4d35"
+    }
+  },
+  "pattern": "the braid renders|loads Twin Banks contract|builds sluices|routes enemies through|a failed 3D prop load|later-era modeled plaza",
+  "specs": [
+    "e2e/beauty-twin-banks.spec.ts",
+    "e2e/e1-twin-banks.spec.ts",
+    "e2e/landmark-collision.spec.ts"
+  ],
+  "candidateEngine": "011419f4873aebb9a8d9d6580844dbf02d116813898fdcc98579cfbf39a88ebe",
+  "baseEngine": "3a437c987c30b1738307197d4e0ebbe64520e8ddbfbbff947378930f8590a041",
+  "command": [
+    "npx",
+    "playwright",
+    "test",
+    "--workers=1",
+    "--project=desktop-chrome",
+    "--project=mobile-chrome",
+    "--trace=off",
+    "--reporter=line",
+    "--output=artifacts/sol/map-art-campaign-2/_raw/run-3/e1-twin-banks-base-initial/test-results",
+    "--grep",
+    "the braid renders|loads Twin Banks contract|builds sluices|routes enemies through|a failed 3D prop load|later-era modeled plaza",
+    "e2e/beauty-twin-banks.spec.ts",
+    "e2e/e1-twin-banks.spec.ts",
+    "e2e/landmark-collision.spec.ts"
+  ],
+  "exit": 1,
+  "restoredEngine": "011419f4873aebb9a8d9d6580844dbf02d116813898fdcc98579cfbf39a88ebe",
+  "candidateRestoredExactly": true,
+  "log": "artifacts/sol/map-art-campaign-2/_raw/run-3/e1-twin-banks-base-initial/tests.log"
+}

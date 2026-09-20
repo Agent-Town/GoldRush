@@ -1,0 +1,1432 @@
+{
+  "label": "ladder-before-baron",
+  "contract": "e1-baron",
+  "base": "http://127.0.0.1:5257",
+  "url": "/?debug&contract=e1-baron&timescale=2&seed=e1-depth-ladder-before-baron",
+  "timescale": 2,
+  "viewport": {
+    "width": 1280,
+    "height": 720
+  },
+  "difficulty": "trail",
+  "secureWave": null,
+  "startGold": 0,
+  "firstRun": {
+    "sawStartMenu": false,
+    "sawGreenhornOffer": false,
+    "greenhornCopy": null,
+    "trailGuideBeats": []
+  },
+  "boot": {
+    "contract": "e1-baron",
+    "difficulty": "trail",
+    "secureWave": null,
+    "briefing": "The Contract Begin The Claim-Jumper Baron A brass-bannered bully compresses the waves and waits at the twentieth horn. Goals The Baron rides at wave 20. Break his Rocket Cart. Rules His outfit rides hot: waves come 15% faster.Taunts warn you before his banner appears.Turn back the Baron for the medal and double science.",
+    "buildables": [
+      {
+        "id": "sentry_beacon",
+        "cost": 25,
+        "max": 6
+      },
+      {
+        "id": "palisade",
+        "cost": 10,
+        "max": 48
+      },
+      {
+        "id": "sluice",
+        "cost": 40,
+        "max": 3
+      },
+      {
+        "id": "stockpile",
+        "cost": 60,
+        "max": 2
+      },
+      {
+        "id": "turret",
+        "cost": 50,
+        "max": 4
+      },
+      {
+        "id": "assay_office",
+        "cost": 80,
+        "max": 1
+      }
+    ],
+    "startGold": 0
+  },
+  "outcome": "dead",
+  "wallSeconds": 271,
+  "wavesReached": 20,
+  "sawRush": false,
+  "fpsEstimate": 119.3,
+  "driver": {
+    "ticks": 451,
+    "kiteTicks": 226,
+    "panTicks": 8,
+    "pauseRecoveries": 2
+  },
+  "perWave": [
+    {
+      "wave": 0,
+      "hpIn": 100,
+      "maxHp": 100,
+      "goldIn": 0,
+      "level": 1,
+      "panned": 0,
+      "sluiced": 0,
+      "seamsUp": 2,
+      "at": {
+        "x": 0,
+        "z": 12
+      },
+      "seamAt": "18,-7 | -22,-7",
+      "builds": "none",
+      "wallSeconds": 6,
+      "peakEnemies": 6,
+      "idleFrac": 0,
+      "zones": {
+        "bank": 5,
+        "shallows": 2,
+        "river": 12
+      }
+    },
+    {
+      "wave": 1,
+      "hpIn": 100,
+      "maxHp": 100,
+      "goldIn": 0,
+      "level": 1,
+      "panned": 0,
+      "sluiced": 0,
+      "seamsUp": 2,
+      "at": {
+        "x": 14.8,
+        "z": -4.1
+      },
+      "seamAt": "18,-7 | -22,-7",
+      "builds": "none",
+      "wallSeconds": 14,
+      "peakEnemies": 10,
+      "idleFrac": 0,
+      "zones": {
+        "river": 8,
+        "shallows": 2,
+        "bank": 15
+      }
+    },
+    {
+      "wave": 2,
+      "hpIn": 36,
+      "maxHp": 100,
+      "goldIn": 10,
+      "level": 3,
+      "panned": 30,
+      "sluiced": 0,
+      "seamsUp": 1,
+      "at": {
+        "x": 9.7,
+        "z": 0.4
+      },
+      "seamAt": "-22,-7",
+      "builds": "palisadex2",
+      "wallSeconds": 14,
+      "peakEnemies": 25,
+      "idleFrac": 0,
+      "zones": {
+        "river": 23
+      }
+    },
+    {
+      "wave": 3,
+      "hpIn": 36,
+      "maxHp": 100,
+      "goldIn": 10,
+      "level": 3,
+      "panned": 30,
+      "sluiced": 0,
+      "seamsUp": 2,
+      "at": {
+        "x": 8.9,
+        "z": 0.6
+      },
+      "seamAt": "-2,-6 | -22,-7",
+      "builds": "palisadex2",
+      "wallSeconds": 12,
+      "peakEnemies": 46,
+      "idleFrac": 0,
+      "zones": {
+        "river": 22
+      }
+    },
+    {
+      "wave": 4,
+      "hpIn": 36,
+      "maxHp": 100,
+      "goldIn": 10,
+      "level": 3,
+      "panned": 30,
+      "sluiced": 0,
+      "seamsUp": 2,
+      "at": {
+        "x": 9.7,
+        "z": 0.4
+      },
+      "seamAt": "-2,-6 | -22,-7",
+      "builds": "palisadex2",
+      "wallSeconds": 13,
+      "peakEnemies": 60,
+      "idleFrac": 0,
+      "zones": {
+        "river": 20
+      }
+    },
+    {
+      "wave": 5,
+      "hpIn": 36,
+      "maxHp": 100,
+      "goldIn": 10,
+      "level": 3,
+      "panned": 30,
+      "sluiced": 0,
+      "seamsUp": 2,
+      "at": {
+        "x": 8.7,
+        "z": -0.9
+      },
+      "seamAt": "-2,-6 | -22,-7",
+      "builds": "palisadex2",
+      "wallSeconds": 14,
+      "peakEnemies": 60,
+      "idleFrac": 0,
+      "zones": {
+        "river": 24
+      }
+    },
+    {
+      "wave": 6,
+      "hpIn": 36,
+      "maxHp": 100,
+      "goldIn": 10,
+      "level": 3,
+      "panned": 30,
+      "sluiced": 0,
+      "seamsUp": 2,
+      "at": {
+        "x": 9.2,
+        "z": 0.6
+      },
+      "seamAt": "-2,-6 | -22,-7",
+      "builds": "palisadex2",
+      "wallSeconds": 12,
+      "peakEnemies": 60,
+      "idleFrac": 0,
+      "zones": {
+        "river": 21
+      }
+    },
+    {
+      "wave": 7,
+      "hpIn": 36,
+      "maxHp": 100,
+      "goldIn": 10,
+      "level": 3,
+      "panned": 30,
+      "sluiced": 0,
+      "seamsUp": 2,
+      "at": {
+        "x": 10.1,
+        "z": 0.6
+      },
+      "seamAt": "-2,-6 | -22,-7",
+      "builds": "palisadex2",
+      "wallSeconds": 13,
+      "peakEnemies": 60,
+      "idleFrac": 0,
+      "zones": {
+        "river": 21
+      }
+    },
+    {
+      "wave": 8,
+      "hpIn": 36,
+      "maxHp": 100,
+      "goldIn": 10,
+      "level": 3,
+      "panned": 30,
+      "sluiced": 0,
+      "seamsUp": 2,
+      "at": {
+        "x": 9.7,
+        "z": -0.9
+      },
+      "seamAt": "-2,-6 | -22,-7",
+      "builds": "palisadex2",
+      "wallSeconds": 14,
+      "peakEnemies": 60,
+      "idleFrac": 0,
+      "zones": {
+        "river": 24
+      }
+    },
+    {
+      "wave": 9,
+      "hpIn": 36,
+      "maxHp": 100,
+      "goldIn": 10,
+      "level": 3,
+      "panned": 30,
+      "sluiced": 0,
+      "seamsUp": 2,
+      "at": {
+        "x": 9.8,
+        "z": -0.9
+      },
+      "seamAt": "-2,-6 | -22,-7",
+      "builds": "palisadex2",
+      "wallSeconds": 12,
+      "peakEnemies": 60,
+      "idleFrac": 0,
+      "zones": {
+        "river": 22
+      }
+    },
+    {
+      "wave": 10,
+      "hpIn": 36,
+      "maxHp": 100,
+      "goldIn": 10,
+      "level": 3,
+      "panned": 30,
+      "sluiced": 0,
+      "seamsUp": 2,
+      "at": {
+        "x": 9.4,
+        "z": -0.9
+      },
+      "seamAt": "-2,-6 | -22,-7",
+      "builds": "palisadex2",
+      "wallSeconds": 13,
+      "peakEnemies": 60,
+      "idleFrac": 0,
+      "zones": {
+        "river": 20
+      }
+    },
+    {
+      "wave": 11,
+      "hpIn": 36,
+      "maxHp": 100,
+      "goldIn": 10,
+      "level": 3,
+      "panned": 30,
+      "sluiced": 0,
+      "seamsUp": 2,
+      "at": {
+        "x": 9.1,
+        "z": -0.9
+      },
+      "seamAt": "-2,-6 | -22,-7",
+      "builds": "palisadex2",
+      "wallSeconds": 14,
+      "peakEnemies": 60,
+      "idleFrac": 0,
+      "zones": {
+        "river": 24
+      }
+    },
+    {
+      "wave": 12,
+      "hpIn": 36,
+      "maxHp": 100,
+      "goldIn": 10,
+      "level": 3,
+      "panned": 30,
+      "sluiced": 0,
+      "seamsUp": 2,
+      "at": {
+        "x": 9.1,
+        "z": -0.9
+      },
+      "seamAt": "-2,-6 | -22,-7",
+      "builds": "palisadex2",
+      "wallSeconds": 12,
+      "peakEnemies": 60,
+      "idleFrac": 0,
+      "zones": {
+        "river": 22
+      }
+    },
+    {
+      "wave": 13,
+      "hpIn": 36,
+      "maxHp": 100,
+      "goldIn": 10,
+      "level": 3,
+      "panned": 30,
+      "sluiced": 0,
+      "seamsUp": 2,
+      "at": {
+        "x": 8.6,
+        "z": -0.9
+      },
+      "seamAt": "-2,-6 | -22,-7",
+      "builds": "palisadex2",
+      "wallSeconds": 13,
+      "peakEnemies": 60,
+      "idleFrac": 0,
+      "zones": {
+        "river": 21
+      }
+    },
+    {
+      "wave": 14,
+      "hpIn": 36,
+      "maxHp": 100,
+      "goldIn": 10,
+      "level": 3,
+      "panned": 30,
+      "sluiced": 0,
+      "seamsUp": 2,
+      "at": {
+        "x": 9.7,
+        "z": -0.9
+      },
+      "seamAt": "-2,-6 | -22,-7",
+      "builds": "palisadex2",
+      "wallSeconds": 14,
+      "peakEnemies": 60,
+      "idleFrac": 0,
+      "zones": {
+        "river": 23
+      }
+    },
+    {
+      "wave": 15,
+      "hpIn": 36,
+      "maxHp": 100,
+      "goldIn": 10,
+      "level": 3,
+      "panned": 30,
+      "sluiced": 0,
+      "seamsUp": 2,
+      "at": {
+        "x": 8,
+        "z": -0.9
+      },
+      "seamAt": "-2,-6 | -22,-7",
+      "builds": "palisadex2",
+      "wallSeconds": 12,
+      "peakEnemies": 60,
+      "idleFrac": 0,
+      "zones": {
+        "river": 23
+      }
+    },
+    {
+      "wave": 16,
+      "hpIn": 36,
+      "maxHp": 100,
+      "goldIn": 10,
+      "level": 3,
+      "panned": 30,
+      "sluiced": 0,
+      "seamsUp": 2,
+      "at": {
+        "x": 9.6,
+        "z": -0.9
+      },
+      "seamAt": "-2,-6 | -22,-7",
+      "builds": "palisadex2",
+      "wallSeconds": 13,
+      "peakEnemies": 60,
+      "idleFrac": 0,
+      "zones": {
+        "river": 21
+      }
+    },
+    {
+      "wave": 17,
+      "hpIn": 36,
+      "maxHp": 100,
+      "goldIn": 10,
+      "level": 3,
+      "panned": 30,
+      "sluiced": 0,
+      "seamsUp": 2,
+      "at": {
+        "x": 7.8,
+        "z": -0.9
+      },
+      "seamAt": "-2,-6 | -22,-7",
+      "builds": "palisadex2",
+      "wallSeconds": 13,
+      "peakEnemies": 60,
+      "idleFrac": 0,
+      "zones": {
+        "river": 22
+      }
+    },
+    {
+      "wave": 18,
+      "hpIn": 36,
+      "maxHp": 100,
+      "goldIn": 10,
+      "level": 3,
+      "panned": 30,
+      "sluiced": 0,
+      "seamsUp": 2,
+      "at": {
+        "x": 10.2,
+        "z": -0.9
+      },
+      "seamAt": "-2,-6 | -22,-7",
+      "builds": "palisadex2",
+      "wallSeconds": 14,
+      "peakEnemies": 60,
+      "idleFrac": 0,
+      "zones": {
+        "river": 24
+      }
+    },
+    {
+      "wave": 19,
+      "hpIn": 36,
+      "maxHp": 100,
+      "goldIn": 10,
+      "level": 3,
+      "panned": 30,
+      "sluiced": 0,
+      "seamsUp": 2,
+      "at": {
+        "x": 10,
+        "z": -0.9
+      },
+      "seamAt": "-2,-6 | -22,-7",
+      "builds": "palisadex2",
+      "wallSeconds": 12,
+      "peakEnemies": 60,
+      "idleFrac": 0,
+      "zones": {
+        "river": 22
+      }
+    },
+    {
+      "wave": 20,
+      "hpIn": 36,
+      "maxHp": 100,
+      "goldIn": 10,
+      "level": 3,
+      "panned": 30,
+      "sluiced": 0,
+      "seamsUp": 2,
+      "at": {
+        "x": 9.7,
+        "z": -0.9
+      },
+      "seamAt": "-2,-6 | -22,-7",
+      "builds": "palisadex2",
+      "wallSeconds": 6,
+      "peakEnemies": 61,
+      "idleFrac": 0,
+      "zones": {
+        "river": 8
+      }
+    }
+  ],
+  "upgradesTaken": [
+    {
+      "wave": 1,
+      "level": 2,
+      "offer": [
+        "double_tap_coil",
+        "spring_heels",
+        "split_spark"
+      ],
+      "took": "double_tap_coil"
+    },
+    {
+      "wave": 1,
+      "level": 3,
+      "offer": [
+        "split_spark",
+        "heavy_spark",
+        "wide_ring"
+      ],
+      "took": "heavy_spark"
+    }
+  ],
+  "buildLog": [
+    {
+      "wave": 1,
+      "id": "palisade",
+      "built": true,
+      "before": 0,
+      "after": 1,
+      "goldBefore": 20,
+      "goldAfter": 15,
+      "at": {
+        "valid": true,
+        "x": 15,
+        "z": -7
+      }
+    },
+    {
+      "wave": 1,
+      "id": "palisade",
+      "built": true,
+      "before": 1,
+      "after": 2,
+      "goldBefore": 20,
+      "goldAfter": 10,
+      "at": {
+        "valid": true,
+        "x": 9,
+        "z": -7
+      }
+    },
+    {
+      "wave": 1,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost in 16 hero-local spots (last ghost 11.0,5.0)",
+      "count": 2,
+      "gold": 10,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 2,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost in 16 hero-local spots (last ghost 8.0,5.0)",
+      "count": 2,
+      "gold": 10,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 2,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost in 16 hero-local spots (last ghost 4.0,1.0)",
+      "count": 2,
+      "gold": 10,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 2,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost in 16 hero-local spots (last ghost 4.0,-3.0)",
+      "count": 2,
+      "gold": 10,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 2,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost in 16 hero-local spots (last ghost 6.0,-5.0)",
+      "count": 2,
+      "gold": 10,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 3,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost in 16 hero-local spots (last ghost 10.0,-6.0)",
+      "count": 2,
+      "gold": 10,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 3,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost in 16 hero-local spots (last ghost 11.0,-3.0)",
+      "count": 2,
+      "gold": 10,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 3,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost in 16 hero-local spots (last ghost 16.0,0.0)",
+      "count": 2,
+      "gold": 10,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 4,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost in 16 hero-local spots (last ghost 14.0,2.0)",
+      "count": 2,
+      "gold": 10,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 4,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost in 16 hero-local spots (last ghost 10.0,5.0)",
+      "count": 2,
+      "gold": 10,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 4,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost in 16 hero-local spots (last ghost 6.0,5.0)",
+      "count": 2,
+      "gold": 10,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 4,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost in 16 hero-local spots (last ghost 4.0,3.0)",
+      "count": 2,
+      "gold": 10,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 5,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost in 16 hero-local spots (last ghost 4.0,-1.0)",
+      "count": 2,
+      "gold": 10,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 5,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost in 16 hero-local spots (last ghost 6.0,-3.0)",
+      "count": 2,
+      "gold": 10,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 5,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost in 16 hero-local spots (last ghost 10.0,-4.0)",
+      "count": 2,
+      "gold": 10,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 5,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost in 16 hero-local spots (last ghost 14.0,-3.0)",
+      "count": 2,
+      "gold": 10,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 6,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost in 16 hero-local spots (last ghost 13.0,0.0)",
+      "count": 2,
+      "gold": 10,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 6,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost in 16 hero-local spots (last ghost 13.0,4.0)",
+      "count": 2,
+      "gold": 10,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 6,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost in 16 hero-local spots (last ghost 11.0,5.0)",
+      "count": 2,
+      "gold": 10,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 7,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost in 16 hero-local spots (last ghost 8.0,5.0)",
+      "count": 2,
+      "gold": 10,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 7,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost in 16 hero-local spots (last ghost 5.0,1.0)",
+      "count": 2,
+      "gold": 10,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 7,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost in 16 hero-local spots (last ghost 6.0,-2.0)",
+      "count": 2,
+      "gold": 10,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 7,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost in 16 hero-local spots (last ghost 6.0,-5.0)",
+      "count": 2,
+      "gold": 10,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 8,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost in 16 hero-local spots (last ghost 10.0,-6.0)",
+      "count": 2,
+      "gold": 10,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 8,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost in 16 hero-local spots (last ghost 13.0,-4.0)",
+      "count": 2,
+      "gold": 10,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 8,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost in 16 hero-local spots (last ghost 15.0,-1.0)",
+      "count": 2,
+      "gold": 10,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 8,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost in 16 hero-local spots (last ghost 12.0,2.0)",
+      "count": 2,
+      "gold": 10,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 9,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost in 16 hero-local spots (last ghost 10.0,4.0)",
+      "count": 2,
+      "gold": 10,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 9,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost in 16 hero-local spots (last ghost 7.0,3.0)",
+      "count": 2,
+      "gold": 10,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 9,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost in 16 hero-local spots (last ghost 6.0,1.0)",
+      "count": 2,
+      "gold": 10,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 10,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost in 16 hero-local spots (last ghost 4.0,-2.0)",
+      "count": 2,
+      "gold": 10,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 10,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost in 16 hero-local spots (last ghost 6.0,-5.0)",
+      "count": 2,
+      "gold": 10,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 10,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost in 16 hero-local spots (last ghost 10.0,-6.0)",
+      "count": 2,
+      "gold": 10,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 10,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost in 16 hero-local spots (last ghost 14.0,-4.0)",
+      "count": 2,
+      "gold": 10,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 11,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost in 16 hero-local spots (last ghost 13.0,-1.0)",
+      "count": 2,
+      "gold": 10,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 11,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost in 16 hero-local spots (last ghost 13.0,2.0)",
+      "count": 2,
+      "gold": 10,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 11,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost in 16 hero-local spots (last ghost 11.0,4.0)",
+      "count": 2,
+      "gold": 10,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 11,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost in 16 hero-local spots (last ghost 8.0,3.0)",
+      "count": 2,
+      "gold": 10,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 12,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost in 16 hero-local spots (last ghost 4.0,1.0)",
+      "count": 2,
+      "gold": 10,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 12,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost in 16 hero-local spots (last ghost 4.0,-2.0)",
+      "count": 2,
+      "gold": 10,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 12,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost in 16 hero-local spots (last ghost 7.0,-5.0)",
+      "count": 2,
+      "gold": 10,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 13,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost in 16 hero-local spots (last ghost 11.0,-6.0)",
+      "count": 2,
+      "gold": 10,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 13,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost in 16 hero-local spots (last ghost 12.0,-4.0)",
+      "count": 2,
+      "gold": 10,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 13,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost in 16 hero-local spots (last ghost 14.0,-1.0)",
+      "count": 2,
+      "gold": 10,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 13,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost in 16 hero-local spots (last ghost 13.0,2.0)",
+      "count": 2,
+      "gold": 10,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 14,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost in 16 hero-local spots (last ghost 11.0,4.0)",
+      "count": 2,
+      "gold": 10,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 14,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost in 16 hero-local spots (last ghost 6.0,3.0)",
+      "count": 2,
+      "gold": 10,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 14,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost in 16 hero-local spots (last ghost 4.0,1.0)",
+      "count": 2,
+      "gold": 10,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 14,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost in 16 hero-local spots (last ghost 5.0,-3.0)",
+      "count": 2,
+      "gold": 10,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 15,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost in 16 hero-local spots (last ghost 8.0,-5.0)",
+      "count": 2,
+      "gold": 10,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 15,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost in 16 hero-local spots (last ghost 9.0,-6.0)",
+      "count": 2,
+      "gold": 10,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 15,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost in 16 hero-local spots (last ghost 13.0,-4.0)",
+      "count": 2,
+      "gold": 10,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 16,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost in 16 hero-local spots (last ghost 14.0,-1.0)",
+      "count": 2,
+      "gold": 10,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 16,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost in 16 hero-local spots (last ghost 14.0,2.0)",
+      "count": 2,
+      "gold": 10,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 16,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost in 16 hero-local spots (last ghost 9.0,4.0)",
+      "count": 2,
+      "gold": 10,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 16,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost in 16 hero-local spots (last ghost 6.0,3.0)",
+      "count": 2,
+      "gold": 10,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 17,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost in 16 hero-local spots (last ghost 5.0,1.0)",
+      "count": 2,
+      "gold": 10,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 17,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost in 16 hero-local spots (last ghost 6.0,-3.0)",
+      "count": 2,
+      "gold": 10,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 17,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost in 16 hero-local spots (last ghost 6.0,-5.0)",
+      "count": 2,
+      "gold": 10,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 17,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost in 16 hero-local spots (last ghost 10.0,-6.0)",
+      "count": 2,
+      "gold": 10,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 18,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost in 16 hero-local spots (last ghost 13.0,-4.0)",
+      "count": 2,
+      "gold": 10,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 18,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost in 16 hero-local spots (last ghost 15.0,-1.0)",
+      "count": 2,
+      "gold": 10,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 18,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost in 16 hero-local spots (last ghost 11.0,2.0)",
+      "count": 2,
+      "gold": 10,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 18,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost in 16 hero-local spots (last ghost 9.0,4.0)",
+      "count": 2,
+      "gold": 10,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 19,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost in 16 hero-local spots (last ghost 7.0,3.0)",
+      "count": 2,
+      "gold": 10,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 19,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost in 16 hero-local spots (last ghost 5.0,1.0)",
+      "count": 2,
+      "gold": 10,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 19,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost in 16 hero-local spots (last ghost 3.0,-3.0)",
+      "count": 2,
+      "gold": 10,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 20,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost in 16 hero-local spots (last ghost 6.0,-5.0)",
+      "count": 2,
+      "gold": 10,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 20,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost in 16 hero-local spots (last ghost 10.0,-6.0)",
+      "count": 2,
+      "gold": 10,
+      "afford": true,
+      "cost": 10
+    }
+  ],
+  "announcements": [
+    {
+      "wave": 0,
+      "text": "the Prospector: follows and observes. Chip by weapon; claim wins grow it.",
+      "kind": "wave"
+    },
+    {
+      "wave": 0,
+      "text": "Wet powder.",
+      "kind": "wave"
+    },
+    {
+      "wave": 0,
+      "text": "Claim Jumpers from the west ridge!",
+      "kind": "wave"
+    },
+    {
+      "wave": 1,
+      "text": "Hold the north bank for the assay!",
+      "kind": "wave"
+    },
+    {
+      "wave": 1,
+      "text": "West ridge shadows want the gold!",
+      "kind": "wave"
+    },
+    {
+      "wave": 2,
+      "text": "East ridge dust is moving!",
+      "kind": "wave"
+    },
+    {
+      "wave": 2,
+      "text": "Claim Jumpers from the east ridge!",
+      "kind": "wave"
+    },
+    {
+      "wave": 2,
+      "text": "Brass warning on the west ridge!",
+      "kind": "wave"
+    },
+    {
+      "wave": 3,
+      "text": "Claim Jumpers from the north bank!",
+      "kind": "wave"
+    },
+    {
+      "wave": 3,
+      "text": "Stake lights on the south bank!",
+      "kind": "wave"
+    },
+    {
+      "wave": 4,
+      "text": "Wrecking crew sighted - east ridge.",
+      "kind": "wave"
+    },
+    {
+      "wave": 4,
+      "text": "Wrecking crew sighted - south bank.",
+      "kind": "wave"
+    },
+    {
+      "wave": 6,
+      "text": "Wrecking crew sighted - north bank.",
+      "kind": "wave"
+    },
+    {
+      "wave": 6,
+      "text": "Beacon coils hum eastward!",
+      "kind": "wave"
+    },
+    {
+      "wave": 8,
+      "text": "Brass warning on the north bank!",
+      "kind": "wave"
+    },
+    {
+      "wave": 9,
+      "text": "Claim Jumpers from the south bank!",
+      "kind": "wave"
+    },
+    {
+      "wave": 10,
+      "text": "Wrecking crew sighted - west ridge.",
+      "kind": "wave"
+    },
+    {
+      "wave": 12,
+      "text": "The Baron sends his regards. The claim won't hold.",
+      "kind": "baron"
+    }
+  ],
+  "end": {
+    "run": {
+      "secured": false,
+      "rush": false,
+      "lastRunEndedReason": "death",
+      "meta": {
+        "version": 1,
+        "tracks": {
+          "territory": 0,
+          "science": 0,
+          "hero": 0,
+          "agent": 0
+        }
+      },
+      "victoryPayout": null,
+      "secureWaveReached": null,
+      "securedResultAt": null,
+      "suspend": {
+        "hasSuspend": false,
+        "restored": false,
+        "restoredWave": null,
+        "lastWriteAt": null,
+        "lastWriteMs": null,
+        "sizeBytes": 0
+      }
+    },
+    "wave": 20,
+    "gold": 10,
+    "level": 3,
+    "kills": 14,
+    "xpAudit": {
+      "deaths": 14,
+      "motesSpawned": 14,
+      "motesCollected": 9,
+      "motesCollectedXp": 36,
+      "overflowBanked": 0,
+      "expiredBanked": 0,
+      "autoBanked": 0,
+      "dropped": 0,
+      "xpAwarded": 36,
+      "xpPerKill": 4,
+      "motePool": 64,
+      "expiryBanks": true
+    },
+    "stacks": {
+      "double_tap_coil": 1,
+      "heavy_spark": 1
+    },
+    "arsenal": {
+      "turretKills": 0,
+      "blastKills": 0,
+      "toggles": 2
+    },
+    "office": null,
+    "deathOverlay": " The claim went quiet. Run Ledger The claim was overrun. The gold remembers. Time Held 08:53 Claim Jumpers Turned Back 14 Waves Survived 20 Gold Panned 30 Gold Sluiced 0 Stolen / Reclaimed 0 / 0 Spent 20 Beacons Built 0 Buildings Built / Lost / Repaired 2 / 2 / 0 Spark / Blast Damage 370 / 0 Blast T"
+  },
+  "errors": {
+    "console": [],
+    "page": []
+  }
+}

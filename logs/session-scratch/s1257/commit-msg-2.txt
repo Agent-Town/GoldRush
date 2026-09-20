@@ -1,0 +1,40 @@
+test: e1 trail-guide plain-boot proof lands on a converging approach helper
+
+Graft of lane/m4 c5fd71b2 onto main. Attempt 4 of a leaf that died three times
+and was §5-parked; s1256 discriminated F-1206-1 and authored this master, and
+the cure works.
+
+CLASSIFICATION. Base 34d78a8f. Two files are genuinely new (main has neither):
+e2e/helpers/hero-approach.ts, e2e/trail-guide-plain-boot.spec.ts. The 12
+artifacts/trail-guide-plain-boot/ PNGs were touched on BOTH sides -- s1256's
+47f5f0aa wrote them as instrumentation output, and this lane rewrote them --
+but they are regenerated screenshots, never byte-identity gated, and the
+committed set here is MY OWN gate run's output on the merged tree, which has
+strictly better provenance than either. ZERO src/ bytes (verified:
+git diff --cached -- src/ is empty), as the firewall demanded.
+
+THE GATE IS THE CANONICAL ARM, NOT --workers=1 -- this master deliberately
+inverts the house config because --workers=1 produced a false GREEN on this
+spec through three attempts (F-1212-2 exists for the opposite failure):
+  npx playwright test e2e/trail-guide-plain-boot.spec.ts --repeat-each=2
+  4/4 PASSED (desktop 32.4s/33.6s, mobile 33.6s/34.0s), 4 workers, 35.3s.
+  loadavg 2.40 -> 12.92 across the run, so this is a LOADED green, not the
+  quiet-box green the master warned is the weakest evidence available.
+- npx tsc --noEmit rc=0 · npm run build green
+- adjacent e2e/trail-guide.spec.ts --workers=1: 12/12 both projects (1.1m)
+
+CONVERGENCE IS NOW STRUCTURAL, WHICH IS THE PART THAT MATTERS. s1256 measured
+the old helper missing its own 0.12 tolerance on 13/13 moves (0.237-2.153) --
+on PASSING runs too, i.e. the proof was passing by harvest-range luck. The new
+helper can only return through its `hypot(dx,dz) <= 0.12` branch; every other
+path breaks the loop and throws. So a green now ENTAILS that every approach
+converged -- the luck hole is closed by construction, not by a measurement.
+Verified additionally: the extracted helper's body is byte-identical to
+release-build.spec.ts's inlined copy incl. SIM_PROGRESS_TIMEOUT=15_000, so
+scope 1 was a move and not a redesign; and the landed spec differs from the
+parked original by EXACTLY the two authorized changes (greenhorn trio ->
+toHaveCount(0); local moveHeroTo/pressUntil -> the shared helper) plus their
+mechanical call-site adaptations. No assertion weakened, no timeout touched,
+feed recorder untouched.
+
+reviews/e1-trail-guide-plain-boot-proof.md

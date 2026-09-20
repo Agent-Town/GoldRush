@@ -1,0 +1,37 @@
+s1253 FINAL battery on the committed tree
+
+##### tsc rc=0 4.8s #####
+
+
+##### test:node-guards rc=0 58.8s #####
+✔ downtime accumulates and catch-up shows oldest first without double-show (148.972459ms)
+✔ concurrent appenders preserve every entry and concurrent consumers show once (379.600375ms)
+✔ missing subject directory fires the actionable existence message (7.975333ms)
+✔ subject below its floor reports expected and walked counts (0.802542ms)
+✔ subject exactly at its floor passes (92.956708ms)
+✔ empty present subject fires the floor instead of passing silently (2.189ms)
+✔ ignoreReadErrors returns only readable paths (10.130125ms)
+✔ default walk fails closed on an unreadable subtree (3.561292ms)
+✔ floor catches files hidden by an ignored read error (6.591917ms)
+✔ reducer output is cwd-invariant (5851.338875ms)
+✔ reducer reports configured and actual workers distinctly (2159.212833ms)
+✔ reducer reports absent harness config as unrecorded (1231.056875ms)
+✔ reducer output is script-root-invariant (1579.372417ms)
+✔ reducer renders absolute raw paths relative to the recorded tree (659.9165ms)
+✔ reducer refuses body statistics when the recorded tree is unavailable (1427.499542ms)
+✔ an unresolved masking row never outranks a resolved row (650.96175ms)
+✔ townEraProps resolves its manifests under plain node, not only under Vite (852.714375ms)
+✔ town specs collect without loading Vite-only modules (7997.9385ms)
+✔ whole suite collects without loading Vite-only modules (11837.5315ms)
+✔ every functions/**/*.ts is type-checked (20590.656ms)
+ℹ tests 156
+ℹ suites 0
+ℹ pass 156
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 58655.543625
+ticker stats checks passed (populated, empty, failures, invalid shape, endpoint diagnostic, poison control, shared URL, JSON)
+
+

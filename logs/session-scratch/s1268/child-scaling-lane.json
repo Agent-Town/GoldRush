@@ -1,0 +1,82 @@
+{
+  "tag": "lane",
+  "node": "v23.11.1",
+  "cores": 16,
+  "cpuModel": "Apple M4 Max",
+  "reps": [
+    {
+      "rep": 1,
+      "loadavgBefore": [
+        2.51,
+        3.03,
+        5.46
+      ],
+      "steps": {
+        "1": 3.82,
+        "2": 3.85,
+        "3": 3.86,
+        "6": 3.91,
+        "8": 4.06
+      },
+      "throughput": {
+        "1": 1,
+        "2": 1.98,
+        "3": 2.97,
+        "6": 5.86,
+        "8": 7.53
+      }
+    },
+    {
+      "rep": 2,
+      "loadavgBefore": [
+        2.7,
+        3.03,
+        5.41
+      ],
+      "steps": {
+        "1": 3.86,
+        "2": 3.87,
+        "3": 4.07,
+        "6": 4.12,
+        "8": 4.18
+      },
+      "throughput": {
+        "1": 1,
+        "2": 1.99,
+        "3": 2.85,
+        "6": 5.62,
+        "8": 7.39
+      }
+    },
+    {
+      "rep": 3,
+      "loadavgBefore": [
+        3.42,
+        3.16,
+        5.4
+      ],
+      "steps": {
+        "1": 3.81,
+        "2": 3.82,
+        "3": 3.91,
+        "6": 4.33,
+        "8": 4.33
+      },
+      "throughput": {
+        "1": 1,
+        "2": 1.99,
+        "3": 2.92,
+        "6": 5.28,
+        "8": 7.04
+      }
+    }
+  ],
+  "widestArmObservation": {
+    "wall": 5.290098625,
+    "sample": {
+      "idlePercent": 77.61,
+      "childCpuPercents": [],
+      "topRaw": "Processes: 1407 total, 3 running, 1404 sleeping, 6611 threads \n2026/07/30 21:12:36\nLoad Avg: 4.06, 3.31, 5.38 \nCPU usage: 19.24% user, 3.14% sys, 77.61% idle \nSharedLibs: 1632M resident, 200M data, 206M linkedit.\nMemRegions: 159 total, 4912K resident, 1080M private, 21G shared.\nPhysMem: 105G used (6011M wired, 19G compressor), 22G unused.\nVM: 605T vsize, 6144M framework vsize, 586736(0) swapins, 1397593(0) swapouts.\nNetworks: packets: 1568520582/8193G in, 1735846201/8393G out.\nDisks: 464881956/5729G read, 639464591/20T written.\n\nPID    COMMAND          %CPU\n64183  com.apple.Virtua 20.7\n1      launchd          9.6 \n48218  top              8.8 \n610    coreaudiod       7.5 \n0      kernel_task      6.4 \n92924  Telegram         4.1 \n591    WindowServer     3.3 \n1370   Finder           2.5 "
+    }
+  }
+}

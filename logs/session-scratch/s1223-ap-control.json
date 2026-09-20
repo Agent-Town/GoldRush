@@ -1,0 +1,552 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.4.0/bin/node",
+      "/Users/robin/Claude/Projects/Gold Rush/node_modules/.bin/playwright",
+      "test",
+      "e2e/ap-standing-orders.spec.ts",
+      "--workers=4",
+      "--repeat-each=4",
+      "--reporter=json"
+    ],
+    "configFile": "/Users/robin/Claude/Projects/Gold Rush/playwright.config.ts",
+    "rootDir": "/Users/robin/Claude/Projects/Gold Rush/e2e",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 4
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/robin/Claude/Projects/Gold Rush/test-results",
+        "repeatEach": 4,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 4
+        },
+        "id": "desktop-chrome",
+        "name": "desktop-chrome",
+        "testDir": "/Users/robin/Claude/Projects/Gold Rush/e2e",
+        "testIgnore": [
+          "**/*.rig.ts"
+        ],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/robin/Claude/Projects/Gold Rush/test-results",
+        "repeatEach": 4,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 4
+        },
+        "id": "mobile-chrome",
+        "name": "mobile-chrome",
+        "testDir": "/Users/robin/Claude/Projects/Gold Rush/e2e",
+        "testIgnore": [
+          "**/*.rig.ts"
+        ],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/robin/Claude/Projects/Gold Rush/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 4
+        },
+        "id": "desktop-webkit",
+        "name": "desktop-webkit",
+        "testDir": "/Users/robin/Claude/Projects/Gold Rush/e2e",
+        "testIgnore": [
+          "**/*.rig.ts"
+        ],
+        "testMatch": [
+          "/058-device-tiers\\.spec\\.ts/"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 4,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "ap-standing-orders.spec.ts",
+      "file": "ap-standing-orders.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "seeded standing orders obey priority, gates, legal actions, surprises, and the live rung",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 30098,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\nCall Log:\n- Timeout 5000ms exceeded while waiting on the predicate",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\nCall Log:\n- Timeout 5000ms exceeded while waiting on the predicate\n    at /Users/robin/Claude/Projects/Gold Rush/e2e/ap-standing-orders.spec.ts:121:115",
+                    "location": {
+                      "file": "/Users/robin/Claude/Projects/Gold Rush/e2e/ap-standing-orders.spec.ts",
+                      "column": 115,
+                      "line": 121
+                    },
+                    "snippet": "  119 |   await expect.poll(() => view(page).then((state) => state.orders[0]?.status)).toBe('pending');\n  120 |   await page.evaluate(() => window.__GR_TEST__?.startWaveForTest(1));\n> 121 |   await expect.poll(() => view(page).then((state) => state.log.some((event) => event.surprise === 'wave_early'))).toBe(true);\n      |                                                                                                                   ^\n  122 |\n  123 |   await grantGold(page, 24);\n  124 |   await page.waitForTimeout(250);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/robin/Claude/Projects/Gold Rush/e2e/ap-standing-orders.spec.ts",
+                        "column": 115,
+                        "line": 121
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\nCall Log:\n- Timeout 5000ms exceeded while waiting on the predicate\n\n  119 |   await expect.poll(() => view(page).then((state) => state.orders[0]?.status)).toBe('pending');\n  120 |   await page.evaluate(() => window.__GR_TEST__?.startWaveForTest(1));\n> 121 |   await expect.poll(() => view(page).then((state) => state.log.some((event) => event.surprise === 'wave_early'))).toBe(true);\n      |                                                                                                                   ^\n  122 |\n  123 |   await grantGold(page, 24);\n  124 |   await page.waitForTimeout(250);\n    at /Users/robin/Claude/Projects/Gold Rush/e2e/ap-standing-orders.spec.ts:121:115"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-07-29T13:54:56.987Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/test-results/ap-standing-orders-seeded--acb18-surprises-and-the-live-rung-desktop-chrome/test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/test-results/ap-standing-orders-seeded--acb18-surprises-and-the-live-rung-desktop-chrome/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/test-results/ap-standing-orders-seeded--acb18-surprises-and-the-live-rung-desktop-chrome/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/robin/Claude/Projects/Gold Rush/e2e/ap-standing-orders.spec.ts",
+                    "column": 115,
+                    "line": 121
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "bc4ebfce92d79d8fdd69-d92802c5539f829b6808",
+          "file": "ap-standing-orders.spec.ts",
+          "line": 80,
+          "column": 1
+        },
+        {
+          "title": "seeded standing orders obey priority, gates, legal actions, surprises, and the live rung",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "failed",
+                  "duration": 26142,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\nCall Log:\n- Timeout 5000ms exceeded while waiting on the predicate",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\nCall Log:\n- Timeout 5000ms exceeded while waiting on the predicate\n    at /Users/robin/Claude/Projects/Gold Rush/e2e/ap-standing-orders.spec.ts:121:115",
+                    "location": {
+                      "file": "/Users/robin/Claude/Projects/Gold Rush/e2e/ap-standing-orders.spec.ts",
+                      "column": 115,
+                      "line": 121
+                    },
+                    "snippet": "  119 |   await expect.poll(() => view(page).then((state) => state.orders[0]?.status)).toBe('pending');\n  120 |   await page.evaluate(() => window.__GR_TEST__?.startWaveForTest(1));\n> 121 |   await expect.poll(() => view(page).then((state) => state.log.some((event) => event.surprise === 'wave_early'))).toBe(true);\n      |                                                                                                                   ^\n  122 |\n  123 |   await grantGold(page, 24);\n  124 |   await page.waitForTimeout(250);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/robin/Claude/Projects/Gold Rush/e2e/ap-standing-orders.spec.ts",
+                        "column": 115,
+                        "line": 121
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\nCall Log:\n- Timeout 5000ms exceeded while waiting on the predicate\n\n  119 |   await expect.poll(() => view(page).then((state) => state.orders[0]?.status)).toBe('pending');\n  120 |   await page.evaluate(() => window.__GR_TEST__?.startWaveForTest(1));\n> 121 |   await expect.poll(() => view(page).then((state) => state.log.some((event) => event.surprise === 'wave_early'))).toBe(true);\n      |                                                                                                                   ^\n  122 |\n  123 |   await grantGold(page, 24);\n  124 |   await page.waitForTimeout(250);\n    at /Users/robin/Claude/Projects/Gold Rush/e2e/ap-standing-orders.spec.ts:121:115"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-07-29T13:54:56.987Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/test-results/ap-standing-orders-seeded--acb18-surprises-and-the-live-rung-desktop-chrome-repeat1/test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/test-results/ap-standing-orders-seeded--acb18-surprises-and-the-live-rung-desktop-chrome-repeat1/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/test-results/ap-standing-orders-seeded--acb18-surprises-and-the-live-rung-desktop-chrome-repeat1/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/robin/Claude/Projects/Gold Rush/e2e/ap-standing-orders.spec.ts",
+                    "column": 115,
+                    "line": 121
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "bc4ebfce92d79d8fdd69-8460931d29d50bce5d64",
+          "file": "ap-standing-orders.spec.ts",
+          "line": 80,
+          "column": 1
+        },
+        {
+          "title": "seeded standing orders obey priority, gates, legal actions, surprises, and the live rung",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 2,
+                  "status": "passed",
+                  "duration": 10795,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-07-29T13:54:56.986Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bc4ebfce92d79d8fdd69-0062993deef02b808031",
+          "file": "ap-standing-orders.spec.ts",
+          "line": 80,
+          "column": 1
+        },
+        {
+          "title": "seeded standing orders obey priority, gates, legal actions, surprises, and the live rung",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 3,
+                  "status": "passed",
+                  "duration": 12349,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-07-29T13:54:56.987Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bc4ebfce92d79d8fdd69-5bd776659403d51ab017",
+          "file": "ap-standing-orders.spec.ts",
+          "line": 80,
+          "column": 1
+        },
+        {
+          "title": "seeded standing orders obey priority, gates, legal actions, surprises, and the live rung",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 2,
+                  "status": "failed",
+                  "duration": 26797,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\nCall Log:\n- Timeout 5000ms exceeded while waiting on the predicate",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\nCall Log:\n- Timeout 5000ms exceeded while waiting on the predicate\n    at /Users/robin/Claude/Projects/Gold Rush/e2e/ap-standing-orders.spec.ts:121:115",
+                    "location": {
+                      "file": "/Users/robin/Claude/Projects/Gold Rush/e2e/ap-standing-orders.spec.ts",
+                      "column": 115,
+                      "line": 121
+                    },
+                    "snippet": "  119 |   await expect.poll(() => view(page).then((state) => state.orders[0]?.status)).toBe('pending');\n  120 |   await page.evaluate(() => window.__GR_TEST__?.startWaveForTest(1));\n> 121 |   await expect.poll(() => view(page).then((state) => state.log.some((event) => event.surprise === 'wave_early'))).toBe(true);\n      |                                                                                                                   ^\n  122 |\n  123 |   await grantGold(page, 24);\n  124 |   await page.waitForTimeout(250);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/robin/Claude/Projects/Gold Rush/e2e/ap-standing-orders.spec.ts",
+                        "column": 115,
+                        "line": 121
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\nCall Log:\n- Timeout 5000ms exceeded while waiting on the predicate\n\n  119 |   await expect.poll(() => view(page).then((state) => state.orders[0]?.status)).toBe('pending');\n  120 |   await page.evaluate(() => window.__GR_TEST__?.startWaveForTest(1));\n> 121 |   await expect.poll(() => view(page).then((state) => state.log.some((event) => event.surprise === 'wave_early'))).toBe(true);\n      |                                                                                                                   ^\n  122 |\n  123 |   await grantGold(page, 24);\n  124 |   await page.waitForTimeout(250);\n    at /Users/robin/Claude/Projects/Gold Rush/e2e/ap-standing-orders.spec.ts:121:115"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-07-29T13:55:08.862Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/test-results/ap-standing-orders-seeded--acb18-surprises-and-the-live-rung-mobile-chrome/test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/test-results/ap-standing-orders-seeded--acb18-surprises-and-the-live-rung-mobile-chrome/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/test-results/ap-standing-orders-seeded--acb18-surprises-and-the-live-rung-mobile-chrome/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/robin/Claude/Projects/Gold Rush/e2e/ap-standing-orders.spec.ts",
+                    "column": 115,
+                    "line": 121
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "bc4ebfce92d79d8fdd69-a61593ff783cfac56413",
+          "file": "ap-standing-orders.spec.ts",
+          "line": 80,
+          "column": 1
+        },
+        {
+          "title": "seeded standing orders obey priority, gates, legal actions, surprises, and the live rung",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 3,
+                  "status": "failed",
+                  "duration": 26464,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\nCall Log:\n- Timeout 5000ms exceeded while waiting on the predicate",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\nCall Log:\n- Timeout 5000ms exceeded while waiting on the predicate\n    at /Users/robin/Claude/Projects/Gold Rush/e2e/ap-standing-orders.spec.ts:121:115",
+                    "location": {
+                      "file": "/Users/robin/Claude/Projects/Gold Rush/e2e/ap-standing-orders.spec.ts",
+                      "column": 115,
+                      "line": 121
+                    },
+                    "snippet": "  119 |   await expect.poll(() => view(page).then((state) => state.orders[0]?.status)).toBe('pending');\n  120 |   await page.evaluate(() => window.__GR_TEST__?.startWaveForTest(1));\n> 121 |   await expect.poll(() => view(page).then((state) => state.log.some((event) => event.surprise === 'wave_early'))).toBe(true);\n      |                                                                                                                   ^\n  122 |\n  123 |   await grantGold(page, 24);\n  124 |   await page.waitForTimeout(250);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/robin/Claude/Projects/Gold Rush/e2e/ap-standing-orders.spec.ts",
+                        "column": 115,
+                        "line": 121
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\nCall Log:\n- Timeout 5000ms exceeded while waiting on the predicate\n\n  119 |   await expect.poll(() => view(page).then((state) => state.orders[0]?.status)).toBe('pending');\n  120 |   await page.evaluate(() => window.__GR_TEST__?.startWaveForTest(1));\n> 121 |   await expect.poll(() => view(page).then((state) => state.log.some((event) => event.surprise === 'wave_early'))).toBe(true);\n      |                                                                                                                   ^\n  122 |\n  123 |   await grantGold(page, 24);\n  124 |   await page.waitForTimeout(250);\n    at /Users/robin/Claude/Projects/Gold Rush/e2e/ap-standing-orders.spec.ts:121:115"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-07-29T13:55:10.462Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/test-results/ap-standing-orders-seeded--acb18-surprises-and-the-live-rung-mobile-chrome-repeat1/test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/test-results/ap-standing-orders-seeded--acb18-surprises-and-the-live-rung-mobile-chrome-repeat1/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/test-results/ap-standing-orders-seeded--acb18-surprises-and-the-live-rung-mobile-chrome-repeat1/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/robin/Claude/Projects/Gold Rush/e2e/ap-standing-orders.spec.ts",
+                    "column": 115,
+                    "line": 121
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "bc4ebfce92d79d8fdd69-eb5e645769d904a4d65e",
+          "file": "ap-standing-orders.spec.ts",
+          "line": 80,
+          "column": 1
+        },
+        {
+          "title": "seeded standing orders obey priority, gates, legal actions, surprises, and the live rung",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 10501,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-07-29T13:55:37.104Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bc4ebfce92d79d8fdd69-a5634d8e3dfba1d3563c",
+          "file": "ap-standing-orders.spec.ts",
+          "line": 80,
+          "column": 1
+        },
+        {
+          "title": "seeded standing orders obey priority, gates, legal actions, surprises, and the live rung",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 9530,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-07-29T13:55:41.914Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bc4ebfce92d79d8fdd69-8c56b0161e970cb87f0f",
+          "file": "ap-standing-orders.spec.ts",
+          "line": 80,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-07-29T13:54:56.788Z",
+    "duration": 55162.867999999995,
+    "expected": 4,
+    "skipped": 0,
+    "unexpected": 4,
+    "flaky": 0
+  }
+}

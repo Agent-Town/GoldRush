@@ -1,0 +1,27 @@
+[
+  {
+    "label": "own-and-pack",
+    "command": [
+      "npx",
+      "playwright",
+      "test",
+      "--workers=1",
+      "--project=desktop-chrome",
+      "--project=mobile-chrome",
+      "--trace=off",
+      "--reporter=line",
+      "--output=artifacts/sol/map-art-campaign-2/_raw/run-3/e1-twin-banks-own-and-pack",
+      "e2e/e1-twin-banks.spec.ts",
+      "e2e/beauty-twin-banks.spec.ts",
+      "e2e/twin-banks-never-wedged.spec.ts",
+      "e2e/landmark-brightness.spec.ts",
+      "e2e/landmark-collision.spec.ts",
+      "e2e/fort-landmark-collision.spec.ts",
+      "e2e/f1453-crossings-hygiene.spec.ts"
+    ],
+    "environment": {},
+    "exit": 1,
+    "seconds": 647.64,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-3/e1-twin-banks-own-and-pack.log"
+  }
+]

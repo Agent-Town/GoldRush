@@ -1,0 +1,1338 @@
+{
+  "config": {
+    "argv": [
+      "/Users/robin/.nvm/versions/node/v23.11.1/bin/node",
+      "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/node_modules/@playwright/test/cli.js",
+      "test",
+      "e2e/town-t5-townsfolk.spec.ts",
+      "e2e/town-t3-board.spec.ts",
+      "e2e/town-t6-surfaces.spec.ts",
+      "--project",
+      "desktop-chrome",
+      "--project",
+      "mobile-chrome",
+      "--workers",
+      "6",
+      "--reporter",
+      "json",
+      "--output",
+      "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/logs/session-scratch/s1519-f1424-4-worker-arms/test-results/run-15"
+    ],
+    "configFile": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/playwright.config.ts",
+    "rootDir": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/e2e",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/scripts/external-server-guard.mjs",
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "revision": "3c06cc21353735813c053b01dce8926b3fa582a4",
+      "dirty": true,
+      "actualWorkers": 6
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/logs/session-scratch/s1519-f1424-4-worker-arms/test-results/run-15",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "revision": "3c06cc21353735813c053b01dce8926b3fa582a4",
+          "dirty": true,
+          "actualWorkers": 6
+        },
+        "id": "desktop-chrome",
+        "name": "desktop-chrome",
+        "testDir": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/e2e",
+        "testIgnore": [
+          "**/*.rig.ts",
+          "**/release-build.spec.ts",
+          "**/release-base-path.spec.ts",
+          "**/accounts-sync.spec.ts"
+        ],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/logs/session-scratch/s1519-f1424-4-worker-arms/test-results/run-15",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "revision": "3c06cc21353735813c053b01dce8926b3fa582a4",
+          "dirty": true,
+          "actualWorkers": 6
+        },
+        "id": "mobile-chrome",
+        "name": "mobile-chrome",
+        "testDir": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/e2e",
+        "testIgnore": [
+          "**/*.rig.ts",
+          "**/release-build.spec.ts",
+          "**/release-base-path.spec.ts",
+          "**/accounts-sync.spec.ts"
+        ],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/logs/session-scratch/s1519-f1424-4-worker-arms/test-results/run-15",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "revision": "3c06cc21353735813c053b01dce8926b3fa582a4",
+          "dirty": true,
+          "actualWorkers": 6
+        },
+        "id": "desktop-webkit",
+        "name": "desktop-webkit",
+        "testDir": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/e2e",
+        "testIgnore": [
+          "**/*.rig.ts",
+          "**/release-build.spec.ts",
+          "**/release-base-path.spec.ts",
+          "**/accounts-sync.spec.ts"
+        ],
+        "testMatch": [
+          "/058-device-tiers\\.spec\\.ts/"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 6,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "town-t3-board.spec.ts",
+      "file": "town-t3-board.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "contract board renders manifest rows, locks, conditions, and per-contract bests",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 54380,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "watchErrors suppressed 0 known GLTFLoader blob error(s)\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-07T05:06:11.834Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "0e272a93bb2890a06752-cb833951973768348bfb",
+          "file": "town-t3-board.spec.ts",
+          "line": 156,
+          "column": 1
+        },
+        {
+          "title": "board launch loads Dry Gulch and New Claim hashes to the default contract config",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 15408,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "watchErrors suppressed 0 known GLTFLoader blob error(s)\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-07T05:07:06.592Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "0e272a93bb2890a06752-d7c1e5a696fb57202538",
+          "file": "town-t3-board.spec.ts",
+          "line": 222,
+          "column": 1
+        },
+        {
+          "title": "post-run overrun returns straight to the town board and records a contract result",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 8630,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "watchErrors suppressed 0 known GLTFLoader blob error(s)\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-07T05:07:22.013Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "0e272a93bb2890a06752-4c8816ab47f1eac4dc8e",
+          "file": "town-t3-board.spec.ts",
+          "line": 246,
+          "column": 1
+        },
+        {
+          "title": "contract catalog navigation remembers the last chapter",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6082,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "watchErrors suppressed 0 known GLTFLoader blob error(s)\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-07T05:07:30.650Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "0e272a93bb2890a06752-72f325878a9b07cf5cbb",
+          "file": "town-t3-board.spec.ts",
+          "line": 268,
+          "column": 1
+        },
+        {
+          "title": "contract board shows the full contract picture and remembers the Ride Together disclosure",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6653,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "watchErrors suppressed 0 known GLTFLoader blob error(s)\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-07T05:07:36.741Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "0e272a93bb2890a06752-6e7407c2124e2072adff",
+          "file": "town-t3-board.spec.ts",
+          "line": 287,
+          "column": 1
+        },
+        {
+          "title": "contract board swipes and keeps tap targets usable at 390px",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5654,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "watchErrors suppressed 0 known GLTFLoader blob error(s)\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-07T05:07:43.407Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "0e272a93bb2890a06752-3ff9bfe4002660c9423b",
+          "file": "town-t3-board.spec.ts",
+          "line": 326,
+          "column": 1
+        },
+        {
+          "title": "contract board renders manifest rows, locks, conditions, and per-contract bests",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 3,
+                  "status": "passed",
+                  "duration": 51922,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "watchErrors suppressed 0 known GLTFLoader blob error(s)\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-07T05:06:11.832Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "0e272a93bb2890a06752-540c3545736fa81e54f6",
+          "file": "town-t3-board.spec.ts",
+          "line": 156,
+          "column": 1
+        },
+        {
+          "title": "board launch loads Dry Gulch and New Claim hashes to the default contract config",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 3,
+                  "status": "passed",
+                  "duration": 15814,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "watchErrors suppressed 2 known GLTFLoader blob error(s)\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-07T05:07:04.133Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "0e272a93bb2890a06752-66fb3dda6cb27b746086",
+          "file": "town-t3-board.spec.ts",
+          "line": 222,
+          "column": 1
+        },
+        {
+          "title": "post-run overrun returns straight to the town board and records a contract result",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 3,
+                  "status": "passed",
+                  "duration": 8073,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "watchErrors suppressed 0 known GLTFLoader blob error(s)\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-07T05:07:19.953Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "0e272a93bb2890a06752-b627b5eb0990b49c99ad",
+          "file": "town-t3-board.spec.ts",
+          "line": 246,
+          "column": 1
+        },
+        {
+          "title": "contract catalog navigation remembers the last chapter",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 3,
+                  "status": "passed",
+                  "duration": 6121,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "watchErrors suppressed 0 known GLTFLoader blob error(s)\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-07T05:07:28.032Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "0e272a93bb2890a06752-bbe9c52304326d6ef4dc",
+          "file": "town-t3-board.spec.ts",
+          "line": 268,
+          "column": 1
+        },
+        {
+          "title": "contract board shows the full contract picture and remembers the Ride Together disclosure",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 3,
+                  "status": "passed",
+                  "duration": 6546,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "watchErrors suppressed 0 known GLTFLoader blob error(s)\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-07T05:07:34.158Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "0e272a93bb2890a06752-c155c6b81b6012c5827a",
+          "file": "town-t3-board.spec.ts",
+          "line": 287,
+          "column": 1
+        },
+        {
+          "title": "contract board swipes and keeps tap targets usable at 390px",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 3,
+                  "status": "passed",
+                  "duration": 6564,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "watchErrors suppressed 0 known GLTFLoader blob error(s)\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-07T05:07:40.710Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "0e272a93bb2890a06752-874897f477e64b35bb3f",
+          "file": "town-t3-board.spec.ts",
+          "line": 326,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "town-t5-townsfolk.spec.ts",
+      "file": "town-t5-townsfolk.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "townsfolk bark data is epoch-scoped and short",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 13,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-07T05:06:11.836Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5ed3499f31b2dd082cf7-012a0fc1fcda3a97ab55",
+          "file": "town-t5-townsfolk.spec.ts",
+          "line": 160,
+          "column": 1
+        },
+        {
+          "title": "seeded growth tiers show the correct townsfolk roster with no run sim diagnostics",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 23845,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-07T05:06:11.863Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5ed3499f31b2dd082cf7-e5e6581120bca64d0636",
+          "file": "town-t5-townsfolk.spec.ts",
+          "line": 170,
+          "column": 1
+        },
+        {
+          "title": "approach barks identify sampled speakers and the Prospector greets by town name",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 18387,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-07T05:06:36.079Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5ed3499f31b2dd082cf7-8e511bf3917fdc8016b2",
+          "file": "town-t5-townsfolk.spec.ts",
+          "line": 203,
+          "column": 1
+        },
+        {
+          "title": "youngsters ride the town ring road",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 11270,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-07T05:06:54.482Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5ed3499f31b2dd082cf7-fff016b90c186c26ae79",
+          "file": "town-t5-townsfolk.spec.ts",
+          "line": 223,
+          "column": 1
+        },
+        {
+          "title": "mobile bark card is readable above the stick zone and captures concept comparison",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 6785,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-07T05:07:05.764Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5ed3499f31b2dd082cf7-17e2252acd0b9e8ae307",
+          "file": "town-t5-townsfolk.spec.ts",
+          "line": 241,
+          "column": 1
+        },
+        {
+          "title": "townsfolk bark data is epoch-scoped and short",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 4,
+                  "status": "passed",
+                  "duration": 13,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-07T05:06:11.832Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5ed3499f31b2dd082cf7-9231887505f146d3e346",
+          "file": "town-t5-townsfolk.spec.ts",
+          "line": 160,
+          "column": 1
+        },
+        {
+          "title": "seeded growth tiers show the correct townsfolk roster with no run sim diagnostics",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 4,
+                  "status": "passed",
+                  "duration": 24607,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-07T05:06:11.859Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5ed3499f31b2dd082cf7-e2d4af7e3fee6f03c6dc",
+          "file": "town-t5-townsfolk.spec.ts",
+          "line": 170,
+          "column": 1
+        },
+        {
+          "title": "approach barks identify sampled speakers and the Prospector greets by town name",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 4,
+                  "status": "failed",
+                  "duration": 43760,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"\u001b[7melde\u001b[27mr\"\u001b[39m\nReceived: \u001b[31m\"\u001b[7mprospecto\u001b[27mr\"\u001b[39m\n\nCall Log:\n- Timeout 8000ms exceeded while waiting on the predicate",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"\u001b[7melde\u001b[27mr\"\u001b[39m\nReceived: \u001b[31m\"\u001b[7mprospecto\u001b[27mr\"\u001b[39m\n\nCall Log:\n- Timeout 8000ms exceeded while waiting on the predicate\n    at expectBark (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/e2e/town-t5-townsfolk.spec.ts:104:129)\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/e2e/town-t5-townsfolk.spec.ts:219:9",
+                    "location": {
+                      "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/e2e/town-t5-townsfolk.spec.ts",
+                      "column": 129,
+                      "line": 104
+                    },
+                    "snippet": "  102 |\n  103 | async function expectBark(page: Page, actorId: TownActorId, speaker: string, textIncludes?: string): Promise<void> {\n> 104 |   await expect.poll(() => page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__?.activeBark?.actorId ?? null), { timeout: 8_000 }).toBe(actorId);\n      |                                                                                                                                 ^\n  105 |   const bark = page.getByTestId('town-bark-card');\n  106 |   await expect(bark).toBeVisible();\n  107 |   await expect(bark).toHaveAttribute('data-actor-id', actorId);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/e2e/town-t5-townsfolk.spec.ts",
+                        "column": 129,
+                        "line": 104
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"\u001b[7melde\u001b[27mr\"\u001b[39m\nReceived: \u001b[31m\"\u001b[7mprospecto\u001b[27mr\"\u001b[39m\n\nCall Log:\n- Timeout 8000ms exceeded while waiting on the predicate\n\n  102 |\n  103 | async function expectBark(page: Page, actorId: TownActorId, speaker: string, textIncludes?: string): Promise<void> {\n> 104 |   await expect.poll(() => page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__?.activeBark?.actorId ?? null), { timeout: 8_000 }).toBe(actorId);\n      |                                                                                                                                 ^\n  105 |   const bark = page.getByTestId('town-bark-card');\n  106 |   await expect(bark).toBeVisible();\n  107 |   await expect(bark).toHaveAttribute('data-actor-id', actorId);\n    at expectBark (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/e2e/town-t5-townsfolk.spec.ts:104:129)\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/e2e/town-t5-townsfolk.spec.ts:219:9"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-07T05:06:36.896Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/logs/session-scratch/s1519-f1424-4-worker-arms/test-results/run-15/town-t5-townsfolk-approach-e6658-spector-greets-by-town-name-mobile-chrome/test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/logs/session-scratch/s1519-f1424-4-worker-arms/test-results/run-15/town-t5-townsfolk-approach-e6658-spector-greets-by-town-name-mobile-chrome/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/logs/session-scratch/s1519-f1424-4-worker-arms/test-results/run-15/town-t5-townsfolk-approach-e6658-spector-greets-by-town-name-mobile-chrome/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/e2e/town-t5-townsfolk.spec.ts",
+                    "column": 129,
+                    "line": 104
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "5ed3499f31b2dd082cf7-c396651e5ef3cb843564",
+          "file": "town-t5-townsfolk.spec.ts",
+          "line": 203,
+          "column": 1
+        },
+        {
+          "title": "youngsters ride the town ring road",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 6764,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-07T05:07:36.381Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5ed3499f31b2dd082cf7-3dc02e659cade7f4939b",
+          "file": "town-t5-townsfolk.spec.ts",
+          "line": 223,
+          "column": 1
+        },
+        {
+          "title": "mobile bark card is readable above the stick zone and captures concept comparison",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 7171,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-07T05:07:43.530Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5ed3499f31b2dd082cf7-d737495e893dd5a04e22",
+          "file": "town-t5-townsfolk.spec.ts",
+          "line": 241,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "town-t6-surfaces.spec.ts",
+      "file": "town-t6-surfaces.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "plain menu thins to town, profile, settings",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 2,
+                  "status": "passed",
+                  "duration": 7924,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-07T05:06:11.833Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "71c3a53df828ec98d724-241f435d56f5660ec321",
+          "file": "town-t6-surfaces.spec.ts",
+          "line": 90,
+          "column": 1
+        },
+        {
+          "title": "Schoolhouse opens the existing Research chart and returns to the square",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 2,
+                  "status": "passed",
+                  "duration": 9448,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-07T05:06:20.195Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "71c3a53df828ec98d724-198289d20cc51efb1db5",
+          "file": "town-t6-surfaces.spec.ts",
+          "line": 102,
+          "column": 1
+        },
+        {
+          "title": "Assay porch opens the existing crafting order status panel",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 2,
+                  "status": "passed",
+                  "duration": 8518,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-07T05:06:29.649Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "71c3a53df828ec98d724-46f5bce0311588797cbb",
+          "file": "town-t6-surfaces.spec.ts",
+          "line": 119,
+          "column": 1
+        },
+        {
+          "title": "run launch remains reachable through the tavern board",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 2,
+                  "status": "passed",
+                  "duration": 13215,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-07T05:06:38.180Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "71c3a53df828ec98d724-33c93eb2ad058b2d87d6",
+          "file": "town-t6-surfaces.spec.ts",
+          "line": 135,
+          "column": 1
+        },
+        {
+          "title": "town surfaces stay readable at 390px",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 2,
+                  "status": "passed",
+                  "duration": 11819,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-07T05:06:51.405Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "71c3a53df828ec98d724-04647d2ace65823ae2ad",
+          "file": "town-t6-surfaces.spec.ts",
+          "line": 155,
+          "column": 1
+        },
+        {
+          "title": "plain menu thins to town, profile, settings",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 5,
+                  "status": "passed",
+                  "duration": 2854,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-07T05:06:11.848Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "71c3a53df828ec98d724-62a020367af28bf11aba",
+          "file": "town-t6-surfaces.spec.ts",
+          "line": 90,
+          "column": 1
+        },
+        {
+          "title": "Schoolhouse opens the existing Research chart and returns to the square",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 5,
+                  "status": "passed",
+                  "duration": 9924,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-07T05:06:15.106Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "71c3a53df828ec98d724-6e3d6502ab0dad115df7",
+          "file": "town-t6-surfaces.spec.ts",
+          "line": 102,
+          "column": 1
+        },
+        {
+          "title": "Assay porch opens the existing crafting order status panel",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 5,
+                  "status": "passed",
+                  "duration": 10047,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-07T05:06:25.035Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "71c3a53df828ec98d724-4a8b1113aac04cd27dcd",
+          "file": "town-t6-surfaces.spec.ts",
+          "line": 119,
+          "column": 1
+        },
+        {
+          "title": "run launch remains reachable through the tavern board",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 5,
+                  "status": "passed",
+                  "duration": 14008,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-07T05:06:35.091Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "71c3a53df828ec98d724-1855fa6ae0c757f5e9e0",
+          "file": "town-t6-surfaces.spec.ts",
+          "line": 135,
+          "column": 1
+        },
+        {
+          "title": "town surfaces stay readable at 390px",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 5,
+                  "status": "passed",
+                  "duration": 11282,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-07T05:06:49.108Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "71c3a53df828ec98d724-4c2e3ac582b3cbbd2d30",
+          "file": "town-t6-surfaces.spec.ts",
+          "line": 155,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-08-07T05:06:11.309Z",
+    "duration": 99524.752,
+    "expected": 31,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  }
+}

@@ -1,0 +1,15 @@
+[WebServer] (node:44988) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 2 tests using 1 worker
+
+(node:44989) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+DOOR_PROBE desktop-chrome {"placeResult":false,"definitionPresent":true,"enabled":true,"countFor":0,"maxCountFor":4,"snappedTarget":{"x":0,"y":0,"z":10},"matchesPlacement":false,"overlapsExisting":false,"placementKind":"bank","terrain":{"walkable":false,"speedMul":0,"zone":"bank"},"terrainBuildable":false,"tileTraversable":true,"terrainSim":{"height":0.8744855971893128,"slope":{"dx":-1.1525835841297294e-10,"dz":0.24588477429542477},"traversable":true,"speedEast":1.000000000032931,"speedWest":0.9999999998682761},"buildZoneMatches":[{"id":"base-t1","bank":"north","minX":-30,"maxX":30,"minZ":8,"maxZ":16}],"collisionPad":0.58,"blockingLandmarks":[{"id":"hill-mine:boiler-house-site","x":0,"z":12,"halfX":3.3587499999999997,"halfZ":3.3587499999999997,"containsUnpadded":true}]}
+  ✓  1 [desktop-chrome] › logs/session-scratch/s1284-lane-d/door-probe.spec.ts:10:1 › measures every placeFree door for the stale turret coordinate (1.7s)
+(node:45005) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+DOOR_PROBE mobile-chrome {"placeResult":false,"definitionPresent":true,"enabled":true,"countFor":0,"maxCountFor":4,"snappedTarget":{"x":0,"y":0,"z":10},"matchesPlacement":false,"overlapsExisting":false,"placementKind":"bank","terrain":{"walkable":false,"speedMul":0,"zone":"bank"},"terrainBuildable":false,"tileTraversable":true,"terrainSim":{"height":0.8744855971893128,"slope":{"dx":-1.1525835841297294e-10,"dz":0.24588477429542477},"traversable":true,"speedEast":1.000000000032931,"speedWest":0.9999999998682761},"buildZoneMatches":[{"id":"base-t1","bank":"north","minX":-30,"maxX":30,"minZ":8,"maxZ":16}],"collisionPad":0.58,"blockingLandmarks":[{"id":"hill-mine:boiler-house-site","x":0,"z":12,"halfX":3.3587499999999997,"halfZ":3.3587499999999997,"containsUnpadded":true}]}
+  ✓  2 [mobile-chrome] › logs/session-scratch/s1284-lane-d/door-probe.spec.ts:10:1 › measures every placeFree door for the stale turret coordinate (1.4s)
+
+  2 passed (4.6s)

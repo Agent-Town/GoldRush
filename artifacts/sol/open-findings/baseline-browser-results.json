@@ -1,0 +1,886 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.4.0/bin/node",
+      "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/node_modules/.bin/playwright",
+      "test",
+      "--config=artifacts/sol/open-findings/_raw/baseline-specs/playwright.config.ts",
+      "--grep",
+      "loads Twin Banks|builds sluices|routes enemies|delayed town textures|menu enters town square|plain town boot shows the tavernkeeper",
+      "--workers=1",
+      "--project=desktop-chrome",
+      "--project=mobile-chrome",
+      "--timeout=120000",
+      "--trace=off",
+      "--output=artifacts/sol/open-findings/_raw/baseline-browser-results-final",
+      "--reporter=line,json"
+    ],
+    "configFile": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/sol/open-findings/_raw/baseline-specs/playwright.config.ts",
+    "rootDir": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/sol/open-findings/_raw/baseline-specs",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/scripts/external-server-guard.mjs",
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "revision": "58fdd423ccde1301b8bc13820867ef61ffd39759",
+      "dirty": true,
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/sol/open-findings/_raw/baseline-browser-results-final",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "revision": "58fdd423ccde1301b8bc13820867ef61ffd39759",
+          "dirty": true,
+          "actualWorkers": 1
+        },
+        "id": "desktop-chrome",
+        "name": "desktop-chrome",
+        "testDir": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/sol/open-findings/_raw/baseline-specs",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/sol/open-findings/_raw/baseline-browser-results-final",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "revision": "58fdd423ccde1301b8bc13820867ef61ffd39759",
+          "dirty": true,
+          "actualWorkers": 1
+        },
+        "id": "mobile-chrome",
+        "name": "mobile-chrome",
+        "testDir": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/sol/open-findings/_raw/baseline-specs",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/sol/open-findings/_raw/baseline-browser-results-final",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "revision": "58fdd423ccde1301b8bc13820867ef61ffd39759",
+          "dirty": true,
+          "actualWorkers": 1
+        },
+        "id": "desktop-webkit",
+        "name": "desktop-webkit",
+        "testDir": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/sol/open-findings/_raw/baseline-specs",
+        "testIgnore": [],
+        "testMatch": [
+          "/058-device-tiers\\.spec\\.ts/"
+        ],
+        "timeout": 120000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "line"
+      ],
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "e1-twin-banks.spec.ts",
+      "file": "e1-twin-banks.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "loads Twin Banks contract with two fords, two build zones, and one loss stake",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2541,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"river\"\u001b[39m\nReceived: \u001b[31m\"bank\"\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"river\"\u001b[39m\nReceived: \u001b[31m\"bank\"\u001b[39m\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/sol/open-findings/_raw/baseline-specs/e1-twin-banks.spec.ts:120:41",
+                    "location": {
+                      "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/sol/open-findings/_raw/baseline-specs/e1-twin-banks.spec.ts",
+                      "column": 41,
+                      "line": 120
+                    },
+                    "snippet": "  118 |   expect(snapshot.water?.fordPresent).toBe(true);\n  119 |   expect(snapshot.water?.fordStones).toBe(14);\n> 120 |   expect(snapshot.samples.center?.zone).toBe('river');\n      |                                         ^\n  121 |   expect(snapshot.samples.westFord?.zone).toBe('ford');\n  122 |   expect(snapshot.samples.eastFord?.zone).toBe('ford');\n  123 |   await shot(page, testInfo, 'both-bank-base');"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/sol/open-findings/_raw/baseline-specs/e1-twin-banks.spec.ts",
+                        "column": 41,
+                        "line": 120
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"river\"\u001b[39m\nReceived: \u001b[31m\"bank\"\u001b[39m\n\n  118 |   expect(snapshot.water?.fordPresent).toBe(true);\n  119 |   expect(snapshot.water?.fordStones).toBe(14);\n> 120 |   expect(snapshot.samples.center?.zone).toBe('river');\n      |                                         ^\n  121 |   expect(snapshot.samples.westFord?.zone).toBe('ford');\n  122 |   expect(snapshot.samples.eastFord?.zone).toBe('ford');\n  123 |   await shot(page, testInfo, 'both-bank-base');\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/sol/open-findings/_raw/baseline-specs/e1-twin-banks.spec.ts:120:41"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-19T14:39:37.719Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/sol/open-findings/_raw/baseline-browser-results-final/e1-twin-banks-loads-Twin-B-f3e5b-ld-zones-and-one-loss-stake-desktop-chrome/test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/sol/open-findings/_raw/baseline-browser-results-final/e1-twin-banks-loads-Twin-B-f3e5b-ld-zones-and-one-loss-stake-desktop-chrome/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/sol/open-findings/_raw/baseline-specs/e1-twin-banks.spec.ts",
+                    "column": 41,
+                    "line": 120
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "d7d659093f3e6361c72c-e2537946e5b9bbc873be",
+          "file": "e1-twin-banks.spec.ts",
+          "line": 88,
+          "column": 1
+        },
+        {
+          "title": "builds sluices and stockpiles on both banks against one gold pool",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 9335,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\nCall Log:\n- Timeout 5000ms exceeded while waiting on the predicate",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\nCall Log:\n- Timeout 5000ms exceeded while waiting on the predicate\n    at placeBuildableAt (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/sol/open-findings/_raw/baseline-specs/e1-twin-banks.spec.ts:72:110)\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/sol/open-findings/_raw/baseline-specs/e1-twin-banks.spec.ts:134:3",
+                    "location": {
+                      "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/sol/open-findings/_raw/baseline-specs/e1-twin-banks.spec.ts",
+                      "column": 110,
+                      "line": 72
+                    },
+                    "snippet": "  70 |   await teleport(page, x, z + 2);\n  71 |   await page.evaluate((buildableId) => window.__GR_TEST__?.selectBuildable(buildableId), id);\n> 72 |   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.ghostValid ?? false)).toBe(true);\n     |                                                                                                              ^\n  73 |   await expect(page.evaluate(() => window.__GR_TEST__?.confirmBuild())).resolves.toBe(true);\n  74 | }\n  75 |"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/sol/open-findings/_raw/baseline-specs/e1-twin-banks.spec.ts",
+                        "column": 110,
+                        "line": 72
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\nCall Log:\n- Timeout 5000ms exceeded while waiting on the predicate\n\n  70 |   await teleport(page, x, z + 2);\n  71 |   await page.evaluate((buildableId) => window.__GR_TEST__?.selectBuildable(buildableId), id);\n> 72 |   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.ghostValid ?? false)).toBe(true);\n     |                                                                                                              ^\n  73 |   await expect(page.evaluate(() => window.__GR_TEST__?.confirmBuild())).resolves.toBe(true);\n  74 | }\n  75 |\n    at placeBuildableAt (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/sol/open-findings/_raw/baseline-specs/e1-twin-banks.spec.ts:72:110)\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/sol/open-findings/_raw/baseline-specs/e1-twin-banks.spec.ts:134:3"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-19T14:39:40.896Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/sol/open-findings/_raw/baseline-browser-results-final/e1-twin-banks-builds-sluic-7516b-banks-against-one-gold-pool-desktop-chrome/test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/sol/open-findings/_raw/baseline-browser-results-final/e1-twin-banks-builds-sluic-7516b-banks-against-one-gold-pool-desktop-chrome/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/sol/open-findings/_raw/baseline-specs/e1-twin-banks.spec.ts",
+                    "column": 110,
+                    "line": 72
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "d7d659093f3e6361c72c-08340d0aed239a31af3d",
+          "file": "e1-twin-banks.spec.ts",
+          "line": 127,
+          "column": 1
+        },
+        {
+          "title": "routes enemies through both west and east fords",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 19640,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\nCall Log:\n- Timeout 15000ms exceeded while waiting on the predicate",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\nCall Log:\n- Timeout 15000ms exceeded while waiting on the predicate\n    at assertFordRoute (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/sol/open-findings/_raw/baseline-specs/e1-twin-banks.spec.ts:235:6)\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/sol/open-findings/_raw/baseline-specs/e1-twin-banks.spec.ts:151:3",
+                    "location": {
+                      "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/sol/open-findings/_raw/baseline-specs/e1-twin-banks.spec.ts",
+                      "column": 6,
+                      "line": 235
+                    },
+                    "snippet": "  233 |       timeout: 15_000,\n  234 |     })\n> 235 |     .toBe(true);\n      |      ^\n  236 |   const track = await page.evaluate(() => (window as unknown as { __twinRoute?: { deepSamples: number; fordSamples: number } }).__twinRoute);\n  237 |   expect(track?.deepSamples).toBe(0);\n  238 |   expect(track?.fordSamples ?? 0).toBeGreaterThan(0);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/sol/open-findings/_raw/baseline-specs/e1-twin-banks.spec.ts",
+                        "column": 6,
+                        "line": 235
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\nCall Log:\n- Timeout 15000ms exceeded while waiting on the predicate\n\n  233 |       timeout: 15_000,\n  234 |     })\n> 235 |     .toBe(true);\n      |      ^\n  236 |   const track = await page.evaluate(() => (window as unknown as { __twinRoute?: { deepSamples: number; fordSamples: number } }).__twinRoute);\n  237 |   expect(track?.deepSamples).toBe(0);\n  238 |   expect(track?.fordSamples ?? 0).toBeGreaterThan(0);\n    at assertFordRoute (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/sol/open-findings/_raw/baseline-specs/e1-twin-banks.spec.ts:235:6)\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/sol/open-findings/_raw/baseline-specs/e1-twin-banks.spec.ts:151:3"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-19T14:39:50.756Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/sol/open-findings/_raw/baseline-browser-results-final/e1-twin-banks-routes-enemi-16f6c-gh-both-west-and-east-fords-desktop-chrome/test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/sol/open-findings/_raw/baseline-browser-results-final/e1-twin-banks-routes-enemi-16f6c-gh-both-west-and-east-fords-desktop-chrome/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/sol/open-findings/_raw/baseline-specs/e1-twin-banks.spec.ts",
+                    "column": 6,
+                    "line": 235
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "d7d659093f3e6361c72c-12b0862b9fabb0c8ff35",
+          "file": "e1-twin-banks.spec.ts",
+          "line": 146,
+          "column": 1
+        },
+        {
+          "title": "loads Twin Banks contract with two fords, two build zones, and one loss stake",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 10251,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"river\"\u001b[39m\nReceived: \u001b[31m\"bank\"\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"river\"\u001b[39m\nReceived: \u001b[31m\"bank\"\u001b[39m\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/sol/open-findings/_raw/baseline-specs/e1-twin-banks.spec.ts:120:41",
+                    "location": {
+                      "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/sol/open-findings/_raw/baseline-specs/e1-twin-banks.spec.ts",
+                      "column": 41,
+                      "line": 120
+                    },
+                    "snippet": "  118 |   expect(snapshot.water?.fordPresent).toBe(true);\n  119 |   expect(snapshot.water?.fordStones).toBe(14);\n> 120 |   expect(snapshot.samples.center?.zone).toBe('river');\n      |                                         ^\n  121 |   expect(snapshot.samples.westFord?.zone).toBe('ford');\n  122 |   expect(snapshot.samples.eastFord?.zone).toBe('ford');\n  123 |   await shot(page, testInfo, 'both-bank-base');"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/sol/open-findings/_raw/baseline-specs/e1-twin-banks.spec.ts",
+                        "column": 41,
+                        "line": 120
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"river\"\u001b[39m\nReceived: \u001b[31m\"bank\"\u001b[39m\n\n  118 |   expect(snapshot.water?.fordPresent).toBe(true);\n  119 |   expect(snapshot.water?.fordStones).toBe(14);\n> 120 |   expect(snapshot.samples.center?.zone).toBe('river');\n      |                                         ^\n  121 |   expect(snapshot.samples.westFord?.zone).toBe('ford');\n  122 |   expect(snapshot.samples.eastFord?.zone).toBe('ford');\n  123 |   await shot(page, testInfo, 'both-bank-base');\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/sol/open-findings/_raw/baseline-specs/e1-twin-banks.spec.ts:120:41"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-19T14:40:42.694Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/sol/open-findings/_raw/baseline-browser-results-final/e1-twin-banks-loads-Twin-B-f3e5b-ld-zones-and-one-loss-stake-mobile-chrome/test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/sol/open-findings/_raw/baseline-browser-results-final/e1-twin-banks-loads-Twin-B-f3e5b-ld-zones-and-one-loss-stake-mobile-chrome/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/sol/open-findings/_raw/baseline-specs/e1-twin-banks.spec.ts",
+                    "column": 41,
+                    "line": 120
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "d7d659093f3e6361c72c-a7da5ef7e6a5f14124c5",
+          "file": "e1-twin-banks.spec.ts",
+          "line": 88,
+          "column": 1
+        },
+        {
+          "title": "builds sluices and stockpiles on both banks against one gold pool",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 12992,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\nCall Log:\n- Timeout 5000ms exceeded while waiting on the predicate",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\nCall Log:\n- Timeout 5000ms exceeded while waiting on the predicate\n    at placeBuildableAt (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/sol/open-findings/_raw/baseline-specs/e1-twin-banks.spec.ts:72:110)\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/sol/open-findings/_raw/baseline-specs/e1-twin-banks.spec.ts:134:3",
+                    "location": {
+                      "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/sol/open-findings/_raw/baseline-specs/e1-twin-banks.spec.ts",
+                      "column": 110,
+                      "line": 72
+                    },
+                    "snippet": "  70 |   await teleport(page, x, z + 2);\n  71 |   await page.evaluate((buildableId) => window.__GR_TEST__?.selectBuildable(buildableId), id);\n> 72 |   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.ghostValid ?? false)).toBe(true);\n     |                                                                                                              ^\n  73 |   await expect(page.evaluate(() => window.__GR_TEST__?.confirmBuild())).resolves.toBe(true);\n  74 | }\n  75 |"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/sol/open-findings/_raw/baseline-specs/e1-twin-banks.spec.ts",
+                        "column": 110,
+                        "line": 72
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\nCall Log:\n- Timeout 5000ms exceeded while waiting on the predicate\n\n  70 |   await teleport(page, x, z + 2);\n  71 |   await page.evaluate((buildableId) => window.__GR_TEST__?.selectBuildable(buildableId), id);\n> 72 |   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.ghostValid ?? false)).toBe(true);\n     |                                                                                                              ^\n  73 |   await expect(page.evaluate(() => window.__GR_TEST__?.confirmBuild())).resolves.toBe(true);\n  74 | }\n  75 |\n    at placeBuildableAt (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/sol/open-findings/_raw/baseline-specs/e1-twin-banks.spec.ts:72:110)\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/sol/open-findings/_raw/baseline-specs/e1-twin-banks.spec.ts:134:3"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-19T14:40:54.516Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/sol/open-findings/_raw/baseline-browser-results-final/e1-twin-banks-builds-sluic-7516b-banks-against-one-gold-pool-mobile-chrome/test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/sol/open-findings/_raw/baseline-browser-results-final/e1-twin-banks-builds-sluic-7516b-banks-against-one-gold-pool-mobile-chrome/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/sol/open-findings/_raw/baseline-specs/e1-twin-banks.spec.ts",
+                    "column": 110,
+                    "line": 72
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "d7d659093f3e6361c72c-3be4adc79236449dcbab",
+          "file": "e1-twin-banks.spec.ts",
+          "line": 127,
+          "column": 1
+        },
+        {
+          "title": "routes enemies through both west and east fords",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 22063,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\nCall Log:\n- Timeout 15000ms exceeded while waiting on the predicate",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\nCall Log:\n- Timeout 15000ms exceeded while waiting on the predicate\n    at assertFordRoute (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/sol/open-findings/_raw/baseline-specs/e1-twin-banks.spec.ts:235:6)\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/sol/open-findings/_raw/baseline-specs/e1-twin-banks.spec.ts:151:3",
+                    "location": {
+                      "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/sol/open-findings/_raw/baseline-specs/e1-twin-banks.spec.ts",
+                      "column": 6,
+                      "line": 235
+                    },
+                    "snippet": "  233 |       timeout: 15_000,\n  234 |     })\n> 235 |     .toBe(true);\n      |      ^\n  236 |   const track = await page.evaluate(() => (window as unknown as { __twinRoute?: { deepSamples: number; fordSamples: number } }).__twinRoute);\n  237 |   expect(track?.deepSamples).toBe(0);\n  238 |   expect(track?.fordSamples ?? 0).toBeGreaterThan(0);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/sol/open-findings/_raw/baseline-specs/e1-twin-banks.spec.ts",
+                        "column": 6,
+                        "line": 235
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\nCall Log:\n- Timeout 15000ms exceeded while waiting on the predicate\n\n  233 |       timeout: 15_000,\n  234 |     })\n> 235 |     .toBe(true);\n      |      ^\n  236 |   const track = await page.evaluate(() => (window as unknown as { __twinRoute?: { deepSamples: number; fordSamples: number } }).__twinRoute);\n  237 |   expect(track?.deepSamples).toBe(0);\n  238 |   expect(track?.fordSamples ?? 0).toBeGreaterThan(0);\n    at assertFordRoute (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/sol/open-findings/_raw/baseline-specs/e1-twin-banks.spec.ts:235:6)\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/sol/open-findings/_raw/baseline-specs/e1-twin-banks.spec.ts:151:3"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-19T14:41:09.255Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/sol/open-findings/_raw/baseline-browser-results-final/e1-twin-banks-routes-enemi-16f6c-gh-both-west-and-east-fords-mobile-chrome/test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/sol/open-findings/_raw/baseline-browser-results-final/e1-twin-banks-routes-enemi-16f6c-gh-both-west-and-east-fords-mobile-chrome/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/sol/open-findings/_raw/baseline-specs/e1-twin-banks.spec.ts",
+                    "column": 6,
+                    "line": 235
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "d7d659093f3e6361c72c-b620f192131b1d4ffa1f",
+          "file": "e1-twin-banks.spec.ts",
+          "line": 146,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "town-cast-wiring.spec.ts",
+      "file": "town-cast-wiring.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "plain town boot shows the tavernkeeper and storekeeper walking on anchored feet",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5636,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-19T14:40:10.953Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9a1ea4eacce5f471b040-cc4b693b45ae4cd3246b",
+          "file": "town-cast-wiring.spec.ts",
+          "line": 51,
+          "column": 1
+        },
+        {
+          "title": "plain town boot shows the tavernkeeper and storekeeper walking on anchored feet",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 12466,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-19T14:41:32.613Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9a1ea4eacce5f471b040-30871e0211ca25885275",
+          "file": "town-cast-wiring.spec.ts",
+          "line": 51,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "town-fresh-boot-textures.spec.ts",
+      "file": "town-fresh-boot-textures.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "delayed town textures converge without a reload and bark portrait falls back",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 12937,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-19T14:40:16.808Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f713eb62d123c4d10918-f06f81a2f5f5d5da44c0",
+          "file": "town-fresh-boot-textures.spec.ts",
+          "line": 52,
+          "column": 1
+        },
+        {
+          "title": "delayed town textures converge without a reload and bark portrait falls back",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 13664,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"fallback\"\u001b[39m\nReceived: \u001b[31m\"loaded\"\u001b[39m\n\nCall Log:\n- Timeout 8000ms exceeded while waiting on the predicate",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"fallback\"\u001b[39m\nReceived: \u001b[31m\"loaded\"\u001b[39m\n\nCall Log:\n- Timeout 8000ms exceeded while waiting on the predicate\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/sol/open-findings/_raw/baseline-specs/town-fresh-boot-textures.spec.ts:81:123",
+                    "location": {
+                      "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/sol/open-findings/_raw/baseline-specs/town-fresh-boot-textures.spec.ts",
+                      "column": 123,
+                      "line": 81
+                    },
+                    "snippet": "  79 |   await expect.poll(() => facadeStates(page)).not.toContain('error');\n  80 |   await expect.poll(() => page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__?.textures.ground)).toBe('placeholder');\n> 81 |   await expect.poll(() => page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__?.textures.barkPortrait), { timeout: 8_000 }).toBe('fallback');\n     |                                                                                                                           ^\n  82 |   await saveShot(page, `${testInfo.project.name}-after-delayed-textures.png`);\n  83 |\n  84 |   expect(errors).toEqual({ consoleErrors: [], pageErrors: [] });"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/sol/open-findings/_raw/baseline-specs/town-fresh-boot-textures.spec.ts",
+                        "column": 123,
+                        "line": 81
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"fallback\"\u001b[39m\nReceived: \u001b[31m\"loaded\"\u001b[39m\n\nCall Log:\n- Timeout 8000ms exceeded while waiting on the predicate\n\n  79 |   await expect.poll(() => facadeStates(page)).not.toContain('error');\n  80 |   await expect.poll(() => page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__?.textures.ground)).toBe('placeholder');\n> 81 |   await expect.poll(() => page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__?.textures.barkPortrait), { timeout: 8_000 }).toBe('fallback');\n     |                                                                                                                           ^\n  82 |   await saveShot(page, `${testInfo.project.name}-after-delayed-textures.png`);\n  83 |\n  84 |   expect(errors).toEqual({ consoleErrors: [], pageErrors: [] });\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/sol/open-findings/_raw/baseline-specs/town-fresh-boot-textures.spec.ts:81:123"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-19T14:41:45.470Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/sol/open-findings/_raw/baseline-browser-results-final/town-fresh-boot-textures-d-8648c-nd-bark-portrait-falls-back-mobile-chrome/test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/sol/open-findings/_raw/baseline-browser-results-final/town-fresh-boot-textures-d-8648c-nd-bark-portrait-falls-back-mobile-chrome/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/sol/open-findings/_raw/baseline-specs/town-fresh-boot-textures.spec.ts",
+                    "column": 123,
+                    "line": 81
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "f713eb62d123c4d10918-c9545f1e5f9217e1b746",
+          "file": "town-fresh-boot-textures.spec.ts",
+          "line": 52,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "town-t1-square.spec.ts",
+      "file": "town-t1-square.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "menu enters town square, prompts at four shells, exits, then starts normal run",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 11476,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: getByTestId('town-approach-prompt')\nTimeout: 5000ms\n\u001b[32m- Expected substring  - 1\u001b[39m\n\u001b[31m+ Received string     + 4\u001b[39m\n\n\u001b[32m- opens soon\u001b[39m\n\u001b[31m+\u001b[39m\n\u001b[31m+         Tavern ... the board is warm\u001b[39m\n\u001b[31m+         Board\u001b[39m\n\u001b[31m+ \u001b[43m      \u001b[49m\u001b[39m\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('town-approach-prompt')\u001b[22m\n\u001b[2m    14 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"town-ui__prompt\" data-testid=\"town-approach-prompt\">…</div>\u001b[22m\n\u001b[2m       - unexpected value \"\u001b[22m\n\u001b[2m        Tavern ... the board is warm\u001b[22m\n\u001b[2m        Board\u001b[22m\n\u001b[2m      \"\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: getByTestId('town-approach-prompt')\nTimeout: 5000ms\n\u001b[32m- Expected substring  - 1\u001b[39m\n\u001b[31m+ Received string     + 4\u001b[39m\n\n\u001b[32m- opens soon\u001b[39m\n\u001b[31m+\u001b[39m\n\u001b[31m+         Tavern ... the board is warm\u001b[39m\n\u001b[31m+         Board\u001b[39m\n\u001b[31m+ \u001b[43m      \u001b[49m\u001b[39m\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('town-approach-prompt')\u001b[22m\n\u001b[2m    14 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"town-ui__prompt\" data-testid=\"town-approach-prompt\">…</div>\u001b[22m\n\u001b[2m       - unexpected value \"\u001b[22m\n\u001b[2m        Tavern ... the board is warm\u001b[22m\n\u001b[2m        Board\u001b[22m\n\u001b[2m      \"\u001b[22m\n\n    at approach (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/sol/open-findings/_raw/baseline-specs/town-t1-square.spec.ts:90:58)\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/sol/open-findings/_raw/baseline-specs/town-t1-square.spec.ts:116:3",
+                    "location": {
+                      "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/sol/open-findings/_raw/baseline-specs/town-t1-square.spec.ts",
+                      "column": 58,
+                      "line": 90
+                    },
+                    "snippet": "  88 |   await expect.poll(() => page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__?.activePrompt), { timeout: 8_000 }).toBe(prompt);\n  89 |   await expect(page.getByTestId('town-approach-prompt')).toContainText(name);\n> 90 |   await expect(page.getByTestId('town-approach-prompt')).toContainText(expectedText);\n     |                                                          ^\n  91 | }\n  92 |\n  93 | function assertNoErrors(errors: ErrorBucket): void {"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/sol/open-findings/_raw/baseline-specs/town-t1-square.spec.ts",
+                        "column": 58,
+                        "line": 90
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: getByTestId('town-approach-prompt')\nTimeout: 5000ms\n\u001b[32m- Expected substring  - 1\u001b[39m\n\u001b[31m+ Received string     + 4\u001b[39m\n\n\u001b[32m- opens soon\u001b[39m\n\u001b[31m+\u001b[39m\n\u001b[31m+         Tavern ... the board is warm\u001b[39m\n\u001b[31m+         Board\u001b[39m\n\u001b[31m+ \u001b[43m      \u001b[49m\u001b[39m\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('town-approach-prompt')\u001b[22m\n\u001b[2m    14 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"town-ui__prompt\" data-testid=\"town-approach-prompt\">…</div>\u001b[22m\n\u001b[2m       - unexpected value \"\u001b[22m\n\u001b[2m        Tavern ... the board is warm\u001b[22m\n\u001b[2m        Board\u001b[22m\n\u001b[2m      \"\u001b[22m\n\n\n  88 |   await expect.poll(() => page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__?.activePrompt), { timeout: 8_000 }).toBe(prompt);\n  89 |   await expect(page.getByTestId('town-approach-prompt')).toContainText(name);\n> 90 |   await expect(page.getByTestId('town-approach-prompt')).toContainText(expectedText);\n     |                                                          ^\n  91 | }\n  92 |\n  93 | function assertNoErrors(errors: ErrorBucket): void {\n    at approach (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/sol/open-findings/_raw/baseline-specs/town-t1-square.spec.ts:90:58)\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/sol/open-findings/_raw/baseline-specs/town-t1-square.spec.ts:116:3"
+                    }
+                  ],
+                  "stdout": [
+                    {
+                      "text": "[town-plaza-slot] {\"id\":\"stamp-mill\",\"position\":{\"x\":4.8,\"z\":9},\"approach\":{\"x\":3.45,\"z\":6.5}}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-19T14:40:29.755Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/sol/open-findings/_raw/baseline-browser-results-final/town-t1-square-menu-enters-3ad1a-xits-then-starts-normal-run-desktop-chrome/test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/sol/open-findings/_raw/baseline-browser-results-final/town-t1-square-menu-enters-3ad1a-xits-then-starts-normal-run-desktop-chrome/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/sol/open-findings/_raw/baseline-specs/town-t1-square.spec.ts",
+                    "column": 58,
+                    "line": 90
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "f9cfde80de46e877d1e1-79e493ef09ba9c40c753",
+          "file": "town-t1-square.spec.ts",
+          "line": 98,
+          "column": 1
+        },
+        {
+          "title": "menu enters town square, prompts at four shells, exits, then starts normal run",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 8328,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: getByTestId('town-approach-prompt')\nTimeout: 5000ms\n\u001b[32m- Expected substring  - 1\u001b[39m\n\u001b[31m+ Received string     + 4\u001b[39m\n\n\u001b[32m- opens soon\u001b[39m\n\u001b[31m+\u001b[39m\n\u001b[31m+         Tavern ... the board is warm\u001b[39m\n\u001b[31m+         Board\u001b[39m\n\u001b[31m+ \u001b[43m      \u001b[49m\u001b[39m\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('town-approach-prompt')\u001b[22m\n\u001b[2m    9 × locator resolved to <div hidden=\"\" role=\"status\" aria-live=\"polite\" class=\"town-ui__prompt\" data-testid=\"town-approach-prompt\">…</div>\u001b[22m\n\u001b[2m      - unexpected value \"\u001b[22m\n\u001b[2m        Tavern ... the board is warm\u001b[22m\n\u001b[2m        Board\u001b[22m\n\u001b[2m      \"\u001b[22m\n\u001b[2m    5 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"town-ui__prompt\" data-testid=\"town-approach-prompt\">…</div>\u001b[22m\n\u001b[2m      - unexpected value \"\u001b[22m\n\u001b[2m        Tavern ... the board is warm\u001b[22m\n\u001b[2m        Board\u001b[22m\n\u001b[2m      \"\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: getByTestId('town-approach-prompt')\nTimeout: 5000ms\n\u001b[32m- Expected substring  - 1\u001b[39m\n\u001b[31m+ Received string     + 4\u001b[39m\n\n\u001b[32m- opens soon\u001b[39m\n\u001b[31m+\u001b[39m\n\u001b[31m+         Tavern ... the board is warm\u001b[39m\n\u001b[31m+         Board\u001b[39m\n\u001b[31m+ \u001b[43m      \u001b[49m\u001b[39m\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('town-approach-prompt')\u001b[22m\n\u001b[2m    9 × locator resolved to <div hidden=\"\" role=\"status\" aria-live=\"polite\" class=\"town-ui__prompt\" data-testid=\"town-approach-prompt\">…</div>\u001b[22m\n\u001b[2m      - unexpected value \"\u001b[22m\n\u001b[2m        Tavern ... the board is warm\u001b[22m\n\u001b[2m        Board\u001b[22m\n\u001b[2m      \"\u001b[22m\n\u001b[2m    5 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"town-ui__prompt\" data-testid=\"town-approach-prompt\">…</div>\u001b[22m\n\u001b[2m      - unexpected value \"\u001b[22m\n\u001b[2m        Tavern ... the board is warm\u001b[22m\n\u001b[2m        Board\u001b[22m\n\u001b[2m      \"\u001b[22m\n\n    at approach (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/sol/open-findings/_raw/baseline-specs/town-t1-square.spec.ts:90:58)\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/sol/open-findings/_raw/baseline-specs/town-t1-square.spec.ts:116:3",
+                    "location": {
+                      "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/sol/open-findings/_raw/baseline-specs/town-t1-square.spec.ts",
+                      "column": 58,
+                      "line": 90
+                    },
+                    "snippet": "  88 |   await expect.poll(() => page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__?.activePrompt), { timeout: 8_000 }).toBe(prompt);\n  89 |   await expect(page.getByTestId('town-approach-prompt')).toContainText(name);\n> 90 |   await expect(page.getByTestId('town-approach-prompt')).toContainText(expectedText);\n     |                                                          ^\n  91 | }\n  92 |\n  93 | function assertNoErrors(errors: ErrorBucket): void {"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/sol/open-findings/_raw/baseline-specs/town-t1-square.spec.ts",
+                        "column": 58,
+                        "line": 90
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: getByTestId('town-approach-prompt')\nTimeout: 5000ms\n\u001b[32m- Expected substring  - 1\u001b[39m\n\u001b[31m+ Received string     + 4\u001b[39m\n\n\u001b[32m- opens soon\u001b[39m\n\u001b[31m+\u001b[39m\n\u001b[31m+         Tavern ... the board is warm\u001b[39m\n\u001b[31m+         Board\u001b[39m\n\u001b[31m+ \u001b[43m      \u001b[49m\u001b[39m\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('town-approach-prompt')\u001b[22m\n\u001b[2m    9 × locator resolved to <div hidden=\"\" role=\"status\" aria-live=\"polite\" class=\"town-ui__prompt\" data-testid=\"town-approach-prompt\">…</div>\u001b[22m\n\u001b[2m      - unexpected value \"\u001b[22m\n\u001b[2m        Tavern ... the board is warm\u001b[22m\n\u001b[2m        Board\u001b[22m\n\u001b[2m      \"\u001b[22m\n\u001b[2m    5 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"town-ui__prompt\" data-testid=\"town-approach-prompt\">…</div>\u001b[22m\n\u001b[2m      - unexpected value \"\u001b[22m\n\u001b[2m        Tavern ... the board is warm\u001b[22m\n\u001b[2m        Board\u001b[22m\n\u001b[2m      \"\u001b[22m\n\n\n  88 |   await expect.poll(() => page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__?.activePrompt), { timeout: 8_000 }).toBe(prompt);\n  89 |   await expect(page.getByTestId('town-approach-prompt')).toContainText(name);\n> 90 |   await expect(page.getByTestId('town-approach-prompt')).toContainText(expectedText);\n     |                                                          ^\n  91 | }\n  92 |\n  93 | function assertNoErrors(errors: ErrorBucket): void {\n    at approach (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/sol/open-findings/_raw/baseline-specs/town-t1-square.spec.ts:90:58)\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/sol/open-findings/_raw/baseline-specs/town-t1-square.spec.ts:116:3"
+                    }
+                  ],
+                  "stdout": [
+                    {
+                      "text": "[town-plaza-slot] {\"id\":\"stamp-mill\",\"position\":{\"x\":4.8,\"z\":9},\"approach\":{\"x\":3.45,\"z\":6.5}}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-19T14:42:01.253Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/sol/open-findings/_raw/baseline-browser-results-final/town-t1-square-menu-enters-3ad1a-xits-then-starts-normal-run-mobile-chrome/test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/sol/open-findings/_raw/baseline-browser-results-final/town-t1-square-menu-enters-3ad1a-xits-then-starts-normal-run-mobile-chrome/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/sol/open-findings/_raw/baseline-specs/town-t1-square.spec.ts",
+                    "column": 58,
+                    "line": 90
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "f9cfde80de46e877d1e1-6045ae7d34f95304d655",
+          "file": "town-t1-square.spec.ts",
+          "line": 98,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-09-19T14:39:37.289Z",
+    "duration": 152633.84399999998,
+    "expected": 3,
+    "skipped": 0,
+    "unexpected": 9,
+    "flaky": 0
+  }
+}

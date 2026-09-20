@@ -1,0 +1,18 @@
+import { readFileSync, writeFileSync } from 'node:fs';
+
+const p = 'tasks/BACKLOG.md';
+const L = readFileSync(p, 'utf8').split('\n');
+
+if (!L[9].startsWith('🔬 **F-1302-1 (s1302')) {
+  console.error('ANCHOR MISMATCH: ' + JSON.stringify(L[9].slice(0, 60)));
+  process.exit(1);
+}
+
+const finding = [
+  '🔺 **F-1302-2 (s1302, MEASURED — AN OWNER-DESK FORK IS DESCRIBING A CONTRACT THAT NO LONGER EXISTS; HALF OF ITS ARM (b) SHIPPED SIX DAYS AGO AND THE DESK WAS NEVER TOLD).** While proving F-1302-1 fork-independent I had to read what F-1166-1 actually asserts, and two of its load-bearing facts have **rotted**. F-1166-1 (s1166) tells the owner, verbatim: *"both bandit slots\' `walk8.grid.rowDirections` is `[\'s\',\'w\',\'e\',\'n\']` with `aliases {se:\'e\', ne:\'e\', sw:\'w\', nw:\'w\'}` — **the diagonals collapse onto the pure side rows**"*, and *"**the two slots that ARE mounted carry no 8-way art** and no action clips"*. ✓ **RE-MEASURED AT SOURCE THIS FIRE** (`assets/layer-contracts/characters.v2.json`, both mounted slots): `walk8.aliases` is **`{}` — EMPTY**, and `walk8.directions` carries **`sw/se/nw/ne`, all four winds, on `char.bandit_base` AND `char.bandit_thief`**. The diagonals do **not** collapse; the mounted slots **do** carry 8-way art. 🔑 **WHAT CHANGED, AND IT IS ALREADY IN THIS LEDGER:** `lane-c-eight-winds-wiring-enemies` (s1183, L2126) *"binds the three outlaw slots — `char.bandit_base`, `char.bandit_thief`, `char.baron` — to their already-landed `walkdiag8` sheets, and settles the `aliases`"*. **That is half of F-1166-1\'s arm (b) — "commission real 8-way art for `char.bandit_base`/`_thief` and wire it" — already SHIPPED**, six days after the fork was written, by a slice that had no idea it was answering an owner question. ⚠️ **SO THE FORK AS WRITTEN IS NO LONGER A CHOICE BETWEEN TWO LIVE OPTIONS:** arm **(a) "ACCEPT COARSE"** describes *"4-row walk8 with aliased diagonals"* — **a state that no longer exists**, so accepting it would mean accepting something already superseded; arm **(b)** is **partly done**, and its genuine remainder is now much smaller than the fork implies. ✓ **WHAT IS STILL TRUE, STATED SO THE NEXT READER DOES NOT OVER-CORRECT ME:** `char.bandit_thief` top-level keys are still **exactly `slot`, `fallback`, `walk8`** — **no `clips` block on either mounted slot**, so `grab`/`flee` action art is genuinely still absent and the animator can still only fall back, exactly as F-1166-1 says. `src/entities/Enemy.ts` still sets `spriteClip=\'grab\'`/`\'flee\'` with no art to serve it. ➡️ **THE HONEST RESIDUAL FORK IS THEREFORE NARROWER AND CHEAPER: the only open question is the `grab`/`flee` ACTION CLIPS, not 8-way walk orientation.** Recommendation unchanged in spirit but re-aimed: **accept the shipped 8-way walk as the answer to the orientation half** (it is live, wired and gated), and rule separately — and later — on whether outlaws get `grab`/`flee` art at all. ⛔ **I did not touch `char.claim_jumper`, `tasks/025` stays DO-NOT-QUEUE, and I am NOT choosing between the arms** — §2E bars that and this line does not pretend otherwise; it repairs the *premise* the owner would rule on. 💡 *Reusable shape: **a desk item ages against a moving tree.** F-1166-1 was measured carefully and was true the day it was written; six days of unrelated shipping falsified two of its facts, and nothing in the factory re-checks a parked question. Before spending an owner action, re-measure the sentence you are asking them to rule on — the cheapest ruling is the one that turns out to be unnecessary.*',
+  '',
+];
+
+L.splice(10, 0, ...finding);
+writeFileSync(p, L.join('\n'));
+console.log('F-1302-2 inserted');

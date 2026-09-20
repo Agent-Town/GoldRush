@@ -1,0 +1,32 @@
+// s1354 SCRATCH PROBE — NOT FOR MERGE. Lives only in the detached probe worktree.
+//
+// WHY THIS EXISTS: `agent-view.spec.ts:261` ("all five E1 mechanics manifests match
+// their byte-stable fixture") is ALREADY RED on pristine main — it dies at :266 on the
+// `e1-drill-yard` id-list assertion (F-1330-1's known red). An early assertion disables
+// everything after it, so :267/:268 — the fixture byte-compare, the ONLY instrument that
+// would notice a `posting.lossStakes` regression — NEVER EXECUTE on main today.
+//
+// This probe reproduces :267/:268 EXACTLY, but over the five ids the red assertion
+// expects, so the byte-compare actually runs. It answers one question and no other:
+// does retiring `posting.lossStakes` from the derivation break the fixture compare?
+import { readFile } from 'node:fs/promises';
+import path from 'node:path';
+import { expect, test } from '@playwright/test';
+import { deriveMechanicsManifest, type MechanicsManifest } from '../src/agent/MechanicsManifest';
+
+const EXPECTED_IDS = ['the-claim', 'e1-dry-gulch', 'e1-night-shift', 'e1-twin-banks', 'e1-baron'];
+
+test('s1354 probe: fixture byte-compare, reached rather than short-circuited', async () => {
+  const fixtures = JSON.parse(
+    await readFile(path.resolve('e2e/fixtures/e1-mechanics-manifests.json'), 'utf8'),
+  ) as MechanicsManifest[];
+  const manifests = EXPECTED_IDS.map(deriveMechanicsManifest);
+
+  const derivedKeys = [...new Set(manifests.map((m) => Object.keys(m.posting).join('|')))];
+  const fixtureHasLossStakes = JSON.stringify(fixtures).includes('lossStakes');
+  console.log(`PROBE derived posting keys: ${JSON.stringify(derivedKeys)}`);
+  console.log(`PROBE fixture still carries lossStakes: ${fixtureHasLossStakes}`);
+  console.log(`PROBE stringify equal: ${JSON.stringify(manifests) === JSON.stringify(fixtures.slice(0, 5))}`);
+
+  expect(JSON.stringify(manifests)).toBe(JSON.stringify(fixtures.slice(0, 5)));
+});

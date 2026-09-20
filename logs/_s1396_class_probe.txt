@@ -1,0 +1,37 @@
+
+Running 26 tests using 1 worker
+
+  ✓   1 [desktop-chrome] › e2e/contract-briefings.spec.ts:303:1 › all 42 card briefings use in-world copy and only cite authored wave numbers (22ms)
+  ✓   2 [desktop-chrome] › e2e/contract-briefings.spec.ts:318:1 › every current contract launch shows manifest briefing goals and rules (10.4s)
+  ✓   3 [desktop-chrome] › e2e/contract-briefings.spec.ts:330:1 › run briefing dismisses by click and by eight second timer while sim keeps running (11.3s)
+  ✓   4 [desktop-chrome] › e2e/contract-briefings.spec.ts:347:1 › pause panel repeats the active contract briefing (2.2s)
+  ✓   5 [desktop-chrome] › e2e/contract-briefings.spec.ts:358:1 › plain no-debug board launch still briefs The Claim (6.2s)
+  ✓   6 [desktop-chrome] › e2e/contract-briefings.spec.ts:369:1 › board cards show the same briefing data (5.7s)
+  ✓   7 [desktop-chrome] › e2e/contract-briefings.spec.ts:379:1 › briefing card and pause contract fit at 390px (2.8s)
+  ✓   8 [desktop-chrome] › e2e/town-t3-board.spec.ts:161:1 › contract board renders manifest rows, locks, conditions, and per-contract bests (20.6s)
+  ✓   9 [desktop-chrome] › e2e/town-t3-board.spec.ts:227:1 › board launch loads Dry Gulch and New Claim hashes to the default contract config (12.9s)
+  ✓  10 [desktop-chrome] › e2e/town-t3-board.spec.ts:251:1 › post-run overrun returns straight to the town board and records a contract result (5.9s)
+  ✓  11 [desktop-chrome] › e2e/town-t3-board.spec.ts:273:1 › contract catalog navigation remembers the last chapter (5.5s)
+  ✓  12 [desktop-chrome] › e2e/town-t3-board.spec.ts:292:1 › contract board shows the full contract picture and remembers the Ride Together disclosure (5.1s)
+  ✓  13 [desktop-chrome] › e2e/town-t3-board.spec.ts:331:1 › contract board swipes and keeps tap targets usable at 390px (3.8s)
+  ✓  14 [mobile-chrome] › e2e/contract-briefings.spec.ts:303:1 › all 42 card briefings use in-world copy and only cite authored wave numbers (20ms)
+  ✓  15 [mobile-chrome] › e2e/contract-briefings.spec.ts:318:1 › every current contract launch shows manifest briefing goals and rules (9.7s)
+  ✓  16 [mobile-chrome] › e2e/contract-briefings.spec.ts:330:1 › run briefing dismisses by click and by eight second timer while sim keeps running (11.6s)
+  ✓  17 [mobile-chrome] › e2e/contract-briefings.spec.ts:347:1 › pause panel repeats the active contract briefing (2.3s)
+  ✓  18 [mobile-chrome] › e2e/contract-briefings.spec.ts:358:1 › plain no-debug board launch still briefs The Claim (6.3s)
+  ✓  19 [mobile-chrome] › e2e/contract-briefings.spec.ts:369:1 › board cards show the same briefing data (5.3s)
+  ✓  20 [mobile-chrome] › e2e/contract-briefings.spec.ts:379:1 › briefing card and pause contract fit at 390px (3.2s)
+  ✓  21 [mobile-chrome] › e2e/town-t3-board.spec.ts:161:1 › contract board renders manifest rows, locks, conditions, and per-contract bests (19.0s)
+  ✓  22 [mobile-chrome] › e2e/town-t3-board.spec.ts:227:1 › board launch loads Dry Gulch and New Claim hashes to the default contract config (12.2s)
+  ✓  23 [mobile-chrome] › e2e/town-t3-board.spec.ts:251:1 › post-run overrun returns straight to the town board and records a contract result (6.1s)
+  ✓  24 [mobile-chrome] › e2e/town-t3-board.spec.ts:273:1 › contract catalog navigation remembers the last chapter (5.3s)
+  ✓  25 [mobile-chrome] › e2e/town-t3-board.spec.ts:292:1 › contract board shows the full contract picture and remembers the Ride Together disclosure (5.3s)
+  ✓  26 [mobile-chrome] › e2e/town-t3-board.spec.ts:331:1 › contract board swipes and keeps tap targets usable at 390px (4.6s)
+
+  26 passed (3.1m)
+(node:48443) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:48464) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:49800) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)

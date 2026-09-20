@@ -1,0 +1,248 @@
+{
+  "label": "smoke5",
+  "contract": "the-claim",
+  "url": "/?debug&contract=the-claim&timescale=1&seed=e1-depth-smoke5",
+  "timescale": 1,
+  "viewport": {
+    "width": 1280,
+    "height": 720
+  },
+  "difficulty": "trail",
+  "secureWave": null,
+  "startGold": 0,
+  "firstRun": {
+    "sawStartMenu": false,
+    "sawGreenhornOffer": false,
+    "greenhornCopy": null,
+    "trailGuideBeats": []
+  },
+  "boot": {
+    "contract": "the-claim",
+    "difficulty": "trail",
+    "secureWave": null,
+    "briefing": "The Contract Begin The Claim The classic river claim. Goals Hold the claim through wave 10. Rules The river splits the claim around one center ford.Pressure comes from all four edges until wave 10 seals the claim; stay for the Rush if you want to press your luck.",
+    "buildables": [
+      {
+        "id": "sentry_beacon",
+        "cost": 25,
+        "max": 6
+      },
+      {
+        "id": "palisade",
+        "cost": 10,
+        "max": 48
+      },
+      {
+        "id": "sluice",
+        "cost": 40,
+        "max": 3
+      },
+      {
+        "id": "stockpile",
+        "cost": 60,
+        "max": 2
+      },
+      {
+        "id": "turret",
+        "cost": 50,
+        "max": 4
+      },
+      {
+        "id": "assay_office",
+        "cost": 80,
+        "max": 1
+      }
+    ],
+    "startGold": 0
+  },
+  "outcome": "dead",
+  "wallSeconds": 47,
+  "wavesReached": 1,
+  "sawRush": false,
+  "fpsEstimate": 114.9,
+  "driver": {
+    "ticks": 85,
+    "kiteTicks": 26,
+    "panTicks": 12
+  },
+  "perWave": [
+    {
+      "wave": 0,
+      "hpIn": 100,
+      "maxHp": 100,
+      "goldIn": 0,
+      "level": 1,
+      "panned": 0,
+      "sluiced": 0,
+      "seamsUp": 2,
+      "builds": "none",
+      "wallSeconds": 23,
+      "peakEnemies": 6,
+      "idleFrac": 0
+    },
+    {
+      "wave": 1,
+      "hpIn": 100,
+      "maxHp": 100,
+      "goldIn": 20,
+      "level": 1,
+      "panned": 20,
+      "sluiced": 0,
+      "seamsUp": 2,
+      "builds": "none",
+      "wallSeconds": 15,
+      "peakEnemies": 11,
+      "idleFrac": 0
+    }
+  ],
+  "upgradesTaken": [
+    {
+      "wave": 1,
+      "level": 2,
+      "offer": [
+        "spring_heels",
+        "split_spark",
+        "heavy_spark"
+      ],
+      "took": "spring_heels"
+    }
+  ],
+  "buildLog": [
+    {
+      "wave": 0,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost spot found in 10 nudges",
+      "count": 0,
+      "gold": 15,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 1,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost spot found in 10 nudges",
+      "count": 0,
+      "gold": 20,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 1,
+      "id": "sentry_beacon",
+      "built": false,
+      "why": "no legal ghost spot found in 10 nudges",
+      "count": 0,
+      "gold": 25,
+      "afford": true,
+      "cost": 25
+    },
+    {
+      "wave": 1,
+      "id": "sentry_beacon",
+      "built": false,
+      "why": "no legal ghost spot found in 10 nudges",
+      "count": 0,
+      "gold": 25,
+      "afford": true,
+      "cost": 25
+    },
+    {
+      "wave": 1,
+      "id": "sentry_beacon",
+      "built": false,
+      "why": "no legal ghost spot found in 10 nudges",
+      "count": 0,
+      "gold": 25,
+      "afford": true,
+      "cost": 25
+    }
+  ],
+  "announcements": [
+    {
+      "wave": 0,
+      "text": "the Prospector: follows and observes. Chip by weapon; claim wins grow it.",
+      "kind": "wave"
+    },
+    {
+      "wave": 0,
+      "text": "Claim Jumpers from the south bank!",
+      "kind": "wave"
+    },
+    {
+      "wave": 1,
+      "text": "Brass warning on the west ridge!",
+      "kind": "wave"
+    },
+    {
+      "wave": 1,
+      "text": "Hold the north bank for the assay!",
+      "kind": "wave"
+    },
+    {
+      "wave": 1,
+      "text": "West ridge shadows want the gold!",
+      "kind": "wave"
+    }
+  ],
+  "end": {
+    "run": {
+      "secured": false,
+      "rush": false,
+      "lastRunEndedReason": "death",
+      "meta": {
+        "version": 1,
+        "tracks": {
+          "territory": 0,
+          "science": 0,
+          "hero": 0,
+          "agent": 0
+        }
+      },
+      "victoryPayout": null,
+      "secureWaveReached": null,
+      "securedResultAt": null,
+      "suspend": {
+        "hasSuspend": false,
+        "restored": false,
+        "restoredWave": null,
+        "lastWriteAt": null,
+        "lastWriteMs": null,
+        "sizeBytes": 0
+      }
+    },
+    "wave": 1,
+    "gold": 25,
+    "level": 2,
+    "kills": 7,
+    "xpAudit": {
+      "deaths": 7,
+      "motesSpawned": 7,
+      "motesCollected": 4,
+      "motesCollectedXp": 16,
+      "overflowBanked": 0,
+      "expiredBanked": 0,
+      "autoBanked": 0,
+      "dropped": 0,
+      "xpAwarded": 16,
+      "xpPerKill": 4,
+      "motePool": 64,
+      "expiryBanks": true
+    },
+    "stacks": {
+      "spring_heels": 1
+    },
+    "arsenal": {
+      "turretKills": 0,
+      "blastKills": 0,
+      "toggles": 10
+    },
+    "office": null,
+    "deathOverlay": " The claim went quiet. Run Ledger The claim was overrun. The gold remembers. Time Held 00:42 Claim Jumpers Turned Back 7 Waves Survived 1 Gold Panned 25 Gold Sluiced 0 Stolen / Reclaimed 0 / 0 Spent 0 Beacons Built 0 Buildings Built / Lost / Repaired 0 / 0 / 0 Spark / Blast Damage 215 / 0 Blast Togg"
+  },
+  "errors": {
+    "console": [],
+    "page": []
+  }
+}

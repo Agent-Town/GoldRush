@@ -1,0 +1,56 @@
+[
+  {
+    "arm": "0 control",
+    "guardRc": 0,
+    "branch": "NONE",
+    "names": "",
+    "tscRc": 0,
+    "tscFirst": "",
+    "restored": "c74245955f89dfcc91184112cac2c6193d37408b"
+  },
+  {
+    "arm": "A real error + @ts-ignore",
+    "guardRc": 1,
+    "branch": ":22 suppression-filter (THE NEW CHECK)",
+    "names": "functions/api/stats.ts (@ts-ignore) ; 'functions/api/stats.ts (@ts-ignore)' ; 0: 'functions/api/stats.ts (@ts-ignore)'",
+    "tscRc": 0,
+    "tscFirst": "",
+    "restored": "c74245955f89dfcc91184112cac2c6193d37408b"
+  },
+  {
+    "arm": "B real error + USED @ts-expect-error",
+    "guardRc": 1,
+    "branch": ":22 suppression-filter (THE NEW CHECK)",
+    "names": "functions/api/stats.ts (@ts-expect-error) ; 'functions/api/stats.ts (@ts-expect-error)' ; 0: 'functions/api/stats.ts (@ts-expect-error)'",
+    "tscRc": 0,
+    "tscFirst": "",
+    "restored": "c74245955f89dfcc91184112cac2c6193d37408b"
+  },
+  {
+    "arm": "C @ts-nocheck control (filter extended, not replaced)",
+    "guardRc": 1,
+    "branch": ":22 suppression-filter (THE NEW CHECK)",
+    "names": "functions/api/stats.ts (@ts-nocheck) ; 'functions/api/stats.ts (@ts-nocheck)' ; 0: 'functions/api/stats.ts (@ts-nocheck)'",
+    "tscRc": 0,
+    "tscFirst": "",
+    "restored": "c74245955f89dfcc91184112cac2c6193d37408b"
+  },
+  {
+    "arm": "E NEGATIVE CONTROL: bare unused @ts-expect-error, NO real error",
+    "guardRc": 1,
+    "branch": ":22 suppression-filter (THE NEW CHECK)",
+    "names": "functions/api/stats.ts (@ts-expect-error) ; 'functions/api/stats.ts (@ts-expect-error)' ; 0: 'functions/api/stats.ts (@ts-expect-error)'",
+    "tscRc": 2,
+    "tscFirst": "functions/api/stats.ts(225,1): error TS2578: Unused '@ts-expect-error' directive.",
+    "restored": "c74245955f89dfcc91184112cac2c6193d37408b"
+  },
+  {
+    "arm": "D transient .d.ts",
+    "guardRc": 1,
+    "branch": ":22 suppression-filter (THE NEW CHECK)",
+    "names": "functions/api/__s1241probe.d.ts (.d.ts) ; 'functions/api/__s1241probe.d.ts (.d.ts)' ; 0: 'functions/api/__s1241probe.d.ts (.d.ts)'",
+    "tscRc": 0,
+    "tscFirst": "",
+    "restored": "c74245955f89dfcc91184112cac2c6193d37408b"
+  }
+]

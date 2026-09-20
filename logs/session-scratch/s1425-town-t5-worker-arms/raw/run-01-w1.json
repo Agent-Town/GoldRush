@@ -1,0 +1,476 @@
+{
+  "config": {
+    "argv": [
+      "/Users/robin/.nvm/versions/node/v23.11.1/bin/node",
+      "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/node_modules/@playwright/test/cli.js",
+      "test",
+      "e2e/town-t5-townsfolk.spec.ts",
+      "--project",
+      "desktop-chrome",
+      "--project",
+      "mobile-chrome",
+      "--workers",
+      "1",
+      "--reporter",
+      "json",
+      "--output",
+      "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/logs/session-scratch/s1425-town-t5-worker-arms/test-results/run-1"
+    ],
+    "configFile": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/playwright.config.ts",
+    "rootDir": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/e2e",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/logs/session-scratch/s1425-town-t5-worker-arms/test-results/run-1",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "desktop-chrome",
+        "name": "desktop-chrome",
+        "testDir": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/e2e",
+        "testIgnore": [
+          "**/*.rig.ts",
+          "**/release-build.spec.ts",
+          "**/release-base-path.spec.ts",
+          "**/accounts-sync.spec.ts"
+        ],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/logs/session-scratch/s1425-town-t5-worker-arms/test-results/run-1",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "mobile-chrome",
+        "name": "mobile-chrome",
+        "testDir": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/e2e",
+        "testIgnore": [
+          "**/*.rig.ts",
+          "**/release-build.spec.ts",
+          "**/release-base-path.spec.ts",
+          "**/accounts-sync.spec.ts"
+        ],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/logs/session-scratch/s1425-town-t5-worker-arms/test-results/run-1",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "desktop-webkit",
+        "name": "desktop-webkit",
+        "testDir": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/e2e",
+        "testIgnore": [
+          "**/*.rig.ts",
+          "**/release-build.spec.ts",
+          "**/release-base-path.spec.ts",
+          "**/accounts-sync.spec.ts"
+        ],
+        "testMatch": [
+          "/058-device-tiers\\.spec\\.ts/"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "town-t5-townsfolk.spec.ts",
+      "file": "town-t5-townsfolk.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "townsfolk bark data is epoch-scoped and short",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 13,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-03T02:19:00.541Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5ed3499f31b2dd082cf7-012a0fc1fcda3a97ab55",
+          "file": "town-t5-townsfolk.spec.ts",
+          "line": 160,
+          "column": 1
+        },
+        {
+          "title": "seeded growth tiers show the correct townsfolk roster with no run sim diagnostics",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3092,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-03T02:19:00.566Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5ed3499f31b2dd082cf7-e5e6581120bca64d0636",
+          "file": "town-t5-townsfolk.spec.ts",
+          "line": 170,
+          "column": 1
+        },
+        {
+          "title": "approach barks identify sampled speakers and the Prospector greets by town name",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 11002,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-03T02:19:03.828Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5ed3499f31b2dd082cf7-8e511bf3917fdc8016b2",
+          "file": "town-t5-townsfolk.spec.ts",
+          "line": 203,
+          "column": 1
+        },
+        {
+          "title": "youngsters ride the town ring road",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4604,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-03T02:19:14.834Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5ed3499f31b2dd082cf7-fff016b90c186c26ae79",
+          "file": "town-t5-townsfolk.spec.ts",
+          "line": 223,
+          "column": 1
+        },
+        {
+          "title": "mobile bark card is readable above the stick zone and captures concept comparison",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4050,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-03T02:19:19.442Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5ed3499f31b2dd082cf7-17e2252acd0b9e8ae307",
+          "file": "town-t5-townsfolk.spec.ts",
+          "line": 241,
+          "column": 1
+        },
+        {
+          "title": "townsfolk bark data is epoch-scoped and short",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 12,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-03T02:19:23.900Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5ed3499f31b2dd082cf7-9231887505f146d3e346",
+          "file": "town-t5-townsfolk.spec.ts",
+          "line": 160,
+          "column": 1
+        },
+        {
+          "title": "seeded growth tiers show the correct townsfolk roster with no run sim diagnostics",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3165,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-03T02:19:23.923Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5ed3499f31b2dd082cf7-e2d4af7e3fee6f03c6dc",
+          "file": "town-t5-townsfolk.spec.ts",
+          "line": 170,
+          "column": 1
+        },
+        {
+          "title": "approach barks identify sampled speakers and the Prospector greets by town name",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 11332,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-03T02:19:27.344Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5ed3499f31b2dd082cf7-c396651e5ef3cb843564",
+          "file": "town-t5-townsfolk.spec.ts",
+          "line": 203,
+          "column": 1
+        },
+        {
+          "title": "youngsters ride the town ring road",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4958,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-03T02:19:38.681Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5ed3499f31b2dd082cf7-3dc02e659cade7f4939b",
+          "file": "town-t5-townsfolk.spec.ts",
+          "line": 223,
+          "column": 1
+        },
+        {
+          "title": "mobile bark card is readable above the stick zone and captures concept comparison",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5213,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-03T02:19:43.645Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5ed3499f31b2dd082cf7-d737495e893dd5a04e22",
+          "file": "town-t5-townsfolk.spec.ts",
+          "line": 241,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-08-03T02:19:00.161Z",
+    "duration": 48836.616,
+    "expected": 10,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

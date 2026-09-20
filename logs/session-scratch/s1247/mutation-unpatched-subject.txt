@@ -1,0 +1,51 @@
+✔ runner exit follows guard exit codes (1566.440125ms)
+✔ --only rejects unknown guards and runs one known guard (145.406709ms)
+✔ --only accepts a comma-separated subset in canonical order (435.28425ms)
+✔ --only rejects a list containing an unknown guard rather than narrowing (25.395625ms)
+✔ power-budget rows include p95 only when printed (242.381958ms)
+✔ --changed-since runs the base gate when no path rule matches (378.265167ms)
+✔ --changed-since adds the worker guards when functions/ moved (1329.562125ms)
+✔ --changed-since exits 2 on a bad ref rather than narrowing to the base gate (131.208667ms)
+✖ --changed-since exits 2 when the untracked listing fails rather than reporting a green (693.646625ms)
+✔ guards run with GR_GUARD_NO_ARTIFACT so a gate cannot dirty its own tree (125.672708ms)
+✔ a signal-killed guard is never a pass (118.072458ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 10
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5225.0525
+
+✖ failing tests:
+
+test at scripts/run-guards.test.mjs:185:1
+✖ --changed-since exits 2 when the untracked listing fails rather than reporting a green (693.646625ms)
+  AssertionError [ERR_ASSERTION]: run-guards: 0 file(s) changed since HEAD
+    base gate: test:node-guards, test:power-budget, test:task-guards
+    (no path rule matched -- base gate only)
+  
+  PASS  rc=0  0s  test:node-guards
+  PASS  rc=0  0s  test:power-budget
+  PASS  rc=0  0s  test:task-guards
+  
+  guards: 3/3 passed
+  
+  
+  0 !== 2
+  
+      at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/Gold%20Rush/scripts/run-guards.test.mjs:219:10)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 2,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

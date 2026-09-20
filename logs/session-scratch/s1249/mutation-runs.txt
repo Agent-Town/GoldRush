@@ -1,0 +1,209 @@
+=== M1 restore-anchored-stem-pattern (pre-F-1249-1 vocabulary) rc=1 pass=8 fail=2
+✖ F-1249-1: a session-stamped reason key that varies the STEM is explained, and non-reason keys are not
+✖ F-1249-1: the leaf TITLE is printed on both refusal arms, even when a reason key exists
+
+✔ drain path REFUSES a terminal-closed leaf (F-1248-1) — and clears the same fixture when live (51.223416ms)
+✔ every TERMINAL_CLOSED word is refused on the drain path, and no other word is (251.415667ms)
+✔ an owner BLOCK still outranks everything and still names the owner (unchanged by F-1248-1) (26.855458ms)
+✔ --queue keeps its own wording and its own reason line (25.562875ms)
+✔ a closed leaf whose reason sits under a session-stamped key is still explained (49.326209ms)
+✖ F-1249-1: a session-stamped reason key that varies the STEM is explained, and non-reason keys are not (25.969458ms)
+✔ F-1249-1: a stale blockedReason is never printed as the CLOSURE cause (48.599583ms)
+✖ F-1249-1: the leaf TITLE is printed on both refusal arms, even when a reason key exists (25.929042ms)
+✔ --all reports terminal-closed leaves but its exit code still tracks BLOCKED alone (50.638333ms)
+✔ a missing leaf is still UNKNOWN-not-a-clearance, and --strict still escalates it (47.584167ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 8
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 638.448667
+
+✖ failing tests:
+
+test at scripts/drain-block-check.test.mjs:144:1
+✖ F-1249-1: a session-stamped reason key that varies the STEM is explained, and non-reason keys are not (25.969458ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /supersededNote_s1116: ITS 2a VERDICT IS OVERTURNED/. Input:
+  
+  '\n' +
+    '  ⛔ CLOSED — DO NOT DRAIN: lane-c-agent-rung-honest-gate.md [agent-rung-honest-gate]\n' +
+    '    refusal arm     : status="superseded" (terminal-closed; the drain path now\n' +
+    '                      consults the same set as --queue — F-1248-1)\n' +
+    '    leaf title      : Make the tool-surface permission gate able to express the rung it already declares\n' +
+    '    (no reason-bearing key on this leaf — searched: id, title, taskFile, status, supersededNote_s1116)\n' +
+    '\n' +
+    '  A lawful STOP ships no work, so there is usually nothing here to land — and when\n' +
+    '  a branch DOES hold bytes (work preserved on a lane or save/* ref), the question\n' +
+    '  that stopped it is the thing to settle first, not the merge. If the stop is stale\n' +
+    '  because a successor landed, retire THIS leaf (superseded) in the same commit as\n' +
+    '  that event — do not merge past it.\n' +
+    '\n'
+  
+      at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/Gold%20Rush/scripts/drain-block-check.test.mjs:152:10)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '\n  ⛔ CLOSED — DO NOT DRAIN: lane-c-agent-rung-honest-gate.md [agent-rung-honest-gate]\n    refusal arm     : status="superseded" (terminal-closed; the drain path now\n                      consults the same set as --queue — F-1248-1)\n    leaf title      : Make the tool-surface permission gate able to express the rung it already declares\n    (no reason-bearing key on this leaf — searched: id, title, taskFile, status, supersededNote_s1116)\n\n  A lawful STOP ships no work, so there is usually nothing here to land — and when\n  a branch DOES hold bytes (work preserved on a lane or save/* ref), the question\n  that stopped it is the thing to settle first, not the merge. If the stop is stale\n  because a successor landed, retire THIS leaf (superseded) in the same commit as\n  that event — do not merge past it.\n\n',
+    expected: /supersededNote_s1116: ITS 2a VERDICT IS OVERTURNED/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at scripts/drain-block-check.test.mjs:198:1
+✖ F-1249-1: the leaf TITLE is printed on both refusal arms, even when a reason key exists (25.929042ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /note_s1174: Verified at source/. Input:
+  
+  '\n' +
+    '  ⛔ CLOSED — DO NOT DRAIN: autosprite-trial-gate.md [autosprite-trial-gate]\n' +
+    '    refusal arm     : status="superseded" (terminal-closed; the drain path now\n' +
+    '                      consults the same set as --queue — F-1248-1)\n' +
+    "    leaf title      : autosprite.io Pro trial — CANNED (owner 2026-07-29, verbatim: 'this can be canned - we don't need that')\n" +
+    '    (no reason-bearing key on this leaf — searched: id, title, taskFile, status, note_s1174)\n' +
+    '\n' +
+    '  A lawful STOP ships no work, so there is usually nothing here to land — and when\n' +
+    '  a branch DOES hold bytes (work preserved on a lane or save/* ref), the question\n' +
+    '  that stopped it is the thing to settle first, not the merge. If the stop is stale\n' +
+    '  because a successor landed, retire THIS leaf (superseded) in the same commit as\n' +
+    '  that event — do not merge past it.\n' +
+    '\n'
+  
+      at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/Gold%20Rush/scripts/drain-block-check.test.mjs:214:12)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: `\n  ⛔ CLOSED — DO NOT DRAIN: autosprite-trial-gate.md [autosprite-trial-gate]\n    refusal arm     : status="superseded" (terminal-closed; the drain path now\n                      consults the same set as --queue — F-1248-1)\n    leaf title      : autosprite.io Pro trial — CANNED (owner 2026-07-29, verbatim: 'this can be canned - we don't need that')\n    (no reason-bearing key on this leaf — searched: id, title, taskFile, status, note_s1174)\n\n  A lawful STOP ships no work, so there is usually nothing here to land — and when\n  a branch DOES hold bytes (work preserved on a lane or save/* ref), the question\n  that stopped it is the thing to settle first, not the merge. If the stop is stale\n  because a successor landed, retire THIS leaf (superseded) in the same commit as\n  that event — do not merge past it.\n\n`,
+    expected: /note_s1174: Verified at source/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+
+========
+
+=== M2 stop excluding blockedReason (the over-broad cure) rc=1 pass=9 fail=1
+✖ F-1249-1: a stale blockedReason is never printed as the CLOSURE cause
+
+✔ drain path REFUSES a terminal-closed leaf (F-1248-1) — and clears the same fixture when live (52.504ms)
+✔ every TERMINAL_CLOSED word is refused on the drain path, and no other word is (251.592291ms)
+✔ an owner BLOCK still outranks everything and still names the owner (unchanged by F-1248-1) (24.297833ms)
+✔ --queue keeps its own wording and its own reason line (24.268ms)
+✔ a closed leaf whose reason sits under a session-stamped key is still explained (50.212292ms)
+✔ F-1249-1: a session-stamped reason key that varies the STEM is explained, and non-reason keys are not (73.522542ms)
+✖ F-1249-1: a stale blockedReason is never printed as the CLOSURE cause (26.113ms)
+✔ F-1249-1: the leaf TITLE is printed on both refusal arms, even when a reason key exists (74.756834ms)
+✔ --all reports terminal-closed leaves but its exit code still tracks BLOCKED alone (49.838917ms)
+✔ a missing leaf is still UNKNOWN-not-a-clearance, and --strict still escalates it (48.439625ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 9
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 710.224875
+
+✖ failing tests:
+
+test at scripts/drain-block-check.test.mjs:173:1
+✖ F-1249-1: a stale blockedReason is never printed as the CLOSURE cause (26.113ms)
+  AssertionError [ERR_ASSERTION]: The input was expected to not match the regular expression /OWNER-GATED ON CREDITS/. Input:
+  
+  '\n' +
+    '  ⛔ CLOSED — DO NOT DRAIN: lane-c-agent-rung-honest-gate.md [agent-rung-honest-gate]\n' +
+    '    refusal arm     : status="superseded" (terminal-closed; the drain path now\n' +
+    '                      consults the same set as --queue — F-1248-1)\n' +
+    '    leaf title      : Make the tool-surface permission gate able to express the rung it already declares\n' +
+    '    blockedReason: OWNER-GATED ON CREDITS — NOT FIRE-QUEUEABLE, AND IT SPENDS MONEY. Lifted by the OWNER only.\n' +
+    '\n' +
+    '  A lawful STOP ships no work, so there is usually nothing here to land — and when\n' +
+    '  a branch DOES hold bytes (work preserved on a lane or save/* ref), the question\n' +
+    '  that stopped it is the thing to settle first, not the merge. If the stop is stale\n' +
+    '  because a successor landed, retire THIS leaf (superseded) in the same commit as\n' +
+    '  that event — do not merge past it.\n' +
+    '\n'
+  
+      at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/Gold%20Rush/scripts/drain-block-check.test.mjs:184:10)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '\n  ⛔ CLOSED — DO NOT DRAIN: lane-c-agent-rung-honest-gate.md [agent-rung-honest-gate]\n    refusal arm     : status="superseded" (terminal-closed; the drain path now\n                      consults the same set as --queue — F-1248-1)\n    leaf title      : Make the tool-surface permission gate able to express the rung it already declares\n    blockedReason: OWNER-GATED ON CREDITS — NOT FIRE-QUEUEABLE, AND IT SPENDS MONEY. Lifted by the OWNER only.\n\n  A lawful STOP ships no work, so there is usually nothing here to land — and when\n  a branch DOES hold bytes (work preserved on a lane or save/* ref), the question\n  that stopped it is the thing to settle first, not the merge. If the stop is stale\n  because a successor landed, retire THIS leaf (superseded) in the same commit as\n  that event — do not merge past it.\n\n',
+    expected: /OWNER-GATED ON CREDITS/,
+    operator: 'doesNotMatch',
+    diff: 'simple'
+  }
+
+
+========
+
+=== M3 drop the unconditional title print (drain arm) rc=1 pass=9 fail=1
+✖ F-1249-1: the leaf TITLE is printed on both refusal arms, even when a reason key exists
+
+✔ drain path REFUSES a terminal-closed leaf (F-1248-1) — and clears the same fixture when live (51.634666ms)
+✔ every TERMINAL_CLOSED word is refused on the drain path, and no other word is (258.025291ms)
+✔ an owner BLOCK still outranks everything and still names the owner (unchanged by F-1248-1) (25.021875ms)
+✔ --queue keeps its own wording and its own reason line (24.012875ms)
+✔ a closed leaf whose reason sits under a session-stamped key is still explained (49.344375ms)
+✔ F-1249-1: a session-stamped reason key that varies the STEM is explained, and non-reason keys are not (73.4395ms)
+✔ F-1249-1: a stale blockedReason is never printed as the CLOSURE cause (48.376459ms)
+✖ F-1249-1: the leaf TITLE is printed on both refusal arms, even when a reason key exists (26.161875ms)
+✔ --all reports terminal-closed leaves but its exit code still tracks BLOCKED alone (50.662958ms)
+✔ a missing leaf is still UNKNOWN-not-a-clearance, and --strict still escalates it (48.975291ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 9
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 690.813584
+
+✖ failing tests:
+
+test at scripts/drain-block-check.test.mjs:198:1
+✖ F-1249-1: the leaf TITLE is printed on both refusal arms, even when a reason key exists (26.161875ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /leaf title\s+: autosprite\.io Pro trial — CANNED \(owner 2026-07-29/. Input:
+  
+  '\n' +
+    '  ⛔ CLOSED — DO NOT DRAIN: autosprite-trial-gate.md [autosprite-trial-gate]\n' +
+    '    refusal arm     : status="superseded" (terminal-closed; the drain path now\n' +
+    '                      consults the same set as --queue — F-1248-1)\n' +
+    '    note_s1174: Verified at source this fire by reading the master.\n' +
+    '\n' +
+    '  A lawful STOP ships no work, so there is usually nothing here to land — and when\n' +
+    '  a branch DOES hold bytes (work preserved on a lane or save/* ref), the question\n' +
+    '  that stopped it is the thing to settle first, not the merge. If the stop is stale\n' +
+    '  because a successor landed, retire THIS leaf (superseded) in the same commit as\n' +
+    '  that event — do not merge past it.\n' +
+    '\n'
+  
+      at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/Gold%20Rush/scripts/drain-block-check.test.mjs:213:12)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '\n  ⛔ CLOSED — DO NOT DRAIN: autosprite-trial-gate.md [autosprite-trial-gate]\n    refusal arm     : status="superseded" (terminal-closed; the drain path now\n                      consults the same set as --queue — F-1248-1)\n    note_s1174: Verified at source this fire by reading the master.\n\n  A lawful STOP ships no work, so there is usually nothing here to land — and when\n  a branch DOES hold bytes (work preserved on a lane or save/* ref), the question\n  that stopped it is the thing to settle first, not the merge. If the stop is stale\n  because a successor landed, retire THIS leaf (superseded) in the same commit as\n  that event — do not merge past it.\n\n',
+    expected: /leaf title\s+: autosprite\.io Pro trial — CANNED \(owner 2026-07-29/,
+    operator: 'match',
+    diff: 'simple'
+  }

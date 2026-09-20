@@ -1,0 +1,50 @@
+s1293: F-1293-2 — the standing art-staging hole, decomposed by KIND; the recommended disposition parks the only irreplaceable part
+
+Ran art-staging-audit voluntarily (the ART-SLOT LAW fires only when a fire
+TOUCHES the slot, and none had). Read AT RISK 748 files / 566.47 MB,
+LOCAL-ONLY 0 -- which looked like a 34x explosion against F-1045-1's
+10 files / 16.5 MB and was nearly written up as a discovery.
+
+Grepping the ledger first is what stopped it: the number is EXACTLY
+F-1120-2's, on the owner's desk since s1120 and recorded "unchanged since
+s1184" by three drains. So the reading is a confirmation, not news -- the
+hole is stable and no fire's neglect widened it.
+
+What is new is the cut. F-1120-2's recommended option splits by AREA (ship
+contact-sheets, park motion-pilot). Splitting by KIND instead:
+  SCRIPT/NOTE/LOG  134 files    0.15 MB
+  SHEET             52 files   97.26 MB
+  OTHER             82 files  133.27 MB
+  FRAME            480 files  335.78 MB
+
+The entire human-authored record of how this art was made is 134 files and
+0.15 MB -- 18% of the files, 0.03% of the bytes -- and it sits INSIDE the
+parked half (RUN-NOTE.md, compose-*.mjs, generate-videos.mjs, process.mjs,
+credit logs, per-take generation-parameter JSONs). A frame can be
+regenerated from a script plus its note; a script cannot be regenerated
+from frames. Adding option 1b costs 0.15 MB over the option already
+recommended and closes the knowledge half outright.
+
+NOT executed deliberately: .gitignore:13 excludes worktrees/ wholesale and
+worktrees/art is absent from `git worktree list` (F-1045-1 re-confirmed at
+source), so salvage means `git add -f` into a deliberately-ignored path --
+a decision about where art provenance permanently lives, not a drive-by
+(§7.7) -- and it needs a `git checkout -b`, which §4 reserves for owner
+approval and which would move main's HEAD while the factory is live.
+The root cause is already written down by F-1193-2: make worktrees/art a
+REAL git worktree, which closes F-1120-2 too.
+
+Census hygiene, caught in my own edit: the row first carried a 🔺 lead,
+which findings-state-guard.mjs:64 does not admit, so it was invisible.
+Re-marked 🟡. That then read 159/131/28 -- +2 open, not +1 -- because the
+headline cited F-1120-2 inside the 90-char subject window
+(findings-state-guard.mjs:35), turning a CITATION into a state
+DECLARATION: the exact hazard F-1259-1 warns of, and one that would plant
+a false double-state the day someone closes F-1120-2. Headline reworded so
+the citation falls outside the window.
+
+Census reconciles exactly, one row at a time:
+  156/130/26 -> 157/131/26 (F-1293-1, closed)
+              -> 158/131/27 (F-1293-2, open), double-state 0, PASS.
+
+Co-Authored-By: Claude <noreply@anthropic.com>

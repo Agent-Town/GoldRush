@@ -1,0 +1,5238 @@
+[
+  {
+    "contract": "the-claim",
+    "off": "9988f3a3fb350d25b444cc04bf1986dffeb9a836080bdfd6b3485a41d0debcf8",
+    "on": "9988f3a3fb350d25b444cc04bf1986dffeb9a836080bdfd6b3485a41d0debcf8",
+    "offAssetRequests": 0,
+    "onAssetRequests": 7,
+    "payload": {
+      "contract": {
+        "id": "the-claim",
+        "tileParams": {
+          "tileId": "frontier-river-claim",
+          "biome": "river-claim",
+          "size": 64,
+          "river": true,
+          "ford": true,
+          "fords": [
+            {
+              "id": "center-ford",
+              "x": 0,
+              "halfWidth": 3
+            }
+          ],
+          "waterSources": [],
+          "harvestAnchors": [
+            {
+              "x": -22,
+              "z": -6.8
+            },
+            {
+              "x": -9,
+              "z": 6.7
+            },
+            {
+              "x": -1.5,
+              "z": -6.4
+            },
+            {
+              "x": 7.5,
+              "z": 6.5
+            },
+            {
+              "x": 18,
+              "z": -7
+            },
+            {
+              "x": 25,
+              "z": 6.9
+            }
+          ],
+          "water": {
+            "id": "frontier-river-depth",
+            "centerZ": 0,
+            "halfWidth": 5,
+            "visualHalfWidth": 6.25
+          },
+          "lanes": {
+            "spawnEdges": [
+              "north",
+              "south",
+              "east",
+              "west"
+            ],
+            "territoryRingBiasWaves": 3,
+            "territoryRingLaneBias": 0.75
+          }
+        }
+      },
+      "sim": {
+        "flat": true,
+        "tile": "frontier-river-claim",
+        "balance": {
+          "uphillMin": 0.6,
+          "downhillMax": 1.1,
+          "slopeMax": 0.35,
+          "wadeDepth": 0.35,
+          "deepDepth": 1
+        },
+        "gt": {
+          "highGroundRangeBonus": 1.5
+        },
+        "lastLos": {
+          "flat": true,
+          "clear": true,
+          "samples": 0,
+          "from": {
+            "x": 0,
+            "z": 0,
+            "h": 0
+          },
+          "to": {
+            "x": 0,
+            "z": 0,
+            "h": 0
+          },
+          "blockedAt": null
+        },
+        "probes": {
+          "heroStart": {
+            "height": 0,
+            "slope": {
+              "dx": 0,
+              "dz": 0
+            },
+            "traversable": true
+          },
+          "ford": {
+            "height": 0,
+            "slope": {
+              "dx": 0,
+              "dz": 0
+            },
+            "traversable": true
+          },
+          "farBank": {
+            "height": 0,
+            "slope": {
+              "dx": 0,
+              "dz": 0
+            },
+            "traversable": true
+          }
+        }
+      },
+      "bounds": {
+        "minX": -32,
+        "maxX": 32,
+        "minZ": -32,
+        "maxZ": 32
+      },
+      "spawnEdges": [
+        {
+          "x": 0,
+          "z": -32
+        },
+        {
+          "x": 0,
+          "z": 32
+        },
+        {
+          "x": 32,
+          "z": 0
+        },
+        {
+          "x": -32,
+          "z": 0
+        }
+      ],
+      "river": {
+        "minX": -32,
+        "maxX": 32,
+        "minZ": -5,
+        "maxZ": 5
+      },
+      "fords": [
+        {
+          "id": "center-ford",
+          "minX": -3,
+          "maxX": 3,
+          "centerX": 0,
+          "halfWidth": 3
+        }
+      ],
+      "waterSources": [],
+      "fog": {
+        "near": 42,
+        "far": 88
+      },
+      "samples": [
+        {
+          "walkable": true,
+          "speedMul": 1,
+          "zone": "bank"
+        },
+        {
+          "walkable": true,
+          "speedMul": 0.85,
+          "zone": "ford",
+          "waterSource": "river",
+          "waterDepth": 0.35,
+          "waterClass": "wade"
+        },
+        {
+          "walkable": true,
+          "speedMul": 1,
+          "zone": "bank"
+        }
+      ],
+      "enemies": [
+        {
+          "id": 0,
+          "x": -16.00797279170474,
+          "z": -15.677326532932682,
+          "hp": 25.2,
+          "vx": 1.7863105201291063,
+          "vz": 2.0246221192302016,
+          "zone": "bank"
+        },
+        {
+          "id": 1,
+          "x": 16.00797279170474,
+          "z": -15.677326532932682,
+          "hp": 25.2,
+          "vx": -1.7863105201291063,
+          "vz": 2.0246221192302016,
+          "zone": "bank"
+        },
+        {
+          "id": 2,
+          "x": -0.3109443728919707,
+          "z": 18.95841918758007,
+          "hp": 25.2,
+          "vx": -0.11853893319179909,
+          "vz": -2.6973966192085186,
+          "zone": "bank"
+        }
+      ],
+      "economy": {
+        "panned": 0,
+        "sluiced": 0,
+        "granted": 0,
+        "stolen": 0,
+        "reclaimed": 0,
+        "pannedByProspector": 0,
+        "sluicedByProspector": 0,
+        "reclaimedByProspector": 0,
+        "spent": 0,
+        "baseValue": 0,
+        "buildingsBuilt": 0,
+        "beaconsBuilt": 0,
+        "repairSpent": 0,
+        "repairs": 0
+      }
+    }
+  },
+  {
+    "contract": "e1-dry-gulch",
+    "off": "cf516445f074e9cb945689d873079873c287271a85611d9f7ec3057dbccdf6b9",
+    "on": "cf516445f074e9cb945689d873079873c287271a85611d9f7ec3057dbccdf6b9",
+    "offAssetRequests": 0,
+    "onAssetRequests": 9,
+    "payload": {
+      "contract": {
+        "id": "e1-dry-gulch",
+        "tileParams": {
+          "tileId": "e1-dry-gulch",
+          "biome": "dry-gulch",
+          "render": {
+            "terrainMesh": "required"
+          },
+          "river": false,
+          "ford": false,
+          "waterSources": [
+            {
+              "kind": "spring_pond",
+              "x": -18,
+              "z": -18,
+              "radius": 1.4
+            }
+          ],
+          "harvestAnchors": [
+            {
+              "x": -22,
+              "z": -6.8
+            },
+            {
+              "x": -9,
+              "z": 6.7
+            },
+            {
+              "x": -5.5,
+              "z": -6.4
+            },
+            {
+              "x": 7.5,
+              "z": 6.5
+            },
+            {
+              "x": 18,
+              "z": -7
+            },
+            {
+              "x": 25,
+              "z": 6.9
+            }
+          ],
+          "heightfield": {
+            "id": "dry-gulch-mesa-washes",
+            "mode": "visual",
+            "springBasin": {
+              "x": -18,
+              "z": -18,
+              "radius": 7.5,
+              "depth": 0.68
+            },
+            "washChannels": [
+              {
+                "id": "southwest-arroyo",
+                "x": -12,
+                "z": -14,
+                "length": 38,
+                "width": 4.2,
+                "depth": 0.2,
+                "angle": -0.55
+              },
+              {
+                "id": "east-mesa-wash",
+                "x": 14,
+                "z": 10,
+                "length": 42,
+                "width": 3.6,
+                "depth": 0.16,
+                "angle": 0.34
+              }
+            ]
+          },
+          "palette": {
+            "id": "dry-gulch-ochre-red",
+            "tint": [
+              1.1,
+              0.9,
+              0.72
+            ],
+            "dampTint": [
+              0.78,
+              0.58,
+              0.42
+            ],
+            "dampAmount": 0.2,
+            "splat": {
+              "rockAmount": 0.72,
+              "dampBand": 2.2,
+              "scrubAmount": 0.12,
+              "macroWarmth": 1.22,
+              "antiTile": 0.86
+            }
+          },
+          "scatter": {
+            "id": "dry-gulch-cactus-sparse",
+            "density": 0.62,
+            "classCounts": {
+              "rocks": 56,
+              "stumps": 4,
+              "dry_grass": 38,
+              "wagon_ruts": 14,
+              "claim_posts": 8,
+              "cactus": 24
+            }
+          },
+          "lanes": {
+            "spawnEdges": [
+              "north",
+              "south",
+              "east",
+              "west"
+            ],
+            "territoryRingBiasWaves": 0,
+            "territoryRingLaneBias": 0
+          }
+        }
+      },
+      "sim": {
+        "flat": true,
+        "tile": "e1-dry-gulch",
+        "balance": {
+          "uphillMin": 0.6,
+          "downhillMax": 1.1,
+          "slopeMax": 0.35,
+          "wadeDepth": 0.35,
+          "deepDepth": 1
+        },
+        "gt": {
+          "highGroundRangeBonus": 1.5
+        },
+        "lastLos": {
+          "flat": true,
+          "clear": true,
+          "samples": 0,
+          "from": {
+            "x": 0,
+            "z": 0,
+            "h": 0
+          },
+          "to": {
+            "x": 0,
+            "z": 0,
+            "h": 0
+          },
+          "blockedAt": null
+        },
+        "probes": {
+          "heroStart": {
+            "height": 0,
+            "slope": {
+              "dx": 0,
+              "dz": 0
+            },
+            "traversable": true
+          },
+          "ford": {
+            "height": 0,
+            "slope": {
+              "dx": 0,
+              "dz": 0
+            },
+            "traversable": true
+          },
+          "farBank": {
+            "height": 0,
+            "slope": {
+              "dx": 0,
+              "dz": 0
+            },
+            "traversable": true
+          }
+        }
+      },
+      "bounds": {
+        "minX": -32,
+        "maxX": 32,
+        "minZ": -32,
+        "maxZ": 32
+      },
+      "spawnEdges": [
+        {
+          "x": 0,
+          "z": -32
+        },
+        {
+          "x": 0,
+          "z": 32
+        },
+        {
+          "x": 32,
+          "z": 0
+        },
+        {
+          "x": -32,
+          "z": 0
+        }
+      ],
+      "river": {
+        "minX": -32,
+        "maxX": 32,
+        "minZ": -5,
+        "maxZ": 5
+      },
+      "fords": [],
+      "waterSources": [
+        {
+          "kind": "spring_pond",
+          "x": -18,
+          "z": -18,
+          "radius": 1.4
+        }
+      ],
+      "fog": {
+        "near": 48.3,
+        "far": 101.2
+      },
+      "samples": [
+        {
+          "walkable": true,
+          "speedMul": 1,
+          "zone": "bank"
+        },
+        {
+          "walkable": true,
+          "speedMul": 1,
+          "zone": "bank"
+        },
+        {
+          "walkable": true,
+          "speedMul": 1,
+          "zone": "bank"
+        }
+      ],
+      "enemies": [
+        {
+          "id": 0,
+          "x": -18,
+          "z": -18,
+          "hp": 25.2,
+          "vx": 0,
+          "vz": 0,
+          "zone": "shallows"
+        },
+        {
+          "id": 1,
+          "x": 15.810267134080703,
+          "z": -15.862620487318459,
+          "hp": 25.2,
+          "vx": -1.9144488639534885,
+          "vz": 1.9039132194790476,
+          "zone": "bank"
+        },
+        {
+          "id": 2,
+          "x": -0.3109443728919707,
+          "z": 18.95841918758007,
+          "hp": 25.2,
+          "vx": -0.11853893319179909,
+          "vz": -2.6973966192085186,
+          "zone": "bank"
+        }
+      ],
+      "economy": {
+        "panned": 0,
+        "sluiced": 0,
+        "granted": 0,
+        "stolen": 0,
+        "reclaimed": 0,
+        "pannedByProspector": 0,
+        "sluicedByProspector": 0,
+        "reclaimedByProspector": 0,
+        "spent": 0,
+        "baseValue": 0,
+        "buildingsBuilt": 0,
+        "beaconsBuilt": 0,
+        "repairSpent": 0,
+        "repairs": 0
+      }
+    }
+  },
+  {
+    "contract": "e1-twin-banks",
+    "off": "e24b3f7e4ac85f98f3f39151df929ec2d4c33cb4f5c80d6389bbf8c7b17645b4",
+    "on": "e24b3f7e4ac85f98f3f39151df929ec2d4c33cb4f5c80d6389bbf8c7b17645b4",
+    "offAssetRequests": 0,
+    "onAssetRequests": 9,
+    "payload": {
+      "contract": {
+        "id": "e1-twin-banks",
+        "tileParams": {
+          "tileId": "e1-twin-banks",
+          "biome": "river-claim",
+          "river": true,
+          "ford": true,
+          "fords": [
+            {
+              "id": "west-ford",
+              "x": -16,
+              "halfWidth": 3
+            },
+            {
+              "id": "east-ford",
+              "x": 16,
+              "halfWidth": 3
+            }
+          ],
+          "buildZones": [
+            {
+              "id": "south-bank",
+              "bank": "south",
+              "minX": -28,
+              "maxX": 28,
+              "minZ": -30,
+              "maxZ": -7
+            },
+            {
+              "id": "north-bank",
+              "bank": "north",
+              "minX": -28,
+              "maxX": 28,
+              "minZ": 7,
+              "maxZ": 30
+            }
+          ],
+          "stakeMarkers": [
+            {
+              "id": "south-claim-stake",
+              "x": 0,
+              "z": -12,
+              "heroStart": true
+            },
+            {
+              "id": "north-expansion-marker",
+              "x": 0,
+              "z": 12,
+              "heroStart": false
+            }
+          ],
+          "waterMask": {
+            "id": "twin-banks-true-braid-dev",
+            "regions": [
+              {
+                "id": "west-ford",
+                "kind": "rect",
+                "zone": "ford",
+                "minX": -19,
+                "maxX": -13,
+                "minZ": -5.5,
+                "maxZ": 5.5
+              },
+              {
+                "id": "east-ford",
+                "kind": "rect",
+                "zone": "ford",
+                "minX": 13,
+                "maxX": 19,
+                "minZ": -5.5,
+                "maxZ": 5.5
+              },
+              {
+                "id": "west-source-box",
+                "kind": "rect",
+                "zone": "river",
+                "minX": -30,
+                "maxX": -26,
+                "minZ": -2,
+                "maxZ": 2
+              },
+              {
+                "id": "north-channel",
+                "kind": "polyline_band",
+                "zone": "river",
+                "halfWidth": 1.5,
+                "points": [
+                  {
+                    "x": -28,
+                    "z": 0
+                  },
+                  {
+                    "x": -14,
+                    "z": 4
+                  },
+                  {
+                    "x": 0,
+                    "z": 2
+                  },
+                  {
+                    "x": 14,
+                    "z": 4
+                  },
+                  {
+                    "x": 28,
+                    "z": 0
+                  }
+                ]
+              },
+              {
+                "id": "south-channel",
+                "kind": "polyline_band",
+                "zone": "river",
+                "halfWidth": 1.5,
+                "points": [
+                  {
+                    "x": -28,
+                    "z": 0
+                  },
+                  {
+                    "x": -14,
+                    "z": -4
+                  },
+                  {
+                    "x": 0,
+                    "z": -2
+                  },
+                  {
+                    "x": 14,
+                    "z": -4
+                  },
+                  {
+                    "x": 28,
+                    "z": 0
+                  }
+                ]
+              }
+            ]
+          },
+          "waterSources": [],
+          "heightfield": {
+            "id": "twin-banks-subtle-relief",
+            "mode": "visual",
+            "bankRelief": {
+              "amount": 0.13,
+              "width": 9
+            }
+          },
+          "palette": {
+            "id": "twin-banks-damp",
+            "tint": [
+              0.92,
+              0.96,
+              0.88
+            ],
+            "dampTint": [
+              0.45,
+              0.53,
+              0.4
+            ],
+            "dampAmount": 0.28,
+            "splat": {
+              "rockAmount": 0.18,
+              "dampBand": 8.2,
+              "scrubAmount": 0.45,
+              "macroWarmth": 0.78,
+              "antiTile": 0.64
+            }
+          },
+          "scatter": {
+            "id": "twin-banks-reeds",
+            "density": 1,
+            "nearWaterBias": 1,
+            "classCounts": {
+              "reeds": 44,
+              "dry_grass": 106
+            }
+          },
+          "water": {
+            "id": "twin-banks-braided-river",
+            "visualHalfWidth": 7.8,
+            "gravelBars": [
+              {
+                "id": "west-mid-channel-bar",
+                "x": -7.5,
+                "z": 0.2,
+                "length": 5.4,
+                "width": 1.35,
+                "rotation": -0.12
+              },
+              {
+                "id": "east-mid-channel-bar",
+                "x": 7.4,
+                "z": -0.25,
+                "length": 4.8,
+                "width": 1.2,
+                "rotation": 0.16
+              }
+            ]
+          },
+          "lanes": {
+            "spawnEdges": [
+              "north",
+              "south",
+              "east",
+              "west"
+            ],
+            "territoryRingBiasWaves": 0,
+            "territoryRingLaneBias": 0
+          }
+        }
+      },
+      "sim": {
+        "flat": true,
+        "tile": "e1-twin-banks",
+        "balance": {
+          "uphillMin": 0.6,
+          "downhillMax": 1.1,
+          "slopeMax": 0.35,
+          "wadeDepth": 0.35,
+          "deepDepth": 1
+        },
+        "gt": {
+          "highGroundRangeBonus": 1.5
+        },
+        "lastLos": {
+          "flat": true,
+          "clear": true,
+          "samples": 0,
+          "from": {
+            "x": 0,
+            "z": 0,
+            "h": 0
+          },
+          "to": {
+            "x": 0,
+            "z": 0,
+            "h": 0
+          },
+          "blockedAt": null
+        },
+        "probes": {
+          "heroStart": {
+            "height": 0,
+            "slope": {
+              "dx": 0,
+              "dz": 0
+            },
+            "traversable": true
+          },
+          "ford": {
+            "height": 0,
+            "slope": {
+              "dx": 0,
+              "dz": 0
+            },
+            "traversable": true
+          },
+          "farBank": {
+            "height": 0,
+            "slope": {
+              "dx": 0,
+              "dz": 0
+            },
+            "traversable": true
+          }
+        }
+      },
+      "bounds": {
+        "minX": -32,
+        "maxX": 32,
+        "minZ": -32,
+        "maxZ": 32
+      },
+      "spawnEdges": [
+        {
+          "x": 0,
+          "z": -32
+        },
+        {
+          "x": 0,
+          "z": 32
+        },
+        {
+          "x": 32,
+          "z": 0
+        },
+        {
+          "x": -32,
+          "z": 0
+        }
+      ],
+      "river": {
+        "minX": -32,
+        "maxX": 32,
+        "minZ": -5,
+        "maxZ": 5
+      },
+      "fords": [
+        {
+          "id": "west-ford",
+          "minX": -19,
+          "maxX": -13,
+          "centerX": -16,
+          "halfWidth": 3
+        },
+        {
+          "id": "east-ford",
+          "minX": 13,
+          "maxX": 19,
+          "centerX": 16,
+          "halfWidth": 3
+        }
+      ],
+      "waterSources": [],
+      "fog": {
+        "near": 42,
+        "far": 88
+      },
+      "samples": [
+        {
+          "walkable": true,
+          "speedMul": 1,
+          "zone": "bank"
+        },
+        {
+          "walkable": true,
+          "speedMul": 1,
+          "zone": "bank"
+        },
+        {
+          "walkable": true,
+          "speedMul": 1,
+          "zone": "bank"
+        }
+      ],
+      "enemies": [
+        {
+          "id": 0,
+          "x": -14.98999626976415,
+          "z": -18.502981162716377,
+          "hp": 25.2,
+          "vx": 2.685526392063302,
+          "vz": -0.17735291244690643,
+          "zone": "bank"
+        },
+        {
+          "id": 1,
+          "x": 15.496174877642384,
+          "z": -16.241325873241106,
+          "hp": 25.2,
+          "vx": -2.2433161397405854,
+          "vz": 1.5025088010322207,
+          "zone": "bank"
+        },
+        {
+          "id": 2,
+          "x": -2.509029377871619,
+          "z": 20.248512334498272,
+          "hp": 25.2,
+          "vx": -2.191058192200863,
+          "vz": -1.5777401555356008,
+          "zone": "bank"
+        }
+      ],
+      "economy": {
+        "panned": 0,
+        "sluiced": 0,
+        "granted": 0,
+        "stolen": 0,
+        "reclaimed": 0,
+        "pannedByProspector": 0,
+        "sluicedByProspector": 0,
+        "reclaimedByProspector": 0,
+        "spent": 0,
+        "baseValue": 0,
+        "buildingsBuilt": 0,
+        "beaconsBuilt": 0,
+        "repairSpent": 0,
+        "repairs": 0
+      }
+    }
+  },
+  {
+    "contract": "e1-night-shift",
+    "off": "6db63838b9cd4380cce3f45677fe8616ad97d970c8c03b378080075160401b5d",
+    "on": "6db63838b9cd4380cce3f45677fe8616ad97d970c8c03b378080075160401b5d",
+    "offAssetRequests": 0,
+    "onAssetRequests": 9,
+    "payload": {
+      "contract": {
+        "id": "e1-night-shift",
+        "tileParams": {
+          "tileId": "frontier-river-claim",
+          "biome": "river-claim",
+          "size": 64,
+          "river": true,
+          "ford": true,
+          "fords": [
+            {
+              "id": "center-ford",
+              "x": 0,
+              "halfWidth": 3
+            }
+          ],
+          "waterSources": [],
+          "harvestAnchors": [
+            {
+              "x": -22,
+              "z": -6.8
+            },
+            {
+              "x": -9,
+              "z": 6.7
+            },
+            {
+              "x": -1.5,
+              "z": -6.4
+            },
+            {
+              "x": 7.5,
+              "z": 6.5
+            },
+            {
+              "x": 18,
+              "z": -7
+            },
+            {
+              "x": 25,
+              "z": 6.9
+            }
+          ],
+          "water": {
+            "id": "frontier-river-depth",
+            "centerZ": 0,
+            "halfWidth": 5,
+            "visualHalfWidth": 6.25
+          },
+          "palette": {
+            "id": "night-shift-dusk",
+            "tint": [
+              0.74,
+              0.78,
+              0.86
+            ],
+            "dampTint": [
+              0.34,
+              0.4,
+              0.44
+            ],
+            "dampAmount": 0.12,
+            "splat": {
+              "rockAmount": 0.2,
+              "dampBand": 5.2,
+              "scrubAmount": 0.14,
+              "macroWarmth": 0.46,
+              "antiTile": 0.56
+            }
+          },
+          "prePlacedBuildables": [
+            {
+              "id": "lantern_post",
+              "x": 0,
+              "z": 16,
+              "rotationSteps": 0,
+              "wrecked": true,
+              "relightCost": 8
+            },
+            {
+              "id": "lantern_post",
+              "x": -16,
+              "z": 18,
+              "rotationSteps": 1,
+              "wrecked": true,
+              "relightCost": 8
+            },
+            {
+              "id": "lantern_post",
+              "x": 16,
+              "z": 18,
+              "rotationSteps": 3,
+              "wrecked": true,
+              "relightCost": 8
+            },
+            {
+              "id": "lantern_post",
+              "x": -22,
+              "z": -12,
+              "rotationSteps": 1,
+              "wrecked": true,
+              "relightCost": 8
+            },
+            {
+              "id": "lantern_post",
+              "x": 22,
+              "z": -12,
+              "rotationSteps": 3,
+              "wrecked": true,
+              "relightCost": 8
+            },
+            {
+              "id": "lantern_post",
+              "x": -10,
+              "z": -24,
+              "rotationSteps": 2,
+              "wrecked": true,
+              "relightCost": 8
+            },
+            {
+              "id": "lantern_post",
+              "x": 10,
+              "z": -24,
+              "rotationSteps": 2,
+              "wrecked": true,
+              "relightCost": 8
+            }
+          ],
+          "lanes": {
+            "spawnEdges": [
+              "north",
+              "south",
+              "east",
+              "west"
+            ],
+            "territoryRingBiasWaves": 3,
+            "territoryRingLaneBias": 0.75
+          }
+        }
+      },
+      "sim": {
+        "flat": true,
+        "tile": "frontier-river-claim",
+        "balance": {
+          "uphillMin": 0.6,
+          "downhillMax": 1.1,
+          "slopeMax": 0.35,
+          "wadeDepth": 0.35,
+          "deepDepth": 1
+        },
+        "gt": {
+          "highGroundRangeBonus": 1.5
+        },
+        "lastLos": {
+          "flat": true,
+          "clear": true,
+          "samples": 0,
+          "from": {
+            "x": 0,
+            "z": 0,
+            "h": 0
+          },
+          "to": {
+            "x": 0,
+            "z": 0,
+            "h": 0
+          },
+          "blockedAt": null
+        },
+        "probes": {
+          "heroStart": {
+            "height": 0,
+            "slope": {
+              "dx": 0,
+              "dz": 0
+            },
+            "traversable": true
+          },
+          "ford": {
+            "height": 0,
+            "slope": {
+              "dx": 0,
+              "dz": 0
+            },
+            "traversable": true
+          },
+          "farBank": {
+            "height": 0,
+            "slope": {
+              "dx": 0,
+              "dz": 0
+            },
+            "traversable": true
+          }
+        }
+      },
+      "bounds": {
+        "minX": -32,
+        "maxX": 32,
+        "minZ": -32,
+        "maxZ": 32
+      },
+      "spawnEdges": [
+        {
+          "x": 0,
+          "z": -32
+        },
+        {
+          "x": 0,
+          "z": 32
+        },
+        {
+          "x": 32,
+          "z": 0
+        },
+        {
+          "x": -32,
+          "z": 0
+        }
+      ],
+      "river": {
+        "minX": -32,
+        "maxX": 32,
+        "minZ": -5,
+        "maxZ": 5
+      },
+      "fords": [
+        {
+          "id": "center-ford",
+          "minX": -3,
+          "maxX": 3,
+          "centerX": 0,
+          "halfWidth": 3
+        }
+      ],
+      "waterSources": [],
+      "fog": {
+        "near": 34,
+        "far": 72
+      },
+      "samples": [
+        {
+          "walkable": true,
+          "speedMul": 1,
+          "zone": "bank"
+        },
+        {
+          "walkable": true,
+          "speedMul": 0.85,
+          "zone": "ford",
+          "waterSource": "river",
+          "waterDepth": 0.35,
+          "waterClass": "wade"
+        },
+        {
+          "walkable": true,
+          "speedMul": 1,
+          "zone": "bank"
+        }
+      ],
+      "enemies": [
+        {
+          "id": 0,
+          "x": -16.00797279170474,
+          "z": -15.677326532932682,
+          "hp": 25.2,
+          "vx": 1.7863105201291063,
+          "vz": 2.0246221192302016,
+          "zone": "bank"
+        },
+        {
+          "id": 1,
+          "x": 16.00797279170474,
+          "z": -15.677326532932682,
+          "hp": 25.2,
+          "vx": -1.7863105201291063,
+          "vz": 2.0246221192302016,
+          "zone": "bank"
+        },
+        {
+          "id": 2,
+          "x": -0.3109443728919707,
+          "z": 18.95841918758007,
+          "hp": 25.2,
+          "vx": -0.11853893319179909,
+          "vz": -2.6973966192085186,
+          "zone": "bank"
+        }
+      ],
+      "economy": {
+        "panned": 0,
+        "sluiced": 0,
+        "granted": 0,
+        "stolen": 0,
+        "reclaimed": 0,
+        "pannedByProspector": 0,
+        "sluicedByProspector": 0,
+        "reclaimedByProspector": 0,
+        "spent": 0,
+        "baseValue": 0,
+        "buildingsBuilt": 0,
+        "beaconsBuilt": 0,
+        "repairSpent": 0,
+        "repairs": 0
+      }
+    }
+  },
+  {
+    "contract": "e1-baron",
+    "off": "3d03be8717c11f8bb67e0ca679306ae409c9333cfed7021ddd43cb31f8335c0f",
+    "on": "3d03be8717c11f8bb67e0ca679306ae409c9333cfed7021ddd43cb31f8335c0f",
+    "offAssetRequests": 0,
+    "onAssetRequests": 9,
+    "payload": {
+      "contract": {
+        "id": "e1-baron",
+        "tileParams": {
+          "tileId": "frontier-river-claim",
+          "biome": "river-claim",
+          "size": 64,
+          "river": true,
+          "ford": true,
+          "fords": [
+            {
+              "id": "center-ford",
+              "x": 0,
+              "halfWidth": 3
+            }
+          ],
+          "waterSources": [],
+          "harvestAnchors": [
+            {
+              "x": -22,
+              "z": -6.8
+            },
+            {
+              "x": -9,
+              "z": 6.7
+            },
+            {
+              "x": -1.5,
+              "z": -6.4
+            },
+            {
+              "x": 7.5,
+              "z": 6.5
+            },
+            {
+              "x": 18,
+              "z": -7
+            },
+            {
+              "x": 25,
+              "z": 6.9
+            }
+          ],
+          "water": {
+            "id": "frontier-river-depth",
+            "centerZ": 0,
+            "halfWidth": 5,
+            "visualHalfWidth": 6.25
+          },
+          "prebuiltPalisades": false,
+          "lanes": {
+            "spawnEdges": [
+              "north",
+              "south",
+              "east",
+              "west"
+            ],
+            "territoryRingBiasWaves": 3,
+            "territoryRingLaneBias": 0.75
+          }
+        }
+      },
+      "sim": {
+        "flat": true,
+        "tile": "frontier-river-claim",
+        "balance": {
+          "uphillMin": 0.6,
+          "downhillMax": 1.1,
+          "slopeMax": 0.35,
+          "wadeDepth": 0.35,
+          "deepDepth": 1
+        },
+        "gt": {
+          "highGroundRangeBonus": 1.5
+        },
+        "lastLos": {
+          "flat": true,
+          "clear": true,
+          "samples": 0,
+          "from": {
+            "x": 0,
+            "z": 0,
+            "h": 0
+          },
+          "to": {
+            "x": 0,
+            "z": 0,
+            "h": 0
+          },
+          "blockedAt": null
+        },
+        "probes": {
+          "heroStart": {
+            "height": 0,
+            "slope": {
+              "dx": 0,
+              "dz": 0
+            },
+            "traversable": true
+          },
+          "ford": {
+            "height": 0,
+            "slope": {
+              "dx": 0,
+              "dz": 0
+            },
+            "traversable": true
+          },
+          "farBank": {
+            "height": 0,
+            "slope": {
+              "dx": 0,
+              "dz": 0
+            },
+            "traversable": true
+          }
+        }
+      },
+      "bounds": {
+        "minX": -32,
+        "maxX": 32,
+        "minZ": -32,
+        "maxZ": 32
+      },
+      "spawnEdges": [
+        {
+          "x": 0,
+          "z": -32
+        },
+        {
+          "x": 0,
+          "z": 32
+        },
+        {
+          "x": 32,
+          "z": 0
+        },
+        {
+          "x": -32,
+          "z": 0
+        }
+      ],
+      "river": {
+        "minX": -32,
+        "maxX": 32,
+        "minZ": -5,
+        "maxZ": 5
+      },
+      "fords": [
+        {
+          "id": "center-ford",
+          "minX": -3,
+          "maxX": 3,
+          "centerX": 0,
+          "halfWidth": 3
+        }
+      ],
+      "waterSources": [],
+      "fog": {
+        "near": 42,
+        "far": 88
+      },
+      "samples": [
+        {
+          "walkable": true,
+          "speedMul": 1,
+          "zone": "bank"
+        },
+        {
+          "walkable": true,
+          "speedMul": 0.85,
+          "zone": "ford",
+          "waterSource": "river",
+          "waterDepth": 0.35,
+          "waterClass": "wade"
+        },
+        {
+          "walkable": true,
+          "speedMul": 1,
+          "zone": "bank"
+        }
+      ],
+      "enemies": [
+        {
+          "id": 0,
+          "x": -17.722297201590493,
+          "z": -15.046512002609727,
+          "hp": 25.2,
+          "vx": 0.42247126840482707,
+          "vz": 2.5083856991092013,
+          "zone": "bank"
+        },
+        {
+          "id": 1,
+          "x": 17.002298260932108,
+          "z": -15.140268037784582,
+          "hp": 25.2,
+          "vx": -0.21618451020042784,
+          "vz": 2.6732756537314195,
+          "zone": "bank"
+        },
+        {
+          "id": 2,
+          "x": -0.3109443728919707,
+          "z": 18.95841918758007,
+          "hp": 25.2,
+          "vx": -0.11853893319179909,
+          "vz": -2.6973966192085186,
+          "zone": "bank"
+        }
+      ],
+      "economy": {
+        "panned": 0,
+        "sluiced": 0,
+        "granted": 0,
+        "stolen": 0,
+        "reclaimed": 0,
+        "pannedByProspector": 0,
+        "sluicedByProspector": 0,
+        "reclaimedByProspector": 0,
+        "spent": 0,
+        "baseValue": 0,
+        "buildingsBuilt": 0,
+        "beaconsBuilt": 0,
+        "repairSpent": 0,
+        "repairs": 0
+      }
+    }
+  },
+  {
+    "contract": "e2-hill-mine",
+    "off": "eec1e96caf65f2799d6e2086a766418f29fea6b506ac5c14db28f86d50bc77b0",
+    "on": "eec1e96caf65f2799d6e2086a766418f29fea6b506ac5c14db28f86d50bc77b0",
+    "offAssetRequests": 0,
+    "onAssetRequests": 9,
+    "payload": {
+      "contract": {
+        "id": "e2-hill-mine",
+        "tileParams": {
+          "tileId": "e2-hill-mine",
+          "biome": "steamworks-hill-mine",
+          "size": 96,
+          "render": {
+            "terrainMesh": "required"
+          },
+          "river": true,
+          "ford": true,
+          "fords": [
+            {
+              "id": "trestle",
+              "x": 0,
+              "halfWidth": 4
+            }
+          ],
+          "buildZones": [
+            {
+              "id": "base-t1",
+              "bank": "north",
+              "minX": -30,
+              "maxX": 30,
+              "minZ": 8,
+              "maxZ": 16
+            },
+            {
+              "id": "t2-west",
+              "bank": "north",
+              "minX": -38,
+              "maxX": -20,
+              "minZ": 21,
+              "maxZ": 29
+            },
+            {
+              "id": "t2-east",
+              "bank": "north",
+              "minX": 20,
+              "maxX": 38,
+              "minZ": 21,
+              "maxZ": 29
+            },
+            {
+              "id": "t3-west",
+              "bank": "north",
+              "minX": -36,
+              "maxX": -22,
+              "minZ": 37,
+              "maxZ": 44
+            },
+            {
+              "id": "t3-east",
+              "bank": "north",
+              "minX": 22,
+              "maxX": 36,
+              "minZ": 37,
+              "maxZ": 44
+            }
+          ],
+          "stakeMarkers": [
+            {
+              "id": "boiler-house-site",
+              "x": 0,
+              "z": 12,
+              "heroStart": true
+            }
+          ],
+          "rails": [
+            {
+              "style": "steamworks",
+              "points": [
+                {
+                  "x": -46,
+                  "z": -2
+                },
+                {
+                  "x": -24,
+                  "z": -1
+                },
+                {
+                  "x": 0,
+                  "z": 0
+                },
+                {
+                  "x": 24,
+                  "z": -1
+                },
+                {
+                  "x": 46,
+                  "z": -2
+                }
+              ]
+            },
+            {
+              "style": "mine-spur",
+              "points": [
+                {
+                  "x": -34,
+                  "z": 12
+                },
+                {
+                  "x": -22,
+                  "z": 16
+                },
+                {
+                  "x": -10,
+                  "z": 24
+                },
+                {
+                  "x": 10,
+                  "z": 24
+                },
+                {
+                  "x": 24,
+                  "z": 34
+                }
+              ]
+            },
+            {
+              "style": "mine-spur",
+              "points": [
+                {
+                  "x": 30,
+                  "z": 38
+                },
+                {
+                  "x": 12,
+                  "z": 42
+                },
+                {
+                  "x": -6,
+                  "z": 41
+                }
+              ]
+            }
+          ],
+          "waterSources": [],
+          "harvestAnchors": [
+            {
+              "x": -30,
+              "z": 25
+            },
+            {
+              "x": -10,
+              "z": 29
+            },
+            {
+              "x": 18,
+              "z": 25
+            },
+            {
+              "x": -25,
+              "z": 39
+            },
+            {
+              "x": 26,
+              "z": 39
+            }
+          ],
+          "elevation": {
+            "cellSize": 2,
+            "analytic": {
+              "hillMine": 1,
+              "creekHeight": -0.5,
+              "railHeight": 0,
+              "t1Height": 1.5,
+              "t2Height": 3,
+              "t3Height": 4.5,
+              "creekBlendStart": -12,
+              "creekBlendEnd": -5,
+              "t1RampStart": 5,
+              "t1RampEnd": 14,
+              "t2RampStart": 18,
+              "t2RampEnd": 26,
+              "t3RampStart": 32,
+              "t3RampEnd": 40,
+              "cliffMinX": -16,
+              "cliffMaxX": 16,
+              "cliffMinZ": 18,
+              "cliffMaxZ": 23,
+              "cliffAmp": 2.2,
+              "cliffFeather": 1,
+              "mineMouthX": -6,
+              "mineMouthZ": 41,
+              "mineMouthRadius": 5,
+              "mineMouthCrown": 0.22
+            }
+          },
+          "heightfield": {
+            "id": "hill-mine-terraces",
+            "mode": "visual"
+          },
+          "palette": {
+            "id": "hill-mine-scree-road",
+            "tint": [
+              0.86,
+              0.82,
+              0.74
+            ],
+            "dampTint": [
+              0.35,
+              0.43,
+              0.42
+            ],
+            "dampAmount": 0.36,
+            "splat": {
+              "rockAmount": 0.84,
+              "dampBand": 2.4,
+              "scrubAmount": 0.1,
+              "macroWarmth": 0.78,
+              "antiTile": 0.72
+            }
+          },
+          "scatter": {
+            "id": "hill-mine-scree-ruts",
+            "density": 0.82,
+            "classCounts": {
+              "rocks": 94,
+              "dry_grass": 38,
+              "wagon_ruts": 28,
+              "claim_posts": 10
+            }
+          },
+          "water": {
+            "id": "hill-mine-flooded-gallery",
+            "visualHalfWidth": 10,
+            "depths": {
+              "river": 1.25,
+              "ford": 0.35,
+              "shallows": 0.25,
+              "springPond": 0.2
+            },
+            "speedMul": {
+              "river": 0.45,
+              "ford": 0.8,
+              "shallows": 0.72,
+              "springPond": 0.8
+            },
+            "centerZ": -10,
+            "halfWidth": 5
+          },
+          "lanes": {
+            "spawnEdges": [
+              "west",
+              "east",
+              "north"
+            ],
+            "territoryRingBiasWaves": 0,
+            "territoryRingLaneBias": 0
+          }
+        }
+      },
+      "sim": {
+        "flat": false,
+        "tile": "e2-hill-mine",
+        "balance": {
+          "uphillMin": 0.6,
+          "downhillMax": 1.1,
+          "slopeMax": 0.35,
+          "wadeDepth": 0.35,
+          "deepDepth": 1
+        },
+        "gt": {
+          "highGroundRangeBonus": 1.5
+        },
+        "lastLos": {
+          "flat": false,
+          "clear": true,
+          "samples": 11,
+          "from": {
+            "x": -3.95,
+            "z": 12,
+            "h": 1.311
+          },
+          "to": {
+            "x": 0,
+            "z": 22,
+            "h": 4.45
+          },
+          "blockedAt": null
+        },
+        "probes": {
+          "heroStart": {
+            "height": 1.3106995937849575,
+            "slope": {
+              "dx": -1.270512806073043e-9,
+              "dz": 0.17181070606386983
+            },
+            "traversable": true
+          },
+          "ford": {
+            "height": 2.6838001465092676e-16,
+            "slope": {
+              "dx": -6.424387796699178e-17,
+              "dz": 4.887040863459409e-16
+            },
+            "traversable": true
+          },
+          "farBank": {
+            "height": -0.5,
+            "slope": {
+              "dx": 0,
+              "dz": 0
+            },
+            "traversable": true
+          }
+        }
+      },
+      "bounds": {
+        "minX": -48,
+        "maxX": 48,
+        "minZ": -48,
+        "maxZ": 48
+      },
+      "spawnEdges": [
+        {
+          "x": 0,
+          "z": -48
+        },
+        {
+          "x": 0,
+          "z": 48
+        },
+        {
+          "x": 48,
+          "z": 0
+        },
+        {
+          "x": -48,
+          "z": 0
+        }
+      ],
+      "river": {
+        "minX": -48,
+        "maxX": 48,
+        "minZ": -15,
+        "maxZ": -5
+      },
+      "fords": [
+        {
+          "id": "trestle",
+          "minX": -4,
+          "maxX": 4,
+          "centerX": 0,
+          "halfWidth": 4
+        }
+      ],
+      "waterSources": [],
+      "fog": {
+        "near": 42,
+        "far": 88
+      },
+      "samples": [
+        {
+          "walkable": false,
+          "speedMul": 0,
+          "zone": "bank"
+        },
+        {
+          "walkable": true,
+          "speedMul": 1,
+          "zone": "bank"
+        },
+        {
+          "walkable": true,
+          "speedMul": 1,
+          "zone": "bank"
+        }
+      ],
+      "enemies": [
+        {
+          "id": 0,
+          "x": -15.240971926251872,
+          "z": -16.69227239011662,
+          "hp": 25.2,
+          "vx": 2.574346569485133,
+          "vz": 0.8140882877059497,
+          "zone": "bank"
+        },
+        {
+          "id": 1,
+          "x": 15.274150349554512,
+          "z": -16.614818581136113,
+          "hp": 25.2,
+          "vx": -2.520022283145078,
+          "vz": 0.9692717330307232,
+          "zone": "bank"
+        },
+        {
+          "id": 2,
+          "x": 0,
+          "z": 22,
+          "hp": 25.2,
+          "vx": 0,
+          "vz": 0,
+          "zone": "out"
+        }
+      ],
+      "economy": {
+        "panned": 0,
+        "sluiced": 0,
+        "granted": 0,
+        "stolen": 0,
+        "reclaimed": 0,
+        "pannedByProspector": 0,
+        "sluicedByProspector": 0,
+        "reclaimedByProspector": 0,
+        "spent": 0,
+        "baseValue": 0,
+        "buildingsBuilt": 0,
+        "beaconsBuilt": 0,
+        "repairSpent": 0,
+        "repairs": 0
+      }
+    }
+  },
+  {
+    "contract": "e2-trestle",
+    "off": "75522ac7e624928ee52b809381b2e1d50589463eee40fc198a27ef5d5051f8ce",
+    "on": "75522ac7e624928ee52b809381b2e1d50589463eee40fc198a27ef5d5051f8ce",
+    "offAssetRequests": 0,
+    "onAssetRequests": 10,
+    "payload": {
+      "contract": {
+        "id": "e2-trestle",
+        "tileParams": {
+          "tileId": "e2-trestle",
+          "biome": "steamworks-trestle-gorge",
+          "size": 96,
+          "render": {
+            "terrainMesh": "required"
+          },
+          "river": true,
+          "ford": true,
+          "fords": [
+            {
+              "id": "trestle",
+              "x": 0,
+              "halfWidth": 3
+            }
+          ],
+          "buildZones": [
+            {
+              "id": "south-approach",
+              "bank": "south",
+              "minX": -30,
+              "maxX": 30,
+              "minZ": -30,
+              "maxZ": -7
+            },
+            {
+              "id": "north-approach",
+              "bank": "north",
+              "minX": -30,
+              "maxX": 30,
+              "minZ": 7,
+              "maxZ": 30
+            }
+          ],
+          "stakeMarkers": [
+            {
+              "id": "south-boiler-site",
+              "x": 12,
+              "z": -12,
+              "heroStart": false
+            },
+            {
+              "id": "north-boiler-site",
+              "x": -12,
+              "z": 12,
+              "heroStart": false
+            },
+            {
+              "id": "trestle-entry",
+              "x": 12,
+              "z": -18,
+              "heroStart": true
+            }
+          ],
+          "rails": [
+            {
+              "style": "steamworks",
+              "points": [
+                {
+                  "x": 0,
+                  "z": -46
+                },
+                {
+                  "x": 0,
+                  "z": -22
+                },
+                {
+                  "x": 0,
+                  "z": -7
+                },
+                {
+                  "x": 0,
+                  "z": 7
+                },
+                {
+                  "x": 0,
+                  "z": 22
+                },
+                {
+                  "x": 0,
+                  "z": 46
+                }
+              ]
+            },
+            {
+              "style": "mine-spur",
+              "points": [
+                {
+                  "x": -30,
+                  "z": -18
+                },
+                {
+                  "x": -14,
+                  "z": -18
+                },
+                {
+                  "x": 0,
+                  "z": -22
+                },
+                {
+                  "x": 18,
+                  "z": -26
+                }
+              ]
+            }
+          ],
+          "waterSources": [],
+          "harvestAnchors": [
+            {
+              "x": -24,
+              "z": -20
+            },
+            {
+              "x": 24,
+              "z": -20
+            },
+            {
+              "x": -24,
+              "z": 20
+            },
+            {
+              "x": 24,
+              "z": 20
+            }
+          ],
+          "elevation": {
+            "cellSize": 2,
+            "analytic": {
+              "bowlDepth": 0.7,
+              "bowlRadius": 12,
+              "bowlCenterX": 0,
+              "bowlCenterZ": 0,
+              "ridgeAmp": 0.8,
+              "ridgeWidth": 18,
+              "ridgeLength": 42,
+              "ridgeX": 28,
+              "ridgeZ": 0
+            }
+          },
+          "heightfield": {
+            "id": "trestle-gorge-banks",
+            "mode": "visual",
+            "bankRelief": {
+              "amount": 0.45,
+              "width": 9
+            }
+          },
+          "palette": {
+            "id": "trestle-rust-river",
+            "tint": [
+              0.78,
+              0.72,
+              0.61
+            ],
+            "dampTint": [
+              0.31,
+              0.42,
+              0.42
+            ],
+            "dampAmount": 0.42,
+            "splat": {
+              "rockAmount": 0.72,
+              "dampBand": 3,
+              "scrubAmount": 0.14,
+              "macroWarmth": 0.7,
+              "antiTile": 0.72
+            }
+          },
+          "scatter": {
+            "id": "trestle-gorge-scrub",
+            "density": 0.7,
+            "classCounts": {
+              "rocks": 76,
+              "dry_grass": 34,
+              "wagon_ruts": 18,
+              "claim_posts": 8,
+              "reeds": 24
+            },
+            "nearWaterBias": 0.35
+          },
+          "water": {
+            "id": "trestle-gorge-river",
+            "visualHalfWidth": 10,
+            "depths": {
+              "river": 1.25,
+              "ford": 0.3,
+              "shallows": 0.25
+            },
+            "speedMul": {
+              "river": 0.45,
+              "ford": 0.8,
+              "shallows": 0.72
+            }
+          },
+          "lanes": {
+            "spawnEdges": [
+              "south",
+              "north",
+              "east",
+              "west"
+            ],
+            "territoryRingBiasWaves": 0,
+            "territoryRingLaneBias": 0
+          }
+        }
+      },
+      "sim": {
+        "flat": false,
+        "tile": "e2-trestle",
+        "balance": {
+          "uphillMin": 0.6,
+          "downhillMax": 1.1,
+          "slopeMax": 0.35,
+          "wadeDepth": 0.35,
+          "deepDepth": 1
+        },
+        "gt": {
+          "highGroundRangeBonus": 1.5
+        },
+        "lastLos": {
+          "flat": false,
+          "clear": true,
+          "samples": 11,
+          "from": {
+            "x": 12,
+            "z": -18,
+            "h": 0.354
+          },
+          "to": {
+            "x": 15.405,
+            "z": -18.394,
+            "h": 0.474
+          },
+          "blockedAt": null
+        },
+        "probes": {
+          "heroStart": {
+            "height": -0.19552637771002637,
+            "slope": {
+              "dx": 0.01979254225013735,
+              "dz": 0.0338024629712976
+            },
+            "traversable": true
+          },
+          "ford": {
+            "height": -0.4614127230548627,
+            "slope": {
+              "dx": 0.02061711465263627,
+              "dz": 0
+            },
+            "traversable": true
+          },
+          "farBank": {
+            "height": 0.3537853691144329,
+            "slope": {
+              "dx": 0.03575067599694598,
+              "dz": -0.012209798380819814
+            },
+            "traversable": true
+          }
+        }
+      },
+      "bounds": {
+        "minX": -48,
+        "maxX": 48,
+        "minZ": -48,
+        "maxZ": 48
+      },
+      "spawnEdges": [
+        {
+          "x": 0,
+          "z": -48
+        },
+        {
+          "x": 0,
+          "z": 48
+        },
+        {
+          "x": 48,
+          "z": 0
+        },
+        {
+          "x": -48,
+          "z": 0
+        }
+      ],
+      "river": {
+        "minX": -48,
+        "maxX": 48,
+        "minZ": -5,
+        "maxZ": 5
+      },
+      "fords": [
+        {
+          "id": "trestle",
+          "minX": -3,
+          "maxX": 3,
+          "centerX": 0,
+          "halfWidth": 3
+        }
+      ],
+      "waterSources": [],
+      "fog": {
+        "near": 42,
+        "far": 88
+      },
+      "samples": [
+        {
+          "walkable": true,
+          "speedMul": 1,
+          "zone": "bank"
+        },
+        {
+          "walkable": true,
+          "speedMul": 0.8,
+          "zone": "ford",
+          "waterSource": "river",
+          "waterDepth": 0.3,
+          "waterClass": "wade"
+        },
+        {
+          "walkable": true,
+          "speedMul": 1,
+          "zone": "bank"
+        }
+      ],
+      "enemies": [
+        {
+          "id": 0,
+          "x": -15.027775059508274,
+          "z": -18.706192678373366,
+          "hp": 25.2,
+          "vx": 2.677989081934893,
+          "vz": -0.3605411602953623,
+          "zone": "bank"
+        },
+        {
+          "id": 1,
+          "x": 14.954742565702128,
+          "z": -18.409238865272894,
+          "hp": 25.2,
+          "vx": -2.7010500459868503,
+          "vz": -0.06167084798399003,
+          "zone": "bank"
+        },
+        {
+          "id": 2,
+          "x": -0.3355617587375182,
+          "z": 18.94080776405603,
+          "hp": 25.2,
+          "vx": -0.1537551319368352,
+          "vz": -2.7149385226404377,
+          "zone": "bank"
+        }
+      ],
+      "economy": {
+        "panned": 0,
+        "sluiced": 0,
+        "granted": 0,
+        "stolen": 0,
+        "reclaimed": 0,
+        "pannedByProspector": 0,
+        "sluicedByProspector": 0,
+        "reclaimedByProspector": 0,
+        "spent": 0,
+        "baseValue": 0,
+        "buildingsBuilt": 0,
+        "beaconsBuilt": 0,
+        "repairSpent": 0,
+        "repairs": 0
+      }
+    }
+  },
+  {
+    "contract": "e3-blackout-ridge",
+    "off": "e94d3a1de1f7d98bc3f27bfcab2e565420345af66adfe59705c6537c5db88354",
+    "on": "e94d3a1de1f7d98bc3f27bfcab2e565420345af66adfe59705c6537c5db88354",
+    "offAssetRequests": 0,
+    "onAssetRequests": 9,
+    "payload": {
+      "contract": {
+        "id": "e3-blackout-ridge",
+        "tileParams": {
+          "tileId": "e3-blackout-ridge",
+          "biome": "voltage-blackout-ridge",
+          "size": 96,
+          "dimensions": {
+            "width": 80,
+            "height": 96
+          },
+          "render": {
+            "terrainMesh": "required"
+          },
+          "river": false,
+          "ford": false,
+          "buildZones": [
+            {
+              "id": "trunk-yard",
+              "bank": "south",
+              "minX": -32,
+              "maxX": 8,
+              "minZ": -38,
+              "maxZ": -8
+            },
+            {
+              "id": "breath-yard",
+              "bank": "north",
+              "minX": -8,
+              "maxX": 24,
+              "minZ": -6,
+              "maxZ": 18
+            },
+            {
+              "id": "ridge-line",
+              "bank": "north",
+              "minX": 8,
+              "maxX": 34,
+              "minZ": 20,
+              "maxZ": 40
+            }
+          ],
+          "stakeMarkers": [
+            {
+              "id": "ridge-switch-house",
+              "x": 24,
+              "z": 30,
+              "heroStart": true
+            }
+          ],
+          "pylonSites": [
+            {
+              "id": "trunk-west",
+              "nodeId": "trunk-west",
+              "wireFrom": "off-map-current",
+              "x": -30,
+              "z": -30,
+              "radius": 2.5
+            },
+            {
+              "id": "trunk-middle",
+              "nodeId": "trunk-middle",
+              "wireFrom": "trunk-west",
+              "x": -18,
+              "z": -18,
+              "radius": 2.5
+            },
+            {
+              "id": "trunk-ridge",
+              "nodeId": "trunk-ridge",
+              "wireFrom": "trunk-middle",
+              "x": -6,
+              "z": -6,
+              "radius": 2.5
+            }
+          ],
+          "capacitorSites": [
+            {
+              "id": "breath-bank-west",
+              "nodeId": "capacitor-west",
+              "x": 6,
+              "z": 4,
+              "radius": 2.5
+            },
+            {
+              "id": "breath-bank-east",
+              "nodeId": "capacitor-east",
+              "x": 16,
+              "z": 4,
+              "radius": 2.5
+            }
+          ],
+          "prePlacedBuildables": [
+            {
+              "id": "sentry_beacon",
+              "x": -30,
+              "z": -30
+            },
+            {
+              "id": "sentry_beacon",
+              "x": -18,
+              "z": -18
+            },
+            {
+              "id": "sentry_beacon",
+              "x": -6,
+              "z": -6
+            },
+            {
+              "id": "lantern_post",
+              "x": 12,
+              "z": 20
+            },
+            {
+              "id": "lantern_post",
+              "x": 24,
+              "z": 30
+            }
+          ],
+          "ridgeGlow": {
+            "x": -38,
+            "z": -44,
+            "color": "#79c8bd",
+            "intensity": 1.35
+          },
+          "waterSources": [],
+          "harvestAnchors": [
+            {
+              "x": 8,
+              "z": 30
+            },
+            {
+              "x": 18,
+              "z": 34
+            },
+            {
+              "x": 30,
+              "z": 26
+            }
+          ],
+          "heightfield": {
+            "id": "blackout-ridge-shelf",
+            "mode": "visual"
+          },
+          "palette": {
+            "id": "blackout-ridge-blue-brass",
+            "tint": [
+              0.48,
+              0.52,
+              0.58
+            ],
+            "dampTint": [
+              0.16,
+              0.24,
+              0.3
+            ],
+            "dampAmount": 0.06,
+            "splat": {
+              "rockAmount": 0.82,
+              "scrubAmount": 0.1,
+              "macroWarmth": 0.32,
+              "antiTile": 0.76
+            }
+          },
+          "scatter": {
+            "id": "blackout-ridge-scree",
+            "density": 0.62,
+            "classCounts": {
+              "rocks": 82,
+              "dry_grass": 20,
+              "wagon_ruts": 12,
+              "claim_posts": 8
+            }
+          },
+          "lanes": {
+            "spawnEdges": [
+              "west",
+              "east",
+              "north"
+            ],
+            "territoryRingBiasWaves": 0,
+            "territoryRingLaneBias": 0
+          }
+        }
+      },
+      "sim": {
+        "flat": true,
+        "tile": "e3-blackout-ridge",
+        "balance": {
+          "uphillMin": 0.6,
+          "downhillMax": 1.1,
+          "slopeMax": 0.35,
+          "wadeDepth": 0.35,
+          "deepDepth": 1
+        },
+        "gt": {
+          "highGroundRangeBonus": 1.5
+        },
+        "lastLos": {
+          "flat": true,
+          "clear": true,
+          "samples": 0,
+          "from": {
+            "x": 0,
+            "z": 0,
+            "h": 0
+          },
+          "to": {
+            "x": 0,
+            "z": 0,
+            "h": 0
+          },
+          "blockedAt": null
+        },
+        "probes": {
+          "heroStart": {
+            "height": 0,
+            "slope": {
+              "dx": 0,
+              "dz": 0
+            },
+            "traversable": true
+          },
+          "ford": {
+            "height": 0,
+            "slope": {
+              "dx": 0,
+              "dz": 0
+            },
+            "traversable": true
+          },
+          "farBank": {
+            "height": 0,
+            "slope": {
+              "dx": 0,
+              "dz": 0
+            },
+            "traversable": true
+          }
+        }
+      },
+      "bounds": {
+        "minX": -40,
+        "maxX": 40,
+        "minZ": -48,
+        "maxZ": 48
+      },
+      "spawnEdges": [
+        {
+          "x": 0,
+          "z": -48
+        },
+        {
+          "x": 0,
+          "z": 48
+        },
+        {
+          "x": 40,
+          "z": 0
+        },
+        {
+          "x": -40,
+          "z": 0
+        }
+      ],
+      "river": {
+        "minX": -40,
+        "maxX": 40,
+        "minZ": -5,
+        "maxZ": 5
+      },
+      "fords": [],
+      "waterSources": [],
+      "fog": {
+        "near": 34,
+        "far": 59.96
+      },
+      "samples": [
+        {
+          "walkable": true,
+          "speedMul": 1,
+          "zone": "bank"
+        },
+        {
+          "walkable": true,
+          "speedMul": 1,
+          "zone": "bank"
+        },
+        {
+          "walkable": true,
+          "speedMul": 1,
+          "zone": "bank"
+        }
+      ],
+      "enemies": [
+        {
+          "id": 0,
+          "x": -15.52946585185373,
+          "z": -16.194451244643073,
+          "hp": 25.2,
+          "vx": 2.1733321463532818,
+          "vz": 1.6020697180919896,
+          "zone": "bank"
+        },
+        {
+          "id": 1,
+          "x": 19.36112816274557,
+          "z": -15.25944270662476,
+          "hp": 25.2,
+          "vx": 1.1786217639716057,
+          "vz": 2.4291666755273056,
+          "zone": "bank"
+        },
+        {
+          "id": 2,
+          "x": 2.494259255693989,
+          "z": 23.772415647761594,
+          "hp": 25.2,
+          "vx": 2.225744651380639,
+          "vz": 1.5284177265559507,
+          "zone": "bank"
+        }
+      ],
+      "economy": {
+        "panned": 0,
+        "sluiced": 0,
+        "granted": 0,
+        "stolen": 0,
+        "reclaimed": 0,
+        "pannedByProspector": 0,
+        "sluicedByProspector": 0,
+        "reclaimedByProspector": 0,
+        "spent": 0,
+        "baseValue": 0,
+        "buildingsBuilt": 0,
+        "beaconsBuilt": 0,
+        "repairSpent": 0,
+        "repairs": 0
+      }
+    }
+  },
+  {
+    "contract": "e3-fairground",
+    "off": "26936e3dd71cfba5899d4617fc33ae96570596408e08905d758665c6c70282c1",
+    "on": "26936e3dd71cfba5899d4617fc33ae96570596408e08905d758665c6c70282c1",
+    "offAssetRequests": 0,
+    "onAssetRequests": 9,
+    "payload": {
+      "contract": {
+        "id": "e3-fairground",
+        "tileParams": {
+          "tileId": "e3-fairground",
+          "biome": "voltage-canyon-fairground",
+          "size": 88,
+          "dimensions": {
+            "width": 88,
+            "height": 88
+          },
+          "river": false,
+          "ford": false,
+          "buildZones": [
+            {
+              "id": "south-midway",
+              "bank": "south",
+              "minX": -36,
+              "maxX": 36,
+              "minZ": -38,
+              "maxZ": -12
+            },
+            {
+              "id": "west-pavilion",
+              "bank": "north",
+              "minX": -38,
+              "maxX": -10,
+              "minZ": -8,
+              "maxZ": 30
+            },
+            {
+              "id": "east-pavilion",
+              "bank": "north",
+              "minX": 10,
+              "maxX": 38,
+              "minZ": -8,
+              "maxZ": 30
+            }
+          ],
+          "stakeMarkers": [
+            {
+              "id": "fair-gate",
+              "x": 0,
+              "z": -30,
+              "heroStart": true
+            }
+          ],
+          "waterSources": [],
+          "harvestAnchors": [
+            {
+              "x": -10,
+              "z": -16
+            },
+            {
+              "x": 10,
+              "z": -16
+            },
+            {
+              "x": -18,
+              "z": -38
+            },
+            {
+              "x": 18,
+              "z": -38
+            },
+            {
+              "x": -24,
+              "z": -34
+            },
+            {
+              "x": 24,
+              "z": -34
+            }
+          ],
+          "heightfield": {
+            "id": "fairground-bowl",
+            "mode": "visual"
+          },
+          "palette": {
+            "id": "fairground-lamp-gold",
+            "tint": [
+              0.68,
+              0.58,
+              0.48
+            ],
+            "dampAmount": 0.04,
+            "splat": {
+              "rockAmount": 0.24,
+              "scrubAmount": 0.16,
+              "macroWarmth": 0.72,
+              "antiTile": 0.68
+            }
+          },
+          "scatter": {
+            "id": "fairground-midway",
+            "density": 0.34,
+            "classCounts": {
+              "rocks": 20,
+              "dry_grass": 24,
+              "wagon_ruts": 24,
+              "claim_posts": 12
+            }
+          },
+          "lanes": {
+            "spawnEdges": [
+              "west",
+              "east",
+              "north"
+            ],
+            "territoryRingBiasWaves": 0,
+            "territoryRingLaneBias": 0
+          }
+        }
+      },
+      "sim": {
+        "flat": true,
+        "tile": "e3-fairground",
+        "balance": {
+          "uphillMin": 0.6,
+          "downhillMax": 1.1,
+          "slopeMax": 0.35,
+          "wadeDepth": 0.35,
+          "deepDepth": 1
+        },
+        "gt": {
+          "highGroundRangeBonus": 1.5
+        },
+        "lastLos": {
+          "flat": true,
+          "clear": true,
+          "samples": 0,
+          "from": {
+            "x": 0,
+            "z": 0,
+            "h": 0
+          },
+          "to": {
+            "x": 0,
+            "z": 0,
+            "h": 0
+          },
+          "blockedAt": null
+        },
+        "probes": {
+          "heroStart": {
+            "height": 0,
+            "slope": {
+              "dx": 0,
+              "dz": 0
+            },
+            "traversable": true
+          },
+          "ford": {
+            "height": 0,
+            "slope": {
+              "dx": 0,
+              "dz": 0
+            },
+            "traversable": true
+          },
+          "farBank": {
+            "height": 0,
+            "slope": {
+              "dx": 0,
+              "dz": 0
+            },
+            "traversable": true
+          }
+        }
+      },
+      "bounds": {
+        "minX": -44,
+        "maxX": 44,
+        "minZ": -44,
+        "maxZ": 44
+      },
+      "spawnEdges": [
+        {
+          "x": 0,
+          "z": -44
+        },
+        {
+          "x": 0,
+          "z": 44
+        },
+        {
+          "x": 44,
+          "z": 0
+        },
+        {
+          "x": -44,
+          "z": 0
+        }
+      ],
+      "river": {
+        "minX": -44,
+        "maxX": 44,
+        "minZ": -5,
+        "maxZ": 5
+      },
+      "fords": [],
+      "waterSources": [],
+      "fog": {
+        "near": 34,
+        "far": 72
+      },
+      "samples": [
+        {
+          "walkable": true,
+          "speedMul": 1,
+          "zone": "bank"
+        },
+        {
+          "walkable": true,
+          "speedMul": 1,
+          "zone": "bank"
+        },
+        {
+          "walkable": true,
+          "speedMul": 1,
+          "zone": "bank"
+        }
+      ],
+      "enemies": [
+        {
+          "id": 0,
+          "x": -15.933097432024358,
+          "z": -20.256280270311713,
+          "hp": 25.2,
+          "vx": 1.8536872298756357,
+          "vz": -1.9631208963779656,
+          "zone": "bank"
+        },
+        {
+          "id": 1,
+          "x": 15.933097432024358,
+          "z": -20.256280270311713,
+          "hp": 25.2,
+          "vx": -1.8536872298756357,
+          "vz": -1.9631208963779656,
+          "zone": "bank"
+        },
+        {
+          "id": 2,
+          "x": -0.3542426281695077,
+          "z": 18.962371235455592,
+          "hp": 25.2,
+          "vx": -0.18122496887566342,
+          "vz": -2.6939111920507486,
+          "zone": "bank"
+        }
+      ],
+      "economy": {
+        "panned": 0,
+        "sluiced": 0,
+        "granted": 0,
+        "stolen": 0,
+        "reclaimed": 0,
+        "pannedByProspector": 0,
+        "sluicedByProspector": 0,
+        "reclaimedByProspector": 0,
+        "spent": 0,
+        "baseValue": 0,
+        "buildingsBuilt": 0,
+        "beaconsBuilt": 0,
+        "repairSpent": 0,
+        "repairs": 0
+      }
+    }
+  },
+  {
+    "contract": "e4-dust-flats",
+    "off": "5a71ea7513df6bd9357456ff96850da5026050e2e67d7ed4a8de9f848989a063",
+    "on": "5a71ea7513df6bd9357456ff96850da5026050e2e67d7ed4a8de9f848989a063",
+    "offAssetRequests": 0,
+    "onAssetRequests": 7,
+    "payload": {
+      "contract": {
+        "id": "e4-dust-flats",
+        "tileParams": {
+          "tileId": "e4-dust-flats",
+          "biome": "motor-dust-flats",
+          "size": 160,
+          "dimensions": {
+            "width": 160,
+            "height": 160
+          },
+          "render": {
+            "terrainMesh": "preferred"
+          },
+          "river": false,
+          "ford": false,
+          "buildZones": [
+            {
+              "id": "motor-camp",
+              "bank": "south",
+              "minX": -30,
+              "maxX": 30,
+              "minZ": -26,
+              "maxZ": 24
+            },
+            {
+              "id": "north-field",
+              "bank": "north",
+              "minX": -62,
+              "maxX": 62,
+              "minZ": 26,
+              "maxZ": 68
+            },
+            {
+              "id": "southwest-field",
+              "bank": "south",
+              "minX": -68,
+              "maxX": -32,
+              "minZ": -62,
+              "maxZ": -28
+            },
+            {
+              "id": "southeast-field",
+              "bank": "south",
+              "minX": 32,
+              "maxX": 68,
+              "minZ": -62,
+              "maxZ": -28
+            }
+          ],
+          "stakeMarkers": [
+            {
+              "id": "motor-camp",
+              "x": 0,
+              "z": 8,
+              "heroStart": true
+            }
+          ],
+          "waterSources": [],
+          "harvestAnchors": [
+            {
+              "x": -48,
+              "z": 48
+            },
+            {
+              "x": -34,
+              "z": 56
+            },
+            {
+              "x": -18,
+              "z": 46
+            },
+            {
+              "x": 18,
+              "z": 46
+            },
+            {
+              "x": 34,
+              "z": 56
+            },
+            {
+              "x": 48,
+              "z": 48
+            },
+            {
+              "x": -56,
+              "z": -44
+            },
+            {
+              "x": -44,
+              "z": -56
+            },
+            {
+              "x": -34,
+              "z": -38
+            },
+            {
+              "x": 34,
+              "z": -38
+            },
+            {
+              "x": 44,
+              "z": -56
+            },
+            {
+              "x": 56,
+              "z": -44
+            }
+          ],
+          "tarSeams": [
+            {
+              "id": "tar-west",
+              "x": -14,
+              "z": 4,
+              "radius": 3.5
+            },
+            {
+              "id": "tar-north",
+              "x": 8,
+              "z": 18,
+              "radius": 3
+            },
+            {
+              "id": "tar-east",
+              "x": 18,
+              "z": -6,
+              "radius": 4
+            },
+            {
+              "id": "tar-wash",
+              "x": 8,
+              "z": -18,
+              "radius": 3.5
+            }
+          ],
+          "roadCorridors": [
+            {
+              "id": "camp-to-railhead",
+              "start": {
+                "x": 0,
+                "z": 12
+              },
+              "end": {
+                "x": 0,
+                "z": 72
+              }
+            },
+            {
+              "id": "camp-to-west-field",
+              "start": {
+                "x": -8,
+                "z": 4
+              },
+              "end": {
+                "x": -58,
+                "z": -46
+              }
+            },
+            {
+              "id": "camp-to-east-field",
+              "start": {
+                "x": 8,
+                "z": 4
+              },
+              "end": {
+                "x": 58,
+                "z": -46
+              }
+            },
+            {
+              "id": "west-boss-road",
+              "start": {
+                "x": -78,
+                "z": -12
+              },
+              "end": {
+                "x": -18,
+                "z": -4
+              }
+            }
+          ],
+          "orbitSpawn": {
+            "center": {
+              "x": 0,
+              "z": 0
+            },
+            "radius": 24,
+            "angularSpeed": 0.5235987756,
+            "lapsBeforePeel": 0.25,
+            "peelSpeed": 10,
+            "telegraphSeconds": 2,
+            "peelPoints": [
+              {
+                "id": "north-cut",
+                "angle": 1.5707963268
+              },
+              {
+                "id": "east-cut",
+                "angle": 0
+              },
+              {
+                "id": "west-cut",
+                "angle": 3.1415926536
+              }
+            ]
+          },
+          "dryWash": {
+            "x": 30,
+            "z": -38,
+            "length": 88,
+            "width": 10,
+            "angle": -0.55
+          },
+          "palette": {
+            "id": "dust-flats-ochre-haze",
+            "tint": [
+              0.78,
+              0.64,
+              0.44
+            ],
+            "dampTint": [
+              0.25,
+              0.2,
+              0.16
+            ],
+            "dampAmount": 0.08,
+            "splat": {
+              "rockAmount": 0.22,
+              "scrubAmount": 0.08,
+              "macroWarmth": 0.72,
+              "antiTile": 0.8
+            }
+          },
+          "scatter": {
+            "id": "dust-flats-sparse-scrub",
+            "density": 0.28,
+            "classCounts": {
+              "rocks": 48,
+              "dry_grass": 24,
+              "wagon_ruts": 32,
+              "claim_posts": 16,
+              "cactus": 12
+            }
+          },
+          "engineDependencies": [
+            {
+              "dep": "dust-flats-tile-consumer",
+              "status": "missing",
+              "description": "Needs the booted DustFlatsTile consumer for the declared tar seams, roads, ORBIT spawn, and dry wash."
+            }
+          ],
+          "lanes": {
+            "spawnEdges": [
+              "north",
+              "east",
+              "south",
+              "west"
+            ],
+            "territoryRingBiasWaves": 0,
+            "territoryRingLaneBias": 0
+          }
+        }
+      },
+      "sim": {
+        "flat": true,
+        "tile": "e4-dust-flats",
+        "balance": {
+          "uphillMin": 0.6,
+          "downhillMax": 1.1,
+          "slopeMax": 0.35,
+          "wadeDepth": 0.35,
+          "deepDepth": 1
+        },
+        "gt": {
+          "highGroundRangeBonus": 1.5
+        },
+        "lastLos": {
+          "flat": true,
+          "clear": true,
+          "samples": 0,
+          "from": {
+            "x": 0,
+            "z": 0,
+            "h": 0
+          },
+          "to": {
+            "x": 0,
+            "z": 0,
+            "h": 0
+          },
+          "blockedAt": null
+        },
+        "probes": {
+          "heroStart": {
+            "height": 0,
+            "slope": {
+              "dx": 0,
+              "dz": 0
+            },
+            "traversable": true
+          },
+          "ford": {
+            "height": 0,
+            "slope": {
+              "dx": 0,
+              "dz": 0
+            },
+            "traversable": true
+          },
+          "farBank": {
+            "height": 0,
+            "slope": {
+              "dx": 0,
+              "dz": 0
+            },
+            "traversable": true
+          }
+        }
+      },
+      "bounds": {
+        "minX": -80,
+        "maxX": 80,
+        "minZ": -80,
+        "maxZ": 80
+      },
+      "spawnEdges": [
+        {
+          "x": 0,
+          "z": -80
+        },
+        {
+          "x": 0,
+          "z": 80
+        },
+        {
+          "x": 80,
+          "z": 0
+        },
+        {
+          "x": -80,
+          "z": 0
+        }
+      ],
+      "river": {
+        "minX": -80,
+        "maxX": 80,
+        "minZ": -5,
+        "maxZ": 5
+      },
+      "fords": [],
+      "waterSources": [],
+      "fog": {
+        "near": 42,
+        "far": 88
+      },
+      "samples": [
+        {
+          "walkable": true,
+          "speedMul": 1,
+          "zone": "bank"
+        },
+        {
+          "walkable": true,
+          "speedMul": 1,
+          "zone": "bank"
+        },
+        {
+          "walkable": true,
+          "speedMul": 1,
+          "zone": "bank"
+        }
+      ],
+      "enemies": [
+        {
+          "id": 0,
+          "x": -15.705995389470633,
+          "z": -15.97494708419297,
+          "hp": 25.2,
+          "vx": 2.0066100244000395,
+          "vz": 1.8065204704008053,
+          "zone": "bank"
+        },
+        {
+          "id": 1,
+          "x": 15.705995389470633,
+          "z": -15.97494708419297,
+          "hp": 25.2,
+          "vx": -2.0066100244000395,
+          "vz": 1.8065204704008053,
+          "zone": "bank"
+        },
+        {
+          "id": 2,
+          "x": -0.3274285264109261,
+          "z": 18.959818448810793,
+          "hp": 25.2,
+          "vx": -0.1437065263493864,
+          "vz": -2.6961729236613863,
+          "zone": "bank"
+        }
+      ],
+      "economy": {
+        "panned": 0,
+        "sluiced": 0,
+        "granted": 0,
+        "stolen": 0,
+        "reclaimed": 0,
+        "pannedByProspector": 0,
+        "sluicedByProspector": 0,
+        "reclaimedByProspector": 0,
+        "spent": 0,
+        "baseValue": 0,
+        "buildingsBuilt": 0,
+        "beaconsBuilt": 0,
+        "repairSpent": 0,
+        "repairs": 0
+      }
+    }
+  },
+  {
+    "contract": "e5-deepwater-claim",
+    "off": "3b30978eb8b9745b3bc3a7cfb6c30768a99d32fd9ab9f7f85b0be28bff0cb6d6",
+    "on": "3b30978eb8b9745b3bc3a7cfb6c30768a99d32fd9ab9f7f85b0be28bff0cb6d6",
+    "offAssetRequests": 0,
+    "onAssetRequests": 4,
+    "payload": {
+      "contract": {
+        "id": "e5-deepwater-claim",
+        "tileParams": {
+          "tileId": "e5-deepwater-claim",
+          "biome": "deepwater-shelf-reefs",
+          "size": 128,
+          "dimensions": {
+            "width": 128,
+            "height": 128
+          },
+          "render": {
+            "terrainMesh": "off"
+          },
+          "river": false,
+          "ford": false,
+          "buildZones": [
+            {
+              "id": "claim-boat-deck-mask",
+              "bank": "north",
+              "minX": -5,
+              "maxX": 5,
+              "minZ": 26,
+              "maxZ": 34
+            }
+          ],
+          "stakeMarkers": [
+            {
+              "id": "claim-boat",
+              "x": 0,
+              "z": 30,
+              "heroStart": true
+            }
+          ],
+          "waterSources": [
+            {
+              "kind": "spring_pond",
+              "x": 0,
+              "z": 0,
+              "radius": 64
+            }
+          ],
+          "harvestAnchors": [
+            {
+              "x": -36,
+              "z": -24
+            },
+            {
+              "x": -18,
+              "z": -30
+            },
+            {
+              "x": 0,
+              "z": -22
+            },
+            {
+              "x": 20,
+              "z": -34
+            },
+            {
+              "x": 36,
+              "z": -20
+            }
+          ],
+          "water": {
+            "id": "deepwater-surface-placeholder",
+            "depths": {
+              "springPond": 0.2
+            },
+            "speedMul": {
+              "springPond": 1
+            }
+          },
+          "engineDependencies": [
+            {
+              "dep": "deepwater-claim-consumer",
+              "status": "missing",
+              "description": "Needs a headless Deepwater consumer for claim-boat anchoring and re-anchoring, deck-pad building, the storm and corsair scheduler, the depth ladder, the E5 arsenal, and Dredge-Queen resolution; these run browser-only through DeepwaterClaimTile, DeepwaterArsenal, and DredgeQueenBossSystem."
+            }
+          ],
+          "deepwater": {
+            "waterTile": {
+              "id": "e5-deepwater-claim",
+              "size": 128,
+              "regions": [
+                {
+                  "id": "open-water",
+                  "minX": -64,
+                  "maxX": 64,
+                  "minZ": -64,
+                  "maxZ": 64,
+                  "depth": 0,
+                  "depthClass": "surface",
+                  "travel": [
+                    "swim",
+                    "boat"
+                  ]
+                },
+                {
+                  "id": "lagoon-shallows",
+                  "minX": -42,
+                  "maxX": 42,
+                  "minZ": 18,
+                  "maxZ": 44,
+                  "depth": -1,
+                  "depthClass": "shallows",
+                  "travel": [
+                    "swim",
+                    "boat"
+                  ]
+                },
+                {
+                  "id": "reef-ring",
+                  "minX": -48,
+                  "maxX": 48,
+                  "minZ": -8,
+                  "maxZ": 8,
+                  "depth": -2,
+                  "depthClass": "reef",
+                  "travel": [
+                    "depth"
+                  ]
+                },
+                {
+                  "id": "reef-gap",
+                  "minX": -5,
+                  "maxX": 5,
+                  "minZ": -8,
+                  "maxZ": 8,
+                  "depth": -2,
+                  "depthClass": "reef",
+                  "travel": [
+                    "boat",
+                    "depth"
+                  ]
+                },
+                {
+                  "id": "wreck-shelf",
+                  "minX": -48,
+                  "maxX": 48,
+                  "minZ": -42,
+                  "maxZ": -14,
+                  "depth": -4,
+                  "depthClass": "wreck",
+                  "travel": [
+                    "boat",
+                    "depth"
+                  ]
+                },
+                {
+                  "id": "trench-edge",
+                  "minX": -64,
+                  "maxX": 64,
+                  "minZ": -64,
+                  "maxZ": -50,
+                  "depth": -8,
+                  "depthClass": "trench",
+                  "travel": []
+                }
+              ]
+            },
+            "claimBoat": {
+              "id": "claim-boat",
+              "initialAnchorId": "lagoon",
+              "anchors": [
+                {
+                  "id": "lagoon",
+                  "x": 0,
+                  "z": 30
+                },
+                {
+                  "id": "open-water",
+                  "x": -24,
+                  "z": 12
+                }
+              ],
+              "pads": [
+                {
+                  "id": "bow",
+                  "x": 0,
+                  "z": -3
+                },
+                {
+                  "id": "port",
+                  "x": -3,
+                  "z": 1
+                },
+                {
+                  "id": "starboard",
+                  "x": 3,
+                  "z": 1
+                }
+              ]
+            },
+            "stormTrack": {
+              "regionId": "open-water",
+              "westX": -64,
+              "eastX": 64
+            },
+            "corsairWaveSize": 3,
+            "wrecks": [
+              {
+                "id": "w1-supply-barge",
+                "era": "E1",
+                "x": -36,
+                "z": -24,
+                "depthClass": "wreck"
+              },
+              {
+                "id": "w2-locomotive",
+                "era": "E2",
+                "x": -18,
+                "z": -30,
+                "depthClass": "wreck"
+              },
+              {
+                "id": "w3-pylon-barge",
+                "era": "E3",
+                "x": 0,
+                "z": -22,
+                "depthClass": "wreck"
+              },
+              {
+                "id": "w4-land-yacht-sister",
+                "era": "E4",
+                "x": 20,
+                "z": -34,
+                "depthClass": "wreck"
+              },
+              {
+                "id": "w5-mystery-hull",
+                "era": "mystery",
+                "x": 36,
+                "z": -20,
+                "depthClass": "wreck"
+              }
+            ]
+          },
+          "lanes": {
+            "spawnEdges": [
+              "west"
+            ],
+            "territoryRingBiasWaves": 0,
+            "territoryRingLaneBias": 0
+          }
+        }
+      },
+      "sim": {
+        "flat": true,
+        "tile": "e5-deepwater-claim",
+        "balance": {
+          "uphillMin": 0.6,
+          "downhillMax": 1.1,
+          "slopeMax": 0.35,
+          "wadeDepth": 0.35,
+          "deepDepth": 1
+        },
+        "gt": {
+          "highGroundRangeBonus": 1.5
+        },
+        "lastLos": {
+          "flat": true,
+          "clear": true,
+          "samples": 0,
+          "from": {
+            "x": 0,
+            "z": 0,
+            "h": 0
+          },
+          "to": {
+            "x": 0,
+            "z": 0,
+            "h": 0
+          },
+          "blockedAt": null
+        },
+        "probes": {
+          "heroStart": {
+            "height": 0,
+            "slope": {
+              "dx": 0,
+              "dz": 0
+            },
+            "traversable": true
+          },
+          "ford": {
+            "height": 0,
+            "slope": {
+              "dx": 0,
+              "dz": 0
+            },
+            "traversable": true
+          },
+          "farBank": {
+            "height": 0,
+            "slope": {
+              "dx": 0,
+              "dz": 0
+            },
+            "traversable": true
+          }
+        }
+      },
+      "bounds": {
+        "minX": -64,
+        "maxX": 64,
+        "minZ": -64,
+        "maxZ": 64
+      },
+      "spawnEdges": [
+        {
+          "x": 0,
+          "z": -64
+        },
+        {
+          "x": 0,
+          "z": 64
+        },
+        {
+          "x": 64,
+          "z": 0
+        },
+        {
+          "x": -64,
+          "z": 0
+        }
+      ],
+      "river": {
+        "minX": -64,
+        "maxX": 64,
+        "minZ": -5,
+        "maxZ": 5
+      },
+      "fords": [],
+      "waterSources": [
+        {
+          "kind": "spring_pond",
+          "x": 0,
+          "z": 0,
+          "radius": 64
+        }
+      ],
+      "fog": {
+        "near": 42,
+        "far": 88
+      },
+      "samples": [
+        {
+          "walkable": true,
+          "speedMul": 1,
+          "zone": "shallows",
+          "waterSource": "spring_pond",
+          "waterDepth": 0.2,
+          "waterClass": "wade"
+        },
+        {
+          "walkable": true,
+          "speedMul": 1,
+          "zone": "shallows",
+          "waterSource": "spring_pond",
+          "waterDepth": 0.2,
+          "waterClass": "wade"
+        },
+        {
+          "walkable": true,
+          "speedMul": 1,
+          "zone": "shallows",
+          "waterSource": "spring_pond",
+          "waterDepth": 0.2,
+          "waterClass": "wade"
+        }
+      ],
+      "enemies": [
+        {
+          "id": 0,
+          "x": -16.134033643400514,
+          "z": -15.574799644691092,
+          "hp": 25.2,
+          "vx": 1.6307719335940263,
+          "vz": 2.1518789233137525,
+          "zone": "shallows"
+        },
+        {
+          "id": 1,
+          "x": 16.134033643400514,
+          "z": -15.574799644691092,
+          "hp": 25.2,
+          "vx": -1.6307719335940263,
+          "vz": 2.1518789233137525,
+          "zone": "shallows"
+        },
+        {
+          "id": 2,
+          "x": -0.29520012218765423,
+          "z": 25.04248004033915,
+          "hp": 25.2,
+          "vx": -0.09275878991379494,
+          "vz": 2.695489739125563,
+          "zone": "shallows"
+        }
+      ],
+      "economy": {
+        "panned": 0,
+        "sluiced": 0,
+        "granted": 0,
+        "stolen": 0,
+        "reclaimed": 0,
+        "pannedByProspector": 0,
+        "sluicedByProspector": 0,
+        "reclaimedByProspector": 0,
+        "spent": 0,
+        "baseValue": 0,
+        "buildingsBuilt": 0,
+        "beaconsBuilt": 0,
+        "repairSpent": 0,
+        "repairs": 0
+      }
+    }
+  },
+  {
+    "contract": "e6-glow-mesa",
+    "off": "88f978826b071c4ea791c15b74a9b3bbc6d234070de807ac0e687bcb728811d3",
+    "on": "88f978826b071c4ea791c15b74a9b3bbc6d234070de807ac0e687bcb728811d3",
+    "offAssetRequests": 0,
+    "onAssetRequests": 7,
+    "payload": {
+      "contract": {
+        "id": "e6-glow-mesa",
+        "tileParams": {
+          "tileId": "e6-glow-mesa",
+          "biome": "atomic-glow-mesa",
+          "size": 128,
+          "dimensions": {
+            "width": 128,
+            "height": 128
+          },
+          "render": {
+            "terrainMesh": "preferred"
+          },
+          "river": false,
+          "ford": false,
+          "buildZones": [
+            {
+              "id": "base-flat",
+              "bank": "south",
+              "minX": -52,
+              "maxX": 52,
+              "minZ": -54,
+              "maxZ": -10
+            },
+            {
+              "id": "decay-clock-site",
+              "bank": "south",
+              "minX": -46,
+              "maxX": -34,
+              "minZ": -48,
+              "maxZ": -38
+            },
+            {
+              "id": "warehouse-approach",
+              "bank": "north",
+              "minX": -50,
+              "maxX": -18,
+              "minZ": 40,
+              "maxZ": 54
+            },
+            {
+              "id": "calculating-house-site",
+              "bank": "north",
+              "minX": -16,
+              "maxX": -4,
+              "minZ": 12,
+              "maxZ": 22
+            },
+            {
+              "id": "reactor-dome-site",
+              "bank": "north",
+              "minX": 4,
+              "maxX": 16,
+              "minZ": 12,
+              "maxZ": 22
+            }
+          ],
+          "stakeMarkers": [
+            {
+              "id": "isotope-kitchen",
+              "x": 0,
+              "z": -32,
+              "heroStart": true
+            }
+          ],
+          "waterSources": [],
+          "harvestAnchors": [
+            {
+              "x": -24,
+              "z": 18
+            },
+            {
+              "x": -14,
+              "z": 34
+            },
+            {
+              "x": 4,
+              "z": 38
+            },
+            {
+              "x": 24,
+              "z": 30
+            },
+            {
+              "x": 26,
+              "z": 10
+            },
+            {
+              "x": 4,
+              "z": 2
+            }
+          ],
+          "heightfield": {
+            "id": "glow-mesa-two-level",
+            "mode": "visual"
+          },
+          "engineDependencies": [
+            {
+              "dep": "glow-mesa-contract-consumers",
+              "status": "missing",
+              "description": "Needs the declared timed decay-field walkability, six-vein night harvest, epoch-wide appliance wrangle, and Homemaker boss consumers; the browser composes E6TileConsumerSystem, WrangleSystem, and HomemakerBossSystem while the headless sim composes none."
+            }
+          ],
+          "lanes": {
+            "spawnEdges": [
+              "north",
+              "west",
+              "east"
+            ],
+            "territoryRingBiasWaves": 0,
+            "territoryRingLaneBias": 0
+          }
+        }
+      },
+      "sim": {
+        "flat": true,
+        "tile": "e6-glow-mesa",
+        "balance": {
+          "uphillMin": 0.6,
+          "downhillMax": 1.1,
+          "slopeMax": 0.35,
+          "wadeDepth": 0.35,
+          "deepDepth": 1
+        },
+        "gt": {
+          "highGroundRangeBonus": 1.5
+        },
+        "lastLos": {
+          "flat": true,
+          "clear": true,
+          "samples": 0,
+          "from": {
+            "x": 0,
+            "z": 0,
+            "h": 0
+          },
+          "to": {
+            "x": 0,
+            "z": 0,
+            "h": 0
+          },
+          "blockedAt": null
+        },
+        "probes": {
+          "heroStart": {
+            "height": 0,
+            "slope": {
+              "dx": 0,
+              "dz": 0
+            },
+            "traversable": true
+          },
+          "ford": {
+            "height": 0,
+            "slope": {
+              "dx": 0,
+              "dz": 0
+            },
+            "traversable": true
+          },
+          "farBank": {
+            "height": 0,
+            "slope": {
+              "dx": 0,
+              "dz": 0
+            },
+            "traversable": true
+          }
+        }
+      },
+      "bounds": {
+        "minX": -64,
+        "maxX": 64,
+        "minZ": -64,
+        "maxZ": 64
+      },
+      "spawnEdges": [
+        {
+          "x": 0,
+          "z": -64
+        },
+        {
+          "x": 0,
+          "z": 64
+        },
+        {
+          "x": 64,
+          "z": 0
+        },
+        {
+          "x": -64,
+          "z": 0
+        }
+      ],
+      "river": {
+        "minX": -64,
+        "maxX": 64,
+        "minZ": -5,
+        "maxZ": 5
+      },
+      "fords": [],
+      "waterSources": [],
+      "fog": {
+        "near": 42,
+        "far": 88
+      },
+      "samples": [
+        {
+          "walkable": true,
+          "speedMul": 1,
+          "zone": "bank"
+        },
+        {
+          "walkable": true,
+          "speedMul": 1,
+          "zone": "bank"
+        },
+        {
+          "walkable": true,
+          "speedMul": 1,
+          "zone": "bank"
+        }
+      ],
+      "enemies": [
+        {
+          "id": 0,
+          "x": -16.06724821964379,
+          "z": -20.37224048396667,
+          "hp": 25.2,
+          "vx": 1.7329022124324922,
+          "vz": -2.0705192397431205,
+          "zone": "bank"
+        },
+        {
+          "id": 1,
+          "x": 16.06724821964379,
+          "z": -20.37224048396667,
+          "hp": 25.2,
+          "vx": -1.7329022124324922,
+          "vz": -2.0705192397431205,
+          "zone": "bank"
+        },
+        {
+          "id": 2,
+          "x": -0.3545833791408991,
+          "z": 18.962405828505418,
+          "hp": 25.2,
+          "vx": -0.1816766722035834,
+          "vz": -2.693880766993395,
+          "zone": "bank"
+        }
+      ],
+      "economy": {
+        "panned": 0,
+        "sluiced": 0,
+        "granted": 0,
+        "stolen": 0,
+        "reclaimed": 0,
+        "pannedByProspector": 0,
+        "sluicedByProspector": 0,
+        "reclaimedByProspector": 0,
+        "spent": 0,
+        "baseValue": 0,
+        "buildingsBuilt": 0,
+        "beaconsBuilt": 0,
+        "repairSpent": 0,
+        "repairs": 0
+      }
+    }
+  },
+  {
+    "contract": "e7-relay-valley",
+    "off": "551515b100026abe7925e43f5281221fc90edb03af9b8c181691b8af7ccab3d0",
+    "on": "551515b100026abe7925e43f5281221fc90edb03af9b8c181691b8af7ccab3d0",
+    "offAssetRequests": 0,
+    "onAssetRequests": 7,
+    "payload": {
+      "contract": {
+        "id": "e7-relay-valley",
+        "tileParams": {
+          "tileId": "e7-relay-valley",
+          "biome": "signal-relay-valley",
+          "size": 128,
+          "dimensions": {
+            "width": 128,
+            "height": 128
+          },
+          "render": {
+            "terrainMesh": "preferred"
+          },
+          "river": false,
+          "ford": false,
+          "buildZones": [
+            {
+              "id": "relay-site-r1",
+              "bank": "north",
+              "minX": -50,
+              "maxX": -40,
+              "minZ": 36,
+              "maxZ": 46
+            },
+            {
+              "id": "relay-site-r2",
+              "bank": "north",
+              "minX": -30,
+              "maxX": -20,
+              "minZ": 36,
+              "maxZ": 46
+            },
+            {
+              "id": "relay-site-r3",
+              "bank": "north",
+              "minX": 20,
+              "maxX": 30,
+              "minZ": 36,
+              "maxZ": 46
+            },
+            {
+              "id": "relay-site-r4",
+              "bank": "north",
+              "minX": 40,
+              "maxX": 50,
+              "minZ": 36,
+              "maxZ": 46
+            },
+            {
+              "id": "ridge-bridge-ground",
+              "bank": "north",
+              "minX": -2,
+              "maxX": 2,
+              "minZ": 39,
+              "maxZ": 43
+            }
+          ],
+          "stakeMarkers": [],
+          "waterSources": [],
+          "harvestAnchors": [
+            {
+              "x": -36,
+              "z": -20
+            },
+            {
+              "x": -12,
+              "z": 18
+            },
+            {
+              "x": 12,
+              "z": 18
+            },
+            {
+              "x": 36,
+              "z": -20
+            }
+          ],
+          "heightfield": {
+            "id": "relay-valley-ridgelines",
+            "mode": "visual"
+          },
+          "lanes": {
+            "spawnEdges": [
+              "north",
+              "west",
+              "east"
+            ],
+            "territoryRingBiasWaves": 0,
+            "territoryRingLaneBias": 0,
+            "patrolRoutes": [
+              {
+                "id": "teaching-patrol",
+                "points": [
+                  {
+                    "x": -24,
+                    "z": -20
+                  },
+                  {
+                    "x": 24,
+                    "z": -20
+                  },
+                  {
+                    "x": 24,
+                    "z": 8
+                  },
+                  {
+                    "x": -24,
+                    "z": 8
+                  },
+                  {
+                    "x": -24,
+                    "z": -20
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      },
+      "sim": {
+        "flat": true,
+        "tile": "e7-relay-valley",
+        "balance": {
+          "uphillMin": 0.6,
+          "downhillMax": 1.1,
+          "slopeMax": 0.35,
+          "wadeDepth": 0.35,
+          "deepDepth": 1
+        },
+        "gt": {
+          "highGroundRangeBonus": 1.5
+        },
+        "lastLos": {
+          "flat": true,
+          "clear": true,
+          "samples": 0,
+          "from": {
+            "x": 0,
+            "z": 0,
+            "h": 0
+          },
+          "to": {
+            "x": 0,
+            "z": 0,
+            "h": 0
+          },
+          "blockedAt": null
+        },
+        "probes": {
+          "heroStart": {
+            "height": 0,
+            "slope": {
+              "dx": 0,
+              "dz": 0
+            },
+            "traversable": true
+          },
+          "ford": {
+            "height": 0,
+            "slope": {
+              "dx": 0,
+              "dz": 0
+            },
+            "traversable": true
+          },
+          "farBank": {
+            "height": 0,
+            "slope": {
+              "dx": 0,
+              "dz": 0
+            },
+            "traversable": true
+          }
+        }
+      },
+      "bounds": {
+        "minX": -64,
+        "maxX": 64,
+        "minZ": -64,
+        "maxZ": 64
+      },
+      "spawnEdges": [
+        {
+          "x": 0,
+          "z": -64
+        },
+        {
+          "x": 0,
+          "z": 64
+        },
+        {
+          "x": 64,
+          "z": 0
+        },
+        {
+          "x": -64,
+          "z": 0
+        }
+      ],
+      "river": {
+        "minX": -64,
+        "maxX": 64,
+        "minZ": -5,
+        "maxZ": 5
+      },
+      "fords": [],
+      "waterSources": [],
+      "fog": {
+        "near": 42,
+        "far": 88
+      },
+      "samples": [
+        {
+          "walkable": true,
+          "speedMul": 1,
+          "zone": "bank"
+        },
+        {
+          "walkable": true,
+          "speedMul": 1,
+          "zone": "bank"
+        },
+        {
+          "walkable": true,
+          "speedMul": 1,
+          "zone": "bank"
+        }
+      ],
+      "enemies": [
+        {
+          "id": 0,
+          "x": -15.810267134080703,
+          "z": -15.862620487318459,
+          "hp": 25.2,
+          "vx": 1.9144488639534885,
+          "vz": 1.9039132194790476,
+          "zone": "bank"
+        },
+        {
+          "id": 1,
+          "x": 15.810267134080703,
+          "z": -15.862620487318459,
+          "hp": 25.2,
+          "vx": -1.9144488639534885,
+          "vz": 1.9039132194790476,
+          "zone": "bank"
+        },
+        {
+          "id": 2,
+          "x": 0.40923212800572206,
+          "z": 20.04328,
+          "hp": 25.2,
+          "vx": 1.331523147209852,
+          "vz": 0,
+          "zone": "bank"
+        }
+      ],
+      "economy": {
+        "panned": 0,
+        "sluiced": 0,
+        "granted": 0,
+        "stolen": 0,
+        "reclaimed": 0,
+        "pannedByProspector": 0,
+        "sluicedByProspector": 0,
+        "reclaimedByProspector": 0,
+        "spent": 0,
+        "baseValue": 0,
+        "buildingsBuilt": 0,
+        "beaconsBuilt": 0,
+        "repairSpent": 0,
+        "repairs": 0
+      }
+    }
+  },
+  {
+    "contract": "e8-mare-claim",
+    "off": "58eab1901050710fca7e4d5fcaff8563740cd1b7c10aeb586fb36ce913159494",
+    "on": "58eab1901050710fca7e4d5fcaff8563740cd1b7c10aeb586fb36ce913159494",
+    "offAssetRequests": 0,
+    "onAssetRequests": 8,
+    "payload": {
+      "contract": {
+        "id": "e8-mare-claim",
+        "tileParams": {
+          "tileId": "e8-mare-claim",
+          "biome": "orbital-mare-claim",
+          "size": 128,
+          "dimensions": {
+            "width": 128,
+            "height": 128
+          },
+          "render": {
+            "terrainMesh": "preferred"
+          },
+          "river": false,
+          "ford": false,
+          "buildZones": [
+            {
+              "id": "rim-premium-pad-west",
+              "bank": "north",
+              "minX": -50,
+              "maxX": -38,
+              "minZ": 42,
+              "maxZ": 52
+            },
+            {
+              "id": "rim-premium-pad-east",
+              "bank": "north",
+              "minX": 38,
+              "maxX": 50,
+              "minZ": 42,
+              "maxZ": 52
+            },
+            {
+              "id": "dome-cluster-pad-west",
+              "bank": "north",
+              "minX": -24,
+              "maxX": -12,
+              "minZ": -6,
+              "maxZ": 6
+            },
+            {
+              "id": "dome-cluster-pad-center",
+              "bank": "north",
+              "minX": -6,
+              "maxX": 6,
+              "minZ": -6,
+              "maxZ": 6
+            },
+            {
+              "id": "dome-cluster-pad-east",
+              "bank": "north",
+              "minX": 12,
+              "maxX": 24,
+              "minZ": -6,
+              "maxZ": 6
+            },
+            {
+              "id": "launch-pad",
+              "bank": "south",
+              "minX": -40,
+              "maxX": -20,
+              "minZ": -40,
+              "maxZ": -22
+            },
+            {
+              "id": "mass-driver-rail-footing",
+              "bank": "south",
+              "minX": -8,
+              "maxX": 54,
+              "minZ": -40,
+              "maxZ": -28
+            }
+          ],
+          "stakeMarkers": [],
+          "rails": [
+            {
+              "style": "mass-driver",
+              "points": [
+                {
+                  "x": -4,
+                  "z": -34
+                },
+                {
+                  "x": 16,
+                  "z": -34
+                },
+                {
+                  "x": 36,
+                  "z": -34
+                },
+                {
+                  "x": 54,
+                  "z": -34
+                }
+              ]
+            }
+          ],
+          "waterSources": [],
+          "harvestAnchors": [
+            {
+              "x": -34,
+              "z": 12
+            },
+            {
+              "x": -22,
+              "z": 26
+            },
+            {
+              "x": -8,
+              "z": 20
+            },
+            {
+              "x": 16,
+              "z": 22
+            },
+            {
+              "x": 30,
+              "z": 30
+            },
+            {
+              "x": 34,
+              "z": 12
+            }
+          ],
+          "heightfield": {
+            "id": "mare-claim-rim-ring",
+            "mode": "visual"
+          },
+          "gravity": {
+            "feelG": 0.6,
+            "lobArcDistanceMultiplier": 2.4,
+            "movement": "floaty"
+          },
+          "atmosphere": {
+            "airIsWall": true,
+            "outsideDomes": "suit-timer"
+          },
+          "engineDependencies": [
+            {
+              "dep": "atmosphere-wall-consumer",
+              "status": "landed",
+              "landedBy": "map-art-repairs F48/F49",
+              "description": "Browser and headless engines compose the atmosphere and suit consumer: outside air drains the suit, breathing domes refill it, empty suits take damage through CombatSystem, and four distinct mining grounds across four air windows gate securing. Native desktop09 and mobile07 complete mining, wave20 secure, banking and reload; evidence is recorded in reviews/sol-map-art-repairs-20260908.md. This records the landed gameplay consumer, not full concept-art acceptance or release admission."
+            }
+          ],
+          "lanes": {
+            "spawnEdges": [
+              "north",
+              "west",
+              "east"
+            ],
+            "territoryRingBiasWaves": 0,
+            "territoryRingLaneBias": 0,
+            "patrolRoutes": [
+              {
+                "id": "debris-arc-rim",
+                "points": [
+                  {
+                    "x": -50,
+                    "z": 46
+                  },
+                  {
+                    "x": -26,
+                    "z": 54
+                  },
+                  {
+                    "x": 0,
+                    "z": 48
+                  },
+                  {
+                    "x": 26,
+                    "z": 54
+                  },
+                  {
+                    "x": 50,
+                    "z": 46
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      },
+      "sim": {
+        "flat": true,
+        "tile": "e8-mare-claim",
+        "balance": {
+          "uphillMin": 0.6,
+          "downhillMax": 1.1,
+          "slopeMax": 0.35,
+          "wadeDepth": 0.35,
+          "deepDepth": 1
+        },
+        "gt": {
+          "highGroundRangeBonus": 1.5
+        },
+        "lastLos": {
+          "flat": true,
+          "clear": true,
+          "samples": 0,
+          "from": {
+            "x": 0,
+            "z": 0,
+            "h": 0
+          },
+          "to": {
+            "x": 0,
+            "z": 0,
+            "h": 0
+          },
+          "blockedAt": null
+        },
+        "probes": {
+          "heroStart": {
+            "height": 0,
+            "slope": {
+              "dx": 0,
+              "dz": 0
+            },
+            "traversable": true
+          },
+          "ford": {
+            "height": 0,
+            "slope": {
+              "dx": 0,
+              "dz": 0
+            },
+            "traversable": true
+          },
+          "farBank": {
+            "height": 0,
+            "slope": {
+              "dx": 0,
+              "dz": 0
+            },
+            "traversable": true
+          }
+        }
+      },
+      "bounds": {
+        "minX": -64,
+        "maxX": 64,
+        "minZ": -64,
+        "maxZ": 64
+      },
+      "spawnEdges": [
+        {
+          "x": 0,
+          "z": -64
+        },
+        {
+          "x": 0,
+          "z": 64
+        },
+        {
+          "x": 64,
+          "z": 0
+        },
+        {
+          "x": -64,
+          "z": 0
+        }
+      ],
+      "river": {
+        "minX": -64,
+        "maxX": 64,
+        "minZ": -5,
+        "maxZ": 5
+      },
+      "fords": [],
+      "waterSources": [],
+      "fog": {
+        "near": 42,
+        "far": 88
+      },
+      "samples": [
+        {
+          "walkable": true,
+          "speedMul": 1,
+          "zone": "bank"
+        },
+        {
+          "walkable": true,
+          "speedMul": 1,
+          "zone": "bank"
+        },
+        {
+          "walkable": true,
+          "speedMul": 1,
+          "zone": "bank"
+        }
+      ],
+      "enemies": [
+        {
+          "id": 0,
+          "x": -15.810267134080703,
+          "z": -15.862620487318459,
+          "hp": 25.2,
+          "vx": 1.9144488639534885,
+          "vz": 1.9039132194790476,
+          "zone": "bank"
+        },
+        {
+          "id": 1,
+          "x": 15.810267134080703,
+          "z": -15.862620487318459,
+          "hp": 25.2,
+          "vx": -1.9144488639534885,
+          "vz": 1.9039132194790476,
+          "zone": "bank"
+        },
+        {
+          "id": 2,
+          "x": -0.3109443728919707,
+          "z": 18.95841918758007,
+          "hp": 25.2,
+          "vx": -0.11853893319179909,
+          "vz": -2.6973966192085186,
+          "zone": "bank"
+        }
+      ],
+      "economy": {
+        "panned": 0,
+        "sluiced": 0,
+        "granted": 0,
+        "stolen": 0,
+        "reclaimed": 0,
+        "pannedByProspector": 0,
+        "sluicedByProspector": 0,
+        "reclaimedByProspector": 0,
+        "spent": 0,
+        "baseValue": 0,
+        "buildingsBuilt": 0,
+        "beaconsBuilt": 0,
+        "repairSpent": 0,
+        "repairs": 0
+      }
+    }
+  },
+  {
+    "contract": "e9-dome-basin",
+    "off": "bed048b347d88dd0c9b2430692dc9e080444dae809fdf4acc424a7c67a613ecb",
+    "on": "bed048b347d88dd0c9b2430692dc9e080444dae809fdf4acc424a7c67a613ecb",
+    "offAssetRequests": 0,
+    "onAssetRequests": 7,
+    "payload": {
+      "contract": {
+        "id": "e9-dome-basin",
+        "tileParams": {
+          "tileId": "e9-dome-basin",
+          "biome": "redfields-dome-basin",
+          "size": 128,
+          "dimensions": {
+            "width": 128,
+            "height": 128
+          },
+          "render": {
+            "terrainMesh": "preferred"
+          },
+          "river": false,
+          "ford": false,
+          "buildZones": [
+            {
+              "id": "old-digger-renovation",
+              "bank": "north",
+              "minX": -42,
+              "maxX": -34,
+              "minZ": 45,
+              "maxZ": 51
+            },
+            {
+              "id": "rim-dome-pad-west",
+              "bank": "north",
+              "minX": -42,
+              "maxX": -28,
+              "minZ": -8,
+              "maxZ": 6
+            },
+            {
+              "id": "rim-dome-pad-east",
+              "bank": "north",
+              "minX": 28,
+              "maxX": 42,
+              "minZ": -6,
+              "maxZ": 8
+            },
+            {
+              "id": "weather-spire-footing",
+              "bank": "south",
+              "minX": -42,
+              "maxX": -30,
+              "minZ": -30,
+              "maxZ": -18
+            },
+            {
+              "id": "seed-rows-footing",
+              "bank": "south",
+              "minX": 18,
+              "maxX": 44,
+              "minZ": -32,
+              "maxZ": -18
+            },
+            {
+              "id": "ark-yards",
+              "bank": "south",
+              "minX": -48,
+              "maxX": -20,
+              "minZ": -52,
+              "maxZ": -36
+            }
+          ],
+          "stakeMarkers": [
+            {
+              "id": "canal-stage-c1",
+              "x": -28,
+              "z": 34,
+              "heroStart": false
+            },
+            {
+              "id": "canal-stage-c2",
+              "x": -12,
+              "z": 10,
+              "heroStart": false
+            },
+            {
+              "id": "canal-stage-c3",
+              "x": 4,
+              "z": -24,
+              "heroStart": false
+            }
+          ],
+          "rails": [
+            {
+              "style": "feeder-canal",
+              "points": [
+                {
+                  "x": -38,
+                  "z": 48
+                },
+                {
+                  "x": -28,
+                  "z": 34
+                },
+                {
+                  "x": -18,
+                  "z": 20
+                },
+                {
+                  "x": -12,
+                  "z": 10
+                },
+                {
+                  "x": -4,
+                  "z": -6
+                },
+                {
+                  "x": 4,
+                  "z": -24
+                }
+              ]
+            }
+          ],
+          "waterSources": [],
+          "harvestAnchors": [
+            {
+              "x": 22,
+              "z": -28
+            },
+            {
+              "x": 28,
+              "z": -22
+            },
+            {
+              "x": 34,
+              "z": -28
+            },
+            {
+              "x": 40,
+              "z": -22
+            }
+          ],
+          "heightfield": {
+            "id": "dome-basin-scarp-depression",
+            "mode": "visual"
+          },
+          "lanes": {
+            "spawnEdges": [
+              "north",
+              "west",
+              "east"
+            ],
+            "territoryRingBiasWaves": 0,
+            "territoryRingLaneBias": 0,
+            "patrolRoutes": [
+              {
+                "id": "dust-devil-wander",
+                "points": [
+                  {
+                    "x": -48,
+                    "z": 18
+                  },
+                  {
+                    "x": -30,
+                    "z": 4
+                  },
+                  {
+                    "x": -16,
+                    "z": -16
+                  },
+                  {
+                    "x": 8,
+                    "z": -6
+                  },
+                  {
+                    "x": 32,
+                    "z": 14
+                  },
+                  {
+                    "x": 48,
+                    "z": 2
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      },
+      "sim": {
+        "flat": true,
+        "tile": "e9-dome-basin",
+        "balance": {
+          "uphillMin": 0.6,
+          "downhillMax": 1.1,
+          "slopeMax": 0.35,
+          "wadeDepth": 0.35,
+          "deepDepth": 1
+        },
+        "gt": {
+          "highGroundRangeBonus": 1.5
+        },
+        "lastLos": {
+          "flat": true,
+          "clear": true,
+          "samples": 0,
+          "from": {
+            "x": 0,
+            "z": 0,
+            "h": 0
+          },
+          "to": {
+            "x": 0,
+            "z": 0,
+            "h": 0
+          },
+          "blockedAt": null
+        },
+        "probes": {
+          "heroStart": {
+            "height": 0,
+            "slope": {
+              "dx": 0,
+              "dz": 0
+            },
+            "traversable": true
+          },
+          "ford": {
+            "height": 0,
+            "slope": {
+              "dx": 0,
+              "dz": 0
+            },
+            "traversable": true
+          },
+          "farBank": {
+            "height": 0,
+            "slope": {
+              "dx": 0,
+              "dz": 0
+            },
+            "traversable": true
+          }
+        }
+      },
+      "bounds": {
+        "minX": -64,
+        "maxX": 64,
+        "minZ": -64,
+        "maxZ": 64
+      },
+      "spawnEdges": [
+        {
+          "x": 0,
+          "z": -64
+        },
+        {
+          "x": 0,
+          "z": 64
+        },
+        {
+          "x": 64,
+          "z": 0
+        },
+        {
+          "x": -64,
+          "z": 0
+        }
+      ],
+      "river": {
+        "minX": -64,
+        "maxX": 64,
+        "minZ": -5,
+        "maxZ": 5
+      },
+      "fords": [],
+      "waterSources": [],
+      "fog": {
+        "near": 42,
+        "far": 88
+      },
+      "samples": [
+        {
+          "walkable": true,
+          "speedMul": 1,
+          "zone": "bank"
+        },
+        {
+          "walkable": true,
+          "speedMul": 1,
+          "zone": "bank"
+        },
+        {
+          "walkable": true,
+          "speedMul": 1,
+          "zone": "bank"
+        }
+      ],
+      "enemies": [
+        {
+          "id": 0,
+          "x": -15.810267134080703,
+          "z": -15.862620487318459,
+          "hp": 25.2,
+          "vx": 1.9144488639534885,
+          "vz": 1.9039132194790476,
+          "zone": "bank"
+        },
+        {
+          "id": 1,
+          "x": 15.810267134080703,
+          "z": -15.862620487318459,
+          "hp": 25.2,
+          "vx": -1.9144488639534885,
+          "vz": 1.9039132194790476,
+          "zone": "bank"
+        },
+        {
+          "id": 2,
+          "x": -0.3109443728919707,
+          "z": 18.95841918758007,
+          "hp": 25.2,
+          "vx": -0.11853893319179909,
+          "vz": -2.6973966192085186,
+          "zone": "bank"
+        }
+      ],
+      "economy": {
+        "panned": 0,
+        "sluiced": 0,
+        "granted": 0,
+        "stolen": 0,
+        "reclaimed": 0,
+        "pannedByProspector": 0,
+        "sluicedByProspector": 0,
+        "reclaimedByProspector": 0,
+        "spent": 0,
+        "baseValue": 0,
+        "buildingsBuilt": 0,
+        "beaconsBuilt": 0,
+        "repairSpent": 0,
+        "repairs": 0
+      }
+    }
+  },
+  {
+    "contract": "e10-ember-shore",
+    "off": "682498e4764481fd7e8cf12396cdea2a529ec4d59076b84cbd60ae0e1866fca5",
+    "on": "682498e4764481fd7e8cf12396cdea2a529ec4d59076b84cbd60ae0e1866fca5",
+    "offAssetRequests": 0,
+    "onAssetRequests": 7,
+    "payload": {
+      "contract": {
+        "id": "e10-ember-shore",
+        "tileParams": {
+          "tileId": "e10-ember-shore",
+          "biome": "deepsky-ember-shore",
+          "size": 128,
+          "dimensions": {
+            "width": 128,
+            "height": 128
+          },
+          "render": {
+            "terrainMesh": "preferred"
+          },
+          "river": false,
+          "ford": false,
+          "buildZones": [
+            {
+              "id": "last-warm-vent-site",
+              "bank": "south",
+              "minX": -2,
+              "maxX": 8,
+              "minZ": -16,
+              "maxZ": -4
+            },
+            {
+              "id": "cooled-titan-machine-mount",
+              "bank": "north",
+              "minX": 14,
+              "maxX": 38,
+              "minZ": 22,
+              "maxZ": 46
+            }
+          ],
+          "stakeMarkers": [
+            {
+              "id": "last-warm-vent",
+              "x": 3,
+              "z": -10,
+              "heroStart": true
+            }
+          ],
+          "rails": [],
+          "waterSources": [],
+          "harvestAnchors": [
+            {
+              "x": -6,
+              "z": -24
+            },
+            {
+              "x": -20,
+              "z": -34
+            },
+            {
+              "x": -38,
+              "z": -22
+            },
+            {
+              "x": -54,
+              "z": -12
+            }
+          ],
+          "engineDependencies": [
+            {
+              "dep": "ember-shore-preserve-consumers",
+              "status": "landed",
+              "landedBy": "E10S-3",
+              "description": "BOTH CONSUMERS LANDED AND THE CLAIM IS EARNED: the squall phase machine in both engines (E10S-2, src/systems/E10SquallScheduler.ts, now.squall) and the warmth meter, STOKE action, gutter terminal, doubled mote pressure and secure latch in both engines (E10S-3, src/systems/E10PreserveSystem.ts, now.emberShore.preserve); E10S-4 added the harvestAnchors, the bench seeds, two losing null-floor rows and the public-verb prover, so the map is admitted. F-E10S4-2 CURED 2026-09-07: twist.emberShore is OUT of DECLARED_INERT_PATHS and the validator now ACCEPTS removing this row, measured rather than assumed (artifacts/engine-correctives-batch/probe-inert-retire.mjs run with the row deleted: 42 contracts load and parseContractDescriptor returns ok=true with no reasons). THE ROW SURVIVES FOR A NEW, SMALLER REASON: scripts/e10-preserve-consumer.test.mjs:455 pins it as a landed row naming its slice, and that guard sat outside the curing task's firewall. Retiring it is now one ledger line plus that guard's own retirement."
+            }
+          ],
+          "heightfield": {
+            "id": "ember-shore-cooling-veins",
+            "mode": "visual"
+          },
+          "lanes": {
+            "spawnEdges": [
+              "north",
+              "west",
+              "east"
+            ],
+            "territoryRingBiasWaves": 0,
+            "territoryRingLaneBias": 0
+          }
+        }
+      },
+      "sim": {
+        "flat": true,
+        "tile": "e10-ember-shore",
+        "balance": {
+          "uphillMin": 0.6,
+          "downhillMax": 1.1,
+          "slopeMax": 0.35,
+          "wadeDepth": 0.35,
+          "deepDepth": 1
+        },
+        "gt": {
+          "highGroundRangeBonus": 1.5
+        },
+        "lastLos": {
+          "flat": true,
+          "clear": true,
+          "samples": 0,
+          "from": {
+            "x": 0,
+            "z": 0,
+            "h": 0
+          },
+          "to": {
+            "x": 0,
+            "z": 0,
+            "h": 0
+          },
+          "blockedAt": null
+        },
+        "probes": {
+          "heroStart": {
+            "height": 0,
+            "slope": {
+              "dx": 0,
+              "dz": 0
+            },
+            "traversable": true
+          },
+          "ford": {
+            "height": 0,
+            "slope": {
+              "dx": 0,
+              "dz": 0
+            },
+            "traversable": true
+          },
+          "farBank": {
+            "height": 0,
+            "slope": {
+              "dx": 0,
+              "dz": 0
+            },
+            "traversable": true
+          }
+        }
+      },
+      "bounds": {
+        "minX": -64,
+        "maxX": 64,
+        "minZ": -64,
+        "maxZ": 64
+      },
+      "spawnEdges": [
+        {
+          "x": 0,
+          "z": -64
+        },
+        {
+          "x": 0,
+          "z": 64
+        },
+        {
+          "x": 64,
+          "z": 0
+        },
+        {
+          "x": -64,
+          "z": 0
+        }
+      ],
+      "river": {
+        "minX": -64,
+        "maxX": 64,
+        "minZ": -5,
+        "maxZ": 5
+      },
+      "fords": [],
+      "waterSources": [],
+      "fog": {
+        "near": 42,
+        "far": 88
+      },
+      "samples": [
+        {
+          "walkable": true,
+          "speedMul": 1,
+          "zone": "bank"
+        },
+        {
+          "walkable": true,
+          "speedMul": 1,
+          "zone": "bank"
+        },
+        {
+          "walkable": true,
+          "speedMul": 1,
+          "zone": "bank"
+        }
+      ],
+      "enemies": [
+        {
+          "id": 0,
+          "x": -15.564776718832933,
+          "z": -16.147352028413785,
+          "hp": 25.2,
+          "vx": 2.17745871519325,
+          "vz": 1.596456558641357,
+          "zone": "bank"
+        },
+        {
+          "id": 1,
+          "x": 15.545757979924094,
+          "z": -16.172924890656624,
+          "hp": 25.2,
+          "vx": -2.2071881106835,
+          "vz": 1.5550950594922597,
+          "zone": "bank"
+        },
+        {
+          "id": 2,
+          "x": 1.2621608384738676,
+          "z": 19.212538584756135,
+          "hp": 25.2,
+          "vx": 1.0742251712493678,
+          "vz": -2.4771032036340657,
+          "zone": "bank"
+        }
+      ],
+      "economy": {
+        "panned": 0,
+        "sluiced": 0,
+        "granted": 0,
+        "stolen": 0,
+        "reclaimed": 0,
+        "pannedByProspector": 0,
+        "sluicedByProspector": 0,
+        "reclaimedByProspector": 0,
+        "spent": 0,
+        "baseValue": 0,
+        "buildingsBuilt": 0,
+        "beaconsBuilt": 0,
+        "repairSpent": 0,
+        "repairs": 0
+      }
+    }
+  }
+]

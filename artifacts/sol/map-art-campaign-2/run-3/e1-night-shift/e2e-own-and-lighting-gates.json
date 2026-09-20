@@ -1,0 +1,30 @@
+[
+  {
+    "label": "own-and-lighting",
+    "command": [
+      "npx",
+      "playwright",
+      "test",
+      "--workers=1",
+      "--project=desktop-chrome",
+      "--project=mobile-chrome",
+      "--trace=off",
+      "--reporter=line",
+      "--output=artifacts/sol/map-art-campaign-2/_raw/run-3/e1-night-shift-own-and-lighting",
+      "e2e/e1-night-shift.spec.ts",
+      "e2e/night-mode-truth.spec.ts",
+      "e2e/night-light-doctrine.spec.ts",
+      "e2e/run3d-lantern-post.spec.ts",
+      "e2e/night3d-perf.spec.ts",
+      "e2e/landmark-brightness.spec.ts",
+      "e2e/landmark-collision.spec.ts",
+      "e2e/fort-landmark-collision.spec.ts",
+      "e2e/w1-02-living-water.spec.ts",
+      "e2e/shore-truth.spec.ts"
+    ],
+    "environment": {},
+    "exit": 1,
+    "seconds": 740.07,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-3/e1-night-shift-own-and-lighting.log"
+  }
+]

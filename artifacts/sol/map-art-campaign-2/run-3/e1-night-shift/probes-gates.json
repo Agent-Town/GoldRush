@@ -1,0 +1,28 @@
+[
+  {
+    "label": "loading",
+    "command": [
+      "node",
+      "scripts/map-landmark-loading-check.mjs"
+    ],
+    "environment": {
+      "PROBE_BASE": "http://127.0.0.1:5303"
+    },
+    "exit": 0,
+    "seconds": 106.03,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-3/e1-night-shift-loading.log"
+  },
+  {
+    "label": "repeat",
+    "command": [
+      "node",
+      "scripts/map-landmark-repeat-check.mjs"
+    ],
+    "environment": {
+      "PROBE_BASE": "http://127.0.0.1:5303"
+    },
+    "exit": 0,
+    "seconds": 15.22,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-3/e1-night-shift-repeat.log"
+  }
+]

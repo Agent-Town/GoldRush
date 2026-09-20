@@ -1,0 +1,80 @@
+{
+  "tavern": {
+    "mae": 0.06993655115365982,
+    "rmse": 2.016695976257324,
+    "diffRatio16": 0.00128125,
+    "diffRatio32": 0.0009443359375,
+    "diffRatio64": 0.0005244140625,
+    "thresholdMismatchProxy": "diffRatio16 (pixelmatch unavailable; no dependency installed)",
+    "edgeEnergyBase": 3.1176652908325195,
+    "edgeEnergyCandidate": 3.1131715774536133,
+    "edgeEnergyRatio": 0.9985586404800415,
+    "edgeDiffRatio32": 0.0001123046875,
+    "avgLuminanceBase": 149.20535278320312,
+    "avgLuminanceCandidate": 149.15228271484375,
+    "avgLuminanceDelta": -0.053070068359375,
+    "diagnosticDistance": 0.0009910475927642159,
+    "localizedTonalGate": {
+      "method": "changed-pixel bounds plus 64px building-and-neighbor context",
+      "crop": {
+        "x": 719,
+        "y": 365,
+        "width": 207,
+        "height": 221
+      },
+      "changedPixelCount": 1680,
+      "avgLuminanceBase": 131.6064453125,
+      "avgLuminanceCandidate": 130.41844177246094,
+      "deltaPercent": -0.9026940414796127,
+      "ceilingPercent": 5.0,
+      "passed": true
+    }
+  },
+  "schoolhouse": {
+    "mae": 0.05952175706624985,
+    "rmse": 1.2731050252914429,
+    "diffRatio16": 0.0017099609375,
+    "diffRatio32": 0.000560546875,
+    "diffRatio64": 0.0,
+    "thresholdMismatchProxy": "diffRatio16 (pixelmatch unavailable; no dependency installed)",
+    "edgeEnergyBase": 3.1176652908325195,
+    "edgeEnergyCandidate": 3.118882656097412,
+    "edgeEnergyRatio": 1.0003905296325684,
+    "edgeDiffRatio32": 2.734375e-05,
+    "avgLuminanceBase": 149.20535278320312,
+    "avgLuminanceCandidate": 149.17837524414062,
+    "avgLuminanceDelta": -0.0269775390625,
+    "diagnosticDistance": 0.0007150133547803639,
+    "localizedTonalGate": {
+      "method": "changed-pixel bounds plus 64px building-and-neighbor context",
+      "crop": {
+        "x": 852,
+        "y": 86,
+        "width": 225,
+        "height": 277
+      },
+      "changedPixelCount": 3015,
+      "avgLuminanceBase": 120.35367584228516,
+      "avgLuminanceCandidate": 119.91026306152344,
+      "deltaPercent": -0.3684247927273774,
+      "ceilingPercent": 5.0,
+      "passed": true
+    }
+  },
+  "integrated": {
+    "mae": 0.12945830821990967,
+    "rmse": 2.3849234580993652,
+    "diffRatio16": 0.0029912109375,
+    "diffRatio32": 0.0015048828125,
+    "diffRatio64": 0.0005244140625,
+    "thresholdMismatchProxy": "diffRatio16 (pixelmatch unavailable; no dependency installed)",
+    "edgeEnergyBase": 3.1176652908325195,
+    "edgeEnergyCandidate": 3.114388942718506,
+    "edgeEnergyRatio": 0.9989491105079651,
+    "edgeDiffRatio32": 0.0001396484375,
+    "avgLuminanceBase": 149.20535278320312,
+    "avgLuminanceCandidate": 149.1252899169922,
+    "avgLuminanceDelta": -0.0800628662109375,
+    "diagnosticDistance": 0.0015369603657567521
+  }
+}

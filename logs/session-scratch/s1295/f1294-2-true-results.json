@@ -1,0 +1,148 @@
+{
+  "preRef": "00e4c074",
+  "preBlob": "d6941842e61bea282f89569d10e3580065cfbb8f",
+  "postBlob": "9451c00092703998b7ba758c0031efb39477c44e",
+  "results": [
+    {
+      "spec": "ap-standing-orders.spec.ts",
+      "arm": "PRE",
+      "rc": 0,
+      "secs": 83,
+      "load0": 41.33,
+      "load1": 36.95,
+      "passed": 6,
+      "failed": 0,
+      "reasons": []
+    },
+    {
+      "spec": "ap-standing-orders.spec.ts",
+      "arm": "POST",
+      "rc": 0,
+      "secs": 52,
+      "load0": 36.95,
+      "load1": 29.97,
+      "passed": 6,
+      "failed": 0,
+      "reasons": []
+    },
+    {
+      "spec": "ss-01-beats.spec.ts",
+      "arm": "PRE",
+      "rc": 1,
+      "secs": 86.5,
+      "load0": 29.97,
+      "load1": 18.05,
+      "passed": 3,
+      "failed": 1,
+      "reasons": [
+        "e2e/ss-01-beats.spec.ts:103:1 › founding, first contract, and Prospector XP beats fire once with portraits"
+      ]
+    },
+    {
+      "spec": "ss-01-beats.spec.ts",
+      "arm": "POST",
+      "rc": 1,
+      "secs": 87.1,
+      "load0": 18.05,
+      "load1": 11.74,
+      "passed": 3,
+      "failed": 1,
+      "reasons": [
+        "e2e/ss-01-beats.spec.ts:103:1 › founding, first contract, and Prospector XP beats fire once with portraits"
+      ]
+    },
+    {
+      "spec": "trail-guide-beat-priority.spec.ts",
+      "arm": "PRE",
+      "rc": 0,
+      "secs": 15.4,
+      "load0": 11.74,
+      "load1": 12.1,
+      "passed": 1,
+      "failed": 0,
+      "reasons": []
+    },
+    {
+      "spec": "trail-guide-beat-priority.spec.ts",
+      "arm": "POST",
+      "rc": 0,
+      "secs": 16.1,
+      "load0": 12.1,
+      "load1": 10.86,
+      "passed": 1,
+      "failed": 0,
+      "reasons": []
+    },
+    {
+      "spec": "ap-standing-orders.spec.ts",
+      "arm": "POST",
+      "rc": 0,
+      "secs": 42.9,
+      "load0": 10.86,
+      "load1": 14.72,
+      "passed": 6,
+      "failed": 0,
+      "reasons": []
+    },
+    {
+      "spec": "ap-standing-orders.spec.ts",
+      "arm": "PRE",
+      "rc": 0,
+      "secs": 43.4,
+      "load0": 14.72,
+      "load1": 14.84,
+      "passed": 6,
+      "failed": 0,
+      "reasons": []
+    },
+    {
+      "spec": "ss-01-beats.spec.ts",
+      "arm": "POST",
+      "rc": 1,
+      "secs": 91,
+      "load0": 14.84,
+      "load1": 15.16,
+      "passed": 3,
+      "failed": 1,
+      "reasons": [
+        "e2e/ss-01-beats.spec.ts:103:1 › founding, first contract, and Prospector XP beats fire once with portraits"
+      ]
+    },
+    {
+      "spec": "ss-01-beats.spec.ts",
+      "arm": "PRE",
+      "rc": 1,
+      "secs": 91.8,
+      "load0": 15.16,
+      "load1": 17.82,
+      "passed": 3,
+      "failed": 1,
+      "reasons": [
+        "e2e/ss-01-beats.spec.ts:103:1 › founding, first contract, and Prospector XP beats fire once with portraits"
+      ]
+    },
+    {
+      "spec": "trail-guide-beat-priority.spec.ts",
+      "arm": "POST",
+      "rc": 0,
+      "secs": 15.4,
+      "load0": 17.82,
+      "load1": 18.26,
+      "passed": 1,
+      "failed": 0,
+      "reasons": []
+    },
+    {
+      "spec": "trail-guide-beat-priority.spec.ts",
+      "arm": "PRE",
+      "rc": 0,
+      "secs": 16,
+      "load0": 18.26,
+      "load1": 15.75,
+      "passed": 1,
+      "failed": 0,
+      "reasons": []
+    }
+  ],
+  "armDependent": false
+}

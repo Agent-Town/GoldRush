@@ -1,0 +1,11 @@
+
+Running 6 tests using 1 worker
+
+  ✓  1 [desktop-chrome] › e2e/cp03-press-loop.spec.ts:25:1 › the Press loop: edit, stamp, shelve, launch a real run, and return (18.2s)
+  ✓  2 [desktop-chrome] › e2e/cp03-press-loop.spec.ts:99:1 › a plain boot never sees the Press and writes nothing (333ms)
+  ✓  3 [desktop-chrome] › e2e/cp03-press-loop.spec.ts:113:1 › a staged charter entry without a Press launch never reaches a run (2.9s)
+  ✓  4 [mobile-chrome] › e2e/cp03-press-loop.spec.ts:25:1 › the Press loop: edit, stamp, shelve, launch a real run, and return (13.2s)
+  ✓  5 [mobile-chrome] › e2e/cp03-press-loop.spec.ts:99:1 › a plain boot never sees the Press and writes nothing (609ms)
+  ✓  6 [mobile-chrome] › e2e/cp03-press-loop.spec.ts:113:1 › a staged charter entry without a Press launch never reaches a run (2.0s)
+
+  6 passed (38.7s)

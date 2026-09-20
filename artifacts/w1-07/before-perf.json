@@ -1,0 +1,38 @@
+{
+  "label": "before",
+  "perf": {
+    "renderer": {
+      "calls": 47,
+      "triangles": 41916,
+      "geometries": 54,
+      "textures": 18
+    },
+    "frameMs": {
+      "last": 50,
+      "avg": 48.66679245642896,
+      "p95": 50,
+      "sampleCount": 53
+    },
+    "wave": 15,
+    "enemiesAlive": 4,
+    "terrain": {
+      "min": -0.18,
+      "max": 0.5909371649602811,
+      "segments": 64,
+      "waterY": 0.025,
+      "probes": {
+        "heroStart": 0.10432646582737946,
+        "river": -0.18,
+        "ford": -0.1692588761176975,
+        "nearBank": -0.07455203203267009,
+        "farBank": 0.37565441171795055
+      },
+      "heroGround": 0.10432646582737946,
+      "heroVisualY": 0.16432646582737948
+    }
+  },
+  "errors": {
+    "consoleErrors": [],
+    "pageErrors": []
+  }
+}

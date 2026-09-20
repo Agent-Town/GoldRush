@@ -1,0 +1,77 @@
+
+> gold-rush@0.1.0 test:review-fixes
+> node --test --test-concurrency=1 scripts/review-mixed-hashes.test.mjs scripts/review-party-retention.test.mjs scripts/review-save-names.test.mjs scripts/review-wrecked-turrets.test.mjs
+
+✔ browser-only: matching peer, remote after local (1.011333ms)
+✔ browser-only: mismatching peer, remote after local (0.163709ms)
+✔ browser-only: matching peer, remote before local (0.152041ms)
+✔ browser-only: mismatching peer, remote before local (0.101209ms)
+✔ mixed: matching peer, remote after local (0.125708ms)
+✔ mixed: mismatching peer, remote after local (0.11375ms)
+✔ mixed: matching peer, remote before local (0.089083ms)
+✔ mixed: mismatching peer, remote before local (0.107375ms)
+✔ headless-only: matching peer, remote after local (0.104333ms)
+✔ headless-only: mismatching peer, remote after local (0.135167ms)
+✔ headless-only: matching peer, remote before local (0.064709ms)
+✔ headless-only: mismatching peer, remote before local (0.047542ms)
+✔ a thin seat, unknown ID, or self hash cannot satisfy or poison the browser quorum (0.083417ms)
+✔ one browser with thin seats ignores their incompatible hashes (0.062875ms)
+✔ headless-only rooms require each headless peer (0.055708ms)
+✔ thin seats keep hash exchange disabled (0.305792ms)
+✔ an outstanding comparison keeps the roster of its sampled tick after a peer leaves (0.280084ms)
+✔ later ticks use the smaller roster and ignore a departed peer (0.107958ms)
+✔ snapshot compression keeps the sampled quorum even when the roster changes before encoding finishes (7.10625ms)
+party retention checks passed (party sizes 1–4, top-100/leftover bounds, replay survival, archives, rotations)
+✔ scripts/review-party-retention.test.mjs (650.441708ms)
+(node:89872) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ the untouched default saves and remains readable on the manual shelf (3.4335ms)
+✔ legal town names and the fallback fit every supported wave digit count (15.691583ms)
+✔ manual input keeps its punctuation, reserved-name, profanity, and duplicate checks (0.316417ms)
+(node:90177) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+✔ later-era mounts stop on wreck or suspension and return on repair with stable relay IDs (1731.3ms)
+ℹ tests 24
+ℹ suites 0
+ℹ pass 24
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3472.882208

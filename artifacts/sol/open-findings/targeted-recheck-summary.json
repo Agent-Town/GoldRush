@@ -1,0 +1,53 @@
+{
+  "stats": {
+    "startTime": "2026-09-19T14:43:01.234Z",
+    "duration": 67212.43900000001,
+    "expected": 2,
+    "skipped": 0,
+    "unexpected": 2,
+    "flaky": 0
+  },
+  "globalErrors": [],
+  "rows": [
+    {
+      "file": "town-cast-wiring.spec.ts",
+      "line": 27,
+      "title": "plain town boot shows the tavernkeeper and storekeeper walking on anchored feet",
+      "project": "desktop-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 10835,
+      "error": ""
+    },
+    {
+      "file": "town-cast-wiring.spec.ts",
+      "line": 27,
+      "title": "plain town boot shows the tavernkeeper and storekeeper walking on anchored feet",
+      "project": "mobile-chrome",
+      "status": "passed",
+      "verdict": "expected",
+      "durationMs": 16115,
+      "error": ""
+    },
+    {
+      "file": "town-fresh-boot-textures.spec.ts",
+      "line": 28,
+      "title": "delayed town textures converge without a reload and bark portrait falls back",
+      "project": "desktop-chrome",
+      "status": "failed",
+      "verdict": "unexpected",
+      "durationMs": 16345,
+      "error": "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: \"fallback\"\nReceived: \"loaded\"\n\nCall Log:\n- Timeout 8000ms exceeded while waiting on the predicate"
+    },
+    {
+      "file": "town-fresh-boot-textures.spec.ts",
+      "line": 28,
+      "title": "delayed town textures converge without a reload and bark portrait falls back",
+      "project": "mobile-chrome",
+      "status": "failed",
+      "verdict": "unexpected",
+      "durationMs": 19398,
+      "error": "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: \"fallback\"\nReceived: \"loaded\"\n\nCall Log:\n- Timeout 8000ms exceeded while waiting on the predicate"
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+s1205: BLOCK trail-guide-plain-boot-timeouts at the gate (F-1205-5) + queue the third attempt on a CHANGED premise
+
+SECOND REJECTION OF THIS WORK, AND THE PREMISE FAILED, NOT THE CRAFT.
+
+s1204 diagnosed the plain-boot proof's flake as expect-timeout length and
+ordered a class fix. The class fix is complete and well built — `expect` is
+shadowed at module scope via baseExpect.configure({timeout: 20_000}), so every
+expect/expect.poll is covered BY CONSTRUCTION; both waitForFunction calls got
+explicit budgets; a census of every wait primitive in the file found no
+enumeration gap, which fully answers s1204's worry about a half-fix. And the
+spec still fails 3 of 4 at the canonical gate on the merged tree.
+
+Measured this fire, merged tree (main + GG-01 + the spec):
+  canonical, both projects, --repeat-each=2 .......... 3 failed / 1 passed
+  control, desktop-chrome --workers=1 --repeat-each=2 . 2/2 PASS (57.2s)
+Same green-alone/red-together signature s1204 measured on the predecessor
+(alone PASS 25.5s, canonical 4/4 FAIL). 4/4 -> 3/4 is noise, not a cure.
+
+REAL MECHANISM, at the captured bytes: hud-agent-feed is a SINGLE-SLOT live
+region. Under contention the walk is slower, the sim reaches wave/damage/
+level-up events, and those barks OVERTAKE the guide beat before the assertion
+samples it. The 20s wait sampled 43 times and the beat copy was never among
+them, while the feed showed "That horn marks their road in" (23x), "You took a
+hard knock" (6x), "The trail has taught you something" (14x). Raising timeouts
+plausibly makes this WORSE — longer upstream waits let the sim advance further.
+
+ATTEMPT 2's OWN RUN REPORT SAW THIS AND DISCARDED IT, verbatim: "one
+stress-following run saw beat 3 overtake beat 2; a fresh-server canonical rerun
+passed 2/2." It then reported the passing arm as the result. A green obtained by
+rerunning after a red is a sample, not a result — the red is data too.
+
+Protocol §5 governs: two failures, so the third attempt carries a CHANGED
+premise. tasks/lane-trail-guide-plain-boot-observed-beats.md (queued lane-b)
+orders a feed RECORDER — a MutationObserver installed before the flow — so the
+beat assertion checks what the feed DISPLAYED rather than what it displays,
+preserving the player-visible semantics that are the whole point of this
+Mistake #10 proof. It forbids the two tempting fake cures: falling back to the
+durable hintsSeen check alone (proves the beat fired, not that it was visible)
+and raising any timeout; and it keeps the negative dismissal assertions on
+current text deliberately.
+
+Leaf e1-trail-guide-plain-boot-proof REPOINTED again, not duplicated
+(Mistake #5); goal-tracker 2/2; drain-block-check resolves the new master.
+
+RETENTION: nothing deleted. Both rejected tips pinned —
+archive/lane-m4-trail-guide-d7d8ba03 and
+archive/lane-m4-trail-guide-timeouts-7b2d63f5 — with a working copy committed at
+logs/session-scratch/s1205-unmerged-trail-guide-timeouts/. F-1204-4 paid a
+second consecutive fire: a fire cannot git rm --cached, so unstaging the
+rejected graft again required the scratchpad + `git add -u` route.

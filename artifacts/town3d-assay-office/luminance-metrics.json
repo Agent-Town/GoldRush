@@ -1,0 +1,19 @@
+{
+  "camera": "TS-04 locked Town camera at hero start",
+  "method": "ImageMagick sRGB grayscale mean over fixed tight non-ground building regions",
+  "assayOffice": {
+    "source": "desktop-chrome-owner-assay-office-vs-neighbors-and-cast.png",
+    "crop": { "x": 1120, "y": 490, "width": 150, "height": 160 },
+    "meanLuminance": 0.174732
+  },
+  "paintedNeighbor": {
+    "building": "Tavern LITE facade",
+    "source": "desktop-chrome-before-facade.png",
+    "crop": { "x": 390, "y": 285, "width": 100, "height": 65 },
+    "meanLuminance": 0.175693
+  },
+  "absoluteDelta": 0.000961,
+  "deltaPercentOfPaintedNeighbor": 0.547,
+  "limitPercent": 5,
+  "passes": true
+}

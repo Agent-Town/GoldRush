@@ -1,0 +1,49 @@
+✖ atomic account identities preserve legacy accounts and isolate registration generations on SQLite and real Durable Objects (90003.629916ms)
+
+Interrupted while running:
+
+⚠ scripts/review-account-creation.test.mjs (scripts/review-account-creation.test.mjs:1:1)
+✖ scripts/review-account-creation.test.mjs (119993.038458ms)
+✖ scripts/review-mixed-hashes.test.mjs
+✖ scripts/review-party-retention.test.mjs
+✖ scripts/review-save-names.test.mjs
+✖ scripts/review-terminal-views.test.mjs
+✖ scripts/review-wrecked-turrets.test.mjs
+ℹ tests 7
+ℹ suites 0
+ℹ pass 0
+ℹ fail 0
+ℹ cancelled 7
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 119996.4595
+
+✖ failing tests:
+
+test at scripts/review-account-creation.test.mjs:17:1
+✖ atomic account identities preserve legacy accounts and isolate registration generations on SQLite and real Durable Objects (90003.629916ms)
+  'test timed out after 90000ms'
+
+test at scripts/review-account-creation.test.mjs:1:1
+✖ scripts/review-account-creation.test.mjs (119993.038458ms)
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/review-mixed-hashes.test.mjs:1:1
+✖ scripts/review-mixed-hashes.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/review-party-retention.test.mjs:1:1
+✖ scripts/review-party-retention.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/review-save-names.test.mjs:1:1
+✖ scripts/review-save-names.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/review-terminal-views.test.mjs:1:1
+✖ scripts/review-terminal-views.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/review-wrecked-turrets.test.mjs:1:1
+✖ scripts/review-wrecked-turrets.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'

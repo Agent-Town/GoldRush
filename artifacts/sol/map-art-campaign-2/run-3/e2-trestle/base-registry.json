@@ -1,0 +1,49 @@
+{
+  "base": "ddfb210f5",
+  "paths": {
+    "assets/pilots/map-rebuild-spike/landmarks/trestle/mine-spur-kit.glb": {
+      "candidateSha256": "8df3090fdb070f81d1503f39d6cdee70d1cb9938fb93a5f9875050f2858d634b",
+      "baseSha256": "14e5f8d7d035983f913dd2744d7d7855a76841646da575d9c0e202e4ebf49ee1"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/trestle/trestle-landmark-pack-contract.json": {
+      "candidateSha256": "a64a47ed8907781c8e6f5d8fe591fd0dd270b9b037e02be058674bb7ee4ae688",
+      "baseSha256": "5247f52c0a54a75dc42e7c02570f31ac3298b9d09a128ce0d2642593946fb3b7"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/trestle/trestle-landmarks.blend": {
+      "candidateSha256": "d706aee6fde687404cc2513a874e998985189045f79997fecf11ac581c83270a",
+      "baseSha256": "08f6f944044a422f3ec8c25756c4aac13b2c631c78b44a124ce8b301d70b7523"
+    },
+    "assets/pilots/map-rebuild-spike/trestle-terrain-contract.json": {
+      "candidateSha256": "e004c480d0ea5a4f137263253b1ead217c8ccae551b8d01dfcf188b5ad8a95bd",
+      "baseSha256": "61d4a69d389836d0596b13d1fbdb685bafde5c856aa86f9611699cc2a894343e"
+    },
+    "src/world/Terrain3dClaimPilot.ts": {
+      "candidateSha256": "ca4807eb3a49da6b1e3ccca106e4927f6627a4157c6b1093b4e0d07ddf7e232a",
+      "baseSha256": "8d1cfde7988553f44a63c881115253146dda74d0aa2b5810aef22769c823bf6e"
+    }
+  },
+  "pattern": "all sixteen contracts|rim and horizon probes|all fifteen contracts stay painted|each registered terrain and panorama",
+  "specs": [
+    "e2e/terrain3d-registry.spec.ts"
+  ],
+  "candidateEngine": "9582fb444b805f2a16b85b3720834fd7d12091e8cf48a96a6862c45b1afcad80",
+  "baseEngine": "e993b9ec062d5d02e2b503c2edf42ab8bf600c9074381e01d8634a4758b03d7b",
+  "command": [
+    "npx",
+    "playwright",
+    "test",
+    "--workers=1",
+    "--project=desktop-chrome",
+    "--project=mobile-chrome",
+    "--trace=off",
+    "--reporter=line",
+    "--output=artifacts/sol/map-art-campaign-2/_raw/run-3/e2-trestle-base-registry/test-results",
+    "--grep",
+    "all sixteen contracts|rim and horizon probes|all fifteen contracts stay painted|each registered terrain and panorama",
+    "e2e/terrain3d-registry.spec.ts"
+  ],
+  "exit": 1,
+  "restoredEngine": "9582fb444b805f2a16b85b3720834fd7d12091e8cf48a96a6862c45b1afcad80",
+  "candidateRestoredExactly": true,
+  "log": "artifacts/sol/map-art-campaign-2/_raw/run-3/e2-trestle-base-registry/tests.log"
+}

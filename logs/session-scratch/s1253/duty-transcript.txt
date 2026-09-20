@@ -1,0 +1,160 @@
+s1253 duty battery
+
+
+########## tsc  rc=0  4.5s ##########
+
+
+########## build  rc=0  24.9s ##########
+dist/assets/E4OrbitRoadHarness-BQ7llcLr-diet-abbb9d04.js                                       7.30 kB │ gzip:   3.12 kB
+dist/assets/MultiplayerBalanceHarness-Bt6gPumL-diet-abbb9d04.js                                8.02 kB │ gzip:   3.35 kB
+dist/assets/StartMenu-DEOEuIai-diet-abbb9d04.js                                               13.83 kB │ gzip:   4.11 kB
+dist/assets/reader-Cb_d4RvD-diet-abbb9d04.js                                                  14.72 kB │ gzip:   5.55 kB
+dist/assets/AssayBench-BLXx2csb-diet-abbb9d04.js                                              21.53 kB │ gzip:   6.32 kB
+dist/assets/SoundSystem-Cme8Q56K-diet-abbb9d04.js                                             21.57 kB │ gzip:   5.12 kB
+dist/assets/PlaybookLab-VolcCohI-diet-abbb9d04.js                                             22.15 kB │ gzip:   7.57 kB
+dist/assets/story-CUw4IBK_-diet-abbb9d04.js                                                   22.32 kB │ gzip:   6.54 kB
+dist/assets/TownTavernPilot-ajCiSCJ5-diet-abbb9d04.js                                         30.56 kB │ gzip:   7.50 kB
+dist/assets/Terrain-DpU7BQIh-diet-abbb9d04.js                                                 48.35 kB │ gzip:  16.13 kB
+dist/assets/LandmarkCollision-Df7CyyGB-diet-abbb9d04.js                                       49.66 kB │ gzip:   7.33 kB
+dist/assets/DescriptorInspector-Bi0JB5FS-diet-abbb9d04.js                                     54.48 kB │ gzip:  16.96 kB
+dist/assets/WorldInfoNotes-Zo4LGDJx-diet-abbb9d04.js                                          58.15 kB │ gzip:  19.40 kB
+dist/assets/scripts-CnSplZgX-diet-abbb9d04.js                                                 65.70 kB │ gzip:  24.29 kB
+dist/assets/TownScene-DwCDEjse-diet-abbb9d04.js                                              142.55 kB │ gzip:  40.81 kB
+dist/assets/AssetLoading-BsUR1ujf-diet-abbb9d04.js                                           166.38 kB │ gzip:  54.51 kB
+dist/assets/SpriteAnimator-C7mYu4-F-diet-abbb9d04.js                                         286.61 kB │ gzip:  33.00 kB
+dist/assets/Terrain3dClaimPilot-Dc0Bgea4-diet-abbb9d04.js                                    423.17 kB │ gzip:  65.54 kB
+dist/assets/Game-C2vc4GtP-diet-abbb9d04.js                                                   891.93 kB │ gzip: 238.60 kB
+dist/assets/index-kxP57JkV-diet-abbb9d04.js                                                1,313.92 kB │ gzip: 311.43 kB
+
+✓ built in 1.91s
+[asset-diet] Herald dev-path art 1099906 bytes (1500000 byte ceiling).
+[asset-diet] 235 terrain/landmark GLBs 592176964 -> 92768500 bytes (84% cut); 53 plate-class PNGs 183518013 -> 24346570 bytes (87% cut); herald spot cuts 317162 bytes.
+[plugin builtin:vite-reporter] 
+(!) Some chunks are larger than 900 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+
+
+########## test:node-guards  rc=1  66.2s ##########
+
+test at scripts/fixture-teardown.test.mjs:24:1
+✖ all 13 scripts/*.test.mjs fixture owners remove their temp directories (65820.345792ms)
+  AssertionError [ERR_ASSERTION]: fixture survivors by file:
+  scripts/assert-release-build.test.mjs: 0 []
+  scripts/citation-title-guard.test.mjs: 0 []
+  scripts/drain-block-check.test.mjs: 0 []
+  scripts/gate-caller-audit.test.mjs: 15 [gold-rush-gate-caller-8K3CbB, gold-rush-gate-caller-8zNe2I, gold-rush-gate-caller-AzxYNS, gold-rush-gate-caller-QkAx2v, gold-rush-gate-caller-RqlG6A, gold-rush-gate-caller-WsZNOL, gold-rush-gate-caller-bare-Y51AfD, gold-rush-gate-caller-cMMbBv, gold-rush-gate-caller-e404NC, gold-rush-gate-caller-erBozu, gold-rush-gate-caller-ewyexd, gold-rush-gate-caller-imdVl4, gold-rush-gate-caller-noname-kYtrEy, gold-rush-gate-caller-ogcaKU, gold-rush-gate-caller-xP1ZLf]
+  scripts/goal-tracker.test.mjs: 0 []
+  scripts/run-guards.test.mjs: 0 []
+  scripts/site-contract.test.mjs: 0 []
+  scripts/stream-curate.test.mjs: 0 []
+  scripts/stream-showcase-queue.test.mjs: 0 []
+  scripts/subject-tree.test.mjs: 0 []
+  scripts/suite-red-inventory.test.mjs: 0 []
+  scripts/town-spec-collection.test.mjs: 0 []
+  scripts/whole-suite-collection.test.mjs: 0 []
+      at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/Gold%20Rush/scripts/fixture-teardown.test.mjs:50:10)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+
+########## test:task-guards  rc=0  0.2s ##########
+
+> gold-rush@0.1.0 test:task-guards
+> node scripts/task-guard-audit.mjs
+
+task-guard-audit: 750 masters, 0 invisible (baseline 0).
+  ✅ no NEW invisible master. rc=0
+
+
+########## test:citations  rc=0  0.5s ##########
+
+> gold-rush@0.1.0 test:citations
+> node scripts/citation-title-guard.mjs
+
+=== citation-title-guard ===
+citations scanned : 306  (in 990 tracked tasks/**/*.md)
+  NUMBER-ONLY     264
+  CARRIES-TITLE   24
+  CARRIES-LINE    18
+grandfathered keys: 262
+NOT GATED         : 854 citation(s) in 98 tracked .md outside tasks/ — largest logs/suite-red-inventory.md (644). Scope ruling: F-1252-1, owner's desk.
+PASS — no new bare `spec:line` citation among the 306 scanned. This verdict covers tasks/** only.
+
+
+########## test:gate-callers  rc=0  0.1s ##########
+
+> gold-rush@0.1.0 test:gate-callers
+> node scripts/gate-caller-audit.mjs
+
+gate-caller-audit — who calls each gate?
+  root                : /Users/robin/Claude/Projects/Gold Rush
+  npm scripts         : 23 (17 gate-shaped)
+  scripts/ files      : 189 (8 guard-shaped)
+  config.ts read      : 30   .github/ files: 0
+  edge vocabulary     : package.json scripts, scripts/**.mjs, scripts/**.sh, *.config.ts, .github/**
+  roots               : 49   reached: 72
+  subjects            : 25   orphans: 5
+  grandfathered       : 5
+  known  npm:test:asset-diet                       s1253 F-1253-1: NO CALLER, but measured GREEN this fire (4/4, rc=0, 52.3s). It is the CORRECT harness for e2e/asset-diet.spec.ts, which the default config also collects against a dev server it cannot satisfy (F-1251-1). Wiring it is gate policy, not a drive-by: owner's desk.
+  known  npm:verify:visual                         DELIBERATELY UNROOTED, and not a coverage hole: a convenience alias for one spec. Verified s1253 by `npx playwright test --list e2e/visual.spec.ts` -- its 5 tests are collected by the DEFAULT config (playwright.config.ts:8 testDir './e2e'), so `npm run test` already gates them. Nothing to wire.
+  known  npm:test:preview                          s1253 F-1253-1: NO CALLER and, as far as any tracked evidence shows, NEVER RUN. Whole e2e suite against the production bundle (docs/DEPLOY.md:19 'Playwright has a preview project (npm run test:preview) that runs the e2e suite against the production bundle'). Cost and likely structural reds make this an owner ruling, not a fire's decision.
+  known  npm:test:release                          s1253 F-1253-1 / F-1126-1's named remainder: NO CALLER. Sole gate over the E1 release door; the chain NOTHING -> test:release -> build:release -> assert-release-build.mjs is unrooted at the top. reviews/approach-convergence-class.md:55 already recommended 'The release suite deserves a place in the drain minimum for any slice that changes first-boot or town-entry flow' and nobody executed it. Adding a ~200s playwright suite to a 124s node battery is a gate-cost decision: owner's desk.
+  known  scripts/anim-pass-dupecheck.mjs           DELIBERATELY UNROOTED: not a gate. A one-off forensic instrument from THE ANIMATION PASS (2026-07-25) that measures mad/diff% between two sprite cells to settle whether a silhouette-hash duplicate suspicion is real. Matches GUARDISH_FILE on the word 'check' only. Verdicts are for a human reading a batch, not for a battery.
+
+PASS — every gate-shaped subject is either reached or grandfathered with a reason.
+
+
+########## test:guards (FULL)  rc=1  157.5s ##########
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+--- test:power-budget (rc=1) last 20 lines ---
+power-graph-budget: p95=0.553ms cap=0.500ms samples=160 verdict=FAIL
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: power graph fixed-step p95 0.553ms exceeded 0.500ms
+    at file:///Users/robin/Claude/Projects/Gold%20Rush/scripts/check-power-graph-budget.mjs:44:8
+    at ModuleJob.run (node:internal/modules/esm/module_job:447:25)
+    at async node:internal/modules/esm/loader:646:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v26.4.0
+
+guards: 8/10 passed -- RED: test:node-guards, test:power-budget
+
+
+
+=== SUMMARY ===
+PASS rc=0      4.5s  tsc
+PASS rc=0     24.9s  build
+FAIL rc=1     66.2s  test:node-guards
+PASS rc=0      0.2s  test:task-guards
+PASS rc=0      0.5s  test:citations
+PASS rc=0      0.1s  test:gate-callers
+FAIL rc=1    157.5s  test:guards (FULL)
+
+all green: false

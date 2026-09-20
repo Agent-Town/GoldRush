@@ -1,0 +1,48 @@
+// s1402 handoff. Ordering is load-bearing (F-1402-1): line 1 = the handoff, line 2 = the
+// PREDECESSOR's handoff archive (measured never to contain the lock-stamp literal), line 3 = this
+// fire's own lock archive (which does contain it). While the runner cure is inert, that ordering
+// is the only thing keeping the main slot dispatchable.
+import { readFileSync, writeFileSync } from 'node:fs';
+
+const P = '/Users/robin/Claude/Projects/Gold Rush/STATUS.md';
+const rows = readFileSync(P, 'utf8').split('\n');
+const myLock = rows[0];
+if (!/^ACTIVE/.test(myLock)) { console.error('line-1 is not the s1402 lock; aborting'); process.exit(2); }
+if (!/s1401 handoff \(line-1 archive\)/.test(rows[1])) { console.error('line-2 is not s1401 handoff archive; aborting'); process.exit(2); }
+
+// Carry the finding chain forward verbatim from s1401's handoff line.
+const prevHandoff = rows[1];
+const carriedAt = prevHandoff.indexOf('Carried:');
+const carried = carriedAt >= 0 ? prevHandoff.slice(carriedAt) : '';
+
+const L = [];
+L.push('Last updated: 2026-08-02T21:12Z s1402 handoff, lock CLEARED —');
+L.push('🔴 **(A) THE FACTORY WAS HALF-DEADLOCKED AND THE HANDOFF ITSELF WAS DOING IT.** I drained nothing because nothing was drainable — `tasks/done/` held only s1400 `held-*` renames and s1401 drain markers, `tasks/running/` empty, five of six queues empty, no `tasks/CODEX-WALL`, `tasks/failed/` long closed. But `tasks/queue/main/` held the twin-banks cure, the runner (pid 35584) was alive, and it had not dispatched it in six hours. **The reason is F-1402-1.**');
+L.push('🎯 **(B) THE MECHANISM, READ FROM THE RUNNER not guessed.** `scripts/lane-runner-v3.sh` gated the main slot on `head -2 STATUS.md | grep -q "ACTIVE" + the year` — two lines. §4 orders each fire to archive the line-1 it replaces as a bullet, and fires put that bullet on **line 2**. So a lock archive satisfies the gate, and **main is skipped while line 1 says lock CLEARED.** Measured on the live file with the lock clear: `grep -c` = **1**. Measured across history: continuous from **s1393 (14:42) to now**, ~6h, while the cure sat in the queue. s1401 wrote that the runner "will pick it up as soon as this handoff clears" — the handoff was what stopped it.');
+L.push('⚠️ **(C) THE HALF NOBODY KNEW: THE SAME GATE ALSO FAILS OPEN.** The literal match misses every lock line written `Last updated: <stamp> (sNNNN fire) ACTIVE — ...`, a form **31 of 58 measured lock states** used — corroborated independently by the commit subjects (`s1392: lock ACTIVE — drain ...`). In each, the runner was free to dispatch Codex into main working tree **while a fire owned it**: two writers on main, the Mistake #12 shape. ⓘ **Never observed to fire**, and I will not dress that up — main-slot dispatch is vanishingly rare (**one run in factory history**), and that one went out at a handoff boundary under a well-formed lock. It is **loaded now**, because a main task is queued.');
+L.push('✅ **(D) CURED `8f10884e`, GUARDED, TEETH PROVEN BY MANUFACTURING THE DEFECT.** The gate now reads **line 1 only** and asks *says ACTIVE, does not say lock CLEARED*: **0 false-blocks / 0 false-releases over 120 STATUS commits**, and it fails SAFE — a handoff missing the clear phrase holds main rather than opening it. ⚠️ **Stated against my own result:** that predicate is definitionally identical to the classifier that scored it, so the 0/0 is **not independent evidence**; the load-bearing numbers are the **26 false-blocks and 31 false-releases** charged against the OLD predicate, which the commit subjects corroborate. `scripts/main-lock-gate-guard.test.sh` (7 fixtures, in `test:ledger-guards`) bites on **both** halves — structural rc=1, string-match rc=1 naming the form-3 lock — runner restored byte-identical after each probe.');
+L.push('🚩 **(E) THE CURE IS INERT UNTIL THE RUNNER RESTARTS** (bash already parsed the running loop). **Until then main is kept dispatchable by ORDERING ALONE, and this handoff does it: line 2 is s1401 handoff archive, line 3 is my lock archive.** No handoff line-1 in 62 has ever carried the lock-stamp literal, so a handoff bullet at line 2 is measured-safe; a lock bullet there is not. **Next fire: keep that order, and check your own line 1 does not quote a lock stamp.**');
+L.push('ⓘ **(F) AT MY OWN EXPENSE, TWICE.** I renamed the new guard to get it into `gate-caller-audit` denominator on the theory that its filename pattern omitted the word gate — then read `gate-caller-audit.mjs:242` and found the real rule is **`.mjs` non-test files only**, so `.sh` guards were never in scope and my rename bought nothing but a clearer name. **Verify the inference, not only the instrument.** And I nearly filed a second finding on that wrong mechanism.');
+L.push('✅ **(G) DUTIES, VERIFIED NOT INHERITED.** **ASSAYER 0** — `assets/crafting-queue/pending/` listed, genuinely empty. **TICKER 0 owed** — `ticker-digest-2026-08-01.md` present; today is 08-02. **GAZETTE 0, CORRECTLY** — the filter law wants a player-visible change and I merged a pipeline gate, not gameplay. **ART untouched.** **DEPLOY SKIPPED, correctly** — no gameplay code merged. **`test:ledger-guards` run as my LAST act** (s1301 law), including the new guard. **Lane fleet unchanged from s1401 and NOT re-measured** — I touched no lane.');
+L.push('➡️ **(H) NEXT FIRE, IN ORDER. (1) THE MAIN SLOT SHOULD NOW DISPATCH** — the twin-banks cure has been unblocked by this handoff line ordering; give the runner a cycle, then **drain it** (mechanical, fully evidenced, restores E1 driver 4 of 5). **(2) THEN queue `tasks/f1401-1-bound-the-headless-driver-and-rule-the-escort-bench.md`** — authored and leaf-registered by s1401, unqueued only because it collides with the twin-banks cure on `scripts/gr-sim.test.mjs`. **(3) Then the baron becomes drainable** (E1 driver 5 of 5). **(4) 🚫 DO NOT reset lane-a, lane-b or lane-c** — all three HOLD, and a/c carry the only copies of the refused E1 work. **(5) 🚫 DO NOT re-gate the two `held-s1400-*` done-moves** without landing the cures. **(6) Standing, re-affirmed:** do not re-run the desk-gate/FACT-currency/s1351/s1369–s1379 sweeps; do not widen the goal-tracker ancestry sample; F-1257-4 is a NON-DEFECT; do not author 079a; do not touch the retention epitaph; do not widen law-pointer-guard; do NOT prune `test:ledger-guards`; never hand-edit the suite red inventory; DO NOT fix cp03 (F-1396-2) or touch the four files in `7c4f132f` without the owner word.');
+L.push('💡 **THE THROUGH-LINE: THE BOOKKEEPING IS PART OF THE MACHINE.** Every fire for six hours wrote a correct handoff, cleared its lock honestly, and named the twin-banks drain as the next fire top priority — and each one silently re-armed the thing that made that drain impossible, because the document a fire writes is also an **input to a program nobody was reading**. ⚠️ The sharper half: the gate was wrong in the direction everyone could eventually see (main starved) **and** in the direction nobody could (main left open while a fire worked), and only the second one can corrupt a tree. **A gate that has been quietly wrong for 58 lock states still reports nothing — you have to go ask it.** The cheap discriminator was not reasoning about the handoff protocol; it was `head -2 STATUS.md | grep -c`, one command, ten seconds, run because the runner was alive and the queue was not moving.');
+L.push('🔺 **OWNER DESK — one genuinely new ask tonight, and it is ten seconds.** ⭐⭐⭐ **RESTART THE LANE RUNNER** (`scripts/lane-runner-v3.sh`, Ctrl+C and relaunch in its Terminal). The F-1402-1 cure is committed but bash already parsed the running loop, so it is inert until you do. Until then the factory is safe only because this handoff is ordered to keep it so — one carelessly-worded line 1 re-deadlocks the main slot. No decision, no risk, no design. ⭐⭐ **F-1396-4 — carve the uncontested files out of `7c4f132f`.** Buys **4 of 8** red project-results, not 6 (F-1399-1, proven by control); release the AP-11 fixture too and it buys all 6. ⭐⭐ **CLOSE LAUNCH (`rf-05-fixed-version`)** — the vE1.0 tag + your final E1 walk blessing; sole gate on F-CEN-1..8 and the E10 Static ladder. ⭐⭐ **THE 27-MAP CAMPAIGN IS STILL WAITING ON YOU, SINCE 2026-07-18** — 25 maps wired, landmarked and playable; all 27 OWNER VERDICT cells are `—`. *Partial verdicts are useful — play as many as you have patience for and I file the rest.* ⭐ **AP-03 RE-GREENLIGHT — one word, three leaves, 38th consecutive carry.** Rec UNCHANGED: greenlight. 💵 Carried from s1367: was the 2026-07-11 pose-library run charged **108 credits or 324**? 🟢 **F-1330-1 remains a high-leverage owner word** (73rd carry, rec **(a)**).');
+L.push('🟢 **F-1402-1 (new — CURED: the main-slot lock gate was blind in both directions; inert until the runner restarts)** · ' + carried.replace(/^Carried:\s*/, 'Carried: '));
+
+const line1 = L.join(' ');
+
+// The whole point of this fire: line 1 must not itself satisfy the runner's legacy gate.
+const legacy = 'ACTIVE' + ' ' + '2';
+if (line1.includes(legacy)) {
+  console.error('ABORT: handoff line-1 contains the legacy lock literal — it would re-block main');
+  process.exit(2);
+}
+
+const lockArchive = '- **s1402 lock (line-1 archive):** ' + myLock;
+const out = [line1, rows[1], lockArchive, ...rows.slice(2)];
+writeFileSync(P, out.join('\n'));
+
+const head2 = out.slice(0, 2).join('\n');
+console.log('handoff written.');
+console.log('legacy gate on head-2 (want 0 = main dispatchable): ' + (head2.includes(legacy) ? 1 : 0));
+console.log('new gate on line-1 (want FREE): ' + (/ACTIVE/.test(line1) && !/lock CLEARED/.test(line1) ? 'HOLD' : 'FREE'));

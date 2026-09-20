@@ -1,0 +1,26 @@
+== A. THE DEFECT: superseded predecessor, shadowed by its longer-named merged successor ==
+A1 ask the SUPERSEDED predecessor by its own taskFile
+    input : lane-blocked-storage-boot.md
+    rc=1  ⛔ CLOSED — DO NOT DRAIN: lane-blocked-storage-boot.md [blocked-storage-boot]
+    EXPECTED (correct): rc=1 ⛔ CLOSED   ACTUAL: rc=1
+
+== B. CONTROL: the same predecessor ALONE (no successor to shadow it) ==
+B1 one-leaf fixture — proves the status word is refused when nothing shadows it
+    input : lane-blocked-storage-boot.md
+    rc=1  ⛔ CLOSED — DO NOT DRAIN: lane-blocked-storage-boot.md [blocked-storage-boot]
+
+== C. CONTROL: ask the SUCCESSOR — must stay CLEAR, a lawful drain must not be reddened ==
+C1
+    input : lane-blocked-storage-boot-2.md
+    rc=0  ✅ CLEAR — lane-blocked-storage-boot-2.md [blocked-storage-boot-2] status="merged"
+
+== D. CONTROL: blocked predecessor is NOT shadowed (line 220 scans ALL hits) ==
+D1 predecessor blocked instead of superseded
+    input : lane-blocked-storage-boot.md
+    rc=1  ⛔ BLOCKED — DO NOT DRAIN: lane-blocked-storage-boot.md
+
+== E. THE REVERSE FALSE POSITIVE: merged successor shadowed by a LONGER-named closed predecessor ==
+E1 ask the MERGED successor; a longer closed leaf contains its key
+    input : lane-storage-boot-2.md
+    rc=0  ✅ CLEAR — lane-storage-boot-2.md [storage-boot-2] status="merged"
+    EXPECTED (correct): rc=0 ✅ CLEAR   ACTUAL: rc=0

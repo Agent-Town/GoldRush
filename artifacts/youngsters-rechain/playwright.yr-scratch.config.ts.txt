@@ -1,0 +1,19 @@
+import { defineConfig } from '@playwright/test';
+import baseConfig from './playwright.config';
+
+/**
+ * youngsters-rechain scratch config (NOT COMMITTED): self-boot a dev server on port 5314, this
+ * worktree's own, so the gate never touches 5188 or a sibling agent's port. Same projects and
+ * viewports as the default config, so a pass here means what a pass there means.
+ * A DEV SERVER, NOT A PREVIEW (F-1457-1): specs that runtime-import `/src/*.ts` 404 on a preview.
+ */
+export default defineConfig({
+  ...baseConfig,
+  use: { ...baseConfig.use, baseURL: 'http://127.0.0.1:5314' },
+  webServer: {
+    command: 'npx vite --host 127.0.0.1 --port 5314 --strictPort',
+    url: 'http://127.0.0.1:5314',
+    reuseExistingServer: false,
+    timeout: 60_000,
+  },
+});

@@ -1,0 +1,67 @@
+{
+  "baseSha": "1a58335f65645b8491e50763e10a32d12d8696f1",
+  "target": "Complete E6 Mesa ensemble reads as a warm atomic civic town at gameplay distance while compact transforms retain their inherited silhouettes.",
+  "freshReferenceRule": "all current-era PNGs rerendered from tracked files on this base; no old PNG input",
+  "dependencies": {
+    "mesa": {
+      "branchTip": "60242186e7bd7e72050146d06533d56922e2fc4e",
+      "sha256": "067c8c652134258379315a41200caf423ff3e9cb70a1b9d8f2607ee691aafdc3",
+      "usage": "evidence only"
+    },
+    "pilot": {
+      "branchTip": "cfdff259c5d3f271f2022b23341d1da4a6f0c4f2",
+      "assets": {
+        "atomic_diner": [
+          "assets/pilots/tavern-3d/tavern.e6.glb",
+          "68ec4ed82ec24c42386a2abf6ff0fc4738556be4e380a9f06bc7e3de4478fd74"
+        ],
+        "reactor_dome": [
+          "assets/pilots/reactor-dome-3d/reactor-dome.glb",
+          "64c81b9b6e622890556cb057f3de230ff76f66731d370e08a2f2f19dda61b5ea"
+        ],
+        "isotope_kitchen": [
+          "assets/pilots/isotope-kitchen-3d/isotope-kitchen.glb",
+          "9664b671eb91bfae861ff70b11014ba2f393c0adb150a0b35a330c38afedf7b6"
+        ]
+      },
+      "usage": "evidence only"
+    }
+  },
+  "placements": {
+    "atomicDiner": "tavern slot",
+    "isotopeKitchen": "general_store slot",
+    "isotopeInstitute": "schoolhouse slot",
+    "decayClock": "claim_office slot",
+    "appliancePen": "assay_office slot",
+    "reactorDome": [
+      7.0,
+      -16.7,
+      1.18
+    ],
+    "catalogWarehouse": [
+      -7.4,
+      -16.6,
+      1.18
+    ]
+  },
+  "comparisonMetrics": {
+    "mae": 4.131285667419434,
+    "rmse": 13.450758934020996,
+    "diffRatio16": 0.0937060546875,
+    "diffRatio32": 0.0424345703125,
+    "diffRatio64": 0.0124794921875,
+    "thresholdMismatchProxy": "diffRatio16 (pixelmatch unavailable; no dependency installed)",
+    "edgeEnergyBase": 1.683718204498291,
+    "edgeEnergyCandidate": 2.2751786708831787,
+    "edgeEnergyRatio": 1.3512823581695557,
+    "edgeDiffRatio32": 0.0039375,
+    "avgLuminanceBase": 147.82998657226562,
+    "avgLuminanceCandidate": 146.6438446044922,
+    "avgLuminanceDelta": -1.1861419677734375,
+    "diagnosticDistance": 0.10441236311160934
+  },
+  "visualReview": {
+    "localFullFrameCropAndTurntables": "required before delivery",
+    "independentSubagent": "not run: this session explicitly forbids delegation; limitation recorded"
+  }
+}

@@ -1,0 +1,4662 @@
+[
+  {
+    "width": 1280,
+    "arm": "before",
+    "focus": "mine-spur-kit",
+    "back": 8,
+    "hero": {
+      "x": -14,
+      "y": 0.06367902622868626,
+      "z": -10
+    },
+    "performance": {
+      "tier": "full",
+      "override": "full",
+      "source": "override",
+      "reason": "settings override",
+      "gpuRenderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Max, Unspecified Version)",
+      "deviceMemory": 32,
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.0.0 Safari/537.36",
+      "config": {
+        "maxDpr": 2,
+        "shadowsQuality": "soft",
+        "shadowMapSize": 1536,
+        "fogNear": 42,
+        "fogFar": 88,
+        "postEnabled": true,
+        "postPaperGrainOpacity": 0.008,
+        "detailDensity": 1,
+        "detailMobileDensity": 0.42,
+        "terrainSegments": 64,
+        "terrainMobileSegments": 40,
+        "vistaSegments": 12,
+        "vistaMobileSegments": 7,
+        "waterQuality": 1,
+        "waterMobileQuality": 0.55,
+        "terrainMesh": false,
+        "terrainSplat": false,
+        "terrainMeshVertexStep": 1,
+        "floatTextPool": 12,
+        "combatVfxPuffs": 32,
+        "combatVfxTicks": 48,
+        "combatVfxRings": 8,
+        "freedWalkerCap": 10,
+        "enemyBarCap": 60
+      },
+      "runtimeVerdict": 0
+    },
+    "bodyBounds": {
+      "world": {
+        "min": [
+          -19.243525993156457,
+          0.21963825821876526,
+          -26.921533502886824
+        ],
+        "max": [
+          -8.756474006843543,
+          1.9596382677555084,
+          -9.078466497113176
+        ]
+      },
+      "corners": [
+        {
+          "x": 511.75802856500695,
+          "y": 150.5308206894973,
+          "z": 0.9973025548473048,
+          "inView": true
+        },
+        {
+          "x": 464.40581234799754,
+          "y": 515.813515606879,
+          "z": 0.9955684565037598,
+          "inView": true
+        },
+        {
+          "x": 507.6194221008619,
+          "y": 114.20647598967793,
+          "z": 0.9971508949643918,
+          "inView": true
+        },
+        {
+          "x": 456.5545326167983,
+          "y": 481.81890842924895,
+          "z": 0.9952807956987783,
+          "inView": true
+        },
+        {
+          "x": 768.2773176439031,
+          "y": 150.53892168869942,
+          "z": 0.9973025163896129,
+          "inView": true
+        },
+        {
+          "x": 815.5813769648478,
+          "y": 515.8286982405524,
+          "z": 0.9955683844275836,
+          "inView": true
+        },
+        {
+          "x": 772.4170997665311,
+          "y": 114.2145315737404,
+          "z": 0.9971508539844345,
+          "inView": true
+        },
+        {
+          "x": 823.4321757819464,
+          "y": 481.8343720498512,
+          "z": 0.995280717033034,
+          "inView": true
+        }
+      ]
+    },
+    "primaryBounds": null,
+    "water": [
+      {
+        "name": "SculptLivingWater",
+        "visible": true,
+        "y": -0.32599999284744263,
+        "depthTest": true,
+        "depthWrite": false
+      }
+    ],
+    "materials": [
+      {
+        "id": "trestle-crossing",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.225,
+          0.225
+        ],
+        "authoredEmissive": [
+          1.5,
+          1.5
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "south-boiler-site",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.217,
+          0.217
+        ],
+        "authoredEmissive": [
+          1.45,
+          1.45
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "north-boiler-site",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.217,
+          0.217
+        ],
+        "authoredEmissive": [
+          1.45,
+          1.45
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "south-approach-kit",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.225,
+          0.225
+        ],
+        "authoredEmissive": [
+          1.5,
+          1.5
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "north-approach-kit",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.225,
+          0.225
+        ],
+        "authoredEmissive": [
+          1.5,
+          1.5
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "mine-spur-kit",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.195,
+          0.195
+        ],
+        "authoredEmissive": [
+          1.3,
+          1.3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      }
+    ],
+    "persistentSelector": ".hud-panel,.hud-pause,.world-info-note,#touch-controls",
+    "errors": []
+  },
+  {
+    "width": 1280,
+    "arm": "before",
+    "focus": "south-approach-kit",
+    "back": "entry",
+    "hero": {
+      "x": 12,
+      "y": 0.8385334587097169,
+      "z": -18
+    },
+    "performance": {
+      "tier": "full",
+      "override": "full",
+      "source": "override",
+      "reason": "settings override",
+      "gpuRenderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Max, Unspecified Version)",
+      "deviceMemory": 32,
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.0.0 Safari/537.36",
+      "config": {
+        "maxDpr": 2,
+        "shadowsQuality": "soft",
+        "shadowMapSize": 1536,
+        "fogNear": 42,
+        "fogFar": 88,
+        "postEnabled": true,
+        "postPaperGrainOpacity": 0.008,
+        "detailDensity": 1,
+        "detailMobileDensity": 0.42,
+        "terrainSegments": 64,
+        "terrainMobileSegments": 40,
+        "vistaSegments": 12,
+        "vistaMobileSegments": 7,
+        "waterQuality": 1,
+        "waterMobileQuality": 0.55,
+        "terrainMesh": false,
+        "terrainSplat": false,
+        "terrainMeshVertexStep": 1,
+        "floatTextPool": 12,
+        "combatVfxPuffs": 32,
+        "combatVfxTicks": 48,
+        "combatVfxRings": 8,
+        "freedWalkerCap": 10,
+        "enemyBarCap": 60
+      },
+      "runtimeVerdict": 0
+    },
+    "bodyBounds": {
+      "world": {
+        "min": [
+          -7.050000190734863,
+          0.38476216870752966,
+          -25.35795783996582
+        ],
+        "max": [
+          7.050000190734863,
+          4.086578250708262,
+          -18.64204216003418
+        ]
+      },
+      "corners": [
+        {
+          "x": 102.21687998558174,
+          "y": 329.8391964215962,
+          "z": 0.9965783799382718,
+          "inView": true
+        },
+        {
+          "x": 30.909808340534326,
+          "y": 484.891446042676,
+          "z": 0.9958591261147945,
+          "inView": true
+        },
+        {
+          "x": 57.50486560957022,
+          "y": 251.16294574861823,
+          "z": 0.996127452680315,
+          "inView": true
+        },
+        {
+          "x": -27.08592343558749,
+          "y": 409.55168844029754,
+          "z": 0.9952742199922416,
+          "inView": false
+        },
+        {
+          "x": 500.25854296457726,
+          "y": 329.8243996060296,
+          "z": 0.9965784485774964,
+          "inView": true
+        },
+        {
+          "x": 481.73804539718475,
+          "y": 484.87246447071817,
+          "z": 0.995859214166198,
+          "inView": true
+        },
+        {
+          "x": 488.6404088964352,
+          "y": 251.14799720068265,
+          "z": 0.996127533207438,
+          "inView": true
+        },
+        {
+          "x": 466.6690557725742,
+          "y": 409.5320822660799,
+          "z": 0.9952743256097776,
+          "inView": true
+        }
+      ]
+    },
+    "primaryBounds": null,
+    "water": [
+      {
+        "name": "SculptLivingWater",
+        "visible": true,
+        "y": -0.32599999284744263,
+        "depthTest": true,
+        "depthWrite": false
+      }
+    ],
+    "materials": [
+      {
+        "id": "trestle-crossing",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.225,
+          0.225
+        ],
+        "authoredEmissive": [
+          1.5,
+          1.5
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "south-boiler-site",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.217,
+          0.217
+        ],
+        "authoredEmissive": [
+          1.45,
+          1.45
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "north-boiler-site",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.217,
+          0.217
+        ],
+        "authoredEmissive": [
+          1.45,
+          1.45
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "south-approach-kit",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.225,
+          0.225
+        ],
+        "authoredEmissive": [
+          1.5,
+          1.5
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "north-approach-kit",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.225,
+          0.225
+        ],
+        "authoredEmissive": [
+          1.5,
+          1.5
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "mine-spur-kit",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.195,
+          0.195
+        ],
+        "authoredEmissive": [
+          1.3,
+          1.3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      }
+    ],
+    "persistentSelector": ".hud-panel,.hud-pause,.world-info-note,#touch-controls",
+    "errors": []
+  },
+  {
+    "width": 1280,
+    "arm": "before",
+    "focus": "south-approach-kit",
+    "back": 9,
+    "hero": {
+      "x": 0,
+      "y": 0.21247968335946413,
+      "z": -13
+    },
+    "performance": {
+      "tier": "full",
+      "override": "full",
+      "source": "override",
+      "reason": "settings override",
+      "gpuRenderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Max, Unspecified Version)",
+      "deviceMemory": 32,
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.0.0 Safari/537.36",
+      "config": {
+        "maxDpr": 2,
+        "shadowsQuality": "soft",
+        "shadowMapSize": 1536,
+        "fogNear": 42,
+        "fogFar": 88,
+        "postEnabled": true,
+        "postPaperGrainOpacity": 0.008,
+        "detailDensity": 1,
+        "detailMobileDensity": 0.42,
+        "terrainSegments": 64,
+        "terrainMobileSegments": 40,
+        "vistaSegments": 12,
+        "vistaMobileSegments": 7,
+        "waterQuality": 1,
+        "waterMobileQuality": 0.55,
+        "terrainMesh": false,
+        "terrainSplat": false,
+        "terrainMeshVertexStep": 1,
+        "floatTextPool": 12,
+        "combatVfxPuffs": 32,
+        "combatVfxTicks": 48,
+        "combatVfxRings": 8,
+        "freedWalkerCap": 10,
+        "enemyBarCap": 60
+      },
+      "runtimeVerdict": 0
+    },
+    "bodyBounds": {
+      "world": {
+        "min": [
+          -7.050000190734863,
+          0.38476216870752966,
+          -25.35795783996582
+        ],
+        "max": [
+          7.050000190734863,
+          4.086578250708262,
+          -18.64204216003418
+        ]
+      },
+      "corners": [
+        {
+          "x": 454.73276077904217,
+          "y": 223.49835518972165,
+          "z": 0.9969530103358683,
+          "inView": true
+        },
+        {
+          "x": 432.06394459340186,
+          "y": 353.52308160390237,
+          "z": 0.9963353574149231,
+          "inView": true
+        },
+        {
+          "x": 440.47506298331996,
+          "y": 142.4920528894862,
+          "z": 0.9965644527168764,
+          "inView": true
+        },
+        {
+          "x": 413.9334409952329,
+          "y": 273.0802772921581,
+          "z": 0.995841267441567,
+          "inView": true
+        },
+        {
+          "x": 825.279521509795,
+          "y": 223.5041464451804,
+          "z": 0.996952982825825,
+          "inView": true
+        },
+        {
+          "x": 847.9405461935082,
+          "y": 353.5303764419281,
+          "z": 0.9963353227624523,
+          "inView": true
+        },
+        {
+          "x": 839.53824818818,
+          "y": 142.49781448813982,
+          "z": 0.9965644208096864,
+          "inView": true
+        },
+        {
+          "x": 866.0715618963038,
+          "y": 273.0876733776641,
+          "z": 0.9958412264827426,
+          "inView": true
+        }
+      ]
+    },
+    "primaryBounds": null,
+    "water": [
+      {
+        "name": "SculptLivingWater",
+        "visible": true,
+        "y": -0.32599999284744263,
+        "depthTest": true,
+        "depthWrite": false
+      }
+    ],
+    "materials": [
+      {
+        "id": "trestle-crossing",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.225,
+          0.225
+        ],
+        "authoredEmissive": [
+          1.5,
+          1.5
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "south-boiler-site",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.217,
+          0.217
+        ],
+        "authoredEmissive": [
+          1.45,
+          1.45
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "north-boiler-site",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.217,
+          0.217
+        ],
+        "authoredEmissive": [
+          1.45,
+          1.45
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "south-approach-kit",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.225,
+          0.225
+        ],
+        "authoredEmissive": [
+          1.5,
+          1.5
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "north-approach-kit",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.225,
+          0.225
+        ],
+        "authoredEmissive": [
+          1.5,
+          1.5
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "mine-spur-kit",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.195,
+          0.195
+        ],
+        "authoredEmissive": [
+          1.3,
+          1.3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      }
+    ],
+    "persistentSelector": ".hud-panel,.hud-pause,.world-info-note,#touch-controls",
+    "errors": []
+  },
+  {
+    "width": 1280,
+    "arm": "before",
+    "focus": "south-approach-kit",
+    "back": 14,
+    "hero": {
+      "x": 0,
+      "y": -0.2042045319080354,
+      "z": -8
+    },
+    "performance": {
+      "tier": "full",
+      "override": "full",
+      "source": "override",
+      "reason": "settings override",
+      "gpuRenderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Max, Unspecified Version)",
+      "deviceMemory": 32,
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.0.0 Safari/537.36",
+      "config": {
+        "maxDpr": 2,
+        "shadowsQuality": "soft",
+        "shadowMapSize": 1536,
+        "fogNear": 42,
+        "fogFar": 88,
+        "postEnabled": true,
+        "postPaperGrainOpacity": 0.008,
+        "detailDensity": 1,
+        "detailMobileDensity": 0.42,
+        "terrainSegments": 64,
+        "terrainMobileSegments": 40,
+        "vistaSegments": 12,
+        "vistaMobileSegments": 7,
+        "waterQuality": 1,
+        "waterMobileQuality": 0.55,
+        "terrainMesh": false,
+        "terrainSplat": false,
+        "terrainMeshVertexStep": 1,
+        "floatTextPool": 12,
+        "combatVfxPuffs": 32,
+        "combatVfxTicks": 48,
+        "combatVfxRings": 8,
+        "freedWalkerCap": 10,
+        "enemyBarCap": 60
+      },
+      "runtimeVerdict": 0
+    },
+    "bodyBounds": {
+      "world": {
+        "min": [
+          -7.050000190734863,
+          0.38476216870752966,
+          -25.35795783996582
+        ],
+        "max": [
+          7.050000190734863,
+          4.086578250708262,
+          -18.64204216003418
+        ]
+      },
+      "corners": [
+        {
+          "x": 467.34838471280847,
+          "y": 135.23475253810352,
+          "z": 0.9972969605132324,
+          "inView": true
+        },
+        {
+          "x": 447.82904900214066,
+          "y": 245.4217156505039,
+          "z": 0.9967650263972495,
+          "inView": true
+        },
+        {
+          "x": 455.0312584738798,
+          "y": 53.84368730191187,
+          "z": 0.9969612984930412,
+          "inView": true
+        },
+        {
+          "x": 432.44535619664714,
+          "y": 162.9129654233763,
+          "z": 0.9963457953765619,
+          "inView": true
+        },
+        {
+          "x": 812.6516152881325,
+          "y": 135.234752538374,
+          "z": 0.997296960513231,
+          "inView": true
+        },
+        {
+          "x": 832.1709509984362,
+          "y": 245.42171565083902,
+          "z": 0.9967650263972481,
+          "inView": true
+        },
+        {
+          "x": 824.9687415271319,
+          "y": 53.843687302177614,
+          "z": 0.9969612984930397,
+          "inView": true
+        },
+        {
+          "x": 847.5546438039811,
+          "y": 162.91296542371074,
+          "z": 0.9963457953765599,
+          "inView": true
+        }
+      ]
+    },
+    "primaryBounds": null,
+    "water": [
+      {
+        "name": "SculptLivingWater",
+        "visible": true,
+        "y": -0.32599999284744263,
+        "depthTest": true,
+        "depthWrite": false
+      }
+    ],
+    "materials": [
+      {
+        "id": "trestle-crossing",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.225,
+          0.225
+        ],
+        "authoredEmissive": [
+          1.5,
+          1.5
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "south-boiler-site",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.217,
+          0.217
+        ],
+        "authoredEmissive": [
+          1.45,
+          1.45
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "north-boiler-site",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.217,
+          0.217
+        ],
+        "authoredEmissive": [
+          1.45,
+          1.45
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "south-approach-kit",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.225,
+          0.225
+        ],
+        "authoredEmissive": [
+          1.5,
+          1.5
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "north-approach-kit",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.225,
+          0.225
+        ],
+        "authoredEmissive": [
+          1.5,
+          1.5
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "mine-spur-kit",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.195,
+          0.195
+        ],
+        "authoredEmissive": [
+          1.3,
+          1.3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      }
+    ],
+    "persistentSelector": ".hud-panel,.hud-pause,.world-info-note,#touch-controls",
+    "errors": []
+  },
+  {
+    "width": 1280,
+    "arm": "before",
+    "focus": "south-approach-kit",
+    "back": 20,
+    "hero": {
+      "x": 0,
+      "y": -0.7298206512133281,
+      "z": -2
+    },
+    "performance": {
+      "tier": "full",
+      "override": "full",
+      "source": "override",
+      "reason": "settings override",
+      "gpuRenderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Max, Unspecified Version)",
+      "deviceMemory": 32,
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.0.0 Safari/537.36",
+      "config": {
+        "maxDpr": 2,
+        "shadowsQuality": "soft",
+        "shadowMapSize": 1536,
+        "fogNear": 42,
+        "fogFar": 88,
+        "postEnabled": true,
+        "postPaperGrainOpacity": 0.008,
+        "detailDensity": 1,
+        "detailMobileDensity": 0.42,
+        "terrainSegments": 64,
+        "terrainMobileSegments": 40,
+        "vistaSegments": 12,
+        "vistaMobileSegments": 7,
+        "waterQuality": 1,
+        "waterMobileQuality": 0.55,
+        "terrainMesh": false,
+        "terrainSplat": false,
+        "terrainMeshVertexStep": 1,
+        "floatTextPool": 12,
+        "combatVfxPuffs": 32,
+        "combatVfxTicks": 48,
+        "combatVfxRings": 8,
+        "freedWalkerCap": 10,
+        "enemyBarCap": 60
+      },
+      "runtimeVerdict": 0
+    },
+    "bodyBounds": {
+      "world": {
+        "min": [
+          -7.050000190734863,
+          0.38476216870752966,
+          -25.35795783996582
+        ],
+        "max": [
+          7.050000190734863,
+          4.086578250708262,
+          -18.64204216003418
+        ]
+      },
+      "corners": [
+        {
+          "x": 480.32797205669306,
+          "y": 43.46486311998463,
+          "z": 0.9976506756919781,
+          "inView": true
+        },
+        {
+          "x": 463.77388729279016,
+          "y": 134.9952397447605,
+          "z": 0.9971995495586197,
+          "inView": true
+        },
+        {
+          "x": 469.8493734113691,
+          "y": -37.42825450151859,
+          "z": 0.9973651165833171,
+          "inView": false
+        },
+        {
+          "x": 450.92247100352864,
+          "y": 51.77880099696557,
+          "z": 0.996849327252679,
+          "inView": true
+        },
+        {
+          "x": 799.6720279433068,
+          "y": 43.46486311998463,
+          "z": 0.9976506756919781,
+          "inView": true
+        },
+        {
+          "x": 816.2261127072098,
+          "y": 134.9952397447605,
+          "z": 0.9971995495586197,
+          "inView": true
+        },
+        {
+          "x": 810.1506265886309,
+          "y": -37.42825450151859,
+          "z": 0.9973651165833171,
+          "inView": false
+        },
+        {
+          "x": 829.0775289964713,
+          "y": 51.77880099696557,
+          "z": 0.996849327252679,
+          "inView": true
+        }
+      ]
+    },
+    "primaryBounds": null,
+    "water": [
+      {
+        "name": "SculptLivingWater",
+        "visible": true,
+        "y": -0.32599999284744263,
+        "depthTest": true,
+        "depthWrite": false
+      }
+    ],
+    "materials": [
+      {
+        "id": "trestle-crossing",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.225,
+          0.225
+        ],
+        "authoredEmissive": [
+          1.5,
+          1.5
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "south-boiler-site",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.217,
+          0.217
+        ],
+        "authoredEmissive": [
+          1.45,
+          1.45
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "north-boiler-site",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.217,
+          0.217
+        ],
+        "authoredEmissive": [
+          1.45,
+          1.45
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "south-approach-kit",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.225,
+          0.225
+        ],
+        "authoredEmissive": [
+          1.5,
+          1.5
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "north-approach-kit",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.225,
+          0.225
+        ],
+        "authoredEmissive": [
+          1.5,
+          1.5
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "mine-spur-kit",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.195,
+          0.195
+        ],
+        "authoredEmissive": [
+          1.3,
+          1.3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      }
+    ],
+    "persistentSelector": ".hud-panel,.hud-pause,.world-info-note,#touch-controls",
+    "errors": []
+  },
+  {
+    "width": 1280,
+    "arm": "after",
+    "focus": "mine-spur-kit",
+    "back": 8,
+    "hero": {
+      "x": -14,
+      "y": 0.06367902622868626,
+      "z": -10
+    },
+    "performance": {
+      "tier": "full",
+      "override": "full",
+      "source": "override",
+      "reason": "settings override",
+      "gpuRenderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Max, Unspecified Version)",
+      "deviceMemory": 32,
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.0.0 Safari/537.36",
+      "config": {
+        "maxDpr": 2,
+        "shadowsQuality": "soft",
+        "shadowMapSize": 1536,
+        "fogNear": 42,
+        "fogFar": 88,
+        "postEnabled": true,
+        "postPaperGrainOpacity": 0.008,
+        "detailDensity": 1,
+        "detailMobileDensity": 0.42,
+        "terrainSegments": 64,
+        "terrainMobileSegments": 40,
+        "vistaSegments": 12,
+        "vistaMobileSegments": 7,
+        "waterQuality": 1,
+        "waterMobileQuality": 0.55,
+        "terrainMesh": false,
+        "terrainSplat": false,
+        "terrainMeshVertexStep": 1,
+        "floatTextPool": 12,
+        "combatVfxPuffs": 32,
+        "combatVfxTicks": 48,
+        "combatVfxRings": 8,
+        "freedWalkerCap": 10,
+        "enemyBarCap": 60
+      },
+      "runtimeVerdict": 0
+    },
+    "bodyBounds": {
+      "world": {
+        "min": [
+          -19.243525993156457,
+          0.21963825821876526,
+          -26.921533502886824
+        ],
+        "max": [
+          -8.756474006843543,
+          1.9596382677555084,
+          -9.078466497113176
+        ]
+      },
+      "corners": [
+        {
+          "x": 511.7578730915171,
+          "y": 150.53089049474102,
+          "z": 0.9973025549879405,
+          "inView": true
+        },
+        {
+          "x": 464.40588282155863,
+          "y": 515.813573020906,
+          "z": 0.9955684565709876,
+          "inView": true
+        },
+        {
+          "x": 507.6192619874993,
+          "y": 114.20654737111175,
+          "z": 0.9971508951234013,
+          "inView": true
+        },
+        {
+          "x": 456.5546068065316,
+          "y": 481.81896532876004,
+          "z": 0.9952807957897166,
+          "inView": true
+        },
+        {
+          "x": 768.277144746655,
+          "y": 150.53891623414185,
+          "z": 0.9973025168875248,
+          "inView": true
+        },
+        {
+          "x": 815.5814255041615,
+          "y": 515.8286146052301,
+          "z": 0.9955683851644062,
+          "inView": true
+        },
+        {
+          "x": 772.4169205869887,
+          "y": 114.21452811722665,
+          "z": 0.9971508545241526,
+          "inView": true
+        },
+        {
+          "x": 823.4322250729017,
+          "y": 481.8342852894362,
+          "z": 0.9952807178547861,
+          "inView": true
+        }
+      ]
+    },
+    "primaryBounds": null,
+    "water": [
+      {
+        "name": "SculptLivingWater",
+        "visible": true,
+        "y": -0.32599999284744263,
+        "depthTest": true,
+        "depthWrite": false
+      }
+    ],
+    "materials": [
+      {
+        "id": "trestle-crossing",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.39,
+          0.39
+        ],
+        "authoredEmissive": [
+          2.6,
+          2.6
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "south-boiler-site",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.375,
+          0.375
+        ],
+        "authoredEmissive": [
+          2.5,
+          2.5
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "north-boiler-site",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.375,
+          0.375
+        ],
+        "authoredEmissive": [
+          2.5,
+          2.5
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "south-approach-kit",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.33,
+          0.33
+        ],
+        "authoredEmissive": [
+          2.2,
+          2.2
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "north-approach-kit",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.33,
+          0.33
+        ],
+        "authoredEmissive": [
+          2.2,
+          2.2
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "mine-spur-kit",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.33,
+          0.33
+        ],
+        "authoredEmissive": [
+          2.2,
+          2.2
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      }
+    ],
+    "persistentSelector": ".hud-panel,.hud-pause,.world-info-note,#touch-controls",
+    "errors": []
+  },
+  {
+    "width": 1280,
+    "arm": "after",
+    "focus": "south-approach-kit",
+    "back": "entry",
+    "hero": {
+      "x": 12,
+      "y": 0.8385334587097169,
+      "z": -18
+    },
+    "performance": {
+      "tier": "full",
+      "override": "full",
+      "source": "override",
+      "reason": "settings override",
+      "gpuRenderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Max, Unspecified Version)",
+      "deviceMemory": 32,
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.0.0 Safari/537.36",
+      "config": {
+        "maxDpr": 2,
+        "shadowsQuality": "soft",
+        "shadowMapSize": 1536,
+        "fogNear": 42,
+        "fogFar": 88,
+        "postEnabled": true,
+        "postPaperGrainOpacity": 0.008,
+        "detailDensity": 1,
+        "detailMobileDensity": 0.42,
+        "terrainSegments": 64,
+        "terrainMobileSegments": 40,
+        "vistaSegments": 12,
+        "vistaMobileSegments": 7,
+        "waterQuality": 1,
+        "waterMobileQuality": 0.55,
+        "terrainMesh": false,
+        "terrainSplat": false,
+        "terrainMeshVertexStep": 1,
+        "floatTextPool": 12,
+        "combatVfxPuffs": 32,
+        "combatVfxTicks": 48,
+        "combatVfxRings": 8,
+        "freedWalkerCap": 10,
+        "enemyBarCap": 60
+      },
+      "runtimeVerdict": 0
+    },
+    "bodyBounds": {
+      "world": {
+        "min": [
+          -7.050000190734863,
+          0.38476216870752966,
+          -25.35795783996582
+        ],
+        "max": [
+          7.050000190734863,
+          4.086578250708262,
+          -18.64204216003418
+        ]
+      },
+      "corners": [
+        {
+          "x": 102.21687998423086,
+          "y": 329.83919642401156,
+          "z": 0.996578379938265,
+          "inView": true
+        },
+        {
+          "x": 30.90980834006963,
+          "y": 484.89144604551643,
+          "z": 0.9958591261147847,
+          "inView": true
+        },
+        {
+          "x": 57.50486560808433,
+          "y": 251.16294575105263,
+          "z": 0.9961274526803074,
+          "inView": true
+        },
+        {
+          "x": -27.085923436146544,
+          "y": 409.55168844318086,
+          "z": 0.9952742199922304,
+          "inView": false
+        },
+        {
+          "x": 500.25854296393624,
+          "y": 329.82439960675765,
+          "z": 0.9965784485774972,
+          "inView": true
+        },
+        {
+          "x": 481.7380453976989,
+          "y": 484.872464471394,
+          "z": 0.9958592141661984,
+          "inView": true
+        },
+        {
+          "x": 488.64040889575307,
+          "y": 251.1479972014123,
+          "z": 0.9961275332074393,
+          "inView": true
+        },
+        {
+          "x": 466.6690557731512,
+          "y": 409.5320822667273,
+          "z": 0.9952743256097785,
+          "inView": true
+        }
+      ]
+    },
+    "primaryBounds": null,
+    "water": [
+      {
+        "name": "SculptLivingWater",
+        "visible": true,
+        "y": -0.32599999284744263,
+        "depthTest": true,
+        "depthWrite": false
+      }
+    ],
+    "materials": [
+      {
+        "id": "trestle-crossing",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.39,
+          0.39
+        ],
+        "authoredEmissive": [
+          2.6,
+          2.6
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "south-boiler-site",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.375,
+          0.375
+        ],
+        "authoredEmissive": [
+          2.5,
+          2.5
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "north-boiler-site",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.375,
+          0.375
+        ],
+        "authoredEmissive": [
+          2.5,
+          2.5
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "south-approach-kit",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.33,
+          0.33
+        ],
+        "authoredEmissive": [
+          2.2,
+          2.2
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "north-approach-kit",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.33,
+          0.33
+        ],
+        "authoredEmissive": [
+          2.2,
+          2.2
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "mine-spur-kit",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.33,
+          0.33
+        ],
+        "authoredEmissive": [
+          2.2,
+          2.2
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      }
+    ],
+    "persistentSelector": ".hud-panel,.hud-pause,.world-info-note,#touch-controls",
+    "errors": []
+  },
+  {
+    "width": 1280,
+    "arm": "after",
+    "focus": "south-approach-kit",
+    "back": 9,
+    "hero": {
+      "x": 0,
+      "y": 0.21247968335946413,
+      "z": -13
+    },
+    "performance": {
+      "tier": "full",
+      "override": "full",
+      "source": "override",
+      "reason": "settings override",
+      "gpuRenderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Max, Unspecified Version)",
+      "deviceMemory": 32,
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.0.0 Safari/537.36",
+      "config": {
+        "maxDpr": 2,
+        "shadowsQuality": "soft",
+        "shadowMapSize": 1536,
+        "fogNear": 42,
+        "fogFar": 88,
+        "postEnabled": true,
+        "postPaperGrainOpacity": 0.008,
+        "detailDensity": 1,
+        "detailMobileDensity": 0.42,
+        "terrainSegments": 64,
+        "terrainMobileSegments": 40,
+        "vistaSegments": 12,
+        "vistaMobileSegments": 7,
+        "waterQuality": 1,
+        "waterMobileQuality": 0.55,
+        "terrainMesh": false,
+        "terrainSplat": false,
+        "terrainMeshVertexStep": 1,
+        "floatTextPool": 12,
+        "combatVfxPuffs": 32,
+        "combatVfxTicks": 48,
+        "combatVfxRings": 8,
+        "freedWalkerCap": 10,
+        "enemyBarCap": 60
+      },
+      "runtimeVerdict": 0
+    },
+    "bodyBounds": {
+      "world": {
+        "min": [
+          -7.050000190734863,
+          0.38476216870752966,
+          -25.35795783996582
+        ],
+        "max": [
+          7.050000190734863,
+          4.086578250708262,
+          -18.64204216003418
+        ]
+      },
+      "corners": [
+        {
+          "x": 454.7327607777902,
+          "y": 223.49835519062324,
+          "z": 0.9969530103358685,
+          "inView": true
+        },
+        {
+          "x": 432.0639445930266,
+          "y": 353.52308160479015,
+          "z": 0.9963353574149225,
+          "inView": true
+        },
+        {
+          "x": 440.4750629819837,
+          "y": 142.49205289040586,
+          "z": 0.9965644527168772,
+          "inView": true
+        },
+        {
+          "x": 413.93344099483784,
+          "y": 273.08027729304564,
+          "z": 0.995841267441567,
+          "inView": true
+        },
+        {
+          "x": 825.2795215082996,
+          "y": 223.5041464447865,
+          "z": 0.9969529828258314,
+          "inView": true
+        },
+        {
+          "x": 847.9405461928791,
+          "y": 353.53037644118416,
+          "z": 0.9963353227624596,
+          "inView": true
+        },
+        {
+          "x": 839.5382481865387,
+          "y": 142.49781448777065,
+          "z": 0.9965644208096942,
+          "inView": true
+        },
+        {
+          "x": 866.0715618955799,
+          "y": 273.0876733768972,
+          "z": 0.9958412264827519,
+          "inView": true
+        }
+      ]
+    },
+    "primaryBounds": null,
+    "water": [
+      {
+        "name": "SculptLivingWater",
+        "visible": true,
+        "y": -0.32599999284744263,
+        "depthTest": true,
+        "depthWrite": false
+      }
+    ],
+    "materials": [
+      {
+        "id": "trestle-crossing",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.39,
+          0.39
+        ],
+        "authoredEmissive": [
+          2.6,
+          2.6
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "south-boiler-site",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.375,
+          0.375
+        ],
+        "authoredEmissive": [
+          2.5,
+          2.5
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "north-boiler-site",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.375,
+          0.375
+        ],
+        "authoredEmissive": [
+          2.5,
+          2.5
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "south-approach-kit",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.33,
+          0.33
+        ],
+        "authoredEmissive": [
+          2.2,
+          2.2
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "north-approach-kit",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.33,
+          0.33
+        ],
+        "authoredEmissive": [
+          2.2,
+          2.2
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "mine-spur-kit",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.33,
+          0.33
+        ],
+        "authoredEmissive": [
+          2.2,
+          2.2
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      }
+    ],
+    "persistentSelector": ".hud-panel,.hud-pause,.world-info-note,#touch-controls",
+    "errors": []
+  },
+  {
+    "width": 1280,
+    "arm": "after",
+    "focus": "south-approach-kit",
+    "back": 14,
+    "hero": {
+      "x": 0,
+      "y": -0.2042045319080354,
+      "z": -8
+    },
+    "performance": {
+      "tier": "full",
+      "override": "full",
+      "source": "override",
+      "reason": "settings override",
+      "gpuRenderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Max, Unspecified Version)",
+      "deviceMemory": 32,
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.0.0 Safari/537.36",
+      "config": {
+        "maxDpr": 2,
+        "shadowsQuality": "soft",
+        "shadowMapSize": 1536,
+        "fogNear": 42,
+        "fogFar": 88,
+        "postEnabled": true,
+        "postPaperGrainOpacity": 0.008,
+        "detailDensity": 1,
+        "detailMobileDensity": 0.42,
+        "terrainSegments": 64,
+        "terrainMobileSegments": 40,
+        "vistaSegments": 12,
+        "vistaMobileSegments": 7,
+        "waterQuality": 1,
+        "waterMobileQuality": 0.55,
+        "terrainMesh": false,
+        "terrainSplat": false,
+        "terrainMeshVertexStep": 1,
+        "floatTextPool": 12,
+        "combatVfxPuffs": 32,
+        "combatVfxTicks": 48,
+        "combatVfxRings": 8,
+        "freedWalkerCap": 10,
+        "enemyBarCap": 60
+      },
+      "runtimeVerdict": 0
+    },
+    "bodyBounds": {
+      "world": {
+        "min": [
+          -7.050000190734863,
+          0.38476216870752966,
+          -25.35795783996582
+        ],
+        "max": [
+          7.050000190734863,
+          4.086578250708262,
+          -18.64204216003418
+        ]
+      },
+      "corners": [
+        {
+          "x": 467.3484148352074,
+          "y": 135.2348455024135,
+          "z": 0.9972969613340859,
+          "inView": true
+        },
+        {
+          "x": 447.82908077960064,
+          "y": 245.42176801372557,
+          "z": 0.9967650272632194,
+          "inView": true
+        },
+        {
+          "x": 455.03129542609156,
+          "y": 53.84379062426823,
+          "z": 0.996961299500016,
+          "inView": true
+        },
+        {
+          "x": 432.4453962604389,
+          "y": 162.91302225063143,
+          "z": 0.9963457964683464,
+          "inView": true
+        },
+        {
+          "x": 812.6515851681859,
+          "y": 135.23484550338907,
+          "z": 0.9972969613340811,
+          "inView": true
+        },
+        {
+          "x": 832.1709192224796,
+          "y": 245.4217680149342,
+          "z": 0.9967650272632136,
+          "inView": true
+        },
+        {
+          "x": 824.968704577557,
+          "y": 53.84379062522613,
+          "z": 0.9969612995000107,
+          "inView": true
+        },
+        {
+          "x": 847.5546037418263,
+          "y": 162.91302225183753,
+          "z": 0.9963457964683397,
+          "inView": true
+        }
+      ]
+    },
+    "primaryBounds": null,
+    "water": [
+      {
+        "name": "SculptLivingWater",
+        "visible": true,
+        "y": -0.32599999284744263,
+        "depthTest": true,
+        "depthWrite": false
+      }
+    ],
+    "materials": [
+      {
+        "id": "trestle-crossing",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.39,
+          0.39
+        ],
+        "authoredEmissive": [
+          2.6,
+          2.6
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "south-boiler-site",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.375,
+          0.375
+        ],
+        "authoredEmissive": [
+          2.5,
+          2.5
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "north-boiler-site",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.375,
+          0.375
+        ],
+        "authoredEmissive": [
+          2.5,
+          2.5
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "south-approach-kit",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.33,
+          0.33
+        ],
+        "authoredEmissive": [
+          2.2,
+          2.2
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "north-approach-kit",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.33,
+          0.33
+        ],
+        "authoredEmissive": [
+          2.2,
+          2.2
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "mine-spur-kit",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.33,
+          0.33
+        ],
+        "authoredEmissive": [
+          2.2,
+          2.2
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      }
+    ],
+    "persistentSelector": ".hud-panel,.hud-pause,.world-info-note,#touch-controls",
+    "errors": []
+  },
+  {
+    "width": 1280,
+    "arm": "after",
+    "focus": "south-approach-kit",
+    "back": 20,
+    "hero": {
+      "x": 0,
+      "y": -0.7298206512133281,
+      "z": -2
+    },
+    "performance": {
+      "tier": "full",
+      "override": "full",
+      "source": "override",
+      "reason": "settings override",
+      "gpuRenderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Max, Unspecified Version)",
+      "deviceMemory": 32,
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.0.0 Safari/537.36",
+      "config": {
+        "maxDpr": 2,
+        "shadowsQuality": "soft",
+        "shadowMapSize": 1536,
+        "fogNear": 42,
+        "fogFar": 88,
+        "postEnabled": true,
+        "postPaperGrainOpacity": 0.008,
+        "detailDensity": 1,
+        "detailMobileDensity": 0.42,
+        "terrainSegments": 64,
+        "terrainMobileSegments": 40,
+        "vistaSegments": 12,
+        "vistaMobileSegments": 7,
+        "waterQuality": 1,
+        "waterMobileQuality": 0.55,
+        "terrainMesh": false,
+        "terrainSplat": false,
+        "terrainMeshVertexStep": 1,
+        "floatTextPool": 12,
+        "combatVfxPuffs": 32,
+        "combatVfxTicks": 48,
+        "combatVfxRings": 8,
+        "freedWalkerCap": 10,
+        "enemyBarCap": 60
+      },
+      "runtimeVerdict": 0
+    },
+    "bodyBounds": {
+      "world": {
+        "min": [
+          -7.050000190734863,
+          0.38476216870752966,
+          -25.35795783996582
+        ],
+        "max": [
+          7.050000190734863,
+          4.086578250708262,
+          -18.64204216003418
+        ]
+      },
+      "corners": [
+        {
+          "x": 480.327972655663,
+          "y": 43.46486568622163,
+          "z": 0.9976506757083009,
+          "inView": true
+        },
+        {
+          "x": 463.77388792706347,
+          "y": 134.995241580803,
+          "z": 0.9971995495759047,
+          "inView": true
+        },
+        {
+          "x": 469.8493741327203,
+          "y": -37.428251637625024,
+          "z": 0.9973651166029751,
+          "inView": false
+        },
+        {
+          "x": 450.92247178454306,
+          "y": 51.77880304855034,
+          "z": 0.996849327273963,
+          "inView": true
+        },
+        {
+          "x": 799.672027344337,
+          "y": 43.46486568622163,
+          "z": 0.9976506757083009,
+          "inView": true
+        },
+        {
+          "x": 816.2261120729365,
+          "y": 134.995241580803,
+          "z": 0.9971995495759047,
+          "inView": true
+        },
+        {
+          "x": 810.1506258672796,
+          "y": -37.428251637625024,
+          "z": 0.9973651166029751,
+          "inView": false
+        },
+        {
+          "x": 829.077528215457,
+          "y": 51.77880304855034,
+          "z": 0.996849327273963,
+          "inView": true
+        }
+      ]
+    },
+    "primaryBounds": null,
+    "water": [
+      {
+        "name": "SculptLivingWater",
+        "visible": true,
+        "y": -0.32599999284744263,
+        "depthTest": true,
+        "depthWrite": false
+      }
+    ],
+    "materials": [
+      {
+        "id": "trestle-crossing",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.39,
+          0.39
+        ],
+        "authoredEmissive": [
+          2.6,
+          2.6
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "south-boiler-site",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.375,
+          0.375
+        ],
+        "authoredEmissive": [
+          2.5,
+          2.5
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "north-boiler-site",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.375,
+          0.375
+        ],
+        "authoredEmissive": [
+          2.5,
+          2.5
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "south-approach-kit",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.33,
+          0.33
+        ],
+        "authoredEmissive": [
+          2.2,
+          2.2
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "north-approach-kit",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.33,
+          0.33
+        ],
+        "authoredEmissive": [
+          2.2,
+          2.2
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "mine-spur-kit",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.33,
+          0.33
+        ],
+        "authoredEmissive": [
+          2.2,
+          2.2
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      }
+    ],
+    "persistentSelector": ".hud-panel,.hud-pause,.world-info-note,#touch-controls",
+    "errors": []
+  },
+  {
+    "width": 390,
+    "arm": "before",
+    "focus": "mine-spur-kit",
+    "back": 8,
+    "hero": {
+      "x": -14,
+      "y": 0.06367902622868626,
+      "z": -10
+    },
+    "performance": {
+      "tier": "full",
+      "override": "full",
+      "source": "override",
+      "reason": "settings override",
+      "gpuRenderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Max, Unspecified Version)",
+      "deviceMemory": 32,
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.0.0 Safari/537.36",
+      "config": {
+        "maxDpr": 2,
+        "shadowsQuality": "soft",
+        "shadowMapSize": 1536,
+        "fogNear": 42,
+        "fogFar": 88,
+        "postEnabled": true,
+        "postPaperGrainOpacity": 0.008,
+        "detailDensity": 1,
+        "detailMobileDensity": 0.42,
+        "terrainSegments": 64,
+        "terrainMobileSegments": 40,
+        "vistaSegments": 12,
+        "vistaMobileSegments": 7,
+        "waterQuality": 1,
+        "waterMobileQuality": 0.55,
+        "terrainMesh": false,
+        "terrainSplat": false,
+        "terrainMeshVertexStep": 1,
+        "floatTextPool": 12,
+        "combatVfxPuffs": 32,
+        "combatVfxTicks": 48,
+        "combatVfxRings": 8,
+        "freedWalkerCap": 10,
+        "enemyBarCap": 60
+      },
+      "runtimeVerdict": 0
+    },
+    "bodyBounds": {
+      "world": {
+        "min": [
+          -19.243525993156457,
+          0.21963825821876526,
+          -26.921533502886824
+        ],
+        "max": [
+          -8.756474006843543,
+          1.9596382677555084,
+          -9.078466497113176
+        ]
+      },
+      "corners": [
+        {
+          "x": 59.705705035386224,
+          "y": 158.8095733764473,
+          "z": 0.9973025541897197,
+          "inView": true
+        },
+        {
+          "x": 9.747702319937805,
+          "y": 544.182892673728,
+          "z": 0.9955684566006007,
+          "inView": true
+        },
+        {
+          "x": 55.33950458612915,
+          "y": 120.48738275109228,
+          "z": 0.9971508942017312,
+          "inView": true
+        },
+        {
+          "x": 1.4645796962903974,
+          "y": 508.3185909488105,
+          "z": 0.9952807956855568,
+          "inView": true
+        },
+        {
+          "x": 330.3336542986439,
+          "y": 158.81859414799487,
+          "z": 0.9973025135981752,
+          "inView": true
+        },
+        {
+          "x": 380.2380324980846,
+          "y": 544.1997991129136,
+          "z": 0.9955683805252371,
+          "inView": true
+        },
+        {
+          "x": 334.70116388889716,
+          "y": 120.49635295163837,
+          "z": 0.9971508509479691,
+          "inView": true
+        },
+        {
+          "x": 388.52061960537816,
+          "y": 508.33581027876704,
+          "z": 0.9952807126549943,
+          "inView": true
+        }
+      ]
+    },
+    "primaryBounds": null,
+    "water": [
+      {
+        "name": "SculptLivingWater",
+        "visible": true,
+        "y": -0.32599999284744263,
+        "depthTest": true,
+        "depthWrite": false
+      }
+    ],
+    "materials": [
+      {
+        "id": "trestle-crossing",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.225,
+          0.225
+        ],
+        "authoredEmissive": [
+          1.5,
+          1.5
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "south-boiler-site",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.217,
+          0.217
+        ],
+        "authoredEmissive": [
+          1.45,
+          1.45
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "north-boiler-site",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.217,
+          0.217
+        ],
+        "authoredEmissive": [
+          1.45,
+          1.45
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "south-approach-kit",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.225,
+          0.225
+        ],
+        "authoredEmissive": [
+          1.5,
+          1.5
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "north-approach-kit",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.225,
+          0.225
+        ],
+        "authoredEmissive": [
+          1.5,
+          1.5
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "mine-spur-kit",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.195,
+          0.195
+        ],
+        "authoredEmissive": [
+          1.3,
+          1.3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      }
+    ],
+    "persistentSelector": ".hud-panel,.hud-pause,.world-info-note,#touch-controls",
+    "errors": []
+  },
+  {
+    "width": 390,
+    "arm": "before",
+    "focus": "south-approach-kit",
+    "back": "entry",
+    "hero": {
+      "x": 12,
+      "y": 0.8385334587097169,
+      "z": -18
+    },
+    "performance": {
+      "tier": "full",
+      "override": "full",
+      "source": "override",
+      "reason": "settings override",
+      "gpuRenderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Max, Unspecified Version)",
+      "deviceMemory": 32,
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.0.0 Safari/537.36",
+      "config": {
+        "maxDpr": 2,
+        "shadowsQuality": "soft",
+        "shadowMapSize": 1536,
+        "fogNear": 42,
+        "fogFar": 88,
+        "postEnabled": true,
+        "postPaperGrainOpacity": 0.008,
+        "detailDensity": 1,
+        "detailMobileDensity": 0.42,
+        "terrainSegments": 64,
+        "terrainMobileSegments": 40,
+        "vistaSegments": 12,
+        "vistaMobileSegments": 7,
+        "waterQuality": 1,
+        "waterMobileQuality": 0.55,
+        "terrainMesh": false,
+        "terrainSplat": false,
+        "terrainMeshVertexStep": 1,
+        "floatTextPool": 12,
+        "combatVfxPuffs": 32,
+        "combatVfxTicks": 48,
+        "combatVfxRings": 8,
+        "freedWalkerCap": 10,
+        "enemyBarCap": 60
+      },
+      "runtimeVerdict": 0
+    },
+    "bodyBounds": {
+      "world": {
+        "min": [
+          -7.050000190734863,
+          0.38476216870752966,
+          -25.35795783996582
+        ],
+        "max": [
+          7.050000190734863,
+          4.086578250708262,
+          -18.64204216003418
+        ]
+      },
+      "corners": [
+        {
+          "x": -372.3612669151714,
+          "y": 347.9804866243101,
+          "z": 0.9965783795716698,
+          "inView": false
+        },
+        {
+          "x": -447.59017824592155,
+          "y": 511.5606336352974,
+          "z": 0.9958591255953452,
+          "inView": false
+        },
+        {
+          "x": -419.5324496154818,
+          "y": 264.97704317933193,
+          "z": 0.9961274522710634,
+          "inView": false
+        },
+        {
+          "x": -508.7756805564138,
+          "y": 432.0771916995133,
+          "z": 0.9952742193965008,
+          "inView": false
+        },
+        {
+          "x": 47.5727271275784,
+          "y": 347.96478209848675,
+          "z": 0.9965784486237086,
+          "inView": true
+        },
+        {
+          "x": 28.033666454047605,
+          "y": 511.5404876388328,
+          "z": 0.9958592141763151,
+          "inView": true
+        },
+        {
+          "x": 35.31559339728511,
+          "y": 264.9611776131749,
+          "z": 0.9961275332824973,
+          "inView": true
+        },
+        {
+          "x": 12.135885891181548,
+          "y": 432.0563827845943,
+          "z": 0.9952743256492508,
+          "inView": true
+        }
+      ]
+    },
+    "primaryBounds": null,
+    "water": [
+      {
+        "name": "SculptLivingWater",
+        "visible": true,
+        "y": -0.32599999284744263,
+        "depthTest": true,
+        "depthWrite": false
+      }
+    ],
+    "materials": [
+      {
+        "id": "trestle-crossing",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.225,
+          0.225
+        ],
+        "authoredEmissive": [
+          1.5,
+          1.5
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "south-boiler-site",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.217,
+          0.217
+        ],
+        "authoredEmissive": [
+          1.45,
+          1.45
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "north-boiler-site",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.217,
+          0.217
+        ],
+        "authoredEmissive": [
+          1.45,
+          1.45
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "south-approach-kit",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.225,
+          0.225
+        ],
+        "authoredEmissive": [
+          1.5,
+          1.5
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "north-approach-kit",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.225,
+          0.225
+        ],
+        "authoredEmissive": [
+          1.5,
+          1.5
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "mine-spur-kit",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.195,
+          0.195
+        ],
+        "authoredEmissive": [
+          1.3,
+          1.3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      }
+    ],
+    "persistentSelector": ".hud-panel,.hud-pause,.world-info-note,#touch-controls",
+    "errors": []
+  },
+  {
+    "width": 390,
+    "arm": "before",
+    "focus": "south-approach-kit",
+    "back": 9,
+    "hero": {
+      "x": 0,
+      "y": 0.21247968335946413,
+      "z": -13
+    },
+    "performance": {
+      "tier": "full",
+      "override": "full",
+      "source": "override",
+      "reason": "settings override",
+      "gpuRenderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Max, Unspecified Version)",
+      "deviceMemory": 32,
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.0.0 Safari/537.36",
+      "config": {
+        "maxDpr": 2,
+        "shadowsQuality": "soft",
+        "shadowMapSize": 1536,
+        "fogNear": 42,
+        "fogFar": 88,
+        "postEnabled": true,
+        "postPaperGrainOpacity": 0.008,
+        "detailDensity": 1,
+        "detailMobileDensity": 0.42,
+        "terrainSegments": 64,
+        "terrainMobileSegments": 40,
+        "vistaSegments": 12,
+        "vistaMobileSegments": 7,
+        "waterQuality": 1,
+        "waterMobileQuality": 0.55,
+        "terrainMesh": false,
+        "terrainSplat": false,
+        "terrainMeshVertexStep": 1,
+        "floatTextPool": 12,
+        "combatVfxPuffs": 32,
+        "combatVfxTicks": 48,
+        "combatVfxRings": 8,
+        "freedWalkerCap": 10,
+        "enemyBarCap": 60
+      },
+      "runtimeVerdict": 0
+    },
+    "bodyBounds": {
+      "world": {
+        "min": [
+          -7.050000190734863,
+          0.38476216870752966,
+          -25.35795783996582
+        ],
+        "max": [
+          7.050000190734863,
+          4.086578250708262,
+          -18.64204216003418
+        ]
+      },
+      "corners": [
+        {
+          "x": -0.45694503768890393,
+          "y": 235.7907709845306,
+          "z": 0.9969530103436592,
+          "inView": false
+        },
+        {
+          "x": -24.37254057817102,
+          "y": 372.9668568571205,
+          "z": 0.9963353574187825,
+          "inView": false
+        },
+        {
+          "x": -15.498816678290115,
+          "y": 150.32912219752257,
+          "z": 0.9965644527284534,
+          "inView": false
+        },
+        {
+          "x": -43.50022191903746,
+          "y": 288.0996982524503,
+          "z": 0.9958412674493904,
+          "inView": false
+        },
+        {
+          "x": 390.4698855044005,
+          "y": 235.7968725791895,
+          "z": 0.9969529828704465,
+          "inView": false
+        },
+        {
+          "x": 414.37727201539406,
+          "y": 372.9745426076612,
+          "z": 0.9963353228127046,
+          "inView": false
+        },
+        {
+          "x": 405.5128411629617,
+          "y": 150.3351925461291,
+          "z": 0.9965644208639808,
+          "inView": false
+        },
+        {
+          "x": 433.50549290331844,
+          "y": 288.1074906760593,
+          "z": 0.9958412265454019,
+          "inView": false
+        }
+      ]
+    },
+    "primaryBounds": null,
+    "water": [
+      {
+        "name": "SculptLivingWater",
+        "visible": true,
+        "y": -0.32599999284744263,
+        "depthTest": true,
+        "depthWrite": false
+      }
+    ],
+    "materials": [
+      {
+        "id": "trestle-crossing",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.225,
+          0.225
+        ],
+        "authoredEmissive": [
+          1.5,
+          1.5
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "south-boiler-site",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.217,
+          0.217
+        ],
+        "authoredEmissive": [
+          1.45,
+          1.45
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "north-boiler-site",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.217,
+          0.217
+        ],
+        "authoredEmissive": [
+          1.45,
+          1.45
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "south-approach-kit",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.225,
+          0.225
+        ],
+        "authoredEmissive": [
+          1.5,
+          1.5
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "north-approach-kit",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.225,
+          0.225
+        ],
+        "authoredEmissive": [
+          1.5,
+          1.5
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "mine-spur-kit",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.195,
+          0.195
+        ],
+        "authoredEmissive": [
+          1.3,
+          1.3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      }
+    ],
+    "persistentSelector": ".hud-panel,.hud-pause,.world-info-note,#touch-controls",
+    "errors": []
+  },
+  {
+    "width": 390,
+    "arm": "before",
+    "focus": "south-approach-kit",
+    "back": 14,
+    "hero": {
+      "x": 0,
+      "y": -0.2042045319080354,
+      "z": -8
+    },
+    "performance": {
+      "tier": "full",
+      "override": "full",
+      "source": "override",
+      "reason": "settings override",
+      "gpuRenderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Max, Unspecified Version)",
+      "deviceMemory": 32,
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.0.0 Safari/537.36",
+      "config": {
+        "maxDpr": 2,
+        "shadowsQuality": "soft",
+        "shadowMapSize": 1536,
+        "fogNear": 42,
+        "fogFar": 88,
+        "postEnabled": true,
+        "postPaperGrainOpacity": 0.008,
+        "detailDensity": 1,
+        "detailMobileDensity": 0.42,
+        "terrainSegments": 64,
+        "terrainMobileSegments": 40,
+        "vistaSegments": 12,
+        "vistaMobileSegments": 7,
+        "waterQuality": 1,
+        "waterMobileQuality": 0.55,
+        "terrainMesh": false,
+        "terrainSplat": false,
+        "terrainMeshVertexStep": 1,
+        "floatTextPool": 12,
+        "combatVfxPuffs": 32,
+        "combatVfxTicks": 48,
+        "combatVfxRings": 8,
+        "freedWalkerCap": 10,
+        "enemyBarCap": 60
+      },
+      "runtimeVerdict": 0
+    },
+    "bodyBounds": {
+      "world": {
+        "min": [
+          -7.050000190734863,
+          0.38476216870752966,
+          -25.35795783996582
+        ],
+        "max": [
+          7.050000190734863,
+          4.086578250708262,
+          -18.64204216003418
+        ]
+      },
+      "corners": [
+        {
+          "x": 12.852545904328993,
+          "y": 142.67266390825716,
+          "z": 0.9972969605132032,
+          "inView": true
+        },
+        {
+          "x": -7.740353284190888,
+          "y": 258.91990999350946,
+          "z": 0.9967650263972282,
+          "inView": false
+        },
+        {
+          "x": -0.14202227576705195,
+          "y": 56.805090083302275,
+          "z": 0.9969612984930014,
+          "inView": false
+        },
+        {
+          "x": -23.97014919288206,
+          "y": 171.87317850357488,
+          "z": 0.996345795376529,
+          "inView": false
+        },
+        {
+          "x": 377.1474541671454,
+          "y": 142.67266392880603,
+          "z": 0.9972969605131092,
+          "inView": true
+        },
+        {
+          "x": 397.740353328005,
+          "y": 258.9199100189674,
+          "z": 0.9967650263971118,
+          "inView": false
+        },
+        {
+          "x": 390.14202235261865,
+          "y": 56.8050901034787,
+          "z": 0.9969612984928935,
+          "inView": false
+        },
+        {
+          "x": 413.9701492405935,
+          "y": 171.87317852897954,
+          "z": 0.996345795376393,
+          "inView": false
+        }
+      ]
+    },
+    "primaryBounds": null,
+    "water": [
+      {
+        "name": "SculptLivingWater",
+        "visible": true,
+        "y": -0.32599999284744263,
+        "depthTest": true,
+        "depthWrite": false
+      }
+    ],
+    "materials": [
+      {
+        "id": "trestle-crossing",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.225,
+          0.225
+        ],
+        "authoredEmissive": [
+          1.5,
+          1.5
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "south-boiler-site",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.217,
+          0.217
+        ],
+        "authoredEmissive": [
+          1.45,
+          1.45
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "north-boiler-site",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.217,
+          0.217
+        ],
+        "authoredEmissive": [
+          1.45,
+          1.45
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "south-approach-kit",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.225,
+          0.225
+        ],
+        "authoredEmissive": [
+          1.5,
+          1.5
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "north-approach-kit",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.225,
+          0.225
+        ],
+        "authoredEmissive": [
+          1.5,
+          1.5
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "mine-spur-kit",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.195,
+          0.195
+        ],
+        "authoredEmissive": [
+          1.3,
+          1.3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      }
+    ],
+    "persistentSelector": ".hud-panel,.hud-pause,.world-info-note,#touch-controls",
+    "errors": []
+  },
+  {
+    "width": 390,
+    "arm": "before",
+    "focus": "south-approach-kit",
+    "back": 20,
+    "hero": {
+      "x": 0,
+      "y": -0.7298206512133281,
+      "z": -2
+    },
+    "performance": {
+      "tier": "full",
+      "override": "full",
+      "source": "override",
+      "reason": "settings override",
+      "gpuRenderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Max, Unspecified Version)",
+      "deviceMemory": 32,
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.0.0 Safari/537.36",
+      "config": {
+        "maxDpr": 2,
+        "shadowsQuality": "soft",
+        "shadowMapSize": 1536,
+        "fogNear": 42,
+        "fogFar": 88,
+        "postEnabled": true,
+        "postPaperGrainOpacity": 0.008,
+        "detailDensity": 1,
+        "detailMobileDensity": 0.42,
+        "terrainSegments": 64,
+        "terrainMobileSegments": 40,
+        "vistaSegments": 12,
+        "vistaMobileSegments": 7,
+        "waterQuality": 1,
+        "waterMobileQuality": 0.55,
+        "terrainMesh": false,
+        "terrainSplat": false,
+        "terrainMeshVertexStep": 1,
+        "floatTextPool": 12,
+        "combatVfxPuffs": 32,
+        "combatVfxTicks": 48,
+        "combatVfxRings": 8,
+        "freedWalkerCap": 10,
+        "enemyBarCap": 60
+      },
+      "runtimeVerdict": 0
+    },
+    "bodyBounds": {
+      "world": {
+        "min": [
+          -7.050000190734863,
+          0.38476216870752966,
+          -25.35795783996582
+        ],
+        "max": [
+          7.050000190734863,
+          4.086578250708262,
+          -18.64204216003418
+        ]
+      },
+      "corners": [
+        {
+          "x": 26.54599970823499,
+          "y": 45.855384270333396,
+          "z": 0.9976506754127049,
+          "inView": true
+        },
+        {
+          "x": 9.08143964507846,
+          "y": 142.4199447896694,
+          "z": 0.9971995492628859,
+          "inView": true
+        },
+        {
+          "x": 15.491075928403346,
+          "y": -39.48686019314256,
+          "z": 0.9973651162469829,
+          "inView": false
+        },
+        {
+          "x": -4.476807188809743,
+          "y": 54.626598020138005,
+          "z": 0.9968493268885266,
+          "inView": false
+        },
+        {
+          "x": 363.4540002917654,
+          "y": 45.85538427033349,
+          "z": 0.9976506754127049,
+          "inView": true
+        },
+        {
+          "x": 380.91856035492185,
+          "y": 142.4199447896695,
+          "z": 0.9971995492628859,
+          "inView": true
+        },
+        {
+          "x": 374.5089240715971,
+          "y": -39.48686019314256,
+          "z": 0.9973651162469829,
+          "inView": false
+        },
+        {
+          "x": 394.47680718881,
+          "y": 54.626598020138005,
+          "z": 0.9968493268885265,
+          "inView": false
+        }
+      ]
+    },
+    "primaryBounds": null,
+    "water": [
+      {
+        "name": "SculptLivingWater",
+        "visible": true,
+        "y": -0.32599999284744263,
+        "depthTest": true,
+        "depthWrite": false
+      }
+    ],
+    "materials": [
+      {
+        "id": "trestle-crossing",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.225,
+          0.225
+        ],
+        "authoredEmissive": [
+          1.5,
+          1.5
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "south-boiler-site",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.217,
+          0.217
+        ],
+        "authoredEmissive": [
+          1.45,
+          1.45
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "north-boiler-site",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.217,
+          0.217
+        ],
+        "authoredEmissive": [
+          1.45,
+          1.45
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "south-approach-kit",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.225,
+          0.225
+        ],
+        "authoredEmissive": [
+          1.5,
+          1.5
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "north-approach-kit",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.225,
+          0.225
+        ],
+        "authoredEmissive": [
+          1.5,
+          1.5
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "mine-spur-kit",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.195,
+          0.195
+        ],
+        "authoredEmissive": [
+          1.3,
+          1.3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      }
+    ],
+    "persistentSelector": ".hud-panel,.hud-pause,.world-info-note,#touch-controls",
+    "errors": []
+  },
+  {
+    "width": 390,
+    "arm": "after",
+    "focus": "mine-spur-kit",
+    "back": 8,
+    "hero": {
+      "x": -14,
+      "y": 0.06367902622868626,
+      "z": -10
+    },
+    "performance": {
+      "tier": "full",
+      "override": "full",
+      "source": "override",
+      "reason": "settings override",
+      "gpuRenderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Max, Unspecified Version)",
+      "deviceMemory": 32,
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.0.0 Safari/537.36",
+      "config": {
+        "maxDpr": 2,
+        "shadowsQuality": "soft",
+        "shadowMapSize": 1536,
+        "fogNear": 42,
+        "fogFar": 88,
+        "postEnabled": true,
+        "postPaperGrainOpacity": 0.008,
+        "detailDensity": 1,
+        "detailMobileDensity": 0.42,
+        "terrainSegments": 64,
+        "terrainMobileSegments": 40,
+        "vistaSegments": 12,
+        "vistaMobileSegments": 7,
+        "waterQuality": 1,
+        "waterMobileQuality": 0.55,
+        "terrainMesh": false,
+        "terrainSplat": false,
+        "terrainMeshVertexStep": 1,
+        "floatTextPool": 12,
+        "combatVfxPuffs": 32,
+        "combatVfxTicks": 48,
+        "combatVfxRings": 8,
+        "freedWalkerCap": 10,
+        "enemyBarCap": 60
+      },
+      "runtimeVerdict": 0
+    },
+    "bodyBounds": {
+      "world": {
+        "min": [
+          -19.243525993156457,
+          0.21963825821876526,
+          -26.921533502886824
+        ],
+        "max": [
+          -8.756474006843543,
+          1.9596382677555084,
+          -9.078466497113176
+        ]
+      },
+      "corners": [
+        {
+          "x": 59.70466183905268,
+          "y": 158.81004198015285,
+          "z": 0.9973025549136253,
+          "inView": true
+        },
+        {
+          "x": 9.748159914748562,
+          "y": 544.1832802677501,
+          "z": 0.9955684565714086,
+          "inView": true
+        },
+        {
+          "x": 55.33843027762829,
+          "y": 120.4878591766831,
+          "z": 0.9971508950377019,
+          "inView": true
+        },
+        {
+          "x": 1.465061282159847,
+          "y": 508.31896999096284,
+          "z": 0.9952807957776785,
+          "inView": true
+        },
+        {
+          "x": 330.3325043144507,
+          "y": 158.818560092405,
+          "z": 0.9973025165839157,
+          "inView": true
+        },
+        {
+          "x": 380.23836978731254,
+          "y": 544.199244641319,
+          "z": 0.9955683847350923,
+          "inView": true
+        },
+        {
+          "x": 334.69997206790185,
+          "y": 120.49632953539444,
+          "z": 0.9971508541941205,
+          "inView": true
+        },
+        {
+          "x": 388.5209627439888,
+          "y": 508.3352298191671,
+          "z": 0.9952807173737244,
+          "inView": true
+        }
+      ]
+    },
+    "primaryBounds": null,
+    "water": [
+      {
+        "name": "SculptLivingWater",
+        "visible": true,
+        "y": -0.32599999284744263,
+        "depthTest": true,
+        "depthWrite": false
+      }
+    ],
+    "materials": [
+      {
+        "id": "trestle-crossing",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.39,
+          0.39
+        ],
+        "authoredEmissive": [
+          2.6,
+          2.6
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "south-boiler-site",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.375,
+          0.375
+        ],
+        "authoredEmissive": [
+          2.5,
+          2.5
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "north-boiler-site",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.375,
+          0.375
+        ],
+        "authoredEmissive": [
+          2.5,
+          2.5
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "south-approach-kit",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.33,
+          0.33
+        ],
+        "authoredEmissive": [
+          2.2,
+          2.2
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "north-approach-kit",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.33,
+          0.33
+        ],
+        "authoredEmissive": [
+          2.2,
+          2.2
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "mine-spur-kit",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.33,
+          0.33
+        ],
+        "authoredEmissive": [
+          2.2,
+          2.2
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      }
+    ],
+    "persistentSelector": ".hud-panel,.hud-pause,.world-info-note,#touch-controls",
+    "errors": []
+  },
+  {
+    "width": 390,
+    "arm": "after",
+    "focus": "south-approach-kit",
+    "back": "entry",
+    "hero": {
+      "x": 12,
+      "y": 0.8385334587097169,
+      "z": -18
+    },
+    "performance": {
+      "tier": "full",
+      "override": "full",
+      "source": "override",
+      "reason": "settings override",
+      "gpuRenderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Max, Unspecified Version)",
+      "deviceMemory": 32,
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.0.0 Safari/537.36",
+      "config": {
+        "maxDpr": 2,
+        "shadowsQuality": "soft",
+        "shadowMapSize": 1536,
+        "fogNear": 42,
+        "fogFar": 88,
+        "postEnabled": true,
+        "postPaperGrainOpacity": 0.008,
+        "detailDensity": 1,
+        "detailMobileDensity": 0.42,
+        "terrainSegments": 64,
+        "terrainMobileSegments": 40,
+        "vistaSegments": 12,
+        "vistaMobileSegments": 7,
+        "waterQuality": 1,
+        "waterMobileQuality": 0.55,
+        "terrainMesh": false,
+        "terrainSplat": false,
+        "terrainMeshVertexStep": 1,
+        "floatTextPool": 12,
+        "combatVfxPuffs": 32,
+        "combatVfxTicks": 48,
+        "combatVfxRings": 8,
+        "freedWalkerCap": 10,
+        "enemyBarCap": 60
+      },
+      "runtimeVerdict": 0
+    },
+    "bodyBounds": {
+      "world": {
+        "min": [
+          -7.050000190734863,
+          0.38476216870752966,
+          -25.35795783996582
+        ],
+        "max": [
+          7.050000190734863,
+          4.086578250708262,
+          -18.64204216003418
+        ]
+      },
+      "corners": [
+        {
+          "x": -372.3611999445622,
+          "y": 347.98036709143616,
+          "z": 0.9965783798977198,
+          "inView": false
+        },
+        {
+          "x": -447.5901550817606,
+          "y": 511.5604930589203,
+          "z": 0.9958591260573352,
+          "inView": false
+        },
+        {
+          "x": -419.5323759445901,
+          "y": 264.976922743716,
+          "z": 0.9961274526350453,
+          "inView": false
+        },
+        {
+          "x": -508.77565269036097,
+          "y": 432.07704904666195,
+          "z": 0.9952742199263432,
+          "inView": false
+        },
+        {
+          "x": 47.572758878649836,
+          "y": 347.96474606584616,
+          "z": 0.9965784485826079,
+          "inView": true
+        },
+        {
+          "x": 28.033641053199545,
+          "y": 511.54045417820697,
+          "z": 0.995859214167317,
+          "inView": true
+        },
+        {
+          "x": 35.31562718362682,
+          "y": 264.96114153398895,
+          "z": 0.9961275332157404,
+          "inView": true
+        },
+        {
+          "x": 12.135857385403558,
+          "y": 432.0563507721881,
+          "z": 0.9952743256141438,
+          "inView": true
+        }
+      ]
+    },
+    "primaryBounds": null,
+    "water": [
+      {
+        "name": "SculptLivingWater",
+        "visible": true,
+        "y": -0.32599999284744263,
+        "depthTest": true,
+        "depthWrite": false
+      }
+    ],
+    "materials": [
+      {
+        "id": "trestle-crossing",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.39,
+          0.39
+        ],
+        "authoredEmissive": [
+          2.6,
+          2.6
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "south-boiler-site",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.375,
+          0.375
+        ],
+        "authoredEmissive": [
+          2.5,
+          2.5
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "north-boiler-site",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.375,
+          0.375
+        ],
+        "authoredEmissive": [
+          2.5,
+          2.5
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "south-approach-kit",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.33,
+          0.33
+        ],
+        "authoredEmissive": [
+          2.2,
+          2.2
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "north-approach-kit",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.33,
+          0.33
+        ],
+        "authoredEmissive": [
+          2.2,
+          2.2
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "mine-spur-kit",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.33,
+          0.33
+        ],
+        "authoredEmissive": [
+          2.2,
+          2.2
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      }
+    ],
+    "persistentSelector": ".hud-panel,.hud-pause,.world-info-note,#touch-controls",
+    "errors": []
+  },
+  {
+    "width": 390,
+    "arm": "after",
+    "focus": "south-approach-kit",
+    "back": 9,
+    "hero": {
+      "x": 0,
+      "y": 0.21247968335946413,
+      "z": -13
+    },
+    "performance": {
+      "tier": "full",
+      "override": "full",
+      "source": "override",
+      "reason": "settings override",
+      "gpuRenderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Max, Unspecified Version)",
+      "deviceMemory": 32,
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.0.0 Safari/537.36",
+      "config": {
+        "maxDpr": 2,
+        "shadowsQuality": "soft",
+        "shadowMapSize": 1536,
+        "fogNear": 42,
+        "fogFar": 88,
+        "postEnabled": true,
+        "postPaperGrainOpacity": 0.008,
+        "detailDensity": 1,
+        "detailMobileDensity": 0.42,
+        "terrainSegments": 64,
+        "terrainMobileSegments": 40,
+        "vistaSegments": 12,
+        "vistaMobileSegments": 7,
+        "waterQuality": 1,
+        "waterMobileQuality": 0.55,
+        "terrainMesh": false,
+        "terrainSplat": false,
+        "terrainMeshVertexStep": 1,
+        "floatTextPool": 12,
+        "combatVfxPuffs": 32,
+        "combatVfxTicks": 48,
+        "combatVfxRings": 8,
+        "freedWalkerCap": 10,
+        "enemyBarCap": 60
+      },
+      "runtimeVerdict": 0
+    },
+    "bodyBounds": {
+      "world": {
+        "min": [
+          -7.050000190734863,
+          0.38476216870752966,
+          -25.35795783996582
+        ],
+        "max": [
+          7.050000190734863,
+          4.086578250708262,
+          -18.64204216003418
+        ]
+      },
+      "corners": [
+        {
+          "x": -0.4569488375708164,
+          "y": 235.79077409230922,
+          "z": 0.996953010347546,
+          "inView": false
+        },
+        {
+          "x": -24.37254163139635,
+          "y": 372.96685971824917,
+          "z": 0.9963353574207187,
+          "inView": false
+        },
+        {
+          "x": -15.498820709239297,
+          "y": 150.32912537472438,
+          "z": 0.9965644527342246,
+          "inView": false
+        },
+        {
+          "x": -43.50022299422895,
+          "y": 288.0997010857208,
+          "z": 0.9958412674532998,
+          "inView": false
+        },
+        {
+          "x": 390.4698806961779,
+          "y": 235.79687162811643,
+          "z": 0.9969529828926088,
+          "inView": false
+        },
+        {
+          "x": 414.3772699212314,
+          "y": 372.9745403561426,
+          "z": 0.9963353228376609,
+          "inView": false
+        },
+        {
+          "x": 405.5128358647023,
+          "y": 150.33519168525854,
+          "z": 0.9965644208909483,
+          "inView": false
+        },
+        {
+          "x": 433.5054904722082,
+          "y": 288.1074883257143,
+          "z": 0.9958412265765213,
+          "inView": false
+        }
+      ]
+    },
+    "primaryBounds": null,
+    "water": [
+      {
+        "name": "SculptLivingWater",
+        "visible": true,
+        "y": -0.32599999284744263,
+        "depthTest": true,
+        "depthWrite": false
+      }
+    ],
+    "materials": [
+      {
+        "id": "trestle-crossing",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.39,
+          0.39
+        ],
+        "authoredEmissive": [
+          2.6,
+          2.6
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "south-boiler-site",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.375,
+          0.375
+        ],
+        "authoredEmissive": [
+          2.5,
+          2.5
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "north-boiler-site",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.375,
+          0.375
+        ],
+        "authoredEmissive": [
+          2.5,
+          2.5
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "south-approach-kit",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.33,
+          0.33
+        ],
+        "authoredEmissive": [
+          2.2,
+          2.2
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "north-approach-kit",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.33,
+          0.33
+        ],
+        "authoredEmissive": [
+          2.2,
+          2.2
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "mine-spur-kit",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.33,
+          0.33
+        ],
+        "authoredEmissive": [
+          2.2,
+          2.2
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      }
+    ],
+    "persistentSelector": ".hud-panel,.hud-pause,.world-info-note,#touch-controls",
+    "errors": []
+  },
+  {
+    "width": 390,
+    "arm": "after",
+    "focus": "south-approach-kit",
+    "back": 14,
+    "hero": {
+      "x": 0,
+      "y": -0.2042045319080354,
+      "z": -8
+    },
+    "performance": {
+      "tier": "full",
+      "override": "full",
+      "source": "override",
+      "reason": "settings override",
+      "gpuRenderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Max, Unspecified Version)",
+      "deviceMemory": 32,
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.0.0 Safari/537.36",
+      "config": {
+        "maxDpr": 2,
+        "shadowsQuality": "soft",
+        "shadowMapSize": 1536,
+        "fogNear": 42,
+        "fogFar": 88,
+        "postEnabled": true,
+        "postPaperGrainOpacity": 0.008,
+        "detailDensity": 1,
+        "detailMobileDensity": 0.42,
+        "terrainSegments": 64,
+        "terrainMobileSegments": 40,
+        "vistaSegments": 12,
+        "vistaMobileSegments": 7,
+        "waterQuality": 1,
+        "waterMobileQuality": 0.55,
+        "terrainMesh": false,
+        "terrainSplat": false,
+        "terrainMeshVertexStep": 1,
+        "floatTextPool": 12,
+        "combatVfxPuffs": 32,
+        "combatVfxTicks": 48,
+        "combatVfxRings": 8,
+        "freedWalkerCap": 10,
+        "enemyBarCap": 60
+      },
+      "runtimeVerdict": 0
+    },
+    "bodyBounds": {
+      "world": {
+        "min": [
+          -7.050000190734863,
+          0.38476216870752966,
+          -25.35795783996582
+        ],
+        "max": [
+          7.050000190734863,
+          4.086578250708262,
+          -18.64204216003418
+        ]
+      },
+      "corners": [
+        {
+          "x": 12.852576634196563,
+          "y": 142.67275878537495,
+          "z": 0.9972969613072299,
+          "inView": true
+        },
+        {
+          "x": -7.740320860926396,
+          "y": 258.9199634363185,
+          "z": 0.9967650272348938,
+          "inView": false
+        },
+        {
+          "x": -0.14198457664380548,
+          "y": 56.80519553114599,
+          "z": 0.996961299467068,
+          "inView": false
+        },
+        {
+          "x": -23.97010831369391,
+          "y": 171.87323650207063,
+          "z": 0.9963457964326304,
+          "inView": false
+        },
+        {
+          "x": 377.14742341729095,
+          "y": 142.67275880017763,
+          "z": 0.997296961307162,
+          "inView": true
+        },
+        {
+          "x": 397.74032089248846,
+          "y": 258.9199634546575,
+          "z": 0.99676502723481,
+          "inView": false
+        },
+        {
+          "x": 390.14198463200484,
+          "y": 56.80519554568047,
+          "z": 0.9969612994669902,
+          "inView": false
+        },
+        {
+          "x": 413.97010834806343,
+          "y": 171.87323652037117,
+          "z": 0.9963457964325326,
+          "inView": false
+        }
+      ]
+    },
+    "primaryBounds": null,
+    "water": [
+      {
+        "name": "SculptLivingWater",
+        "visible": true,
+        "y": -0.32599999284744263,
+        "depthTest": true,
+        "depthWrite": false
+      }
+    ],
+    "materials": [
+      {
+        "id": "trestle-crossing",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.39,
+          0.39
+        ],
+        "authoredEmissive": [
+          2.6,
+          2.6
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "south-boiler-site",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.375,
+          0.375
+        ],
+        "authoredEmissive": [
+          2.5,
+          2.5
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "north-boiler-site",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.375,
+          0.375
+        ],
+        "authoredEmissive": [
+          2.5,
+          2.5
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "south-approach-kit",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.33,
+          0.33
+        ],
+        "authoredEmissive": [
+          2.2,
+          2.2
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "north-approach-kit",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.33,
+          0.33
+        ],
+        "authoredEmissive": [
+          2.2,
+          2.2
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "mine-spur-kit",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.33,
+          0.33
+        ],
+        "authoredEmissive": [
+          2.2,
+          2.2
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      }
+    ],
+    "persistentSelector": ".hud-panel,.hud-pause,.world-info-note,#touch-controls",
+    "errors": []
+  },
+  {
+    "width": 390,
+    "arm": "after",
+    "focus": "south-approach-kit",
+    "back": 20,
+    "hero": {
+      "x": 0,
+      "y": -0.7298206512133281,
+      "z": -2
+    },
+    "performance": {
+      "tier": "full",
+      "override": "full",
+      "source": "override",
+      "reason": "settings override",
+      "gpuRenderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Max, Unspecified Version)",
+      "deviceMemory": 32,
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.0.0 Safari/537.36",
+      "config": {
+        "maxDpr": 2,
+        "shadowsQuality": "soft",
+        "shadowMapSize": 1536,
+        "fogNear": 42,
+        "fogFar": 88,
+        "postEnabled": true,
+        "postPaperGrainOpacity": 0.008,
+        "detailDensity": 1,
+        "detailMobileDensity": 0.42,
+        "terrainSegments": 64,
+        "terrainMobileSegments": 40,
+        "vistaSegments": 12,
+        "vistaMobileSegments": 7,
+        "waterQuality": 1,
+        "waterMobileQuality": 0.55,
+        "terrainMesh": false,
+        "terrainSplat": false,
+        "terrainMeshVertexStep": 1,
+        "floatTextPool": 12,
+        "combatVfxPuffs": 32,
+        "combatVfxTicks": 48,
+        "combatVfxRings": 8,
+        "freedWalkerCap": 10,
+        "enemyBarCap": 60
+      },
+      "runtimeVerdict": 0
+    },
+    "bodyBounds": {
+      "world": {
+        "min": [
+          -7.050000190734863,
+          0.38476216870752966,
+          -25.35795783996582
+        ],
+        "max": [
+          7.050000190734863,
+          4.086578250708262,
+          -18.64204216003418
+        ]
+      },
+      "corners": [
+        {
+          "x": 26.546000348026123,
+          "y": 45.85538701145835,
+          "z": 0.9976506754292311,
+          "inView": true
+        },
+        {
+          "x": 9.081440322579551,
+          "y": 142.41994675083822,
+          "z": 0.9971995492803865,
+          "inView": true
+        },
+        {
+          "x": 15.491076698916125,
+          "y": -39.486857134074185,
+          "z": 0.997365116266886,
+          "inView": false
+        },
+        {
+          "x": -4.476806354567017,
+          "y": 54.62660021154012,
+          "z": 0.9968493269100758,
+          "inView": false
+        },
+        {
+          "x": 363.4539996519741,
+          "y": 45.8553870114584,
+          "z": 0.9976506754292311,
+          "inView": true
+        },
+        {
+          "x": 380.91855967742066,
+          "y": 142.41994675083825,
+          "z": 0.9971995492803865,
+          "inView": true
+        },
+        {
+          "x": 374.5089233010841,
+          "y": -39.486857134074185,
+          "z": 0.9973651162668858,
+          "inView": false
+        },
+        {
+          "x": 394.4768063545672,
+          "y": 54.626600211540215,
+          "z": 0.9968493269100758,
+          "inView": false
+        }
+      ]
+    },
+    "primaryBounds": null,
+    "water": [
+      {
+        "name": "SculptLivingWater",
+        "visible": true,
+        "y": -0.32599999284744263,
+        "depthTest": true,
+        "depthWrite": false
+      }
+    ],
+    "materials": [
+      {
+        "id": "trestle-crossing",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.39,
+          0.39
+        ],
+        "authoredEmissive": [
+          2.6,
+          2.6
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "south-boiler-site",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.375,
+          0.375
+        ],
+        "authoredEmissive": [
+          2.5,
+          2.5
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "north-boiler-site",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.375,
+          0.375
+        ],
+        "authoredEmissive": [
+          2.5,
+          2.5
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "south-approach-kit",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.33,
+          0.33
+        ],
+        "authoredEmissive": [
+          2.2,
+          2.2
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "north-approach-kit",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.33,
+          0.33
+        ],
+        "authoredEmissive": [
+          2.2,
+          2.2
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "mine-spur-kit",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.33,
+          0.33
+        ],
+        "authoredEmissive": [
+          2.2,
+          2.2
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      }
+    ],
+    "persistentSelector": ".hud-panel,.hud-pause,.world-info-note,#touch-controls",
+    "errors": []
+  }
+]

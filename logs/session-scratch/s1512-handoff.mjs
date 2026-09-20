@@ -1,0 +1,40 @@
+import fs from 'node:fs';
+
+const p = 'STATUS.md';
+const lines = fs.readFileSync(p, 'utf8').split('\n');
+const prev = fs.readFileSync('logs/session-scratch/s1512-prev-line1.txt', 'utf8').trim();
+
+const handoff =
+  'Last updated: 2026-08-07T07:13Z s1512 handoff, lock CLEARED — 🟩 **NOTHING WAS DRAINABLE, SO THE FIRE SPENT ITSELF DE-RISKING THE NEXT LANE RUN INSTEAD — AND THE CURE F-1511-2 PROPOSED IS NOW MEASURED GREEN.** ' +
+  '📋 **BOARD ON ARRIVAL:** zero done-moves pending, zero failed runs, no CODEX-WALL, `assets/crafting-queue/pending/` empty, digests current (s1511 covered today). lane-b **BUSY** with f1508-2 (tracked dirt on `scripts/red-inventory-lookup.mjs` + its test — leave it alone); lanes a/c/d USABLE. **No drain was owed and none was invented.** ' +
+  '🔬 **F-1511-2 MEASURED FIRE-SIDE BEFORE SPENDING A THIRD LANE RUN ON THIS THREAD** (s1510 and s1511 each spent one). Detached worktree `gate-s1512` inside the repo root (§3.0b — undecided content never touched main), `node_modules` symlinked, external vite on scratch port **5199** under `strictPort` (5188 was free but lane-b was live, and a strict-port collision fails loudly instead of silently retargeting), `--workers=1` throughout (F-1270-1), both projects. ' +
+  '⭐ **THE HEADLINE, ISOLATED AND CONTROLLED:** baseline `landmark-collision:68` **2 FAILED** (desktop + mobile) — **reproduced twice** — vs treated **2 PASSED**. Full pair with `never-trap`: baseline **rc=1, 4 failed / 14 passed**; treated **rc=0, 18/18 passed**, reproduced twice (2.5m, 2.4m). **`never-trap` 8/8 green on every arm**, so the F-BW-10 wedge cure survives. `tsc` rc=0. `npm run test:node-guards` **rc=0 with NO Baron sim pin moved** — checked explicitly, because F-1460-1 was born from a routing change silently moving one. ' +
+  '🔑 **THE CURE IS TWO LINES: delete the `ACTIVE_TILE_ID === \'e1-twin-banks\'` fence from both `slideX`/`slideZ` ternaries in `resolveBlocker()`.** Why it works, read from the code rather than inferred: inside the padded span the approach is head-on, so `Math.sign(moveTarget.x - blocker.x)` is ~0 and the `|| avoidanceSide()` fallback restores the stable go-around **scoped to exactly that geometry**; outside the span `blockerSlideDirection()` still applies. **That is the axis the deadband could never reach, because it asked about a MAGNITUDE instead of about WHERE THE GOAL IS.** ' +
+  '📮 **AUTHORED + DISPATCHED `lane-f1511-2-blocker-slide-geometry-gate.md` → lane-c** in F-1424-3 order: master + bench report + leaf + BACKLOG committed **first** (`7c7d178c4`), lane fast-forwarded **second** (18 behind → `ahead=0 behind=0`), citation key grepped **1 on main and 1 in the lane**, `cp` **third**. The key is file-scoped to `src/entities/Enemy.ts`, so my own master quoting it cannot self-rot it (F-1310-1). **A negative result is re-licensed in the master despite the positive measurement** — my arm is a 2-line patch in a scratch worktree, and a runner disagreement would be worth more than the confirmation. ' +
+  '⚠️ **TWO REDS WERE SEPARATED FROM THE SIGNAL RATHER THAN CLAIMED AS CURES, AND ONE OF THEM NEARLY BECAME A FALSE CLAIM IN MY OWN REPORT.** 🔺 **F-1512-1 (NEW):** `landmark-collision:157` was red on BOTH projects at baseline and green on both treated runs — which reads exactly like a second cure, and my first draft said so. **It is false:** `:157` **passes isolated on the baseline tree**, and it asserts *hero* position while the change is confined to `ClaimJumperEnemy.resolveBlocker()` — no mechanism connects them. **Lesson: a red that appears in a batch and vanishes under your treatment is not evidence you fixed it; a treatment that greens MORE than it claims should raise suspicion, not confidence.** 🔺 **F-1512-2 (NEW):** the consumer batch ran **95 passed / 1 failed on BOTH arms** at an identical 8.6m, but **the red MOVED between maps** (`e5-deepwater-claim` treated vs `e2-pressure-garden` baseline), and passes isolated on both — a wandering load ceiling, not a line. **Method note worth keeping: my first control for it was ISOLATED while the failure had occurred inside a 96-test batch — that control would have exonerated the treatment for the wrong reason. The composition-matched baseline settled it, by showing the red had moved.** ' +
+  '**NEXT: (A)** drain f1508-2 when lane-b reports. **(B)** drain f1511-2 when lane-c reports — if it confirms, `landmark-collision:68` stops being red on main and F-1510-1 finally gets its actual green. **(C)** lanes a and d remain idle; F-1511-5 (below) is why, and it is arithmetic, not neglect. No gazette item (nothing merged — filter law). No deploy (no gameplay code merged). TK-01: nothing owed, s1511 covered today. ' +
+  '🔺 **OWNER’S DESK — 16 awaiting a word (0 added this fire; F-1512-1/2 are fire-side findings, not owner questions).** ' +
+  '🔺 **F-1511-5 — THE BOARD’S THROUGHPUT CEILING IS ONE LANE PER FIRE, AND IT CONTRADICTS YOUR OWN "4–5 LANES CONSTANTLY".** `tasks/goals.json` holds **zero** leaves in `queued`/`ready`/`authored`/`pending` before each fire authors one, so every refill must be *authored*, and §2E caps that at **one per fire**. **REC: narrow the cap, do not raise it — keep one-per-fire for masters authored from a SPEC SLICE, allow up to three when each comes from an existing BACKLOG finding row with a stated GATE.** A law change is not a fire’s call (§7.2). ' +
+  '🔺 **F-1510-1 — IS "THE ENEMY GOES AROUND THE LANDMARK" STILL THE INTENDED READ?** Unchanged and still not blocking. **Now much better informed: the deadband axis is dead and the geometry axis is measured green**, so this may answer itself at the next drain. **REC: keep the go-around.** ' +
+  '🔺 **F-1507-1 — UNIFY THE LANE AND FIRE ONTO `.nvmrc`’s 26.4.0?** Lanes gate on **v23.11.1**, fires on **v26.4.0**. **REC: one line in `~/.zshrc` — `nvm use 23` → `nvm use` — YOUR file, so no fire has touched it.** ' +
+  '🔺 **F-1501-3** motion-pilot staging: `art-staging-audit` reads **AT RISK 582 files / 527.89 MB**. **REC: (a) commit the pose-library PNGs and leave the 49 regenerable MP4s, or (c) rule the staging EXEMPT from §10b.** ' +
+  '🔺 **f1328-1 — still the cheapest word on the list. REC: close it.** ' +
+  '🔺 **F-1499-2 — DOES A HEADLESS RIDER GET A BODY?** Both AGENT-READY E2 contracts are unwinnable while the headless hero is `IDLE_INTENTS` forever. **REC: grow the body.** ' +
+  '🔺 **F-MTS-2** `AgentGameAdapter` has no verb for two epochs’ defining action. **REC: rule on CAPTURE first.** ' +
+  '🔺 **F-MILK-SS-3** Dust Flats says *"four surveyed fields"* and authors **three**. **REC: take the one-word prose fix.** ' +
+  '🔺 **F-MSD-1** 13 of 25 campaign maps cannot be opened. **REC: verdict the 12 that can.** ' +
+  '🔺 **F-MSD-2** five reuse maps ship 25 bespoke landmark `.glb` the game can never mount. ' +
+  '🔺 **F-1494-1** remove `gate-s1455/` and reclaim 14 GB? Provably lossless. **REC: remove.** ' +
+  '🔺 **F-1493-3** Hill Mine Railcar dying at wave 14 under a 100,000-HP rig — acceptable tuning? **REC: accept.** ' +
+  '🔺 **F-1475-1** e3-fairground diagnostics-only construction path — **REC: (c) a `diagnostic:true` boot flag**; F-1495-1 prices it at **30 contracts** unblocked. ' +
+  '🔺 **F-1096-2** rf-34 hero-Y: (A) merge as-is [rec] or (B) terrain-visualY authoritative. ' +
+  '🔺 **F-1166-1** vp-02e jumper: (a) accept coarse [rec] or (b) real 8-way art. ' +
+  '🔺 **F-1294-1** calibrate-suite-workers-v2 — worth a v3? [rec: RETIRE]. ' +
+  '**Robin owes (unchanged, never blocking):** turret-feel + water-feel playtests, Mac full-regression evidence, favicon 16px eyeball.';
+
+lines[0] = handoff;
+lines.splice(1, 0, `- **s1511 handoff (line-1 archive):** ${prev}`);
+lines.splice(2, 0, '- **s1512 lock line (archived):** ACTIVE 2026-08-07T06:30Z (s1512 fire) — author F-1511-2 geometry-gate corrective for the landmark routing red; lane-b busy with f1508-2.');
+
+fs.writeFileSync(p, lines.join('\n'));
+console.log('handoff written');

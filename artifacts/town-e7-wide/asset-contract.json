@@ -1,0 +1,972 @@
+{
+  "blender": "5.1.2",
+  "scope": "E7 Signal Mesa wide completion",
+  "laws": {
+    "source": "specs/epoch-saga/e7-signal-bundle.md section A",
+    "accretion": "three E6 transforms retain every source polygon and exact footprint",
+    "materials": "one embedded painted atlas per GLB; no emission or helpers",
+    "budget": "15,000 triangles per asset",
+    "anchors": "none invented; E7 bundle and queue define no emitter-anchor family"
+  },
+  "assets": {
+    "playbook_library": {
+      "checked": {
+        "sha256": "9d615139cf7e873a5941c86e5bf0a609feed347ff992b3dc4040a1d3f92151fb",
+        "bytes": 1806404,
+        "meshes": 1,
+        "primitives": 1,
+        "nodes": [
+          "PlaybookLibraryE7"
+        ],
+        "anchors": [],
+        "triangles": 7190,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "imageDimensions": [
+          [
+            1024,
+            1024
+          ]
+        ],
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -3.05,
+            0,
+            -2.4
+          ],
+          "max": [
+            3.05,
+            7.820945,
+            2.57
+          ],
+          "size": [
+            6.1,
+            7.820945,
+            4.97
+          ],
+          "center": [
+            0.0,
+            3.910473,
+            0.085
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.9200000166893005,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "reexported": {
+        "sha256": "9d615139cf7e873a5941c86e5bf0a609feed347ff992b3dc4040a1d3f92151fb",
+        "bytes": 1806404,
+        "meshes": 1,
+        "primitives": 1,
+        "nodes": [
+          "PlaybookLibraryE7"
+        ],
+        "anchors": [],
+        "triangles": 7190,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "imageDimensions": [
+          [
+            1024,
+            1024
+          ]
+        ],
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -3.05,
+            0,
+            -2.4
+          ],
+          "max": [
+            3.05,
+            7.820945,
+            2.57
+          ],
+          "size": [
+            6.1,
+            7.820945,
+            4.97
+          ],
+          "center": [
+            0.0,
+            3.910473,
+            0.085
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.9200000166893005,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "byteIdentical": true,
+      "semanticIdentical": {
+        "meshes": true,
+        "primitives": true,
+        "nodes": true,
+        "anchors": true,
+        "triangles": true,
+        "materials": true,
+        "images": true,
+        "embeddedImages": true,
+        "imageDimensions": true,
+        "cameras": true,
+        "lights": true,
+        "animations": true,
+        "bounds": true,
+        "materialContract": true
+      },
+      "footprintGate": {
+        "actualXZ": [
+          6.1,
+          4.97
+        ],
+        "maximumXZ": [
+          6.2,
+          5.0
+        ],
+        "passed": true
+      }
+    },
+    "drone_coop": {
+      "checked": {
+        "sha256": "3d0faa78725dd273a7cc24c56c8d1d5f560a2757f9e8bb72430e88b462644157",
+        "bytes": 1779836,
+        "meshes": 1,
+        "primitives": 1,
+        "nodes": [
+          "DroneCoopE7"
+        ],
+        "anchors": [],
+        "triangles": 6986,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "imageDimensions": [
+          [
+            1024,
+            1024
+          ]
+        ],
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -2.205969,
+            0,
+            -2.24
+          ],
+          "max": [
+            2.205969,
+            8.180945,
+            2.24
+          ],
+          "size": [
+            4.411939,
+            8.180945,
+            4.48
+          ],
+          "center": [
+            0.0,
+            4.090473,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.9200000166893005,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "reexported": {
+        "sha256": "3d0faa78725dd273a7cc24c56c8d1d5f560a2757f9e8bb72430e88b462644157",
+        "bytes": 1779836,
+        "meshes": 1,
+        "primitives": 1,
+        "nodes": [
+          "DroneCoopE7"
+        ],
+        "anchors": [],
+        "triangles": 6986,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "imageDimensions": [
+          [
+            1024,
+            1024
+          ]
+        ],
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -2.205969,
+            0,
+            -2.24
+          ],
+          "max": [
+            2.205969,
+            8.180945,
+            2.24
+          ],
+          "size": [
+            4.411939,
+            8.180945,
+            4.48
+          ],
+          "center": [
+            0.0,
+            4.090473,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.9200000166893005,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "byteIdentical": true,
+      "semanticIdentical": {
+        "meshes": true,
+        "primitives": true,
+        "nodes": true,
+        "anchors": true,
+        "triangles": true,
+        "materials": true,
+        "images": true,
+        "embeddedImages": true,
+        "imageDimensions": true,
+        "cameras": true,
+        "lights": true,
+        "animations": true,
+        "bounds": true,
+        "materialContract": true
+      },
+      "footprintGate": {
+        "actualXZ": [
+          4.411939,
+          4.48
+        ],
+        "maximumXZ": [
+          4.5,
+          4.5
+        ],
+        "passed": true
+      }
+    },
+    "signal_refinery": {
+      "checked": {
+        "sha256": "695811ee9793127d94b9516f551ab4858cc0c106c621448a16c39c19fc1756b5",
+        "bytes": 1694108,
+        "meshes": 1,
+        "primitives": 1,
+        "nodes": [
+          "SignalRefineryE7"
+        ],
+        "anchors": [],
+        "triangles": 5882,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "imageDimensions": [
+          [
+            1024,
+            1024
+          ]
+        ],
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -3.09,
+            0,
+            -2.424641
+          ],
+          "max": [
+            3.09,
+            7.716265,
+            2.597167
+          ],
+          "size": [
+            6.18,
+            7.716265,
+            5.021808
+          ],
+          "center": [
+            0.0,
+            3.858133,
+            0.086263
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.9200000166893005,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "reexported": {
+        "sha256": "695811ee9793127d94b9516f551ab4858cc0c106c621448a16c39c19fc1756b5",
+        "bytes": 1694108,
+        "meshes": 1,
+        "primitives": 1,
+        "nodes": [
+          "SignalRefineryE7"
+        ],
+        "anchors": [],
+        "triangles": 5882,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "imageDimensions": [
+          [
+            1024,
+            1024
+          ]
+        ],
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -3.09,
+            0,
+            -2.424641
+          ],
+          "max": [
+            3.09,
+            7.716265,
+            2.597167
+          ],
+          "size": [
+            6.18,
+            7.716265,
+            5.021808
+          ],
+          "center": [
+            0.0,
+            3.858133,
+            0.086263
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.9200000166893005,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "byteIdentical": true,
+      "semanticIdentical": {
+        "meshes": true,
+        "primitives": true,
+        "nodes": true,
+        "anchors": true,
+        "triangles": true,
+        "materials": true,
+        "images": true,
+        "embeddedImages": true,
+        "imageDimensions": true,
+        "cameras": true,
+        "lights": true,
+        "animations": true,
+        "bounds": true,
+        "materialContract": true
+      },
+      "footprintGate": {
+        "actualXZ": [
+          6.18,
+          5.021808
+        ],
+        "maximumXZ": [
+          6.2,
+          5.1
+        ],
+        "passed": true
+      }
+    },
+    "beam_relay": {
+      "checked": {
+        "sha256": "be598eba8489234edf6bb316a5180f5655de5e89f1d44128908a6818b7b70856",
+        "bytes": 508208,
+        "meshes": 1,
+        "primitives": 1,
+        "nodes": [
+          "BeamRelayTurretE7"
+        ],
+        "anchors": [],
+        "triangles": 1998,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "imageDimensions": [
+          [
+            512,
+            512
+          ]
+        ],
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -0.675,
+            0,
+            -0.675
+          ],
+          "max": [
+            0.675,
+            3.429084,
+            0.675
+          ],
+          "size": [
+            1.35,
+            3.429084,
+            1.35
+          ],
+          "center": [
+            0.0,
+            1.714542,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.9200000166893005,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "reexported": {
+        "sha256": "be598eba8489234edf6bb316a5180f5655de5e89f1d44128908a6818b7b70856",
+        "bytes": 508208,
+        "meshes": 1,
+        "primitives": 1,
+        "nodes": [
+          "BeamRelayTurretE7"
+        ],
+        "anchors": [],
+        "triangles": 1998,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "imageDimensions": [
+          [
+            512,
+            512
+          ]
+        ],
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -0.675,
+            0,
+            -0.675
+          ],
+          "max": [
+            0.675,
+            3.429084,
+            0.675
+          ],
+          "size": [
+            1.35,
+            3.429084,
+            1.35
+          ],
+          "center": [
+            0.0,
+            1.714542,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.9200000166893005,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "byteIdentical": true,
+      "semanticIdentical": {
+        "meshes": true,
+        "primitives": true,
+        "nodes": true,
+        "anchors": true,
+        "triangles": true,
+        "materials": true,
+        "images": true,
+        "embeddedImages": true,
+        "imageDimensions": true,
+        "cameras": true,
+        "lights": true,
+        "animations": true,
+        "bounds": true,
+        "materialContract": true
+      },
+      "footprintGate": {
+        "actualXZ": [
+          1.35,
+          1.35
+        ],
+        "maximumXZ": [
+          1.35,
+          1.35
+        ],
+        "passed": true
+      },
+      "inheritance": {
+        "sourceBlendSha256": "2459bdc55bdcf063d3d7282d526374a8f0832341277ce391fe321075928e18c5",
+        "sourceGlbSha256": "44d17919c60e294bbe977736a01ce93bf1a9f72a8ed85ca4b167a305b5cf1bbe",
+        "sourceTriangles": 1346,
+        "candidateTriangles": 1998,
+        "sourceVertices": 729,
+        "candidateVertices": 1087,
+        "sourcePolygonSignatures": 685,
+        "missingSourcePolygonSignatures": 0,
+        "exactFootprint": {
+          "sourceXZ": [
+            1.35,
+            1.35
+          ],
+          "candidateXZ": [
+            1.35,
+            1.35
+          ]
+        },
+        "passed": true
+      }
+    },
+    "signal_works": {
+      "checked": {
+        "sha256": "c7d5446cd7a3c70c5b333195b32d58f86fca53f4de1a5f4c08de9d95e128cc04",
+        "bytes": 1815548,
+        "meshes": 1,
+        "primitives": 1,
+        "nodes": [
+          "SignalWorksE7"
+        ],
+        "anchors": [],
+        "triangles": 8244,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "imageDimensions": [
+          [
+            1024,
+            1024
+          ]
+        ],
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -1.98,
+            0,
+            -1.68
+          ],
+          "max": [
+            1.98,
+            7.685536,
+            1.695
+          ],
+          "size": [
+            3.96,
+            7.685536,
+            3.375
+          ],
+          "center": [
+            0.0,
+            3.842768,
+            0.0075
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.9200000166893005,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "reexported": {
+        "sha256": "c7d5446cd7a3c70c5b333195b32d58f86fca53f4de1a5f4c08de9d95e128cc04",
+        "bytes": 1815548,
+        "meshes": 1,
+        "primitives": 1,
+        "nodes": [
+          "SignalWorksE7"
+        ],
+        "anchors": [],
+        "triangles": 8244,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "imageDimensions": [
+          [
+            1024,
+            1024
+          ]
+        ],
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -1.98,
+            0,
+            -1.68
+          ],
+          "max": [
+            1.98,
+            7.685536,
+            1.695
+          ],
+          "size": [
+            3.96,
+            7.685536,
+            3.375
+          ],
+          "center": [
+            0.0,
+            3.842768,
+            0.0075
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.9200000166893005,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "byteIdentical": true,
+      "semanticIdentical": {
+        "meshes": true,
+        "primitives": true,
+        "nodes": true,
+        "anchors": true,
+        "triangles": true,
+        "materials": true,
+        "images": true,
+        "embeddedImages": true,
+        "imageDimensions": true,
+        "cameras": true,
+        "lights": true,
+        "animations": true,
+        "bounds": true,
+        "materialContract": true
+      },
+      "footprintGate": {
+        "actualXZ": [
+          3.96,
+          3.375
+        ],
+        "maximumXZ": [
+          3.96,
+          3.375
+        ],
+        "passed": true
+      },
+      "inheritance": {
+        "sourceBlendSha256": "7be45aeb005544b861297aced589c7be17420ca5096067fb8e3b5aadbbf92825",
+        "sourceGlbSha256": "f3de54fb073729e1b251f0809b9ea65b2f869afd9c731430454636c03351bfb3",
+        "sourceTriangles": 7392,
+        "candidateTriangles": 8244,
+        "sourceVertices": 3978,
+        "candidateVertices": 4475,
+        "sourcePolygonSignatures": 3994,
+        "missingSourcePolygonSignatures": 0,
+        "exactFootprint": {
+          "sourceXZ": [
+            3.96,
+            3.375
+          ],
+          "candidateXZ": [
+            3.96,
+            3.375
+          ]
+        },
+        "passed": true
+      }
+    },
+    "tape_post": {
+      "checked": {
+        "sha256": "d7b38acbd153727ec30016fbcd102194f8b65895c8e7c66ba1e9eb71ce9479e5",
+        "bytes": 1291144,
+        "meshes": 1,
+        "primitives": 1,
+        "nodes": [
+          "TapePostE7"
+        ],
+        "anchors": [],
+        "triangles": 6390,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "imageDimensions": [
+          [
+            1024,
+            1024
+          ]
+        ],
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -2.793385,
+            0,
+            -1.8625
+          ],
+          "max": [
+            2.793385,
+            6.419345,
+            1.88
+          ],
+          "size": [
+            5.58677,
+            6.419345,
+            3.7425
+          ],
+          "center": [
+            0.0,
+            3.209672,
+            0.00875
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.9200000166893005,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "reexported": {
+        "sha256": "d7b38acbd153727ec30016fbcd102194f8b65895c8e7c66ba1e9eb71ce9479e5",
+        "bytes": 1291144,
+        "meshes": 1,
+        "primitives": 1,
+        "nodes": [
+          "TapePostE7"
+        ],
+        "anchors": [],
+        "triangles": 6390,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "imageDimensions": [
+          [
+            1024,
+            1024
+          ]
+        ],
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -2.793385,
+            0,
+            -1.8625
+          ],
+          "max": [
+            2.793385,
+            6.419345,
+            1.88
+          ],
+          "size": [
+            5.58677,
+            6.419345,
+            3.7425
+          ],
+          "center": [
+            0.0,
+            3.209672,
+            0.00875
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.9200000166893005,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "byteIdentical": true,
+      "semanticIdentical": {
+        "meshes": true,
+        "primitives": true,
+        "nodes": true,
+        "anchors": true,
+        "triangles": true,
+        "materials": true,
+        "images": true,
+        "embeddedImages": true,
+        "imageDimensions": true,
+        "cameras": true,
+        "lights": true,
+        "animations": true,
+        "bounds": true,
+        "materialContract": true
+      },
+      "footprintGate": {
+        "actualXZ": [
+          5.58677,
+          3.7425
+        ],
+        "maximumXZ": [
+          5.58677,
+          3.7425
+        ],
+        "passed": true
+      },
+      "inheritance": {
+        "sourceBlendSha256": "596b964914b73b8e5c4457b62cd1cff6dba038c52c6c86ef23afe48f5a9e05e2",
+        "sourceGlbSha256": "f72109125d3c036a3ac8a06004fa212f02539c762076dd9959c30cd578fcce24",
+        "sourceTriangles": 5670,
+        "candidateTriangles": 6390,
+        "sourceVertices": 2984,
+        "candidateVertices": 3408,
+        "sourcePolygonSignatures": 3080,
+        "missingSourcePolygonSignatures": 0,
+        "exactFootprint": {
+          "sourceXZ": [
+            5.58677,
+            3.7425
+          ],
+          "candidateXZ": [
+            5.58677,
+            3.7425
+          ]
+        },
+        "passed": true
+      }
+    }
+  },
+  "visualEvidence": {
+    "path": "artifacts/town-e7-wide/visual-evidence-contract.json",
+    "baseSha": "3fe1e493fb11b6685f1ffc76b65dd81ebff8dd6b",
+    "diffRatio16": 0.129017578125,
+    "edgeEnergyRatio": 1.1134198904037476,
+    "luminanceDeltaPercent": -4.853368652918406,
+    "renderCount": 12
+  },
+  "cadence": {
+    "netCafe": "PERSIST E6 diner and jukebox; UPGRADE to E7 terminal service (pilot)",
+    "sunlineMount": "PERSIST complete E6 body; UPGRADE to beam relay",
+    "isotopeInstitute": "PERSIST complete E6 body; UPGRADE to Signal Works",
+    "catalogWarehouse": "PERSIST complete E6 body; UPGRADE parcel office to Tape Post",
+    "reactorDome": "CARRIED UNCHANGED; E7 signal does not plausibly rebuild containment",
+    "isotopeKitchen": "CARRIED UNCHANGED; service continues beside the new refinery",
+    "decayClock": "CARRIED UNCHANGED; signal does not replace atomic civic timing",
+    "appliancePen": "CARRIED UNCHANGED; captured appliances remain useful",
+    "glowFence": "CARRIED UNCHANGED; no E7 transform is named",
+    "panMonument": "PERSIST unchanged under heritage law"
+  }
+}

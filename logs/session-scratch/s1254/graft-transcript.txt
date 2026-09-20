@@ -1,0 +1,23 @@
+$ git cherry-pick -n f2a056c8
+rc=0
+Auto-merging src/game/Game.ts
+
+---
+$ git status --porcelain
+rc=0
+A  artifacts/trail-guide-beat-priority/desktop-chrome-storm.png
+A  artifacts/trail-guide-beat-priority/mobile-chrome-storm.png
+A  e2e/trail-guide-beat-priority.spec.ts
+ M logs/dashboard.html
+ M logs/task-stats.jsonl
+M  src/game/Game.ts
+?? logs/session-scratch/s1254/
+
+---
+$ git diff --cached --stat
+rc=0
+ .../desktop-chrome-storm.png                       | Bin 0 -> 982753 bytes
+ .../mobile-chrome-storm.png                        | Bin 0 -> 1329599 bytes
+ e2e/trail-guide-beat-priority.spec.ts              | 120 +++++++++++++++++++++
+ src/game/Game.ts                                   |  21 +++-
+ 4 files changed, 139 insertions(+), 2 deletions(-)

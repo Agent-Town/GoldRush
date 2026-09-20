@@ -1,0 +1,361 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.4.0/bin/node",
+      "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/node_modules/.bin/playwright",
+      "test",
+      "e2e/town-cast-wiring.spec.ts",
+      "e2e/town-fresh-boot-textures.spec.ts",
+      "--grep",
+      "plain town boot shows|delayed town textures",
+      "--workers=1",
+      "--project=desktop-chrome",
+      "--project=mobile-chrome",
+      "--timeout=120000",
+      "--trace=off",
+      "--output=artifacts/sol/open-findings/_raw/targeted-recheck",
+      "--reporter=line,json"
+    ],
+    "configFile": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/playwright.config.ts",
+    "rootDir": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/e2e",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/scripts/external-server-guard.mjs",
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "revision": "58fdd423ccde1301b8bc13820867ef61ffd39759",
+      "dirty": true,
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/sol/open-findings/_raw/targeted-recheck",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "revision": "58fdd423ccde1301b8bc13820867ef61ffd39759",
+          "dirty": true,
+          "actualWorkers": 1
+        },
+        "id": "desktop-chrome",
+        "name": "desktop-chrome",
+        "testDir": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/e2e",
+        "testIgnore": [
+          "**/*.rig.ts",
+          "**/release-build.spec.ts",
+          "**/release-base-path.spec.ts",
+          "**/accounts-sync.spec.ts"
+        ],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/sol/open-findings/_raw/targeted-recheck",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "revision": "58fdd423ccde1301b8bc13820867ef61ffd39759",
+          "dirty": true,
+          "actualWorkers": 1
+        },
+        "id": "mobile-chrome",
+        "name": "mobile-chrome",
+        "testDir": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/e2e",
+        "testIgnore": [
+          "**/*.rig.ts",
+          "**/release-build.spec.ts",
+          "**/release-base-path.spec.ts",
+          "**/accounts-sync.spec.ts"
+        ],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/sol/open-findings/_raw/targeted-recheck",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "revision": "58fdd423ccde1301b8bc13820867ef61ffd39759",
+          "dirty": true,
+          "actualWorkers": 1
+        },
+        "id": "desktop-webkit",
+        "name": "desktop-webkit",
+        "testDir": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/e2e",
+        "testIgnore": [
+          "**/*.rig.ts",
+          "**/release-build.spec.ts",
+          "**/release-base-path.spec.ts",
+          "**/accounts-sync.spec.ts"
+        ],
+        "testMatch": [
+          "/058-device-tiers\\.spec\\.ts/"
+        ],
+        "timeout": 120000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "line"
+      ],
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "town-cast-wiring.spec.ts",
+      "file": "town-cast-wiring.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "plain town boot shows the tavernkeeper and storekeeper walking on anchored feet",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 10835,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-19T14:43:02.311Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9a1ea4eacce5f471b040-cc4b693b45ae4cd3246b",
+          "file": "town-cast-wiring.spec.ts",
+          "line": 27,
+          "column": 1
+        },
+        {
+          "title": "plain town boot shows the tavernkeeper and storekeeper walking on anchored feet",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 16115,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-19T14:43:31.746Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9a1ea4eacce5f471b040-30871e0211ca25885275",
+          "file": "town-cast-wiring.spec.ts",
+          "line": 27,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "town-fresh-boot-textures.spec.ts",
+      "file": "town-fresh-boot-textures.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "delayed town textures converge without a reload and bark portrait falls back",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 16345,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"fallback\"\u001b[39m\nReceived: \u001b[31m\"loaded\"\u001b[39m\n\nCall Log:\n- Timeout 8000ms exceeded while waiting on the predicate",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"fallback\"\u001b[39m\nReceived: \u001b[31m\"loaded\"\u001b[39m\n\nCall Log:\n- Timeout 8000ms exceeded while waiting on the predicate\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/e2e/town-fresh-boot-textures.spec.ts:57:123",
+                    "location": {
+                      "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/e2e/town-fresh-boot-textures.spec.ts",
+                      "column": 123,
+                      "line": 57
+                    },
+                    "snippet": "  55 |   await expect.poll(() => facadeStates(page)).not.toContain('error');\n  56 |   await expect.poll(() => page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__?.textures.ground)).toBe('placeholder');\n> 57 |   await expect.poll(() => page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__?.textures.barkPortrait), { timeout: 8_000 }).toBe('fallback');\n     |                                                                                                                           ^\n  58 |   await saveShot(page, `${testInfo.project.name}-after-delayed-textures.png`);\n  59 |\n  60 |   expect(errors).toEqual({ consoleErrors: [], pageErrors: [] });"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/e2e/town-fresh-boot-textures.spec.ts",
+                        "column": 123,
+                        "line": 57
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"fallback\"\u001b[39m\nReceived: \u001b[31m\"loaded\"\u001b[39m\n\nCall Log:\n- Timeout 8000ms exceeded while waiting on the predicate\n\n  55 |   await expect.poll(() => facadeStates(page)).not.toContain('error');\n  56 |   await expect.poll(() => page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__?.textures.ground)).toBe('placeholder');\n> 57 |   await expect.poll(() => page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__?.textures.barkPortrait), { timeout: 8_000 }).toBe('fallback');\n     |                                                                                                                           ^\n  58 |   await saveShot(page, `${testInfo.project.name}-after-delayed-textures.png`);\n  59 |\n  60 |   expect(errors).toEqual({ consoleErrors: [], pageErrors: [] });\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/e2e/town-fresh-boot-textures.spec.ts:57:123"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-19T14:43:13.846Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/sol/open-findings/_raw/targeted-recheck/town-fresh-boot-textures-d-8648c-nd-bark-portrait-falls-back-desktop-chrome/test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/sol/open-findings/_raw/targeted-recheck/town-fresh-boot-textures-d-8648c-nd-bark-portrait-falls-back-desktop-chrome/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/e2e/town-fresh-boot-textures.spec.ts",
+                    "column": 123,
+                    "line": 57
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "f713eb62d123c4d10918-f06f81a2f5f5d5da44c0",
+          "file": "town-fresh-boot-textures.spec.ts",
+          "line": 28,
+          "column": 1
+        },
+        {
+          "title": "delayed town textures converge without a reload and bark portrait falls back",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 19398,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"fallback\"\u001b[39m\nReceived: \u001b[31m\"loaded\"\u001b[39m\n\nCall Log:\n- Timeout 8000ms exceeded while waiting on the predicate",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"fallback\"\u001b[39m\nReceived: \u001b[31m\"loaded\"\u001b[39m\n\nCall Log:\n- Timeout 8000ms exceeded while waiting on the predicate\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/e2e/town-fresh-boot-textures.spec.ts:57:123",
+                    "location": {
+                      "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/e2e/town-fresh-boot-textures.spec.ts",
+                      "column": 123,
+                      "line": 57
+                    },
+                    "snippet": "  55 |   await expect.poll(() => facadeStates(page)).not.toContain('error');\n  56 |   await expect.poll(() => page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__?.textures.ground)).toBe('placeholder');\n> 57 |   await expect.poll(() => page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__?.textures.barkPortrait), { timeout: 8_000 }).toBe('fallback');\n     |                                                                                                                           ^\n  58 |   await saveShot(page, `${testInfo.project.name}-after-delayed-textures.png`);\n  59 |\n  60 |   expect(errors).toEqual({ consoleErrors: [], pageErrors: [] });"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/e2e/town-fresh-boot-textures.spec.ts",
+                        "column": 123,
+                        "line": 57
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"fallback\"\u001b[39m\nReceived: \u001b[31m\"loaded\"\u001b[39m\n\nCall Log:\n- Timeout 8000ms exceeded while waiting on the predicate\n\n  55 |   await expect.poll(() => facadeStates(page)).not.toContain('error');\n  56 |   await expect.poll(() => page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__?.textures.ground)).toBe('placeholder');\n> 57 |   await expect.poll(() => page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__?.textures.barkPortrait), { timeout: 8_000 }).toBe('fallback');\n     |                                                                                                                           ^\n  58 |   await saveShot(page, `${testInfo.project.name}-after-delayed-textures.png`);\n  59 |\n  60 |   expect(errors).toEqual({ consoleErrors: [], pageErrors: [] });\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/e2e/town-fresh-boot-textures.spec.ts:57:123"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-19T14:43:48.807Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/sol/open-findings/_raw/targeted-recheck/town-fresh-boot-textures-d-8648c-nd-bark-portrait-falls-back-mobile-chrome/test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/sol/open-findings/_raw/targeted-recheck/town-fresh-boot-textures-d-8648c-nd-bark-portrait-falls-back-mobile-chrome/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/e2e/town-fresh-boot-textures.spec.ts",
+                    "column": 123,
+                    "line": 57
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "f713eb62d123c4d10918-c9545f1e5f9217e1b746",
+          "file": "town-fresh-boot-textures.spec.ts",
+          "line": 28,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-09-19T14:43:01.234Z",
+    "duration": 67212.43900000001,
+    "expected": 2,
+    "skipped": 0,
+    "unexpected": 2,
+    "flaky": 0
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "baseSha": "8d974f11911187136469fbd017c9598e5b2faf28",
+  "target": "At gameplay distance, E6 must read as a dry atomic Mesa era: the Tavern identity becomes a chrome/enamel social hub, while the Dome and Kitchen own distinct civic-machine silhouettes.",
+  "freshReferenceRule": "all current-era PNGs rerendered from GLBs and manifests on this base; no old PNG input",
+  "mesaEvidenceDependency": {
+    "branchTip": "60242186e7bd7e72050146d06533d56922e2fc4e",
+    "path": "assets/pilots/mesa-town-3d/mesa-town-plate.glb",
+    "sha256": "067c8c652134258379315a41200caf423ff3e9cb70a1b9d8f2607ee691aafdc3",
+    "usage": "exact site and camera evidence only; no Mesa bytes duplicated in this wave"
+  },
+  "placements": {
+    "atomicDiner": {
+      "identitySlot": "tavern",
+      "position": [
+        -7.1,
+        -7.1
+      ],
+      "height": 0.0
+    },
+    "isotopeKitchen": {
+      "pilotSlot": "general_store",
+      "position": [
+        0.0,
+        -10.2
+      ],
+      "height": 0.0
+    },
+    "reactorDome": {
+      "premiumSite": "reactor-dome-candidate",
+      "position": [
+        7.0,
+        -16.7
+      ],
+      "height": 1.18
+    }
+  },
+  "comparisonMetrics": {
+    "mae": 2.2066917419433594,
+    "rmse": 10.962265968322754,
+    "diffRatio16": 0.0402314453125,
+    "diffRatio32": 0.026865234375,
+    "diffRatio64": 0.0096708984375,
+    "thresholdMismatchProxy": "diffRatio16 (pixelmatch unavailable; no dependency installed)",
+    "edgeEnergyBase": 1.691104769706726,
+    "edgeEnergyCandidate": 2.0414724349975586,
+    "edgeEnergyRatio": 1.207182765007019,
+    "edgeDiffRatio32": 0.0021826171875,
+    "avgLuminanceBase": 149.15379333496094,
+    "avgLuminanceCandidate": 147.28775024414062,
+    "avgLuminanceDelta": -1.8660430908203125,
+    "diagnosticDistance": 0.060752964713322075
+  },
+  "visualReview": {
+    "localFullFrameAndCrop": "required and completed after generation",
+    "independentSubagent": "not run: this session explicitly forbids delegation; limitation recorded"
+  },
+  "renders": [
+    "artifacts/town-e6-pilot/current-references/8d974f119111-main/town-e1-e4-e5-current.png",
+    "artifacts/town-e6-pilot/mesa-e6-pilot-across-plaza-ab.png",
+    "artifacts/town-e6-pilot/mesa-e6-pilot-key-feature-crop.png",
+    "artifacts/town-e6-pilot/atomic-diner-identity-ab.png",
+    "artifacts/town-e6-pilot/turntables/atomic-diner-e6.png",
+    "artifacts/town-e6-pilot/turntables/reactor-dome-e6.png",
+    "artifacts/town-e6-pilot/turntables/isotope-kitchen-e6.png"
+  ]
+}

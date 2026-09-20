@@ -1,0 +1,294 @@
+Auto-merging e2e/elder-walk8-woman.spec.ts
+Merge made by the 'ort' strategy.
+ STATUS.md                                          |    3 +-
+ .../attended-battery-node26.log                    | 2600 ++++++++++++++++++++
+ .../attended-battery-stages2-7.log                 |   55 +
+ .../attended-build-release.log                     | 1210 +++++++++
+ .../attended-e2e.log                               |  151 ++
+ .../attended-halo.log                              |    2 +
+ .../attended-payload.log                           |   40 +
+ .../attended-sweep-after-cures-worktree.log        |  108 +
+ .../attended-sweep-on-main-before-cure.log         |   28 +
+ .../char-assay-clerk-sheet-walk8-a-r0c0.png        |  Bin 58307 -> 140825 bytes
+ .../char-assay-clerk-sheet-walk8-a-r0c1.png        |  Bin 57532 -> 138242 bytes
+ .../char-assay-clerk-sheet-walk8-a-r0c2.png        |  Bin 57212 -> 137633 bytes
+ .../char-assay-clerk-sheet-walk8-a-r0c3.png        |  Bin 55700 -> 134733 bytes
+ .../char-assay-clerk-sheet-walk8-a-r1c0.png        |  Bin 49946 -> 115815 bytes
+ .../char-assay-clerk-sheet-walk8-a-r1c1.png        |  Bin 43403 -> 120288 bytes
+ .../char-assay-clerk-sheet-walk8-a-r1c2.png        |  Bin 50060 -> 119231 bytes
+ .../char-assay-clerk-sheet-walk8-a-r1c3.png        |  Bin 42193 -> 117257 bytes
+ .../char-assay-clerk-sheet-walk8-a-r2c0.png        |  Bin 55662 -> 130213 bytes
+ .../char-assay-clerk-sheet-walk8-a-r2c1.png        |  Bin 57378 -> 115650 bytes
+ .../char-assay-clerk-sheet-walk8-a-r2c2.png        |  Bin 54958 -> 131045 bytes
+ .../char-assay-clerk-sheet-walk8-a-r2c3.png        |  Bin 53726 -> 119692 bytes
+ .../char-assay-clerk-sheet-walk8-a-r3c0.png        |  Bin 49949 -> 124399 bytes
+ .../char-assay-clerk-sheet-walk8-a-r3c1.png        |  Bin 55912 -> 133358 bytes
+ .../char-assay-clerk-sheet-walk8-a-r3c2.png        |  Bin 51758 -> 122491 bytes
+ .../char-assay-clerk-sheet-walk8-a-r3c3.png        |  Bin 53394 -> 127090 bytes
+ .../char-assay-clerk-sheet-walk8-a.frames.json     |   90 +-
+ assets/processed/char-elder-sheet-walk8-r0c0.png   |  Bin 53287 -> 143210 bytes
+ assets/processed/char-elder-sheet-walk8-r0c1.png   |  Bin 64569 -> 146324 bytes
+ assets/processed/char-elder-sheet-walk8-r0c2.png   |  Bin 53891 -> 134038 bytes
+ assets/processed/char-elder-sheet-walk8-r0c3.png   |  Bin 65158 -> 141896 bytes
+ assets/processed/char-elder-sheet-walk8-r0c4.png   |  Bin 66597 -> 143596 bytes
+ assets/processed/char-elder-sheet-walk8-r0c5.png   |  Bin 54681 -> 142300 bytes
+ assets/processed/char-elder-sheet-walk8-r0c6.png   |  Bin 58105 -> 144613 bytes
+ assets/processed/char-elder-sheet-walk8-r0c7.png   |  Bin 54300 -> 138494 bytes
+ assets/processed/char-elder-sheet-walk8-r1c0.png   |  Bin 50609 -> 150585 bytes
+ assets/processed/char-elder-sheet-walk8-r1c1.png   |  Bin 44637 -> 119739 bytes
+ assets/processed/char-elder-sheet-walk8-r1c2.png   |  Bin 58877 -> 135610 bytes
+ assets/processed/char-elder-sheet-walk8-r1c3.png   |  Bin 51179 -> 147368 bytes
+ assets/processed/char-elder-sheet-walk8-r1c4.png   |  Bin 49816 -> 141947 bytes
+ assets/processed/char-elder-sheet-walk8-r1c5.png   |  Bin 49810 -> 116502 bytes
+ assets/processed/char-elder-sheet-walk8-r1c6.png   |  Bin 51184 -> 143757 bytes
+ assets/processed/char-elder-sheet-walk8-r1c7.png   |  Bin 61993 -> 148613 bytes
+ assets/processed/char-elder-sheet-walk8-r2c0.png   |  Bin 64436 -> 152296 bytes
+ assets/processed/char-elder-sheet-walk8-r2c1.png   |  Bin 43135 -> 120991 bytes
+ assets/processed/char-elder-sheet-walk8-r2c2.png   |  Bin 51137 -> 135052 bytes
+ assets/processed/char-elder-sheet-walk8-r2c3.png   |  Bin 44937 -> 131459 bytes
+ assets/processed/char-elder-sheet-walk8-r2c4.png   |  Bin 54571 -> 143142 bytes
+ assets/processed/char-elder-sheet-walk8-r2c5.png   |  Bin 53552 -> 142879 bytes
+ assets/processed/char-elder-sheet-walk8-r2c6.png   |  Bin 42154 -> 115358 bytes
+ assets/processed/char-elder-sheet-walk8-r2c7.png   |  Bin 51180 -> 133832 bytes
+ assets/processed/char-elder-sheet-walk8-r3c0.png   |  Bin 55912 -> 140018 bytes
+ assets/processed/char-elder-sheet-walk8-r3c1.png   |  Bin 59118 -> 133875 bytes
+ assets/processed/char-elder-sheet-walk8-r3c2.png   |  Bin 55866 -> 136277 bytes
+ assets/processed/char-elder-sheet-walk8-r3c3.png   |  Bin 62712 -> 142757 bytes
+ assets/processed/char-elder-sheet-walk8-r3c4.png   |  Bin 48025 -> 132179 bytes
+ assets/processed/char-elder-sheet-walk8-r3c5.png   |  Bin 50123 -> 129719 bytes
+ assets/processed/char-elder-sheet-walk8-r3c6.png   |  Bin 58914 -> 136917 bytes
+ assets/processed/char-elder-sheet-walk8-r3c7.png   |  Bin 44034 -> 125860 bytes
+ .../processed/char-elder-sheet-walk8.frames.json   |  106 +-
+ assets/processed/char-hero-sheet-walk8-r0c0.png    |  Bin 13001 -> 42138 bytes
+ assets/processed/char-hero-sheet-walk8-r0c1.png    |  Bin 12968 -> 41329 bytes
+ assets/processed/char-hero-sheet-walk8-r0c2.png    |  Bin 12819 -> 41200 bytes
+ assets/processed/char-hero-sheet-walk8-r0c3.png    |  Bin 13024 -> 40423 bytes
+ assets/processed/char-hero-sheet-walk8-r0c4.png    |  Bin 12922 -> 41692 bytes
+ assets/processed/char-hero-sheet-walk8-r0c5.png    |  Bin 13012 -> 41803 bytes
+ assets/processed/char-hero-sheet-walk8-r0c6.png    |  Bin 13259 -> 41445 bytes
+ assets/processed/char-hero-sheet-walk8-r0c7.png    |  Bin 13118 -> 43413 bytes
+ assets/processed/char-hero-sheet-walk8-r1c0.png    |  Bin 11377 -> 35430 bytes
+ assets/processed/char-hero-sheet-walk8-r1c1.png    |  Bin 12015 -> 30954 bytes
+ assets/processed/char-hero-sheet-walk8-r1c2.png    |  Bin 11530 -> 34581 bytes
+ assets/processed/char-hero-sheet-walk8-r1c3.png    |  Bin 12035 -> 35193 bytes
+ assets/processed/char-hero-sheet-walk8-r1c4.png    |  Bin 11242 -> 33475 bytes
+ assets/processed/char-hero-sheet-walk8-r1c5.png    |  Bin 12058 -> 35343 bytes
+ assets/processed/char-hero-sheet-walk8-r1c6.png    |  Bin 10950 -> 31540 bytes
+ assets/processed/char-hero-sheet-walk8-r1c7.png    |  Bin 12145 -> 37881 bytes
+ assets/processed/char-hero-sheet-walk8-r2c0.png    |  Bin 11703 -> 36696 bytes
+ assets/processed/char-hero-sheet-walk8-r2c1.png    |  Bin 12725 -> 38013 bytes
+ assets/processed/char-hero-sheet-walk8-r2c2.png    |  Bin 10710 -> 33838 bytes
+ assets/processed/char-hero-sheet-walk8-r2c3.png    |  Bin 12822 -> 39941 bytes
+ assets/processed/char-hero-sheet-walk8-r2c4.png    |  Bin 12432 -> 38492 bytes
+ assets/processed/char-hero-sheet-walk8-r2c5.png    |  Bin 10470 -> 33074 bytes
+ assets/processed/char-hero-sheet-walk8-r2c6.png    |  Bin 13279 -> 40015 bytes
+ assets/processed/char-hero-sheet-walk8-r2c7.png    |  Bin 12760 -> 38399 bytes
+ assets/processed/char-hero-sheet-walk8-r3c0.png    |  Bin 13619 -> 43232 bytes
+ assets/processed/char-hero-sheet-walk8-r3c1.png    |  Bin 13451 -> 45134 bytes
+ assets/processed/char-hero-sheet-walk8-r3c2.png    |  Bin 13648 -> 45358 bytes
+ assets/processed/char-hero-sheet-walk8-r3c3.png    |  Bin 13154 -> 43554 bytes
+ assets/processed/char-hero-sheet-walk8-r3c4.png    |  Bin 13187 -> 44097 bytes
+ assets/processed/char-hero-sheet-walk8-r3c5.png    |  Bin 12723 -> 44067 bytes
+ assets/processed/char-hero-sheet-walk8-r3c6.png    |  Bin 12670 -> 43184 bytes
+ assets/processed/char-hero-sheet-walk8-r3c7.png    |  Bin 12758 -> 44404 bytes
+ assets/processed/char-hero-sheet-walk8.frames.json |  282 ++-
+ .../processed/char-newsie-mei-sheet-walk8-r0c0.png |  Bin 39114 -> 115520 bytes
+ .../processed/char-newsie-mei-sheet-walk8-r0c1.png |  Bin 36924 -> 110590 bytes
+ .../processed/char-newsie-mei-sheet-walk8-r0c2.png |  Bin 44951 -> 119658 bytes
+ .../processed/char-newsie-mei-sheet-walk8-r0c3.png |  Bin 39174 -> 114520 bytes
+ .../processed/char-newsie-mei-sheet-walk8-r0c4.png |  Bin 39889 -> 119619 bytes
+ .../processed/char-newsie-mei-sheet-walk8-r0c5.png |  Bin 39984 -> 117616 bytes
+ .../processed/char-newsie-mei-sheet-walk8-r0c6.png |  Bin 36465 -> 113208 bytes
+ .../processed/char-newsie-mei-sheet-walk8-r0c7.png |  Bin 40840 -> 127758 bytes
+ .../processed/char-newsie-mei-sheet-walk8-r1c0.png |  Bin 41572 -> 138097 bytes
+ .../processed/char-newsie-mei-sheet-walk8-r1c1.png |  Bin 33310 -> 104881 bytes
+ .../processed/char-newsie-mei-sheet-walk8-r1c2.png |  Bin 43150 -> 129551 bytes
+ .../processed/char-newsie-mei-sheet-walk8-r1c3.png |  Bin 31699 -> 98512 bytes
+ .../processed/char-newsie-mei-sheet-walk8-r1c4.png |  Bin 46198 -> 134675 bytes
+ .../processed/char-newsie-mei-sheet-walk8-r1c5.png |  Bin 38588 -> 96144 bytes
+ .../processed/char-newsie-mei-sheet-walk8-r1c6.png |  Bin 41293 -> 136731 bytes
+ .../processed/char-newsie-mei-sheet-walk8-r1c7.png |  Bin 32625 -> 101904 bytes
+ .../processed/char-newsie-mei-sheet-walk8-r2c0.png |  Bin 47329 -> 130390 bytes
+ .../processed/char-newsie-mei-sheet-walk8-r2c1.png |  Bin 41469 -> 115777 bytes
+ .../processed/char-newsie-mei-sheet-walk8-r2c2.png |  Bin 38020 -> 112556 bytes
+ .../processed/char-newsie-mei-sheet-walk8-r2c3.png |  Bin 37569 -> 103677 bytes
+ .../processed/char-newsie-mei-sheet-walk8-r2c4.png |  Bin 37797 -> 113797 bytes
+ .../processed/char-newsie-mei-sheet-walk8-r2c5.png |  Bin 36742 -> 109435 bytes
+ .../processed/char-newsie-mei-sheet-walk8-r2c6.png |  Bin 50930 -> 139919 bytes
+ .../processed/char-newsie-mei-sheet-walk8-r2c7.png |  Bin 46490 -> 122484 bytes
+ .../processed/char-newsie-mei-sheet-walk8-r3c0.png |  Bin 39989 -> 125265 bytes
+ .../processed/char-newsie-mei-sheet-walk8-r3c1.png |  Bin 39981 -> 120776 bytes
+ .../processed/char-newsie-mei-sheet-walk8-r3c2.png |  Bin 36034 -> 113524 bytes
+ .../processed/char-newsie-mei-sheet-walk8-r3c3.png |  Bin 36949 -> 111210 bytes
+ .../processed/char-newsie-mei-sheet-walk8-r3c4.png |  Bin 35645 -> 111407 bytes
+ .../processed/char-newsie-mei-sheet-walk8-r3c5.png |  Bin 36836 -> 112883 bytes
+ .../processed/char-newsie-mei-sheet-walk8-r3c6.png |  Bin 38002 -> 121216 bytes
+ .../processed/char-newsie-mei-sheet-walk8-r3c7.png |  Bin 39952 -> 122669 bytes
+ .../char-newsie-mei-sheet-walk8.frames.json        |   70 +-
+ .../processed/char-preacher-sheet-walk8-a-r0c0.png |  Bin 49655 -> 121162 bytes
+ .../processed/char-preacher-sheet-walk8-a-r0c1.png |  Bin 53009 -> 128718 bytes
+ .../processed/char-preacher-sheet-walk8-a-r0c2.png |  Bin 50138 -> 119833 bytes
+ .../processed/char-preacher-sheet-walk8-a-r0c3.png |  Bin 49821 -> 121945 bytes
+ .../processed/char-preacher-sheet-walk8-a-r1c0.png |  Bin 42046 -> 118327 bytes
+ .../processed/char-preacher-sheet-walk8-a-r1c1.png |  Bin 40417 -> 105483 bytes
+ .../processed/char-preacher-sheet-walk8-a-r1c2.png |  Bin 43153 -> 121958 bytes
+ .../processed/char-preacher-sheet-walk8-a-r1c3.png |  Bin 38398 -> 109019 bytes
+ .../processed/char-preacher-sheet-walk8-a-r2c0.png |  Bin 43480 -> 107994 bytes
+ .../processed/char-preacher-sheet-walk8-a-r2c1.png |  Bin 38737 -> 107120 bytes
+ .../processed/char-preacher-sheet-walk8-a-r2c2.png |  Bin 41060 -> 115454 bytes
+ .../processed/char-preacher-sheet-walk8-a-r2c3.png |  Bin 42319 -> 101652 bytes
+ .../processed/char-preacher-sheet-walk8-a-r3c0.png |  Bin 46562 -> 106879 bytes
+ .../processed/char-preacher-sheet-walk8-a-r3c1.png |  Bin 45551 -> 109821 bytes
+ .../processed/char-preacher-sheet-walk8-a-r3c2.png |  Bin 49026 -> 111605 bytes
+ .../processed/char-preacher-sheet-walk8-a-r3c3.png |  Bin 42930 -> 100934 bytes
+ .../char-preacher-sheet-walk8-a.frames.json        |   88 +-
+ .../char-storekeeper-sheet-walk8-r0c0.png          |  Bin 63416 -> 161885 bytes
+ .../char-storekeeper-sheet-walk8-r0c1.png          |  Bin 55283 -> 159005 bytes
+ .../char-storekeeper-sheet-walk8-r0c2.png          |  Bin 55132 -> 158457 bytes
+ .../char-storekeeper-sheet-walk8-r0c3.png          |  Bin 55738 -> 156750 bytes
+ .../char-storekeeper-sheet-walk8-r0c4.png          |  Bin 56518 -> 159431 bytes
+ .../char-storekeeper-sheet-walk8-r0c5.png          |  Bin 56035 -> 156151 bytes
+ .../char-storekeeper-sheet-walk8-r0c6.png          |  Bin 55204 -> 157340 bytes
+ .../char-storekeeper-sheet-walk8-r0c7.png          |  Bin 55612 -> 157192 bytes
+ .../char-storekeeper-sheet-walk8-r1c0.png          |  Bin 41373 -> 132522 bytes
+ .../char-storekeeper-sheet-walk8-r1c1.png          |  Bin 38838 -> 113630 bytes
+ .../char-storekeeper-sheet-walk8-r1c2.png          |  Bin 33509 -> 100555 bytes
+ .../char-storekeeper-sheet-walk8-r1c3.png          |  Bin 48404 -> 127513 bytes
+ .../char-storekeeper-sheet-walk8-r1c4.png          |  Bin 41622 -> 132203 bytes
+ .../char-storekeeper-sheet-walk8-r1c5.png          |  Bin 35837 -> 111542 bytes
+ .../char-storekeeper-sheet-walk8-r1c6.png          |  Bin 38830 -> 107618 bytes
+ .../char-storekeeper-sheet-walk8-r1c7.png          |  Bin 46034 -> 125704 bytes
+ .../char-storekeeper-sheet-walk8-r2c0.png          |  Bin 46962 -> 151512 bytes
+ .../char-storekeeper-sheet-walk8-r2c1.png          |  Bin 51821 -> 144293 bytes
+ .../char-storekeeper-sheet-walk8-r2c2.png          |  Bin 37443 -> 107725 bytes
+ .../char-storekeeper-sheet-walk8-r2c3.png          |  Bin 42676 -> 123213 bytes
+ .../char-storekeeper-sheet-walk8-r2c4.png          |  Bin 42889 -> 142030 bytes
+ .../char-storekeeper-sheet-walk8-r2c5.png          |  Bin 40526 -> 126286 bytes
+ .../char-storekeeper-sheet-walk8-r2c6.png          |  Bin 37479 -> 110422 bytes
+ .../char-storekeeper-sheet-walk8-r2c7.png          |  Bin 46465 -> 136908 bytes
+ .../char-storekeeper-sheet-walk8-r3c0.png          |  Bin 50221 -> 139181 bytes
+ .../char-storekeeper-sheet-walk8-r3c1.png          |  Bin 49236 -> 138283 bytes
+ .../char-storekeeper-sheet-walk8-r3c2.png          |  Bin 57628 -> 140958 bytes
+ .../char-storekeeper-sheet-walk8-r3c3.png          |  Bin 50920 -> 134920 bytes
+ .../char-storekeeper-sheet-walk8-r3c4.png          |  Bin 50790 -> 142732 bytes
+ .../char-storekeeper-sheet-walk8-r3c5.png          |  Bin 50546 -> 139568 bytes
+ .../char-storekeeper-sheet-walk8-r3c6.png          |  Bin 50745 -> 144162 bytes
+ .../char-storekeeper-sheet-walk8-r3c7.png          |  Bin 50873 -> 134860 bytes
+ .../char-storekeeper-sheet-walk8.frames.json       |  370 ++-
+ .../char-tavernkeeper-sheet-walk8-r0c0.png         |  Bin 73306 -> 176672 bytes
+ .../char-tavernkeeper-sheet-walk8-r0c1.png         |  Bin 73279 -> 179398 bytes
+ .../char-tavernkeeper-sheet-walk8-r0c2.png         |  Bin 67235 -> 167823 bytes
+ .../char-tavernkeeper-sheet-walk8-r0c3.png         |  Bin 57804 -> 169329 bytes
+ .../char-tavernkeeper-sheet-walk8-r0c4.png         |  Bin 72839 -> 177241 bytes
+ .../char-tavernkeeper-sheet-walk8-r0c5.png         |  Bin 74738 -> 178269 bytes
+ .../char-tavernkeeper-sheet-walk8-r0c6.png         |  Bin 68839 -> 168781 bytes
+ .../char-tavernkeeper-sheet-walk8-r0c7.png         |  Bin 74490 -> 177450 bytes
+ .../char-tavernkeeper-sheet-walk8-r1c0.png         |  Bin 52403 -> 162588 bytes
+ .../char-tavernkeeper-sheet-walk8-r1c1.png         |  Bin 48927 -> 141681 bytes
+ .../char-tavernkeeper-sheet-walk8-r1c2.png         |  Bin 38205 -> 115297 bytes
+ .../char-tavernkeeper-sheet-walk8-r1c3.png         |  Bin 45304 -> 134086 bytes
+ .../char-tavernkeeper-sheet-walk8-r1c4.png         |  Bin 43262 -> 137029 bytes
+ .../char-tavernkeeper-sheet-walk8-r1c5.png         |  Bin 41249 -> 126394 bytes
+ .../char-tavernkeeper-sheet-walk8-r1c6.png         |  Bin 39656 -> 117527 bytes
+ .../char-tavernkeeper-sheet-walk8-r1c7.png         |  Bin 46767 -> 127911 bytes
+ .../char-tavernkeeper-sheet-walk8-r2c0.png         |  Bin 54821 -> 151104 bytes
+ .../char-tavernkeeper-sheet-walk8-r2c1.png         |  Bin 44137 -> 145460 bytes
+ .../char-tavernkeeper-sheet-walk8-r2c2.png         |  Bin 46185 -> 138254 bytes
+ .../char-tavernkeeper-sheet-walk8-r2c3.png         |  Bin 45238 -> 126259 bytes
+ .../char-tavernkeeper-sheet-walk8-r2c4.png         |  Bin 48396 -> 144741 bytes
+ .../char-tavernkeeper-sheet-walk8-r2c5.png         |  Bin 55773 -> 140464 bytes
+ .../char-tavernkeeper-sheet-walk8-r2c6.png         |  Bin 53646 -> 143236 bytes
+ .../char-tavernkeeper-sheet-walk8-r2c7.png         |  Bin 58181 -> 145357 bytes
+ .../char-tavernkeeper-sheet-walk8-r3c0.png         |  Bin 50012 -> 143135 bytes
+ .../char-tavernkeeper-sheet-walk8-r3c1.png         |  Bin 52217 -> 156874 bytes
+ .../char-tavernkeeper-sheet-walk8-r3c2.png         |  Bin 56129 -> 153772 bytes
+ .../char-tavernkeeper-sheet-walk8-r3c3.png         |  Bin 58861 -> 148277 bytes
+ .../char-tavernkeeper-sheet-walk8-r3c4.png         |  Bin 46685 -> 149161 bytes
+ .../char-tavernkeeper-sheet-walk8-r3c5.png         |  Bin 47919 -> 146029 bytes
+ .../char-tavernkeeper-sheet-walk8-r3c6.png         |  Bin 50412 -> 153253 bytes
+ .../char-tavernkeeper-sheet-walk8-r3c7.png         |  Bin 44654 -> 135963 bytes
+ .../char-tavernkeeper-sheet-walk8.frames.json      |  212 +-
+ .../char-youngster-f-sheet-walk8-r0c0.png          |  Bin 45954 -> 144590 bytes
+ .../char-youngster-f-sheet-walk8-r0c1.png          |  Bin 44789 -> 135879 bytes
+ .../char-youngster-f-sheet-walk8-r0c2.png          |  Bin 51074 -> 144801 bytes
+ .../char-youngster-f-sheet-walk8-r0c3.png          |  Bin 48622 -> 149989 bytes
+ .../char-youngster-f-sheet-walk8-r0c4.png          |  Bin 46338 -> 144662 bytes
+ .../char-youngster-f-sheet-walk8-r0c5.png          |  Bin 44311 -> 140720 bytes
+ .../char-youngster-f-sheet-walk8-r0c6.png          |  Bin 44842 -> 139862 bytes
+ .../char-youngster-f-sheet-walk8-r0c7.png          |  Bin 49494 -> 143468 bytes
+ .../char-youngster-f-sheet-walk8-r1c0.png          |  Bin 42714 -> 143591 bytes
+ .../char-youngster-f-sheet-walk8-r1c1.png          |  Bin 42359 -> 141122 bytes
+ .../char-youngster-f-sheet-walk8-r1c2.png          |  Bin 36390 -> 120279 bytes
+ .../char-youngster-f-sheet-walk8-r1c3.png          |  Bin 44820 -> 125983 bytes
+ .../char-youngster-f-sheet-walk8-r1c4.png          |  Bin 44080 -> 150190 bytes
+ .../char-youngster-f-sheet-walk8-r1c5.png          |  Bin 41974 -> 148208 bytes
+ .../char-youngster-f-sheet-walk8-r1c6.png          |  Bin 38106 -> 127181 bytes
+ .../char-youngster-f-sheet-walk8-r1c7.png          |  Bin 39926 -> 115547 bytes
+ .../char-youngster-f-sheet-walk8-r2c0.png          |  Bin 48933 -> 159524 bytes
+ .../char-youngster-f-sheet-walk8-r2c1.png          |  Bin 43827 -> 142282 bytes
+ .../char-youngster-f-sheet-walk8-r2c2.png          |  Bin 37548 -> 120514 bytes
+ .../char-youngster-f-sheet-walk8-r2c3.png          |  Bin 44947 -> 130692 bytes
+ .../char-youngster-f-sheet-walk8-r2c4.png          |  Bin 43896 -> 154718 bytes
+ .../char-youngster-f-sheet-walk8-r2c5.png          |  Bin 40408 -> 139431 bytes
+ .../char-youngster-f-sheet-walk8-r2c6.png          |  Bin 36441 -> 114757 bytes
+ .../char-youngster-f-sheet-walk8-r2c7.png          |  Bin 43223 -> 122897 bytes
+ .../char-youngster-f-sheet-walk8-r3c0.png          |  Bin 37910 -> 129388 bytes
+ .../char-youngster-f-sheet-walk8-r3c1.png          |  Bin 37694 -> 127168 bytes
+ .../char-youngster-f-sheet-walk8-r3c2.png          |  Bin 37994 -> 126310 bytes
+ .../char-youngster-f-sheet-walk8-r3c3.png          |  Bin 41760 -> 134751 bytes
+ .../char-youngster-f-sheet-walk8-r3c4.png          |  Bin 39875 -> 143073 bytes
+ .../char-youngster-f-sheet-walk8-r3c5.png          |  Bin 39218 -> 141358 bytes
+ .../char-youngster-f-sheet-walk8-r3c6.png          |  Bin 41954 -> 140887 bytes
+ .../char-youngster-f-sheet-walk8-r3c7.png          |  Bin 43110 -> 137898 bytes
+ .../char-youngster-f-sheet-walk8.frames.json       |  358 ++-
+ .../char-youngster-m-sheet-walk8-r0c0.png          |  Bin 46939 -> 143926 bytes
+ .../char-youngster-m-sheet-walk8-r0c1.png          |  Bin 50885 -> 143119 bytes
+ .../char-youngster-m-sheet-walk8-r0c2.png          |  Bin 50160 -> 153052 bytes
+ .../char-youngster-m-sheet-walk8-r0c3.png          |  Bin 49326 -> 144356 bytes
+ .../char-youngster-m-sheet-walk8-r0c4.png          |  Bin 45670 -> 144838 bytes
+ .../char-youngster-m-sheet-walk8-r0c5.png          |  Bin 49974 -> 129008 bytes
+ .../char-youngster-m-sheet-walk8-r0c6.png          |  Bin 47515 -> 140553 bytes
+ .../char-youngster-m-sheet-walk8-r0c7.png          |  Bin 48639 -> 140037 bytes
+ .../char-youngster-m-sheet-walk8-r1c0.png          |  Bin 43601 -> 150097 bytes
+ .../char-youngster-m-sheet-walk8-r1c1.png          |  Bin 44402 -> 133072 bytes
+ .../char-youngster-m-sheet-walk8-r1c2.png          |  Bin 31201 -> 110881 bytes
+ .../char-youngster-m-sheet-walk8-r1c3.png          |  Bin 38649 -> 125308 bytes
+ .../char-youngster-m-sheet-walk8-r1c4.png          |  Bin 42525 -> 160604 bytes
+ .../char-youngster-m-sheet-walk8-r1c5.png          |  Bin 50212 -> 147881 bytes
+ .../char-youngster-m-sheet-walk8-r1c6.png          |  Bin 35627 -> 119439 bytes
+ .../char-youngster-m-sheet-walk8-r1c7.png          |  Bin 42983 -> 105892 bytes
+ .../char-youngster-m-sheet-walk8-r2c0.png          |  Bin 40694 -> 154984 bytes
+ .../char-youngster-m-sheet-walk8-r2c1.png          |  Bin 44458 -> 166998 bytes
+ .../char-youngster-m-sheet-walk8-r2c2.png          |  Bin 35025 -> 118504 bytes
+ .../char-youngster-m-sheet-walk8-r2c3.png          |  Bin 34690 -> 117970 bytes
+ .../char-youngster-m-sheet-walk8-r2c4.png          |  Bin 44244 -> 160724 bytes
+ .../char-youngster-m-sheet-walk8-r2c5.png          |  Bin 47017 -> 151606 bytes
+ .../char-youngster-m-sheet-walk8-r2c6.png          |  Bin 32097 -> 117027 bytes
+ .../char-youngster-m-sheet-walk8-r2c7.png          |  Bin 48849 -> 122628 bytes
+ .../char-youngster-m-sheet-walk8-r3c0.png          |  Bin 45971 -> 142695 bytes
+ .../char-youngster-m-sheet-walk8-r3c1.png          |  Bin 46621 -> 142455 bytes
+ .../char-youngster-m-sheet-walk8-r3c2.png          |  Bin 47016 -> 142600 bytes
+ .../char-youngster-m-sheet-walk8-r3c3.png          |  Bin 42179 -> 132010 bytes
+ .../char-youngster-m-sheet-walk8-r3c4.png          |  Bin 47193 -> 146663 bytes
+ .../char-youngster-m-sheet-walk8-r3c5.png          |  Bin 47650 -> 143125 bytes
+ .../char-youngster-m-sheet-walk8-r3c6.png          |  Bin 43546 -> 136532 bytes
+ .../char-youngster-m-sheet-walk8-r3c7.png          |  Bin 43406 -> 129898 bytes
+ .../char-youngster-m-sheet-walk8.frames.json       |  366 ++-
+ e2e/elder-walk8-woman.spec.ts                      |    4 +-
+ reviews/town-cast-original-cells-restore.md        |   31 +
+ scripts/deploy-budget.test.mjs                     |   12 +-
+ scripts/deploy.sh                                  |    7 +-
+ scripts/fixture-teardown.test.mjs                  |    8 +
+ scripts/glb-contract-guard.test.mjs                |    8 +-
+ tasks/BACKLOG.md                                   |    2 +
+ tasks/goals.json                                   |    8 +-
+ 282 files changed, 5494 insertions(+), 725 deletions(-)
+ create mode 100644 artifacts/town-cast-original-cells-restore/attended-battery-node26.log
+ create mode 100644 artifacts/town-cast-original-cells-restore/attended-battery-stages2-7.log
+ create mode 100644 artifacts/town-cast-original-cells-restore/attended-build-release.log
+ create mode 100644 artifacts/town-cast-original-cells-restore/attended-e2e.log
+ create mode 100644 artifacts/town-cast-original-cells-restore/attended-halo.log
+ create mode 100644 artifacts/town-cast-original-cells-restore/attended-payload.log
+ create mode 100644 artifacts/town-cast-original-cells-restore/attended-sweep-after-cures-worktree.log
+ create mode 100644 artifacts/town-cast-original-cells-restore/attended-sweep-on-main-before-cure.log
+ create mode 100644 reviews/town-cast-original-cells-restore.md

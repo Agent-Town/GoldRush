@@ -1,0 +1,765 @@
+{
+  "label": "smoke6",
+  "contract": "the-claim",
+  "url": "/?debug&contract=the-claim&timescale=1&seed=e1-depth-smoke6",
+  "timescale": 1,
+  "viewport": {
+    "width": 1280,
+    "height": 720
+  },
+  "difficulty": "trail",
+  "secureWave": null,
+  "startGold": 0,
+  "firstRun": {
+    "sawStartMenu": false,
+    "sawGreenhornOffer": false,
+    "greenhornCopy": null,
+    "trailGuideBeats": []
+  },
+  "boot": {
+    "contract": "the-claim",
+    "difficulty": "trail",
+    "secureWave": null,
+    "briefing": "The Contract Begin The Claim The classic river claim. Goals Hold the claim through wave 10. Rules The river splits the claim around one center ford.Pressure comes from all four edges until wave 10 seals the claim; stay for the Rush if you want to press your luck.",
+    "buildables": [
+      {
+        "id": "sentry_beacon",
+        "cost": 25,
+        "max": 6
+      },
+      {
+        "id": "palisade",
+        "cost": 10,
+        "max": 48
+      },
+      {
+        "id": "sluice",
+        "cost": 40,
+        "max": 3
+      },
+      {
+        "id": "stockpile",
+        "cost": 60,
+        "max": 2
+      },
+      {
+        "id": "turret",
+        "cost": 50,
+        "max": 4
+      },
+      {
+        "id": "assay_office",
+        "cost": 80,
+        "max": 1
+      }
+    ],
+    "startGold": 0
+  },
+  "outcome": "budget-exhausted",
+  "wallSeconds": 191,
+  "wavesReached": 6,
+  "sawRush": false,
+  "fpsEstimate": 119.9,
+  "driver": {
+    "ticks": 311,
+    "kiteTicks": 246,
+    "panTicks": 11
+  },
+  "perWave": [
+    {
+      "wave": 0,
+      "hpIn": 100,
+      "maxHp": 100,
+      "goldIn": 0,
+      "level": 1,
+      "panned": 0,
+      "sluiced": 0,
+      "seamsUp": 2,
+      "builds": "none",
+      "wallSeconds": 23,
+      "peakEnemies": 10,
+      "idleFrac": 0
+    },
+    {
+      "wave": 1,
+      "hpIn": 60,
+      "maxHp": 100,
+      "goldIn": 20,
+      "level": 1,
+      "panned": 20,
+      "sluiced": 0,
+      "seamsUp": 2,
+      "builds": "none",
+      "wallSeconds": 29,
+      "peakEnemies": 26,
+      "idleFrac": 0
+    },
+    {
+      "wave": 2,
+      "hpIn": 60,
+      "maxHp": 100,
+      "goldIn": 20,
+      "level": 1,
+      "panned": 20,
+      "sluiced": 0,
+      "seamsUp": 2,
+      "builds": "none",
+      "wallSeconds": 30,
+      "peakEnemies": 45,
+      "idleFrac": 0
+    },
+    {
+      "wave": 3,
+      "hpIn": 60,
+      "maxHp": 100,
+      "goldIn": 20,
+      "level": 1,
+      "panned": 20,
+      "sluiced": 0,
+      "seamsUp": 2,
+      "builds": "none",
+      "wallSeconds": 30,
+      "peakEnemies": 60,
+      "idleFrac": 0
+    },
+    {
+      "wave": 4,
+      "hpIn": 60,
+      "maxHp": 100,
+      "goldIn": 20,
+      "level": 1,
+      "panned": 20,
+      "sluiced": 0,
+      "seamsUp": 2,
+      "builds": "none",
+      "wallSeconds": 31,
+      "peakEnemies": 60,
+      "idleFrac": 0
+    },
+    {
+      "wave": 5,
+      "hpIn": 60,
+      "maxHp": 100,
+      "goldIn": 20,
+      "level": 1,
+      "panned": 20,
+      "sluiced": 0,
+      "seamsUp": 2,
+      "builds": "none",
+      "wallSeconds": 29,
+      "peakEnemies": 60,
+      "idleFrac": 0
+    },
+    {
+      "wave": 6,
+      "hpIn": 60,
+      "maxHp": 100,
+      "goldIn": 20,
+      "level": 1,
+      "panned": 20,
+      "sluiced": 0,
+      "seamsUp": 2,
+      "builds": "none",
+      "wallSeconds": 7,
+      "peakEnemies": 60,
+      "idleFrac": 0
+    }
+  ],
+  "upgradesTaken": [],
+  "buildLog": [
+    {
+      "wave": 0,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost spot found in 10 nudges",
+      "count": 0,
+      "gold": 10,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 0,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost spot found in 10 nudges",
+      "count": 0,
+      "gold": 20,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 0,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost spot found in 10 nudges",
+      "count": 0,
+      "gold": 20,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 0,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost spot found in 10 nudges",
+      "count": 0,
+      "gold": 20,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 0,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost spot found in 10 nudges",
+      "count": 0,
+      "gold": 20,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 1,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost spot found in 10 nudges",
+      "count": 0,
+      "gold": 20,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 1,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost spot found in 10 nudges",
+      "count": 0,
+      "gold": 20,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 1,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost spot found in 10 nudges",
+      "count": 0,
+      "gold": 20,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 1,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost spot found in 10 nudges",
+      "count": 0,
+      "gold": 20,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 1,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost spot found in 10 nudges",
+      "count": 0,
+      "gold": 20,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 1,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost spot found in 10 nudges",
+      "count": 0,
+      "gold": 20,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 1,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost spot found in 10 nudges",
+      "count": 0,
+      "gold": 20,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 1,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost spot found in 10 nudges",
+      "count": 0,
+      "gold": 20,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 2,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost spot found in 10 nudges",
+      "count": 0,
+      "gold": 20,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 2,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost spot found in 10 nudges",
+      "count": 0,
+      "gold": 20,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 2,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost spot found in 10 nudges",
+      "count": 0,
+      "gold": 20,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 2,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost spot found in 10 nudges",
+      "count": 0,
+      "gold": 20,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 2,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost spot found in 10 nudges",
+      "count": 0,
+      "gold": 20,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 2,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost spot found in 10 nudges",
+      "count": 0,
+      "gold": 20,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 2,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost spot found in 10 nudges",
+      "count": 0,
+      "gold": 20,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 2,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost spot found in 10 nudges",
+      "count": 0,
+      "gold": 20,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 2,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost spot found in 10 nudges",
+      "count": 0,
+      "gold": 20,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 3,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost spot found in 10 nudges",
+      "count": 0,
+      "gold": 20,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 3,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost spot found in 10 nudges",
+      "count": 0,
+      "gold": 20,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 3,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost spot found in 10 nudges",
+      "count": 0,
+      "gold": 20,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 3,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost spot found in 10 nudges",
+      "count": 0,
+      "gold": 20,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 3,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost spot found in 10 nudges",
+      "count": 0,
+      "gold": 20,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 3,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost spot found in 10 nudges",
+      "count": 0,
+      "gold": 20,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 3,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost spot found in 10 nudges",
+      "count": 0,
+      "gold": 20,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 3,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost spot found in 10 nudges",
+      "count": 0,
+      "gold": 20,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 4,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost spot found in 10 nudges",
+      "count": 0,
+      "gold": 20,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 4,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost spot found in 10 nudges",
+      "count": 0,
+      "gold": 20,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 4,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost spot found in 10 nudges",
+      "count": 0,
+      "gold": 20,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 4,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost spot found in 10 nudges",
+      "count": 0,
+      "gold": 20,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 4,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost spot found in 10 nudges",
+      "count": 0,
+      "gold": 20,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 4,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost spot found in 10 nudges",
+      "count": 0,
+      "gold": 20,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 4,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost spot found in 10 nudges",
+      "count": 0,
+      "gold": 20,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 4,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost spot found in 10 nudges",
+      "count": 0,
+      "gold": 20,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 4,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost spot found in 10 nudges",
+      "count": 0,
+      "gold": 20,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 5,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost spot found in 10 nudges",
+      "count": 0,
+      "gold": 20,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 5,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost spot found in 10 nudges",
+      "count": 0,
+      "gold": 20,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 5,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost spot found in 10 nudges",
+      "count": 0,
+      "gold": 20,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 5,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost spot found in 10 nudges",
+      "count": 0,
+      "gold": 20,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 5,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost spot found in 10 nudges",
+      "count": 0,
+      "gold": 20,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 5,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost spot found in 10 nudges",
+      "count": 0,
+      "gold": 20,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 5,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost spot found in 10 nudges",
+      "count": 0,
+      "gold": 20,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 5,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost spot found in 10 nudges",
+      "count": 0,
+      "gold": 20,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 6,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost spot found in 10 nudges",
+      "count": 0,
+      "gold": 20,
+      "afford": true,
+      "cost": 10
+    },
+    {
+      "wave": 6,
+      "id": "palisade",
+      "built": false,
+      "why": "no legal ghost spot found in 10 nudges",
+      "count": 0,
+      "gold": 20,
+      "afford": true,
+      "cost": 10
+    }
+  ],
+  "announcements": [
+    {
+      "wave": 0,
+      "text": "the Prospector: follows and observes. Chip by weapon; claim wins grow it.",
+      "kind": "wave"
+    },
+    {
+      "wave": 0,
+      "text": "Wet powder.",
+      "kind": "wave"
+    },
+    {
+      "wave": 0,
+      "text": "Claim Jumpers from the east ridge!",
+      "kind": "wave"
+    },
+    {
+      "wave": 0,
+      "text": "Brass warning on the north bank!",
+      "kind": "wave"
+    },
+    {
+      "wave": 1,
+      "text": "Hold the east ridge for the assay!",
+      "kind": "wave"
+    },
+    {
+      "wave": 1,
+      "text": "South bank dust is moving!",
+      "kind": "wave"
+    },
+    {
+      "wave": 2,
+      "text": "Hold the north bank for the assay!",
+      "kind": "wave"
+    },
+    {
+      "wave": 2,
+      "text": "West ridge shadows want the gold!",
+      "kind": "wave"
+    },
+    {
+      "wave": 2,
+      "text": "Brass warning on the west ridge!",
+      "kind": "wave"
+    }
+  ],
+  "end": {
+    "run": {
+      "secured": false,
+      "rush": false,
+      "lastRunEndedReason": null,
+      "meta": {
+        "version": 1,
+        "tracks": {
+          "territory": 0,
+          "science": 0,
+          "hero": 0,
+          "agent": 0
+        }
+      },
+      "victoryPayout": null,
+      "secureWaveReached": null,
+      "securedResultAt": null,
+      "suspend": {
+        "hasSuspend": true,
+        "restored": false,
+        "restoredWave": null,
+        "lastWriteAt": 1784997744572,
+        "lastWriteMs": 0.4,
+        "sizeBytes": 97611
+      }
+    },
+    "wave": 6,
+    "gold": 20,
+    "level": 1,
+    "kills": 0,
+    "xpAudit": {
+      "deaths": 0,
+      "motesSpawned": 0,
+      "motesCollected": 0,
+      "motesCollectedXp": 0,
+      "overflowBanked": 0,
+      "expiredBanked": 0,
+      "autoBanked": 0,
+      "dropped": 0,
+      "xpAwarded": 0,
+      "xpPerKill": 4,
+      "motePool": 64,
+      "expiryBanks": true
+    },
+    "stacks": {},
+    "arsenal": {
+      "turretKills": 0,
+      "blastKills": 0,
+      "toggles": 35
+    },
+    "office": null,
+    "deathOverlay": ""
+  },
+  "errors": {
+    "console": [],
+    "page": []
+  }
+}

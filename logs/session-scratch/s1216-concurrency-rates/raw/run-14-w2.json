@@ -1,0 +1,586 @@
+{
+  "config": {
+    "argv": [
+      "/Users/robin/.nvm/versions/node/v23.11.1/bin/node",
+      "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-d/node_modules/@playwright/test/cli.js",
+      "test",
+      "e2e/gazette-welcome.spec.ts:44",
+      "e2e/ap-standing-orders.spec.ts:80",
+      "e2e/locked-win.spec.ts:65",
+      "e2e/tl-01-run-telemetry.spec.ts:229",
+      "--project",
+      "desktop-chrome",
+      "--project",
+      "mobile-chrome",
+      "--workers",
+      "2",
+      "--reporter",
+      "json",
+      "--output",
+      "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-d/logs/session-scratch/s1216-concurrency-rates/test-results/run-14"
+    ],
+    "configFile": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-d/playwright.config.ts",
+    "rootDir": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-d/e2e",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 2
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-d/logs/session-scratch/s1216-concurrency-rates/test-results/run-14",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "desktop-chrome",
+        "name": "desktop-chrome",
+        "testDir": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-d/e2e",
+        "testIgnore": [
+          "**/*.rig.ts"
+        ],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-d/logs/session-scratch/s1216-concurrency-rates/test-results/run-14",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "mobile-chrome",
+        "name": "mobile-chrome",
+        "testDir": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-d/e2e",
+        "testIgnore": [
+          "**/*.rig.ts"
+        ],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-d/logs/session-scratch/s1216-concurrency-rates/test-results/run-14",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "desktop-webkit",
+        "name": "desktop-webkit",
+        "testDir": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-d/e2e",
+        "testIgnore": [
+          "**/*.rig.ts"
+        ],
+        "testMatch": [
+          "/058-device-tiers\\.spec\\.ts/"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 2,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "ap-standing-orders.spec.ts",
+      "file": "ap-standing-orders.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "seeded standing orders obey priority, gates, legal actions, surprises, and the live rung",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 8411,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-07-29T11:02:51.177Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bc4ebfce92d79d8fdd69-d92802c5539f829b6808",
+          "file": "ap-standing-orders.spec.ts",
+          "line": 80,
+          "column": 1
+        },
+        {
+          "title": "seeded standing orders obey priority, gates, legal actions, surprises, and the live rung",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 7444,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-07-29T11:03:18.131Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bc4ebfce92d79d8fdd69-a61593ff783cfac56413",
+          "file": "ap-standing-orders.spec.ts",
+          "line": 80,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "gazette-welcome.spec.ts",
+      "file": "gazette-welcome.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "the Gazette welcome fires once, walks skippably, and retriggers through the newsie",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 9423,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-07-29T11:02:51.205Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "18a7107457e7be2ef49d-9df80ac2a1e0dd3ec7a4",
+          "file": "gazette-welcome.spec.ts",
+          "line": 44,
+          "column": 1
+        },
+        {
+          "title": "the Gazette welcome fires once, walks skippably, and retriggers through the newsie",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 10221,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-07-29T11:03:25.914Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "18a7107457e7be2ef49d-6db333add5e49869883d",
+          "file": "gazette-welcome.spec.ts",
+          "line": 44,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "locked-win.spec.ts",
+      "file": "locked-win.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "wave 10 banks the win; a wave 12 Rush death keeps it and records both wave marks",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 16071,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 4\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"Failed to load resource: the server responded with a status of 405 ()\",\u001b[39m\n\u001b[31m+   \"Failed to load resource: the server responded with a status of 405 ()\",\u001b[39m\n\u001b[31m+ ]\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 4\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"Failed to load resource: the server responded with a status of 405 ()\",\u001b[39m\n\u001b[31m+   \"Failed to load resource: the server responded with a status of 405 ()\",\u001b[39m\n\u001b[31m+ ]\u001b[39m\n    at expectClean (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-d/e2e/locked-win.spec.ts:61:26)\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-d/e2e/locked-win.spec.ts:105:3",
+                    "location": {
+                      "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-d/e2e/locked-win.spec.ts",
+                      "column": 26,
+                      "line": 61
+                    },
+                    "snippet": "  59 |\n  60 | function expectClean(errors: Errors): void {\n> 61 |   expect(errors.console).toEqual([]);\n     |                          ^\n  62 |   expect(errors.page).toEqual([]);\n  63 | }\n  64 |"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-d/e2e/locked-win.spec.ts",
+                        "column": 26,
+                        "line": 61
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 4\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"Failed to load resource: the server responded with a status of 405 ()\",\u001b[39m\n\u001b[31m+   \"Failed to load resource: the server responded with a status of 405 ()\",\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n  59 |\n  60 | function expectClean(errors: Errors): void {\n> 61 |   expect(errors.console).toEqual([]);\n     |                          ^\n  62 |   expect(errors.page).toEqual([]);\n  63 | }\n  64 |\n    at expectClean (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-d/e2e/locked-win.spec.ts:61:26)\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-d/e2e/locked-win.spec.ts:105:3"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-07-29T11:03:00.015Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-d/logs/session-scratch/s1216-concurrency-rates/test-results/run-14/locked-win-wave-10-banks-t-c82d0-and-records-both-wave-marks-desktop-chrome/test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-d/logs/session-scratch/s1216-concurrency-rates/test-results/run-14/locked-win-wave-10-banks-t-c82d0-and-records-both-wave-marks-desktop-chrome/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-d/logs/session-scratch/s1216-concurrency-rates/test-results/run-14/locked-win-wave-10-banks-t-c82d0-and-records-both-wave-marks-desktop-chrome/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-d/e2e/locked-win.spec.ts",
+                    "column": 26,
+                    "line": 61
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "08de62a17449faba3cb5-6752775bf82b0168584b",
+          "file": "locked-win.spec.ts",
+          "line": 65,
+          "column": 1
+        },
+        {
+          "title": "wave 10 banks the win; a wave 12 Rush death keeps it and records both wave marks",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 11481,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 4\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"Failed to load resource: the server responded with a status of 405 ()\",\u001b[39m\n\u001b[31m+   \"Failed to load resource: the server responded with a status of 405 ()\",\u001b[39m\n\u001b[31m+ ]\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 4\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"Failed to load resource: the server responded with a status of 405 ()\",\u001b[39m\n\u001b[31m+   \"Failed to load resource: the server responded with a status of 405 ()\",\u001b[39m\n\u001b[31m+ ]\u001b[39m\n    at expectClean (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-d/e2e/locked-win.spec.ts:61:26)\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-d/e2e/locked-win.spec.ts:105:3",
+                    "location": {
+                      "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-d/e2e/locked-win.spec.ts",
+                      "column": 26,
+                      "line": 61
+                    },
+                    "snippet": "  59 |\n  60 | function expectClean(errors: Errors): void {\n> 61 |   expect(errors.console).toEqual([]);\n     |                          ^\n  62 |   expect(errors.page).toEqual([]);\n  63 | }\n  64 |"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-d/e2e/locked-win.spec.ts",
+                        "column": 26,
+                        "line": 61
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 4\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"Failed to load resource: the server responded with a status of 405 ()\",\u001b[39m\n\u001b[31m+   \"Failed to load resource: the server responded with a status of 405 ()\",\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n  59 |\n  60 | function expectClean(errors: Errors): void {\n> 61 |   expect(errors.console).toEqual([]);\n     |                          ^\n  62 |   expect(errors.page).toEqual([]);\n  63 | }\n  64 |\n    at expectClean (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-d/e2e/locked-win.spec.ts:61:26)\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-d/e2e/locked-win.spec.ts:105:3"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-07-29T11:03:36.150Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-d/logs/session-scratch/s1216-concurrency-rates/test-results/run-14/locked-win-wave-10-banks-t-c82d0-and-records-both-wave-marks-mobile-chrome/test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-d/logs/session-scratch/s1216-concurrency-rates/test-results/run-14/locked-win-wave-10-banks-t-c82d0-and-records-both-wave-marks-mobile-chrome/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-d/logs/session-scratch/s1216-concurrency-rates/test-results/run-14/locked-win-wave-10-banks-t-c82d0-and-records-both-wave-marks-mobile-chrome/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-d/e2e/locked-win.spec.ts",
+                    "column": 26,
+                    "line": 61
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "08de62a17449faba3cb5-4d75b794ba5c6225d8f5",
+          "file": "locked-win.spec.ts",
+          "line": 65,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "tl-01-run-telemetry.spec.ts",
+      "file": "tl-01-run-telemetry.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "plain no-debug secure return keeps telemetry invisible to gameplay",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "failed",
+                  "duration": 38571,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByTestId('claim-secured')\nExpected: visible\nTimeout: 18000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 18000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('claim-secured')\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByTestId('claim-secured')\nExpected: visible\nTimeout: 18000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 18000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('claim-secured')\u001b[22m\n\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-d/e2e/tl-01-run-telemetry.spec.ts:236:51",
+                    "location": {
+                      "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-d/e2e/tl-01-run-telemetry.spec.ts",
+                      "column": 51,
+                      "line": 236
+                    },
+                    "snippet": "  234 |\n  235 |   await openBoardAndLaunchPlain(page);\n> 236 |   await expect(page.getByTestId('claim-secured')).toBeVisible({ timeout: 18_000 });\n      |                                                   ^\n  237 |   await page.getByTestId('bank-secured-claim').click();\n  238 |   await expect(page.getByTestId('death-overlay')).toBeVisible({ timeout: 8_000 });\n  239 |   await page.getByTestId('stake-again').click();"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-d/e2e/tl-01-run-telemetry.spec.ts",
+                        "column": 51,
+                        "line": 236
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByTestId('claim-secured')\nExpected: visible\nTimeout: 18000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 18000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('claim-secured')\u001b[22m\n\n\n  234 |\n  235 |   await openBoardAndLaunchPlain(page);\n> 236 |   await expect(page.getByTestId('claim-secured')).toBeVisible({ timeout: 18_000 });\n      |                                                   ^\n  237 |   await page.getByTestId('bank-secured-claim').click();\n  238 |   await expect(page.getByTestId('death-overlay')).toBeVisible({ timeout: 8_000 });\n  239 |   await page.getByTestId('stake-again').click();\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-d/e2e/tl-01-run-telemetry.spec.ts:236:51"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-07-29T11:03:00.974Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-d/logs/session-scratch/s1216-concurrency-rates/test-results/run-14/tl-01-run-telemetry-plain--b1be5-metry-invisible-to-gameplay-desktop-chrome/test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-d/logs/session-scratch/s1216-concurrency-rates/test-results/run-14/tl-01-run-telemetry-plain--b1be5-metry-invisible-to-gameplay-desktop-chrome/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-d/logs/session-scratch/s1216-concurrency-rates/test-results/run-14/tl-01-run-telemetry-plain--b1be5-metry-invisible-to-gameplay-desktop-chrome/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-d/e2e/tl-01-run-telemetry.spec.ts",
+                    "column": 51,
+                    "line": 236
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "e3acdbce1dd347b352e7-d9ce74198f0f38f63fac",
+          "file": "tl-01-run-telemetry.spec.ts",
+          "line": 229,
+          "column": 1
+        },
+        {
+          "title": "plain no-debug secure return keeps telemetry invisible to gameplay",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 32784,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByTestId('claim-secured')\nExpected: visible\nTimeout: 18000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 18000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('claim-secured')\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByTestId('claim-secured')\nExpected: visible\nTimeout: 18000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 18000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('claim-secured')\u001b[22m\n\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-d/e2e/tl-01-run-telemetry.spec.ts:236:51",
+                    "location": {
+                      "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-d/e2e/tl-01-run-telemetry.spec.ts",
+                      "column": 51,
+                      "line": 236
+                    },
+                    "snippet": "  234 |\n  235 |   await openBoardAndLaunchPlain(page);\n> 236 |   await expect(page.getByTestId('claim-secured')).toBeVisible({ timeout: 18_000 });\n      |                                                   ^\n  237 |   await page.getByTestId('bank-secured-claim').click();\n  238 |   await expect(page.getByTestId('death-overlay')).toBeVisible({ timeout: 8_000 });\n  239 |   await page.getByTestId('stake-again').click();"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-d/e2e/tl-01-run-telemetry.spec.ts",
+                        "column": 51,
+                        "line": 236
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByTestId('claim-secured')\nExpected: visible\nTimeout: 18000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 18000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('claim-secured')\u001b[22m\n\n\n  234 |\n  235 |   await openBoardAndLaunchPlain(page);\n> 236 |   await expect(page.getByTestId('claim-secured')).toBeVisible({ timeout: 18_000 });\n      |                                                   ^\n  237 |   await page.getByTestId('bank-secured-claim').click();\n  238 |   await expect(page.getByTestId('death-overlay')).toBeVisible({ timeout: 8_000 });\n  239 |   await page.getByTestId('stake-again').click();\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-d/e2e/tl-01-run-telemetry.spec.ts:236:51"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-07-29T11:03:49.425Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-d/logs/session-scratch/s1216-concurrency-rates/test-results/run-14/tl-01-run-telemetry-plain--b1be5-metry-invisible-to-gameplay-mobile-chrome/test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-d/logs/session-scratch/s1216-concurrency-rates/test-results/run-14/tl-01-run-telemetry-plain--b1be5-metry-invisible-to-gameplay-mobile-chrome/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-d/logs/session-scratch/s1216-concurrency-rates/test-results/run-14/tl-01-run-telemetry-plain--b1be5-metry-invisible-to-gameplay-mobile-chrome/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-d/e2e/tl-01-run-telemetry.spec.ts",
+                    "column": 51,
+                    "line": 236
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "e3acdbce1dd347b352e7-036c491be13fd31931f0",
+          "file": "tl-01-run-telemetry.spec.ts",
+          "line": 229,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-07-29T11:02:50.838Z",
+    "duration": 103674.041,
+    "expected": 4,
+    "skipped": 0,
+    "unexpected": 4,
+    "flaky": 0
+  }
+}

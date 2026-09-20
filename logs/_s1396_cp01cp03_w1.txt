@@ -1,0 +1,185 @@
+
+Running 26 tests using 1 worker
+
+  ✘   1 [desktop-chrome] › e2e/cp01-charter-roundtrip.spec.ts:27:3 › CP-01 round-trip gate › the epoch ships the five expected fixtures (3ms)
+  ✓   2 [desktop-chrome] › e2e/cp01-charter-roundtrip.spec.ts:38:5 › CP-01 round-trip gate › round-trip: the-claim (4ms)
+  ✓   3 [desktop-chrome] › e2e/cp01-charter-roundtrip.spec.ts:38:5 › CP-01 round-trip gate › round-trip: e1-drill-yard (2ms)
+  ✓   4 [desktop-chrome] › e2e/cp01-charter-roundtrip.spec.ts:38:5 › CP-01 round-trip gate › round-trip: e1-dry-gulch (1ms)
+  ✓   5 [desktop-chrome] › e2e/cp01-charter-roundtrip.spec.ts:38:5 › CP-01 round-trip gate › round-trip: e1-night-shift (2ms)
+  ✓   6 [desktop-chrome] › e2e/cp01-charter-roundtrip.spec.ts:38:5 › CP-01 round-trip gate › round-trip: e1-twin-banks (2ms)
+  ✓   7 [desktop-chrome] › e2e/cp01-charter-roundtrip.spec.ts:38:5 › CP-01 round-trip gate › round-trip: e1-baron (1ms)
+  ✓   8 [desktop-chrome] › e2e/cp01-charter-roundtrip.spec.ts:60:3 › CP-01 round-trip gate › the envelope stays outside the contract format (0ms)
+  ✓   9 [desktop-chrome] › e2e/cp01-charter-roundtrip.spec.ts:76:3 › CP-01 round-trip gate › editing the charter contract does not disturb the source contract (0ms)
+  ✓  10 [desktop-chrome] › e2e/cp01-charter-roundtrip.spec.ts:85:3 › CP-01 round-trip gate › a damaged shelf record is rejected with prose reasons (3ms)
+  ✘  11 [desktop-chrome] › e2e/cp03-press-loop.spec.ts:25:1 › the Press loop: edit, stamp, shelve, launch a real run, and return (45.6s)
+  ✓  12 [desktop-chrome] › e2e/cp03-press-loop.spec.ts:99:1 › a plain boot never sees the Press and writes nothing (507ms)
+  ✓  13 [desktop-chrome] › e2e/cp03-press-loop.spec.ts:113:1 › a staged charter entry without a Press launch never reaches a run (1.6s)
+  ✘  14 [mobile-chrome] › e2e/cp01-charter-roundtrip.spec.ts:27:3 › CP-01 round-trip gate › the epoch ships the five expected fixtures (3ms)
+  ✓  15 [mobile-chrome] › e2e/cp01-charter-roundtrip.spec.ts:38:5 › CP-01 round-trip gate › round-trip: the-claim (4ms)
+  ✓  16 [mobile-chrome] › e2e/cp01-charter-roundtrip.spec.ts:38:5 › CP-01 round-trip gate › round-trip: e1-drill-yard (2ms)
+  ✓  17 [mobile-chrome] › e2e/cp01-charter-roundtrip.spec.ts:38:5 › CP-01 round-trip gate › round-trip: e1-dry-gulch (1ms)
+  ✓  18 [mobile-chrome] › e2e/cp01-charter-roundtrip.spec.ts:38:5 › CP-01 round-trip gate › round-trip: e1-night-shift (2ms)
+  ✓  19 [mobile-chrome] › e2e/cp01-charter-roundtrip.spec.ts:38:5 › CP-01 round-trip gate › round-trip: e1-twin-banks (1ms)
+  ✓  20 [mobile-chrome] › e2e/cp01-charter-roundtrip.spec.ts:38:5 › CP-01 round-trip gate › round-trip: e1-baron (1ms)
+  ✓  21 [mobile-chrome] › e2e/cp01-charter-roundtrip.spec.ts:60:3 › CP-01 round-trip gate › the envelope stays outside the contract format (0ms)
+  ✓  22 [mobile-chrome] › e2e/cp01-charter-roundtrip.spec.ts:76:3 › CP-01 round-trip gate › editing the charter contract does not disturb the source contract (0ms)
+  ✓  23 [mobile-chrome] › e2e/cp01-charter-roundtrip.spec.ts:85:3 › CP-01 round-trip gate › a damaged shelf record is rejected with prose reasons (3ms)
+  ✘  24 [mobile-chrome] › e2e/cp03-press-loop.spec.ts:25:1 › the Press loop: edit, stamp, shelve, launch a real run, and return (45.2s)
+  ✓  25 [mobile-chrome] › e2e/cp03-press-loop.spec.ts:99:1 › a plain boot never sees the Press and writes nothing (888ms)
+  ✓  26 [mobile-chrome] › e2e/cp03-press-loop.spec.ts:113:1 › a staged charter entry without a Press launch never reaches a run (1.6s)
+
+
+  1) [desktop-chrome] › e2e/cp01-charter-roundtrip.spec.ts:27:3 › CP-01 round-trip gate › the epoch ships the five expected fixtures 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 0
+    + Received  + 1
+
+      Array [
+        "the-claim",
+    +   "e1-drill-yard",
+        "e1-dry-gulch",
+        "e1-night-shift",
+        "e1-twin-banks",
+        "e1-baron",
+      ]
+
+      26 | test.describe('CP-01 round-trip gate', () => {
+      27 |   test('the epoch ships the five expected fixtures', () => {
+    > 28 |     expect(E1_CONTRACTS.map((contract) => contract.id)).toEqual([
+         |                                                         ^
+      29 |       'the-claim',
+      30 |       'e1-dry-gulch',
+      31 |       'e1-night-shift',
+        at /Users/robin/Claude/Projects/Gold Rush/e2e/cp01-charter-roundtrip.spec.ts:28:57
+
+    Error Context: test-results/cp01-charter-roundtrip-CP--297de--the-five-expected-fixtures-desktop-chrome/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/cp01-charter-roundtrip-CP--297de--the-five-expected-fixtures-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/cp01-charter-roundtrip-CP--297de--the-five-expected-fixtures-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [desktop-chrome] › e2e/cp03-press-loop.spec.ts:25:1 › the Press loop: edit, stamp, shelve, launch a real run, and return 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  getByTestId('contract-briefing-name')
+    Expected: "Twin Banks, Re-pressed"
+    Received: "The Claim"
+    Timeout:  30000ms
+
+    Call log:
+      - Expect "toHaveText" with timeout 30000ms
+      - waiting for getByTestId('contract-briefing-name')
+        61 × locator resolved to <h2 data-testid="contract-briefing-name">The Claim</h2>
+           - unexpected value "The Claim"
+
+
+      62 |   await page.getByTestId('press-launch-0').click();
+      63 |   await page.waitForURL((url) => url.searchParams.get('contract') === 'e1-twin-banks' && !url.searchParams.has('editor'));
+    > 64 |   await expect(page.getByTestId('contract-briefing-name')).toHaveText(CHARTER_NAME, { timeout: 30_000 });
+         |                                                            ^
+      65 |   await page.screenshot({ path: path.join(SHOT_DIR, `charter-run-briefing-${testInfo.project.name}.png`) });
+      66 |   await page.getByTestId('contract-briefing-dismiss').click();
+      67 |   await page.waitForTimeout(1_000);
+        at /Users/robin/Claude/Projects/Gold Rush/e2e/cp03-press-loop.spec.ts:64:60
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/cp03-press-loop-the-Press--fb91e-aunch-a-real-run-and-return-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/cp03-press-loop-the-Press--fb91e-aunch-a-real-run-and-return-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/cp03-press-loop-the-Press--fb91e-aunch-a-real-run-and-return-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/cp03-press-loop-the-Press--fb91e-aunch-a-real-run-and-return-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [mobile-chrome] › e2e/cp01-charter-roundtrip.spec.ts:27:3 › CP-01 round-trip gate › the epoch ships the five expected fixtures 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 0
+    + Received  + 1
+
+      Array [
+        "the-claim",
+    +   "e1-drill-yard",
+        "e1-dry-gulch",
+        "e1-night-shift",
+        "e1-twin-banks",
+        "e1-baron",
+      ]
+
+      26 | test.describe('CP-01 round-trip gate', () => {
+      27 |   test('the epoch ships the five expected fixtures', () => {
+    > 28 |     expect(E1_CONTRACTS.map((contract) => contract.id)).toEqual([
+         |                                                         ^
+      29 |       'the-claim',
+      30 |       'e1-dry-gulch',
+      31 |       'e1-night-shift',
+        at /Users/robin/Claude/Projects/Gold Rush/e2e/cp01-charter-roundtrip.spec.ts:28:57
+
+    Error Context: test-results/cp01-charter-roundtrip-CP--297de--the-five-expected-fixtures-mobile-chrome/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/cp01-charter-roundtrip-CP--297de--the-five-expected-fixtures-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/cp01-charter-roundtrip-CP--297de--the-five-expected-fixtures-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [mobile-chrome] › e2e/cp03-press-loop.spec.ts:25:1 › the Press loop: edit, stamp, shelve, launch a real run, and return 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  getByTestId('contract-briefing-name')
+    Expected: "Twin Banks, Re-pressed"
+    Received: "The Claim"
+    Timeout:  30000ms
+
+    Call log:
+      - Expect "toHaveText" with timeout 30000ms
+      - waiting for getByTestId('contract-briefing-name')
+        60 × locator resolved to <h2 data-testid="contract-briefing-name">The Claim</h2>
+           - unexpected value "The Claim"
+
+
+      62 |   await page.getByTestId('press-launch-0').click();
+      63 |   await page.waitForURL((url) => url.searchParams.get('contract') === 'e1-twin-banks' && !url.searchParams.has('editor'));
+    > 64 |   await expect(page.getByTestId('contract-briefing-name')).toHaveText(CHARTER_NAME, { timeout: 30_000 });
+         |                                                            ^
+      65 |   await page.screenshot({ path: path.join(SHOT_DIR, `charter-run-briefing-${testInfo.project.name}.png`) });
+      66 |   await page.getByTestId('contract-briefing-dismiss').click();
+      67 |   await page.waitForTimeout(1_000);
+        at /Users/robin/Claude/Projects/Gold Rush/e2e/cp03-press-loop.spec.ts:64:60
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/cp03-press-loop-the-Press--fb91e-aunch-a-real-run-and-return-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/cp03-press-loop-the-Press--fb91e-aunch-a-real-run-and-return-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/cp03-press-loop-the-Press--fb91e-aunch-a-real-run-and-return-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/cp03-press-loop-the-Press--fb91e-aunch-a-real-run-and-return-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4 failed
+    [desktop-chrome] › e2e/cp01-charter-roundtrip.spec.ts:27:3 › CP-01 round-trip gate › the epoch ships the five expected fixtures 
+    [desktop-chrome] › e2e/cp03-press-loop.spec.ts:25:1 › the Press loop: edit, stamp, shelve, launch a real run, and return 
+    [mobile-chrome] › e2e/cp01-charter-roundtrip.spec.ts:27:3 › CP-01 round-trip gate › the epoch ships the five expected fixtures 
+    [mobile-chrome] › e2e/cp03-press-loop.spec.ts:25:1 › the Press loop: edit, stamp, shelve, launch a real run, and return 
+  22 passed (2.1m)

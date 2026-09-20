@@ -1,0 +1,43 @@
+import fs from 'node:fs';
+
+const p = 'STATUS.md';
+const L = fs.readFileSync(p, 'utf8').split('\n');
+const lock = L[0];
+if (!lock.startsWith('ACTIVE 2026-08-10T16:58Z (s1634 fire)')) {
+  throw new Error('line-1 is not my lock: ' + lock.slice(0, 80));
+}
+
+const H = '7f9340baf056e228bae8c1ca11c2d836e38a2a26';
+
+const desk = [
+  '🔺 **OWNER\'S DESK — 17 awaiting a word.**',
+  '🔺 **F-1631-3** — buying Codex credits to get `gpt-5.6-sol` back before 2026-08-16 03:30. **The urgency is now lower still, because the tier question is ANSWERED rather than merely tolerable: `gpt-5.5` at `effort=high` just cleared a full drain gate (F-1634-3).** Recommendation stays **(b) ride it out**, unless you want Sol-tier quality back sooner.',
+  '🔺 **F-1625-4** — what should the 25 MB release budget actually GOVERN? **Fresh evidence from this drain, and it sharpens the fork:** the committed desktop baseline is **21,903,056** while the same build measured fresh is **22,497,140** — so whichever path the gate took, it was quietly choosing between two numbers **594,084 bytes apart**. f1631-1 deliberately did not settle it; it only made the choice visible.',
+  '🔺 **F-1620-6** · 🔺 **F-1617-1** · 🔺 **F-DOOR-6** · 🔺 **F-1608-2** · 🔺 **F-1193-3** · 🔺 **F-1501-3** · 🔺 **F-1601-1** · 🔺 **F-1510-1** · 🔺 **F-E2S-3** · 🔺 **F-1536-2** · 🔺 **F-1591-1** · 🔺 **F-1507-1** · 🔺 **F-E2S-4** · 🔺 **F-1101-1** · 🔺 **F-1166-1** — carried unchanged. Re-checked with `desk-state-audit --status` against s1633\'s ARCHIVED line-1: **CLOSED=0 · OPEN=5 · BOTH=0 · OPEN-DESK-ONLY=17 · UNRECORDED=0** — nothing carried that should have been dropped, none a ghost.',
+  '**None of F-1634-1..4 joins the desk:** three are technical and non-blocking, and F-1634-3 is reversible with one word (re-raise the full wall, empty the queues) per §7.4.',
+].join(' ');
+
+const line1 = [
+  'Last updated: 2026-08-10T17:34Z s1634 handoff, lock CLEARED —',
+  '✅ **f1631-1 DRAINED AND MERGED — `' + H.slice(0, 9) + '` — AND THE ANSWER THE BOARD WAS WAITING FOR IS YES: `gpt-5.5` AT `effort=high` IS MERGE-QUALITY (F-1634-3).**',
+  's1632 deliberately dispatched ONE master rather than four because nobody had ever gated `gpt-5.5` output here. **That verdict is now in.** Scope complete on all four numbered items; firewall exactly respected (**one** file +33/-5, literal `25_000_000` count **1 on both sides**, `TOWN_TRANSFER_CEILING_BYTES` count **4 unchanged**, the cue test\'s own `:241` assertion intact, `artifacts/**` untouched); honest report; and its ONE deviation from literal scope was an **improvement it surfaced itself**.',
+  '📊 **GATES:** `tsc` clean · `build` green · **`test:asset-diet` 6/6 both projects, 7.3 m, exit 0**, zero console/page errors · gated in detached worktree `gate-s1634` (§3.0b custody) and merged as **one act** (§3/F-1589-5) · classification **LANE-TOUCHED / MAIN-UNTOUCHED** off base `4ce0dad4a`, no graft · post-merge `main..lane/c` **empty**, `lane-usable lane-c` **USABLE ahead=0**.',
+  '🔬 **I PROVED ALL THREE PROVENANCE PATHS MYSELF RATHER THAN INHERITING THE RUNNER\'S REPORT — and the third one is the interesting one.** map-HIT → `measured in this run` **22,497,140** (both projects); map-MISS with artifact **≠** HEAD → `read from the on-disk fallback artifact (not measured in this run)` (1 passed 3.6 m); map-MISS with artifact **==** HEAD → `read from the committed artifact` **21,903,056** (1 passed 3.5 m, after restoring both artifacts from HEAD and verifying byte-equality).',
+  '🔑 **THE SUBSTANCE, QUANTIFIED: the vacuous path reported 3,096,944 bytes of headroom where the same build measures 2,502,860 — 594,084 bytes the build does not have.** That gap is exactly what the assertion now names.',
+  '⭐ **F-1634-2 — THE RUNNER\'S OUT-OF-SCOPE THIRD LABEL IS LOAD-BEARING, AND I CAN SHOW IT.** The master asked for two labels; `gpt-5.5` shipped three, after its own `codex review --uncommitted` noticed that *"committed artifact"* becomes false once the artifact is rewritten on disk. **Mid-gate my own suite run had already rewritten `town-transfer-desktop-chrome.json` (127,023 on disk vs 127,971 at HEAD) while `mobile-chrome` still matched** — a suite run leaves the artifact ≠ HEAD as a matter of course. **So the REAL F-1627-3 fallback — a timeout part-way through a suite, then a solo re-run in the same worktree — lands on the THIRD label, and `read from the committed artifact` appears only on a genuinely clean tree.** Implemented literally, the common fallback case would have claimed `read from the committed artifact` while gating bytes that were not it: a new false statement inside the very cure written to remove one.',
+  '⚠️ **F-1634-4 — MY OWN MERGE TURNED THE BOARD RED, AND THE RED ACCUSED SOMEONE ELSE.** The merge added +33 lines to `e2e/asset-diet.spec.ts`, shifting the code under `e2e/asset-diet.spec.ts:431–432` — a citation inside the **already-retired ✅ F-1627-1 row**, whose defect was cured two fires ago. `test:citations` could no longer recover a test title and **`test:ledger-guards` went rc=1 on a tree whose code was green**. ✅ **Settled by control, not by inference:** the same guard in a detached worktree at pre-merge `c1acdea37` exits **0** against **1** post-merge, with **609 citations scanned on BOTH sides** — nothing was added, the code moved beneath an existing pointer. 💡 **The reusable widening: F-1300-4\'s "subject a fire mutates late" is not just its ledger rows and law surfaces — it is ANY CODE FILE ITS MERGE SHIFTS, so every stale coordinate anywhere in `tasks/**` pointing into that file is a candidate red.** Cured as the guard prescribes (the citation now carries its test title + a note that the coordinates are s1627-era and the surviving assertion sits at `:465`); CARRIES-TITLE **297→298**, exit 0.',
+  '🟡 **F-1634-1** — the runner\'s new `matchesCommittedFile` helper reads `git show HEAD:<path>` with `maxBuffer: 1_000_000` against artifacts of **127,971 / 128,183** bytes: **7.8× headroom, so recorded not cured.** Past 1 MB the `catch` returns false and a genuine committed-artifact read gets the fallback label — **degradation direction is SAFE** (toward the cautious label, never toward a false `measured in this run`), so it can mislead a reader but cannot launder a red into a green.',
+  '📋 **BOARD:** arrived DRY — six queues empty, every done-move `drained-*`/`stopped-*` residue, lane-c LIVE on f1631-1 (I waited it out and drained it rather than authoring around it). Now: **six queues empty, lanes a/b/d `ahead=0` USABLE (behind 18/60/406), lane-c USABLE ahead=0, assayer `pending/` 0, ART untouched, `tasks/CODEX-WALL` STANDS** (`gpt-5.6-sol` still quota-walled to 2026-08-16 03:30). `test:ledger-guards` **155 pass / 0 fail, EXIT 0** after the citation cure. GZ-01 sweep by the instrument: **`reported 62 / dismissed 4 / candidates 0`** — discharged, and **no item owed for this merge: it is test-instrumentation, not player-visible.** No deploy (no gameplay code). ⓘ FYI so nobody re-discovers it as a pile: **650 done-moves are unprefixed, but the NEWEST is 2026-07-26** — legacy naming from before the prefix convention, not undrained work (the known `prefix≠dry` law).',
+  '**NEXT:** **(A)** ⚡ **REFILL LANES a/b/d ON `gpt-5.5` — THIS IS NOW UNBLOCKED AND IT IS THE WHOLE POINT OF F-1634-3.** I did **not** refill, and that is the one thing I left undone: I hit the ~35-min drain budget having spent ~15 min in playwright gates, and a master authored in a hurry is how the Mistake Catalog gets new entries. **Every master needs `CODEX: model=gpt-5.5 effort=high` as its own line** (no header ⇒ the `:173` default ⇒ straight into the wall), and the lanes are **behind 18/60/406** so refresh before dispatch and follow the F-1424-3 order: commit master+evidence FIRST, refresh lane SECOND, run the master\'s own citation grep, `cp` THIRD. **(B)** treat the first `src/**` slice on `gpt-5.5` as the real exam — F-1634-3 is one small **test-only** slice, so it is evidence about the tier, not proof. **(C)** if a future toucher opens `matchesCommittedFile`, fold in F-1634-1.',
+  desk,
+].join(' ');
+
+L[0] = line1;
+L.splice(1, 0, '- **s1634 lock (line-1 archive):** ' + lock);
+fs.writeFileSync(p, L.join('\n'));
+
+const after = fs.readFileSync(p, 'utf8').split('\n');
+console.log('line-1 rewritten, length', after[0].length);
+console.log('s1633 handoff archive count:', after.filter((l) => l.includes('s1633 handoff (line-1 archive)')).length);
+console.log('s1634 lock archive count   :', after.filter((l) => l.includes('s1634 lock (line-1 archive)')).length);
+console.log('desk header present        :', /OWNER'S DESK — 17 awaiting a word\./.test(after[0]));

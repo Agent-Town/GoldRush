@@ -1,0 +1,266 @@
+{
+  "tavern": {
+    "mae": 0.06993655115365982,
+    "rmse": 2.016695976257324,
+    "diffRatio16": 0.00128125,
+    "diffRatio32": 0.0009443359375,
+    "diffRatio64": 0.0005244140625,
+    "thresholdMismatchProxy": "diffRatio16 (pixelmatch unavailable; no dependency installed)",
+    "edgeEnergyBase": 3.1176652908325195,
+    "edgeEnergyCandidate": 3.1131715774536133,
+    "edgeEnergyRatio": 0.9985586404800415,
+    "edgeDiffRatio32": 0.0001123046875,
+    "avgLuminanceBase": 149.20535278320312,
+    "avgLuminanceCandidate": 149.15228271484375,
+    "avgLuminanceDelta": -0.053070068359375,
+    "diagnosticDistance": 0.0009910475927642159,
+    "localizedTonalGate": {
+      "method": "changed-pixel bounds plus 64px building-and-neighbor context",
+      "crop": {
+        "x": 719,
+        "y": 365,
+        "width": 207,
+        "height": 221
+      },
+      "changedPixelCount": 1680,
+      "avgLuminanceBase": 131.6064453125,
+      "avgLuminanceCandidate": 130.41844177246094,
+      "deltaPercent": -0.9026940414796127,
+      "ceilingPercent": 5.0,
+      "passed": true
+    }
+  },
+  "general_store": {
+    "mae": 0.042374465614557266,
+    "rmse": 0.839937150478363,
+    "diffRatio16": 0.0008681640625,
+    "diffRatio32": 6.640625e-05,
+    "diffRatio64": 5.859375e-06,
+    "thresholdMismatchProxy": "diffRatio16 (pixelmatch unavailable; no dependency installed)",
+    "edgeEnergyBase": 3.1176652908325195,
+    "edgeEnergyCandidate": 3.118739366531372,
+    "edgeEnergyRatio": 1.0003445148468018,
+    "edgeDiffRatio32": 2.9296875e-06,
+    "avgLuminanceBase": 149.20535278320312,
+    "avgLuminanceCandidate": 149.21466064453125,
+    "avgLuminanceDelta": 0.009307861328125,
+    "diagnosticDistance": 0.00031555726453542,
+    "localizedTonalGate": {
+      "method": "changed-pixel bounds plus 64px building-and-neighbor context",
+      "crop": {
+        "x": 518,
+        "y": 402,
+        "width": 246,
+        "height": 228
+      },
+      "changedPixelCount": 3881,
+      "avgLuminanceBase": 130.3612823486328,
+      "avgLuminanceCandidate": 130.53094482421875,
+      "deltaPercent": 0.1301479032188401,
+      "ceilingPercent": 5.0,
+      "passed": true
+    }
+  },
+  "claim_office": {
+    "mae": 0.08263395726680756,
+    "rmse": 2.7169694900512695,
+    "diffRatio16": 0.00089453125,
+    "diffRatio32": 0.0008330078125,
+    "diffRatio64": 0.0007421875,
+    "thresholdMismatchProxy": "diffRatio16 (pixelmatch unavailable; no dependency installed)",
+    "edgeEnergyBase": 3.1176652908325195,
+    "edgeEnergyCandidate": 3.139045476913452,
+    "edgeEnergyRatio": 1.0068577527999878,
+    "edgeDiffRatio32": 0.00033203125,
+    "avgLuminanceBase": 149.20535278320312,
+    "avgLuminanceCandidate": 149.1227569580078,
+    "avgLuminanceDelta": -0.0825958251953125,
+    "diagnosticDistance": 0.002077174784732184,
+    "localizedTonalGate": {
+      "method": "changed-pixel bounds plus 64px building-and-neighbor context",
+      "crop": {
+        "x": 173,
+        "y": 328,
+        "width": 271,
+        "height": 326
+      },
+      "changedPixelCount": 1778,
+      "avgLuminanceBase": 148.59597778320312,
+      "avgLuminanceCandidate": 147.6383819580078,
+      "deltaPercent": -0.6444291692689117,
+      "ceilingPercent": 5.0,
+      "passed": true
+    }
+  },
+  "assay_office": {
+    "mae": 0.08379334211349487,
+    "rmse": 2.202141523361206,
+    "diffRatio16": 0.0013974609375,
+    "diffRatio32": 0.0008076171875,
+    "diffRatio64": 0.0004384765625,
+    "thresholdMismatchProxy": "diffRatio16 (pixelmatch unavailable; no dependency installed)",
+    "edgeEnergyBase": 3.1176652908325195,
+    "edgeEnergyCandidate": 3.1275525093078613,
+    "edgeEnergyRatio": 1.0031713247299194,
+    "edgeDiffRatio32": 0.00015625,
+    "avgLuminanceBase": 149.20535278320312,
+    "avgLuminanceCandidate": 149.16261291503906,
+    "avgLuminanceDelta": -0.0427398681640625,
+    "diagnosticDistance": 0.0013562959930912004,
+    "localizedTonalGate": {
+      "method": "changed-pixel bounds plus 64px building-and-neighbor context",
+      "crop": {
+        "x": 149,
+        "y": 112,
+        "width": 203,
+        "height": 279
+      },
+      "changedPixelCount": 3169,
+      "avgLuminanceBase": 132.7389373779297,
+      "avgLuminanceCandidate": 131.9642333984375,
+      "deltaPercent": -0.5836297885122262,
+      "ceilingPercent": 5.0,
+      "passed": true
+    }
+  },
+  "chapel": {
+    "mae": 7.284764433279634e-05,
+    "rmse": 0.007833744399249554,
+    "diffRatio16": 0.0,
+    "diffRatio32": 0.0,
+    "diffRatio64": 0.0,
+    "thresholdMismatchProxy": "diffRatio16 (pixelmatch unavailable; no dependency installed)",
+    "edgeEnergyBase": 3.1176652908325195,
+    "edgeEnergyCandidate": 3.117663860321045,
+    "edgeEnergyRatio": 0.9999995231628418,
+    "edgeDiffRatio32": 0.0,
+    "avgLuminanceBase": 149.20535278320312,
+    "avgLuminanceCandidate": 149.20530700683594,
+    "avgLuminanceDelta": -4.57763671875e-05,
+    "diagnosticDistance": 1.0318961512000855e-07,
+    "localizedTonalGate": {
+      "method": "cadence-approved quiet fixture; ensemble owns the era read",
+      "crop": {
+        "x": 720,
+        "y": 0,
+        "width": 300,
+        "height": 220
+      },
+      "changedPixelCount": 1,
+      "avgLuminanceBase": 121.21796417236328,
+      "avgLuminanceCandidate": 121.21713256835938,
+      "deltaPercent": -0.0006860402330497553,
+      "ceilingPercent": 5.0,
+      "passed": true
+    }
+  },
+  "schoolhouse": {
+    "mae": 0.05952175706624985,
+    "rmse": 1.2731050252914429,
+    "diffRatio16": 0.0017099609375,
+    "diffRatio32": 0.000560546875,
+    "diffRatio64": 0.0,
+    "thresholdMismatchProxy": "diffRatio16 (pixelmatch unavailable; no dependency installed)",
+    "edgeEnergyBase": 3.1176652908325195,
+    "edgeEnergyCandidate": 3.118882656097412,
+    "edgeEnergyRatio": 1.0003905296325684,
+    "edgeDiffRatio32": 2.734375e-05,
+    "avgLuminanceBase": 149.20535278320312,
+    "avgLuminanceCandidate": 149.17837524414062,
+    "avgLuminanceDelta": -0.0269775390625,
+    "diagnosticDistance": 0.0007150133547803639,
+    "localizedTonalGate": {
+      "method": "changed-pixel bounds plus 64px building-and-neighbor context",
+      "crop": {
+        "x": 852,
+        "y": 86,
+        "width": 225,
+        "height": 277
+      },
+      "changedPixelCount": 3015,
+      "avgLuminanceBase": 120.35367584228516,
+      "avgLuminanceCandidate": 119.91026306152344,
+      "deltaPercent": -0.3684247927273774,
+      "ceilingPercent": 5.0,
+      "passed": true
+    }
+  },
+  "stamp-mill": {
+    "mae": 0.10552553087472916,
+    "rmse": 1.893349051475525,
+    "diffRatio16": 0.0026552734375,
+    "diffRatio32": 0.0012158203125,
+    "diffRatio64": 9.9609375e-05,
+    "thresholdMismatchProxy": "diffRatio16 (pixelmatch unavailable; no dependency installed)",
+    "edgeEnergyBase": 3.1176652908325195,
+    "edgeEnergyCandidate": 3.1197187900543213,
+    "edgeEnergyRatio": 1.000658631324768,
+    "edgeDiffRatio32": 4.8828125e-05,
+    "avgLuminanceBase": 149.20535278320312,
+    "avgLuminanceCandidate": 149.23924255371094,
+    "avgLuminanceDelta": 0.0338897705078125,
+    "diagnosticDistance": 0.0012440462049359163,
+    "localizedTonalGate": {
+      "method": "changed-pixel bounds plus 64px building-and-neighbor context",
+      "crop": {
+        "x": 272,
+        "y": 0,
+        "width": 305,
+        "height": 152
+      },
+      "changedPixelCount": 4868,
+      "avgLuminanceBase": 122.30671691894531,
+      "avgLuminanceCandidate": 123.05524444580078,
+      "deltaPercent": 0.612008519001888,
+      "ceilingPercent": 5.0,
+      "passed": true
+    }
+  },
+  "dynamo-hall": {
+    "mae": 0.05595087632536888,
+    "rmse": 1.3285759687423706,
+    "diffRatio16": 0.00148828125,
+    "diffRatio32": 0.00053125,
+    "diffRatio64": 4.8828125e-05,
+    "thresholdMismatchProxy": "diffRatio16 (pixelmatch unavailable; no dependency installed)",
+    "edgeEnergyBase": 3.1176652908325195,
+    "edgeEnergyCandidate": 3.138012170791626,
+    "edgeEnergyRatio": 1.0065263509750366,
+    "edgeDiffRatio32": 4.6875e-05,
+    "avgLuminanceBase": 149.20535278320312,
+    "avgLuminanceCandidate": 149.24571228027344,
+    "avgLuminanceDelta": 0.0403594970703125,
+    "diagnosticDistance": 0.0019774679637375955,
+    "localizedTonalGate": {
+      "method": "changed-pixel bounds plus 64px building-and-neighbor context",
+      "crop": {
+        "x": 0,
+        "y": 0,
+        "width": 361,
+        "height": 100
+      },
+      "changedPixelCount": 2620,
+      "avgLuminanceBase": 93.63310241699219,
+      "avgLuminanceCandidate": 94.77787780761719,
+      "deltaPercent": 1.2226182419191638,
+      "ceilingPercent": 5.0,
+      "passed": true
+    }
+  },
+  "integrated": {
+    "mae": 1.471933364868164,
+    "rmse": 9.443999290466309,
+    "diffRatio16": 0.0274189453125,
+    "diffRatio32": 0.01757421875,
+    "diffRatio64": 0.0061787109375,
+    "thresholdMismatchProxy": "diffRatio16 (pixelmatch unavailable; no dependency installed)",
+    "edgeEnergyBase": 3.1176652908325195,
+    "edgeEnergyCandidate": 3.29349422454834,
+    "edgeEnergyRatio": 1.0563976764678955,
+    "edgeDiffRatio32": 0.00172265625,
+    "avgLuminanceBase": 149.20535278320312,
+    "avgLuminanceCandidate": 148.11611938476562,
+    "avgLuminanceDelta": -1.0892333984375,
+    "diagnosticDistance": 0.02530933196812135
+  }
+}

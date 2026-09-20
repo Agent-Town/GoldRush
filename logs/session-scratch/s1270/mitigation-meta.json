@@ -1,0 +1,110 @@
+[
+  {
+    "seq": 1,
+    "cycle": 1,
+    "arm": "w1",
+    "workersObtained": 1,
+    "exitCode": 0,
+    "passed": 6,
+    "failed": 0,
+    "driftFrames": 0,
+    "retriggerFrames": 0,
+    "otherFailLines": [
+      45
+    ],
+    "wallSeconds": 54.84,
+    "loadavgBefore": "1.79 2.55 3.73",
+    "loadavgAfter": "4.24 3.01 3.82",
+    "log": "logs/session-scratch/s1270/run-w1-c1.txt"
+  },
+  {
+    "seq": 2,
+    "cycle": 1,
+    "arm": "default",
+    "workersObtained": 6,
+    "exitCode": 1,
+    "passed": 1,
+    "failed": 5,
+    "driftFrames": 5,
+    "retriggerFrames": 0,
+    "otherFailLines": [
+      45
+    ],
+    "wallSeconds": 45.45,
+    "loadavgBefore": "4.24 3.01 3.82",
+    "loadavgAfter": "12.56 5.67 4.78",
+    "log": "logs/session-scratch/s1270/run-default-c1.txt"
+  },
+  {
+    "seq": 3,
+    "cycle": 2,
+    "arm": "w1",
+    "workersObtained": 1,
+    "exitCode": 0,
+    "passed": 6,
+    "failed": 0,
+    "driftFrames": 0,
+    "retriggerFrames": 0,
+    "otherFailLines": [
+      45
+    ],
+    "wallSeconds": 63.16,
+    "loadavgBefore": "12.56 5.67 4.78",
+    "loadavgAfter": "6.96 5.47 4.77",
+    "log": "logs/session-scratch/s1270/run-w1-c2.txt"
+  },
+  {
+    "seq": 4,
+    "cycle": 2,
+    "arm": "default",
+    "workersObtained": 6,
+    "exitCode": 1,
+    "passed": 0,
+    "failed": 6,
+    "driftFrames": 6,
+    "retriggerFrames": 0,
+    "otherFailLines": [
+      45
+    ],
+    "wallSeconds": 74.03,
+    "loadavgBefore": "6.96 5.47 4.77",
+    "loadavgAfter": "20.54 10.27 6.66",
+    "log": "logs/session-scratch/s1270/run-default-c2.txt"
+  },
+  {
+    "seq": 5,
+    "cycle": 3,
+    "arm": "w1",
+    "workersObtained": 1,
+    "exitCode": 0,
+    "passed": 6,
+    "failed": 0,
+    "driftFrames": 0,
+    "retriggerFrames": 0,
+    "otherFailLines": [
+      45
+    ],
+    "wallSeconds": 49.83,
+    "loadavgBefore": "20.54 10.27 6.66",
+    "loadavgAfter": "11.45 9.40 6.55",
+    "log": "logs/session-scratch/s1270/run-w1-c3.txt"
+  },
+  {
+    "seq": 6,
+    "cycle": 3,
+    "arm": "default",
+    "workersObtained": 6,
+    "exitCode": 1,
+    "passed": 0,
+    "failed": 6,
+    "driftFrames": 6,
+    "retriggerFrames": 0,
+    "otherFailLines": [
+      45
+    ],
+    "wallSeconds": 62.73,
+    "loadavgBefore": "11.45 9.40 6.55",
+    "loadavgAfter": "21.11 13.22 8.22",
+    "log": "logs/session-scratch/s1270/run-default-c3.txt"
+  }
+]
