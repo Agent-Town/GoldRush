@@ -2919,14 +2919,7 @@ type LandmarkPaint = { intensity: number; tint: string };
  * body drops below 1.5 and the silhouette edges stay lit.
  */
 const LANDMARK_PAINT: Record<string, Record<string, LandmarkPaint>> = {
-  'e2-trestle': {
-    'trestle-crossing': { intensity: 2.6, tint: '#ffffff' },
-    'south-boiler-site': { intensity: 2.5, tint: '#e4e5e7' },
-    'north-boiler-site': { intensity: 2.5, tint: '#e4e5e7' },
-    'mine-spur-kit': { intensity: 2.2, tint: '#efe2cc' },
-    'south-approach-kit': { intensity: 2.2, tint: '#ffffff' },
-    'north-approach-kit': { intensity: 2.2, tint: '#ffffff' },
-  },
+  'e2-trestle': { 'trestle-crossing': { intensity: 2.6, tint: '#ffffff' }, 'south-boiler-site': { intensity: 2.5, tint: '#e4e5e7' }, 'north-boiler-site': { intensity: 2.5, tint: '#e4e5e7' }, 'mine-spur-kit': { intensity: 2.2, tint: '#efe2cc' }, 'south-approach-kit': { intensity: 2.2, tint: '#ffffff' }, 'north-approach-kit': { intensity: 2.2, tint: '#ffffff' }, },
   'e2-pressure-garden': { 'garden-pressure-manifold': { intensity: 1.3, tint: '#efe0d2' }, 'water-band-pump-station': { intensity: 1.3, tint: '#efe0d2' }, },
   'e2-incline': { 'upper-ore-cable-house': { intensity: 1.5, tint: '#c2a48c' }, 'west-line-brake-tower': { intensity: 1.28, tint: '#b3a693' }, 'east-line-brake-tower': { intensity: 1.28, tint: '#b3a693' }, },
   'e1-baron': {
