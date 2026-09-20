@@ -66,14 +66,15 @@ Coordinates are the claim plane's `{x, z}` values. Contract-specific vocabulary 
 
 ### View schema
 
-Current view schema version: **2**. Every view carries this number as `viewVersion`, and every submitted reel records the version it rode against in `meta.viewVersion`. Reels without that stamp are version 1.
+Current view schema version: **3**. Every view carries this number as `viewVersion`, and every submitted reel records the version it rode against in `meta.viewVersion`. Reels without that stamp are version 1.
 
-The rider view is additive-only: fields may be added, never removed or renamed. An added field bumps the version (unless the engine era itself advances), and `assets/engine-era.json` stamps the sorted field set beside the engine hash without joining the hash corpus. That stamped set is the CANONICAL view: the fields every contract publishes. Contract-scoped fields such as `now.preserve`, `now.canalChoices`, `now.gravity`, `now.air`, `now.motor`, `now.playbookUse` and `now.pressure` appear only where their contract declares them, are absent from the stamped set, and so do not move the version; each is documented here in the section that owns it. Read them where they appear and never require them.
+The rider view is additive-only: fields may be added, never removed or renamed. An added field bumps the version (unless the engine era itself advances), and `assets/engine-era.json` stamps the sorted field set beside the engine hash without joining the hash corpus. That stamped set is the CANONICAL view: the fields every contract publishes. Contract-scoped fields such as `now.preserve`, `now.canalChoices`, `now.gravity`, `now.air`, `now.motor`, `now.playbookUse`, `now.pressure` and `now.regatta` appear only where their contract declares them and are absent from the stamped set; each is documented here in the section that owns it. Being outside the stamped set, such a field does not have to move the version and usually does not (`now.pressure` did not), but the slice that adds one may declare a bump anyway when the field is new information rather than a re-cut of what was already published, and version 3 below is exactly that case. Read them where they appear and never require them.
 
 | View version | Era extension |
 |---|---|
 | 1 | Baseline published rider view through the current E1-E10 door contracts. |
 | 2 | E4 Motor Frontier: `now.motor` on contracts declaring `twist.motorFrontier` (all four Motor maps), carrying `objective`, `weather`, `roads`, `fuel`, `vehicle`, `convoy`, `events` and `eventCount`; the terminal outcome gains `motor`; the grammar gains `GRADE` and `HAUL`. |
+| 3 | E5 Regatta: `now.regatta` on contracts declaring `tileParams.raceCourse` (the Regatta alone), carrying the Claim-Boat's `boat` position, `heading`, `speed` and `aboard`, the `nextBuoy` with its gate radius, the `buoysPassed` with the second each fell, and the race's `state` / `finished` / `forfeited` / `fastWaterMultiplier`; `hero_orders` gains the two boat refusals `NOT_ABOARD` and `UNREACHABLE_WATER`. No new verb: the helm is `MOVE_HERO` while aboard. |
 
 ## THE GRAMMAR
 

@@ -156,6 +156,14 @@ interface ThreeGameDiagnostics {
     eligibility: string[];
   };
   deepwaterClaim: ReturnType<import('./world/DeepwaterClaimTile').DeepwaterClaimTile['snapshot']> | null;
+  /**
+   * E5 Regatta slice 3 (`Game.regattaDiagnostics`): the hull's motion and the race's own read, the
+   * one key `View.readRegatta` derives `now.regatta` from in BOTH engines. Null on every contract
+   * that declares no `tileParams.raceCourse`. Declared here rather than cast through, because
+   * F-PICNIC-2 removed the blanket `as ThreeGameDiagnostics` from the published literal and every
+   * key must now be declared or it reds — so a type-only line here IS the publishing act.
+   */
+  regatta: import('./agent/View').AgentRegattaSource | null;
   tilePersistence: {
     contractId: string;
     entries: number;

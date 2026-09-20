@@ -93,7 +93,7 @@ import { awardBaronMedal, hasBaronMedal, hasRocketCartCaptured, loadMedals } fro
 import { baronArrivalEdge } from './BaronFort';
 import { AgentConsentStore, type AgentAbility } from '../agent/AgentConsent';
 import { mechanicsBuildableIds } from '../agent/MechanicsManifest';
-import { buildView, type AgentViewSource } from '../agent/View';
+import { buildView, type AgentRegattaSource, type AgentViewSource } from '../agent/View';
 import type { AgentPermissionLevel } from '../agent/PermissionLadder';
 import { install as installAgentStub, type AgentStub } from '../agent/AgentStub';
 import { bindStandingOrderHero, bindStandingUpgradePicker, snapshotStandingOrders, standingOrderHeroSteering, type StandingOrder } from '../agent/StandingOrders';
@@ -3452,6 +3452,35 @@ export class Game {
     return true;
   }
 
+  /**
+   * E5 REGATTA, SLICE 3 — THE ONE KEY THE VIEW READS,
+   * `HeadlessContractSim.regattaDiagnostics`'s twin
+   * (`specs/agent-play/e5-regatta-steerable-boat.md` law 5; F-RB2-4).
+   *
+   * PUBLISHING ONLY: nothing here steps, decides or stores anything. It reads the hull's own motion
+   * getters and the race system's diagnostics — the SAME two sources `ClaimBoatView` and
+   * `RegattaBuoysView` draw this map's plain-boot readouts from (`canvas.dataset.claimBoat`,
+   * `canvas.dataset.regattaBuoys`) — so a room seat's view and the human's canvas cannot drift.
+   * `declared` is the contract-scope gate: null on every contract with no race course.
+   */
+  private regattaDiagnostics(): AgentRegattaSource | null {
+    const claim = this.deepwaterClaim;
+    if (!claim || !this.regattaRace) return null;
+    const boat = claim.boat;
+    return {
+      declared: true,
+      boat: {
+        id: boat.config.id,
+        x: boat.position.x,
+        z: boat.position.z,
+        heading: boat.heading,
+        speed: boat.speed,
+        aboard: boat.aboard !== null,
+      },
+      race: this.regattaRace.diagnostics,
+    };
+  }
+
   private watchMovePin(actor: Hero, intents: Intents, beforeX: number, beforeZ: number, delta: number): void {
     const hasIntent = intents.move.lengthSq() > 0;
     const displacementSq = (actor.group.position.x - beforeX) ** 2 + (actor.group.position.z - beforeZ) ** 2;
@@ -5993,6 +6022,9 @@ export class Game {
             ...(this.noiseHunt ? { noiseHunt: this.noiseHunt.diagnostics } : {}),
           })
         : null,
+      // E5 Regatta slice 3: the same key `HeadlessContractSim` publishes, so `buildView` derives
+      // `now.regatta` identically in both engines; null off the one map with a race course.
+      regatta: this.regattaDiagnostics(),
       tilePersistence: {
         contractId: this.activeContract.id,
         entries: this.tileStateStore.readSnapshot(this.activeContract.id).entries.length,

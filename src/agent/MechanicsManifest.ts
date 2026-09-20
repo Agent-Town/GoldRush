@@ -36,6 +36,18 @@ import { MOTOR_GRADE_REACH, MOTOR_GRADE_VERB, MOTOR_HAUL_VERB, MOTOR_STOP_REACH 
 
 /** The public verb a rider uses to lift the probe, named once so the manifest cannot drift. */
 const PROBE_RECOVER_ACTION = 'recover';
+
+/**
+ * E5 Regatta — the gate radius a mark that authors none falls back to, which on the Regatta is the
+ * SIXTH and last gate: the course as raced is the five authored beacons and then the `heroStart`
+ * stake, and a stake marker carries no radius. `RegattaRaceSystem.DEFAULT_GATE_RADIUS` is the
+ * engine's own copy of this number; slice 3's firewall forbids editing that file, so the constant
+ * lives here — beside the `regatta_race` rule that already published the literal — rather than as a
+ * third copy inside `View.ts`. `scripts/regatta-boat-steer.test.mjs` pins the two against each
+ * other by source text so they cannot drift; a later slice that may touch the race system should
+ * move this constant there and export it from the engine.
+ */
+export const REGATTA_GATE_RADIUS_FALLBACK = 6;
 // hero-move-verb: read from the verb's own module so the published contract cannot drift from the
 // executor that enforces it.
 import { HERO_ARRIVE_RADIUS, HERO_ORDER_REFUSALS } from './StandingOrders';
