@@ -3423,8 +3423,8 @@ export class Game {
    * point — null at this door by ADR-005 law (the singleton executor binds `riderPiloted: false`,
    * because the hero here is the human's), so the rider's half of the parity claim is driven in
    * the headless engine and, in the browser, through the `?debug`-gated `__GR_TEST__.claimBoat`
-   * seam below. Neither species gains a control the other lacks: the boat only ever sees the same
-   * unit intent and the same steering point.
+   * seam the constructor installs inside its `?debug` harness block. Neither species gains a control
+   * the other lacks: the boat only ever sees the same unit intent and the same steering point.
    */
   private sailClaimBoat(simDelta: number, intents: Intents): boolean {
     const claim = this.deepwaterClaim;
