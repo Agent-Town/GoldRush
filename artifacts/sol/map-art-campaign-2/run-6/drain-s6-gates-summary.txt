@@ -1,0 +1,32 @@
+slice 6: lane d3eb1b9cd store 8ea5370ba1dfd4bc85276380875fdb87f17f7bf7 maps: the Ember Shore, the Archive World, the River (render half) 19:13Z
+store on 'main', dirty 0 (Astra's, untouched)
+store main -> 8ea5370 (art(store): Archive World — open the library gate and declare inspection station)
+store main pushed: 8ea5370
+scratch store: detached at 8ea5370, clean
+chain base fbea65ce2 merging lane d3eb1b9cd (lane tip d3eb1b9cd) 19:14Z
+merged 1b386e550
+single-line law: nothing to flatten
+engine hash merged (scratch store at 8ea5370): 4374cdbfcb7631c86982f9439fb30583eb3eba1acbf70e1bcccaf8fb6e210b21
+tsc/build/e1: 0 / 0 / 0
+first-town payload: 34271395 bytes
+halo: rc=0 halo re-extraction PASS: 315 cured, 0 held, 760 regenerated-and-cured, 2127 scanned; alpha and opaque RGB unchanged
+null floors: rc=0 83 of 83 null floors match assets/contracts/null-floors.json (289.9s).
+law-pointer: rc=0 law-pointer-guard — do the law surfaces still point at what they claim?
+guards: ℹ pass 95 ℹ fail 0 
+e2e start 19:20Z: e2e/e10-ember-shore-preserve.spec.ts e2e/e10-ember-shore-squall.spec.ts e2e/er01-e10-census.spec.ts e2e/ss-11-e10-beats.spec.ts e2e/e10-river-boot-guard.spec.ts e2e/e10-finale-staging.spec.ts e2e/preview-unlock-all.spec.ts e2e/e10-static-boss.spec.ts e2e/map-census.spec.ts e2e/landmark-brightness.spec.ts e2e/landmark-collision.spec.ts e2e/fort-landmark-collision.spec.ts e2e/task-025-bandits-dont-swim.spec.ts e2e/m2-01-build-menu.spec.ts
+e2e: rc=1   4 failed   6 skipped   182 passed (23.5m)  19:44Z
+1) [desktop-chrome] › e2e/e10-static-boss.spec.ts:153:1 › recession hands the secured claim to the existing T10 re-inking finale 
+2) [desktop-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-archive-world census cites the existing Deep Sky debt 
+3) [mobile-chrome] › e2e/e10-static-boss.spec.ts:153:1 › recession hands the secured claim to the existing T10 re-inking finale 
+4) [mobile-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-archive-world census cites the existing Deep Sky debt 
+battery start 19:44Z
+battery: rc=1 ℹ tests 940 ℹ pass 932 ℹ fail 3 ℹ skipped 5  19:51Z
+✖ all 152 scripts/*.test.mjs fixture owners remove their temp directories (158538.163459ms)
+✖ failing tests:
+✖ rotation registry stays outside the engine identity corpus (530.749959ms)
+✖ the landed registry names the live engine and stays outside its hash corpus (131.799042ms)
+dirt after battery: 5
+CORR4-S6-PREP-DONE
+hash at pin time: 4374cdbfcb7631c86982f9439fb30583eb3eba1acbf70e1bcccaf8fb6e210b21
+pin #28
+era (chain, scratch store): ℹ pass 9 ℹ fail 0 
