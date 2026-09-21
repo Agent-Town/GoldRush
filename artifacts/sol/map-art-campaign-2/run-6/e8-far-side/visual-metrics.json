@@ -1,0 +1,482 @@
+{
+  "maximumWholeBodyEmission": 0.45,
+  "method": "On-screen binary body geometry masks; persistent panels/pause/world-info/touch controls retained, temporary story and announcements excluded only from labelled mask. Normal-HUD frames retained. Full projected bounds distinguish offscreen from HUD-covered. Display-RGB luminance with Rec.709 weights.",
+  "stations": [
+    {
+      "arm": "before",
+      "width": 1280,
+      "focus": "earthrise-listening-array",
+      "station": "entry",
+      "hero": {
+        "x": 0,
+        "y": 0.06,
+        "z": -36
+      },
+      "projectedBounds": {
+        "minX": 495.5573273105683,
+        "maxX": 784.4426726894317,
+        "minY": -2028.6477394279032,
+        "maxY": -1462.594717715138
+      },
+      "emissiveIntensities": [
+        [
+          0.45,
+          0.45
+        ]
+      ],
+      "bodyPixels": 0,
+      "persistentHudCoveragePercent": null,
+      "bodyMedian": null,
+      "bodyRms": null
+    },
+    {
+      "arm": "before",
+      "width": 1280,
+      "focus": "earthrise-listening-array",
+      "station": 5,
+      "hero": {
+        "x": 0,
+        "y": 0.7156867361068726,
+        "z": 61
+      },
+      "projectedBounds": {
+        "minX": 470.14654404413676,
+        "maxX": 809.8534559558632,
+        "minY": 40.12383152935794,
+        "maxY": 333.46949422578865
+      },
+      "emissiveIntensities": [
+        [
+          0.45,
+          0.45
+        ]
+      ],
+      "bodyPixels": 45213,
+      "persistentHudCoveragePercent": 0.1349169486652069,
+      "bodyMedian": 0.16270823529411765,
+      "bodyRms": 0.10600655764424895
+    },
+    {
+      "arm": "before",
+      "width": 1280,
+      "focus": "earthrise-listening-array",
+      "station": 3,
+      "hero": {
+        "x": 0,
+        "y": 2.9504237747192383,
+        "z": 59
+      },
+      "projectedBounds": {
+        "minX": 474.1995309150574,
+        "maxX": 805.8004690849427,
+        "minY": 156.60351198045336,
+        "maxY": 432.97139735134687
+      },
+      "emissiveIntensities": [
+        [
+          0.45,
+          0.45
+        ]
+      ],
+      "bodyPixels": 42681,
+      "persistentHudCoveragePercent": 0.004685925821794241,
+      "bodyMedian": 0.1408,
+      "bodyRms": 0.1056913119481233
+    },
+    {
+      "arm": "after",
+      "width": 1280,
+      "focus": "far-side-landing-frame",
+      "station": "entry",
+      "hero": {
+        "x": 0,
+        "y": 0.06,
+        "z": -36
+      },
+      "projectedBounds": {
+        "minX": 519.7722284466909,
+        "maxX": 760.2277715533091,
+        "minY": 179.8892885008601,
+        "maxY": 451.5477834774302
+      },
+      "emissiveIntensities": [
+        [
+          0.45,
+          0.45
+        ]
+      ],
+      "bodyPixels": 37180,
+      "persistentHudCoveragePercent": 0.013448090371167294,
+      "bodyMedian": 0.29379215686274507,
+      "bodyRms": 0.11927653873443109
+    },
+    {
+      "arm": "after",
+      "width": 1280,
+      "focus": "far-side-landing-frame",
+      "station": 3,
+      "hero": {
+        "x": 0,
+        "y": 0.06,
+        "z": -37
+      },
+      "projectedBounds": {
+        "minX": 516.908560212865,
+        "maxX": 763.091439787135,
+        "minY": 201.7817683084887,
+        "maxY": 477.26607885892133
+      },
+      "emissiveIntensities": [
+        [
+          0.45,
+          0.45
+        ]
+      ],
+      "bodyPixels": 38033,
+      "persistentHudCoveragePercent": 0.04732732101070123,
+      "bodyMedian": 0.29577176470588235,
+      "bodyRms": 0.1189966452546591
+    },
+    {
+      "arm": "after",
+      "width": 1280,
+      "focus": "earthrise-listening-array",
+      "station": "entry",
+      "hero": {
+        "x": 0,
+        "y": 0.06,
+        "z": -36
+      },
+      "projectedBounds": {
+        "minX": 495.5462481916221,
+        "maxX": 784.4537518083779,
+        "minY": -2028.958306419888,
+        "maxY": -1462.8124817545977
+      },
+      "emissiveIntensities": [
+        [
+          0.45,
+          0.45
+        ]
+      ],
+      "bodyPixels": 0,
+      "persistentHudCoveragePercent": null,
+      "bodyMedian": null,
+      "bodyRms": null
+    },
+    {
+      "arm": "after",
+      "width": 1280,
+      "focus": "earthrise-listening-array",
+      "station": 5,
+      "hero": {
+        "x": 0,
+        "y": 0.7156867361068726,
+        "z": 61
+      },
+      "projectedBounds": {
+        "minX": 470.15683281867007,
+        "maxX": 809.8431671813298,
+        "minY": 40.1356228946812,
+        "maxY": 333.4682733325717
+      },
+      "emissiveIntensities": [
+        [
+          0.45,
+          0.45
+        ]
+      ],
+      "bodyPixels": 45210,
+      "persistentHudCoveragePercent": 0.126078301260783,
+      "bodyMedian": 0.2333678431372549,
+      "bodyRms": 0.10973971978797485
+    },
+    {
+      "arm": "after",
+      "width": 1280,
+      "focus": "earthrise-listening-array",
+      "station": 3,
+      "hero": {
+        "x": 0,
+        "y": 2.9504237747192383,
+        "z": 59
+      },
+      "projectedBounds": {
+        "minX": 474.19946541089257,
+        "maxX": 805.8005345891074,
+        "minY": 156.6013855159003,
+        "maxY": 432.9705690799465
+      },
+      "emissiveIntensities": [
+        [
+          0.45,
+          0.45
+        ]
+      ],
+      "bodyPixels": 42764,
+      "persistentHudCoveragePercent": 0.004676830979328407,
+      "bodyMedian": 0.21938509803921566,
+      "bodyRms": 0.11067868155360695
+    },
+    {
+      "arm": "before",
+      "width": 390,
+      "focus": "earthrise-listening-array",
+      "station": "entry",
+      "hero": {
+        "x": 0,
+        "y": 0.06,
+        "z": -36
+      },
+      "projectedBounds": {
+        "minX": 42.61298029131276,
+        "maxX": 347.3870197086872,
+        "minY": -2140.2233655445134,
+        "maxY": -1543.037427481716
+      },
+      "emissiveIntensities": [
+        [
+          0.45,
+          0.45
+        ]
+      ],
+      "bodyPixels": 0,
+      "persistentHudCoveragePercent": null,
+      "bodyMedian": null,
+      "bodyRms": null
+    },
+    {
+      "arm": "before",
+      "width": 390,
+      "focus": "earthrise-listening-array",
+      "station": 5,
+      "hero": {
+        "x": 0,
+        "y": 0.7156867361068726,
+        "z": 61
+      },
+      "projectedBounds": {
+        "minX": 15.876200509296728,
+        "maxX": 374.1237994907033,
+        "minY": 42.41272510386921,
+        "maxY": 351.8018316361553
+      },
+      "emissiveIntensities": [
+        [
+          0.45,
+          0.45
+        ]
+      ],
+      "bodyPixels": 50476,
+      "persistentHudCoveragePercent": 37.215706474364055,
+      "bodyMedian": 0.16292941176470588,
+      "bodyRms": 0.10173960403192965
+    },
+    {
+      "arm": "before",
+      "width": 390,
+      "focus": "earthrise-listening-array",
+      "station": 3,
+      "hero": {
+        "x": 0,
+        "y": 2.9504237747192383,
+        "z": 59
+      },
+      "projectedBounds": {
+        "minX": 20.0800852074533,
+        "maxX": 369.9199147925467,
+        "minY": 165.21389736733352,
+        "maxY": 456.78396907310895
+      },
+      "emissiveIntensities": [
+        [
+          0.45,
+          0.45
+        ]
+      ],
+      "bodyPixels": 47252,
+      "persistentHudCoveragePercent": 10.738169812917972,
+      "bodyMedian": 0.14563764705882354,
+      "bodyRms": 0.10475412492102029
+    },
+    {
+      "arm": "after",
+      "width": 390,
+      "focus": "far-side-landing-frame",
+      "station": "entry",
+      "hero": {
+        "x": 0,
+        "y": 0.06,
+        "z": -36
+      },
+      "projectedBounds": {
+        "minX": 68.15970101642975,
+        "maxX": 321.8402989835703,
+        "minY": 189.78319937940626,
+        "maxY": 476.3829115673179
+      },
+      "emissiveIntensities": [
+        [
+          0.45,
+          0.45
+        ]
+      ],
+      "bodyPixels": 41472,
+      "persistentHudCoveragePercent": 10.385320216049383,
+      "bodyMedian": 0.29379215686274507,
+      "bodyRms": 0.11914328403187005
+    },
+    {
+      "arm": "after",
+      "width": 390,
+      "focus": "far-side-landing-frame",
+      "station": 3,
+      "hero": {
+        "x": 0,
+        "y": 0.06,
+        "z": -37
+      },
+      "projectedBounds": {
+        "minX": 65.13807567599027,
+        "maxX": 324.86192432400975,
+        "minY": 212.8794470439221,
+        "maxY": 503.51605895003536
+      },
+      "emissiveIntensities": [
+        [
+          0.45,
+          0.45
+        ]
+      ],
+      "bodyPixels": 42301,
+      "persistentHudCoveragePercent": 5.768185149287251,
+      "bodyMedian": 0.296596862745098,
+      "bodyRms": 0.11813637540915609
+    },
+    {
+      "arm": "after",
+      "width": 390,
+      "focus": "earthrise-listening-array",
+      "station": "entry",
+      "hero": {
+        "x": 0,
+        "y": 0.06,
+        "z": -36
+      },
+      "projectedBounds": {
+        "minX": 42.601192409434844,
+        "maxX": 347.3988075905652,
+        "minY": -2140.5538003988613,
+        "maxY": -1543.2691224836503
+      },
+      "emissiveIntensities": [
+        [
+          0.45,
+          0.45
+        ]
+      ],
+      "bodyPixels": 0,
+      "persistentHudCoveragePercent": null,
+      "bodyMedian": null,
+      "bodyRms": null
+    },
+    {
+      "arm": "after",
+      "width": 390,
+      "focus": "earthrise-listening-array",
+      "station": 5,
+      "hero": {
+        "x": 0,
+        "y": 0.7156867361068726,
+        "z": 61
+      },
+      "projectedBounds": {
+        "minX": 15.87791445528353,
+        "maxX": 374.12208554471647,
+        "minY": 42.414690997403326,
+        "maxY": 351.80162886375723
+      },
+      "emissiveIntensities": [
+        [
+          0.45,
+          0.45
+        ]
+      ],
+      "bodyPixels": 50486,
+      "persistentHudCoveragePercent": 37.22418096105851,
+      "bodyMedian": 0.23225098039215686,
+      "bodyRms": 0.10533175970352475
+    },
+    {
+      "arm": "after",
+      "width": 390,
+      "focus": "earthrise-listening-array",
+      "station": 3,
+      "hero": {
+        "x": 0,
+        "y": 2.9504237747192383,
+        "z": 59
+      },
+      "projectedBounds": {
+        "minX": 20.08020165763336,
+        "maxX": 369.9197983423667,
+        "minY": 165.21644879095064,
+        "maxY": 456.78493578813965
+      },
+      "emissiveIntensities": [
+        [
+          0.45,
+          0.45
+        ]
+      ],
+      "bodyPixels": 47261,
+      "persistentHudCoveragePercent": 10.746704470916823,
+      "bodyMedian": 0.2210525490196078,
+      "bodyRms": 0.10920330695103746
+    }
+  ],
+  "groundRegions": [
+    {
+      "width": 1280,
+      "box": [
+        800,
+        420,
+        930,
+        500
+      ],
+      "before": {
+        "median": 0.16766352941176468,
+        "rms": 0.004780794777158023,
+        "darkShareBelow01": 0.0
+      },
+      "after": {
+        "median": 0.4378227450980392,
+        "rms": 0.00868908761682191,
+        "darkShareBelow01": 0.0
+      },
+      "medianChangePercent": 161.13177184931538,
+      "rmsChangePercent": 81.74985586783956
+    },
+    {
+      "width": 390,
+      "box": [
+        15,
+        480,
+        95,
+        530
+      ],
+      "before": {
+        "median": 0.1880894117647059,
+        "rms": 0.011575895438423656,
+        "darkShareBelow01": 0.0
+      },
+      "after": {
+        "median": 0.41849803921568623,
+        "rms": 0.021881165394668337,
+        "darkShareBelow01": 0.0
+      },
+      "medianChangePercent": 122.49952046169112,
+      "rmsChangePercent": 89.02352315690922
+    }
+  ]
+}

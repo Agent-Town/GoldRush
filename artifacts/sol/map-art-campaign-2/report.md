@@ -461,3 +461,9 @@ Builds, scoped guards, visual census, shared checks, loading/repeat and six moun
 **IMPROVED / HELD.** Four relay frames mount, 5→9 bodies, +1,264 authored triangles. Ground RMS −51.24% desktop / −49.40% phone. R2 entry phone HUD 2.91%; west dish 3 m 76.11%→6.60%; charting station 2 m 0.60%. Equal-height route, peripheral entry crop/HUD and full vista remain held. Low frame platform covers 6.5% of the player sprite at the feet. [Every clause and evidence](run-6/e7-relay-rush/review.md).
 
 Builds, scoped guards, own 16 checks, six Signal row checks, visual census, shared checks, loading/repeat and six mount/dispose cycles pass. Four-run p95 10.10→10.05 / 10.00→9.95 ms, draws 68→70 / 51→52, within 15%. Engine `c4de03c756e538abb6c3787d9a1e4b80cc03b62cc3de095eaa2fedb8df814ab4` → `36abad02458965365c31dfe66a98155d66182324ab136feb6709bfa791ff0abc`. Store `0535aa5ffca2f422b0d15b378044d00b9e47771a` pushed.
+
+### The Far Side correction — 2026-09-21 run 6
+
+**IMPROVED / HELD.** Landing frame mounts, 5→6 bodies, +600 triangles. Inherited rail stripe contrast 36.09%→1.56%; fine-ground high-pass RMS 0.00159→0.00661 / 0.00128→0.00647. Frame entry phone HUD 10.385%, 3 m 5.768%; array 3 m 37.22%→10.75%. Circular vista, equipment compound and solid variant mounts remain held for named owners. [Every clause and evidence](run-6/e8-far-side/review.md).
+
+Builds, scoped guards, Far Side parity/census, shared checks and loading/repeat pass. Own batch 22 pass / two ordinary Mare Claim arsenal failures reproduced on exact base. Four-run p95 9.70→9.75 / 9.60→9.70 ms, draws 62→63 / 49→50, within 15%. Engine `36abad02458965365c31dfe66a98155d66182324ab136feb6709bfa791ff0abc` → `37a425e8df7634b36005ac5712ccee589eba59ab7aac41f7033a2949d203c146`. Store `d134d7607cda6b995a9421c5727fbd11f9a69230` pushed.
