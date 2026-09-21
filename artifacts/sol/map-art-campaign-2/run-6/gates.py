@@ -15,7 +15,18 @@ elif mode=='probes':
 else:raise ValueError(mode)
 rows=[]
 for label,cmd,extra in commands:
-    log=raw/f'{name}-{label}.log'; start=time.time()
+    log=raw/f'{name}-{label}.log'; attempt=1
+    while log.exists():
+        attempt+=1;log=raw/f'{name}-{label}-rerun-{attempt}.log'
+    # Playwright clears its output directory on startup. Give each rerun a fresh
+    # directory so raw screenshots and failure context from prior attempts survive.
+    cmd=cmd.copy()
+    for i,arg in enumerate(cmd):
+        if arg.startswith('--output=') and Path(arg.split('=',1)[1]).exists():
+            candidate=Path(arg.split('=',1)[1]);suffix=2
+            while Path(str(candidate)+f'-rerun-{suffix}').exists():suffix+=1
+            cmd[i]='--output='+str(candidate)+f'-rerun-{suffix}'
+    start=time.time()
     with log.open('w') as f:
         try:rc=subprocess.run(cmd,env={**env,**extra},stdout=f,stderr=subprocess.STDOUT,timeout=1800).returncode
         except subprocess.TimeoutExpired:rc='timeout'
