@@ -1086,7 +1086,7 @@ function keepLandmarkPaintReadable(model: THREE.Object3D, paint: LandmarkPaint =
     // pre-calibration render from a material that may already have been re-installed once.
     material.userData.landmarkAuthoredEmissive = paint.intensity;
     material.emissiveIntensity = calibratedLandmarkIntensity(paint.intensity);
-    if ((contractId === 'e2-pressure-garden' || contractId === 'e6-glow-mesa' || contractId === 'e6-picnic' || contractId === 'e7-dead-band' || contractId === 'e7-relay-rush' || contractId === 'e8-far-side' || contractId === 'e8-low-orbit' || contractId === 'e9-dome-basin' || contractId === 'e9-seed-run' || contractId === 'e9-devils-alley' || contractId === 'e9-old-canal' || contractId === 'e10-last-claim') && !material.userData.landmarkDiffuseGrade) {
+    if ((contractId === 'e2-pressure-garden' || contractId === 'e6-glow-mesa' || contractId === 'e6-picnic' || contractId === 'e7-dead-band' || contractId === 'e7-relay-rush' || contractId === 'e8-far-side' || contractId === 'e8-low-orbit' || contractId === 'e9-dome-basin' || contractId === 'e9-seed-run' || contractId === 'e9-devils-alley' || contractId === 'e9-old-canal' || contractId === 'e10-last-claim' || contractId === 'e10-ember-shore' || contractId === 'e10-archive-world') && !material.userData.landmarkDiffuseGrade) {
       material.userData.landmarkDiffuseGrade = true;
       // Recover the atlas's dark iron detail in its diffuse paint, so the body can
       // leave the legacy-emission exemption without turning its texture into a lamp.
@@ -2183,6 +2183,142 @@ diffuseColor.rgb = mix(diffuseColor.rgb, memorialBrass, max(memorialRing, memori
   });
 }
 
+/** A material-only dawn treatment for the raw River's existing painted fallback. */
+function paintRiverReturn(host: Host): () => void {
+  if (host.contractId !== 'e10-river' || isMapBeautyDisabled()) return () => undefined;
+  const materials = new Set<THREE.MeshStandardMaterial>();
+  host.scene.traverse(node => {
+    const mesh = node as THREE.Mesh;
+    if (!mesh.isMesh) return;
+    for (const material of Array.isArray(mesh.material) ? mesh.material : [mesh.material]) {
+      if ((material as THREE.MeshStandardMaterial).isMeshStandardMaterial && (material.userData.terrainUniforms || material.userData.waterUniforms)) materials.add(material as THREE.MeshStandardMaterial);
+    }
+  });
+  const restore = [...materials].map(material => {
+    const compile = material.onBeforeCompile, key = material.customProgramCacheKey;
+    const cacheKey = key.call(material), water = !!material.userData.waterUniforms;
+    material.onBeforeCompile = (shader, renderer) => {
+      compile.call(material, shader, renderer);
+      if (water) {
+        shader.fragmentShader = shader.fragmentShader.replace('vec4 sampledDiffuseColor = vec4(waterColor, alpha);', `
+vec3 returnWater = mix(vec3(0.33, 0.39, 0.38), vec3(0.10, 0.19, 0.23), depth);
+returnWater = mix(returnWater, vec3(0.48, 0.46, 0.35), fordBand * 0.55);
+waterColor = mix(waterColor, returnWater, 0.65);
+float returnFlowLine = sin(vWaterWorld.y * 7.0 + waterNoise(vWaterWorld * vec2(1.2, 1.8) - vec2(waterTime * 0.32, 0.0)) * 4.8);
+float returnFlowBreak = smoothstep(0.50, 0.78, waterNoise(vWaterWorld * vec2(3.4, 2.3) - vec2(waterTime * 0.4, 0.0)));
+waterColor += vec3(0.12, 0.11, 0.075) * smoothstep(0.94, 0.995, returnFlowLine) * returnFlowBreak * waterQuality * (1.0 - fordBand) * smoothstep(0.05, 0.20, depth);
+vec4 sampledDiffuseColor = vec4(waterColor, alpha);`);
+      } else {
+        shader.uniforms.returnBankPigment = { value: new THREE.Color('#ad9c75') };
+        shader.fragmentShader = shader.fragmentShader
+          .replace('#include <common>', '#include <common>\nuniform vec3 returnBankPigment;')
+          .replace('diffuseColor *= sampledDiffuseColor;', 'diffuseColor *= sampledDiffuseColor;\ndiffuseColor.rgb = mix(diffuseColor.rgb, returnBankPigment, 0.25);');
+      }
+    };
+    material.customProgramCacheKey = () => `${cacheKey}|raw-river-dawn-v1:${water ? 'water' : 'bank'}`;
+    material.needsUpdate = true;
+    return () => { material.onBeforeCompile = compile; material.customProgramCacheKey = key; material.needsUpdate = true; };
+  });
+  return () => { for (const reset of restore) reset(); };
+}
+
+/** Quiet the archive paving; warm pools appear only for already-restored wings. */
+function clarifyArchiveTerraces(model: THREE.Object3D, readState?: () => ArchiveRestorationState | null): void {
+  if (isMapBeautyDisabled()) return;
+  const zones = readState?.()?.zones ?? [];
+  const pools = { value: zones.map(zone => new THREE.Vector4((zone.minX + zone.maxX) / 2, (zone.minZ + zone.maxZ) / 2, (zone.maxX - zone.minX) * 0.30, (zone.maxZ - zone.minZ) * 0.30)) };
+  const restored = { value: new Float32Array(zones.length) };
+  model.traverse(node => {
+    const mesh = node as THREE.Mesh<THREE.BufferGeometry, THREE.MeshStandardMaterial>;
+    if (!mesh.isMesh || Array.isArray(mesh.material) || !mesh.material.isMeshStandardMaterial) return;
+    const beforeRender = mesh.onBeforeRender.bind(mesh);
+    mesh.onBeforeRender = (renderer, scene, camera, geometry, material, group) => {
+      beforeRender(renderer, scene, camera, geometry, material, group);
+      const state = readState?.();
+      zones.forEach((zone, index) => { restored.value[index] = state?.restoredWingIds.includes(zone.id) ? 1 : 0; });
+    };
+    const material = mesh.material, compile = material.onBeforeCompile.bind(material);
+    const cacheKey = material.customProgramCacheKey();
+    material.onBeforeCompile = (shader, renderer) => {
+      compile(shader, renderer);
+      shader.uniforms.archiveFloorLow = { value: new THREE.Color('#776f5e') };
+      shader.uniforms.archiveFloorHigh = { value: new THREE.Color('#a8a38d') };
+      shader.uniforms.archiveFloorPools = pools;
+      shader.uniforms.archiveFloorRestored = restored;
+      shader.vertexShader = shader.vertexShader
+        .replace('#include <common>', '#include <common>\nvarying vec3 vArchiveFloor;')
+        .replace('#include <begin_vertex>', '#include <begin_vertex>\nvArchiveFloor = (modelMatrix * vec4(position, 1.0)).xyz;');
+      shader.fragmentShader = shader.fragmentShader
+        .replace('#include <common>', `#include <common>
+varying vec3 vArchiveFloor;
+uniform vec3 archiveFloorLow, archiveFloorHigh;
+${zones.length ? `uniform vec4 archiveFloorPools[${zones.length}];\nuniform float archiveFloorRestored[${zones.length}];` : ''}`)
+        .replace('#include <map_fragment>', `#include <map_fragment>
+float archiveTerrace = smoothstep(-0.7, 2.2, vArchiveFloor.y);
+diffuseColor.rgb = mix(diffuseColor.rgb, mix(archiveFloorLow, archiveFloorHigh, archiveTerrace), 0.50);`)
+        .replace('#include <emissivemap_fragment>', `#include <emissivemap_fragment>
+${zones.length ? `for (int i = 0; i < ${zones.length}; i++) {
+  vec4 pool = archiveFloorPools[i];
+  float archivePool = 1.0 - smoothstep(0.12, 1.0, length((vArchiveFloor.xz - pool.xy) / pool.zw));
+  totalEmissiveRadiance += vec3(0.24, 0.095, 0.025) * archivePool * archiveFloorRestored[i];
+}` : ''}`);
+    };
+    material.customProgramCacheKey = () => `${cacheKey}|archive-terraces-v1:${zones.length}`;
+    material.needsUpdate = true;
+  });
+}
+
+/** One world-space basalt treatment crosses the sculpt/continuation join. */
+function clarifyEmberBasalt(model: THREE.Object3D): void {
+  if (isMapBeautyDisabled()) return;
+  model.traverse(node => {
+    const mesh = node as THREE.Mesh<THREE.BufferGeometry, THREE.MeshStandardMaterial>;
+    if (!mesh.isMesh || Array.isArray(mesh.material) || !mesh.material.isMeshStandardMaterial) return;
+    const material = mesh.material, compile = material.onBeforeCompile.bind(material);
+    const cacheKey = material.customProgramCacheKey();
+    material.onBeforeCompile = (shader, renderer) => {
+      compile(shader, renderer);
+      shader.uniforms.emberBasaltLow = { value: new THREE.Color('#5d727c') };
+      shader.uniforms.emberBasaltHigh = { value: new THREE.Color('#9c9e91') };
+      shader.vertexShader = shader.vertexShader
+        .replace('#include <common>', '#include <common>\nvarying vec3 vEmberBasalt;')
+        .replace('#include <begin_vertex>', '#include <begin_vertex>\nvEmberBasalt = (modelMatrix * vec4(position, 1.0)).xyz;');
+      shader.fragmentShader = shader.fragmentShader
+        .replace('#include <common>', `#include <common>
+varying vec3 vEmberBasalt;
+uniform vec3 emberBasaltLow, emberBasaltHigh;
+vec2 emberStoneHash(vec2 p) {
+  return fract(sin(vec2(dot(p, vec2(127.1, 311.7)), dot(p, vec2(269.5, 183.3)))) * 43758.5453);
+}`)
+        .replace('#include <map_fragment>', `#include <map_fragment>
+float emberWarm = clamp((diffuseColor.r - max(diffuseColor.g, diffuseColor.b) * 1.8) * 18.0, 0.0, 1.0);
+float emberShelf = smoothstep(-1.8, 1.8, vEmberBasalt.y);
+vec2 emberCell = vEmberBasalt.xz * 1.45;
+vec2 emberCellId = floor(emberCell), emberCellPoint = fract(emberCell);
+float emberNear = 8.0, emberNext = 8.0, emberCellShade = 0.5;
+for (int emberY = -1; emberY <= 1; emberY++) for (int emberX = -1; emberX <= 1; emberX++) {
+  vec2 emberNeighbour = vec2(float(emberX), float(emberY));
+  vec2 emberSeed = emberStoneHash(emberCellId + emberNeighbour);
+  float emberDistance = length(emberNeighbour + 0.18 + emberSeed * 0.64 - emberCellPoint);
+  if (emberDistance < emberNear) { emberNext = emberNear; emberNear = emberDistance; emberCellShade = emberSeed.x; }
+  else emberNext = min(emberNext, emberDistance);
+}
+float emberJoint = smoothstep(0.006, 0.030, emberNext - emberNear);
+float emberGrain = fract(sin(dot(floor(vEmberBasalt * 18.0), vec3(12.9898, 78.233, 37.719))) * 43758.5453);
+float emberGrainFade = 1.0 - smoothstep(0.4, 1.2, max(max(fwidth(vEmberBasalt.x), fwidth(vEmberBasalt.z)), fwidth(vEmberBasalt.y)) * 18.0);
+vec3 emberStone = mix(emberBasaltLow, emberBasaltHigh, emberShelf);
+emberStone *= (0.94 + emberCellShade * 0.08 + (emberGrain - 0.5) * 0.20 * emberGrainFade) * mix(0.93, 1.0, emberJoint);
+diffuseColor.rgb = mix(diffuseColor.rgb, emberStone, 0.88);
+float emberPlayfield = 1.0 - smoothstep(63.8, 64.0, max(abs(vEmberBasalt.x), abs(vEmberBasalt.z)));
+float emberVein = emberWarm * emberPlayfield * (0.70 + 0.30 * emberGrain);
+diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.28, 0.055, 0.012), emberVein * 0.82);`)
+        .replace('#include <emissivemap_fragment>', '#include <emissivemap_fragment>\ntotalEmissiveRadiance += vec3(0.07, 0.012, 0.002) * emberVein;');
+    };
+    material.customProgramCacheKey = () => `${cacheKey}|ember-basalt-v4`;
+    material.needsUpdate = true;
+  });
+}
+
 /** Dry canal/road pigment follows published routes. Permanent green zones are
  * authored terrain paint; staged water and planted state keep their existing owners. */
 function clarifyRedFieldsRoute(model: THREE.Object3D, points: PaintRoutePoint[], greenZones: PaintZone[] = []): void {
@@ -2632,11 +2768,12 @@ function createContinuation(
       }
     }
   });
+  const deepSkyGround = contractId === 'e10-ember-shore' || contractId === 'e10-archive-world';
   const halfX = Math.max(Math.abs(bounds.min.x), Math.abs(bounds.max.x));
   const halfZ = Math.max(Math.abs(bounds.min.z), Math.abs(bounds.max.z));
-  if (!Number.isFinite(outerRadius) || (contractId !== 'e10-ember-shore' && innerChebyshev <= Math.max(halfX, halfZ) + 0.5)) return undefined;
+  if (!Number.isFinite(outerRadius) || (!deepSkyGround && innerChebyshev <= Math.max(halfX, halfZ) + 0.5)) return undefined;
   // The panorama's near ridge starts at radius 161.5; cover the intervening ground.
-  if (contractId === 'e10-ember-shore') outerRadius = 160;
+  if (deepSkyGround) outerRadius = 160;
 
   // Keep the night ground beyond every square corner and the perimeter landmarks.
   if (contractId === 'e3-moth-season') outerRadius = Math.max(outerRadius, Math.hypot(halfX, halfZ) + 12);
@@ -2666,8 +2803,8 @@ function createContinuation(
       const sampleX = innerX - innerX / innerRadius * sampleDepth;
       const sampleZ = innerZ - innerZ / innerRadius * sampleDepth;
       positions.push(x, THREE.MathUtils.lerp(heightAt(innerX, innerZ), outerHeight, eased), z);
-      const uvX = (contractId === 'e3-moth-season' || contractId === 'e10-ember-shore') ? x : sampleX;
-      const uvZ = (contractId === 'e3-moth-season' || contractId === 'e10-ember-shore') ? z : sampleZ;
+      const uvX = (contractId === 'e3-moth-season' || deepSkyGround) ? x : sampleX;
+      const uvZ = (contractId === 'e3-moth-season' || deepSkyGround) ? z : sampleZ;
       uvs.push((uvX - bounds.min.x) / (bounds.max.x - bounds.min.x), (bounds.max.z - uvZ) / (bounds.max.z - bounds.min.z));
     }
   }
@@ -2689,7 +2826,7 @@ function createContinuation(
   geometry.computeVertexNormals();
   geometry.computeBoundingSphere();
   const material = source.material.clone();
-  if (contractId === 'e3-moth-season' || contractId === 'e10-ember-shore') {
+  if (contractId === 'e3-moth-season' || deepSkyGround) {
     const mapped = material as THREE.MeshStandardMaterial;
     if (mapped.map) {
       mapped.map = mapped.map.clone();
@@ -2698,7 +2835,7 @@ function createContinuation(
     }
   }
   material.side = THREE.DoubleSide;
-  (material as THREE.Material & { fog?: boolean }).fog = contractId === 'e10-ember-shore';
+  (material as THREE.Material & { fog?: boolean }).fog = deepSkyGround;
   material.depthWrite = false;
   material.onBeforeCompile = (shader) => {
     shader.vertexShader = shader.vertexShader.replace(
@@ -2712,7 +2849,7 @@ function createContinuation(
   const apron = horizonApronProfile(contractId);
   if (apron) paintHorizonApron(material, apron);
   const continuation = new THREE.Mesh(geometry, material);
-  continuation.receiveShadow = contractId === 'e10-ember-shore';
+  continuation.receiveShadow = deepSkyGround;
   continuation.userData.horizonApron = apron ? 'painted' : 'plain';
   continuation.frustumCulled = false;
   continuation.renderOrder = -50;
@@ -2732,7 +2869,7 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
   if (!selected || selected.contract.tileId !== host.tileId) {
     host.canvas.dataset.terrain3dPilotLandmarkLoadState = 'off';
     publish(host.canvas, 'failed', 'painted', undefined, undefined, undefined, 'pilot-contract-unavailable');
-    return () => undefined;
+    return paintRiverReturn(host);
   }
   let disposed = false;
   let terrain: THREE.Object3D | undefined;
@@ -2808,6 +2945,8 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
       if (host.contractId === 'e2-incline') clarifyInclineYards(nextTerrain);
       if (host.contractId === 'e3-canyon-works') clarifyCanyonGround(nextTerrain);
       if (host.contractId === 'e10-last-claim') paintLastClaimDeck(nextTerrain);
+      if (host.contractId === 'e10-ember-shore') clarifyEmberBasalt(nextTerrain);
+      if (host.contractId === 'e10-archive-world') clarifyArchiveTerraces(nextTerrain, host.archiveRestoration);
       if (host.contractId === 'e9-devils-alley') gradeTerrainByHeight(nextTerrain, '#9f8b6e', '#bba487', -0.14, 4.57, 0.46);
       if (host.contractId === 'e8-low-orbit') gradeTerrainByHeight(nextTerrain, '#777a76', '#a5a28e', -4.8, 0.7, 0.38);
       if (host.contractId === 'e8-far-side') clarifyFarSideRegolith(nextTerrain);
@@ -2837,6 +2976,8 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
         host.canvas.dataset.terrain3dPilotSeaApronTriangles = String(routeSeaApron(nextTerrain, nextPanorama, terrainMetrics.bounds));
       }
       const nextSkirt = createContinuation(nextTerrain, nextPanorama, heightAt, terrainMetrics.bounds, host.contractId);
+      if (host.contractId === 'e10-ember-shore' && nextSkirt) clarifyEmberBasalt(nextSkirt);
+      if (host.contractId === 'e10-archive-world' && nextSkirt) clarifyArchiveTerraces(nextSkirt, host.archiveRestoration);
       if (host.contractId === 'e3-moth-season' && host.nightMode && nextSkirt) {
         const material = nextSkirt.material as THREE.Material;
         const programKey = material.customProgramCacheKey();

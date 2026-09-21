@@ -1,0 +1,40 @@
+[
+  {
+    "label": "tsc",
+    "command": [
+      "npx",
+      "tsc",
+      "--noEmit"
+    ],
+    "environment": {},
+    "exit": 0,
+    "seconds": 6.39,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-6/e10-ember-shore-tsc-rerun-4.log"
+  },
+  {
+    "label": "default-build",
+    "command": [
+      "npm",
+      "run",
+      "build"
+    ],
+    "environment": {},
+    "exit": 0,
+    "seconds": 19.52,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-6/e10-ember-shore-default-build-rerun-4.log"
+  },
+  {
+    "label": "full-build",
+    "command": [
+      "npm",
+      "run",
+      "build"
+    ],
+    "environment": {
+      "GR_RELEASE": "full"
+    },
+    "exit": 0,
+    "seconds": 19.95,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-6/e10-ember-shore-full-build-rerun-4.log"
+  }
+]

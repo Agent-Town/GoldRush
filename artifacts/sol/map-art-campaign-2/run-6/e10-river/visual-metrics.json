@@ -1,0 +1,141 @@
+{
+  "method": "Frozen full-tier normal-HUD captures. Display RGB Rec.709 luminance; fixed unobscured ROIs. Water is animated, so one frozen sample measures the captured surface and is not a temporal stability statistic. Zero mounted landmarks: station/body-emission/HUD body coverage are not applicable.",
+  "rows": [
+    {
+      "width": 1280,
+      "region": "bank",
+      "box": [
+        980,
+        450,
+        1050,
+        550
+      ],
+      "before": {
+        "median": 0.4957156862745098,
+        "rms": 0.020173896978962887,
+        "rgbMean": [
+          0.6534745098039034,
+          0.4748683473389539,
+          0.22488347338937187
+        ],
+        "gradientRmsX": 0.009269893290309117,
+        "gradientRmsY": 0.012530362067492223
+      },
+      "after": {
+        "median": 0.4821576470588235,
+        "rms": 0.01592008739876847,
+        "rgbMean": [
+          0.631995518207254,
+          0.46357142857145506,
+          0.22068179271710503
+        ],
+        "gradientRmsX": 0.0072665419286461145,
+        "gradientRmsY": 0.009844849100528772
+      },
+      "medianChangePercent": -2.735043411189997,
+      "rmsChangePercent": -21.085710830338044
+    },
+    {
+      "width": 1280,
+      "region": "water",
+      "box": [
+        250,
+        210,
+        480,
+        275
+      ],
+      "before": {
+        "median": 0.31650666666666666,
+        "rms": 0.017104838723006374,
+        "rgbMean": [
+          0.29181113515646423,
+          0.33879834743260845,
+          0.2026737490982633
+        ],
+        "gradientRmsX": 0.002510950673530576,
+        "gradientRmsY": 0.003726808896575381
+      },
+      "after": {
+        "median": 0.31591529411764707,
+        "rms": 0.01708821369008304,
+        "rgbMean": [
+          0.3126631254508798,
+          0.3330437405731535,
+          0.2163493999605964
+        ],
+        "gradientRmsX": 0.005159426709686942,
+        "gradientRmsY": 0.014967360053679598
+      },
+      "medianChangePercent": -0.18684363120932135,
+      "rmsChangePercent": -0.09719491187585305
+    },
+    {
+      "width": 390,
+      "region": "bank",
+      "box": [
+        20,
+        380,
+        115,
+        415
+      ],
+      "before": {
+        "median": 0.47624941176470587,
+        "rms": 0.025464098168358776,
+        "rgbMean": [
+          0.6280807902108227,
+          0.4500922895474161,
+          0.20733952528380606
+        ],
+        "gradientRmsX": 0.005828028717498142,
+        "gradientRmsY": 0.007377976872088711
+      },
+      "after": {
+        "median": 0.4664713725490196,
+        "rms": 0.023141053733803527,
+        "rgbMean": [
+          0.6087913902402979,
+          0.44200973020788975,
+          0.20601149933658378
+        ],
+        "gradientRmsX": 0.004751172220634378,
+        "gradientRmsY": 0.0058659487881152035
+      },
+      "medianChangePercent": -2.0531341297524097,
+      "rmsChangePercent": -9.122822332823954
+    },
+    {
+      "width": 390,
+      "region": "water",
+      "box": [
+        20,
+        292,
+        80,
+        318
+      ],
+      "before": {
+        "median": 0.40821019607843134,
+        "rms": 0.04375592613601425,
+        "rgbMean": [
+          0.43573152337858245,
+          0.4069105077928635,
+          0.24417797888386067
+        ],
+        "gradientRmsX": 0.002407176884358251,
+        "gradientRmsY": 0.0037128995267981615
+      },
+      "after": {
+        "median": 0.3955913725490196,
+        "rms": 0.039638017976183826,
+        "rgbMean": [
+          0.4399170437405737,
+          0.3911613876319766,
+          0.24112870789341187
+        ],
+        "gradientRmsX": 0.002839602984972957,
+        "gradientRmsY": 0.004057275733928736
+      },
+      "medianChangePercent": -3.091256330840697,
+      "rmsChangePercent": -9.411086733783225
+    }
+  ]
+}

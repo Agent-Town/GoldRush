@@ -1,0 +1,76 @@
+{
+  "method": "Use the already-reported 35% gap clusters. Match fast with fast and slow with slow; retain all 4 runs/arm. One phone baseline slow run has no candidate counterpart and establishes no causal speedup. All observed candidate modes have a corresponding baseline mode.",
+  "matched": [
+    {
+      "width": 1280,
+      "mode": "fast",
+      "before": [
+        10,
+        10.199999999999818
+      ],
+      "after": [
+        9.899999999999636
+      ],
+      "beforeMedian": 10.099999999999909,
+      "afterMedian": 9.899999999999636,
+      "medianChangePercent": -1.980198019804702,
+      "maximumAfterVersusMaximumBeforePercent": -2.941176470590068
+    },
+    {
+      "width": 1280,
+      "mode": "slow",
+      "before": [
+        16.599999999999454,
+        16.699999999999818
+      ],
+      "after": [
+        15.300000000000182,
+        16.300000000000182,
+        16.59999999999991
+      ],
+      "beforeMedian": 16.649999999999636,
+      "afterMedian": 16.300000000000182,
+      "medianChangePercent": -2.1021021020988684,
+      "maximumAfterVersusMaximumBeforePercent": -0.5988023952090415
+    },
+    {
+      "width": 390,
+      "mode": "fast",
+      "before": [
+        9.5,
+        9.900000000000546,
+        10
+      ],
+      "after": [
+        9.699999999999818,
+        9.900000000000091,
+        10,
+        10.100000000000364
+      ],
+      "beforeMedian": 9.900000000000546,
+      "afterMedian": 9.950000000000045,
+      "medianChangePercent": 0.5050505050454346,
+      "maximumAfterVersusMaximumBeforePercent": 1.0000000000036424
+    }
+  ],
+  "unmatchedBeforeModes": [
+    {
+      "width": 390,
+      "mode": "slow",
+      "p95": [
+        16
+      ]
+    }
+  ],
+  "drawCallsUnchanged": {
+    "1280": 79,
+    "390": 58
+  },
+  "trianglesUnchanged": {
+    "1280": 81448,
+    "390": 69440
+  },
+  "within15PercentByMatchedModes": true,
+  "pooledDesktopChangePercent": 17.91044776119859,
+  "pooledDesktopInterpretation": "17.91% is mode-population drift (2 fast/2 slow before, 1 fast/3 slow after), not a within-mode regression. Automated single-mode flag remains false; this explicit review resolves it without discarding samples."
+}

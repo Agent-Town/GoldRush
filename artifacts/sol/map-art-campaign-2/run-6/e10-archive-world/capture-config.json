@@ -1,0 +1,110 @@
+{
+  "allowFallbackBefore": false,
+  "extraSources": [],
+  "epoch": "epoch-10-deepsky",
+  "assets": [
+    {
+      "name": "archive-world-terrain.glb",
+      "type": "model/gltf-binary"
+    },
+    {
+      "name": "archive-world-panorama.glb",
+      "type": "model/gltf-binary"
+    },
+    {
+      "name": "archive-entry-gate.glb",
+      "type": "model/gltf-binary"
+    },
+    {
+      "name": "west-stack-ruin.glb",
+      "type": "model/gltf-binary"
+    },
+    {
+      "name": "east-stack-ruin.glb",
+      "type": "model/gltf-binary"
+    },
+    {
+      "name": "warning-shelf-ruin.glb",
+      "type": "model/gltf-binary"
+    },
+    {
+      "name": "ours-unless-marker.glb",
+      "type": "model/gltf-binary"
+    }
+  ],
+  "stations": [
+    [
+      "archive-entry-gate",
+      "entry",
+      0,
+      -52
+    ],
+    [
+      "archive-entry-gate",
+      10,
+      0,
+      -36
+    ],
+    [
+      "west-stack-ruin",
+      3,
+      -28,
+      -3
+    ],
+    [
+      "east-stack-ruin",
+      3,
+      28,
+      -3
+    ],
+    [
+      "warning-shelf-ruin",
+      3,
+      -14,
+      43
+    ],
+    [
+      "ours-unless-marker",
+      3,
+      0,
+      49
+    ]
+  ],
+  "regions": [
+    [
+      1280,
+      [
+        350,
+        280,
+        520,
+        400
+      ]
+    ],
+    [
+      390,
+      [
+        20,
+        375,
+        110,
+        420
+      ]
+    ]
+  ],
+  "viewpoints": [
+    [
+      "terraces",
+      0,
+      12
+    ],
+    [
+      "west-wing",
+      -28,
+      -1
+    ],
+    [
+      "edge",
+      60,
+      -61
+    ]
+  ]
+}
