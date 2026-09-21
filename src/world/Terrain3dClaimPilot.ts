@@ -1086,7 +1086,7 @@ function keepLandmarkPaintReadable(model: THREE.Object3D, paint: LandmarkPaint =
     // pre-calibration render from a material that may already have been re-installed once.
     material.userData.landmarkAuthoredEmissive = paint.intensity;
     material.emissiveIntensity = calibratedLandmarkIntensity(paint.intensity);
-    if ((contractId === 'e2-pressure-garden' || contractId === 'e6-glow-mesa' || contractId === 'e6-picnic' || contractId === 'e7-dead-band' || contractId === 'e7-relay-rush' || contractId === 'e8-far-side' || contractId === 'e8-low-orbit' || contractId === 'e9-dome-basin' || contractId === 'e9-seed-run' || contractId === 'e9-devils-alley' || contractId === 'e9-old-canal' || contractId === 'e10-last-claim') && !material.userData.landmarkDiffuseGrade) {
+    if ((contractId === 'e2-pressure-garden' || contractId === 'e6-glow-mesa' || contractId === 'e6-picnic' || contractId === 'e7-dead-band' || contractId === 'e7-relay-rush' || contractId === 'e8-far-side' || contractId === 'e8-low-orbit' || contractId === 'e9-dome-basin' || contractId === 'e9-seed-run' || contractId === 'e9-devils-alley' || contractId === 'e9-old-canal' || contractId === 'e10-last-claim' || contractId === 'e10-ember-shore') && !material.userData.landmarkDiffuseGrade) {
       material.userData.landmarkDiffuseGrade = true;
       // Recover the atlas's dark iron detail in its diffuse paint, so the body can
       // leave the legacy-emission exemption without turning its texture into a lamp.
@@ -2183,6 +2183,57 @@ diffuseColor.rgb = mix(diffuseColor.rgb, memorialBrass, max(memorialRing, memori
   });
 }
 
+/** One world-space basalt treatment crosses the sculpt/continuation join. */
+function clarifyEmberBasalt(model: THREE.Object3D): void {
+  if (isMapBeautyDisabled()) return;
+  model.traverse(node => {
+    const mesh = node as THREE.Mesh<THREE.BufferGeometry, THREE.MeshStandardMaterial>;
+    if (!mesh.isMesh || Array.isArray(mesh.material) || !mesh.material.isMeshStandardMaterial) return;
+    const material = mesh.material, compile = material.onBeforeCompile.bind(material);
+    const cacheKey = material.customProgramCacheKey();
+    material.onBeforeCompile = (shader, renderer) => {
+      compile(shader, renderer);
+      shader.uniforms.emberBasaltLow = { value: new THREE.Color('#5d727c') };
+      shader.uniforms.emberBasaltHigh = { value: new THREE.Color('#9c9e91') };
+      shader.vertexShader = shader.vertexShader
+        .replace('#include <common>', '#include <common>\nvarying vec3 vEmberBasalt;')
+        .replace('#include <begin_vertex>', '#include <begin_vertex>\nvEmberBasalt = (modelMatrix * vec4(position, 1.0)).xyz;');
+      shader.fragmentShader = shader.fragmentShader
+        .replace('#include <common>', `#include <common>
+varying vec3 vEmberBasalt;
+uniform vec3 emberBasaltLow, emberBasaltHigh;
+vec2 emberStoneHash(vec2 p) {
+  return fract(sin(vec2(dot(p, vec2(127.1, 311.7)), dot(p, vec2(269.5, 183.3)))) * 43758.5453);
+}`)
+        .replace('#include <map_fragment>', `#include <map_fragment>
+float emberWarm = clamp((diffuseColor.r - max(diffuseColor.g, diffuseColor.b) * 1.8) * 18.0, 0.0, 1.0);
+float emberShelf = smoothstep(-1.8, 1.8, vEmberBasalt.y);
+vec2 emberCell = vEmberBasalt.xz * 1.45;
+vec2 emberCellId = floor(emberCell), emberCellPoint = fract(emberCell);
+float emberNear = 8.0, emberNext = 8.0, emberCellShade = 0.5;
+for (int emberY = -1; emberY <= 1; emberY++) for (int emberX = -1; emberX <= 1; emberX++) {
+  vec2 emberNeighbour = vec2(float(emberX), float(emberY));
+  vec2 emberSeed = emberStoneHash(emberCellId + emberNeighbour);
+  float emberDistance = length(emberNeighbour + 0.18 + emberSeed * 0.64 - emberCellPoint);
+  if (emberDistance < emberNear) { emberNext = emberNear; emberNear = emberDistance; emberCellShade = emberSeed.x; }
+  else emberNext = min(emberNext, emberDistance);
+}
+float emberJoint = smoothstep(0.006, 0.030, emberNext - emberNear);
+float emberGrain = fract(sin(dot(floor(vEmberBasalt * 18.0), vec3(12.9898, 78.233, 37.719))) * 43758.5453);
+float emberGrainFade = 1.0 - smoothstep(0.4, 1.2, max(max(fwidth(vEmberBasalt.x), fwidth(vEmberBasalt.z)), fwidth(vEmberBasalt.y)) * 18.0);
+vec3 emberStone = mix(emberBasaltLow, emberBasaltHigh, emberShelf);
+emberStone *= (0.94 + emberCellShade * 0.08 + (emberGrain - 0.5) * 0.20 * emberGrainFade) * mix(0.93, 1.0, emberJoint);
+diffuseColor.rgb = mix(diffuseColor.rgb, emberStone, 0.88);
+float emberPlayfield = 1.0 - smoothstep(63.8, 64.0, max(abs(vEmberBasalt.x), abs(vEmberBasalt.z)));
+float emberVein = emberWarm * emberPlayfield * (0.70 + 0.30 * emberGrain);
+diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.28, 0.055, 0.012), emberVein * 0.82);`)
+        .replace('#include <emissivemap_fragment>', '#include <emissivemap_fragment>\ntotalEmissiveRadiance += vec3(0.07, 0.012, 0.002) * emberVein;');
+    };
+    material.customProgramCacheKey = () => `${cacheKey}|ember-basalt-v4`;
+    material.needsUpdate = true;
+  });
+}
+
 /** Dry canal/road pigment follows published routes. Permanent green zones are
  * authored terrain paint; staged water and planted state keep their existing owners. */
 function clarifyRedFieldsRoute(model: THREE.Object3D, points: PaintRoutePoint[], greenZones: PaintZone[] = []): void {
@@ -2808,6 +2859,7 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
       if (host.contractId === 'e2-incline') clarifyInclineYards(nextTerrain);
       if (host.contractId === 'e3-canyon-works') clarifyCanyonGround(nextTerrain);
       if (host.contractId === 'e10-last-claim') paintLastClaimDeck(nextTerrain);
+      if (host.contractId === 'e10-ember-shore') clarifyEmberBasalt(nextTerrain);
       if (host.contractId === 'e9-devils-alley') gradeTerrainByHeight(nextTerrain, '#9f8b6e', '#bba487', -0.14, 4.57, 0.46);
       if (host.contractId === 'e8-low-orbit') gradeTerrainByHeight(nextTerrain, '#777a76', '#a5a28e', -4.8, 0.7, 0.38);
       if (host.contractId === 'e8-far-side') clarifyFarSideRegolith(nextTerrain);
@@ -2837,6 +2889,7 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
         host.canvas.dataset.terrain3dPilotSeaApronTriangles = String(routeSeaApron(nextTerrain, nextPanorama, terrainMetrics.bounds));
       }
       const nextSkirt = createContinuation(nextTerrain, nextPanorama, heightAt, terrainMetrics.bounds, host.contractId);
+      if (host.contractId === 'e10-ember-shore' && nextSkirt) clarifyEmberBasalt(nextSkirt);
       if (host.contractId === 'e3-moth-season' && host.nightMode && nextSkirt) {
         const material = nextSkirt.material as THREE.Material;
         const programKey = material.customProgramCacheKey();
