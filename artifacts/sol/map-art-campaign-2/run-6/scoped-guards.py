@@ -6,7 +6,9 @@ raw=Path('artifacts/sol/map-art-campaign-2/_raw/run-6');env={**os.environ,'PATH'
 commands={'renderGuards':['node','--test',*[f'scripts/{s}.test.mjs' for s in ['glb-contract-guard','terrain-height-sampler','landmark-walk-surfaces','open-sea-water','shared-atlas-plugin']]],'namedGuards':['node','scripts/run-guards.mjs','--only','test:task-guards,test:citations,test:gate-callers']}
 rows={}
 for name,cmd in commands.items():
- log=raw/f'{sys.argv[1]}-{name}.log'
+ log=raw/f'{sys.argv[1]}-{name}.log';attempt=1
+ while log.exists():
+  attempt+=1;log=raw/f'{sys.argv[1]}-{name}-rerun-{attempt}.log'
  with log.open('w') as f:rc=subprocess.run(cmd,env=env,stdout=f,stderr=subprocess.STDOUT).returncode
  rows[name]={'command':cmd,'exit':rc,'log':str(log)};print(name,rc)
 rows['scope']={'fullNodeBattery':'drain-owned','selector':'Scoped checks required by corrections-4; no changed-since battery invoked.'}

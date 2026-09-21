@@ -9,9 +9,12 @@ const out=`artifacts/sol/map-art-campaign-2/run-6/${id}`;
 const raw=`artifacts/sol/map-art-campaign-2/_raw/run-6/${id}-before`;
 const config=JSON.parse(readFileSync(`${out}/capture-config.json`,'utf8'));
 const base='http://127.0.0.1:5303',rows=[];
-const browser=await chromium.launch({channel:'chromium'});
+let browser=await chromium.launch({channel:'chromium'});
 const keep='#game-canvas,.hud-panel,.hud-panel *,.hud-pause,.hud-pause *,.world-info-note,.world-info-note *,#touch-controls,#touch-controls *,.building-context-prompt,.building-context-prompt *';
 try {for(const width of [1280,390])for(let cycle=0;cycle<(mode==='performance'?4:1);cycle++)for(const arm of (process.env.ARM?[process.env.ARM]:(cycle%2?['after','before']:['before','after']))){
+ if(mode==='performance'&&process.env.FRESH_BROWSER_PER_RUN==='1'){
+  await browser.close();browser=await chromium.launch({channel:'chromium'});
+ }
  const page=await browser.newPage({viewport:{width,height:width===390?844:800},isMobile:width===390,hasTouch:width===390,deviceScaleFactor:1});
  page.setDefaultTimeout(120000);page.setDefaultNavigationTimeout(120000);
  const errors=[];page.on('console',m=>{if(m.type()==='error')errors.push(m.text())});page.on('pageerror',e=>{errors.push(e.message);console.log('PAGE ERROR',e.message)});
@@ -38,14 +41,15 @@ try {for(const width of [1280,390])for(let cycle=0;cycle<(mode==='performance'?4
   await page.goto(base);await page.evaluate(async id=>{(await import('/src/meta/ContractUnlock.ts')).setPreviewUnlockAll(true);(await import('/src/meta/ContractFamilies.ts')).stagePlayerContractLaunch(id)},id);
  }
  await page.goto(`${base}/?${mode==='plain'?'':`debug&epoch=${config.epoch}&nowaves&nolevel&nokill&nopause&tier=full&`}contract=${id}&seed=map-art-campaign-2`);
- await page.waitForFunction(()=>document.querySelector('#game-canvas')?.dataset.terrain3dPilotLandmarkLoadState==='mounted');
+ const fallback=!!config.allowFallbackBefore&&arm==='before';
+ await page.waitForFunction(fallback=>{const d=document.querySelector('#game-canvas')?.dataset;return fallback?d?.terrain3dPilotState==='failed':d?.terrain3dPilotLandmarkLoadState==='mounted'},fallback);
  const begin=page.getByTestId('contract-briefing-dismiss');if(await begin.isVisible())await begin.click({timeout:2000}).catch(async e=>{if(await begin.isVisible())throw e});
  assert.equal(await page.evaluate(()=>window.__THREE_GAME_DIAGNOSTICS__.contract.activeId),id);
  if(mode==='plain'){
   await page.waitForFunction(()=>window.__THREE_GAME_DIAGNOSTICS__.timeAlive>=10);
   await page.screenshot({path:`${out}/${arm}-plain-${width}.png`});
   const state=await page.evaluate(()=>({diagnostics:window.__THREE_GAME_DIAGNOSTICS__,dataset:{...document.querySelector('#game-canvas').dataset},testHook:typeof window.__GR_TEST__}));
-  assert.equal(state.testHook,'undefined');assert.ok(state.diagnostics.timeAlive<11.5);assert.equal(state.dataset.terrain3dPilotRenderSource,'glb');
+  assert.equal(state.testHook,'undefined');assert.ok(state.diagnostics.timeAlive<11.5);assert.equal(state.dataset.terrain3dPilotRenderSource,fallback?'painted':'glb');
   rows.push({width,arm,state,errors});
  }else{
   await page.evaluate(()=>{window.__GR_TEST__.setManualSim(true);window.__GR_GUI__?.hide()});await page.waitForTimeout(1500);
@@ -57,6 +61,10 @@ try {for(const width of [1280,390])for(let cycle=0;cycle<(mode==='performance'?4
    });rows.push({width,arm,cycle,...stats,errors});console.log(width,cycle,arm,stats.p95,[...new Set(stats.calls)]);
   }else{
    await page.screenshot({path:`${out}/${arm}-frozen-${width}.png`});
+   for(const [name,x,z] of config.viewpoints??[]){
+    await page.evaluate(({x,z})=>window.__GR_TEST__.teleport(x,z),{x,z});await page.waitForTimeout(900);
+    await page.screenshot({path:`${out}/viewpoint-${arm}-${name}-${width}.png`});
+   }
    for(const [focus,station,x,z,stationArm] of config.stations){
     if(stationArm && stationArm!==arm)continue;
     await page.evaluate(({x,z})=>window.__GR_TEST__.teleport(x,z),{x,z});await page.waitForTimeout(900);
@@ -70,10 +78,14 @@ try {for(const width of [1280,390])for(let cycle=0;cycle<(mode==='performance'?4
     await page.screenshot({path:prefix+'-normal.png'});
     const noHud=await page.addStyleTag({content:'body *{visibility:hidden!important}#game-canvas{visibility:visible!important}'});
     await page.screenshot({path:prefix+'-body.png'});
-    await page.evaluate(focus=>window.__ART_MODELS__.get(focus).traverse(n=>{if(n.isMesh){n.userData.savedMaterial=n.material;n.material=new window.__ART_THREE__.MeshBasicMaterial({color:0xff00ff,side:2})}}),focus);
+    // Finale grayscale is retained in normal/body evidence, but would erase the
+    // diagnostic magenta identifier. Disable it only for the binary masks.
+    const maskFilter=await page.addStyleTag({content:'#game-canvas{filter:none!important;transition:none!important}'});
+    await page.evaluate(focus=>window.__ART_MODELS__.get(focus).traverse(n=>{if(n.isMesh){n.userData.savedMaterial=n.material;n.material=new window.__ART_THREE__.MeshBasicMaterial({color:0xff00ff,side:2,toneMapped:false,fog:false})}}),focus);
     await page.screenshot({path:prefix+'-mask.png'});await noHud.evaluate(n=>n.remove());
     const persistent=await page.addStyleTag({content:`body *{visibility:hidden!important}${keep}{visibility:visible!important}`});
     await page.screenshot({path:prefix+'-persistent-mask.png'});await persistent.evaluate(n=>n.remove());
+    await maskFilter.evaluate(n=>n.remove());
     await page.evaluate(focus=>window.__ART_MODELS__.get(focus).traverse(n=>{if(n.isMesh&&n.userData.savedMaterial){n.material.dispose();n.material=n.userData.savedMaterial;delete n.userData.savedMaterial}}),focus);
     if(((id==='e4-gusher-county'&&focus==='county-camp-rig')||config.actorMaskAtEntry)&&station==='entry'){
      const hide=await page.addStyleTag({content:'body *{visibility:hidden!important}#game-canvas{visibility:visible!important}'});
