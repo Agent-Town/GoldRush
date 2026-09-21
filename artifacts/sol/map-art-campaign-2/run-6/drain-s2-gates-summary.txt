@@ -1,0 +1,31 @@
+slice 2: lane cd99e25b0 store 0535aa5ffca2f422b0d15b378044d00b9e47771a maps: the Picnic, the Dead Band, Relay Rush 15:22Z
+store on 'astra/corrections-4', dirty 0 (Astra's, untouched)
+store main -> 0535aa5 (art(store): Relay Rush — declare safe frames and readable stations)
+store main pushed: 0535aa5
+scratch store: detached at 0535aa5, clean
+chain base 2325afe53 merging lane cd99e25b0 (lane tip cd99e25b0) 15:23Z
+merged 4a039135e
+single-line law: nothing to flatten
+engine hash merged (scratch store at 0535aa5): 36abad02458965365c31dfe66a98155d66182324ab136feb6709bfa791ff0abc
+tsc/build/e1: 0 / 0 / 0
+first-town payload: 34257721 bytes
+halo: rc=0 halo re-extraction PASS: 315 cured, 0 held, 760 regenerated-and-cured, 2127 scanned; alpha and opaque RGB unchanged
+null floors: rc=0 83 of 83 null floors match assets/contracts/null-floors.json (386.8s).
+law-pointer: rc=0 law-pointer-guard — do the law surfaces still point at what they claim?
+guards: ℹ pass 95 ℹ fail 0 
+e2e start 15:31Z: e2e/e6-picnic-opening.spec.ts e2e/er01-e6-census.spec.ts e2e/e7-dead-band-suppression.spec.ts e2e/er01-e7-census.spec.ts e2e/e7-relay-rush-front.spec.ts e2e/landmark-brightness.spec.ts e2e/landmark-collision.spec.ts e2e/fort-landmark-collision.spec.ts e2e/task-025-bandits-dont-swim.spec.ts e2e/m2-01-build-menu.spec.ts
+e2e: rc=0   4 skipped   74 passed (11.2m)  15:43Z
+battery start 15:43Z
+battery: rc=1 ℹ tests 940 ℹ pass 929 ℹ fail 5 ℹ skipped 5  15:53Z
+✖ a reactive client can recover from rejected orders (20002.493792ms)
+✖ all 152 scripts/*.test.mjs fixture owners remove their temp directories (284678.287833ms)
+✖ failing tests:
+✖ headless landmark starts release before enemies can stall at the perimeter (61451.416959ms)
+✖ rotation registry stays outside the engine identity corpus (748.073584ms)
+✖ runtime rush and --overtime use the same CLI ceiling and terminal stream (90000.00975ms)
+✖ the landed registry names the live engine and stays outside its hash corpus (250.206375ms)
+dirt after battery: 0
+CORR4-S2-PREP-DONE
+hash at pin time: 36abad02458965365c31dfe66a98155d66182324ab136feb6709bfa791ff0abc
+pin #24
+era (chain, scratch store): ℹ pass 9 ℹ fail 0 
