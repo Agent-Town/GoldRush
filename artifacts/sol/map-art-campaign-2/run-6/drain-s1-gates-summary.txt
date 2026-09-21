@@ -1,0 +1,34 @@
+slice 1: lane f59e22529 store 850ae868ef5688c79f20f98f1bbda515065efa4b maps: the Boneyard, the Glow Mesa, Half-Life Hollow 14:40Z
+store on 'astra/corrections-4', dirty 0 (Astra's, untouched)
+store main -> 850ae86 (art(store): Half-Life Hollow — declare gate inspection stations)
+store main pushed: 850ae86
+scratch store: detached at 850ae86, clean
+chain base 362a3db5f merging lane f59e22529 (lane tip f59e22529) 14:40Z
+merged 25bd52869
+single-line law: nothing to flatten
+engine hash merged (scratch store at 850ae86): d2f15b7a6ec3c5e04fa54c71dfcc16dda4288e20d6890f0eedca77b9035b878f
+tsc/build/e1: 0 / 0 / 0
+first-town payload: 34257402 bytes
+halo: rc=0 halo re-extraction PASS: 315 cured, 0 held, 760 regenerated-and-cured, 2127 scanned; alpha and opaque RGB unchanged
+null floors: rc=0 83 of 83 null floors match assets/contracts/null-floors.json (345.5s).
+law-pointer: rc=0 law-pointer-guard — do the law surfaces still point at what they claim?
+guards: ℹ pass 95 ℹ fail 0 
+e2e start 14:48Z: e2e/e4-roads-and-convoys.spec.ts e2e/ss-05-e4-beats.spec.ts e2e/er01-e4-census.spec.ts e2e/ss-07-e6-beats.spec.ts e2e/e6-tile-consumers.spec.ts e2e/e6-half-life-hollow-crossing.spec.ts e2e/er01-e6-census.spec.ts e2e/landmark-brightness.spec.ts e2e/landmark-collision.spec.ts e2e/fort-landmark-collision.spec.ts e2e/task-025-bandits-dont-swim.spec.ts e2e/m2-01-build-menu.spec.ts
+e2e: rc=1   3 failed   4 skipped   93 passed (12.0m)  15:00Z
+1) [desktop-chrome] › e2e/e4-roads-and-convoys.spec.ts:69:1 › every Motor reel replays to its claimed hash in Node and Chromium 
+2) [desktop-chrome] › e2e/e4-roads-and-convoys.spec.ts:123:1 › every Motor map publishes its own errand to a browser rider, and GRADE is ref
+3) [mobile-chrome] › e2e/e4-roads-and-convoys.spec.ts:69:1 › every Motor reel replays to its claimed hash in Node and Chromium 
+battery start 15:00Z
+battery: rc=1 ℹ tests 940 ℹ pass 932 ℹ fail 3 ℹ skipped 5  15:07Z
+✖ all 152 scripts/*.test.mjs fixture owners remove their temp directories (153597.030625ms)
+✖ failing tests:
+✖ rotation registry stays outside the engine identity corpus (535.33175ms)
+✖ the landed registry names the live engine and stays outside its hash corpus (180.5385ms)
+dirt after battery: 0
+CORR4-S1-PREP-DONE
+hash at pin time: d2f15b7a6ec3c5e04fa54c71dfcc16dda4288e20d6890f0eedca77b9035b878f
+pin #23
+era (chain, scratch store): ℹ pass 9 ℹ fail 0 
+hash at pin time: d2f15b7a6ec3c5e04fa54c71dfcc16dda4288e20d6890f0eedca77b9035b878f
+already pinned #23
+era (chain, scratch store): ℹ pass 9 ℹ fail 0 
