@@ -1,0 +1,48 @@
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - import "./src/crafting/CraftingQueueContract" without a file extension (vite.config.ts:20:8). Add the file extension
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+11:46:49 PM [vite] (client) Re-optimizing dependencies because vite config has changed
+
+  VITE v8.3.0  ready in 84 ms
+
+  ➜  Local:   http://127.0.0.1:5348/
+(!) Failed to run dependency scan. Skipping dependency pre-bundling. Error:   Failed to scan for dependencies from entries:
+  /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-corr3-land/index.html
+/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-corr3-land/logs/cast-sheets.html
+/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-corr3-land/logs/dashboard.html
+/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-corr3-land/site/index-legacy-2026-08-13.html
+/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-corr3-land/site/index.html
+/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-corr3-land/site/news.html
+/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-corr3-land/scripts/stream-dashboard.html
+/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-corr3-land/scripts/stream-player.html
+/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-corr3-land/artifacts/boss-art-fidelity-2026-09-08/index.html
+/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-corr3-land/artifacts/dashboard-truth/after.html
+/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-corr3-land/artifacts/dashboard-truth/before.html
+/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-corr3-land/artifacts/goal-tracker-dashboard/dashboard.html
+/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-corr3-land/artifacts/map-art-inventory-20260908/index.html
+/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-corr3-land/src/replay/harness.html
+/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-corr3-land/artifacts/boss-fidelity/e1-baron/index.html
+/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-corr3-land/artifacts/boss-fidelity/e2-railcar/index.html
+/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-corr3-land/artifacts/boss-fidelity/e4-landyacht/index.html
+/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-corr3-land/artifacts/boss-fidelity/e5-dredge-queen/index.html
+/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-corr3-land/artifacts/boss-fidelity/e3-crawler/index.html
+/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-corr3-land/assets/pilots/hero-3d/compare.html
+
+  Build failed with 1 error:
+
+[31m[TSCONFIG_ERROR] [0mFailed to load tsconfig '../tsconfig.json': Tsconfig not found
+
+    at aggregateBindingErrorsIntoJsError (file:///Users/robin/Claude/Projects/Gold%20Rush/node_modules/rolldown/dist/shared/error-CGhV1ebk.mjs:48:18)
+    at unwrapBindingResult (file:///Users/robin/Claude/Projects/Gold%20Rush/node_modules/rolldown/dist/shared/error-CGhV1ebk.mjs:18:128)
+    at scan (file:///Users/robin/Claude/Projects/Gold%20Rush/node_modules/rolldown/dist/experimental-index.mjs:238:3)
+    at async Object.build (file:///Users/robin/Claude/Projects/Gold%20Rush/node_modules/vite/dist/node/chunks/node.js:27504:3)
+    at async scan (file:///Users/robin/Claude/Projects/Gold%20Rush/node_modules/vite/dist/node/chunks/node.js:27443:4)
+    at async file:///Users/robin/Claude/Projects/Gold%20Rush/node_modules/vite/dist/node/chunks/node.js:35201:15
+11:46:50 PM [vite] (client) dependency optimized: three
+11:47:37 PM [vite] (client) dependencies optimized: lil-gui, meshoptimizer, three/addons/utils/BufferGeometryUtils.js, three/examples/jsm/loaders/GLTFLoader.js, three/examples/jsm/math/ConvexHull.js
+11:47:37 PM [vite] (client) optimized dependencies changed. reloading
+11:47:48 PM [vite] (client) [console.warn] [gold-rush] render demotion {"event":"render_demotion","reason":"pilot-load-failed:Failed to fetch","contractId":"the-claim","buildId":"dev","tier":"FULL","dataset":{"terrain3dPilotState":"failed","terrain3dPilotRenderSource":"painted","run3dPilotState":"loading","run3dPilotMeshes":"0","run3dPilotTriangles":"0","terrain3dPilotContract":"the-claim","terrain3dPilotTerrainLoadState":"pending","terrain3dPilotPanoramaLoadState":"pending","terrain3dPilotLandmarkLoadState":"pending","terrain3dPilotHeightSource":"painted","terrain3dPilotMeshes":"0","terrain3dPilotTriangles":"0","terrain3dPilotMaterials":"0","terrain3dPilotVertices":"0","terrain3dPilotPanorama":"off","terrain3dPilotPanoramaMeshes":"0","terrain3dPilotPanoramaTriangles":"0","terrain3dPilotPanoramaMaterials":"0","terrain3dPilotPanoramaVertices":"0"}}
+11:48:28 PM [vite] (client) [console.warn] [gold-rush] render demotion {"event":"render_demotion","reason":"pilot-load-failed:Failed to fetch","contractId":"the-claim","buildId":"dev","tier":"FULL","dataset":{"terrain3dPilotState":"failed","terrain3dPilotRenderSource":"painted","run3dPilotState":"loading","run3dPilotMeshes":"0","run3dPilotTriangles":"0","terrain3dPilotContract":"the-claim","terrain3dPilotTerrainLoadState":"pending","terrain3dPilotPanoramaLoadState":"pending","terrain3dPilotLandmarkLoadState":"pending","terrain3dPilotHeightSource":"painted","terrain3dPilotMeshes":"0","terrain3dPilotTriangles":"0","terrain3dPilotMaterials":"0","terrain3dPilotVertices":"0","terrain3dPilotPanorama":"off","terrain3dPilotPanoramaMeshes":"0","terrain3dPilotPanoramaTriangles":"0","terrain3dPilotPanoramaMaterials":"0","terrain3dPilotPanoramaVertices":"0"}}
+11:48:50 PM [vite] (client) [console.warn] [gold-rush] render demotion {"event":"render_demotion","reason":"pilot-load-failed:Failed to fetch","contractId":"the-claim","buildId":"dev","tier":"FULL","dataset":{"terrain3dPilotState":"failed","terrain3dPilotRenderSource":"painted","run3dPilotState":"loading","run3dPilotMeshes":"0","run3dPilotTriangles":"0","terrain3dPilotContract":"the-claim","terrain3dPilotTerrainLoadState":"pending","terrain3dPilotPanoramaLoadState":"pending","terrain3dPilotLandmarkLoadState":"pending","terrain3dPilotHeightSource":"painted","terrain3dPilotMeshes":"0","terrain3dPilotTriangles":"0","terrain3dPilotMaterials":"0","terrain3dPilotVertices":"0","terrain3dPilotPanorama":"off","terrain3dPilotPanoramaMeshes":"0","terrain3dPilotPanoramaTriangles":"0","terrain3dPilotPanoramaMaterials":"0","terrain3dPilotPanoramaVertices":"0"}}
+11:49:02 PM [vite] (client) [console.warn] [gold-rush] render demotion {"event":"render_demotion","reason":"pilot-load-failed:Failed to fetch","contractId":"the-claim","buildId":"dev","tier":"FULL","dataset":{"terrain3dPilotState":"failed","terrain3dPilotRenderSource":"painted","run3dPilotState":"loading","run3dPilotMeshes":"0","run3dPilotTriangles":"0","terrain3dPilotContract":"the-claim","terrain3dPilotTerrainLoadState":"pending","terrain3dPilotPanoramaLoadState":"pending","terrain3dPilotLandmarkLoadState":"pending","terrain3dPilotHeightSource":"painted","terrain3dPilotMeshes":"0","terrain3dPilotTriangles":"0","terrain3dPilotMaterials":"0","terrain3dPilotVertices":"0","terrain3dPilotPanorama":"off","terrain3dPilotPanoramaMeshes":"0","terrain3dPilotPanoramaTriangles":"0","terrain3dPilotPanoramaMaterials":"0","terrain3dPilotPanoramaVertices":"0"}}
+11:49:52 PM [vite] (client) [console.warn] [gold-rush] render demotion {"event":"render_demotion","reason":"pilot-load-failed:Failed to fetch","contractId":"the-claim","buildId":"dev","tier":"FULL","dataset":{"terrain3dPilotState":"failed","terrain3dPilotRenderSource":"painted","run3dPilotState":"loading","run3dPilotMeshes":"0","run3dPilotTriangles":"0","terrain3dPilotContract":"the-claim","terrain3dPilotTerrainLoadState":"pending","terrain3dPilotPanoramaLoadState":"pending","terrain3dPilotLandmarkLoadState":"pending","terrain3dPilotHeightSource":"painted","terrain3dPilotMeshes":"0","terrain3dPilotTriangles":"0","terrain3dPilotMaterials":"0","terrain3dPilotVertices":"0","terrain3dPilotPanorama":"off","terrain3dPilotPanoramaMeshes":"0","terrain3dPilotPanoramaTriangles":"0","terrain3dPilotPanoramaMaterials":"0","terrain3dPilotPanoramaVertices":"0"}}
