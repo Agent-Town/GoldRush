@@ -1,0 +1,54 @@
+{
+  "storeBase": "2a1c3e11ec470fb3761cb9e462d39b025b61f24f",
+  "base": "3869bbcd5",
+  "paths": {
+    "src/world/Terrain3dClaimPilot.ts": {
+      "candidateSha256": "947bb772d0c5e79a16e8608779d5ec9c06c932b61b53ddabde1aea5082a9051e",
+      "baseSha256": "7aacbc7aac692f4d352c358a468a77dd5e189ac7d91092c90b6b6754939bba90"
+    },
+    "assets/pilots/map-rebuild-spike/dome-basin-terrain-contract.json": {
+      "candidateSha256": "fe0c9743bbbe87f2794d7e377cf91d2592ffbe0ddfd7ae6d9ffacea7023b779b",
+      "baseSha256": "75ebc86006971459dbb98c28bcb11ef3ba8d003f472d30c00fc5d78897d722ff"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/dome-basin/canal-gate-works.glb": {
+      "candidateSha256": "41740fe984866b67f1673ac6041e9bc66a97e38740804da07c0d2e8fb36bf56c",
+      "baseSha256": "89491e54759464f92d1be9e7ba730304b3f91ec1b84dfa9206698ac11efcdee0"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/dome-basin/dome-basin-landmark-pack-contract.json": {
+      "candidateSha256": "964e8f0f9d45b81a57e7579d5ef5b62bed9e5491f4eab2d2ddffe0801bee673c",
+      "baseSha256": "a3062fe2d0a017f11799a50ec910a3a50a8fbf15dd261f479d90ce22ba4a6999"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/dome-basin/dome-basin-landmarks.blend": {
+      "candidateSha256": "4eaee88d717c7e3f843cc2926cb57ba322febfc21d478a32c4768f88b95564a3",
+      "baseSha256": "2e75fea973de8fa0768dd5ccf1758861293713adab0f90023c7db55b757efc9e"
+    }
+  },
+  "pattern": "Cure-Arms free|plain Red Fields boot|era parameter is inert",
+  "specs": [
+    "e2e/e9-arsenal.spec.ts",
+    "e2e/e9-roster.spec.ts",
+    "e2e/tour-era-seed.spec.ts"
+  ],
+  "candidateEngine": "8e71546045562c64ef70c60d2616e0a2cc1cee965709dc89d691ca13d57164dc",
+  "baseEngine": "d7cad8f8bd1ebb800b36fff3531b8726760b5430fcb516cd39d32a71bb420bcf",
+  "command": [
+    "npx",
+    "playwright",
+    "test",
+    "--workers=1",
+    "--project=desktop-chrome",
+    "--project=mobile-chrome",
+    "--trace=off",
+    "--reporter=line",
+    "--output=artifacts/sol/map-art-campaign-2/_raw/run-6/e9-dome-basin-base-redfields/test-results",
+    "--grep",
+    "Cure-Arms free|plain Red Fields boot|era parameter is inert",
+    "e2e/e9-arsenal.spec.ts",
+    "e2e/e9-roster.spec.ts",
+    "e2e/tour-era-seed.spec.ts"
+  ],
+  "exit": 1,
+  "restoredEngine": "8e71546045562c64ef70c60d2616e0a2cc1cee965709dc89d691ca13d57164dc",
+  "candidateRestoredExactly": true,
+  "log": "artifacts/sol/map-art-campaign-2/_raw/run-6/e9-dome-basin-base-redfields/tests.log"
+}

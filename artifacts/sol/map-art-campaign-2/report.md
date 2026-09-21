@@ -473,3 +473,9 @@ Builds, scoped guards, Far Side parity/census, shared checks and loading/repeat 
 **IMPROVED / HELD.** Recovery housing and braced ring, 2,360→2,972/3,000 triangles; chamfered base area −29.29%. Body dark share 81.17→7.74% / 80.85→7.83%. Ground median 0.076→0.255 / 0.085→0.256; RMS −59.55% / +66.79%. Declared 3 m phone HUD 54.376→0.998%, entry remains 47.291%. Suspended composition, debris depth, material fidelity and entry UI remain held. [Every clause and evidence](run-6/e8-low-orbit/review.md).
 
 Builds, scoped guards, own momentum/physics, movement, parity/census, shared checks and loading/repeat pass. Two ordinary Mare Claim arsenal failures reproduce on exact base. Four-run p95 9.80→9.50 / 9.90→10.10 ms, draws 77/55 unchanged. Engine `37a425e8df7634b36005ac5712ccee589eba59ab7aac41f7033a2949d203c146` → `d7cad8f8bd1ebb800b36fff3531b8726760b5430fcb516cd39d32a71bb420bcf`. Store `2a1c3e11ec470fb3761cb9e462d39b025b61f24f` pushed.
+
+### The Dome Basin correction — 2026-09-21 run 6
+
+**IMPROVED / HELD.** Dry mineral route and geared lock wheel, 452→1,580/3,000 triangles. Ground RMS −49.33% / −39.41%; 5 m body median 0.054→0.327 / 0.067→0.325. Low-surface material mismatch fixed. Declared 5 m phone HUD 48.008→0%, silhouette fits; ordinary phone lock remains offscreen. Wet state, monumental chamber, terraced settlement, rail joins and entry composition remain held. [Every clause and evidence](run-6/e9-dome-basin/review.md).
+
+Builds, scoped guards, final canal stages, census, shared checks and loading/repeat pass. Six arsenal/profile failures reproduce on exact base. Four-run p95 8.90→8.90 / 9.85→9.45 ms; draws 88/53 unchanged. Engine `d7cad8f8bd1ebb800b36fff3531b8726760b5430fcb516cd39d32a71bb420bcf` → `8e71546045562c64ef70c60d2616e0a2cc1cee965709dc89d691ca13d57164dc`. Store `4613a6ff288eb6e984dbdd44e7e861ee1627da73` pushed.
