@@ -418,3 +418,16 @@ Builds, final scoped checks, shared lighting/collision, loading/repeat and guard
 ### Capped stop — 2026-09-20 run 5
 
 Three maps completed and committed in order: Dust Flats, Long Road, Gusher County. Boneyard was not started. The Last Claim remains UNACCEPTED in my judgment: its retained plain-entry evidence lacks the circular deck, orrery, ornate rim and preserve-station architecture, and portrait supplies no architectural context. Its sculpt-pack correction remains on the continuation list. [Ordered remaining work, HUD handoff, engine pairs and gate exceptions](run-5/handoff.md).
+
+
+## Sixth run — 2026-09-21 (task sol-map-art-corrections-4)
+
+The full remaining list is authorized in order, beginning with the Boneyard. Preflight passed: code d00459be2c130d6dbd029339640dbc44baa2a5f2, store b9597680a8c6eff78526b0c2af2cdc3f05b86f85, no ahead commits or unowned edits; permitted guard log only, no evidence discarded. Required art symlinks resolve, npm install and default build pass. Store branch `astra/corrections-4` starts at main. [Preflight](run-6/preflight.json).
+
+### The Boneyard correction — 2026-09-21 run 6
+
+**IMPROVED / HELD.** Ground RMS -53.93% desktop / -48.91% phone; pressure-engine sleeper replaces the cabin, 1,842/3,000 triangles within unchanged bounds and footprint. Declared boiler 5 m station reduces phone HUD 45.00%→0%; sleeper 8 m reduces original 14 m coverage 39.76%→0.80%. Entry yard context, richer burial/metal and shared vehicle art remain held. [Every clause, final boards, critique and gates](run-6/e4-boneyard/review.md).
+
+Builds, scoped guards, map census, shared brightness/collision and loading/repeat pass. Motor batch 24 pass / two malformed-tape failures reproduced on exact base; no assertion changed. Four-run p95 9.80→9.90 / 9.95→9.80 ms, draws 62/49 unchanged. Engine `491f2a917b0e360fcaa1e0eda3ee5eb7ba840cc1cd9bf852e3d574d34350725d` → `c8da6e7c043bb2f42b5fd2f94d17d83387d7a29abca9adffab1d15994ce5681e`.
+
+Boneyard store commit `dfac96930cee55742fde0f99c19ba4b70c9ddc05` pushed on `astra/corrections-4`.
