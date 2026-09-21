@@ -1,0 +1,40 @@
+[
+  {
+    "label": "tsc",
+    "command": [
+      "npx",
+      "tsc",
+      "--noEmit"
+    ],
+    "environment": {},
+    "exit": 0,
+    "seconds": 24.55,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-6/e8-low-orbit-tsc.log"
+  },
+  {
+    "label": "default-build",
+    "command": [
+      "npm",
+      "run",
+      "build"
+    ],
+    "environment": {},
+    "exit": 0,
+    "seconds": 43.4,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-6/e8-low-orbit-default-build.log"
+  },
+  {
+    "label": "full-build",
+    "command": [
+      "npm",
+      "run",
+      "build"
+    ],
+    "environment": {
+      "GR_RELEASE": "full"
+    },
+    "exit": 0,
+    "seconds": 21.88,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-6/e8-low-orbit-full-build.log"
+  }
+]

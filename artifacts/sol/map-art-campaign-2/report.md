@@ -467,3 +467,9 @@ Builds, scoped guards, own 16 checks, six Signal row checks, visual census, shar
 **IMPROVED / HELD.** Landing frame mounts, 5→6 bodies, +600 triangles. Inherited rail stripe contrast 36.09%→1.56%; fine-ground high-pass RMS 0.00159→0.00661 / 0.00128→0.00647. Frame entry phone HUD 10.385%, 3 m 5.768%; array 3 m 37.22%→10.75%. Circular vista, equipment compound and solid variant mounts remain held for named owners. [Every clause and evidence](run-6/e8-far-side/review.md).
 
 Builds, scoped guards, Far Side parity/census, shared checks and loading/repeat pass. Own batch 22 pass / two ordinary Mare Claim arsenal failures reproduced on exact base. Four-run p95 9.70→9.75 / 9.60→9.70 ms, draws 62→63 / 49→50, within 15%. Engine `36abad02458965365c31dfe66a98155d66182324ab136feb6709bfa791ff0abc` → `37a425e8df7634b36005ac5712ccee589eba59ab7aac41f7033a2949d203c146`. Store `d134d7607cda6b995a9421c5727fbd11f9a69230` pushed.
+
+### Low Orbit correction — 2026-09-21 run 6
+
+**IMPROVED / HELD.** Recovery housing and braced ring, 2,360→2,972/3,000 triangles; chamfered base area −29.29%. Body dark share 81.17→7.74% / 80.85→7.83%. Ground median 0.076→0.255 / 0.085→0.256; RMS −59.55% / +66.79%. Declared 3 m phone HUD 54.376→0.998%, entry remains 47.291%. Suspended composition, debris depth, material fidelity and entry UI remain held. [Every clause and evidence](run-6/e8-low-orbit/review.md).
+
+Builds, scoped guards, own momentum/physics, movement, parity/census, shared checks and loading/repeat pass. Two ordinary Mare Claim arsenal failures reproduce on exact base. Four-run p95 9.80→9.50 / 9.90→10.10 ms, draws 77/55 unchanged. Engine `37a425e8df7634b36005ac5712ccee589eba59ab7aac41f7033a2949d203c146` → `d7cad8f8bd1ebb800b36fff3531b8726760b5430fcb516cd39d32a71bb420bcf`. Store `2a1c3e11ec470fb3761cb9e462d39b025b61f24f` pushed.

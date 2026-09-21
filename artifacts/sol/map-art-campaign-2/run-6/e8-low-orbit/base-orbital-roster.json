@@ -1,0 +1,50 @@
+{
+  "storeBase": "d134d7607cda6b995a9421c5727fbd11f9a69230",
+  "base": "5d96ac7f22d3103a41436b543a04dbc186b4b274",
+  "paths": {
+    "src/world/Terrain3dClaimPilot.ts": {
+      "candidateSha256": "7aacbc7aac692f4d352c358a468a77dd5e189ac7d91092c90b6b6754939bba90",
+      "baseSha256": "41d69cddae88de79dffb6e75e424280058d3637ffac15fde7dcf27e0d85652b2"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/low-orbit/claw-carcass-rig.glb": {
+      "candidateSha256": "8d6dbf8259826812b01e01cc135ce42cda78554db52cab79d3cd7716edd198ae",
+      "baseSha256": "505afe0564731da2317b0f0ec5c2f61821d6cc8a72cd1dc5a0cadb8228f3d118"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/low-orbit/low-orbit-landmark-pack-contract.json": {
+      "candidateSha256": "4bcd9acb3ca614e92b347f96724be63180286cf83f84f932c36d96fb5046e32f",
+      "baseSha256": "4422fd5ece0abb86b1804e6a76914af4f89bda2937032733471013fa226029e9"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/low-orbit/low-orbit-landmarks.blend": {
+      "candidateSha256": "ba3425a1bbe1ce389102b1a2c0094ecafe0008c042a6bdb7fefd31b011c789e3",
+      "baseSha256": "9fc9c17e6577a832898129fe22ac2e5c8d847d9b49397cb6b8948d5e37939496"
+    },
+    "assets/pilots/map-rebuild-spike/low-orbit-terrain-contract.json": {
+      "candidateSha256": "5f6f6685e29ecb88973316559da5f47e5e173940095eae2c1874a85a2a09c4fe",
+      "baseSha256": "7b39addddb224544707f0e80cdab77468ceb4067ad22f721f4ea1e48f1fefe1b"
+    }
+  },
+  "pattern": "plain Orbital-era boot",
+  "specs": [
+    "e2e/e8-roster.spec.ts"
+  ],
+  "candidateEngine": "d7cad8f8bd1ebb800b36fff3531b8726760b5430fcb516cd39d32a71bb420bcf",
+  "baseEngine": "37a425e8df7634b36005ac5712ccee589eba59ab7aac41f7033a2949d203c146",
+  "command": [
+    "npx",
+    "playwright",
+    "test",
+    "--workers=1",
+    "--project=desktop-chrome",
+    "--project=mobile-chrome",
+    "--trace=off",
+    "--reporter=line",
+    "--output=artifacts/sol/map-art-campaign-2/_raw/run-6/e8-low-orbit-base-orbital-roster/test-results",
+    "--grep",
+    "plain Orbital-era boot",
+    "e2e/e8-roster.spec.ts"
+  ],
+  "exit": 1,
+  "restoredEngine": "d7cad8f8bd1ebb800b36fff3531b8726760b5430fcb516cd39d32a71bb420bcf",
+  "candidateRestoredExactly": true,
+  "log": "artifacts/sol/map-art-campaign-2/_raw/run-6/e8-low-orbit-base-orbital-roster/tests.log"
+}

@@ -18,7 +18,7 @@ try{for(const width of [1280,390]){
    const dataset={...canvas.dataset};dispose();rows.push({cycle,dataset,remainingSceneChildren:scene.children.length});
   }return rows;
  },{contractId,tileId});
- for(const r of cycles){assert.equal(r.dataset.terrain3dPilotLandmarks,expected);assert.equal(r.dataset.terrain3dPilotLandmarkSkipped,'0');assert.equal(r.dataset.terrain3dPilotWalkSurfaces,'0');assert.equal(r.remainingSceneChildren,0);const mounts=JSON.parse(r.dataset.terrain3dPilotLandmarkMounts);for(const id of proof.activeAdditionalMounts)assert.ok(mounts.some(m=>m.id===id));for(const id of proof.heldForCollisionAlias)assert.equal(mounts.some(m=>m.id===id),false)}
+ for(const r of cycles){assert.equal(r.dataset.terrain3dPilotLandmarks,expected);assert.equal(r.dataset.terrain3dPilotLandmarkSkipped,'0');assert.equal(r.dataset.terrain3dPilotWalkSurfaces,'0');assert.equal(r.remainingSceneChildren,0);const mounts=JSON.parse(r.dataset.terrain3dPilotLandmarkMounts);for(const id of proof.activeAdditionalMounts??[])assert.ok(mounts.some(m=>m.id===id));for(const id of proof.heldForCollisionAlias??[])assert.equal(mounts.some(m=>m.id===id),false)}
  assert.deepEqual(errors,[]);rows.push({width,cycles,errors});await page.close();
 }}finally{await browser.close()}
 writeFileSync(`${out}/mount-repeat-proof.json`,JSON.stringify(rows,null,2)+'\n');console.log(contractId,'3 mount/dispose cycles at each viewport;',expected,'bodies; held bodies absent; no errors; no retained scene objects');
