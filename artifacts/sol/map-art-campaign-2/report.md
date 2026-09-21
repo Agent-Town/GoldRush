@@ -437,3 +437,9 @@ Boneyard store commit `dfac96930cee55742fde0f99c19ba4b70c9ddc05` pushed on `astr
 **IMPROVED / HELD.** Ground RMS −41.49% desktop / −39.21% phone; whole-body emission 3.0→0.45 with lit diffuse paint. Pylon 5 m station phone HUD 8.90%→0%; derrick 3 m 0.090%. Entry rack remains cropped and 95.31% HUD-covered on desktop, entirely offscreen on phone. Mesa composition, facility grouping and daytime node-ring visibility remain held for their named owners. [Every clause and evidence](run-6/e6-glow-mesa/review.md).
 
 Builds, scoped guards, selected Glow Mesa/Pressure Garden census, shared brightness/collision and loading/repeat pass. Own batch 39 pass / one story-arrival timeout; unchanged retry 2/2. Four-run p95 9.75→8.90 / 9.70→9.60 ms, draws 68/48 unchanged. Engine `c8da6e7c043bb2f42b5fd2f94d17d83387d7a29abca9adffab1d15994ce5681e` → `68d976b06be1045f935047e482b765d91d61b045b45c87d77d677715b4e528e4`. Store `a368aba78a3f65bb93e46a9a624c617fb2d90b18` pushed.
+
+### Half-Life Hollow correction — 2026-09-21 run 6
+
+**IMPROVED / HELD.** Ground RMS −40.00% desktop / −40.30% phone; median +48.17% / +73.04%. Gate 5 m station phone HUD 66.27%→0.17%. Ordinary entry still shows the unchanged ochre slab and no gate; crossing presentation is held for the Game owner, full ravine composition for layout/camera. [Every clause and evidence](run-6/e6-half-life-hollow/review.md).
+
+Builds, scoped guards, own 20 checks, selected Hollow/Glow Mesa census, shared brightness/collision and loading/repeat pass. Four-run p95 9.55→9.50 / 9.60→9.60 ms, draws 73/52 unchanged. Engine `68d976b06be1045f935047e482b765d91d61b045b45c87d77d677715b4e528e4` → `d2f15b7a6ec3c5e04fa54c71dfcc16dda4288e20d6890f0eedca77b9035b878f`. Store `850ae868ef5688c79f20f98f1bbda515065efa4b` pushed.

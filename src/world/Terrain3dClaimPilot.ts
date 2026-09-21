@@ -2113,8 +2113,8 @@ diffuseColor.rgb = mix(motorOriginal, diffuseColor.rgb, motorInterior);`);
   }
 }
 
-/** Separate the existing mesa cap from its lower apron without moving its surface. */
-function clarifyMesaGround(model: THREE.Object3D): void {
+/** Separate existing shelves from their lower ground without moving any surface. */
+function gradeTerrainByHeight(model: THREE.Object3D, lowColor: string, highColor: string, lowHeight: number, highHeight: number, paintMix: number): void {
   if (isMapBeautyDisabled()) return;
   const materials = new Set<THREE.MeshStandardMaterial>();
   model.traverse(node => {
@@ -2125,19 +2125,21 @@ function clarifyMesaGround(model: THREE.Object3D): void {
     const compile = material.onBeforeCompile.bind(material);
     material.onBeforeCompile = (shader, renderer) => {
       compile(shader, renderer);
-      shader.uniforms.mesaApron = { value: new THREE.Color('#9f8867') };
-      shader.uniforms.mesaCap = { value: new THREE.Color('#9b9682') };
+      shader.uniforms.heightPaintLow = { value: new THREE.Color(lowColor) };
+      shader.uniforms.heightPaintHigh = { value: new THREE.Color(highColor) };
+      shader.uniforms.heightPaintRange = { value: new THREE.Vector2(lowHeight, highHeight) };
+      shader.uniforms.heightPaintMix = { value: paintMix };
       shader.vertexShader = shader.vertexShader
-        .replace('#include <common>', '#include <common>\nvarying vec3 vMesaGround;')
-        .replace('#include <begin_vertex>', '#include <begin_vertex>\nvMesaGround = (modelMatrix * vec4(position, 1.0)).xyz;');
+        .replace('#include <common>', '#include <common>\nvarying vec3 vHeightPaint;')
+        .replace('#include <begin_vertex>', '#include <begin_vertex>\nvHeightPaint = (modelMatrix * vec4(position, 1.0)).xyz;');
       shader.fragmentShader = shader.fragmentShader
-        .replace('#include <common>', '#include <common>\nvarying vec3 vMesaGround;\nuniform vec3 mesaApron, mesaCap;')
+        .replace('#include <common>', '#include <common>\nvarying vec3 vHeightPaint;\nuniform vec3 heightPaintLow, heightPaintHigh;\nuniform vec2 heightPaintRange;\nuniform float heightPaintMix;')
         .replace('#include <map_fragment>', `#include <map_fragment>
-float mesaInterior = 1.0 - smoothstep(48.0, 64.0, max(abs(vMesaGround.x), abs(vMesaGround.z)));
-float mesaHeight = smoothstep(1.5, 4.6, vMesaGround.y);
-diffuseColor.rgb = mix(diffuseColor.rgb, mix(mesaApron, mesaCap, mesaHeight), 0.34 * mesaInterior);`);
+float heightPaintInterior = 1.0 - smoothstep(48.0, 64.0, max(abs(vHeightPaint.x), abs(vHeightPaint.z)));
+float heightPaintFactor = smoothstep(heightPaintRange.x, heightPaintRange.y, vHeightPaint.y);
+diffuseColor.rgb = mix(diffuseColor.rgb, mix(heightPaintLow, heightPaintHigh, heightPaintFactor), heightPaintMix * heightPaintInterior);`);
     };
-    material.customProgramCacheKey = () => 'mesa-height-pigment-v1';
+    material.customProgramCacheKey = () => 'terrain-height-pigment-v1';
     material.needsUpdate = true;
   }
 }
@@ -2683,7 +2685,8 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
       if (host.contractId === 'e2-pressure-garden') clarifyPressureGardenTerraces(nextTerrain);
       if (host.contractId === 'e2-incline') clarifyInclineYards(nextTerrain);
       if (host.contractId === 'e3-canyon-works') clarifyCanyonGround(nextTerrain);
-      if (host.contractId === 'e6-glow-mesa') clarifyMesaGround(nextTerrain);
+      if (host.contractId === 'e6-glow-mesa') gradeTerrainByHeight(nextTerrain, '#9f8867', '#9b9682', 1.5, 4.6, 0.34);
+      if (host.contractId === 'e6-half-life-hollow') gradeTerrainByHeight(nextTerrain, '#897c68', '#b9a788', -1.9, 1.8, 0.32);
       if ((host.contractId === 'e4-dust-flats' || host.contractId === 'e4-long-road' || host.contractId === 'e4-gusher-county' || host.contractId === 'e4-boneyard') && selected.contract.maskTruth) clarifyMotorGround(nextTerrain, selected.contract.maskTruth, false, host.contractId === 'e4-gusher-county' ? 0.30 : host.contractId === 'e4-boneyard' ? 0.55 : 0.78);
       if (host.nightMode) applyNightTerrainPools(nextTerrain, host);
       else {
