@@ -1,0 +1,22 @@
+[
+  {
+    "label": "story-roster",
+    "command": [
+      "npx",
+      "playwright",
+      "test",
+      "--workers=1",
+      "--project=desktop-chrome",
+      "--project=mobile-chrome",
+      "--trace=off",
+      "--reporter=line",
+      "--output=artifacts/sol/map-art-campaign-2/_raw/run-6/e9-dome-basin-story-roster",
+      "e2e/e9-roster.spec.ts",
+      "e2e/ss-10-e9-beats.spec.ts"
+    ],
+    "environment": {},
+    "exit": 1,
+    "seconds": 178.83,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-6/e9-dome-basin-story-roster.log"
+  }
+]

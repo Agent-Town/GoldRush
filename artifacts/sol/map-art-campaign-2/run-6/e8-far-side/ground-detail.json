@@ -1,0 +1,63 @@
+{
+  "method": "Fixed clear-ground crops. High-pass is display luminance minus a two-pixel Gaussian, measuring added fine detail separately from broad bands. Stripe and adjacent boxes are fixed at desktop x870:1100 y542:559 / y510:528.",
+  "fineDetail": [
+    {
+      "width": 1280,
+      "arm": "before",
+      "box": [
+        800,
+        420,
+        930,
+        500
+      ],
+      "highPassRms": 0.0015946477981343206
+    },
+    {
+      "width": 1280,
+      "arm": "after",
+      "box": [
+        800,
+        420,
+        930,
+        500
+      ],
+      "highPassRms": 0.006612751322997069
+    },
+    {
+      "width": 390,
+      "arm": "before",
+      "box": [
+        15,
+        480,
+        95,
+        530
+      ],
+      "highPassRms": 0.0012787094965723744
+    },
+    {
+      "width": 390,
+      "arm": "after",
+      "box": [
+        15,
+        480,
+        95,
+        530
+      ],
+      "highPassRms": 0.006469189479866308
+    }
+  ],
+  "mareRailPaintStripe": [
+    {
+      "arm": "before",
+      "stripeMedian": 0.10214509803921569,
+      "adjacentMedian": 0.15982039215686275,
+      "relativeDarkness": 0.3608756888860535
+    },
+    {
+      "arm": "after",
+      "stripeMedian": 0.42325333333333337,
+      "adjacentMedian": 0.4299796078431372,
+      "relativeDarkness": 0.01564324071912193
+    }
+  ]
+}
