@@ -1076,7 +1076,7 @@ function keepLandmarkPaintReadable(model: THREE.Object3D, paint: LandmarkPaint =
     // pre-calibration render from a material that may already have been re-installed once.
     material.userData.landmarkAuthoredEmissive = paint.intensity;
     material.emissiveIntensity = calibratedLandmarkIntensity(paint.intensity);
-    if ((contractId === 'e2-pressure-garden' || contractId === 'e6-glow-mesa' || contractId === 'e6-picnic' || contractId === 'e7-dead-band' || contractId === 'e7-relay-rush' || contractId === 'e8-far-side' || contractId === 'e8-low-orbit' || contractId === 'e9-dome-basin' || contractId === 'e9-seed-run') && !material.userData.landmarkDiffuseGrade) {
+    if ((contractId === 'e2-pressure-garden' || contractId === 'e6-glow-mesa' || contractId === 'e6-picnic' || contractId === 'e7-dead-band' || contractId === 'e7-relay-rush' || contractId === 'e8-far-side' || contractId === 'e8-low-orbit' || contractId === 'e9-dome-basin' || contractId === 'e9-seed-run' || contractId === 'e9-devils-alley') && !material.userData.landmarkDiffuseGrade) {
       material.userData.landmarkDiffuseGrade = true;
       // Recover the atlas's dark iron detail in its diffuse paint, so the body can
       // leave the legacy-emission exemption without turning its texture into a lamp.
@@ -2764,6 +2764,7 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
       if (host.contractId === 'e2-pressure-garden') clarifyPressureGardenTerraces(nextTerrain);
       if (host.contractId === 'e2-incline') clarifyInclineYards(nextTerrain);
       if (host.contractId === 'e3-canyon-works') clarifyCanyonGround(nextTerrain);
+      if (host.contractId === 'e9-devils-alley') gradeTerrainByHeight(nextTerrain, '#9f8b6e', '#bba487', -0.14, 4.57, 0.46);
       if (host.contractId === 'e8-low-orbit') gradeTerrainByHeight(nextTerrain, '#777a76', '#a5a28e', -4.8, 0.7, 0.38);
       if (host.contractId === 'e8-far-side') clarifyFarSideRegolith(nextTerrain);
       if (host.contractId === 'e9-dome-basin' && selected.contract.maskTruth?.canalRoute) clarifyRedFieldsRoute(nextTerrain, selected.contract.maskTruth.canalRoute.points);
