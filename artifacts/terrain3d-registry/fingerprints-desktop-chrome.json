@@ -235,10 +235,10 @@
   },
   {
     "contract": "e1-dry-gulch",
-    "off": "cf516445f074e9cb945689d873079873c287271a85611d9f7ec3057dbccdf6b9",
-    "on": "cf516445f074e9cb945689d873079873c287271a85611d9f7ec3057dbccdf6b9",
+    "off": "4708f97d091a0b2a45e2ee6eea913ee1e523eae214fc7493f43d1fa9d0938c7c",
+    "on": "4708f97d091a0b2a45e2ee6eea913ee1e523eae214fc7493f43d1fa9d0938c7c",
     "offAssetRequests": 0,
-    "onAssetRequests": 9,
+    "onAssetRequests": 7,
     "payload": {
       "contract": {
         "id": "e1-dry-gulch",
@@ -356,7 +356,14 @@
             ],
             "territoryRingBiasWaves": 0,
             "territoryRingLaneBias": 0
-          }
+          },
+          "engineDependencies": [
+            {
+              "dep": "dry-gulch-inert-fields",
+              "status": "missing",
+              "description": "Needs consumers for sluice water-source gating; the declared dry-gulch seam yield is tracked separately until that field is single-sourced."
+            }
+          ]
         }
       },
       "sim": {
@@ -524,10 +531,10 @@
   },
   {
     "contract": "e1-twin-banks",
-    "off": "e24b3f7e4ac85f98f3f39151df929ec2d4c33cb4f5c80d6389bbf8c7b17645b4",
-    "on": "e24b3f7e4ac85f98f3f39151df929ec2d4c33cb4f5c80d6389bbf8c7b17645b4",
+    "off": "3b778df6d94439a1e79f7d9954abeaa19e4aa85480e4cd8c9387c2e7f71738bb",
+    "on": "3b778df6d94439a1e79f7d9954abeaa19e4aa85480e4cd8c9387c2e7f71738bb",
     "offAssetRequests": 0,
-    "onAssetRequests": 9,
+    "onAssetRequests": 7,
     "payload": {
       "contract": {
         "id": "e1-twin-banks",
@@ -732,9 +739,7 @@
           "lanes": {
             "spawnEdges": [
               "north",
-              "south",
-              "east",
-              "west"
+              "south"
             ],
             "territoryRingBiasWaves": 0,
             "territoryRingLaneBias": 0
@@ -917,7 +922,7 @@
     "off": "6db63838b9cd4380cce3f45677fe8616ad97d970c8c03b378080075160401b5d",
     "on": "6db63838b9cd4380cce3f45677fe8616ad97d970c8c03b378080075160401b5d",
     "offAssetRequests": 0,
-    "onAssetRequests": 9,
+    "onAssetRequests": 7,
     "payload": {
       "contract": {
         "id": "e1-night-shift",
@@ -1230,7 +1235,7 @@
     "off": "3d03be8717c11f8bb67e0ca679306ae409c9333cfed7021ddd43cb31f8335c0f",
     "on": "3d03be8717c11f8bb67e0ca679306ae409c9333cfed7021ddd43cb31f8335c0f",
     "offAssetRequests": 0,
-    "onAssetRequests": 9,
+    "onAssetRequests": 7,
     "payload": {
       "contract": {
         "id": "e1-baron",
@@ -1462,10 +1467,10 @@
   },
   {
     "contract": "e2-hill-mine",
-    "off": "eec1e96caf65f2799d6e2086a766418f29fea6b506ac5c14db28f86d50bc77b0",
-    "on": "eec1e96caf65f2799d6e2086a766418f29fea6b506ac5c14db28f86d50bc77b0",
+    "off": "811eb0bfaa69f1d95706600510c4413ece68a7811651fc069924e4d66ec65c65",
+    "on": "811eb0bfaa69f1d95706600510c4413ece68a7811651fc069924e4d66ec65c65",
     "offAssetRequests": 0,
-    "onAssetRequests": 9,
+    "onAssetRequests": 7,
     "payload": {
       "contract": {
         "id": "e2-hill-mine",
@@ -1717,7 +1722,14 @@
             ],
             "territoryRingBiasWaves": 0,
             "territoryRingLaneBias": 0
-          }
+          },
+          "engineDependencies": [
+            {
+              "dep": "elevation-advisory-fields",
+              "status": "missing",
+              "description": "Needs registered consumers for the declared slopeMax and waterline advisory fields."
+            }
+          ]
         }
       },
       "sim": {
@@ -1886,10 +1898,10 @@
   },
   {
     "contract": "e2-trestle",
-    "off": "75522ac7e624928ee52b809381b2e1d50589463eee40fc198a27ef5d5051f8ce",
-    "on": "75522ac7e624928ee52b809381b2e1d50589463eee40fc198a27ef5d5051f8ce",
+    "off": "e9e04851f3c0e226d7f53d5ad2754429264b9ffc181b9eb64a6ddfa011a99293",
+    "on": "e9e04851f3c0e226d7f53d5ad2754429264b9ffc181b9eb64a6ddfa011a99293",
     "offAssetRequests": 0,
-    "onAssetRequests": 10,
+    "onAssetRequests": 8,
     "payload": {
       "contract": {
         "id": "e2-trestle",
@@ -2096,7 +2108,14 @@
             ],
             "territoryRingBiasWaves": 0,
             "territoryRingLaneBias": 0
-          }
+          },
+          "engineDependencies": [
+            {
+              "dep": "elevation-advisory-fields",
+              "status": "missing",
+              "description": "Needs registered consumers for the declared slopeMax and waterline advisory fields."
+            }
+          ]
         }
       },
       "sim": {
@@ -2271,7 +2290,7 @@
     "off": "e94d3a1de1f7d98bc3f27bfcab2e565420345af66adfe59705c6537c5db88354",
     "on": "e94d3a1de1f7d98bc3f27bfcab2e565420345af66adfe59705c6537c5db88354",
     "offAssetRequests": 0,
-    "onAssetRequests": 9,
+    "onAssetRequests": 7,
     "payload": {
       "contract": {
         "id": "e3-blackout-ridge",
@@ -2618,7 +2637,7 @@
     "off": "26936e3dd71cfba5899d4617fc33ae96570596408e08905d758665c6c70282c1",
     "on": "26936e3dd71cfba5899d4617fc33ae96570596408e08905d758665c6c70282c1",
     "offAssetRequests": 0,
-    "onAssetRequests": 9,
+    "onAssetRequests": 7,
     "payload": {
       "contract": {
         "id": "e3-fairground",
@@ -3319,7 +3338,7 @@
     "off": "3b30978eb8b9745b3bc3a7cfb6c30768a99d32fd9ab9f7f85b0be28bff0cb6d6",
     "on": "3b30978eb8b9745b3bc3a7cfb6c30768a99d32fd9ab9f7f85b0be28bff0cb6d6",
     "offAssetRequests": 0,
-    "onAssetRequests": 4,
+    "onAssetRequests": 2,
     "payload": {
       "contract": {
         "id": "e5-deepwater-claim",
