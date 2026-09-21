@@ -44,6 +44,7 @@ import echoCanyonContractText from '../../assets/pilots/map-rebuild-spike/echo-c
 import echoCanyonPanoramaContractText from '../../assets/pilots/map-rebuild-spike/echo-canyon-panorama-contract.json?raw';
 import gusherCountyContractText from '../../assets/pilots/map-rebuild-spike/gusher-county-terrain-contract.json?raw';
 import gusherCountyPanoramaContractText from '../../assets/pilots/map-rebuild-spike/gusher-county-panorama-contract.json?raw';
+import deadBandContractText from '../../assets/pilots/map-rebuild-spike/dead-band-terrain-contract.json?raw';
 import picnicContractText from '../../assets/pilots/map-rebuild-spike/picnic-terrain-contract.json?raw';
 import halfLifeHollowContractText from '../../assets/pilots/map-rebuild-spike/half-life-hollow-terrain-contract.json?raw';
 import halfLifeHollowPanoramaContractText from '../../assets/pilots/map-rebuild-spike/half-life-hollow-panorama-contract.json?raw';
@@ -148,12 +149,12 @@ type Host = {
 type Metrics = { meshes: number; triangles: number; materials: number; vertices: number; bounds: THREE.Box3 };
 type HiddenRelief = { object: THREE.Object3D; visible: boolean };
 
-const entry = (terrainUrl: string, panoramaUrl: string, contractText: string, panoramaContractText: string): Entry => ({
-  terrainUrl,
-  panoramaUrl,
-  contract: JSON.parse(contractText) as Contract,
-  panoramaContract: JSON.parse(panoramaContractText) as PanoramaContract,
-});
+const entry = (terrainUrl: string, panoramaUrl: string, contractText: string, panoramaContractText: string, dressingText?: string): Entry => {
+  const contract = JSON.parse(contractText) as Contract;
+  // Variant dressing supplements the base bodies; the existing mount filter and transforms apply.
+  if (dressingText) contract.landmarkMounts = [...(contract.landmarkMounts ?? []), ...((JSON.parse(dressingText) as Contract).landmarkMounts ?? [])];
+  return { terrainUrl, panoramaUrl, contract, panoramaContract: JSON.parse(panoramaContractText) as PanoramaContract };
+};
 const REGISTRY: Record<string, Entry> = {
   'the-claim': entry(new URL('../../assets/pilots/map-rebuild-spike/the-claim-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/the-claim-panorama.glb', import.meta.url).href, claimContractText, claimPanoramaContractText),
   'e1-dry-gulch': entry(new URL('../../assets/pilots/map-rebuild-spike/dry-gulch-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/dry-gulch-panorama.glb', import.meta.url).href, dryGulchContractText, dryGulchPanoramaContractText),
@@ -186,10 +187,10 @@ const REGISTRY: Record<string, Entry> = {
   'e6-showroom': entry(new URL('../../assets/pilots/map-rebuild-spike/showroom-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/showroom-panorama.glb', import.meta.url).href, showroomContractText, showroomPanoramaContractText),
   'e6-half-life-hollow': entry(new URL('../../assets/pilots/map-rebuild-spike/half-life-hollow-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/half-life-hollow-panorama.glb', import.meta.url).href, halfLifeHollowContractText, halfLifeHollowPanoramaContractText),
   // Picnic retains the Glow Mesa sculpt and collision-backed bodies, adding its nonblocking dressing.
-  'e6-picnic': entry(new URL('../../assets/pilots/map-rebuild-spike/glow-mesa-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/glow-mesa-panorama.glb', import.meta.url).href, JSON.stringify({ ...JSON.parse(glowMesaContractText), landmarkMounts: [...JSON.parse(glowMesaContractText).landmarkMounts, ...JSON.parse(picnicContractText).landmarkMounts] }), glowMesaPanoramaContractText),
+  'e6-picnic': entry(new URL('../../assets/pilots/map-rebuild-spike/glow-mesa-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/glow-mesa-panorama.glb', import.meta.url).href, glowMesaContractText, glowMesaPanoramaContractText, picnicContractText),
   'e7-echo-canyon': entry(new URL('../../assets/pilots/map-rebuild-spike/echo-canyon-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/echo-canyon-panorama.glb', import.meta.url).href, echoCanyonContractText, echoCanyonPanoramaContractText),
   // Relay Valley aliases: both signal variants reuse its terrain and panorama.
-  'e7-dead-band': entry(new URL('../../assets/pilots/map-rebuild-spike/relay-valley-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/relay-valley-panorama.glb', import.meta.url).href, relayValleyContractText, relayValleyPanoramaContractText),
+  'e7-dead-band': entry(new URL('../../assets/pilots/map-rebuild-spike/relay-valley-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/relay-valley-panorama.glb', import.meta.url).href, relayValleyContractText, relayValleyPanoramaContractText, deadBandContractText),
   'e7-relay-rush': entry(new URL('../../assets/pilots/map-rebuild-spike/relay-valley-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/relay-valley-panorama.glb', import.meta.url).href, relayValleyContractText, relayValleyPanoramaContractText),
   // Mare Claim aliases: Far Side and Eclipse change campaign rules without changing the sculpt.
   'e8-far-side': entry(new URL('../../assets/pilots/map-rebuild-spike/mare-claim-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/mare-claim-panorama.glb', import.meta.url).href, mareClaimContractText, mareClaimPanoramaContractText),
@@ -1071,7 +1072,7 @@ function keepLandmarkPaintReadable(model: THREE.Object3D, paint: LandmarkPaint =
     // pre-calibration render from a material that may already have been re-installed once.
     material.userData.landmarkAuthoredEmissive = paint.intensity;
     material.emissiveIntensity = calibratedLandmarkIntensity(paint.intensity);
-    if ((contractId === 'e2-pressure-garden' || contractId === 'e6-glow-mesa' || contractId === 'e6-picnic') && !material.userData.landmarkDiffuseGrade) {
+    if ((contractId === 'e2-pressure-garden' || contractId === 'e6-glow-mesa' || contractId === 'e6-picnic' || contractId === 'e7-dead-band') && !material.userData.landmarkDiffuseGrade) {
       material.userData.landmarkDiffuseGrade = true;
       // Recover the atlas's dark iron detail in its diffuse paint, so the body can
       // leave the legacy-emission exemption without turning its texture into a lamp.
@@ -2674,6 +2675,7 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
       if (host.contractId === 'e2-incline') clarifyInclineYards(nextTerrain);
       if (host.contractId === 'e3-canyon-works') clarifyCanyonGround(nextTerrain);
       if (host.contractId === 'e6-glow-mesa') gradeTerrainByHeight(nextTerrain, '#9f8867', '#9b9682', 1.5, 4.6, 0.34);
+      if (host.contractId === 'e7-dead-band') gradeTerrainByHeight(nextTerrain, '#888474', '#b2ab92', 0.4, 4.6, 0.34);
       if (host.contractId === 'e6-picnic') gradeTerrainByHeight(nextTerrain, '#9f8867', '#a1a483', 1.5, 4.6, 0.34);
       if (host.contractId === 'e6-half-life-hollow') gradeTerrainByHeight(nextTerrain, '#897c68', '#b9a788', -1.9, 1.8, 0.32);
       if ((host.contractId === 'e4-dust-flats' || host.contractId === 'e4-long-road' || host.contractId === 'e4-gusher-county' || host.contractId === 'e4-boneyard') && selected.contract.maskTruth) clarifyMotorGround(nextTerrain, selected.contract.maskTruth, false, host.contractId === 'e4-gusher-county' ? 0.30 : host.contractId === 'e4-boneyard' ? 0.55 : 0.78);
