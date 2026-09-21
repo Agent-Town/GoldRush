@@ -1,0 +1,57 @@
+{
+  "storeBase": "caf34490756564bd8dfb1693070e479147590c58",
+  "base": "8ad1bb69df1becf12c3ab202e857ec1ff519fc93",
+  "paths": {
+    "src/world/Terrain3dClaimPilot.ts": {
+      "candidateSha256": "a2a968252677f9b99c8ee80991f1c25b66bf30d83b905cda27a944c2864f1cae",
+      "baseSha256": "1f23ba1b63f84995e06834c6ce506fd299058883eb947df03bd69f5d573ac8d4"
+    },
+    "assets/pilots/map-rebuild-spike/archive-world-terrain-contract.json": {
+      "candidateSha256": "49cf96fb2ca94c749fd53deaf0270ea51469a2ae1f2f5490b329c6b270af02a9",
+      "baseSha256": "b4f070949b31e56ba8692ce77193665ab46eba1d7685c65c99fa64e2949e38a3"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/archive-world/archive-entry-gate.glb": {
+      "candidateSha256": "636d14185dec37a44ac737a259253fed7093560e1403b0d50096a870d53dab25",
+      "baseSha256": "081193ccb1781665bd73b42186c33f160f50b4231529643b23efc706c93823fe"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/archive-world/archive-world-landmark-pack-contract.json": {
+      "candidateSha256": "ed253f7976a8a05366a9bf94baf1bbe7d653e0a331d6fffa1e771f87e48f7adb",
+      "baseSha256": "cba263be539fcc2b92a04b1ac5e008092dc13607c803d979c2a3f2e95da2e34b"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/archive-world/archive-world-landmarks.blend": {
+      "candidateSha256": "028176571d99eb809424fba0799752601ccab7c34f30063afb5e5c3dc66c974e",
+      "baseSha256": "3fbd071138fa8355bc50d33c2003deac77c5f62ad75509c86c94f93c9876ff38"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/landmark-source-ledger.json": {
+      "candidateSha256": "8d0c596ac2ea8b5ee1d55cfc8da9259a5cc16ac91163370c7cb77e93d4cfbb73",
+      "baseSha256": "b0917fcf2ce388447d5e97010a24adeb08fb3d2d74e5d47dc443694058a2e3e5"
+    }
+  },
+  "pattern": "all sixteen contracts mount|e10-archive-world",
+  "specs": [
+    "e2e/terrain3d-registry.spec.ts",
+    "e2e/er01-e10-census.spec.ts"
+  ],
+  "candidateEngine": "9ab63072bf545c545e192f2a6d4623ccceb60235662638adb6f3c27736648cf5",
+  "baseEngine": "0df7afdfb61520a896c158f0208e401731a733f465ab77a8fc4232bc495c65ba",
+  "command": [
+    "npx",
+    "playwright",
+    "test",
+    "--workers=1",
+    "--project=desktop-chrome",
+    "--project=mobile-chrome",
+    "--trace=off",
+    "--reporter=line",
+    "--output=artifacts/sol/map-art-campaign-2/_raw/run-6/e10-archive-world-base-census-registry/test-results",
+    "--grep",
+    "all sixteen contracts mount|e10-archive-world",
+    "e2e/terrain3d-registry.spec.ts",
+    "e2e/er01-e10-census.spec.ts"
+  ],
+  "exit": 1,
+  "newAssetsAbsentDuringBase": {},
+  "restoredEngine": "9ab63072bf545c545e192f2a6d4623ccceb60235662638adb6f3c27736648cf5",
+  "candidateRestoredExactly": true,
+  "log": "artifacts/sol/map-art-campaign-2/_raw/run-6/e10-archive-world-base-census-registry/tests.log"
+}

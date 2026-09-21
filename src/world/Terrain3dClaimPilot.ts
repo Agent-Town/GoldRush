@@ -1086,7 +1086,7 @@ function keepLandmarkPaintReadable(model: THREE.Object3D, paint: LandmarkPaint =
     // pre-calibration render from a material that may already have been re-installed once.
     material.userData.landmarkAuthoredEmissive = paint.intensity;
     material.emissiveIntensity = calibratedLandmarkIntensity(paint.intensity);
-    if ((contractId === 'e2-pressure-garden' || contractId === 'e6-glow-mesa' || contractId === 'e6-picnic' || contractId === 'e7-dead-band' || contractId === 'e7-relay-rush' || contractId === 'e8-far-side' || contractId === 'e8-low-orbit' || contractId === 'e9-dome-basin' || contractId === 'e9-seed-run' || contractId === 'e9-devils-alley' || contractId === 'e9-old-canal' || contractId === 'e10-last-claim' || contractId === 'e10-ember-shore') && !material.userData.landmarkDiffuseGrade) {
+    if ((contractId === 'e2-pressure-garden' || contractId === 'e6-glow-mesa' || contractId === 'e6-picnic' || contractId === 'e7-dead-band' || contractId === 'e7-relay-rush' || contractId === 'e8-far-side' || contractId === 'e8-low-orbit' || contractId === 'e9-dome-basin' || contractId === 'e9-seed-run' || contractId === 'e9-devils-alley' || contractId === 'e9-old-canal' || contractId === 'e10-last-claim' || contractId === 'e10-ember-shore' || contractId === 'e10-archive-world') && !material.userData.landmarkDiffuseGrade) {
       material.userData.landmarkDiffuseGrade = true;
       // Recover the atlas's dark iron detail in its diffuse paint, so the body can
       // leave the legacy-emission exemption without turning its texture into a lamp.
@@ -2183,6 +2183,52 @@ diffuseColor.rgb = mix(diffuseColor.rgb, memorialBrass, max(memorialRing, memori
   });
 }
 
+/** Quiet the archive paving; warm pools appear only for already-restored wings. */
+function clarifyArchiveTerraces(model: THREE.Object3D, readState?: () => ArchiveRestorationState | null): void {
+  if (isMapBeautyDisabled()) return;
+  const zones = readState?.()?.zones ?? [];
+  const pools = { value: zones.map(zone => new THREE.Vector4((zone.minX + zone.maxX) / 2, (zone.minZ + zone.maxZ) / 2, (zone.maxX - zone.minX) * 0.30, (zone.maxZ - zone.minZ) * 0.30)) };
+  const restored = { value: new Float32Array(zones.length) };
+  model.traverse(node => {
+    const mesh = node as THREE.Mesh<THREE.BufferGeometry, THREE.MeshStandardMaterial>;
+    if (!mesh.isMesh || Array.isArray(mesh.material) || !mesh.material.isMeshStandardMaterial) return;
+    const beforeRender = mesh.onBeforeRender.bind(mesh);
+    mesh.onBeforeRender = (renderer, scene, camera, geometry, material, group) => {
+      beforeRender(renderer, scene, camera, geometry, material, group);
+      const state = readState?.();
+      zones.forEach((zone, index) => { restored.value[index] = state?.restoredWingIds.includes(zone.id) ? 1 : 0; });
+    };
+    const material = mesh.material, compile = material.onBeforeCompile.bind(material);
+    const cacheKey = material.customProgramCacheKey();
+    material.onBeforeCompile = (shader, renderer) => {
+      compile(shader, renderer);
+      shader.uniforms.archiveFloorLow = { value: new THREE.Color('#776f5e') };
+      shader.uniforms.archiveFloorHigh = { value: new THREE.Color('#a8a38d') };
+      shader.uniforms.archiveFloorPools = pools;
+      shader.uniforms.archiveFloorRestored = restored;
+      shader.vertexShader = shader.vertexShader
+        .replace('#include <common>', '#include <common>\nvarying vec3 vArchiveFloor;')
+        .replace('#include <begin_vertex>', '#include <begin_vertex>\nvArchiveFloor = (modelMatrix * vec4(position, 1.0)).xyz;');
+      shader.fragmentShader = shader.fragmentShader
+        .replace('#include <common>', `#include <common>
+varying vec3 vArchiveFloor;
+uniform vec3 archiveFloorLow, archiveFloorHigh;
+${zones.length ? `uniform vec4 archiveFloorPools[${zones.length}];\nuniform float archiveFloorRestored[${zones.length}];` : ''}`)
+        .replace('#include <map_fragment>', `#include <map_fragment>
+float archiveTerrace = smoothstep(-0.7, 2.2, vArchiveFloor.y);
+diffuseColor.rgb = mix(diffuseColor.rgb, mix(archiveFloorLow, archiveFloorHigh, archiveTerrace), 0.50);`)
+        .replace('#include <emissivemap_fragment>', `#include <emissivemap_fragment>
+${zones.length ? `for (int i = 0; i < ${zones.length}; i++) {
+  vec4 pool = archiveFloorPools[i];
+  float archivePool = 1.0 - smoothstep(0.12, 1.0, length((vArchiveFloor.xz - pool.xy) / pool.zw));
+  totalEmissiveRadiance += vec3(0.24, 0.095, 0.025) * archivePool * archiveFloorRestored[i];
+}` : ''}`);
+    };
+    material.customProgramCacheKey = () => `${cacheKey}|archive-terraces-v1:${zones.length}`;
+    material.needsUpdate = true;
+  });
+}
+
 /** One world-space basalt treatment crosses the sculpt/continuation join. */
 function clarifyEmberBasalt(model: THREE.Object3D): void {
   if (isMapBeautyDisabled()) return;
@@ -2683,11 +2729,12 @@ function createContinuation(
       }
     }
   });
+  const deepSkyGround = contractId === 'e10-ember-shore' || contractId === 'e10-archive-world';
   const halfX = Math.max(Math.abs(bounds.min.x), Math.abs(bounds.max.x));
   const halfZ = Math.max(Math.abs(bounds.min.z), Math.abs(bounds.max.z));
-  if (!Number.isFinite(outerRadius) || (contractId !== 'e10-ember-shore' && innerChebyshev <= Math.max(halfX, halfZ) + 0.5)) return undefined;
+  if (!Number.isFinite(outerRadius) || (!deepSkyGround && innerChebyshev <= Math.max(halfX, halfZ) + 0.5)) return undefined;
   // The panorama's near ridge starts at radius 161.5; cover the intervening ground.
-  if (contractId === 'e10-ember-shore') outerRadius = 160;
+  if (deepSkyGround) outerRadius = 160;
 
   // Keep the night ground beyond every square corner and the perimeter landmarks.
   if (contractId === 'e3-moth-season') outerRadius = Math.max(outerRadius, Math.hypot(halfX, halfZ) + 12);
@@ -2717,8 +2764,8 @@ function createContinuation(
       const sampleX = innerX - innerX / innerRadius * sampleDepth;
       const sampleZ = innerZ - innerZ / innerRadius * sampleDepth;
       positions.push(x, THREE.MathUtils.lerp(heightAt(innerX, innerZ), outerHeight, eased), z);
-      const uvX = (contractId === 'e3-moth-season' || contractId === 'e10-ember-shore') ? x : sampleX;
-      const uvZ = (contractId === 'e3-moth-season' || contractId === 'e10-ember-shore') ? z : sampleZ;
+      const uvX = (contractId === 'e3-moth-season' || deepSkyGround) ? x : sampleX;
+      const uvZ = (contractId === 'e3-moth-season' || deepSkyGround) ? z : sampleZ;
       uvs.push((uvX - bounds.min.x) / (bounds.max.x - bounds.min.x), (bounds.max.z - uvZ) / (bounds.max.z - bounds.min.z));
     }
   }
@@ -2740,7 +2787,7 @@ function createContinuation(
   geometry.computeVertexNormals();
   geometry.computeBoundingSphere();
   const material = source.material.clone();
-  if (contractId === 'e3-moth-season' || contractId === 'e10-ember-shore') {
+  if (contractId === 'e3-moth-season' || deepSkyGround) {
     const mapped = material as THREE.MeshStandardMaterial;
     if (mapped.map) {
       mapped.map = mapped.map.clone();
@@ -2749,7 +2796,7 @@ function createContinuation(
     }
   }
   material.side = THREE.DoubleSide;
-  (material as THREE.Material & { fog?: boolean }).fog = contractId === 'e10-ember-shore';
+  (material as THREE.Material & { fog?: boolean }).fog = deepSkyGround;
   material.depthWrite = false;
   material.onBeforeCompile = (shader) => {
     shader.vertexShader = shader.vertexShader.replace(
@@ -2763,7 +2810,7 @@ function createContinuation(
   const apron = horizonApronProfile(contractId);
   if (apron) paintHorizonApron(material, apron);
   const continuation = new THREE.Mesh(geometry, material);
-  continuation.receiveShadow = contractId === 'e10-ember-shore';
+  continuation.receiveShadow = deepSkyGround;
   continuation.userData.horizonApron = apron ? 'painted' : 'plain';
   continuation.frustumCulled = false;
   continuation.renderOrder = -50;
@@ -2860,6 +2907,7 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
       if (host.contractId === 'e3-canyon-works') clarifyCanyonGround(nextTerrain);
       if (host.contractId === 'e10-last-claim') paintLastClaimDeck(nextTerrain);
       if (host.contractId === 'e10-ember-shore') clarifyEmberBasalt(nextTerrain);
+      if (host.contractId === 'e10-archive-world') clarifyArchiveTerraces(nextTerrain, host.archiveRestoration);
       if (host.contractId === 'e9-devils-alley') gradeTerrainByHeight(nextTerrain, '#9f8b6e', '#bba487', -0.14, 4.57, 0.46);
       if (host.contractId === 'e8-low-orbit') gradeTerrainByHeight(nextTerrain, '#777a76', '#a5a28e', -4.8, 0.7, 0.38);
       if (host.contractId === 'e8-far-side') clarifyFarSideRegolith(nextTerrain);
@@ -2890,6 +2938,7 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
       }
       const nextSkirt = createContinuation(nextTerrain, nextPanorama, heightAt, terrainMetrics.bounds, host.contractId);
       if (host.contractId === 'e10-ember-shore' && nextSkirt) clarifyEmberBasalt(nextSkirt);
+      if (host.contractId === 'e10-archive-world' && nextSkirt) clarifyArchiveTerraces(nextSkirt, host.archiveRestoration);
       if (host.contractId === 'e3-moth-season' && host.nightMode && nextSkirt) {
         const material = nextSkirt.material as THREE.Material;
         const programKey = material.customProgramCacheKey();

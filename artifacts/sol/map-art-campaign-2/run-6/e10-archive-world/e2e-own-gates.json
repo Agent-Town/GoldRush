@@ -1,0 +1,24 @@
+[
+  {
+    "label": "own",
+    "command": [
+      "npx",
+      "playwright",
+      "test",
+      "--workers=1",
+      "--project=desktop-chrome",
+      "--project=mobile-chrome",
+      "--trace=off",
+      "--reporter=line",
+      "--output=artifacts/sol/map-art-campaign-2/_raw/run-6/e10-archive-world-own",
+      "e2e/board-gating-and-profiles.spec.ts",
+      "e2e/er01-e10-census.spec.ts",
+      "--grep",
+      "the board hides future epochs|e10-archive-world"
+    ],
+    "environment": {},
+    "exit": 1,
+    "seconds": 18.23,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-6/e10-archive-world-own.log"
+  }
+]
