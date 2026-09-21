@@ -72,6 +72,15 @@
 
 ---
 
+### F-CORR4-2 — the corrections campaign's residue: what stays HELD after every map was corrected (added 2026-09-22)
+Astra's run 4 corrected all sixteen rows (the thirteen UNACCEPTED maps and the three run-2 HELD rows) on the render side, one commit per map, every row IMPROVED / HELD by its own bar. What it could not close is not art:
+1. **Variant packs the runtime alias never selects** — the Picnic (aliased to Glow Mesa), the Dead Band and Relay Rush (Relay Valley), the Far Side (Mare Claim): only the nonblocking variant bodies are mounted; the SOLID ones (the Picnic shade, the Dead Band's null post and tool caches, Relay Rush's start horn, the Far Side's suit rack, probe cradle and markers) wait for the contract/collision owner to reconcile their footprints with the alias. **Recommendation:** one lane task for the collision resolver, "select the variant footprint when a variant pack is mounted", closes all four maps.
+2. **Code-owned presentation:** Half-Life Hollow's causeway slabs (`Game.ts`), the Seed Run's convoy (`SeedCaravanSystem.ts`) and rut markers, Devil's Alley's sweep column and hold-radius rings, Relay Rush's active signal, the Dead Band's suppression, the Last Claim's grey finale palette and heart effect (`E10StaticBossSystem`). **Recommendation:** rule which of these the plates should win over; the Hollow's slabs and the Last Claim's heart effect are the two a player meets at entry.
+3. **The fixed camera and hero start:** on the Glow Mesa, the Dead Band, the Far Side, Half-Life Hollow and Relay Rush the plate's landmark is behind or beside the entry frame. **Recommendation:** either accept (the maps read at their inspection stations) or a camera rule "entry frames the declared landmark".
+4. **Phone HUD at entry:** where a body got fuller its phone overlap rose (Low Orbit 44 → 47 %, the Seed Run 16 → 23 %). **Recommendation:** one UI task for the persistent HUD on 390 px pays across every map.
+5. **Shared Motor vehicle art** (the Boneyard's vehicle, every Motor map) and the Dome Basin / Old Canal water states (stage-gated by contract, correctly dry at entry) — no action unless you want them.
+6. **The River (F-CORR4-18):** the raw River is a 128² painted fallback with no sculpt and a single centre ford, while the finale lever stamps `the-claim`'s 64² charter; Astra proved the lever's real destination and corrected only the raw surface. **Recommendation:** decide whether the raw route deserves its own sculpt pack (a small Astra task, the Last Claim's shape) or should alias the charter outright; until then the quiet return reads as it does now.
+
 ## 2. Art — your eye
 
 ### F-SSL-3 — two prospector hover8 regenerations
@@ -159,4 +168,4 @@ The register mis-transcribed the finding: at source the 227 are shipped art cell
 - **A15** the Long Road secures (heat 14, 243 s of slack). · **Canyon Works** ("unwinnable by one number", "needs a second lever", both 2026-09-06): heat 13 secured it at w15/270g after the bank cap; heat 14's rider called it winnable and blamed its own budget — both rows are closed. · **F-PERF-14** (a county tape no longer replays to its hash): era 6 retired every era-5 reel; moot. · **A7** the 25 MB first-town tripwire: reported and non-gating today; the request-family guard is the gate. · **A5 / F-MCAP-1** (a rider can hang a heat): cured.
 
 ## 7. Running now — no decision
-Astra: lane-c the map-art campaign (E5 water first), lane-b the account registry, lane-a its two open findings. Opus: the Codex strips landed and wired, the assay-index drop (F-HEAT14-6), battery robustness (F-POC-8). Each is drained attended when it reports.
+Astra: the map-art corrections campaign is COMPLETE (2026-09-22, all sixteen rows, `reviews/sol-map-art-corrections-4.md`; its residue is F-CORR4-2 above), lane-b the account registry, lane-a its two open findings. Opus: the Codex strips landed and wired, the assay-index drop (F-HEAT14-6), battery robustness (F-POC-8). Each is drained attended when it reports.
