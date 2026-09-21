@@ -41,7 +41,7 @@ try {for(const width of [1280,390])for(let cycle=0;cycle<(mode==='performance'?4
   await page.goto(base);await page.evaluate(async id=>{(await import('/src/meta/ContractUnlock.ts')).setPreviewUnlockAll(true);(await import('/src/meta/ContractFamilies.ts')).stagePlayerContractLaunch(id)},id);
  }
  await page.goto(`${base}/?${mode==='plain'?'':`debug&epoch=${config.epoch}&nowaves&nolevel&nokill&nopause&tier=full&`}contract=${id}&seed=map-art-campaign-2`);
- const fallback=!!config.allowFallbackBefore&&arm==='before';
+ const fallback=!!((config.allowFallbackBefore&&arm==='before')||(config.allowFallbackAfter&&arm==='after'));
  await page.waitForFunction(fallback=>{const d=document.querySelector('#game-canvas')?.dataset;return fallback?d?.terrain3dPilotState==='failed':d?.terrain3dPilotLandmarkLoadState==='mounted'},fallback);
  const begin=page.getByTestId('contract-briefing-dismiss');if(await begin.isVisible())await begin.click({timeout:2000}).catch(async e=>{if(await begin.isVisible())throw e});
  assert.equal(await page.evaluate(()=>window.__THREE_GAME_DIAGNOSTICS__.contract.activeId),id);
@@ -65,6 +65,7 @@ try {for(const width of [1280,390])for(let cycle=0;cycle<(mode==='performance'?4
     await page.evaluate(({x,z})=>window.__GR_TEST__.teleport(x,z),{x,z});await page.waitForTimeout(900);
     await page.screenshot({path:`${out}/viewpoint-${arm}-${name}-${width}.png`});
    }
+   if(!config.stations.length)rows.push({width,arm,emptyLandmarks:true,errors});
    for(const [focus,station,x,z,stationArm] of config.stations){
     if(stationArm && stationArm!==arm)continue;
     await page.evaluate(({x,z})=>window.__GR_TEST__.teleport(x,z),{x,z});await page.waitForTimeout(900);

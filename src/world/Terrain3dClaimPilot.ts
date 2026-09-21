@@ -2183,6 +2183,45 @@ diffuseColor.rgb = mix(diffuseColor.rgb, memorialBrass, max(memorialRing, memori
   });
 }
 
+/** A material-only dawn treatment for the raw River's existing painted fallback. */
+function paintRiverReturn(host: Host): () => void {
+  if (host.contractId !== 'e10-river' || isMapBeautyDisabled()) return () => undefined;
+  const materials = new Set<THREE.MeshStandardMaterial>();
+  host.scene.traverse(node => {
+    const mesh = node as THREE.Mesh;
+    if (!mesh.isMesh) return;
+    for (const material of Array.isArray(mesh.material) ? mesh.material : [mesh.material]) {
+      if ((material as THREE.MeshStandardMaterial).isMeshStandardMaterial && (material.userData.terrainUniforms || material.userData.waterUniforms)) materials.add(material as THREE.MeshStandardMaterial);
+    }
+  });
+  const restore = [...materials].map(material => {
+    const compile = material.onBeforeCompile, key = material.customProgramCacheKey;
+    const cacheKey = key.call(material), water = !!material.userData.waterUniforms;
+    material.onBeforeCompile = (shader, renderer) => {
+      compile.call(material, shader, renderer);
+      if (water) {
+        shader.fragmentShader = shader.fragmentShader.replace('vec4 sampledDiffuseColor = vec4(waterColor, alpha);', `
+vec3 returnWater = mix(vec3(0.33, 0.39, 0.38), vec3(0.10, 0.19, 0.23), depth);
+returnWater = mix(returnWater, vec3(0.48, 0.46, 0.35), fordBand * 0.55);
+waterColor = mix(waterColor, returnWater, 0.65);
+float returnFlowLine = sin(vWaterWorld.y * 7.0 + waterNoise(vWaterWorld * vec2(1.2, 1.8) - vec2(waterTime * 0.32, 0.0)) * 4.8);
+float returnFlowBreak = smoothstep(0.50, 0.78, waterNoise(vWaterWorld * vec2(3.4, 2.3) - vec2(waterTime * 0.4, 0.0)));
+waterColor += vec3(0.12, 0.11, 0.075) * smoothstep(0.94, 0.995, returnFlowLine) * returnFlowBreak * waterQuality * (1.0 - fordBand) * smoothstep(0.05, 0.20, depth);
+vec4 sampledDiffuseColor = vec4(waterColor, alpha);`);
+      } else {
+        shader.uniforms.returnBankPigment = { value: new THREE.Color('#ad9c75') };
+        shader.fragmentShader = shader.fragmentShader
+          .replace('#include <common>', '#include <common>\nuniform vec3 returnBankPigment;')
+          .replace('diffuseColor *= sampledDiffuseColor;', 'diffuseColor *= sampledDiffuseColor;\ndiffuseColor.rgb = mix(diffuseColor.rgb, returnBankPigment, 0.25);');
+      }
+    };
+    material.customProgramCacheKey = () => `${cacheKey}|raw-river-dawn-v1:${water ? 'water' : 'bank'}`;
+    material.needsUpdate = true;
+    return () => { material.onBeforeCompile = compile; material.customProgramCacheKey = key; material.needsUpdate = true; };
+  });
+  return () => { for (const reset of restore) reset(); };
+}
+
 /** Quiet the archive paving; warm pools appear only for already-restored wings. */
 function clarifyArchiveTerraces(model: THREE.Object3D, readState?: () => ArchiveRestorationState | null): void {
   if (isMapBeautyDisabled()) return;
@@ -2830,7 +2869,7 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
   if (!selected || selected.contract.tileId !== host.tileId) {
     host.canvas.dataset.terrain3dPilotLandmarkLoadState = 'off';
     publish(host.canvas, 'failed', 'painted', undefined, undefined, undefined, 'pilot-contract-unavailable');
-    return () => undefined;
+    return paintRiverReturn(host);
   }
   let disposed = false;
   let terrain: THREE.Object3D | undefined;
