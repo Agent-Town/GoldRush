@@ -89,6 +89,9 @@ import { createSpringPondSurface, type SpringPondSurface } from './Water';
 import { createFordSheet, createWaterConfluence, createWaterRibbon, updateWaterMaterial } from './Water';
 import type { ContractManifest } from '../meta/ContractFamilies';
 
+import lastClaimContractText from '../../assets/pilots/map-rebuild-spike/last-claim-terrain-contract.json?raw';
+import lastClaimPanoramaContractText from '../../assets/pilots/map-rebuild-spike/last-claim-panorama-contract.json?raw';
+
 type MotorGroundTruth = Pick<ContractManifest['tileParams'], 'dimensions' | 'roadCorridors' | 'tarSeams' | 'orbitSpawn'>;
 type PaintRoutePoint = { x: number; z: number };
 type PaintZone = { minX: number; maxX: number; minZ: number; maxZ: number };
@@ -210,6 +213,7 @@ const REGISTRY: Record<string, Entry> = {
   'e9-devils-alley': entry(new URL('../../assets/pilots/map-rebuild-spike/devils-alley-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/devils-alley-panorama.glb', import.meta.url).href, JSON.stringify({ ...JSON.parse(devilsAlleyContractText), boundsMeters: { min: [-64, -64, -0.14], max: [64, 64, 4.567115] } }), devilsAlleyPanoramaContractText),
   'e9-old-canal': entry(new URL('../../assets/pilots/map-rebuild-spike/old-canal-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/old-canal-panorama.glb', import.meta.url).href, JSON.stringify({ ...JSON.parse(oldCanalContractText), boundsMeters: { min: [-64, -64, -1.42], max: [64, 64, 2.906317] } }), oldCanalPanoramaContractText),
   'e10-archive-world': entry(new URL('../../assets/pilots/map-rebuild-spike/archive-world-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/archive-world-panorama.glb', import.meta.url).href, archiveWorldContractText, archiveWorldPanoramaContractText),
+  'e10-last-claim': entry(new URL('../../assets/pilots/map-rebuild-spike/last-claim-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/last-claim-panorama.glb', import.meta.url).href, lastClaimContractText, lastClaimPanoramaContractText),
   }),
 };
 const LANDMARK_ASSETS = import.meta.glob([
@@ -1082,7 +1086,7 @@ function keepLandmarkPaintReadable(model: THREE.Object3D, paint: LandmarkPaint =
     // pre-calibration render from a material that may already have been re-installed once.
     material.userData.landmarkAuthoredEmissive = paint.intensity;
     material.emissiveIntensity = calibratedLandmarkIntensity(paint.intensity);
-    if ((contractId === 'e2-pressure-garden' || contractId === 'e6-glow-mesa' || contractId === 'e6-picnic' || contractId === 'e7-dead-band' || contractId === 'e7-relay-rush' || contractId === 'e8-far-side' || contractId === 'e8-low-orbit' || contractId === 'e9-dome-basin' || contractId === 'e9-seed-run' || contractId === 'e9-devils-alley' || contractId === 'e9-old-canal') && !material.userData.landmarkDiffuseGrade) {
+    if ((contractId === 'e2-pressure-garden' || contractId === 'e6-glow-mesa' || contractId === 'e6-picnic' || contractId === 'e7-dead-band' || contractId === 'e7-relay-rush' || contractId === 'e8-far-side' || contractId === 'e8-low-orbit' || contractId === 'e9-dome-basin' || contractId === 'e9-seed-run' || contractId === 'e9-devils-alley' || contractId === 'e9-old-canal' || contractId === 'e10-last-claim') && !material.userData.landmarkDiffuseGrade) {
       material.userData.landmarkDiffuseGrade = true;
       // Recover the atlas's dark iron detail in its diffuse paint, so the body can
       // leave the legacy-emission exemption without turning its texture into a lamp.
@@ -2146,6 +2150,39 @@ diffuseColor.rgb = mix(diffuseColor.rgb, farSidePigment, 0.92 * farSideInterior)
   }
 }
 
+/** A circular memorial inlay stays on the complete authored square floor. */
+function paintLastClaimDeck(model: THREE.Object3D): void {
+  if (isMapBeautyDisabled()) return;
+  model.traverse(node => {
+    const mesh = node as THREE.Mesh<THREE.BufferGeometry, THREE.MeshStandardMaterial>;
+    if (!mesh.isMesh || Array.isArray(mesh.material) || !mesh.material.isMeshStandardMaterial) return;
+    const material = mesh.material, compile = material.onBeforeCompile.bind(material);
+    material.onBeforeCompile = (shader, renderer) => {
+      compile(shader, renderer);
+      shader.uniforms.memorialBrass = { value: new THREE.Color('#c4a465') };
+      shader.uniforms.memorialBand = { value: new THREE.Color('#8c928b') };
+      shader.vertexShader = shader.vertexShader
+        .replace('#include <common>', '#include <common>\nvarying vec2 vMemorialDeck;')
+        .replace('#include <begin_vertex>', '#include <begin_vertex>\nvMemorialDeck = (modelMatrix * vec4(position, 1.0)).xz;');
+      shader.fragmentShader = shader.fragmentShader
+        .replace('#include <common>', '#include <common>\nvarying vec2 vMemorialDeck;\nuniform vec3 memorialBrass, memorialBand;')
+        .replace('#include <map_fragment>', `#include <map_fragment>
+float memorialRadius = length(vMemorialDeck);
+float memorialInside = 1.0 - smoothstep(55.8, 57.0, memorialRadius);
+diffuseColor.rgb = (pow(max(diffuseColor.rgb, vec3(0.0)), vec3(0.68)) * 0.84 + vec3(0.026)) * mix(0.58, 1.0, memorialInside);
+float memorialAnnulus = smoothstep(44.7, 45.0, memorialRadius) * (1.0 - smoothstep(48.3, 48.6, memorialRadius));
+diffuseColor.rgb = mix(diffuseColor.rgb, memorialBand, memorialAnnulus * 0.24);
+float memorialRingDistance = min(min(abs(memorialRadius - 44.6), abs(memorialRadius - 48.7)), min(abs(memorialRadius - 55.2), min(abs(memorialRadius - 20.0), abs(memorialRadius - 5.0))));
+float memorialRing = 1.0 - smoothstep(0.065, 0.16, memorialRingDistance);
+float memorialSpokeDistance = abs(sin(atan(vMemorialDeck.y, vMemorialDeck.x) * 6.0)) * memorialRadius;
+float memorialSpoke = (1.0 - smoothstep(0.08, 0.20, memorialSpokeDistance)) * smoothstep(4.5, 5.0, memorialRadius) * (1.0 - smoothstep(43.9, 44.3, memorialRadius));
+diffuseColor.rgb = mix(diffuseColor.rgb, memorialBrass, max(memorialRing, memorialSpoke) * 0.82);`);
+    };
+    material.customProgramCacheKey = () => 'last-claim-memorial-inlay-v1';
+    material.needsUpdate = true;
+  });
+}
+
 /** Dry canal/road pigment follows published routes. Permanent green zones are
  * authored terrain paint; staged water and planted state keep their existing owners. */
 function clarifyRedFieldsRoute(model: THREE.Object3D, points: PaintRoutePoint[], greenZones: PaintZone[] = []): void {
@@ -2770,6 +2807,7 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
       if (host.contractId === 'e2-pressure-garden') clarifyPressureGardenTerraces(nextTerrain);
       if (host.contractId === 'e2-incline') clarifyInclineYards(nextTerrain);
       if (host.contractId === 'e3-canyon-works') clarifyCanyonGround(nextTerrain);
+      if (host.contractId === 'e10-last-claim') paintLastClaimDeck(nextTerrain);
       if (host.contractId === 'e9-devils-alley') gradeTerrainByHeight(nextTerrain, '#9f8b6e', '#bba487', -0.14, 4.57, 0.46);
       if (host.contractId === 'e8-low-orbit') gradeTerrainByHeight(nextTerrain, '#777a76', '#a5a28e', -4.8, 0.7, 0.38);
       if (host.contractId === 'e8-far-side') clarifyFarSideRegolith(nextTerrain);
