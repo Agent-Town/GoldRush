@@ -1,0 +1,32 @@
+slice 5: lane 19bdb6bce store 97d29c730796c9b5ddfae1f44073c44e1eced3e0 maps: the Last Claim 17:51Z
+store on 'astra/corrections-4', dirty 0 (Astra's, untouched)
+store main -> 97d29c7 (art(store): Last Claim — mount a dedicated memorial deck pack)
+store main pushed: 97d29c7
+scratch store: detached at 97d29c7, clean
+chain base ffc28f1f9 merging lane 19bdb6bce (lane tip 19bdb6bce) 17:51Z
+merged ed3263b12
+single-line law: nothing to flatten
+engine hash merged (scratch store at 97d29c7): 2a898e9e9e87ddd72c9dea598df97363c9e179592ef33e69a54871da21c1efd3
+tsc/build/e1: 0 / 0 / 0
+first-town payload: 34264846 bytes
+halo: rc=0 halo re-extraction PASS: 315 cured, 0 held, 760 regenerated-and-cured, 2127 scanned; alpha and opaque RGB unchanged
+null floors: rc=0 83 of 83 null floors match assets/contracts/null-floors.json (359.7s).
+law-pointer: rc=0 law-pointer-guard — do the law surfaces still point at what they claim?
+guards: ℹ pass 95 ℹ fail 0 
+e2e start 17:59Z: e2e/e10-static-boss.spec.ts e2e/ss-11-e10-beats.spec.ts e2e/er01-e10-census.spec.ts e2e/e10-preserve-objective.spec.ts e2e/map-census.spec.ts e2e/landmark-brightness.spec.ts e2e/landmark-collision.spec.ts e2e/fort-landmark-collision.spec.ts e2e/task-025-bandits-dont-swim.spec.ts e2e/m2-01-build-menu.spec.ts
+e2e: rc=1   4 failed   4 skipped   164 passed (20.5m)  18:20Z
+1) [desktop-chrome] › e2e/e10-static-boss.spec.ts:153:1 › recession hands the secured claim to the existing T10 re-inking finale 
+2) [desktop-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-archive-world census cites the existing Deep Sky debt 
+3) [mobile-chrome] › e2e/e10-static-boss.spec.ts:153:1 › recession hands the secured claim to the existing T10 re-inking finale 
+4) [mobile-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-archive-world census cites the existing Deep Sky debt 
+battery start 18:20Z
+battery: rc=1 ℹ tests 940 ℹ pass 932 ℹ fail 3 ℹ skipped 5  18:27Z
+✖ all 152 scripts/*.test.mjs fixture owners remove their temp directories (155879.502083ms)
+✖ failing tests:
+✖ rotation registry stays outside the engine identity corpus (632.290125ms)
+✖ the landed registry names the live engine and stays outside its hash corpus (148.574333ms)
+dirt after battery: 1
+CORR4-S5-PREP-DONE
+hash at pin time: 2a898e9e9e87ddd72c9dea598df97363c9e179592ef33e69a54871da21c1efd3
+pin #27
+era (chain, scratch store): ℹ pass 9 ℹ fail 0 
