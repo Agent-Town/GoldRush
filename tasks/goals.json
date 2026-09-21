@@ -5476,7 +5476,7 @@
             {
               "id": "sol-map-art-corrections-4",
               "title": "The corrections campaign, run 4 of the corrections (owner 2026-09-20 \"correct all the 23 UNACCEPTED maps, one after the other\"): the 13 maps runs 1 to 3 did not reach, the Boneyard first; NO CAP (owner 2026-09-21 \"Lets actually complete all the maps.\"): the whole remaining list in one run, continuations after a quota stop on the same word",
-              "status": "queued",
+              "status": "merged",
               "taskFile": "sol-map-art-corrections-4.md",
               "registeredBy": "attended 2026-09-20",
               "lane": "lane-c (Codex gpt-6-astra xhigh); continuation of sol-map-art-corrections-3 under the CODEX-WALL corrections lift and the art-store law",
@@ -5521,8 +5521,20 @@
                   "store": "97d29c7",
                   "pin": "#27 `2a898e9e`",
                   "landedAt": "2026-09-21"
+                },
+                {
+                  "slice": 6,
+                  "maps": "the Ember Shore, the Archive World, the River (render half)",
+                  "mergeHash": "1b386e5506b265131bc57ddc88d65ebc4b1ead0c",
+                  "store": "8ea5370",
+                  "pin": "#28 `4374cdbf`",
+                  "landedAt": "2026-09-21"
                 }
-              ]
+              ],
+              "mergeHash": "1b386e5506b265131bc57ddc88d65ebc4b1ead0c",
+              "mergedAt": "2026-09-21",
+              "review": "reviews/sol-map-art-corrections-4.md",
+              "drainedBy": "attended 2026-09-21 (landed in 6 slices; the store branch landed first each time)"
             },
             {
               "id": "e5-regatta-boat-01",
