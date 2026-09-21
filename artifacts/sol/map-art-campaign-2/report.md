@@ -443,3 +443,9 @@ Builds, scoped guards, selected Glow Mesa/Pressure Garden census, shared brightn
 **IMPROVED / HELD.** Ground RMS −40.00% desktop / −40.30% phone; median +48.17% / +73.04%. Gate 5 m station phone HUD 66.27%→0.17%. Ordinary entry still shows the unchanged ochre slab and no gate; crossing presentation is held for the Game owner, full ravine composition for layout/camera. [Every clause and evidence](run-6/e6-half-life-hollow/review.md).
 
 Builds, scoped guards, own 20 checks, selected Hollow/Glow Mesa census, shared brightness/collision and loading/repeat pass. Four-run p95 9.55→9.50 / 9.60→9.60 ms, draws 73/52 unchanged. Engine `68d976b06be1045f935047e482b765d91d61b045b45c87d77d677715b4e528e4` → `d2f15b7a6ec3c5e04fa54c71dfcc16dda4288e20d6890f0eedca77b9035b878f`. Store `850ae868ef5688c79f20f98f1bbda515065efa4b` pushed.
+
+### The Picnic correction — 2026-09-21 run 6
+
+**IMPROVED / HELD.** Four previously unselected nonblocking bodies mount (three blankets and staging gate), 5→9 bodies, +1,452 authored triangles. Original Glow Mesa collision-backed bodies remain; shade is held for the active collision alias. Ground RMS −45.92% desktop / −43.46% phone; emission 3.0→0.45. Pylon 5 m phone HUD 0%, entry 21.42%; blankets still outside phone entry, west desktop blanket 34.71% HUD-covered and cropped. Gathering and entry grouping remain held. [Every clause and evidence](run-6/e6-picnic/review.md).
+
+Builds, scoped guards, own 20 checks, selected Picnic/Glow Mesa census, shared checks, loading/repeat and dedicated six mount/dispose cycles pass. Four-run p95 9.70→10.00 / 10.00→9.75 ms, draws 87→90 / 53→54, within 15%. Engine `d2f15b7a6ec3c5e04fa54c71dfcc16dda4288e20d6890f0eedca77b9035b878f` → `338b9a112823ee64444dc9d7cc4525dea0e2bc84474174c6af583ea8ce9545ad`. Store `13038c4f2324f0fec063663db72ccde43238301a` pushed.

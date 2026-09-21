@@ -44,6 +44,7 @@ import echoCanyonContractText from '../../assets/pilots/map-rebuild-spike/echo-c
 import echoCanyonPanoramaContractText from '../../assets/pilots/map-rebuild-spike/echo-canyon-panorama-contract.json?raw';
 import gusherCountyContractText from '../../assets/pilots/map-rebuild-spike/gusher-county-terrain-contract.json?raw';
 import gusherCountyPanoramaContractText from '../../assets/pilots/map-rebuild-spike/gusher-county-panorama-contract.json?raw';
+import picnicContractText from '../../assets/pilots/map-rebuild-spike/picnic-terrain-contract.json?raw';
 import halfLifeHollowContractText from '../../assets/pilots/map-rebuild-spike/half-life-hollow-terrain-contract.json?raw';
 import halfLifeHollowPanoramaContractText from '../../assets/pilots/map-rebuild-spike/half-life-hollow-panorama-contract.json?raw';
 import inclineContractText from '../../assets/pilots/map-rebuild-spike/incline-terrain-contract.json?raw';
@@ -184,8 +185,8 @@ const REGISTRY: Record<string, Entry> = {
   'e5-flotilla': entry(new URL('../../assets/pilots/map-rebuild-spike/deepwater-claim-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/deepwater-claim-panorama.glb', import.meta.url).href, deepwaterClaimContractText, deepwaterClaimPanoramaContractText),
   'e6-showroom': entry(new URL('../../assets/pilots/map-rebuild-spike/showroom-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/showroom-panorama.glb', import.meta.url).href, showroomContractText, showroomPanoramaContractText),
   'e6-half-life-hollow': entry(new URL('../../assets/pilots/map-rebuild-spike/half-life-hollow-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/half-life-hollow-panorama.glb', import.meta.url).href, halfLifeHollowContractText, halfLifeHollowPanoramaContractText),
-  // Glow Mesa alias: The Picnic keeps the caprock sculpt and changes campaign rules only.
-  'e6-picnic': entry(new URL('../../assets/pilots/map-rebuild-spike/glow-mesa-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/glow-mesa-panorama.glb', import.meta.url).href, glowMesaContractText, glowMesaPanoramaContractText),
+  // Picnic retains the Glow Mesa sculpt and collision-backed bodies, adding its nonblocking dressing.
+  'e6-picnic': entry(new URL('../../assets/pilots/map-rebuild-spike/glow-mesa-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/glow-mesa-panorama.glb', import.meta.url).href, JSON.stringify({ ...JSON.parse(glowMesaContractText), landmarkMounts: [...JSON.parse(glowMesaContractText).landmarkMounts, ...JSON.parse(picnicContractText).landmarkMounts] }), glowMesaPanoramaContractText),
   'e7-echo-canyon': entry(new URL('../../assets/pilots/map-rebuild-spike/echo-canyon-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/echo-canyon-panorama.glb', import.meta.url).href, echoCanyonContractText, echoCanyonPanoramaContractText),
   // Relay Valley aliases: both signal variants reuse its terrain and panorama.
   'e7-dead-band': entry(new URL('../../assets/pilots/map-rebuild-spike/relay-valley-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/relay-valley-panorama.glb', import.meta.url).href, relayValleyContractText, relayValleyPanoramaContractText),
@@ -854,23 +855,10 @@ const LANDMARK_EMISSIVE_WHOLE_BODY_MIN = 0.12;
  * emissive), none of which route through this function — the cap below only ever touches a body
  * whose own diffuse atlas was being used as its light source.
  */
-/**
- * Contracts whose landmark atlas is too dark for the sun to carry: measured, each one reds
- * `e2e/map-census.spec.ts`'s 0.06 landmark-readability floor at EVERY legal calibrated lift on a
- * full 47-test run, while the pre-change tree is clean. They keep their authored emissive until
- * F-ASTRA-1's value separation reaches their atlas. Membership is a MEASUREMENT, not a taste: a map
- * leaves this list the moment a full census run clears the floor without it.
- */
-// Moth material atlas and frame remap pass the normal-emission census and visual gate (material-light21/gate22).
-const LANDMARK_EMISSIVE_READABILITY_EXEMPT = new Set([
-  'e6-picnic',
-]);
-
-function calibratedLandmarkIntensity(authored: number, contractId: string): number {
+function calibratedLandmarkIntensity(authored: number): number {
   const dials = lightingDials();
   if (dials.mode === 'legacy') return authored;
   if (dials.emissive !== undefined) return dials.emissive;
-  if (LANDMARK_EMISSIVE_READABILITY_EXEMPT.has(contractId)) return authored;
   const grade = authored / LANDMARK_EMISSIVE_DEFAULT;
   const lift = LANDMARK_EMISSIVE_CALIBRATED_DEFAULT * grade;
   return +THREE.MathUtils.clamp(lift, LANDMARK_EMISSIVE_WHOLE_BODY_MIN, LANDMARK_EMISSIVE_WHOLE_BODY_MAX).toFixed(4);
@@ -1082,8 +1070,8 @@ function keepLandmarkPaintReadable(model: THREE.Object3D, paint: LandmarkPaint =
     // wrote and the lit value it renders at — and so `?lighting=legacy` restores the exact
     // pre-calibration render from a material that may already have been re-installed once.
     material.userData.landmarkAuthoredEmissive = paint.intensity;
-    material.emissiveIntensity = calibratedLandmarkIntensity(paint.intensity, contractId);
-    if ((contractId === 'e2-pressure-garden' || contractId === 'e6-glow-mesa') && !material.userData.landmarkDiffuseGrade) {
+    material.emissiveIntensity = calibratedLandmarkIntensity(paint.intensity);
+    if ((contractId === 'e2-pressure-garden' || contractId === 'e6-glow-mesa' || contractId === 'e6-picnic') && !material.userData.landmarkDiffuseGrade) {
       material.userData.landmarkDiffuseGrade = true;
       // Recover the atlas's dark iron detail in its diffuse paint, so the body can
       // leave the legacy-emission exemption without turning its texture into a lamp.
@@ -2686,6 +2674,7 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
       if (host.contractId === 'e2-incline') clarifyInclineYards(nextTerrain);
       if (host.contractId === 'e3-canyon-works') clarifyCanyonGround(nextTerrain);
       if (host.contractId === 'e6-glow-mesa') gradeTerrainByHeight(nextTerrain, '#9f8867', '#9b9682', 1.5, 4.6, 0.34);
+      if (host.contractId === 'e6-picnic') gradeTerrainByHeight(nextTerrain, '#9f8867', '#a1a483', 1.5, 4.6, 0.34);
       if (host.contractId === 'e6-half-life-hollow') gradeTerrainByHeight(nextTerrain, '#897c68', '#b9a788', -1.9, 1.8, 0.32);
       if ((host.contractId === 'e4-dust-flats' || host.contractId === 'e4-long-road' || host.contractId === 'e4-gusher-county' || host.contractId === 'e4-boneyard') && selected.contract.maskTruth) clarifyMotorGround(nextTerrain, selected.contract.maskTruth, false, host.contractId === 'e4-gusher-county' ? 0.30 : host.contractId === 'e4-boneyard' ? 0.55 : 0.78);
       if (host.nightMode) applyNightTerrainPools(nextTerrain, host);

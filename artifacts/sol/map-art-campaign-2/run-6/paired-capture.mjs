@@ -56,7 +56,8 @@ try {for(const width of [1280,390])for(let cycle=0;cycle<(mode==='performance'?4
    });rows.push({width,arm,cycle,...stats,errors});console.log(width,cycle,arm,stats.p95,[...new Set(stats.calls)]);
   }else{
    await page.screenshot({path:`${out}/${arm}-frozen-${width}.png`});
-   for(const [focus,station,x,z] of config.stations){
+   for(const [focus,station,x,z,stationArm] of config.stations){
+    if(stationArm && stationArm!==arm)continue;
     await page.evaluate(({x,z})=>window.__GR_TEST__.teleport(x,z),{x,z});await page.waitForTimeout(900);
     const prefix=`${out}/station-${arm}-${focus}-${station}-${width}`;
     const state=await page.evaluate(focus=>{
