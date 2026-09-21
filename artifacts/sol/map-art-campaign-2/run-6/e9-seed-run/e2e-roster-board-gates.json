@@ -1,0 +1,22 @@
+[
+  {
+    "label": "roster-board",
+    "command": [
+      "npx",
+      "playwright",
+      "test",
+      "--workers=1",
+      "--project=desktop-chrome",
+      "--project=mobile-chrome",
+      "--trace=off",
+      "--reporter=line",
+      "--output=artifacts/sol/map-art-campaign-2/_raw/run-6/e9-seed-run-roster-board",
+      "e2e/e9-roster.spec.ts",
+      "e2e/board-gating-and-profiles.spec.ts"
+    ],
+    "environment": {},
+    "exit": 1,
+    "seconds": 43.89,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-6/e9-seed-run-roster-board.log"
+  }
+]

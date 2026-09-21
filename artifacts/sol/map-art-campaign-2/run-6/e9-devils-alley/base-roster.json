@@ -1,0 +1,58 @@
+{
+  "storeBase": "3c023c883f3d30179fbaef26a22629e31efe7df5",
+  "base": "64c3661c60bd3d5b212efe36630f17507843ab79",
+  "paths": {
+    "src/world/Terrain3dClaimPilot.ts": {
+      "candidateSha256": "9e2a825a9437575d0f5269d1c300841f0be534bbfdfcee9b5cd4733a55923929",
+      "baseSha256": "688a1c274b8ccfe247f33b6ad920094e0600bcf8f436ed27511533d7736c0843"
+    },
+    "assets/pilots/map-rebuild-spike/devils-alley-terrain-contract.json": {
+      "candidateSha256": "bb8db8c5b1f695d8a76cb9f2c1adaef02519172f303ee6b9b35383dd3b138ae7",
+      "baseSha256": "127ed9a8517532f96e7101b5d12f9cd6500a616d0e9fd99a1137e058741a981d"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/devils-alley/center-wind-anchor.glb": {
+      "candidateSha256": "597d8f87f16497275be81229d4b023d2940e504154176fb98f697443486aa28d",
+      "baseSha256": "bb713de3de3dc113123db50214a917763b18f9438b01b03cf4af72b2ba8dcd2f"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/devils-alley/devils-alley-landmark-pack-contract.json": {
+      "candidateSha256": "558b73fe72adac8cabb1b2a1327c03cd460504c4b5cd3584a79229691a5950f5",
+      "baseSha256": "47bb7f1f3e9caa2b66430c155f252cf396e3c49d9871042a5c3a6ab4aed2678a"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/devils-alley/devils-alley-landmarks.blend": {
+      "candidateSha256": "ecf1a39f1fe5af2a4b1f742609bb545ffa2b1def401141f279226ba3898dc7fd",
+      "baseSha256": "219484f55babbbd74d5c6bd3cf6bae79b0584680ed73fd9a46f813393b6f12f6"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/devils-alley/east-wind-anchor.glb": {
+      "candidateSha256": "c388e4f7cfc855cbf74d19331e81e00633df70c7fa020a866647543aa73dc1eb",
+      "baseSha256": "2a45d1690ed5efde68217a489165f6bbdf3a478057d8761749df51513198091d"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/devils-alley/west-wind-anchor.glb": {
+      "candidateSha256": "c91b61a21036e7ffd64ef62f141c55766e11e4bb43de8a7071b0ed25668a1275",
+      "baseSha256": "bae4c77b7f2af8495a075f539f4c9f748b5d22320787423dbd2d6b0a22579899"
+    }
+  },
+  "pattern": "plain Red Fields boot",
+  "specs": [
+    "e2e/e9-roster.spec.ts"
+  ],
+  "candidateEngine": "6b6c1185f0c23a0a2235502e69238db177900147ab630e66db1120c9cb30ada2",
+  "baseEngine": "ba67e6db9a2d8b34e23fcb1bacdc4e00a8ce72e84c347d9d6bbf3f9975a5a66f",
+  "command": [
+    "npx",
+    "playwright",
+    "test",
+    "--workers=1",
+    "--project=desktop-chrome",
+    "--project=mobile-chrome",
+    "--trace=off",
+    "--reporter=line",
+    "--output=artifacts/sol/map-art-campaign-2/_raw/run-6/e9-devils-alley-base-roster/test-results",
+    "--grep",
+    "plain Red Fields boot",
+    "e2e/e9-roster.spec.ts"
+  ],
+  "exit": 1,
+  "restoredEngine": "6b6c1185f0c23a0a2235502e69238db177900147ab630e66db1120c9cb30ada2",
+  "candidateRestoredExactly": true,
+  "log": "artifacts/sol/map-art-campaign-2/_raw/run-6/e9-devils-alley-base-roster/tests.log"
+}

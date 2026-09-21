@@ -90,7 +90,8 @@ import { createFordSheet, createWaterConfluence, createWaterRibbon, updateWaterM
 import type { ContractManifest } from '../meta/ContractFamilies';
 
 type MotorGroundTruth = Pick<ContractManifest['tileParams'], 'dimensions' | 'roadCorridors' | 'tarSeams' | 'orbitSpawn'>;
-type CanalPaintRoute = { points: Array<{ x: number; z: number }> };
+type PaintRoutePoint = { x: number; z: number };
+type PaintZone = { minX: number; maxX: number; minZ: number; maxZ: number };
 
 type Contract = {
   tileId: string;
@@ -101,7 +102,13 @@ type Contract = {
   boundsMeters: { min: [number, number, number]; max: [number, number, number] };
   panoramaMount: Mount;
   landmarkMounts?: LandmarkMount[];
-  maskTruth?: MotorGroundTruth & { canalRoute?: CanalPaintRoute; waterMask?: { id: string; regions: MaskRegion[] } };
+  maskTruth?: MotorGroundTruth & {
+    canalRoute?: { points: PaintRoutePoint[] };
+    inheritedCanalRoute?: { points: PaintRoutePoint[] };
+    caravanRoute?: PaintRoutePoint[];
+    permanentGreenWaypointZones?: PaintZone[];
+    waterMask?: { id: string; regions: MaskRegion[] };
+  };
   maskAgreement?: { waterPlaneY?: number };
   waterSurface?: { owner: string; includedInTerrainGLB: boolean };
 };
@@ -1075,7 +1082,7 @@ function keepLandmarkPaintReadable(model: THREE.Object3D, paint: LandmarkPaint =
     // pre-calibration render from a material that may already have been re-installed once.
     material.userData.landmarkAuthoredEmissive = paint.intensity;
     material.emissiveIntensity = calibratedLandmarkIntensity(paint.intensity);
-    if ((contractId === 'e2-pressure-garden' || contractId === 'e6-glow-mesa' || contractId === 'e6-picnic' || contractId === 'e7-dead-band' || contractId === 'e7-relay-rush' || contractId === 'e8-far-side' || contractId === 'e8-low-orbit' || contractId === 'e9-dome-basin') && !material.userData.landmarkDiffuseGrade) {
+    if ((contractId === 'e2-pressure-garden' || contractId === 'e6-glow-mesa' || contractId === 'e6-picnic' || contractId === 'e7-dead-band' || contractId === 'e7-relay-rush' || contractId === 'e8-far-side' || contractId === 'e8-low-orbit' || contractId === 'e9-dome-basin' || contractId === 'e9-seed-run' || contractId === 'e9-devils-alley' || contractId === 'e9-old-canal') && !material.userData.landmarkDiffuseGrade) {
       material.userData.landmarkDiffuseGrade = true;
       // Recover the atlas's dark iron detail in its diffuse paint, so the body can
       // leave the legacy-emission exemption without turning its texture into a lamp.
@@ -2139,11 +2146,11 @@ diffuseColor.rgb = mix(diffuseColor.rgb, farSidePigment, 0.92 * farSideInterior)
   }
 }
 
-/** Dry mineral bed and pale spoil shoulders follow the published canal exactly.
- * Water remains the staged canal owner's surface; this never paints wet/green state. */
-function clarifyDomeCanal(model: THREE.Object3D, route: CanalPaintRoute): void {
-  if (isMapBeautyDisabled() || route.points.length < 2) return;
-  const segments = route.points.slice(1).map((end, i) => new THREE.Vector4(route.points[i]!.x, route.points[i]!.z, end.x, end.z));
+/** Dry canal/road pigment follows published routes. Permanent green zones are
+ * authored terrain paint; staged water and planted state keep their existing owners. */
+function clarifyRedFieldsRoute(model: THREE.Object3D, points: PaintRoutePoint[], greenZones: PaintZone[] = []): void {
+  if (isMapBeautyDisabled() || points.length < 2) return;
+  const segments = points.slice(1).map((end, i) => new THREE.Vector4(points[i]!.x, points[i]!.z, end.x, end.z));
   const materials = new Set<THREE.MeshStandardMaterial>();
   model.traverse(node => {
     const mesh = node as THREE.Mesh<THREE.BufferGeometry, THREE.MeshStandardMaterial>;
@@ -2155,12 +2162,14 @@ function clarifyDomeCanal(model: THREE.Object3D, route: CanalPaintRoute): void {
       compile(shader, renderer);
       shader.uniforms.domeCanalSegments = { value: segments };
       shader.uniforms.domeCanalEarth = { value: new THREE.Color('#af8b69') };
-      shader.uniforms.domeCanalBed = { value: new THREE.Color('#777467') };
+      shader.uniforms.domeCanalBed = { value: new THREE.Color(greenZones.length ? '#b39b74' : '#777467') };
+      shader.uniforms.redFieldsGreen = { value: new THREE.Color('#82916e') };
+      shader.uniforms.redFieldsZones = { value: greenZones.map(z => new THREE.Vector4(z.minX, z.minZ, z.maxX, z.maxZ)) };
       shader.vertexShader = shader.vertexShader
         .replace('#include <common>', '#include <common>\nvarying vec3 vDomeCanal;')
         .replace('#include <begin_vertex>', '#include <begin_vertex>\nvDomeCanal = (modelMatrix * vec4(position, 1.0)).xyz;');
       shader.fragmentShader = shader.fragmentShader
-        .replace('#include <common>', `#include <common>\nvarying vec3 vDomeCanal;\nuniform vec4 domeCanalSegments[${segments.length}];\nuniform vec3 domeCanalEarth, domeCanalBed;`)
+        .replace('#include <common>', `#include <common>\nvarying vec3 vDomeCanal;\nuniform vec4 domeCanalSegments[${segments.length}];\nuniform vec3 domeCanalEarth, domeCanalBed;${greenZones.length ? `\nuniform vec3 redFieldsGreen;\nuniform vec4 redFieldsZones[${greenZones.length}];` : ''}`)
         .replace('#include <map_fragment>', `#include <map_fragment>
 float domeCanalDistance = 1000.0;
 for (int i = 0; i < ${segments.length}; i++) {
@@ -2171,13 +2180,20 @@ for (int i = 0; i < ${segments.length}; i++) {
 float domeCanalInterior = 1.0 - smoothstep(50.0, 63.0, max(abs(vDomeCanal.x), abs(vDomeCanal.z)));
 float domeCanalGrain = sin(vDomeCanal.x * 1.7 + sin(vDomeCanal.z * 0.8)) * sin(vDomeCanal.z * 2.3);
 vec3 domeCanalPigment = domeCanalEarth * mix(0.82, 1.13, smoothstep(-2.0, 4.0, vDomeCanal.y));
-diffuseColor.rgb = mix(diffuseColor.rgb, domeCanalPigment * (1.0 + domeCanalGrain * 0.035), 0.58 * domeCanalInterior);
+${greenZones.length ? `float redFieldsGreenMask = 0.0;
+for (int i = 0; i < ${greenZones.length}; i++) {
+  vec4 zone = redFieldsZones[i];
+  vec2 inset = min(vDomeCanal.xz - zone.xy, zone.zw - vDomeCanal.xz);
+  redFieldsGreenMask = max(redFieldsGreenMask, smoothstep(0.0, 2.0, min(inset.x, inset.y)));
+}
+domeCanalPigment = mix(domeCanalPigment, redFieldsGreen, redFieldsGreenMask * 0.82);` : ''}
+diffuseColor.rgb = mix(diffuseColor.rgb, domeCanalPigment * (1.0 + domeCanalGrain * 0.035), ${greenZones.length ? '0.48' : '0.58'} * domeCanalInterior);
 float domeCanalBedMask = 1.0 - smoothstep(1.3, 2.1, domeCanalDistance);
 float domeCanalShoulder = smoothstep(1.5, 2.1, domeCanalDistance) * (1.0 - smoothstep(2.8, 3.8, domeCanalDistance));
-diffuseColor.rgb = mix(diffuseColor.rgb, domeCanalBed * (0.94 + domeCanalGrain * 0.04), 0.68 * domeCanalBedMask * domeCanalInterior);
-diffuseColor.rgb = mix(diffuseColor.rgb, domeCanalEarth * 1.22, 0.35 * domeCanalShoulder * domeCanalInterior);`);
+diffuseColor.rgb = mix(diffuseColor.rgb, domeCanalBed * (0.94 + domeCanalGrain * 0.04), ${greenZones.length ? '0.48' : '0.68'} * domeCanalBedMask * domeCanalInterior);
+diffuseColor.rgb = mix(diffuseColor.rgb, domeCanalEarth * 1.22, ${greenZones.length ? '0.18' : '0.35'} * domeCanalShoulder * domeCanalInterior);`);
     };
-    material.customProgramCacheKey = () => `dome-canal-dry-pigment-v1:${segments.length}`;
+    material.customProgramCacheKey = () => `redfields-dry-route-v2:${segments.length}:${greenZones.length}`;
     material.needsUpdate = true;
   }
 }
@@ -2754,9 +2770,12 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
       if (host.contractId === 'e2-pressure-garden') clarifyPressureGardenTerraces(nextTerrain);
       if (host.contractId === 'e2-incline') clarifyInclineYards(nextTerrain);
       if (host.contractId === 'e3-canyon-works') clarifyCanyonGround(nextTerrain);
+      if (host.contractId === 'e9-devils-alley') gradeTerrainByHeight(nextTerrain, '#9f8b6e', '#bba487', -0.14, 4.57, 0.46);
       if (host.contractId === 'e8-low-orbit') gradeTerrainByHeight(nextTerrain, '#777a76', '#a5a28e', -4.8, 0.7, 0.38);
       if (host.contractId === 'e8-far-side') clarifyFarSideRegolith(nextTerrain);
-      if (host.contractId === 'e9-dome-basin' && selected.contract.maskTruth?.canalRoute) clarifyDomeCanal(nextTerrain, selected.contract.maskTruth.canalRoute);
+      if (host.contractId === 'e9-dome-basin' && selected.contract.maskTruth?.canalRoute) clarifyRedFieldsRoute(nextTerrain, selected.contract.maskTruth.canalRoute.points);
+      if (host.contractId === 'e9-old-canal' && selected.contract.maskTruth?.inheritedCanalRoute) clarifyRedFieldsRoute(nextTerrain, selected.contract.maskTruth.inheritedCanalRoute.points);
+      if (host.contractId === 'e9-seed-run' && selected.contract.maskTruth?.caravanRoute) clarifyRedFieldsRoute(nextTerrain, selected.contract.maskTruth.caravanRoute, selected.contract.maskTruth.permanentGreenWaypointZones);
       if (host.contractId === 'e6-glow-mesa') gradeTerrainByHeight(nextTerrain, '#9f8867', '#9b9682', 1.5, 4.6, 0.34);
       if (host.contractId === 'e7-relay-rush') gradeTerrainByHeight(nextTerrain, '#898476', '#b2a482', 0.4, 4.6, 0.34);
       if (host.contractId === 'e7-dead-band') gradeTerrainByHeight(nextTerrain, '#888474', '#b2ab92', 0.4, 4.6, 0.34);

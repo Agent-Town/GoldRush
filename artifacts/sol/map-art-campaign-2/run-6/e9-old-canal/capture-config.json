@@ -1,0 +1,82 @@
+{
+  "extraSources": [
+    "systems/CanalFlowPresentation"
+  ],
+  "epoch": "epoch-9-redfields",
+  "assets": [
+    {
+      "name": "old-canal-terrain.glb",
+      "type": "model/gltf-binary"
+    },
+    {
+      "name": "old-canal-panorama.glb",
+      "type": "model/gltf-binary"
+    },
+    {
+      "name": "south-survey-rig.glb",
+      "type": "model/gltf-binary"
+    },
+    {
+      "name": "canal-segment-a-marker.glb",
+      "type": "model/gltf-binary"
+    },
+    {
+      "name": "canal-segment-b-marker.glb",
+      "type": "model/gltf-binary"
+    },
+    {
+      "name": "canal-segment-c-marker.glb",
+      "type": "model/gltf-binary"
+    },
+    {
+      "name": "north-outflow-gate.glb",
+      "type": "model/gltf-binary"
+    }
+  ],
+  "stations": [
+    [
+      "canal-segment-b-marker",
+      "entry",
+      0,
+      12
+    ],
+    [
+      "canal-segment-b-marker",
+      14,
+      2,
+      14
+    ],
+    [
+      "canal-segment-b-marker",
+      5,
+      2,
+      5
+    ],
+    [
+      "canal-segment-b-marker",
+      3,
+      2,
+      3
+    ]
+  ],
+  "regions": [
+    [
+      1280,
+      [
+        790,
+        520,
+        940,
+        620
+      ]
+    ],
+    [
+      390,
+      [
+        275,
+        450,
+        365,
+        510
+      ]
+    ]
+  ]
+}

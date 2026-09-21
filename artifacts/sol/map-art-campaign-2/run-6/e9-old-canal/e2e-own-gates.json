@@ -1,0 +1,21 @@
+[
+  {
+    "label": "own",
+    "command": [
+      "npx",
+      "playwright",
+      "test",
+      "--workers=1",
+      "--project=desktop-chrome",
+      "--project=mobile-chrome",
+      "--trace=off",
+      "--reporter=line",
+      "--output=artifacts/sol/map-art-campaign-2/_raw/run-6/e9-old-canal-own",
+      "e2e/e9-old-canal-choices.spec.ts"
+    ],
+    "environment": {},
+    "exit": 0,
+    "seconds": 39.56,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-6/e9-old-canal-own.log"
+  }
+]

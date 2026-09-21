@@ -1,4 +1,4 @@
-"""Verify one rebuilt landmark while all other pack and gameplay-bearing bytes stay fixed."""
+"""Verify selected rebuilt landmarks while all other pack and gameplay-bearing bytes stay fixed."""
 from pathlib import Path
 import json,subprocess,hashlib,sys
 name,pack,mount=sys.argv[1:];pilot=Path('assets/pilots/map-rebuild-spike');out=Path('artifacts/sol/map-art-campaign-2/run-6')/name
@@ -7,7 +7,7 @@ original=lambda f:subprocess.check_output(['git','-C',store,'show',base['store']
 rel=f'landmarks/{pack}/{pack}-landmark-pack-contract.json';old=json.loads(original(rel));new=json.loads((pilot/rel).read_text());rows={}
 assert old['mounts']==new['mounts'];assert old['atlas']==new['atlas']
 for key,record in new['assets'].items():
- if key==mount:
+ if key in mount.split(','):
   before=old['assets'][key].copy();after=record.copy()
   for d in [before,after]:
    for k in ['triangles','sha256','artRevision']:d.pop(k,None)

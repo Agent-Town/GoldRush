@@ -479,3 +479,21 @@ Builds, scoped guards, own momentum/physics, movement, parity/census, shared che
 **IMPROVED / HELD.** Dry mineral route and geared lock wheel, 452→1,580/3,000 triangles. Ground RMS −49.33% / −39.41%; 5 m body median 0.054→0.327 / 0.067→0.325. Low-surface material mismatch fixed. Declared 5 m phone HUD 48.008→0%, silhouette fits; ordinary phone lock remains offscreen. Wet state, monumental chamber, terraced settlement, rail joins and entry composition remain held. [Every clause and evidence](run-6/e9-dome-basin/review.md).
 
 Builds, scoped guards, final canal stages, census, shared checks and loading/repeat pass. Six arsenal/profile failures reproduce on exact base. Four-run p95 8.90→8.90 / 9.85→9.45 ms; draws 88/53 unchanged. Engine `d7cad8f8bd1ebb800b36fff3531b8726760b5430fcb516cd39d32a71bb420bcf` → `8e71546045562c64ef70c60d2616e0a2cc1cee965709dc89d691ca13d57164dc`. Store `4613a6ff288eb6e984dbdd44e7e861ee1627da73` pushed.
+
+### The Seed Run correction — 2026-09-21 run 6
+
+**IMPROVED / HELD.** Enclosed curved seed vault, 800→2,148/3,000 triangles; base area −29.29%. Four dry route segments and three green zones gain continuous pigment. Ground RMS −59.39% / −62.50%; entry body median 0.094→0.254 / 0.097→0.254. Declared 3 m phone HUD 53.759→0%, full bbox fits; ordinary phone entry coverage increases 16.057→23.326%. Convoy, irrigation, distant settlement, materials and ordinary entry remain held. [Every clause and evidence](run-6/e9-seed-run/review.md).
+
+Builds, scoped guards, final own caravan/seam 15 pass / one intentional skip, census, shared checks and loading/repeat pass. Two ordinary-roster failures reproduce on exact base; an earlier seam failure also reproduces on base, while final candidate passes. Four-run p95 10.20→10.05 / 9.95→10.00 ms, draws 126/72 unchanged. Engine `8e71546045562c64ef70c60d2616e0a2cc1cee965709dc89d691ca13d57164dc` → `ba67e6db9a2d8b34e23fcb1bacdc4e00a8ce72e84c347d9d6bbf3f9975a5a66f`. Store `3c023c883f3d30179fbaef26a22629e31efe7df5` pushed.
+
+### Devil's Alley correction — 2026-09-21 run 6
+
+**IMPROVED / HELD.** Three braced coil anchors, west/center/east 1,848/2,192/2,536 triangles under 3,000 each; base area −29.29%. Entry body median 0.084→0.254; ground RMS −40.50% / −20.91%. Declared 3 m phone HUD 7.071→0.004%, full bbox fits; ordinary phone 5.175→5.880% remains held. Functional 8 m rings retained; storm layout, fine materials and entry UI remain held. Later-state sweep is shown separately. [Every clause and evidence](run-6/e9-devils-alley/review.md).
+
+Builds, scoped guards, own relocation/story 16/16, census, shared checks and loading/repeat pass. Two roster failures reproduce on exact base. Four-run p95 9.70→9.75 / 9.60→9.85 ms; draws 88/58 unchanged. Engine `ba67e6db9a2d8b34e23fcb1bacdc4e00a8ce72e84c347d9d6bbf3f9975a5a66f` → `6b6c1185f0c23a0a2235502e69238db177900147ab630e66db1120c9cb30ada2`. Store `57a399b81a9d2911364c0770e10a6a5c6eb414c6` pushed.
+
+### The Old Canal correction — 2026-09-22 run 6
+
+**IMPROVED / HELD.** Undecided translucent slabs replaced by broken low masonry, 552 triangles per band, 0.015–0.395 m above sampled ground. Three supported hand-winches, 1,444/1,456/1,468 triangles within 3,000 each. Dry pigment exposes six inherited route segments. Ground RMS −69.99% / −25.61%; entry body median 0.095→0.186 / 0.102→0.190. Declared 5 m phone HUD 24.030→0.111%; 3 m rejected for decision-panel overlap (6.316%). Ordinary phone coverage 15.861% remains held. Depth, contact shadows, continuous wet vista and full architecture remain held. [Every clause and evidence](run-6/e9-old-canal/review.md).
+
+Builds, scoped guards, own choices/persistence 8/8, relevant story 6/6, census, shared checks and loading/repeat pass. Presentation proof covers three-state visibility, idempotent substrate resampling and 18 resource disposals. Two roster failures reproduce on exact base. Four-run p95 9.85→9.30 / 9.60→9.35 ms; draws 91→90 / 59→59. Engine `6b6c1185f0c23a0a2235502e69238db177900147ab630e66db1120c9cb30ada2` → `c2018fcb58b57688525b2afe23a8fd99dd20e3ce481894e58f9017db628333c7`. Store `ce3a6a5ad3b8d9f44c4adece0d6c8b424735b5e4` pushed.
