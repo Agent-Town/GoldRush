@@ -443,3 +443,21 @@ Builds, scoped guards, selected Glow Mesa/Pressure Garden census, shared brightn
 **IMPROVED / HELD.** Ground RMS −40.00% desktop / −40.30% phone; median +48.17% / +73.04%. Gate 5 m station phone HUD 66.27%→0.17%. Ordinary entry still shows the unchanged ochre slab and no gate; crossing presentation is held for the Game owner, full ravine composition for layout/camera. [Every clause and evidence](run-6/e6-half-life-hollow/review.md).
 
 Builds, scoped guards, own 20 checks, selected Hollow/Glow Mesa census, shared brightness/collision and loading/repeat pass. Four-run p95 9.55→9.50 / 9.60→9.60 ms, draws 73/52 unchanged. Engine `68d976b06be1045f935047e482b765d91d61b045b45c87d77d677715b4e528e4` → `d2f15b7a6ec3c5e04fa54c71dfcc16dda4288e20d6890f0eedca77b9035b878f`. Store `850ae868ef5688c79f20f98f1bbda515065efa4b` pushed.
+
+### The Picnic correction — 2026-09-21 run 6
+
+**IMPROVED / HELD.** Four previously unselected nonblocking bodies mount (three blankets and staging gate), 5→9 bodies, +1,452 authored triangles. Original Glow Mesa collision-backed bodies remain; shade is held for the active collision alias. Ground RMS −45.92% desktop / −43.46% phone; emission 3.0→0.45. Pylon 5 m phone HUD 0%, entry 21.42%; blankets still outside phone entry, west desktop blanket 34.71% HUD-covered and cropped. Gathering and entry grouping remain held. [Every clause and evidence](run-6/e6-picnic/review.md).
+
+Builds, scoped guards, own 20 checks, selected Picnic/Glow Mesa census, shared checks, loading/repeat and dedicated six mount/dispose cycles pass. Four-run p95 9.70→10.00 / 10.00→9.75 ms, draws 87→90 / 53→54, within 15%. Engine `d2f15b7a6ec3c5e04fa54c71dfcc16dda4288e20d6890f0eedca77b9035b878f` → `338b9a112823ee64444dc9d7cc4525dea0e2bc84474174c6af583ea8ce9545ad`. Store `13038c4f2324f0fec063663db72ccde43238301a` pushed.
+
+### The Dead Band correction — 2026-09-21 run 6
+
+**IMPROVED / HELD.** Two authored nonblocking frames mount, 5→7 bodies, +336 triangles; warning frame appears at entry. Ground RMS −45.64% desktop / −40.92% phone; radio entry median 0.115→0.210 at emission 0.45. Radio 2 m phone HUD 51.46%→0.52%; warning 3 m 0.026%, north gate 3 m 3.51% with side crop. Paired-terrace vista, held solid mounts and entry HUD remain with named owners. [Every clause and evidence](run-6/e7-dead-band/review.md).
+
+Builds, scoped guards, visual census, shared checks, loading/repeat and six mount/dispose cycles pass. Own batch 39 pass / five failures, all reproduced on exact base: era enable/activation on both projects and mobile Save Tape visibility. Four-run p95 9.55→9.65 / 9.65→9.60 ms, draws 77→78 / 55→56, within 15%. Engine `338b9a112823ee64444dc9d7cc4525dea0e2bc84474174c6af583ea8ce9545ad` → `c4de03c756e538abb6c3787d9a1e4b80cc03b62cc3de095eaa2fedb8df814ab4`. Store `d852b15ac75bb588ab3c45912f0d704abe90261a` pushed.
+
+### Relay Rush correction — 2026-09-21 run 6
+
+**IMPROVED / HELD.** Four relay frames mount, 5→9 bodies, +1,264 authored triangles. Ground RMS −51.24% desktop / −49.40% phone. R2 entry phone HUD 2.91%; west dish 3 m 76.11%→6.60%; charting station 2 m 0.60%. Equal-height route, peripheral entry crop/HUD and full vista remain held. Low frame platform covers 6.5% of the player sprite at the feet. [Every clause and evidence](run-6/e7-relay-rush/review.md).
+
+Builds, scoped guards, own 16 checks, six Signal row checks, visual census, shared checks, loading/repeat and six mount/dispose cycles pass. Four-run p95 10.10→10.05 / 10.00→9.95 ms, draws 68→70 / 51→52, within 15%. Engine `c4de03c756e538abb6c3787d9a1e4b80cc03b62cc3de095eaa2fedb8df814ab4` → `36abad02458965365c31dfe66a98155d66182324ab136feb6709bfa791ff0abc`. Store `0535aa5ffca2f422b0d15b378044d00b9e47771a` pushed.

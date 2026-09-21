@@ -1,0 +1,114 @@
+{
+  "epoch": "epoch-7-signal",
+  "assets": [
+    {
+      "name": "relay-valley-terrain.glb",
+      "type": "model/gltf-binary"
+    },
+    {
+      "name": "relay-valley-panorama.glb",
+      "type": "model/gltf-binary"
+    },
+    {
+      "name": "west-ridge-dish-cluster.glb",
+      "type": "model/gltf-binary"
+    },
+    {
+      "name": "east-ridge-dish-cluster.glb",
+      "type": "model/gltf-binary"
+    },
+    {
+      "name": "dead-gap-charting-station.glb",
+      "type": "model/gltf-binary"
+    },
+    {
+      "name": "valley-cable-drum-yard.glb",
+      "type": "model/gltf-binary"
+    },
+    {
+      "name": "drone-recovery-beacon.glb",
+      "type": "model/gltf-binary"
+    }
+  ],
+  "stations": [
+    [
+      "dead-gap-charting-station",
+      "entry",
+      0,
+      12
+    ],
+    [
+      "dead-gap-charting-station",
+      14,
+      0,
+      32
+    ],
+    [
+      "dead-gap-charting-station",
+      5,
+      0,
+      23
+    ],
+    [
+      "iron-shadow-warning-frame",
+      "entry",
+      0,
+      12,
+      "after"
+    ],
+    [
+      "iron-shadow-warning-frame",
+      5,
+      0,
+      11,
+      "after"
+    ],
+    [
+      "north-silence-gate",
+      5,
+      0,
+      59,
+      "after"
+    ],
+    [
+      "dead-gap-charting-station",
+      2,
+      0,
+      20
+    ],
+    [
+      "iron-shadow-warning-frame",
+      3,
+      0,
+      9,
+      "after"
+    ],
+    [
+      "north-silence-gate",
+      3,
+      0,
+      57,
+      "after"
+    ]
+  ],
+  "regions": [
+    [
+      1280,
+      [
+        170,
+        350,
+        420,
+        460
+      ]
+    ],
+    [
+      390,
+      [
+        340,
+        395,
+        380,
+        510
+      ]
+    ]
+  ]
+}

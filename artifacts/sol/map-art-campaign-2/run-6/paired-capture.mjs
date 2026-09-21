@@ -56,7 +56,8 @@ try {for(const width of [1280,390])for(let cycle=0;cycle<(mode==='performance'?4
    });rows.push({width,arm,cycle,...stats,errors});console.log(width,cycle,arm,stats.p95,[...new Set(stats.calls)]);
   }else{
    await page.screenshot({path:`${out}/${arm}-frozen-${width}.png`});
-   for(const [focus,station,x,z] of config.stations){
+   for(const [focus,station,x,z,stationArm] of config.stations){
+    if(stationArm && stationArm!==arm)continue;
     await page.evaluate(({x,z})=>window.__GR_TEST__.teleport(x,z),{x,z});await page.waitForTimeout(900);
     const prefix=`${out}/station-${arm}-${focus}-${station}-${width}`;
     const state=await page.evaluate(focus=>{
@@ -73,13 +74,13 @@ try {for(const width of [1280,390])for(let cycle=0;cycle<(mode==='performance'?4
     const persistent=await page.addStyleTag({content:`body *{visibility:hidden!important}${keep}{visibility:visible!important}`});
     await page.screenshot({path:prefix+'-persistent-mask.png'});await persistent.evaluate(n=>n.remove());
     await page.evaluate(focus=>window.__ART_MODELS__.get(focus).traverse(n=>{if(n.isMesh&&n.userData.savedMaterial){n.material.dispose();n.material=n.userData.savedMaterial;delete n.userData.savedMaterial}}),focus);
-    if(id==='e4-gusher-county'&&focus==='county-camp-rig'&&station==='entry'){
+    if(((id==='e4-gusher-county'&&focus==='county-camp-rig')||config.actorMaskAtEntry)&&station==='entry'){
      const hide=await page.addStyleTag({content:'body *{visibility:hidden!important}#game-canvas{visibility:visible!important}'});
-     await page.evaluate(()=>{
-      let scene=window.__ART_MODELS__.get('county-camp-rig');while(scene.parent)scene=scene.parent;
+     await page.evaluate(focus=>{
+      let scene=window.__ART_MODELS__.get(focus);while(scene.parent)scene=scene.parent;
       const hero=scene.getObjectByName('HomesteaderHero');if(!hero)throw Error('hero missing');window.__ART_HERO__=[];
       hero.traverse(n=>{if(n.isSprite){const old=n.material,m=old.clone();m.onBeforeCompile=(shader,renderer)=>{old.onBeforeCompile(shader,renderer);shader.fragmentShader=shader.fragmentShader.replace('outgoingLight = diffuseColor.rgb;', 'outgoingLight = vec3(1.0,0.0,1.0);')};m.customProgramCacheKey=()=>old.customProgramCacheKey()+'|actor-mask';m.toneMapped=false;m.fog=false;n.material=m;window.__ART_HERO__.push([n,old]);}});
-     });
+     },focus);
      await page.screenshot({path:prefix+'-hero-visible.png'});
      await page.evaluate(()=>window.__ART_HERO__.forEach(([n])=>{n.material.depthTest=false;n.material.needsUpdate=true}));
      await page.screenshot({path:prefix+'-hero-unoccluded.png'});

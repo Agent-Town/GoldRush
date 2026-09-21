@@ -11,8 +11,10 @@ def triangles(p):
  return total
 for kind in ['terrain','panorama']:
  p=base/f'{name}-{kind}-contract.json';d=json.loads(p.read_text());n=triangles(base/d['asset']);rows.append({'kind':kind,'asset':d['asset'],'actualTriangles':n,'declaredTriangles':d['triangles'],'budget':d['triangleBudget']});assert n==d['triangles'] and n<=d['triangleBudget']
-p=base/f'landmarks/{name}/{name}-landmark-pack-contract.json'
-if p.exists():
- for id,d in json.loads(p.read_text())['assets'].items():
-  n=triangles(base/d['asset']);rows.append({'kind':'landmark','id':id,'asset':d['asset'],'actualTriangles':n,'declaredTriangles':d['triangles'],'budget':d['triangleBudget']});assert n==d['triangles'] and n<=d['triangleBudget']
+for pack in [name, *sys.argv[3:]]:
+ p=base/f'landmarks/{pack}/{pack}-landmark-pack-contract.json'
+ if not p.exists():continue
+ contract=json.loads(p.read_text());active={m['id'] for m in contract['mounts'] if 'contractIds' not in m or sys.argv[2] in m['contractIds']}
+ for id,d in contract['assets'].items():
+  n=triangles(base/d['asset']);rows.append({'kind':'landmark','id':id,'asset':d['asset'],'actualTriangles':n,'declaredTriangles':d['triangles'],'budget':d['triangleBudget'],'mounted':id in active});assert n==d['triangles'] and n<=d['triangleBudget']
 folder.mkdir(exist_ok=True);(folder/'asset-budgets.json').write_text(json.dumps(rows,indent=2)+'\n');print(rows)
