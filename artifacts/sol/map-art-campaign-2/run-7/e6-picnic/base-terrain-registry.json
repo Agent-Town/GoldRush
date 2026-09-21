@@ -1,0 +1,43 @@
+{
+  "storeBase": "8ea5370ba1dfd4bc85276380875fdb87f17f7bf7",
+  "base": "823b06b1dce4b861be2fccf646245fc4cc864588",
+  "paths": {
+    "src/world/LandmarkCollision.ts": {
+      "candidateSha256": "3650bd8c00e22a8cb458a22ff258b7561482565b4fe9cc47fdd5916a4a51a9e5",
+      "baseSha256": "52ff39655ddf3babc8d47d5eef67847ddb9187dba4e4664729991c3b5d65ed07"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/picnic/picnic-landmark-pack-contract.json": {
+      "candidateSha256": "356f294c50b6d9c310851db96a9da1364136d9951c5b7fdf8ff866b26da9c0de",
+      "baseSha256": "72672d62a8afb36c50efe1ee91883f90f3bab592674f0d6675efc7859eebf8ae"
+    },
+    "assets/pilots/map-rebuild-spike/picnic-terrain-contract.json": {
+      "candidateSha256": "57b9f2210f162f6a969acdd5d1aae84379f37ad5f8010a5bb62d3695f251683d",
+      "baseSha256": "762f36f5edb01aca94eedded1e2d3b84a4607b6decfe0e0e24180b68a5d1d6ae"
+    }
+  },
+  "pattern": "all sixteen contracts|rim and horizon probes|all fifteen contracts",
+  "specs": [
+    "e2e/terrain3d-registry.spec.ts"
+  ],
+  "candidateEngine": "da49237c406cfbb90e634443440aaaddeb0d4185afa98e99e9e5f6cf0848d232",
+  "baseEngine": "4374cdbfcb7631c86982f9439fb30583eb3eba1acbf70e1bcccaf8fb6e210b21",
+  "command": [
+    "npx",
+    "playwright",
+    "test",
+    "--workers=1",
+    "--project=desktop-chrome",
+    "--project=mobile-chrome",
+    "--trace=off",
+    "--reporter=line",
+    "--output=artifacts/sol/map-art-campaign-2/_raw/run-7/e6-picnic-base-terrain-registry/test-results",
+    "--grep",
+    "all sixteen contracts|rim and horizon probes|all fifteen contracts",
+    "e2e/terrain3d-registry.spec.ts"
+  ],
+  "exit": 1,
+  "newAssetsAbsentDuringBase": {},
+  "restoredEngine": "da49237c406cfbb90e634443440aaaddeb0d4185afa98e99e9e5f6cf0848d232",
+  "candidateRestoredExactly": true,
+  "log": "artifacts/sol/map-art-campaign-2/_raw/run-7/e6-picnic-base-terrain-registry/tests.log"
+}

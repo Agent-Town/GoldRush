@@ -523,3 +523,24 @@ IMPROVED / HELD. Material-only treatment of the raw painted route: bank RMS −2
 Builds/scoped guards and 18 own/story checks pass; final boot/finale four pass, charter/board/debt census six pass. Two secured-claim failures reproduce at exact base. Broad map census is an unavailable-contract exemption, not behavioral proof. Four-run performance shows desktop fast 10.10→9.90 ms / slow16.65→16.30 ms; phone fast9.90→9.95 ms. Pooled desktop +17.91% reflects different mode populations, with every candidate mode within15% of its corresponding baseline. Draws79/58 and triangles81,448/69,440 unchanged. Engine `9ab63072bf545c545e192f2a6d4623ccceb60235662638adb6f3c27736648cf5` → `4374cdbfcb7631c86982f9439fb30583eb3eba1acbf70e1bcccaf8fb6e210b21`; pin untouched. Store unchanged at pushed `8ea5370ba1dfd4bc85276380875fdb87f17f7bf7`.
 
 All 16 requested maps now have per-map corrections and explicit holds. Remaining list: **none**. [Ordered completion, HUD handoff and all hash pairs](run-6/handoff.md). Full concept acceptance is still withheld; full node gates and engine pin remain drain-owned. Ember/Archive objective text is restored to its prior column, with these art verdicts in the visual column.
+
+
+## Run 7 — 2026-09-22: variant solids and parent-plus-variant collision
+
+IN PROGRESS. Owner-authorized F-CORR4-2 follow-on. Baseline code `823b06b1dce4b861be2fccf646245fc4cc864588`, store `8ea5370ba1dfd4bc85276380875fdb87f17f7bf7`; install and default build pass. Cleanliness: only `?? logs/guard-stats.jsonl` (permitted factory churn), no evidence discarded. Store clean before branching to `astra/f-corr4-2`; required raw plate and terrain resolve. Parent transforms, registry numbers, gameplay contracts, heights and masks remain frozen. The existing renderer already composes variant mounts from the mirrored terrain contract.
+
+Remaining in order: e7-dead-band; e7-relay-rush; e8-far-side.
+
+Run-7 preflight correction: the task says Eclipse has no own registry entry, but this base contains four Eclipse records. The resolver therefore names only the four authorized unions; the alias-only control tests and full unaffected-map snapshot pass.
+
+Run-7 floor verdict: 81/83 unchanged; only Picnic moved. Seed 01: timeMs 97967→97367, kills 35→24, eventLogHash fnv1a32:6dc50c46→fnv1a32:a887b86b. Seed 02: 98533→100200, kills 32→25, hash fnv1a32:774ca441→fnv1a32:547712da. The shade at (0,40) is the only new Picnic blocker. Pins left untouched for the drain.
+
+Run-7 parity qualification: all four maps retain exactly their base rows (32 equal, 10 agent-lacks), independently reproduced from base code 823b06b1d in an isolated scratch extraction. The requested all-EQUAL result cannot be claimed; the missing tape/control verbs belong to the parity owner and are outside this firewall. See run-7/same-game-comparison.json.
+
+Run-7 verification qualification: an initial browser batch was interrupted after an in-root scratch extraction triggered a Vite full reload (06:27:51). Its Picnic palisade and E6 boot failures are not accepted results. The scratch tree moved outside the watched root; the complete stable rerun finished at 45 passed / 6 exact-base terrain-registry failures / 1 skipped. The Picnic palisade and E6 boot failures vanished. Initial paired frames also exposed stale-module baseline capture: the frozen renderer referred to a different Terrain module instance and the variant raw matcher missed `?import&raw`. Final captures use unchanged live renderer bytes plus the frozen collision/variant data, assert before/after body counts, and confirm identical hero ground height; all invalid attempts remain in local raw evidence.
+
+### Run 7 — The Picnic
+
+**FIXED variant solidity / HELD prior composition and baseline parity debt.** All 1 registered variant solids mount beside the five unchanged parent bodies and the already selected nonblocking dressing: **9→10 bodies**, **+216 authored triangles**. No geometry, atlas, source transform, height, mask, gameplay contract or registry number changed. The renderer already composes these mirrored mount tables, so no renderer code change was necessary.
+
+1280px p95 10.20→10.25 ms (+0.49%), draws [90]→[90]; 390px p95 9.90→10.10 ms (+2.02%), draws [54]→[54]. Engine `4374cdbfcb7631c86982f9439fb30583eb3eba1acbf70e1bcccaf8fb6e210b21` → `da49237c406cfbb90e634443440aaaddeb0d4185afa98e99e9e5f6cf0848d232`; store `187e555ea982f12fe7f988184c6574a6298dcaa9`. [Boards, probes, bounds and gates](run-7/e6-picnic/review.md).
