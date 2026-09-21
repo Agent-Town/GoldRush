@@ -863,7 +863,6 @@ const LANDMARK_EMISSIVE_WHOLE_BODY_MIN = 0.12;
  */
 // Moth material atlas and frame remap pass the normal-emission census and visual gate (material-light21/gate22).
 const LANDMARK_EMISSIVE_READABILITY_EXEMPT = new Set([
-  'e6-glow-mesa',
   'e6-picnic',
 ]);
 
@@ -1084,8 +1083,8 @@ function keepLandmarkPaintReadable(model: THREE.Object3D, paint: LandmarkPaint =
     // pre-calibration render from a material that may already have been re-installed once.
     material.userData.landmarkAuthoredEmissive = paint.intensity;
     material.emissiveIntensity = calibratedLandmarkIntensity(paint.intensity, contractId);
-    if (contractId === 'e2-pressure-garden' && !material.userData.gardenDiffuseGrade) {
-      material.userData.gardenDiffuseGrade = true;
+    if ((contractId === 'e2-pressure-garden' || contractId === 'e6-glow-mesa') && !material.userData.landmarkDiffuseGrade) {
+      material.userData.landmarkDiffuseGrade = true;
       // Recover the atlas's dark iron detail in its diffuse paint, so the body can
       // leave the legacy-emission exemption without turning its texture into a lamp.
       const compile = material.onBeforeCompile.bind(material);
@@ -1094,7 +1093,7 @@ function keepLandmarkPaintReadable(model: THREE.Object3D, paint: LandmarkPaint =
         shader.fragmentShader = shader.fragmentShader.replace('#include <map_fragment>', `#include <map_fragment>
 diffuseColor.rgb = min(vec3(0.88), pow(max(diffuseColor.rgb, vec3(0.0)), vec3(0.62)) * vec3(0.94, 0.99, 1.06) + vec3(0.014));`);
       };
-      material.customProgramCacheKey = () => 'pressure-garden-diffuse-iron-v1';
+      material.customProgramCacheKey = () => 'landmark-diffuse-iron-v1';
       material.needsUpdate = true;
     }
   });
@@ -2114,6 +2113,37 @@ diffuseColor.rgb = mix(motorOriginal, diffuseColor.rgb, motorInterior);`);
   }
 }
 
+/** Separate existing shelves from their lower ground without moving any surface. */
+function gradeTerrainByHeight(model: THREE.Object3D, lowColor: string, highColor: string, lowHeight: number, highHeight: number, paintMix: number): void {
+  if (isMapBeautyDisabled()) return;
+  const materials = new Set<THREE.MeshStandardMaterial>();
+  model.traverse(node => {
+    const mesh = node as THREE.Mesh<THREE.BufferGeometry, THREE.MeshStandardMaterial>;
+    if (mesh.isMesh && !Array.isArray(mesh.material) && mesh.material.isMeshStandardMaterial && mesh.material.map) materials.add(mesh.material);
+  });
+  for (const material of materials) {
+    const compile = material.onBeforeCompile.bind(material);
+    material.onBeforeCompile = (shader, renderer) => {
+      compile(shader, renderer);
+      shader.uniforms.heightPaintLow = { value: new THREE.Color(lowColor) };
+      shader.uniforms.heightPaintHigh = { value: new THREE.Color(highColor) };
+      shader.uniforms.heightPaintRange = { value: new THREE.Vector2(lowHeight, highHeight) };
+      shader.uniforms.heightPaintMix = { value: paintMix };
+      shader.vertexShader = shader.vertexShader
+        .replace('#include <common>', '#include <common>\nvarying vec3 vHeightPaint;')
+        .replace('#include <begin_vertex>', '#include <begin_vertex>\nvHeightPaint = (modelMatrix * vec4(position, 1.0)).xyz;');
+      shader.fragmentShader = shader.fragmentShader
+        .replace('#include <common>', '#include <common>\nvarying vec3 vHeightPaint;\nuniform vec3 heightPaintLow, heightPaintHigh;\nuniform vec2 heightPaintRange;\nuniform float heightPaintMix;')
+        .replace('#include <map_fragment>', `#include <map_fragment>
+float heightPaintInterior = 1.0 - smoothstep(48.0, 64.0, max(abs(vHeightPaint.x), abs(vHeightPaint.z)));
+float heightPaintFactor = smoothstep(heightPaintRange.x, heightPaintRange.y, vHeightPaint.y);
+diffuseColor.rgb = mix(diffuseColor.rgb, mix(heightPaintLow, heightPaintHigh, heightPaintFactor), heightPaintMix * heightPaintInterior);`);
+    };
+    material.customProgramCacheKey = () => 'terrain-height-pigment-v1';
+    material.needsUpdate = true;
+  }
+}
+
 /** Prepared boiler aprons and combed earth follow the existing terrace/bed coordinates. */
 function clarifyPressureGardenTerraces(model: THREE.Object3D): void {
   if (isMapBeautyDisabled()) return;
@@ -2655,7 +2685,9 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
       if (host.contractId === 'e2-pressure-garden') clarifyPressureGardenTerraces(nextTerrain);
       if (host.contractId === 'e2-incline') clarifyInclineYards(nextTerrain);
       if (host.contractId === 'e3-canyon-works') clarifyCanyonGround(nextTerrain);
-      if ((host.contractId === 'e4-dust-flats' || host.contractId === 'e4-long-road' || host.contractId === 'e4-gusher-county') && selected.contract.maskTruth) clarifyMotorGround(nextTerrain, selected.contract.maskTruth, false, host.contractId === 'e4-gusher-county' ? 0.30 : 0.78);
+      if (host.contractId === 'e6-glow-mesa') gradeTerrainByHeight(nextTerrain, '#9f8867', '#9b9682', 1.5, 4.6, 0.34);
+      if (host.contractId === 'e6-half-life-hollow') gradeTerrainByHeight(nextTerrain, '#897c68', '#b9a788', -1.9, 1.8, 0.32);
+      if ((host.contractId === 'e4-dust-flats' || host.contractId === 'e4-long-road' || host.contractId === 'e4-gusher-county' || host.contractId === 'e4-boneyard') && selected.contract.maskTruth) clarifyMotorGround(nextTerrain, selected.contract.maskTruth, false, host.contractId === 'e4-gusher-county' ? 0.30 : host.contractId === 'e4-boneyard' ? 0.55 : 0.78);
       if (host.nightMode) applyNightTerrainPools(nextTerrain, host);
       else {
         host.canvas.dataset.terrain3dPilotNightPools = 'off';
