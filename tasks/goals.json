@@ -5475,14 +5475,12 @@
             },
             {
               "id": "sol-map-art-corrections-4",
-              "title": "The corrections campaign, run 4 of the corrections (owner 2026-09-20 \"correct all the 23 UNACCEPTED maps, one after the other\" / \"don't let it run through all of them\"): the 13 maps runs 1 to 3 did not reach, the Boneyard first, capped at 3 maps per run; QUEUED ONLY ON THE OWNER'S WORD for a Codex subscription window",
-              "status": "blocked",
+              "title": "The corrections campaign, run 4 of the corrections (owner 2026-09-20 \"correct all the 23 UNACCEPTED maps, one after the other\"): the 13 maps runs 1 to 3 did not reach, the Boneyard first; NO CAP (owner 2026-09-21 \"Lets actually complete all the maps.\"): the whole remaining list in one run, continuations after a quota stop on the same word",
+              "status": "queued",
               "taskFile": "sol-map-art-corrections-4.md",
               "registeredBy": "attended 2026-09-20",
               "lane": "lane-c (Codex gpt-6-astra xhigh); continuation of sol-map-art-corrections-3 under the CODEX-WALL corrections lift and the art-store law",
-              "blockClass": "owner-fork",
-              "blockedReason": "OWNER'S WORD OWED for a Codex subscription window — the queue copy waits (owner 2026-09-20, verbatim: \"with that one we have to be more careful\" and \"don't let it run through all of them\"; each capped set is dispatched on a word). Lift = the owner's word: flip status to queued and cp tasks/sol-map-art-corrections-4.md into tasks/queue/lane-c/ in the same act; nothing else is owed. Not a gate-side hold.",
-              "heldAt": "2026-09-20 attended, after run 3 landed as 7dd9d7fbc"
+              "queuedAt": "2026-09-21, dispatched lane-c on the owner's word (\"Ok, lets continue on the current ChatGPT subscription with the Astra work. Lets actually complete all the maps.\"); no cap"
             },
             {
               "id": "e5-regatta-boat-01",
