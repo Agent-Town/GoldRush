@@ -863,7 +863,6 @@ const LANDMARK_EMISSIVE_WHOLE_BODY_MIN = 0.12;
  */
 // Moth material atlas and frame remap pass the normal-emission census and visual gate (material-light21/gate22).
 const LANDMARK_EMISSIVE_READABILITY_EXEMPT = new Set([
-  'e6-glow-mesa',
   'e6-picnic',
 ]);
 
@@ -1084,8 +1083,8 @@ function keepLandmarkPaintReadable(model: THREE.Object3D, paint: LandmarkPaint =
     // pre-calibration render from a material that may already have been re-installed once.
     material.userData.landmarkAuthoredEmissive = paint.intensity;
     material.emissiveIntensity = calibratedLandmarkIntensity(paint.intensity, contractId);
-    if (contractId === 'e2-pressure-garden' && !material.userData.gardenDiffuseGrade) {
-      material.userData.gardenDiffuseGrade = true;
+    if ((contractId === 'e2-pressure-garden' || contractId === 'e6-glow-mesa') && !material.userData.landmarkDiffuseGrade) {
+      material.userData.landmarkDiffuseGrade = true;
       // Recover the atlas's dark iron detail in its diffuse paint, so the body can
       // leave the legacy-emission exemption without turning its texture into a lamp.
       const compile = material.onBeforeCompile.bind(material);
@@ -1094,7 +1093,7 @@ function keepLandmarkPaintReadable(model: THREE.Object3D, paint: LandmarkPaint =
         shader.fragmentShader = shader.fragmentShader.replace('#include <map_fragment>', `#include <map_fragment>
 diffuseColor.rgb = min(vec3(0.88), pow(max(diffuseColor.rgb, vec3(0.0)), vec3(0.62)) * vec3(0.94, 0.99, 1.06) + vec3(0.014));`);
       };
-      material.customProgramCacheKey = () => 'pressure-garden-diffuse-iron-v1';
+      material.customProgramCacheKey = () => 'landmark-diffuse-iron-v1';
       material.needsUpdate = true;
     }
   });
@@ -2114,6 +2113,35 @@ diffuseColor.rgb = mix(motorOriginal, diffuseColor.rgb, motorInterior);`);
   }
 }
 
+/** Separate the existing mesa cap from its lower apron without moving its surface. */
+function clarifyMesaGround(model: THREE.Object3D): void {
+  if (isMapBeautyDisabled()) return;
+  const materials = new Set<THREE.MeshStandardMaterial>();
+  model.traverse(node => {
+    const mesh = node as THREE.Mesh<THREE.BufferGeometry, THREE.MeshStandardMaterial>;
+    if (mesh.isMesh && !Array.isArray(mesh.material) && mesh.material.isMeshStandardMaterial && mesh.material.map) materials.add(mesh.material);
+  });
+  for (const material of materials) {
+    const compile = material.onBeforeCompile.bind(material);
+    material.onBeforeCompile = (shader, renderer) => {
+      compile(shader, renderer);
+      shader.uniforms.mesaApron = { value: new THREE.Color('#9f8867') };
+      shader.uniforms.mesaCap = { value: new THREE.Color('#9b9682') };
+      shader.vertexShader = shader.vertexShader
+        .replace('#include <common>', '#include <common>\nvarying vec3 vMesaGround;')
+        .replace('#include <begin_vertex>', '#include <begin_vertex>\nvMesaGround = (modelMatrix * vec4(position, 1.0)).xyz;');
+      shader.fragmentShader = shader.fragmentShader
+        .replace('#include <common>', '#include <common>\nvarying vec3 vMesaGround;\nuniform vec3 mesaApron, mesaCap;')
+        .replace('#include <map_fragment>', `#include <map_fragment>
+float mesaInterior = 1.0 - smoothstep(48.0, 64.0, max(abs(vMesaGround.x), abs(vMesaGround.z)));
+float mesaHeight = smoothstep(1.5, 4.6, vMesaGround.y);
+diffuseColor.rgb = mix(diffuseColor.rgb, mix(mesaApron, mesaCap, mesaHeight), 0.34 * mesaInterior);`);
+    };
+    material.customProgramCacheKey = () => 'mesa-height-pigment-v1';
+    material.needsUpdate = true;
+  }
+}
+
 /** Prepared boiler aprons and combed earth follow the existing terrace/bed coordinates. */
 function clarifyPressureGardenTerraces(model: THREE.Object3D): void {
   if (isMapBeautyDisabled()) return;
@@ -2655,6 +2683,7 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
       if (host.contractId === 'e2-pressure-garden') clarifyPressureGardenTerraces(nextTerrain);
       if (host.contractId === 'e2-incline') clarifyInclineYards(nextTerrain);
       if (host.contractId === 'e3-canyon-works') clarifyCanyonGround(nextTerrain);
+      if (host.contractId === 'e6-glow-mesa') clarifyMesaGround(nextTerrain);
       if ((host.contractId === 'e4-dust-flats' || host.contractId === 'e4-long-road' || host.contractId === 'e4-gusher-county' || host.contractId === 'e4-boneyard') && selected.contract.maskTruth) clarifyMotorGround(nextTerrain, selected.contract.maskTruth, false, host.contractId === 'e4-gusher-county' ? 0.30 : host.contractId === 'e4-boneyard' ? 0.55 : 0.78);
       if (host.nightMode) applyNightTerrainPools(nextTerrain, host);
       else {

@@ -431,3 +431,9 @@ The full remaining list is authorized in order, beginning with the Boneyard. Pre
 Builds, scoped guards, map census, shared brightness/collision and loading/repeat pass. Motor batch 24 pass / two malformed-tape failures reproduced on exact base; no assertion changed. Four-run p95 9.80→9.90 / 9.95→9.80 ms, draws 62/49 unchanged. Engine `491f2a917b0e360fcaa1e0eda3ee5eb7ba840cc1cd9bf852e3d574d34350725d` → `c8da6e7c043bb2f42b5fd2f94d17d83387d7a29abca9adffab1d15994ce5681e`.
 
 Boneyard store commit `dfac96930cee55742fde0f99c19ba4b70c9ddc05` pushed on `astra/corrections-4`.
+
+### The Glow Mesa correction — 2026-09-21 run 6
+
+**IMPROVED / HELD.** Ground RMS −41.49% desktop / −39.21% phone; whole-body emission 3.0→0.45 with lit diffuse paint. Pylon 5 m station phone HUD 8.90%→0%; derrick 3 m 0.090%. Entry rack remains cropped and 95.31% HUD-covered on desktop, entirely offscreen on phone. Mesa composition, facility grouping and daytime node-ring visibility remain held for their named owners. [Every clause and evidence](run-6/e6-glow-mesa/review.md).
+
+Builds, scoped guards, selected Glow Mesa/Pressure Garden census, shared brightness/collision and loading/repeat pass. Own batch 39 pass / one story-arrival timeout; unchanged retry 2/2. Four-run p95 9.75→8.90 / 9.70→9.60 ms, draws 68/48 unchanged. Engine `c8da6e7c043bb2f42b5fd2f94d17d83387d7a29abca9adffab1d15994ce5681e` → `68d976b06be1045f935047e482b765d91d61b045b45c87d77d677715b4e528e4`. Store `a368aba78a3f65bb93e46a9a624c617fb2d90b18` pushed.
