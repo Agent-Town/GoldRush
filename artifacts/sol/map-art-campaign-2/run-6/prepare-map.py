@@ -13,6 +13,8 @@ for source in ['Terrain3dClaimPilot','Water']:
 d=json.loads((pilot/(pack+'-terrain-contract.json')).read_text());assets=[]
 for p in [pilot/d['asset'],pilot/d['panoramaMount']['asset'],*[pilot/m['asset'] for m in d['landmarkMounts']]]:
  shutil.copy2(p,raw/p.name);assets.append({'name':p.name,'type':'model/gltf-binary'})
-config={'epoch':epoch,'assets':assets,'stations':[],'regions':[[1280,[440,300,850,380]],[390,[20,285,145,390]]]}
+for source in sys.argv[4:]:
+ base=source.split('/')[-1];(raw/(base+'.js')).write_bytes(urllib.request.urlopen('http://127.0.0.1:5303/src/'+source+'.ts').read());shutil.copy2('src/'+source+'.ts',raw/(base+'.ts'))
+config={'extraSources':sys.argv[4:],'epoch':epoch,'assets':assets,'stations':[],'regions':[[1280,[440,300,850,380]],[390,[20,285,145,390]]]}
 (out/'capture-config.json').write_text(json.dumps(config,indent=2)+'\n')
 print(json.dumps({'name':name,'engine':engine,'mounts':[(m['id'],m['position']) for m in d['landmarkMounts']]}))

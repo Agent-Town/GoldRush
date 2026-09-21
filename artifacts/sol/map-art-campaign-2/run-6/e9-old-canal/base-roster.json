@@ -1,0 +1,62 @@
+{
+  "storeBase": "57a399b81a9d2911364c0770e10a6a5c6eb414c6",
+  "base": "9d388a981ee8846298cf0ab234becf2e70a42bf8",
+  "paths": {
+    "src/systems/CanalFlowPresentation.ts": {
+      "candidateSha256": "b6153a0c581bf0a5cefbac64a78d4e2db2d3f60296eefc1e7e2859658e2ffd7a",
+      "baseSha256": "73c873028de39cd28e40c7194a9323b3fd1a2c17f53e7cb6dea38b4b12676497"
+    },
+    "src/world/Terrain3dClaimPilot.ts": {
+      "candidateSha256": "8a36755399382a80dfce8618a669b56fbe3eacb6414c3fc01ca89b75c1879a73",
+      "baseSha256": "9e2a825a9437575d0f5269d1c300841f0be534bbfdfcee9b5cd4733a55923929"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/old-canal/canal-segment-a-marker.glb": {
+      "candidateSha256": "7f196d63a45a2850ad57514b0df41a024c79fcaae28c2818f64bcdf0266aad21",
+      "baseSha256": "3ef7d85461c909f58156daae0a7e2315ca6e0efc048c19c08497c710b94a4a85"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/old-canal/canal-segment-b-marker.glb": {
+      "candidateSha256": "5fd0c138d216499e66ce26b1acfaf19fd7ad570dac3b14989e9c860928dce256",
+      "baseSha256": "91cf57b609b28b0081e9b9bfe68272de317b161d6679712af360437acdfba858"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/old-canal/canal-segment-c-marker.glb": {
+      "candidateSha256": "334fd4e355fb9a29ecf79f2ba9aac3a81008aafbdc5d892d01dc5dbdd7b58e9b",
+      "baseSha256": "47168dab6061401423e80a3b8994fb6ffd7813adfdbdea62de85d0b875401832"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/old-canal/old-canal-landmark-pack-contract.json": {
+      "candidateSha256": "efd858e1af5e6d5f0c0c2f1bbaadc7f3d4a7c32edec016bf72718b0c213862e0",
+      "baseSha256": "27b39f6779f13985428a50efa393a7295a71c7e476b1c34d9321688027274a0e"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/old-canal/old-canal-landmarks.blend": {
+      "candidateSha256": "61addf49a9620a2d4c2c74fa16fa1decaada1d3a32f8d18d346761f58f39e465",
+      "baseSha256": "39fec832d71e70879a0b8587bc0819205604c72a4d242b954ca1bb82b6ce7982"
+    },
+    "assets/pilots/map-rebuild-spike/old-canal-terrain-contract.json": {
+      "candidateSha256": "3505fbd901ed9b06e03a344a1590705aaffde3eb0320b1287191b30fb198be91",
+      "baseSha256": "a88bcde5d333941afbca0bde11095141bb4e54ad675194b8479cceb471c3733b"
+    }
+  },
+  "pattern": "plain Red Fields boot",
+  "specs": [
+    "e2e/e9-roster.spec.ts"
+  ],
+  "candidateEngine": "c2018fcb58b57688525b2afe23a8fd99dd20e3ce481894e58f9017db628333c7",
+  "baseEngine": "6b6c1185f0c23a0a2235502e69238db177900147ab630e66db1120c9cb30ada2",
+  "command": [
+    "npx",
+    "playwright",
+    "test",
+    "--workers=1",
+    "--project=desktop-chrome",
+    "--project=mobile-chrome",
+    "--trace=off",
+    "--reporter=line",
+    "--output=artifacts/sol/map-art-campaign-2/_raw/run-6/e9-old-canal-base-roster/test-results",
+    "--grep",
+    "plain Red Fields boot",
+    "e2e/e9-roster.spec.ts"
+  ],
+  "exit": 1,
+  "restoredEngine": "c2018fcb58b57688525b2afe23a8fd99dd20e3ce481894e58f9017db628333c7",
+  "candidateRestoredExactly": true,
+  "log": "artifacts/sol/map-art-campaign-2/_raw/run-6/e9-old-canal-base-roster/tests.log"
+}

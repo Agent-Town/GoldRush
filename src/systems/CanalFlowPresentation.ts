@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import { RenderLayers } from '../core/RenderLayers';
 import type { CanalChoiceDiagnostics, CanalSegment } from './CanalChoiceSystem';
 
@@ -43,9 +44,8 @@ export type CanalFlowDiagnostics = Readonly<{
 const WATER_COLOR = '#3f7f86';
 const WATER_OPACITY = 0.62;
 const WATER_DEPTH = 0.16;
-/** Rubble: the dry-gate brown `Balance.e9Canal.stage.dryColor` uses, one shade down. */
-const DERELICT_COLOR = '#6b4a37';
-const DERELICT_OPACITY = 0.42;
+/** Dry mineral masonry separates the undecided cut from water and backfill. */
+const DERELICT_COLOR = '#927e64';
 /** Filled ground: warm spoil, clearly NOT water and clearly not the untouched cut. */
 const FILLED_COLOR = '#a9895c';
 const FILLED_OPACITY = 0.34;
@@ -57,6 +57,7 @@ type Band = {
   centre: { x: number; z: number };
   water: THREE.Mesh;
   derelict: THREE.Mesh;
+  derelictHeights: Float32Array;
   filled: THREE.Mesh;
   post: THREE.Mesh;
   postMaterial: THREE.MeshStandardMaterial;
@@ -72,7 +73,7 @@ export class CanalFlowPresentation {
     color: WATER_COLOR, transparent: true, opacity: WATER_OPACITY, roughness: 0.26, metalness: 0.03,
   });
   private readonly derelictMaterial = new THREE.MeshStandardMaterial({
-    color: DERELICT_COLOR, transparent: true, opacity: DERELICT_OPACITY, roughness: 0.94,
+    color: DERELICT_COLOR, vertexColors: true, roughness: 0.94,
   });
   private readonly filledMaterial = new THREE.MeshStandardMaterial({
     color: FILLED_COLOR, transparent: true, opacity: FILLED_OPACITY, roughness: 0.9,
@@ -109,7 +110,18 @@ export class CanalFlowPresentation {
     for (const band of this.bands) {
       const y = this.groundY(band.centre.x, band.centre.z);
       band.water.position.y = y + WATER_DEPTH * 0.5;
-      band.derelict.position.y = y + 0.02;
+      // Keep the low broken masonry seated on the mounted terrain. Stored local
+      // heights make repeated resampling idempotent, including after a GLB swap.
+      band.derelict.position.y = y;
+      const positions = band.derelict.geometry.getAttribute('position');
+      for (let i = 0; i < positions.count; i += 1) {
+        positions.setY(i, band.derelictHeights[i]! + this.groundY(
+          band.centre.x + positions.getX(i), band.centre.z + positions.getZ(i),
+        ) - y);
+      }
+      positions.needsUpdate = true;
+      band.derelict.geometry.computeVertexNormals();
+      band.derelict.geometry.computeBoundingSphere();
       band.filled.position.y = y + 0.03;
       band.post.position.y = this.groundY(band.stake.x, band.stake.z) + POST_HEIGHT * 0.5;
     }
@@ -155,15 +167,63 @@ export class CanalFlowPresentation {
     post.name = `CanalDecisionPost-${segment.id}`;
     post.position.set(segment.x, 0, segment.z);
     post.renderOrder = RenderLayers.gameplay;
+    const derelict = this.createRuinedCut(width, depth, centre, segment.id);
+    const derelictHeights = Float32Array.from(
+      { length: derelict.geometry.getAttribute('position').count },
+      (_, i) => derelict.geometry.getAttribute('position').getY(i),
+    );
     return {
       id: segment.id,
       centre,
       water: slab(this.waterMaterial, WATER_DEPTH, `CanalWetBand-${segment.id}`),
-      derelict: slab(this.derelictMaterial, 0.04, `CanalDerelictBand-${segment.id}`),
+      derelict,
+      derelictHeights,
       filled: slab(this.filledMaterial, 0.06, `CanalFilledBand-${segment.id}`),
       post,
       postMaterial,
       stake: { x: segment.x, z: segment.z },
     };
   }
+
+  /** Broken, ankle-to-knee-high retaining courses replace the undecided slab.
+   * The authored band remains crossable; openings and low rubble imply no new wall collision. */
+  private createRuinedCut(width: number, depth: number, centre: { x: number; z: number }, id: string): THREE.Mesh {
+    const pieces: THREE.BufferGeometry[] = [];
+    const block = (x: number, z: number, w: number, d: number, h: number, turn: number, shade: number) => {
+      const columns = Math.ceil(w / 1.15), rows = Math.ceil(d / 1.15);
+      for (let col = 0; col < columns; col += 1) for (let row = 0; row < rows; row += 1) {
+        const brickHeight = h * (0.86 + ((col + row) % 3) * 0.07);
+        const geometry = new THREE.BoxGeometry(w / columns - 0.035, brickHeight, d / rows - 0.035);
+        geometry.translate((col + 0.5) * w / columns - w * 0.5, brickHeight * 0.5 + 0.015, (row + 0.5) * d / rows - d * 0.5);
+        geometry.rotateY(turn);
+        geometry.translate(x, 0, z);
+        const colors = new Float32Array(geometry.getAttribute('position').count * 3);
+        const value = shade * (0.90 + ((col + row) % 3) * 0.05);
+        for (let i = 0; i < colors.length; i += 3) colors.set([value, value, value], i);
+        geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+        pieces.push(geometry);
+      }
+    };
+    for (const side of [-1, 1]) {
+      for (let i = 0; i < 7; i += 1) {
+        if (i === 2 || i === 5) continue;
+        const z = (i - 3) * depth / 7;
+        block(side * width * 0.42, z, 0.65, depth / 7 * 0.88, 0.32 + (i % 3) * 0.07, side * 0.035 * (i % 2), 0.84 + (i % 3) * 0.07);
+        block(side * (width * 0.42 - 0.7), z + 0.7, 0.55, 0.7, 0.16 + (i % 2) * 0.08, i * 0.63, 0.82);
+      }
+      for (const end of [-1, 1]) {
+        block(side * width * 0.34, end * depth * 0.44, width * 0.14, 0.64, 0.38, side * end * 0.06, 0.95);
+        block(side * width * 0.22, end * depth * 0.42, 0.72, 0.60, 0.20, side * 0.5, 0.88);
+      }
+    }
+    const geometry = mergeGeometries(pieces)!;
+    for (const piece of pieces) piece.dispose();
+    this.geometries.push(geometry);
+    const mesh = new THREE.Mesh(geometry, this.derelictMaterial);
+    mesh.name = `CanalDerelictBand-${id}`;
+    mesh.position.set(centre.x, 0, centre.z);
+    mesh.renderOrder = RenderLayers.gameplay;
+    return mesh;
+  }
+
 }

@@ -10,12 +10,13 @@ const raw=`artifacts/sol/map-art-campaign-2/_raw/run-6/${id}-before`;
 const config=JSON.parse(readFileSync(`${out}/capture-config.json`,'utf8'));
 const base='http://127.0.0.1:5303',rows=[];
 const browser=await chromium.launch({channel:'chromium'});
-const keep='#game-canvas,.hud-panel,.hud-panel *,.hud-pause,.hud-pause *,.world-info-note,.world-info-note *,#touch-controls,#touch-controls *';
+const keep='#game-canvas,.hud-panel,.hud-panel *,.hud-pause,.hud-pause *,.world-info-note,.world-info-note *,#touch-controls,#touch-controls *,.building-context-prompt,.building-context-prompt *';
 try {for(const width of [1280,390])for(let cycle=0;cycle<(mode==='performance'?4:1);cycle++)for(const arm of (process.env.ARM?[process.env.ARM]:(cycle%2?['after','before']:['before','after']))){
  const page=await browser.newPage({viewport:{width,height:width===390?844:800},isMobile:width===390,hasTouch:width===390,deviceScaleFactor:1});
  page.setDefaultTimeout(120000);page.setDefaultNavigationTimeout(120000);
  const errors=[];page.on('console',m=>{if(m.type()==='error')errors.push(m.text())});page.on('pageerror',e=>{errors.push(e.message);console.log('PAGE ERROR',e.message)});
- for(const source of ['Terrain3dClaimPilot','Water'])await page.route(`**/src/world/${source}.ts*`,async route=>{
+ for(const sourcePath of ['world/Terrain3dClaimPilot','world/Water',...(config.extraSources??[])])await page.route(`**/src/${sourcePath}.ts*`,async route=>{
+  const source=sourcePath.split('/').at(-1);
   const response=await route.fetch();const live=await response.text();let body=arm==='before'?readFileSync(`${raw}/${source}.js`,'utf8'):live;
   // Vite may re-optimize dependencies after the baseline capture; source bytes
   // stay frozen, but the optimizer URL must resolve to today's identical module.
