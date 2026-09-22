@@ -396,15 +396,15 @@
       "fingerprint": "72ea46966bc9",
       "excerpt": "git -C \"$ROOT\" log --format=' %h %cI %s' --since=\"@$start_epoch\" -n 10 -- \"$RUNNER_SCRIPT\" 2>/dev/nu"
     },
-    "scripts/fire.md -> scripts/skillmd-guard.test.mjs:133": {
+    "scripts/fire.md -> scripts/skillmd-guard.test.mjs:138": {
       "target": "scripts/skillmd-guard.test.mjs",
-      "line": 133,
+      "line": 138,
       "fingerprint": "6abed180ebaa",
       "excerpt": "assert.deepEqual(jsonBlock('rotations'), rotations);"
     },
-    "scripts/fire.md -> skillmd-guard.test.mjs:133": {
+    "scripts/fire.md -> skillmd-guard.test.mjs:138": {
       "target": "scripts/skillmd-guard.test.mjs",
-      "line": 133,
+      "line": 138,
       "fingerprint": "6abed180ebaa",
       "excerpt": "assert.deepEqual(jsonBlock('rotations'), rotations);"
     },
@@ -438,9 +438,9 @@
       "fingerprint": "5c7c80d8d1eb",
       "excerpt": "const rotations = (existing.rotations ?? []).filter((entry) => entry.id !== rotation.id).concat([rot"
     },
-    "scripts/fire.md -> scripts/skillmd-guard.test.mjs:124": {
+    "scripts/fire.md -> scripts/skillmd-guard.test.mjs:129": {
       "target": "scripts/skillmd-guard.test.mjs",
-      "line": 124,
+      "line": 129,
       "fingerprint": "6cd84c8fb906",
       "excerpt": "// F-2568-2, owner ruling 2026-09-19 (verbatim: \"I agree with all your recommendations on the"
     },
