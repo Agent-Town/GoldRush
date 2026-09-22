@@ -157,8 +157,8 @@ export class CameraRig {
   update(delta: number, target: THREE.Vector3, velocity: THREE.Vector3): void {
     target = this.glanceTarget?.position ?? target;
     velocity = this.glanceTarget?.velocity ?? velocity;
-    if (this.entryGlance) {
-      const glance = this.entryGlance;
+    const glance = this.entryGlance;
+    if (glance) {
       glance.elapsed = Math.min(glance.seconds, glance.elapsed + delta);
       const easeIn = THREE.MathUtils.smoothstep(glance.elapsed, 0, 0.7);
       const easeOut = 1 - THREE.MathUtils.smoothstep(glance.elapsed, glance.seconds - 0.7, glance.seconds);
@@ -170,7 +170,10 @@ export class CameraRig {
     this.trackedTarget.copy(target);
     this.setDesiredPosition(target);
     const factor = 1 - Math.exp(-delta / Balance.camera.lag);
-    this.camera.position.lerp(this.desiredPosition, factor);
+    // The entry focus is already eased. Lagging behind it again can put a distant
+    // landmark behind the camera's look direction and flip the view mid-flight.
+    if (glance) this.camera.position.copy(this.desiredPosition);
+    else this.camera.position.lerp(this.desiredPosition, factor);
     if (this.impulseRemaining > 0) {
       this.impulseRemaining = Math.max(0, this.impulseRemaining - delta);
       const t = this.impulseRemaining / 0.2;

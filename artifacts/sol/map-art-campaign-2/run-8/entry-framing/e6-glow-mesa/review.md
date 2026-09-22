@@ -4,12 +4,12 @@
 
 | View | Rest body pixels | Peak body pixels | Return body pixels | Observed time in frame |
 | --- | ---: | ---: | ---: | --- |
-| 1280 | 0 | 38,176 | 0 | 1.499–1.600 s |
-| 390 | 0 | 42,461 | 0 | 1.342–1.458 s |
+| 1280 | 0 | 37,168 | 0 | 1.416–1.525 s |
+| 390 | 0 | 41,400 | 0 | 1.359–1.468 s |
 
 [Desktop board](board-1280.png) · [Phone board](board-390.png) · [Measurements](metrics.json) · [Live-pose capture receipts](captures.json) · [Independent timing pass](duration.json).
 
-The authored camera window is 2.5 presentation seconds: 0.7 s ease in, 1.1 s at the mount, 0.7 s ease out, followed by the existing 0.15 s tracking lag. The existing rig moves its position as well as its look target; no extra reach, FOV or hero-start adjustment is introduced. The body is reachable in both viewports. The mesa's full silhouette, facility grouping, state-dependent node ring, HUD overlap and the gap between current model art and the plate remain held; this is entry framing, not full concept acceptance.
+The authored camera window is 2.5 presentation seconds: 0.7 s ease in, 1.1 s at the mount, 0.7 s ease out. The authored ease directly places the camera at its unchanged offset; ordinary tracking retains the existing 0.15 s lag. This final refinement prevents the long Far Side pan from flipping the view, and these Glow Mesa captures were refreshed on that same source. Earlier captures remain in `before-lag-correction/`. The existing rig moves its position as well as its look target; no extra reach, FOV or hero-start adjustment is introduced. The body is reachable in both viewports. The mesa's full silhouette, facility grouping, state-dependent node ring, HUD overlap and the gap between current model art and the plate remain held; this is entry framing, not full concept acceptance.
 
 Ordinary boots use seed `map-art-campaign-2`, DPR1, normal HUD and no debug/test hook. Read-only route instrumentation records camera poses; the before arm suppresses only the new hook. Body counts compare black/white opaque target materials under the scene's real depth test at drawing-buffer resolution, separately from HUD coverage. Duration is measured in a separate ordinary boot with no screenshot or readback during the glance; its recorded poses are censused against the final frozen scene at intervals of at least 50 ms. Bounds bracket the first/last visible samples. Both desktop and phone have zero console/page errors. Normal screenshots retain all HUD/story layers.
 

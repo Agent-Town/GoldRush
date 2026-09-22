@@ -36,5 +36,16 @@ try {
   assert.ok(after.position.distanceTo(expected)<1e-7,'returns to the resting hero offset');
   rig.entryGlance={position:new THREE.Vector3(),elapsed:0,seconds:2.5};rig.snapTo(target);assert.equal(rig.entryGlance,null);
   rig.entryGlance={position:new THREE.Vector3(),elapsed:0,seconds:2.5};rig.setGlanceTarget(target,velocity);assert.equal(rig.entryGlance,null);
-  writeFileSync(`${root}/rig-proof.json`,JSON.stringify({comparedBaselineFrames:compared,exactPoses:true,covered:['replay pan targets','moving hero','impulse','multiplayer glance and cancellation','zoom','snap'],timedReturnsToHero:true,inputVectorsUnchanged:true,snapCancels:true,multiplayerOverrides:true},null,2)+'\n');
+  rig.setGlanceTarget(null);velocity.set(0,0,0);target.set(0,.7,0);let entryFrames=0;
+  for(const destination of [new THREE.Vector3(0,.7,92),new THREE.Vector3(0,.7,-71),new THREE.Vector3(-56,.7,82),new THREE.Vector3(56,6,-82)]){
+    rig.snapTo(target);const rotation=after.quaternion.clone();
+    rig.entryGlance={position:destination,elapsed:0,seconds:2.5};
+    for(let i=0;i<150;i++){
+      rig.update(1/60,target,velocity);
+      assert.ok(after.quaternion.angleTo(rotation)<1e-7,'long entry pan preserves the normal rig orientation');
+      assert.ok(after.position.clone().sub(rig.focus).distanceTo(Balance.camera.offset.clone().multiplyScalar(1.3))<1e-10,'entry keeps the authored camera offset');
+      entryFrames++;
+    }
+  }
+  writeFileSync(`${root}/rig-proof.json`,JSON.stringify({comparedBaselineFrames:compared,exactPoses:true,covered:['replay pan targets','moving hero','impulse','multiplayer glance and cancellation','zoom','snap'],timedReturnsToHero:true,inputVectorsUnchanged:true,snapCancels:true,multiplayerOverrides:true,entryFramesWithFixedOrientation:entryFrames,longPanDoesNotFlip:true},null,2)+'\n');
 } finally {await vite.close();}
