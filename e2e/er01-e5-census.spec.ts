@@ -282,7 +282,8 @@ for (const contract of deepwater.contracts) {
           // the published `hero_orders` vocabulary, and the manifest's `regatta_boat` row beside a
           // `regatta_race` row that finally reads the AUTHORED fast-water number.
           const view = door.currentTurn().view;
-          expect(view.viewVersion).toBe(3);
+          // Schema 4 (2026-09-22): terminal seconds and the measured shore query.
+          expect(view.viewVersion).toBe(4);
           // The authored hull physics, read once: `RegattaRaceSystem.create` REFUSES a course whose
           // racing body authors none (slice 2, F-RB1-2), so on this contract it is present by law.
           const physics = contract.tileParams.deepwater.claimBoat.physics;
@@ -297,6 +298,9 @@ for (const contract of deepwater.contracts) {
             state: 'racing',
             finished: false,
             forfeited: false,
+            finishedAt: null,
+            forfeitedAt: null,
+            canStepAshore: true,
             fastWaterMultiplier: 1.5,
           });
           // THE MANIFEST'S TWO ROWS. `regatta_race` is the course AS RACED — six gates, the five
