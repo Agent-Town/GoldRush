@@ -63,12 +63,11 @@ const CAMPAIGN_EXTRAS: Contract[] = [
   { id: 'e10-archive-world', panorama: 'archive-world-panorama', contractFile: 'archive-world', assets: ['archive-world-panorama.glb', 'archive-world-terrain.glb'], water: [] },
 ];
 
-type LandmarkMount = { id: string; asset?: string; position: [number, number, number] };
+type LandmarkMount = { id: string; asset?: string; position: [number, number, number] }; type TerrainContract = { tileId: string; triangles: number; landmarkMounts?: LandmarkMount[] };
 
-async function landmarkMounts(contract: Contract): Promise<LandmarkMount[]> {
+async function terrainContract(contract: Contract): Promise<TerrainContract> {
   const file = path.resolve(`assets/pilots/map-rebuild-spike/${contract.contractFile}-terrain-contract.json`);
-  const parsed = JSON.parse(await readFile(file, 'utf8')) as { landmarkMounts?: LandmarkMount[] };
-  return (parsed.landmarkMounts ?? []).filter((mount) => mount.asset);
+  return JSON.parse(await readFile(file, 'utf8')) as TerrainContract;
 }
 
 function collectErrors(page: Page): Errors {
@@ -90,7 +89,7 @@ test('all campaign extras resolve their registered terrain and panorama assets',
   const errors = collectErrors(page);
   await boot(page, 'the-claim');
   for (const contract of CAMPAIGN_EXTRAS) {
-    const terrainContract = JSON.parse(await readFile(path.resolve(`assets/pilots/map-rebuild-spike/${contract.contractFile}-terrain-contract.json`), 'utf8')) as { tileId: string };
+    const registered = await terrainContract(contract);
     const dataset = await page.evaluate(async ({ contractId, tileId }) => {
       const THREE = await Function('return import("/@id/three")')() as typeof import('three');
       const pilot = await Function('return import("/src/world/Terrain3dClaimPilot.ts")')() as typeof import('../src/world/Terrain3dClaimPilot');
@@ -109,7 +108,7 @@ test('all campaign extras resolve their registered terrain and panorama assets',
       const result = { ...canvas.dataset };
       dispose();
       return result;
-    }, { contractId: contract.id, tileId: terrainContract.tileId });
+    }, { contractId: contract.id, tileId: registered.tileId });
     expect(dataset, contract.id).toMatchObject({
       terrain3dPilotContract: contract.id,
       terrain3dPilotState: 'ready',
@@ -200,7 +199,7 @@ test('all sixteen contracts mount terrain, panorama, and grounded render-only la
   await mkdir(ARTIFACT_DIR, { recursive: true });
   await mkdir(LANDMARK_ARTIFACT_DIR, { recursive: true });
   for (const contract of CONTRACTS) {
-    const expectedMounts = await landmarkMounts(contract);
+    const registered = await terrainContract(contract), expectedMounts = (registered.landmarkMounts ?? []).filter((mount) => mount.asset);
     const requests: string[] = [];
     const listener = (request: { url(): string; resourceType(): string }) => { if (isAssetRequest(request)) requests.push(path.basename(new URL(request.url()).pathname)); };
     page.on('request', listener);
@@ -214,7 +213,7 @@ test('all sixteen contracts mount terrain, panorama, and grounded render-only la
     await expect(canvas).toHaveAttribute('data-terrain3d-pilot-height-source', 'baked-grid');
     await expect(canvas).toHaveAttribute('data-terrain3d-pilot-panorama', contract.panorama);
     expect(Number(await canvas.getAttribute('data-terrain3d-pilot-meshes'))).toBe(1);
-    expect(Number(await canvas.getAttribute('data-terrain3d-pilot-triangles'))).toBe(32_768);
+    expect(Number(await canvas.getAttribute('data-terrain3d-pilot-triangles'))).toBe(registered.triangles); // 2026-09-22, 7c2744e5a: inspected terrain-only GLB metric; continuation excluded.
     expect(Number(await canvas.getAttribute('data-terrain3d-pilot-materials'))).toBe(1);
     expect(Number(await canvas.getAttribute('data-terrain3d-pilot-landmarks'))).toBe(expectedMounts.length);
     expect(Number(await canvas.getAttribute('data-terrain3d-pilot-landmark-skipped'))).toBe(0);
@@ -278,7 +277,8 @@ test('rim and horizon probes keep the terrain meeting gradual and every panorama
     await boot(page, contract.id, '&terrain3dPilot');
     const canvas = page.locator('canvas');
     await expect(canvas).toHaveAttribute('data-terrain3d-pilot-state', 'ready');
-    await expect(canvas).toHaveAttribute('data-terrain3d-pilot-skirt-blend', 'painted-underlay-alpha-rim');
+    const expectedSkirtBlend = await canvas.getAttribute('data-terrain3d-pilot-render-source') === 'glb' ? 'opaque-sculpt-edge' : 'painted-underlay-alpha-rim'; // 2026-09-22, 7c2744e5a: sculpt edge vs painted alpha rim.
+    await expect(canvas).toHaveAttribute('data-terrain3d-pilot-skirt-blend', expectedSkirtBlend);
     await expect(canvas).toHaveAttribute('data-terrain3d-pilot-panorama-fog', 'excluded');
     await expect(canvas).toHaveAttribute('data-terrain3d-pilot-panorama-depth', 'screen-horizon-backdrop');
     expect(Number(await canvas.getAttribute('data-terrain3d-pilot-hidden-relief'))).toBeGreaterThan(0);
@@ -358,7 +358,8 @@ test('all fifteen contracts stay painted in LITE and on invalid terrain bytes', 
 
     const terrain = new RegExp(`${contract.panorama.replace('-panorama', '-terrain')}(?:-[^/?]+)?\\.glb`);
     await page.route(terrain, (route) => route.fulfill({ status: 200, body: 'invalid glb bytes', contentType: 'model/gltf-binary' }));
-    await boot(page, contract.id, '&terrain3dPilot');
+    // 2026-09-22, 7c2744e5a: pin FULL so this boot reaches the invalid-bytes loader branch instead of the headless LITE early return.
+    await boot(page, contract.id, '&terrain3dPilot&tier=full');
     await expect(page.locator('canvas')).toHaveAttribute('data-terrain3d-pilot-state', 'failed');
     await expect(page.locator('canvas')).toHaveAttribute('data-terrain3d-pilot-render-source', 'painted');
     await expect(page.locator('canvas')).toHaveAttribute('data-terrain3d-pilot-panorama', 'off');

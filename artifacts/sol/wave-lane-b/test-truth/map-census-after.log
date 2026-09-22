@@ -1,0 +1,59 @@
+
+> gold-rush@0.1.0 census
+> playwright test e2e/map-census.spec.ts --project=desktop-chrome --workers=1 --reporter=line
+
+
+Running 47 tests using 1 worker
+
+
+(node:99912) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[1/47] [desktop-chrome] › e2e/map-census.spec.ts:36:3 › the-claim census
+[2/47] [desktop-chrome] › e2e/map-census.spec.ts:36:3 › e1-drill-yard census
+[3/47] [desktop-chrome] › e2e/map-census.spec.ts:36:3 › e1-dry-gulch census
+[4/47] [desktop-chrome] › e2e/map-census.spec.ts:36:3 › e1-night-shift census
+[5/47] [desktop-chrome] › e2e/map-census.spec.ts:36:3 › e1-twin-banks census
+[6/47] [desktop-chrome] › e2e/map-census.spec.ts:36:3 › e1-baron census
+[7/47] [desktop-chrome] › e2e/map-census.spec.ts:36:3 › e2-hill-mine census
+[8/47] [desktop-chrome] › e2e/map-census.spec.ts:36:3 › e2-trestle census
+[9/47] [desktop-chrome] › e2e/map-census.spec.ts:36:3 › e2-pressure-garden census
+[10/47] [desktop-chrome] › e2e/map-census.spec.ts:36:3 › e2-incline census
+[11/47] [desktop-chrome] › e2e/map-census.spec.ts:36:3 › e3-blackout-ridge census
+[12/47] [desktop-chrome] › e2e/map-census.spec.ts:36:3 › e3-moth-season census
+[13/47] [desktop-chrome] › e2e/map-census.spec.ts:36:3 › e3-canyon-works census
+[14/47] [desktop-chrome] › e2e/map-census.spec.ts:36:3 › e3-fairground census
+[15/47] [desktop-chrome] › e2e/map-census.spec.ts:36:3 › e4-dust-flats census
+[16/47] [desktop-chrome] › e2e/map-census.spec.ts:36:3 › e4-long-road census
+[17/47] [desktop-chrome] › e2e/map-census.spec.ts:36:3 › e4-gusher-county census
+[18/47] [desktop-chrome] › e2e/map-census.spec.ts:36:3 › e4-boneyard census
+[19/47] [desktop-chrome] › e2e/map-census.spec.ts:36:3 › e5-deepwater-claim census
+[20/47] [desktop-chrome] › e2e/map-census.spec.ts:36:3 › e5-regatta census
+[21/47] [desktop-chrome] › e2e/map-census.spec.ts:36:3 › e5-stillwater census
+[22/47] [desktop-chrome] › e2e/map-census.spec.ts:36:3 › e5-flotilla census
+[23/47] [desktop-chrome] › e2e/map-census.spec.ts:36:3 › e6-glow-mesa census
+[24/47] [desktop-chrome] › e2e/map-census.spec.ts:36:3 › e6-showroom census
+[25/47] [desktop-chrome] › e2e/map-census.spec.ts:36:3 › e6-half-life-hollow census
+[26/47] [desktop-chrome] › e2e/map-census.spec.ts:36:3 › e6-picnic census
+[27/47] [desktop-chrome] › e2e/map-census.spec.ts:36:3 › e7-relay-valley census
+[28/47] [desktop-chrome] › e2e/map-census.spec.ts:36:3 › e7-echo-canyon census
+[29/47] [desktop-chrome] › e2e/map-census.spec.ts:36:3 › e7-dead-band census
+[30/47] [desktop-chrome] › e2e/map-census.spec.ts:36:3 › e7-relay-rush census
+[31/47] [desktop-chrome] › e2e/map-census.spec.ts:36:3 › e8-mare-claim census
+[32/47] [desktop-chrome] › e2e/map-census.spec.ts:36:3 › e8-far-side census
+[33/47] [desktop-chrome] › e2e/map-census.spec.ts:36:3 › e8-low-orbit census
+[34/47] [desktop-chrome] › e2e/map-census.spec.ts:36:3 › e8-eclipse census
+[35/47] [desktop-chrome] › e2e/map-census.spec.ts:36:3 › e9-dome-basin census
+[36/47] [desktop-chrome] › e2e/map-census.spec.ts:36:3 › e9-seed-run census
+[37/47] [desktop-chrome] › e2e/map-census.spec.ts:36:3 › e9-devils-alley census
+[38/47] [desktop-chrome] › e2e/map-census.spec.ts:36:3 › e9-old-canal census
+[39/47] [desktop-chrome] › e2e/map-census.spec.ts:36:3 › e10-ember-shore census
+[40/47] [desktop-chrome] › e2e/map-census.spec.ts:36:3 › e10-archive-world census
+[41/47] [desktop-chrome] › e2e/map-census.spec.ts:36:3 › e10-last-claim census
+[42/47] [desktop-chrome] › e2e/map-census.spec.ts:36:3 › e10-river census
+[43/47] [desktop-chrome] › e2e/map-census.spec.ts:44:3 › the-claim mobile spot
+[44/47] [desktop-chrome] › e2e/map-census.spec.ts:44:3 › e2-pressure-garden mobile spot
+[45/47] [desktop-chrome] › e2e/map-census.spec.ts:44:3 › e5-deepwater-claim mobile spot
+[46/47] [desktop-chrome] › e2e/map-census.spec.ts:44:3 › e8-low-orbit mobile spot
+[47/47] [desktop-chrome] › e2e/map-census.spec.ts:44:3 › e10-river mobile spot
+  47 passed (3.5m)
