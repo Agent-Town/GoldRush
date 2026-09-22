@@ -1222,7 +1222,12 @@ export function deriveMechanicsManifest(source: string | ContractManifest): Mech
       })),
     } : {}),
     interactables: interactables(contract),
-    rules: rules.sort(byId),
+    rules: rules.map((row) => {
+      const entry = entryPacks[contract.id]?.entryLandmark;
+      return entry && row.id === entryRuleIds[contract.id]
+        ? { ...row, data: { ...row.data, entryLandmark: `This map leads with the ${entry.mountId} landmark.` } }
+        : row;
+    }).sort(byId),
     modes: (contract.modes ?? []).map((mode) => ({ ...mode })),
     posting: {
       waves: waves.sort((left, right) => left.wave - right.wave || compare(left.event, right.event)),
@@ -1335,3 +1340,23 @@ function byId<T extends { id: string }>(left: T, right: T): number {
 function compare(left: string, right: string): number {
   return left < right ? -1 : left > right ? 1 : 0;
 }
+
+import glowMesaEntryPack from '../../assets/pilots/map-rebuild-spike/glow-mesa-terrain-contract.json' with { type: 'json' };
+import deadBandEntryPack from '../../assets/pilots/map-rebuild-spike/dead-band-terrain-contract.json' with { type: 'json' };
+import farSideEntryPack from '../../assets/pilots/map-rebuild-spike/far-side-terrain-contract.json' with { type: 'json' };
+import halfLifeHollowEntryPack from '../../assets/pilots/map-rebuild-spike/half-life-hollow-terrain-contract.json' with { type: 'json' };
+import relayRushEntryPack from '../../assets/pilots/map-rebuild-spike/relay-rush-terrain-contract.json' with { type: 'json' };
+const entryPacks: Readonly<Record<string, { contractId: string; entryLandmark?: { mountId: string } }>> = {
+  'e6-glow-mesa': glowMesaEntryPack,
+  'e7-dead-band': deadBandEntryPack,
+  'e8-far-side': farSideEntryPack,
+  'e6-half-life-hollow': halfLifeHollowEntryPack,
+  'e7-relay-rush': relayRushEntryPack,
+};
+const entryRuleIds: Readonly<Record<string, string>> = {
+  'e6-glow-mesa': 'night_vein_ring',
+  'e7-dead-band': 'signal_suppression',
+  'e8-far-side': 'probe_recovery',
+  'e6-half-life-hollow': 'hollow_crossing',
+  'e7-relay-rush': 'interference_front',
+};

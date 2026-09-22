@@ -1,0 +1,102 @@
+import * as THREE from 'three';
+import { Balance } from '../game/Balance';
+
+export class CameraRig {
+  private readonly desiredPosition = new THREE.Vector3();
+  private readonly lookTarget = new THREE.Vector3();
+  private readonly lookAhead = new THREE.Vector3();
+  private readonly impulseOffset = new THREE.Vector3();
+  private readonly trackedTarget = new THREE.Vector3();
+  private distanceScale = 1;
+  private impulseRemaining = 0;
+  private glanceTarget: { position: THREE.Vector3; velocity: THREE.Vector3 } | null = null;
+
+  constructor(
+    private readonly camera: THREE.PerspectiveCamera,
+    private readonly sceneScale = 1,
+  ) {
+    this.camera.fov = Balance.camera.fov;
+    this.camera.updateProjectionMatrix();
+  }
+
+  get focus(): THREE.Vector3 { return this.trackedTarget; }
+
+  setDistanceScale(scale: number): void {
+    this.distanceScale = scale;
+  }
+
+  /** Fit the selected contract with the normal game pose, including narrow portrait viewports. */
+  frameBounds(bounds: { minX: number; maxX: number; minZ: number; maxZ: number }, target: THREE.Vector3): void {
+    const width = bounds.maxX - bounds.minX;
+    const depth = bounds.maxZ - bounds.minZ;
+    const halfFov = THREE.MathUtils.degToRad(this.camera.fov / 2);
+    const distance = Math.max(width / Math.max(.1, this.camera.aspect), depth) / (2 * Math.tan(halfFov));
+    this.setDistanceScale((distance + depth * .28) * this.sceneScale / Balance.camera.offset.length());
+    this.snapTo(target);
+  }
+
+  diagnostics(): { baseDistance: number; actualDistance: number; glanceActive: boolean } {
+    return {
+      baseDistance: Balance.camera.offset.length() / this.sceneScale,
+      actualDistance: this.camera.position.distanceTo(this.trackedTarget),
+      glanceActive: this.glanceTarget !== null,
+    };
+  }
+
+  setGlanceTarget(position: THREE.Vector3 | null, velocity?: THREE.Vector3): void {
+    this.glanceTarget = position && velocity ? { position, velocity } : null;
+  }
+
+  snapTo(target: THREE.Vector3): void {
+    this.trackedTarget.copy(target);
+    this.setDesiredPosition(target);
+    this.camera.position.copy(this.desiredPosition);
+    this.impulseOffset.set(0, 0, 0);
+    this.impulseRemaining = 0;
+    this.lookTarget.set(target.x, target.y + 0.45, target.z - Balance.camera.downScreenLookOffset);
+    this.camera.lookAt(this.lookTarget);
+  }
+
+  impulse(target: THREE.Vector3, amount: number = Balance.charm.camImpulse): void {
+    const clamped = Math.max(0, Math.min(0.15, amount));
+    if (clamped <= 0) return;
+    this.impulseOffset.set(this.camera.position.x - target.x, 0, this.camera.position.z - target.z);
+    if (this.impulseOffset.lengthSq() <= 0.0001) this.impulseOffset.set(0, 0, 1);
+    this.impulseOffset.normalize().multiplyScalar(clamped);
+    this.impulseRemaining = 0.2;
+  }
+
+  get impulseActive(): boolean {
+    return this.impulseRemaining > 0;
+  }
+
+  update(delta: number, target: THREE.Vector3, velocity: THREE.Vector3): void {
+    target = this.glanceTarget?.position ?? target;
+    velocity = this.glanceTarget?.velocity ?? velocity;
+    this.trackedTarget.copy(target);
+    this.setDesiredPosition(target);
+    const factor = 1 - Math.exp(-delta / Balance.camera.lag);
+    this.camera.position.lerp(this.desiredPosition, factor);
+    if (this.impulseRemaining > 0) {
+      this.impulseRemaining = Math.max(0, this.impulseRemaining - delta);
+      const t = this.impulseRemaining / 0.2;
+      this.camera.position.addScaledVector(this.impulseOffset, t);
+    }
+
+    this.lookAhead.set(velocity.x, 0, velocity.z);
+    if (this.lookAhead.lengthSq() > 0.0001) {
+      this.lookAhead.normalize().multiplyScalar(Balance.camera.lookAhead);
+    }
+    this.lookTarget
+      .set(target.x, target.y + 0.45, target.z - Balance.camera.downScreenLookOffset)
+      .add(this.lookAhead);
+    this.camera.lookAt(this.lookTarget);
+  }
+
+  private setDesiredPosition(target: THREE.Vector3): void {
+    this.desiredPosition
+      .copy(Balance.camera.offset)
+      .multiplyScalar(this.distanceScale / this.sceneScale)
+      .add(target);
+  }
+}

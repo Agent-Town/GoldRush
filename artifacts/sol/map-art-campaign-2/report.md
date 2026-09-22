@@ -663,3 +663,47 @@ Final four-run pairs per arm/width: Boneyard p95 **8.85→9.05 / 8.90→8.95 ms*
 Requested builds and **34+3** scoped guards pass; E1 first-town payload **34,279,452 B** unchanged. The shared body is emitted in E1 but not requested by ordinary Claim boots. All normal map captures have zero console/page errors; the supplementary pre-deploy E1-dist probe separately records its expected missing version metadata 404. Shared checks **16 pass/4 opt-in skips**, census **8**, loading **8**, repeat **2**, source reexport, six actual disposal cycles and compressed-body/2D/LITE probes pass. The final selected replay has **4 pass/22 exact-base failures**, every remaining fingerprint matched by project and assertion; the new 2D request regression was fixed, and the initial story failure cleared. No test assertions or pin changed.
 
 Store **adf6bd1a22582459e64c2ddc1a37b1bd707ffa14**, pushed on **astra/fidelity-1**. Engine **db5803bef10a13daa735eab2d860a2d8608dba2104d0a00571d85fb98570aad7 → b7113b37c1a7e10b10f504947a660147c581c22b667aa1df2feb695bbb96100c**. [Every clause, four-map boards, final metrics and exact failure attribution](run-8/motor-hauler/review.md). **READY-FOR-GATES**. Remaining ordered task list: **none**; full concept and gameplay/entry holds remain explicit.
+
+
+## 2026-09-22 — run 8: entry, Dead Band
+
+**Already framed:** `iron-shadow-warning-frame` has **6,714 desktop / 7,570 phone** body pixels at rest and remains visible throughout the separate ~4 s sample. Applying the task's already-framed exception, it declares nothing and adds no manifest sentence. No camera glance runs. The ridge vista and HUD/art limitations stay HELD. Own suppression/census **12/12**, final builds and **61+3** guards pass; E1 payload **34,309,364 B**. All five broader Signal failures reproduce on the exact preceding map base. The shared lookup is corrected to bind runtime map IDs rather than variant authoring IDs; all 42 manifests preserve every other field. [Evidence and attribution](run-8/entry-framing/e7-dead-band/review.md).
+
+Engine `b13e44ed083d03e30fee4cf9d6e3702ff8b6e167ddb88f20a7d24eae36cd7427` → `084df9fa71eef1eb63753addda63d7ee7b34a049e8394acfea11db36d284ae37`. Store unchanged at `4e9720b`; no empty store commit. READY-FOR-GATES with the five explicitly attributed baseline failures.
+
+
+## 2026-09-22 — run 8: entry, Glow Mesa
+
+**Fixed offscreen entry:** `mesa-starstone-derrick` names the raised cap's identifying derrick/working compound. Final corrected ease measures **0→37,168→0 desktop / 0→41,400→0 phone** body pixels; in-frame duration **1.416–1.525 / 1.359–1.468 s** inside a 2.5 s authored window. The rig visits the actual mount at the unchanged offset, then returns to the live hero. All normal tracking and replay poses retain their original path; final long-pan correction removes duplicate lag during the authored ease. The earlier captures are preserved. Full mesa/grouping/node-ring/model/HUD composition remains HELD. [Boards, measurements and checks](run-8/entry-framing/e6-glow-mesa/review.md).
+
+Own checks pass after correcting the manifest sentence to extend an existing rule, shared/replay/view **28 pass / four opt-in skips**, loading **8/8**, repeat **2/2**, builds and **61+3** guards pass. Headless `now` snapshots match byte-for-byte; audit semantics match. Initial engine `b7113b37c1a7e10b10f504947a660147c581c22b667aa1df2feb695bbb96100c` → `b13e44ed083d03e30fee4cf9d6e3702ff8b6e167ddb88f20a7d24eae36cd7427`; final shared ease refinement is in the Far Side commit below. Store `4e9720b0788ebd6bccb6f2bd1f3945dbd855a50c`. Pin drain-owned.
+
+
+## 2026-09-22 — run 8: entry, Far Side
+
+**Fixed offscreen entry:** `earthrise-listening-array` represents the plate's isolated horizon dish opposite the landing compound. **0→26,144→0 desktop / 0→28,996→0 phone** body pixels; visible **1.377–1.490 / 1.375–1.491 s**. The existing camera reaches the z 56 mount from the z −36 entry without changing FOV, offset, zoom or hero start. During the authored ease, removing duplicate tracking lag prevents a mid-pan flip; all normal/replay poses remain exact, 600 long-pan proof frames retain the fixed orientation. Glow Mesa's final captures were refreshed. Full plate/model/vista and phone HUD composition remain HELD.
+
+Builds, **61+3** guards, focused parity/census **6/6**, loading **8/8**, repeat **2/2** pass. Own **22 pass / two failures**; both arsenal availability mismatches reproduce on the exact preceding engine, candidate restored exactly. E1 payload **34,309,624 B**. [Boards, proofs and attribution](run-8/entry-framing/e8-far-side/review.md).
+
+Engine `084df9fa71eef1eb63753addda63d7ee7b34a049e8394acfea11db36d284ae37` → `b3a86513d6b6511e4fa3049104211051d4cddac7fdda6c314a52144cdb98a288`. Store `2d1000357f06e44b42b7288ef8682b1919a66e05`. Pin drain-owned. READY-FOR-GATES with two attributed baseline failures.
+
+
+## 2026-09-22 — run 8: entry, Half-Life Hollow
+
+**Fixed offscreen entry:** `south-countdown-gate` names the plate's foreground clock gate at the timed crossing. **0→26,671→0 desktop / 0→29,787→0 phone** body pixels; visible **1.700–1.816 / 1.684–1.791 s** inside the 2.5 s authored window. Reachable with the original offset/FOV/zoom and hero start. The simple frame, terrain/continuation seam, ochre/teal crossing slabs, ravine and HUD composition remain HELD. Only the two mirrored metadata declarations change.
+
+Builds, **61+3** guards and own crossing/roster/census **20/20** pass; E1 payload **34,309,830 B**. [Boards, counts and invariants](run-8/entry-framing/e6-half-life-hollow/review.md). Engine `b3a86513d6b6511e4fa3049104211051d4cddac7fdda6c314a52144cdb98a288` → `a8afc11f313a5bc6567deac76bb40da24aab1ff19d7f935146229510289ad7c1`. Store `d8938178a7464c637a79bca81d5f788bc8ad954d`. Pin drain-owned. READY-FOR-GATES.
+
+
+## 2026-09-22 — run 8: entry, Relay Rush
+
+**Already framed:** the plate's nearest relay shelf is represented by `rush-relay-r2-frame` at the actual start. Rest/mid/return body pixels **21,662→21,676→21,675 desktop / 24,145→24,126→24,124 phone**; visible throughout **≥3.965 / ≥3.957 s**. No declaration, manifest sentence or camera glance, following the explicit already-framed exception. The minor pixel changes are ordinary settling, not improvement. The wider terraces, charting station, west dish, active relay art and HUD remain HELD. Prior solidity and art are unchanged.
+
+Own front/census **16/16** and visual census **2/2** pass. Builds and **61+3** guards from the identical final Hollow engine apply unchanged; E1 payload **34,309,830 B**. [Boards, counts and invariants](run-8/entry-framing/e7-relay-rush/review.md). Engine `a8afc11f313a5bc6567deac76bb40da24aab1ff19d7f935146229510289ad7c1` → same hash; store unchanged `d8938178a7464c637a79bca81d5f788bc8ad954d`. No empty art commit. READY-FOR-GATES, with final shared closeout to follow.
+
+
+## 2026-09-22 — run 8: entry framing closeout
+
+**READY-FOR-GATES:** all five maps completed, three declared camera glances and two already-framed exceptions. **No unreachable or remaining maps.** Final shared **28 pass / four opt-in skips**, exact Regatta replay **2/2**, agent-view **10/10**, ten uninstrumented boots **zero errors**. Thirty final `now` snapshots, **109,496 bytes**, are byte-identical; the audit is unchanged except source-line citations. Builds and **61+3** guards pass, E1 payload **34,309,830 B**. Seven broader Signal/Orbital failures reproduce on exact preceding map bases and remain held. Full art/vista/crossing/relay/HUD acceptance remains separate.
+
+Store `d8938178a7464c637a79bca81d5f788bc8ad954d` is pushed and read back on `astra/entry-framing`; land it with `sol/map-art-campaign-2`. Final engine `a8afc11f313a5bc6567deac76bb40da24aab1ff19d7f935146229510289ad7c1`; pins untouched. [All measurements, boards, per-map commits, full hash pairs and failure attribution](run-8/entry-framing/handoff.md). Remaining list: **none**.
