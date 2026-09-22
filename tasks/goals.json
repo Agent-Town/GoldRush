@@ -5702,21 +5702,40 @@
               "id": "sol-entry-framing",
               "title": "Astra's next wave, 2 of 3 (prepared 2026-09-22): the plain entry frames the declared landmark on the five maps where it stands behind or beyond the entry view — a timed glance from the existing camera rig, declared per pack; camera only, the view untouched",
               "status": "blocked",
-              "blockClass": "owner-fork",
-              "blockedReason": "OWNER'S WORD OWED naming the ChatGPT subscription (tasks/CODEX-WALL): prepared 2026-09-22 on \"Ok, then prep for Astra's next wave.\" — NOT dispatched. Lift = the owner's word: flip to queued and cp into tasks/queue/lane-c/ (after sol-map-art-fidelity-1 lands, by its drain, on the same word). Not a gate-side hold.",
+              "blockClass": "gate-side",
+              "blockedReason": "GATE-SIDE hold, no owner word owed (the word is given: \"There will be a reset in the next 24 hours. Lets hit it! Full Codex power.\"): queue only after sol-map-art-fidelity-1 has LANDED (same lane, same store worktree; serial by design). Lift = the fidelity-1 drain's final slice runs wave-next.cjs and cp's this master into tasks/queue/lane-c/.",
               "taskFile": "sol-entry-framing.md",
               "registeredBy": "attended 2026-09-22",
               "lane": "lane-c (Codex gpt-6-astra xhigh, the owner's ChatGPT subscription), serial with the wave's other two; the store commits go to the lanes' own store worktree worktrees/GoldRush-assets"
             },
             {
               "id": "sol-phone-hud-entry",
-              "title": "Astra's next wave, 3 of 3 (prepared 2026-09-22): the persistent HUD at 390 px stops hiding the entry landmark — a coverage census with a guard, then the layout cure at 390 px only, testids kept",
-              "status": "blocked",
-              "blockClass": "owner-fork",
-              "blockedReason": "OWNER'S WORD OWED naming the ChatGPT subscription (tasks/CODEX-WALL): prepared 2026-09-22 on \"Ok, then prep for Astra's next wave.\" — NOT dispatched. Lift = the owner's word: flip to queued and cp into tasks/queue/lane-c/ (after sol-entry-framing lands, by its drain, on the same word). Not a gate-side hold.",
+              "title": "Astra's wave, lane-b (dispatched 2026-09-22 on \"There will be a reset in the next 24 hours. Lets hit it! Full Codex power.\"): the persistent HUD at 390 px stops hiding the entry landmark — a coverage census with a guard, then the layout cure at 390 px only, testids kept; store-independent, beside the lane-c fidelity run",
+              "status": "queued",
               "taskFile": "sol-phone-hud-entry.md",
               "registeredBy": "attended 2026-09-22",
-              "lane": "lane-c (Codex gpt-6-astra xhigh, the owner's ChatGPT subscription), serial with the wave's other two; the store commits go to the lanes' own store worktree worktrees/GoldRush-assets"
+              "lane": "lane-b (Codex gpt-6-astra xhigh, the owner's ChatGPT subscription), branch sol/wave-lane-b, port 5312; the lane store is the concurrent lane-c run's and untouched",
+              "queuedAt": "2026-09-22, queued lane-b on the owner's word beside the lane-c fidelity run"
+            },
+            {
+              "id": "sol-regatta-view-parity",
+              "title": "Astra's wave, lane-b 2 of 2 (2026-09-22): F-HEAT15-2 (the shore published — a bounds rule on regatta_boat + canStepAshore on now.regatta) and F-HEAT15-3 (finishedAt / forfeitedAt published; the finish gate enters buoysPassed); view schema 3 → 4",
+              "status": "blocked",
+              "blockClass": "gate-side",
+              "blockedReason": "GATE-SIDE hold, no owner word owed (the word is given: \"There will be a reset in the next 24 hours. Lets hit it! Full Codex power.\"): queue only after sol-phone-hud-entry has LANDED (same lane; serial by design). Lift = the phone-hud drain runs wave-next.cjs and cp's this master into tasks/queue/lane-b/.",
+              "taskFile": "sol-regatta-view-parity.md",
+              "registeredBy": "attended 2026-09-22",
+              "lane": "lane-b (Codex gpt-6-astra xhigh, the owner's ChatGPT subscription), branch sol/wave-lane-b, port 5312"
+            },
+            {
+              "id": "sol-map-art-fidelity-2",
+              "title": "Astra's wave, lane-c 3 of 3 (2026-09-22): run 9 of the map-art campaign — the art-owned residue on the other twenty-two maps, E1 → E9, each clause quoted from Astra's own latest review and judged against its own earlier number",
+              "status": "blocked",
+              "blockClass": "gate-side",
+              "blockedReason": "GATE-SIDE hold, no owner word owed (the word is given: \"There will be a reset in the next 24 hours. Lets hit it! Full Codex power.\"): queue only after sol-entry-framing has LANDED (same lane, same store worktree; serial by design). Lift = the entry-framing drain runs wave-next.cjs and cp's this master into tasks/queue/lane-c/.",
+              "taskFile": "sol-map-art-fidelity-2.md",
+              "registeredBy": "attended 2026-09-22",
+              "lane": "lane-c (Codex gpt-6-astra xhigh, the owner's ChatGPT subscription); the store commits go to the lanes' own store worktree"
             }
           ]
         }
