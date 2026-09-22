@@ -5617,21 +5617,24 @@
             {
               "id": "f-corr4-2-variant-footprints",
               "title": "F-CORR4-2 RULED (owner 2026-09-22 \"ok, lets do it\"): the collision resolver unions the parent blockers with the variant maps' own registered solids (Picnic, Dead Band, Relay Rush, Far Side) and the render side mounts them",
-              "status": "queued",
+              "status": "merged",
               "taskFile": "f-corr4-2-variant-footprints.md",
               "registeredBy": "attended 2026-09-22",
               "lane": "lane-c (Codex gpt-6-astra xhigh, the owner's ChatGPT subscription — the CODEX-WALL follow-on lift of 2026-09-22)",
-              "queuedAt": "2026-09-22, dispatched lane-c on the owner's word"
+              "queuedAt": "2026-09-22, dispatched lane-c on the owner's word",
+              "mergeHash": "aaa06d8d15533d15a0cabcde349e2db982b26f1f",
+              "mergedAt": "2026-09-22",
+              "review": "reviews/f-corr4-2-variant-footprints.md",
+              "drainedBy": "attended 2026-09-22 (the store branch landed first)"
             },
             {
               "id": "f-corr4-18-river-pack",
               "title": "F-CORR4-18 RULED (owner 2026-09-22 \"give the raw route its own small pack\"): the raw River gets a render-only pack the Last Claim's shape — terrain grid, panorama, nonblocking shoreline bodies",
-              "status": "blocked",
-              "blockClass": "gate-side",
-              "blockedReason": "GATE-SIDE hold, no owner word owed: queue only after f-corr4-2-variant-footprints has LANDED on main (the same lane and store; serial by design). Lift = flip to queued and cp into tasks/queue/lane-c/ in the drain that lands f-corr4-2.",
+              "status": "queued",
               "taskFile": "f-corr4-18-river-pack.md",
               "registeredBy": "attended 2026-09-22",
-              "lane": "lane-c (Codex gpt-6-astra xhigh, the owner's ChatGPT subscription — the CODEX-WALL follow-on lift of 2026-09-22)"
+              "lane": "lane-c (Codex gpt-6-astra xhigh, the owner's ChatGPT subscription — the CODEX-WALL follow-on lift of 2026-09-22)",
+              "queuedAt": "2026-09-22, queued lane-c by the drain that landed f-corr4-2 (aaa06d8d1), per its gate-side hold"
             },
             {
               "id": "f-rb2-2-gangway-reach",
