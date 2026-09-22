@@ -396,15 +396,15 @@
       "fingerprint": "72ea46966bc9",
       "excerpt": "git -C \"$ROOT\" log --format=' %h %cI %s' --since=\"@$start_epoch\" -n 10 -- \"$RUNNER_SCRIPT\" 2>/dev/nu"
     },
-    "scripts/fire.md -> scripts/skillmd-guard.test.mjs:109": {
+    "scripts/fire.md -> scripts/skillmd-guard.test.mjs:133": {
       "target": "scripts/skillmd-guard.test.mjs",
-      "line": 109,
+      "line": 133,
       "fingerprint": "6abed180ebaa",
       "excerpt": "assert.deepEqual(jsonBlock('rotations'), rotations);"
     },
-    "scripts/fire.md -> skillmd-guard.test.mjs:109": {
+    "scripts/fire.md -> skillmd-guard.test.mjs:133": {
       "target": "scripts/skillmd-guard.test.mjs",
-      "line": 109,
+      "line": 133,
       "fingerprint": "6abed180ebaa",
       "excerpt": "assert.deepEqual(jsonBlock('rotations'), rotations);"
     },
@@ -426,9 +426,9 @@
       "fingerprint": "4d472fe44dc3",
       "excerpt": "const rotation = rotationSeeds.rotations[0];"
     },
-    "scripts/fire.md -> test-standings.mjs:1189": {
+    "scripts/fire.md -> test-standings.mjs:1326": {
       "target": "scripts/test-standings.mjs",
-      "line": 1189,
+      "line": 1326,
       "fingerprint": "4d472fe44dc3",
       "excerpt": "const rotation = rotationSeeds.rotations[0];"
     },
@@ -438,9 +438,9 @@
       "fingerprint": "5c7c80d8d1eb",
       "excerpt": "const rotations = (existing.rotations ?? []).filter((entry) => entry.id !== rotation.id).concat([rot"
     },
-    "scripts/fire.md -> scripts/skillmd-guard.test.mjs:100": {
+    "scripts/fire.md -> scripts/skillmd-guard.test.mjs:124": {
       "target": "scripts/skillmd-guard.test.mjs",
-      "line": 100,
+      "line": 124,
       "fingerprint": "6cd84c8fb906",
       "excerpt": "// F-2568-2, owner ruling 2026-09-19 (verbatim: \"I agree with all your recommendations on the"
     },
@@ -450,15 +450,15 @@
       "fingerprint": "837297d35281",
       "excerpt": ".sort((a, b) => a.opensAt.localeCompare(b.opensAt));"
     },
-    "scripts/fire.md -> functions/api/standings.ts:541": {
+    "scripts/fire.md -> functions/api/standings.ts:576": {
       "target": "functions/api/standings.ts",
-      "line": 541,
+      "line": 576,
       "fingerprint": "c5cea6199b80",
       "excerpt": "const rotation = ROTATIONS.find(({ id }) => id === url.searchParams.get('rotation'));"
     },
-    "scripts/fire.md -> functions/api/standings.ts:1237": {
+    "scripts/fire.md -> functions/api/standings.ts:1284": {
       "target": "functions/api/standings.ts",
-      "line": 1237,
+      "line": 1284,
       "fingerprint": "e8725d260828",
       "excerpt": "function currentOrLatestRotation(now: number): Rotation | null {"
     },
