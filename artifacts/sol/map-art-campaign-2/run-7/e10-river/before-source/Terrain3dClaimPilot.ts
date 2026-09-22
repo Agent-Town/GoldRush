@@ -91,8 +91,6 @@ import type { ContractManifest } from '../meta/ContractFamilies';
 
 import lastClaimContractText from '../../assets/pilots/map-rebuild-spike/last-claim-terrain-contract.json?raw';
 import lastClaimPanoramaContractText from '../../assets/pilots/map-rebuild-spike/last-claim-panorama-contract.json?raw';
-import riverContractText from '../../assets/pilots/map-rebuild-spike/river-terrain-contract.json?raw';
-import riverPanoramaContractText from '../../assets/pilots/map-rebuild-spike/river-panorama-contract.json?raw';
 
 type MotorGroundTruth = Pick<ContractManifest['tileParams'], 'dimensions' | 'roadCorridors' | 'tarSeams' | 'orbitSpawn'>;
 type PaintRoutePoint = { x: number; z: number };
@@ -216,7 +214,6 @@ const REGISTRY: Record<string, Entry> = {
   'e9-old-canal': entry(new URL('../../assets/pilots/map-rebuild-spike/old-canal-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/old-canal-panorama.glb', import.meta.url).href, JSON.stringify({ ...JSON.parse(oldCanalContractText), boundsMeters: { min: [-64, -64, -1.42], max: [64, 64, 2.906317] } }), oldCanalPanoramaContractText),
   'e10-archive-world': entry(new URL('../../assets/pilots/map-rebuild-spike/archive-world-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/archive-world-panorama.glb', import.meta.url).href, archiveWorldContractText, archiveWorldPanoramaContractText),
   'e10-last-claim': entry(new URL('../../assets/pilots/map-rebuild-spike/last-claim-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/last-claim-panorama.glb', import.meta.url).href, lastClaimContractText, lastClaimPanoramaContractText),
-  'e10-river': entry(new URL('../../assets/pilots/map-rebuild-spike/river-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/river-panorama.glb', import.meta.url).href, riverContractText, riverPanoramaContractText),
   }),
 };
 const LANDMARK_ASSETS = import.meta.glob([
@@ -2186,35 +2183,6 @@ diffuseColor.rgb = mix(diffuseColor.rgb, memorialBrass, max(memorialRing, memori
   });
 }
 
-/** The raw River keeps its run-6 water; the dedicated grid replaces bank paint. */
-function paintRiverBanks(model: THREE.Object3D): void {
-  if (isMapBeautyDisabled()) return;
-  model.traverse(node => {
-    const mesh = node as THREE.Mesh<THREE.BufferGeometry, THREE.MeshStandardMaterial>;
-    if (!mesh.isMesh || Array.isArray(mesh.material) || !mesh.material.isMeshStandardMaterial) return;
-    const material = mesh.material, compile = material.onBeforeCompile.bind(material);
-    const cacheKey = material.customProgramCacheKey();
-    material.onBeforeCompile = (shader, renderer) => {
-      compile(shader, renderer);
-      shader.uniforms.riverSand = { value: new THREE.Color('#b8a47c') };
-      shader.uniforms.riverWet = { value: new THREE.Color('#69746b') };
-      shader.vertexShader = shader.vertexShader
-        .replace('#include <common>', '#include <common>\nvarying vec2 vRiverBank;')
-        .replace('#include <begin_vertex>', '#include <begin_vertex>\nvRiverBank = (modelMatrix * vec4(position, 1.0)).xz;');
-      shader.fragmentShader = shader.fragmentShader
-        .replace('#include <common>', '#include <common>\nvarying vec2 vRiverBank;\nuniform vec3 riverSand, riverWet;')
-        .replace('#include <map_fragment>', `#include <map_fragment>
-float riverEdge = abs(vRiverBank.y) + sin(vRiverBank.x * 0.79) * 0.25 + sin(vRiverBank.x * 1.93) * 0.12;
-float riverDamp = 1.0 - smoothstep(5.7, 8.5, riverEdge);
-float riverFord = 1.0 - smoothstep(2.5, 3.0, abs(vRiverBank.x));
-vec3 riverPigment = mix(riverSand, riverWet, riverDamp * (1.0 - 0.45 * riverFord));
-diffuseColor.rgb = mix(diffuseColor.rgb, riverPigment, 0.72);`);
-    };
-    material.customProgramCacheKey = () => `${cacheKey}|river-bank-dawn-v1`;
-    material.needsUpdate = true;
-  });
-}
-
 /** A material-only dawn treatment for the raw River's existing painted fallback. */
 function paintRiverReturn(host: Host): () => void {
   if (host.contractId !== 'e10-river' || isMapBeautyDisabled()) return () => undefined;
@@ -2684,9 +2652,6 @@ function createLiveSpringPonds(host: Host, heightAt: (x: number, z: number) => n
 function hidePaintedRelief(host: Host): HiddenRelief[] {
   const objects = new Set<THREE.Object3D>();
   host.scene.traverse((object) => {
-    // F-CORR4-18 keeps the contract-owned water and its existing animation/depth.
-    // Only the bank, ford paint and old stepping stones yield to the new pack.
-    if (host.contractId === 'e10-river' && object.userData.assetSlot === 'terrain.river') return;
     if (
       object.userData.terrainRelief === true ||
       object.userData.terrainVista === true ||
@@ -2906,7 +2871,6 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
     publish(host.canvas, 'failed', 'painted', undefined, undefined, undefined, 'pilot-contract-unavailable');
     return paintRiverReturn(host);
   }
-  const restoreRiverPaint = paintRiverReturn(host);
   let disposed = false;
   let terrain: THREE.Object3D | undefined;
   let panorama: THREE.Object3D | undefined;
@@ -2981,7 +2945,6 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
       if (host.contractId === 'e2-incline') clarifyInclineYards(nextTerrain);
       if (host.contractId === 'e3-canyon-works') clarifyCanyonGround(nextTerrain);
       if (host.contractId === 'e10-last-claim') paintLastClaimDeck(nextTerrain);
-      if (host.contractId === 'e10-river') paintRiverBanks(nextTerrain);
       if (host.contractId === 'e10-ember-shore') clarifyEmberBasalt(nextTerrain);
       if (host.contractId === 'e10-archive-world') clarifyArchiveTerraces(nextTerrain, host.archiveRestoration);
       if (host.contractId === 'e9-devils-alley') gradeTerrainByHeight(nextTerrain, '#9f8b6e', '#bba487', -0.14, 4.57, 0.46);
@@ -3013,7 +2976,6 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
         host.canvas.dataset.terrain3dPilotSeaApronTriangles = String(routeSeaApron(nextTerrain, nextPanorama, terrainMetrics.bounds));
       }
       const nextSkirt = createContinuation(nextTerrain, nextPanorama, heightAt, terrainMetrics.bounds, host.contractId);
-      if (host.contractId === 'e10-river' && nextSkirt) paintRiverBanks(nextSkirt);
       if (host.contractId === 'e10-ember-shore' && nextSkirt) clarifyEmberBasalt(nextSkirt);
       if (host.contractId === 'e10-archive-world' && nextSkirt) clarifyArchiveTerraces(nextSkirt, host.archiveRestoration);
       if (host.contractId === 'e3-moth-season' && host.nightMode && nextSkirt) {
@@ -3344,7 +3306,6 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
 
   return () => {
     disposed = true;
-    restoreRiverPaint();
     host.canvas.removeEventListener('webglcontextlost', onContextLost);
     disposeLoaded();
     uninstallHeightSource?.();

@@ -1,0 +1,65 @@
+✔ parseGlb rejects a non-GLB and reads the JSON + BIN chunks of a real one (1.063542ms)
+✔ metrics reproduce the runtime definitions: triangles, welded vertices, world bounds (0.716959ms)
+✔ bounds are TRANSFORMED bounds: a node translation moves them (F-ASTRA-8) (0.180125ms)
+✔ a node rotation is applied to the bounds, not ignored (0.169209ms)
+✔ non-finite positions are counted, not silently folded into the bounds (0.444208ms)
+✔ the grid probe accepts a complete lattice and rejects a punctured one (0.307958ms)
+✔ texture dimensions come from the real image header, and the family cap is enforced (0.303708ms)
+✔ external buffers and images are policy violations (0.132125ms)
+✔ an alpha mode outside the family policy is a violation; a permitted one is not (0.218584ms)
+✔ required extras are reported as ONE violation per asset, listing every missing key (0.161583ms)
+✔ the baseline key carries the detail, so a NEW violation on a baselined asset still reds (0.068375ms)
+✔ water metadata is required by the asset's own contract, never by blanket family rule (0.170041ms)
+✔ contract counts and bounds are compared against the sibling JSON the runtime reads (0.187875ms)
+
+| family            | assets | triangles | vertices  | materials | textures | max tex | cap   | 2-sided | anims | skins | extras | anchors |
+|-------------------|--------|-----------|-----------|-----------|----------|---------|-------|---------|-------|-------|--------|---------|
+| bosses            | 7      | 116,429   | 63,219    | 7         | 7        | 2048²   | 1024² | 7       | 0     | 0     | 1      | 0       |
+| finale            | 2      | 25,260    | 13,834    | 2         | 2        | 1024²   | 1024² | 2       | 0     | 0     | 0      | 0       |
+| landmarks         | 212    | 244,362   | 139,627   | 213       | 212      | 1024²   | 1024² | 212     | 0     | 0     | 212    | 0       |
+| panoramas         | 34     | 86,008    | 60,986    | 34        | 34       | 2048²   | 2048² | 34      | 0     | 0     | 34     | 0       |
+| props             | 65     | 92,934    | 50,517    | 68        | 67       | 1024²   | 512²  | 68      | 0     | 0     | 0      | 19      |
+| rail-element      | 1      | 132       | 72        | 1         | 1        | 256²    | 512²  | 1       | 0     | 0     | 0      | 0       |
+| terrain           | 34     | 1,132,544 | 575,074   | 34        | 34       | 2048²   | 2048² | 34      | 0     | 0     | 34     | 0       |
+| town-buildings    | 9      | 49,744    | 26,371    | 9         | 9        | 2048²   | 1024² | 9       | 0     | 0     | 0      | 0       |
+| town-era-variants | 73     | 472,838   | 252,013   | 73        | 73       | 1024²   | 1024² | 73      | 0     | 0     | 0      | 55      |
+| TOTAL             | 437    | 2,220,251 | 1,181,713 | 441       | 439      |         |       | 440     | 0     | 0     | 281    | 74      |
+437 production GLBs · 6 violations · 6 grandfathered · 0 live
+✔ THE CORPUS: every production GLB is clean or explicitly grandfathered (3189.869125ms)
+✔ landmark pack records bind the actual bytes, triangles and Blender-coordinate bounds (2.927917ms)
+✔ the census totals every family in the manifest and every family has a policy (136.068084ms)
+✔ the terrain family and the hero carry an export sidecar, and every sidecar is well-formed (4.071792ms)
+✔ reexport-pilot.sh reads the sidecar and leaves the no-sidecar path on the old recipe (0.399375ms)
+✔ the baseline is paid down by hand: no regenerate path exists in the guard (0.518583ms)
+✔ contractFor resolves the same sibling JSON Terrain3dClaimPilot.ts imports (0.467875ms)
+✔ census rows sum to the asset count (0.2495ms)
+✔ the shared landmark source ledger covers every shipped pack and current source declaration (131.980042ms)
+✔ landmark contracts honor declared material counts and retain legacy defaults (3.553167ms)
+PASS: translated/rotated/scaled/sheared surfaces agree with raycasts; invalid transforms and bounds rejected; disposal idempotent
+✔ scripts/landmark-walk-surfaces.test.mjs (78.13125ms)
+✔ sea texture has a disposable local sampler; late loading cannot resurrect a disposed surface (3.819708ms)
+✔ FNV-1a 64 known vectors, full bytes, and independent BigInt reference (2.594ms)
+✔ concurrent hits decode once; independent texture state shares Source until final disposal (0.407667ms)
+✔ misses, decode failure retry, and reset during decode do not retain or resurrect entries (0.329375ms)
+✔ real GLTF parser: cross-file wrap, colorSpace, UV and WebP paths preserve independent material views (6.420166ms)
+✔ late town retries cannot replace or dispose the active run tracker (14.487292ms)
+✔ embedded ImageBitmap atlases decode resident bytes once without a blob URL fetch (0.612458ms)
+
+  centroid discrepancy vs the drawn triangles (every triangle of every terrain)
+  terrain     triangles  old max    old p95    new max    new p95    worst point (x, z)
+  The Claim   32768      0.025272   0.000719   2.78e-15   8.88e-16   (29.667, 29.833)
+  Twin Banks  51200      0.022965   0.001956   5.53e-7    6.64e-8    (-19.467, 0.667)
+  Hill Mine   32768      0.103274   0.000268   1.42e-14   8.88e-16   (-16.000, 17.500)
+  Mare Claim  32768      0.666667   0.003457   7.11e-14   1.07e-14   (41.667, -26.667)
+
+✔ the height sampler lands on the drawn triangles, not near them (F-ASTRA-10) (53.206125ms)
+✔ the diagonal is read from the index buffer, never assumed (0.26525ms)
+✔ a cell the mesh never split, or split both ways, is rejected rather than guessed (0.442041ms)
+ℹ tests 34
+ℹ suites 0
+ℹ pass 34
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 6127.46525
