@@ -1,0 +1,28 @@
+branch tip f79b02c37 fix: F-RB2-2 (a) evidence — the two disembark cases at 1280 and 390, the guard transcripts 00:10Z
+scratch store: detached at 8ea5370 = store main, clean
+chain base 823b06b1d merging fix/f-rb2-2-gangway-reach f79b02c37
+merged aa0320a04
+single-line law: n/a (no pilot tables)
+engine hash merged (scratch store at 8ea5370): 048d8adfd230e0783a71a2a3ccb03e720ecd49823f857dbf58d1269e539fc01d
+tsc/build/e1: 0 / 0 / 0
+first-town payload: 34271448 bytes
+halo: rc=0 halo re-extraction PASS: 315 cured, 0 held, 760 regenerated-and-cured, 2127 scanned; alpha and opaque RGB unchanged
+null floors: rc=0 83 of 83 null floors match assets/contracts/null-floors.json (317.0s).
+law-pointer: rc=0 law-pointer-guard — do the law surfaces still point at what they claim?
+guards: ℹ pass 83 ℹ fail 0 
+e2e start 00:24Z: e2e/e5-regatta-boat.spec.ts e2e/e5-regatta-race.spec.ts e2e/agent-view.spec.ts e2e/er01-e5-census.spec.ts e2e/drill-yard-manifest.spec.ts e2e/task-025-bandits-dont-swim.spec.ts e2e/m2-01-build-menu.spec.ts
+e2e: rc=0   58 passed (4.9m)  00:29Z
+battery start 00:29Z
+battery: rc=1 ℹ tests 941 ℹ pass 933 ℹ fail 3 ℹ skipped 5  00:36Z
+✖ all 152 scripts/*.test.mjs fixture owners remove their temp directories (176197.834334ms)
+✖ failing tests:
+✖ rotation registry stays outside the engine identity corpus (544.102709ms)
+✖ the landed registry names the live engine and stays outside its hash corpus (197.127625ms)
+dirt after battery: 0
+RB2-PREP-DONE
+hash at pin time: 048d8adfd230e0783a71a2a3ccb03e720ecd49823f857dbf58d1269e539fc01d
+
+era (chain, scratch store): ℹ pass 7 ℹ fail 2 
+hash at pin time: 048d8adfd230e0783a71a2a3ccb03e720ecd49823f857dbf58d1269e539fc01d
+pin #29
+era (chain, scratch store): ℹ pass 9 ℹ fail 0 
