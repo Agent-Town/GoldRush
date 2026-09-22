@@ -223,6 +223,12 @@ export const HERO_ARRIVE_RADIUS = Balance.hero.radius;
  *                       the gangway. The order only makes sense from the deck.
  *   UNREACHABLE_WATER — aboard, ordered to a point the hull cannot reach that is not a step ashore.
  *
+ * F-RB2-2 (a), owner 2026-09-22 ("gangway-reach only"): both words are measured against the
+ * GANGWAY'S REACH from the deck anchor (`CLAIM_BOAT_GANGWAY_REACH`), not against the deck
+ * rectangle — so a point a metre past the BOW, which used to be accepted as a step ashore 15 m
+ * from the body, now answers `UNREACHABLE_WATER`, exactly as a human's bow-ward key now steps
+ * nowhere. One predicate, both species (ADR-005).
+ *
  * SLICE 3 PUBLISHES THEM (`specs/agent-play/e5-regatta-steerable-boat.md` law 5, "Refusals are the
  * standing-order status channel: `NOT_ABOARD`, `UNREACHABLE_WATER`, the existing `UNREACHABLE_*`").
  * Slice 1 deliberately held them OUT of `HERO_ORDER_REFUSALS` below, with this note: that list is
