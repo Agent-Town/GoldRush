@@ -1,4 +1,5 @@
 import {
+  CLAIM_BOAT_GANGWAY_REACH,
   CLAIM_BOAT_HULL_RADIUS,
   ClaimBoat,
   type BoatRiderPosition,
@@ -231,6 +232,22 @@ export class DeepwaterClaimTile {
     return zone !== undefined && x >= zone.minX && x <= zone.maxX && z >= zone.minZ && z <= zone.maxZ;
   }
 
+  /**
+   * Read-only shore geometry for both engines, independent of boarding/physics (also useful at a
+   * moored jetty). Mirror stepAshore's off-deck, non-navigable, walkable clauses at 16 headings.
+   * Walkable water inside the clamp is swimming, not a step ashore.
+   */
+  canStepAshore({ walkable }: BoatHelmPorts): boolean {
+    const { x, z } = this.boat.position;
+    for (let heading = 0; heading < 16; heading += 1) {
+      const angle = heading * Math.PI / 8;
+      const px = x + Math.cos(angle) * CLAIM_BOAT_GANGWAY_REACH;
+      const pz = z + Math.sin(angle) * CLAIM_BOAT_GANGWAY_REACH;
+      if (!this.boat.contains(px, pz) && !this.boat.navigable(px, pz) && walkable(px, pz)) return true;
+    }
+    return false;
+  }
+
   reset(): ReturnType<DeepwaterClaimTile['snapshot']> {
     this.boat = new ClaimBoat(this.deepwater.claimBoat, this.boatWater);
     this.flotilla?.reset();
@@ -294,7 +311,7 @@ export class DeepwaterClaimTile {
  * inset by the hull's turning radius so the deck never leaves the water it was cleared for. Null
  * where no region admits a boat at all, which makes the boat unsteerable rather than unbounded.
  */
-function boatWaterFor(tile: WaterTileParams): ClaimBoatWater | null {
+export function boatWaterFor(tile: WaterTileParams): ClaimBoatWater | null {
   const sailable = tile.regions.filter((region) => region.travel.includes('boat'));
   if (sailable.length === 0) return null;
   const minX = Math.min(...sailable.map((region) => region.minX)) + CLAIM_BOAT_HULL_RADIUS;

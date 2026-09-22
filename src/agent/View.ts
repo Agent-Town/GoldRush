@@ -212,6 +212,11 @@ export type AgentRegattaView = Readonly<{
   state: 'racing' | 'finished' | 'forfeited';
   finished: boolean;
   forfeited: boolean;
+  /** Run seconds, on the same clock as buoysPassed[].atSeconds; null until the event. */
+  finishedAt: number | null;
+  forfeitedAt: number | null;
+  /** Off-deck, non-navigable, walkable ground at one of 16 headings at gangwayReach; independent of boarding. */
+  canStepAshore: boolean;
   /** The one authored fast-water number (F-RB1-2), the same one the hull steers on. */
   fastWaterMultiplier: number;
 }>;
@@ -226,12 +231,15 @@ export type AgentRegattaView = Readonly<{
 export type AgentRegattaSource = Readonly<{
   /** The contract-scope gate: the key is `null` wherever no `tileParams.raceCourse` is declared. */
   declared: true;
+  canStepAshore: boolean;
   boat: Readonly<{ id: string; x: number; z: number; heading: number; speed: number; aboard: boolean }>;
   race: Readonly<{
     nextGate: Readonly<{ id: string; x: number; z: number; radius?: number }> | null;
     gatesPassed: readonly Readonly<{ id: string; passedAt: number }>[];
     finished: boolean;
     forfeited: boolean;
+    finishedAt: number | null;
+    forfeitedAt: number | null;
     fastWaterMultiplier: number;
   }>;
 }>;
@@ -812,6 +820,9 @@ function readRegatta(regatta: Record<string, unknown>): AgentRegattaView | undef
     state: finished ? 'finished' : forfeited ? 'forfeited' : 'racing',
     finished,
     forfeited,
+    finishedAt: typeof race.finishedAt === 'number' && Number.isFinite(race.finishedAt) ? round(race.finishedAt) : null,
+    forfeitedAt: typeof race.forfeitedAt === 'number' && Number.isFinite(race.forfeitedAt) ? round(race.forfeitedAt) : null,
+    canStepAshore: regatta.canStepAshore === true,
     fastWaterMultiplier: number(race.fastWaterMultiplier, 1),
   };
 }

@@ -1,0 +1,26 @@
+{
+  "boot": {
+    "x": 0,
+    "z": 30,
+    "canStepAshore": false
+  },
+  "shore": {
+    "x": 49.75,
+    "z": 30,
+    "canStepAshore": true
+  },
+  "note": "Boot uses the real lagoon anchor. Shore is a hull-position fixture on real walkable terrain, not a playable trip to an authored jetty; this map has no jetty anchor and no boat physics.",
+  "anchors": [
+    {
+      "id": "lagoon",
+      "x": 0,
+      "z": 30
+    },
+    {
+      "id": "open-water",
+      "x": -24,
+      "z": 12
+    }
+  ],
+  "steerable": false
+}

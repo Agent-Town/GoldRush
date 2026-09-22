@@ -452,8 +452,8 @@ test('SLICE 2 — a rider sails the five buoys and the race is won by the BOAT',
     assert.equal(race.forfeited, false, 'a race sailed all the way is not a forfeit');
     assert.deepEqual(
       race.gatesPassed.map(({ id }) => id),
-      course.beacons.map(({ id }) => id),
-      'all five authored marks, in their authored order',
+      [...course.beacons.map(({ id }) => id), loadContract(CONTRACT).tileParams.stakeMarkers.find(({ heroStart }) => heroStart).id],
+      'all five authored marks, then the finish stake',
     );
     assert.equal(race.nextGate, null, 'a finished course has no next mark');
     assert.equal(motionOf(sim).aboard, 'hero', 'the finish requires the boat WITH the hero aboard');
@@ -646,8 +646,8 @@ test('SLICE 3 — the winning rider tape replays to its hash, and the view tells
     // Six gates: the five authored beacons, then the `heroStart` stake as the finish line.
     assert.deepEqual(
       first.view.buoysPassed.map(({ id }) => id),
-      course.beacons.map(({ id }) => id),
-      'the published list is the authored marks, in their authored order',
+      [...course.beacons.map(({ id }) => id), loadContract(CONTRACT).tileParams.stakeMarkers.find(({ heroStart }) => heroStart).id],
+      'the published list is the authored marks, then the finish stake',
     );
     assert.equal(first.view.fastWaterMultiplier, loadContract(CONTRACT).tileParams.deepwater.claimBoat.physics.fastWaterMultiplier);
 
@@ -676,7 +676,17 @@ test('SLICE 3 — the winning rider tape replays to its hash, and the view tells
     assert.equal(hash, pinned.hash, 'the winning ride must reach the pinned view-tape hash');
     assert.equal(first.samples.length, pinned.samples);
     assert.deepEqual(first.samples, pinned.track, 'the winning ride must reach the pinned track');
-    assert.deepEqual(first.view, pinned.finalView, 'the published view at the finish must match the pin');
+    // Schema 4 adds the terminal second, shore query and finish row. Preserve EVERY schema-3
+    // field against its immutable tape; assert the additive fields separately without re-minting.
+    const { finishedAt, forfeitedAt, canStepAshore, ...previousView } = first.view;
+    const finish = previousView.buoysPassed.at(-1);
+    assert.equal(finish.id, loadContract(CONTRACT).tileParams.stakeMarkers.find(({ heroStart }) => heroStart).id);
+    assert.equal(finishedAt, Number(first.race.finishedAt.toFixed(2)));
+    assert.equal(finish.atSeconds, finishedAt);
+    assert.equal(forfeitedAt, null);
+    assert.equal(typeof canStepAshore, 'boolean');
+    assert.deepEqual({ ...previousView, buoysPassed: previousView.buoysPassed.slice(0, -1) }, pinned.finalView,
+      'every pre-existing view field and buoy row must still match the immutable schema-3 pin');
   });
 });
 

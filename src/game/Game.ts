@@ -3469,6 +3469,7 @@ export class Game {
     const boat = claim.boat;
     return {
       declared: true,
+      canStepAshore: claim.canStepAshore({ walkable: (x, z) => this.actorTerrainSample(x, z).walkable }),
       boat: {
         id: boat.config.id,
         x: boat.position.x,

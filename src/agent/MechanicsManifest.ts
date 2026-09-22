@@ -27,7 +27,7 @@ import {
 import { ProbeRecovery } from '../systems/ProbeRecovery';
 import { FLOTILLA_HULL_RULES } from '../systems/FlotillaHullSystem';
 import { NOISE_HUNT_RULES } from '../systems/NoiseHuntSystem';
-import { deepwaterStormDrivesWaves } from '../world/DeepwaterClaimTile';
+import { boatWaterFor, deepwaterStormDrivesWaves } from '../world/DeepwaterClaimTile';
 import { ShowroomCaptureObjective } from '../systems/ShowroomCaptureObjective';
 import { HOLLOW_EXTRACTION_RADIUS, HOLLOW_GLOW_DAMAGE_PER_SECOND } from '../systems/HollowCrossingSystem';
 // From the LEAF module, never `../sim/MotorSocket`: that file's graph reaches `world/Terrain` and
@@ -621,6 +621,9 @@ export function deriveMechanicsManifest(source: string | ContractManifest): Mech
         // ANCHOR you ride, so it is the same in every direction and you leave her over the SIDE.
         disembark: 'a move intent toward standable ground off the deck and within gangwayReach of the deck anchor, so a bow-ward intent steps nowhere and the hull runs aground on its clamp instead; after the start beacon this forfeits',
         gangwayReach: CLAIM_BOAT_GANGWAY_REACH,
+        waterBounds: boatWaterFor(deepwater.waterTile) ?? {},
+        standable: 'A step ashore needs STANDABLE ground — walkable terrain off the deck and outside the hull water bounds, within gangwayReach of the deck anchor. The Regatta has walkable shallows beyond parts of this clamp; other points are blocked. Read canStepAshore before ordering: all-water scenery does not make leaving the boat unreachable.',
+        shoreView: 'now.regatta.canStepAshore samples off-deck, non-navigable, walkable terrain at 16 headings around the gangway reach circle',
         gangplankReach: CLAIM_BOAT_GANGPLANK_REACH,
         deckHalfWidth: CLAIM_BOAT_DECK_BOUNDS.maxX,
         deckHalfLength: CLAIM_BOAT_DECK_BOUNDS.maxZ,

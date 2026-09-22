@@ -115,3 +115,13 @@ test('editing viewSchema does not rotate computeEngineHash', async (t) => {
   const after = await computeEngineHash(root);
   assert.equal(after, before);
 });
+
+test('schema 4 names Regatta time and shore additions without requiring them on other maps', async () => {
+  const registry = JSON.parse(await readFile(path.join(ROOT, REGISTRY), 'utf8'));
+  assert.equal(registry.viewSchema.version, 4);
+  assert.deepEqual(registry.viewSchema.additions, [
+    'now.regatta.finishedAt', 'now.regatta.forfeitedAt', 'now.regatta.canStepAshore',
+  ]);
+  const view = await canonicalView();
+  assert.equal(view.now.regatta, undefined);
+});
