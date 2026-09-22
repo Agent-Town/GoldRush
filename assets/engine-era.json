@@ -1,7 +1,7 @@
 {
   "era": 6,
   "name": "the Re-surveyed Claims",
-  "engineHash": "4374cdbfcb7631c86982f9439fb30583eb3eba1acbf70e1bcccaf8fb6e210b21",
+  "engineHash": "048d8adfd230e0783a71a2a3ccb03e720ecd49823f857dbf58d1269e539fc01d",
   "declaredAt": "2026-09-14",
   "note": "Era 6 opens with Astra's map campaign (sol/map-art-inventory-20260908 7c2744e5a) landed by maps-campaign-land-era6 on 2026-09-14: 17 contracts re-parameterised (tileParams on 13, twists on 3, briefings on 5), the door tightened to the contract's own research epoch, 66 src files, the map-rebuild-spike terrain, plaza props and flotilla models. Owner ruling 2026-09-13, verbatim: \"ah, that is all no problem. we don't have players yet so we can just keep going\" and \"we then have to make another run in the future but not immediately\"; the name ratified 2026-09-14 (\"the Re-surveye Claims\" is good for me). Every era-5 reel reads \"This reel rode era 5; the county accepts era 6\" and stands retired, counted. Heat 14 re-rides the boards on this era when the owner says so.",
   "viewSchema": {
@@ -251,6 +251,12 @@
       "engineHash": "4374cdbfcb7631c86982f9439fb30583eb3eba1acbf70e1bcccaf8fb6e210b21",
       "pinnedAt": "2026-09-21",
       "cause": "same era, pin #28: sol-map-art-corrections-4, slice 6 landed mid-run (Astra on the owner's ChatGPT subscription, no cap; owner 2026-09-21 \"Ok, lets continue on the current ChatGPT subscription with the Astra work. Lets actually complete all the maps.\"): the Ember Shore, the Archive World, the River (render half) corrected on the render side and in their pilot sources — the store's main (Agent-Town/GoldRush-assets) fast-forwarded to 8ea5370 before this pin, which was measured in a store worktree detached at that commit; no gameplay contract, sim table or null floor moved. reviews/sol-map-art-corrections-4.md, slice 6",
+      "aliases": []
+    },
+    {
+      "engineHash": "048d8adfd230e0783a71a2a3ccb03e720ecd49823f857dbf58d1269e539fc01d",
+      "pinnedAt": "2026-09-22",
+      "cause": "same era, pin #29: f-rb2-2-gangway-reach (Opus implementer on the Anthropic subscription; owner 2026-09-22 \"F-RB2-2: gangway-reach only\", ruling (a)): the Regatta boat disembarks only onto standable ground within one plank of the gangway (the deck anchor), not a boat-length ahead, and a rider's MOVE_HERO point gets the same reach (ADR-005); a sim rule for one map, no contract, table or null floor moved; the store unchanged at 8ea5370. reviews/f-rb2-2-gangway-reach.md",
       "aliases": []
     }
   ],
