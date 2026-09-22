@@ -1,0 +1,45 @@
+slice 3: lane 606778d1316e62c98f2511f7d475baa96dba204d store f5f617c48f33ee6f4577c4a60fade8faf7b08e8d maps: the Archive World 13:23Z
+store on 'main', dirty 0 (Astra's, untouched)
+store main -> f5f617c (art(store): Archive World — masonry and colonnaded perimeter ruins)
+store main pushed: f5f617c
+scratch store: detached at f5f617c, clean
+chain fast-forwarded to main 1ec2097a2
+chain base 1ec2097a2 merging lane 606778d13 (lane tip 7c5d21348) 13:23Z
+CONFLICT (content): Merge conflict in artifacts/sol/map-art-campaign-2/report.md
+CONFLICT (content): Merge conflict in reviews/sol-map-art-current-status-20260909.md
+md-3way artifacts/sol/map-art-campaign-2/report.md: 17 keys; no double edits
+md-3way reviews/sol-map-art-current-status-20260909.md: 50 keys; both changed The Archive World (e10-archive-world): theirs (main's edit dropped)
+merged 4c6111aab
+single-line law: nothing to flatten
+law-pointer (pre): rc=0, no re-base needed
+engine hash merged (scratch store at f5f617c): 872cfc6474c7bdcba83290f87685a14c6882749c12b5564bbe1a355a0d45a6ff
+droplet mirror closure (early check, F-FID1-5 class: a store slice can add a corpus file the mirror does not ship): rc=0
+tsc/build/e1: 0 / 0 / 0
+first-town payload: 34282592 bytes
+halo: rc=0 halo re-extraction PASS: 315 cured, 0 held, 760 regenerated-and-cured, 2127 scanned; alpha and opaque RGB unchanged
+status doc: the Archive row's double edit re-applied by hand (HUD prefix + Astra's run-8 note), committed 31fb41c17
+null floors: rc=0 83 of 83 null floors match assets/contracts/null-floors.json (340.2s).
+law-pointer: rc=0 law-pointer-guard — do the law surfaces still point at what they claim?
+guards: ℹ pass 97 ℹ fail 0 
+e2e start 13:31Z: e2e/board-gating-and-profiles.spec.ts e2e/ss-11-e10-beats.spec.ts e2e/er01-e10-census.spec.ts e2e/terrain3d-registry.spec.ts e2e/landmark-brightness.spec.ts e2e/landmark-collision.spec.ts e2e/task-025-bandits-dont-swim.spec.ts e2e/m2-01-build-menu.spec.ts 
+e2e: rc=1   8 failed   5 skipped   73 passed (20.9m)  13:52Z
+1) [desktop-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-archive-world census cites the existing Deep Sky debt 
+2) [desktop-chrome] › e2e/terrain3d-registry.spec.ts:196:1 › all sixteen contracts mount terrain, panorama, and grounded render-only landmar
+3) [desktop-chrome] › e2e/terrain3d-registry.spec.ts:272:1 › rim and horizon probes keep the terrain meeting gradual and every panorama read
+4) [desktop-chrome] › e2e/terrain3d-registry.spec.ts:345:1 › all fifteen contracts stay painted in LITE and on invalid terrain bytes 
+5) [mobile-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-archive-world census cites the existing Deep Sky debt 
+6) [mobile-chrome] › e2e/terrain3d-registry.spec.ts:196:1 › all sixteen contracts mount terrain, panorama, and grounded render-only landmark
+7) [mobile-chrome] › e2e/terrain3d-registry.spec.ts:272:1 › rim and horizon probes keep the terrain meeting gradual and every panorama reada
+8) [mobile-chrome] › e2e/terrain3d-registry.spec.ts:345:1 › all fifteen contracts stay painted in LITE and on invalid terrain bytes 
+battery start 13:52Z
+battery: rc=1 ℹ tests 950 ℹ pass 942 ℹ fail 3 ℹ skipped 5  14:00Z
+✖ all 152 scripts/*.test.mjs fixture owners remove their temp directories (199259.041917ms)
+✖ failing tests:
+✖ rotation registry stays outside the engine identity corpus (1129.931417ms)
+✖ the landed registry names the live engine and stays outside its hash corpus (471.335333ms)
+dirt after battery: 0
+FID1-S3-PREP-DONE
+known-red overrides: e2e e2e/er01-e10-census\.spec\.ts:120:3|e2e/terrain3d-registry\.spec\.ts:196:1|e2e/terrain3d-registry\.spec\.ts:272:1|e2e/terrain3d-registry\.spec\.ts:345:1 battery ^$
+hash at pin time: 872cfc6474c7bdcba83290f87685a14c6882749c12b5564bbe1a355a0d45a6ff
+pin #36
+era (chain, scratch store): ℹ pass 9 ℹ fail 0 
