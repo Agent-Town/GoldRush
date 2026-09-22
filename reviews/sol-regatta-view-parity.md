@@ -4,7 +4,7 @@
 
 ## LANDED `fb60f599a` (2026-09-22 15:45Z)
 
-**Branch tip** `1993ae2a3` · **store main** `adf6bd1` (unchanged; the scratch store worktree at it) · **merge** `fb60f599a` · same-era pin #37 `b489190a`
+**Branch tip** `1993ae2a3` · **store main** `adf6bd1` (unchanged; the scratch store worktree at it) · **merge** `fb60f599a` · same-era pin #38 `df53e448` (the chain had pinned #37 `b489190a` before the fidelity-1 final slice landed its own #37; re-measured on the merged tree after the main merge)
 
 ### What it does
 **The Regatta's view now says where the shore is and when the race ended (F-HEAT15-2, F-HEAT15-3; view schema 3 → 4, Astra's verdict READY-FOR-GATES with two named exceptions the drain closes).** `now.regatta` gains `finishedAt` and `forfeitedAt` (run seconds, rounded like `buoysPassed[].atSeconds`, null before the event) and the finish stake as the sixth and last `buoysPassed` row with the same timestamp; `canStepAshore` is a deterministic sixteen-heading geometry probe at the gangway reach that applies the existing off-deck, non-navigable and walkable clauses, computed by one query (`DeepwaterClaimTile.canStepAshore`) that both the browser and the headless diagnostics call, so the two boot views compare as identical JSON on desktop and mobile. The `regatta_boat` rule publishes `waterBounds` read from the hull-water derivation with `gangwayReach` 6.4 unchanged, and its sentence tells a rider to read `canStepAshore` before ordering. No order, sim rule, forfeit rule, radius or tape moved: the movement tape replays to `fnv1a32:dd4116bf` and the schema-3 view track to `fnv1a32:9e79d1e9` unchanged; the headless public-order ride banks wave 12 at 272 s with `finishedAt` 139.33 equal to the last buoy row; the same-game audit is EQUAL on every Regatta control row. What Astra measured against the task's own premise matters more than the fields: the heat-15 claim that the shore is unreachable everywhere was one blocked point, not the rim; at the starting hull, 149 of 273 sampled hull positions inside the clamp can step ashore (the contract's radius-64 spring pond is walkable shallows at depth 0.2), so the published rule states the measured boundary instead of a universal no.
@@ -15,7 +15,7 @@ Where the player sees it: nowhere on the screen — this is the rider's view: `n
 | --- | --- |
 | merge | `clean, no conflicts` |
 | tsc / build / e1 | `0 / 0 / 0` (rc) · payload `34283328 bytes` |
-| engine hash | `b489190a88f86ebf…`; same-era pin #37 `b489190a`, era guards in the chain `ℹ pass 9 ℹ fail 0` |
+| engine hash | `b489190a88f86ebf…`; same-era pin #38 `df53e448` (the chain had pinned #37 `b489190a` before the fidelity-1 final slice landed its own #37; re-measured on the merged tree after the main merge), era guards in the chain `ℹ pass 9 ℹ fail 0` |
 | halo / null floors / law-pointer | `rc=0 halo re-extraction PASS: 315 cured, 0 held, 760 regenerated-and-cured, 2127 scanned; alpha and opaque RGB unchanged` · `rc=0 83 of 83 null floors match assets/contracts/null-floors.json (436.3s).` · `rc=0 law-pointer-guard — do the law surfaces still point at what they claim?` |
 | named guards (gr-sim, same-game audit, skill.md, view schema, the boat's three suites, rider parity, citations, no-emdash) | `ℹ pass 90 ℹ fail 0` |
 | e2e both projects, `--workers=1` (the boat incl. the tape replay, the race, the agent view, the E5 census, task-025, m2-01) | `rc=1   1 failed   57 passed (5.5m)  15:00Z` |
