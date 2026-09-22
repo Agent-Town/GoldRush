@@ -170,8 +170,10 @@ export class DeepwaterClaimTile {
    * walked before this slice existed.
    *
    * `orderTarget` is a rider's live `MOVE_HERO` point (null for a human at the keys); `intent` is
-   * the unit move vector BOTH species produce. A target within a plank of the rail that the hull
-   * cannot float in is a step ashore; anything else is a course to steer.
+   * the unit move vector BOTH species produce. A target within the GANGWAY'S REACH of the deck
+   * anchor that the hull cannot float in is a step ashore; anything else is a course to steer
+   * (F-RB2-2 (a), owner 2026-09-22 "gangway-reach only": the reach used to run the hull's length
+   * over the bow, so a key held near a rim put the body over the side and forfeited the race).
    */
   helm(
     dt: number,
@@ -214,7 +216,8 @@ export class DeepwaterClaimTile {
       return boat.navigable(target.x, target.z) || boat.stepAshore(target, walkable) ? null : 'UNREACHABLE_WATER';
     }
     // Ashore (standing where the hull cannot float) and ordered out into the navigable water,
-    // past the gangway: that order only makes sense aboard.
+    // past the gangway — the anchor's own reach since F-RB2-2 (a): that order only makes sense
+    // aboard.
     return !boat.navigable(hero.x, hero.z)
       && boat.navigable(target.x, target.z)
       && !boat.withinGangplank(target.x, target.z)

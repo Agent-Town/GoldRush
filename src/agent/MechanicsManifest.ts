@@ -56,6 +56,7 @@ import { BOAT_ORDER_REFUSALS, HERO_ARRIVE_RADIUS, HERO_ORDER_REFUSALS } from './
 import {
   CLAIM_BOAT_DECK_BOUNDS,
   CLAIM_BOAT_GANGPLANK_REACH,
+  CLAIM_BOAT_GANGWAY_REACH,
   CLAIM_BOAT_HULL_RADIUS,
   type ClaimBoatPhysics,
 } from '../entities/ClaimBoat';
@@ -616,7 +617,10 @@ export function deriveMechanicsManifest(source: string | ContractManifest): Mech
         helm: 'MOVE_HERO',
         helmedWhile: 'aboard; a MOVE_HERO to navigable water sails the hull, and the hero rides the deck anchor',
         embark: 'walk the hero onto the deck: boarding is a CROSSING of the rail, so a hero that boots on the deck has not boarded',
-        disembark: 'a move intent toward standable ground off the deck and within the gangplank; after the start beacon this forfeits',
+        // F-RB2-2 (a), owner 2026-09-22 "gangway-reach only": the reach is measured from the DECK
+        // ANCHOR you ride, so it is the same in every direction and you leave her over the SIDE.
+        disembark: 'a move intent toward standable ground off the deck and within gangwayReach of the deck anchor, so a bow-ward intent steps nowhere and the hull runs aground on its clamp instead; after the start beacon this forfeits',
+        gangwayReach: CLAIM_BOAT_GANGWAY_REACH,
         gangplankReach: CLAIM_BOAT_GANGPLANK_REACH,
         deckHalfWidth: CLAIM_BOAT_DECK_BOUNDS.maxX,
         deckHalfLength: CLAIM_BOAT_DECK_BOUNDS.maxZ,

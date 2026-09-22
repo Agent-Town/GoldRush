@@ -41,6 +41,14 @@
 //      gates, and the boat's MOORING used to pass the start beacon on every idle run because the
 //      mark stands on it. Both are asserted dead here.
 //
+// THE RULING OF 2026-09-22 ("F-RB2-2: gangway-reach only") added a ninth:
+//
+//   9. THE BOW GROWS A GANGPLANK AGAIN. The step-ashore reach is the GANGWAY's, measured from the
+//      deck anchor and equal in every direction, so a body leaves her over the SIDE and a bow-ward
+//      intent steps nobody anywhere; a rider's `MOVE_HERO` past the bow answers `UNREACHABLE_WATER`
+//      on the same predicate. Asserted at the hull position where the old 16.25 m probe actually
+//      put racers over the side.
+//
 // MINTING: `GR_BOAT_TAPE_MINT=1 node --test scripts/regatta-boat-steer.test.mjs` rewrites
 // `boat-tape.json` from the headless engine. Minting is a deliberate, reviewed act — the tape is
 // this slice's evidence, and a guard that silently re-records its own baseline asserts nothing.
@@ -716,21 +724,28 @@ test('SLICE 3 — both engines publish the regatta key from the same expression'
 });
 
 /**
- * SLICE 2, F-RB2-2 — WHY THE AUTHORED GATE RADIUS MOVED FROM 3 TO 6, measured rather than argued.
+ * SLICE 2, F-RB2-2 — WHY THE AUTHORED GATE RADIUS MOVED FROM 3 TO 6, measured rather than argued,
+ * AND THE TWO BANDS RE-PINNED TO THE OWNER'S RULING OF 2026-09-22, verbatim: "F-RB2-2:
+ * gangway-reach only" (option (a) of the finding in `reviews/e5-regatta-boat-02.md`).
  *
- * Slice 1's ratified rule: a move intent towards standable ground within a plank of the rail is a
- * step ashore, and `ClaimBoat.gangplankPoint` measures that plank from the HULL CENTRE out through
- * whichever rail the intent leaves by. Over the bow of a 28.5 m hull that is 16.25 m (14.25 + the
- * 2 m plank); over the beam it is 6.4 m. On a course that is all open water, "shore" is the water
- * beyond the hull's own clamp (+/-49.75), so a racer HOLDING A KEY AT A MARK NEAR THE RIM steps
- * off the bow into the sea — and after slice 2 that is a forfeit rather than a swim.
+ * Slice 1's rule was that a move intent towards standable ground within a plank of the RAIL is a
+ * step ashore, and `ClaimBoat.gangplankPoint` measured that plank from the hull centre out through
+ * whichever rail the intent left by: 16.25 m over the bow of a 28.5 m hull (14.25 + the 2 m plank),
+ * 6.4 m over the beam. On a course that is all open water, "shore" is the water beyond the hull's
+ * own clamp (+/-49.75), so a racer HOLDING A KEY AT A MARK NEAR THE RIM stepped off the bow into
+ * the sea — and after slice 2 that was a forfeit rather than a swim.
  *
- * At the authored radius of 3 that made the north marks unroundable on a straight approach: the
- * band starts at z = 33.5 and the mark scores at z = 35. At 6 the mark scores at z = 32, two
- * metres of sea BEFORE the band. That is the whole reason for the data change, and it is asserted
- * here so nobody can quietly put it back.
+ * The ruling makes the reach the GANGWAY's, measured from the deck anchor and equal in every
+ * direction (`CLAIM_BOAT_GANGWAY_REACH` = 4.4 + 2 = 6.4). So the bow probe falls 16.25 -> 6.40 and
+ * its band moves NORTH, 33.50 -> 43.35; the beam probe and its band are untouched (6.40, 43.35),
+ * because the beam always was the gangway's reach. The marks and the finish beacon are asserted
+ * against the bands they actually have now.
+ *
+ * The radius of 6 stays the authored number and stays justified: at 3 the north marks scored at
+ * z = 35, and this test also keeps the historical band (33.50) in view as the number the data
+ * change answered. What the ruling removes is the hazard itself, not the margin.
  */
-test('SLICE 2 — the marks score before the bow-probe reaches the rim (the radius-6 reason)', async () => {
+test('SLICE 2 + F-RB2-2 (a) — the gangway bands, and the marks that score inside them', async () => {
   await withVite(async (vite) => {
     const { HeadlessContractSim } = await vite.ssrLoadModule('/src/sim/HeadlessContractSim.ts');
     const { loadContract } = await vite.ssrLoadModule('/src/meta/ContractFamilies.ts');
@@ -738,16 +753,22 @@ test('SLICE 2 — the marks score before the bow-probe reaches the rim (the radi
     const sim = new HeadlessContractSim({ contractId: CONTRACT, seed: SEED });
     const boat = boatOf(sim);
 
-    // THE TWO PROBES, off the boat's own geometry.
+    // THE TWO PROBES, off the boat's own geometry. RE-PINNED to the ruling: one reach, every
+    // direction, measured from the deck anchor the body rides.
     boardByWalkingAboard(sim);
     const overTheBow = boat.gangplankPoint({ x: 0, y: 1 });
     const overTheBeam = boat.gangplankPoint({ x: 1, y: 1 });
-    assert.equal(Number((overTheBow.z - motionOf(sim).z).toFixed(2)), 16.25, 'the bow probe is the hull half-length plus a plank');
-    assert.equal(Number((overTheBeam.z - motionOf(sim).z).toFixed(2)), 5.81, 'the beam probe is barely a third of it');
+    assert.equal(Number((overTheBow.z - motionOf(sim).z).toFixed(2)), 6.40,
+      'F-RB2-2 (a): the bow probe is the gangway reach, not the hull half-length plus a plank (was 16.25)');
+    assert.equal(Number((overTheBeam.z - motionOf(sim).z).toFixed(2)), 4.53,
+      'the diagonal probe is the same 6.40 reach resolved on the diagonal (was 5.81)');
+    assert.equal(boat.contains(overTheBow.x, overTheBow.z), true,
+      'a bow-ward intent now probes a point on her own deck, so the hull clamps instead of unloading a racer');
 
     // THE BAND. North of this line a pure-north key intent lands the body outside the hull's water.
+    // 33.50 under slice 1; the ruling moves it to 43.35, ten metres further north than any mark.
     const band = boat.water.maxZ - (overTheBow.z - motionOf(sim).z);
-    assert.equal(Number(band.toFixed(2)), 33.50);
+    assert.equal(Number(band.toFixed(2)), 43.35);
 
     // THE MARKS. Every authored mark must score before its own nearest band, or a racer who points
     // the bow at it goes overboard instead of rounding it.
@@ -758,11 +779,110 @@ test('SLICE 2 — the marks score before the bow-probe reaches the rim (the radi
         `${mark.id} scores at z ${mark.z - mark.radius} but the bow is over the rim from z ${band}`);
     }
     // The finish beacon is the tight one, and it is tight because it stands 0.75 m off the hull's
-    // own east clamp — a residual of F-RB2-2 that no radius fully cures. Stated, not hidden.
+    // own east clamp — a residual of F-RB2-2 that no radius fully cures, and that RULING (a) does
+    // not cure either: the BEAM reach was already the gangway's, so this band does not move.
+    // Stated, not hidden — a racer crossing the line on a held east key still leaves her.
     const finish = beacons.find(({ id }) => id === 'finish-beacon');
     const eastBand = boat.water.maxX - (boat.gangplankPoint({ x: 1, y: 0 }).x - motionOf(sim).x);
-    assert.equal(Number(eastBand.toFixed(2)), 43.35);
+    assert.equal(Number(eastBand.toFixed(2)), 43.35, 'the beam band is unchanged by the ruling');
     assert.ok(finish.x - finish.radius <= eastBand,
       `the finish beacon scores at x ${finish.x - finish.radius} but the bow is over the rim from x ${eastBand}`);
+  });
+});
+
+/**
+ * F-RB2-2 (a), THE RULING ITSELF — owner 2026-09-22, verbatim: "F-RB2-2: gangway-reach only".
+ *
+ * The finding (`reviews/e5-regatta-boat-02.md`): "disembark fires on a key direction and the
+ * step-ashore probe reaches a boat-length (16.25 m) ahead, so a racer holding the wrong key near a
+ * rim goes over the side and, since slice 2, forfeits unwarned." Option (a), the one ruled: the
+ * body leaves her only onto standable ground within the GANGWAY'S reach.
+ *
+ * Driven where the hazard actually lived: the hull is sailed up the west rim into the OLD overboard
+ * band (z 33.5 .. 47.25 — north of 33.5 the slice-1 bow probe cleared the hull's clamp, and below
+ * 47.25 it still landed inside the terrain, which on this map is standable everywhere). Four cases,
+ * the two species side by side (ADR-005, one predicate):
+ *
+ *   KEY, keel-ward  — the probe lands on her own deck, so nobody steps anywhere and the hull runs
+ *                     aground on its clamp, exactly as the ruling asks.
+ *   KEY, beam-ward  — ground 1.5 m off the rail is still a step ashore: the ruling shortens the
+ *                     bow's reach, never the gangway's own.
+ *   RIDER, past the bow — `UNREACHABLE_WATER`. The refusal WORD is the proof that the ground was
+ *                     standable: `StandingOrders` answers `UNREACHABLE_TERRAIN` first for ground no
+ *                     body can stand on, so reaching the water refusal means the terrain said yes
+ *                     and the gangway said no. Slice 1 ACCEPTED the 1 m case and teleported the
+ *                     body 15.25 m off the deck.
+ *   RIDER, off the rail — accepted, and the body stands exactly where it named.
+ */
+test('F-RB2-2 (a) — the gangway reach: she is left over the SIDE, and a bow-ward intent steps nobody', async () => {
+  await withVite(async (vite) => {
+    const { HeadlessContractSim } = await vite.ssrLoadModule('/src/sim/HeadlessContractSim.ts');
+    const { CLAIM_BOAT_DECK_BOUNDS, CLAIM_BOAT_GANGPLANK_REACH, CLAIM_BOAT_GANGWAY_REACH } =
+      await vite.ssrLoadModule('/src/entities/ClaimBoat.ts');
+    assert.equal(CLAIM_BOAT_GANGWAY_REACH, CLAIM_BOAT_DECK_BOUNDS.maxX + CLAIM_BOAT_GANGPLANK_REACH,
+      'the gangway reach is the beam half-width plus one plank: the shortest reach that still leaves the deck');
+
+    const sim = new HeadlessContractSim({ contractId: CONTRACT, seed: SEED });
+    const boat = boatOf(sim);
+    boardByWalkingAboard(sim);
+
+    // Up the west rim, into the band where slice 1's probe put racers over the side.
+    assert.equal(sim.submitOrders([{ verb: 'MOVE_HERO', pos: { x: -49, z: 40 } }]).outcome.ok, true);
+    for (let i = 0; i < 3_000 && !sim.isTerminal; i += 1) {
+      sim.advanceOneTick();
+      if (orderOf(sim)?.status === 'done' || orderOf(sim)?.status === 'failed') break;
+    }
+    assert.equal(orderOf(sim).status, 'done', `the crossing ended ${orderOf(sim).status}: ${orderOf(sim).reason ?? ''}`);
+    for (let i = 0; i < 300 && motionOf(sim).speed !== 0; i += 1) sim.advanceOneTick();
+    const helm = motionOf(sim);
+    assert.equal(helm.aboard, 'hero', 'the crossing must not have put anybody ashore');
+    assert.equal(helm.speed, 0, 'measure the geometry on a boat at rest, not one still coasting');
+    assert.ok(helm.z > 33.5 && helm.z < 47.25, `the hull must sit in slice 1's overboard band, not at ${helm.z}`);
+    assert.ok(helm.x < -43.35, `and close enough to the west rim for a beam step ashore, not at ${helm.x}`);
+
+    // The geometry, with walkability held true so this reads the RULE and nothing else; the engine's
+    // own terrain answer runs in the rider half below.
+    const anywhere = () => true;
+    const bowProbe = boat.gangplankPoint({ x: 0, y: 1 });
+    assert.equal(Number(Math.hypot(bowProbe.x - helm.x, bowProbe.z - helm.z).toFixed(2)), 6.40);
+    assert.equal(boat.contains(bowProbe.x, bowProbe.z), true, 'the bow-ward probe is her own deck');
+    assert.equal(boat.stepAshore(bowProbe, anywhere), false, 'a keel-ward key must step nobody ashore');
+
+    // The rim 3 m beyond the bow: standable ground the slice-1 probe flew over on its way out.
+    const pastTheBow = (metres) => ({ x: helm.x, z: helm.z + CLAIM_BOAT_DECK_BOUNDS.maxZ + metres });
+    const rim3 = pastTheBow(3);
+    assert.equal(boat.navigable(rim3.x, rim3.z), false, 'the rim past the bow is water the hull cannot use');
+    assert.equal(boat.withinGangplank(rim3.x, rim3.z), false, 'and it is outside the gangway reach');
+    assert.equal(boat.stepAshore(rim3, anywhere), false, 'so a keel-ward key at that rim disembarks nobody');
+
+    // The beam is untouched: the probe itself, and ground 1.5 m off the rail.
+    const beamProbe = boat.gangplankPoint({ x: -1, y: 0 });
+    assert.equal(Number((helm.x - beamProbe.x).toFixed(2)), 6.40, 'the beam reach is what it always was');
+    assert.equal(boat.stepAshore(beamProbe, anywhere), true, 'a beam-ward key still steps her crew ashore');
+    const offTheRail = { x: helm.x - CLAIM_BOAT_DECK_BOUNDS.maxX - 1.5, z: helm.z };
+    assert.equal(boat.contains(offTheRail.x, offTheRail.z), false, 'ground 1.5 m off the rail is off the deck');
+    assert.equal(boat.navigable(offTheRail.x, offTheRail.z), false, 'and beyond the hull clamp');
+    assert.equal(boat.stepAshore(offTheRail, anywhere), true, 'and inside the gangway reach');
+
+    // THE RIDER, on the engine's own walkability. One predicate, both species.
+    const order = (pos) => {
+      assert.equal(sim.submitOrders([{ verb: 'MOVE_HERO', pos }]).outcome.ok, true);
+      sim.advanceOneTick();
+      return orderOf(sim);
+    };
+    const refusedAtOne = order(pastTheBow(1));
+    assert.equal(refusedAtOne.status, 'failed', 'a point a metre past the bow is no longer a step ashore');
+    assert.match(refusedAtOne.reason, /^UNREACHABLE_WATER: /);
+    const refusedAtThree = order(rim3);
+    assert.equal(refusedAtThree.status, 'failed');
+    assert.match(refusedAtThree.reason, /^UNREACHABLE_WATER: /);
+    assert.equal(motionOf(sim).aboard, 'hero', 'a refused order leaves the body aboard, not overboard');
+
+    // ...and 1.5 m off the rail is accepted, and lands the body exactly where it named.
+    assert.equal(order(offTheRail).status !== 'failed', true, `the rail step was refused: ${orderOf(sim).reason ?? ''}`);
+    sim.advanceOneTick();
+    assert.equal(motionOf(sim).aboard, null, 'a step ashore within the gangway reach must still leave the boat');
+    assert.ok(Math.hypot(sim.hero.group.position.x - offTheRail.x, sim.hero.group.position.z - offTheRail.z) < 1e-9,
+      `the hero must stand on the shore point it named (${sim.hero.group.position.x}, ${sim.hero.group.position.z})`);
   });
 });
