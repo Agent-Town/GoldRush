@@ -1,7 +1,7 @@
 {
   "era": 6,
   "name": "the Re-surveyed Claims",
-  "engineHash": "24b70411d2849f7a8bb5454decdfffd3bae4e4ba6878bd81f6b3edcceb7a5e6b",
+  "engineHash": "dcb4de59ae7dff13e11432fb748139356683407cd27efdde2ea8536dbc277f9f",
   "declaredAt": "2026-09-14",
   "note": "Era 6 opens with Astra's map campaign (sol/map-art-inventory-20260908 7c2744e5a) landed by maps-campaign-land-era6 on 2026-09-14: 17 contracts re-parameterised (tileParams on 13, twists on 3, briefings on 5), the door tightened to the contract's own research epoch, 66 src files, the map-rebuild-spike terrain, plaza props and flotilla models. Owner ruling 2026-09-13, verbatim: \"ah, that is all no problem. we don't have players yet so we can just keep going\" and \"we then have to make another run in the future but not immediately\"; the name ratified 2026-09-14 (\"the Re-surveye Claims\" is good for me). Every era-5 reel reads \"This reel rode era 5; the county accepts era 6\" and stands retired, counted. Heat 14 re-rides the boards on this era when the owner says so.",
   "viewSchema": {
@@ -322,6 +322,12 @@
       "engineHash": "24b70411d2849f7a8bb5454decdfffd3bae4e4ba6878bd81f6b3edcceb7a5e6b",
       "pinnedAt": "2026-09-22",
       "cause": "same era, pin #39: sol-test-truth-registry-census (Astra on the owner's wave word 2026-09-22 \"Full Codex power\", lane-b): the terrain registry, the E10 census and the map census read the truths that moved under them; test files only, no assertion weakened, no source, store, contract or null floor moved; the store unchanged at d893817. reviews/sol-test-truth-registry-census.md",
+      "aliases": []
+    },
+    {
+      "engineHash": "dcb4de59ae7dff13e11432fb748139356683407cd27efdde2ea8536dbc277f9f",
+      "pinnedAt": "2026-09-22",
+      "cause": "same era, pin #40: sol-entry-framing (Astra on the owner's wave word 2026-09-22 \"Full Codex power\" and his words \"Can we do this one now? entry framing, five maps (lane-c)\", lane-c): the plain entry frames the declared landmark on the Glow Mesa, the Far Side and Half-Life Hollow with a timed glance from the existing camera rig (the Dead Band and Relay Rush were already framed), the landmark declared per pack in both mirrored contracts, one manifest sentence per framed map; camera only, the view and every order untouched; the store's main (Agent-Town/GoldRush-assets) at d893817 since 17:32Z. Renumbered: this chain pinned #39 (dcb4de59…) before the test-truth landing took #39; that pin's hash moved because these entry-framing store contracts had already landed on the store's main between its prep and its pin, so #39's cause names the test-truth task while the mover was this store landing. reviews/sol-entry-framing.md",
       "aliases": []
     }
   ],
