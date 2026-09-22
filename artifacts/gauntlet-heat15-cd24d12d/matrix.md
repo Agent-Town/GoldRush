@@ -15,3 +15,4 @@ carries, so ride 2 reads ride 1's lessons and ride 3 reads both (F-HEAT15-4).
 
 | # | contract | seed | stake | gen | outcome | waves | gold | timeAlive | wall | tape / eventLogHash | door verdict | notebook |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|
+| 1 | e5-regatta<br>`r1` | `e5-regatta-01` | map-rebuilt | 134 | **SECURED** | 12 | 0 | 272s | 1114s | `attempt-1-tape.json` · `agent-cce8d603-90fa4316-29bb-4db7-ae4c-f310682d2f1f`<br>fnv1a32:d7eb1903 | verified `fnv1a32:f3a9c00c` | gen 134<br>slip `agent-cce8d603-90fa4316-29bb-4db7-ae4c-f310682d2f1f` |
