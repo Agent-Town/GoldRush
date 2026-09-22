@@ -1,0 +1,92 @@
+{
+  "storeBase": "aee63ba07d388a14ba4c48a0ef3fe9ecee42965a",
+  "base": "debcc5001cc365b64d74f4ce2a1f7dcb0388646b",
+  "paths": {
+    "src/world/Terrain3dClaimPilot.ts": {
+      "candidateSha256": "bf511b40783b37f66524c2fd5e50feb534da56328f091e0e534129e0b4087899",
+      "baseSha256": "781c9fa2f030bbf1b82a6f1aa7391c027107fe8856329fcd754a0f15568295b9"
+    },
+    "assets/pilots/map-rebuild-spike/build_last_claim_pack.py": {
+      "candidateSha256": "a2b221ec805de2a7262efe4ce3d59cddbcf5a030cb7f52fc577090c6b753ffe3",
+      "baseSha256": "67407d817fbcc21c98de2a78960d8f5ea576a0e26e2d88b805f1ec96d18f7d8c"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/last-claim/last-claim-landmark-pack-contract.json": {
+      "candidateSha256": "743666119b3f055fd4a96506848eeb2c156e3a130f15c3bc9411f4690d9ec2e5",
+      "baseSha256": "ce8001626b1528268851a16ce3168cd92606895a2be16cb50671978590f33c52"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/last-claim/last-claim-landmarks.blend": {
+      "candidateSha256": "360f9cc3bb4b1b8730768bf325994d63b6bc864562fff1daac9e09170c9d572b",
+      "baseSha256": "8481246c2103a5ac57a0d261a9311f5fb1cc363e9ed5041e8fbb8016d760813c"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/last-claim/stern-memory-arch.glb": {
+      "candidateSha256": "11305377bbcc239df4de040500d83548f28425a81345682881b7a5e8f30fa4b7",
+      "baseSha256": "5fa8b3b7e1b45305819463189a8172c94c2de8f91c81848ce849b9ed61801a08"
+    },
+    "assets/pilots/map-rebuild-spike/last-claim-panorama-atlas.png": {
+      "candidateSha256": "0b6ecaf3c7f4ded7adf4ba5db6544b615a7eeb089f35dae2baa74912e163ed05",
+      "baseSha256": "e6902a845b8324062b92ab7744521c5c5a4b579cc5547943552c278d3979fd65"
+    },
+    "assets/pilots/map-rebuild-spike/last-claim-panorama-contract.json": {
+      "candidateSha256": "efffa85cad2496b836478d4b2b77494bc7c8a74c41d9dc534ae667f09ffd4ac2",
+      "baseSha256": "e01071fc67d928af916a62562ff9daf58526c4bbbd5d79ffe20191326120d40f"
+    },
+    "assets/pilots/map-rebuild-spike/last-claim-panorama.blend": {
+      "candidateSha256": "8f0973fc5ae6f642a2172a83208fb7d86d7e13b17bba7f7c305a76ae8c8eea81",
+      "baseSha256": "19f6d9974d8b1695f6204cf6d6bfdb858c6051bc91ede6f8b44e7d679f40e1db"
+    },
+    "assets/pilots/map-rebuild-spike/last-claim-panorama.glb": {
+      "candidateSha256": "3ccf3ce9a0ed7854fca950cf7f59420142b2220c80e105f9767f6e3770a7d6df",
+      "baseSha256": "08021d6fb8d08dfe51b44ad07459ccd12f659dd6b838252e4d56783439bff247"
+    },
+    "assets/pilots/map-rebuild-spike/last-claim-terrain-atlas.png": {
+      "candidateSha256": "822f685b83d8d3a8384f9253d426fa469f6b6aaeedbe5ad17a9589a1c5914e3c",
+      "baseSha256": "621a457ee276de08c7563686a0d9e76371413fe1dd03ffa174a9747a8a07d101"
+    },
+    "assets/pilots/map-rebuild-spike/last-claim-terrain-contract.json": {
+      "candidateSha256": "92c1cfdd887a665c76b85289f72a99bca6243d0ac190e0ed9480d39e1518d4f3",
+      "baseSha256": "76a7acb88c89794a500f63f1e0a4d1f4aeaabf5d7415930979a4186de9d2441b"
+    },
+    "assets/pilots/map-rebuild-spike/last-claim-terrain.blend": {
+      "candidateSha256": "a97fbe3c9addfa21cfd42202826e3188ab9d416bc02694706bd185e7a4ce0a39",
+      "baseSha256": "2699f37b05c0a2060b4574fc66d8b7be240d15ddffa6620cf572d01d5ad63d7e"
+    },
+    "assets/pilots/map-rebuild-spike/last-claim-terrain.glb": {
+      "candidateSha256": "040a57c2747f6b9a73c607198392b6c847428e54e19152421ed3889207c846e2",
+      "baseSha256": "a9b6c50c8cef5542b564c8ba36278cbd5f11e6838fedf00fb502ad659326b8af"
+    }
+  },
+  "pattern": "recession hands|e10-archive-world census|the Quiet, the return|player-selected Deep Sky town",
+  "specs": [
+    "e2e/e10-static-boss.spec.ts",
+    "e2e/er01-e10-census.spec.ts",
+    "e2e/ss-11-e10-beats.spec.ts"
+  ],
+  "candidateEngine": "f25d23259a2f0991aa779a161148f3d27498887cc435ee5de488fe92d139f1b8",
+  "baseEngine": "88c4256efeb97d64c205919e785173b9c7375fd4553c92bbe26de6a37d197ea4",
+  "command": [
+    "npx",
+    "playwright",
+    "test",
+    "--workers=1",
+    "--project=desktop-chrome",
+    "--project=mobile-chrome",
+    "--trace=off",
+    "--reporter=line",
+    "--output=artifacts/sol/map-art-campaign-2/_raw/run-8/e10-last-claim-base-finale-story/test-results",
+    "--grep",
+    "recession hands|e10-archive-world census|the Quiet, the return|player-selected Deep Sky town",
+    "e2e/e10-static-boss.spec.ts",
+    "e2e/er01-e10-census.spec.ts",
+    "e2e/ss-11-e10-beats.spec.ts"
+  ],
+  "exit": 1,
+  "newAssetsAbsentDuringBase": {
+    "assets/pilots/map-rebuild-spike/sources/last-claim-fidelity-1/engraved-bronze-deck.png": "822f685b83d8d3a8384f9253d426fa469f6b6aaeedbe5ad17a9589a1c5914e3c",
+    "assets/pilots/map-rebuild-spike/sources/last-claim-fidelity-1/engraved-star-vista-square.png": "0b6ecaf3c7f4ded7adf4ba5db6544b615a7eeb089f35dae2baa74912e163ed05",
+    "assets/pilots/map-rebuild-spike/sources/last-claim-fidelity-1/engraved-star-vista.png": "87bded5b0a2a86c608ffcb19ac9ca2201181d2705e6a6a2810e998bea94cd4ca",
+    "assets/pilots/map-rebuild-spike/sources/last-claim-fidelity-1/provenance.json": "c9f1d35925c2659e6ccb1623eb612350183c4404175155b9ca6de22d131e74de"
+  },
+  "restoredEngine": "f25d23259a2f0991aa779a161148f3d27498887cc435ee5de488fe92d139f1b8",
+  "candidateRestoredExactly": true,
+  "log": "artifacts/sol/map-art-campaign-2/_raw/run-8/e10-last-claim-base-finale-story/tests.log"
+}
