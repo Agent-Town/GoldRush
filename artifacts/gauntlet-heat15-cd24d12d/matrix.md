@@ -17,3 +17,14 @@ carries, so ride 2 reads ride 1's lessons and ride 3 reads both (F-HEAT15-4).
 |---|---|---|---|---|---|---|---|---|---|---|---|---|
 | 1 | e5-regatta<br>`r1` | `e5-regatta-01` | map-rebuilt | 134 | **SECURED** | 12 | 0 | 272s | 1114s | `attempt-1-tape.json` · `agent-cce8d603-90fa4316-29bb-4db7-ae4c-f310682d2f1f`<br>fnv1a32:d7eb1903 | verified `fnv1a32:f3a9c00c` | gen 134<br>slip `agent-cce8d603-90fa4316-29bb-4db7-ae4c-f310682d2f1f` |
 | 2 | e5-regatta<br>`r2` | `e5-regatta-01` | map-rebuilt | 135 | **SECURED** | 12 | 200 | 272s | 685s | `attempt-1-tape.json` · `agent-ae781bc1-722225b2-0bc4-4766-8655-01e3a8380133`<br>fnv1a32:136a45a0 | verified `fnv1a32:b92da1bf` | gen 135<br>slip `agent-ae781bc1-722225b2-0bc4-4766-8655-01e3a8380133` |
+| 3 | e5-regatta<br>`r3` | `e5-regatta-01` | map-rebuilt | 136 | **SECURED** | 12 | 200 | 272s | 1125s | `attempt-1-tape.json` · `agent-de3fcdf5-5ada3c41-51a4-4e6c-98be-3421199f0b4b`<br>fnv1a32:86d55c20 | ⚠ not submitted | gen 136 |
+
+**Ridden 3 · secured 3 · not secured 0 · never ridden 0.** Reels accepted by the door 2, refused 1
+(ride 3, `reel_not_current` on the engine pin — F-HEAT15-1, a concurrent lane task moved a symlinked
+`ENGINE_SOURCE_INPUTS` path mid-heat). Rows gained on the county board: **0** — both accepted reels
+were assayed and VERIFIED and neither was promoted, because this rider's own heat-14 row ties or
+beats them (F-HEAT15-4). Receipts delta 30 → 30 verified, 56 → 56 retired.
+
+Every ride boarded the boat and finished the course; the five beacons fell in order on all three,
+within 0.40 s of each other. No rider was ever refused `NOT_ABOARD`; `UNREACHABLE_WATER` was answered
+once, provoked deliberately by gen 136 after its race was over. Nobody disembarked; nothing forfeited.
