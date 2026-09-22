@@ -1,0 +1,16 @@
+✔ boat follows its owner and reset, projects only a loaded deck, and disposes late loads (1.496083ms)
+✔ rendered deck equipment leaves every combat origin and owner position unchanged (1.094791ms)
+✔ three Flotilla bodies follow movement, loss and reset without changing the hull owner (12.212917ms)
+(node:73628) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ Regatta publishes exact terminal seconds, including the finish row, and resets them (332.579709ms)
+✔ the shared shore query samples all 16 headings, reads the walkable port, and changes no state (0.838084ms)
+✔ live Regatta shore agrees with stepAshore; Deepwater has a positive shore geometry control (3040.890458ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3609.3165

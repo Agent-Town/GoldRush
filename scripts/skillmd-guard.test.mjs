@@ -265,3 +265,14 @@ function jsonBlock(name) {
   assert.ok(match, `${name} guard block must contain one JSON fence`);
   return JSON.parse(match[1]);
 }
+
+test('the Regatta paragraph publishes terminal seconds and the standable-ground query', () => {
+  const paragraph = skill.split('\n').find((line) => line.startsWith('On the E5 Regatta,'));
+  for (const field of ['now.regatta.finishedAt', 'forfeitedAt', 'buoysPassed[].atSeconds', 'now.regatta.canStepAshore', 'regatta_boat.waterBounds']) {
+    assert.ok(paragraph.includes(field), `Regatta paragraph must publish ${field}`);
+  }
+  assert.match(paragraph, /STANDABLE ground — walkable terrain/);
+  assert.match(paragraph, /16-heading/);
+  assert.match(paragraph, /49\.75/);
+  assert.match(paragraph, /`null` until they happen/);
+});

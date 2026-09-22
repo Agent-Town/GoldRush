@@ -1,0 +1,242 @@
+{
+  "note": "Geometry probes inside the real clamp; task universal-false assumption is disproved by the unchanged stepAshore.",
+  "points": [
+    {
+      "x": -49.75,
+      "z": -49.75,
+      "canStepAshore": true
+    },
+    {
+      "x": -49.75,
+      "z": -40,
+      "canStepAshore": true
+    },
+    {
+      "x": -49.75,
+      "z": 0,
+      "canStepAshore": true
+    },
+    {
+      "x": -49.75,
+      "z": 40,
+      "canStepAshore": true
+    },
+    {
+      "x": -49.75,
+      "z": 49.75,
+      "canStepAshore": true
+    },
+    {
+      "x": -49,
+      "z": -49.75,
+      "canStepAshore": true
+    },
+    {
+      "x": -49,
+      "z": -40,
+      "canStepAshore": true
+    },
+    {
+      "x": -49,
+      "z": 0,
+      "canStepAshore": true
+    },
+    {
+      "x": -49,
+      "z": 40,
+      "canStepAshore": true
+    },
+    {
+      "x": -49,
+      "z": 49.75,
+      "canStepAshore": true
+    },
+    {
+      "x": -45.21,
+      "z": -49.75,
+      "canStepAshore": true
+    },
+    {
+      "x": -45.21,
+      "z": -40,
+      "canStepAshore": true
+    },
+    {
+      "x": -45.21,
+      "z": 0,
+      "canStepAshore": true
+    },
+    {
+      "x": -45.21,
+      "z": 40,
+      "canStepAshore": true
+    },
+    {
+      "x": -45.21,
+      "z": 49.75,
+      "canStepAshore": true
+    },
+    {
+      "x": -40,
+      "z": -49.75,
+      "canStepAshore": true
+    },
+    {
+      "x": -40,
+      "z": -40,
+      "canStepAshore": false
+    },
+    {
+      "x": -40,
+      "z": 0,
+      "canStepAshore": false
+    },
+    {
+      "x": -40,
+      "z": 40,
+      "canStepAshore": false
+    },
+    {
+      "x": -40,
+      "z": 49.75,
+      "canStepAshore": true
+    },
+    {
+      "x": 0,
+      "z": -49.75,
+      "canStepAshore": true
+    },
+    {
+      "x": 0,
+      "z": -40,
+      "canStepAshore": false
+    },
+    {
+      "x": 0,
+      "z": 0,
+      "canStepAshore": false
+    },
+    {
+      "x": 0,
+      "z": 40,
+      "canStepAshore": false
+    },
+    {
+      "x": 0,
+      "z": 49.75,
+      "canStepAshore": true
+    },
+    {
+      "x": 40,
+      "z": -49.75,
+      "canStepAshore": true
+    },
+    {
+      "x": 40,
+      "z": -40,
+      "canStepAshore": false
+    },
+    {
+      "x": 40,
+      "z": 0,
+      "canStepAshore": false
+    },
+    {
+      "x": 40,
+      "z": 40,
+      "canStepAshore": false
+    },
+    {
+      "x": 40,
+      "z": 49.75,
+      "canStepAshore": true
+    },
+    {
+      "x": 45.21,
+      "z": -49.75,
+      "canStepAshore": true
+    },
+    {
+      "x": 45.21,
+      "z": -40,
+      "canStepAshore": true
+    },
+    {
+      "x": 45.21,
+      "z": 0,
+      "canStepAshore": true
+    },
+    {
+      "x": 45.21,
+      "z": 40,
+      "canStepAshore": true
+    },
+    {
+      "x": 45.21,
+      "z": 49.75,
+      "canStepAshore": true
+    },
+    {
+      "x": 49,
+      "z": -49.75,
+      "canStepAshore": true
+    },
+    {
+      "x": 49,
+      "z": -40,
+      "canStepAshore": true
+    },
+    {
+      "x": 49,
+      "z": 0,
+      "canStepAshore": true
+    },
+    {
+      "x": 49,
+      "z": 40,
+      "canStepAshore": true
+    },
+    {
+      "x": 49,
+      "z": 49.75,
+      "canStepAshore": true
+    },
+    {
+      "x": 49.75,
+      "z": -49.75,
+      "canStepAshore": true
+    },
+    {
+      "x": 49.75,
+      "z": -40,
+      "canStepAshore": true
+    },
+    {
+      "x": 49.75,
+      "z": 0,
+      "canStepAshore": true
+    },
+    {
+      "x": 49.75,
+      "z": 40,
+      "canStepAshore": true
+    },
+    {
+      "x": 49.75,
+      "z": 49.75,
+      "canStepAshore": true
+    }
+  ],
+  "counterexample": {
+    "hull": {
+      "x": -49,
+      "z": 0
+    },
+    "target": {
+      "x": -55,
+      "z": 0
+    },
+    "stepAshore": true,
+    "heat15TargetWalkable": false
+  }
+}

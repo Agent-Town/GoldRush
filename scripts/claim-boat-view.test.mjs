@@ -90,3 +90,96 @@ test('three Flotilla bodies follow movement, loss and reset without changing the
   for (const callback of pending.splice(0)) { callback.ready({scene:new Group()}); callback.error(); }
   assert.equal(late.group.children.length, 0); assert.equal(canvas.dataset.flotillaBodies, 'disposed');
 });
+
+test('Regatta publishes exact terminal seconds, including the finish row, and resets them', async () => {
+  const { RegattaRaceSystem } = await vite.ssrLoadModule('/src/systems/RegattaRaceSystem.ts');
+  const { buildView } = await vite.ssrLoadModule('/src/agent/View.ts');
+  const { loadContract } = await vite.ssrLoadModule('/src/meta/ContractFamilies.ts');
+  const race = RegattaRaceSystem.create(loadContract('e5-regatta'));
+  const boat = { id: 'claim-boat', x: -49, z: 0, heading: 0, speed: 0, aboard: true };
+  const read = (canStepAshore = false, overrides = {}) => buildView({ diagnostics: () => ({
+    regatta: { declared: true, boat, canStepAshore, race: { ...race.diagnostics, ...overrides } },
+  }) }).now.regatta;
+  assert.equal(read().finishedAt, null);
+  assert.equal(read().forfeitedAt, null);
+  assert.equal(read().canStepAshore, false);
+  assert.equal(read(true).canStepAshore, true);
+  let at = 0;
+  while (race.diagnostics.nextGate) race.advance(at += 1.234, 0, race.diagnostics.nextGate);
+  const finish = read();
+  assert.equal(finish.buoysPassed.length, 6);
+  assert.equal(finish.buoysPassed.at(-1).id, 'claim-boat');
+  assert.equal(finish.finishedAt, Math.round(at * 100) / 100);
+  assert.equal(finish.finishedAt, finish.buoysPassed.at(-1).atSeconds);
+  assert.equal(finish.forfeitedAt, null);
+  race.advance(99, 0, null);
+  assert.deepEqual(read(), finish, 'terminal reads do not append duplicate finishes');
+  race.reset();
+  race.advance(0, 0, race.diagnostics.nextGate);
+  race.advance(3.456, 0, null);
+  assert.equal(read().finishedAt, null);
+  assert.equal(read().forfeitedAt, 3.46);
+  assert.equal(read().state, 'forfeited');
+  assert.equal(read().buoysPassed.length, 1);
+  assert.equal(read(false, { finishedAt: Infinity, forfeitedAt: NaN }).finishedAt, null);
+  assert.equal(read(false, { finishedAt: Infinity, forfeitedAt: NaN }).forfeitedAt, null);
+  race.reset();
+  assert.equal(read().finishedAt, null);
+  assert.equal(read().forfeitedAt, null);
+  assert.deepEqual(read().buoysPassed, []);
+});
+
+test('the shared shore query samples all 16 headings, reads the walkable port, and changes no state', async () => {
+  const { DeepwaterClaimTile } = await vite.ssrLoadModule('/src/world/DeepwaterClaimTile.ts');
+  const { loadContract } = await vite.ssrLoadModule('/src/meta/ContractFamilies.ts');
+  const { CLAIM_BOAT_GANGWAY_REACH } = await vite.ssrLoadModule('/src/entities/ClaimBoat.ts');
+  const { deriveMechanicsManifest } = await vite.ssrLoadModule('/src/agent/MechanicsManifest.ts');
+  const tile = new DeepwaterClaimTile(loadContract('e5-regatta'));
+  const rule = deriveMechanicsManifest('e5-regatta').rules.find(({ id }) => id === 'regatta_boat');
+  assert.deepEqual(rule.data.waterBounds, tile.boat.water);
+  assert.deepEqual(rule.data.waterBounds, { minX: -49.75, maxX: 49.75, minZ: -49.75, maxZ: 49.75 });
+  assert.equal(rule.data.gangwayReach, CLAIM_BOAT_GANGWAY_REACH);
+  assert.match(rule.data.standable, /STANDABLE ground — walkable terrain off the deck/);
+  const before = tile.boat.snapshot();
+  // Record headings before the geometry filter so the query cannot silently reduce its resolution.
+  const contains = tile.boat.contains.bind(tile.boat), points = [];
+  tile.boat.contains = (x, z) => { points.push({ x, z }); return contains(x, z); };
+  assert.equal(tile.canStepAshore({ walkable: () => false }), false);
+  assert.equal(points.length, 16);
+  for (const point of points) assert.ok(Math.abs(Math.hypot(point.x + 49, point.z) - CLAIM_BOAT_GANGWAY_REACH) < 1e-9);
+  const lastSide = points[14];
+  // At the initial left rim only western off-deck probes can disembark.
+  assert.equal(tile.canStepAshore({ walkable: (x, z) => x < -49.75 && z < 0 }), true);
+  assert.equal(tile.canStepAshore({ walkable: (x, z) => x === lastSide.x && z === lastSide.z }), false);
+  assert.deepEqual(tile.boat.snapshot(), before);
+});
+
+test('live Regatta shore agrees with stepAshore; Deepwater has a positive shore geometry control', async () => {
+  const beforeLocation = globalThis.location, beforeWindow = globalThis.window;
+  try {
+    for (const contractId of ['e5-regatta', 'e5-deepwater-claim']) {
+      const location = new URL(`http://shore.test/?debug&contract=${contractId}`);
+      Object.assign(globalThis, { location, window: { location } });
+      const loader = await createServer({ appType: 'custom', logLevel: 'silent', server: { middlewareMode: true, watch: null } });
+      try {
+        const { DeepwaterClaimTile } = await loader.ssrLoadModule('/src/world/DeepwaterClaimTile.ts');
+        const { loadContract } = await loader.ssrLoadModule('/src/meta/ContractFamilies.ts');
+        const Terrain = await loader.ssrLoadModule('/src/world/Terrain.ts');
+        const tile = new DeepwaterClaimTile(loadContract(contractId));
+        const ports = { walkable: (x, z) => Terrain.sample(x, z).walkable };
+        if (contractId === 'e5-regatta') {
+          tile.boat.board(-40, 0); tile.boat.board(-49, 6);
+          assert.equal(tile.boat.stepAshore({ x: -55, z: 0 }, ports.walkable), true);
+          assert.equal(ports.walkable(-50.41, 0), false, 'heat 15 measured this point, not the whole rim');
+          assert.equal(tile.canStepAshore(ports), true);
+          tile.boat.hullX = 0;
+          assert.equal(tile.canStepAshore(ports), false, 'walkable swimming water is not a shore');
+        } else {
+          assert.equal(tile.canStepAshore(ports), false, 'the lagoon anchor is out of shore reach');
+          tile.boat.hullX = 49.75; // geometric fixture on actual terrain; the home boat only moors
+          assert.equal(tile.canStepAshore(ports), true);
+        }
+      } finally { await loader.close(); }
+    }
+  } finally { Object.assign(globalThis, { location: beforeLocation, window: beforeWindow }); }
+});

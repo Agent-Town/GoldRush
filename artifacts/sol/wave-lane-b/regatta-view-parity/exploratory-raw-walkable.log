@@ -1,0 +1,76 @@
+(node:51641) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+{"contractId":"e5-regatta","boat":{"id":"claim-boat","anchor":{"id":"start-line","x":-49,"z":0},"motion":{"x":-49,"z":0,"heading":0,"speed":0,"aboard":null,"steerable":true},"pads":[{"id":"bow","x":0,"z":-3,"occupied":false},{"id":"port","x":-3,"z":1,"occupied":false},{"id":"starboard","x":3,"z":1,"occupied":false}],"buildings":[]},"bounds":{"minX":-64,"maxX":64,"minZ":-64,"maxZ":64},"water":{"minX":-49.75,"maxX":49.75,"minZ":-49.75,"maxZ":49.75},"flag":true,"samples":[{"z":0,"walkable":true},{"z":8,"walkable":true},{"z":16,"walkable":true},{"z":24,"walkable":true},{"z":30,"walkable":true},{"z":38,"walkable":true},{"z":46,"walkable":true},{"z":49.75,"walkable":false}],"stakes":[{"id":"claim-boat","x":-49,"z":0,"heroStart":true}]}
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+{"contractId":"e5-deepwater-claim","boat":{"id":"claim-boat","anchor":{"id":"lagoon","x":0,"z":30},"motion":{"x":0,"z":30,"heading":0,"speed":0,"aboard":null,"steerable":false},"pads":[{"id":"bow","x":0,"z":-3,"occupied":false},{"id":"port","x":-3,"z":1,"occupied":false},{"id":"starboard","x":3,"z":1,"occupied":false}],"buildings":[]},"bounds":{"minX":-64,"maxX":64,"minZ":-64,"maxZ":64},"water":{"minX":-49.75,"maxX":49.75,"minZ":-49.75,"maxZ":49.75},"flag":true,"samples":[{"z":0,"walkable":true},{"z":8,"walkable":true},{"z":16,"walkable":true},{"z":24,"walkable":true},{"z":30,"walkable":true},{"z":38,"walkable":true},{"z":46,"walkable":true},{"z":49.75,"walkable":true}],"stakes":[{"id":"claim-boat","x":0,"z":30,"heroStart":true}]}

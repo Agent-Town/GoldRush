@@ -911,6 +911,7 @@ export class HeadlessContractSim {
     const boat = tile.boat;
     return {
       declared: true,
+      canStepAshore: tile.canStepAshore({ walkable: (x, z) => this.heroWalkable(x, z) }),
       boat: {
         id: boat.config.id,
         x: boat.position.x,

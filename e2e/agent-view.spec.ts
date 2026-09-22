@@ -724,3 +724,30 @@ test('the seeded rider view stays cache-shaped and grows one honest wave at a ti
   expect(terminalEntries.secured).toMatchObject({ wave: 1, outcome: 'secured' });
   expectNoConsoleErrors(watch, 'seeded rider');
 });
+
+test('Regatta schema 4 matches the headless diagnostics byte for byte on boot', async ({ page }, testInfo) => {
+  const watch = watchErrors(page);
+  await page.goto('/?debug&contract=e5-regatta&nowaves&nolevel&nopause');
+  await page.waitForFunction(() => Boolean(window.__GR_TEST__ && window.__GR_AGENT__));
+  const browserView = await page.evaluate(() => {
+    window.__GR_TEST__!.setManualSim(true);
+    return window.__GR_AGENT__!.view.now.regatta;
+  });
+  const { createServer } = await import('vite');
+  const previousLocation = globalThis.location, previousWindow = globalThis.window;
+  const location = new URL('http://regatta-parity.test/?debug&contract=e5-regatta');
+  Object.assign(globalThis, { location, window: { location } });
+  const loader = await createServer({ appType: 'custom', logLevel: 'silent', server: { middlewareMode: true, watch: null } });
+  try {
+    const { HeadlessContractSim } = await loader.ssrLoadModule('/src/sim/HeadlessContractSim.ts');
+    const sim = new HeadlessContractSim({ contractId: 'e5-regatta', seed: 'e5-regatta-01' });
+    const headlessView = sim.currentTurn().view.now.regatta;
+    expect(JSON.stringify(browserView)).toBe(JSON.stringify(headlessView));
+    expect(browserView).toMatchObject({ finishedAt: null, forfeitedAt: null, canStepAshore: true });
+  } finally {
+    await loader.close();
+    Object.assign(globalThis, { location: previousLocation, window: previousWindow });
+  }
+  await page.screenshot({ path: `artifacts/sol/wave-lane-b/regatta-view-parity/view-${testInfo.project.name}.png` });
+  expectNoConsoleErrors(watch, 'Regatta schema 4');
+});

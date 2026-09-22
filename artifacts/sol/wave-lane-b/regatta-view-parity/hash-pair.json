@@ -1,0 +1,17 @@
+{
+  "at": "2026-09-22T13:34:22.935Z",
+  "base": "ca69148e67cc810aaaec21090148f7577f387334",
+  "note": "Before is reconstructed from HEAD source against the same live store bytes used for after; not a claimed preflight store snapshot.",
+  "before": "9743e025e0ba93040e7ef8225b129556538889933a211f65fd528720ccc7669c",
+  "after": "02804461a4d27b98c90161a16f53d3f0dcf5b16c39abd629d2301dc0b9148d10",
+  "check": "02804461a4d27b98c90161a16f53d3f0dcf5b16c39abd629d2301dc0b9148d10",
+  "sourceOverrides": [
+    "src/agent/MechanicsManifest.ts",
+    "src/agent/View.ts",
+    "src/game/Game.ts",
+    "src/sim/HeadlessContractSim.ts",
+    "src/systems/RegattaRaceSystem.ts",
+    "src/world/DeepwaterClaimTile.ts"
+  ],
+  "storeStableDuringCheck": true
+}

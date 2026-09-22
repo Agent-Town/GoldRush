@@ -435,7 +435,7 @@ test('a human at the keys sails the whole authored course and wins the Regatta, 
   expect(finished.forfeited, `the race must be won, not abandoned — last glances: ${track}`).toBe(false);
   expect(finished.finished, `the course ended ${JSON.stringify(finished)} — last glances: ${track}`).toBe(true);
   expect(finished.gatesPassed.map(({ id }) => id)).toEqual([
-    'start-beacon', 'northwest-checkpoint', 'midcourse-checkpoint', 'northeast-checkpoint', 'finish-beacon',
+    'start-beacon', 'northwest-checkpoint', 'midcourse-checkpoint', 'northeast-checkpoint', 'finish-beacon', 'claim-boat',
   ]);
   expect(finished.nextGate, 'a finished course has no next mark').toBeNull();
   expect((await raceState(page)).boat.motion.aboard, 'the finish requires the boat with the hero aboard').toBe('hero');
