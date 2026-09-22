@@ -677,3 +677,10 @@ Builds, **61+3** guards and own crossing/roster/census **20/20** pass; E1 payloa
 **Already framed:** the plate's nearest relay shelf is represented by `rush-relay-r2-frame` at the actual start. Rest/mid/return body pixels **21,662→21,676→21,675 desktop / 24,145→24,126→24,124 phone**; visible throughout **≥3.965 / ≥3.957 s**. No declaration, manifest sentence or camera glance, following the explicit already-framed exception. The minor pixel changes are ordinary settling, not improvement. The wider terraces, charting station, west dish, active relay art and HUD remain HELD. Prior solidity and art are unchanged.
 
 Own front/census **16/16** and visual census **2/2** pass. Builds and **61+3** guards from the identical final Hollow engine apply unchanged; E1 payload **34,309,830 B**. [Boards, counts and invariants](run-8/entry-framing/e7-relay-rush/review.md). Engine `a8afc11f313a5bc6567deac76bb40da24aab1ff19d7f935146229510289ad7c1` → same hash; store unchanged `d8938178a7464c637a79bca81d5f788bc8ad954d`. No empty art commit. READY-FOR-GATES, with final shared closeout to follow.
+
+
+## 2026-09-22 — run 8: entry framing closeout
+
+**READY-FOR-GATES:** all five maps completed, three declared camera glances and two already-framed exceptions. **No unreachable or remaining maps.** Final shared **28 pass / four opt-in skips**, exact Regatta replay **2/2**, agent-view **10/10**, ten uninstrumented boots **zero errors**. Thirty final `now` snapshots, **109,496 bytes**, are byte-identical; the audit is unchanged except source-line citations. Builds and **61+3** guards pass, E1 payload **34,309,830 B**. Seven broader Signal/Orbital failures reproduce on exact preceding map bases and remain held. Full art/vista/crossing/relay/HUD acceptance remains separate.
+
+Store `d8938178a7464c637a79bca81d5f788bc8ad954d` is pushed and read back on `astra/entry-framing`; land it with `sol/map-art-campaign-2`. Final engine `a8afc11f313a5bc6567deac76bb40da24aab1ff19d7f935146229510289ad7c1`; pins untouched. [All measurements, boards, per-map commits, full hash pairs and failure attribution](run-8/entry-framing/handoff.md). Remaining list: **none**.

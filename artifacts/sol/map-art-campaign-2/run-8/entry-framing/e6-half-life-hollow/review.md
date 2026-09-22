@@ -16,3 +16,5 @@ Only `entryLandmark` differs in the two JSONs; all prior fields and all model/at
 Engine `b3a86513d6b6511e4fa3049104211051d4cddac7fdda6c314a52144cdb98a288` → `a8afc11f313a5bc6567deac76bb40da24aab1ff19d7f935146229510289ad7c1`; pin drain-owned. Store `d8938178a7464c637a79bca81d5f788bc8ad954d`, pushed on `astra/entry-framing`.
 
 TypeScript/default/full/E1 builds pass; E1 payload **34,309,830 B**. Scoped guards **61/61**, named **3/3**, own crossing/roster/census **20/20** pass, including the ordinary mounted-terrain boot. Shared loading/reload proofs from Far Side apply unchanged; this map modifies metadata only. [Builds](build-gates.json) · [Guards](guards-gates.json) · [Own tests](e2e-own.json). READY-FOR-GATES.
+
+Final shared closeout: replay **2/2**, all agent-view **10/10**, shared total **28 pass / four opt-in skips**, ten uninstrumented boots with zero errors, byte-identical final `now` snapshots and unchanged audit semantics. [Task handoff and exact hash pairs](../handoff.md).

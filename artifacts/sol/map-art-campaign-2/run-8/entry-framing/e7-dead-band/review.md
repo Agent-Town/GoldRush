@@ -18,3 +18,5 @@ Final own suppression+census **12/12** pass. Broader Signal batch **39 pass / fi
 Final TypeScript/default/full/E1 builds pass; payload **34,309,364 B**. Final scoped guards **61/61**, named **3/3** pass. [Build receipts](../e7-dead-band-final/build-gates.json) · [Guard receipts](../e7-dead-band-final/guards-gates.json) · [Own tests](e2e-final-own.json) · [Exact-base attribution](e2e-exact-base.json) · [Metadata/asset invariants](invariants.json).
 
 Engine `b13e44ed083d03e30fee4cf9d6e3702ff8b6e167ddb88f20a7d24eae36cd7427` → `084df9fa71eef1eb63753addda63d7ee7b34a049e8394acfea11db36d284ae37` (shared variant-ID binding). Store stays at `4e9720b`; no empty art commit is created for an undeclared, unchanged pack. Pin drain-owned.
+
+Final shared closeout: replay **2/2**, all agent-view **10/10**, shared total **28 pass / four opt-in skips**, ten uninstrumented boots with zero errors, byte-identical final `now` snapshots and unchanged audit semantics. [Task handoff and exact hash pairs](../handoff.md).

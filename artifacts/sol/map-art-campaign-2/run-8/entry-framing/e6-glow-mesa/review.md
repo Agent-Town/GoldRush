@@ -20,3 +20,5 @@ Only `entryLandmark` differs in the two JSONs; all previous contract data and al
 [Camera parity](../rig-proof.json): 1,200 exact baseline poses, including replay-style pan targets, impulses, zoom and multiplayer. [Visibility proof](../visibility-proof.json): visible/no-op, offscreen, fully occluded, undeclared/no-op, one-shot and resource/state restoration. [Headless parity](../parity-summary.json): 30 `now` snapshots, 109,496 bytes, byte-identical across these five maps and The Claim; the audit's semantic output is unchanged, with only shifted source-line citations.
 
 Engine `b7113b37c1a7e10b10f504947a660147c581c22b667aa1df2feb695bbb96100c` → `b13e44ed083d03e30fee4cf9d6e3702ff8b6e167ddb88f20a7d24eae36cd7427`; pin remains drain-owned. Store commit is recorded in `commit.json`.
+
+Final shared closeout: replay **2/2**, all agent-view **10/10**, shared total **28 pass / four opt-in skips**, ten uninstrumented boots with zero errors, byte-identical final `now` snapshots and unchanged audit semantics. [Task handoff and exact hash pairs](../handoff.md).
