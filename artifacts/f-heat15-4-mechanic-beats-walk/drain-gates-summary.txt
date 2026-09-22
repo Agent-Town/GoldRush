@@ -1,0 +1,33 @@
+branch tip 2a6643965 feat: F-HEAT15-4 evidence — gate transcripts, plain-boot shots, implementer report 07:26Z
+scratch store: detached at d5e2552 = store main, clean
+chain base da7ebe19b merging fix/f-heat15-4-mechanic-beats-walk 2a6643965
+merged b5596d6e2
+single-line law: n/a (no pilot tables)
+engine hash merged (scratch store at d5e2552): 789b97dee3a6447c9d984e3009538d4cc133ab610c10de5ddb9f76800bca48c8
+tsc/build/e1: 0 / 0 / 0
+first-town payload: 34272646 bytes
+halo: rc=0 halo re-extraction PASS: 315 cured, 0 held, 760 regenerated-and-cured, 2127 scanned; alpha and opaque RGB unchanged
+null floors: rc=0 83 of 83 null floors match assets/contracts/null-floors.json (299.0s).
+law-pointer: rc=1 law-pointer-guard — do the law surfaces still point at what they claim?
+guards: ℹ pass 66 ℹ fail 0 (worker trio stats/accounts/mp rc=0/0/0)
+e2e start 07:35Z: e2e/e5-regatta-boat.spec.ts e2e/agent-view.spec.ts e2e/er01-e5-census.spec.ts e2e/drill-yard-manifest.spec.ts e2e/task-025-bandits-dont-swim.spec.ts e2e/m2-01-build-menu.spec.ts
+e2e: rc=0   52 passed (3.9m)  07:39Z
+battery start 07:39Z
+battery: rc=1 ℹ tests 947 ℹ pass 938 ℹ fail 4 ℹ skipped 5  07:46Z
+✖ THE REAL TREE: every law-surface pointer in this repo currently holds (522.023542ms)
+✖ all 152 scripts/*.test.mjs fixture owners remove their temp directories (190045.075167ms)
+✖ failing tests:
+✖ rotation registry stays outside the engine identity corpus (518.433167ms)
+✖ the landed registry names the live engine and stays outside its hash corpus (188.322166ms)
+dirt after battery: 0
+H154-PREP-DONE
+law-pointer: rc=1 law-pointer-guard — do the law surfaces still point at what they claim (re-based: scripts/skillmd-guard.test.mjs:109 -> scripts/skillmd-guard.test.mjs:133 (1x), skillmd-guard.test.mjs:109 -> skillmd-guard.test.mj)
+law-pointer: rc=0 law-pointer-guard — do the law surfaces still point at what they claim (six pointers re-based by their banked excerpts and re-banked: re-based: scripts/skillmd-guard.test.mjs:109 -> scripts/skillmd-guard.test.mjs:133 (1x), skillmd-guard.test.mjs:109 -> s)
+guards: ℹ pass 39 ℹ fail 0  (re-run after the F-H154-1 port; the worker trio unchanged)
+law-pointer: rc=1 law-pointer-guard — do the law surfaces still point at what they claim (after the port)
+port committed 40f97d1c5
+law-pointer: rc=0 law-pointer-guard — do the law surfaces still point at what they claim (re-based again after the F-H154-1 port grew the guard test: re-based: scripts/skillmd-guard.test.mjs:133 -> scripts/skillmd-guard.test.mjs:138 (1x), skillmd-guard.test.mj)
+battery note: the law-pointer test's red in the transcript predates the two re-bases; scripts/law-pointer-guard.test.mjs re-run alone after them: rc=0 ℹ pass 22 ℹ fail 0 
+hash at pin time: 789b97dee3a6447c9d984e3009538d4cc133ab610c10de5ddb9f76800bca48c8
+pin #32
+era (chain, scratch store): ℹ pass 9 ℹ fail 0 
