@@ -384,6 +384,16 @@ for ((ATTEMPT = 1; ATTEMPT <= VERIFY_ATTEMPTS; ATTEMPT++)); do
         "--include=/assets/pilots/map-rebuild-spike/reconcile-late/*.json"
         "--include=/assets/pilots/map-rebuild-spike/reconcile-late/*.mjs"
         "--include=/assets/pilots/map-rebuild-spike/landmarks/***"
+        # sol-map-art-fidelity-1 slice 1 (2026-09-22, F-FID1-5): Astra's fidelity maps keep a provenance.json beside
+        # their Blender and PNG sources under sources/<map>/; the engine hash walks map-rebuild-spike recursively for
+        # .json/.mjs/.ts (assay-replay-agent.mjs), so those files sit inside the pin's corpus and the droplet's assayer
+        # must see them. deploy-mirror-allowlist.test.mjs:97 measured provenance.json missing on the merged tree; the
+        # image and .blend sources stay unshipped, as they do at the top level.
+        "--include=/assets/pilots/map-rebuild-spike/sources/"
+        "--include=/assets/pilots/map-rebuild-spike/sources/**/"
+        "--include=/assets/pilots/map-rebuild-spike/sources/**.json"
+        "--include=/assets/pilots/map-rebuild-spike/sources/**.mjs"
+        "--include=/assets/pilots/map-rebuild-spike/sources/**.ts"
         "--include=/assets/pilots/*-3d/*.e*.glb"
         "--include=/assets/pilots/railcar-3d/railcar.glb"
         "--include=/assets/pilots/claim-boat-3d/claim-boat.glb"
