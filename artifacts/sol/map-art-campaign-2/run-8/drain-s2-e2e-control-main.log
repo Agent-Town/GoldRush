@@ -1,0 +1,913 @@
+
+Running 28 tests using 1 worker
+
+[1/28] [desktop-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-ember-shore census cites the existing Deep Sky debt
+[desktop-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-ember-shore census cites the existing Deep Sky debt
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[2/28] [desktop-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-archive-world census cites the existing Deep Sky debt
+  1) [desktop-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-archive-world census cites the existing Deep Sky debt 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    Expected: undefined
+    Received: ["e10-archive-world-01", "e10-archive-world-02"]
+
+      136 |     console.warn = (...args: unknown[]) => consoleErrors.push(args.map(String).join(' '));
+      137 |     try {
+    > 138 |       expect((benchSeeds as Record<string, string[]>)[contract.id]).toEqual(EXPECTED_SEEDS[contract.id]);
+          |                                                                     ^
+      139 |       const dependency = 'engineDependencies' in contract.tileParams
+      140 |         ? contract.tileParams.engineDependencies
+      141 |         : undefined;
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-control/e2e/er01-e10-census.spec.ts:138:69
+
+    Error Context: test-results/er01-e10-census-e10-archiv-b80f9--the-existing-Deep-Sky-debt-desktop-chrome/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/er01-e10-census-e10-archiv-b80f9--the-existing-Deep-Sky-debt-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/er01-e10-census-e10-archiv-b80f9--the-existing-Deep-Sky-debt-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[3/28] [desktop-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-last-claim census cites the existing Deep Sky debt
+[desktop-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-last-claim census cites the existing Deep Sky debt
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[4/28] [desktop-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-river census cites the existing Deep Sky debt
+[desktop-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-river census cites the existing Deep Sky debt
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[5/28] [desktop-chrome] › e2e/terrain3d-registry.spec.ts:88:1 › all campaign extras resolve their registered terrain and panorama assets
+[6/28] [desktop-chrome] › e2e/terrain3d-registry.spec.ts:124:1 › four campaign era bands mount with zero console errors
+[7/28] [desktop-chrome] › e2e/terrain3d-registry.spec.ts:196:1 › all sixteen contracts mount terrain, panorama, and grounded render-only landmarks with matching water
+  2) [desktop-chrome] › e2e/terrain3d-registry.spec.ts:196:1 › all sixteen contracts mount terrain, panorama, and grounded render-only landmarks with matching water 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 32768
+    Received: 51200
+
+      215 |     await expect(canvas).toHaveAttribute('data-terrain3d-pilot-panorama', contract.panorama);
+      216 |     expect(Number(await canvas.getAttribute('data-terrain3d-pilot-meshes'))).toBe(1);
+    > 217 |     expect(Number(await canvas.getAttribute('data-terrain3d-pilot-triangles'))).toBe(32_768);
+          |                                                                                 ^
+      218 |     expect(Number(await canvas.getAttribute('data-terrain3d-pilot-materials'))).toBe(1);
+      219 |     expect(Number(await canvas.getAttribute('data-terrain3d-pilot-landmarks'))).toBe(expectedMounts.length);
+      220 |     expect(Number(await canvas.getAttribute('data-terrain3d-pilot-landmark-skipped'))).toBe(0);
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-control/e2e/terrain3d-registry.spec.ts:217:81
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/terrain3d-registry-all-six-91b86-ndmarks-with-matching-water-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/terrain3d-registry-all-six-91b86-ndmarks-with-matching-water-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/terrain3d-registry-all-six-91b86-ndmarks-with-matching-water-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/terrain3d-registry-all-six-91b86-ndmarks-with-matching-water-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[8/28] [desktop-chrome] › e2e/terrain3d-registry.spec.ts:253:1 › Hill Mine rails resample onto the mounted terrain surface
+[9/28] [desktop-chrome] › e2e/terrain3d-registry.spec.ts:272:1 › rim and horizon probes keep the terrain meeting gradual and every panorama readable
+  3) [desktop-chrome] › e2e/terrain3d-registry.spec.ts:272:1 › rim and horizon probes keep the terrain meeting gradual and every panorama readable 
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  locator('canvas')
+    Expected: "painted-underlay-alpha-rim"
+    Received: "opaque-sculpt-edge"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveAttribute" with timeout 5000ms
+      - waiting for locator('canvas')
+        - locator resolved to <canvas width="1280" height="800" id="game-canvas" data-css-aspect="1.6" data-hero-skin="stock" data-hero-sheet="young" data-camera-aspect="1.6" data-railcar3d-state="off" data-boss-bar-depleted="0" data-crawler3d-state="off" data-boss-bar-remaining="0" data-boss-bar-anchor="none" data-engine="three.js r184" data-run3d-pilot-meshes="0" data-homemaker3d-state="off" data-prospector-skin="stock" data-hero-skin-sheet="stock" data-asset-prefetch-ready="8" data-boss-bar-visible="false" data-boss-bar-semanti…></canvas>
+        - unexpected value "opaque-sculpt-edge"
+        - locator resolved to <canvas width="1280" height="800" id="game-canvas" data-css-aspect="1.6" data-hero-skin="stock" data-hero-sheet="young" data-camera-aspect="1.6" data-railcar3d-state="off" data-boss-bar-depleted="0" data-crawler3d-state="off" data-boss-bar-remaining="0" data-boss-bar-anchor="none" data-engine="three.js r184" data-run3d-pilot-meshes="0" data-homemaker3d-state="off" data-prospector-skin="stock" data-hero-skin-sheet="stock" data-boss-bar-visible="false" data-boss-bar-semantic="none" data-boss-bar-positio…></canvas>
+        12 × unexpected value "opaque-sculpt-edge"
+           - locator resolved to <canvas width="1280" height="800" id="game-canvas" data-css-aspect="1.6" data-hero-skin="stock" data-hero-sheet="young" data-camera-aspect="1.6" data-railcar3d-state="off" data-boss-bar-depleted="0" data-crawler3d-state="off" data-boss-bar-remaining="0" data-boss-bar-anchor="none" data-engine="three.js r184" data-run3d-pilot-meshes="0" data-homemaker3d-state="off" data-prospector-skin="stock" data-hero-skin-sheet="stock" data-asset-prefetch-target="" data-boss-bar-visible="false" data-boss-bar-semanti…></canvas>
+        - unexpected value "opaque-sculpt-edge"
+
+
+      279 |     const canvas = page.locator('canvas');
+      280 |     await expect(canvas).toHaveAttribute('data-terrain3d-pilot-state', 'ready');
+    > 281 |     await expect(canvas).toHaveAttribute('data-terrain3d-pilot-skirt-blend', 'painted-underlay-alpha-rim');
+          |                          ^
+      282 |     await expect(canvas).toHaveAttribute('data-terrain3d-pilot-panorama-fog', 'excluded');
+      283 |     await expect(canvas).toHaveAttribute('data-terrain3d-pilot-panorama-depth', 'screen-horizon-backdrop');
+      284 |     expect(Number(await canvas.getAttribute('data-terrain3d-pilot-hidden-relief'))).toBeGreaterThan(0);
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-control/e2e/terrain3d-registry.spec.ts:281:26
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/terrain3d-registry-rim-and-03240-and-every-panorama-readable-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/terrain3d-registry-rim-and-03240-and-every-panorama-readable-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/terrain3d-registry-rim-and-03240-and-every-panorama-readable-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/terrain3d-registry-rim-and-03240-and-every-panorama-readable-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[10/28] [desktop-chrome] › e2e/terrain3d-registry.spec.ts:328:1 › terrain2d and the 3D default keep bounds, spawns, fog, masks, and simulation byte-identical per map
+  4) [desktop-chrome] › e2e/terrain3d-registry.spec.ts:328:1 › terrain2d and the 3D default keep bounds, spawns, fog, masks, and simulation byte-identical per map 
+
+    Test timeout of 180000ms exceeded.
+
+    Error: locator.click: Test ended.
+    Call log:
+      - waiting for getByRole('button', { name: 'Begin' })
+        - locator resolved to <button type="button" class="contract-briefing__dismiss" data-testid="contract-briefing-dismiss">Begin</button>
+      - attempting click action
+        - waiting for element to be visible, enabled and stable
+        - element is visible, enabled and stable
+        - scrolling into view if needed
+        - done scrolling
+
+
+      83 |   const begin = page.getByRole('button', { name: 'Begin' });
+      84 |   await page.waitForFunction(() => Boolean(window.__GR_TEST__) && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+    > 85 |   if (await begin.isVisible()) await begin.click();
+         |                                            ^
+      86 | }
+      87 |
+      88 | test('all campaign extras resolve their registered terrain and panorama assets', async ({ page }) => {
+        at boot (/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-control/e2e/terrain3d-registry.spec.ts:85:44)
+        at fingerprint (/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-control/e2e/terrain3d-registry.spec.ts:162:3)
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-control/e2e/terrain3d-registry.spec.ts:333:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/terrain3d-registry-terrain-abfe2-tion-byte-identical-per-map-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/terrain3d-registry-terrain-abfe2-tion-byte-identical-per-map-desktop-chrome/test-failed-2.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #3: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/terrain3d-registry-terrain-abfe2-tion-byte-identical-per-map-desktop-chrome/test-failed-3.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #4: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/terrain3d-registry-terrain-abfe2-tion-byte-identical-per-map-desktop-chrome/test-failed-4.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #5: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/terrain3d-registry-terrain-abfe2-tion-byte-identical-per-map-desktop-chrome/test-failed-5.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #6: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/terrain3d-registry-terrain-abfe2-tion-byte-identical-per-map-desktop-chrome/test-failed-6.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #7: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/terrain3d-registry-terrain-abfe2-tion-byte-identical-per-map-desktop-chrome/test-failed-7.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #8: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/terrain3d-registry-terrain-abfe2-tion-byte-identical-per-map-desktop-chrome/test-failed-8.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #9: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/terrain3d-registry-terrain-abfe2-tion-byte-identical-per-map-desktop-chrome/test-failed-9.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #10: screenshot (image/png) ─────────────────────────────────────────────────────────
+    test-results/terrain3d-registry-terrain-abfe2-tion-byte-identical-per-map-desktop-chrome/test-failed-11.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #11: screenshot (image/png) ─────────────────────────────────────────────────────────
+    test-results/terrain3d-registry-terrain-abfe2-tion-byte-identical-per-map-desktop-chrome/test-failed-10.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #12: screenshot (image/png) ─────────────────────────────────────────────────────────
+    test-results/terrain3d-registry-terrain-abfe2-tion-byte-identical-per-map-desktop-chrome/test-failed-12.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #13: screenshot (image/png) ─────────────────────────────────────────────────────────
+    test-results/terrain3d-registry-terrain-abfe2-tion-byte-identical-per-map-desktop-chrome/test-failed-14.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #14: screenshot (image/png) ─────────────────────────────────────────────────────────
+    test-results/terrain3d-registry-terrain-abfe2-tion-byte-identical-per-map-desktop-chrome/test-failed-13.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #15: screenshot (image/png) ─────────────────────────────────────────────────────────
+    test-results/terrain3d-registry-terrain-abfe2-tion-byte-identical-per-map-desktop-chrome/test-failed-15.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #16: screenshot (image/png) ─────────────────────────────────────────────────────────
+    test-results/terrain3d-registry-terrain-abfe2-tion-byte-identical-per-map-desktop-chrome/test-failed-16.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #17: screenshot (image/png) ─────────────────────────────────────────────────────────
+    test-results/terrain3d-registry-terrain-abfe2-tion-byte-identical-per-map-desktop-chrome/test-failed-17.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #18: screenshot (image/png) ─────────────────────────────────────────────────────────
+    test-results/terrain3d-registry-terrain-abfe2-tion-byte-identical-per-map-desktop-chrome/test-failed-18.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #19: screenshot (image/png) ─────────────────────────────────────────────────────────
+    test-results/terrain3d-registry-terrain-abfe2-tion-byte-identical-per-map-desktop-chrome/test-failed-19.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #20: screenshot (image/png) ─────────────────────────────────────────────────────────
+    test-results/terrain3d-registry-terrain-abfe2-tion-byte-identical-per-map-desktop-chrome/test-failed-20.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #21: screenshot (image/png) ─────────────────────────────────────────────────────────
+    test-results/terrain3d-registry-terrain-abfe2-tion-byte-identical-per-map-desktop-chrome/test-failed-21.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #22: screenshot (image/png) ─────────────────────────────────────────────────────────
+    test-results/terrain3d-registry-terrain-abfe2-tion-byte-identical-per-map-desktop-chrome/test-failed-22.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #23: screenshot (image/png) ─────────────────────────────────────────────────────────
+    test-results/terrain3d-registry-terrain-abfe2-tion-byte-identical-per-map-desktop-chrome/test-failed-23.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #24: screenshot (image/png) ─────────────────────────────────────────────────────────
+    test-results/terrain3d-registry-terrain-abfe2-tion-byte-identical-per-map-desktop-chrome/test-failed-24.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #25: screenshot (image/png) ─────────────────────────────────────────────────────────
+    test-results/terrain3d-registry-terrain-abfe2-tion-byte-identical-per-map-desktop-chrome/test-failed-25.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #26: screenshot (image/png) ─────────────────────────────────────────────────────────
+    test-results/terrain3d-registry-terrain-abfe2-tion-byte-identical-per-map-desktop-chrome/test-failed-29.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #27: screenshot (image/png) ─────────────────────────────────────────────────────────
+    test-results/terrain3d-registry-terrain-abfe2-tion-byte-identical-per-map-desktop-chrome/test-failed-26.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #28: screenshot (image/png) ─────────────────────────────────────────────────────────
+    test-results/terrain3d-registry-terrain-abfe2-tion-byte-identical-per-map-desktop-chrome/test-failed-27.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #29: screenshot (image/png) ─────────────────────────────────────────────────────────
+    test-results/terrain3d-registry-terrain-abfe2-tion-byte-identical-per-map-desktop-chrome/test-failed-28.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #30: screenshot (image/png) ─────────────────────────────────────────────────────────
+    test-results/terrain3d-registry-terrain-abfe2-tion-byte-identical-per-map-desktop-chrome/test-failed-30.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #31: screenshot (image/png) ─────────────────────────────────────────────────────────
+    test-results/terrain3d-registry-terrain-abfe2-tion-byte-identical-per-map-desktop-chrome/test-failed-31.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #32: screenshot (image/png) ─────────────────────────────────────────────────────────
+    test-results/terrain3d-registry-terrain-abfe2-tion-byte-identical-per-map-desktop-chrome/test-failed-32.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/terrain3d-registry-terrain-abfe2-tion-byte-identical-per-map-desktop-chrome/error-context.md
+
+    attachment #34: trace (application/zip) ────────────────────────────────────────────────────────
+    test-results/terrain3d-registry-terrain-abfe2-tion-byte-identical-per-map-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/terrain3d-registry-terrain-abfe2-tion-byte-identical-per-map-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[11/28] [desktop-chrome] › e2e/terrain3d-registry.spec.ts:345:1 › all fifteen contracts stay painted in LITE and on invalid terrain bytes
+  5) [desktop-chrome] › e2e/terrain3d-registry.spec.ts:345:1 › all fifteen contracts stay painted in LITE and on invalid terrain bytes 
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  locator('canvas')
+    Expected: "failed"
+    Received: "lite"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveAttribute" with timeout 5000ms
+      - waiting for locator('canvas')
+        14 × locator resolved to <canvas width="1280" height="800" id="game-canvas" data-css-aspect="1.6" data-hero-skin="stock" data-hero-sheet="young" data-camera-aspect="1.6" data-boss-bar-depleted="0" data-railcar3d-state="lite" data-boss-bar-remaining="0" data-boss-bar-anchor="none" data-crawler3d-state="lite" data-engine="three.js r184" data-run3d-pilot-meshes="0" data-asset-loading-ready="0" data-asset-loading-total="0" data-prospector-skin="stock" data-hero-skin-sheet="stock" data-asset-prefetch-ready="0" data-asset-prefetch-…></canvas>
+           - unexpected value "lite"
+
+
+      360 |     await page.route(terrain, (route) => route.fulfill({ status: 200, body: 'invalid glb bytes', contentType: 'model/gltf-binary' }));
+      361 |     await boot(page, contract.id, '&terrain3dPilot');
+    > 362 |     await expect(page.locator('canvas')).toHaveAttribute('data-terrain3d-pilot-state', 'failed');
+          |                                          ^
+      363 |     await expect(page.locator('canvas')).toHaveAttribute('data-terrain3d-pilot-render-source', 'painted');
+      364 |     await expect(page.locator('canvas')).toHaveAttribute('data-terrain3d-pilot-panorama', 'off');
+      365 |     await page.unroute(terrain);
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-control/e2e/terrain3d-registry.spec.ts:362:42
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/terrain3d-registry-all-fif-b8590-nd-on-invalid-terrain-bytes-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/terrain3d-registry-all-fif-b8590-nd-on-invalid-terrain-bytes-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/terrain3d-registry-all-fif-b8590-nd-on-invalid-terrain-bytes-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/terrain3d-registry-all-fif-b8590-nd-on-invalid-terrain-bytes-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[12/28] [desktop-chrome] › e2e/terrain3d-registry.spec.ts:378:1 › an invalid landmark is skipped with diagnostics while the terrain stays ready
+[13/28] [desktop-chrome] › e2e/terrain3d-registry.spec.ts:392:1 › disposing while the peer GLB is delayed releases each decoded model immediately
+[14/28] [desktop-chrome] › e2e/terrain3d-registry.spec.ts:447:1 › each registered terrain and panorama stays inside the 115% p95 budget
+[15/28] [mobile-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-ember-shore census cites the existing Deep Sky debt
+[mobile-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-ember-shore census cites the existing Deep Sky debt
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[16/28] [mobile-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-archive-world census cites the existing Deep Sky debt
+  6) [mobile-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-archive-world census cites the existing Deep Sky debt 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    Expected: undefined
+    Received: ["e10-archive-world-01", "e10-archive-world-02"]
+
+      136 |     console.warn = (...args: unknown[]) => consoleErrors.push(args.map(String).join(' '));
+      137 |     try {
+    > 138 |       expect((benchSeeds as Record<string, string[]>)[contract.id]).toEqual(EXPECTED_SEEDS[contract.id]);
+          |                                                                     ^
+      139 |       const dependency = 'engineDependencies' in contract.tileParams
+      140 |         ? contract.tileParams.engineDependencies
+      141 |         : undefined;
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-control/e2e/er01-e10-census.spec.ts:138:69
+
+    Error Context: test-results/er01-e10-census-e10-archiv-b80f9--the-existing-Deep-Sky-debt-mobile-chrome/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/er01-e10-census-e10-archiv-b80f9--the-existing-Deep-Sky-debt-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/er01-e10-census-e10-archiv-b80f9--the-existing-Deep-Sky-debt-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[17/28] [mobile-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-last-claim census cites the existing Deep Sky debt
+[mobile-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-last-claim census cites the existing Deep Sky debt
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[18/28] [mobile-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-river census cites the existing Deep Sky debt
+[mobile-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-river census cites the existing Deep Sky debt
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[19/28] [mobile-chrome] › e2e/terrain3d-registry.spec.ts:88:1 › all campaign extras resolve their registered terrain and panorama assets
+[20/28] [mobile-chrome] › e2e/terrain3d-registry.spec.ts:124:1 › four campaign era bands mount with zero console errors
+[21/28] [mobile-chrome] › e2e/terrain3d-registry.spec.ts:196:1 › all sixteen contracts mount terrain, panorama, and grounded render-only landmarks with matching water
+  7) [mobile-chrome] › e2e/terrain3d-registry.spec.ts:196:1 › all sixteen contracts mount terrain, panorama, and grounded render-only landmarks with matching water 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 32768
+    Received: 51200
+
+      215 |     await expect(canvas).toHaveAttribute('data-terrain3d-pilot-panorama', contract.panorama);
+      216 |     expect(Number(await canvas.getAttribute('data-terrain3d-pilot-meshes'))).toBe(1);
+    > 217 |     expect(Number(await canvas.getAttribute('data-terrain3d-pilot-triangles'))).toBe(32_768);
+          |                                                                                 ^
+      218 |     expect(Number(await canvas.getAttribute('data-terrain3d-pilot-materials'))).toBe(1);
+      219 |     expect(Number(await canvas.getAttribute('data-terrain3d-pilot-landmarks'))).toBe(expectedMounts.length);
+      220 |     expect(Number(await canvas.getAttribute('data-terrain3d-pilot-landmark-skipped'))).toBe(0);
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-control/e2e/terrain3d-registry.spec.ts:217:81
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/terrain3d-registry-all-six-91b86-ndmarks-with-matching-water-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/terrain3d-registry-all-six-91b86-ndmarks-with-matching-water-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/terrain3d-registry-all-six-91b86-ndmarks-with-matching-water-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/terrain3d-registry-all-six-91b86-ndmarks-with-matching-water-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[22/28] [mobile-chrome] › e2e/terrain3d-registry.spec.ts:253:1 › Hill Mine rails resample onto the mounted terrain surface
+[23/28] [mobile-chrome] › e2e/terrain3d-registry.spec.ts:272:1 › rim and horizon probes keep the terrain meeting gradual and every panorama readable
+  8) [mobile-chrome] › e2e/terrain3d-registry.spec.ts:272:1 › rim and horizon probes keep the terrain meeting gradual and every panorama readable 
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  locator('canvas')
+    Expected: "painted-underlay-alpha-rim"
+    Received: "opaque-sculpt-edge"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveAttribute" with timeout 5000ms
+      - waiting for locator('canvas')
+        14 × locator resolved to <canvas width="780" height="1688" id="game-canvas" data-hero-skin="stock" data-hero-sheet="young" data-railcar3d-state="off" data-boss-bar-depleted="0" data-crawler3d-state="off" data-boss-bar-remaining="0" data-boss-bar-anchor="none" data-engine="three.js r184" data-run3d-pilot-meshes="0" data-homemaker3d-state="off" data-prospector-skin="stock" data-hero-skin-sheet="stock" data-asset-prefetch-ready="6" data-boss-bar-visible="false" data-boss-bar-semantic="none" data-boss-bar-position="none" data-old…></canvas>
+           - unexpected value "opaque-sculpt-edge"
+
+
+      279 |     const canvas = page.locator('canvas');
+      280 |     await expect(canvas).toHaveAttribute('data-terrain3d-pilot-state', 'ready');
+    > 281 |     await expect(canvas).toHaveAttribute('data-terrain3d-pilot-skirt-blend', 'painted-underlay-alpha-rim');
+          |                          ^
+      282 |     await expect(canvas).toHaveAttribute('data-terrain3d-pilot-panorama-fog', 'excluded');
+      283 |     await expect(canvas).toHaveAttribute('data-terrain3d-pilot-panorama-depth', 'screen-horizon-backdrop');
+      284 |     expect(Number(await canvas.getAttribute('data-terrain3d-pilot-hidden-relief'))).toBeGreaterThan(0);
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-control/e2e/terrain3d-registry.spec.ts:281:26
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/terrain3d-registry-rim-and-03240-and-every-panorama-readable-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/terrain3d-registry-rim-and-03240-and-every-panorama-readable-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/terrain3d-registry-rim-and-03240-and-every-panorama-readable-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/terrain3d-registry-rim-and-03240-and-every-panorama-readable-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[24/28] [mobile-chrome] › e2e/terrain3d-registry.spec.ts:328:1 › terrain2d and the 3D default keep bounds, spawns, fog, masks, and simulation byte-identical per map
+  9) [mobile-chrome] › e2e/terrain3d-registry.spec.ts:328:1 › terrain2d and the 3D default keep bounds, spawns, fog, masks, and simulation byte-identical per map 
+
+    Test timeout of 180000ms exceeded.
+
+    Error: browser.newPage: Test ended.
+    Browser logs:
+
+    <launching> /Users/robin/Library/Caches/ms-playwright/chromium-1228/chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate,RenderDocument,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/var/folders/cd/p02kvf6s5qgfn47w85hhtzjc0000gn/T/playwright_chromiumdev_profile-X39oGd --remote-debugging-pipe --no-startup-window
+    <launched> pid=28270
+    [pid=28270][err] [29950:320614648:0922/185042.856924:ERROR:sandbox/mac/system_services.cc:31] SetApplicationIsDaemon: Error Domain=NSOSStatusErrorDomain Code=-50 "paramErr: error in user parameter list" (-50)
+    [pid=28270][err] [28423:320612737:0922/185134.211478:ERROR:gpu/command_buffer/service/shared_image/shared_image_manager.cc:361] SharedImageManager::ProduceOverlay: Trying to Produce a Overlay representation from a non-existent mailbox.
+    [pid=28270][err] [28423:320612737:0922/185134.211846:ERROR:components/viz/service/display_embedder/skia_output_device_buffer_queue.cc:258] Invalid mailbox.
+    [pid=28270][err] [28423:320612737:0922/185134.211854:ERROR:gpu/command_buffer/service/shared_image/shared_image_manager.cc:361] SharedImageManager::ProduceOverlay: Trying to Produce a Overlay representation from a non-existent mailbox.
+    [pid=28270][err] [28423:320612737:0922/185134.211857:ERROR:components/viz/service/display_embedder/skia_output_device_buffer_queue.cc:258] Invalid mailbox.
+    [pid=28270][err] [28423:320612737:0922/185134.211860:ERROR:gpu/command_buffer/service/shared_image/shared_image_manager.cc:361] SharedImageManager::ProduceOverlay: Trying to Produce a Overlay representation from a non-existent mailbox.
+    [pid=28270][err] [28423:320612737:0922/185134.211862:ERROR:components/viz/service/display_embedder/skia_output_device_buffer_queue.cc:258] Invalid mailbox.
+    [pid=28270][err] [28423:320612737:0922/185134.211864:ERROR:gpu/command_buffer/service/shared_image/shared_image_manager.cc:361] SharedImageManager::ProduceOverlay: Trying to Produce a Overlay representation from a non-existent mailbox.
+    [pid=28270][err] [28423:320612737:0922/185134.211867:ERROR:components/viz/service/display_embedder/skia_output_device_buffer_queue.cc:258] Invalid mailbox.
+    [pid=28270][err] [28423:320612737:0922/185158.333448:ERROR:gpu/command_buffer/service/shared_image/shared_image_manager.cc:361] SharedImageManager::ProduceOverlay: Trying to Produce a Overlay representation from a non-existent mailbox.
+    [pid=28270][err] [28423:320612737:0922/185158.333461:ERROR:components/viz/service/display_embedder/skia_output_device_buffer_queue.cc:258] Invalid mailbox.
+    [pid=28270][err] [28423:320612737:0922/185158.333464:ERROR:gpu/command_buffer/service/shared_image/shared_image_manager.cc:361] SharedImageManager::ProduceOverlay: Trying to Produce a Overlay representation from a non-existent mailbox.
+    [pid=28270][err] [28423:320612737:0922/185158.333466:ERROR:components/viz/service/display_embedder/skia_output_device_buffer_queue.cc:258] Invalid mailbox.
+    [pid=28270][err] [28423:320612737:0922/185158.333468:ERROR:gpu/command_buffer/service/shared_image/shared_image_manager.cc:361] SharedImageManager::ProduceOverlay: Trying to Produce a Overlay representation from a non-existent mailbox.
+    [pid=28270][err] [28423:320612737:0922/185158.333469:ERROR:components/viz/service/display_embedder/skia_output_device_buffer_queue.cc:258] Invalid mailbox.
+    [pid=28270][err] [28423:320612737:0922/185158.333471:ERROR:gpu/command_buffer/service/shared_image/shared_image_manager.cc:361] SharedImageManager::ProduceOverlay: Trying to Produce a Overlay representation from a non-existent mailbox.
+    [pid=28270][err] [28423:320612737:0922/185158.333472:ERROR:components/viz/service/display_embedder/skia_output_device_buffer_queue.cc:258] Invalid mailbox.
+    [pid=28270][err] [28270:320612735:0922/185203.046210:ERROR:base/process/process_mac.cc:53] task_policy_set TASK_CATEGORY_POLICY: (os/kern) invalid argument (4)
+    [pid=28270][err] [28270:320612735:0922/185203.046232:ERROR:base/process/process_mac.cc:98] task_policy_set TASK_SUPPRESSION_POLICY: (os/kern) invalid argument (4)
+    [pid=28270][err] [28423:320612737:0922/185243.443574:ERROR:gpu/command_buffer/service/shared_image/shared_image_manager.cc:361] SharedImageManager::ProduceOverlay: Trying to Produce a Overlay representation from a non-existent mailbox.
+    [pid=28270][err] [28423:320612737:0922/185243.443589:ERROR:components/viz/service/display_embedder/skia_output_device_buffer_queue.cc:258] Invalid mailbox.
+    [pid=28270][err] [28423:320612737:0922/185243.443593:ERROR:gpu/command_buffer/service/shared_image/shared_image_manager.cc:361] SharedImageManager::ProduceOverlay: Trying to Produce a Overlay representation from a non-existent mailbox.
+    [pid=28270][err] [28423:320612737:0922/185243.443595:ERROR:components/viz/service/display_embedder/skia_output_device_buffer_queue.cc:258] Invalid mailbox.
+    [pid=28270][err] [28423:320612737:0922/185243.443598:ERROR:gpu/command_buffer/service/shared_image/shared_image_manager.cc:361] SharedImageManager::ProduceOverlay: Trying to Produce a Overlay representation from a non-existent mailbox.
+    [pid=28270][err] [28423:320612737:0922/185243.443600:ERROR:components/viz/service/display_embedder/skia_output_device_buffer_queue.cc:258] Invalid mailbox.
+    [pid=28270][err] [28423:320612737:0922/185243.443602:ERROR:gpu/command_buffer/service/shared_image/shared_image_manager.cc:361] SharedImageManager::ProduceOverlay: Trying to Produce a Overlay representation from a non-existent mailbox.
+    [pid=28270][err] [28423:320612737:0922/185243.443604:ERROR:components/viz/service/display_embedder/skia_output_device_buffer_queue.cc:258] Invalid mailbox.
+    [pid=28270][err] [28270:320612573:0922/185243.503620:ERROR:chrome/browser/ui/views/user_education/impl/browser_user_education_interface_impl.cc:186] Attempting to show IPH IPH_ExtensionsZeroStatePromo before browser initialization complete; IPH will not be shown.
+    [pid=28270][err] [28423:320612737:0922/185250.547359:ERROR:gpu/command_buffer/service/shared_image/shared_image_manager.cc:361] SharedImageManager::ProduceOverlay: Trying to Produce a Overlay representation from a non-existent mailbox.
+    [pid=28270][err] [28423:320612737:0922/185250.547375:ERROR:components/viz/service/display_embedder/skia_output_device_buffer_queue.cc:258] Invalid mailbox.
+    [pid=28270][err] [28423:320612737:0922/185250.547379:ERROR:gpu/command_buffer/service/shared_image/shared_image_manager.cc:361] SharedImageManager::ProduceOverlay: Trying to Produce a Overlay representation from a non-existent mailbox.
+    [pid=28270][err] [28423:320612737:0922/185250.547381:ERROR:components/viz/service/display_embedder/skia_output_device_buffer_queue.cc:258] Invalid mailbox.
+    [pid=28270][err] [28423:320612737:0922/185250.547383:ERROR:gpu/command_buffer/service/shared_image/shared_image_manager.cc:361] SharedImageManager::ProduceOverlay: Trying to Produce a Overlay representation from a non-existent mailbox.
+    [pid=28270][err] [28423:320612737:0922/185250.547384:ERROR:components/viz/service/display_embedder/skia_output_device_buffer_queue.cc:258] Invalid mailbox.
+    [pid=28270][err] [28423:320612737:0922/185250.547386:ERROR:gpu/command_buffer/service/shared_image/shared_image_manager.cc:361] SharedImageManager::ProduceOverlay: Trying to Produce a Overlay representation from a non-existent mailbox.
+    [pid=28270][err] [28423:320612737:0922/185250.547389:ERROR:components/viz/service/display_embedder/skia_output_device_buffer_queue.cc:258] Invalid mailbox.
+    [pid=28270][err] [28423:320612737:0922/185250.547391:ERROR:gpu/command_buffer/service/shared_image/shared_image_manager.cc:361] SharedImageManager::ProduceOverlay: Trying to Produce a Overlay representation from a non-existent mailbox.
+    [pid=28270][err] [28423:320612737:0922/185250.547393:ERROR:components/viz/service/display_embedder/skia_output_device_buffer_queue.cc:258] Invalid mailbox.
+    [pid=28270][err] [28423:320612737:0922/185250.547395:ERROR:gpu/command_buffer/service/shared_image/shared_image_manager.cc:361] SharedImageManager::ProduceOverlay: Trying to Produce a Overlay representation from a non-existent mailbox.
+    [pid=28270][err] [28423:320612737:0922/185250.547397:ERROR:components/viz/service/display_embedder/skia_output_device_buffer_queue.cc:258] Invalid mailbox.
+    [pid=28270][err] [28423:320612737:0922/185250.547400:ERROR:gpu/command_buffer/service/shared_image/shared_image_manager.cc:361] SharedImageManager::ProduceOverlay: Trying to Produce a Overlay representation from a non-existent mailbox.
+    [pid=28270][err] [28423:320612737:0922/185250.547402:ERROR:components/viz/service/display_embedder/skia_output_device_buffer_queue.cc:258] Invalid mailbox.
+    [pid=28270][err] [28423:320612737:0922/185250.547404:ERROR:gpu/command_buffer/service/shared_image/shared_image_manager.cc:361] SharedImageManager::ProduceOverlay: Trying to Produce a Overlay representation from a non-existent mailbox.
+    [pid=28270][err] [28423:320612737:0922/185250.547406:ERROR:components/viz/service/display_embedder/skia_output_device_buffer_queue.cc:258] Invalid mailbox.
+    [pid=28270] <gracefully close start>
+
+      156 |
+      157 | async function fingerprint(browser: Browser, contractId: string, pilot: boolean): Promise<{ hash: string; payload: unknown; errors: Errors; assetRequests: number }> {
+    > 158 |   const page = await browser.newPage();
+          |                              ^
+      159 |   const errors = collectErrors(page);
+      160 |   let assetRequests = 0;
+      161 |   page.on('request', (request) => { if (isAssetRequest(request)) assetRequests += 1; });
+        at fingerprint (/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-control/e2e/terrain3d-registry.spec.ts:158:30)
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-control/e2e/terrain3d-registry.spec.ts:332:23
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/terrain3d-registry-terrain-abfe2-tion-byte-identical-per-map-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/terrain3d-registry-terrain-abfe2-tion-byte-identical-per-map-mobile-chrome/test-failed-2.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #3: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/terrain3d-registry-terrain-abfe2-tion-byte-identical-per-map-mobile-chrome/test-failed-3.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #4: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/terrain3d-registry-terrain-abfe2-tion-byte-identical-per-map-mobile-chrome/test-failed-4.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #5: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/terrain3d-registry-terrain-abfe2-tion-byte-identical-per-map-mobile-chrome/test-failed-5.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #6: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/terrain3d-registry-terrain-abfe2-tion-byte-identical-per-map-mobile-chrome/test-failed-6.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #7: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/terrain3d-registry-terrain-abfe2-tion-byte-identical-per-map-mobile-chrome/test-failed-9.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #8: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/terrain3d-registry-terrain-abfe2-tion-byte-identical-per-map-mobile-chrome/test-failed-10.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #9: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/terrain3d-registry-terrain-abfe2-tion-byte-identical-per-map-mobile-chrome/test-failed-7.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #10: screenshot (image/png) ─────────────────────────────────────────────────────────
+    test-results/terrain3d-registry-terrain-abfe2-tion-byte-identical-per-map-mobile-chrome/test-failed-11.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #11: screenshot (image/png) ─────────────────────────────────────────────────────────
+    test-results/terrain3d-registry-terrain-abfe2-tion-byte-identical-per-map-mobile-chrome/test-failed-8.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #12: screenshot (image/png) ─────────────────────────────────────────────────────────
+    test-results/terrain3d-registry-terrain-abfe2-tion-byte-identical-per-map-mobile-chrome/test-failed-12.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #13: screenshot (image/png) ─────────────────────────────────────────────────────────
+    test-results/terrain3d-registry-terrain-abfe2-tion-byte-identical-per-map-mobile-chrome/test-failed-13.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #14: screenshot (image/png) ─────────────────────────────────────────────────────────
+    test-results/terrain3d-registry-terrain-abfe2-tion-byte-identical-per-map-mobile-chrome/test-failed-14.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #15: screenshot (image/png) ─────────────────────────────────────────────────────────
+    test-results/terrain3d-registry-terrain-abfe2-tion-byte-identical-per-map-mobile-chrome/test-failed-15.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #16: screenshot (image/png) ─────────────────────────────────────────────────────────
+    test-results/terrain3d-registry-terrain-abfe2-tion-byte-identical-per-map-mobile-chrome/test-failed-16.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #17: screenshot (image/png) ─────────────────────────────────────────────────────────
+    test-results/terrain3d-registry-terrain-abfe2-tion-byte-identical-per-map-mobile-chrome/test-failed-17.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #18: screenshot (image/png) ─────────────────────────────────────────────────────────
+    test-results/terrain3d-registry-terrain-abfe2-tion-byte-identical-per-map-mobile-chrome/test-failed-19.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #19: screenshot (image/png) ─────────────────────────────────────────────────────────
+    test-results/terrain3d-registry-terrain-abfe2-tion-byte-identical-per-map-mobile-chrome/test-failed-18.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #20: screenshot (image/png) ─────────────────────────────────────────────────────────
+    test-results/terrain3d-registry-terrain-abfe2-tion-byte-identical-per-map-mobile-chrome/test-failed-20.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #21: screenshot (image/png) ─────────────────────────────────────────────────────────
+    test-results/terrain3d-registry-terrain-abfe2-tion-byte-identical-per-map-mobile-chrome/test-failed-23.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #22: screenshot (image/png) ─────────────────────────────────────────────────────────
+    test-results/terrain3d-registry-terrain-abfe2-tion-byte-identical-per-map-mobile-chrome/test-failed-25.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #23: screenshot (image/png) ─────────────────────────────────────────────────────────
+    test-results/terrain3d-registry-terrain-abfe2-tion-byte-identical-per-map-mobile-chrome/test-failed-22.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #24: screenshot (image/png) ─────────────────────────────────────────────────────────
+    test-results/terrain3d-registry-terrain-abfe2-tion-byte-identical-per-map-mobile-chrome/test-failed-21.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #25: screenshot (image/png) ─────────────────────────────────────────────────────────
+    test-results/terrain3d-registry-terrain-abfe2-tion-byte-identical-per-map-mobile-chrome/test-failed-26.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #26: screenshot (image/png) ─────────────────────────────────────────────────────────
+    test-results/terrain3d-registry-terrain-abfe2-tion-byte-identical-per-map-mobile-chrome/test-failed-29.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #27: screenshot (image/png) ─────────────────────────────────────────────────────────
+    test-results/terrain3d-registry-terrain-abfe2-tion-byte-identical-per-map-mobile-chrome/test-failed-28.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #28: screenshot (image/png) ─────────────────────────────────────────────────────────
+    test-results/terrain3d-registry-terrain-abfe2-tion-byte-identical-per-map-mobile-chrome/test-failed-24.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #29: screenshot (image/png) ─────────────────────────────────────────────────────────
+    test-results/terrain3d-registry-terrain-abfe2-tion-byte-identical-per-map-mobile-chrome/test-failed-27.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #30: screenshot (image/png) ─────────────────────────────────────────────────────────
+    test-results/terrain3d-registry-terrain-abfe2-tion-byte-identical-per-map-mobile-chrome/test-failed-30.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/terrain3d-registry-terrain-abfe2-tion-byte-identical-per-map-mobile-chrome/error-context.md
+
+    attachment #32: trace (application/zip) ────────────────────────────────────────────────────────
+    test-results/terrain3d-registry-terrain-abfe2-tion-byte-identical-per-map-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/terrain3d-registry-terrain-abfe2-tion-byte-identical-per-map-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[25/28] [mobile-chrome] › e2e/terrain3d-registry.spec.ts:345:1 › all fifteen contracts stay painted in LITE and on invalid terrain bytes
+  10) [mobile-chrome] › e2e/terrain3d-registry.spec.ts:345:1 › all fifteen contracts stay painted in LITE and on invalid terrain bytes 
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  locator('canvas')
+    Expected: "failed"
+    Received: "lite"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveAttribute" with timeout 5000ms
+      - waiting for locator('canvas')
+        14 × locator resolved to <canvas width="390" height="844" id="game-canvas" data-hero-skin="stock" data-hero-sheet="young" data-boss-bar-depleted="0" data-railcar3d-state="lite" data-boss-bar-remaining="0" data-boss-bar-anchor="none" data-crawler3d-state="lite" data-engine="three.js r184" data-run3d-pilot-meshes="0" data-asset-loading-ready="0" data-asset-loading-total="0" data-prospector-skin="stock" data-hero-skin-sheet="stock" data-asset-prefetch-ready="0" data-asset-prefetch-total="0" data-asset-prefetch-target="" data-ass…></canvas>
+           - unexpected value "lite"
+
+
+      360 |     await page.route(terrain, (route) => route.fulfill({ status: 200, body: 'invalid glb bytes', contentType: 'model/gltf-binary' }));
+      361 |     await boot(page, contract.id, '&terrain3dPilot');
+    > 362 |     await expect(page.locator('canvas')).toHaveAttribute('data-terrain3d-pilot-state', 'failed');
+          |                                          ^
+      363 |     await expect(page.locator('canvas')).toHaveAttribute('data-terrain3d-pilot-render-source', 'painted');
+      364 |     await expect(page.locator('canvas')).toHaveAttribute('data-terrain3d-pilot-panorama', 'off');
+      365 |     await page.unroute(terrain);
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-control/e2e/terrain3d-registry.spec.ts:362:42
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/terrain3d-registry-all-fif-b8590-nd-on-invalid-terrain-bytes-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/terrain3d-registry-all-fif-b8590-nd-on-invalid-terrain-bytes-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/terrain3d-registry-all-fif-b8590-nd-on-invalid-terrain-bytes-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/terrain3d-registry-all-fif-b8590-nd-on-invalid-terrain-bytes-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[26/28] [mobile-chrome] › e2e/terrain3d-registry.spec.ts:378:1 › an invalid landmark is skipped with diagnostics while the terrain stays ready
+[27/28] [mobile-chrome] › e2e/terrain3d-registry.spec.ts:392:1 › disposing while the peer GLB is delayed releases each decoded model immediately
+[28/28] [mobile-chrome] › e2e/terrain3d-registry.spec.ts:447:1 › each registered terrain and panorama stays inside the 115% p95 budget
+  10 failed
+    [desktop-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-archive-world census cites the existing Deep Sky debt 
+    [desktop-chrome] › e2e/terrain3d-registry.spec.ts:196:1 › all sixteen contracts mount terrain, panorama, and grounded render-only landmarks with matching water 
+    [desktop-chrome] › e2e/terrain3d-registry.spec.ts:272:1 › rim and horizon probes keep the terrain meeting gradual and every panorama readable 
+    [desktop-chrome] › e2e/terrain3d-registry.spec.ts:328:1 › terrain2d and the 3D default keep bounds, spawns, fog, masks, and simulation byte-identical per map 
+    [desktop-chrome] › e2e/terrain3d-registry.spec.ts:345:1 › all fifteen contracts stay painted in LITE and on invalid terrain bytes 
+    [mobile-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-archive-world census cites the existing Deep Sky debt 
+    [mobile-chrome] › e2e/terrain3d-registry.spec.ts:196:1 › all sixteen contracts mount terrain, panorama, and grounded render-only landmarks with matching water 
+    [mobile-chrome] › e2e/terrain3d-registry.spec.ts:272:1 › rim and horizon probes keep the terrain meeting gradual and every panorama readable 
+    [mobile-chrome] › e2e/terrain3d-registry.spec.ts:328:1 › terrain2d and the 3D default keep bounds, spawns, fog, masks, and simulation byte-identical per map 
+    [mobile-chrome] › e2e/terrain3d-registry.spec.ts:345:1 › all fifteen contracts stay painted in LITE and on invalid terrain bytes 
+  1 skipped
+  17 passed (12.5m)
