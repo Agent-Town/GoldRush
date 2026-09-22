@@ -1,0 +1,5 @@
+# River — rejected candidates and final evidence
+
+The initial imported run-7 capture config had an empty asset list; its incomplete capture was rejected and the full seven-GLB baseline route restored. The first geometric draft also used incorrect Blender/world z and mount-height offsets; it was rejected before acceptance. Corrected strips passed intersection checks but read as retaining walls in ordinary frames, so all strip geometry was removed. A later large pale gravel candidate was rejected visually; a dark larger candidate triggered independent rock-consistency concerns. The final candidate retains only smaller irregular pebbles with the existing atlas and original geometry.
+
+One performance attempt on the larger candidate was intentionally terminated and is not counted. All 16 final performance runs completed on the smaller final geometry. Final plain/station after frames replaced rejected images; baseline rows are preserved from the corrected seven-GLB frozen baseline. Failed/partial raw attempts and duplicate reexports stay disk-local under `_raw/run-8` or `/tmp`.

@@ -2232,6 +2232,25 @@ diffuseColor.rgb = mix(diffuseColor.rgb, riverPigment, 0.72);`);
   });
 }
 
+/** The original stones and new gravel share a cool damp lower edge. */
+function paintRiverStones(model: THREE.Object3D): void {
+  if (isMapBeautyDisabled()) return;
+  model.traverse(node => {
+    const mesh = node as THREE.Mesh<THREE.BufferGeometry, THREE.MeshStandardMaterial>;
+    if (!mesh.isMesh || Array.isArray(mesh.material) || !mesh.material.isMeshStandardMaterial) return;
+    const material = mesh.material, compile = material.onBeforeCompile.bind(material), key = material.customProgramCacheKey();
+    material.onBeforeCompile = (shader, renderer) => {
+      compile(shader, renderer);
+      shader.vertexShader = shader.vertexShader.replace('#include <common>', '#include <common>\nvarying vec3 vRiverStone;').replace('#include <begin_vertex>', '#include <begin_vertex>\nvRiverStone = (modelMatrix * vec4(position, 1.0)).xyz;');
+      shader.fragmentShader = shader.fragmentShader.replace('#include <common>', '#include <common>\nvarying vec3 vRiverStone;')
+        .replace('#include <map_fragment>', '#include <map_fragment>\ndiffuseColor.rgb *= mix(0.75, 1.0, smoothstep(5.6, 8.3, abs(vRiverStone.z)));')
+        .replace('#include <roughnessmap_fragment>', '#include <roughnessmap_fragment>\nroughnessFactor = mix(0.44, roughnessFactor, smoothstep(5.6, 8.3, abs(vRiverStone.z)));');
+    };
+    material.customProgramCacheKey = () => `${key}|river-wet-stone-v1`;
+    material.needsUpdate = true;
+  });
+}
+
 /** A material-only dawn treatment for the raw River's existing painted fallback. */
 function paintRiverReturn(host: Host): () => void {
   if (host.contractId !== 'e10-river' || isMapBeautyDisabled()) return () => undefined;
@@ -2249,10 +2268,12 @@ function paintRiverReturn(host: Host): () => void {
     material.onBeforeCompile = (shader, renderer) => {
       compile.call(material, shader, renderer);
       if (water) {
-        shader.fragmentShader = shader.fragmentShader.replace('vec4 sampledDiffuseColor = vec4(waterColor, alpha);', `
-vec3 returnWater = mix(vec3(0.33, 0.39, 0.38), vec3(0.10, 0.19, 0.23), depth);
+        shader.fragmentShader = shader.fragmentShader.replace('bankFoam * 0.58', 'bankFoam * 0.16').replace('vec4 sampledDiffuseColor = vec4(waterColor, alpha);', `
+vec3 returnWater = mix(vec3(0.26, 0.40, 0.40), vec3(0.16, 0.29, 0.34), depth);
 returnWater = mix(returnWater, vec3(0.48, 0.46, 0.35), fordBand * 0.55);
-waterColor = mix(waterColor, returnWater, 0.65);
+waterColor = mix(waterColor, returnWater, 0.86);
+// Break only the visual outer fade inward; declared widths and depth uniforms stay exact.
+alpha *= smoothstep(0.0, 0.65, visualEdgeDist - waterNoise(vWaterWorld * vec2(0.24, 0.8)) * 0.25);
 float returnFlowLine = sin(vWaterWorld.y * 7.0 + waterNoise(vWaterWorld * vec2(1.2, 1.8) - vec2(waterTime * 0.32, 0.0)) * 4.8);
 float returnFlowBreak = smoothstep(0.50, 0.78, waterNoise(vWaterWorld * vec2(3.4, 2.3) - vec2(waterTime * 0.4, 0.0)));
 waterColor += vec3(0.12, 0.11, 0.075) * smoothstep(0.94, 0.995, returnFlowLine) * returnFlowBreak * waterQuality * (1.0 - fordBand) * smoothstep(0.05, 0.20, depth);
@@ -2264,7 +2285,7 @@ vec4 sampledDiffuseColor = vec4(waterColor, alpha);`);
           .replace('diffuseColor *= sampledDiffuseColor;', 'diffuseColor *= sampledDiffuseColor;\ndiffuseColor.rgb = mix(diffuseColor.rgb, returnBankPigment, 0.25);');
       }
     };
-    material.customProgramCacheKey = () => `${cacheKey}|raw-river-dawn-v1:${water ? 'water' : 'bank'}`;
+    material.customProgramCacheKey = () => `${cacheKey}|raw-river-dawn-v2:${water ? 'water' : 'bank'}`;
     material.needsUpdate = true;
     return () => { material.onBeforeCompile = compile; material.customProgramCacheKey = key; material.needsUpdate = true; };
   });
@@ -3290,6 +3311,7 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
             installBannerSway(model, BARON_SWAY_AMPLITUDE[mount.id]!);
           }
           dressLandmark(model, host.contractId, mount.id);
+          if (host.contractId === 'e10-river') paintRiverStones(model);
           if (host.archiveRestoration) installArchiveRestoration(model, host.archiveRestoration);
           if (host.contractId === 'e10-archive-world') lightArchiveFacade(model, host.archiveRestoration);
           return model;

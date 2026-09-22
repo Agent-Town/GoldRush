@@ -1,0 +1,25 @@
+[
+  {
+    "label": "own",
+    "command": [
+      "npx",
+      "playwright",
+      "test",
+      "--workers=1",
+      "--project=desktop-chrome",
+      "--project=mobile-chrome",
+      "--trace=off",
+      "--reporter=line",
+      "--output=artifacts/sol/map-art-campaign-2/_raw/run-8/e10-river-own",
+      "e2e/e10-river-boot-guard.spec.ts",
+      "e2e/e10-finale-staging.spec.ts",
+      "e2e/e10-static-boss.spec.ts",
+      "e2e/er01-e10-census.spec.ts",
+      "e2e/preview-unlock-all.spec.ts"
+    ],
+    "environment": {},
+    "exit": 1,
+    "seconds": 80.75,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-8/e10-river-own.log"
+  }
+]
