@@ -3586,7 +3586,61 @@ export class HeadlessContractSim {
       ...event,
     } as EconomyEvent;
   }
+
+  // ─────────────────────────────────────────────────────────────────────────────
+  // THE MECHANIC TABLE (F-HEAT15-4, owner ruling 2026-09-22, verbatim: "F-HEAT15-4: yes" — option
+  // (a) of the finding, "a reel that finished the race supersedes one that did not — the mechanic
+  // beats the walk").
+  //
+  // WHAT IT IS FOR. Heat 15 re-won `e5-regatta` three times by SAILING the Claim-Boat, two of
+  // those reels were assayed and VERIFIED, and the public board did not move: ride 2 tied the
+  // standing heat-14 row on waves, gold and time, so `compareScores` fell through to `submittedAt`
+  // and the county kept showing the Regatta won by walking the hero through the water. The scored
+  // axes cannot tell a sailed claim from a walked one. This table is where the map says which
+  // mechanic decides its board, so the door can.
+  //
+  // ONE ROW PER MAP WHOSE SIGNATURE MECHANIC DECIDES ITS BOARD, and the next map is one line: a
+  // contract id, the mechanic's id, and a predicate over this sim's own diagnostics.
+  //
+  // DETERMINISTIC BY CONSTRUCTION. Nothing here steps, decides or stores anything; it is READ ONCE
+  // at the end of a replay off state the determinism hash already certifies — no clock, no
+  // randomness, no second source. `e5-regatta`'s predicate is exactly the clause the secure itself
+  // is gated on (`autoSecureWaveForRun`: `raceCourse && race.finished !== true`), so the flag and
+  // the secure can never disagree about the same reel.
+  //
+  // THE DOOR MIRRORS THE KEYS, NOT THE TABLE. `functions/api/standings.ts` is a Cloudflare worker
+  // and cannot import this engine, so it carries `MECHANIC_CONTRACTS` as a hand-written Set;
+  // `scripts/skillmd-guard.test.mjs` pins the two lists equal, so a map added here and forgotten
+  // at the door reds the battery instead of ranking silently.
+  //
+  // WHY IT SITS AT THE TAIL OF THE CLASS rather than beside `regattaDiagnostics()`, which is where
+  // it reads: this file is cited BY LINE from twenty-three places in code and a thousand in the
+  // ledgers, and every one of those coordinates points above `:2087`. Appending here moves none of
+  // them — the same reason the contract-purse and beacon-ladder calls ride one line at the
+  // `RunManager` construction above.
+  // ─────────────────────────────────────────────────────────────────────────────
+  private static readonly MECHANIC_OUTCOMES: ReadonlyMap<string, { id: string; complete: (sim: HeadlessContractSim) => boolean }> = new Map([
+    ['e5-regatta', { id: 'regatta-race', complete: (sim: HeadlessContractSim) => sim.regattaDiagnostics()?.race.finished === true }],
+  ]);
+
+  /** The contract ids this engine declares a board-deciding mechanic for; the door mirrors these. */
+  static mechanicContractIds(): string[] {
+    return [...HeadlessContractSim.MECHANIC_OUTCOMES.keys()];
+  }
+
+  /**
+   * THE SIGNATURE MECHANIC THIS RUN EITHER FINISHED OR DID NOT — `null` on every contract that
+   * declares none, which is every map but the Regatta today. Read at the end of a replay by
+   * `AgentTapeReplaySession.result()`; carried to the county by the assayer's `verified` verdict.
+   */
+  mechanicOutcome(): MechanicOutcome | null {
+    const declared = HeadlessContractSim.MECHANIC_OUTCOMES.get(this.manifest.id);
+    return declared === undefined ? null : { id: declared.id, complete: declared.complete(this) };
+  }
 }
+
+/** A map's signature mechanic, and whether this run finished it. See `MECHANIC_OUTCOMES` above. */
+export type MechanicOutcome = { id: string; complete: boolean };
 
 function contractPowerDefinition(contractId: string, grid: ContractPowerGrid): PowerGraphDefinition {
   return {

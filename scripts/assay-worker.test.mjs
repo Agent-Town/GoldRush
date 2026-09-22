@@ -36,11 +36,17 @@ async function fixture() {
       await writeFile(${JSON.stringify(attempts)}, String(attempt));
       if (attempt <= 3) throw new Error('stub instrument unavailable');
     }
-    const eventLogHash = tape.id === 'hash-mismatch' ? 'fnv1a32:deadbeef' : tape.id === 'invalid-hash' ? 'not-a-hash' : tape.id.startsWith('matching-round2') ? tape.eventLogHash : 'fnv1a32:1234abcd';
+    const eventLogHash = tape.id === 'hash-mismatch' || tape.id === 'mechanic-rejected' ? 'fnv1a32:deadbeef' : tape.id === 'invalid-hash' ? 'not-a-hash' : tape.id.startsWith('matching-round2') ? tape.eventLogHash : 'fnv1a32:1234abcd';
     const outcome = tape.id === 'unsecured-mismatch'
       ? { secured: false, waves: 9, timeAlive: 120, gold: 40 }
       : tape.id.startsWith('matching-round2') ? tape.outcome : { secured: true, waves: tape.id === 'outcome-mismatch' ? 9 : 10, timeAlive: 120, gold: 40 };
-    process.stdout.write(JSON.stringify({ eventLogHash, outcome, ...(tape.id === 'unsecured-mismatch' ? {} : { securedSnapshot: { waves: 10, timeAlive: 100, gold: 30 } }) }) + '\\n');
+    // F-HEAT15-4: the instrument reports a mechanic only where the contract declares one, so most
+    // ids below emit none at all — the ordinary case, and never an error.
+    const mechanic = tape.id === 'mechanic-complete' || tape.id === 'mechanic-rejected' ? { id: 'regatta-race', complete: true }
+      : tape.id === 'mechanic-unfinished' ? { id: 'regatta-race', complete: false }
+      : tape.id === 'bad-mechanic' ? { id: '', complete: 'yes' }
+      : undefined;
+    process.stdout.write(JSON.stringify({ eventLogHash, outcome, ...(tape.id === 'unsecured-mismatch' ? {} : { securedSnapshot: { waves: 10, timeAlive: 100, gold: 30 } }), ...(mechanic ? { mechanic } : {}) }) + '\\n');
   `);
   return { directory, stub };
 }
@@ -114,6 +120,46 @@ test('once keeps completed mismatches rejected and retries instrument failures b
     const verdicts = logs.filter(({ verdict }) => verdict);
     assert.equal(verdicts.length, 7);
     assert.ok(verdicts.every((entry) => entry.locator && entry.hashes && Number.isInteger(entry.wallMs)));
+  } finally {
+    await api.close();
+    await rm(directory, { recursive: true, force: true });
+  }
+});
+
+/**
+ * THE MECHANIC RIDES THE VERDICT (F-HEAT15-4, owner ruling 2026-09-22 (a)). The worker is the only
+ * road between the replay that KNOWS whether the race was finished and the county that RANKS on it,
+ * and it carries the answer under exactly one condition: a verification. A rejection is not a
+ * measurement of the mechanic, and a contract that declares none posts none.
+ */
+test('a verified payload carries the replay\'s mechanic, and nothing else does', async () => {
+  const { directory, stub } = await fixture();
+  const api = await mockApi([row('mechanic-complete'), row('mechanic-unfinished'), row('mechanic-rejected'), row('verified')]);
+  try {
+    const { code, stderr } = await runWorker(api.base, stub).done;
+    assert.equal(code, 0, stderr);
+    assert.deepEqual(api.posts.map(({ verdict }) => verdict), ['verified', 'verified', 'rejected', 'verified']);
+    assert.deepEqual(api.posts[0].mechanic, { id: 'regatta-race', complete: true });
+    assert.deepEqual(api.posts[1].mechanic, { id: 'regatta-race', complete: false }, 'an unfinished race is reported, not omitted');
+    assert.equal(api.posts[2].mechanic, undefined, 'a rejected verdict never carries the mechanic');
+    assert.equal(api.posts[3].mechanic, undefined, 'a contract that declares no mechanic posts none');
+  } finally {
+    await api.close();
+    await rm(directory, { recursive: true, force: true });
+  }
+});
+
+test('a malformed mechanic is an instrument failure, retried and then unassayable, never posted', async () => {
+  const { directory, stub } = await fixture();
+  const api = await mockApi([row('bad-mechanic')]);
+  try {
+    const { code, stdout, stderr } = await runWorker(api.base, stub).done;
+    assert.equal(code, 0, stderr);
+    assert.deepEqual(api.posts.map(({ verdict }) => verdict), ['unassayable']);
+    assert.match(api.posts[0].reason, /malformed mechanic/);
+    assert.equal(api.posts[0].mechanic, undefined, 'a shape the county would refuse is never put on the wire');
+    assert.deepEqual(stdout.trim().split('\n').map(JSON.parse).filter(({ event }) => event === 'instrument_retry')
+      .map(({ attempt }) => attempt), [1, 2], 'it is retried like any other instrument failure');
   } finally {
     await api.close();
     await rm(directory, { recursive: true, force: true });

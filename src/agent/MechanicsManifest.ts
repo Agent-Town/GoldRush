@@ -631,6 +631,9 @@ export function deriveMechanicsManifest(source: string | ContractManifest): Mech
         turnRateRadPerSec: boatPhysics?.turnRateRadPerSec ?? 0,
         drag: boatPhysics?.drag ?? 0,
         fastWaterMultiplier: boatPhysics?.fastWaterMultiplier ?? 0,
+        // F-HEAT15-4, owner ruling 2026-09-22 (a): published because a rider that cannot read this
+        // has no way to know that sailing the course is worth more than tying on the scored axes.
+        boardRanking: 'the county ranks a finished race above any unfinished row on this board',
         view: 'now.regatta.boat',
       }));
     }

@@ -165,6 +165,9 @@ test('a securing door tape carries its start, its boundary answer, and replays t
       gold: tape.outcome.gold,
       timeAlive: tape.outcome.timeAlive,
     });
+    // F-HEAT15-4: `the-claim` declares no signature mechanic, so the instrument reports none and
+    // the county is never handed a flag to rank on. The absence is the contract, not an omission.
+    assert.equal(replay.mechanic, undefined, 'a contract with no declared mechanic reports none');
 
     // ...and only the recorded stream reproduces it. Drop the boundary answer and the run still
     // secures on its own default clock, but the accepted order stream is a different stream and
@@ -213,6 +216,67 @@ test('an overtime replay returns the immutable secure-event snapshot and the lat
     assert.ok(replay.outcome.timeAlive > replay.securedSnapshot.timeAlive);
   } finally {
     rmSync(directory, { recursive: true, force: true });
+  }
+});
+
+/**
+ * THE MECHANIC THE MAP IS ABOUT (F-HEAT15-4, owner ruling 2026-09-22, verbatim "F-HEAT15-4: yes" on
+ * option (a): "a reel that finished the race supersedes one that did not — the mechanic beats the
+ * walk").
+ *
+ * THE FIXTURE IS THE FINDING'S OWN REEL, not a manufactured one: heat 15 ride 2
+ * (`reviews/heat-15-regatta.md`), the reel the county VERIFIED as `fnv1a32:b92da1bf` and then
+ * declined to promote because it tied the standing heat-14 row on waves, gold and time. It is the
+ * exact tape whose finish the board could not see, so this test measures the cure at the place the
+ * defect was measured.
+ *
+ * It replays through `assay-replay.mjs` — the seam the worker spawns — rather than through the
+ * library, so the mechanic is proved to survive the process boundary the verdict actually crosses.
+ */
+test('the Regatta reel that finished the race replays with its mechanic complete', { timeout: 240_000 }, () => {
+  const submission = JSON.parse(readFileSync('artifacts/gauntlet-heat15-cd24d12d/rides/r2/submission.json', 'utf8'));
+  assert.equal(submission.tape.contract, 'e5-regatta');
+  const directory = mkdtempSync(join(tmpdir(), 'gold-rush-assay-regatta-'));
+  try {
+    const tapePath = join(directory, 'heat15-r2.json');
+    writeFileSync(tapePath, JSON.stringify(submission.tape));
+    const replay = seam(tapePath);
+    assert.equal(replay.eventLogHash, submission.tape.eventLogHash, 'the banked reel still replays to its own hash');
+    assert.equal(replay.outcome.secured, true);
+    assert.deepEqual(replay.mechanic, { id: 'regatta-race', complete: true });
+  } finally {
+    rmSync(directory, { recursive: true, force: true });
+  }
+});
+
+/**
+ * THE OTHER TWO ANSWERS THE TABLE CAN GIVE, at the source (F-HEAT15-4). No banked reel can supply
+ * the `complete: false` arm and that is structural rather than an oversight: the Regatta's secure
+ * is gated on `race.finished` (`HeadlessContractSim.autoSecureWaveForRun`), only a secured run is
+ * submittable, so every Regatta reel on disk finished its race. The unfinished state is therefore
+ * read where it exists — a booted sim before anyone boards — and the `null` arm beside it.
+ */
+test('the mechanic table answers false before the race is finished and null where no mechanic is declared', async () => {
+  const oldWindow = globalThis.window;
+  const oldLocation = globalThis.location;
+  globalThis.location = new URL('http://mechanic.test/?debug&contract=e5-regatta');
+  globalThis.window = { location: globalThis.location };
+  const vite = await createServer({ root: process.cwd(), appType: 'custom', logLevel: 'silent', server: { middlewareMode: true, watch: null } });
+  // The sim prints its quality verdict on boot; `assay-replay-agent.mjs` silences the same noise
+  // for the same reason — a battery's output should carry assertions, not a render profile.
+  const quiet = { log: console.log, info: console.info, debug: console.debug };
+  console.log = console.info = console.debug = () => undefined;
+  try {
+    const { HeadlessContractSim } = await vite.ssrLoadModule('/src/sim/HeadlessContractSim.ts');
+    const racing = new HeadlessContractSim({ contractId: 'e5-regatta', seed: 'mechanic-table-check' });
+    assert.deepEqual(racing.mechanicOutcome(), { id: 'regatta-race', complete: false });
+    assert.deepEqual(new HeadlessContractSim({ contractId: 'the-claim', seed: 'mechanic-table-check' }).mechanicOutcome(), null);
+    assert.deepEqual(HeadlessContractSim.mechanicContractIds(), ['e5-regatta']);
+  } finally {
+    Object.assign(console, quiet);
+    await vite.close();
+    globalThis.window = oldWindow;
+    globalThis.location = oldLocation;
   }
 });
 

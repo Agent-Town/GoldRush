@@ -83,6 +83,19 @@ function validSecuredSnapshot(value) {
     && Number.isFinite(value.timeAlive) && value.timeAlive >= 0;
 }
 
+// THE MECHANIC THE MAP IS ABOUT (F-HEAT15-4, owner ruling 2026-09-22 (a)). The instrument reports
+// it only for a contract that declares one, so ABSENT is the ordinary case and never an error; a
+// PRESENT-but-malformed one is an instrument defect and is treated exactly as a malformed
+// `securedSnapshot` is — thrown inside the attempt loop, retried, and finally `unassayable` rather
+// than posted. The worker never invents the field and never forwards it on a verdict the county
+// would refuse it on; the door is still the authority and validates it again.
+function validMechanic(value) {
+  return Boolean(value) && typeof value === 'object'
+    && typeof value.id === 'string' && value.id.length > 0 && value.id.length <= 64
+    && typeof value.complete === 'boolean'
+    && Object.keys(value).length === 2;
+}
+
 async function assay(row) {
   const startedAt = performance.now();
   const claimedHash = typeof row?.tape?.eventLogHash === 'string' ? row.tape.eventLogHash : null;
@@ -118,6 +131,7 @@ async function assay(row) {
       }
       if (attemptResult.eventLogHash === claimedHash && !outcomeMismatch(row.score, attemptResult.outcome)
         && !validSecuredSnapshot(attemptResult.securedSnapshot)) throw new Error('instrument returned no valid securedSnapshot');
+      if (attemptResult.mechanic !== undefined && !validMechanic(attemptResult.mechanic)) throw new Error('instrument returned a malformed mechanic');
       result = attemptResult;
       reason = undefined;
       break;
@@ -148,7 +162,9 @@ async function assay(row) {
   // box's absolute paths through `error.message`; those say nothing to a rider and something to a
   // stranger, so they are named by basename on the wire and left whole in the log.
   const payload = { locator: row?.locator, verdict, ...(replayedHash ? { replayedHash } : {}),
-    ...(verdict === 'verified' ? { securedSnapshot: result.securedSnapshot } : {}), ...(reason ? { reason: publicReason(reason) } : {}) };
+    ...(verdict === 'verified' ? { securedSnapshot: result.securedSnapshot } : {}),
+    ...(verdict === 'verified' && result.mechanic !== undefined ? { mechanic: result.mechanic } : {}),
+    ...(reason ? { reason: publicReason(reason) } : {}) };
   let recorded;
   if (!dryRun) {
     const response = await requestJson(verdictUrl, {

@@ -40,6 +40,12 @@ type ScoreRow = {
 
 type SecuredSnapshot = Pick<ScoreRow, 'waves' | 'timeAlive' | 'gold'>;
 
+// THE MECHANIC A MAP IS ABOUT (F-HEAT15-4, owner ruling 2026-09-22, verbatim: "F-HEAT15-4: yes" —
+// option (a), "a reel that finished the race supersedes one that did not — the mechanic beats the
+// walk"). NOT A SCORE: it is never in `SCORE_KEYS`, so a rider cannot declare it; the county only
+// ever learns it from an assay verdict, which is a replay of the rider's own reel.
+type MechanicOutcome = { id: string; complete: boolean };
+
 type SeedMode = 'live' | 'bench';
 
 type Rotation = {
@@ -108,6 +114,10 @@ type StoredRow = ScoreRow & {
   assayReason?: string;
   orders?: number;
   securedSnapshot?: SecuredSnapshot;
+  // Written ONLY by the assay verdict, ONLY on `verified`, and ONLY for a MECHANIC_CONTRACTS
+  // contract; cleared by every other verdict and by the re-assay verb, so it is always a fact
+  // about the row's CURRENT verification rather than a mark it keeps after one (F-HEAT15-4).
+  mechanic?: MechanicOutcome;
   rotationId?: string;
   lineage?: LineageMark;
 };
@@ -147,6 +157,12 @@ const CONTRACT_EPOCHS = new Map(
 const PRESERVE_CONTRACTS = new Set(CONTRACT_BUNDLES.flatMap((bundle) => bundle.contracts
   .filter((contract) => 'preserve' in contract.twist)
   .map((contract) => contract.id)));
+// THE MECHANIC BOARDS (F-HEAT15-4). Hand-mirrored from `HeadlessContractSim.MECHANIC_OUTCOMES` —
+// the door is a Cloudflare worker and cannot import the engine, so the two lists are pinned equal
+// by `scripts/skillmd-guard.test.mjs` instead. `PRESERVE_CONTRACTS` above derives itself from the
+// bundles because `twist.preserve` is declared there; a signature mechanic is not a twist field,
+// it is a predicate over the sim's diagnostics, so it cannot be derived the same way.
+const MECHANIC_CONTRACTS: ReadonlySet<string> = new Set(['e5-regatta']);
 const ALLOWED_ORIGINS = new Set(['https://gold-rush-3in.pages.dev', 'https://agenttown.app', 'https://www.agenttown.app']);
 // THE OUTER WALL, and it is derived rather than authored: the widest per-contract reel plus 44 KiB
 // of request metadata. It is NOT the refusal a rider meets first. Side by side after F-HEAT12-2's
@@ -201,8 +217,10 @@ const MAX_ASSAY_QUEUE = 100;
 const MAX_ASSAY_REASON_LENGTH = 256;
 const ASSAY_HASH = /^fnv1a32:[a-f0-9]{8}$/;
 const ASSAY_ROW_ID = /^[a-f0-9]{32}:[1-4]:\d{1,16}:[a-f0-9]{64}$/;
-const ASSAY_VERDICT_KEYS = new Set(['locator', 'verdict', 'replayedHash', 'reason', 'securedSnapshot']);
+const ASSAY_VERDICT_KEYS = new Set(['locator', 'verdict', 'replayedHash', 'reason', 'securedSnapshot', 'mechanic']);
 const SECURED_SNAPSHOT_KEYS = new Set(['waves', 'timeAlive', 'gold']);
+const MECHANIC_KEYS = new Set(['id', 'complete']);
+const MAX_MECHANIC_ID_LENGTH = 64;
 const ASSAY_LOCATOR_KEYS = new Set(['epochId', 'contractId', 'tapeId', 'rowId']);
 const REASSAY_KEYS = new Set(['epochId', 'contractId', 'reason', 'includeRetired', 'storedUnassayed']);
 const LINEAGE_KEYS = new Set(['reason', 'requeuedAt']);
@@ -311,10 +329,15 @@ export async function onRequestAssayVerdict(context: StandingsContext): Promise<
     const reason = body.reason === undefined ? undefined : typeof body.reason === 'string' && body.reason.length <= MAX_ASSAY_REASON_LENGTH ? body.reason : null;
     const replayedHash = typeof body.replayedHash === 'string' && ASSAY_HASH.test(body.replayedHash) ? body.replayedHash : null;
     const securedSnapshot = body.securedSnapshot === undefined ? undefined : validateSecuredSnapshot(body.securedSnapshot);
+    // F-HEAT15-4: optional even on `verified` — most contracts declare no mechanic and the
+    // instrument reports none — but a PRESENT one must be well formed, and it may never ride a
+    // verdict that is not a verification.
+    const mechanic = body.mechanic === undefined ? undefined : validateMechanicOutcome(body.mechanic);
     if (!hasOnlyKeys(body, ASSAY_VERDICT_KEYS) || !locator || !hasOnlyKeys(locator, ASSAY_LOCATOR_KEYS)
       || (body.verdict !== 'verified' && body.verdict !== 'rejected' && body.verdict !== 'unassayable')
       || (body.verdict === 'unassayable' ? body.replayedHash !== undefined : replayedHash === null)
       || (body.verdict === 'verified' ? securedSnapshot === null || securedSnapshot === undefined : body.securedSnapshot !== undefined)
+      || (body.verdict === 'verified' ? mechanic === null : body.mechanic !== undefined)
       || reason === null || typeof locator.epochId !== 'string' || typeof locator.contractId !== 'string'
       || typeof locator.tapeId !== 'string' || locator.tapeId.length === 0 || locator.tapeId.length > MAX_REEL_ID_LENGTH
       || typeof locator.rowId !== 'string' || !ASSAY_ROW_ID.test(locator.rowId)
@@ -361,6 +384,14 @@ export async function onRequestAssayVerdict(context: StandingsContext): Promise<
       Object.assign(row, securedSnapshot);
       row.securedSnapshot = securedSnapshot;
     }
+    // THE MECHANIC BEATS THE WALK (F-HEAT15-4, owner ruling 2026-09-22 (a)). Cleared first and set
+    // only on a surviving `verified` for a contract whose board the mechanic decides, so: a
+    // rejection (including a gold mismatch demoted above) takes the flag with it, a re-verification
+    // re-earns it, and a contract nobody declared a mechanic for can never carry one however the
+    // instrument is patched. The rider's own POST cannot reach here — `SCORE_KEYS` is unchanged and
+    // this endpoint is the assayer's secret path.
+    delete row.mechanic;
+    if (!mismatch && body.verdict === 'verified' && mechanic && MECHANIC_CONTRACTS.has(locator.contractId)) row.mechanic = mechanic;
     row.assayedAt = Date.now();
     row.orders = inputEntryCount(row) ?? 0;
     delete row.assayHash;
@@ -476,6 +507,10 @@ export async function onRequestStandingsReassay(context: StandingsContext): Prom
         if (waves !== null && timeAlive !== null && gold !== null) Object.assign(row, { waves, timeAlive, gold });
       }
       delete row.securedSnapshot;
+      // F-HEAT15-4: the mechanic flag is a fact about the row's CURRENT verification, so it goes
+      // back with the snapshot. The row is `pending` again and the replay re-earns both, which is
+      // also what lets a standing recorded before this rule landed GAIN the flag on a sweep.
+      delete row.mechanic;
       row.assay = 'pending';
       row.lineage = { reason, requeuedAt };
       delete row.assayReason;
@@ -709,6 +744,10 @@ function boardRow(row: StoredRow, index: number, heldOut?: JsonRecord | null): J
     baseValue: row.baseValue,
     ...(row.preserveWavesAlive === undefined ? {} : { preserveWavesAlive: row.preserveWavesAlive }),
     ...(row.preserveHpFraction === undefined ? {} : { preserveHpFraction: row.preserveHpFraction }),
+    // F-HEAT15-4: the mechanic the board was decided on, published where a rider can read why a
+    // row outranks one with more waves. Absent on every contract that declares none, and on a row
+    // the county has not verified under the rule.
+    ...(row.mechanic === undefined ? {} : { mechanic: row.mechanic }),
     assay: row.assay,
     difficulty: row.difficulty,
     ...(Number.isFinite(row.submittedAt) && row.submittedAt >= 0 ? { submittedAt: row.submittedAt } : {}),
@@ -1109,6 +1148,13 @@ function validateStoredRow(value: unknown, contractId: string): StoredRow | null
   const assayReason = typeof value.assayReason === 'string' && value.assayReason.length <= MAX_ASSAY_REASON_LENGTH ? value.assayReason : undefined;
   const orders = value.orders === undefined ? undefined : integerInRange(value.orders, 0, Number.MAX_SAFE_INTEGER);
   const securedSnapshot = value.securedSnapshot === undefined ? undefined : validateSecuredSnapshot(value.securedSnapshot);
+  // F-HEAT15-4. A MALFORMED mechanic refuses the row, exactly as a malformed `securedSnapshot`
+  // does — it can only come from a corrupted blob. A WELL-FORMED one in a place the verdict path
+  // could never have written it (a row that is not `verified`, or a contract with no declared
+  // mechanic) is STRIPPED and the row kept: publishing a flag the county did not earn is the harm,
+  // and destroying an honest standing to prevent it is a retention-law violation (F-HEAT14-6).
+  const mechanic = value.mechanic === undefined ? undefined : validateMechanicOutcome(value.mechanic);
+  const lawfulMechanic = mechanic && assay === 'verified' && MECHANIC_CONTRACTS.has(contractId) ? mechanic : undefined;
   const rotationId = value.rotationId === undefined ? undefined : typeof value.rotationId === 'string' ? value.rotationId : null;
   const lineage = value.lineage === undefined ? undefined : validateLineage(value.lineage);
   // A re-queued row's score is the `securedSnapshot` the county measured at its verification, which
@@ -1116,7 +1162,7 @@ function validateStoredRow(value: unknown, contractId: string): StoredRow | null
   // this clause the `pending` arm of the tape/score check would DELETE every goal-snapshot standing
   // the reassay verb touched — the row would simply stop validating on the next read.
   const snapshotBacked = securedSnapshot !== undefined && securedSnapshot !== null && sameSecuredSnapshot(score, securedSnapshot);
-  if (submittedAt === null || tape === null || securedSnapshot === null || lineage === null
+  if (submittedAt === null || tape === null || securedSnapshot === null || lineage === null || mechanic === null
     || (tape && assay !== 'verified' && !(lineage && snapshotBacked) && !tapeMatchesScore(tape, score))
     || (assay === 'verified' && securedSnapshot && !sameSecuredSnapshot(score, securedSnapshot))) return null;
   if ((!tape && (value.assay !== undefined || value.assayedAt !== undefined || value.assayHash !== undefined || value.assayReason !== undefined))
@@ -1150,6 +1196,7 @@ function validateStoredRow(value: unknown, contractId: string): StoredRow | null
     ...(assayReason === undefined ? {} : { assayReason }),
     ...(typeof orders === 'number' ? { orders } : {}),
     ...(securedSnapshot ? { securedSnapshot } : {}),
+    ...(lawfulMechanic ? { mechanic: lawfulMechanic } : {}),
     ...(rotationId ? { rotationId } : {}),
     ...(lineage ? { lineage } : {}),
   };
@@ -1349,6 +1396,19 @@ function validateSecuredSnapshot(value: unknown): SecuredSnapshot | null {
   return waves === null || timeAlive === null || gold === null ? null : { waves, timeAlive, gold };
 }
 
+/**
+ * F-HEAT15-4. Refused the way a malformed `securedSnapshot` is: `null` means "present and not a
+ * mechanic outcome", which the caller turns into HTTP 400 `bad_verdict`. The shape is deliberately
+ * the narrowest thing that can carry the ruling — an id so a later map's mechanic is legible in the
+ * row, and one boolean the replay decided.
+ */
+function validateMechanicOutcome(value: unknown): MechanicOutcome | null {
+  if (!isRecord(value) || !hasOnlyKeys(value, MECHANIC_KEYS)) return null;
+  const id = typeof value.id === 'string' && value.id.length > 0 && value.id.length <= MAX_MECHANIC_ID_LENGTH ? value.id : null;
+  if (id === null || typeof value.complete !== 'boolean') return null;
+  return { id, complete: value.complete };
+}
+
 function sameSecuredSnapshot(score: ScoreRow, snapshot: SecuredSnapshot): boolean {
   return score.waves === snapshot.waves && score.timeAlive === snapshot.timeAlive && score.gold === snapshot.gold;
 }
@@ -1380,7 +1440,21 @@ function securedSnapshotMismatch(score: ScoreRow, snapshot: SecuredSnapshot): As
   return sameTick && snapshot.gold !== score.gold ? 'score_mismatch' : null;
 }
 
-export function compareScores(a: ScoreRow & { submittedAt?: number }, b: ScoreRow & { submittedAt?: number }, contractId?: string): number {
+/**
+ * THE MECHANIC BEATS THE WALK (F-HEAT15-4, owner ruling 2026-09-22 (a), on the finding that heat
+ * 15 re-won `e5-regatta` three times by SAILING and the board still showed the row won by walking
+ * the hero through the water).
+ *
+ * A row "finished" only when the county's own replay said so: `mechanic.complete === true`.
+ * ABSENT and `false` are the same answer here, and that is the ruling rather than an oversight —
+ * a standing assayed before this landed carries no mechanic, and the owner chose (a) knowing it
+ * ranks below a reel that finished the race.
+ */
+function finishedMechanic(row: { mechanic?: MechanicOutcome }): boolean {
+  return row.mechanic?.complete === true;
+}
+
+export function compareScores(a: ScoreRow & { submittedAt?: number; mechanic?: MechanicOutcome }, b: ScoreRow & { submittedAt?: number; mechanic?: MechanicOutcome }, contractId?: string): number {
   if (a.secured !== b.secured) return a.secured ? -1 : 1;
   if (contractId && PRESERVE_CONTRACTS.has(contractId)) {
     if (a.preserveWavesAlive !== b.preserveWavesAlive) return (b.preserveWavesAlive ?? -1) - (a.preserveWavesAlive ?? -1);
@@ -1388,18 +1462,24 @@ export function compareScores(a: ScoreRow & { submittedAt?: number }, b: ScoreRo
     if (a.timeAlive !== b.timeAlive) return b.timeAlive - a.timeAlive;
     return (a.submittedAt ?? 0) - (b.submittedAt ?? 0);
   }
+  // Exactly one clause, between `secured` and `waves`, on exactly the contracts that declare a
+  // board-deciding mechanic. Every other contract takes the identical path it always took.
+  if (contractId && MECHANIC_CONTRACTS.has(contractId) && finishedMechanic(a) !== finishedMechanic(b)) return finishedMechanic(a) ? -1 : 1;
   if (a.waves !== b.waves) return b.waves - a.waves;
   if (a.gold !== b.gold) return b.gold - a.gold;
   if (a.timeAlive !== b.timeAlive) return a.secured ? a.timeAlive - b.timeAlive : b.timeAlive - a.timeAlive;
   return (a.submittedAt ?? 0) - (b.submittedAt ?? 0);
 }
 
-function decidingKey(a: ScoreRow & { submittedAt?: number }, b: ScoreRow & { submittedAt?: number }, contractId?: string): string {
+function decidingKey(a: ScoreRow & { submittedAt?: number; mechanic?: MechanicOutcome }, b: ScoreRow & { submittedAt?: number; mechanic?: MechanicOutcome }, contractId?: string): string {
   if (contractId && PRESERVE_CONTRACTS.has(contractId)) {
     if (a.preserveWavesAlive !== b.preserveWavesAlive || a.preserveHpFraction !== b.preserveHpFraction) return 'preservation';
     if (a.timeAlive !== b.timeAlive) return 'time';
     return 'submittedAt';
   }
+  // F-HEAT15-4. `src/ui/DeathOverlay.ts` already answers an unknown key with "The row above holds
+  // the next tiebreak", so the score screen stays honest without moving.
+  if (contractId && MECHANIC_CONTRACTS.has(contractId) && finishedMechanic(a) !== finishedMechanic(b)) return 'mechanic';
   if (a.waves !== b.waves) return 'waves';
   if (a.gold !== b.gold) return 'gold';
   if (a.timeAlive !== b.timeAlive) return 'time';
