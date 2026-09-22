@@ -12,7 +12,10 @@ for (const [contract, parent, solidIds] of [
   ['e6-picnic', 'glow-mesa', ['mesa-civilian-shade']],
   ['e7-dead-band', 'relay-valley', ['dead-band-yard-null-post', 'west-old-tool-cache', 'east-old-tool-cache']],
   ['e7-relay-rush', 'relay-valley', ['rush-start-horn']],
-  ['e8-far-side', 'mare-claim', ['probe-recovery-cradle', 'west-comms-shadow-marker', 'east-suit-cache-rack', 'far-horizon-listening-post']],
+  // F-FC2-5 (attended drain 2026-09-22): the probe-recovery-cradle is NOT among the Far Side's solids — its footprint at (0,45)
+  // sits on the probe recovery point and left the A6 latch unclosable (scripts/e8-remaining-maps.test.mjs:512); it returned to
+  // unselected in the store and was removed from the registry until the contract/collision owner reconciles the point.
+  ['e8-far-side', 'mare-claim', ['west-comms-shadow-marker', 'east-suit-cache-rack', 'far-horizon-listening-post']],
 ]) {
   test(`${contract} retains the parent blockers and appends its own registered solids`, () => {
     const ownMap = contract.replace(/^e\d+-/, '');
