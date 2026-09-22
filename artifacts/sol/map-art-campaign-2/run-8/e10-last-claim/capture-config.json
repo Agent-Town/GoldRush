@@ -1,0 +1,109 @@
+{
+  "allowFallbackBefore": false,
+  "extraSources": [],
+  "epoch": "epoch-10-deepsky",
+  "assets": [
+    {
+      "name": "last-claim-terrain.glb",
+      "type": "model/gltf-binary"
+    },
+    {
+      "name": "last-claim-panorama.glb",
+      "type": "model/gltf-binary"
+    },
+    {
+      "name": "preserve-last-lantern.glb",
+      "type": "model/gltf-binary"
+    },
+    {
+      "name": "preserve-pan-theme-song.glb",
+      "type": "model/gltf-binary"
+    },
+    {
+      "name": "preserve-last-portrait.glb",
+      "type": "model/gltf-binary"
+    },
+    {
+      "name": "central-orrery.glb",
+      "type": "model/gltf-binary"
+    },
+    {
+      "name": "stern-memory-arch.glb",
+      "type": "model/gltf-binary"
+    }
+  ],
+  "stations": [
+    [
+      "preserve-last-lantern",
+      "entry",
+      -10,
+      50
+    ],
+    [
+      "preserve-last-lantern",
+      5,
+      -10,
+      52
+    ],
+    [
+      "preserve-pan-theme-song",
+      5,
+      0,
+      52
+    ],
+    [
+      "preserve-last-portrait",
+      5,
+      10,
+      52
+    ],
+    [
+      "central-orrery",
+      5,
+      0,
+      5
+    ],
+    [
+      "stern-memory-arch",
+      5,
+      0,
+      -46
+    ]
+  ],
+  "regions": [
+    [
+      1280,
+      [
+        300,
+        480,
+        450,
+        600
+      ]
+    ],
+    [
+      390,
+      [
+        275,
+        450,
+        365,
+        510
+      ]
+    ]
+  ],
+  "viewpoints": [
+    [
+      "center",
+      0,
+      5
+    ],
+    [
+      "rim",
+      58,
+      58
+    ]
+  ],
+  "contracts": [
+    "last-claim-terrain-contract.json",
+    "last-claim-panorama-contract.json"
+  ]
+}

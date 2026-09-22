@@ -2163,25 +2163,42 @@ function paintLastClaimDeck(model: THREE.Object3D): void {
     material.onBeforeCompile = (shader, renderer) => {
       compile(shader, renderer);
       shader.uniforms.memorialBrass = { value: new THREE.Color('#c4a465') };
-      shader.uniforms.memorialBand = { value: new THREE.Color('#8c928b') };
+      shader.uniforms.memorialBand = { value: new THREE.Color('#8c8270') };
       shader.vertexShader = shader.vertexShader
         .replace('#include <common>', '#include <common>\nvarying vec2 vMemorialDeck;')
         .replace('#include <begin_vertex>', '#include <begin_vertex>\nvMemorialDeck = (modelMatrix * vec4(position, 1.0)).xz;');
       shader.fragmentShader = shader.fragmentShader
         .replace('#include <common>', '#include <common>\nvarying vec2 vMemorialDeck;\nuniform vec3 memorialBrass, memorialBand;')
-        .replace('#include <map_fragment>', `#include <map_fragment>
+        .replace('#include <map_fragment>', `
+#ifdef USE_MAP
+// Polar paint lives in the shader: the sampler's regular grid has no UV seam duplicates.
+vec2 memorialUV = vec2(atan(vMemorialDeck.y, vMemorialDeck.x) / 6.28318530718 * 16.0, length(vMemorialDeck) / 22.0);
+diffuseColor *= texture2D(map, memorialUV);
+#endif
 float memorialRadius = length(vMemorialDeck);
 float memorialInside = 1.0 - smoothstep(55.8, 57.0, memorialRadius);
-diffuseColor.rgb = (pow(max(diffuseColor.rgb, vec3(0.0)), vec3(0.68)) * 0.84 + vec3(0.026)) * mix(0.58, 1.0, memorialInside);
+diffuseColor.rgb = (pow(max(diffuseColor.rgb, vec3(0.0)), vec3(0.68)) * 0.84 + vec3(0.026)) * mix(0.76, 1.0, memorialInside);
 float memorialAnnulus = smoothstep(44.7, 45.0, memorialRadius) * (1.0 - smoothstep(48.3, 48.6, memorialRadius));
 diffuseColor.rgb = mix(diffuseColor.rgb, memorialBand, memorialAnnulus * 0.24);
 float memorialRingDistance = min(min(abs(memorialRadius - 44.6), abs(memorialRadius - 48.7)), min(abs(memorialRadius - 55.2), min(abs(memorialRadius - 20.0), abs(memorialRadius - 5.0))));
 float memorialRing = 1.0 - smoothstep(0.065, 0.16, memorialRingDistance);
 float memorialSpokeDistance = abs(sin(atan(vMemorialDeck.y, vMemorialDeck.x) * 6.0)) * memorialRadius;
 float memorialSpoke = (1.0 - smoothstep(0.08, 0.20, memorialSpokeDistance)) * smoothstep(4.5, 5.0, memorialRadius) * (1.0 - smoothstep(43.9, 44.3, memorialRadius));
-diffuseColor.rgb = mix(diffuseColor.rgb, memorialBrass, max(memorialRing, memorialSpoke) * 0.82);`);
+// Small divisions within the outer bands read as a surveyed memorial deck.
+float memorialAngle = atan(vMemorialDeck.y, vMemorialDeck.x);
+float memorialTick = (1.0 - smoothstep(0.04, 0.11, abs(sin(memorialAngle * 96.0)) * memorialRadius))
+  * smoothstep(48.9, 49.0, memorialRadius) * (1.0 - smoothstep(49.8, 49.9, memorialRadius));
+diffuseColor.rgb = mix(diffuseColor.rgb, memorialBrass, max(max(memorialRing, memorialSpoke), memorialTick) * 0.66);
+float memorialContact = min(length(vMemorialDeck - vec2(-10.0, 47.0)), length(vMemorialDeck - vec2(10.0, 47.0)));
+diffuseColor.rgb *= mix(0.62, 1.0, smoothstep(1.28, 1.85, memorialContact));`)
+        .replace('#include <emissivemap_fragment>', `#include <emissivemap_fragment>
+// Authored light cast by the memorial instruments; no gameplay state is written.
+float lanternPool = exp(-dot(vMemorialDeck - vec2(-10.0, 47.0), vMemorialDeck - vec2(-10.0, 47.0)) / 18.0);
+float portraitPool = exp(-dot(vMemorialDeck - vec2(10.0, 47.0), vMemorialDeck - vec2(10.0, 47.0)) / 12.0);
+float archPool = exp(-dot(vMemorialDeck - vec2(0.0, -51.0), vMemorialDeck - vec2(0.0, -51.0)) / 24.0);
+totalEmissiveRadiance += vec3(0.30, 0.14, 0.045) * (lanternPool + portraitPool * 0.65 + archPool * 0.4) * smoothstep(1.30, 2.0, memorialContact);`);
     };
-    material.customProgramCacheKey = () => 'last-claim-memorial-inlay-v1';
+    material.customProgramCacheKey = () => 'last-claim-memorial-inlay-v3';
     material.needsUpdate = true;
   });
 }
