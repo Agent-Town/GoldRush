@@ -139,7 +139,7 @@ test('the shared shore query samples all 16 headings, reads the walkable port, a
   assert.deepEqual(rule.data.waterBounds, tile.boat.water);
   assert.deepEqual(rule.data.waterBounds, { minX: -49.75, maxX: 49.75, minZ: -49.75, maxZ: 49.75 });
   assert.equal(rule.data.gangwayReach, CLAIM_BOAT_GANGWAY_REACH);
-  assert.match(rule.data.standable, /STANDABLE ground — walkable terrain off the deck/);
+  assert.match(rule.data.standable, /STANDABLE ground: walkable terrain off the deck/);
   const before = tile.boat.snapshot();
   // Record headings before the geometry filter so the query cannot silently reduce its resolution.
   const contains = tile.boat.contains.bind(tile.boat), points = [];
