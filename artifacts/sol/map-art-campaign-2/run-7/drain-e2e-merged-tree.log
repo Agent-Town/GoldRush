@@ -1,0 +1,347 @@
+(node:85542) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 34 tests using 1 worker
+
+[1/34] [desktop-chrome] › e2e/e8-far-side-probe.spec.ts:34:1 › the Far Side probe is a place, and its playback fires once
+[2/34] [desktop-chrome] › e2e/e8-far-side-probe.spec.ts:88:1 › PLAIN BOOT — a player reaches the Far Side and the probe is live for them
+[3/34] [desktop-chrome] › e2e/e8-far-side-probe.spec.ts:127:1 › the objective latch arms only when a crater exists to stand in
+[4/34] [desktop-chrome] › e2e/e8-remaining-maps-parity.spec.ts:147:3 › e8-far-side rides to the same event-log hash in the browser as in node
+[5/34] [desktop-chrome] › e2e/e8-remaining-maps-parity.spec.ts:147:3 › e8-low-orbit rides to the same event-log hash in the browser as in node
+[6/34] [desktop-chrome] › e2e/e8-remaining-maps-parity.spec.ts:147:3 › e8-eclipse rides to the same event-log hash in the browser as in node
+[7/34] [desktop-chrome] › e2e/e8-remaining-maps-parity.spec.ts:147:3 › e8-mare-claim rides to the same event-log hash in the browser as in node
+[8/34] [desktop-chrome] › e2e/er01-e8-census.spec.ts:75:3 › e8-mare-claim census pins the Orbital contract's door state
+  1) [desktop-chrome] › e2e/er01-e8-census.spec.ts:75:3 › e8-mare-claim census pins the Orbital contract's door state 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 2
+    + Received  + 4
+
+      Array [
+    -   ObjectContaining {
+    +   Object {
+          "dep": "atmosphere-wall-consumer",
+    -     "status": "missing",
+    +     "description": "Browser and headless engines compose the atmosphere and suit consumer: outside air drains the suit, breathing domes refill it, empty suits take damage through CombatSystem, and four distinct mining grounds across four air windows gate securing. Native desktop09 and mobile07 complete mining, wave20 secure, banking and reload; evidence is recorded in reviews/sol-map-art-repairs-20260908.md. This records the landed gameplay consumer, not full concept-art acceptance or release admission.",
+    +     "landedBy": "map-art-repairs F48/F49",
+    +     "status": "landed",
+        },
+      ]
+
+      106 |       // which is also why two contracts can be socketed concurrently without fighting here.
+      107 |       const admitted = (contract.tileParams.harvestAnchors?.length ?? 0) > 0;
+    > 108 |       expect(contract.tileParams.engineDependencies).toEqual([
+          |                                                      ^
+      109 |         expect.objectContaining({ dep: EXPECTED_DEPENDENCY[contract.id], status: 'missing' }),
+      110 |       ]);
+      111 |       const seeds = [`${contract.id}-01`, `${contract.id}-02`];
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-fc2-land/e2e/er01-e8-census.spec.ts:108:54
+
+    Error Context: test-results/er01-e8-census-e8-mare-cla-350c9-bital-contract-s-door-state-desktop-chrome/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/er01-e8-census-e8-mare-cla-350c9-bital-contract-s-door-state-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/er01-e8-census-e8-mare-cla-350c9-bital-contract-s-door-state-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[9/34] [desktop-chrome] › e2e/er01-e8-census.spec.ts:75:3 › e8-far-side census pins the Orbital contract's door state
+[desktop-chrome] › e2e/er01-e8-census.spec.ts:75:3 › e8-far-side census pins the Orbital contract's door state
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[10/34] [desktop-chrome] › e2e/er01-e8-census.spec.ts:75:3 › e8-low-orbit census pins the Orbital contract's door state
+[desktop-chrome] › e2e/er01-e8-census.spec.ts:75:3 › e8-low-orbit census pins the Orbital contract's door state
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[11/34] [desktop-chrome] › e2e/er01-e8-census.spec.ts:75:3 › e8-eclipse census pins the Orbital contract's door state
+[desktop-chrome] › e2e/er01-e8-census.spec.ts:75:3 › e8-eclipse census pins the Orbital contract's door state
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[12/34] [desktop-chrome] › e2e/fort-landmark-collision.spec.ts:72:1 › the four new landmark solids block every face and release embedded heroes
+[13/34] [desktop-chrome] › e2e/landmark-collision.spec.ts:52:1 › authored footprints stop the hero on The Claim and a county map while an unfootprinted mount stays walkable
+[14/34] [desktop-chrome] › e2e/landmark-collision.spec.ts:68:1 › enemy blocker routing is deterministic and goes around a county landmark
+[15/34] [desktop-chrome] › e2e/landmark-collision.spec.ts:121:1 › Town chapel and Pan Monument are solid and default 3D renders exactly one monument
+[16/34] [desktop-chrome] › e2e/landmark-collision.spec.ts:144:1 › a failed 3D prop load keeps the legacy Pan Monument visible and solid
+[17/34] [desktop-chrome] › e2e/landmark-collision.spec.ts:157:1 › later-era modeled plaza props use their authored Town footprints
+[18/34] [mobile-chrome] › e2e/e8-far-side-probe.spec.ts:34:1 › the Far Side probe is a place, and its playback fires once
+[19/34] [mobile-chrome] › e2e/e8-far-side-probe.spec.ts:88:1 › PLAIN BOOT — a player reaches the Far Side and the probe is live for them
+[20/34] [mobile-chrome] › e2e/e8-far-side-probe.spec.ts:127:1 › the objective latch arms only when a crater exists to stand in
+[21/34] [mobile-chrome] › e2e/e8-remaining-maps-parity.spec.ts:147:3 › e8-far-side rides to the same event-log hash in the browser as in node
+[22/34] [mobile-chrome] › e2e/e8-remaining-maps-parity.spec.ts:147:3 › e8-low-orbit rides to the same event-log hash in the browser as in node
+[23/34] [mobile-chrome] › e2e/e8-remaining-maps-parity.spec.ts:147:3 › e8-eclipse rides to the same event-log hash in the browser as in node
+[24/34] [mobile-chrome] › e2e/e8-remaining-maps-parity.spec.ts:147:3 › e8-mare-claim rides to the same event-log hash in the browser as in node
+[25/34] [mobile-chrome] › e2e/er01-e8-census.spec.ts:75:3 › e8-mare-claim census pins the Orbital contract's door state
+  2) [mobile-chrome] › e2e/er01-e8-census.spec.ts:75:3 › e8-mare-claim census pins the Orbital contract's door state 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 2
+    + Received  + 4
+
+      Array [
+    -   ObjectContaining {
+    +   Object {
+          "dep": "atmosphere-wall-consumer",
+    -     "status": "missing",
+    +     "description": "Browser and headless engines compose the atmosphere and suit consumer: outside air drains the suit, breathing domes refill it, empty suits take damage through CombatSystem, and four distinct mining grounds across four air windows gate securing. Native desktop09 and mobile07 complete mining, wave20 secure, banking and reload; evidence is recorded in reviews/sol-map-art-repairs-20260908.md. This records the landed gameplay consumer, not full concept-art acceptance or release admission.",
+    +     "landedBy": "map-art-repairs F48/F49",
+    +     "status": "landed",
+        },
+      ]
+
+      106 |       // which is also why two contracts can be socketed concurrently without fighting here.
+      107 |       const admitted = (contract.tileParams.harvestAnchors?.length ?? 0) > 0;
+    > 108 |       expect(contract.tileParams.engineDependencies).toEqual([
+          |                                                      ^
+      109 |         expect.objectContaining({ dep: EXPECTED_DEPENDENCY[contract.id], status: 'missing' }),
+      110 |       ]);
+      111 |       const seeds = [`${contract.id}-01`, `${contract.id}-02`];
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-fc2-land/e2e/er01-e8-census.spec.ts:108:54
+
+    Error Context: test-results/er01-e8-census-e8-mare-cla-350c9-bital-contract-s-door-state-mobile-chrome/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/er01-e8-census-e8-mare-cla-350c9-bital-contract-s-door-state-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/er01-e8-census-e8-mare-cla-350c9-bital-contract-s-door-state-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[26/34] [mobile-chrome] › e2e/er01-e8-census.spec.ts:75:3 › e8-far-side census pins the Orbital contract's door state
+[mobile-chrome] › e2e/er01-e8-census.spec.ts:75:3 › e8-far-side census pins the Orbital contract's door state
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[27/34] [mobile-chrome] › e2e/er01-e8-census.spec.ts:75:3 › e8-low-orbit census pins the Orbital contract's door state
+[mobile-chrome] › e2e/er01-e8-census.spec.ts:75:3 › e8-low-orbit census pins the Orbital contract's door state
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[28/34] [mobile-chrome] › e2e/er01-e8-census.spec.ts:75:3 › e8-eclipse census pins the Orbital contract's door state
+[mobile-chrome] › e2e/er01-e8-census.spec.ts:75:3 › e8-eclipse census pins the Orbital contract's door state
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[29/34] [mobile-chrome] › e2e/fort-landmark-collision.spec.ts:72:1 › the four new landmark solids block every face and release embedded heroes
+[30/34] [mobile-chrome] › e2e/landmark-collision.spec.ts:52:1 › authored footprints stop the hero on The Claim and a county map while an unfootprinted mount stays walkable
+[31/34] [mobile-chrome] › e2e/landmark-collision.spec.ts:68:1 › enemy blocker routing is deterministic and goes around a county landmark
+[32/34] [mobile-chrome] › e2e/landmark-collision.spec.ts:121:1 › Town chapel and Pan Monument are solid and default 3D renders exactly one monument
+[33/34] [mobile-chrome] › e2e/landmark-collision.spec.ts:144:1 › a failed 3D prop load keeps the legacy Pan Monument visible and solid
+[34/34] [mobile-chrome] › e2e/landmark-collision.spec.ts:157:1 › later-era modeled plaza props use their authored Town footprints
+  2 failed
+    [desktop-chrome] › e2e/er01-e8-census.spec.ts:75:3 › e8-mare-claim census pins the Orbital contract's door state 
+    [mobile-chrome] › e2e/er01-e8-census.spec.ts:75:3 › e8-mare-claim census pins the Orbital contract's door state 
+  32 passed (3.1m)

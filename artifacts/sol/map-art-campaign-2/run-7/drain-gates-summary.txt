@@ -1,0 +1,34 @@
+slice 1: lane 41ad43c91e84f2a7aabae18e09fd4938aab0969d store 300caacfa15ad6be5e6bf41be80b0c5a331c443c maps: the Picnic, the Dead Band, Relay Rush, the Far Side 02:01Z
+store on 'main', dirty 0 (Astra's, untouched)
+store main -> 300caac (art(store): the Far Side — mount four registered variant solids)
+store main pushed: 300caac
+scratch store: detached at 300caac, clean
+chain base df5261526 merging lane 41ad43c91 (lane tip 41ad43c91) 02:01Z
+merged aaa06d8d1
+single-line law: nothing to flatten
+gate-callers after the roster entry: rc=0
+roster commit 9907cacaa
+REGATE after F-FC2-5 (store 7bfbd3f, scratch store 7bfbd3f) 02:44Z
+engine hash merged (scratch store at 7bfbd3f): 52a84bc29febd924518528080bee8d0843e4e6d5c89165c1f8cb6f43dd61bcd5
+tsc/build/e1: 0 / 0 / 0
+first-town payload: 34271215 bytes
+halo: rc=0 halo re-extraction PASS: 315 cured, 0 held, 760 regenerated-and-cured, 2127 scanned; alpha and opaque RGB unchanged
+null floors: rc=0 83 of 83 null floors match assets/contracts/null-floors.json (296.1s).
+law-pointer: rc=0 law-pointer-guard — do the law surfaces still point at what they claim?
+guards: ℹ pass 110 ℹ fail 1 
+e2e start 02:52Z (regate): e2e/e8-far-side-probe.spec.ts e2e/er01-e8-census.spec.ts e2e/landmark-collision.spec.ts e2e/fort-landmark-collision.spec.ts e2e/e8-remaining-maps-parity.spec.ts
+e2e: rc=1   2 failed   32 passed (3.1m)  02:55Z
+1) [desktop-chrome] › e2e/er01-e8-census.spec.ts:75:3 › e8-mare-claim census pins the Orbital contract's door state 
+2) [mobile-chrome] › e2e/er01-e8-census.spec.ts:75:3 › e8-mare-claim census pins the Orbital contract's door state 
+battery start 02:55Z (regate)
+guards: ℹ pass 111 ℹ fail 0  (re-run after the union test's re-pin, F-FC2-5)
+battery: rc=1 ℹ tests 941 ℹ pass 933 ℹ fail 3 ℹ skipped 5  03:03Z
+✖ all 152 scripts/*.test.mjs fixture owners remove their temp directories (193520.051667ms)
+✖ failing tests:
+✖ rotation registry stays outside the engine identity corpus (534.585958ms)
+✖ the landed registry names the live engine and stays outside its hash corpus (158.862083ms)
+dirt after battery: 0
+FC2-PREP-DONE
+hash at pin time: 52a84bc29febd924518528080bee8d0843e4e6d5c89165c1f8cb6f43dd61bcd5
+pin #30
+era (chain, scratch store): ℹ pass 9 ℹ fail 0 
