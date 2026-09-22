@@ -214,7 +214,7 @@ const REGISTRY: Record<string, Entry> = {
   'e9-seed-run': entry(new URL('../../assets/pilots/map-rebuild-spike/seed-run-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/seed-run-panorama.glb', import.meta.url).href, JSON.stringify({ ...JSON.parse(seedRunContractText), boundsMeters: { min: [-64, -64, -0.14], max: [64, 64, 3.715142] } }), seedRunPanoramaContractText),
   'e9-devils-alley': entry(new URL('../../assets/pilots/map-rebuild-spike/devils-alley-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/devils-alley-panorama.glb', import.meta.url).href, JSON.stringify({ ...JSON.parse(devilsAlleyContractText), boundsMeters: { min: [-64, -64, -0.14], max: [64, 64, 4.567115] } }), devilsAlleyPanoramaContractText),
   'e9-old-canal': entry(new URL('../../assets/pilots/map-rebuild-spike/old-canal-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/old-canal-panorama.glb', import.meta.url).href, JSON.stringify({ ...JSON.parse(oldCanalContractText), boundsMeters: { min: [-64, -64, -1.42], max: [64, 64, 2.906317] } }), oldCanalPanoramaContractText),
-  'e10-archive-world': entry(new URL('../../assets/pilots/map-rebuild-spike/archive-world-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/archive-world-panorama.glb', import.meta.url).href, archiveWorldContractText, archiveWorldPanoramaContractText),
+  'e10-archive-world': entry(new URL('../../assets/pilots/map-rebuild-spike/archive-world-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/archive-world-panorama.glb', import.meta.url).href, archiveWorldContractText, archiveWorldPanoramaContractText, undefined, new URL('../../assets/pilots/map-rebuild-spike/sources/archive-world-fidelity-1/engraved-masonry.png', import.meta.url).href),
   'e10-last-claim': entry(new URL('../../assets/pilots/map-rebuild-spike/last-claim-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/last-claim-panorama.glb', import.meta.url).href, lastClaimContractText, lastClaimPanoramaContractText),
   'e10-river': entry(new URL('../../assets/pilots/map-rebuild-spike/river-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/river-panorama.glb', import.meta.url).href, riverContractText, riverPanoramaContractText),
   }),
@@ -2272,10 +2272,10 @@ vec4 sampledDiffuseColor = vec4(waterColor, alpha);`);
 }
 
 /** Quiet the archive paving; warm pools appear only for already-restored wings. */
-function clarifyArchiveTerraces(model: THREE.Object3D, readState?: () => ArchiveRestorationState | null): void {
+function clarifyArchiveTerraces(model: THREE.Object3D, readState?: () => ArchiveRestorationState | null, detailTextureUrl?: string): void {
   if (isMapBeautyDisabled()) return;
   const zones = readState?.()?.zones ?? [];
-  const pools = { value: zones.map(zone => new THREE.Vector4((zone.minX + zone.maxX) / 2, (zone.minZ + zone.maxZ) / 2, (zone.maxX - zone.minX) * 0.30, (zone.maxZ - zone.minZ) * 0.30)) };
+  const pools = { value: zones.map(zone => new THREE.Vector4((zone.minX + zone.maxX) / 2, (zone.minZ + zone.maxZ) / 2, (zone.maxX - zone.minX) * 0.37, (zone.maxZ - zone.minZ) * 0.37)) };
   const restored = { value: new Float32Array(zones.length) };
   model.traverse(node => {
     const mesh = node as THREE.Mesh<THREE.BufferGeometry, THREE.MeshStandardMaterial>;
@@ -2287,11 +2287,19 @@ function clarifyArchiveTerraces(model: THREE.Object3D, readState?: () => Archive
       zones.forEach((zone, index) => { restored.value[index] = state?.restoredWingIds.includes(zone.id) ? 1 : 0; });
     };
     const material = mesh.material, compile = material.onBeforeCompile.bind(material);
+    let disposed = false;
+    const detail = detailTextureUrl ? new THREE.TextureLoader().load(detailTextureUrl, texture => { if (disposed) texture.dispose(); }) : undefined;
+    if (detail) {
+      detail.colorSpace = THREE.SRGBColorSpace;
+      detail.wrapS = detail.wrapT = THREE.RepeatWrapping;
+      material.addEventListener('dispose', () => { disposed = true; detail.dispose(); });
+    }
     const cacheKey = material.customProgramCacheKey();
     material.onBeforeCompile = (shader, renderer) => {
       compile(shader, renderer);
       shader.uniforms.archiveFloorLow = { value: new THREE.Color('#776f5e') };
       shader.uniforms.archiveFloorHigh = { value: new THREE.Color('#a8a38d') };
+      if (detail) shader.uniforms.archiveMasonry = { value: detail };
       shader.uniforms.archiveFloorPools = pools;
       shader.uniforms.archiveFloorRestored = restored;
       shader.vertexShader = shader.vertexShader
@@ -2301,18 +2309,86 @@ function clarifyArchiveTerraces(model: THREE.Object3D, readState?: () => Archive
         .replace('#include <common>', `#include <common>
 varying vec3 vArchiveFloor;
 uniform vec3 archiveFloorLow, archiveFloorHigh;
+${detail ? 'uniform sampler2D archiveMasonry;' : ''}
 ${zones.length ? `uniform vec4 archiveFloorPools[${zones.length}];\nuniform float archiveFloorRestored[${zones.length}];` : ''}`)
         .replace('#include <map_fragment>', `#include <map_fragment>
 float archiveTerrace = smoothstep(-0.7, 2.2, vArchiveFloor.y);
-diffuseColor.rgb = mix(diffuseColor.rgb, mix(archiveFloorLow, archiveFloorHigh, archiveTerrace), 0.50);`)
+diffuseColor.rgb = mix(diffuseColor.rgb, mix(archiveFloorLow, archiveFloorHigh, archiveTerrace), 0.78);
+${detail ? 'float archiveEngraving = dot(texture2D(archiveMasonry, vArchiveFloor.xz / 24.0).rgb, vec3(0.2126, 0.7152, 0.0722));\ndiffuseColor.rgb *= 0.90 + archiveEngraving * 0.30;' : ''}`)
         .replace('#include <emissivemap_fragment>', `#include <emissivemap_fragment>
 ${zones.length ? `for (int i = 0; i < ${zones.length}; i++) {
   vec4 pool = archiveFloorPools[i];
   float archivePool = 1.0 - smoothstep(0.12, 1.0, length((vArchiveFloor.xz - pool.xy) / pool.zw));
-  totalEmissiveRadiance += vec3(0.24, 0.095, 0.025) * archivePool * archiveFloorRestored[i];
+  totalEmissiveRadiance += vec3(0.30, 0.14, 0.045) * archivePool * archiveFloorRestored[i];
 }` : ''}`);
     };
-    material.customProgramCacheKey = () => `${cacheKey}|archive-terraces-v1:${zones.length}`;
+    material.customProgramCacheKey = () => `${cacheKey}|archive-terraces-v2:${zones.length}:${!!detail}`;
+    material.needsUpdate = true;
+  });
+}
+
+/** Contact at the footing and earned warm facade wash; no restoration writes. */
+function lightArchiveFacade(model: THREE.Object3D, readState?: () => ArchiveRestorationState | null): void {
+  if (isMapBeautyDisabled()) return;
+  const bounds = new THREE.Box3().setFromObject(model), center = bounds.getCenter(new THREE.Vector3());
+  const zone = readState?.()?.zones.find(z => center.x >= z.minX && center.x <= z.maxX && center.z >= z.minZ && center.z <= z.maxZ);
+  const restored = { value: 0 };
+  model.traverse(node => {
+    const mesh = node as THREE.Mesh<THREE.BufferGeometry, THREE.MeshStandardMaterial>;
+    if (!mesh.isMesh || Array.isArray(mesh.material) || !mesh.material.isMeshStandardMaterial) return;
+    const beforeRender = mesh.onBeforeRender.bind(mesh);
+    mesh.onBeforeRender = (renderer, scene, camera, geometry, material, group) => {
+      beforeRender(renderer, scene, camera, geometry, material, group);
+      restored.value = zone && readState?.()?.restoredWingIds.includes(zone.id) ? 1 : 0;
+    };
+    const material = mesh.material, compile = material.onBeforeCompile.bind(material), key = material.customProgramCacheKey();
+    material.onBeforeCompile = (shader, renderer) => {
+      compile(shader, renderer);
+      shader.uniforms.archiveFacadeBase = { value: bounds.min.y };
+      shader.uniforms.archiveFacadeRestored = restored;
+      shader.vertexShader = shader.vertexShader.replace('#include <common>', '#include <common>\nvarying vec3 vArchiveFacade;').replace('#include <begin_vertex>', '#include <begin_vertex>\nvArchiveFacade = (modelMatrix * vec4(position, 1.0)).xyz;');
+      shader.fragmentShader = shader.fragmentShader.replace('#include <common>', '#include <common>\nvarying vec3 vArchiveFacade;\nuniform float archiveFacadeBase, archiveFacadeRestored;')
+        .replace('#include <map_fragment>', `#include <map_fragment>
+float archiveFacadeHeight = vArchiveFacade.y - archiveFacadeBase;
+diffuseColor.rgb *= mix(0.63, 1.0, smoothstep(0.0, 0.7, archiveFacadeHeight));`)
+        .replace('#include <emissivemap_fragment>', `#include <emissivemap_fragment>
+float archiveFacadeWash = smoothstep(0.1, 0.8, archiveFacadeHeight) * (1.0 - smoothstep(2.5, 6.0, archiveFacadeHeight));
+totalEmissiveRadiance += vec3(0.11, 0.055, 0.012) * archiveFacadeWash * archiveFacadeRestored;`);
+    };
+    material.customProgramCacheKey = () => `${key}|archive-facade-v1`;
+    material.needsUpdate = true;
+  });
+}
+
+/** The near library halls use real depth; distant sky and apron stay at far depth. */
+function prepareArchiveLibrary(model: THREE.Object3D, detailTextureUrl?: string): void {
+  if (!detailTextureUrl) return;
+  model.traverse(node => {
+    const mesh = node as THREE.Mesh<THREE.BufferGeometry, THREE.MeshStandardMaterial>;
+    if (!mesh.isMesh || Array.isArray(mesh.material) || !['ArchiveLibraryScenery', 'ArchiveLibraryRecess'].includes(mesh.material.name)) return;
+    const material = mesh.material, compile = material.onBeforeCompile.bind(material), key = material.customProgramCacheKey();
+    mesh.renderOrder = 0;
+    material.depthWrite = true;
+    material.fog = true;
+    material.vertexColors = false;
+    material.color.set('#b6aa8d');
+    const recess = material.name === 'ArchiveLibraryRecess';
+    material.emissive.set(recess ? '#39362c' : '#88847a');
+    material.emissiveIntensity = 0.18;
+    let disposed = false;
+    const detail = new THREE.TextureLoader().load(detailTextureUrl, texture => { if (disposed) texture.dispose(); });
+    detail.colorSpace = THREE.SRGBColorSpace;
+    detail.wrapS = detail.wrapT = THREE.RepeatWrapping;
+    material.addEventListener('dispose', () => { disposed = true; detail.dispose(); });
+    material.onBeforeCompile = (shader, renderer) => {
+      compile(shader, renderer);
+      shader.vertexShader = shader.vertexShader.replace('gl_Position.z = gl_Position.w * 0.999999;', '');
+      shader.uniforms.archiveFacadeStone = { value: detail };
+      shader.fragmentShader = shader.fragmentShader
+        .replace('#include <common>', '#include <common>\nuniform sampler2D archiveFacadeStone;')
+        .replace('#include <map_fragment>', '#include <map_fragment>\ndiffuseColor.rgb = texture2D(archiveFacadeStone, vMapUv).rgb * ' + (recess ? 'vec3(0.38, 0.36, 0.32);' : 'vec3(0.70, 0.65, 0.56);'));
+    };
+    material.customProgramCacheKey = () => `${key}|archive-library-v4:${recess}`;
     material.needsUpdate = true;
   });
 }
@@ -2922,6 +2998,12 @@ function createContinuation(
       '#include <project_vertex>\ngl_Position.z = gl_Position.w * 0.99999;',
     );
   };
+  if (contractId === 'e10-archive-world') {
+    // The floor must occlude the buried feet of near library scenery.
+    material.depthWrite = true;
+    material.onBeforeCompile = () => undefined;
+    material.customProgramCacheKey = () => 'archive-continuation-depth-v1';
+  }
   // THE ATMOSPHERICS SHIFT: this apron — not the panorama — is what a run frame's top edge
   // actually contains once the player crosses onto the far bank. Measured, per contract, in
   // src/world/HorizonApron.ts.
@@ -3027,7 +3109,7 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
       if (host.contractId === 'e10-last-claim') paintLastClaimDeck(nextTerrain);
       if (host.contractId === 'e10-river') paintRiverBanks(nextTerrain);
       if (host.contractId === 'e10-ember-shore') clarifyEmberBasalt(nextTerrain, selected.detailTextureUrl);
-      if (host.contractId === 'e10-archive-world') clarifyArchiveTerraces(nextTerrain, host.archiveRestoration);
+      if (host.contractId === 'e10-archive-world') clarifyArchiveTerraces(nextTerrain, host.archiveRestoration, selected.detailTextureUrl);
       if (host.contractId === 'e9-devils-alley') gradeTerrainByHeight(nextTerrain, '#9f8b6e', '#bba487', -0.14, 4.57, 0.46);
       if (host.contractId === 'e8-low-orbit') gradeTerrainByHeight(nextTerrain, '#777a76', '#a5a28e', -4.8, 0.7, 0.38);
       if (host.contractId === 'e8-far-side') clarifyFarSideRegolith(nextTerrain);
@@ -3051,6 +3133,7 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
       nextPanorama.rotation.set(...mount.rotation);
       nextPanorama.scale.fromArray(mount.scale);
       preparePanorama(nextPanorama);
+      if (host.contractId === 'e10-archive-world') prepareArchiveLibrary(nextPanorama, selected.detailTextureUrl);
       if (host.contractId === 'e10-ember-shore') clarifyEmberBasalt(nextPanorama, selected.detailTextureUrl, true);
       if (host.contractId === 'e3-canyon-works') clarifyCanyonGround(nextPanorama, true);
       if (host.contractId === 'e4-long-road' && selected.contract.maskTruth) clarifyMotorGround(nextPanorama, selected.contract.maskTruth, true);
@@ -3060,7 +3143,7 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
       const nextSkirt = createContinuation(nextTerrain, nextPanorama, heightAt, terrainMetrics.bounds, host.contractId);
       if (host.contractId === 'e10-river' && nextSkirt) paintRiverBanks(nextSkirt);
       if (host.contractId === 'e10-ember-shore' && nextSkirt) clarifyEmberBasalt(nextSkirt, selected.detailTextureUrl);
-      if (host.contractId === 'e10-archive-world' && nextSkirt) clarifyArchiveTerraces(nextSkirt, host.archiveRestoration);
+      if (host.contractId === 'e10-archive-world' && nextSkirt) clarifyArchiveTerraces(nextSkirt, host.archiveRestoration, selected.detailTextureUrl);
       if (host.contractId === 'e3-moth-season' && host.nightMode && nextSkirt) {
         const material = nextSkirt.material as THREE.Material;
         const programKey = material.customProgramCacheKey();
@@ -3208,6 +3291,7 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
           }
           dressLandmark(model, host.contractId, mount.id);
           if (host.archiveRestoration) installArchiveRestoration(model, host.archiveRestoration);
+          if (host.contractId === 'e10-archive-world') lightArchiveFacade(model, host.archiveRestoration);
           return model;
         } catch {
           diagnostics.push(`${mount.id}: asset invalid`);

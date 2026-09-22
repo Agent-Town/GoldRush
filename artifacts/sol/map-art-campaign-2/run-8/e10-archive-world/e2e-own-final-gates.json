@@ -1,0 +1,24 @@
+[
+  {
+    "label": "own-final",
+    "command": [
+      "npx",
+      "playwright",
+      "test",
+      "--workers=1",
+      "--project=desktop-chrome",
+      "--project=mobile-chrome",
+      "--trace=off",
+      "--reporter=line",
+      "--output=artifacts/sol/map-art-campaign-2/_raw/run-8/e10-archive-world-own-final",
+      "e2e/board-gating-and-profiles.spec.ts",
+      "e2e/ss-11-e10-beats.spec.ts",
+      "e2e/terrain3d-registry.spec.ts",
+      "e2e/er01-e10-census.spec.ts"
+    ],
+    "environment": {},
+    "exit": 1,
+    "seconds": 865.39,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-8/e10-archive-world-own-final.log"
+  }
+]
