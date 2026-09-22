@@ -1,0 +1,38 @@
+slice 1: lane 70f67c0ae47714a8db14f877940d6a98b4aeb900 store f3078c4001d86b8f177a1f1727464c32bdc166bb maps: the Last Claim 10:24Z
+store on 'main', dirty 0 (Astra's, untouched)
+store main -> f3078c4 (art(store): Last Claim — engraved deck, star vista and perimeter frame)
+store main pushed: f3078c4
+scratch store: detached at f3078c4, clean
+chain base 676abbc6d merging lane 70f67c0ae (lane tip 70f67c0ae) 10:25Z
+merged 4b4ec03bc
+single-line law: nothing to flatten
+law-pointer (pre): rc=0, no re-base needed
+engine hash merged (scratch store at f3078c4): c72f302925f627b0a783f8d44bd132ed1fa61ae737379454a746e1033e1adfeb
+tsc/build/e1: 0 / 0 / 0
+first-town payload: 34274360 bytes
+halo: rc=0 halo re-extraction PASS: 315 cured, 0 held, 760 regenerated-and-cured, 2127 scanned; alpha and opaque RGB unchanged
+null floors: rc=0 83 of 83 null floors match assets/contracts/null-floors.json (383.8s).
+law-pointer: rc=0 law-pointer-guard — do the law surfaces still point at what they claim?
+guards: ℹ pass 97 ℹ fail 0 
+e2e start 10:35Z: e2e/e10-static-boss.spec.ts e2e/e10-preserve-objective.spec.ts e2e/ss-11-e10-beats.spec.ts e2e/er01-e10-census.spec.ts e2e/map-census.spec.ts e2e/landmark-brightness.spec.ts e2e/landmark-collision.spec.ts e2e/task-025-bandits-dont-swim.spec.ts e2e/m2-01-build-menu.spec.ts 
+e2e: rc=1   4 failed   4 skipped   162 passed (20.2m)  10:56Z
+1) [desktop-chrome] › e2e/e10-static-boss.spec.ts:153:1 › recession hands the secured claim to the existing T10 re-inking finale 
+2) [desktop-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-archive-world census cites the existing Deep Sky debt 
+3) [mobile-chrome] › e2e/e10-static-boss.spec.ts:153:1 › recession hands the secured claim to the existing T10 re-inking finale 
+4) [mobile-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-archive-world census cites the existing Deep Sky debt 
+battery (first run, before the F-FID1-5 cure): rc=1 ℹ tests 947 ℹ pass 938 ℹ fail 4 ℹ skipped 5  11:06Z with one red beyond the pre-pin hash class (droplet mirror ships the runtime closure: provenance.json under sources/ not shipped); cured on the chain as 214a54568 and re-gated below
+battery start (re-gate after the cure) 11:22Z
+battery: rc=1 ℹ tests 947 ℹ pass 939 ℹ fail 3 ℹ skipped 5  11:22Z
+✖ rotation registry stays outside the engine identity corpus (797.336083ms)
+✖ the landed registry names the live engine and stays outside its hash corpus (206.205667ms)
+✖ all 152 scripts/*.test.mjs fixture owners remove their temp directories (256470.8635ms)
+✖ failing tests:
+dirt after battery: 0
+FID1-S1-PREP-DONE
+known-red overrides: e2e e10-static-boss\.spec\.ts:153:1|er01-e10-census\.spec\.ts:120:3 battery ^$
+cure F-FID1-5: scripts/deploy.sh sources includes committed 214a54568; mirror test alone rc=0; law-pointer rc=0
+deploy contract (after the cure): rc=0 deploy contract PASS (production alias current/stale/500/retry/late-promotion/whitespace-sleeps/no-url; strict 0/2/3/4/7; default failures r
+known-red overrides: e2e e10-static-boss\.spec\.ts:153:1|er01-e10-census\.spec\.ts:120:3 battery ^$
+hash at pin time: c72f302925f627b0a783f8d44bd132ed1fa61ae737379454a746e1033e1adfeb
+pin #34
+era (chain, scratch store): ℹ pass 9 ℹ fail 0 
