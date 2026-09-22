@@ -1,0 +1,96 @@
+
+Running 2 tests using 1 worker
+
+
+(node:91947) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[1/2] [desktop-chrome] › e2e/terrain3d-registry.spec.ts:350:1 › all fifteen contracts stay painted in LITE and on invalid terrain bytes
+  1) [desktop-chrome] › e2e/terrain3d-registry.spec.ts:350:1 › all fifteen contracts stay painted in LITE and on invalid terrain bytes 
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  locator('canvas')
+    Expected: "failed"
+    Received: "lite"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveAttribute" with timeout 5000ms
+      - waiting for locator('canvas')
+        14 × locator resolved to <canvas width="1280" height="800" id="game-canvas" data-css-aspect="1.6" data-hero-skin="stock" data-hero-sheet="young" data-camera-aspect="1.6" data-boss-bar-depleted="0" data-railcar3d-state="lite" data-boss-bar-remaining="0" data-boss-bar-anchor="none" data-crawler3d-state="lite" data-engine="three.js r184" data-run3d-pilot-meshes="0" data-asset-loading-ready="0" data-asset-loading-total="0" data-prospector-skin="stock" data-hero-skin-sheet="stock" data-asset-prefetch-ready="0" data-asset-prefetch-…></canvas>
+           - unexpected value "lite"
+
+
+      366 |     // 2026-09-22, 7c2744e5a: pin FULL so this boot reaches the invalid-bytes loader branch instead of the headless LITE early return.
+      367 |     await boot(page, contract.id, '&terrain3dPilot');
+    > 368 |     await expect(page.locator('canvas')).toHaveAttribute('data-terrain3d-pilot-state', 'failed');
+          |                                          ^
+      369 |     await expect(page.locator('canvas')).toHaveAttribute('data-terrain3d-pilot-render-source', 'painted');
+      370 |     await expect(page.locator('canvas')).toHaveAttribute('data-terrain3d-pilot-panorama', 'off');
+      371 |     await page.unroute(terrain);
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/terrain3d-registry.spec.ts:368:42
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/terrain3d-registry-all-fif-b8590-nd-on-invalid-terrain-bytes-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/terrain3d-registry-all-fif-b8590-nd-on-invalid-terrain-bytes-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/terrain3d-registry-all-fif-b8590-nd-on-invalid-terrain-bytes-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/terrain3d-registry-all-fif-b8590-nd-on-invalid-terrain-bytes-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:92152) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[2/2] [mobile-chrome] › e2e/terrain3d-registry.spec.ts:350:1 › all fifteen contracts stay painted in LITE and on invalid terrain bytes
+  2) [mobile-chrome] › e2e/terrain3d-registry.spec.ts:350:1 › all fifteen contracts stay painted in LITE and on invalid terrain bytes 
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  locator('canvas')
+    Expected: "failed"
+    Received: "lite"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveAttribute" with timeout 5000ms
+      - waiting for locator('canvas')
+        14 × locator resolved to <canvas width="390" height="844" id="game-canvas" data-hero-skin="stock" data-hero-sheet="young" data-boss-bar-depleted="0" data-railcar3d-state="lite" data-boss-bar-remaining="0" data-boss-bar-anchor="none" data-crawler3d-state="lite" data-engine="three.js r184" data-run3d-pilot-meshes="0" data-asset-loading-ready="0" data-asset-loading-total="0" data-prospector-skin="stock" data-hero-skin-sheet="stock" data-asset-prefetch-ready="0" data-asset-prefetch-total="0" data-asset-prefetch-target="" data-ass…></canvas>
+           - unexpected value "lite"
+
+
+      366 |     // 2026-09-22, 7c2744e5a: pin FULL so this boot reaches the invalid-bytes loader branch instead of the headless LITE early return.
+      367 |     await boot(page, contract.id, '&terrain3dPilot');
+    > 368 |     await expect(page.locator('canvas')).toHaveAttribute('data-terrain3d-pilot-state', 'failed');
+          |                                          ^
+      369 |     await expect(page.locator('canvas')).toHaveAttribute('data-terrain3d-pilot-render-source', 'painted');
+      370 |     await expect(page.locator('canvas')).toHaveAttribute('data-terrain3d-pilot-panorama', 'off');
+      371 |     await page.unroute(terrain);
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/terrain3d-registry.spec.ts:368:42
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/terrain3d-registry-all-fif-b8590-nd-on-invalid-terrain-bytes-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/terrain3d-registry-all-fif-b8590-nd-on-invalid-terrain-bytes-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/terrain3d-registry-all-fif-b8590-nd-on-invalid-terrain-bytes-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/terrain3d-registry-all-fif-b8590-nd-on-invalid-terrain-bytes-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  2 failed
+    [desktop-chrome] › e2e/terrain3d-registry.spec.ts:350:1 › all fifteen contracts stay painted in LITE and on invalid terrain bytes 
+    [mobile-chrome] › e2e/terrain3d-registry.spec.ts:350:1 › all fifteen contracts stay painted in LITE and on invalid terrain bytes 
