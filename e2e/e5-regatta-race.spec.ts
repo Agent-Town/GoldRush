@@ -170,8 +170,12 @@ test('the Regatta is won by the BOAT and secures both bench seeds deterministica
     };
 
     const expected = {
-      'e5-regatta-01': 'fnv1a32:1bf7c1ff',
-      'e5-regatta-02': 'fnv1a32:e8b9b2ff',
+      // NAMED-CAUSE RE-PIN (sol-regatta-view-parity, 2026-09-22): the finish stake is now recorded as the
+      // sixth passed gate (RegattaRaceSystem pushes it into `passed`), one more row in the event log; the
+      // outcome (secured, waves 12, kills 25) and both runs' equality are unchanged. Old pins:
+      // fnv1a32:1bf7c1ff / fnv1a32:e8b9b2ff.
+      'e5-regatta-01': 'fnv1a32:79f2ff16',
+      'e5-regatta-02': 'fnv1a32:d2195750',
     } as const;
     for (const [seed, eventLogHash] of Object.entries(expected)) {
       const first = run(seed);
