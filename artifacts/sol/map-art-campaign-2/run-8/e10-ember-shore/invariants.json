@@ -1,0 +1,39 @@
+{
+  "unchangedBytes": {
+    "ember-shore-terrain.glb": "1b688f841923409756218449950401bf59d8b66d65cf4d5c7979ee7cdfc4dcac",
+    "ember-shore-terrain.blend": "b75dc49376fbf639a8f198dcdf88c15b06953497149d7bb7e91d78184c501628",
+    "ember-shore-terrain-contract.json": "212f355465dda182f8d4e32d6fc72bb8be9eec73180917c15ed3e004e4033ccf",
+    "ember-shore-terrain-atlas.png": "2afd2cd7861ae29263f2ea66d4d6845ad9bc0c7921f00cbba1d61308d0945c38",
+    "ember-shore-panorama-atlas.png": "1d46b44785153a19e2614e3165ed9c269cb5ee5585252f1f2cc9a15a6ad6b8d9",
+    "landmark-collision-contract.json": "929c325001a04c8f098885cc5973fb43e6de89b51781a48ba62d4cdd18c6d4fa",
+    "landmarks/landmark-source-ledger.json": "394fb092d10a695e78800a16ee804ede23fde91ba7ee7277d07fc61dc67dad86",
+    "landmarks/ember-shore/west-vein-cooling-marker.glb": "4a40debb6af92acb6ea0048060668aaebb99795feb80e85913b4cb2fdde7cd27",
+    "landmarks/ember-shore/ember-shore-landmark-pack-contract.json": "491bd665bee6b7fe41b09b7119cefdf667a4319b640dae00a19d39366514e9dd",
+    "landmarks/ember-shore/ember-shore-landmarks-atlas.png": "f810d60954703fe33f871cbcffa9c31b9554764e50c1be2bb455e9544fde214f",
+    "landmarks/ember-shore/last-warm-vent-altar.glb": "b8923206fd38d348a359029196e5931bdf0c7889356c0e31d6260f970872dc91",
+    "landmarks/ember-shore/ember-shore-landmarks.blend": "acf041facb734f4fd61a17f574ba1bdcb150f23f182414a0c229c7e0547de0f4",
+    "landmarks/ember-shore/shore-preserve-rack.glb": "f7685433e7cb1046206f885cc73d3638afe99e8862b75bdc6466e8e3b51802bd",
+    "landmarks/ember-shore/center-vein-bridge-school.glb": "4ee09b4cb93a183768631601415188e19bdc61dad205869690dd6ef44f3bf6fc",
+    "landmarks/ember-shore/cooled-titan-shelf.glb": "8fb07dfc4f414e4f1f1e684a5d91e66060ee15a088a482258820e80cffb1a6ba"
+  },
+  "terrainHeightAndMaskTruthUnchanged": true,
+  "terrainTriangleSurfacesExact": true,
+  "heatAtlasEmbeddedBytesUnchanged": true,
+  "boundsMountsStationsCollisionUnchanged": true,
+  "existingPanoramaPositionsUnchanged": true,
+  "addedSceneryUniquePositions": 0,
+  "minimumAddedChebyshevRadiusMeters": null,
+  "onlyNamedRenderFunctionPanoramaCallAndSceneryNormalsChanged": true,
+  "heatPixelsAndPlayfieldRestrictionPreserved": true,
+  "singleLineRegistryEntries": 36,
+  "protectedAuthorities": [
+    "src/game",
+    "src/sim",
+    "assets/contracts",
+    "src/world/Terrain.ts",
+    "src/world/LandmarkCollision.ts",
+    "src/systems",
+    "e2e",
+    "assets/engine-era.json"
+  ]
+}

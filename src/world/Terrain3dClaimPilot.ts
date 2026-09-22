@@ -137,7 +137,7 @@ type Mount = {
   renderOnly: boolean;
 };
 type LandmarkMount = Omit<Mount, 'renderOnly'> & { asset?: string; contractIds?: string[]; walkSurfaces?: LandmarkWalkSurface[] };
-type Entry = { terrainUrl: string; panoramaUrl: string; contract: Contract; panoramaContract: PanoramaContract };
+type Entry = { terrainUrl: string; panoramaUrl: string; contract: Contract; panoramaContract: PanoramaContract; detailTextureUrl?: string };
 type Host = {
   scene: THREE.Scene;
   canvas: HTMLCanvasElement;
@@ -164,11 +164,11 @@ type Host = {
 type Metrics = { meshes: number; triangles: number; materials: number; vertices: number; bounds: THREE.Box3 };
 type HiddenRelief = { object: THREE.Object3D; visible: boolean };
 
-const entry = (terrainUrl: string, panoramaUrl: string, contractText: string, panoramaContractText: string, dressingText?: string): Entry => {
+const entry = (terrainUrl: string, panoramaUrl: string, contractText: string, panoramaContractText: string, dressingText?: string, detailTextureUrl?: string): Entry => {
   const contract = JSON.parse(contractText) as Contract;
   // Variant dressing supplements the base bodies; the existing mount filter and transforms apply.
   if (dressingText) contract.landmarkMounts = [...(contract.landmarkMounts ?? []), ...((JSON.parse(dressingText) as Contract).landmarkMounts ?? [])];
-  return { terrainUrl, panoramaUrl, contract, panoramaContract: JSON.parse(panoramaContractText) as PanoramaContract };
+  return { terrainUrl, panoramaUrl, contract, panoramaContract: JSON.parse(panoramaContractText) as PanoramaContract, detailTextureUrl };
 };
 const REGISTRY: Record<string, Entry> = {
   'the-claim': entry(new URL('../../assets/pilots/map-rebuild-spike/the-claim-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/the-claim-panorama.glb', import.meta.url).href, claimContractText, claimPanoramaContractText),
@@ -187,7 +187,7 @@ const REGISTRY: Record<string, Entry> = {
   'e7-relay-valley': entry(new URL('../../assets/pilots/map-rebuild-spike/relay-valley-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/relay-valley-panorama.glb', import.meta.url).href, relayValleyContractText, relayValleyPanoramaContractText),
   'e8-mare-claim': entry(new URL('../../assets/pilots/map-rebuild-spike/mare-claim-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/mare-claim-panorama.glb', import.meta.url).href, mareClaimContractText, mareClaimPanoramaContractText),
   'e9-dome-basin': entry(new URL('../../assets/pilots/map-rebuild-spike/dome-basin-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/dome-basin-panorama.glb', import.meta.url).href, domeBasinContractText, domeBasinPanoramaContractText),
-  'e10-ember-shore': entry(new URL('../../assets/pilots/map-rebuild-spike/ember-shore-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/ember-shore-panorama.glb', import.meta.url).href, emberShoreContractText, emberShorePanoramaContractText),
+  'e10-ember-shore': entry(new URL('../../assets/pilots/map-rebuild-spike/ember-shore-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/ember-shore-panorama.glb', import.meta.url).href, emberShoreContractText, emberShorePanoramaContractText, undefined, new URL('../../assets/pilots/map-rebuild-spike/sources/ember-shore-fidelity-1/engraved-basalt.png', import.meta.url).href),
   'e2-pressure-garden': entry(new URL('../../assets/pilots/map-rebuild-spike/pressure-garden-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/pressure-garden-panorama.glb', import.meta.url).href, pressureGardenContractText, pressureGardenPanoramaContractText),
   'e2-incline': entry(new URL('../../assets/pilots/map-rebuild-spike/incline-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/incline-panorama.glb', import.meta.url).href, inclineContractText, inclinePanoramaContractText),
   'e3-canyon-works': entry(new URL('../../assets/pilots/map-rebuild-spike/canyon-works-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/canyon-works-panorama.glb', import.meta.url).href, canyonWorksContractText, canyonWorksPanoramaContractText),
@@ -2317,16 +2317,29 @@ ${zones.length ? `for (int i = 0; i < ${zones.length}; i++) {
   });
 }
 
-/** One world-space basalt treatment crosses the sculpt/continuation join. */
-function clarifyEmberBasalt(model: THREE.Object3D): void {
-  if (isMapBeautyDisabled()) return;
+/** Shared basalt pigment for sculpt, continuation and authored scenery rock.
+ * Fractures and strata change the material only; heat still comes from the atlas. */
+function clarifyEmberBasalt(model: THREE.Object3D, detailTextureUrl?: string, scenery = false): void {
+  if (isMapBeautyDisabled() || !detailTextureUrl) return;
   model.traverse(node => {
     const mesh = node as THREE.Mesh<THREE.BufferGeometry, THREE.MeshStandardMaterial>;
     if (!mesh.isMesh || Array.isArray(mesh.material) || !mesh.material.isMeshStandardMaterial) return;
     const material = mesh.material, compile = material.onBeforeCompile.bind(material);
+    if (scenery && material.name !== 'EmberShoreBasaltScenery') return;
+    if (scenery) { material.fog = true; material.vertexColors = false; }
+    // This material owns its native detail sampler, including late decode after
+    // disposal. The GLB's original color map remains the heat-paint authority.
+    let disposed = false;
+    const detail = new THREE.TextureLoader().load(detailTextureUrl, texture => {
+      if (disposed) texture.dispose();
+    });
+    detail.colorSpace = THREE.SRGBColorSpace;
+    detail.wrapS = detail.wrapT = THREE.RepeatWrapping;
+    material.addEventListener('dispose', () => { disposed = true; detail.dispose(); });
     const cacheKey = material.customProgramCacheKey();
     material.onBeforeCompile = (shader, renderer) => {
       compile(shader, renderer);
+      shader.uniforms.emberBasaltDetail = { value: detail };
       shader.uniforms.emberBasaltLow = { value: new THREE.Color('#5d727c') };
       shader.uniforms.emberBasaltHigh = { value: new THREE.Color('#9c9e91') };
       shader.vertexShader = shader.vertexShader
@@ -2336,34 +2349,24 @@ function clarifyEmberBasalt(model: THREE.Object3D): void {
         .replace('#include <common>', `#include <common>
 varying vec3 vEmberBasalt;
 uniform vec3 emberBasaltLow, emberBasaltHigh;
-vec2 emberStoneHash(vec2 p) {
-  return fract(sin(vec2(dot(p, vec2(127.1, 311.7)), dot(p, vec2(269.5, 183.3)))) * 43758.5453);
-}`)
+uniform sampler2D emberBasaltDetail;
+float emberHeatCore(vec3 paint) { return clamp((paint.r - max(paint.g, paint.b) * 1.8) * 18.0, 0.0, 1.0); }`)
         .replace('#include <map_fragment>', `#include <map_fragment>
 float emberWarm = clamp((diffuseColor.r - max(diffuseColor.g, diffuseColor.b) * 1.8) * 18.0, 0.0, 1.0);
 float emberShelf = smoothstep(-1.8, 1.8, vEmberBasalt.y);
-vec2 emberCell = vEmberBasalt.xz * 1.45;
-vec2 emberCellId = floor(emberCell), emberCellPoint = fract(emberCell);
-float emberNear = 8.0, emberNext = 8.0, emberCellShade = 0.5;
-for (int emberY = -1; emberY <= 1; emberY++) for (int emberX = -1; emberX <= 1; emberX++) {
-  vec2 emberNeighbour = vec2(float(emberX), float(emberY));
-  vec2 emberSeed = emberStoneHash(emberCellId + emberNeighbour);
-  float emberDistance = length(emberNeighbour + 0.18 + emberSeed * 0.64 - emberCellPoint);
-  if (emberDistance < emberNear) { emberNext = emberNear; emberNear = emberDistance; emberCellShade = emberSeed.x; }
-  else emberNext = min(emberNext, emberDistance);
-}
-float emberJoint = smoothstep(0.006, 0.030, emberNext - emberNear);
-float emberGrain = fract(sin(dot(floor(vEmberBasalt * 18.0), vec3(12.9898, 78.233, 37.719))) * 43758.5453);
-float emberGrainFade = 1.0 - smoothstep(0.4, 1.2, max(max(fwidth(vEmberBasalt.x), fwidth(vEmberBasalt.z)), fwidth(vEmberBasalt.y)) * 18.0);
+vec3 emberSample = texture2D(emberBasaltDetail, vEmberBasalt.xz / 12.0).rgb;
+float emberEtching = dot(emberSample, vec3(0.2126, 0.7152, 0.0722));
 vec3 emberStone = mix(emberBasaltLow, emberBasaltHigh, emberShelf);
-emberStone *= (0.94 + emberCellShade * 0.08 + (emberGrain - 0.5) * 0.20 * emberGrainFade) * mix(0.93, 1.0, emberJoint);
-diffuseColor.rgb = mix(diffuseColor.rgb, emberStone, 0.88);
+emberStone *= clamp(0.82 + emberEtching * 1.35, 0.76, 1.22);
+diffuseColor.rgb = emberStone;
 float emberPlayfield = 1.0 - smoothstep(63.8, 64.0, max(abs(vEmberBasalt.x), abs(vEmberBasalt.z)));
-float emberVein = emberWarm * emberPlayfield * (0.70 + 0.30 * emberGrain);
-diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.28, 0.055, 0.012), emberVein * 0.82);`)
-        .replace('#include <emissivemap_fragment>', '#include <emissivemap_fragment>\ntotalEmissiveRadiance += vec3(0.07, 0.012, 0.002) * emberVein;');
+float emberVein = emberWarm * emberPlayfield * clamp(0.58 + emberEtching * 1.8, 0.58, 1.0);
+float emberCore = ${scenery ? '0.0' : `min(min(emberHeatCore(texture2D(map, vMapUv + vec2(0.00045, 0.0)).rgb), emberHeatCore(texture2D(map, vMapUv - vec2(0.00045, 0.0)).rgb)), min(emberHeatCore(texture2D(map, vMapUv + vec2(0.0, 0.00045)).rgb), emberHeatCore(texture2D(map, vMapUv - vec2(0.0, 0.00045)).rgb)))`};
+emberCore *= emberWarm * emberPlayfield;
+diffuseColor.rgb = mix(diffuseColor.rgb, mix(vec3(0.20, 0.034, 0.010), vec3(0.38, 0.075, 0.014), emberCore), emberVein * 0.82);`)
+        .replace('#include <emissivemap_fragment>', 'totalEmissiveRadiance = vec3(0.055, 0.012, 0.002) * emberVein + vec3(0.36, 0.11, 0.015) * emberCore;');
     };
-    material.customProgramCacheKey = () => `${cacheKey}|ember-basalt-v4`;
+    material.customProgramCacheKey = () => `${cacheKey}|ember-basalt-v11:${scenery}`;
     material.needsUpdate = true;
   });
 }
@@ -2876,6 +2879,30 @@ function createContinuation(
   geometry.setAttribute('uv1', new THREE.Float32BufferAttribute(uvs, 2));
   geometry.setIndex(indices);
   geometry.computeVertexNormals();
+  if (contractId === 'e10-ember-shore') {
+    // The two surfaces already meet in position. Match their lighting normals
+    // at that join, then blend into the apron over its first two rings.
+    const sourcePositions = source.geometry.getAttribute('position');
+    const sourceNormals = source.geometry.getAttribute('normal');
+    const normals = geometry.getAttribute('normal');
+    const edgeNormals = new Map<string, THREE.Vector3>();
+    for (let i = 0; i < sourcePositions.count; i += 1) {
+      const x = sourcePositions.getX(i), z = sourcePositions.getZ(i);
+      if (Math.abs(Math.abs(x) - halfX) < 0.001 || Math.abs(Math.abs(z) - halfZ) < 0.001) {
+        edgeNormals.set(`${x.toFixed(3)},${z.toFixed(3)}`, new THREE.Vector3().fromBufferAttribute(sourceNormals, i));
+      }
+    }
+    const blended = new THREE.Vector3();
+    for (let ring = 0; ring < 2; ring += 1) for (let i = 0; i < edge.length; i += 1) {
+      const [x, z] = edge[i]!;
+      const normal = edgeNormals.get(`${x.toFixed(3)},${z.toFixed(3)}`);
+      if (!normal) continue;
+      const index = ring * edge.length + i;
+      blended.fromBufferAttribute(normals, index).lerp(normal, 1 - ring * 0.5).normalize();
+      normals.setXYZ(index, blended.x, blended.y, blended.z);
+    }
+    normals.needsUpdate = true;
+  }
   geometry.computeBoundingSphere();
   const material = source.material.clone();
   if (contractId === 'e3-moth-season' || deepSkyGround) {
@@ -2999,7 +3026,7 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
       if (host.contractId === 'e3-canyon-works') clarifyCanyonGround(nextTerrain);
       if (host.contractId === 'e10-last-claim') paintLastClaimDeck(nextTerrain);
       if (host.contractId === 'e10-river') paintRiverBanks(nextTerrain);
-      if (host.contractId === 'e10-ember-shore') clarifyEmberBasalt(nextTerrain);
+      if (host.contractId === 'e10-ember-shore') clarifyEmberBasalt(nextTerrain, selected.detailTextureUrl);
       if (host.contractId === 'e10-archive-world') clarifyArchiveTerraces(nextTerrain, host.archiveRestoration);
       if (host.contractId === 'e9-devils-alley') gradeTerrainByHeight(nextTerrain, '#9f8b6e', '#bba487', -0.14, 4.57, 0.46);
       if (host.contractId === 'e8-low-orbit') gradeTerrainByHeight(nextTerrain, '#777a76', '#a5a28e', -4.8, 0.7, 0.38);
@@ -3024,6 +3051,7 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
       nextPanorama.rotation.set(...mount.rotation);
       nextPanorama.scale.fromArray(mount.scale);
       preparePanorama(nextPanorama);
+      if (host.contractId === 'e10-ember-shore') clarifyEmberBasalt(nextPanorama, selected.detailTextureUrl, true);
       if (host.contractId === 'e3-canyon-works') clarifyCanyonGround(nextPanorama, true);
       if (host.contractId === 'e4-long-road' && selected.contract.maskTruth) clarifyMotorGround(nextPanorama, selected.contract.maskTruth, true);
       if (selected.contract.waterSurface?.owner === 'runtime DeepwaterClaimTile') {
@@ -3031,7 +3059,7 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
       }
       const nextSkirt = createContinuation(nextTerrain, nextPanorama, heightAt, terrainMetrics.bounds, host.contractId);
       if (host.contractId === 'e10-river' && nextSkirt) paintRiverBanks(nextSkirt);
-      if (host.contractId === 'e10-ember-shore' && nextSkirt) clarifyEmberBasalt(nextSkirt);
+      if (host.contractId === 'e10-ember-shore' && nextSkirt) clarifyEmberBasalt(nextSkirt, selected.detailTextureUrl);
       if (host.contractId === 'e10-archive-world' && nextSkirt) clarifyArchiveTerraces(nextSkirt, host.archiveRestoration);
       if (host.contractId === 'e3-moth-season' && host.nightMode && nextSkirt) {
         const material = nextSkirt.material as THREE.Material;
