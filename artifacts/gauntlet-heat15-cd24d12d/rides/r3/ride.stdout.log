@@ -1,0 +1,15 @@
+**SECURED** on the rebuilt map. Everything is on disk and the ride is stopped at the first secure per the rules.
+
+## Outcome
+`e5-regatta` / `e5-regatta-01` / trail — **secured, wave 12, 272.000 s, 200 gold, 20 calls**, `eventLogHash fnv1a32:86d55c20`. Three sim runs, one scored attempt. Tape put forward: **`attempt-1-tape.json`**, byte-identical to `tune-2-tape.json` and named in `gauntlet-outcome.json`'s `tape` field. Envelope clears all three axes (last order 717 ticks inside; 20 of 3601 entries; 44 KB of a 1.94 MB ceiling).
+
+## The board arithmetic, up front
+`w12 / 200 g / 272.000 s` is this contract's **arithmetic maximum, not a margin I left behind** — and it equals my own standing row exactly, so the door stores this reel without assaying it. Three independent pins: `secureWave: 12` fixes waves and time; `skill.md` line 514 ("a secured standing freezes at the official goal, so riding on … never moves the board") closes the ride-on route even though the null floor proves this map reaches wave 14; and the purse caps at 200 because nothing places a `stockpile` here — re-measured this ride, not inherited. I knew that before writing an order, so the heat's value went into the receipt and the parity evidence.
+
+## What I got that no prior generation did
+- **The first verbatim `UNREACHABLE_WATER`** in six rides of this map: `MOVE_HERO names water the Claim-Boat cannot reach.` — hero/boat (−45.21, 0), point (0, 62).
+- **`walkable` is half of the forfeit rule and is not in the view.** A deliberate step-ashore at (−50.41, 0) — beyond the clamp, off the deck, inside the 6.4 gangway — answered `UNREACHABLE_TERRAIN`. So the rim the door calls "that shore" did not accept a body, the forfeit was structurally unreachable there, and **generation 134's claim that a point like (−55, 0) "would have been a legal step ashore" is measured false.** A rider cannot derive that boundary in either direction, and it is the boundary that ends runs.
+- Both probes were fired only after the race latched, where `advance` returns early and a forfeit is impossible by construction.
+
+## The cost, stated plainly
+Run 2 was stopped mid-race: `PICK_UPGRADE` carried the offer *object* instead of `pick.id`, so every array with a live draft was refused whole and the sim re-served the same view **24,635 times**. Rejected arrays never enter a reel, so it left no trace in the artefact while burning most of the wall. That is the third consecutive generation on this map to lose a run to one unverified field name — my own rule ("branch only on keys you have SEEN") applied to `now.regatta` and not to `now.pendingOffer`. The cure in run 3 was that one field plus signature dedupe, which makes a storm structurally impossible.

@@ -1,0 +1,175 @@
+{
+  "rig": "opus",
+  "contract": "r3",
+  "model": "claude-opus-5",
+  "sessionId": "0f3d17c6-b155-4b50-b3b3-3f27673694ad",
+  "startedAt": "2026-09-22T03:55:46.082Z",
+  "endedAt": "2026-09-22T04:14:31.531Z",
+  "wallClockSeconds": 1125,
+  "wallHit": false,
+  "exitCode": 0,
+  "signal": null,
+  "setupToFirstOutputSeconds": 405,
+  "arenaTrackedChanges": [],
+  "workspaceFiles": [
+    "attempt-1-tape.json",
+    "ctrl-null.mjs",
+    "ctrl-v1.mjs",
+    "ctrl-v2.mjs",
+    "gauntlet-outcome.json",
+    "gauntlet-report.md",
+    "probe-null-summary.json",
+    "probe-null-tape.json",
+    "probe-null-views.jsonl",
+    "runner.mjs",
+    "tune-1-views.jsonl",
+    "tune-2-summary.json",
+    "tune-2-tape.json",
+    "tune-2-views.jsonl"
+  ],
+  "outcome": {
+    "secured": true,
+    "waves": 12,
+    "timeMs": 272000,
+    "gold": 200,
+    "kills": 27,
+    "calls": 20,
+    "defaultedPicks": 0,
+    "defaultedSecure": 1,
+    "eventLogHash": "fnv1a32:86d55c20",
+    "tape": "/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-heat15-arena/artifacts/heat15/opus/r3/attempt-1-tape.json",
+    "scored": true,
+    "runsSoFar": 3,
+    "scoredAttempts": 1,
+    "worldModel": "sim-import",
+    "note": "attempt-1-tape.json is a byte-identical copy of tune-2-tape.json: ONE ride under two filenames, promoted by name per the brief's promotion clause. The first controller ride (tune-1) was stopped mid-race after a self-inflicted view storm (PICK_UPGRADE carried the offer object instead of pick.id, so every array with a live draft was refused whole and the sim re-served the same view 24,635 times); it is not a scored attempt and its tape is not put forward.",
+    "envelope": {
+      "durationTicks": 8160,
+      "lastEntryTick": 7443,
+      "entryCount": 20,
+      "maxEntriesAllowed": 3601,
+      "bytes": 44475,
+      "byteCeiling": 1938784,
+      "tapeHeaderHash": "fnv1a32:621cb085"
+    },
+    "ceilingNote": "w12 / 200 g / 272.000 s is this contract's ARITHMETIC MAXIMUM, not a margin left behind. secureWave 12 pins waves at 12 and timeAlive at 272.000 s; skill.md line 514 ('a secured standing freezes at the official goal, so riding on earns only that run's rewards and never moves the board') closes the ride-on route; and the bank cap is the default 200 because the only cap-raiser is stockpile and no path places one here - re-measured this ride, see the report. That row equals the rider's own standing row of 2026-09-18, so an exact tie goes to the earlier submission and the door stores this reel without assaying it. Recorded as fact, not as a claim to have beaten it."
+  },
+  "outcomeError": null,
+  "promotedTapeName": "attempt-1-tape.json",
+  "scoredTapes": [
+    {
+      "file": "attempt-1-tape.json",
+      "id": "agent-de3fcdf5-5ada3c41-51a4-4e6c-98be-3421199f0b4b",
+      "contract": "e5-regatta",
+      "seed": "e5-regatta-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "cd24d12d2",
+        "engineHash": "53f680fe23f46c53b936c5ab3f6d48698db9b446a7a992add3fc90e8f6baf595",
+        "era": 6,
+        "viewVersion": 3
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 12,
+        "timeAlive": 272,
+        "gold": 200
+      },
+      "entries": 20,
+      "durationTicks": 8160,
+      "lastEntryTick": 7443,
+      "promotedByRig": true,
+      "discoveredBy": "outcome-file+filename"
+    }
+  ],
+  "otherTapes": [
+    {
+      "file": "probe-null-tape.json",
+      "id": "agent-aa9b15ba-fa7be94c-70a8-422b-8593-26722e85e950",
+      "contract": "e5-regatta",
+      "seed": "e5-regatta-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "cd24d12d2",
+        "engineHash": "53f680fe23f46c53b936c5ab3f6d48698db9b446a7a992add3fc90e8f6baf595",
+        "era": 6,
+        "viewVersion": 3
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 14,
+        "timeAlive": 320,
+        "gold": 0
+      },
+      "entries": 0,
+      "durationTicks": 9600,
+      "lastEntryTick": null
+    },
+    {
+      "file": "tune-2-tape.json",
+      "id": "agent-de3fcdf5-5ada3c41-51a4-4e6c-98be-3421199f0b4b",
+      "contract": "e5-regatta",
+      "seed": "e5-regatta-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "cd24d12d2",
+        "engineHash": "53f680fe23f46c53b936c5ab3f6d48698db9b446a7a992add3fc90e8f6baf595",
+        "era": 6,
+        "viewVersion": 3
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 12,
+        "timeAlive": 272,
+        "gold": 200
+      },
+      "entries": 20,
+      "durationTicks": 8160,
+      "lastEntryTick": 7443
+    }
+  ],
+  "otherSecuredTapes": [
+    {
+      "file": "tune-2-tape.json",
+      "id": "agent-de3fcdf5-5ada3c41-51a4-4e6c-98be-3421199f0b4b",
+      "contract": "e5-regatta",
+      "seed": "e5-regatta-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "cd24d12d2",
+        "engineHash": "53f680fe23f46c53b936c5ab3f6d48698db9b446a7a992add3fc90e8f6baf595",
+        "era": 6,
+        "viewVersion": 3
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 12,
+        "timeAlive": 272,
+        "gold": 200
+      },
+      "entries": 20,
+      "durationTicks": 8160,
+      "lastEntryTick": 7443
+    }
+  ],
+  "report": {
+    "outcome": "**SECURED** — waves **12**, timeAlive **272.000 s**, gold **200**, calls **20**\n(kills 27, `defaultedSecure: 1`, `defaultedPicks: 0`, `eventLogHash fnv1a32:86d55c20`).\n\nTape put forward: **`attempt-1-tape.json`**, a byte-identical copy of `tune-2-tape.json` — one ride\nunder two filenames, promoted by name in `gauntlet-outcome.json`'s `tape` field.\n\n**3 sim runs, 1 scored attempt.** Run 1 was the zero-order floor probe. Run 2 (`tune-1`) was stopped\nmid-race after a self-inflicted view storm — `PICK_UPGRADE` carried the offer *object* instead of\n`pick.id`, so every array with a live draft was refused whole, the sim re-served the same view, and\nthe run reached 24,635 views; rejected submissions never enter a reel, so nothing was put forward and\nit is not a scored attempt. Run 3 (`tune-2`) fixed that one field and a sampling probe that was its\nown storm generator, and secured on its first ride.\n\nEnvelope, measured off the first reel that existed: `durationTicks` 8160, last accepted order at tick\n**7443** (717 inside), **20** entries against 3601, **44,475 bytes** against the live ceiling of\n1,938,784 (2.3 %). Local assay: the zero-order probe was control-tested first; its ceiling tape\nfails replay by design (a known class, not the instrument). The reel's own header hash is\n`fnv1a32:621cb085`, which is a different number from the stdout outcome line's `fnv1a32:86d55c20` by\ndesign — compare the replay against the **tape header**, never the outcome line.\n\n**The ceiling, stated as fact rather than as a claim to have beaten it.** `w12 / 200 g / 272.000 s`\nis this contract's arithmetic maximum: `twist.secureWave: 12` pins waves at 12 and `timeAlive` at\n272.000 s; `skill.md` line 514 closes the ride-on route (\"a secured standing freezes at the official\ngoal, so riding on earns only that run's rewards and never moves the board\"); and the purse caps at\nthe default 200 because the only cap-raiser is `stockpile` and nothing places one here — re-measured\nthis ride, not inherited (a `BOAT_BUILD` of a stockpile onto the bow pad plus two `BUILD stockpile`\norders inside the sole declared build zone all rode in the tape, and the cap never moved off 200).\nThat row equals my own standing row of 2026-09-18, so the board's own rule stores this reel and never\nassays it. Recorded either way.",
+    "whatTheMapAsked": "It asked for its era's signature mechanic — **E5 storms schedule the waves** — and the storm is the\n**clock**, not the adversary. `deepwater_storm_track` declares `replacesScheduledWaves: true`, so the\ntimetable is computable from view 0 (wave *N* at 8 + 24(*N*−1)) and the boundary views duly landed at\nt = 8.03, 32, 56.03, 80.03, 104.03, 128.03, 152.03 … 272. That arithmetic **is** the deadline:\n`RegattaRaceSystem.advance` returns early at `wave >= secureWave`, so the course **freezes forever at\nt = 272** and the race is a distance-over-time budget denominated in storm cycles. I did that sum\nbefore writing an order: ~254 units of course at `topSpeed` 1.65 against a 272 s freeze, which is\ncomfortable — and because a wave-12 secure pins `timeAlive`, **speed does not rank at all**, so I\nspent the slack on robustness (aim points 4.5 units *inside* each radius-6 disc) rather than on pace.\nThe adversarial half stayed inert exactly as my notebook remembers: `stormMovementMultiplier: 0.72`\nis published and never reaches the hull — `ClaimBoat.steer` takes `dt` and a fast-water boolean and\ncarries no weather term at all. The one authored current (`fastWaterMultiplier` 1.5 over z ∈ [34,54])\nis real and was worth little on my line: it showed up once, as `speed: 2.26` at the t = 32 view, on\nthe leg between the two northern marks.\n\nFields that carried it: `now.regatta.boat.{x,z,heading,speed,aboard}`,\n`now.regatta.{nextBuoy,buoysPassed,state,finished,forfeited}`, `now.timers.runSeconds`,\n`now.seams[].{id,active,x,z}`, `now.gold` against `now.score.goldPanned`, `now.orders[].status/reason`,\n`now.pendingOffer`, `now.pendingSecure`. Orders: **`MOVE_HERO`** for the whole race (seven waypoints),\nthen `HARVEST`, three cap probes, two refusal probes, and silence at the boundary. **There is no\nRegatta verb: the helm is `MOVE_HERO` while aboard**, which is exactly what ADR-005 intended.\n\n**Does it still play the way my notebook remembers?** Yes in its bones — and my two predecessors on\nthis rebuilt map reproduced to the hundredth of a second, which on an era named *the Re-surveyed\nClaims* is itself the result. Gate seconds this ride against generation 135's: start-beacon **2.73**\nboth; northwest **28.07** (135: 27.83); midcourse **44.80** (44.70); northeast **64.13** identical;\nfinish-beacon **87.67** (87.93). Generation 116's era-6 sentence is still dead: `regattaRacer` answers\nthe hull's point only while a body is aboard and **null otherwise**, so a swimming hero scores nothing.\nIts **first minute**, this time: the hero booted at (−49, 0) *inside* the deck and `aboard: false`,\nstepped off over the beam toward (−42, −6), turned back across the rail toward (−47, 6), boarded on the\ncrossing, and was already making 1.65 u/s past the start beacon by the t = 8.03 view. Nothing\nthreatening happened at all — `threats.alive` peaked at 6 and the hero finished **100/100, having\ntaken no damage in any of the 26 views**.\n\n### The race, as it happened\n\n- **Boarding.** Yes. `boat.aboard` read `false` at t = 0 (hero (−49, 0), standing on the deck, boarded\n  nothing) and `true` at the t = 8.03 view (hull (−46.83, 5.90), making 1.65 u/s). The crossing\n  instant is **not published**; it is recoverable only because the start gate coincides with the\n  mooring, so gate 1's own `atSeconds` dates it: **run second 2.73**. The crossing *point* is\n  **computed, not observed** — walking from (−42, −6) toward (−47, 6) re-enters the deck box\n  (half-width 4.4 about the anchor) at ≈ **(−44.6, +0.2)**, the beam rail.\n- **Buoys, in the order they recorded, with the second each fell** (verbatim from\n  `now.regatta.buoysPassed`):\n\n  | # | id | `atSeconds` |\n  |---|---|---|\n  | 1 | `start-beacon` | **2.73** |\n  | 2 | `northwest-checkpoint` | **28.07** |\n  | 3 | `midcourse-checkpoint` | **44.80** |\n  | 4 | `northeast-checkpoint` | **64.13** |\n  | 5 | `finish-beacon` | **87.67** |\n\n  The sixth and final gate — the start stake `claim-boat` at (−49, 0), radius 6 by\n  `DEFAULT_GATE_RADIUS` — **never appears in `buoysPassed` and its second is never published.** I can\n  only bound it between views and compute it: at t = 128.03 the hull was at (−20.77, −0.08) making\n  1.65 u/s due west (heading 3.14) with no turn left in the leg; the disc edge on that line is\n  x = −43, i.e. 22.23 units, i.e. 13.47 s — so the **finish fell at ≈ t 141.5**, and by the t = 152.03\n  view `state` read `finished` with the hull at rest at (−45.21, 0). `now.regatta.state` at the\n  terminal view read **`\"finished\"`**, with `finished: true`, `forfeited: false`, `nextBuoy: null`.\n- **Every refusal the status channel answered, verbatim.** Four kinds, and two of them were probes I\n  fired deliberately once the purse was capped and the race was over (after `finishedAt` is set\n  `advance` returns early, so a forfeit is unreachable from there):\n  - `MOVE_HERO:UNREACHABLE_WATER: MOVE_HERO names water the Claim-Boat cannot reach.` — at\n    **t = 248.07**, hero **(−45.21, 0)**, boat **(−45.21, 0)**, point named **(0, 62)**. Chosen to be\n    non-navigable (|z| 62 > the hull's ±49.75 clamp) *and* 62 units clear of the 6.4 gangway reach, so\n    it could not be a step ashore. **No generation before this one had ever provoked this refusal.**\n  - `MOVE_HERO:UNREACHABLE_TERRAIN: MOVE_HERO target is outside walkable terrain.` — at\n    **t = 248.10**, hero **(−45.21, 0)**, boat **(−45.21, 0)**, point named **(−50.41, 0)**: a\n    deliberate step-ashore attempt, beyond the clamp, outside the deck box, 5.2 units out and so\n    inside the gangway's 6.4. It was refused for **walkability**, which is the finding — see the last\n    bullet.\n  - `HARVEST:INVALID_TARGET: gold-seam-N is unavailable.` — ordinary depleted-seam failures through\n    the panning phase (the failing tail is the clock; the Prospector already stands where it pans).\n  - `HARVEST:FAILED: HARVEST action was rejected.` — from t = 201.37 onward, which is `Economy`\n    refusing credits against a full purse, not a broken economy: `gold` 200 with `goldPanned` frozen\n    at 200.\n  - **`NOT_ABOARD` was never answered.** It requires `!navigable(hero)` — the hero standing where the\n    hull cannot float — and the step ashore above was refused, so the hero never left the boat and the\n    precondition never existed.\n- **Forfeited: no.** `forfeited: false` at every one of the 26 views, and `state` went `racing` →\n  `finished` only. That was designed rather than avoided: `stepAshore` requires a point that is **not**\n  navigable, so every racing waypoint was clamped inside ±44 and therefore failed that clause outright.\n  The tightest margin I allowed was the last-gate aim at **(−44, 0)** — 5.0 from the mark, inside its\n  radius 6, and 5.75 inside the clamp wall; the hull coasted to rest at (−45.21, 0), still 4.54 inside\n  it. No point I issued was ever a forfeit candidate.\n- **What `now.regatta` did NOT tell me, and I had to infer, measure or guess.** Three things, the\n  third of them new:\n  1. **The finish second is withheld.** `RegattaRaceSystem` stores `finishedAt` and the view's\n     `readRegatta` drops it, publishing `state` instead — so the five checkpoints each carry an exact\n     `atSeconds` and **the decisive gate carries none.** I could only bracket it across a 24-second\n     view gap and compute ≈ 141.5 from the published position and speed. A rider cannot report when it\n     won. Both of my predecessors reported this same gap; it reproduces exactly, and it is the one\n     field whose absence I would most like closed.\n  2. **The boarding instant is unpublished.** There is no `aboard` transition record and no \"boarded\n     at\" second; `boat.aboard` is a bare boolean. On this course the start beacon sits on the mooring,\n     so gate 1's timestamp recovers it — on a course whose start gate sat elsewhere it would be\n     unrecoverable from the view.\n  3. **`walkable` is not in the view, and it is half of the forfeit rule.** `stepAshore`'s last clause\n     is `walkable(point)`, and nothing in `now` or `stablePrefix` says which ground is walkable. I\n     measured it: from a hull at (−45.21, 0) the point (−50.41, 0) — beyond the clamp, off the deck,\n     inside the gangway — is **outside walkable terrain**, so on this course, at that hull position,\n     the run-ending forfeit is **structurally unreachable**: the rim the door document calls \"that\n     shore\" did not accept a body. Generation 134 wrote that a point like (−55, 0) \"*would* have been a\n     legal step ashore\"; measured, it is not. A rider cannot derive that boundary — in either\n     direction — from the published view, and it is the boundary that ends runs.\n  Two things my notebook listed as gaps are **not** gaps, and the correction is worth keeping:\n  `gangwayReach` (6.4) *is* published on the `regatta_boat` rule, and the hull's clamp *is* computable\n  from `deepwater_water_regions.size` 128 and `regatta_boat.hullRadius` 14.25 as ±49.75.",
+    "winnability": "Secured, and the margin was **wide on every axis that can lose the run and at the arithmetic ceiling\non every axis that scores**: the hero took no damage at all (100/100 at all 26 views, `threats.alive`\npeak 6), the race finished at ≈ t 141.5 against a t = 272 freeze (1.9× slack), and the purse capped at\nt = 201.37 with 70 seconds to spare — while `w12 / 200 g / 272.000 s` is the most this contract can\npublish, so the only thing genuinely thin was my own controller, which cost one run to a single wrong\nfield name.",
+    "lessons": "- **The same class of bug has now cost three consecutive generations on this one map, and each time it\n  was a field name I had not SEEN.** Gen 134 read `now.regatta.race` off the engine's nested type and\n  sailed a second lap; gen 135 cured it by dumping the raw object; gen 136 read\n  `now.pendingOffer[0]` as an id when it is an **object** with an `id`, so every array carrying a\n  draft was refused whole and the sim re-served the same view **24,635 times**. My own rule was\n  \"dump the raw contract-scoped object and branch only on keys you have seen\" — I applied it to\n  `now.regatta` and not to `now.pendingOffer`. **Apply it to EVERY field the controller branches on,\n  including the ones I have used fifty times, and assert the shape (`typeof o.id === 'string'`) rather\n  than the presence.**\n- **A refused array is invisible in the tape and catastrophic in wall clock.** Rejected submissions\n  never enter a reel, so the storm left no trace in the artefact I was protecting while it burned the\n  whole heat's budget; the run still *advanced*, on the order set installed before the draft appeared,\n  which is exactly what made it look healthy. **Count submissions against views in the runner and\n  treat a view-to-submission ratio near 1:1 at sub-second spacing as a stop condition.**\n- **Dedupe by signature is the structural cure, not a discipline.** Returning silence whenever the\n  array would be identical to the last accepted one makes a storm impossible, keeps the reel at 20\n  entries for a 26-view run, and cost nothing: the race chain is submitted once and drains.\n- **Never manufacture surprises with fresh ids.** My v1 \"sampling\" probe prepended a bogus `HARVEST`\n  with a new id every view to force sub-second views; distinct ids mean a new failure every time,\n  which is a view-storm generator with no back-off. If a mechanic's instant is withheld, **compute it\n  from published position and speed** instead of trying to out-sample the view cadence.\n- **Provoke a published refusal AFTER the objective latches, and it is free evidence.** `advance`\n  returns early once `finishedAt` is set, so the post-finish window is a place where a forfeit is\n  unreachable by construction. Two orders there produced the first verbatim `UNREACHABLE_WATER` in six\n  generations of riding this map *and* the measurement that the rim is not walkable — which is worth\n  more than either probe alone, because together they say the forfeit clause has a second half no\n  rider can see.\n- **Read the ranking clause before designing for a score.** `skill.md` line 514 — \"a secured standing\n  freezes at the official goal\" — is what closes the only route to beating a pinned row, and it took\n  one read of the submission section to know that riding on to wave 14 (which the null floor proves\n  this map reaches) could not move the board. Knowing the ceiling equals my own row **before** riding\n  turned the heat's purpose from chasing a score into delivering a clean receipt plus the parity\n  evidence the operator asked for.\n- **`null-floors.json` first, then grep the era pins for the contract id — fourteenth heat running,\n  and it has never once been wrong.** Reproducing the floor to the hash is three things at once: proof\n  the rules have not moved, a verified instrument, and the licence to spend the whole reading budget\n  on what actually changed.\n- **The runner before the probe, seventeenth heat running** — this arena refuses compound commands,\n  shell redirection *and* `pkill`, and a relative controller path resolves against the runner's own\n  directory (my gen 125 lesson, re-paid in thirty seconds). The node runner made the\n  intermediate-results law automatic and its per-view table is the entire evidence base of this report."
+  },
+  "usage": {
+    "transcript": "/Users/robin/.claude/projects/-private-tmp-claude-501--Users-robin-Claude-Projects-Gold-Rush-fe6b8d27-b064-40eb-934b-1d29d57a71db-scratchpad-wt-heat15-arena/0f3d17c6-b155-4b50-b3b3-3f27673694ad.jsonl",
+    "assistantTurns": 65,
+    "toolCalls": 35,
+    "tokensIn": 130,
+    "tokensOut": 151493,
+    "cacheReadTokens": 35470209,
+    "cacheWriteTokens": 2295395,
+    "note": "tokensIn excludes cache reads/writes (reported separately); summed from the CLI session transcript, not self-reported by the rig"
+  }
+}

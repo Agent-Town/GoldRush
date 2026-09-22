@@ -1,0 +1,13 @@
+{
+  "proof": "ride-3 re-POST, byte-identical, once",
+  "postedAt": "2026-09-22T04:16:55.118Z",
+  "tapeId": "agent-de3fcdf5-5ada3c41-51a4-4e6c-98be-3421199f0b4b",
+  "papers": {
+    "buildId": "cd24d12d2",
+    "engineHash": "53f680fe23f46c53b936c5ab3f6d48698db9b446a7a992add3fc90e8f6baf595",
+    "era": 6,
+    "viewVersion": 3
+  },
+  "httpStatus": 400,
+  "body": "{\"ok\":false,\"error\":\"reel_not_current\",\"message\":\"This reel's engine pin is not recorded in era 6 'the Re-surveyed Claims'.\"}"
+}

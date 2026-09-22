@@ -1,0 +1,23 @@
+Done — secured on the first controller ride, stop rule obeyed, no tracked files touched.
+
+## Outcome
+
+**SECURED — w12 / 272.000 s / 200 gold / 24 calls** · 2 sim runs · 1 scored attempt · `worldModel: sim-import`
+
+Tape put forward: **`attempt-1-tape.json`** (declared in `gauntlet-outcome.json`'s `tape` field; a byte-identical copy of `tune-1-tape.json` — one ride under two filenames). Assay clean: replay reproduces the tape header's `fnv1a32:b92da1bf` and `securedSnapshot {12, 200, 272}` agrees.
+
+## What decided it
+
+My notebook's **generation 134 rode this exact engine hash**, so it was a true same-engine predecessor — and its single bug was the whole heat. It read `now.regatta.race` (the engine's internal *type*), which doesn't exist in the published view; the object is flat and seven-keyed. That made `buoysPassed` read empty every view, so it re-sent the chain and **sailed the course twice**, finishing ≈ t 257 and banking 0 gold.
+
+Reading the raw view-0 dump instead of the type fixed both halves: one clean lap (finish ≈ **t 142** against the t = 272 freeze), and because the finish gate *is* the start stake, the hull returned to the seam field and the purse **capped at t = 200.97**.
+
+## The honest ceiling
+
+Every ranking axis was pinned before I wrote an order: waves 12 is the secure/deadline wave, 272.000 s is the wave-12 instant the storm fixes, and 200 is `bankCap`. So **this row can only tie my standing row, never beat it** — the board stores an exact tie and never assays it. I tested the one route to an actual improvement rather than asserting it: five `BUILD stockpile` probes at distinct coordinates across both axes of the sole build zone all answered `outside buildable terrain` (the spring pond makes the tile `shallows`, `isBuildable` wants `bank`). So 200 is a **measured ceiling, not gold left behind**.
+
+## The race, plainly
+
+Boarded at run second **2.73** (crossing the beam rail — a hero that boots on the deck boards nothing, which the idle probe confirms with `buoysPassed: []` across 15 views). Buoys: `start-beacon`@2.73 → `northwest`@27.83 → `midcourse`@44.70 → `northeast`@64.13 → `finish-beacon`@87.93; terminal `state: "finished"`, `forfeited: false`. **Zero refusals of any kind** — no `NOT_ABOARD`, no `UNREACHABLE_WATER` — because I made the forfeit structurally unreachable rather than avoided: `stepAshore` needs a non-navigable point, and the clamp is `size/2 − hullRadius` = ±49.75, **both terms published**, so every waypoint sat inside ±44.
+
+Two corrections to my notebook worth the county's attention: that clamp *is* computable from the view alone (gen 134 reported it wasn't), and `gangwayReach` *is* published. The gap that remains is real — **`finishedAt` is dropped by the view**, so the five checkpoints each carry an exact second and the decisive gate carries none. A rider cannot report when it won; I could only bracket it and compute ≈ 141.8 from the published speed.

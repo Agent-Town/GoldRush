@@ -1,0 +1,626 @@
+{
+ "schema": "goldrush.view.v1",
+ "viewVersion": 3,
+ "stablePrefix": {
+  "seed": "e5-regatta-01",
+  "contract": {
+   "id": "e5-regatta",
+   "name": "The Regatta",
+   "briefing": {
+    "geography": "An open-water beacon course bends north toward the fast storm-front water before returning to the finish.",
+    "goals": [
+     "Cross the north-bending beacon course.",
+     "Build from the Claim-Boat deck while watching the western water."
+    ],
+    "rules": [
+     "Five beacon gates mark the out-and-back course.",
+     "The Claim-Boat deck is the only surveyed build ground.",
+     "Waves enter from the west."
+    ]
+   }
+  },
+  "mechanics": {
+   "schema": "goldrush.mechanics.v1",
+   "contractId": "e5-regatta",
+   "buildables": [
+    {
+     "id": "sentry_beacon",
+     "operation": "BUILD",
+     "meaning": "Lights the dark and slows what it touches; radius 8wu.",
+     "cost": 25,
+     "costs": [
+      25,
+      35,
+      45,
+      55,
+      75,
+      95
+     ],
+     "costRule": "ceil-to-5",
+     "maxCount": 6,
+     "source": "buildables.registry"
+    },
+    {
+     "id": "palisade",
+     "operation": "BUILD",
+     "meaning": "Timber that holds. Bandits break it before you.",
+     "cost": 10,
+     "costs": [
+      10,
+      10,
+      10,
+      10,
+      10,
+      10
+     ],
+     "maxCount": 48,
+     "source": "buildables.registry"
+    },
+    {
+     "id": "sluice",
+     "operation": "BUILD",
+     "meaning": "Works the river for you: 3g per cycle beside water.",
+     "cost": 40,
+     "costs": [
+      40,
+      40,
+      40
+     ],
+     "maxCount": 3,
+     "source": "buildables.registry"
+    },
+    {
+     "id": "stockpile",
+     "operation": "BUILD",
+     "meaning": "Holds +150 gold above the pan cap.",
+     "cost": 60,
+     "costs": [
+      60,
+      60
+     ],
+     "maxCount": 2,
+     "source": "buildables.registry"
+    },
+    {
+     "id": "turret",
+     "operation": "BUILD",
+     "meaning": "Spark bolts, line-of-sight, 16wu range.",
+     "cost": 50,
+     "costs": [
+      50,
+      70,
+      95,
+      125
+     ],
+     "costRule": "ceil-to-5",
+     "maxCount": 4,
+     "source": "buildables.registry"
+    },
+    {
+     "id": "assay_office",
+     "operation": "BUILD",
+     "meaning": "Write orders; the town's craftsmen answer. One per claim.",
+     "cost": 80,
+     "costs": [
+      80
+     ],
+     "maxCount": 1,
+     "source": "buildables.registry"
+    }
+   ],
+   "interactables": [],
+   "rules": [
+    {
+     "id": "build_zones",
+     "source": "tileParams.buildZones",
+     "data": {
+      "count": 1,
+      "banks": [
+       "north"
+      ]
+     }
+    },
+    {
+     "id": "deepwater_arsenal",
+     "source": "DeepwaterArsenal.update",
+     "data": {
+      "deckBuildables": [
+       "sentry_beacon",
+       "turret"
+      ],
+      "weapons": [
+       "depthChargeLobber",
+       "depthChargeRack",
+       "harpoonBallista"
+      ],
+      "sharedMunition": "depth_charge",
+      "munitionCapacity": 12,
+      "sealedInDiveZone": true
+     }
+    },
+    {
+     "id": "deepwater_claim_boat",
+     "source": "ClaimBoat.placeBuilding+reanchor",
+     "data": {
+      "boatId": "claim-boat",
+      "pads": [
+       "bow",
+       "port",
+       "starboard"
+      ],
+      "anchors": [
+       "finish-line",
+       "start-line"
+      ],
+      "initialAnchor": "start-line",
+      "padsAcceptOneBuildingEach": true,
+      "buildingsRideTheAnchor": "world position = anchor + pad offset"
+     }
+    },
+    {
+     "id": "deepwater_levers_unreachable",
+     "source": "AgentGameAdapter",
+     "data": {
+      "consumerLevers": [
+       "ClaimBoat.placeBuilding",
+       "ClaimBoat.reanchor"
+      ],
+      "agentOperations": [],
+      "reason": "no boat-build or reanchor verb exists on the agent tool surface"
+     }
+    },
+    {
+     "id": "deepwater_storm_track",
+     "source": "StormWaveScheduler.advance",
+     "data": {
+      "regionId": "storm-front-fast-water",
+      "westX": -64,
+      "eastX": 64,
+      "corsairsPerWave": 3,
+      "replacesScheduledWaves": true
+     }
+    },
+    {
+     "id": "deepwater_water_regions",
+     "source": "WaterRegionTile.sample",
+     "data": {
+      "tileId": "e5-regatta",
+      "size": 128,
+      "depthClasses": [
+       "surface"
+      ],
+      "diveZone": [
+       "reef",
+       "wreck",
+       "trench"
+      ]
+     }
+    },
+    {
+     "id": "hero_orders",
+     "source": "StandingOrders.MOVE_HERO",
+     "data": {
+      "verb": "MOVE_HERO",
+      "body": "hero",
+      "arriveRadius": 0.5,
+      "refusals": [
+       "HERO_NOT_YOURS",
+       "UNREACHABLE_TERRAIN",
+       "UNREACHABLE_APPROACH",
+       "HERO_UNAVAILABLE",
+       "NOT_ABOARD",
+       "UNREACHABLE_WATER"
+      ],
+      "pilots": {
+       "headless": "the rider pilots the run's only hero",
+       "roomSeat": "a headless roster seat pilots its own hero",
+       "soloBrowser": "a human pilots the hero; MOVE_HERO refuses HERO_NOT_YOURS"
+      }
+     }
+    },
+    {
+     "id": "regatta_boat",
+     "source": "ClaimBoat.board+steer+stepAshore",
+     "data": {
+      "boatId": "claim-boat",
+      "helm": "MOVE_HERO",
+      "helmedWhile": "aboard; a MOVE_HERO to navigable water sails the hull, and the hero rides the deck anchor",
+      "embark": "walk the hero onto the deck: boarding is a CROSSING of the rail, so a hero that boots on the deck has not boarded",
+      "disembark": "a move intent toward standable ground off the deck and within gangwayReach of the deck anchor, so a bow-ward intent steps nowhere and the hull runs aground on its clamp instead; after the start beacon this forfeits",
+      "gangwayReach": 6.4,
+      "gangplankReach": 2,
+      "deckHalfWidth": 4.4,
+      "deckHalfLength": 14.25,
+      "hullRadius": 14.25,
+      "refusals": [
+       "NOT_ABOARD",
+       "UNREACHABLE_WATER"
+      ],
+      "topSpeed": 1.65,
+      "acceleration": 0.55,
+      "turnRateRadPerSec": 3.14,
+      "drag": 0.8,
+      "fastWaterMultiplier": 1.5,
+      "view": "now.regatta.boat"
+     }
+    },
+    {
+     "id": "regatta_race",
+     "source": "RegattaRaceSystem.advance+movementMultiplierAt",
+     "data": {
+      "gates": [
+       "start-beacon",
+       "northwest-checkpoint",
+       "midcourse-checkpoint",
+       "northeast-checkpoint",
+       "finish-beacon",
+       "claim-boat"
+      ],
+      "gateCount": 6,
+      "finish": "claim-boat",
+      "gateRadiusFallback": 6,
+      "fastWaterZone": "storm-front-fast-water",
+      "fastWaterMultiplier": 1.5,
+      "racer": "the Claim-Boat with a body aboard; a swimming hero and a moored hull score nothing",
+      "leavingTheBoatForfeits": true,
+      "forfeitIsTerminalForTheRace": true,
+      "deadlineWave": 12,
+      "competingRacerLoot": false,
+      "view": "now.regatta"
+     }
+    },
+    {
+     "id": "spring_cells",
+     "source": "tileParams.waterSources",
+     "data": {
+      "count": 1,
+      "kinds": [
+       "spring_pond"
+      ]
+     }
+    }
+   ],
+   "modes": [],
+   "posting": {
+    "waves": [
+     {
+      "event": "secure",
+      "wave": 12,
+      "source": "twist.secureWave"
+     }
+    ],
+    "spawnEdges": [
+     "west"
+    ],
+    "lossStakes": [
+     {
+      "id": "claim-boat",
+      "x": -49,
+      "z": 0,
+      "source": "tileParams.stakeMarkers"
+     }
+    ]
+   }
+  },
+  "map": {
+   "claim": {
+    "x": -49,
+    "z": 0
+   },
+   "seams": [
+    {
+     "id": "gold-seam-1",
+     "x": -52,
+     "z": -4
+    },
+    {
+     "id": "gold-seam-2",
+     "x": -49,
+     "z": -4
+    },
+    {
+     "id": "gold-seam-3",
+     "x": -46,
+     "z": -4
+    },
+    {
+     "id": "gold-seam-4",
+     "x": -52,
+     "z": 4
+    },
+    {
+     "id": "gold-seam-5",
+     "x": -46,
+     "z": 4
+    }
+   ],
+   "coalSeams": [],
+   "water": {
+    "river": false,
+    "ford": false,
+    "sources": 1,
+    "descriptor": "deepwater-surface-placeholder"
+   },
+   "spawnGates": [
+    {
+     "edge": "west",
+     "x": -62,
+     "z": 0
+    }
+   ]
+  },
+  "orders": []
+ },
+ "appendLog": [],
+ "now": {
+  "wave": 0,
+  "blastReadyInMs": 0,
+  "weapon": "rig",
+  "regatta": {
+   "boat": {
+    "id": "claim-boat",
+    "x": -49,
+    "z": 0,
+    "heading": 0,
+    "speed": 0,
+    "aboard": false
+   },
+   "nextBuoy": {
+    "id": "start-beacon",
+    "x": -49,
+    "z": 0,
+    "radius": 6
+   },
+   "buoysPassed": [],
+   "state": "racing",
+   "finished": false,
+   "forfeited": false,
+   "fastWaterMultiplier": 1.5
+  },
+  "timers": {
+   "runSeconds": 0,
+   "nextWaveInSeconds": 30
+  },
+  "gold": 0,
+  "hero": {
+   "hp": 100,
+   "maxHp": 100,
+   "x": -49,
+   "z": 0,
+   "level": 1,
+   "upgradesTaken": {},
+   "upgradeChoiceRule": "first-offer"
+  },
+  "prospector": {
+   "x": -50.8,
+   "z": -1.07
+  },
+  "works": {
+   "hp": 0,
+   "maxHp": 0,
+   "standing": 0,
+   "wrecked": 0,
+   "byKind": {},
+   "entries": []
+  },
+  "threats": {
+   "alive": 0,
+   "state": "quiet",
+   "edge": null,
+   "thieves": 0,
+   "wreckers": 0,
+   "spawnedTotal": 0,
+   "defeatedTotal": 0,
+   "defeatedBasis": "all enemies, including continuous tricklers"
+  },
+  "orders": [],
+  "needsRider": false,
+  "seams": [
+   {
+    "id": "gold-seam-1",
+    "active": true,
+    "remaining": 30,
+    "x": -49,
+    "z": -4,
+    "anchorIndex": 1
+   },
+   {
+    "id": "gold-seam-2",
+    "active": true,
+    "remaining": 30,
+    "x": -46,
+    "z": -4,
+    "anchorIndex": 2
+   },
+   {
+    "id": "gold-seam-3",
+    "active": true,
+    "remaining": 30,
+    "x": -46,
+    "z": 4,
+    "anchorIndex": 4
+   },
+   {
+    "id": "gold-seam-4",
+    "active": false,
+    "remaining": 30,
+    "x": null,
+    "z": null,
+    "anchorIndex": null
+   },
+   {
+    "id": "gold-seam-5",
+    "active": false,
+    "remaining": 30,
+    "x": null,
+    "z": null,
+    "anchorIndex": null
+   }
+  ],
+  "score": {
+   "wavesSurvived": 0,
+   "goldPanned": 0,
+   "goldPannedByProspector": 0,
+   "goldStolen": 0,
+   "goldReclaimed": 0,
+   "goldReclaimedByProspector": 0,
+   "buildingsBuilt": 0
+  },
+  "deepwater": {
+   "contractId": "e5-regatta",
+   "tileId": "e5-regatta",
+   "size": 128,
+   "anchor": {
+    "id": "start-line",
+    "x": -49,
+    "z": 0
+   },
+   "anchors": [
+    {
+     "id": "start-line",
+     "x": -49,
+     "z": 0
+    },
+    {
+     "id": "finish-line",
+     "x": 49,
+     "z": 0
+    }
+   ],
+   "pads": [
+    {
+     "id": "bow",
+     "occupied": false
+    },
+    {
+     "id": "port",
+     "occupied": false
+    },
+    {
+     "id": "starboard",
+     "occupied": false
+    }
+   ],
+   "boatBuildings": [],
+   "storm": {
+    "time": 0,
+    "weather": {
+     "era": 5,
+     "contractId": "e5-regatta",
+     "phase": "clear",
+     "phaseProgress": 0,
+     "cycle": 0,
+     "simTime": 0,
+     "movementMultiplier": 1,
+     "visibilityMultiplier": 1,
+     "hazeColor": "#335f64",
+     "hazeStrength": 0,
+     "warning": false
+    },
+    "frontX": null,
+    "waves": []
+   },
+   "corsairWaves": 0,
+   "corsairsSpawned": 0,
+   "corsairsRecycledAtExit": 0,
+   "wrecks": [],
+   "bossHandoffsRefused": 0,
+   "arsenal": {
+    "active": true,
+    "items": [
+     {
+      "id": "pressureSealed",
+      "line": "fire",
+      "munitionId": null
+     },
+     {
+      "id": "harpoonBallista",
+      "line": "watch",
+      "munitionId": null
+     },
+     {
+      "id": "depthChargeRack",
+      "line": "watch",
+      "munitionId": "depth_charge"
+     },
+     {
+      "id": "depthChargeLobber",
+      "line": "powder",
+      "munitionId": "depth_charge"
+     }
+    ],
+    "fires": {
+     "harpoonBallista": 0,
+     "depthChargeRack": 0,
+     "depthChargeLobber": 0
+    },
+    "sharedMunition": {
+     "id": "depth_charge",
+     "stock": 12,
+     "capacity": 12,
+     "spentBy": {
+      "depthChargeRack": 0,
+      "depthChargeLobber": 0
+     }
+    },
+    "pressureSealed": {
+     "active": true,
+     "inDiveZone": false
+    },
+    "silhouette": {
+     "harpoonBallista": 1.1,
+     "priorTurret": 1.1
+    },
+    "treatmentEvents": [],
+    "visuals": {
+     "harpoonBallista": true,
+     "depthChargeRack": true,
+     "depthChargeLobber": true
+    }
+   },
+   "race": {
+    "nextGate": {
+     "id": "start-beacon",
+     "x": -49,
+     "z": 0,
+     "radius": 6
+    },
+    "gatesPassed": [],
+    "finished": false,
+    "finishedAt": null,
+    "forfeited": false,
+    "forfeitedAt": null,
+    "fastWaterMultiplier": 1.5
+   }
+  }
+ },
+ "almanac": {
+  "label": "the Almanac reckons",
+  "estimate": true,
+  "nextWave": {
+   "wave": 1,
+   "arrivalInSeconds": 30,
+   "basis": "estimated-from-wave-schedule",
+   "composition": [
+    {
+     "id": "corsair_racer",
+     "label": "Corsair Racer",
+     "count": 6
+    }
+   ],
+   "compositionScope": "wave-horn packs only; continuous tricklers are additional",
+   "continuousTrickle": {
+    "currentIntervalSeconds": 2.4,
+    "includedInComposition": false,
+    "includedInDefeatedTotal": true
+   }
+  },
+  "projection": {
+   "expectedLeaks": 0,
+   "expectedWorksDamage": 0,
+   "expectedGold": 55.83,
+   "currentWorks": 0,
+   "harnessHash": "fnv1a32:b9bd727e"
+  }
+ }
+}
