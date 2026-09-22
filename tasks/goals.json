@@ -5792,12 +5792,106 @@
             {
               "id": "sol-map-art-fidelity-2",
               "title": "Astra's wave, lane-c 3 of 3 (2026-09-22): run 9 of the map-art campaign — the art-owned residue on the other twenty-two maps, E1 → E9, each clause quoted from Astra's own latest review and judged against its own earlier number",
-              "status": "blocked",
+              "status": "superseded",
               "blockClass": "gate-side",
               "blockedReason": "GATE-SIDE hold, no owner word owed (the word is given: \"There will be a reset in the next 24 hours. Lets hit it! Full Codex power.\"): queue only after sol-entry-framing has LANDED (same lane, same store worktree; serial by design). Lift = the entry-framing drain runs wave-next.cjs and cp's this master into tasks/queue/lane-c/.",
               "taskFile": "sol-map-art-fidelity-2.md",
               "registeredBy": "attended 2026-09-22",
-              "lane": "lane-c (Codex gpt-6-astra xhigh, the owner's ChatGPT subscription); the store commits go to the lanes' own store worktree"
+              "lane": "lane-c (Codex gpt-6-astra xhigh, the owner's ChatGPT subscription); the store commits go to the lanes' own store worktree",
+              "supersededBy": [
+                "sol-map-art-fidelity-2-e1-e2.md",
+                "sol-map-art-fidelity-2-e3.md",
+                "sol-map-art-fidelity-2-e4.md",
+                "sol-map-art-fidelity-2-e6.md",
+                "sol-map-art-fidelity-2-e7.md",
+                "sol-map-art-fidelity-2-e8.md",
+                "sol-map-art-fidelity-2-e9.md"
+              ],
+              "supersededReason": "split into legs by epoch on the owner's word of 2026-09-22 (\"Can the work be split in E1, E2, E3 and so on and we start with E1 and E2? I have 9% left on the subscription and it is a reset I can use anytime when I want.\"); the 22-map master is not queued"
+            },
+            {
+              "id": "sol-map-art-fidelity-2-e1-e2",
+              "title": "fidelity-2 leg E1 and E2: e1-night-shift, e1-twin-banks, e1-baron, e2-pressure-garden, e2-incline, e2-trestle (lane-c, Astra, run 9 split by epoch on the owner's word)",
+              "status": "blocked",
+              "blockClass": "gate-side",
+              "blockedReason": "queued now by the attended session on the owner's word of 2026-09-22 (the split); lifted by the queueing script",
+              "taskFile": "sol-map-art-fidelity-2-e1-e2.md",
+              "lane": "lane-c",
+              "authoredAt": "2026-09-22",
+              "authoredBy": "attended (Fable), split from sol-map-art-fidelity-2 on the owner's word",
+              "parent": "sol-map-art-fidelity-2"
+            },
+            {
+              "id": "sol-map-art-fidelity-2-e3",
+              "title": "fidelity-2 leg E3: e3-canyon-works (lane-c, Astra, run 9 split by epoch on the owner's word)",
+              "status": "blocked",
+              "blockClass": "gate-side",
+              "blockedReason": "queued after the previous leg lands and on the owner's word; lifted by the queueing script",
+              "taskFile": "sol-map-art-fidelity-2-e3.md",
+              "lane": "lane-c",
+              "authoredAt": "2026-09-22",
+              "authoredBy": "attended (Fable), split from sol-map-art-fidelity-2 on the owner's word",
+              "parent": "sol-map-art-fidelity-2"
+            },
+            {
+              "id": "sol-map-art-fidelity-2-e4",
+              "title": "fidelity-2 leg E4: e4-dust-flats, e4-long-road, e4-gusher-county, e4-boneyard (lane-c, Astra, run 9 split by epoch on the owner's word)",
+              "status": "blocked",
+              "blockClass": "gate-side",
+              "blockedReason": "queued after the previous leg lands and on the owner's word; lifted by the queueing script",
+              "taskFile": "sol-map-art-fidelity-2-e4.md",
+              "lane": "lane-c",
+              "authoredAt": "2026-09-22",
+              "authoredBy": "attended (Fable), split from sol-map-art-fidelity-2 on the owner's word",
+              "parent": "sol-map-art-fidelity-2"
+            },
+            {
+              "id": "sol-map-art-fidelity-2-e6",
+              "title": "fidelity-2 leg E6: e6-glow-mesa, e6-half-life-hollow, e6-picnic (lane-c, Astra, run 9 split by epoch on the owner's word)",
+              "status": "blocked",
+              "blockClass": "gate-side",
+              "blockedReason": "queued after the previous leg lands and on the owner's word; lifted by the queueing script",
+              "taskFile": "sol-map-art-fidelity-2-e6.md",
+              "lane": "lane-c",
+              "authoredAt": "2026-09-22",
+              "authoredBy": "attended (Fable), split from sol-map-art-fidelity-2 on the owner's word",
+              "parent": "sol-map-art-fidelity-2"
+            },
+            {
+              "id": "sol-map-art-fidelity-2-e7",
+              "title": "fidelity-2 leg E7: e7-dead-band, e7-relay-rush (lane-c, Astra, run 9 split by epoch on the owner's word)",
+              "status": "blocked",
+              "blockClass": "gate-side",
+              "blockedReason": "queued after the previous leg lands and on the owner's word; lifted by the queueing script",
+              "taskFile": "sol-map-art-fidelity-2-e7.md",
+              "lane": "lane-c",
+              "authoredAt": "2026-09-22",
+              "authoredBy": "attended (Fable), split from sol-map-art-fidelity-2 on the owner's word",
+              "parent": "sol-map-art-fidelity-2"
+            },
+            {
+              "id": "sol-map-art-fidelity-2-e8",
+              "title": "fidelity-2 leg E8: e8-far-side, e8-low-orbit (lane-c, Astra, run 9 split by epoch on the owner's word)",
+              "status": "blocked",
+              "blockClass": "gate-side",
+              "blockedReason": "queued after the previous leg lands and on the owner's word; lifted by the queueing script",
+              "taskFile": "sol-map-art-fidelity-2-e8.md",
+              "lane": "lane-c",
+              "authoredAt": "2026-09-22",
+              "authoredBy": "attended (Fable), split from sol-map-art-fidelity-2 on the owner's word",
+              "parent": "sol-map-art-fidelity-2"
+            },
+            {
+              "id": "sol-map-art-fidelity-2-e9",
+              "title": "fidelity-2 leg E9: e9-dome-basin, e9-seed-run, e9-devils-alley, e9-old-canal (lane-c, Astra, run 9 split by epoch on the owner's word)",
+              "status": "blocked",
+              "blockClass": "gate-side",
+              "blockedReason": "queued after the previous leg lands and on the owner's word; lifted by the queueing script",
+              "taskFile": "sol-map-art-fidelity-2-e9.md",
+              "lane": "lane-c",
+              "authoredAt": "2026-09-22",
+              "authoredBy": "attended (Fable), split from sol-map-art-fidelity-2 on the owner's word",
+              "parent": "sol-map-art-fidelity-2"
             }
           ]
         }
