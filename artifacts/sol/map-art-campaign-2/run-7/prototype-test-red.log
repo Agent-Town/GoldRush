@@ -1,0 +1,28 @@
+✔ e6-picnic retains the parent blockers and appends its own registered solids (0.891417ms)
+✔ e7-dead-band retains the parent blockers and appends its own registered solids (0.087959ms)
+✔ e7-relay-rush retains the parent blockers and appends its own registered solids (0.051375ms)
+✔ e8-far-side retains the parent blockers and appends its own registered solids (0.047709ms)
+✔ alias-only maps retain exactly their parent blockers (0.062584ms)
+✖ plain maps retain their footprints without duplication (0.1335ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 5
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 210.005583
+
+✖ failing tests:
+
+test at scripts/landmark-collision.test.mjs:33:1
+✖ plain maps retain their footprints without duplication (0.1335ms)
+  TypeError: maps.flatMap is not a function
+      at landmarkBlockersFor (eval at runInlinedModule (file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-c/node_modules/vite/dist/node/module-runner.js:809:9), <anonymous>:25:14)
+      at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-c/scripts/landmark-collision.test.mjs:76:22)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)

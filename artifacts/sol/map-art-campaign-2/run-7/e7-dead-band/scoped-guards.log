@@ -1,0 +1,71 @@
+✔ parseGlb rejects a non-GLB and reads the JSON + BIN chunks of a real one (0.969708ms)
+✔ metrics reproduce the runtime definitions: triangles, welded vertices, world bounds (0.700083ms)
+✔ bounds are TRANSFORMED bounds: a node translation moves them (F-ASTRA-8) (0.168125ms)
+✔ a node rotation is applied to the bounds, not ignored (0.158583ms)
+✔ non-finite positions are counted, not silently folded into the bounds (0.406584ms)
+✔ the grid probe accepts a complete lattice and rejects a punctured one (0.224416ms)
+✔ texture dimensions come from the real image header, and the family cap is enforced (0.263083ms)
+✔ external buffers and images are policy violations (0.121542ms)
+✔ an alpha mode outside the family policy is a violation; a permitted one is not (0.201583ms)
+✔ required extras are reported as ONE violation per asset, listing every missing key (0.161209ms)
+✔ the baseline key carries the detail, so a NEW violation on a baselined asset still reds (0.065291ms)
+✔ water metadata is required by the asset's own contract, never by blanket family rule (0.164958ms)
+✔ contract counts and bounds are compared against the sibling JSON the runtime reads (0.194708ms)
+
+| family            | assets | triangles | vertices  | materials | textures | max tex | cap   | 2-sided | anims | skins | extras | anchors |
+|-------------------|--------|-----------|-----------|-----------|----------|---------|-------|---------|-------|-------|--------|---------|
+| bosses            | 7      | 116,429   | 63,219    | 7         | 7        | 2048²   | 1024² | 7       | 0     | 0     | 1      | 0       |
+| finale            | 2      | 25,260    | 13,834    | 2         | 2        | 1024²   | 1024² | 2       | 0     | 0     | 0      | 0       |
+| landmarks         | 207    | 233,802   | 134,083   | 208       | 207      | 1024²   | 1024² | 207     | 0     | 0     | 207    | 0       |
+| panoramas         | 33     | 84,984    | 60,346    | 33        | 33       | 2048²   | 2048² | 33      | 0     | 0     | 33     | 0       |
+| props             | 65     | 92,934    | 50,517    | 68        | 67       | 1024²   | 512²  | 68      | 0     | 0     | 0      | 19      |
+| rail-element      | 1      | 132       | 72        | 1         | 1        | 256²    | 512²  | 1       | 0     | 0     | 0      | 0       |
+| terrain           | 33     | 1,099,776 | 558,433   | 33        | 33       | 2048²   | 2048² | 33      | 0     | 0     | 33     | 0       |
+| town-buildings    | 9      | 49,744    | 26,371    | 9         | 9        | 2048²   | 1024² | 9       | 0     | 0     | 0      | 0       |
+| town-era-variants | 73     | 472,838   | 252,013   | 73        | 73       | 1024²   | 1024² | 73      | 0     | 0     | 0      | 55      |
+| TOTAL             | 430    | 2,175,899 | 1,158,888 | 434       | 432      |         |       | 433     | 0     | 0     | 274    | 74      |
+430 production GLBs · 6 violations · 6 grandfathered · 0 live
+✔ THE CORPUS: every production GLB is clean or explicitly grandfathered (3527.1205ms)
+✔ landmark pack records bind the actual bytes, triangles and Blender-coordinate bounds (4.37525ms)
+✔ the census totals every family in the manifest and every family has a policy (138.04625ms)
+✔ the terrain family and the hero carry an export sidecar, and every sidecar is well-formed (6.45075ms)
+✔ reexport-pilot.sh reads the sidecar and leaves the no-sidecar path on the old recipe (0.520833ms)
+✔ the baseline is paid down by hand: no regenerate path exists in the guard (0.581583ms)
+✔ contractFor resolves the same sibling JSON Terrain3dClaimPilot.ts imports (0.644333ms)
+✔ census rows sum to the asset count (0.281416ms)
+✔ the shared landmark source ledger covers every shipped pack and current source declaration (126.281958ms)
+✔ landmark contracts honor declared material counts and retain legacy defaults (2.849333ms)
+✔ e6-picnic retains the parent blockers and appends its own registered solids (1.097667ms)
+✔ e7-dead-band retains the parent blockers and appends its own registered solids (0.101166ms)
+✔ e7-relay-rush retains the parent blockers and appends its own registered solids (0.05675ms)
+✔ e8-far-side retains the parent blockers and appends its own registered solids (0.051667ms)
+✔ alias-only maps retain exactly their parent blockers (0.065083ms)
+✔ plain maps retain their footprints without duplication (0.077459ms)
+PASS: translated/rotated/scaled/sheared surfaces agree with raycasts; invalid transforms and bounds rejected; disposal idempotent
+✔ scripts/landmark-walk-surfaces.test.mjs (86.771167ms)
+✔ sea texture has a disposable local sampler; late loading cannot resurrect a disposed surface (4.75825ms)
+✔ FNV-1a 64 known vectors, full bytes, and independent BigInt reference (3.091833ms)
+✔ concurrent hits decode once; independent texture state shares Source until final disposal (0.4245ms)
+✔ misses, decode failure retry, and reset during decode do not retain or resurrect entries (0.36025ms)
+✔ real GLTF parser: cross-file wrap, colorSpace, UV and WebP paths preserve independent material views (6.548417ms)
+✔ late town retries cannot replace or dispose the active run tracker (26.871125ms)
+✔ embedded ImageBitmap atlases decode resident bytes once without a blob URL fetch (0.594791ms)
+
+  centroid discrepancy vs the drawn triangles (every triangle of every terrain)
+  terrain     triangles  old max    old p95    new max    new p95    worst point (x, z)
+  The Claim   32768      0.025272   0.000719   2.78e-15   8.88e-16   (29.667, 29.833)
+  Twin Banks  51200      0.022965   0.001956   5.53e-7    6.64e-8    (-19.467, 0.667)
+  Hill Mine   32768      0.103274   0.000268   1.42e-14   8.88e-16   (-16.000, 17.500)
+  Mare Claim  32768      0.666667   0.003457   7.11e-14   1.07e-14   (41.667, -26.667)
+
+✔ the height sampler lands on the drawn triangles, not near them (F-ASTRA-10) (58.03825ms)
+✔ the diagonal is read from the index buffer, never assumed (0.297042ms)
+✔ a cell the mesh never split, or split both ways, is rejected rather than guessed (0.507458ms)
+ℹ tests 40
+ℹ suites 0
+ℹ pass 40
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3865.267875

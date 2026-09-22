@@ -523,3 +523,62 @@ IMPROVED / HELD. Material-only treatment of the raw painted route: bank RMS −2
 Builds/scoped guards and 18 own/story checks pass; final boot/finale four pass, charter/board/debt census six pass. Two secured-claim failures reproduce at exact base. Broad map census is an unavailable-contract exemption, not behavioral proof. Four-run performance shows desktop fast 10.10→9.90 ms / slow16.65→16.30 ms; phone fast9.90→9.95 ms. Pooled desktop +17.91% reflects different mode populations, with every candidate mode within15% of its corresponding baseline. Draws79/58 and triangles81,448/69,440 unchanged. Engine `9ab63072bf545c545e192f2a6d4623ccceb60235662638adb6f3c27736648cf5` → `4374cdbfcb7631c86982f9439fb30583eb3eba1acbf70e1bcccaf8fb6e210b21`; pin untouched. Store unchanged at pushed `8ea5370ba1dfd4bc85276380875fdb87f17f7bf7`.
 
 All 16 requested maps now have per-map corrections and explicit holds. Remaining list: **none**. [Ordered completion, HUD handoff and all hash pairs](run-6/handoff.md). Full concept acceptance is still withheld; full node gates and engine pin remain drain-owned. Ember/Archive objective text is restored to its prior column, with these art verdicts in the visual column.
+
+
+## Run 7 — 2026-09-22: variant solids and parent-plus-variant collision
+
+IMPLEMENTATION COMPLETE; READY-FOR-GATES WITH HOLDS. Owner-authorized F-CORR4-2 follow-on. Baseline code `823b06b1dce4b861be2fccf646245fc4cc864588`, store `8ea5370ba1dfd4bc85276380875fdb87f17f7bf7`; install and default build pass. Cleanliness: only `?? logs/guard-stats.jsonl` (permitted factory churn), no evidence discarded. Store clean before branching to `astra/f-corr4-2`; required raw plate and terrain resolve. Parent transforms, registry numbers, gameplay contracts, heights and masks remain frozen. The existing renderer already composes variant mounts from the mirrored terrain contract.
+
+Remaining in order: none.
+
+Run-7 preflight correction: the task says Eclipse has no own registry entry, but this base contains four Eclipse records. The resolver therefore names only the four authorized unions; the alias-only control tests and full unaffected-map snapshot pass.
+
+Run-7 floor verdict: 81/83 unchanged; only Picnic moved. Seed 01: timeMs 97967→97367, kills 35→24, eventLogHash fnv1a32:6dc50c46→fnv1a32:a887b86b. Seed 02: 98533→100200, kills 32→25, hash fnv1a32:774ca441→fnv1a32:547712da. The shade at (0,40) is the only new Picnic blocker. Pins left untouched for the drain.
+
+Run-7 parity qualification: all four maps retain exactly their base rows (32 equal, 10 agent-lacks), independently reproduced from base code 823b06b1d in an isolated scratch extraction. The requested all-EQUAL result cannot be claimed; the missing tape/control verbs belong to the parity owner and are outside this firewall. See run-7/same-game-comparison.json.
+
+Run-7 verification qualification: an initial browser batch was interrupted after an in-root scratch extraction triggered a Vite full reload (06:27:51). Its Picnic palisade and E6 boot failures are not accepted results. The scratch tree moved outside the watched root; the complete stable rerun finished at 45 passed / 6 exact-base terrain-registry failures / 1 skipped. The Picnic palisade and E6 boot failures vanished. Initial paired frames also exposed stale-module baseline capture: the frozen renderer referred to a different Terrain module instance and the variant raw matcher missed `?import&raw`. Final captures use unchanged live renderer bytes plus the frozen collision/variant data, assert before/after body counts, and confirm identical hero ground height; all invalid attempts remain in local raw evidence.
+
+### Run 7 — The Picnic
+
+**FIXED variant solidity / HELD prior composition and baseline parity debt.** All 1 registered variant solids mount beside the five unchanged parent bodies and the already selected nonblocking dressing: **9→10 bodies**, **+216 authored triangles**. No geometry, atlas, source transform, height, mask, gameplay contract or registry number changed. The renderer already composes these mirrored mount tables, so no renderer code change was necessary.
+
+1280px p95 10.20→10.25 ms (+0.49%), draws [90]→[90]; 390px p95 9.90→10.10 ms (+2.02%), draws [54]→[54]. Engine `4374cdbfcb7631c86982f9439fb30583eb3eba1acbf70e1bcccaf8fb6e210b21` → `da49237c406cfbb90e634443440aaaddeb0d4185afa98e99e9e5f6cf0848d232`; store `187e555ea982f12fe7f988184c6574a6298dcaa9`. [Boards, probes, bounds and gates](run-7/e6-picnic/review.md).
+
+### Run 7 — post-commit test caller check
+
+The newly tracked collision union test passes all six assertions but is not yet listed in the permanent node battery. The required named-guard batch is therefore 2/3 after the first commit; its earlier pre-commit pass omitted the untracked file. A one-line package.json roster addition requires a task-firewall exception, requested from the owner. [Attribution and exact proposed fix](run-7/gate-caller-attribution.md).
+
+### Run 7 — The Dead Band
+
+**FIXED variant solidity / HELD prior composition and baseline parity debt.** All 3 registered variant solids mount beside the five unchanged parent bodies and the already selected nonblocking dressing: **7→10 bodies**, **+3792 authored triangles**. No geometry, atlas, source transform, height, mask, gameplay contract or registry number changed. The renderer already composes these mirrored mount tables, so no renderer code change was necessary.
+
+1280px p95 10.00→10.00 ms (+0.00%), draws [78]→[78]; 390px p95 10.00→10.05 ms (+0.50%), draws [56, 57]→[56]. Engine `da49237c406cfbb90e634443440aaaddeb0d4185afa98e99e9e5f6cf0848d232` → `f00319a05cf5f5d6bea92a824e5377188e98c44da7238d8db2d659e32e4f9f13`; store `3c25d72a9de66c5fbaa633be41df390a8d79d245`. [Boards, probes, bounds and gates](run-7/e7-dead-band/review.md).
+
+### Run 7 — integration boundary
+
+Land the completed `sol/map-art-campaign-2` code branch together with all four map selections from store branch `astra/f-corr4-2`. The shared resolver in the first code commit enables the four unions at once; integrating that commit without the corresponding store selections would temporarily leave the later maps’ new blockers invisible. Per-map commits preserve review and evidence boundaries; the final code/store heads are the integration unit. Engine-era and null-floor pin updates remain drain-owned.
+
+### Run 7 — Relay Rush
+
+**FIXED variant solidity / HELD prior composition and baseline parity debt.** All 1 registered variant solids mount beside the five unchanged parent bodies and the already selected nonblocking dressing: **9→10 bodies**, **+552 authored triangles**. No geometry, atlas, source transform, height, mask, gameplay contract or registry number changed. The renderer already composes these mirrored mount tables, so no renderer code change was necessary.
+
+1280px p95 9.75→9.20 ms (-5.64%), draws [70]→[70]; 390px p95 9.80→9.60 ms (-2.04%), draws [52]→[52]. Engine `f00319a05cf5f5d6bea92a824e5377188e98c44da7238d8db2d659e32e4f9f13` → `39f21aea8a827ba58c52363c354420aa5cc19ea55ba1b2751ea264e04b6f6d2b`; store `0787a539f6ee70886bc4867909fd70c0de4a3ba7`. [Boards, probes, bounds and gates](run-7/e7-relay-rush/review.md).
+
+### Run 7 — resolver compatibility check
+
+Final review caught an inherited-property regression in the array-valued alias table: `constructor`, `__proto__`, and `toString` threw instead of returning the original empty list. A one-line array check restores the baseline behavior. The extended unit test was red before and green after the fix; all 43 registered-map/alias results are byte-identical across it. [Reproduction](run-7/prototype-compatibility-before-fix.json) · [Corrected result](run-7/prototype-compatibility-after-fix.json) · [Red test](run-7/prototype-test-red.log) · [Green test](run-7/prototype-test-green.log). The final Far Side gates include fresh builds, movement proofs, captures, timing and focused collision/recovery/parity regressions on this corrected source.
+
+### Run 7 — The Far Side
+
+**FIXED variant solidity / HELD prior composition and baseline parity debt.** All 4 registered variant solids mount beside the five unchanged parent bodies and the already selected nonblocking dressing: **6→10 bodies**, **+1396 authored triangles**. No geometry, atlas, source transform, height, mask, gameplay contract or registry number changed. The renderer already composes these mirrored mount tables, so no renderer code change was necessary.
+
+1280px p95 9.40→9.70 ms (+3.19%), draws [63]→[63]; 390px p95 9.45→9.75 ms (+3.17%), draws [50]→[50]. Engine `39f21aea8a827ba58c52363c354420aa5cc19ea55ba1b2751ea264e04b6f6d2b` → `3ece8e8fac9f610d43579194a9d83b81f36f81a7ffdd5105fcf6c4ec191112a9`; store `300caacfa15ad6be5e6bf41be80b0c5a331c443c`. [Boards, probes, bounds and gates](run-7/e8-far-side/review.md).
+
+### Run 7 — completed handoff
+
+All four maps are implemented: **nine existing solids selected, 5,956 additional mounted triangles, ten total bodies per map**. Parent blockers and models remain. Across both viewports: **54 published destinations per viewport reachable**, **72 face probes**, **18 embedded-hero escapes**, **24 mount/dispose cycles** with zero retained scene children. Ordinary before/after boots have zero errors. Final-source focused browser checks **26/26** and scoped node guards **40/40** pass. All four maps pass the four-run, 15% timing budget. Final E1 payload is **34,271,491 B**, **+96 B** of compiled resolver code, no E1 pack additions.
+
+This is not an all-green handoff. The new union test still needs its permanent package roster entry; the task firewall excludes package.json, permission was requested, and the prepared patch passes `git apply --check`. Named guards remain **2/3**. Full browser batches are Picnic **45/6/1**, Dead Band **97/14/1**, Relay Rush **97/34/1**, Far Side **61/10/1** (pass/fail/skip); base reproductions and their exact scope are in each map’s attribution. Static same-game rows remain **32 equal / 10 agent-lacks** on the exact base and candidate. Only Picnic’s two null floors move, as detailed above; the drain owns pins. Far Side’s remote northern-rim hero occlusion is visible in both arms and remains outside this footprint task.
+
+[Machine-readable handoff, all solids/positions, full engine hash pairs and samples](run-7/handoff.json). Store branch `astra/f-corr4-2` is pushed through `300caacfa15ad6be5e6bf41be80b0c5a331c443c`. Land the complete code and store heads together. **Remaining maps in order: none.**
