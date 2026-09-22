@@ -529,7 +529,7 @@ All 16 requested maps now have per-map corrections and explicit holds. Remaining
 
 IN PROGRESS. Owner-authorized F-CORR4-2 follow-on. Baseline code `823b06b1dce4b861be2fccf646245fc4cc864588`, store `8ea5370ba1dfd4bc85276380875fdb87f17f7bf7`; install and default build pass. Cleanliness: only `?? logs/guard-stats.jsonl` (permitted factory churn), no evidence discarded. Store clean before branching to `astra/f-corr4-2`; required raw plate and terrain resolve. Parent transforms, registry numbers, gameplay contracts, heights and masks remain frozen. The existing renderer already composes variant mounts from the mirrored terrain contract.
 
-Remaining in order: e7-dead-band; e7-relay-rush; e8-far-side.
+Remaining in order: e7-relay-rush; e8-far-side.
 
 Run-7 preflight correction: the task says Eclipse has no own registry entry, but this base contains four Eclipse records. The resolver therefore names only the four authorized unions; the alias-only control tests and full unaffected-map snapshot pass.
 
@@ -544,3 +544,13 @@ Run-7 verification qualification: an initial browser batch was interrupted after
 **FIXED variant solidity / HELD prior composition and baseline parity debt.** All 1 registered variant solids mount beside the five unchanged parent bodies and the already selected nonblocking dressing: **9→10 bodies**, **+216 authored triangles**. No geometry, atlas, source transform, height, mask, gameplay contract or registry number changed. The renderer already composes these mirrored mount tables, so no renderer code change was necessary.
 
 1280px p95 10.20→10.25 ms (+0.49%), draws [90]→[90]; 390px p95 9.90→10.10 ms (+2.02%), draws [54]→[54]. Engine `4374cdbfcb7631c86982f9439fb30583eb3eba1acbf70e1bcccaf8fb6e210b21` → `da49237c406cfbb90e634443440aaaddeb0d4185afa98e99e9e5f6cf0848d232`; store `187e555ea982f12fe7f988184c6574a6298dcaa9`. [Boards, probes, bounds and gates](run-7/e6-picnic/review.md).
+
+### Run 7 — post-commit test caller check
+
+The newly tracked collision union test passes all six assertions but is not yet listed in the permanent node battery. The required named-guard batch is therefore 2/3 after the first commit; its earlier pre-commit pass omitted the untracked file. A one-line package.json roster addition requires a task-firewall exception, requested from the owner. [Attribution and exact proposed fix](run-7/gate-caller-attribution.md).
+
+### Run 7 — The Dead Band
+
+**FIXED variant solidity / HELD prior composition and baseline parity debt.** All 3 registered variant solids mount beside the five unchanged parent bodies and the already selected nonblocking dressing: **7→10 bodies**, **+3792 authored triangles**. No geometry, atlas, source transform, height, mask, gameplay contract or registry number changed. The renderer already composes these mirrored mount tables, so no renderer code change was necessary.
+
+1280px p95 10.00→10.00 ms (+0.00%), draws [78]→[78]; 390px p95 10.00→10.05 ms (+0.50%), draws [56, 57]→[56]. Engine `da49237c406cfbb90e634443440aaaddeb0d4185afa98e99e9e5f6cf0848d232` → `f00319a05cf5f5d6bea92a824e5377188e98c44da7238d8db2d659e32e4f9f13`; store `3c25d72a9de66c5fbaa633be41df390a8d79d245`. [Boards, probes, bounds and gates](run-7/e7-dead-band/review.md).

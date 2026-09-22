@@ -14,6 +14,9 @@ assert final
 if any(any(r['exit']!=0 for r in rs) for _,rs in final):assert (folder/'failure-attribution.md').exists()
 assert read('probes-gates.json')[0]['exit']==0 and read('probes-gates.json')[1]['exit']==0
 assert (folder/'invariants.json').exists()
+named_pass = 'guards: 3/3 passed' in (folder/'named-guards.log').read_text()
+if not named_pass: assert (root/'run-7/gate-caller-attribution.md').exists()
+named_verdict = '**3/3** pass' if named_pass else '**2/3** pass; gate-callers rejects the newly tracked union test because its package roster entry is outside the task firewall; see [attribution](../gate-caller-attribution.md)'
 env={**os.environ,'PATH':'/opt/homebrew/bin:'+os.environ['PATH']}
 after=subprocess.check_output(['node','--input-type=module','-e',"import {computeEngineHash} from './scripts/assay-replay-agent.mjs';console.log(await computeEngineHash(process.cwd()))"],env=env,text=True).strip()
 before=(folder/'engine-before.txt').read_text().strip();store=subprocess.check_output(['git','-C','/Users/robin/Claude/Projects/GoldRush-assets','rev-parse','HEAD'],text=True).strip()
@@ -36,7 +39,7 @@ Movement: **{len(solids)} bodies × four outer faces × two viewports** stop the
 
 Six fresh mount/dispose cycles retain exactly ten bodies, no skipped loads and zero scene children after disposal. All registered X/Z positions, rotations and scales match the rendered models exactly. All parent and registry bytes, source geometry and unrelated map blocker outputs match the base. [Invariant proof](invariants.json) · [Asset budgets](asset-budgets.json). Generic loading **8/8**, repeat **2/2** pass; map-specific load/dispose evidence is in the movement proof because those generic scripts target E5/Mare rather than accepting a map argument.
 
-TypeScript, default/full/E1 builds pass. E1 first-town payload **{payload:,} B**, baseline **{base:,} B**, delta **{payload-base:+} B**, under 52,000,000 B; there are no new E1 art bytes, only the shared resolver’s compiled code delta. Scoped guards **40/40**, named guards **3/3** pass. Browser suite receipts: {', '.join('['+n+']('+n+')' for n,_ in final)}. Any reproduced baseline failures are named in failure-attribution.md; no test assertion was changed.
+TypeScript, default/full/E1 builds pass. E1 first-town payload **{payload:,} B**, baseline **{base:,} B**, delta **{payload-base:+} B**, under 52,000,000 B; there are no new E1 art bytes, only the shared resolver’s compiled code delta. Scoped guards **40/40**, named guards {named_verdict}. Browser suite receipts: {', '.join('['+n+']('+n+')' for n,_ in final)}. Any reproduced baseline failures are named in failure-attribution.md; no test assertion was changed.
 
 Performance: four fresh boots per arm/viewport, 180 rAF intervals each, alternating arms: **{summary}**. Both pass the 15% limits. [All samples and modes](performance-summary.json).
 

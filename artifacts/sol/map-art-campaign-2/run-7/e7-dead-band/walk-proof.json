@@ -1,0 +1,1754 @@
+[
+  {
+    "width": 1280,
+    "navigation": {
+      "spawn": {
+        "x": 0,
+        "y": 0.13633806020021438,
+        "z": 12
+      },
+      "spawnWalkable": true,
+      "own": [
+        {
+          "id": "dead-band:dead-band-yard-null-post",
+          "x": 0,
+          "z": -40,
+          "halfX": 0.864,
+          "halfZ": 0.864
+        },
+        {
+          "id": "dead-band:west-old-tool-cache",
+          "x": -42,
+          "z": 38,
+          "halfX": 2.634943880642162,
+          "halfZ": 1.8434628032582818
+        },
+        {
+          "id": "dead-band:east-old-tool-cache",
+          "x": 42,
+          "z": 38,
+          "halfX": 2.634943880642162,
+          "halfZ": 1.8434628032582818
+        }
+      ],
+      "blockers": [
+        {
+          "id": "relay-valley:west-ridge-dish-cluster",
+          "x": -56,
+          "z": 30,
+          "halfX": 2.320815623365354,
+          "halfZ": 1.6307534078847432
+        },
+        {
+          "id": "relay-valley:east-ridge-dish-cluster",
+          "x": 56,
+          "z": 30,
+          "halfX": 2.308801931149333,
+          "halfZ": 1.5933860377503082
+        },
+        {
+          "id": "relay-valley:dead-gap-charting-station",
+          "x": 0,
+          "z": 18,
+          "halfX": 2.2912200000000005,
+          "halfZ": 1.31328
+        },
+        {
+          "id": "relay-valley:valley-cable-drum-yard",
+          "x": -44,
+          "z": -26,
+          "halfX": 2.6942953933669846,
+          "halfZ": 1.9699649514722366
+        },
+        {
+          "id": "relay-valley:drone-recovery-beacon",
+          "x": 44,
+          "z": -26,
+          "halfX": 3.21408,
+          "halfZ": 3.21408
+        },
+        {
+          "id": "dead-band:dead-band-yard-null-post",
+          "x": 0,
+          "z": -40,
+          "halfX": 0.864,
+          "halfZ": 0.864
+        },
+        {
+          "id": "dead-band:west-old-tool-cache",
+          "x": -42,
+          "z": 38,
+          "halfX": 2.634943880642162,
+          "halfZ": 1.8434628032582818
+        },
+        {
+          "id": "dead-band:east-old-tool-cache",
+          "x": 42,
+          "z": 38,
+          "halfX": 2.634943880642162,
+          "halfZ": 1.8434628032582818
+        }
+      ],
+      "targets": [
+        {
+          "kind": "harvest",
+          "id": "0",
+          "x": -14,
+          "z": -6,
+          "reachable": true
+        },
+        {
+          "kind": "harvest",
+          "id": "1",
+          "x": 14,
+          "z": -6,
+          "reachable": true
+        },
+        {
+          "kind": "harvest",
+          "id": "2",
+          "x": -34,
+          "z": 37,
+          "reachable": true
+        },
+        {
+          "kind": "harvest",
+          "id": "3",
+          "x": 34,
+          "z": 37,
+          "reachable": true
+        },
+        {
+          "kind": "station",
+          "id": "iron-shadow-warning-frame",
+          "x": 0,
+          "z": 9,
+          "reachable": true
+        },
+        {
+          "kind": "station",
+          "id": "north-silence-gate",
+          "x": 0,
+          "z": 57,
+          "reachable": true
+        },
+        {
+          "kind": "station",
+          "id": "dead-gap-charting-station",
+          "x": 0,
+          "z": 20,
+          "reachable": true
+        },
+        {
+          "kind": "site",
+          "id": "dead-band-yard",
+          "center": {
+            "x": 0,
+            "z": -15
+          },
+          "approach": {
+            "x": 0,
+            "z": -15
+          },
+          "reachable": true
+        },
+        {
+          "kind": "site",
+          "id": "west-old-tool-ground",
+          "center": {
+            "x": -35,
+            "z": 37
+          },
+          "approach": {
+            "x": -35,
+            "z": 37
+          },
+          "reachable": true
+        },
+        {
+          "kind": "site",
+          "id": "east-old-tool-ground",
+          "center": {
+            "x": 35,
+            "z": 37
+          },
+          "approach": {
+            "x": 35,
+            "z": 37
+          },
+          "reachable": true
+        }
+      ],
+      "reachableCells": 63107,
+      "step": 0.5
+    },
+    "probes": [
+      {
+        "id": "dead-band:dead-band-yard-null-post",
+        "overlappingBlockerGroup": [
+          "dead-band:dead-band-yard-null-post"
+        ],
+        "faces": [
+          {
+            "axis": "x",
+            "sign": -1,
+            "key": "KeyD",
+            "faceBody": "dead-band:dead-band-yard-null-post",
+            "start": {
+              "x": -2.044,
+              "z": -40
+            },
+            "hero": {
+              "x": -1.5291533318835049,
+              "y": 0.02087029927520931,
+              "z": -40
+            },
+            "boundaryDistance": 0.08515333188350493,
+            "outsideAllBlockers": true
+          },
+          {
+            "axis": "x",
+            "sign": 1,
+            "key": "KeyA",
+            "faceBody": "dead-band:dead-band-yard-null-post",
+            "start": {
+              "x": 2.044,
+              "z": -40
+            },
+            "hero": {
+              "x": 1.5291533318835049,
+              "y": 0.050607855057055284,
+              "z": -40
+            },
+            "boundaryDistance": 0.08515333188350493,
+            "outsideAllBlockers": true
+          },
+          {
+            "axis": "z",
+            "sign": -1,
+            "key": "KeyS",
+            "faceBody": "dead-band:dead-band-yard-null-post",
+            "start": {
+              "x": 0,
+              "z": -42.044
+            },
+            "hero": {
+              "x": 0,
+              "y": 0.013924099178588403,
+              "z": -41.52915333188349
+            },
+            "boundaryDistance": 0.08515333188348961,
+            "outsideAllBlockers": true
+          },
+          {
+            "axis": "z",
+            "sign": 1,
+            "key": "KeyW",
+            "faceBody": "dead-band:dead-band-yard-null-post",
+            "start": {
+              "x": 0,
+              "z": -37.956
+            },
+            "hero": {
+              "x": 0,
+              "y": 0.06444981381864813,
+              "z": -38.47084666811651
+            },
+            "boundaryDistance": 0.08515333188348961,
+            "outsideAllBlockers": true
+          }
+        ],
+        "depenetrated": true,
+        "releasePosition": {
+          "x": -1.45,
+          "y": 0.02153684034943578,
+          "z": -40
+        }
+      },
+      {
+        "id": "dead-band:west-old-tool-cache",
+        "overlappingBlockerGroup": [
+          "dead-band:west-old-tool-cache"
+        ],
+        "faces": [
+          {
+            "axis": "x",
+            "sign": -1,
+            "key": "KeyD",
+            "faceBody": "dead-band:west-old-tool-cache",
+            "start": {
+              "x": -45.81494388064216,
+              "z": 38
+            },
+            "hero": {
+              "x": -45.30009721252566,
+              "y": 5.06,
+              "z": 38
+            },
+            "boundaryDistance": 0.08515333188349672,
+            "outsideAllBlockers": true
+          },
+          {
+            "axis": "x",
+            "sign": 1,
+            "key": "KeyA",
+            "faceBody": "dead-band:west-old-tool-cache",
+            "start": {
+              "x": -38.18505611935784,
+              "z": 38
+            },
+            "hero": {
+              "x": -38.69990278747434,
+              "y": 5.06,
+              "z": 38
+            },
+            "boundaryDistance": 0.08515333188349672,
+            "outsideAllBlockers": true
+          },
+          {
+            "axis": "z",
+            "sign": -1,
+            "key": "KeyS",
+            "faceBody": "dead-band:west-old-tool-cache",
+            "start": {
+              "x": -42,
+              "z": 34.97653719674172
+            },
+            "hero": {
+              "x": -42,
+              "y": 5.06,
+              "z": 35.49138386485822
+            },
+            "boundaryDistance": 0.08515333188349672,
+            "outsideAllBlockers": true
+          },
+          {
+            "axis": "z",
+            "sign": 1,
+            "key": "KeyW",
+            "faceBody": "dead-band:west-old-tool-cache",
+            "start": {
+              "x": -42,
+              "z": 41.02346280325828
+            },
+            "hero": {
+              "x": -42,
+              "y": 5.06,
+              "z": 40.50861613514178
+            },
+            "boundaryDistance": 0.08515333188349672,
+            "outsideAllBlockers": true
+          }
+        ],
+        "depenetrated": true,
+        "releasePosition": {
+          "x": -26.611029667961954,
+          "y": 5.06,
+          "z": 35.54999999999997
+        }
+      },
+      {
+        "id": "dead-band:east-old-tool-cache",
+        "overlappingBlockerGroup": [
+          "dead-band:east-old-tool-cache"
+        ],
+        "faces": [
+          {
+            "axis": "x",
+            "sign": -1,
+            "key": "KeyD",
+            "faceBody": "dead-band:east-old-tool-cache",
+            "start": {
+              "x": 38.18505611935784,
+              "z": 38
+            },
+            "hero": {
+              "x": 38.69990278747434,
+              "y": 5.06,
+              "z": 38
+            },
+            "boundaryDistance": 0.08515333188349672,
+            "outsideAllBlockers": true
+          },
+          {
+            "axis": "x",
+            "sign": 1,
+            "key": "KeyA",
+            "faceBody": "dead-band:east-old-tool-cache",
+            "start": {
+              "x": 45.81494388064216,
+              "z": 38
+            },
+            "hero": {
+              "x": 45.30009721252566,
+              "y": 5.06,
+              "z": 38
+            },
+            "boundaryDistance": 0.08515333188349672,
+            "outsideAllBlockers": true
+          },
+          {
+            "axis": "z",
+            "sign": -1,
+            "key": "KeyS",
+            "faceBody": "dead-band:east-old-tool-cache",
+            "start": {
+              "x": 42,
+              "z": 34.97653719674172
+            },
+            "hero": {
+              "x": 42,
+              "y": 5.06,
+              "z": 35.49138386485822
+            },
+            "boundaryDistance": 0.08515333188349672,
+            "outsideAllBlockers": true
+          },
+          {
+            "axis": "z",
+            "sign": 1,
+            "key": "KeyW",
+            "faceBody": "dead-band:east-old-tool-cache",
+            "start": {
+              "x": 42,
+              "z": 41.02346280325828
+            },
+            "hero": {
+              "x": 42,
+              "y": 5.06,
+              "z": 40.50861613514178
+            },
+            "boundaryDistance": 0.08515333188349672,
+            "outsideAllBlockers": true
+          }
+        ],
+        "depenetrated": true,
+        "releasePosition": {
+          "x": 57.38897033203814,
+          "y": 4.4267742507395695,
+          "z": 35.54999999999997
+        }
+      }
+    ],
+    "cycles": [
+      {
+        "cycle": 0,
+        "bodies": [
+          {
+            "id": "dead-band-yard-null-post",
+            "position": [
+              0,
+              -0.024970659986138344,
+              -40
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "bounds": {
+              "isBox3": true,
+              "min": {
+                "x": -1.399999976158142,
+                "y": -0.024970659986138344,
+                "z": -41.200000047683716
+              },
+              "max": {
+                "x": 1.399999976158142,
+                "y": 5.655029168352485,
+                "z": -38.799999952316284
+              }
+            }
+          },
+          {
+            "id": "west-old-tool-cache",
+            "position": [
+              -42,
+              5,
+              38
+            ],
+            "rotation": [
+              0,
+              0.16,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "bounds": {
+              "isBox3": true,
+              "min": {
+                "x": -45.65996645278716,
+                "y": 5,
+                "z": 35.439488962443725
+              },
+              "max": {
+                "x": -38.34003354721284,
+                "y": 7.430000066757202,
+                "z": 40.560511037556275
+              }
+            }
+          },
+          {
+            "id": "east-old-tool-cache",
+            "position": [
+              42,
+              5,
+              38
+            ],
+            "rotation": [
+              0,
+              -0.16,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "bounds": {
+              "isBox3": true,
+              "min": {
+                "x": 38.34003354721284,
+                "y": 5,
+                "z": 35.439488962443725
+              },
+              "max": {
+                "x": 45.65996645278716,
+                "y": 7.430000066757202,
+                "z": 40.560511037556275
+              }
+            }
+          }
+        ],
+        "dataset": {
+          "terrain3dPilotContract": "e7-dead-band",
+          "terrain3dPilotTerrainLoadState": "mounted",
+          "terrain3dPilotPanoramaLoadState": "mounted",
+          "terrain3dPilotLandmarkLoadState": "mounted",
+          "terrain3dPilotState": "ready",
+          "terrain3dPilotRenderSource": "glb",
+          "terrain3dPilotHeightSource": "baked-grid",
+          "terrain3dPilotMeshes": "1",
+          "terrain3dPilotTriangles": "32768",
+          "terrain3dPilotMaterials": "1",
+          "terrain3dPilotVertices": "16641",
+          "terrain3dPilotPanorama": "relay-valley-panorama",
+          "terrain3dPilotPanoramaMeshes": "1",
+          "terrain3dPilotPanoramaTriangles": "3084",
+          "terrain3dPilotPanoramaMaterials": "1",
+          "terrain3dPilotPanoramaVertices": "2246",
+          "assetLoadingLabel": "the claim",
+          "assetLoadingReady": "24",
+          "assetLoadingTotal": "24",
+          "assetLoadingProgress": "24/24",
+          "assetLoadingState": "ready",
+          "terrain3dPilotNightPools": "off",
+          "terrain3dPilotNightPoolSources": "0",
+          "terrain3dPilotSpringPonds": "0",
+          "terrain3dPilotSpringPondWaterRadii": "[]",
+          "terrain3dPilotChannelWater": "0",
+          "terrain3dPilotFordWater": "0",
+          "terrain3dPilotChannelWaterHalfWidths": "[]",
+          "terrain3dPilotHiddenRelief": "0",
+          "terrain3dPilotHiddenGroundLayers": "",
+          "terrain3dPilotContinuation": "panorama-owned-continuation",
+          "terrain3dPilotHorizonApron": "none",
+          "terrain3dPilotFarGroundProbe": "off",
+          "terrain3dPilotPanoramaFraming": "world-projected-horizon",
+          "terrain3dPilotSkirtBlend": "opaque-sculpt-edge",
+          "terrain3dPilotPanoramaFog": "excluded",
+          "terrain3dPilotPanoramaDepth": "screen-horizon-backdrop",
+          "terrain3dPilotLandmarkExpected": "10",
+          "terrain3dPilotWalkSurfaces": "0",
+          "terrain3dPilotLandmarkEmissive": "3",
+          "terrain3dPilotLandmarkSides": "{\"total\":{\"meshes\":10,\"closed\":10,\"open\":0,\"culled\":10,\"doubleSided\":0},\"mounts\":[{\"id\":\"west-ridge-dish-cluster\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5.299,\"topY\":12.919},{\"id\":\"east-ridge-dish-cluster\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":4.995,\"topY\":12.615},{\"id\":\"dead-gap-charting-station\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":-0.01,\"topY\":7.69},{\"id\":\"valley-cable-drum-yard\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":-0.027,\"topY\":2.403},{\"id\":\"drone-recovery-beacon\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.045,\"topY\":6.363},{\"id\":\"dead-band-yard-null-post\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":-0.025,\"topY\":5.655},{\"id\":\"west-old-tool-cache\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5,\"topY\":7.43},{\"id\":\"east-old-tool-cache\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5,\"topY\":7.43},{\"id\":\"iron-shadow-warning-frame\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.022,\"topY\":4.932},{\"id\":\"north-silence-gate\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":-0.087,\"topY\":6.323}]}",
+          "terrain3dPilotLandmarks": "10",
+          "terrain3dPilotLandmarkSkipped": "0",
+          "terrain3dPilotLandmarkDiagnostics": "",
+          "terrain3dPilotLandmarkMounts": "[{\"id\":\"west-ridge-dish-cluster\",\"x\":-56,\"y\":5.298643112182617,\"z\":30},{\"id\":\"east-ridge-dish-cluster\",\"x\":56,\"y\":4.9947662353515625,\"z\":30},{\"id\":\"dead-gap-charting-station\",\"x\":0,\"y\":-0.010416525416076183,\"z\":18},{\"id\":\"valley-cable-drum-yard\",\"x\":-44,\"y\":-0.026742985472083092,\"z\":-26},{\"id\":\"drone-recovery-beacon\",\"x\":44,\"y\":0.04453114792704582,\"z\":-26},{\"id\":\"dead-band-yard-null-post\",\"x\":0,\"y\":-0.024970659986138344,\"z\":-40},{\"id\":\"west-old-tool-cache\",\"x\":-42,\"y\":5,\"z\":38},{\"id\":\"east-old-tool-cache\",\"x\":42,\"y\":5,\"z\":38},{\"id\":\"iron-shadow-warning-frame\",\"x\":0,\"y\":0.02205866016447544,\"z\":6},{\"id\":\"north-silence-gate\",\"x\":0,\"y\":-0.08733604103326797,\"z\":54}]",
+          "terrain3dPilotLandmarkMaterials": "[{\"id\":\"west-ridge-dish-cluster\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"east-ridge-dish-cluster\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"dead-gap-charting-station\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"valley-cable-drum-yard\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"drone-recovery-beacon\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"dead-band-yard-null-post\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"west-old-tool-cache\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"east-old-tool-cache\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"iron-shadow-warning-frame\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"north-silence-gate\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0}]"
+        },
+        "remainingSceneChildren": 0
+      },
+      {
+        "cycle": 1,
+        "bodies": [
+          {
+            "id": "dead-band-yard-null-post",
+            "position": [
+              0,
+              -0.024970659986138344,
+              -40
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "bounds": {
+              "isBox3": true,
+              "min": {
+                "x": -1.399999976158142,
+                "y": -0.024970659986138344,
+                "z": -41.200000047683716
+              },
+              "max": {
+                "x": 1.399999976158142,
+                "y": 5.655029168352485,
+                "z": -38.799999952316284
+              }
+            }
+          },
+          {
+            "id": "west-old-tool-cache",
+            "position": [
+              -42,
+              5,
+              38
+            ],
+            "rotation": [
+              0,
+              0.16,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "bounds": {
+              "isBox3": true,
+              "min": {
+                "x": -45.65996645278716,
+                "y": 5,
+                "z": 35.439488962443725
+              },
+              "max": {
+                "x": -38.34003354721284,
+                "y": 7.430000066757202,
+                "z": 40.560511037556275
+              }
+            }
+          },
+          {
+            "id": "east-old-tool-cache",
+            "position": [
+              42,
+              5,
+              38
+            ],
+            "rotation": [
+              0,
+              -0.16,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "bounds": {
+              "isBox3": true,
+              "min": {
+                "x": 38.34003354721284,
+                "y": 5,
+                "z": 35.439488962443725
+              },
+              "max": {
+                "x": 45.65996645278716,
+                "y": 7.430000066757202,
+                "z": 40.560511037556275
+              }
+            }
+          }
+        ],
+        "dataset": {
+          "terrain3dPilotContract": "e7-dead-band",
+          "terrain3dPilotTerrainLoadState": "mounted",
+          "terrain3dPilotPanoramaLoadState": "mounted",
+          "terrain3dPilotLandmarkLoadState": "mounted",
+          "terrain3dPilotState": "ready",
+          "terrain3dPilotRenderSource": "glb",
+          "terrain3dPilotHeightSource": "baked-grid",
+          "terrain3dPilotMeshes": "1",
+          "terrain3dPilotTriangles": "32768",
+          "terrain3dPilotMaterials": "1",
+          "terrain3dPilotVertices": "16641",
+          "terrain3dPilotPanorama": "relay-valley-panorama",
+          "terrain3dPilotPanoramaMeshes": "1",
+          "terrain3dPilotPanoramaTriangles": "3084",
+          "terrain3dPilotPanoramaMaterials": "1",
+          "terrain3dPilotPanoramaVertices": "2246",
+          "assetLoadingLabel": "the claim",
+          "assetLoadingReady": "24",
+          "assetLoadingTotal": "24",
+          "assetLoadingProgress": "24/24",
+          "assetLoadingState": "ready",
+          "terrain3dPilotNightPools": "off",
+          "terrain3dPilotNightPoolSources": "0",
+          "terrain3dPilotSpringPonds": "0",
+          "terrain3dPilotSpringPondWaterRadii": "[]",
+          "terrain3dPilotChannelWater": "0",
+          "terrain3dPilotFordWater": "0",
+          "terrain3dPilotChannelWaterHalfWidths": "[]",
+          "terrain3dPilotHiddenRelief": "0",
+          "terrain3dPilotHiddenGroundLayers": "",
+          "terrain3dPilotContinuation": "panorama-owned-continuation",
+          "terrain3dPilotHorizonApron": "none",
+          "terrain3dPilotFarGroundProbe": "off",
+          "terrain3dPilotPanoramaFraming": "world-projected-horizon",
+          "terrain3dPilotSkirtBlend": "opaque-sculpt-edge",
+          "terrain3dPilotPanoramaFog": "excluded",
+          "terrain3dPilotPanoramaDepth": "screen-horizon-backdrop",
+          "terrain3dPilotLandmarkExpected": "10",
+          "terrain3dPilotWalkSurfaces": "0",
+          "terrain3dPilotLandmarkEmissive": "3",
+          "terrain3dPilotLandmarkSides": "{\"total\":{\"meshes\":10,\"closed\":10,\"open\":0,\"culled\":10,\"doubleSided\":0},\"mounts\":[{\"id\":\"west-ridge-dish-cluster\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5.299,\"topY\":12.919},{\"id\":\"east-ridge-dish-cluster\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":4.995,\"topY\":12.615},{\"id\":\"dead-gap-charting-station\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":-0.01,\"topY\":7.69},{\"id\":\"valley-cable-drum-yard\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":-0.027,\"topY\":2.403},{\"id\":\"drone-recovery-beacon\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.045,\"topY\":6.363},{\"id\":\"dead-band-yard-null-post\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":-0.025,\"topY\":5.655},{\"id\":\"west-old-tool-cache\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5,\"topY\":7.43},{\"id\":\"east-old-tool-cache\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5,\"topY\":7.43},{\"id\":\"iron-shadow-warning-frame\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.022,\"topY\":4.932},{\"id\":\"north-silence-gate\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":-0.087,\"topY\":6.323}]}",
+          "terrain3dPilotLandmarks": "10",
+          "terrain3dPilotLandmarkSkipped": "0",
+          "terrain3dPilotLandmarkDiagnostics": "",
+          "terrain3dPilotLandmarkMounts": "[{\"id\":\"west-ridge-dish-cluster\",\"x\":-56,\"y\":5.298643112182617,\"z\":30},{\"id\":\"east-ridge-dish-cluster\",\"x\":56,\"y\":4.9947662353515625,\"z\":30},{\"id\":\"dead-gap-charting-station\",\"x\":0,\"y\":-0.010416525416076183,\"z\":18},{\"id\":\"valley-cable-drum-yard\",\"x\":-44,\"y\":-0.026742985472083092,\"z\":-26},{\"id\":\"drone-recovery-beacon\",\"x\":44,\"y\":0.04453114792704582,\"z\":-26},{\"id\":\"dead-band-yard-null-post\",\"x\":0,\"y\":-0.024970659986138344,\"z\":-40},{\"id\":\"west-old-tool-cache\",\"x\":-42,\"y\":5,\"z\":38},{\"id\":\"east-old-tool-cache\",\"x\":42,\"y\":5,\"z\":38},{\"id\":\"iron-shadow-warning-frame\",\"x\":0,\"y\":0.02205866016447544,\"z\":6},{\"id\":\"north-silence-gate\",\"x\":0,\"y\":-0.08733604103326797,\"z\":54}]",
+          "terrain3dPilotLandmarkMaterials": "[{\"id\":\"west-ridge-dish-cluster\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"east-ridge-dish-cluster\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"dead-gap-charting-station\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"valley-cable-drum-yard\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"drone-recovery-beacon\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"dead-band-yard-null-post\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"west-old-tool-cache\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"east-old-tool-cache\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"iron-shadow-warning-frame\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"north-silence-gate\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0}]"
+        },
+        "remainingSceneChildren": 0
+      },
+      {
+        "cycle": 2,
+        "bodies": [
+          {
+            "id": "dead-band-yard-null-post",
+            "position": [
+              0,
+              -0.024970659986138344,
+              -40
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "bounds": {
+              "isBox3": true,
+              "min": {
+                "x": -1.399999976158142,
+                "y": -0.024970659986138344,
+                "z": -41.200000047683716
+              },
+              "max": {
+                "x": 1.399999976158142,
+                "y": 5.655029168352485,
+                "z": -38.799999952316284
+              }
+            }
+          },
+          {
+            "id": "west-old-tool-cache",
+            "position": [
+              -42,
+              5,
+              38
+            ],
+            "rotation": [
+              0,
+              0.16,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "bounds": {
+              "isBox3": true,
+              "min": {
+                "x": -45.65996645278716,
+                "y": 5,
+                "z": 35.439488962443725
+              },
+              "max": {
+                "x": -38.34003354721284,
+                "y": 7.430000066757202,
+                "z": 40.560511037556275
+              }
+            }
+          },
+          {
+            "id": "east-old-tool-cache",
+            "position": [
+              42,
+              5,
+              38
+            ],
+            "rotation": [
+              0,
+              -0.16,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "bounds": {
+              "isBox3": true,
+              "min": {
+                "x": 38.34003354721284,
+                "y": 5,
+                "z": 35.439488962443725
+              },
+              "max": {
+                "x": 45.65996645278716,
+                "y": 7.430000066757202,
+                "z": 40.560511037556275
+              }
+            }
+          }
+        ],
+        "dataset": {
+          "terrain3dPilotContract": "e7-dead-band",
+          "terrain3dPilotTerrainLoadState": "mounted",
+          "terrain3dPilotPanoramaLoadState": "mounted",
+          "terrain3dPilotLandmarkLoadState": "mounted",
+          "terrain3dPilotState": "ready",
+          "terrain3dPilotRenderSource": "glb",
+          "terrain3dPilotHeightSource": "baked-grid",
+          "terrain3dPilotMeshes": "1",
+          "terrain3dPilotTriangles": "32768",
+          "terrain3dPilotMaterials": "1",
+          "terrain3dPilotVertices": "16641",
+          "terrain3dPilotPanorama": "relay-valley-panorama",
+          "terrain3dPilotPanoramaMeshes": "1",
+          "terrain3dPilotPanoramaTriangles": "3084",
+          "terrain3dPilotPanoramaMaterials": "1",
+          "terrain3dPilotPanoramaVertices": "2246",
+          "assetLoadingLabel": "the claim",
+          "assetLoadingReady": "24",
+          "assetLoadingTotal": "24",
+          "assetLoadingProgress": "24/24",
+          "assetLoadingState": "ready",
+          "terrain3dPilotNightPools": "off",
+          "terrain3dPilotNightPoolSources": "0",
+          "terrain3dPilotSpringPonds": "0",
+          "terrain3dPilotSpringPondWaterRadii": "[]",
+          "terrain3dPilotChannelWater": "0",
+          "terrain3dPilotFordWater": "0",
+          "terrain3dPilotChannelWaterHalfWidths": "[]",
+          "terrain3dPilotHiddenRelief": "0",
+          "terrain3dPilotHiddenGroundLayers": "",
+          "terrain3dPilotContinuation": "panorama-owned-continuation",
+          "terrain3dPilotHorizonApron": "none",
+          "terrain3dPilotFarGroundProbe": "off",
+          "terrain3dPilotPanoramaFraming": "world-projected-horizon",
+          "terrain3dPilotSkirtBlend": "opaque-sculpt-edge",
+          "terrain3dPilotPanoramaFog": "excluded",
+          "terrain3dPilotPanoramaDepth": "screen-horizon-backdrop",
+          "terrain3dPilotLandmarkExpected": "10",
+          "terrain3dPilotWalkSurfaces": "0",
+          "terrain3dPilotLandmarkEmissive": "3",
+          "terrain3dPilotLandmarkSides": "{\"total\":{\"meshes\":10,\"closed\":10,\"open\":0,\"culled\":10,\"doubleSided\":0},\"mounts\":[{\"id\":\"west-ridge-dish-cluster\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5.299,\"topY\":12.919},{\"id\":\"east-ridge-dish-cluster\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":4.995,\"topY\":12.615},{\"id\":\"dead-gap-charting-station\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":-0.01,\"topY\":7.69},{\"id\":\"valley-cable-drum-yard\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":-0.027,\"topY\":2.403},{\"id\":\"drone-recovery-beacon\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.045,\"topY\":6.363},{\"id\":\"dead-band-yard-null-post\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":-0.025,\"topY\":5.655},{\"id\":\"west-old-tool-cache\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5,\"topY\":7.43},{\"id\":\"east-old-tool-cache\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5,\"topY\":7.43},{\"id\":\"iron-shadow-warning-frame\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.022,\"topY\":4.932},{\"id\":\"north-silence-gate\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":-0.087,\"topY\":6.323}]}",
+          "terrain3dPilotLandmarks": "10",
+          "terrain3dPilotLandmarkSkipped": "0",
+          "terrain3dPilotLandmarkDiagnostics": "",
+          "terrain3dPilotLandmarkMounts": "[{\"id\":\"west-ridge-dish-cluster\",\"x\":-56,\"y\":5.298643112182617,\"z\":30},{\"id\":\"east-ridge-dish-cluster\",\"x\":56,\"y\":4.9947662353515625,\"z\":30},{\"id\":\"dead-gap-charting-station\",\"x\":0,\"y\":-0.010416525416076183,\"z\":18},{\"id\":\"valley-cable-drum-yard\",\"x\":-44,\"y\":-0.026742985472083092,\"z\":-26},{\"id\":\"drone-recovery-beacon\",\"x\":44,\"y\":0.04453114792704582,\"z\":-26},{\"id\":\"dead-band-yard-null-post\",\"x\":0,\"y\":-0.024970659986138344,\"z\":-40},{\"id\":\"west-old-tool-cache\",\"x\":-42,\"y\":5,\"z\":38},{\"id\":\"east-old-tool-cache\",\"x\":42,\"y\":5,\"z\":38},{\"id\":\"iron-shadow-warning-frame\",\"x\":0,\"y\":0.02205866016447544,\"z\":6},{\"id\":\"north-silence-gate\",\"x\":0,\"y\":-0.08733604103326797,\"z\":54}]",
+          "terrain3dPilotLandmarkMaterials": "[{\"id\":\"west-ridge-dish-cluster\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"east-ridge-dish-cluster\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"dead-gap-charting-station\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"valley-cable-drum-yard\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"drone-recovery-beacon\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"dead-band-yard-null-post\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"west-old-tool-cache\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"east-old-tool-cache\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"iron-shadow-warning-frame\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"north-silence-gate\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0}]"
+        },
+        "remainingSceneChildren": 0
+      }
+    ],
+    "errors": []
+  },
+  {
+    "width": 390,
+    "navigation": {
+      "spawn": {
+        "x": 0,
+        "y": 0.13633806020021438,
+        "z": 12
+      },
+      "spawnWalkable": true,
+      "own": [
+        {
+          "id": "dead-band:dead-band-yard-null-post",
+          "x": 0,
+          "z": -40,
+          "halfX": 0.864,
+          "halfZ": 0.864
+        },
+        {
+          "id": "dead-band:west-old-tool-cache",
+          "x": -42,
+          "z": 38,
+          "halfX": 2.634943880642162,
+          "halfZ": 1.8434628032582818
+        },
+        {
+          "id": "dead-band:east-old-tool-cache",
+          "x": 42,
+          "z": 38,
+          "halfX": 2.634943880642162,
+          "halfZ": 1.8434628032582818
+        }
+      ],
+      "blockers": [
+        {
+          "id": "relay-valley:west-ridge-dish-cluster",
+          "x": -56,
+          "z": 30,
+          "halfX": 2.320815623365354,
+          "halfZ": 1.6307534078847432
+        },
+        {
+          "id": "relay-valley:east-ridge-dish-cluster",
+          "x": 56,
+          "z": 30,
+          "halfX": 2.308801931149333,
+          "halfZ": 1.5933860377503082
+        },
+        {
+          "id": "relay-valley:dead-gap-charting-station",
+          "x": 0,
+          "z": 18,
+          "halfX": 2.2912200000000005,
+          "halfZ": 1.31328
+        },
+        {
+          "id": "relay-valley:valley-cable-drum-yard",
+          "x": -44,
+          "z": -26,
+          "halfX": 2.6942953933669846,
+          "halfZ": 1.9699649514722366
+        },
+        {
+          "id": "relay-valley:drone-recovery-beacon",
+          "x": 44,
+          "z": -26,
+          "halfX": 3.21408,
+          "halfZ": 3.21408
+        },
+        {
+          "id": "dead-band:dead-band-yard-null-post",
+          "x": 0,
+          "z": -40,
+          "halfX": 0.864,
+          "halfZ": 0.864
+        },
+        {
+          "id": "dead-band:west-old-tool-cache",
+          "x": -42,
+          "z": 38,
+          "halfX": 2.634943880642162,
+          "halfZ": 1.8434628032582818
+        },
+        {
+          "id": "dead-band:east-old-tool-cache",
+          "x": 42,
+          "z": 38,
+          "halfX": 2.634943880642162,
+          "halfZ": 1.8434628032582818
+        }
+      ],
+      "targets": [
+        {
+          "kind": "harvest",
+          "id": "0",
+          "x": -14,
+          "z": -6,
+          "reachable": true
+        },
+        {
+          "kind": "harvest",
+          "id": "1",
+          "x": 14,
+          "z": -6,
+          "reachable": true
+        },
+        {
+          "kind": "harvest",
+          "id": "2",
+          "x": -34,
+          "z": 37,
+          "reachable": true
+        },
+        {
+          "kind": "harvest",
+          "id": "3",
+          "x": 34,
+          "z": 37,
+          "reachable": true
+        },
+        {
+          "kind": "station",
+          "id": "iron-shadow-warning-frame",
+          "x": 0,
+          "z": 9,
+          "reachable": true
+        },
+        {
+          "kind": "station",
+          "id": "north-silence-gate",
+          "x": 0,
+          "z": 57,
+          "reachable": true
+        },
+        {
+          "kind": "station",
+          "id": "dead-gap-charting-station",
+          "x": 0,
+          "z": 20,
+          "reachable": true
+        },
+        {
+          "kind": "site",
+          "id": "dead-band-yard",
+          "center": {
+            "x": 0,
+            "z": -15
+          },
+          "approach": {
+            "x": 0,
+            "z": -15
+          },
+          "reachable": true
+        },
+        {
+          "kind": "site",
+          "id": "west-old-tool-ground",
+          "center": {
+            "x": -35,
+            "z": 37
+          },
+          "approach": {
+            "x": -35,
+            "z": 37
+          },
+          "reachable": true
+        },
+        {
+          "kind": "site",
+          "id": "east-old-tool-ground",
+          "center": {
+            "x": 35,
+            "z": 37
+          },
+          "approach": {
+            "x": 35,
+            "z": 37
+          },
+          "reachable": true
+        }
+      ],
+      "reachableCells": 63107,
+      "step": 0.5
+    },
+    "probes": [
+      {
+        "id": "dead-band:dead-band-yard-null-post",
+        "overlappingBlockerGroup": [
+          "dead-band:dead-band-yard-null-post"
+        ],
+        "faces": [
+          {
+            "axis": "x",
+            "sign": -1,
+            "key": "KeyD",
+            "faceBody": "dead-band:dead-band-yard-null-post",
+            "start": {
+              "x": -2.044,
+              "z": -40
+            },
+            "hero": {
+              "x": -1.5291533318835049,
+              "y": 0.02087029927520931,
+              "z": -40
+            },
+            "boundaryDistance": 0.08515333188350493,
+            "outsideAllBlockers": true
+          },
+          {
+            "axis": "x",
+            "sign": 1,
+            "key": "KeyA",
+            "faceBody": "dead-band:dead-band-yard-null-post",
+            "start": {
+              "x": 2.044,
+              "z": -40
+            },
+            "hero": {
+              "x": 1.5291533318835049,
+              "y": 0.050607855057055284,
+              "z": -40
+            },
+            "boundaryDistance": 0.08515333188350493,
+            "outsideAllBlockers": true
+          },
+          {
+            "axis": "z",
+            "sign": -1,
+            "key": "KeyS",
+            "faceBody": "dead-band:dead-band-yard-null-post",
+            "start": {
+              "x": 0,
+              "z": -42.044
+            },
+            "hero": {
+              "x": 0,
+              "y": 0.013924099178588403,
+              "z": -41.52915333188349
+            },
+            "boundaryDistance": 0.08515333188348961,
+            "outsideAllBlockers": true
+          },
+          {
+            "axis": "z",
+            "sign": 1,
+            "key": "KeyW",
+            "faceBody": "dead-band:dead-band-yard-null-post",
+            "start": {
+              "x": 0,
+              "z": -37.956
+            },
+            "hero": {
+              "x": 0,
+              "y": 0.06444981381864813,
+              "z": -38.47084666811651
+            },
+            "boundaryDistance": 0.08515333188348961,
+            "outsideAllBlockers": true
+          }
+        ],
+        "depenetrated": true,
+        "releasePosition": {
+          "x": -1.45,
+          "y": 0.02153684034943578,
+          "z": -40
+        }
+      },
+      {
+        "id": "dead-band:west-old-tool-cache",
+        "overlappingBlockerGroup": [
+          "dead-band:west-old-tool-cache"
+        ],
+        "faces": [
+          {
+            "axis": "x",
+            "sign": -1,
+            "key": "KeyD",
+            "faceBody": "dead-band:west-old-tool-cache",
+            "start": {
+              "x": -45.81494388064216,
+              "z": 38
+            },
+            "hero": {
+              "x": -45.30009721252566,
+              "y": 5.06,
+              "z": 38
+            },
+            "boundaryDistance": 0.08515333188349672,
+            "outsideAllBlockers": true
+          },
+          {
+            "axis": "x",
+            "sign": 1,
+            "key": "KeyA",
+            "faceBody": "dead-band:west-old-tool-cache",
+            "start": {
+              "x": -38.18505611935784,
+              "z": 38
+            },
+            "hero": {
+              "x": -38.69990278747434,
+              "y": 5.06,
+              "z": 38
+            },
+            "boundaryDistance": 0.08515333188349672,
+            "outsideAllBlockers": true
+          },
+          {
+            "axis": "z",
+            "sign": -1,
+            "key": "KeyS",
+            "faceBody": "dead-band:west-old-tool-cache",
+            "start": {
+              "x": -42,
+              "z": 34.97653719674172
+            },
+            "hero": {
+              "x": -42,
+              "y": 5.06,
+              "z": 35.49138386485822
+            },
+            "boundaryDistance": 0.08515333188349672,
+            "outsideAllBlockers": true
+          },
+          {
+            "axis": "z",
+            "sign": 1,
+            "key": "KeyW",
+            "faceBody": "dead-band:west-old-tool-cache",
+            "start": {
+              "x": -42,
+              "z": 41.02346280325828
+            },
+            "hero": {
+              "x": -42,
+              "y": 5.06,
+              "z": 40.50861613514178
+            },
+            "boundaryDistance": 0.08515333188349672,
+            "outsideAllBlockers": true
+          }
+        ],
+        "depenetrated": true,
+        "releasePosition": {
+          "x": -26.611029667961954,
+          "y": 5.06,
+          "z": 35.54999999999997
+        }
+      },
+      {
+        "id": "dead-band:east-old-tool-cache",
+        "overlappingBlockerGroup": [
+          "dead-band:east-old-tool-cache"
+        ],
+        "faces": [
+          {
+            "axis": "x",
+            "sign": -1,
+            "key": "KeyD",
+            "faceBody": "dead-band:east-old-tool-cache",
+            "start": {
+              "x": 38.18505611935784,
+              "z": 38
+            },
+            "hero": {
+              "x": 38.69990278747434,
+              "y": 5.06,
+              "z": 38
+            },
+            "boundaryDistance": 0.08515333188349672,
+            "outsideAllBlockers": true
+          },
+          {
+            "axis": "x",
+            "sign": 1,
+            "key": "KeyA",
+            "faceBody": "dead-band:east-old-tool-cache",
+            "start": {
+              "x": 45.81494388064216,
+              "z": 38
+            },
+            "hero": {
+              "x": 45.30009721252566,
+              "y": 5.06,
+              "z": 38
+            },
+            "boundaryDistance": 0.08515333188349672,
+            "outsideAllBlockers": true
+          },
+          {
+            "axis": "z",
+            "sign": -1,
+            "key": "KeyS",
+            "faceBody": "dead-band:east-old-tool-cache",
+            "start": {
+              "x": 42,
+              "z": 34.97653719674172
+            },
+            "hero": {
+              "x": 42,
+              "y": 5.06,
+              "z": 35.49138386485822
+            },
+            "boundaryDistance": 0.08515333188349672,
+            "outsideAllBlockers": true
+          },
+          {
+            "axis": "z",
+            "sign": 1,
+            "key": "KeyW",
+            "faceBody": "dead-band:east-old-tool-cache",
+            "start": {
+              "x": 42,
+              "z": 41.02346280325828
+            },
+            "hero": {
+              "x": 42,
+              "y": 5.06,
+              "z": 40.50861613514178
+            },
+            "boundaryDistance": 0.08515333188349672,
+            "outsideAllBlockers": true
+          }
+        ],
+        "depenetrated": true,
+        "releasePosition": {
+          "x": 57.38897033203814,
+          "y": 4.4267742507395695,
+          "z": 35.54999999999997
+        }
+      }
+    ],
+    "cycles": [
+      {
+        "cycle": 0,
+        "bodies": [
+          {
+            "id": "dead-band-yard-null-post",
+            "position": [
+              0,
+              -0.024970659986138344,
+              -40
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "bounds": {
+              "isBox3": true,
+              "min": {
+                "x": -1.399999976158142,
+                "y": -0.024970659986138344,
+                "z": -41.200000047683716
+              },
+              "max": {
+                "x": 1.399999976158142,
+                "y": 5.655029168352485,
+                "z": -38.799999952316284
+              }
+            }
+          },
+          {
+            "id": "west-old-tool-cache",
+            "position": [
+              -42,
+              5,
+              38
+            ],
+            "rotation": [
+              0,
+              0.16,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "bounds": {
+              "isBox3": true,
+              "min": {
+                "x": -45.65996645278716,
+                "y": 5,
+                "z": 35.439488962443725
+              },
+              "max": {
+                "x": -38.34003354721284,
+                "y": 7.430000066757202,
+                "z": 40.560511037556275
+              }
+            }
+          },
+          {
+            "id": "east-old-tool-cache",
+            "position": [
+              42,
+              5,
+              38
+            ],
+            "rotation": [
+              0,
+              -0.16,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "bounds": {
+              "isBox3": true,
+              "min": {
+                "x": 38.34003354721284,
+                "y": 5,
+                "z": 35.439488962443725
+              },
+              "max": {
+                "x": 45.65996645278716,
+                "y": 7.430000066757202,
+                "z": 40.560511037556275
+              }
+            }
+          }
+        ],
+        "dataset": {
+          "terrain3dPilotContract": "e7-dead-band",
+          "terrain3dPilotTerrainLoadState": "mounted",
+          "terrain3dPilotPanoramaLoadState": "mounted",
+          "terrain3dPilotLandmarkLoadState": "mounted",
+          "terrain3dPilotState": "ready",
+          "terrain3dPilotRenderSource": "glb",
+          "terrain3dPilotHeightSource": "baked-grid",
+          "terrain3dPilotMeshes": "1",
+          "terrain3dPilotTriangles": "32768",
+          "terrain3dPilotMaterials": "1",
+          "terrain3dPilotVertices": "16641",
+          "terrain3dPilotPanorama": "relay-valley-panorama",
+          "terrain3dPilotPanoramaMeshes": "1",
+          "terrain3dPilotPanoramaTriangles": "3084",
+          "terrain3dPilotPanoramaMaterials": "1",
+          "terrain3dPilotPanoramaVertices": "2246",
+          "assetLoadingLabel": "the claim",
+          "assetLoadingReady": "24",
+          "assetLoadingTotal": "24",
+          "assetLoadingProgress": "24/24",
+          "assetLoadingState": "ready",
+          "terrain3dPilotNightPools": "off",
+          "terrain3dPilotNightPoolSources": "0",
+          "terrain3dPilotSpringPonds": "0",
+          "terrain3dPilotSpringPondWaterRadii": "[]",
+          "terrain3dPilotChannelWater": "0",
+          "terrain3dPilotFordWater": "0",
+          "terrain3dPilotChannelWaterHalfWidths": "[]",
+          "terrain3dPilotHiddenRelief": "0",
+          "terrain3dPilotHiddenGroundLayers": "",
+          "terrain3dPilotContinuation": "panorama-owned-continuation",
+          "terrain3dPilotHorizonApron": "none",
+          "terrain3dPilotFarGroundProbe": "off",
+          "terrain3dPilotPanoramaFraming": "world-projected-horizon",
+          "terrain3dPilotSkirtBlend": "opaque-sculpt-edge",
+          "terrain3dPilotPanoramaFog": "excluded",
+          "terrain3dPilotPanoramaDepth": "screen-horizon-backdrop",
+          "terrain3dPilotLandmarkExpected": "10",
+          "terrain3dPilotWalkSurfaces": "0",
+          "terrain3dPilotLandmarkEmissive": "3",
+          "terrain3dPilotLandmarkSides": "{\"total\":{\"meshes\":10,\"closed\":10,\"open\":0,\"culled\":10,\"doubleSided\":0},\"mounts\":[{\"id\":\"west-ridge-dish-cluster\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5.299,\"topY\":12.919},{\"id\":\"east-ridge-dish-cluster\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":4.995,\"topY\":12.615},{\"id\":\"dead-gap-charting-station\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":-0.01,\"topY\":7.69},{\"id\":\"valley-cable-drum-yard\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":-0.027,\"topY\":2.403},{\"id\":\"drone-recovery-beacon\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.045,\"topY\":6.363},{\"id\":\"dead-band-yard-null-post\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":-0.025,\"topY\":5.655},{\"id\":\"west-old-tool-cache\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5,\"topY\":7.43},{\"id\":\"east-old-tool-cache\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5,\"topY\":7.43},{\"id\":\"iron-shadow-warning-frame\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.022,\"topY\":4.932},{\"id\":\"north-silence-gate\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":-0.087,\"topY\":6.323}]}",
+          "terrain3dPilotLandmarks": "10",
+          "terrain3dPilotLandmarkSkipped": "0",
+          "terrain3dPilotLandmarkDiagnostics": "",
+          "terrain3dPilotLandmarkMounts": "[{\"id\":\"west-ridge-dish-cluster\",\"x\":-56,\"y\":5.298643112182617,\"z\":30},{\"id\":\"east-ridge-dish-cluster\",\"x\":56,\"y\":4.9947662353515625,\"z\":30},{\"id\":\"dead-gap-charting-station\",\"x\":0,\"y\":-0.010416525416076183,\"z\":18},{\"id\":\"valley-cable-drum-yard\",\"x\":-44,\"y\":-0.026742985472083092,\"z\":-26},{\"id\":\"drone-recovery-beacon\",\"x\":44,\"y\":0.04453114792704582,\"z\":-26},{\"id\":\"dead-band-yard-null-post\",\"x\":0,\"y\":-0.024970659986138344,\"z\":-40},{\"id\":\"west-old-tool-cache\",\"x\":-42,\"y\":5,\"z\":38},{\"id\":\"east-old-tool-cache\",\"x\":42,\"y\":5,\"z\":38},{\"id\":\"iron-shadow-warning-frame\",\"x\":0,\"y\":0.02205866016447544,\"z\":6},{\"id\":\"north-silence-gate\",\"x\":0,\"y\":-0.08733604103326797,\"z\":54}]",
+          "terrain3dPilotLandmarkMaterials": "[{\"id\":\"west-ridge-dish-cluster\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"east-ridge-dish-cluster\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"dead-gap-charting-station\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"valley-cable-drum-yard\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"drone-recovery-beacon\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"dead-band-yard-null-post\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"west-old-tool-cache\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"east-old-tool-cache\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"iron-shadow-warning-frame\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"north-silence-gate\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0}]"
+        },
+        "remainingSceneChildren": 0
+      },
+      {
+        "cycle": 1,
+        "bodies": [
+          {
+            "id": "dead-band-yard-null-post",
+            "position": [
+              0,
+              -0.024970659986138344,
+              -40
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "bounds": {
+              "isBox3": true,
+              "min": {
+                "x": -1.399999976158142,
+                "y": -0.024970659986138344,
+                "z": -41.200000047683716
+              },
+              "max": {
+                "x": 1.399999976158142,
+                "y": 5.655029168352485,
+                "z": -38.799999952316284
+              }
+            }
+          },
+          {
+            "id": "west-old-tool-cache",
+            "position": [
+              -42,
+              5,
+              38
+            ],
+            "rotation": [
+              0,
+              0.16,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "bounds": {
+              "isBox3": true,
+              "min": {
+                "x": -45.65996645278716,
+                "y": 5,
+                "z": 35.439488962443725
+              },
+              "max": {
+                "x": -38.34003354721284,
+                "y": 7.430000066757202,
+                "z": 40.560511037556275
+              }
+            }
+          },
+          {
+            "id": "east-old-tool-cache",
+            "position": [
+              42,
+              5,
+              38
+            ],
+            "rotation": [
+              0,
+              -0.16,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "bounds": {
+              "isBox3": true,
+              "min": {
+                "x": 38.34003354721284,
+                "y": 5,
+                "z": 35.439488962443725
+              },
+              "max": {
+                "x": 45.65996645278716,
+                "y": 7.430000066757202,
+                "z": 40.560511037556275
+              }
+            }
+          }
+        ],
+        "dataset": {
+          "terrain3dPilotContract": "e7-dead-band",
+          "terrain3dPilotTerrainLoadState": "mounted",
+          "terrain3dPilotPanoramaLoadState": "mounted",
+          "terrain3dPilotLandmarkLoadState": "mounted",
+          "terrain3dPilotState": "ready",
+          "terrain3dPilotRenderSource": "glb",
+          "terrain3dPilotHeightSource": "baked-grid",
+          "terrain3dPilotMeshes": "1",
+          "terrain3dPilotTriangles": "32768",
+          "terrain3dPilotMaterials": "1",
+          "terrain3dPilotVertices": "16641",
+          "terrain3dPilotPanorama": "relay-valley-panorama",
+          "terrain3dPilotPanoramaMeshes": "1",
+          "terrain3dPilotPanoramaTriangles": "3084",
+          "terrain3dPilotPanoramaMaterials": "1",
+          "terrain3dPilotPanoramaVertices": "2246",
+          "assetLoadingLabel": "the claim",
+          "assetLoadingReady": "24",
+          "assetLoadingTotal": "24",
+          "assetLoadingProgress": "24/24",
+          "assetLoadingState": "ready",
+          "terrain3dPilotNightPools": "off",
+          "terrain3dPilotNightPoolSources": "0",
+          "terrain3dPilotSpringPonds": "0",
+          "terrain3dPilotSpringPondWaterRadii": "[]",
+          "terrain3dPilotChannelWater": "0",
+          "terrain3dPilotFordWater": "0",
+          "terrain3dPilotChannelWaterHalfWidths": "[]",
+          "terrain3dPilotHiddenRelief": "0",
+          "terrain3dPilotHiddenGroundLayers": "",
+          "terrain3dPilotContinuation": "panorama-owned-continuation",
+          "terrain3dPilotHorizonApron": "none",
+          "terrain3dPilotFarGroundProbe": "off",
+          "terrain3dPilotPanoramaFraming": "world-projected-horizon",
+          "terrain3dPilotSkirtBlend": "opaque-sculpt-edge",
+          "terrain3dPilotPanoramaFog": "excluded",
+          "terrain3dPilotPanoramaDepth": "screen-horizon-backdrop",
+          "terrain3dPilotLandmarkExpected": "10",
+          "terrain3dPilotWalkSurfaces": "0",
+          "terrain3dPilotLandmarkEmissive": "3",
+          "terrain3dPilotLandmarkSides": "{\"total\":{\"meshes\":10,\"closed\":10,\"open\":0,\"culled\":10,\"doubleSided\":0},\"mounts\":[{\"id\":\"west-ridge-dish-cluster\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5.299,\"topY\":12.919},{\"id\":\"east-ridge-dish-cluster\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":4.995,\"topY\":12.615},{\"id\":\"dead-gap-charting-station\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":-0.01,\"topY\":7.69},{\"id\":\"valley-cable-drum-yard\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":-0.027,\"topY\":2.403},{\"id\":\"drone-recovery-beacon\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.045,\"topY\":6.363},{\"id\":\"dead-band-yard-null-post\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":-0.025,\"topY\":5.655},{\"id\":\"west-old-tool-cache\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5,\"topY\":7.43},{\"id\":\"east-old-tool-cache\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5,\"topY\":7.43},{\"id\":\"iron-shadow-warning-frame\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.022,\"topY\":4.932},{\"id\":\"north-silence-gate\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":-0.087,\"topY\":6.323}]}",
+          "terrain3dPilotLandmarks": "10",
+          "terrain3dPilotLandmarkSkipped": "0",
+          "terrain3dPilotLandmarkDiagnostics": "",
+          "terrain3dPilotLandmarkMounts": "[{\"id\":\"west-ridge-dish-cluster\",\"x\":-56,\"y\":5.298643112182617,\"z\":30},{\"id\":\"east-ridge-dish-cluster\",\"x\":56,\"y\":4.9947662353515625,\"z\":30},{\"id\":\"dead-gap-charting-station\",\"x\":0,\"y\":-0.010416525416076183,\"z\":18},{\"id\":\"valley-cable-drum-yard\",\"x\":-44,\"y\":-0.026742985472083092,\"z\":-26},{\"id\":\"drone-recovery-beacon\",\"x\":44,\"y\":0.04453114792704582,\"z\":-26},{\"id\":\"dead-band-yard-null-post\",\"x\":0,\"y\":-0.024970659986138344,\"z\":-40},{\"id\":\"west-old-tool-cache\",\"x\":-42,\"y\":5,\"z\":38},{\"id\":\"east-old-tool-cache\",\"x\":42,\"y\":5,\"z\":38},{\"id\":\"iron-shadow-warning-frame\",\"x\":0,\"y\":0.02205866016447544,\"z\":6},{\"id\":\"north-silence-gate\",\"x\":0,\"y\":-0.08733604103326797,\"z\":54}]",
+          "terrain3dPilotLandmarkMaterials": "[{\"id\":\"west-ridge-dish-cluster\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"east-ridge-dish-cluster\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"dead-gap-charting-station\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"valley-cable-drum-yard\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"drone-recovery-beacon\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"dead-band-yard-null-post\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"west-old-tool-cache\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"east-old-tool-cache\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"iron-shadow-warning-frame\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"north-silence-gate\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0}]"
+        },
+        "remainingSceneChildren": 0
+      },
+      {
+        "cycle": 2,
+        "bodies": [
+          {
+            "id": "dead-band-yard-null-post",
+            "position": [
+              0,
+              -0.024970659986138344,
+              -40
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "bounds": {
+              "isBox3": true,
+              "min": {
+                "x": -1.399999976158142,
+                "y": -0.024970659986138344,
+                "z": -41.200000047683716
+              },
+              "max": {
+                "x": 1.399999976158142,
+                "y": 5.655029168352485,
+                "z": -38.799999952316284
+              }
+            }
+          },
+          {
+            "id": "west-old-tool-cache",
+            "position": [
+              -42,
+              5,
+              38
+            ],
+            "rotation": [
+              0,
+              0.16,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "bounds": {
+              "isBox3": true,
+              "min": {
+                "x": -45.65996645278716,
+                "y": 5,
+                "z": 35.439488962443725
+              },
+              "max": {
+                "x": -38.34003354721284,
+                "y": 7.430000066757202,
+                "z": 40.560511037556275
+              }
+            }
+          },
+          {
+            "id": "east-old-tool-cache",
+            "position": [
+              42,
+              5,
+              38
+            ],
+            "rotation": [
+              0,
+              -0.16,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "bounds": {
+              "isBox3": true,
+              "min": {
+                "x": 38.34003354721284,
+                "y": 5,
+                "z": 35.439488962443725
+              },
+              "max": {
+                "x": 45.65996645278716,
+                "y": 7.430000066757202,
+                "z": 40.560511037556275
+              }
+            }
+          }
+        ],
+        "dataset": {
+          "terrain3dPilotContract": "e7-dead-band",
+          "terrain3dPilotTerrainLoadState": "mounted",
+          "terrain3dPilotPanoramaLoadState": "mounted",
+          "terrain3dPilotLandmarkLoadState": "mounted",
+          "terrain3dPilotState": "ready",
+          "terrain3dPilotRenderSource": "glb",
+          "terrain3dPilotHeightSource": "baked-grid",
+          "terrain3dPilotMeshes": "1",
+          "terrain3dPilotTriangles": "32768",
+          "terrain3dPilotMaterials": "1",
+          "terrain3dPilotVertices": "16641",
+          "terrain3dPilotPanorama": "relay-valley-panorama",
+          "terrain3dPilotPanoramaMeshes": "1",
+          "terrain3dPilotPanoramaTriangles": "3084",
+          "terrain3dPilotPanoramaMaterials": "1",
+          "terrain3dPilotPanoramaVertices": "2246",
+          "assetLoadingLabel": "the claim",
+          "assetLoadingReady": "24",
+          "assetLoadingTotal": "24",
+          "assetLoadingProgress": "24/24",
+          "assetLoadingState": "ready",
+          "terrain3dPilotNightPools": "off",
+          "terrain3dPilotNightPoolSources": "0",
+          "terrain3dPilotSpringPonds": "0",
+          "terrain3dPilotSpringPondWaterRadii": "[]",
+          "terrain3dPilotChannelWater": "0",
+          "terrain3dPilotFordWater": "0",
+          "terrain3dPilotChannelWaterHalfWidths": "[]",
+          "terrain3dPilotHiddenRelief": "0",
+          "terrain3dPilotHiddenGroundLayers": "",
+          "terrain3dPilotContinuation": "panorama-owned-continuation",
+          "terrain3dPilotHorizonApron": "none",
+          "terrain3dPilotFarGroundProbe": "off",
+          "terrain3dPilotPanoramaFraming": "world-projected-horizon",
+          "terrain3dPilotSkirtBlend": "opaque-sculpt-edge",
+          "terrain3dPilotPanoramaFog": "excluded",
+          "terrain3dPilotPanoramaDepth": "screen-horizon-backdrop",
+          "terrain3dPilotLandmarkExpected": "10",
+          "terrain3dPilotWalkSurfaces": "0",
+          "terrain3dPilotLandmarkEmissive": "3",
+          "terrain3dPilotLandmarkSides": "{\"total\":{\"meshes\":10,\"closed\":10,\"open\":0,\"culled\":10,\"doubleSided\":0},\"mounts\":[{\"id\":\"west-ridge-dish-cluster\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5.299,\"topY\":12.919},{\"id\":\"east-ridge-dish-cluster\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":4.995,\"topY\":12.615},{\"id\":\"dead-gap-charting-station\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":-0.01,\"topY\":7.69},{\"id\":\"valley-cable-drum-yard\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":-0.027,\"topY\":2.403},{\"id\":\"drone-recovery-beacon\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.045,\"topY\":6.363},{\"id\":\"dead-band-yard-null-post\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":-0.025,\"topY\":5.655},{\"id\":\"west-old-tool-cache\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5,\"topY\":7.43},{\"id\":\"east-old-tool-cache\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5,\"topY\":7.43},{\"id\":\"iron-shadow-warning-frame\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.022,\"topY\":4.932},{\"id\":\"north-silence-gate\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":-0.087,\"topY\":6.323}]}",
+          "terrain3dPilotLandmarks": "10",
+          "terrain3dPilotLandmarkSkipped": "0",
+          "terrain3dPilotLandmarkDiagnostics": "",
+          "terrain3dPilotLandmarkMounts": "[{\"id\":\"west-ridge-dish-cluster\",\"x\":-56,\"y\":5.298643112182617,\"z\":30},{\"id\":\"east-ridge-dish-cluster\",\"x\":56,\"y\":4.9947662353515625,\"z\":30},{\"id\":\"dead-gap-charting-station\",\"x\":0,\"y\":-0.010416525416076183,\"z\":18},{\"id\":\"valley-cable-drum-yard\",\"x\":-44,\"y\":-0.026742985472083092,\"z\":-26},{\"id\":\"drone-recovery-beacon\",\"x\":44,\"y\":0.04453114792704582,\"z\":-26},{\"id\":\"dead-band-yard-null-post\",\"x\":0,\"y\":-0.024970659986138344,\"z\":-40},{\"id\":\"west-old-tool-cache\",\"x\":-42,\"y\":5,\"z\":38},{\"id\":\"east-old-tool-cache\",\"x\":42,\"y\":5,\"z\":38},{\"id\":\"iron-shadow-warning-frame\",\"x\":0,\"y\":0.02205866016447544,\"z\":6},{\"id\":\"north-silence-gate\",\"x\":0,\"y\":-0.08733604103326797,\"z\":54}]",
+          "terrain3dPilotLandmarkMaterials": "[{\"id\":\"west-ridge-dish-cluster\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"east-ridge-dish-cluster\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"dead-gap-charting-station\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"valley-cable-drum-yard\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"drone-recovery-beacon\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"dead-band-yard-null-post\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"west-old-tool-cache\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"east-old-tool-cache\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"iron-shadow-warning-frame\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"north-silence-gate\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0}]"
+        },
+        "remainingSceneChildren": 0
+      }
+    ],
+    "errors": []
+  }
+]
