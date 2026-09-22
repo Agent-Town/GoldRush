@@ -663,3 +663,10 @@ Own checks pass after correcting the manifest sentence to extend an existing rul
 Builds, **61+3** guards, focused parity/census **6/6**, loading **8/8**, repeat **2/2** pass. Own **22 pass / two failures**; both arsenal availability mismatches reproduce on the exact preceding engine, candidate restored exactly. E1 payload **34,309,624 B**. [Boards, proofs and attribution](run-8/entry-framing/e8-far-side/review.md).
 
 Engine `084df9fa71eef1eb63753addda63d7ee7b34a049e8394acfea11db36d284ae37` → `b3a86513d6b6511e4fa3049104211051d4cddac7fdda6c314a52144cdb98a288`. Store `2d1000357f06e44b42b7288ef8682b1919a66e05`. Pin drain-owned. READY-FOR-GATES with two attributed baseline failures.
+
+
+## 2026-09-22 — run 8: entry, Half-Life Hollow
+
+**Fixed offscreen entry:** `south-countdown-gate` names the plate's foreground clock gate at the timed crossing. **0→26,671→0 desktop / 0→29,787→0 phone** body pixels; visible **1.700–1.816 / 1.684–1.791 s** inside the 2.5 s authored window. Reachable with the original offset/FOV/zoom and hero start. The simple frame, terrain/continuation seam, ochre/teal crossing slabs, ravine and HUD composition remain HELD. Only the two mirrored metadata declarations change.
+
+Builds, **61+3** guards and own crossing/roster/census **20/20** pass; E1 payload **34,309,830 B**. [Boards, counts and invariants](run-8/entry-framing/e6-half-life-hollow/review.md). Engine `b3a86513d6b6511e4fa3049104211051d4cddac7fdda6c314a52144cdb98a288` → `a8afc11f313a5bc6567deac76bb40da24aab1ff19d7f935146229510289ad7c1`. Store `d8938178a7464c637a79bca81d5f788bc8ad954d`. Pin drain-owned. READY-FOR-GATES.
