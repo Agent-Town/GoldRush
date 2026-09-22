@@ -16,3 +16,4 @@ carries, so ride 2 reads ride 1's lessons and ride 3 reads both (F-HEAT15-4).
 | # | contract | seed | stake | gen | outcome | waves | gold | timeAlive | wall | tape / eventLogHash | door verdict | notebook |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|
 | 1 | e5-regatta<br>`r1` | `e5-regatta-01` | map-rebuilt | 134 | **SECURED** | 12 | 0 | 272s | 1114s | `attempt-1-tape.json` · `agent-cce8d603-90fa4316-29bb-4db7-ae4c-f310682d2f1f`<br>fnv1a32:d7eb1903 | verified `fnv1a32:f3a9c00c` | gen 134<br>slip `agent-cce8d603-90fa4316-29bb-4db7-ae4c-f310682d2f1f` |
+| 2 | e5-regatta<br>`r2` | `e5-regatta-01` | map-rebuilt | 135 | **SECURED** | 12 | 200 | 272s | 685s | `attempt-1-tape.json` · `agent-ae781bc1-722225b2-0bc4-4766-8655-01e3a8380133`<br>fnv1a32:136a45a0 | verified `fnv1a32:b92da1bf` | gen 135<br>slip `agent-ae781bc1-722225b2-0bc4-4766-8655-01e3a8380133` |
