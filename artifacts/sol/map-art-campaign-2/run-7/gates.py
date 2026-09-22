@@ -9,7 +9,9 @@ if mode=='build':
     commands=[('tsc',['npx','tsc','--noEmit'],{}),('default-build',['npm','run','build'],{}),('full-build',['npm','run','build'],{'GR_RELEASE':'full'})]
     if True:commands += [('e1-build',['npm','run','build'],{'GR_RELEASE':'e1'}),('payload',['node','scripts/first-town-payload.mjs','--json'],{})]
 elif mode=='e2e':
-    commands=[(sys.argv[3],['npx','playwright','test','--workers=1','--project=desktop-chrome','--project=mobile-chrome','--trace=off','--reporter=line','--output='+str(raw/(name+'-'+sys.argv[3])),*sys.argv[4:]],{})]
+    projects=os.environ.get('GR_CAPTURE_PROJECTS','desktop-chrome,mobile-chrome').split(',')
+    assert projects and all(p in ['desktop-chrome','mobile-chrome'] for p in projects)
+    commands=[(sys.argv[3],['npx','playwright','test','--workers=1',*['--project='+p for p in projects],'--trace=off','--reporter=line','--output='+str(raw/(name+'-'+sys.argv[3])),*sys.argv[4:]],{})]
 elif mode=='probes':
     commands=[(label,['node',f'scripts/map-landmark-{label}-check.mjs'],{'PROBE_BASE':'http://127.0.0.1:5303'}) for label in ['loading','repeat']]
 else:raise ValueError(mode)

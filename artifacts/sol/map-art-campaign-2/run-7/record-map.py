@@ -7,7 +7,7 @@ config=read('capture-config.json');solids=read('selected-solids.json');walk=read
 assert all(x['exit']==0 for x in build);assert all(not x['errors'] for x in plain);assert len(plain)==4
 assert all(x['within15Percent'] for x in perf['rows']);assert all(x['navigation']['spawnWalkable'] and all(t['reachable'] for t in x['navigation']['targets']) for x in walk)
 gates=sorted(folder.glob('e2e-*.json'));receipts=[(p.name,json.loads(p.read_text())) for p in gates]
-final=[(n,rs) for n,rs in receipts if 'own-stable' in n or 'collision' in n or n=='e2e-own-gates.json']
+final=[(n,rs) for n,rs in receipts if 'own-stable' in n or 'collision' in n or n in ['e2e-own-gates.json','e2e-own-mobile-gates.json']]
 # An initial invalidated own batch is superseded by own-stable; preserve its raw receipt.
 if any('own-stable' in n for n,_ in final):final=[(n,rs) for n,rs in final if n!='e2e-own-gates.json']
 assert final
