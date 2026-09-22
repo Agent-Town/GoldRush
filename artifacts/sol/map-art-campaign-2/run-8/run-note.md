@@ -8,8 +8,9 @@ Completed: Ember Shore, IMPROVED / HELD, READY-FOR-GATES; store `75bdd35936c531d
 
 Completed: Archive World, IMPROVED / HELD, READY-FOR-GATES; store `f5f617c48f33ee6f4577c4a60fade8faf7b08e8d`. Full library identity/skyline and camera/HUD framing remain held.
 
+Completed: River, IMPROVED / HELD, READY-FOR-GATES; store `a54dcc4ab31cb59e673f831b0b99161b38b62799`. Grounded gravel and water color improve; continuous gravel, full contact and route/HUD holds remain.
+
 Remaining in order:
-1. River.
-2. Shared Motor vehicle, if capacity remains.
+1. Shared Motor vehicle. Capacity remains; continuing.
 
 Run continues; this is a progress checkpoint, not the stop rule.

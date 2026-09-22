@@ -1,0 +1,79 @@
+{
+  "storeBase": "f5f617c48f33ee6f4577c4a60fade8faf7b08e8d",
+  "base": "606778d1316e62c98f2511f7d475baa96dba204d",
+  "paths": {
+    "src/world/Terrain3dClaimPilot.ts": {
+      "candidateSha256": "89c0d262add12e9a7c6d894fc6d040f871300b380c4e0f8d0f5a78be37f141e4",
+      "baseSha256": "f8db9507b619c1c12fb04c1197baf6f4f1cb2c1992a38607b39d93d47c215a1a"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/landmark-source-ledger.json": {
+      "candidateSha256": "a3c2ed07ebb090f252000ad451f249270885799f724a9ea5e30b2cf2c758eecf",
+      "baseSha256": "394fb092d10a695e78800a16ee804ede23fde91ba7ee7277d07fc61dc67dad86"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/river/ford-wet-stones.glb": {
+      "candidateSha256": "e6aae3700e2c649da5a811cf81e963edd432518b928b24bbd9a94dd67e5040c7",
+      "baseSha256": "acc04f3ec1ddce283c01f8dc21093f7a2080105d7cde5e20cd2ee2edc977005d"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/river/north-east-shore.glb": {
+      "candidateSha256": "75709b578a74034f087dad326db33096204bc9e4f8e1c1ed7735b80d0cd0e677",
+      "baseSha256": "7a027a053e901854fc7b07a556c8805f9206bbf55abbf2eb567b025f7f4e0ca9"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/river/north-west-shore.glb": {
+      "candidateSha256": "6b3ab5f04766febeab857f55f3e349d7777f16966fce45e2e7a4abf9fb4edbcb",
+      "baseSha256": "860f66bccf260b49254a1cebe82dc03312797cf2b97f8c83bcd02a25130529d9"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/river/river-landmark-pack-contract.json": {
+      "candidateSha256": "aec20c180aba65cac88151c20afe9ee3015b300b9e1eb810b90ebfc6b7245ed7",
+      "baseSha256": "d43da4bc00e91ae9ccdd83cd08edf7d3d4574c004b73c9df3ec382a4a8e1c480"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/river/river-landmarks.blend": {
+      "candidateSha256": "e0f0c260c3dd6241ad75276043d61c72b8c710d7ca6aa32ff3f966d6a7d68766",
+      "baseSha256": "bc20e7f1e8f39e67443c70cd4029ae384880f5f28965ab2eb9be3a04167bb7a4"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/river/south-east-shore.glb": {
+      "candidateSha256": "f0392400ad3459aca6a9ddd5263bee1b98d96fac8ce2487c463666f71731ce14",
+      "baseSha256": "5cb03291d75de0b1a224d91e2dd62e4ed7e05b431c665e4b4bf4dda9fd005880"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/river/south-west-shore.glb": {
+      "candidateSha256": "7e84f3b2ecfe75f55c210e077ccfbc6d1d7775115f2d00a37846c7b54e346d55",
+      "baseSha256": "05cf99bfbbb01817baef8dc33a77f5e33f78c135b2a71572f0fa337bdf363755"
+    },
+    "assets/pilots/map-rebuild-spike/river-source-provenance.json": {
+      "candidateSha256": "4199532ad54ef45d5cad44a5e9bd3f9e158ec59c53645fb1b94f15990ed086ea",
+      "baseSha256": "1e31f7a90ae4a13f7cf6f3037529fe82e43e746e8d2c3307936d4dc049490eaa"
+    }
+  },
+  "pattern": "recession hands|e10-archive-world census",
+  "specs": [
+    "e2e/e10-static-boss.spec.ts",
+    "e2e/er01-e10-census.spec.ts"
+  ],
+  "candidateEngine": "db5803bef10a13daa735eab2d860a2d8608dba2104d0a00571d85fb98570aad7",
+  "baseEngine": "872cfc6474c7bdcba83290f87685a14c6882749c12b5564bbe1a355a0d45a6ff",
+  "command": [
+    "npx",
+    "playwright",
+    "test",
+    "--workers=1",
+    "--project=desktop-chrome",
+    "--project=mobile-chrome",
+    "--trace=off",
+    "--reporter=line",
+    "--output=artifacts/sol/map-art-campaign-2/_raw/run-8/e10-river-base-own-reds/test-results",
+    "--grep",
+    "recession hands|e10-archive-world census",
+    "e2e/e10-static-boss.spec.ts",
+    "e2e/er01-e10-census.spec.ts"
+  ],
+  "exit": 1,
+  "newAssetsAbsentDuringBase": {
+    "assets/pilots/map-rebuild-spike/fidelity_river_shores.py": "ed9a0d2851192540871b2518f31cdf01caa566b7921aa08789cae1ed4283725b",
+    "assets/pilots/map-rebuild-spike/sources/river-fidelity-1/geometry-proof.json": "cf9ea44549ac285991d7a2c47cd80066e075f7faab77549c80adeff996006bec",
+    "assets/pilots/map-rebuild-spike/sources/river-fidelity-1/landmarks-input.blend": "bc20e7f1e8f39e67443c70cd4029ae384880f5f28965ab2eb9be3a04167bb7a4",
+    "assets/pilots/map-rebuild-spike/sources/river-fidelity-1/pack-input.json": "d43da4bc00e91ae9ccdd83cd08edf7d3d4574c004b73c9df3ec382a4a8e1c480",
+    "assets/pilots/map-rebuild-spike/sources/river-fidelity-1/provenance.json": "6919eba9ffdb9a414ac37c1ed225822247a0222939c1fc9a8c5c8990ebfef41f"
+  },
+  "restoredEngine": "db5803bef10a13daa735eab2d860a2d8608dba2104d0a00571d85fb98570aad7",
+  "candidateRestoredExactly": true,
+  "log": "artifacts/sol/map-art-campaign-2/_raw/run-8/e10-river-base-own-reds/tests.log"
+}
