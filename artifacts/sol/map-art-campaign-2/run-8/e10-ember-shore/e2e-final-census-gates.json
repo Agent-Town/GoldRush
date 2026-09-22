@@ -1,0 +1,24 @@
+[
+  {
+    "label": "final-census",
+    "command": [
+      "npx",
+      "playwright",
+      "test",
+      "--workers=1",
+      "--project=desktop-chrome",
+      "--project=mobile-chrome",
+      "--trace=off",
+      "--reporter=line",
+      "--output=artifacts/sol/map-art-campaign-2/_raw/run-8/e10-ember-shore-final-census",
+      "e2e/er01-e10-census.spec.ts",
+      "e2e/map-census.spec.ts",
+      "--grep",
+      "e10-ember-shore"
+    ],
+    "environment": {},
+    "exit": 0,
+    "seconds": 12.72,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-8/e10-ember-shore-final-census.log"
+  }
+]

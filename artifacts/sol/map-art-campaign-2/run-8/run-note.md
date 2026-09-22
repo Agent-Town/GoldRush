@@ -4,10 +4,11 @@ Preflight: lane had zero commits ahead of main; advanced `sol/map-art-campaign-2
 
 Completed: Last Claim, IMPROVED / HELD, READY-FOR-GATES; store `f3078c4001d86b8f177a1f1727464c32bdc166bb` on `astra/fidelity-1`. Full concept remains unaccepted; see the map review for every clause and baseline test hold.
 
+Completed: Ember Shore, IMPROVED / HELD, READY-FOR-GATES; store `75bdd35936c531da53094eaee94503b71ea1ea7f`. Fractured shelves and fissure-shape fidelity remain art-owned; no new rock geometry retained.
+
 Remaining in order:
-1. Ember Shore.
-2. Archive World.
-3. River.
-4. Shared Motor vehicle, if capacity remains.
+1. Archive World.
+2. River.
+3. Shared Motor vehicle, if capacity remains.
 
 Run continues; this is a progress checkpoint, not the stop rule.
