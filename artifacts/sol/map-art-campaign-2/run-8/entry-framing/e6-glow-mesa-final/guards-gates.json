@@ -1,0 +1,32 @@
+[
+  {
+    "command": [
+      "node",
+      "--test",
+      "scripts/glb-contract-guard.test.mjs",
+      "scripts/terrain-height-sampler.test.mjs",
+      "scripts/landmark-walk-surfaces.test.mjs",
+      "scripts/open-sea-water.test.mjs",
+      "scripts/shared-atlas-plugin.test.mjs",
+      "scripts/same-game-audit.test.mjs",
+      "scripts/view-schema-guard.test.mjs",
+      "scripts/skillmd-guard.test.mjs"
+    ],
+    "environment": {},
+    "exit": 0,
+    "seconds": 96.44,
+    "log": "artifacts/sol/map-art-campaign-2/run-8/entry-framing/e6-glow-mesa-final/guards-scoped.log"
+  },
+  {
+    "command": [
+      "node",
+      "scripts/run-guards.mjs",
+      "--only",
+      "test:task-guards,test:citations,test:gate-callers"
+    ],
+    "environment": {},
+    "exit": 0,
+    "seconds": 5.12,
+    "log": "artifacts/sol/map-art-campaign-2/run-8/entry-framing/e6-glow-mesa-final/guards-named.log"
+  }
+]

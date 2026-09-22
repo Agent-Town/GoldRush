@@ -1,5 +1,13 @@
 import * as THREE from 'three';
 import { Balance } from '../game/Balance';
+import glowMesa from '../../assets/pilots/map-rebuild-spike/glow-mesa-terrain-contract.json' with { type: 'json' };
+import deadBand from '../../assets/pilots/map-rebuild-spike/dead-band-terrain-contract.json' with { type: 'json' };
+import farSide from '../../assets/pilots/map-rebuild-spike/far-side-terrain-contract.json' with { type: 'json' };
+import halfLifeHollow from '../../assets/pilots/map-rebuild-spike/half-life-hollow-terrain-contract.json' with { type: 'json' };
+import relayRush from '../../assets/pilots/map-rebuild-spike/relay-rush-terrain-contract.json' with { type: 'json' };
+
+const entryPacks: readonly { contractId: string; entryLandmark?: { mountId: string; reason: string } }[] =
+  [glowMesa, deadBand, farSide, halfLifeHollow, relayRush];
 
 export class CameraRig {
   private readonly desiredPosition = new THREE.Vector3();
@@ -10,6 +18,10 @@ export class CameraRig {
   private distanceScale = 1;
   private impulseRemaining = 0;
   private glanceTarget: { position: THREE.Vector3; velocity: THREE.Vector3 } | null = null;
+  private entryChecked = false;
+  private entryGlance: { position: THREE.Vector3; elapsed: number; seconds: number } | null = null;
+  private readonly entryFocus = new THREE.Vector3();
+  private readonly entryVelocity = new THREE.Vector3();
 
   constructor(
     private readonly camera: THREE.PerspectiveCamera,
@@ -39,15 +51,81 @@ export class CameraRig {
     return {
       baseDistance: Balance.camera.offset.length() / this.sceneScale,
       actualDistance: this.camera.position.distanceTo(this.trackedTarget),
-      glanceActive: this.glanceTarget !== null,
+      glanceActive: this.glanceTarget !== null || this.entryGlance !== null,
     };
   }
 
   setGlanceTarget(position: THREE.Vector3 | null, velocity?: THREE.Vector3): void {
+    this.entryGlance = null;
     this.glanceTarget = position && velocity ? { position, velocity } : null;
   }
 
+  /** Called only for a live ordinary boot, after the briefing and landmark loads. */
+  tryEntryGlance(contractId: string, scene: THREE.Scene, renderer: THREE.WebGLRenderer): void {
+    if (this.entryChecked) return;
+    this.entryChecked = true;
+    const entry = entryPacks.find((pack) => pack.contractId === contractId)?.entryLandmark;
+    if (!entry || this.glanceTarget) return;
+    const model = scene.getObjectByName(entry.mountId);
+    if (!model || !model.userData.landmarkAsset || this.bodyPixels(model, scene, renderer) > 0) return;
+    this.entryGlance = { position: model.getWorldPosition(new THREE.Vector3()), elapsed: 0, seconds: 2.5 };
+  }
+
+  /** One boot-time depth-tested body census; HUD coverage is intentionally separate. */
+  private bodyPixels(model: THREE.Object3D, scene: THREE.Scene, renderer: THREE.WebGLRenderer): number {
+    scene.updateMatrixWorld(true);
+    this.camera.updateMatrixWorld(true);
+    const frustum = new THREE.Frustum().setFromProjectionMatrix(
+      new THREE.Matrix4().multiplyMatrices(this.camera.projectionMatrix, this.camera.matrixWorldInverse),
+    );
+    if (!frustum.intersectsBox(new THREE.Box3().setFromObject(model))) return 0;
+    const size = renderer.getDrawingBufferSize(new THREE.Vector2());
+    const target = new THREE.WebGLRenderTarget(size.x, size.y);
+    const before = new Uint8Array(size.x * size.y * 4);
+    const after = new Uint8Array(before.length);
+    const savedTarget = renderer.getRenderTarget();
+    const savedAutoClear = renderer.autoClear;
+    const savedShadows = renderer.shadowMap.autoUpdate;
+    const saved: { mesh: THREE.Mesh; material: THREE.Material | THREE.Material[]; masks: THREE.MeshBasicMaterial[] }[] = [];
+    model.traverse((node) => {
+      const mesh = node as THREE.Mesh;
+      if (!mesh.isMesh) return;
+      const material = mesh.material;
+      const masks = (Array.isArray(material) ? material : [material]).map((original) => new THREE.MeshBasicMaterial({
+        color: 0, side: original.side, depthTest: original.depthTest, depthWrite: original.depthWrite,
+        toneMapped: false, fog: false,
+      }));
+      saved.push({ mesh, material, masks });
+      mesh.material = Array.isArray(material) ? masks : masks[0];
+    });
+    try {
+      renderer.autoClear = true;
+      renderer.shadowMap.autoUpdate = false;
+      renderer.setRenderTarget(target);
+      renderer.render(scene, this.camera);
+      renderer.readRenderTargetPixels(target, 0, 0, size.x, size.y, before);
+      for (const { masks } of saved) for (const mask of masks) mask.color.setHex(0xffffff);
+      renderer.render(scene, this.camera);
+      renderer.readRenderTargetPixels(target, 0, 0, size.x, size.y, after);
+      let pixels = 0;
+      for (let i = 0; i < before.length; i += 4) {
+        if (before[i] !== after[i] || before[i + 1] !== after[i + 1] || before[i + 2] !== after[i + 2]) pixels++;
+      }
+      return pixels;
+    } finally {
+      for (const { mesh, material, masks } of saved) {
+        mesh.material = material;
+        for (const mask of masks) mask.dispose();
+      }
+      renderer.setRenderTarget(savedTarget);
+      renderer.autoClear = savedAutoClear;
+      renderer.shadowMap.autoUpdate = savedShadows;
+      target.dispose();
+    }
+  }
+
   snapTo(target: THREE.Vector3): void {
+    this.entryGlance = null;
     this.trackedTarget.copy(target);
     this.setDesiredPosition(target);
     this.camera.position.copy(this.desiredPosition);
@@ -73,6 +151,16 @@ export class CameraRig {
   update(delta: number, target: THREE.Vector3, velocity: THREE.Vector3): void {
     target = this.glanceTarget?.position ?? target;
     velocity = this.glanceTarget?.velocity ?? velocity;
+    if (this.entryGlance) {
+      const glance = this.entryGlance;
+      glance.elapsed = Math.min(glance.seconds, glance.elapsed + delta);
+      const easeIn = THREE.MathUtils.smoothstep(glance.elapsed, 0, 0.7);
+      const easeOut = 1 - THREE.MathUtils.smoothstep(glance.elapsed, glance.seconds - 0.7, glance.seconds);
+      const blend = easeIn * easeOut;
+      target = this.entryFocus.copy(target).lerp(glance.position, blend);
+      velocity = this.entryVelocity.copy(velocity).multiplyScalar(1 - blend);
+      if (glance.elapsed >= glance.seconds) this.entryGlance = null;
+    }
     this.trackedTarget.copy(target);
     this.setDesiredPosition(target);
     const factor = 1 - Math.exp(-delta / Balance.camera.lag);

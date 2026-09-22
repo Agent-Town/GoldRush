@@ -1,0 +1,387 @@
+(node:3997) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 40 tests using 1 worker
+
+
+(node:4096) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:4096) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[1/40] [desktop-chrome] › e2e/e6-arsenal.spec.ts:29:1 › E6 arsenal is absent before the Atomic epoch and present at epoch 6
+[2/40] [desktop-chrome] › e2e/e6-arsenal.spec.ts:48:1 › the four Atomic additions fire, track, deny, and expire on a visible dial
+[3/40] [desktop-chrome] › e2e/e6-arsenal.spec.ts:89:1 › Cure-Arms turn people back and power fevered machines down without death outcomes
+[4/40] [desktop-chrome] › e2e/e6-boss-homemaker.spec.ts:126:1 › unbuilds, tidies, makes one chair, and remains kept without ever hurting the player
+[5/40] [desktop-chrome] › e2e/e6-roster.spec.ts:52:1 › E6 wave tables field the Atomic roster while E1 stays on untagged outlaws
+[6/40] [desktop-chrome] › e2e/e6-roster.spec.ts:79:1 › Lawn-Shepherd herd drive produces one same-seed toaster path
+[7/40] [desktop-chrome] › e2e/e6-roster.spec.ts:88:1 › Cure-Arms leave appliances wranglable, free Glowjack home, and resolve named sprite fallbacks
+[8/40] [desktop-chrome] › e2e/e6-tile-consumers.spec.ts:25:1 › 1. authored decay fields fade through three dial stages, breathe independently, and persist their safe phase
+[9/40] [desktop-chrome] › e2e/e6-tile-consumers.spec.ts:78:1 › 2. the six-vein ring opens after dark, harvests through Economy, and remembers spent veins
+[10/40] [desktop-chrome] › e2e/e6-tile-consumers.spec.ts:123:1 › non-E6 boots leave the consumer and shared decay scheduler inert
+[11/40] [desktop-chrome] › e2e/e6-wrangle.spec.ts:16:1 › patient kiting exhausts, captures, persists, and pays through Economy
+[12/40] [desktop-chrome] › e2e/er01-e6-census.spec.ts:74:3 › e6-glow-mesa census admission is explicit
+  1) [desktop-chrome] › e2e/er01-e6-census.spec.ts:74:3 › e6-glow-mesa census admission is explicit 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 0
+    + Received  + 1
+
+    @@ -1,9 +1,10 @@
+      Array [
+        "baron",
+        "build_zones",
+        "decay_field_windows",
+    +   "entry_landmark",
+        "hero_orders",
+        "night_vein_ring",
+        "wrangle_capture",
+        "wrangle_exhausted",
+        "wrangle_pen",
+
+      114 |       expect(contract.twist.enemyRoster.some(({ id }) => id === 'feral_toaster' || id === 'lawn_shepherd')).toBe(true);
+      115 |       expect(mechanics.interactables).toEqual([]);
+    > 116 |       expect(mechanics.rules.map(({ id }: { id: string }) => id)).toEqual(EXPECTED_RULES[contract.id]);
+          |                                                                   ^
+      117 |
+      118 |       // The socket is REAL: it constructs for this contract, and it is epoch-gated, not
+      119 |       // contract-gated — the same test the browser applies at Game.ts:646.
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/er01-e6-census.spec.ts:116:67
+
+    Error Context: artifacts/sol/map-art-campaign-2/run-8/entry-framing/e6-glow-mesa/own-results/er01-e6-census-e6-glow-mesa-census-admission-is-explicit-desktop-chrome/error-context.md
+
+
+
+(node:7114) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[13/40] [desktop-chrome] › e2e/er01-e6-census.spec.ts:74:3 › e6-showroom census admission is explicit
+
+[desktop-chrome] › e2e/er01-e6-census.spec.ts:74:3 › e6-showroom census admission is explicit
+(node:7114) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[14/40] [desktop-chrome] › e2e/er01-e6-census.spec.ts:74:3 › e6-half-life-hollow census admission is explicit
+[desktop-chrome] › e2e/er01-e6-census.spec.ts:74:3 › e6-half-life-hollow census admission is explicit
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[15/40] [desktop-chrome] › e2e/er01-e6-census.spec.ts:74:3 › e6-picnic census admission is explicit
+[desktop-chrome] › e2e/er01-e6-census.spec.ts:74:3 › e6-picnic census admission is explicit
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[16/40] [desktop-chrome] › e2e/ss-07-e6-beats.spec.ts:111:1 › SS-07 table is attributed, presentational, and uses the E2/E3 trigger vocabulary
+[17/40] [desktop-chrome] › e2e/ss-07-e6-beats.spec.ts:123:1 › a player-selected Atomic town presents the mesa arrival and the steward before the ride
+[desktop-chrome] › e2e/ss-07-e6-beats.spec.ts:123:1 › a player-selected Atomic town presents the mesa arrival and the steward before the ride
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[18/40] [desktop-chrome] › e2e/ss-07-e6-beats.spec.ts:150:1 › The Claim cannot load Atomic beats in Frontier
+[desktop-chrome] › e2e/ss-07-e6-beats.spec.ts:150:1 › The Claim cannot load Atomic beats in Frontier
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[19/40] [desktop-chrome] › e2e/ss-07-e6-beats.spec.ts:165:1 › epoch-3-voltage cannot load Atomic beats
+[desktop-chrome] › e2e/ss-07-e6-beats.spec.ts:165:1 › epoch-3-voltage cannot load Atomic beats
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[20/40] [desktop-chrome] › e2e/ss-07-e6-beats.spec.ts:182:1 › the Atomic boss and return beats fire only on their own triggers
+[desktop-chrome] › e2e/ss-07-e6-beats.spec.ts:182:1 › the Atomic boss and return beats fire only on their own triggers
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+
+(node:30765) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:30765) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[21/40] [mobile-chrome] › e2e/e6-arsenal.spec.ts:29:1 › E6 arsenal is absent before the Atomic epoch and present at epoch 6
+[22/40] [mobile-chrome] › e2e/e6-arsenal.spec.ts:48:1 › the four Atomic additions fire, track, deny, and expire on a visible dial
+[23/40] [mobile-chrome] › e2e/e6-arsenal.spec.ts:89:1 › Cure-Arms turn people back and power fevered machines down without death outcomes
+[24/40] [mobile-chrome] › e2e/e6-boss-homemaker.spec.ts:126:1 › unbuilds, tidies, makes one chair, and remains kept without ever hurting the player
+[25/40] [mobile-chrome] › e2e/e6-roster.spec.ts:52:1 › E6 wave tables field the Atomic roster while E1 stays on untagged outlaws
+[26/40] [mobile-chrome] › e2e/e6-roster.spec.ts:79:1 › Lawn-Shepherd herd drive produces one same-seed toaster path
+[27/40] [mobile-chrome] › e2e/e6-roster.spec.ts:88:1 › Cure-Arms leave appliances wranglable, free Glowjack home, and resolve named sprite fallbacks
+[28/40] [mobile-chrome] › e2e/e6-tile-consumers.spec.ts:25:1 › 1. authored decay fields fade through three dial stages, breathe independently, and persist their safe phase
+[29/40] [mobile-chrome] › e2e/e6-tile-consumers.spec.ts:78:1 › 2. the six-vein ring opens after dark, harvests through Economy, and remembers spent veins
+[30/40] [mobile-chrome] › e2e/e6-tile-consumers.spec.ts:123:1 › non-E6 boots leave the consumer and shared decay scheduler inert
+[31/40] [mobile-chrome] › e2e/e6-wrangle.spec.ts:16:1 › patient kiting exhausts, captures, persists, and pays through Economy
+[32/40] [mobile-chrome] › e2e/er01-e6-census.spec.ts:74:3 › e6-glow-mesa census admission is explicit
+  2) [mobile-chrome] › e2e/er01-e6-census.spec.ts:74:3 › e6-glow-mesa census admission is explicit ─
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 0
+    + Received  + 1
+
+    @@ -1,9 +1,10 @@
+      Array [
+        "baron",
+        "build_zones",
+        "decay_field_windows",
+    +   "entry_landmark",
+        "hero_orders",
+        "night_vein_ring",
+        "wrangle_capture",
+        "wrangle_exhausted",
+        "wrangle_pen",
+
+      114 |       expect(contract.twist.enemyRoster.some(({ id }) => id === 'feral_toaster' || id === 'lawn_shepherd')).toBe(true);
+      115 |       expect(mechanics.interactables).toEqual([]);
+    > 116 |       expect(mechanics.rules.map(({ id }: { id: string }) => id)).toEqual(EXPECTED_RULES[contract.id]);
+          |                                                                   ^
+      117 |
+      118 |       // The socket is REAL: it constructs for this contract, and it is epoch-gated, not
+      119 |       // contract-gated — the same test the browser applies at Game.ts:646.
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/er01-e6-census.spec.ts:116:67
+
+    Error Context: artifacts/sol/map-art-campaign-2/run-8/entry-framing/e6-glow-mesa/own-results/er01-e6-census-e6-glow-mesa-census-admission-is-explicit-mobile-chrome/error-context.md
+
+
+
+(node:49523) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[33/40] [mobile-chrome] › e2e/er01-e6-census.spec.ts:74:3 › e6-showroom census admission is explicit
+
+[mobile-chrome] › e2e/er01-e6-census.spec.ts:74:3 › e6-showroom census admission is explicit
+(node:49523) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[34/40] [mobile-chrome] › e2e/er01-e6-census.spec.ts:74:3 › e6-half-life-hollow census admission is explicit
+[mobile-chrome] › e2e/er01-e6-census.spec.ts:74:3 › e6-half-life-hollow census admission is explicit
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[35/40] [mobile-chrome] › e2e/er01-e6-census.spec.ts:74:3 › e6-picnic census admission is explicit
+[mobile-chrome] › e2e/er01-e6-census.spec.ts:74:3 › e6-picnic census admission is explicit
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[36/40] [mobile-chrome] › e2e/ss-07-e6-beats.spec.ts:111:1 › SS-07 table is attributed, presentational, and uses the E2/E3 trigger vocabulary
+[37/40] [mobile-chrome] › e2e/ss-07-e6-beats.spec.ts:123:1 › a player-selected Atomic town presents the mesa arrival and the steward before the ride
+[mobile-chrome] › e2e/ss-07-e6-beats.spec.ts:123:1 › a player-selected Atomic town presents the mesa arrival and the steward before the ride
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[38/40] [mobile-chrome] › e2e/ss-07-e6-beats.spec.ts:150:1 › The Claim cannot load Atomic beats in Frontier
+[mobile-chrome] › e2e/ss-07-e6-beats.spec.ts:150:1 › The Claim cannot load Atomic beats in Frontier
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[39/40] [mobile-chrome] › e2e/ss-07-e6-beats.spec.ts:165:1 › epoch-3-voltage cannot load Atomic beats
+[mobile-chrome] › e2e/ss-07-e6-beats.spec.ts:165:1 › epoch-3-voltage cannot load Atomic beats
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[40/40] [mobile-chrome] › e2e/ss-07-e6-beats.spec.ts:182:1 › the Atomic boss and return beats fire only on their own triggers
+[mobile-chrome] › e2e/ss-07-e6-beats.spec.ts:182:1 › the Atomic boss and return beats fire only on their own triggers
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+  2 failed
+    [desktop-chrome] › e2e/er01-e6-census.spec.ts:74:3 › e6-glow-mesa census admission is explicit ─
+    [mobile-chrome] › e2e/er01-e6-census.spec.ts:74:3 › e6-glow-mesa census admission is explicit ──
+  38 passed (5.2m)

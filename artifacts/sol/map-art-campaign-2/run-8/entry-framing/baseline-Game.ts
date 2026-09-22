@@ -3617,12 +3617,6 @@ export class Game {
     const cameraTarget = this.runTapeReplay
       ? this.replayCameraTarget.copy(this.localActor.renderPosition).add(this.replayCameraPan)
       : this.localActor.renderPosition;
-    if (!this.boot.replay && !this.runTapeReplay && !this.mpClient
-      && this.state.current === 'playing' && !this.state.isPaused
-      && !document.querySelector('[data-testid="contract-briefing"]:not([hidden])')
-      && this.canvas.dataset.terrain3dPilotLandmarkLoadState === 'mounted') {
-      this.cameraRig.tryEntryGlance(this.activeContract.id, this.scene, this.renderer);
-    }
     this.cameraRig.update(delta, cameraTarget, this.localActor.velocity);
     this.syncMultiplayerNameChips();
     this.baronVolleyVfx.setDetailBudget(this.runtimePerformanceVerdict);
