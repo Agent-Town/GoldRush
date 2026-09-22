@@ -1,0 +1,31 @@
+branch tip 1993ae2a3 docs: fix Regatta hash reproduction to its pre-change base 14:15Z
+scratch store: detached at f5f617c = store main, clean
+RESUME: chain already contains 1993ae2a3 at 196460964; merge and census-patch steps skipped
+law-pointer (pre): rc=0, no re-base needed
+engine hash merged (re-measured after the cures, scratch store at adf6bd1): b489190a88f86ebfc0c46579ca728f5794948585d2c5f72a221623df8534c154
+tsc/build/e1: 0 / 0 / 0
+first-town payload: 34283328 bytes
+halo: rc=0 halo re-extraction PASS: 315 cured, 0 held, 760 regenerated-and-cured, 2127 scanned; alpha and opaque RGB unchanged
+null floors: rc=0 83 of 83 null floors match assets/contracts/null-floors.json (436.3s).
+law-pointer: rc=0 law-pointer-guard — do the law surfaces still point at what they claim?
+guards: ℹ pass 90 ℹ fail 0 
+e2e (first run, before the cures): rc=1   2 failed   56 passed (5.1m)  14:37Z with the race spec red on both projects (F-RVP-6, F-RVP-8); battery (first run): rc=1 ℹ tests 955 ℹ pass 946 ℹ fail 4 ℹ skipped 5  14:46Z with the visitor-copy em-dash row red (F-RVP-7); cured on the chain and re-gated below
+e2e start (re-gate) 15:09Z: e2e/e5-regatta-boat.spec.ts e2e/e5-regatta-race.spec.ts e2e/agent-view.spec.ts e2e/er01-e5-census.spec.ts e2e/task-025-bandits-dont-swim.spec.ts e2e/m2-01-build-menu.spec.ts
+e2e: rc=1   1 failed   57 passed (5.5m)  15:00Z
+1) [mobile-chrome] › e2e/e5-regatta-boat.spec.ts:122:1 › a human boards the Claim-Boat on the keys and sails her, in a plain boot 
+battery (re-gate 1, after F-RVP-6/7/8): rc=1 ℹ tests 955 ℹ pass 946 ℹ fail 4 ℹ skipped 5  15:09Z with one row beyond the pre-pin hash class: the shore-query unit test still pinned the em-dash sentence (scripts/claim-boat-view.test.mjs:142); cured as 7aa15406a and re-gated below
+battery start (re-gate 2) 15:45Z
+battery: rc=1 ℹ tests 955 ℹ pass 946 ℹ fail 4 ℹ skipped 5  15:45Z
+✖ rotation registry stays outside the engine identity corpus (648.581375ms)
+✖ the live board is green under this guard (baseline is honest) (264.994875ms)
+✖ the landed registry names the live engine and stays outside its hash corpus (237.944333ms)
+✖ all 152 scripts/*.test.mjs fixture owners remove their temp directories (205173.565416ms)
+✖ failing tests:
+dirt after battery: 0
+RVP-PREP-DONE
+known-red overrides: e2e ^$ battery ^$
+known-red overrides: e2e ^$ battery ^$
+known-red overrides: e2e e2e/e5-regatta-boat\.spec\.ts:122:1 battery ^$
+hash at pin time: b489190a88f86ebfc0c46579ca728f5794948585d2c5f72a221623df8534c154
+pin #37
+era (chain, scratch store): ℹ pass 9 ℹ fail 0 
