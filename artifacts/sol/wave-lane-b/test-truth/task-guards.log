@@ -1,0 +1,8 @@
+
+> gold-rush@0.1.0 test:task-guards
+> node scripts/task-guard-audit.mjs
+
+task-guard-audit: SKIPPED -- cwd is a linked worktree (.git is a file).
+  tasks/done|failed|running are untracked and live only in the main checkout, so the
+  invisible set cannot be computed here. Reporting a number from this cwd would be a
+  false red (F-1151-1). Run this guard from the main checkout to get a real verdict.

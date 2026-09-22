@@ -1,0 +1,668 @@
+
+Running 146 tests using 1 worker
+
+[1/146] [desktop-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-ember-shore census cites the existing Deep Sky debt
+[desktop-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-ember-shore census cites the existing Deep Sky debt
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[2/146] [desktop-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-archive-world census cites the existing Deep Sky debt
+  1) [desktop-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-archive-world census cites the existing Deep Sky debt 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    Expected: undefined
+    Received: ["e10-archive-world-01", "e10-archive-world-02"]
+
+      136 |     console.warn = (...args: unknown[]) => consoleErrors.push(args.map(String).join(' '));
+      137 |     try {
+    > 138 |       expect((benchSeeds as Record<string, string[]>)[contract.id]).toEqual(EXPECTED_SEEDS[contract.id]);
+          |                                                                     ^
+      139 |       const dependency = 'engineDependencies' in contract.tileParams
+      140 |         ? contract.tileParams.engineDependencies
+      141 |         : undefined;
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-control/e2e/er01-e10-census.spec.ts:138:69
+
+    Error Context: test-results/er01-e10-census-e10-archiv-b80f9--the-existing-Deep-Sky-debt-desktop-chrome/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/er01-e10-census-e10-archiv-b80f9--the-existing-Deep-Sky-debt-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/er01-e10-census-e10-archiv-b80f9--the-existing-Deep-Sky-debt-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[3/146] [desktop-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-last-claim census cites the existing Deep Sky debt
+[desktop-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-last-claim census cites the existing Deep Sky debt
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[4/146] [desktop-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-river census cites the existing Deep Sky debt
+[desktop-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-river census cites the existing Deep Sky debt
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[5/146] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:111:1 › menu places a palisade and logs build_palisade spend
+[6/146] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:136:1 › build menu shows six ready icons and Balance-backed blurbs
+[7/146] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining
+[8/146] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:205:1 › beacon cost curve stays intact through the menu
+[9/146] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:227:1 › single enemy slides around a finite palisade line without passing through
+[10/146] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:284:1 › 390px build menu is visible, tappable, and clear of HUD controls
+[11/146] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:329:1 › stress draw calls stay under 200 with palisades and beacons
+[12/146] [desktop-chrome] › e2e/map-census.spec.ts:35:3 › the-claim census
+[13/146] [desktop-chrome] › e2e/map-census.spec.ts:35:3 › e1-drill-yard census
+[14/146] [desktop-chrome] › e2e/map-census.spec.ts:35:3 › e1-dry-gulch census
+[15/146] [desktop-chrome] › e2e/map-census.spec.ts:35:3 › e1-night-shift census
+[16/146] [desktop-chrome] › e2e/map-census.spec.ts:35:3 › e1-twin-banks census
+[17/146] [desktop-chrome] › e2e/map-census.spec.ts:35:3 › e1-baron census
+[18/146] [desktop-chrome] › e2e/map-census.spec.ts:35:3 › e2-hill-mine census
+[19/146] [desktop-chrome] › e2e/map-census.spec.ts:35:3 › e2-trestle census
+[20/146] [desktop-chrome] › e2e/map-census.spec.ts:35:3 › e2-pressure-garden census
+[21/146] [desktop-chrome] › e2e/map-census.spec.ts:35:3 › e2-incline census
+[22/146] [desktop-chrome] › e2e/map-census.spec.ts:35:3 › e3-blackout-ridge census
+[23/146] [desktop-chrome] › e2e/map-census.spec.ts:35:3 › e3-moth-season census
+[24/146] [desktop-chrome] › e2e/map-census.spec.ts:35:3 › e3-canyon-works census
+[25/146] [desktop-chrome] › e2e/map-census.spec.ts:35:3 › e3-fairground census
+[26/146] [desktop-chrome] › e2e/map-census.spec.ts:35:3 › e4-dust-flats census
+[27/146] [desktop-chrome] › e2e/map-census.spec.ts:35:3 › e4-long-road census
+[28/146] [desktop-chrome] › e2e/map-census.spec.ts:35:3 › e4-gusher-county census
+[29/146] [desktop-chrome] › e2e/map-census.spec.ts:35:3 › e4-boneyard census
+[30/146] [desktop-chrome] › e2e/map-census.spec.ts:35:3 › e5-deepwater-claim census
+[31/146] [desktop-chrome] › e2e/map-census.spec.ts:35:3 › e5-regatta census
+[32/146] [desktop-chrome] › e2e/map-census.spec.ts:35:3 › e5-stillwater census
+[33/146] [desktop-chrome] › e2e/map-census.spec.ts:35:3 › e5-flotilla census
+[34/146] [desktop-chrome] › e2e/map-census.spec.ts:35:3 › e6-glow-mesa census
+[35/146] [desktop-chrome] › e2e/map-census.spec.ts:35:3 › e6-showroom census
+[36/146] [desktop-chrome] › e2e/map-census.spec.ts:35:3 › e6-half-life-hollow census
+[37/146] [desktop-chrome] › e2e/map-census.spec.ts:35:3 › e6-picnic census
+[38/146] [desktop-chrome] › e2e/map-census.spec.ts:35:3 › e7-relay-valley census
+[39/146] [desktop-chrome] › e2e/map-census.spec.ts:35:3 › e7-echo-canyon census
+[40/146] [desktop-chrome] › e2e/map-census.spec.ts:35:3 › e7-dead-band census
+[41/146] [desktop-chrome] › e2e/map-census.spec.ts:35:3 › e7-relay-rush census
+[42/146] [desktop-chrome] › e2e/map-census.spec.ts:35:3 › e8-mare-claim census
+[43/146] [desktop-chrome] › e2e/map-census.spec.ts:35:3 › e8-far-side census
+[44/146] [desktop-chrome] › e2e/map-census.spec.ts:35:3 › e8-low-orbit census
+[45/146] [desktop-chrome] › e2e/map-census.spec.ts:35:3 › e8-eclipse census
+[46/146] [desktop-chrome] › e2e/map-census.spec.ts:35:3 › e9-dome-basin census
+[47/146] [desktop-chrome] › e2e/map-census.spec.ts:35:3 › e9-seed-run census
+[48/146] [desktop-chrome] › e2e/map-census.spec.ts:35:3 › e9-devils-alley census
+[49/146] [desktop-chrome] › e2e/map-census.spec.ts:35:3 › e9-old-canal census
+[50/146] [desktop-chrome] › e2e/map-census.spec.ts:35:3 › e10-ember-shore census
+[51/146] [desktop-chrome] › e2e/map-census.spec.ts:35:3 › e10-archive-world census
+[52/146] [desktop-chrome] › e2e/map-census.spec.ts:35:3 › e10-last-claim census
+[53/146] [desktop-chrome] › e2e/map-census.spec.ts:35:3 › e10-river census
+[54/146] [desktop-chrome] › e2e/map-census.spec.ts:43:3 › the-claim mobile spot
+[55/146] [desktop-chrome] › e2e/map-census.spec.ts:43:3 › e2-pressure-garden mobile spot
+[56/146] [desktop-chrome] › e2e/map-census.spec.ts:43:3 › e5-deepwater-claim mobile spot
+[57/146] [desktop-chrome] › e2e/map-census.spec.ts:43:3 › e8-low-orbit mobile spot
+[58/146] [desktop-chrome] › e2e/map-census.spec.ts:43:3 › e10-river mobile spot
+[59/146] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:105:1 › enemy crossing the river reaches the hero through the ford only
+[60/146] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:123:1 › scheduled waves never place enemies in deep river over three waves
+[61/146] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:139:1 › hero stops in the shallows and keeps weapons armed at the deep channel
+[62/146] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:181:1 › xp from a residual deep-water death is auto-banked with no mote
+[63/146] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:202:1 › far-bank sluice stays untouched when the river flank is open
+[64/146] [desktop-chrome] › e2e/terrain3d-registry.spec.ts:88:1 › all campaign extras resolve their registered terrain and panorama assets
+[65/146] [desktop-chrome] › e2e/terrain3d-registry.spec.ts:124:1 › four campaign era bands mount with zero console errors
+[66/146] [desktop-chrome] › e2e/terrain3d-registry.spec.ts:196:1 › all sixteen contracts mount terrain, panorama, and grounded render-only landmarks with matching water
+  2) [desktop-chrome] › e2e/terrain3d-registry.spec.ts:196:1 › all sixteen contracts mount terrain, panorama, and grounded render-only landmarks with matching water 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 32768
+    Received: 51200
+
+      215 |     await expect(canvas).toHaveAttribute('data-terrain3d-pilot-panorama', contract.panorama);
+      216 |     expect(Number(await canvas.getAttribute('data-terrain3d-pilot-meshes'))).toBe(1);
+    > 217 |     expect(Number(await canvas.getAttribute('data-terrain3d-pilot-triangles'))).toBe(32_768);
+          |                                                                                 ^
+      218 |     expect(Number(await canvas.getAttribute('data-terrain3d-pilot-materials'))).toBe(1);
+      219 |     expect(Number(await canvas.getAttribute('data-terrain3d-pilot-landmarks'))).toBe(expectedMounts.length);
+      220 |     expect(Number(await canvas.getAttribute('data-terrain3d-pilot-landmark-skipped'))).toBe(0);
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-control/e2e/terrain3d-registry.spec.ts:217:81
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/terrain3d-registry-all-six-91b86-ndmarks-with-matching-water-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/terrain3d-registry-all-six-91b86-ndmarks-with-matching-water-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/terrain3d-registry-all-six-91b86-ndmarks-with-matching-water-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/terrain3d-registry-all-six-91b86-ndmarks-with-matching-water-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[67/146] [desktop-chrome] › e2e/terrain3d-registry.spec.ts:253:1 › Hill Mine rails resample onto the mounted terrain surface
+[68/146] [desktop-chrome] › e2e/terrain3d-registry.spec.ts:272:1 › rim and horizon probes keep the terrain meeting gradual and every panorama readable
+  3) [desktop-chrome] › e2e/terrain3d-registry.spec.ts:272:1 › rim and horizon probes keep the terrain meeting gradual and every panorama readable 
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  locator('canvas')
+    Expected: "painted-underlay-alpha-rim"
+    Received: "opaque-sculpt-edge"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveAttribute" with timeout 5000ms
+      - waiting for locator('canvas')
+        - locator resolved to <canvas width="1280" height="800" id="game-canvas" data-css-aspect="1.6" data-hero-skin="stock" data-hero-sheet="young" data-camera-aspect="1.6" data-railcar3d-state="off" data-boss-bar-depleted="0" data-crawler3d-state="off" data-boss-bar-remaining="0" data-boss-bar-anchor="none" data-engine="three.js r184" data-run3d-pilot-meshes="0" data-homemaker3d-state="off" data-prospector-skin="stock" data-hero-skin-sheet="stock" data-asset-prefetch-ready="8" data-boss-bar-visible="false" data-boss-bar-semanti…></canvas>
+        - unexpected value "opaque-sculpt-edge"
+        - locator resolved to <canvas width="1280" height="800" id="game-canvas" data-css-aspect="1.6" data-hero-skin="stock" data-hero-sheet="young" data-camera-aspect="1.6" data-railcar3d-state="off" data-boss-bar-depleted="0" data-crawler3d-state="off" data-boss-bar-remaining="0" data-boss-bar-anchor="none" data-engine="three.js r184" data-run3d-pilot-meshes="0" data-homemaker3d-state="off" data-prospector-skin="stock" data-hero-skin-sheet="stock" data-boss-bar-visible="false" data-boss-bar-semantic="none" data-boss-bar-positio…></canvas>
+        12 × unexpected value "opaque-sculpt-edge"
+           - locator resolved to <canvas width="1280" height="800" id="game-canvas" data-css-aspect="1.6" data-hero-skin="stock" data-hero-sheet="young" data-camera-aspect="1.6" data-railcar3d-state="off" data-boss-bar-depleted="0" data-crawler3d-state="off" data-boss-bar-remaining="0" data-boss-bar-anchor="none" data-engine="three.js r184" data-run3d-pilot-meshes="0" data-homemaker3d-state="off" data-prospector-skin="stock" data-hero-skin-sheet="stock" data-asset-prefetch-target="" data-boss-bar-visible="false" data-boss-bar-semanti…></canvas>
+        - unexpected value "opaque-sculpt-edge"
+
+
+      279 |     const canvas = page.locator('canvas');
+      280 |     await expect(canvas).toHaveAttribute('data-terrain3d-pilot-state', 'ready');
+    > 281 |     await expect(canvas).toHaveAttribute('data-terrain3d-pilot-skirt-blend', 'painted-underlay-alpha-rim');
+          |                          ^
+      282 |     await expect(canvas).toHaveAttribute('data-terrain3d-pilot-panorama-fog', 'excluded');
+      283 |     await expect(canvas).toHaveAttribute('data-terrain3d-pilot-panorama-depth', 'screen-horizon-backdrop');
+      284 |     expect(Number(await canvas.getAttribute('data-terrain3d-pilot-hidden-relief'))).toBeGreaterThan(0);
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-control/e2e/terrain3d-registry.spec.ts:281:26
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/terrain3d-registry-rim-and-03240-and-every-panorama-readable-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/terrain3d-registry-rim-and-03240-and-every-panorama-readable-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/terrain3d-registry-rim-and-03240-and-every-panorama-readable-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/terrain3d-registry-rim-and-03240-and-every-panorama-readable-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[69/146] [desktop-chrome] › e2e/terrain3d-registry.spec.ts:328:1 › terrain2d and the 3D default keep bounds, spawns, fog, masks, and simulation byte-identical per map
+[70/146] [desktop-chrome] › e2e/terrain3d-registry.spec.ts:345:1 › all fifteen contracts stay painted in LITE and on invalid terrain bytes
+  4) [desktop-chrome] › e2e/terrain3d-registry.spec.ts:345:1 › all fifteen contracts stay painted in LITE and on invalid terrain bytes 
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  locator('canvas')
+    Expected: "failed"
+    Received: "lite"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveAttribute" with timeout 5000ms
+      - waiting for locator('canvas')
+        14 × locator resolved to <canvas width="1280" height="800" id="game-canvas" data-css-aspect="1.6" data-hero-skin="stock" data-hero-sheet="young" data-camera-aspect="1.6" data-boss-bar-depleted="0" data-railcar3d-state="lite" data-boss-bar-remaining="0" data-boss-bar-anchor="none" data-crawler3d-state="lite" data-engine="three.js r184" data-run3d-pilot-meshes="0" data-asset-loading-ready="0" data-asset-loading-total="0" data-prospector-skin="stock" data-hero-skin-sheet="stock" data-asset-prefetch-ready="0" data-asset-prefetch-…></canvas>
+           - unexpected value "lite"
+
+
+      360 |     await page.route(terrain, (route) => route.fulfill({ status: 200, body: 'invalid glb bytes', contentType: 'model/gltf-binary' }));
+      361 |     await boot(page, contract.id, '&terrain3dPilot');
+    > 362 |     await expect(page.locator('canvas')).toHaveAttribute('data-terrain3d-pilot-state', 'failed');
+          |                                          ^
+      363 |     await expect(page.locator('canvas')).toHaveAttribute('data-terrain3d-pilot-render-source', 'painted');
+      364 |     await expect(page.locator('canvas')).toHaveAttribute('data-terrain3d-pilot-panorama', 'off');
+      365 |     await page.unroute(terrain);
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-control/e2e/terrain3d-registry.spec.ts:362:42
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/terrain3d-registry-all-fif-b8590-nd-on-invalid-terrain-bytes-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/terrain3d-registry-all-fif-b8590-nd-on-invalid-terrain-bytes-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/terrain3d-registry-all-fif-b8590-nd-on-invalid-terrain-bytes-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/terrain3d-registry-all-fif-b8590-nd-on-invalid-terrain-bytes-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[71/146] [desktop-chrome] › e2e/terrain3d-registry.spec.ts:378:1 › an invalid landmark is skipped with diagnostics while the terrain stays ready
+[72/146] [desktop-chrome] › e2e/terrain3d-registry.spec.ts:392:1 › disposing while the peer GLB is delayed releases each decoded model immediately
+[73/146] [desktop-chrome] › e2e/terrain3d-registry.spec.ts:447:1 › each registered terrain and panorama stays inside the 115% p95 budget
+[74/146] [mobile-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-ember-shore census cites the existing Deep Sky debt
+[mobile-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-ember-shore census cites the existing Deep Sky debt
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[75/146] [mobile-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-archive-world census cites the existing Deep Sky debt
+  5) [mobile-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-archive-world census cites the existing Deep Sky debt 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    Expected: undefined
+    Received: ["e10-archive-world-01", "e10-archive-world-02"]
+
+      136 |     console.warn = (...args: unknown[]) => consoleErrors.push(args.map(String).join(' '));
+      137 |     try {
+    > 138 |       expect((benchSeeds as Record<string, string[]>)[contract.id]).toEqual(EXPECTED_SEEDS[contract.id]);
+          |                                                                     ^
+      139 |       const dependency = 'engineDependencies' in contract.tileParams
+      140 |         ? contract.tileParams.engineDependencies
+      141 |         : undefined;
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-control/e2e/er01-e10-census.spec.ts:138:69
+
+    Error Context: test-results/er01-e10-census-e10-archiv-b80f9--the-existing-Deep-Sky-debt-mobile-chrome/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/er01-e10-census-e10-archiv-b80f9--the-existing-Deep-Sky-debt-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/er01-e10-census-e10-archiv-b80f9--the-existing-Deep-Sky-debt-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[76/146] [mobile-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-last-claim census cites the existing Deep Sky debt
+[mobile-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-last-claim census cites the existing Deep Sky debt
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[77/146] [mobile-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-river census cites the existing Deep Sky debt
+[mobile-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-river census cites the existing Deep Sky debt
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[78/146] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:111:1 › menu places a palisade and logs build_palisade spend
+[79/146] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:136:1 › build menu shows six ready icons and Balance-backed blurbs
+[80/146] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining
+[81/146] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:205:1 › beacon cost curve stays intact through the menu
+[82/146] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:227:1 › single enemy slides around a finite palisade line without passing through
+[83/146] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:284:1 › 390px build menu is visible, tappable, and clear of HUD controls
+[84/146] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:329:1 › stress draw calls stay under 200 with palisades and beacons
+[85/146] [mobile-chrome] › e2e/map-census.spec.ts:35:3 › the-claim census
+[86/146] [mobile-chrome] › e2e/map-census.spec.ts:35:3 › e1-drill-yard census
+[87/146] [mobile-chrome] › e2e/map-census.spec.ts:35:3 › e1-dry-gulch census
+[88/146] [mobile-chrome] › e2e/map-census.spec.ts:35:3 › e1-night-shift census
+[89/146] [mobile-chrome] › e2e/map-census.spec.ts:35:3 › e1-twin-banks census
+[90/146] [mobile-chrome] › e2e/map-census.spec.ts:35:3 › e1-baron census
+[91/146] [mobile-chrome] › e2e/map-census.spec.ts:35:3 › e2-hill-mine census
+[92/146] [mobile-chrome] › e2e/map-census.spec.ts:35:3 › e2-trestle census
+[93/146] [mobile-chrome] › e2e/map-census.spec.ts:35:3 › e2-pressure-garden census
+[94/146] [mobile-chrome] › e2e/map-census.spec.ts:35:3 › e2-incline census
+[95/146] [mobile-chrome] › e2e/map-census.spec.ts:35:3 › e3-blackout-ridge census
+[96/146] [mobile-chrome] › e2e/map-census.spec.ts:35:3 › e3-moth-season census
+[97/146] [mobile-chrome] › e2e/map-census.spec.ts:35:3 › e3-canyon-works census
+[98/146] [mobile-chrome] › e2e/map-census.spec.ts:35:3 › e3-fairground census
+[99/146] [mobile-chrome] › e2e/map-census.spec.ts:35:3 › e4-dust-flats census
+[100/146] [mobile-chrome] › e2e/map-census.spec.ts:35:3 › e4-long-road census
+[101/146] [mobile-chrome] › e2e/map-census.spec.ts:35:3 › e4-gusher-county census
+[102/146] [mobile-chrome] › e2e/map-census.spec.ts:35:3 › e4-boneyard census
+[103/146] [mobile-chrome] › e2e/map-census.spec.ts:35:3 › e5-deepwater-claim census
+[104/146] [mobile-chrome] › e2e/map-census.spec.ts:35:3 › e5-regatta census
+[105/146] [mobile-chrome] › e2e/map-census.spec.ts:35:3 › e5-stillwater census
+[106/146] [mobile-chrome] › e2e/map-census.spec.ts:35:3 › e5-flotilla census
+[107/146] [mobile-chrome] › e2e/map-census.spec.ts:35:3 › e6-glow-mesa census
+[108/146] [mobile-chrome] › e2e/map-census.spec.ts:35:3 › e6-showroom census
+[109/146] [mobile-chrome] › e2e/map-census.spec.ts:35:3 › e6-half-life-hollow census
+[110/146] [mobile-chrome] › e2e/map-census.spec.ts:35:3 › e6-picnic census
+[111/146] [mobile-chrome] › e2e/map-census.spec.ts:35:3 › e7-relay-valley census
+[112/146] [mobile-chrome] › e2e/map-census.spec.ts:35:3 › e7-echo-canyon census
+[113/146] [mobile-chrome] › e2e/map-census.spec.ts:35:3 › e7-dead-band census
+[114/146] [mobile-chrome] › e2e/map-census.spec.ts:35:3 › e7-relay-rush census
+[115/146] [mobile-chrome] › e2e/map-census.spec.ts:35:3 › e8-mare-claim census
+[116/146] [mobile-chrome] › e2e/map-census.spec.ts:35:3 › e8-far-side census
+[117/146] [mobile-chrome] › e2e/map-census.spec.ts:35:3 › e8-low-orbit census
+[118/146] [mobile-chrome] › e2e/map-census.spec.ts:35:3 › e8-eclipse census
+[119/146] [mobile-chrome] › e2e/map-census.spec.ts:35:3 › e9-dome-basin census
+[120/146] [mobile-chrome] › e2e/map-census.spec.ts:35:3 › e9-seed-run census
+[121/146] [mobile-chrome] › e2e/map-census.spec.ts:35:3 › e9-devils-alley census
+[122/146] [mobile-chrome] › e2e/map-census.spec.ts:35:3 › e9-old-canal census
+[123/146] [mobile-chrome] › e2e/map-census.spec.ts:35:3 › e10-ember-shore census
+[124/146] [mobile-chrome] › e2e/map-census.spec.ts:35:3 › e10-archive-world census
+[125/146] [mobile-chrome] › e2e/map-census.spec.ts:35:3 › e10-last-claim census
+[126/146] [mobile-chrome] › e2e/map-census.spec.ts:35:3 › e10-river census
+[127/146] [mobile-chrome] › e2e/map-census.spec.ts:43:3 › the-claim mobile spot
+[128/146] [mobile-chrome] › e2e/map-census.spec.ts:43:3 › e2-pressure-garden mobile spot
+[129/146] [mobile-chrome] › e2e/map-census.spec.ts:43:3 › e5-deepwater-claim mobile spot
+[130/146] [mobile-chrome] › e2e/map-census.spec.ts:43:3 › e8-low-orbit mobile spot
+[131/146] [mobile-chrome] › e2e/map-census.spec.ts:43:3 › e10-river mobile spot
+[132/146] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:105:1 › enemy crossing the river reaches the hero through the ford only
+[133/146] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:123:1 › scheduled waves never place enemies in deep river over three waves
+[134/146] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:139:1 › hero stops in the shallows and keeps weapons armed at the deep channel
+[135/146] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:181:1 › xp from a residual deep-water death is auto-banked with no mote
+[136/146] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:202:1 › far-bank sluice stays untouched when the river flank is open
+[137/146] [mobile-chrome] › e2e/terrain3d-registry.spec.ts:88:1 › all campaign extras resolve their registered terrain and panorama assets
+[138/146] [mobile-chrome] › e2e/terrain3d-registry.spec.ts:124:1 › four campaign era bands mount with zero console errors
+[139/146] [mobile-chrome] › e2e/terrain3d-registry.spec.ts:196:1 › all sixteen contracts mount terrain, panorama, and grounded render-only landmarks with matching water
+  6) [mobile-chrome] › e2e/terrain3d-registry.spec.ts:196:1 › all sixteen contracts mount terrain, panorama, and grounded render-only landmarks with matching water 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 32768
+    Received: 51200
+
+      215 |     await expect(canvas).toHaveAttribute('data-terrain3d-pilot-panorama', contract.panorama);
+      216 |     expect(Number(await canvas.getAttribute('data-terrain3d-pilot-meshes'))).toBe(1);
+    > 217 |     expect(Number(await canvas.getAttribute('data-terrain3d-pilot-triangles'))).toBe(32_768);
+          |                                                                                 ^
+      218 |     expect(Number(await canvas.getAttribute('data-terrain3d-pilot-materials'))).toBe(1);
+      219 |     expect(Number(await canvas.getAttribute('data-terrain3d-pilot-landmarks'))).toBe(expectedMounts.length);
+      220 |     expect(Number(await canvas.getAttribute('data-terrain3d-pilot-landmark-skipped'))).toBe(0);
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-control/e2e/terrain3d-registry.spec.ts:217:81
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/terrain3d-registry-all-six-91b86-ndmarks-with-matching-water-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/terrain3d-registry-all-six-91b86-ndmarks-with-matching-water-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/terrain3d-registry-all-six-91b86-ndmarks-with-matching-water-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/terrain3d-registry-all-six-91b86-ndmarks-with-matching-water-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[140/146] [mobile-chrome] › e2e/terrain3d-registry.spec.ts:253:1 › Hill Mine rails resample onto the mounted terrain surface
+[141/146] [mobile-chrome] › e2e/terrain3d-registry.spec.ts:272:1 › rim and horizon probes keep the terrain meeting gradual and every panorama readable
+  7) [mobile-chrome] › e2e/terrain3d-registry.spec.ts:272:1 › rim and horizon probes keep the terrain meeting gradual and every panorama readable 
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  locator('canvas')
+    Expected: "painted-underlay-alpha-rim"
+    Received: "opaque-sculpt-edge"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveAttribute" with timeout 5000ms
+      - waiting for locator('canvas')
+        14 × locator resolved to <canvas width="780" height="1688" id="game-canvas" data-hero-skin="stock" data-hero-sheet="young" data-railcar3d-state="off" data-boss-bar-depleted="0" data-crawler3d-state="off" data-boss-bar-remaining="0" data-boss-bar-anchor="none" data-engine="three.js r184" data-run3d-pilot-meshes="0" data-homemaker3d-state="off" data-prospector-skin="stock" data-hero-skin-sheet="stock" data-asset-prefetch-ready="6" data-boss-bar-visible="false" data-boss-bar-semantic="none" data-boss-bar-position="none" data-old…></canvas>
+           - unexpected value "opaque-sculpt-edge"
+
+
+      279 |     const canvas = page.locator('canvas');
+      280 |     await expect(canvas).toHaveAttribute('data-terrain3d-pilot-state', 'ready');
+    > 281 |     await expect(canvas).toHaveAttribute('data-terrain3d-pilot-skirt-blend', 'painted-underlay-alpha-rim');
+          |                          ^
+      282 |     await expect(canvas).toHaveAttribute('data-terrain3d-pilot-panorama-fog', 'excluded');
+      283 |     await expect(canvas).toHaveAttribute('data-terrain3d-pilot-panorama-depth', 'screen-horizon-backdrop');
+      284 |     expect(Number(await canvas.getAttribute('data-terrain3d-pilot-hidden-relief'))).toBeGreaterThan(0);
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-control/e2e/terrain3d-registry.spec.ts:281:26
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/terrain3d-registry-rim-and-03240-and-every-panorama-readable-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/terrain3d-registry-rim-and-03240-and-every-panorama-readable-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/terrain3d-registry-rim-and-03240-and-every-panorama-readable-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/terrain3d-registry-rim-and-03240-and-every-panorama-readable-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[142/146] [mobile-chrome] › e2e/terrain3d-registry.spec.ts:328:1 › terrain2d and the 3D default keep bounds, spawns, fog, masks, and simulation byte-identical per map
+[143/146] [mobile-chrome] › e2e/terrain3d-registry.spec.ts:345:1 › all fifteen contracts stay painted in LITE and on invalid terrain bytes
+  8) [mobile-chrome] › e2e/terrain3d-registry.spec.ts:345:1 › all fifteen contracts stay painted in LITE and on invalid terrain bytes 
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  locator('canvas')
+    Expected: "failed"
+    Received: "lite"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveAttribute" with timeout 5000ms
+      - waiting for locator('canvas')
+        14 × locator resolved to <canvas width="390" height="844" id="game-canvas" data-hero-skin="stock" data-hero-sheet="young" data-boss-bar-depleted="0" data-railcar3d-state="lite" data-boss-bar-remaining="0" data-boss-bar-anchor="none" data-crawler3d-state="lite" data-engine="three.js r184" data-run3d-pilot-meshes="0" data-asset-loading-ready="0" data-asset-loading-total="0" data-prospector-skin="stock" data-hero-skin-sheet="stock" data-asset-prefetch-ready="0" data-asset-prefetch-total="0" data-asset-prefetch-target="" data-ass…></canvas>
+           - unexpected value "lite"
+
+
+      360 |     await page.route(terrain, (route) => route.fulfill({ status: 200, body: 'invalid glb bytes', contentType: 'model/gltf-binary' }));
+      361 |     await boot(page, contract.id, '&terrain3dPilot');
+    > 362 |     await expect(page.locator('canvas')).toHaveAttribute('data-terrain3d-pilot-state', 'failed');
+          |                                          ^
+      363 |     await expect(page.locator('canvas')).toHaveAttribute('data-terrain3d-pilot-render-source', 'painted');
+      364 |     await expect(page.locator('canvas')).toHaveAttribute('data-terrain3d-pilot-panorama', 'off');
+      365 |     await page.unroute(terrain);
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-control/e2e/terrain3d-registry.spec.ts:362:42
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/terrain3d-registry-all-fif-b8590-nd-on-invalid-terrain-bytes-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/terrain3d-registry-all-fif-b8590-nd-on-invalid-terrain-bytes-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/terrain3d-registry-all-fif-b8590-nd-on-invalid-terrain-bytes-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/terrain3d-registry-all-fif-b8590-nd-on-invalid-terrain-bytes-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[144/146] [mobile-chrome] › e2e/terrain3d-registry.spec.ts:378:1 › an invalid landmark is skipped with diagnostics while the terrain stays ready
+[145/146] [mobile-chrome] › e2e/terrain3d-registry.spec.ts:392:1 › disposing while the peer GLB is delayed releases each decoded model immediately
+[146/146] [mobile-chrome] › e2e/terrain3d-registry.spec.ts:447:1 › each registered terrain and panorama stays inside the 115% p95 budget
+  8 failed
+    [desktop-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-archive-world census cites the existing Deep Sky debt 
+    [desktop-chrome] › e2e/terrain3d-registry.spec.ts:196:1 › all sixteen contracts mount terrain, panorama, and grounded render-only landmarks with matching water 
+    [desktop-chrome] › e2e/terrain3d-registry.spec.ts:272:1 › rim and horizon probes keep the terrain meeting gradual and every panorama readable 
+    [desktop-chrome] › e2e/terrain3d-registry.spec.ts:345:1 › all fifteen contracts stay painted in LITE and on invalid terrain bytes 
+    [mobile-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-archive-world census cites the existing Deep Sky debt 
+    [mobile-chrome] › e2e/terrain3d-registry.spec.ts:196:1 › all sixteen contracts mount terrain, panorama, and grounded render-only landmarks with matching water 
+    [mobile-chrome] › e2e/terrain3d-registry.spec.ts:272:1 › rim and horizon probes keep the terrain meeting gradual and every panorama readable 
+    [mobile-chrome] › e2e/terrain3d-registry.spec.ts:345:1 › all fifteen contracts stay painted in LITE and on invalid terrain bytes 
+  1 skipped
+  137 passed (19.2m)

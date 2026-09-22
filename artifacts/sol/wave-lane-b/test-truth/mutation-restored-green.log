@@ -1,0 +1,101 @@
+
+Running 4 tests using 1 worker
+
+
+(node:93696) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[1/4] [desktop-chrome] › e2e/er01-e10-census.spec.ts:122:3 › e10-archive-world census cites the existing Deep Sky debt
+
+[desktop-chrome] › e2e/er01-e10-census.spec.ts:122:3 › e10-archive-world census cites the existing Deep Sky debt
+(node:93696) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+  1) [desktop-chrome] › e2e/er01-e10-census.spec.ts:122:3 › e10-archive-world census cites the existing Deep Sky debt 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 0
+    + Received  + 2
+
+      Array [
+    +   "archive_restoration",
+        "build_zones",
+        "hero_orders",
+    +   "static_squall",
+      ]
+
+      160 |       expect(mechanics.buildables?.map(({ id }: { id: string }) => id)).toEqual(EXPECTED_BUILDABLES);
+      161 |       expect(mechanics.interactables).toEqual([]);
+    > 162 |       expect(mechanics.rules.map(({ id }: { id: string }) => id)).toEqual(EXPECTED_RULES[contract.id]);
+          |                                                                   ^
+      163 |       expect(mechanics.posting.lossStakes).toHaveLength(EXPECTED_LOSS_STAKES[contract.id]!);
+      164 |       for (const seed of [`${contract.id}-01`, `${contract.id}-02`]) {
+      165 |         // The agent-play door, asked directly. An admitted map must OPEN for a rider on its own
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/er01-e10-census.spec.ts:162:67
+
+    Error Context: test-results/er01-e10-census-e10-archiv-b80f9--the-existing-Deep-Sky-debt-desktop-chrome/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/er01-e10-census-e10-archiv-b80f9--the-existing-Deep-Sky-debt-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/er01-e10-census-e10-archiv-b80f9--the-existing-Deep-Sky-debt-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:93783) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[2/4] [desktop-chrome] › e2e/terrain3d-registry.spec.ts:350:1 › all fifteen contracts stay painted in LITE and on invalid terrain bytes
+
+(node:95513) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[3/4] [mobile-chrome] › e2e/er01-e10-census.spec.ts:122:3 › e10-archive-world census cites the existing Deep Sky debt
+
+[mobile-chrome] › e2e/er01-e10-census.spec.ts:122:3 › e10-archive-world census cites the existing Deep Sky debt
+(node:95513) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+  2) [mobile-chrome] › e2e/er01-e10-census.spec.ts:122:3 › e10-archive-world census cites the existing Deep Sky debt 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 0
+    + Received  + 2
+
+      Array [
+    +   "archive_restoration",
+        "build_zones",
+        "hero_orders",
+    +   "static_squall",
+      ]
+
+      160 |
+      161 |       expect(mechanics.buildables?.map(({ id }: { id: string }) => id)).toEqual(EXPECTED_BUILDABLES);
+    > 162 |       expect(mechanics.interactables).toEqual([]);
+          |                                                   ^
+      163 |       expect(mechanics.rules.map(({ id }: { id: string }) => id)).toEqual(EXPECTED_RULES[contract.id]);
+      164 |       expect(mechanics.posting.lossStakes).toHaveLength(EXPECTED_LOSS_STAKES[contract.id]!);
+      165 |       for (const seed of [`${contract.id}-01`, `${contract.id}-02`]) {
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/er01-e10-census.spec.ts:162:67
+
+    Error Context: test-results/er01-e10-census-e10-archiv-b80f9--the-existing-Deep-Sky-debt-mobile-chrome/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/er01-e10-census-e10-archiv-b80f9--the-existing-Deep-Sky-debt-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/er01-e10-census-e10-archiv-b80f9--the-existing-Deep-Sky-debt-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:95576) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[4/4] [mobile-chrome] › e2e/terrain3d-registry.spec.ts:350:1 › all fifteen contracts stay painted in LITE and on invalid terrain bytes
+  2 failed
+    [desktop-chrome] › e2e/er01-e10-census.spec.ts:122:3 › e10-archive-world census cites the existing Deep Sky debt 
+    [mobile-chrome] › e2e/er01-e10-census.spec.ts:122:3 › e10-archive-world census cites the existing Deep Sky debt 
+  2 passed (2.8m)

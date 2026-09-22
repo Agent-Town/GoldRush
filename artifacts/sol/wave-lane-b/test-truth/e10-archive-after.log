@@ -1,0 +1,78 @@
+
+Running 2 tests using 1 worker
+
+
+(node:98191) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[1/2] [desktop-chrome] › e2e/er01-e10-census.spec.ts:123:3 › e10-archive-world census cites the existing Deep Sky debt
+
+[desktop-chrome] › e2e/er01-e10-census.spec.ts:123:3 › e10-archive-world census cites the existing Deep Sky debt
+(node:98191) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+  1) [desktop-chrome] › e2e/er01-e10-census.spec.ts:123:3 › e10-archive-world census cites the existing Deep Sky debt 
+
+    Error: expect(received).toHaveLength(expected)
+
+    Expected length: 0
+    Received length: 1
+    Received array:  [{"id": "archive-entry", "source": "tileParams.stakeMarkers", "x": 0, "z": -52}]
+
+      162 |       expect(mechanics.interactables).toEqual([]);
+      163 |       expect(mechanics.rules.map(({ id }: { id: string }) => id)).toEqual(EXPECTED_RULES[contract.id]);
+    > 164 |       expect(mechanics.posting.lossStakes).toHaveLength(EXPECTED_LOSS_STAKES[contract.id]!);
+          |                                            ^
+      165 |       for (const seed of [`${contract.id}-01`, `${contract.id}-02`]) {
+      166 |         // The agent-play door, asked directly. An admitted map must OPEN for a rider on its own
+      167 |         // id; a refused one must say so in the door's own words rather than failing some other
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/er01-e10-census.spec.ts:164:44
+
+    Error Context: test-results/er01-e10-census-e10-archiv-b80f9--the-existing-Deep-Sky-debt-desktop-chrome/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/er01-e10-census-e10-archiv-b80f9--the-existing-Deep-Sky-debt-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/er01-e10-census-e10-archiv-b80f9--the-existing-Deep-Sky-debt-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:98324) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[2/2] [mobile-chrome] › e2e/er01-e10-census.spec.ts:123:3 › e10-archive-world census cites the existing Deep Sky debt
+
+[mobile-chrome] › e2e/er01-e10-census.spec.ts:123:3 › e10-archive-world census cites the existing Deep Sky debt
+(node:98324) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+  2) [mobile-chrome] › e2e/er01-e10-census.spec.ts:123:3 › e10-archive-world census cites the existing Deep Sky debt 
+
+    Error: expect(received).toHaveLength(expected)
+
+    Expected length: 0
+    Received length: 1
+    Received array:  [{"id": "archive-entry", "source": "tileParams.stakeMarkers", "x": 0, "z": -52}]
+
+      162 |       expect(mechanics.interactables).toEqual([]);
+      163 |       expect(mechanics.rules.map(({ id }: { id: string }) => id)).toEqual(EXPECTED_RULES[contract.id]);
+    > 164 |       expect(mechanics.posting.lossStakes).toHaveLength(EXPECTED_LOSS_STAKES[contract.id]!);
+          |                                            ^
+      165 |       for (const seed of [`${contract.id}-01`, `${contract.id}-02`]) {
+      166 |         // The agent-play door, asked directly. An admitted map must OPEN for a rider on its own
+      167 |         // id; a refused one must say so in the door's own words rather than failing some other
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/er01-e10-census.spec.ts:164:44
+
+    Error Context: test-results/er01-e10-census-e10-archiv-b80f9--the-existing-Deep-Sky-debt-mobile-chrome/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/er01-e10-census-e10-archiv-b80f9--the-existing-Deep-Sky-debt-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/er01-e10-census-e10-archiv-b80f9--the-existing-Deep-Sky-debt-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  2 failed
+    [desktop-chrome] › e2e/er01-e10-census.spec.ts:123:3 › e10-archive-world census cites the existing Deep Sky debt 
+    [mobile-chrome] › e2e/er01-e10-census.spec.ts:123:3 › e10-archive-world census cites the existing Deep Sky debt 
