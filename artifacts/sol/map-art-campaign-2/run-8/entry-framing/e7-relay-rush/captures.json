@@ -1,0 +1,3284 @@
+[
+  {
+    "width": 1280,
+    "arm": "before",
+    "entry": {
+      "mountId": "rush-relay-r2-frame",
+      "reason": "The plate leads along a relay route from its nearest beacon shelf; the R2 frame marks the actual starting shelf and introduces that route without implying an active relay."
+    },
+    "declared": false,
+    "errors": [],
+    "frames": {
+      "rest": {
+        "t": 3509.0999999046326,
+        "elapsed": null,
+        "pixels": 21662,
+        "position": [
+          -25,
+          31.250289313249336,
+          59.3
+        ],
+        "quaternion": [
+          -0.4220883942194871,
+          0,
+          0,
+          0.9065546797988606
+        ],
+        "focus": [
+          -25,
+          5.06,
+          41
+        ],
+        "hero": {
+          "x": -25,
+          "y": 5.06,
+          "z": 41
+        },
+        "timeAlive": 2.200000000000002
+      }
+    },
+    "dataset": {
+      "assetPrefetchScene": "run",
+      "assetPrefetchState": "allowance",
+      "assetPrefetchReady": "16",
+      "assetPrefetchTotal": "16",
+      "assetPrefetchProgress": "16/16",
+      "assetPrefetchFailed": "0",
+      "assetPrefetchPriority": "1",
+      "assetPrefetchTarget": "town",
+      "assetPrefetchSaveData": "false",
+      "assetPrefetchEnabled": "true",
+      "assetPrefetchAllowance": "24000000",
+      "assetPrefetchBytes": "24463220",
+      "assetPrefetchTownState": "ready",
+      "spriteClipGroups": "claim town",
+      "railcar3dState": "off",
+      "railcar3dSource": "billboard",
+      "railcar3dMounted": "false",
+      "railcar3dDamageStates": "{\"wheels\":\"intact\",\"boiler\":\"intact\",\"cabin\":\"intact\"}",
+      "bossBarVisible": "false",
+      "bossBarSemantic": "none",
+      "bossBarRemaining": "0",
+      "bossBarDepleted": "0",
+      "bossBarRemainingColor": "#6bb36b",
+      "bossBarDepletedColor": "#a0522d",
+      "bossBarComponent": "shared",
+      "bossBarAnchor": "none",
+      "bossBarOrientation": "none",
+      "bossBarPosition": "none",
+      "crawler3dState": "off",
+      "crawler3dSource": "placeholder",
+      "crawler3dMounted": "false",
+      "crawler3dDamageStates": "{\"drain_mast\":\"intact\",\"tracks\":\"intact\",\"capacitor_bank\":\"intact\"}",
+      "dredgeQueen3dState": "off",
+      "dredgeQueen3dSource": "placeholder",
+      "dredgeQueen3dMounted": "false",
+      "dredgeQueen3dPresentation": "hidden",
+      "dredgeQueen3dDamageStates": "{\"claw\":\"intact\",\"paddle_port\":\"intact\",\"paddle_starboard\":\"intact\",\"hold\":\"intact\"}",
+      "salvageClaw3dState": "off",
+      "salvageClaw3dSource": "placeholder",
+      "salvageClaw3dMounted": "false",
+      "salvageClaw3dPresentation": "hidden",
+      "homemaker3dState": "off",
+      "homemaker3dSource": "placeholder",
+      "homemaker3dMounted": "false",
+      "homemaker3dPresentation": "hidden",
+      "homemaker3dDamageStates": "{\"vac\":\"intact\",\"rack\":\"intact\",\"core\":\"intact\"}",
+      "oldDigger3dState": "off",
+      "oldDigger3dSource": "placeholder",
+      "oldDigger3dMounted": "false",
+      "oldDigger3dPresentation": "hidden",
+      "assetLoadingLabel": "the claim",
+      "assetLoadingReady": "40",
+      "assetLoadingTotal": "40",
+      "assetLoadingProgress": "40/40",
+      "assetLoadingState": "ready",
+      "engine": "three.js r184",
+      "terrain3dPilotState": "ready",
+      "terrain3dPilotRenderSource": "glb",
+      "run3dPilotState": "ready",
+      "nightPoolSurfaceSources": "0",
+      "nightPoolSurfaceMaxRadius": "0",
+      "cameraAspect": "1.6",
+      "cssAspect": "1.6",
+      "prospectorSkin": "stock",
+      "prospectorSheet": "stock",
+      "run3dPilotMeshes": "0",
+      "run3dPilotTriangles": "0",
+      "terrain3dPilotContract": "e7-relay-rush",
+      "terrain3dPilotTerrainLoadState": "mounted",
+      "terrain3dPilotPanoramaLoadState": "mounted",
+      "terrain3dPilotLandmarkLoadState": "mounted",
+      "terrain3dPilotHeightSource": "baked-grid",
+      "terrain3dPilotMeshes": "1",
+      "terrain3dPilotTriangles": "32768",
+      "terrain3dPilotMaterials": "1",
+      "terrain3dPilotVertices": "16641",
+      "terrain3dPilotPanorama": "relay-valley-panorama",
+      "terrain3dPilotPanoramaMeshes": "1",
+      "terrain3dPilotPanoramaTriangles": "3084",
+      "terrain3dPilotPanoramaMaterials": "1",
+      "terrain3dPilotPanoramaVertices": "2246",
+      "heroSheet": "midlife",
+      "heroSkin": "stock",
+      "heroSkinSheet": "stock",
+      "terrain3dPilotNightPools": "off",
+      "terrain3dPilotNightPoolSources": "0",
+      "terrain3dPilotSpringPonds": "0",
+      "terrain3dPilotSpringPondWaterRadii": "[]",
+      "terrain3dPilotChannelWater": "0",
+      "terrain3dPilotFordWater": "0",
+      "terrain3dPilotChannelWaterHalfWidths": "[]",
+      "terrain3dPilotHiddenRelief": "3",
+      "terrain3dPilotHiddenGroundLayers": "TerrainVistaRing|TerrainReliefMesh|SpringPonds",
+      "terrain3dPilotContinuation": "panorama-owned-continuation",
+      "terrain3dPilotHorizonApron": "none",
+      "terrain3dPilotFarGroundProbe": "off",
+      "terrain3dPilotPanoramaFraming": "world-projected-horizon",
+      "terrain3dPilotSkirtBlend": "opaque-sculpt-edge",
+      "terrain3dPilotPanoramaFog": "excluded",
+      "terrain3dPilotPanoramaDepth": "screen-horizon-backdrop",
+      "terrain3dPilotLandmarkExpected": "10",
+      "terrain3dPilotWalkSurfaces": "0",
+      "terrain3dPilotLandmarkEmissive": "3",
+      "terrain3dPilotLandmarkSides": "{\"total\":{\"meshes\":10,\"closed\":10,\"open\":0,\"culled\":10,\"doubleSided\":0},\"mounts\":[{\"id\":\"west-ridge-dish-cluster\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5.299,\"topY\":12.919},{\"id\":\"east-ridge-dish-cluster\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":4.995,\"topY\":12.615},{\"id\":\"dead-gap-charting-station\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":-0.01,\"topY\":7.69},{\"id\":\"valley-cable-drum-yard\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":-0.027,\"topY\":2.403},{\"id\":\"drone-recovery-beacon\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.045,\"topY\":6.363},{\"id\":\"rush-start-horn\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":-0.02,\"topY\":7.23},{\"id\":\"rush-relay-r1-frame\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5,\"topY\":11.58},{\"id\":\"rush-relay-r2-frame\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5,\"topY\":11.76},{\"id\":\"rush-relay-r3-frame\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5,\"topY\":11.94},{\"id\":\"rush-relay-r4-frame\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5,\"topY\":12.12}]}",
+      "terrain3dPilotLandmarks": "10",
+      "terrain3dPilotLandmarkSkipped": "0",
+      "terrain3dPilotLandmarkDiagnostics": "",
+      "terrain3dPilotLandmarkMounts": "[{\"id\":\"west-ridge-dish-cluster\",\"x\":-56,\"y\":5.298643112182617,\"z\":30},{\"id\":\"east-ridge-dish-cluster\",\"x\":56,\"y\":4.9947662353515625,\"z\":30},{\"id\":\"dead-gap-charting-station\",\"x\":0,\"y\":-0.010416525416076183,\"z\":18},{\"id\":\"valley-cable-drum-yard\",\"x\":-44,\"y\":-0.026742985472083092,\"z\":-26},{\"id\":\"drone-recovery-beacon\",\"x\":44,\"y\":0.04453114792704582,\"z\":-26},{\"id\":\"rush-start-horn\",\"x\":0,\"y\":-0.019563019275665283,\"z\":-50},{\"id\":\"rush-relay-r1-frame\",\"x\":-45,\"y\":5,\"z\":41},{\"id\":\"rush-relay-r2-frame\",\"x\":-25,\"y\":5,\"z\":41},{\"id\":\"rush-relay-r3-frame\",\"x\":25,\"y\":5,\"z\":41},{\"id\":\"rush-relay-r4-frame\",\"x\":45,\"y\":5,\"z\":41}]",
+      "terrain3dPilotLandmarkMaterials": "[{\"id\":\"west-ridge-dish-cluster\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"east-ridge-dish-cluster\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"dead-gap-charting-station\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"valley-cable-drum-yard\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"drone-recovery-beacon\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"rush-start-horn\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"rush-relay-r1-frame\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"rush-relay-r2-frame\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"rush-relay-r3-frame\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"rush-relay-r4-frame\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0}]"
+    }
+  },
+  {
+    "width": 1280,
+    "arm": "after",
+    "entry": {
+      "mountId": "rush-relay-r2-frame",
+      "reason": "The plate leads along a relay route from its nearest beacon shelf; the R2 frame marks the actual starting shelf and introduces that route without implying an active relay."
+    },
+    "declared": false,
+    "errors": [],
+    "frames": {
+      "peak": {
+        "t": 3981.2999997138977,
+        "elapsed": null,
+        "pixels": 21676,
+        "position": [
+          -25,
+          31.259766702230518,
+          59.3
+        ],
+        "quaternion": [
+          -0.4221705873979115,
+          0,
+          0,
+          0.9065164064351524
+        ],
+        "focus": [
+          -25,
+          5.06,
+          41
+        ],
+        "hero": {
+          "x": -25,
+          "y": 5.06,
+          "z": 41
+        },
+        "timeAlive": 2.666666666666667
+      },
+      "return": {
+        "t": 5780.5,
+        "elapsed": null,
+        "pixels": 21675,
+        "position": [
+          -25,
+          31.25999999821145,
+          59.3
+        ],
+        "quaternion": [
+          -0.42217261017942775,
+          0,
+          0,
+          0.9065154644098956
+        ],
+        "focus": [
+          -25,
+          5.06,
+          41
+        ],
+        "hero": {
+          "x": -25,
+          "y": 5.06,
+          "z": 41
+        },
+        "timeAlive": 4.466666666666661
+      }
+    },
+    "triggered": false,
+    "census": {
+      "method": "Depth-tested opaque landmark body at recorded live camera poses; final frozen scene; at least 50 ms between samples.",
+      "samples": [
+        {
+          "t": 2830.199999809265,
+          "presentationSeconds": 0.067,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            30.73438955512602,
+            59.3
+          ],
+          "quaternion": [
+            -0.41755491402667766,
+            0,
+            0,
+            0.9086516900177833
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 0,
+          "pixels": 22253
+        },
+        {
+          "t": 2887.0999999046326,
+          "presentationSeconds": 0.13339999999999966,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            30.92238922705555,
+            59.3
+          ],
+          "quaternion": [
+            -0.41922054244793666,
+            0,
+            0,
+            0.9078844292032207
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 0.05690000009536743,
+          "pixels": 22029
+        },
+        {
+          "t": 2944.699999809265,
+          "presentationSeconds": 0.19159999999999994,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.030960684415547,
+            59.3
+          ],
+          "quaternion": [
+            -0.4201753357667203,
+            0,
+            0,
+            0.9074429388194742
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 0.1145,
+          "pixels": 21914
+        },
+        {
+          "t": 2994.7999997138977,
+          "presentationSeconds": 0.24169999999999983,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.095995531797023,
+            59.3
+          ],
+          "quaternion": [
+            -0.4207447818594992,
+            0,
+            0,
+            0.9071790498782489
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 0.16459999990463256,
+          "pixels": 21839
+        },
+        {
+          "t": 3053.2999997138977,
+          "presentationSeconds": 0.29989999999999967,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.148737344420635,
+            59.3
+          ],
+          "quaternion": [
+            -0.42120523150307326,
+            0,
+            0,
+            0.9069653537784353
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 0.22309999990463256,
+          "pixels": 21785
+        },
+        {
+          "t": 3111.7999997138977,
+          "presentationSeconds": 0.3586999999999998,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.18481936589484,
+            59.3
+          ],
+          "quaternion": [
+            -0.42151953804901593,
+            0,
+            0,
+            0.9068193199546115
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 0.2815999999046326,
+          "pixels": 21754
+        },
+        {
+          "t": 3168.2999997138977,
+          "presentationSeconds": 0.4153999999999996,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.208483936451742,
+            59.3
+          ],
+          "quaternion": [
+            -0.42172536991671894,
+            0,
+            0,
+            0.9067236141011253
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 0.3380999999046326,
+          "pixels": 21726
+        },
+        {
+          "t": 3219.4000000953674,
+          "presentationSeconds": 0.46549999999999997,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.22311172785081,
+            59.3
+          ],
+          "quaternion": [
+            -0.42185247916485463,
+            0,
+            0,
+            0.9066644836004474
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 0.3892000002861023,
+          "pixels": 21712
+        },
+        {
+          "t": 3278.5,
+          "presentationSeconds": 0.5252999999999998,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.23524006046112,
+            59.3
+          ],
+          "quaternion": [
+            -0.42195779875150846,
+            0,
+            0,
+            0.9066154731046572
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 0.44830000019073485,
+          "pixels": 21688
+        },
+        {
+          "t": 3336.4000000953674,
+          "presentationSeconds": 0.5836999999999999,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.243224933072057,
+            59.3
+          ],
+          "quaternion": [
+            -0.4220271026713581,
+            0,
+            0,
+            0.9065832143884085
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 0.5062000002861023,
+          "pixels": 21671
+        },
+        {
+          "t": 3386.5999999046326,
+          "presentationSeconds": 0.6332999999999998,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.24794804357202,
+            59.3
+          ],
+          "quaternion": [
+            -0.4220680834337818,
+            0,
+            0,
+            0.9065641361462157
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 0.5564000000953674,
+          "pixels": 21674
+        },
+        {
+          "t": 3444.5,
+          "presentationSeconds": 0.6916999999999999,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.251834698328942,
+            59.3
+          ],
+          "quaternion": [
+            -0.422101799312507,
+            0,
+            0,
+            0.9065484383181872
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 0.6143000001907348,
+          "pixels": 21679
+        },
+        {
+          "t": 3494.5999999046326,
+          "presentationSeconds": 0.7416999999999999,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.25414930569241,
+            59.3
+          ],
+          "quaternion": [
+            -0.42212187491422914,
+            0,
+            0,
+            0.9065390905630578
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 0.6644000000953675,
+          "pixels": 21680
+        },
+        {
+          "t": 3545.0999999046326,
+          "presentationSeconds": 0.7920000000000001,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.255816170372512,
+            59.3
+          ],
+          "quaternion": [
+            -0.42213633092260405,
+            0,
+            0,
+            0.9065323591109155
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 0.7149000000953675,
+          "pixels": 21681
+        },
+        {
+          "t": 3602.9000000953674,
+          "presentationSeconds": 0.8501,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.257159745466602,
+            59.3
+          ],
+          "quaternion": [
+            -0.4221479823016944,
+            0,
+            0,
+            0.9065269334325419
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 0.7727000002861023,
+          "pixels": 21678
+        },
+        {
+          "t": 3661.5,
+          "presentationSeconds": 0.9082999999999997,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.25807313626653,
+            59.3
+          ],
+          "quaternion": [
+            -0.42215590270937714,
+            0,
+            0,
+            0.9065232450453936
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 0.8313000001907349,
+          "pixels": 21678
+        },
+        {
+          "t": 3718,
+          "presentationSeconds": 0.9650999999999996,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.25868053413639,
+            59.3
+          ],
+          "quaternion": [
+            -0.4221611695196009,
+            0,
+            0,
+            0.9065207923428137
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 0.8878000001907349,
+          "pixels": 21679
+        },
+        {
+          "t": 3769.5999999046326,
+          "presentationSeconds": 1.0167999999999993,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.259065215876905,
+            59.3
+          ],
+          "quaternion": [
+            -0.42216450505239916,
+            0,
+            0,
+            0.9065192389981929
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 0.9394000000953674,
+          "pixels": 21680
+        },
+        {
+          "t": 3819.9000000953674,
+          "presentationSeconds": 1.0665999999999995,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.259329304242076,
+            59.3
+          ],
+          "quaternion": [
+            -0.4221667948962775,
+            0,
+            0,
+            0.9065181726181799
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 0.9897000002861023,
+          "pixels": 21678
+        },
+        {
+          "t": 3877.9000000953674,
+          "presentationSeconds": 1.1249999999999998,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.259545597992684,
+            59.3
+          ],
+          "quaternion": [
+            -0.42216867030255445,
+            0,
+            0,
+            0.9065172992364643
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 1.0477000002861023,
+          "pixels": 21678
+        },
+        {
+          "t": 3928.199999809265,
+          "presentationSeconds": 1.1751999999999998,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.259674840569236,
+            59.3
+          ],
+          "quaternion": [
+            -0.4221697909093525,
+            0,
+            0,
+            0.9065167773646295
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 1.098,
+          "pixels": 21678
+        },
+        {
+          "t": 3978.199999809265,
+          "presentationSeconds": 1.2250000000000003,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.259766702230518,
+            59.3
+          ],
+          "quaternion": [
+            -0.4221705873979115,
+            0,
+            0,
+            0.9065164064351524
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 1.148,
+          "pixels": 21677
+        },
+        {
+          "t": 4065.9000000953674,
+          "presentationSeconds": 1.2334,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.25977940782864,
+            59.3
+          ],
+          "quaternion": [
+            -0.42217069756179243,
+            0,
+            0,
+            0.9065163551311083
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 1.2357000002861023,
+          "pixels": 21677
+        },
+        {
+          "t": 4120,
+          "presentationSeconds": 1.3333999999999997,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.2598867442029,
+            59.3
+          ],
+          "quaternion": [
+            -0.42217162821897003,
+            0,
+            0,
+            0.9065159217172878
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 1.2898000001907348,
+          "pixels": 21677
+        },
+        {
+          "t": 4178.299999713898,
+          "presentationSeconds": 1.3921000000000003,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.259923421556685,
+            59.3
+          ],
+          "quaternion": [
+            -0.4221719462278464,
+            0,
+            0,
+            0.9065157736179732
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 1.3480999999046326,
+          "pixels": 21677
+        },
+        {
+          "t": 4236.199999809265,
+          "presentationSeconds": 1.4502,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.259948013592776,
+            59.3
+          ],
+          "quaternion": [
+            -0.42217215945134784,
+            0,
+            0,
+            0.906515674317982
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 1.406,
+          "pixels": 21677
+        },
+        {
+          "t": 4286.699999809265,
+          "presentationSeconds": 1.5005000000000002,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.259962824536828,
+            59.3
+          ],
+          "quaternion": [
+            -0.4221722878684593,
+            0,
+            0,
+            0.906515614513016
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 1.4565,
+          "pixels": 21678
+        },
+        {
+          "t": 4344.599999904633,
+          "presentationSeconds": 1.5585000000000002,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.259974746057427,
+            59.3
+          ],
+          "quaternion": [
+            -0.4221723912329856,
+            0,
+            0,
+            0.9065155663752404
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 1.5144000000953675,
+          "pixels": 21678
+        },
+        {
+          "t": 4394.599999904633,
+          "presentationSeconds": 1.6085000000000005,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.25998190475943,
+            59.3
+          ],
+          "quaternion": [
+            -0.42217245330187053,
+            0,
+            0,
+            0.9065155374692041
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 1.5644000000953675,
+          "pixels": 21677
+        },
+        {
+          "t": 4444.599999904633,
+          "presentationSeconds": 1.6588000000000005,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.25998706009926,
+            59.3
+          ],
+          "quaternion": [
+            -0.4221724980007693,
+            0,
+            0,
+            0.906515516652523
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 1.6144000000953673,
+          "pixels": 21678
+        },
+        {
+          "t": 4503,
+          "presentationSeconds": 1.7168000000000005,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.259991209699024,
+            59.3
+          ],
+          "quaternion": [
+            -0.4221725339794832,
+            0,
+            0,
+            0.9065154998969086
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 1.6728000001907348,
+          "pixels": 21674
+        },
+        {
+          "t": 4561.699999809265,
+          "presentationSeconds": 1.7755000000000003,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.259994056396387,
+            59.3
+          ],
+          "quaternion": [
+            -0.4221725586615003,
+            0,
+            0,
+            0.9065154884022679
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 1.7315,
+          "pixels": 21675
+        },
+        {
+          "t": 4620,
+          "presentationSeconds": 1.8335000000000004,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.259995962406073,
+            59.3
+          ],
+          "quaternion": [
+            -0.4221725751873728,
+            0,
+            0,
+            0.9065154807060176
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 1.7898000001907348,
+          "pixels": 21676
+        },
+        {
+          "t": 4677.599999904633,
+          "presentationSeconds": 1.8918000000000006,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.259997262671938,
+            59.3
+          ],
+          "quaternion": [
+            -0.42217258646120126,
+            0,
+            0,
+            0.9065154754556922
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 1.8474000000953674,
+          "pixels": 21676
+        },
+        {
+          "t": 4727.900000095367,
+          "presentationSeconds": 1.9418000000000006,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.259998038618736,
+            59.3
+          ],
+          "quaternion": [
+            -0.422172593188972,
+            0,
+            0,
+            0.9065154723225074
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 1.8977000002861022,
+          "pixels": 21676
+        },
+        {
+          "t": 4778.099999904633,
+          "presentationSeconds": 1.9920000000000004,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.259998596481516,
+            59.3
+          ],
+          "quaternion": [
+            -0.42217259802586654,
+            0,
+            0,
+            0.9065154700699211
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 1.9479000000953675,
+          "pixels": 21676
+        },
+        {
+          "t": 4836.299999713898,
+          "presentationSeconds": 2.050100000000001,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.25999904720075,
+            59.3
+          ],
+          "quaternion": [
+            -0.42217260193378325,
+            0,
+            0,
+            0.9065154682499683
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 2.0060999999046327,
+          "pixels": 21676
+        },
+        {
+          "t": 4886.5,
+          "presentationSeconds": 2.100100000000001,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.259999317289505,
+            59.3
+          ],
+          "quaternion": [
+            -0.42217260427556125,
+            0,
+            0,
+            0.9065154671593808
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 2.056300000190735,
+          "pixels": 21676
+        },
+        {
+          "t": 4944.799999713898,
+          "presentationSeconds": 2.1588000000000007,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.25999953838207,
+            59.3
+          ],
+          "quaternion": [
+            -0.4221726061925225,
+            0,
+            0,
+            0.9065154662666343
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 2.1145999999046325,
+          "pixels": 21676
+        },
+        {
+          "t": 4994.799999713898,
+          "presentationSeconds": 2.2088000000000005,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.259999669236297,
+            59.3
+          ],
+          "quaternion": [
+            -0.42217260732708106,
+            0,
+            0,
+            0.90651546573826
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 2.1645999999046324,
+          "pixels": 21676
+        },
+        {
+          "t": 5053.099999904633,
+          "presentationSeconds": 2.2668000000000004,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.25999977530643,
+            59.3
+          ],
+          "quaternion": [
+            -0.42217260824675173,
+            0,
+            0,
+            0.9065154653099609
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 2.2229000000953674,
+          "pixels": 21676
+        },
+        {
+          "t": 5111.299999713898,
+          "presentationSeconds": 2.3251999999999997,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.25999984776822,
+            59.3
+          ],
+          "quaternion": [
+            -0.4221726088750245,
+            0,
+            0,
+            0.9065154650173681
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 2.2810999999046326,
+          "pixels": 21676
+        },
+        {
+          "t": 5169.599999904633,
+          "presentationSeconds": 2.3834999999999997,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.259999896792912,
+            59.3
+          ],
+          "quaternion": [
+            -0.42217260930008826,
+            0,
+            0,
+            0.9065154648194123
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 2.3394000000953676,
+          "pixels": 21676
+        },
+        {
+          "t": 5219.699999809265,
+          "presentationSeconds": 2.4331,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.25999992585142,
+            59.3
+          ],
+          "quaternion": [
+            -0.4221726095520371,
+            0,
+            0,
+            0.9065154647020773
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 2.3895,
+          "pixels": 21676
+        },
+        {
+          "t": 5276.5,
+          "presentationSeconds": 2.4903999999999993,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.25999994939396,
+            59.3
+          ],
+          "quaternion": [
+            -0.42217260975616056,
+            0,
+            0,
+            0.906515464607015
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 2.446300000190735,
+          "pixels": 21676
+        },
+        {
+          "t": 5326.699999809265,
+          "presentationSeconds": 2.5406999999999993,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.259999963811634,
+            59.3
+          ],
+          "quaternion": [
+            -0.42217260988116745,
+            0,
+            0,
+            0.9065154645487983
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 2.4965,
+          "pixels": 21676
+        },
+        {
+          "t": 5385.299999713898,
+          "presentationSeconds": 2.5987999999999998,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.25999997543299,
+            59.3
+          ],
+          "quaternion": [
+            -0.42217260998192924,
+            0,
+            0,
+            0.9065154645018726
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 2.5550999999046327,
+          "pixels": 21676
+        },
+        {
+          "t": 5443.199999809265,
+          "presentationSeconds": 2.6571999999999996,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.259999983355645,
+            59.3
+          ],
+          "quaternion": [
+            -0.42217261005062184,
+            0,
+            0,
+            0.9065154644698818
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 2.613,
+          "pixels": 21676
+        },
+        {
+          "t": 5494.699999809265,
+          "presentationSeconds": 2.7085,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.25999998817671,
+            59.3
+          ],
+          "quaternion": [
+            -0.4221726100924225,
+            0,
+            0,
+            0.9065154644504149
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 2.6645,
+          "pixels": 21676
+        },
+        {
+          "t": 5553.099999904633,
+          "presentationSeconds": 2.7667,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.25999999197893,
+            59.3
+          ],
+          "quaternion": [
+            -0.42217261012538926,
+            0,
+            0,
+            0.906515464435062
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 2.7229000000953674,
+          "pixels": 21676
+        },
+        {
+          "t": 5611.199999809265,
+          "presentationSeconds": 2.825100000000001,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.259999994565657,
+            59.3
+          ],
+          "quaternion": [
+            -0.42217261014781715,
+            0,
+            0,
+            0.9065154644246172
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 2.781,
+          "pixels": 21676
+        },
+        {
+          "t": 5661.199999809265,
+          "presentationSeconds": 2.875100000000001,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.25999999610612,
+            59.3
+          ],
+          "quaternion": [
+            -0.4221726101611737,
+            0,
+            0,
+            0.9065154644183967
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 2.831,
+          "pixels": 21676
+        },
+        {
+          "t": 5720.099999904633,
+          "presentationSeconds": 2.9335000000000004,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.259999997361863,
+            59.3
+          ],
+          "quaternion": [
+            -0.4221726101720614,
+            0,
+            0,
+            0.9065154644133263
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 2.8899000000953676,
+          "pixels": 21676
+        },
+        {
+          "t": 5778,
+          "presentationSeconds": 2.9918000000000005,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.25999999821145,
+            59.3
+          ],
+          "quaternion": [
+            -0.42217261017942775,
+            0,
+            0,
+            0.9065154644098956
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 2.947800000190735,
+          "pixels": 21676
+        },
+        {
+          "t": 5836.099999904633,
+          "presentationSeconds": 3.0501000000000005,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.259999998787436,
+            59.3
+          ],
+          "quaternion": [
+            -0.42217261018442176,
+            0,
+            0,
+            0.90651546440757
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 3.0059000000953673,
+          "pixels": 21676
+        },
+        {
+          "t": 5886.099999904633,
+          "presentationSeconds": 3.0998999999999994,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.259999999130006,
+            59.3
+          ],
+          "quaternion": [
+            -0.42217261018739194,
+            0,
+            0,
+            0.9065154644061868
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 3.0559000000953676,
+          "pixels": 21676
+        },
+        {
+          "t": 5936.599999904633,
+          "presentationSeconds": 3.1503999999999994,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.259999999378696,
+            59.3
+          ],
+          "quaternion": [
+            -0.42217261018954816,
+            0,
+            0,
+            0.9065154644051825
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 3.1064000000953675,
+          "pixels": 21676
+        }
+      ]
+    },
+    "dataset": {
+      "assetPrefetchScene": "run",
+      "assetPrefetchState": "allowance",
+      "assetPrefetchReady": "16",
+      "assetPrefetchTotal": "16",
+      "assetPrefetchProgress": "16/16",
+      "assetPrefetchFailed": "0",
+      "assetPrefetchPriority": "1",
+      "assetPrefetchTarget": "town",
+      "assetPrefetchSaveData": "false",
+      "assetPrefetchEnabled": "true",
+      "assetPrefetchAllowance": "24000000",
+      "assetPrefetchBytes": "24463220",
+      "assetPrefetchTownState": "ready",
+      "spriteClipGroups": "claim town",
+      "railcar3dState": "off",
+      "railcar3dSource": "billboard",
+      "railcar3dMounted": "false",
+      "railcar3dDamageStates": "{\"wheels\":\"intact\",\"boiler\":\"intact\",\"cabin\":\"intact\"}",
+      "bossBarVisible": "false",
+      "bossBarSemantic": "none",
+      "bossBarRemaining": "0",
+      "bossBarDepleted": "0",
+      "bossBarRemainingColor": "#6bb36b",
+      "bossBarDepletedColor": "#a0522d",
+      "bossBarComponent": "shared",
+      "bossBarAnchor": "none",
+      "bossBarOrientation": "none",
+      "bossBarPosition": "none",
+      "crawler3dState": "off",
+      "crawler3dSource": "placeholder",
+      "crawler3dMounted": "false",
+      "crawler3dDamageStates": "{\"drain_mast\":\"intact\",\"tracks\":\"intact\",\"capacitor_bank\":\"intact\"}",
+      "dredgeQueen3dState": "off",
+      "dredgeQueen3dSource": "placeholder",
+      "dredgeQueen3dMounted": "false",
+      "dredgeQueen3dPresentation": "hidden",
+      "dredgeQueen3dDamageStates": "{\"claw\":\"intact\",\"paddle_port\":\"intact\",\"paddle_starboard\":\"intact\",\"hold\":\"intact\"}",
+      "salvageClaw3dState": "off",
+      "salvageClaw3dSource": "placeholder",
+      "salvageClaw3dMounted": "false",
+      "salvageClaw3dPresentation": "hidden",
+      "homemaker3dState": "off",
+      "homemaker3dSource": "placeholder",
+      "homemaker3dMounted": "false",
+      "homemaker3dPresentation": "hidden",
+      "homemaker3dDamageStates": "{\"vac\":\"intact\",\"rack\":\"intact\",\"core\":\"intact\"}",
+      "oldDigger3dState": "off",
+      "oldDigger3dSource": "placeholder",
+      "oldDigger3dMounted": "false",
+      "oldDigger3dPresentation": "hidden",
+      "assetLoadingLabel": "the claim",
+      "assetLoadingReady": "40",
+      "assetLoadingTotal": "40",
+      "assetLoadingProgress": "40/40",
+      "assetLoadingState": "ready",
+      "engine": "three.js r184",
+      "terrain3dPilotState": "ready",
+      "terrain3dPilotRenderSource": "glb",
+      "run3dPilotState": "ready",
+      "nightPoolSurfaceSources": "0",
+      "nightPoolSurfaceMaxRadius": "0",
+      "cameraAspect": "1.6",
+      "cssAspect": "1.6",
+      "prospectorSkin": "stock",
+      "prospectorSheet": "stock",
+      "run3dPilotMeshes": "0",
+      "run3dPilotTriangles": "0",
+      "terrain3dPilotContract": "e7-relay-rush",
+      "terrain3dPilotTerrainLoadState": "mounted",
+      "terrain3dPilotPanoramaLoadState": "mounted",
+      "terrain3dPilotLandmarkLoadState": "mounted",
+      "terrain3dPilotHeightSource": "baked-grid",
+      "terrain3dPilotMeshes": "1",
+      "terrain3dPilotTriangles": "32768",
+      "terrain3dPilotMaterials": "1",
+      "terrain3dPilotVertices": "16641",
+      "terrain3dPilotPanorama": "relay-valley-panorama",
+      "terrain3dPilotPanoramaMeshes": "1",
+      "terrain3dPilotPanoramaTriangles": "3084",
+      "terrain3dPilotPanoramaMaterials": "1",
+      "terrain3dPilotPanoramaVertices": "2246",
+      "heroSheet": "midlife",
+      "heroSkin": "stock",
+      "heroSkinSheet": "stock",
+      "terrain3dPilotNightPools": "off",
+      "terrain3dPilotNightPoolSources": "0",
+      "terrain3dPilotSpringPonds": "0",
+      "terrain3dPilotSpringPondWaterRadii": "[]",
+      "terrain3dPilotChannelWater": "0",
+      "terrain3dPilotFordWater": "0",
+      "terrain3dPilotChannelWaterHalfWidths": "[]",
+      "terrain3dPilotHiddenRelief": "3",
+      "terrain3dPilotHiddenGroundLayers": "TerrainVistaRing|TerrainReliefMesh|SpringPonds",
+      "terrain3dPilotContinuation": "panorama-owned-continuation",
+      "terrain3dPilotHorizonApron": "none",
+      "terrain3dPilotFarGroundProbe": "off",
+      "terrain3dPilotPanoramaFraming": "world-projected-horizon",
+      "terrain3dPilotSkirtBlend": "opaque-sculpt-edge",
+      "terrain3dPilotPanoramaFog": "excluded",
+      "terrain3dPilotPanoramaDepth": "screen-horizon-backdrop",
+      "terrain3dPilotLandmarkExpected": "10",
+      "terrain3dPilotWalkSurfaces": "0",
+      "terrain3dPilotLandmarkEmissive": "3",
+      "terrain3dPilotLandmarkSides": "{\"total\":{\"meshes\":10,\"closed\":10,\"open\":0,\"culled\":10,\"doubleSided\":0},\"mounts\":[{\"id\":\"west-ridge-dish-cluster\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5.299,\"topY\":12.919},{\"id\":\"east-ridge-dish-cluster\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":4.995,\"topY\":12.615},{\"id\":\"dead-gap-charting-station\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":-0.01,\"topY\":7.69},{\"id\":\"valley-cable-drum-yard\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":-0.027,\"topY\":2.403},{\"id\":\"drone-recovery-beacon\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.045,\"topY\":6.363},{\"id\":\"rush-start-horn\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":-0.02,\"topY\":7.23},{\"id\":\"rush-relay-r1-frame\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5,\"topY\":11.58},{\"id\":\"rush-relay-r2-frame\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5,\"topY\":11.76},{\"id\":\"rush-relay-r3-frame\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5,\"topY\":11.94},{\"id\":\"rush-relay-r4-frame\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5,\"topY\":12.12}]}",
+      "terrain3dPilotLandmarks": "10",
+      "terrain3dPilotLandmarkSkipped": "0",
+      "terrain3dPilotLandmarkDiagnostics": "",
+      "terrain3dPilotLandmarkMounts": "[{\"id\":\"west-ridge-dish-cluster\",\"x\":-56,\"y\":5.298643112182617,\"z\":30},{\"id\":\"east-ridge-dish-cluster\",\"x\":56,\"y\":4.9947662353515625,\"z\":30},{\"id\":\"dead-gap-charting-station\",\"x\":0,\"y\":-0.010416525416076183,\"z\":18},{\"id\":\"valley-cable-drum-yard\",\"x\":-44,\"y\":-0.026742985472083092,\"z\":-26},{\"id\":\"drone-recovery-beacon\",\"x\":44,\"y\":0.04453114792704582,\"z\":-26},{\"id\":\"rush-start-horn\",\"x\":0,\"y\":-0.019563019275665283,\"z\":-50},{\"id\":\"rush-relay-r1-frame\",\"x\":-45,\"y\":5,\"z\":41},{\"id\":\"rush-relay-r2-frame\",\"x\":-25,\"y\":5,\"z\":41},{\"id\":\"rush-relay-r3-frame\",\"x\":25,\"y\":5,\"z\":41},{\"id\":\"rush-relay-r4-frame\",\"x\":45,\"y\":5,\"z\":41}]",
+      "terrain3dPilotLandmarkMaterials": "[{\"id\":\"west-ridge-dish-cluster\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"east-ridge-dish-cluster\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"dead-gap-charting-station\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"valley-cable-drum-yard\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"drone-recovery-beacon\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"rush-start-horn\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"rush-relay-r1-frame\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"rush-relay-r2-frame\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"rush-relay-r3-frame\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"rush-relay-r4-frame\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0}]"
+    }
+  },
+  {
+    "width": 390,
+    "arm": "before",
+    "entry": {
+      "mountId": "rush-relay-r2-frame",
+      "reason": "The plate leads along a relay route from its nearest beacon shelf; the R2 frame marks the actual starting shelf and introduces that route without implying an active relay."
+    },
+    "declared": false,
+    "errors": [],
+    "frames": {
+      "rest": {
+        "t": 3463.8999996185303,
+        "elapsed": null,
+        "pixels": 24145,
+        "position": [
+          -25,
+          31.247202792207396,
+          59.3
+        ],
+        "quaternion": [
+          -0.4220616177933419,
+          0,
+          0,
+          0.9065671463193815
+        ],
+        "focus": [
+          -25,
+          5.06,
+          41
+        ],
+        "hero": {
+          "x": -25,
+          "y": 5.06,
+          "z": 41
+        },
+        "timeAlive": 2.1666666666666687
+      }
+    },
+    "dataset": {
+      "assetPrefetchScene": "run",
+      "assetPrefetchState": "allowance",
+      "assetPrefetchReady": "4",
+      "assetPrefetchTotal": "16",
+      "assetPrefetchProgress": "4/16",
+      "assetPrefetchFailed": "0",
+      "assetPrefetchPriority": "1",
+      "assetPrefetchTarget": "town",
+      "assetPrefetchSaveData": "false",
+      "assetPrefetchEnabled": "true",
+      "assetPrefetchAllowance": "12000000",
+      "assetPrefetchBytes": "12354992",
+      "assetPrefetchTownState": "partial",
+      "spriteClipGroups": "claim town",
+      "railcar3dState": "off",
+      "railcar3dSource": "billboard",
+      "railcar3dMounted": "false",
+      "railcar3dDamageStates": "{\"wheels\":\"intact\",\"boiler\":\"intact\",\"cabin\":\"intact\"}",
+      "bossBarVisible": "false",
+      "bossBarSemantic": "none",
+      "bossBarRemaining": "0",
+      "bossBarDepleted": "0",
+      "bossBarRemainingColor": "#6bb36b",
+      "bossBarDepletedColor": "#a0522d",
+      "bossBarComponent": "shared",
+      "bossBarAnchor": "none",
+      "bossBarOrientation": "none",
+      "bossBarPosition": "none",
+      "crawler3dState": "off",
+      "crawler3dSource": "placeholder",
+      "crawler3dMounted": "false",
+      "crawler3dDamageStates": "{\"drain_mast\":\"intact\",\"tracks\":\"intact\",\"capacitor_bank\":\"intact\"}",
+      "dredgeQueen3dState": "off",
+      "dredgeQueen3dSource": "placeholder",
+      "dredgeQueen3dMounted": "false",
+      "dredgeQueen3dPresentation": "hidden",
+      "dredgeQueen3dDamageStates": "{\"claw\":\"intact\",\"paddle_port\":\"intact\",\"paddle_starboard\":\"intact\",\"hold\":\"intact\"}",
+      "salvageClaw3dState": "off",
+      "salvageClaw3dSource": "placeholder",
+      "salvageClaw3dMounted": "false",
+      "salvageClaw3dPresentation": "hidden",
+      "homemaker3dState": "off",
+      "homemaker3dSource": "placeholder",
+      "homemaker3dMounted": "false",
+      "homemaker3dPresentation": "hidden",
+      "homemaker3dDamageStates": "{\"vac\":\"intact\",\"rack\":\"intact\",\"core\":\"intact\"}",
+      "oldDigger3dState": "off",
+      "oldDigger3dSource": "placeholder",
+      "oldDigger3dMounted": "false",
+      "oldDigger3dPresentation": "hidden",
+      "assetLoadingLabel": "the claim",
+      "assetLoadingReady": "40",
+      "assetLoadingTotal": "40",
+      "assetLoadingProgress": "40/40",
+      "assetLoadingState": "ready",
+      "engine": "three.js r184",
+      "terrain3dPilotState": "ready",
+      "terrain3dPilotRenderSource": "glb",
+      "run3dPilotState": "ready",
+      "nightPoolSurfaceSources": "0",
+      "nightPoolSurfaceMaxRadius": "0",
+      "cameraAspect": "0.46208530805687204",
+      "cssAspect": "0.46208530805687204",
+      "prospectorSkin": "stock",
+      "prospectorSheet": "stock",
+      "run3dPilotMeshes": "0",
+      "run3dPilotTriangles": "0",
+      "terrain3dPilotContract": "e7-relay-rush",
+      "terrain3dPilotTerrainLoadState": "mounted",
+      "terrain3dPilotPanoramaLoadState": "mounted",
+      "terrain3dPilotLandmarkLoadState": "mounted",
+      "terrain3dPilotHeightSource": "baked-grid",
+      "terrain3dPilotMeshes": "1",
+      "terrain3dPilotTriangles": "32768",
+      "terrain3dPilotMaterials": "1",
+      "terrain3dPilotVertices": "16641",
+      "terrain3dPilotPanorama": "relay-valley-panorama",
+      "terrain3dPilotPanoramaMeshes": "1",
+      "terrain3dPilotPanoramaTriangles": "3084",
+      "terrain3dPilotPanoramaMaterials": "1",
+      "terrain3dPilotPanoramaVertices": "2246",
+      "heroSheet": "midlife",
+      "heroSkin": "stock",
+      "heroSkinSheet": "stock",
+      "terrain3dPilotNightPools": "off",
+      "terrain3dPilotNightPoolSources": "0",
+      "terrain3dPilotSpringPonds": "0",
+      "terrain3dPilotSpringPondWaterRadii": "[]",
+      "terrain3dPilotChannelWater": "0",
+      "terrain3dPilotFordWater": "0",
+      "terrain3dPilotChannelWaterHalfWidths": "[]",
+      "terrain3dPilotHiddenRelief": "3",
+      "terrain3dPilotHiddenGroundLayers": "TerrainVistaRing|TerrainReliefMesh|SpringPonds",
+      "terrain3dPilotContinuation": "panorama-owned-continuation",
+      "terrain3dPilotHorizonApron": "none",
+      "terrain3dPilotFarGroundProbe": "off",
+      "terrain3dPilotPanoramaFraming": "world-projected-horizon",
+      "terrain3dPilotSkirtBlend": "opaque-sculpt-edge",
+      "terrain3dPilotPanoramaFog": "excluded",
+      "terrain3dPilotPanoramaDepth": "screen-horizon-backdrop",
+      "terrain3dPilotLandmarkExpected": "10",
+      "terrain3dPilotWalkSurfaces": "0",
+      "terrain3dPilotLandmarkEmissive": "3",
+      "terrain3dPilotLandmarkSides": "{\"total\":{\"meshes\":10,\"closed\":10,\"open\":0,\"culled\":10,\"doubleSided\":0},\"mounts\":[{\"id\":\"west-ridge-dish-cluster\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5.299,\"topY\":12.919},{\"id\":\"east-ridge-dish-cluster\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":4.995,\"topY\":12.615},{\"id\":\"dead-gap-charting-station\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":-0.01,\"topY\":7.69},{\"id\":\"valley-cable-drum-yard\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":-0.027,\"topY\":2.403},{\"id\":\"drone-recovery-beacon\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.045,\"topY\":6.363},{\"id\":\"rush-start-horn\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":-0.02,\"topY\":7.23},{\"id\":\"rush-relay-r1-frame\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5,\"topY\":11.58},{\"id\":\"rush-relay-r2-frame\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5,\"topY\":11.76},{\"id\":\"rush-relay-r3-frame\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5,\"topY\":11.94},{\"id\":\"rush-relay-r4-frame\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5,\"topY\":12.12}]}",
+      "terrain3dPilotLandmarks": "10",
+      "terrain3dPilotLandmarkSkipped": "0",
+      "terrain3dPilotLandmarkDiagnostics": "",
+      "terrain3dPilotLandmarkMounts": "[{\"id\":\"west-ridge-dish-cluster\",\"x\":-56,\"y\":5.298643112182617,\"z\":30},{\"id\":\"east-ridge-dish-cluster\",\"x\":56,\"y\":4.9947662353515625,\"z\":30},{\"id\":\"dead-gap-charting-station\",\"x\":0,\"y\":-0.010416525416076183,\"z\":18},{\"id\":\"valley-cable-drum-yard\",\"x\":-44,\"y\":-0.026742985472083092,\"z\":-26},{\"id\":\"drone-recovery-beacon\",\"x\":44,\"y\":0.04453114792704582,\"z\":-26},{\"id\":\"rush-start-horn\",\"x\":0,\"y\":-0.019563019275665283,\"z\":-50},{\"id\":\"rush-relay-r1-frame\",\"x\":-45,\"y\":5,\"z\":41},{\"id\":\"rush-relay-r2-frame\",\"x\":-25,\"y\":5,\"z\":41},{\"id\":\"rush-relay-r3-frame\",\"x\":25,\"y\":5,\"z\":41},{\"id\":\"rush-relay-r4-frame\",\"x\":45,\"y\":5,\"z\":41}]",
+      "terrain3dPilotLandmarkMaterials": "[{\"id\":\"west-ridge-dish-cluster\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"east-ridge-dish-cluster\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"dead-gap-charting-station\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"valley-cable-drum-yard\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"drone-recovery-beacon\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"rush-start-horn\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"rush-relay-r1-frame\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"rush-relay-r2-frame\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"rush-relay-r3-frame\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"rush-relay-r4-frame\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0}]"
+    }
+  },
+  {
+    "width": 390,
+    "arm": "after",
+    "entry": {
+      "mountId": "rush-relay-r2-frame",
+      "reason": "The plate leads along a relay route from its nearest beacon shelf; the R2 frame marks the actual starting shelf and introduces that route without implying an active relay."
+    },
+    "declared": false,
+    "errors": [],
+    "frames": {
+      "peak": {
+        "t": 3964.4000000953674,
+        "elapsed": null,
+        "pixels": 24126,
+        "position": [
+          -25,
+          31.259686756048445,
+          59.3
+        ],
+        "quaternion": [
+          -0.4221698942229839,
+          0,
+          0,
+          0.9065167292509029
+        ],
+        "focus": [
+          -25,
+          5.06,
+          41
+        ],
+        "hero": {
+          "x": -25,
+          "y": 5.06,
+          "z": 41
+        },
+        "timeAlive": 2.7
+      },
+      "return": {
+        "t": 5630.099999904633,
+        "elapsed": null,
+        "pixels": 24124,
+        "position": [
+          -25,
+          31.259999994503723,
+          59.3
+        ],
+        "quaternion": [
+          -0.4221726101472803,
+          0,
+          0,
+          0.9065154644248671
+        ],
+        "focus": [
+          -25,
+          5.06,
+          41
+        ],
+        "hero": {
+          "x": -25,
+          "y": 5.06,
+          "z": 41
+        },
+        "timeAlive": 4.366666666666661
+      }
+    },
+    "triggered": false,
+    "census": {
+      "method": "Depth-tested opaque landmark body at recorded live camera poses; final frozen scene; at least 50 ms between samples.",
+      "samples": [
+        {
+          "t": 2824.9000000953674,
+          "presentationSeconds": 0.041400000000000096,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            30.628207928476794,
+            59.3
+          ],
+          "quaternion": [
+            -0.4166072099714716,
+            0,
+            0,
+            0.9090865924650887
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 0,
+          "pixels": 24929
+        },
+        {
+          "t": 2881.4000000953674,
+          "presentationSeconds": 0.1070999999999999,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            30.852288286841254,
+            59.3
+          ],
+          "quaternion": [
+            -0.4186013005141244,
+            0,
+            0,
+            0.9081701113821594
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 0.0565,
+          "pixels": 24641
+        },
+        {
+          "t": 2931.5,
+          "presentationSeconds": 0.15729999999999972,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            30.968251049881935,
+            59.3
+          ],
+          "quaternion": [
+            -0.419624491289772,
+            0,
+            0,
+            0.9076977945934429
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 0.10659999990463256,
+          "pixels": 24488
+        },
+        {
+          "t": 2981.5999999046326,
+          "presentationSeconds": 0.20750000000000002,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.05123128635293,
+            59.3
+          ],
+          "quaternion": [
+            -0.42035302427145704,
+            0,
+            0,
+            0.9073606421847048
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 0.15669999980926513,
+          "pixels": 24386
+        },
+        {
+          "t": 3032.699999809265,
+          "presentationSeconds": 0.2582999999999998,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.111206365994928,
+            59.3
+          ],
+          "quaternion": [
+            -0.42087770102284106,
+            0,
+            0,
+            0.9071173908495681
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 0.2077999997138977,
+          "pixels": 24333
+        },
+        {
+          "t": 3090.9000000953674,
+          "presentationSeconds": 0.31669999999999987,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.15919106365475,
+            59.3
+          ],
+          "quaternion": [
+            -0.42129635105426444,
+            0,
+            0,
+            0.9069230312371398
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 0.266,
+          "pixels": 24263
+        },
+        {
+          "t": 3147.7999997138977,
+          "presentationSeconds": 0.37369999999999987,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.191060658729736,
+            59.3
+          ],
+          "quaternion": [
+            -0.4215738477773976,
+            0,
+            0,
+            0.9067940730232855
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 0.3228999996185303,
+          "pixels": 24217
+        },
+        {
+          "t": 3198.0999999046326,
+          "presentationSeconds": 0.4235999999999999,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.21056986100556,
+            59.3
+          ],
+          "quaternion": [
+            -0.42174350138955613,
+            0,
+            0,
+            0.9067151807682927
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 0.37319999980926516,
+          "pixels": 24191
+        },
+        {
+          "t": 3257.0999999046326,
+          "presentationSeconds": 0.4826999999999998,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.226666585268575,
+            59.3
+          ],
+          "quaternion": [
+            -0.42188335532303356,
+            0,
+            0,
+            0.9066501169146669
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 0.43219999980926516,
+          "pixels": 24170
+        },
+        {
+          "t": 3307.199999809265,
+          "presentationSeconds": 0.5322999999999997,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.236051787831034,
+            59.3
+          ],
+          "quaternion": [
+            -0.42196484532236067,
+            0,
+            0,
+            0.9066121934499204
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 0.4822999997138977,
+          "pixels": 24163
+        },
+        {
+          "t": 3358,
+          "presentationSeconds": 0.5835999999999998,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.242988430479777,
+            59.3
+          ],
+          "quaternion": [
+            -0.42202505036759624,
+            0,
+            0,
+            0.9065841697615439
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 0.5330999999046325,
+          "pixels": 24152
+        },
+        {
+          "t": 3408.5999999046326,
+          "presentationSeconds": 0.6336999999999997,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.247818801303424,
+            59.3
+          ],
+          "quaternion": [
+            -0.42206696217293105,
+            0,
+            0,
+            0.9065646581695724
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 0.5836999998092651,
+          "pixels": 24146
+        },
+        {
+          "t": 3464.7999997138977,
+          "presentationSeconds": 0.6902999999999996,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.251647504643895,
+            59.3
+          ],
+          "quaternion": [
+            -0.42210017559835533,
+            0,
+            0,
+            0.9065491943407359
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 0.6398999996185303,
+          "pixels": 24141
+        },
+        {
+          "t": 3515.0999999046326,
+          "presentationSeconds": 0.7403999999999998,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.254019164109224,
+            59.3
+          ],
+          "quaternion": [
+            -0.4221207462009683,
+            0,
+            0,
+            0.9065396161375066
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 0.6901999998092652,
+          "pixels": 24136
+        },
+        {
+          "t": 3566.199999809265,
+          "presentationSeconds": 0.7915999999999997,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.255748690700653,
+            59.3
+          ],
+          "quaternion": [
+            -0.4221357457234929,
+            0,
+            0,
+            0.9065326316148088
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 0.7412999997138977,
+          "pixels": 24134
+        },
+        {
+          "t": 3624.5999999046326,
+          "presentationSeconds": 0.8501999999999996,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.25712354009255,
+            59.3
+          ],
+          "quaternion": [
+            -0.4221476683417499,
+            0,
+            0,
+            0.9065270796361373
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 0.7996999998092651,
+          "pixels": 24134
+        },
+        {
+          "t": 3682.7999997138977,
+          "presentationSeconds": 0.9077999999999995,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.258040752758017,
+            59.3
+          ],
+          "quaternion": [
+            -0.42215562190411265,
+            0,
+            0,
+            0.9065233758126438
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 0.8578999996185303,
+          "pixels": 24132
+        },
+        {
+          "t": 3741.7999997138977,
+          "presentationSeconds": 0.9669999999999997,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.258679654199202,
+            59.3
+          ],
+          "quaternion": [
+            -0.4221611618896895,
+            0,
+            0,
+            0.9065207958960165
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 0.9168999996185303,
+          "pixels": 24130
+        },
+        {
+          "t": 3799.5,
+          "presentationSeconds": 1.0252999999999994,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.25910485807161,
+            59.3
+          ],
+          "quaternion": [
+            -0.42216484878183885,
+            0,
+            0,
+            0.906519078923884
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 0.9745999999046325,
+          "pixels": 24125
+        },
+        {
+          "t": 3857.0999999046326,
+          "presentationSeconds": 1.0828999999999998,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.25939029070079,
+            59.3
+          ],
+          "quaternion": [
+            -0.42216732369024806,
+            0,
+            0,
+            0.9065179263578924
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 1.0321999998092652,
+          "pixels": 24126
+        },
+        {
+          "t": 3908.4000000953674,
+          "presentationSeconds": 1.1336999999999997,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.25956544799874,
+            59.3
+          ],
+          "quaternion": [
+            -0.42216884241389036,
+            0,
+            0,
+            0.9065172190835185
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 1.0835,
+          "pixels": 24126
+        },
+        {
+          "t": 4035.199999809265,
+          "presentationSeconds": 1.1917999999999995,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.259704997956067,
+            59.3
+          ],
+          "quaternion": [
+            -0.42217005239004274,
+            0,
+            0,
+            0.906516655591605
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 1.2102999997138977,
+          "pixels": 24128
+        },
+        {
+          "t": 4091,
+          "presentationSeconds": 1.2919999999999996,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.259848742711387,
+            59.3
+          ],
+          "quaternion": [
+            -0.4221712987286194,
+            0,
+            0,
+            0.9065160751634749
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 1.2660999999046325,
+          "pixels": 24128
+        },
+        {
+          "t": 4148.099999904633,
+          "presentationSeconds": 1.3488999999999993,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.259896491995114,
+            59.3
+          ],
+          "quaternion": [
+            -0.42217171273669596,
+            0,
+            0,
+            0.9065158823567102
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 1.3231999998092652,
+          "pixels": 24128
+        },
+        {
+          "t": 4199.199999809265,
+          "presentationSeconds": 1.4002999999999997,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.259926522276036,
+            59.3
+          ],
+          "quaternion": [
+            -0.4221719731124275,
+            0,
+            0,
+            0.9065157610975993
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 1.3742999997138976,
+          "pixels": 24126
+        },
+        {
+          "t": 4258.099999904633,
+          "presentationSeconds": 1.4589999999999996,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.259950317689132,
+            59.3
+          ],
+          "quaternion": [
+            -0.422172179428838,
+            0,
+            0,
+            0.9065156650142926
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 1.433199999809265,
+          "pixels": 24128
+        },
+        {
+          "t": 4315.799999713898,
+          "presentationSeconds": 1.5169999999999997,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.259966249936966,
+            59.3
+          ],
+          "quaternion": [
+            -0.42217231756810497,
+            0,
+            0,
+            0.9065156006816292
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 1.4908999996185304,
+          "pixels": 24128
+        },
+        {
+          "t": 4372.599999904633,
+          "presentationSeconds": 1.5738999999999992,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.25997690424229,
+            59.3
+          ],
+          "quaternion": [
+            -0.42217240994533667,
+            0,
+            0,
+            0.9065155576607313
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 1.547699999809265,
+          "pixels": 24128
+        },
+        {
+          "t": 4424.5,
+          "presentationSeconds": 1.6254999999999997,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.25998362674924,
+            59.3
+          ],
+          "quaternion": [
+            -0.4221724682322259,
+            0,
+            0,
+            0.9065155305160029
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 1.5995999999046326,
+          "pixels": 24126
+        },
+        {
+          "t": 4474.699999809265,
+          "presentationSeconds": 1.6756000000000004,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.259988275871866,
+            59.3
+          ],
+          "quaternion": [
+            -0.422172508542012,
+            0,
+            0,
+            0.9065155117433704
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 1.6497999997138977,
+          "pixels": 24128
+        },
+        {
+          "t": 4531.400000095367,
+          "presentationSeconds": 1.7323999999999997,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.25999197162384,
+            59.3
+          ],
+          "quaternion": [
+            -0.42217254058567977,
+            0,
+            0,
+            0.9065154968203426
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 1.7065,
+          "pixels": 24128
+        },
+        {
+          "t": 4582.5,
+          "presentationSeconds": 1.7836999999999998,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.259994297057407,
+            59.3
+          ],
+          "quaternion": [
+            -0.42217256074812837,
+            0,
+            0,
+            0.9065154874305059
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 1.7575999999046326,
+          "pixels": 24127
+        },
+        {
+          "t": 4632.5,
+          "presentationSeconds": 1.8336999999999999,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.259995913663072,
+            59.3
+          ],
+          "quaternion": [
+            -0.42217257476475134,
+            0,
+            0,
+            0.9065154809028363
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 1.8075999999046326,
+          "pixels": 24128
+        },
+        {
+          "t": 4683.299999713898,
+          "presentationSeconds": 1.8837,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.259997072011647,
+            59.3
+          ],
+          "quaternion": [
+            -0.4221725848080998,
+            0,
+            0,
+            0.9065154762255567
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 1.8583999996185303,
+          "pixels": 24128
+        },
+        {
+          "t": 4741.199999809265,
+          "presentationSeconds": 1.9420000000000002,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.259998014940372,
+            59.3
+          ],
+          "quaternion": [
+            -0.42217259298367116,
+            0,
+            0,
+            0.9065154724181179
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 1.9162999997138976,
+          "pixels": 24128
+        },
+        {
+          "t": 4799.5,
+          "presentationSeconds": 2.0006000000000004,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.259998656897427,
+            59.3
+          ],
+          "quaternion": [
+            -0.4221725985496968,
+            0,
+            0,
+            0.9065154698259685
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 1.9745999999046326,
+          "pixels": 24128
+        },
+        {
+          "t": 4857.699999809265,
+          "presentationSeconds": 2.0586999999999995,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.259999088214983,
+            59.3
+          ],
+          "quaternion": [
+            -0.4221726022893932,
+            0,
+            0,
+            0.9065154680843576
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 2.0327999997138977,
+          "pixels": 24128
+        },
+        {
+          "t": 4915.099999904633,
+          "presentationSeconds": 2.1156999999999995,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.259999376465412,
+            59.3
+          ],
+          "quaternion": [
+            -0.42217260478864005,
+            0,
+            0,
+            0.9065154669204353
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 2.0901999998092653,
+          "pixels": 24128
+        },
+        {
+          "t": 4966,
+          "presentationSeconds": 2.166899999999999,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.25999955677794,
+            59.3
+          ],
+          "quaternion": [
+            -0.4221726063520221,
+            0,
+            0,
+            0.9065154661923538
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 2.1410999999046325,
+          "pixels": 24128
+        },
+        {
+          "t": 5024.599999904633,
+          "presentationSeconds": 2.2256,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.259999700313305,
+            59.3
+          ],
+          "quaternion": [
+            -0.4221726075965312,
+            0,
+            0,
+            0.9065154656127745
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 2.199699999809265,
+          "pixels": 24128
+        },
+        {
+          "t": 5075.199999809265,
+          "presentationSeconds": 2.2756999999999996,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.25999978540821,
+            59.3
+          ],
+          "quaternion": [
+            -0.42217260833433823,
+            0,
+            0,
+            0.906515465269171
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 2.2502999997138975,
+          "pixels": 24128
+        },
+        {
+          "t": 5131.299999713898,
+          "presentationSeconds": 2.3321999999999994,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.259999852758966,
+            59.3
+          ],
+          "quaternion": [
+            -0.4221726089182962,
+            0,
+            0,
+            0.9065154649972162
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 2.3063999996185305,
+          "pixels": 24128
+        },
+        {
+          "t": 5182.699999809265,
+          "presentationSeconds": 2.3836999999999997,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.259999895546954,
+            59.3
+          ],
+          "quaternion": [
+            -0.4221726092892854,
+            0,
+            0,
+            0.9065154648244431
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 2.357799999713898,
+          "pixels": 24128
+        },
+        {
+          "t": 5241.299999713898,
+          "presentationSeconds": 2.4421,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.259999929232183,
+            59.3
+          ],
+          "quaternion": [
+            -0.4221726095813497,
+            0,
+            0,
+            0.9065154646884261
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 2.4163999996185304,
+          "pixels": 24128
+        },
+        {
+          "t": 5299.199999809265,
+          "presentationSeconds": 2.5002999999999997,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.259999951990235,
+            59.3
+          ],
+          "quaternion": [
+            -0.4221726097786712,
+            0,
+            0,
+            0.9065154645965318
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 2.4742999997138977,
+          "pixels": 24128
+        },
+        {
+          "t": 5357.799999713898,
+          "presentationSeconds": 2.558699999999999,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.25999996747298,
+            59.3
+          ],
+          "quaternion": [
+            -0.42217260991291283,
+            0,
+            0,
+            0.9065154645340142
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 2.53289999961853,
+          "pixels": 24128
+        },
+        {
+          "t": 5407.900000095367,
+          "presentationSeconds": 2.608699999999999,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.259999976693376,
+            59.3
+          ],
+          "quaternion": [
+            -0.42217260999285733,
+            0,
+            0,
+            0.9065154644967833
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 2.583,
+          "pixels": 24128
+        },
+        {
+          "t": 5465.900000095367,
+          "presentationSeconds": 2.6669999999999994,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.259999984199037,
+            59.3
+          ],
+          "quaternion": [
+            -0.42217261005793444,
+            0,
+            0,
+            0.9065154644664764
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 2.641,
+          "pixels": 24128
+        },
+        {
+          "t": 5524.099999904633,
+          "presentationSeconds": 2.7251999999999996,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.25999998928043,
+            59.3
+          ],
+          "quaternion": [
+            -0.42217261010199225,
+            0,
+            0,
+            0.9065154644459582
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 2.6991999998092653,
+          "pixels": 24128
+        },
+        {
+          "t": 5574.400000095367,
+          "presentationSeconds": 2.7753,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.25999999232421,
+            59.3
+          ],
+          "quaternion": [
+            -0.4221726101283829,
+            0,
+            0,
+            0.9065154644336678
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 2.7495,
+          "pixels": 24128
+        },
+        {
+          "t": 5639,
+          "presentationSeconds": 2.8337,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.25999999479959,
+            59.3
+          ],
+          "quaternion": [
+            -0.42217261014984553,
+            0,
+            0,
+            0.9065154644236725
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 2.8140999999046326,
+          "pixels": 24128
+        },
+        {
+          "t": 5691.299999713898,
+          "presentationSeconds": 2.8923000000000005,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            -25,
+            31.259999996481373,
+            59.3
+          ],
+          "quaternion": [
+            -0.42217261016442725,
+            0,
+            0,
+            0.9065154644168815
+          ],
+          "focus": [
+            -25,
+            5.06,
+            41
+          ],
+          "seconds": 2.86639999961853,
+          "pixels": 24128
+        }
+      ]
+    },
+    "dataset": {
+      "assetPrefetchScene": "run",
+      "assetPrefetchState": "allowance",
+      "assetPrefetchReady": "4",
+      "assetPrefetchTotal": "16",
+      "assetPrefetchProgress": "4/16",
+      "assetPrefetchFailed": "0",
+      "assetPrefetchPriority": "1",
+      "assetPrefetchTarget": "town",
+      "assetPrefetchSaveData": "false",
+      "assetPrefetchEnabled": "true",
+      "assetPrefetchAllowance": "12000000",
+      "assetPrefetchBytes": "12354992",
+      "assetPrefetchTownState": "partial",
+      "spriteClipGroups": "claim town",
+      "railcar3dState": "off",
+      "railcar3dSource": "billboard",
+      "railcar3dMounted": "false",
+      "railcar3dDamageStates": "{\"wheels\":\"intact\",\"boiler\":\"intact\",\"cabin\":\"intact\"}",
+      "bossBarVisible": "false",
+      "bossBarSemantic": "none",
+      "bossBarRemaining": "0",
+      "bossBarDepleted": "0",
+      "bossBarRemainingColor": "#6bb36b",
+      "bossBarDepletedColor": "#a0522d",
+      "bossBarComponent": "shared",
+      "bossBarAnchor": "none",
+      "bossBarOrientation": "none",
+      "bossBarPosition": "none",
+      "crawler3dState": "off",
+      "crawler3dSource": "placeholder",
+      "crawler3dMounted": "false",
+      "crawler3dDamageStates": "{\"drain_mast\":\"intact\",\"tracks\":\"intact\",\"capacitor_bank\":\"intact\"}",
+      "dredgeQueen3dState": "off",
+      "dredgeQueen3dSource": "placeholder",
+      "dredgeQueen3dMounted": "false",
+      "dredgeQueen3dPresentation": "hidden",
+      "dredgeQueen3dDamageStates": "{\"claw\":\"intact\",\"paddle_port\":\"intact\",\"paddle_starboard\":\"intact\",\"hold\":\"intact\"}",
+      "salvageClaw3dState": "off",
+      "salvageClaw3dSource": "placeholder",
+      "salvageClaw3dMounted": "false",
+      "salvageClaw3dPresentation": "hidden",
+      "homemaker3dState": "off",
+      "homemaker3dSource": "placeholder",
+      "homemaker3dMounted": "false",
+      "homemaker3dPresentation": "hidden",
+      "homemaker3dDamageStates": "{\"vac\":\"intact\",\"rack\":\"intact\",\"core\":\"intact\"}",
+      "oldDigger3dState": "off",
+      "oldDigger3dSource": "placeholder",
+      "oldDigger3dMounted": "false",
+      "oldDigger3dPresentation": "hidden",
+      "assetLoadingLabel": "the claim",
+      "assetLoadingReady": "40",
+      "assetLoadingTotal": "40",
+      "assetLoadingProgress": "40/40",
+      "assetLoadingState": "ready",
+      "engine": "three.js r184",
+      "terrain3dPilotState": "ready",
+      "terrain3dPilotRenderSource": "glb",
+      "run3dPilotState": "ready",
+      "nightPoolSurfaceSources": "0",
+      "nightPoolSurfaceMaxRadius": "0",
+      "cameraAspect": "0.46208530805687204",
+      "cssAspect": "0.46208530805687204",
+      "prospectorSkin": "stock",
+      "prospectorSheet": "stock",
+      "run3dPilotMeshes": "0",
+      "run3dPilotTriangles": "0",
+      "terrain3dPilotContract": "e7-relay-rush",
+      "terrain3dPilotTerrainLoadState": "mounted",
+      "terrain3dPilotPanoramaLoadState": "mounted",
+      "terrain3dPilotLandmarkLoadState": "mounted",
+      "terrain3dPilotHeightSource": "baked-grid",
+      "terrain3dPilotMeshes": "1",
+      "terrain3dPilotTriangles": "32768",
+      "terrain3dPilotMaterials": "1",
+      "terrain3dPilotVertices": "16641",
+      "terrain3dPilotPanorama": "relay-valley-panorama",
+      "terrain3dPilotPanoramaMeshes": "1",
+      "terrain3dPilotPanoramaTriangles": "3084",
+      "terrain3dPilotPanoramaMaterials": "1",
+      "terrain3dPilotPanoramaVertices": "2246",
+      "heroSheet": "midlife",
+      "heroSkin": "stock",
+      "heroSkinSheet": "stock",
+      "terrain3dPilotNightPools": "off",
+      "terrain3dPilotNightPoolSources": "0",
+      "terrain3dPilotSpringPonds": "0",
+      "terrain3dPilotSpringPondWaterRadii": "[]",
+      "terrain3dPilotChannelWater": "0",
+      "terrain3dPilotFordWater": "0",
+      "terrain3dPilotChannelWaterHalfWidths": "[]",
+      "terrain3dPilotHiddenRelief": "3",
+      "terrain3dPilotHiddenGroundLayers": "TerrainVistaRing|TerrainReliefMesh|SpringPonds",
+      "terrain3dPilotContinuation": "panorama-owned-continuation",
+      "terrain3dPilotHorizonApron": "none",
+      "terrain3dPilotFarGroundProbe": "off",
+      "terrain3dPilotPanoramaFraming": "world-projected-horizon",
+      "terrain3dPilotSkirtBlend": "opaque-sculpt-edge",
+      "terrain3dPilotPanoramaFog": "excluded",
+      "terrain3dPilotPanoramaDepth": "screen-horizon-backdrop",
+      "terrain3dPilotLandmarkExpected": "10",
+      "terrain3dPilotWalkSurfaces": "0",
+      "terrain3dPilotLandmarkEmissive": "3",
+      "terrain3dPilotLandmarkSides": "{\"total\":{\"meshes\":10,\"closed\":10,\"open\":0,\"culled\":10,\"doubleSided\":0},\"mounts\":[{\"id\":\"west-ridge-dish-cluster\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5.299,\"topY\":12.919},{\"id\":\"east-ridge-dish-cluster\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":4.995,\"topY\":12.615},{\"id\":\"dead-gap-charting-station\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":-0.01,\"topY\":7.69},{\"id\":\"valley-cable-drum-yard\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":-0.027,\"topY\":2.403},{\"id\":\"drone-recovery-beacon\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.045,\"topY\":6.363},{\"id\":\"rush-start-horn\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":-0.02,\"topY\":7.23},{\"id\":\"rush-relay-r1-frame\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5,\"topY\":11.58},{\"id\":\"rush-relay-r2-frame\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5,\"topY\":11.76},{\"id\":\"rush-relay-r3-frame\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5,\"topY\":11.94},{\"id\":\"rush-relay-r4-frame\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5,\"topY\":12.12}]}",
+      "terrain3dPilotLandmarks": "10",
+      "terrain3dPilotLandmarkSkipped": "0",
+      "terrain3dPilotLandmarkDiagnostics": "",
+      "terrain3dPilotLandmarkMounts": "[{\"id\":\"west-ridge-dish-cluster\",\"x\":-56,\"y\":5.298643112182617,\"z\":30},{\"id\":\"east-ridge-dish-cluster\",\"x\":56,\"y\":4.9947662353515625,\"z\":30},{\"id\":\"dead-gap-charting-station\",\"x\":0,\"y\":-0.010416525416076183,\"z\":18},{\"id\":\"valley-cable-drum-yard\",\"x\":-44,\"y\":-0.026742985472083092,\"z\":-26},{\"id\":\"drone-recovery-beacon\",\"x\":44,\"y\":0.04453114792704582,\"z\":-26},{\"id\":\"rush-start-horn\",\"x\":0,\"y\":-0.019563019275665283,\"z\":-50},{\"id\":\"rush-relay-r1-frame\",\"x\":-45,\"y\":5,\"z\":41},{\"id\":\"rush-relay-r2-frame\",\"x\":-25,\"y\":5,\"z\":41},{\"id\":\"rush-relay-r3-frame\",\"x\":25,\"y\":5,\"z\":41},{\"id\":\"rush-relay-r4-frame\",\"x\":45,\"y\":5,\"z\":41}]",
+      "terrain3dPilotLandmarkMaterials": "[{\"id\":\"west-ridge-dish-cluster\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"east-ridge-dish-cluster\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"dead-gap-charting-station\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"valley-cable-drum-yard\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"drone-recovery-beacon\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"rush-start-horn\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"rush-relay-r1-frame\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"rush-relay-r2-frame\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"rush-relay-r3-frame\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"rush-relay-r4-frame\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0}]"
+    }
+  }
+]

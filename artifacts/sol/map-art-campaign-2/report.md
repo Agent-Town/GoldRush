@@ -670,3 +670,10 @@ Engine `084df9fa71eef1eb63753addda63d7ee7b34a049e8394acfea11db36d284ae37` → `b
 **Fixed offscreen entry:** `south-countdown-gate` names the plate's foreground clock gate at the timed crossing. **0→26,671→0 desktop / 0→29,787→0 phone** body pixels; visible **1.700–1.816 / 1.684–1.791 s** inside the 2.5 s authored window. Reachable with the original offset/FOV/zoom and hero start. The simple frame, terrain/continuation seam, ochre/teal crossing slabs, ravine and HUD composition remain HELD. Only the two mirrored metadata declarations change.
 
 Builds, **61+3** guards and own crossing/roster/census **20/20** pass; E1 payload **34,309,830 B**. [Boards, counts and invariants](run-8/entry-framing/e6-half-life-hollow/review.md). Engine `b3a86513d6b6511e4fa3049104211051d4cddac7fdda6c314a52144cdb98a288` → `a8afc11f313a5bc6567deac76bb40da24aab1ff19d7f935146229510289ad7c1`. Store `d8938178a7464c637a79bca81d5f788bc8ad954d`. Pin drain-owned. READY-FOR-GATES.
+
+
+## 2026-09-22 — run 8: entry, Relay Rush
+
+**Already framed:** the plate's nearest relay shelf is represented by `rush-relay-r2-frame` at the actual start. Rest/mid/return body pixels **21,662→21,676→21,675 desktop / 24,145→24,126→24,124 phone**; visible throughout **≥3.965 / ≥3.957 s**. No declaration, manifest sentence or camera glance, following the explicit already-framed exception. The minor pixel changes are ordinary settling, not improvement. The wider terraces, charting station, west dish, active relay art and HUD remain HELD. Prior solidity and art are unchanged.
+
+Own front/census **16/16** and visual census **2/2** pass. Builds and **61+3** guards from the identical final Hollow engine apply unchanged; E1 payload **34,309,830 B**. [Boards, counts and invariants](run-8/entry-framing/e7-relay-rush/review.md). Engine `a8afc11f313a5bc6567deac76bb40da24aab1ff19d7f935146229510289ad7c1` → same hash; store unchanged `d8938178a7464c637a79bca81d5f788bc8ad954d`. No empty art commit. READY-FOR-GATES, with final shared closeout to follow.
