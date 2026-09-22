@@ -1,0 +1,580 @@
+(node:43042) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 44 tests using 1 worker
+
+
+(node:43130) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[1/44] [desktop-chrome] › e2e/e7-dead-band-suppression.spec.ts:45:1 › the Dead Band refuses drones, playbooks and relay chains
+[2/44] [desktop-chrome] › e2e/e7-dead-band-suppression.spec.ts:81:1 › CONTROL — Relay Valley, same tile, keeps all three
+[3/44] [desktop-chrome] › e2e/e7-playbook-rows.spec.ts:163:1 › the four Signal maps run the playbook verb identically in the browser runtime and in Node
+
+[desktop-chrome] › e2e/e7-playbook-rows.spec.ts:163:1 › the four Signal maps run the playbook verb identically in the browser runtime and in Node
+(node:43297) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:43297) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[e7-both-engines] e7-relay-valley tickHash node=fnv1a32:0d9d07c9 browser=fnv1a32:0d9d07c9 met=true uses=1 runs=1 relays=["relay-site-r1"] refusals={"suppressed":0,"muted":0,"unrecorded":0}
+
+[e7-both-engines] e7-echo-canyon tickHash node=fnv1a32:becbba92 browser=fnv1a32:becbba92 met=false uses=2 runs=2 relays=[] refusals={"suppressed":0,"muted":0,"unrecorded":0}
+
+[e7-both-engines] e7-dead-band tickHash node=fnv1a32:97bdab00 browser=fnv1a32:97bdab00 met=true uses=0 runs=0 relays=[] refusals={"suppressed":1,"muted":0,"unrecorded":0}
+
+[e7-both-engines] e7-relay-rush tickHash node=fnv1a32:00793392 browser=fnv1a32:00793392 met=false uses=1 runs=1 relays=["relay-site-r1"] refusals={"suppressed":0,"muted":0,"unrecorded":0}
+
+[4/44] [desktop-chrome] › e2e/e7-playbook-rows.spec.ts:198:1 › every Signal map still boots clean for a player, and the E7 board is where the player sees it
+[5/44] [desktop-chrome] › e2e/e7-playbook-rows.spec.ts:218:1 › HUMAN PARITY: a plain-boot player records and delegates a patrol through the shared latch
+[desktop-chrome] › e2e/e7-playbook-rows.spec.ts:218:1 › HUMAN PARITY: a plain-boot player records and delegates a patrol through the shared latch
+[e7-parity] plain player use={"declared":true,"objective":"relay","objectiveMet":true,"uses":1,"relaysLitByProgram":["relay-site-r1"]} lit=["ford-table"]
+
+[6/44] [desktop-chrome] › e2e/e7-playbook-rows.spec.ts:267:1 › the human run tape records and assay-replays a player playbook use
+
+(node:43130) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[7/44] [desktop-chrome] › e2e/e7-roster.spec.ts:47:1 › E7 contract rows are era-gated while E1 keeps its untagged outlaws
+[8/44] [desktop-chrome] › e2e/e7-roster.spec.ts:118:1 › E7 placeholders preserve roster stats, thief state, and cure-only death outcomes
+[9/44] [desktop-chrome] › e2e/e7-roster.spec.ts:164:1 › plain Signal-era boot stays error-free without the debug harness
+  1) [desktop-chrome] › e2e/e7-roster.spec.ts:164:1 › plain Signal-era boot stays error-free without the debug harness 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      173 |   await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+      174 |   expect(await page.evaluate(() => window.__GR_TEST__)).toBeUndefined();
+    > 175 |   expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.e7Arsenal.enabled)).toBe(true);
+          |                                                                                           ^
+      176 |   expect(errors).toEqual({ console: [], page: [] });
+      177 | });
+      178 |
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/e7-roster.spec.ts:175:91
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-8/entry-framing/e7-dead-band/own-results/e7-roster-plain-Signal-era-d9798-e-without-the-debug-harness-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/sol/map-art-campaign-2/run-8/entry-framing/e7-dead-band/own-results/e7-roster-plain-Signal-era-d9798-e-without-the-debug-harness-desktop-chrome/error-context.md
+
+
+
+(node:45513) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[10/44] [desktop-chrome] › e2e/e7-signal-systems.spec.ts:34:1 › S1 relay graph is stable, leaves the dead gap open, and a correctly placed tower bridges it
+[11/44] [desktop-chrome] › e2e/e7-signal-systems.spec.ts:67:1 › S2 jack-board milestones remain inert before the Signal Era
+[12/44] [desktop-chrome] › e2e/e7-signal-systems.spec.ts:79:1 › S2 seeded progress lights each jack once, persists, and keeps player copy frontier-clean
+[13/44] [desktop-chrome] › e2e/e7-signal-systems.spec.ts:104:1 › S3 silences wait for midpoint, darken in canon order, and arm the last beat exactly once
+  2) [desktop-chrome] › e2e/e7-signal-systems.spec.ts:104:1 › S3 silences wait for midpoint, darken in canon order, and arm the last beat exactly once 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      136 |     const contracts = (await Function('return import("/src/meta/ContractFamilies.ts")')()) as typeof import('../src/meta/ContractFamilies');
+      137 |     return contracts.activateEpoch('epoch-8-orbital');
+    > 138 |   })).toBe(true);
+          |       ^
+      139 |   expect(errors).toEqual({ consoleErrors: [], pageErrors: [] });
+      140 | });
+      141 |
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/e7-signal-systems.spec.ts:138:7
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-8/entry-framing/e7-dead-band/own-results/e7-signal-systems-S3-silen-c08f3--the-last-beat-exactly-once-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/sol/map-art-campaign-2/run-8/entry-framing/e7-dead-band/own-results/e7-signal-systems-S3-silen-c08f3--the-last-beat-exactly-once-desktop-chrome/error-context.md
+
+
+
+(node:46037) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[14/44] [desktop-chrome] › e2e/er01-e7-census.spec.ts:119:3 › e7-relay-valley census refuses the unsocketed Signal mechanics
+
+[desktop-chrome] › e2e/er01-e7-census.spec.ts:119:3 › e7-relay-valley census refuses the unsocketed Signal mechanics
+(node:46037) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[15/44] [desktop-chrome] › e2e/er01-e7-census.spec.ts:119:3 › e7-echo-canyon census refuses the unsocketed Signal mechanics
+[desktop-chrome] › e2e/er01-e7-census.spec.ts:119:3 › e7-echo-canyon census refuses the unsocketed Signal mechanics
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[16/44] [desktop-chrome] › e2e/er01-e7-census.spec.ts:119:3 › e7-dead-band census refuses the unsocketed Signal mechanics
+[desktop-chrome] › e2e/er01-e7-census.spec.ts:119:3 › e7-dead-band census refuses the unsocketed Signal mechanics
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[17/44] [desktop-chrome] › e2e/er01-e7-census.spec.ts:119:3 › e7-relay-rush census refuses the unsocketed Signal mechanics
+[desktop-chrome] › e2e/er01-e7-census.spec.ts:119:3 › e7-relay-rush census refuses the unsocketed Signal mechanics
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[18/44] [desktop-chrome] › e2e/ss-08-e7-beats.spec.ts:114:1 › SS-08 table is attributed, presentational, and uses the E2/E3 trigger vocabulary
+[19/44] [desktop-chrome] › e2e/ss-08-e7-beats.spec.ts:126:1 › a player-selected Signal town presents the ridge arrival, the wrong number and Chalk before the ride
+[desktop-chrome] › e2e/ss-08-e7-beats.spec.ts:126:1 › a player-selected Signal town presents the ridge arrival, the wrong number and Chalk before the ride
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[20/44] [desktop-chrome] › e2e/ss-08-e7-beats.spec.ts:155:1 › The Claim cannot load Signal beats in Frontier
+[desktop-chrome] › e2e/ss-08-e7-beats.spec.ts:155:1 › The Claim cannot load Signal beats in Frontier
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[21/44] [desktop-chrome] › e2e/ss-08-e7-beats.spec.ts:170:1 › epoch-3-voltage cannot load Signal beats
+[desktop-chrome] › e2e/ss-08-e7-beats.spec.ts:170:1 › epoch-3-voltage cannot load Signal beats
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[22/44] [desktop-chrome] › e2e/ss-08-e7-beats.spec.ts:187:1 › the Echo and the silences fire only on their own triggers
+[desktop-chrome] › e2e/ss-08-e7-beats.spec.ts:187:1 › the Echo and the silences fire only on their own triggers
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+
+(node:48223) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[23/44] [mobile-chrome] › e2e/e7-dead-band-suppression.spec.ts:45:1 › the Dead Band refuses drones, playbooks and relay chains
+[24/44] [mobile-chrome] › e2e/e7-dead-band-suppression.spec.ts:81:1 › CONTROL — Relay Valley, same tile, keeps all three
+[25/44] [mobile-chrome] › e2e/e7-playbook-rows.spec.ts:163:1 › the four Signal maps run the playbook verb identically in the browser runtime and in Node
+
+[mobile-chrome] › e2e/e7-playbook-rows.spec.ts:163:1 › the four Signal maps run the playbook verb identically in the browser runtime and in Node
+(node:48371) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:48371) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[e7-both-engines] e7-relay-valley tickHash node=fnv1a32:0d9d07c9 browser=fnv1a32:0d9d07c9 met=true uses=1 runs=1 relays=["relay-site-r1"] refusals={"suppressed":0,"muted":0,"unrecorded":0}
+
+[e7-both-engines] e7-echo-canyon tickHash node=fnv1a32:becbba92 browser=fnv1a32:becbba92 met=false uses=2 runs=2 relays=[] refusals={"suppressed":0,"muted":0,"unrecorded":0}
+
+[e7-both-engines] e7-dead-band tickHash node=fnv1a32:97bdab00 browser=fnv1a32:97bdab00 met=true uses=0 runs=0 relays=[] refusals={"suppressed":1,"muted":0,"unrecorded":0}
+
+[e7-both-engines] e7-relay-rush tickHash node=fnv1a32:00793392 browser=fnv1a32:00793392 met=false uses=1 runs=1 relays=["relay-site-r1"] refusals={"suppressed":0,"muted":0,"unrecorded":0}
+
+[26/44] [mobile-chrome] › e2e/e7-playbook-rows.spec.ts:198:1 › every Signal map still boots clean for a player, and the E7 board is where the player sees it
+[27/44] [mobile-chrome] › e2e/e7-playbook-rows.spec.ts:218:1 › HUMAN PARITY: a plain-boot player records and delegates a patrol through the shared latch
+  3) [mobile-chrome] › e2e/e7-playbook-rows.spec.ts:218:1 › HUMAN PARITY: a plain-boot player records and delegates a patrol through the shared latch 
+
+    Test timeout of 180000ms exceeded.
+
+    Error: locator.click: Test timeout of 180000ms exceeded.
+    Call log:
+      - waiting for getByTestId('playbook-record')
+        - locator resolved to <button type="button" data-recording="true" data-testid="playbook-record">Save Tape</button>
+      - attempting click action
+        2 × waiting for element to be visible, enabled and stable
+          - element is not visible
+        - retrying click action
+        - waiting 20ms
+        2 × waiting for element to be visible, enabled and stable
+          - element is not visible
+        - retrying click action
+          - waiting 100ms
+        306 × waiting for element to be visible, enabled and stable
+            - element is not visible
+          - retrying click action
+            - waiting 500ms
+
+
+      247 |   if (await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.build.mode)) await page.keyboard.press('KeyB');
+      248 |   await page.getByTestId('playbook-toggle').click();
+    > 249 |   await page.getByTestId('playbook-record').click();
+          |                                             ^
+      250 |   await page.getByTestId('playbook-toggle').click();
+      251 |   await page.getByTestId('playbook-toggle').click();
+      252 |   await page.getByTestId('playbook-replay-Relay Patrol').click();
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/e7-playbook-rows.spec.ts:249:45
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-8/entry-framing/e7-dead-band/own-results/e7-playbook-rows-HUMAN-PAR-818a2-ol-through-the-shared-latch-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/sol/map-art-campaign-2/run-8/entry-framing/e7-dead-band/own-results/e7-playbook-rows-HUMAN-PAR-818a2-ol-through-the-shared-latch-mobile-chrome/error-context.md
+
+
+
+(node:54293) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[28/44] [mobile-chrome] › e2e/e7-playbook-rows.spec.ts:267:1 › the human run tape records and assay-replays a player playbook use
+
+(node:54293) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[29/44] [mobile-chrome] › e2e/e7-roster.spec.ts:47:1 › E7 contract rows are era-gated while E1 keeps its untagged outlaws
+[30/44] [mobile-chrome] › e2e/e7-roster.spec.ts:118:1 › E7 placeholders preserve roster stats, thief state, and cure-only death outcomes
+[31/44] [mobile-chrome] › e2e/e7-roster.spec.ts:164:1 › plain Signal-era boot stays error-free without the debug harness
+  4) [mobile-chrome] › e2e/e7-roster.spec.ts:164:1 › plain Signal-era boot stays error-free without the debug harness 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      173 |   await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+      174 |   expect(await page.evaluate(() => window.__GR_TEST__)).toBeUndefined();
+    > 175 |   expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.e7Arsenal.enabled)).toBe(true);
+          |                                                                                           ^
+      176 |   expect(errors).toEqual({ console: [], page: [] });
+      177 | });
+      178 |
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/e7-roster.spec.ts:175:91
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-8/entry-framing/e7-dead-band/own-results/e7-roster-plain-Signal-era-d9798-e-without-the-debug-harness-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/sol/map-art-campaign-2/run-8/entry-framing/e7-dead-band/own-results/e7-roster-plain-Signal-era-d9798-e-without-the-debug-harness-mobile-chrome/error-context.md
+
+
+
+(node:64246) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[32/44] [mobile-chrome] › e2e/e7-signal-systems.spec.ts:34:1 › S1 relay graph is stable, leaves the dead gap open, and a correctly placed tower bridges it
+[33/44] [mobile-chrome] › e2e/e7-signal-systems.spec.ts:67:1 › S2 jack-board milestones remain inert before the Signal Era
+[34/44] [mobile-chrome] › e2e/e7-signal-systems.spec.ts:79:1 › S2 seeded progress lights each jack once, persists, and keeps player copy frontier-clean
+[35/44] [mobile-chrome] › e2e/e7-signal-systems.spec.ts:104:1 › S3 silences wait for midpoint, darken in canon order, and arm the last beat exactly once
+  5) [mobile-chrome] › e2e/e7-signal-systems.spec.ts:104:1 › S3 silences wait for midpoint, darken in canon order, and arm the last beat exactly once 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      136 |     const contracts = (await Function('return import("/src/meta/ContractFamilies.ts")')()) as typeof import('../src/meta/ContractFamilies');
+      137 |     return contracts.activateEpoch('epoch-8-orbital');
+    > 138 |   })).toBe(true);
+          |       ^
+      139 |   expect(errors).toEqual({ consoleErrors: [], pageErrors: [] });
+      140 | });
+      141 |
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/e7-signal-systems.spec.ts:138:7
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-8/entry-framing/e7-dead-band/own-results/e7-signal-systems-S3-silen-c08f3--the-last-beat-exactly-once-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/sol/map-art-campaign-2/run-8/entry-framing/e7-dead-band/own-results/e7-signal-systems-S3-silen-c08f3--the-last-beat-exactly-once-mobile-chrome/error-context.md
+
+
+
+(node:82367) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[36/44] [mobile-chrome] › e2e/er01-e7-census.spec.ts:119:3 › e7-relay-valley census refuses the unsocketed Signal mechanics
+
+[mobile-chrome] › e2e/er01-e7-census.spec.ts:119:3 › e7-relay-valley census refuses the unsocketed Signal mechanics
+(node:82367) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[37/44] [mobile-chrome] › e2e/er01-e7-census.spec.ts:119:3 › e7-echo-canyon census refuses the unsocketed Signal mechanics
+[mobile-chrome] › e2e/er01-e7-census.spec.ts:119:3 › e7-echo-canyon census refuses the unsocketed Signal mechanics
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[38/44] [mobile-chrome] › e2e/er01-e7-census.spec.ts:119:3 › e7-dead-band census refuses the unsocketed Signal mechanics
+[mobile-chrome] › e2e/er01-e7-census.spec.ts:119:3 › e7-dead-band census refuses the unsocketed Signal mechanics
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[39/44] [mobile-chrome] › e2e/er01-e7-census.spec.ts:119:3 › e7-relay-rush census refuses the unsocketed Signal mechanics
+[mobile-chrome] › e2e/er01-e7-census.spec.ts:119:3 › e7-relay-rush census refuses the unsocketed Signal mechanics
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[40/44] [mobile-chrome] › e2e/ss-08-e7-beats.spec.ts:114:1 › SS-08 table is attributed, presentational, and uses the E2/E3 trigger vocabulary
+[41/44] [mobile-chrome] › e2e/ss-08-e7-beats.spec.ts:126:1 › a player-selected Signal town presents the ridge arrival, the wrong number and Chalk before the ride
+[mobile-chrome] › e2e/ss-08-e7-beats.spec.ts:126:1 › a player-selected Signal town presents the ridge arrival, the wrong number and Chalk before the ride
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[42/44] [mobile-chrome] › e2e/ss-08-e7-beats.spec.ts:155:1 › The Claim cannot load Signal beats in Frontier
+[mobile-chrome] › e2e/ss-08-e7-beats.spec.ts:155:1 › The Claim cannot load Signal beats in Frontier
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[43/44] [mobile-chrome] › e2e/ss-08-e7-beats.spec.ts:170:1 › epoch-3-voltage cannot load Signal beats
+[mobile-chrome] › e2e/ss-08-e7-beats.spec.ts:170:1 › epoch-3-voltage cannot load Signal beats
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[44/44] [mobile-chrome] › e2e/ss-08-e7-beats.spec.ts:187:1 › the Echo and the silences fire only on their own triggers
+[mobile-chrome] › e2e/ss-08-e7-beats.spec.ts:187:1 › the Echo and the silences fire only on their own triggers
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+  5 failed
+    [desktop-chrome] › e2e/e7-roster.spec.ts:164:1 › plain Signal-era boot stays error-free without the debug harness 
+    [desktop-chrome] › e2e/e7-signal-systems.spec.ts:104:1 › S3 silences wait for midpoint, darken in canon order, and arm the last beat exactly once 
+    [mobile-chrome] › e2e/e7-playbook-rows.spec.ts:218:1 › HUMAN PARITY: a plain-boot player records and delegates a patrol through the shared latch 
+    [mobile-chrome] › e2e/e7-roster.spec.ts:164:1 › plain Signal-era boot stays error-free without the debug harness 
+    [mobile-chrome] › e2e/e7-signal-systems.spec.ts:104:1 › S3 silences wait for midpoint, darken in canon order, and arm the last beat exactly once 
+  39 passed (8.2m)

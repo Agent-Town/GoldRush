@@ -6,8 +6,14 @@ import farSide from '../../assets/pilots/map-rebuild-spike/far-side-terrain-cont
 import halfLifeHollow from '../../assets/pilots/map-rebuild-spike/half-life-hollow-terrain-contract.json' with { type: 'json' };
 import relayRush from '../../assets/pilots/map-rebuild-spike/relay-rush-terrain-contract.json' with { type: 'json' };
 
-const entryPacks: readonly { contractId: string; entryLandmark?: { mountId: string; reason: string } }[] =
-  [glowMesa, deadBand, farSide, halfLifeHollow, relayRush];
+// Variant pack contractIds name authoring verdicts, not the playable contracts.
+const entryPacks: Readonly<Record<string, { contractId: string; entryLandmark?: { mountId: string; reason: string } }>> = {
+  'e6-glow-mesa': glowMesa,
+  'e7-dead-band': deadBand,
+  'e8-far-side': farSide,
+  'e6-half-life-hollow': halfLifeHollow,
+  'e7-relay-rush': relayRush,
+};
 
 export class CameraRig {
   private readonly desiredPosition = new THREE.Vector3();
@@ -64,7 +70,7 @@ export class CameraRig {
   tryEntryGlance(contractId: string, scene: THREE.Scene, renderer: THREE.WebGLRenderer): void {
     if (this.entryChecked) return;
     this.entryChecked = true;
-    const entry = entryPacks.find((pack) => pack.contractId === contractId)?.entryLandmark;
+    const entry = entryPacks[contractId]?.entryLandmark;
     if (!entry || this.glanceTarget) return;
     const model = scene.getObjectByName(entry.mountId);
     if (!model || !model.userData.landmarkAsset || this.bodyPixels(model, scene, renderer) > 0) return;

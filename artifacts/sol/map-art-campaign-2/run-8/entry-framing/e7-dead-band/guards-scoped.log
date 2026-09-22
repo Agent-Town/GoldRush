@@ -1,0 +1,96 @@
+✔ parseGlb rejects a non-GLB and reads the JSON + BIN chunks of a real one (1.563833ms)
+✔ metrics reproduce the runtime definitions: triangles, welded vertices, world bounds (1.213667ms)
+✔ bounds are TRANSFORMED bounds: a node translation moves them (F-ASTRA-8) (0.207541ms)
+✔ a node rotation is applied to the bounds, not ignored (0.188541ms)
+✔ non-finite positions are counted, not silently folded into the bounds (0.428ms)
+✔ the grid probe accepts a complete lattice and rejects a punctured one (0.267583ms)
+✔ texture dimensions come from the real image header, and the family cap is enforced (0.2835ms)
+✔ external buffers and images are policy violations (0.12925ms)
+✔ an alpha mode outside the family policy is a violation; a permitted one is not (0.213041ms)
+✔ required extras are reported as ONE violation per asset, listing every missing key (0.162208ms)
+✔ the baseline key carries the detail, so a NEW violation on a baselined asset still reds (0.165042ms)
+✔ water metadata is required by the asset's own contract, never by blanket family rule (2.3925ms)
+✔ contract counts and bounds are compared against the sibling JSON the runtime reads (0.462458ms)
+
+| family            | assets | triangles | vertices  | materials | textures | max tex | cap   | 2-sided | anims | skins | extras | anchors |
+|-------------------|--------|-----------|-----------|-----------|----------|---------|-------|---------|-------|-------|--------|---------|
+| bosses            | 7      | 116,429   | 63,219    | 7         | 7        | 2048²   | 1024² | 7       | 0     | 0     | 1      | 0       |
+| finale            | 2      | 25,260    | 13,834    | 2         | 2        | 1024²   | 1024² | 2       | 0     | 0     | 0      | 0       |
+| landmarks         | 213    | 249,322   | 142,555   | 218       | 212      | 1024²   | 1024² | 217     | 0     | 0     | 213    | 0       |
+| panoramas         | 34     | 89,432    | 63,194    | 38        | 37       | 2048²   | 2048² | 38      | 0     | 0     | 34     | 0       |
+| props             | 65     | 92,934    | 50,517    | 68        | 67       | 1024²   | 512²  | 68      | 0     | 0     | 0      | 19      |
+| rail-element      | 1      | 132       | 72        | 1         | 1        | 256²    | 512²  | 1       | 0     | 0     | 0      | 0       |
+| terrain           | 34     | 1,132,544 | 575,074   | 34        | 34       | 2048²   | 2048² | 34      | 0     | 0     | 34     | 0       |
+| town-buildings    | 9      | 49,744    | 26,371    | 9         | 9        | 2048²   | 1024² | 9       | 0     | 0     | 0      | 0       |
+| town-era-variants | 73     | 472,838   | 252,013   | 73        | 73       | 1024²   | 1024² | 73      | 0     | 0     | 0      | 55      |
+| TOTAL             | 438    | 2,228,635 | 1,186,849 | 450       | 442      |         |       | 449     | 0     | 0     | 282    | 74      |
+438 production GLBs · 6 violations · 6 grandfathered · 0 live
+✔ THE CORPUS: every production GLB is clean or explicitly grandfathered (5458.007625ms)
+✔ landmark pack records bind the actual bytes, triangles and Blender-coordinate bounds (4.774583ms)
+✔ the census totals every family in the manifest and every family has a policy (215.248709ms)
+✔ the terrain family and the hero carry an export sidecar, and every sidecar is well-formed (14.243584ms)
+✔ reexport-pilot.sh reads the sidecar and leaves the no-sidecar path on the old recipe (0.684333ms)
+✔ the baseline is paid down by hand: no regenerate path exists in the guard (0.746666ms)
+✔ contractFor resolves the same sibling JSON Terrain3dClaimPilot.ts imports (0.594042ms)
+✔ census rows sum to the asset count (0.361833ms)
+✔ the shared landmark source ledger covers every shipped pack and current source declaration (153.434542ms)
+✔ landmark contracts honor declared material counts and retain legacy defaults (5.576625ms)
+PASS: translated/rotated/scaled/sheared surfaces agree with raycasts; invalid transforms and bounds rejected; disposal idempotent
+✔ scripts/landmark-walk-surfaces.test.mjs (146.304834ms)
+✔ sea texture has a disposable local sampler; late loading cannot resurrect a disposed surface (4.909125ms)
+✔ same-game audit runs over every contract and keeps its row schema (14884.803167ms)
+✔ same-game audit follows the door grammar through the final AP-16 verbs (14193.614ms)
+✔ same-game audit also emits a complete markdown table (14883.090875ms)
+✔ every door verb is mapped to a human control (ADR-005) (1.332667ms)
+✔ same-game audit publishes the ADR-005 controls section (15836.896333ms)
+✔ the committed same-game report carries a controls row for every door verb (1.684ms)
+✔ FNV-1a 64 known vectors, full bytes, and independent BigInt reference (7.43875ms)
+✔ concurrent hits decode once; independent texture state shares Source until final disposal (2.598875ms)
+✔ misses, decode failure retry, and reset during decode do not retain or resurrect entries (0.796959ms)
+✔ real GLTF parser: cross-file wrap, colorSpace, UV and WebP paths preserve independent material views (9.42725ms)
+✔ late town retries cannot replace or dispose the active run tracker (114.895458ms)
+✔ embedded ImageBitmap atlases decode resident bytes once without a blob URL fetch (0.595208ms)
+✔ score screen, landing, and rider protocol carry one county ranking rule (1.209375ms)
+(node:42973) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ skill.md pins the lawful world-model disclosure (0.524041ms)
+✔ skill.md pins the operator-probe ranking law (0.05825ms)
+✔ skill.md pins the E10 preserve ranking law (0.055167ms)
+✔ skill.md pins the Regatta mechanic-first ranking law (0.043458ms)
+✔ the door mirrors the engine's mechanic contracts (0.483875ms)
+✔ skill.md pins optional declared tokens outside ranking (0.0425ms)
+✔ skill.md pins the harness receipt law (0.057209ms)
+✔ every standings submission refusal branch is enumerated (0.426042ms)
+✔ skill.md refusal list matches the executable taxonomy (0.680292ms)
+✔ the refusal enumeration BITES an unrecorded branch (7337.870541ms)
+✔ skill.md pins the tape checkpoint command (0.08075ms)
+✔ skill.md grammar matches every StandingOrder source form (0.919041ms)
+✔ skill.md buildables match BuildableId (0.19625ms)
+✔ skill.md bench seeds match the source registry (0.17025ms)
+✔ skill.md rotations match the source registry (0.12025ms)
+✔ skill.md door-contracts match SUPPORTED_CONTRACTS in HeadlessContractSim (0.116333ms)
+✔ the guard BITES a drifted skill.md (positive control, manufactured defect) (7336.398125ms)
+
+  centroid discrepancy vs the drawn triangles (every triangle of every terrain)
+  terrain     triangles  old max    old p95    new max    new p95    worst point (x, z)
+  The Claim   32768      0.025272   0.000719   2.78e-15   8.88e-16   (29.667, 29.833)
+  Twin Banks  51200      0.022965   0.001956   5.53e-7    6.64e-8    (-19.467, 0.667)
+  Hill Mine   32768      0.103274   0.000268   1.42e-14   8.88e-16   (-16.000, 17.500)
+  Mare Claim  32768      0.666667   0.003457   7.11e-14   1.07e-14   (41.667, -26.667)
+
+✔ the height sampler lands on the drawn triangles, not near them (F-ASTRA-10) (65.414375ms)
+✔ the diagonal is read from the index buffer, never assumed (0.307125ms)
+✔ a cell the mesh never split, or split both ways, is rejected rather than guessed (0.352542ms)
+(node:42975) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ the canonical rider view matches the additive versioned registry (2445.065709ms)
+✔ view-schema mutation proofs: removal reds, unbumped addition reds, bumped addition greens (2.257875ms)
+✔ editing viewSchema does not rotate computeEngineHash (54.687ms)
+ℹ tests 61
+ℹ suites 0
+ℹ pass 61
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 59866.762583

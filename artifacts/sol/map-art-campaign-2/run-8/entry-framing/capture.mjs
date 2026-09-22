@@ -6,7 +6,9 @@ import assert from 'node:assert/strict';
 const id = process.argv[2], root = 'artifacts/sol/map-art-campaign-2/run-8/entry-framing';
 const name = id.replace(/^e\d+-/, '');
 const durationOnly = process.argv.includes('--duration');
-const entry = JSON.parse(readFileSync(`assets/pilots/map-rebuild-spike/${name}-terrain-contract.json`)).entryLandmark;
+const declaredEntry = JSON.parse(readFileSync(`assets/pilots/map-rebuild-spike/${name}-terrain-contract.json`)).entryLandmark;
+const plan = JSON.parse(readFileSync(`${root}/map-plan.json`)).find(row => row[0] === id);
+const entry = declaredEntry ?? { mountId: plan[1], reason: plan[2] };
 assert.ok(entry);
 const out = `${root}/${id}`;
 mkdirSync(out, { recursive: true });
@@ -41,7 +43,7 @@ try {
     await page.evaluate(() => { window.__ENTRY_RECORD__ = { samples: [] }; });
     const dismiss = page.getByTestId('contract-briefing-dismiss');
     if (await dismiss.isVisible()) await dismiss.click();
-    const row = { width, arm, entry, errors, frames: {} };
+    const row = { width, arm, entry, declared: Boolean(declaredEntry), errors, frames: {} };
     const shot = async label => {
       row.frames[label] = await page.evaluate(mountId => {
         const {rig,camera,scene,renderer}=window.__ENTRY_CONTEXT__, model=scene.getObjectByName(mountId);

@@ -1220,7 +1220,7 @@ export function deriveMechanicsManifest(source: string | ContractManifest): Mech
     } : {}),
     interactables: interactables(contract),
     rules: rules.map((row) => {
-      const entry = entryPacks.find((pack) => pack.contractId === contract.id)?.entryLandmark;
+      const entry = entryPacks[contract.id]?.entryLandmark;
       return entry && row.id === entryRuleIds[contract.id]
         ? { ...row, data: { ...row.data, entryLandmark: `This map leads with the ${entry.mountId} landmark.` } }
         : row;
@@ -1343,8 +1343,13 @@ import deadBandEntryPack from '../../assets/pilots/map-rebuild-spike/dead-band-t
 import farSideEntryPack from '../../assets/pilots/map-rebuild-spike/far-side-terrain-contract.json' with { type: 'json' };
 import halfLifeHollowEntryPack from '../../assets/pilots/map-rebuild-spike/half-life-hollow-terrain-contract.json' with { type: 'json' };
 import relayRushEntryPack from '../../assets/pilots/map-rebuild-spike/relay-rush-terrain-contract.json' with { type: 'json' };
-const entryPacks: readonly { contractId: string; entryLandmark?: { mountId: string } }[] =
-  [glowMesaEntryPack, deadBandEntryPack, farSideEntryPack, halfLifeHollowEntryPack, relayRushEntryPack];
+const entryPacks: Readonly<Record<string, { contractId: string; entryLandmark?: { mountId: string } }>> = {
+  'e6-glow-mesa': glowMesaEntryPack,
+  'e7-dead-band': deadBandEntryPack,
+  'e8-far-side': farSideEntryPack,
+  'e6-half-life-hollow': halfLifeHollowEntryPack,
+  'e7-relay-rush': relayRushEntryPack,
+};
 const entryRuleIds: Readonly<Record<string, string>> = {
   'e6-glow-mesa': 'night_vein_ring',
   'e7-dead-band': 'signal_suppression',

@@ -6,7 +6,7 @@ paths=[f'pilots/map-rebuild-spike/{name}-terrain-contract.json',f'pilots/map-reb
 entries=[]
 for rel in paths:
  before=json.loads(subprocess.check_output(['git','-C',store,'show','adf6bd1a22582459e64c2ddc1a37b1bd707ffa14:'+rel],text=True))
- after=json.loads((Path(store)/rel).read_text());entries.append(after.pop('entryLandmark'));assert before==after,rel
+ after=json.loads((Path(store)/rel).read_text());entries.append(after.pop('entryLandmark',None));assert before==after,rel
 assert entries[0]==entries[1]
 changed=subprocess.check_output(['git','-C',store,'diff','--name-only','adf6bd1a22582459e64c2ddc1a37b1bd707ffa14'],text=True).splitlines()
 assert all(p.endswith('-contract.json') for p in changed)
