@@ -594,3 +594,26 @@ Four fresh browsers per arm give matching fast-mode p95 medians **10.10→9.35 m
 The dark straight water, rectangular ford, weak wet contact, distant dawn framing, outer continuation joins, one-pan composition and ordinary HUD remain held by the named water/art/camera/contract/finale/UI owners. Phone shore groups extend outside the viewport; tiny surviving ford mask fragments do not establish full-body HUD clearance. Prior campaign and gameplay parity debt is unchanged.
 
 Store **`d5e25522490ae7342e497ce58f51239040a41eb3`** is pushed on **`astra/f-corr4-18`**; land with this code branch. Engine **`52a84bc29febd924518528080bee8d0843e4e6d5c89165c1f8cb6f43dd61bcd5` → `6abbafbebf86f1af6cd5496a7d6eb530337e3ff66b16d18aaef691fd9d22d3f5`**, pin left for the drain. **READY-FOR-GATES**, no remaining implementation in F-CORR4-18. [Every original clause, boards, heights, timing modes, source proofs and checks](run-7/e10-river/review.md).
+
+## Ninth campaign section — 2026-09-22: phone entry HUD (run 8)
+
+**READY-FOR-GATES: requested-mask census PASS / browser and offscreen-body acceptance HELD.** The before census was committed as `11ec9b7b1` before any cure; `b95e2c4f0` adds its caller through the existing node-guard runner. The runtime cure changes only the 390–430px, ≥701px-high query in `src/ui/theme.css`: compact vitals/gold/Pause rail; XP and era resources below; small weapon, portrait/Prospector, Tape Reel and Exchange surfaces; Build 40px inward; a narrower world-note column. All numbers and testids keep their sources, visible touch controls remain ≥44px, and joystick/action anchors do not move. Desktop panel boxes and painted unions are unchanged.
+
+| Map | Phone union before → after | Reduction | Phone entry-body coverage before → after |
+|---|---:|---:|---|
+| Low Orbit | 24.24% → 13.41% | 44.70% | Claw rig 46.89% → 7.66% |
+| Seed Run | 21.45% → 12.12% | 43.49% | Vault 23.18% → 2.12% |
+| Archive World | 24.05% → 14.56% | 39.45% | Gate 15.32% → 7.27% |
+| Dead Band | 24.50% → 14.23% | 41.93% | Radio 3.75% → 9.59%; warning frame 22.81% → 0% |
+| Relay Rush | 24.50% → 13.82% | 43.60% | Relay frame 2.74% → 0.44%; charting station/west dishes OFFSCREEN in both arms |
+| Glow Mesa | 19.19% → 11.28% | 41.23% | Cooling rack OFFSCREEN in both arms |
+
+All visible phone bodies meet the 10% ceiling under the exact run-6 persistent mask; the Dead Band radio's overlap rises within that limit. **OFFSCREEN is null, never 0% or a visible-body pass.** The inherited mask excludes the prompt-stack parent's backing, so this is a consistent campaign-mask result, not complete real-paint occlusion clearance. Unretouched plain frames retain that backing and transient story cards. Desktop body occlusion, composition/art and camera holds remain. All twelve final plain boots have zero console/page errors.
+
+TypeScript/default/full/E1 builds and **61 scoped node guards pass**. Same-game audit output is byte-identical (378,541 B). E1 first-town payload **34,272,945 → 34,277,296 B (+4,351 B)**, under 52,000,000 B. Full Build and mobile-HUD specs pass both Chrome projects; the final touch/text-fit diagnostic passes 390 and 430px, including large values and touch-opened Build/Prospector/Exchange.
+
+The broad HUD batch is **342 pass / 44 fail / 120 skip**; five required mobile campaign suites **19 / 1 / 0**; supplemental HUD suites **97 / 3 / 0**; explicit multiplayer HUD case **1 / 0 / 1**. Final rechecks are **24 / 6 / 2**. Across the initial 48 failures, **43 fail with original CSS too, 2 HUD regressions were corrected and pass, 3 pass without a claimed causal fix**. Forty-two of the 43 reproduced cases reach the same assertion line; one desktop world-note control fails later. The six final recheck failures have failing original-CSS controls. Existing tests/assertions are unchanged. E1 release browser checks are **26 pass / 4 fail**: harvesting fails at the same assertion on both projects with the cure CSS removed, and the asset audit fails on both. Final named task/citation/gate-caller checks are **3/3 PASS**. The extra asset audit reports the same four E4-named jumper PNGs present in the pre-edit E1 build; asset repair remains outside this slice.
+
+Concurrent lane-c store writes caused Vite full-page reloads during the first batch; final captures and controls disable HMR on the sole port 5312. Before controls substitute only the exact committed pre-cure stylesheet. No shared-store path was written or committed by this task. Engine `821660ba0a1990094b583d82fdb6d8d3d1b8a1b290b2ff99dc125d43f71b7541` → `3d49e0a2b9ab6ccf63ccd1db5db8a8bb339492db7285e36fe3813bee9a6e42a5`; observed shared-store head `aee63ba07d388a14ba4c48a0ef3fe9ecee42965a` → `75bdd35936c531da53094eaee94503b71ea1ea7f`. This hash drift includes concurrent art inventory changes; CSS is excluded from the engine source inventory. The drain owns pins.
+
+[Complete handoff and remaining owners](run-8/phone-hud/review.md) · [Per-panel census, denominators, and all six before/after boards](run-8/phone-hud/census.md) · [Failure attribution](run-8/phone-hud/failure-attribution.md) · [Exact hash/store pair](run-8/phone-hud/engine-pair.json). **Remaining implementation in this slice: none.** Full acceptance still depends on the named baseline-test, offscreen framing and measurement holds.

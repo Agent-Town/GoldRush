@@ -9,7 +9,7 @@ import { PNG } from 'pngjs';
 
 export const EVIDENCE = 'artifacts/sol/map-art-campaign-2/run-8/phone-hud';
 export const MAPS = ['e8-low-orbit', 'e9-seed-run', 'e10-archive-world', 'e7-dead-band', 'e7-relay-rush', 'e6-glow-mesa'];
-export const UI_SOURCES = ['src/ui/Hud.ts', 'src/ui/BuildButton.ts', 'src/ui/ProspectorPanel.ts', 'src/ui/WorldInfoNotes.ts', 'src/styles.css', 'src/ui/theme.css'];
+export const UI_SOURCES = ['src/ui/Hud.ts', 'src/ui/BuildButton.ts', 'src/ui/ProspectorPanel.ts', 'src/ui/WorldInfoNotes.ts', 'src/styles.css', 'src/ui/theme.css', 'index.html', 'src/playbook/PlaybookSurface.ts', 'src/playbook/playbook-surface.css', 'src/systems/E7SignalSystem.ts'];
 export const KEEP = '#game-canvas,.hud-panel,.hud-panel *,.hud-pause,.hud-pause *,.world-info-note,.world-info-note *,#touch-controls,#touch-controls *,.building-context-prompt,.building-context-prompt *';
 export function sourceHash() {
   return createHash('sha256').update(UI_SOURCES.map(p => p + '\n' + readFileSync(p, 'utf8')).join('\n')).digest('hex');
@@ -32,6 +32,8 @@ export function magentaMask(buffer) {
   return { mask, width, height };
 }
 export function coverage(body, persistent) {
+  assert.equal(body.width, persistent.width);
+  assert.equal(body.height, persistent.height);
   assert.equal(body.mask.length, persistent.mask.length);
   let bodyPixels = 0, coveredPixels = 0;
   for (let i = 0; i < body.mask.length; i++) if (body.mask[i]) { bodyPixels++; if (!persistent.mask[i]) coveredPixels++; }
@@ -40,6 +42,11 @@ export function coverage(body, persistent) {
 
 export async function census(phase, { maps = MAPS, widths = [390, 1280] } = {}) {
   assert.ok(['before', 'after'].includes(phase));
+  const base = process.env.GR_CAPTURE_BASE_URL ?? 'http://127.0.0.1:5312';
+  const cssModule = await (await fetch(`${base}/src/ui/theme.css`)).text();
+  const servedCss = JSON.parse(cssModule.match(/^const __vite__css = (.*)$/m)?.[1] ?? 'null');
+  const hash = value => createHash('sha256').update(value ?? '').digest('hex');
+  assert.equal(hash(servedCss), hash(readFileSync('src/ui/theme.css', 'utf8')), 'Vite serves stale CSS: restart the capture server');
   const { chromium } = await import('@playwright/test');
   const browser = await chromium.launch({ channel: 'chromium' });
   const report = { phase, capturedAt: new Date().toISOString(), sourceHash: sourceHash(), method: 'Plain contract entry at 10 simulation seconds. Run-6 persistent selector and magenta threshold. Union is painted pixels over a magenta backdrop; clipped rectangle union is also retained. Zero-pixel landmarks are OFFSCREEN, never counted as zero coverage.', rows: [] };
@@ -64,7 +71,6 @@ export async function census(phase, { maps = MAPS, widths = [390, 1280] } = {}) 
         body = body.replace('model.name = mount.id;', 'model.name = mount.id; (window.__HUD_CENSUS_MODELS__??=new Map()).set(mount.id,model); window.__HUD_CENSUS_THREE__=THREE;');
         await route.fulfill({ response, body });
       });
-      const base = process.env.GR_CAPTURE_BASE_URL ?? 'http://127.0.0.1:5312';
       await page.goto(base);
       await page.evaluate(async id => { (await import('/src/meta/ContractUnlock.ts')).setPreviewUnlockAll(true); (await import('/src/meta/ContractFamilies.ts')).stagePlayerContractLaunch(id); }, map);
       await page.goto(`${base}/?contract=${map}&seed=map-art-campaign-2`);
@@ -76,6 +82,7 @@ export async function census(phase, { maps = MAPS, widths = [390, 1280] } = {}) 
       await page.screenshot({ path: `${prefix}-plain.png` });
       const state = await page.evaluate(() => ({ contract: window.__THREE_GAME_DIAGNOSTICS__.contract.activeId, hero: window.__THREE_GAME_DIAGNOSTICS__.heroPos, timeAlive: window.__THREE_GAME_DIAGNOSTICS__.timeAlive, testHook: typeof window.__GR_TEST__, renderSource: document.querySelector('#game-canvas').dataset.terrain3dPilotRenderSource }));
       assert.equal(state.contract, map); assert.equal(state.testHook, 'undefined'); assert.equal(state.renderSource, 'glb');
+      assert.ok(state.timeAlive < 11.5, `Entry capture ran late: ${state.timeAlive}s`);
       const persistentStyle = await page.addStyleTag({ content: `body *{visibility:hidden!important}${KEEP}{visibility:visible!important}#game-canvas{filter:none!important;transition:none!important}` });
       const panels = await page.evaluate(() => [...document.querySelectorAll('.hud-panel,.hud-pause,.world-info-note,.building-context-prompt,#touch-stick,#touch-controls button')].flatMap(el => {
         const b = el.getBoundingClientRect(), s = getComputedStyle(el);

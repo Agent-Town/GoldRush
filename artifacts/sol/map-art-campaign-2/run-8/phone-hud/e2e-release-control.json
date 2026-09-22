@@ -1,0 +1,261 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.4.0/bin/node",
+      "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/node_modules/.bin/playwright",
+      "test",
+      "--config",
+      "artifacts/sol/map-art-campaign-2/run-8/phone-hud/release-control.config.ts",
+      "--project=desktop-chrome",
+      "--project=mobile-chrome",
+      "--workers=1",
+      "--reporter=line,json"
+    ],
+    "configFile": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/artifacts/sol/map-art-campaign-2/run-8/phone-hud/release-control.config.ts",
+    "rootDir": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/artifacts/sol/map-art-campaign-2/run-8/phone-hud",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "revision": "b95e2c4f0fb3e4cc08563ae8999b0f6935e1830e",
+      "dirty": true,
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "revision": "b95e2c4f0fb3e4cc08563ae8999b0f6935e1830e",
+          "dirty": true,
+          "actualWorkers": 1
+        },
+        "id": "desktop-chrome",
+        "name": "desktop-chrome",
+        "testDir": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/artifacts/sol/map-art-campaign-2/run-8/phone-hud",
+        "testIgnore": [
+          "**/*.rig.ts"
+        ],
+        "testMatch": [
+          "/release-control\\.spec\\.ts/"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "revision": "b95e2c4f0fb3e4cc08563ae8999b0f6935e1830e",
+          "dirty": true,
+          "actualWorkers": 1
+        },
+        "id": "mobile-chrome",
+        "name": "mobile-chrome",
+        "testDir": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/artifacts/sol/map-art-campaign-2/run-8/phone-hud",
+        "testIgnore": [
+          "**/*.rig.ts"
+        ],
+        "testMatch": [
+          "/release-control\\.spec\\.ts/"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "line"
+      ],
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "release-control.spec.ts",
+      "file": "release-control.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "first player reaches textured town actors and places a Dry Gulch spring sluice",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 150000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 26112,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\nCall Log:\n- Timeout 5000ms exceeded while waiting on the predicate",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\nCall Log:\n- Timeout 5000ms exceeded while waiting on the predicate\n    at harvestSluiceBudget (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/release-build.spec.ts:330:103)\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/release-build.spec.ts:81:3",
+                    "location": {
+                      "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/release-build.spec.ts",
+                      "column": 103,
+                      "line": 330
+                    },
+                    "snippet": "  328 |   await moveHeroTo(page, -4.5, -6.4);\n  329 |   await moveHeroTo(page, -2.5, -6.4);\n> 330 |   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.harvest.channeling)).toBe(true);\n      |                                                                                                       ^\n  331 |   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.economy.gold), { timeout: 20_000 }).toBeGreaterThanOrEqual(30);\n  332 |   await moveHeroTo(page, -4.5, -6.4);\n  333 |   await moveHeroTo(page, -4.5, 6.7);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/release-build.spec.ts",
+                        "column": 103,
+                        "line": 330
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\nCall Log:\n- Timeout 5000ms exceeded while waiting on the predicate\n\n  328 |   await moveHeroTo(page, -4.5, -6.4);\n  329 |   await moveHeroTo(page, -2.5, -6.4);\n> 330 |   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.harvest.channeling)).toBe(true);\n      |                                                                                                       ^\n  331 |   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.economy.gold), { timeout: 20_000 }).toBeGreaterThanOrEqual(30);\n  332 |   await moveHeroTo(page, -4.5, -6.4);\n  333 |   await moveHeroTo(page, -4.5, 6.7);\n    at harvestSluiceBudget (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/release-build.spec.ts:330:103)\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/release-build.spec.ts:81:3"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T12:00:38.051Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/test-results/release-control-first-play-5d212-s-a-Dry-Gulch-spring-sluice-desktop-chrome/test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/test-results/release-control-first-play-5d212-s-a-Dry-Gulch-spring-sluice-desktop-chrome/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/test-results/release-control-first-play-5d212-s-a-Dry-Gulch-spring-sluice-desktop-chrome/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/release-build.spec.ts",
+                    "column": 103,
+                    "line": 330
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "5ea202886960b843e719-1f979d28a5988bd28119",
+          "file": "../../../../../e2e/release-build.spec.ts",
+          "line": 24,
+          "column": 1
+        },
+        {
+          "title": "first player reaches textured town actors and places a Dry Gulch spring sluice",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 150000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 23756,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\nCall Log:\n- Timeout 5000ms exceeded while waiting on the predicate",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\nCall Log:\n- Timeout 5000ms exceeded while waiting on the predicate\n    at harvestSluiceBudget (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/release-build.spec.ts:330:103)\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/release-build.spec.ts:81:3",
+                    "location": {
+                      "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/release-build.spec.ts",
+                      "column": 103,
+                      "line": 330
+                    },
+                    "snippet": "  328 |   await moveHeroTo(page, -4.5, -6.4);\n  329 |   await moveHeroTo(page, -2.5, -6.4);\n> 330 |   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.harvest.channeling)).toBe(true);\n      |                                                                                                       ^\n  331 |   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.economy.gold), { timeout: 20_000 }).toBeGreaterThanOrEqual(30);\n  332 |   await moveHeroTo(page, -4.5, -6.4);\n  333 |   await moveHeroTo(page, -4.5, 6.7);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/release-build.spec.ts",
+                        "column": 103,
+                        "line": 330
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\nCall Log:\n- Timeout 5000ms exceeded while waiting on the predicate\n\n  328 |   await moveHeroTo(page, -4.5, -6.4);\n  329 |   await moveHeroTo(page, -2.5, -6.4);\n> 330 |   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.harvest.channeling)).toBe(true);\n      |                                                                                                       ^\n  331 |   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.economy.gold), { timeout: 20_000 }).toBeGreaterThanOrEqual(30);\n  332 |   await moveHeroTo(page, -4.5, -6.4);\n  333 |   await moveHeroTo(page, -4.5, 6.7);\n    at harvestSluiceBudget (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/release-build.spec.ts:330:103)\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/release-build.spec.ts:81:3"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T12:01:09.498Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/test-results/release-control-first-play-5d212-s-a-Dry-Gulch-spring-sluice-mobile-chrome/test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/test-results/release-control-first-play-5d212-s-a-Dry-Gulch-spring-sluice-mobile-chrome/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/test-results/release-control-first-play-5d212-s-a-Dry-Gulch-spring-sluice-mobile-chrome/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/release-build.spec.ts",
+                    "column": 103,
+                    "line": 330
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "5ea202886960b843e719-0134c3b2e48215108eac",
+          "file": "../../../../../e2e/release-build.spec.ts",
+          "line": 24,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-09-22T12:00:37.478Z",
+    "duration": 59007.473,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 2,
+    "flaky": 0
+  }
+}
