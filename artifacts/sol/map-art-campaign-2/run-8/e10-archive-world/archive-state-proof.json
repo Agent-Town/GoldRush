@@ -1,0 +1,97 @@
+{
+  "facadeSamples": [
+    0,
+    1,
+    1,
+    0
+  ],
+  "facadeCallbackCount": 4,
+  "facadeHasEarnedMultiplier": true,
+  "sourceState": {
+    "zones": [
+      {
+        "id": "west-stacks-wing",
+        "order": 1,
+        "minX": -50,
+        "maxX": -6,
+        "minZ": -30,
+        "maxZ": 18
+      },
+      {
+        "id": "east-stacks-wing",
+        "order": 2,
+        "minX": 6,
+        "maxX": 50,
+        "minZ": -30,
+        "maxZ": 18
+      },
+      {
+        "id": "warning-shelf-wing",
+        "order": 3,
+        "minX": -26,
+        "maxX": 26,
+        "minZ": 26,
+        "maxZ": 54
+      }
+    ],
+    "restoredWingIds": []
+  },
+  "inputUnchanged": true,
+  "samples": [
+    {
+      "ids": [],
+      "values": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "ids": [
+        "west-stacks-wing"
+      ],
+      "values": [
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "ids": [
+        "west-stacks-wing",
+        "east-stacks-wing",
+        "warning-shelf-wing"
+      ],
+      "values": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "ids": [],
+      "values": [
+        0,
+        0,
+        0
+      ]
+    }
+  ],
+  "callbackCount": 4,
+  "disposed": 2,
+  "shaderHasEarnedMultiplier": true,
+  "shaderHasNoConstantPool": true,
+  "continuationTriangles": 5120,
+  "maximumJoinGap": 0,
+  "sceneFog": true,
+  "depthWrite": true,
+  "actualArchive": {
+    "restoredWingIds": [],
+    "restoredThisRun": [],
+    "holdingWingId": null,
+    "completedHolds": 0,
+    "objectiveAllowsSecure": false
+  },
+  "errors": [],
+  "stagedPaintOnly": true
+}

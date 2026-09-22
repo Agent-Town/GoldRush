@@ -6,9 +6,10 @@ Completed: Last Claim, IMPROVED / HELD, READY-FOR-GATES; store `f3078c4001d86b8f
 
 Completed: Ember Shore, IMPROVED / HELD, READY-FOR-GATES; store `75bdd35936c531da53094eaee94503b71ea1ea7f`. Fractured shelves and fissure-shape fidelity remain art-owned; no new rock geometry retained.
 
+Completed: Archive World, IMPROVED / HELD, READY-FOR-GATES; store `f5f617c48f33ee6f4577c4a60fade8faf7b08e8d`. Full library identity/skyline and camera/HUD framing remain held.
+
 Remaining in order:
-1. Archive World.
-2. River.
-3. Shared Motor vehicle, if capacity remains.
+1. River.
+2. Shared Motor vehicle, if capacity remains.
 
 Run continues; this is a progress checkpoint, not the stop rule.

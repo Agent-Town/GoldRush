@@ -1,0 +1,56 @@
+{
+  "storeBase": "75bdd35936c531da53094eaee94503b71ea1ea7f",
+  "base": "ec786009689270ebe6f5954f0d8ec1a9ce8afa91",
+  "paths": {
+    "src/world/Terrain3dClaimPilot.ts": {
+      "candidateSha256": "f8db9507b619c1c12fb04c1197baf6f4f1cb2c1992a38607b39d93d47c215a1a",
+      "baseSha256": "d475809ba978447f920fabd5fb5cdb207e390cf8d4d7a96239f9adea685699e4"
+    },
+    "assets/pilots/map-rebuild-spike/archive-world-panorama-contract.json": {
+      "candidateSha256": "876548d0444704c8456012a7cdabe175bb005357e467cd16f87ed41ef6ecb784",
+      "baseSha256": "9fd8cef53004b685de45d9d19313b4d595c750e050da63b44b4b0b4cf8a0382d"
+    },
+    "assets/pilots/map-rebuild-spike/archive-world-panorama.blend": {
+      "candidateSha256": "d5f7d7b0f7b213a971bd3e0ab34837799777d50c2a9d9290f4afd303e9bcf3d7",
+      "baseSha256": "14cd1b9e966b93f79b4a71f32287e361ed187c163d3f727c3bf08dbc75d50dfe"
+    },
+    "assets/pilots/map-rebuild-spike/archive-world-panorama.glb": {
+      "candidateSha256": "7919346bac0385e6e1f7fc07f7d8b8a60c54e6507179de71748ab05ca715ad8d",
+      "baseSha256": "904174f07352da63ce1012b331c8ba8d67d0601a86c6f864efcd13f532a69dd0"
+    }
+  },
+  "pattern": "e10-archive-world|all sixteen contracts mount|rim and horizon probes|all fifteen contracts stay painted",
+  "specs": [
+    "e2e/terrain3d-registry.spec.ts",
+    "e2e/er01-e10-census.spec.ts"
+  ],
+  "candidateEngine": "872cfc6474c7bdcba83290f87685a14c6882749c12b5564bbe1a355a0d45a6ff",
+  "baseEngine": "ac5caf75c8186240ed5c5e56ec5ea55c8b8769fa9db2324fb21726efdb34c200",
+  "command": [
+    "npx",
+    "playwright",
+    "test",
+    "--workers=1",
+    "--project=desktop-chrome",
+    "--project=mobile-chrome",
+    "--trace=off",
+    "--reporter=line",
+    "--output=artifacts/sol/map-art-campaign-2/_raw/run-8/e10-archive-world-base-own-final/test-results",
+    "--grep",
+    "e10-archive-world|all sixteen contracts mount|rim and horizon probes|all fifteen contracts stay painted",
+    "e2e/terrain3d-registry.spec.ts",
+    "e2e/er01-e10-census.spec.ts"
+  ],
+  "exit": 1,
+  "newAssetsAbsentDuringBase": {
+    "assets/pilots/map-rebuild-spike/fidelity_archive_panorama.py": "4a33cdd58a005f1121467be6c73a45c88db79dd96eab140d17d006749e8429a2",
+    "assets/pilots/map-rebuild-spike/sources/archive-world-fidelity-1/engraved-masonry.png": "b56c4ff5120ef7b50f11094f7eb47dfcff60c7ba4b285b75acfd2935c8a4f5eb",
+    "assets/pilots/map-rebuild-spike/sources/archive-world-fidelity-1/library-layout.json": "e3651daa9c10dc69b6259b6172b5b059d723b91e3c18fa438dd45e1272296ba9",
+    "assets/pilots/map-rebuild-spike/sources/archive-world-fidelity-1/panorama-input-contract.json": "9fd8cef53004b685de45d9d19313b4d595c750e050da63b44b4b0b4cf8a0382d",
+    "assets/pilots/map-rebuild-spike/sources/archive-world-fidelity-1/panorama-input.blend": "14cd1b9e966b93f79b4a71f32287e361ed187c163d3f727c3bf08dbc75d50dfe",
+    "assets/pilots/map-rebuild-spike/sources/archive-world-fidelity-1/provenance.json": "0a8b4553a27eee6f3851dc046b870d046b36577d58a64dd4b50f6043086d0185"
+  },
+  "restoredEngine": "872cfc6474c7bdcba83290f87685a14c6882749c12b5564bbe1a355a0d45a6ff",
+  "candidateRestoredExactly": true,
+  "log": "artifacts/sol/map-art-campaign-2/_raw/run-8/e10-archive-world-base-own-final/tests.log"
+}
