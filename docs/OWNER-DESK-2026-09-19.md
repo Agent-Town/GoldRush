@@ -92,6 +92,9 @@ Astra's run 4 corrected all sixteen rows (the thirteen UNACCEPTED maps and the t
 **Options.** (a) a reel that finished the race supersedes one that did not — the mechanic beats the walk (a Regatta-specific tie-break, one ruling); (b) retire rows whose engine pin predates the slice that rebuilt their map (general, needs a marker for "the mechanic changed"); (c) leave it. **Recommendation:** (a) now; write (b) when the next map's mechanic changes.
 **Ruled 2026-09-22, verbatim: "F-HEAT15-4: yes".** F-HEAT15-4 RULED (a): `tasks/f-heat15-4-mechanic-beats-walk.md` (Opus, scratch worktree) — the assayer reports whether the race finished, the door stores it, `compareScores` ranks a finished race first on `e5-regatta`; the drain re-assays the heat-15 rows after deploy so ride 2's reel takes the row. F-HEAT15-4 LANDED 2026-09-22 as `2f9aa6160` (`reviews/f-heat15-4-mechanic-beats-walk.md`), deployed 7d393271; the Regatta board re-assayed the same day — see the handover 13y for the rows.
 
+### F-FID1-4 — the Last Claim's playable square against the plate's circular perimeter (added 2026-09-22)
+Astra's fidelity run 8 (slice 1, landed as `4b4ec03bc`) rebuilt the memorial deck and rim inside the square playable silhouette and records again that the plate's articulated circular perimeter is not achievable by art: the silhouette is contract-owned (the mask tables, collisions, every tape replay). **Recommendation: keep the square.** Gameplay bounds, collisions and the tape replays stay untouched, and art may round the rim's ornament inside the square; a circular playable area would be a new contract, a new census row and a re-pin of every Last Claim tape. Reverse with one word. Review: `reviews/sol-map-art-fidelity-1.md`, slice 1.
+
 ## 2. Art — your eye
 
 ### F-SSL-3 — two prospector hover8 regenerations
