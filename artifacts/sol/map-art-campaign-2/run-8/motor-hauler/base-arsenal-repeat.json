@@ -1,0 +1,46 @@
+{
+  "storeBase": "a54dcc4ab31cb59e673f831b0b99161b38b62799",
+  "base": "7c5d213487e8b4f0386eadbad6ee7c32fcff42f5",
+  "paths": {
+    "src/entities/Vehicle.ts": {
+      "candidateSha256": "97d4e4137038222320618eb0b2e48c66660100c4accf9321059ef5804e7d8657",
+      "baseSha256": "01381190928d5f258c1ee455d9f371e20ee5efd944e3f0daf35f54cd4d3806a7"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/landmark-source-ledger.json": {
+      "candidateSha256": "0b2049a0862e9a3ec55aaf868b3c2b13c1ad49fce5868d1b3f72123924708f19",
+      "baseSha256": "a3c2ed07ebb090f252000ad451f249270885799f724a9ea5e30b2cf2c758eecf"
+    }
+  },
+  "pattern": "pressure-seals the rig",
+  "specs": [
+    "e2e/e5-arsenal.spec.ts",
+    "--repeat-each=3"
+  ],
+  "candidateEngine": "b7113b37c1a7e10b10f504947a660147c581c22b667aa1df2feb695bbb96100c",
+  "baseEngine": "db5803bef10a13daa735eab2d860a2d8608dba2104d0a00571d85fb98570aad7",
+  "command": [
+    "npx",
+    "playwright",
+    "test",
+    "--workers=1",
+    "--project=desktop-chrome",
+    "--project=mobile-chrome",
+    "--trace=off",
+    "--reporter=line",
+    "--output=artifacts/sol/map-art-campaign-2/_raw/run-8/motor-hauler-base-arsenal-repeat/test-results",
+    "--grep",
+    "pressure-seals the rig",
+    "e2e/e5-arsenal.spec.ts",
+    "--repeat-each=3"
+  ],
+  "exit": 1,
+  "newAssetsAbsentDuringBase": {
+    "assets/pilots/map-rebuild-spike/fidelity_motor_hauler.py": "e88f5da7a267b453de8bde5498e92f87ef9c1f15d3880b6be1b67e4c3ec709cd",
+    "assets/pilots/map-rebuild-spike/landmarks/motor-hauler/motor-hauler-landmark-pack-contract.json": "e25f0575134592bd94b6a953d3663edac1d69de4fd00041a46afb335ac2b2e3f",
+    "assets/pilots/map-rebuild-spike/landmarks/motor-hauler/motor-hauler.blend": "e578099d9cf304a7849808c2720eecec4ddd9971f05bdc79d54ce396be7e9082",
+    "assets/pilots/map-rebuild-spike/landmarks/motor-hauler/motor-hauler.glb": "4b17d0ee069fb13d9b967e0c9bc8ef2990a0501d411f495819225ae84e05a14b"
+  },
+  "restoredEngine": "b7113b37c1a7e10b10f504947a660147c581c22b667aa1df2feb695bbb96100c",
+  "candidateRestoredExactly": true,
+  "log": "artifacts/sol/map-art-campaign-2/_raw/run-8/motor-hauler-base-arsenal-repeat/tests.log"
+}
