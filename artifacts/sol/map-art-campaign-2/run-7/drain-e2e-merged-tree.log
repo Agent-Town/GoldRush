@@ -1,56 +1,54 @@
-(node:85542) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(node:7724) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
 (Use `node --trace-warnings ...` to show where the warning was created)
 
-Running 34 tests using 1 worker
+Running 70 tests using 1 worker
 
-[1/34] [desktop-chrome] › e2e/e8-far-side-probe.spec.ts:34:1 › the Far Side probe is a place, and its playback fires once
-[2/34] [desktop-chrome] › e2e/e8-far-side-probe.spec.ts:88:1 › PLAIN BOOT — a player reaches the Far Side and the probe is live for them
-[3/34] [desktop-chrome] › e2e/e8-far-side-probe.spec.ts:127:1 › the objective latch arms only when a crater exists to stand in
-[4/34] [desktop-chrome] › e2e/e8-remaining-maps-parity.spec.ts:147:3 › e8-far-side rides to the same event-log hash in the browser as in node
-[5/34] [desktop-chrome] › e2e/e8-remaining-maps-parity.spec.ts:147:3 › e8-low-orbit rides to the same event-log hash in the browser as in node
-[6/34] [desktop-chrome] › e2e/e8-remaining-maps-parity.spec.ts:147:3 › e8-eclipse rides to the same event-log hash in the browser as in node
-[7/34] [desktop-chrome] › e2e/e8-remaining-maps-parity.spec.ts:147:3 › e8-mare-claim rides to the same event-log hash in the browser as in node
-[8/34] [desktop-chrome] › e2e/er01-e8-census.spec.ts:75:3 › e8-mare-claim census pins the Orbital contract's door state
-  1) [desktop-chrome] › e2e/er01-e8-census.spec.ts:75:3 › e8-mare-claim census pins the Orbital contract's door state 
+[1/70] [desktop-chrome] › e2e/e10-finale-staging.spec.ts:14:1 › E10 closes on the Ark, re-inks, and offers THE RIVER through the Press
+[2/70] [desktop-chrome] › e2e/e10-river-boot-guard.spec.ts:12:1 › raw E10 River door opens as The River without errors
+[3/70] [desktop-chrome] › e2e/e10-static-boss.spec.ts:37:1 › The Last Claim boots directly and the Static arrives without the e10static flag
+[4/70] [desktop-chrome] › e2e/e10-static-boss.spec.ts:71:1 › the Static pressures meaning, three preserves make the Quiet recede, and nothing is killed
+[5/70] [desktop-chrome] › e2e/e10-static-boss.spec.ts:145:1 › the Static stays unarmed without the E10 contract or explicit debug seam
+[6/70] [desktop-chrome] › e2e/e10-static-boss.spec.ts:153:1 › recession hands the secured claim to the existing T10 re-inking finale
+  1) [desktop-chrome] › e2e/e10-static-boss.spec.ts:153:1 › recession hands the secured claim to the existing T10 re-inking finale 
 
-    Error: expect(received).toEqual(expected) // deep equality
+    Error: expect(locator).toBeVisible() failed
 
-    - Expected  - 2
-    + Received  + 4
+    Locator: getByTestId('bank-secured-claim')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
 
-      Array [
-    -   ObjectContaining {
-    +   Object {
-          "dep": "atmosphere-wall-consumer",
-    -     "status": "missing",
-    +     "description": "Browser and headless engines compose the atmosphere and suit consumer: outside air drains the suit, breathing domes refill it, empty suits take damage through CombatSystem, and four distinct mining grounds across four air windows gate securing. Native desktop09 and mobile07 complete mining, wave20 secure, banking and reload; evidence is recorded in reviews/sol-map-art-repairs-20260908.md. This records the landed gameplay consumer, not full concept-art acceptance or release admission.",
-    +     "landedBy": "map-art-repairs F48/F49",
-    +     "status": "landed",
-        },
-      ]
+    Call log:
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for getByTestId('bank-secured-claim')
 
-      106 |       // which is also why two contracts can be socketed concurrently without fighting here.
-      107 |       const admitted = (contract.tileParams.harvestAnchors?.length ?? 0) > 0;
-    > 108 |       expect(contract.tileParams.engineDependencies).toEqual([
-          |                                                      ^
-      109 |         expect.objectContaining({ dep: EXPECTED_DEPENDENCY[contract.id], status: 'missing' }),
-      110 |       ]);
-      111 |       const seeds = [`${contract.id}-01`, `${contract.id}-02`];
-        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-fc2-land/e2e/er01-e8-census.spec.ts:108:54
 
-    Error Context: test-results/er01-e8-census-e8-mare-cla-350c9-bital-contract-s-door-state-desktop-chrome/error-context.md
+      176 |   });
+      177 |
+    > 178 |   await expect(page.getByTestId('bank-secured-claim')).toBeVisible();
+          |                                                        ^
+      179 |   await page.getByTestId('bank-secured-claim').click();
+      180 |   await expect(page.getByTestId('e10-river-lever')).toBeVisible();
+      181 |   expect(await page.evaluate(() => ({
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-fc18-land/e2e/e10-static-boss.spec.ts:178:56
 
-    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
-    test-results/er01-e8-census-e8-mare-cla-350c9-bital-contract-s-door-state-desktop-chrome/trace.zip
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e10-static-boss-recession--53f77-isting-T10-re-inking-finale-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e10-static-boss-recession--53f77-isting-T10-re-inking-finale-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e10-static-boss-recession--53f77-isting-T10-re-inking-finale-desktop-chrome/trace.zip
     Usage:
 
-        npx playwright show-trace test-results/er01-e8-census-e8-mare-cla-350c9-bital-contract-s-door-state-desktop-chrome/trace.zip
+        npx playwright show-trace test-results/e10-static-boss-recession--53f77-isting-T10-re-inking-finale-desktop-chrome/trace.zip
 
     ────────────────────────────────────────────────────────────────────────────────────────────────
 
 
-[9/34] [desktop-chrome] › e2e/er01-e8-census.spec.ts:75:3 › e8-far-side census pins the Orbital contract's door state
-[desktop-chrome] › e2e/er01-e8-census.spec.ts:75:3 › e8-far-side census pins the Orbital contract's door state
+[7/70] [desktop-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-ember-shore census cites the existing Deep Sky debt
+[desktop-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-ember-shore census cites the existing Deep Sky debt
 [gold-rush] performance tier {
   tier: 'full',
   override: 'auto',
@@ -88,138 +86,36 @@ Running 34 tests using 1 worker
   runtimeVerdict: 0
 }
 
-[10/34] [desktop-chrome] › e2e/er01-e8-census.spec.ts:75:3 › e8-low-orbit census pins the Orbital contract's door state
-[desktop-chrome] › e2e/er01-e8-census.spec.ts:75:3 › e8-low-orbit census pins the Orbital contract's door state
-[gold-rush] performance tier {
-  tier: 'full',
-  override: 'auto',
-  source: 'auto',
-  reason: 'desktop-class defaults',
-  gpuRenderer: 'unknown',
-  deviceMemory: null,
-  userAgent: 'Node.js/26',
-  config: {
-    maxDpr: 2,
-    shadowsQuality: 'soft',
-    shadowMapSize: 1536,
-    fogNear: 42,
-    fogFar: 88,
-    postEnabled: true,
-    postPaperGrainOpacity: 0.008,
-    detailDensity: 1,
-    detailMobileDensity: 0.42,
-    terrainSegments: 64,
-    terrainMobileSegments: 40,
-    vistaSegments: 12,
-    vistaMobileSegments: 7,
-    waterQuality: 1,
-    waterMobileQuality: 0.55,
-    terrainMesh: false,
-    terrainSplat: false,
-    terrainMeshVertexStep: 1,
-    floatTextPool: 12,
-    combatVfxPuffs: 32,
-    combatVfxTicks: 48,
-    combatVfxRings: 8,
-    freedWalkerCap: 10,
-    enemyBarCap: 60
-  },
-  runtimeVerdict: 0
-}
-
-[11/34] [desktop-chrome] › e2e/er01-e8-census.spec.ts:75:3 › e8-eclipse census pins the Orbital contract's door state
-[desktop-chrome] › e2e/er01-e8-census.spec.ts:75:3 › e8-eclipse census pins the Orbital contract's door state
-[gold-rush] performance tier {
-  tier: 'full',
-  override: 'auto',
-  source: 'auto',
-  reason: 'desktop-class defaults',
-  gpuRenderer: 'unknown',
-  deviceMemory: null,
-  userAgent: 'Node.js/26',
-  config: {
-    maxDpr: 2,
-    shadowsQuality: 'soft',
-    shadowMapSize: 1536,
-    fogNear: 42,
-    fogFar: 88,
-    postEnabled: true,
-    postPaperGrainOpacity: 0.008,
-    detailDensity: 1,
-    detailMobileDensity: 0.42,
-    terrainSegments: 64,
-    terrainMobileSegments: 40,
-    vistaSegments: 12,
-    vistaMobileSegments: 7,
-    waterQuality: 1,
-    waterMobileQuality: 0.55,
-    terrainMesh: false,
-    terrainSplat: false,
-    terrainMeshVertexStep: 1,
-    floatTextPool: 12,
-    combatVfxPuffs: 32,
-    combatVfxTicks: 48,
-    combatVfxRings: 8,
-    freedWalkerCap: 10,
-    enemyBarCap: 60
-  },
-  runtimeVerdict: 0
-}
-
-[12/34] [desktop-chrome] › e2e/fort-landmark-collision.spec.ts:72:1 › the four new landmark solids block every face and release embedded heroes
-[13/34] [desktop-chrome] › e2e/landmark-collision.spec.ts:52:1 › authored footprints stop the hero on The Claim and a county map while an unfootprinted mount stays walkable
-[14/34] [desktop-chrome] › e2e/landmark-collision.spec.ts:68:1 › enemy blocker routing is deterministic and goes around a county landmark
-[15/34] [desktop-chrome] › e2e/landmark-collision.spec.ts:121:1 › Town chapel and Pan Monument are solid and default 3D renders exactly one monument
-[16/34] [desktop-chrome] › e2e/landmark-collision.spec.ts:144:1 › a failed 3D prop load keeps the legacy Pan Monument visible and solid
-[17/34] [desktop-chrome] › e2e/landmark-collision.spec.ts:157:1 › later-era modeled plaza props use their authored Town footprints
-[18/34] [mobile-chrome] › e2e/e8-far-side-probe.spec.ts:34:1 › the Far Side probe is a place, and its playback fires once
-[19/34] [mobile-chrome] › e2e/e8-far-side-probe.spec.ts:88:1 › PLAIN BOOT — a player reaches the Far Side and the probe is live for them
-[20/34] [mobile-chrome] › e2e/e8-far-side-probe.spec.ts:127:1 › the objective latch arms only when a crater exists to stand in
-[21/34] [mobile-chrome] › e2e/e8-remaining-maps-parity.spec.ts:147:3 › e8-far-side rides to the same event-log hash in the browser as in node
-[22/34] [mobile-chrome] › e2e/e8-remaining-maps-parity.spec.ts:147:3 › e8-low-orbit rides to the same event-log hash in the browser as in node
-[23/34] [mobile-chrome] › e2e/e8-remaining-maps-parity.spec.ts:147:3 › e8-eclipse rides to the same event-log hash in the browser as in node
-[24/34] [mobile-chrome] › e2e/e8-remaining-maps-parity.spec.ts:147:3 › e8-mare-claim rides to the same event-log hash in the browser as in node
-[25/34] [mobile-chrome] › e2e/er01-e8-census.spec.ts:75:3 › e8-mare-claim census pins the Orbital contract's door state
-  2) [mobile-chrome] › e2e/er01-e8-census.spec.ts:75:3 › e8-mare-claim census pins the Orbital contract's door state 
+[8/70] [desktop-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-archive-world census cites the existing Deep Sky debt
+  2) [desktop-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-archive-world census cites the existing Deep Sky debt 
 
     Error: expect(received).toEqual(expected) // deep equality
 
-    - Expected  - 2
-    + Received  + 4
+    Expected: undefined
+    Received: ["e10-archive-world-01", "e10-archive-world-02"]
 
-      Array [
-    -   ObjectContaining {
-    +   Object {
-          "dep": "atmosphere-wall-consumer",
-    -     "status": "missing",
-    +     "description": "Browser and headless engines compose the atmosphere and suit consumer: outside air drains the suit, breathing domes refill it, empty suits take damage through CombatSystem, and four distinct mining grounds across four air windows gate securing. Native desktop09 and mobile07 complete mining, wave20 secure, banking and reload; evidence is recorded in reviews/sol-map-art-repairs-20260908.md. This records the landed gameplay consumer, not full concept-art acceptance or release admission.",
-    +     "landedBy": "map-art-repairs F48/F49",
-    +     "status": "landed",
-        },
-      ]
+      136 |     console.warn = (...args: unknown[]) => consoleErrors.push(args.map(String).join(' '));
+      137 |     try {
+    > 138 |       expect((benchSeeds as Record<string, string[]>)[contract.id]).toEqual(EXPECTED_SEEDS[contract.id]);
+          |                                                                     ^
+      139 |       const dependency = 'engineDependencies' in contract.tileParams
+      140 |         ? contract.tileParams.engineDependencies
+      141 |         : undefined;
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-fc18-land/e2e/er01-e10-census.spec.ts:138:69
 
-      106 |       // which is also why two contracts can be socketed concurrently without fighting here.
-      107 |       const admitted = (contract.tileParams.harvestAnchors?.length ?? 0) > 0;
-    > 108 |       expect(contract.tileParams.engineDependencies).toEqual([
-          |                                                      ^
-      109 |         expect.objectContaining({ dep: EXPECTED_DEPENDENCY[contract.id], status: 'missing' }),
-      110 |       ]);
-      111 |       const seeds = [`${contract.id}-01`, `${contract.id}-02`];
-        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-fc2-land/e2e/er01-e8-census.spec.ts:108:54
-
-    Error Context: test-results/er01-e8-census-e8-mare-cla-350c9-bital-contract-s-door-state-mobile-chrome/error-context.md
+    Error Context: test-results/er01-e10-census-e10-archiv-b80f9--the-existing-Deep-Sky-debt-desktop-chrome/error-context.md
 
     attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
-    test-results/er01-e8-census-e8-mare-cla-350c9-bital-contract-s-door-state-mobile-chrome/trace.zip
+    test-results/er01-e10-census-e10-archiv-b80f9--the-existing-Deep-Sky-debt-desktop-chrome/trace.zip
     Usage:
 
-        npx playwright show-trace test-results/er01-e8-census-e8-mare-cla-350c9-bital-contract-s-door-state-mobile-chrome/trace.zip
+        npx playwright show-trace test-results/er01-e10-census-e10-archiv-b80f9--the-existing-Deep-Sky-debt-desktop-chrome/trace.zip
 
     ────────────────────────────────────────────────────────────────────────────────────────────────
 
 
-[26/34] [mobile-chrome] › e2e/er01-e8-census.spec.ts:75:3 › e8-far-side census pins the Orbital contract's door state
-[mobile-chrome] › e2e/er01-e8-census.spec.ts:75:3 › e8-far-side census pins the Orbital contract's door state
+[9/70] [desktop-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-last-claim census cites the existing Deep Sky debt
+[desktop-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-last-claim census cites the existing Deep Sky debt
 [gold-rush] performance tier {
   tier: 'full',
   override: 'auto',
@@ -257,8 +153,8 @@ Running 34 tests using 1 worker
   runtimeVerdict: 0
 }
 
-[27/34] [mobile-chrome] › e2e/er01-e8-census.spec.ts:75:3 › e8-low-orbit census pins the Orbital contract's door state
-[mobile-chrome] › e2e/er01-e8-census.spec.ts:75:3 › e8-low-orbit census pins the Orbital contract's door state
+[10/70] [desktop-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-river census cites the existing Deep Sky debt
+[desktop-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-river census cites the existing Deep Sky debt
 [gold-rush] performance tier {
   tier: 'full',
   override: 'auto',
@@ -296,8 +192,83 @@ Running 34 tests using 1 worker
   runtimeVerdict: 0
 }
 
-[28/34] [mobile-chrome] › e2e/er01-e8-census.spec.ts:75:3 › e8-eclipse census pins the Orbital contract's door state
-[mobile-chrome] › e2e/er01-e8-census.spec.ts:75:3 › e8-eclipse census pins the Orbital contract's door state
+[11/70] [desktop-chrome] › e2e/landmark-brightness.spec.ts:57:1 › The Claim keeps daylight landmarks opaque, lit, and under the frame budget
+[12/70] [desktop-chrome] › e2e/landmark-brightness.spec.ts:96:1 › Night Shift keeps ground light pools without mutating landmark materials
+[13/70] [desktop-chrome] › e2e/landmark-brightness.spec.ts:182:1 › reference rig: terrain, landmark and hero sprite measured together (F-ASTRA-9 calibration)
+[14/70] [desktop-chrome] › e2e/landmark-brightness.spec.ts:315:1 › closed/open mesh census across the landmark packs (F-ASTRA-9)
+[15/70] [desktop-chrome] › e2e/landmark-collision.spec.ts:52:1 › authored footprints stop the hero on The Claim and a county map while an unfootprinted mount stays walkable
+[16/70] [desktop-chrome] › e2e/landmark-collision.spec.ts:68:1 › enemy blocker routing is deterministic and goes around a county landmark
+[17/70] [desktop-chrome] › e2e/landmark-collision.spec.ts:121:1 › Town chapel and Pan Monument are solid and default 3D renders exactly one monument
+[18/70] [desktop-chrome] › e2e/landmark-collision.spec.ts:144:1 › a failed 3D prop load keeps the legacy Pan Monument visible and solid
+[19/70] [desktop-chrome] › e2e/landmark-collision.spec.ts:157:1 › later-era modeled plaza props use their authored Town footprints
+[20/70] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:111:1 › menu places a palisade and logs build_palisade spend
+[21/70] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:136:1 › build menu shows six ready icons and Balance-backed blurbs
+[22/70] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining
+[23/70] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:205:1 › beacon cost curve stays intact through the menu
+[24/70] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:227:1 › single enemy slides around a finite palisade line without passing through
+[25/70] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:284:1 › 390px build menu is visible, tappable, and clear of HUD controls
+[26/70] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:329:1 › stress draw calls stay under 200 with palisades and beacons
+[27/70] [desktop-chrome] › e2e/preview-unlock-all.spec.ts:176:1 › the board data still says 16 of 42 contracts unlock by default
+[28/70] [desktop-chrome] › e2e/preview-unlock-all.spec.ts:186:1 › one control on the board opens every claim and locks them all again
+[desktop-chrome] › e2e/preview-unlock-all.spec.ts:186:1 › one control on the board opens every claim and locks them all again
+preview-unlock-all watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[29/70] [desktop-chrome] › e2e/preview-unlock-all.spec.ts:237:1 › a fresh Frontier profile reaches all ten chapters through the control
+[desktop-chrome] › e2e/preview-unlock-all.spec.ts:237:1 › a fresh Frontier profile reaches all ten chapters through the control
+preview-unlock-all-fresh watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[30/70] [desktop-chrome] › e2e/preview-unlock-all.spec.ts:264:1 › the E1 release build carries no such control
+[31/70] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:105:1 › enemy crossing the river reaches the hero through the ford only
+[32/70] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:123:1 › scheduled waves never place enemies in deep river over three waves
+[33/70] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:139:1 › hero stops in the shallows and keeps weapons armed at the deep channel
+[34/70] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:181:1 › xp from a residual deep-water death is auto-banked with no mote
+[35/70] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:202:1 › far-bank sluice stays untouched when the river flank is open
+[36/70] [mobile-chrome] › e2e/e10-finale-staging.spec.ts:14:1 › E10 closes on the Ark, re-inks, and offers THE RIVER through the Press
+[37/70] [mobile-chrome] › e2e/e10-river-boot-guard.spec.ts:12:1 › raw E10 River door opens as The River without errors
+[38/70] [mobile-chrome] › e2e/e10-static-boss.spec.ts:37:1 › The Last Claim boots directly and the Static arrives without the e10static flag
+[39/70] [mobile-chrome] › e2e/e10-static-boss.spec.ts:71:1 › the Static pressures meaning, three preserves make the Quiet recede, and nothing is killed
+[40/70] [mobile-chrome] › e2e/e10-static-boss.spec.ts:145:1 › the Static stays unarmed without the E10 contract or explicit debug seam
+[41/70] [mobile-chrome] › e2e/e10-static-boss.spec.ts:153:1 › recession hands the secured claim to the existing T10 re-inking finale
+  3) [mobile-chrome] › e2e/e10-static-boss.spec.ts:153:1 › recession hands the secured claim to the existing T10 re-inking finale 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByTestId('bank-secured-claim')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for getByTestId('bank-secured-claim')
+
+
+      176 |   });
+      177 |
+    > 178 |   await expect(page.getByTestId('bank-secured-claim')).toBeVisible();
+          |                                                        ^
+      179 |   await page.getByTestId('bank-secured-claim').click();
+      180 |   await expect(page.getByTestId('e10-river-lever')).toBeVisible();
+      181 |   expect(await page.evaluate(() => ({
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-fc18-land/e2e/e10-static-boss.spec.ts:178:56
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e10-static-boss-recession--53f77-isting-T10-re-inking-finale-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e10-static-boss-recession--53f77-isting-T10-re-inking-finale-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e10-static-boss-recession--53f77-isting-T10-re-inking-finale-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e10-static-boss-recession--53f77-isting-T10-re-inking-finale-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[42/70] [mobile-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-ember-shore census cites the existing Deep Sky debt
+[mobile-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-ember-shore census cites the existing Deep Sky debt
 [gold-rush] performance tier {
   tier: 'full',
   override: 'auto',
@@ -335,13 +306,147 @@ Running 34 tests using 1 worker
   runtimeVerdict: 0
 }
 
-[29/34] [mobile-chrome] › e2e/fort-landmark-collision.spec.ts:72:1 › the four new landmark solids block every face and release embedded heroes
-[30/34] [mobile-chrome] › e2e/landmark-collision.spec.ts:52:1 › authored footprints stop the hero on The Claim and a county map while an unfootprinted mount stays walkable
-[31/34] [mobile-chrome] › e2e/landmark-collision.spec.ts:68:1 › enemy blocker routing is deterministic and goes around a county landmark
-[32/34] [mobile-chrome] › e2e/landmark-collision.spec.ts:121:1 › Town chapel and Pan Monument are solid and default 3D renders exactly one monument
-[33/34] [mobile-chrome] › e2e/landmark-collision.spec.ts:144:1 › a failed 3D prop load keeps the legacy Pan Monument visible and solid
-[34/34] [mobile-chrome] › e2e/landmark-collision.spec.ts:157:1 › later-era modeled plaza props use their authored Town footprints
-  2 failed
-    [desktop-chrome] › e2e/er01-e8-census.spec.ts:75:3 › e8-mare-claim census pins the Orbital contract's door state 
-    [mobile-chrome] › e2e/er01-e8-census.spec.ts:75:3 › e8-mare-claim census pins the Orbital contract's door state 
-  32 passed (3.1m)
+[43/70] [mobile-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-archive-world census cites the existing Deep Sky debt
+  4) [mobile-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-archive-world census cites the existing Deep Sky debt 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    Expected: undefined
+    Received: ["e10-archive-world-01", "e10-archive-world-02"]
+
+      136 |     console.warn = (...args: unknown[]) => consoleErrors.push(args.map(String).join(' '));
+      137 |     try {
+    > 138 |       expect((benchSeeds as Record<string, string[]>)[contract.id]).toEqual(EXPECTED_SEEDS[contract.id]);
+          |                                                                     ^
+      139 |       const dependency = 'engineDependencies' in contract.tileParams
+      140 |         ? contract.tileParams.engineDependencies
+      141 |         : undefined;
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-fc18-land/e2e/er01-e10-census.spec.ts:138:69
+
+    Error Context: test-results/er01-e10-census-e10-archiv-b80f9--the-existing-Deep-Sky-debt-mobile-chrome/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/er01-e10-census-e10-archiv-b80f9--the-existing-Deep-Sky-debt-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/er01-e10-census-e10-archiv-b80f9--the-existing-Deep-Sky-debt-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[44/70] [mobile-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-last-claim census cites the existing Deep Sky debt
+[mobile-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-last-claim census cites the existing Deep Sky debt
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[45/70] [mobile-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-river census cites the existing Deep Sky debt
+[mobile-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-river census cites the existing Deep Sky debt
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[46/70] [mobile-chrome] › e2e/landmark-brightness.spec.ts:57:1 › The Claim keeps daylight landmarks opaque, lit, and under the frame budget
+[47/70] [mobile-chrome] › e2e/landmark-brightness.spec.ts:96:1 › Night Shift keeps ground light pools without mutating landmark materials
+[48/70] [mobile-chrome] › e2e/landmark-brightness.spec.ts:182:1 › reference rig: terrain, landmark and hero sprite measured together (F-ASTRA-9 calibration)
+[49/70] [mobile-chrome] › e2e/landmark-brightness.spec.ts:315:1 › closed/open mesh census across the landmark packs (F-ASTRA-9)
+[50/70] [mobile-chrome] › e2e/landmark-collision.spec.ts:52:1 › authored footprints stop the hero on The Claim and a county map while an unfootprinted mount stays walkable
+[51/70] [mobile-chrome] › e2e/landmark-collision.spec.ts:68:1 › enemy blocker routing is deterministic and goes around a county landmark
+[52/70] [mobile-chrome] › e2e/landmark-collision.spec.ts:121:1 › Town chapel and Pan Monument are solid and default 3D renders exactly one monument
+[53/70] [mobile-chrome] › e2e/landmark-collision.spec.ts:144:1 › a failed 3D prop load keeps the legacy Pan Monument visible and solid
+[54/70] [mobile-chrome] › e2e/landmark-collision.spec.ts:157:1 › later-era modeled plaza props use their authored Town footprints
+[55/70] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:111:1 › menu places a palisade and logs build_palisade spend
+[56/70] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:136:1 › build menu shows six ready icons and Balance-backed blurbs
+[57/70] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining
+[58/70] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:205:1 › beacon cost curve stays intact through the menu
+[59/70] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:227:1 › single enemy slides around a finite palisade line without passing through
+[60/70] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:284:1 › 390px build menu is visible, tappable, and clear of HUD controls
+[61/70] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:329:1 › stress draw calls stay under 200 with palisades and beacons
+[62/70] [mobile-chrome] › e2e/preview-unlock-all.spec.ts:176:1 › the board data still says 16 of 42 contracts unlock by default
+[63/70] [mobile-chrome] › e2e/preview-unlock-all.spec.ts:186:1 › one control on the board opens every claim and locks them all again
+[mobile-chrome] › e2e/preview-unlock-all.spec.ts:186:1 › one control on the board opens every claim and locks them all again
+preview-unlock-all watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[64/70] [mobile-chrome] › e2e/preview-unlock-all.spec.ts:237:1 › a fresh Frontier profile reaches all ten chapters through the control
+[mobile-chrome] › e2e/preview-unlock-all.spec.ts:237:1 › a fresh Frontier profile reaches all ten chapters through the control
+preview-unlock-all-fresh watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[65/70] [mobile-chrome] › e2e/preview-unlock-all.spec.ts:264:1 › the E1 release build carries no such control
+[66/70] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:105:1 › enemy crossing the river reaches the hero through the ford only
+[67/70] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:123:1 › scheduled waves never place enemies in deep river over three waves
+[68/70] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:139:1 › hero stops in the shallows and keeps weapons armed at the deep channel
+[69/70] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:181:1 › xp from a residual deep-water death is auto-banked with no mote
+[70/70] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:202:1 › far-bank sluice stays untouched when the river flank is open
+  4 failed
+    [desktop-chrome] › e2e/e10-static-boss.spec.ts:153:1 › recession hands the secured claim to the existing T10 re-inking finale 
+    [desktop-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-archive-world census cites the existing Deep Sky debt 
+    [mobile-chrome] › e2e/e10-static-boss.spec.ts:153:1 › recession hands the secured claim to the existing T10 re-inking finale 
+    [mobile-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-archive-world census cites the existing Deep Sky debt 
+  6 skipped
+  60 passed (4.8m)
