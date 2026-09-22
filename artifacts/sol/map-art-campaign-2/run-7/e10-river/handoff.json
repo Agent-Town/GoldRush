@@ -1,0 +1,123 @@
+{
+  "task": "F-CORR4-18",
+  "status": "READY-FOR-GATES",
+  "codeBranch": "sol/map-art-campaign-2",
+  "codeBase": "cd24d12d25aaabf7dbcf9a3c79a4c32db0136333",
+  "store": {
+    "repo": "Agent-Town/GoldRush-assets",
+    "branch": "astra/f-corr4-18",
+    "commit": "d5e25522490ae7342e497ce58f51239040a41eb3",
+    "remoteHead": "d5e25522490ae7342e497ce58f51239040a41eb3",
+    "verifiedPushed": true,
+    "cleanAfterPush": true
+  },
+  "engine": {
+    "before": "52a84bc29febd924518528080bee8d0843e4e6d5c89165c1f8cb6f43dd61bcd5",
+    "after": "6abbafbebf86f1af6cd5496a7d6eb530337e3ff66b16d18aaef691fd9d22d3f5",
+    "captureRuntimeSourceEngine": "b11b65830ea85956374109d444a48d630f9a2e386b8324ee337722ba46574e90",
+    "afterCaptureChange": "Moved one existing JSDoc comment back to paintRiverReturn; executable bytes unchanged.",
+    "pinUpdated": false,
+    "pinOwner": "Claude drain"
+  },
+  "inventory": {
+    "inventory": [
+      {
+        "id": "terrain",
+        "triangles": 32768,
+        "budget": 60000
+      },
+      {
+        "id": "panorama",
+        "triangles": 1024,
+        "budget": 4000
+      },
+      {
+        "id": "south-west-shore",
+        "triangles": 2240,
+        "budget": 3000,
+        "blocking": "none; low decorative stones, no collision or walk surface"
+      },
+      {
+        "id": "south-east-shore",
+        "triangles": 2240,
+        "budget": 3000,
+        "blocking": "none; low decorative stones, no collision or walk surface"
+      },
+      {
+        "id": "north-west-shore",
+        "triangles": 2240,
+        "budget": 3000,
+        "blocking": "none; low decorative stones, no collision or walk surface"
+      },
+      {
+        "id": "north-east-shore",
+        "triangles": 2240,
+        "budget": 3000,
+        "blocking": "none; low decorative stones, no collision or walk surface"
+      },
+      {
+        "id": "ford-wet-stones",
+        "triangles": 1600,
+        "budget": 2000,
+        "blocking": "none; low decorative stones, no collision or walk surface"
+      }
+    ],
+    "allWithinBudget": true,
+    "packTriangles": 44352,
+    "bodies": 5,
+    "collisionMounts": 0
+  },
+  "heights": {
+    "vertices": {
+      "samples": 16641,
+      "max": 5.9124654505637864e-08,
+      "p95": 2.259191256293036e-08,
+      "mean": 7.662416485170873e-09
+    },
+    "offGrid": {
+      "samples": 8460,
+      "max": 0.21973442365288795,
+      "p95": 0.02660592019820665,
+      "mean": 0.004881191519135067
+    },
+    "errors": []
+  },
+  "visualVerdict": {
+    "fixed": [
+      "dedicated raw River pack"
+    ],
+    "improved": [
+      "112 shoreline stones",
+      "20 wet ford stones",
+      "separate dawn panorama asset",
+      "warm bank treatment"
+    ],
+    "held": [
+      "original water and rectangular ford presentation",
+      "wet contact and continuous rocky bank fidelity",
+      "ordinary dawn vista and one-pan framing",
+      "coarse continuation edge joins",
+      "ordinary HUD overlap",
+      "canonical raw-vs-Claim route reconciliation"
+    ]
+  },
+  "gates": {
+    "builds": "tsc/default/full/e1 pass",
+    "payloadBytes": 34272559,
+    "requestedE2E": {
+      "pass": 24,
+      "skip": 6,
+      "fail": 0
+    },
+    "finalRiverBootPass": 2,
+    "scopedNodeGuardsPass": 34,
+    "namedGuardsPass": 3,
+    "sharedLoadingPass": 8,
+    "sharedRepeatPass": 2,
+    "rawRiverMountDisposeCyclesPass": 6,
+    "actualLeverBothWidths": true,
+    "performance": "four runs per arm, explicit mode review within15Percent"
+  },
+  "review": "review.md",
+  "gatePinOwner": "Claude drain"
+}

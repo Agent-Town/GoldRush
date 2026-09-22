@@ -1,0 +1,55 @@
+# The River — dedicated raw-route pack, 2026-09-22, run 7
+
+**Missing pack FIXED; shoreline and wet-stone dressing IMPROVED; full concept remains HELD.** The raw `e10-river` now mounts its own 128 m terrain, separate panorama and five nonblocking bodies. It retains the captured visual heights, original water and planar simulation. The actual finale still opens the distinct 64 m `the-claim` charter.
+
+Owner authorization, 2026-09-22: “F-CORR4-18: ok, give the raw route its own small pack”. Only the River description changes in the gameplay descriptor: “at dawn with no new sculpt;” becomes “at dawn with a dedicated render-only River pack;”. `terrainMesh: "off"` remains; the existing renderer registry does not require another flag.
+
+| Original River-row clause | Result and owner |
+| --- | --- |
+| Raw plain entry is a painted fallback with no mounted sculpt | **FIXED:** dedicated 128×128 m, 1 m grid; 16,641 vertices and 32,768 triangles. Two new registry imports mount terrain, panorama and five bodies through the existing path. Raw boots retain `fallbackReason: null`, report `ready/glb`, and skip zero bodies. **HELD:** canonical-route reconciliation belongs to contract/finale owners via Claude. No alias or finale change. |
+| Flat banks and tiled ford dominate | **IMPROVED:** four shoreline groups add **112** low irregular stones, and the ford adds **20** wet stones. All 132 intersect the sampled terrain; the center **2.2 m** strip remains visually free of stones. No colliders or walk surfaces. Ground fixed-region RMS **0.01592→0.01453 (−8.75%) desktop / 0.02314→0.03373 (+45.74%) phone**. The phone rectangle now includes stone edges; this is changed image content, not a noise-reduction result. **HELD:** full bank relief, continuous gravel and convincing wet contact need further terrain-art/water work via Claude. |
+| Quiet dawn river from the plate is not achieved | **IMPROVED:** separate **1,024-triangle** dawn panorama reuses the exact River plate; warm sand/wet-bank pigment spans the grid and continuation, with run-6 water treatment retained. **HELD:** the original water still reads as a dark straight band with cloudy margins and a rectangular dry ford. The ordinary downward camera does not expose the distant vista or one-pan composition. Full rocky panorama/composition belongs to scene-art/camera and contract/finale owners via Claude. Final north-edge diagnostic shows thin pale joins between the 1 m grid and inherited 4 m continuation: shared continuation/camera owner. |
+| Ordinary combat/build HUD remains on the quiet return | **HELD** by UI/camera and finale owners via Claude. Desktop dialogue overlaps Claim Stake; phone dialogue covers that panel and controls, while upper panels hide the bank. New bodies have measured stations, but those do not replace ordinary entry evidence. No HUD edit. |
+
+[Desktop concept/before/after board](board-1280.png) · [Phone board](board-390.png) · [Final independent critique](independent-review-final.md) · [Visual metrics](visual-metrics.json). All ordinary captures use the same seed, no debug flag and no test hook, keep the normal HUD/dialogue, and report zero console/page errors. Preview permission and the raw route are explicitly staged before plain navigation. Frozen full-tier diagnostics and labelled ford, bank, water and edge views are separate evidence.
+
+| Pack member | Triangles | Budget |
+| --- | ---: | ---: |
+| River terrain | 32,768 | 60,000 |
+| River panorama | 1,024 | 4,000 |
+| South-west shore, 28 stones | 2,240 | 3,000 |
+| South-east shore, 28 stones | 2,240 | 3,000 |
+| North-west shore, 28 stones | 2,240 | 3,000 |
+| North-east shore, 28 stones | 2,240 | 3,000 |
+| Ford wet stones, 20 stones | 1,600 | 2,000 |
+
+Total **44,352 authored triangles**, five nonblocking bodies. The existing renderer additionally creates a **3,072-triangle continuation**; it is included in the live rendering-cost measurements. Each body is one closed, culled mesh/material. Terrain/pack mount and acceptance-station arrays are mirrored exactly. Shore mounts are `(±18, ±7.3)` m; ford mount is `(0,0)`. The simulation, river band `−64..64 × −5..5`, ford at `x=0, halfWidth=3`, water fields and credits zone are unchanged. The collision registry has no River entry. [Budgets](asset-budgets.json) · [Invariants](invariants.json).
+
+The executable Blender recipe, three saved `.blend` sources, GLBs, atlas copies, export metadata, provenance and additive `river` source-ledger entry live under `assets/pilots/map-rebuild-spike/` in the art store. Terrain and panorama contracts record export counts, bounds and hashes; the body-pack contract records all five exports. Reopening saved sources and reexporting yields **byte-identical terrain, panorama and five body GLBs**. Raster bytes are reused exactly from `terrain-bank-tile.png`, `plate-contract-e10-river.png` and Twin Banks' landmark atlas; no raster generation. [Terrain/panorama source proof](terrain-source-verification.json) · [Body source proof](source-verification.json) · [Source ledger and provenance checks](invariants.json).
+
+The maximum grid-vertex height error is **0.0000000591246545 m**, over 16,641 vertices. Off-grid 8,460-point error is **mean 0.0048811915 m / p95 0.0266059202 m / max 0.2197344237 m**. This is interpolation error between the preserved fallback function and the regular-grid triangles, not a simulation-height change. The corrected probe uses the exact `Terrain` module imported by the active Vite installer and requires a nonzero off-grid positive control. An earlier bare import created a second singleton and falsely reported zero; those rejected receipts are retained locally. [Height proof](height-proof.json) · [Stone grounding](stone-grounding.json).
+
+The dedicated bank shader keeps the previous material compile callback and cache identity, then adds its River suffix. The continuation therefore retains its own far-depth program. `paintRiverReturn` still treats the original water and restores it on disposal; the old bank/ford paint and stepping-stone relief yield to the pack. Removing only the named River additions reproduces the base `Terrain3dClaimPilot.ts` byte-for-byte. Gameplay contract bytes differ only by the authorized description. `Terrain.ts`, `Water.ts`, collision code/registry, sim, game, meta, story, finale, tests and engine pin remain unchanged. [Exact source boundary](source-boundary.json).
+
+All five declared stations are **8 m** behind their mounts. Shore-body luminance medians are about **0.189–0.220**, and actual runtime emission is **0.45**, under the **0.6** cap. Surviving body-mask fragments have persistent HUD overlap at most **0.4014%**. Desktop projected shore bounds fit; phone groups deliberately span beyond the viewport (roughly x **−204..629**), so this is **not** a full-body-fit pass. Ford bounds fit at both widths, but original translucent water suppresses most magenta-mask pixels, leaving only **57–61** fragments: its reported 0% HUD overlap is not evidence of complete visible stone coverage. The normal images and projected bounds remain the visual evidence. Desktop ground median **0.482→0.477**; phone **0.466→0.406**. [All station measurements](visual-metrics.json).
+
+Both widths pass actual keyboard/advance-simulation walks along the south and north banks from x −58 to +58 and across the center ford from z +12 to −12, without intermediate teleports. Navigation samples across both banks, the ford and all five body centers remain walkable. Three isolated mount/dispose cycles per width (**six total**) mount all five bodies with zero walk surfaces, keep the original water visible, restore its material callbacks and leave only the original water mesh. [Movement and lifecycle proof](walk-and-repeat.json).
+
+The real finale lever was clicked at 1280 and 390 after labelled diagnostic staging. Both destinations are plain `/?contract=the-claim&nowaves=` routes named The River, with **64 m** terrain, five ready Claim bodies, no test hook, `fallbackReason: null` and zero errors. This proves the actual lever destination, not native final-boss completion. [Lever proof](finale-route.json) · [Desktop destination](finale-charter-plain-1280.png) · [Phone destination](finale-charter-plain-390.png).
+
+| Local performance, four fresh browsers per arm | Desktop | Phone |
+| --- | --- | --- |
+| Before p95 samples, ms | 9.8, 10.4, 16.0, 16.6 | 9.9, 10.1, 10.2, 16.6 |
+| After p95 samples, ms | 8.9, 9.2, 9.5, 9.6 | 9.8, 9.9, 9.9, 10.0 |
+| Matching fast-mode median, ms | 10.10→9.35 | 10.10→9.90 |
+| Worst candidate versus fastest baseline | −2.04% | +1.01% |
+| Draws, conservative baseline floor | 79→83, +5.06% | 58→62, +6.90% |
+| Rendered triangles | 81,448–81,450→113,130 | 69,440→110,778 |
+
+Every observed candidate run and draw-count increase is within **15%**. Alternating arm order retains 180 rAF samples per boot. Baseline timing is bimodal; the automatic single-mode acceptance flags remain **false**. The explicit [mode review](performance-mode-review.json) compares matching modes and conservatively compares candidate maxima with the fastest baseline. No causal speedup is claimed from the pooled desktop median, and four local runs cannot rule out rare slow-device behavior. [Raw samples](performance-paired.json).
+
+TypeScript, default/full/E1 builds pass; first-town payload is **34,272,559 B**, below 52,000,000 B. The five unchanged requested E2E files pass **24 tests / six skips / zero failures** across desktop and phone with one worker. Four skips are opt-in brightness paths, two are E1-release-only preview assertions; actual River emission/visibility is covered by the station probes above. The final panorama/material refinement additionally passes fresh River boots **2/2**, all ordinary/station captures and performance runs. Shared loading **8/8**, repeated mounts **2/2**, scoped Node guards **34/34**, named task/citation/gate-caller guards **3/3** pass. These are the task's bounded gates; no claim that historical full regression/parity debt is resolved. [Build receipts](build-gates.json) · [E2E log](e2e-gates.log) · [Final raw boot](e10-boot-final.log) · [Scoped guards](scoped-guards.log) · [Named guards](named-guards.log).
+
+Art store **`d5e25522490ae7342e497ce58f51239040a41eb3`** is pushed and remote-verified on **`astra/f-corr4-18`**. Land that store head together with this code branch. [Publication](store-publication.json). Engine **`52a84bc29febd924518528080bee8d0843e4e6d5c89165c1f8cb6f43dd61bcd5` → `6abbafbebf86f1af6cd5496a7d6eb530337e3ff66b16d18aaef691fd9d22d3f5`**; the only change after the captured/tested runtime was relocating an existing JSDoc comment to its original function. The drain owns the untouched pin. [Hash pair](engine-pair.json).
+
+**READY-FOR-GATES** for F-CORR4-18. No remaining implementation in this slice; the visual holds above remain explicit. Rejected candidates and duplicate Blender reexports stay disk-local; durable boards, recipes, measurements and logs are committed. [Run note and reproduction](run-note.md).
