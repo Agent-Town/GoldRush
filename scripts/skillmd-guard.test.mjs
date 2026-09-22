@@ -16,8 +16,9 @@ const refusalSource = readFileSync(process.env.REFUSALS_SOURCE ?? path.resolve(r
 const standingsSource = readFileSync(process.env.STANDINGS_SOURCE ?? path.resolve(root, 'functions/api/standings.ts'), 'utf8');
 const vite = await createServer({ root, appType: 'custom', logLevel: 'silent', server: { middlewareMode: true, watch: null } });
 let supportedContracts;
+let HeadlessContractSimClass;
 try {
-  ({ supportedContractIds: supportedContracts } = await vite.ssrLoadModule('/src/sim/HeadlessContractSim.ts'));
+  ({ supportedContractIds: supportedContracts, HeadlessContractSim: HeadlessContractSimClass } = await vite.ssrLoadModule('/src/sim/HeadlessContractSim.ts'));
 } finally {
   await vite.close();
 }
@@ -28,6 +29,11 @@ const rotations = JSON.parse(read('assets/rotations/rotation-seeds.json'));
 const WORLD_MODEL_LAW = "Importing the county's open sim as a world model is lawful. Declare it in the stack's `worldModel` as `sim-import`, `none`, or a short description up to 64 characters. These honesty laws cover that declaration. It is information only and never changes ranking.";
 const OPERATOR_PROBE_LAW = 'Rows declaring `harness: operator-probe` are verified but never ranked.';
 const E10_PRESERVE_RANKING_LAW = '`e10-last-claim` is ranked by preservation, never by gold.';
+// F-HEAT15-4, owner ruling 2026-09-22 (a). The door document is the ONLY place a headless rider
+// learns the ranking, and heat 15 proved what happens when a board rule is unpublished: three
+// riders sailed the course, two reels verified, and nobody could tell that finishing the race was
+// worth more than tying the standing row on waves, gold and time.
+const REGATTA_MECHANIC_RANKING_LAW = 'The Regatta ranks the mechanic first: on `e5-regatta` a row whose race the county\'s own replay finished outranks any row it did not, ahead of waves, gold, and time, and a row carrying no finish ranks below one that does. The finish is never declared; the assay reads it from your reel and publishes it as `mechanic` on the board row.';
 const COST_RANKING_LAW = 'declared tokens are optional information that never changes ranking.';
 const HARNESS_RECEIPT_LAW = 'A standing without a digest is lawful but unfrozen; the receipt is attribution only and never changes ranking.';
 const HARNESS_DIGEST_RECIPE = 'harnessDigest = lowercase hex SHA-256(UTF-8(JSON.stringify([charterText, notebookGenerationHeader, controllerVersion])))';
@@ -43,6 +49,24 @@ test('skill.md pins the operator-probe ranking law', () => {
 
 test('skill.md pins the E10 preserve ranking law', () => {
   assert.equal(skill.split(E10_PRESERVE_RANKING_LAW).length, 2);
+});
+
+test('skill.md pins the Regatta mechanic-first ranking law', () => {
+  assert.equal(skill.split(REGATTA_MECHANIC_RANKING_LAW).length, 2);
+});
+
+// THE DOOR MIRRORS THE ENGINE'S MECHANIC TABLE (F-HEAT15-4). `functions/api/standings.ts` runs as
+// a Cloudflare worker and cannot import `HeadlessContractSim`, so `MECHANIC_CONTRACTS` is a hand
+// copy of that table's keys. This is the same shape as the door-contracts pin below: the executable
+// list wins, and a map given a board-deciding mechanic in the engine but not at the door — which
+// would rank by waves while the sim reported a finish nobody read — reds here instead of shipping.
+test('the door mirrors the engine\'s mechanic contracts', () => {
+  const block = /const MECHANIC_CONTRACTS: ReadonlySet<string> = new Set\(\[([^\]]*)\]\)/.exec(standingsSource);
+  assert.ok(block, 'MECHANIC_CONTRACTS declaration not found in the door');
+  const door = [...block[1].matchAll(/'([^']+)'/g)].map((match) => match[1]).sort();
+  const engine = [...HeadlessContractSimClass.mechanicContractIds()].sort();
+  assert.ok(engine.length > 0, 'the engine must declare at least one mechanic contract');
+  assert.deepEqual(door, engine);
 });
 
 test('skill.md pins optional declared tokens outside ranking', () => {

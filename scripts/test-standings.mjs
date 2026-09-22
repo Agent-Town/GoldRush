@@ -53,6 +53,7 @@ try {
     await checkAssayIndexRace(onRequest, onRequestAssayQueue);
     await checkPosts(onRequest, onRequestAssayQueue, onRequestAssayVerdict, MAX_JSON_BYTES);
     await checkPreserveRanking(onRequest, compareScores);
+    await checkMechanicRanking(onRequest, compareScores, onRequestAssayQueue, onRequestAssayVerdict, onRequestReassay);
     await checkBankedBaronTapes(onRequest, onRequestAssayQueue, onRequestAssayVerdict, validateTape, validateRunTape);
     await checkBankedHeat11Tapes(onRequest, validateTape, validateRunTape);
     await checkVerdicts(onRequest, onRequestAssayQueue, onRequestAssayVerdict);
@@ -172,6 +173,142 @@ async function checkPreserveRanking(onRequest, compareScores) {
   invalid.score.preserveWavesAlive = 8;
   invalid.score.preserveHpFraction = 1.1;
   equal((await call(onRequest, 'POST', '/api/standings', invalid, makeKv())).status, 400, 'preserve hp fraction is bounded at the score boundary');
+}
+
+/**
+ * THE MECHANIC BEATS THE WALK (F-HEAT15-4, owner ruling 2026-09-22, verbatim "F-HEAT15-4: yes" on
+ * option (a): "a reel that finished the race supersedes one that did not").
+ *
+ * THE DEFECT THIS MEASURES IS A REAL BOARD, not a hypothetical: heat 15 rode `e5-regatta` three
+ * times by SAILING the Claim-Boat, two reels were assayed and VERIFIED, and rank 1 stayed the
+ * heat-14 row won by walking the hero through the water, because ride 2 tied it on waves, gold and
+ * time and `compareScores` fell through to `submittedAt` (`reviews/heat-15-regatta.md`).
+ *
+ * Six checks, in the master's order: (a) the finish outranks a row with MORE waves and no finish,
+ * (b) two finished rows fall through the old ladder unchanged, (c) every other contract compares
+ * byte-identically with and without the field, (d) only a surviving `verified` stores it, (e) a
+ * malformed one is refused at the door, (f) a rider cannot declare it.
+ */
+async function checkMechanicRanking(onRequest, compareScores, queueRoute, verdictRoute, reassayRoute) {
+  const contractId = 'e5-regatta';
+  const epochId = 'epoch-5-deepwater';
+  const key = `standings:s2:${epochId}:${contractId}`;
+  const FINISHED = { id: 'regatta-race', complete: true };
+  const verifiedRow = (index, profileName, waves, gold, timeAlive, submittedAt, mechanic) => {
+    const row = storedRowFor(index, contractId, epochId);
+    row.profileName = profileName;
+    row.waves = row.tape.outcome.waves = waves;
+    row.gold = row.tape.outcome.gold = gold;
+    row.timeAlive = row.tape.outcome.timeAlive = timeAlive;
+    row.submittedAt = submittedAt;
+    row.assay = 'verified';
+    row.assayedAt = submittedAt + 1;
+    row.assayHash = 'fnv1a32:1234abcd';
+    if (mechanic) row.mechanic = mechanic;
+    return row;
+  };
+
+  // (a) THE RULING ITSELF, and deliberately harder than the live case: the walked row is AHEAD on
+  // waves, was submitted first, and still loses to the reel that finished the race.
+  const kv = makeKv();
+  const walked = verifiedRow(1, 'walked the water', 14, 400, 250, 1_000);
+  const sailed = verifiedRow(2, 'sailed the course', 12, 200, 272, 2_000, FINISHED);
+  await kv.put(key, JSON.stringify([walked, sailed]));
+  const board = await call(onRequest, 'GET', `/api/standings?contract=${contractId}&epoch=${epochId}`, undefined, kv);
+  equal(board.status, 200, 'the Regatta board reads');
+  equal(board.body.board.map((row) => row.profileName), ['sailed the course', 'walked the water'],
+    'a finished race outranks a row with more waves, more gold and an earlier date');
+  equal(board.body.board[0].mechanic, FINISHED, 'the board publishes the mechanic it ranked on');
+  equal(board.body.board[1].mechanic, undefined, 'a row the county never verified under the rule carries none');
+
+  // (b) TWO FINISHED ROWS FALL THROUGH THE OLD LADDER, unchanged: waves, then gold, then time
+  // (faster first for a secured row), then the earlier submission.
+  const finished = { secured: true, baseValue: 1, mechanic: FINISHED };
+  equal([
+    { ...finished, profileName: 'fewer waves', waves: 11, gold: 900, timeAlive: 100, submittedAt: 1 },
+    { ...finished, profileName: 'more waves', waves: 12, gold: 1, timeAlive: 300, submittedAt: 9 },
+  ].sort((a, b) => compareScores(a, b, contractId)).map((row) => row.profileName), ['more waves', 'fewer waves'],
+    'two finished rows still rank on waves first');
+  equal([
+    { ...finished, profileName: 'less gold', waves: 12, gold: 100, timeAlive: 100, submittedAt: 1 },
+    { ...finished, profileName: 'more gold', waves: 12, gold: 200, timeAlive: 300, submittedAt: 9 },
+  ].sort((a, b) => compareScores(a, b, contractId)).map((row) => row.profileName), ['more gold', 'less gold'],
+    'then on gold');
+  equal([
+    { ...finished, profileName: 'slower', waves: 12, gold: 200, timeAlive: 300, submittedAt: 1 },
+    { ...finished, profileName: 'faster', waves: 12, gold: 200, timeAlive: 272, submittedAt: 9 },
+  ].sort((a, b) => compareScores(a, b, contractId)).map((row) => row.profileName), ['faster', 'slower'],
+    'then on time, faster securing first');
+  equal([
+    { ...finished, profileName: 'later', waves: 12, gold: 200, timeAlive: 272, submittedAt: 9 },
+    { ...finished, profileName: 'earlier', waves: 12, gold: 200, timeAlive: 272, submittedAt: 1 },
+  ].sort((a, b) => compareScores(a, b, contractId)).map((row) => row.profileName), ['earlier', 'later'],
+    'and an exact tie between two finished rows still goes to the earlier submission');
+
+  // (c) EVERY OTHER CONTRACT IS BYTE-IDENTICAL with and without the field. The comparator's return
+  // VALUE is compared, not just the order, so a clause that merely happened to agree would fail.
+  const pairs = [
+    [{ secured: true, waves: 12, gold: 200, timeAlive: 272, baseValue: 1, submittedAt: 1 }, { secured: true, waves: 14, gold: 100, timeAlive: 250, baseValue: 1, submittedAt: 2 }],
+    [{ secured: true, waves: 12, gold: 200, timeAlive: 272, baseValue: 1, submittedAt: 1 }, { secured: true, waves: 12, gold: 200, timeAlive: 272, baseValue: 1, submittedAt: 2 }],
+    [{ secured: false, waves: 3, gold: 0, timeAlive: 40, baseValue: 1, submittedAt: 1 }, { secured: true, waves: 1, gold: 0, timeAlive: 10, baseValue: 1, submittedAt: 2 }],
+  ];
+  for (const other of ['the-claim', 'e1-baron', 'e10-last-claim', undefined]) {
+    for (const [left, right] of pairs) {
+      equal(compareScores({ ...left, mechanic: FINISHED }, right, other), compareScores(left, right, other),
+        `${other ?? 'no contract'} ranks identically with the field present on the left`);
+      equal(compareScores(left, { ...right, mechanic: FINISHED }, other), compareScores(left, right, other),
+        `${other ?? 'no contract'} ranks identically with the field present on the right`);
+    }
+  }
+
+  // (d) ONLY A SURVIVING `verified` STORES IT — and this is also the re-assay evidence: a standing
+  // that was verified before the rule existed GAINS the flag when the lineage sweep re-queues it
+  // through the same worker path, and LOSES it again the moment a replay stops agreeing.
+  const live = makeKv();
+  const submission = post('9'.repeat(32), 12, tape('regatta-reel', 12, 'fnv1a32:1234abcd', contractId), contractId, epochId);
+  equal((await call(onRequest, 'POST', '/api/standings', submission, live)).status, 200, 'a Regatta reel is accepted');
+  const queued = await workerCall(queueRoute, 'GET', '/api/standings/assay-queue?limit=5', undefined, live, SECRET);
+  const locator = queued.body.queue.find((row) => row.locator.tapeId === 'regatta-reel').locator;
+  const mechanicVerdict = verdict(locator, 'verified', undefined, 'fnv1a32:1234abcd', { waves: 12, timeAlive: 120, gold: 40 });
+  mechanicVerdict.mechanic = FINISHED;
+  equal((await workerCall(verdictRoute, 'POST', '/api/standings/assay-verdict', mechanicVerdict, live, SECRET)).status, 200, 'a verified verdict carrying a mechanic is accepted');
+  equal(JSON.parse(await live.get(key))[0].mechanic, FINISHED, 'a verified Regatta row stores the mechanic');
+
+  equal((await workerCall(reassayRoute, 'POST', '/api/standings/reassay', { epochId, contractId, reason: 'composition moved' }, live, SECRET)).body.requeued, 1, 'the sweep re-queues the verified row');
+  const requeued = JSON.parse(await live.get(key))[0];
+  equal(requeued.assay, 'pending', 're-queued row is pending again');
+  equal(requeued.mechanic, undefined, 'and gives the flag back with the snapshot, to be re-earned by the replay');
+  const second = await workerCall(queueRoute, 'GET', '/api/standings/assay-queue?limit=5', undefined, live, SECRET);
+  const reLocator = second.body.queue.find((row) => row.locator.tapeId === 'regatta-reel').locator;
+  equal((await workerCall(verdictRoute, 'POST', '/api/standings/assay-verdict', verdict(reLocator, 'rejected', 'replay diverged', 'fnv1a32:1234abcd'), live, SECRET)).status, 200, 'the re-assay may reject');
+  equal(JSON.parse(await live.get(key))[0].mechanic, undefined, 'a rejected verdict stores no mechanic');
+
+  // (e) A MALFORMED MECHANIC IS REFUSED exactly as a malformed securedSnapshot is, and it may
+  // never ride a verdict that is not a verification.
+  const refused = makeKv();
+  await call(onRequest, 'POST', '/api/standings', post('a'.repeat(32), 12, tape('refuse-me', 12, 'fnv1a32:1234abcd', contractId), contractId, epochId), refused);
+  const refusedQueue = await workerCall(queueRoute, 'GET', '/api/standings/assay-queue?limit=5', undefined, refused, SECRET);
+  const refusedLocator = refusedQueue.body.queue.find((row) => row.locator.tapeId === 'refuse-me').locator;
+  for (const bad of [{ id: '', complete: true }, { id: 'regatta-race' }, { id: 'regatta-race', complete: 'yes' }, { id: 'regatta-race', complete: true, extra: 1 }, 'regatta-race', null, { id: 'x'.repeat(65), complete: true }]) {
+    const payload = verdict(refusedLocator, 'verified', undefined, 'fnv1a32:1234abcd', { waves: 12, timeAlive: 120, gold: 40 });
+    payload.mechanic = bad;
+    equal((await workerCall(verdictRoute, 'POST', '/api/standings/assay-verdict', payload, refused, SECRET)).status, 400, `malformed mechanic refused: ${JSON.stringify(bad)}`);
+  }
+  const onRejection = verdict(refusedLocator, 'rejected', 'replay diverged', 'fnv1a32:1234abcd');
+  onRejection.mechanic = FINISHED;
+  equal((await workerCall(verdictRoute, 'POST', '/api/standings/assay-verdict', onRejection, refused, SECRET)).status, 400, 'a rejected verdict may not carry a mechanic at all');
+  equal(JSON.parse(await refused.get(key))[0].assay, 'pending', 'and none of those refusals moved the row');
+
+  // (f) A RIDER CANNOT DECLARE IT. Both shapes are refused before storage: on the payload
+  // (`POST_KEYS`) and inside the score (`SCORE_KEYS`, unchanged by this ruling).
+  const rider = makeKv();
+  const claimed = post('d'.repeat(32), 12, tape('rider-claim', 12, 'fnv1a32:1234abcd', contractId), contractId, epochId);
+  claimed.mechanic = FINISHED;
+  equal((await call(onRequest, 'POST', '/api/standings', claimed, rider)).status, 400, 'a POST carrying a mechanic is refused');
+  const inScore = post('e'.repeat(32), 12, tape('rider-score', 12, 'fnv1a32:1234abcd', contractId), contractId, epochId);
+  inScore.score.mechanic = FINISHED;
+  equal((await call(onRequest, 'POST', '/api/standings', inScore, rider)).status, 400, 'a mechanic inside the score is refused');
+  ok(!(await rider.get(key)), 'and neither refusal wrote a board');
 }
 
 async function checkAssayStrips(onRequest) {
