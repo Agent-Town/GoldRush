@@ -1,7 +1,7 @@
 {
   "era": 6,
   "name": "the Re-surveyed Claims",
-  "engineHash": "df53e4483e0f1f173a1ab0fb02c1938e8f5201d482220e26315b5928c87686db",
+  "engineHash": "24b70411d2849f7a8bb5454decdfffd3bae4e4ba6878bd81f6b3edcceb7a5e6b",
   "declaredAt": "2026-09-14",
   "note": "Era 6 opens with Astra's map campaign (sol/map-art-inventory-20260908 7c2744e5a) landed by maps-campaign-land-era6 on 2026-09-14: 17 contracts re-parameterised (tileParams on 13, twists on 3, briefings on 5), the door tightened to the contract's own research epoch, 66 src files, the map-rebuild-spike terrain, plaza props and flotilla models. Owner ruling 2026-09-13, verbatim: \"ah, that is all no problem. we don't have players yet so we can just keep going\" and \"we then have to make another run in the future but not immediately\"; the name ratified 2026-09-14 (\"the Re-surveye Claims\" is good for me). Every era-5 reel reads \"This reel rode era 5; the county accepts era 6\" and stands retired, counted. Heat 14 re-rides the boards on this era when the owner says so.",
   "viewSchema": {
@@ -316,6 +316,12 @@
       "engineHash": "df53e4483e0f1f173a1ab0fb02c1938e8f5201d482220e26315b5928c87686db",
       "pinnedAt": "2026-09-22",
       "cause": "same era, pin #38: sol-regatta-view-parity (Astra on the owner's wave word 2026-09-22 \"Full Codex power\", lane-b; F-HEAT15-2, F-HEAT15-3): now.regatta publishes finishedAt / forfeitedAt and the finish gate in buoysPassed, canStepAshore and the shore as a bounds rule on regatta_boat; view schema 3 → 4; no order, contract, table or null floor moved; the finish stake recorded as the sixth passed gate re-pins the race spec's event-log hashes by named cause (F-RVP-8); the store unchanged at adf6bd1. Renumbered: the chain pinned #37 (b489190a…) before the fidelity-1 final slice landed its own #37, so this is the merged tree's hash re-measured after the main merge, as #38. reviews/sol-regatta-view-parity.md",
+      "aliases": []
+    },
+    {
+      "engineHash": "24b70411d2849f7a8bb5454decdfffd3bae4e4ba6878bd81f6b3edcceb7a5e6b",
+      "pinnedAt": "2026-09-22",
+      "cause": "same era, pin #39: sol-test-truth-registry-census (Astra on the owner's wave word 2026-09-22 \"Full Codex power\", lane-b): the terrain registry, the E10 census and the map census read the truths that moved under them; test files only, no assertion weakened, no source, store, contract or null floor moved; the store unchanged at d893817. reviews/sol-test-truth-registry-census.md",
       "aliases": []
     }
   ],
