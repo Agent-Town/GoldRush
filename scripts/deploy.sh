@@ -394,6 +394,11 @@ for ((ATTEMPT = 1; ATTEMPT <= VERIFY_ATTEMPTS; ATTEMPT++)); do
         "--include=/assets/pilots/map-rebuild-spike/sources/**.json"
         "--include=/assets/pilots/map-rebuild-spike/sources/**.mjs"
         "--include=/assets/pilots/map-rebuild-spike/sources/**.ts"
+        # sol-map-art-fidelity-1 slice 2 (2026-09-22, F-FID1-8): the Ember Shore's code imports its native mineral texture
+        # from sources/<map>/ (an ES import, so vite bundles it and the runtime closure the mirror is measured against
+        # contains it); deploy-mirror-allowlist.test.mjs:97 measured the PNG missing. Imported textures ship; .blend
+        # inputs and unreferenced images still do not.
+        "--include=/assets/pilots/map-rebuild-spike/sources/**.png"
         "--include=/assets/pilots/*-3d/*.e*.glb"
         "--include=/assets/pilots/railcar-3d/railcar.glb"
         "--include=/assets/pilots/claim-boat-3d/claim-boat.glb"
