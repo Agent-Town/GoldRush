@@ -1,0 +1,30 @@
+[
+  {
+    "label": "related",
+    "command": [
+      "npx",
+      "playwright",
+      "test",
+      "--workers=1",
+      "--project=desktop-chrome",
+      "--project=mobile-chrome",
+      "--trace=off",
+      "--reporter=line",
+      "--output=artifacts/sol/map-art-campaign-2/_raw/run-8/motor-hauler-related",
+      "e2e/_s2080-f1742-1-boot-probe.spec.ts",
+      "e2e/board-gating-and-profiles.spec.ts",
+      "e2e/e5-arsenal.spec.ts",
+      "e2e/playability-secure.spec.ts",
+      "e2e/run3d-gold-seam.spec.ts",
+      "e2e/panorama-framing.spec.ts",
+      "e2e/rider-parity-grammar.spec.ts",
+      "e2e/terrain3d-registry.spec.ts",
+      "e2e/wd02-barks.spec.ts",
+      "e2e/true-reel-harness.spec.ts"
+    ],
+    "environment": {},
+    "exit": 1,
+    "seconds": 635.49,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-8/motor-hauler-related.log"
+  }
+]

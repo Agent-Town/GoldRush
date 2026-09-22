@@ -1,0 +1,150 @@
+{
+  "rows": [
+    {
+      "width": 1280,
+      "region": "bank",
+      "box": [
+        980,
+        450,
+        1050,
+        550
+      ],
+      "run6": {
+        "median": 0.4821576470588235,
+        "rms": 0.01592008739876847,
+        "rgbMean": [
+          0.631995518207254,
+          0.46357142857145506,
+          0.22068179271710503
+        ],
+        "gradientRmsX": 0.0072665419286461145,
+        "gradientRmsY": 0.009844849100528772
+      },
+      "run8Base": {
+        "median": 0.476604705882353,
+        "rms": 0.014526458910594927
+      },
+      "run8": {
+        "median": 0.476604705882353,
+        "rms": 0.014526458910594927
+      },
+      "medianChangePercent": -1.1516858044964495,
+      "rmsChangePercent": -8.753899732242354
+    },
+    {
+      "width": 1280,
+      "region": "water",
+      "box": [
+        250,
+        210,
+        480,
+        275
+      ],
+      "run6": {
+        "median": 0.31591529411764707,
+        "rms": 0.01708821369008304,
+        "rgbMean": [
+          0.3126631254508798,
+          0.3330437405731535,
+          0.2163493999605964
+        ],
+        "gradientRmsX": 0.005159426709686942,
+        "gradientRmsY": 0.014967360053679598
+      },
+      "run8Base": {
+        "median": 0.29857725490196074,
+        "rms": 0.01660422968632405
+      },
+      "run8": {
+        "median": 0.3610392156862745,
+        "rms": 0.01186169348899931
+      },
+      "medianChangePercent": 14.283550815309143,
+      "rmsChangePercent": -30.585526936129583
+    },
+    {
+      "width": 390,
+      "region": "bank",
+      "box": [
+        20,
+        380,
+        115,
+        415
+      ],
+      "run6": {
+        "median": 0.4664713725490196,
+        "rms": 0.023141053733803527,
+        "rgbMean": [
+          0.6087913902402979,
+          0.44200973020788975,
+          0.20601149933658378
+        ],
+        "gradientRmsX": 0.004751172220634378,
+        "gradientRmsY": 0.0058659487881152035
+      },
+      "run8Base": {
+        "median": 0.4060996078431372,
+        "rms": 0.03372672499526468
+      },
+      "run8": {
+        "median": 0.4060996078431372,
+        "rms": 0.06962270910663751
+      },
+      "medianChangePercent": -12.942222879827025,
+      "rmsChangePercent": 200.86231123060503
+    },
+    {
+      "width": 390,
+      "region": "water",
+      "box": [
+        20,
+        292,
+        80,
+        318
+      ],
+      "run6": {
+        "median": 0.3955913725490196,
+        "rms": 0.039638017976183826,
+        "rgbMean": [
+          0.4399170437405737,
+          0.3911613876319766,
+          0.24112870789341187
+        ],
+        "gradientRmsX": 0.002839602984972957,
+        "gradientRmsY": 0.004057275733928736
+      },
+      "run8Base": {
+        "median": 0.3669290196078432,
+        "rms": 0.036171382074421304
+      },
+      "run8": {
+        "median": 0.36671019607843136,
+        "rms": 0.027190424315529402
+      },
+      "medianChangePercent": -7.300759944406887,
+      "rmsChangePercent": -31.40316871578558
+    }
+  ],
+  "controls": [
+    {
+      "width": 390,
+      "kind": "uncovered-ground",
+      "box": [
+        20,
+        455,
+        100,
+        510
+      ],
+      "before": {
+        "median": 0.46148470588235296,
+        "rms": 0.020992412159194895
+      },
+      "after": {
+        "median": 0.46148470588235296,
+        "rms": 0.020992412159194895
+      },
+      "identicalPixels": true
+    }
+  ],
+  "interpretation": "Phone fixed region includes additional rock silhouettes; increased RMS is disclosed, not described as lower texture noise. Ground-only control and byte-exact floor separately verify original pigment preservation."
+}

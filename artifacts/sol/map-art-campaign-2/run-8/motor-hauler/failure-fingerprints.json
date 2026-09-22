@@ -1,0 +1,811 @@
+{
+  "candidateFailures": 22,
+  "distinctBaseFailures": 22,
+  "allFinalFailuresMatchExactBase": true,
+  "rows": [
+    {
+      "test": "desktop-chrome e2e/e4-dust-flats.spec.ts:31:1 fires the authored storm and peels a convoy off the ORBIT road",
+      "candidate": {
+        "details": [
+          "Error: expect(received).toMatchObject(expected)",
+          "Matcher error: received value must be a non-null object",
+          "Received has value: undefined"
+        ],
+        "assertion": [
+          "e4-dust-flats.spec.ts",
+          "46",
+          "16"
+        ]
+      },
+      "baseAttempts": [
+        {
+          "receipt": "base-final.json",
+          "fingerprint": {
+            "details": [
+              "Error: expect(received).toMatchObject(expected)",
+              "Matcher error: received value must be a non-null object",
+              "Received has value: undefined"
+            ],
+            "assertion": [
+              "e4-dust-flats.spec.ts",
+              "46",
+              "16"
+            ]
+          }
+        }
+      ],
+      "fingerprintMatches": true
+    },
+    {
+      "test": "desktop-chrome e2e/e4-dust-flats.spec.ts:97:1 offers road grading and the hauler in a normal Motor-era run",
+      "candidate": {
+        "details": [
+          "Error: expect(received).toBe(expected) // Object.is equality",
+          "Expected: 1",
+          "Received: 0"
+        ],
+        "assertion": [
+          "e4-dust-flats.spec.ts",
+          "110",
+          "115"
+        ]
+      },
+      "baseAttempts": [
+        {
+          "receipt": "base-final.json",
+          "fingerprint": {
+            "details": [
+              "Error: expect(received).toBe(expected) // Object.is equality",
+              "Expected: 1",
+              "Received: 0"
+            ],
+            "assertion": [
+              "e4-dust-flats.spec.ts",
+              "110",
+              "115"
+            ]
+          }
+        }
+      ],
+      "fingerprintMatches": true
+    },
+    {
+      "test": "desktop-chrome e2e/e4-roads-and-convoys.spec.ts:69:1 every Motor reel replays to its claimed hash in Node and Chromium",
+      "candidate": {
+        "details": [
+          "Error: Command failed: /opt/homebrew/Cellar/node/26.4.0/bin/node scripts/assay-replay-agent.mjs artifacts/e4-roads-and-convoys/e4-dust-flats-floor.tape.json",
+          "assay replay failed: malformed tape"
+        ],
+        "assertion": [
+          "e4-roads-and-convoys.spec.ts",
+          "80",
+          "29"
+        ]
+      },
+      "baseAttempts": [
+        {
+          "receipt": "base-final.json",
+          "fingerprint": {
+            "details": [
+              "Error: Command failed: /opt/homebrew/Cellar/node/26.4.0/bin/node scripts/assay-replay-agent.mjs artifacts/e4-roads-and-convoys/e4-dust-flats-floor.tape.json",
+              "assay replay failed: malformed tape"
+            ],
+            "assertion": [
+              "e4-roads-and-convoys.spec.ts",
+              "80",
+              "29"
+            ]
+          }
+        }
+      ],
+      "fingerprintMatches": true
+    },
+    {
+      "test": "desktop-chrome e2e/e5-arsenal.spec.ts:48:1 pressure-seals the rig and records cure-arm outcomes through the existing resolver",
+      "candidate": {
+        "details": [
+          "Error: expect(received).toBe(expected) // Object.is equality",
+          "Expected: true",
+          "Received: false"
+        ],
+        "assertion": [
+          "e5-arsenal.spec.ts",
+          "58",
+          "90"
+        ]
+      },
+      "baseAttempts": [
+        {
+          "receipt": "base-arsenal-repeat.json",
+          "fingerprint": {
+            "details": [
+              "Error: expect(received).toBe(expected) // Object.is equality",
+              "Expected: false",
+              "Received: true"
+            ],
+            "assertion": [
+              "e5-arsenal.spec.ts",
+              "60",
+              "90"
+            ]
+          }
+        },
+        {
+          "receipt": "base-arsenal-repeat.json",
+          "fingerprint": {
+            "details": [
+              "Error: expect(received).toBe(expected) // Object.is equality",
+              "Expected: true",
+              "Received: false"
+            ],
+            "assertion": [
+              "e5-arsenal.spec.ts",
+              "58",
+              "90"
+            ]
+          }
+        },
+        {
+          "receipt": "base-arsenal-repeat.json",
+          "fingerprint": {
+            "details": [
+              "Error: expect(received).toBe(expected) // Object.is equality",
+              "Expected: false",
+              "Received: true"
+            ],
+            "assertion": [
+              "e5-arsenal.spec.ts",
+              "60",
+              "90"
+            ]
+          }
+        },
+        {
+          "receipt": "base-arsenal.json",
+          "fingerprint": {
+            "details": [
+              "Error: expect(received).toBe(expected) // Object.is equality",
+              "Expected: true",
+              "Received: false"
+            ],
+            "assertion": [
+              "e5-arsenal.spec.ts",
+              "58",
+              "90"
+            ]
+          }
+        },
+        {
+          "receipt": "base-final.json",
+          "fingerprint": {
+            "details": [
+              "Error: expect(received).toBe(expected) // Object.is equality",
+              "Expected: false",
+              "Received: true"
+            ],
+            "assertion": [
+              "e5-arsenal.spec.ts",
+              "60",
+              "90"
+            ]
+          }
+        }
+      ],
+      "fingerprintMatches": true
+    },
+    {
+      "test": "desktop-chrome e2e/rider-parity-grammar.spec.ts:77:1 a plain-boot human can build on the Claim-Boat deck (BOAT_BUILD parity)",
+      "candidate": {
+        "details": [
+          "Error: expect(locator).toBeVisible() failed",
+          "Expected: visible",
+          "Received: hidden"
+        ],
+        "assertion": [
+          "rider-parity-grammar.spec.ts",
+          "86",
+          "29"
+        ]
+      },
+      "baseAttempts": [
+        {
+          "receipt": "base-final.json",
+          "fingerprint": {
+            "details": [
+              "Error: expect(locator).toBeVisible() failed",
+              "Expected: visible",
+              "Received: hidden"
+            ],
+            "assertion": [
+              "rider-parity-grammar.spec.ts",
+              "86",
+              "29"
+            ]
+          }
+        }
+      ],
+      "fingerprintMatches": true
+    },
+    {
+      "test": "desktop-chrome e2e/rider-parity-grammar.spec.ts:107:1 a plain-boot human can weigh anchor from the same prompt (REANCHOR parity)",
+      "candidate": {
+        "details": [
+          "Error: expect(locator).toBeVisible() failed",
+          "Expected: visible",
+          "Received: hidden"
+        ],
+        "assertion": [
+          "rider-parity-grammar.spec.ts",
+          "116",
+          "30"
+        ]
+      },
+      "baseAttempts": [
+        {
+          "receipt": "base-final.json",
+          "fingerprint": {
+            "details": [
+              "Error: expect(locator).toBeVisible() failed",
+              "Expected: visible",
+              "Received: hidden"
+            ],
+            "assertion": [
+              "rider-parity-grammar.spec.ts",
+              "116",
+              "30"
+            ]
+          }
+        }
+      ],
+      "fingerprintMatches": true
+    },
+    {
+      "test": "desktop-chrome e2e/terrain3d-registry.spec.ts:196:1 all sixteen contracts mount terrain, panorama, and grounded render-only landmarks with matching water",
+      "candidate": {
+        "details": [
+          "Error: expect(received).toBe(expected) // Object.is equality",
+          "Expected: 32768",
+          "Received: 51200"
+        ],
+        "assertion": [
+          "terrain3d-registry.spec.ts",
+          "217",
+          "81"
+        ]
+      },
+      "baseAttempts": [
+        {
+          "receipt": "base-final.json",
+          "fingerprint": {
+            "details": [
+              "Error: expect(received).toBe(expected) // Object.is equality",
+              "Expected: 32768",
+              "Received: 51200"
+            ],
+            "assertion": [
+              "terrain3d-registry.spec.ts",
+              "217",
+              "81"
+            ]
+          }
+        }
+      ],
+      "fingerprintMatches": true
+    },
+    {
+      "test": "desktop-chrome e2e/terrain3d-registry.spec.ts:272:1 rim and horizon probes keep the terrain meeting gradual and every panorama readable",
+      "candidate": {
+        "details": [
+          "Error: expect(locator).toHaveAttribute(expected) failed",
+          "Expected: \"painted-underlay-alpha-rim\"",
+          "Received: \"opaque-sculpt-edge\""
+        ],
+        "assertion": [
+          "terrain3d-registry.spec.ts",
+          "281",
+          "26"
+        ]
+      },
+      "baseAttempts": [
+        {
+          "receipt": "base-final.json",
+          "fingerprint": {
+            "details": [
+              "Error: expect(locator).toHaveAttribute(expected) failed",
+              "Expected: \"painted-underlay-alpha-rim\"",
+              "Received: \"opaque-sculpt-edge\""
+            ],
+            "assertion": [
+              "terrain3d-registry.spec.ts",
+              "281",
+              "26"
+            ]
+          }
+        }
+      ],
+      "fingerprintMatches": true
+    },
+    {
+      "test": "desktop-chrome e2e/terrain3d-registry.spec.ts:345:1 all fifteen contracts stay painted in LITE and on invalid terrain bytes",
+      "candidate": {
+        "details": [
+          "Error: expect(locator).toHaveAttribute(expected) failed",
+          "Expected: \"failed\"",
+          "Received: \"lite\""
+        ],
+        "assertion": [
+          "terrain3d-registry.spec.ts",
+          "362",
+          "42"
+        ]
+      },
+      "baseAttempts": [
+        {
+          "receipt": "base-final.json",
+          "fingerprint": {
+            "details": [
+              "Error: expect(locator).toHaveAttribute(expected) failed",
+              "Expected: \"failed\"",
+              "Received: \"lite\""
+            ],
+            "assertion": [
+              "terrain3d-registry.spec.ts",
+              "362",
+              "42"
+            ]
+          }
+        }
+      ],
+      "fingerprintMatches": true
+    },
+    {
+      "test": "desktop-chrome e2e/true-reel-harness.spec.ts:12:1 the browser replays the Claim control and a terrain-reading Motor reel to the claimed and node hashes",
+      "candidate": {
+        "details": [
+          "Error: Command failed: /opt/homebrew/Cellar/node/26.4.0/bin/node scripts/assay-replay-agent.mjs artifacts/e4-roads-and-convoys/e4-dust-flats-floor.tape.json",
+          "assay replay failed: malformed tape"
+        ],
+        "assertion": [
+          "true-reel-harness.spec.ts",
+          "23",
+          "29"
+        ]
+      },
+      "baseAttempts": [
+        {
+          "receipt": "base-final.json",
+          "fingerprint": {
+            "details": [
+              "Error: Command failed: /opt/homebrew/Cellar/node/26.4.0/bin/node scripts/assay-replay-agent.mjs artifacts/e4-roads-and-convoys/e4-dust-flats-floor.tape.json",
+              "assay replay failed: malformed tape"
+            ],
+            "assertion": [
+              "true-reel-harness.spec.ts",
+              "23",
+              "29"
+            ]
+          }
+        }
+      ],
+      "fingerprintMatches": true
+    },
+    {
+      "test": "desktop-chrome e2e/true-reel-harness.spec.ts:44:1 the module worker takes Hill Mine from the tape without a page location",
+      "candidate": {
+        "details": [
+          "Error: Command failed: /opt/homebrew/Cellar/node/26.4.0/bin/node scripts/assay-replay-agent.mjs artifacts/claude-debut-20260901/claude-opus-hillmine/t09-verify.json",
+          "assay replay failed: malformed tape"
+        ],
+        "assertion": [
+          "true-reel-harness.spec.ts",
+          "46",
+          "27"
+        ]
+      },
+      "baseAttempts": [
+        {
+          "receipt": "base-final.json",
+          "fingerprint": {
+            "details": [
+              "Error: Command failed: /opt/homebrew/Cellar/node/26.4.0/bin/node scripts/assay-replay-agent.mjs artifacts/claude-debut-20260901/claude-opus-hillmine/t09-verify.json",
+              "assay replay failed: malformed tape"
+            ],
+            "assertion": [
+              "true-reel-harness.spec.ts",
+              "46",
+              "27"
+            ]
+          }
+        }
+      ],
+      "fingerprintMatches": true
+    },
+    {
+      "test": "mobile-chrome e2e/e4-dust-flats.spec.ts:31:1 fires the authored storm and peels a convoy off the ORBIT road",
+      "candidate": {
+        "details": [
+          "Error: expect(received).toMatchObject(expected)",
+          "Matcher error: received value must be a non-null object",
+          "Received has value: undefined"
+        ],
+        "assertion": [
+          "e4-dust-flats.spec.ts",
+          "46",
+          "16"
+        ]
+      },
+      "baseAttempts": [
+        {
+          "receipt": "base-final.json",
+          "fingerprint": {
+            "details": [
+              "Error: expect(received).toMatchObject(expected)",
+              "Matcher error: received value must be a non-null object",
+              "Received has value: undefined"
+            ],
+            "assertion": [
+              "e4-dust-flats.spec.ts",
+              "46",
+              "16"
+            ]
+          }
+        }
+      ],
+      "fingerprintMatches": true
+    },
+    {
+      "test": "mobile-chrome e2e/e4-dust-flats.spec.ts:97:1 offers road grading and the hauler in a normal Motor-era run",
+      "candidate": {
+        "details": [
+          "Error: expect(received).toBe(expected) // Object.is equality",
+          "Expected: 1",
+          "Received: 0"
+        ],
+        "assertion": [
+          "e4-dust-flats.spec.ts",
+          "110",
+          "115"
+        ]
+      },
+      "baseAttempts": [
+        {
+          "receipt": "base-final.json",
+          "fingerprint": {
+            "details": [
+              "Error: expect(received).toBe(expected) // Object.is equality",
+              "Expected: 1",
+              "Received: 0"
+            ],
+            "assertion": [
+              "e4-dust-flats.spec.ts",
+              "110",
+              "115"
+            ]
+          }
+        }
+      ],
+      "fingerprintMatches": true
+    },
+    {
+      "test": "mobile-chrome e2e/e4-roads-and-convoys.spec.ts:69:1 every Motor reel replays to its claimed hash in Node and Chromium",
+      "candidate": {
+        "details": [
+          "Error: Command failed: /opt/homebrew/Cellar/node/26.4.0/bin/node scripts/assay-replay-agent.mjs artifacts/e4-roads-and-convoys/e4-dust-flats-floor.tape.json",
+          "assay replay failed: malformed tape"
+        ],
+        "assertion": [
+          "e4-roads-and-convoys.spec.ts",
+          "80",
+          "29"
+        ]
+      },
+      "baseAttempts": [
+        {
+          "receipt": "base-final.json",
+          "fingerprint": {
+            "details": [
+              "Error: Command failed: /opt/homebrew/Cellar/node/26.4.0/bin/node scripts/assay-replay-agent.mjs artifacts/e4-roads-and-convoys/e4-dust-flats-floor.tape.json",
+              "assay replay failed: malformed tape"
+            ],
+            "assertion": [
+              "e4-roads-and-convoys.spec.ts",
+              "80",
+              "29"
+            ]
+          }
+        }
+      ],
+      "fingerprintMatches": true
+    },
+    {
+      "test": "mobile-chrome e2e/e5-arsenal.spec.ts:48:1 pressure-seals the rig and records cure-arm outcomes through the existing resolver",
+      "candidate": {
+        "details": [
+          "Error: expect(received).toBe(expected) // Object.is equality",
+          "Expected: false",
+          "Received: true"
+        ],
+        "assertion": [
+          "e5-arsenal.spec.ts",
+          "60",
+          "90"
+        ]
+      },
+      "baseAttempts": [
+        {
+          "receipt": "base-arsenal-repeat.json",
+          "fingerprint": {
+            "details": [
+              "Error: expect(received).toBe(expected) // Object.is equality",
+              "Expected: true",
+              "Received: false"
+            ],
+            "assertion": [
+              "e5-arsenal.spec.ts",
+              "58",
+              "90"
+            ]
+          }
+        },
+        {
+          "receipt": "base-arsenal-repeat.json",
+          "fingerprint": {
+            "details": [
+              "Error: expect(received).toBe(expected) // Object.is equality",
+              "Expected: false",
+              "Received: true"
+            ],
+            "assertion": [
+              "e5-arsenal.spec.ts",
+              "60",
+              "90"
+            ]
+          }
+        },
+        {
+          "receipt": "base-arsenal.json",
+          "fingerprint": {
+            "details": [
+              "Error: expect(received).toBe(expected) // Object.is equality",
+              "Expected: true",
+              "Received: false"
+            ],
+            "assertion": [
+              "e5-arsenal.spec.ts",
+              "58",
+              "90"
+            ]
+          }
+        }
+      ],
+      "fingerprintMatches": true
+    },
+    {
+      "test": "mobile-chrome e2e/rider-parity-grammar.spec.ts:77:1 a plain-boot human can build on the Claim-Boat deck (BOAT_BUILD parity)",
+      "candidate": {
+        "details": [
+          "Error: expect(locator).toBeVisible() failed",
+          "Expected: visible",
+          "Received: hidden"
+        ],
+        "assertion": [
+          "rider-parity-grammar.spec.ts",
+          "86",
+          "29"
+        ]
+      },
+      "baseAttempts": [
+        {
+          "receipt": "base-final.json",
+          "fingerprint": {
+            "details": [
+              "Error: expect(locator).toBeVisible() failed",
+              "Expected: visible",
+              "Received: hidden"
+            ],
+            "assertion": [
+              "rider-parity-grammar.spec.ts",
+              "86",
+              "29"
+            ]
+          }
+        }
+      ],
+      "fingerprintMatches": true
+    },
+    {
+      "test": "mobile-chrome e2e/rider-parity-grammar.spec.ts:107:1 a plain-boot human can weigh anchor from the same prompt (REANCHOR parity)",
+      "candidate": {
+        "details": [
+          "Error: expect(locator).toBeVisible() failed",
+          "Expected: visible",
+          "Received: hidden"
+        ],
+        "assertion": [
+          "rider-parity-grammar.spec.ts",
+          "116",
+          "30"
+        ]
+      },
+      "baseAttempts": [
+        {
+          "receipt": "base-final.json",
+          "fingerprint": {
+            "details": [
+              "Error: expect(locator).toBeVisible() failed",
+              "Expected: visible",
+              "Received: hidden"
+            ],
+            "assertion": [
+              "rider-parity-grammar.spec.ts",
+              "116",
+              "30"
+            ]
+          }
+        }
+      ],
+      "fingerprintMatches": true
+    },
+    {
+      "test": "mobile-chrome e2e/terrain3d-registry.spec.ts:196:1 all sixteen contracts mount terrain, panorama, and grounded render-only landmarks with matching water",
+      "candidate": {
+        "details": [
+          "Error: expect(received).toBe(expected) // Object.is equality",
+          "Expected: 32768",
+          "Received: 51200"
+        ],
+        "assertion": [
+          "terrain3d-registry.spec.ts",
+          "217",
+          "81"
+        ]
+      },
+      "baseAttempts": [
+        {
+          "receipt": "base-final.json",
+          "fingerprint": {
+            "details": [
+              "Error: expect(received).toBe(expected) // Object.is equality",
+              "Expected: 32768",
+              "Received: 51200"
+            ],
+            "assertion": [
+              "terrain3d-registry.spec.ts",
+              "217",
+              "81"
+            ]
+          }
+        }
+      ],
+      "fingerprintMatches": true
+    },
+    {
+      "test": "mobile-chrome e2e/terrain3d-registry.spec.ts:272:1 rim and horizon probes keep the terrain meeting gradual and every panorama readable",
+      "candidate": {
+        "details": [
+          "Error: expect(locator).toHaveAttribute(expected) failed",
+          "Expected: \"painted-underlay-alpha-rim\"",
+          "Received: \"opaque-sculpt-edge\""
+        ],
+        "assertion": [
+          "terrain3d-registry.spec.ts",
+          "281",
+          "26"
+        ]
+      },
+      "baseAttempts": [
+        {
+          "receipt": "base-final.json",
+          "fingerprint": {
+            "details": [
+              "Error: expect(locator).toHaveAttribute(expected) failed",
+              "Expected: \"painted-underlay-alpha-rim\"",
+              "Received: \"opaque-sculpt-edge\""
+            ],
+            "assertion": [
+              "terrain3d-registry.spec.ts",
+              "281",
+              "26"
+            ]
+          }
+        }
+      ],
+      "fingerprintMatches": true
+    },
+    {
+      "test": "mobile-chrome e2e/terrain3d-registry.spec.ts:345:1 all fifteen contracts stay painted in LITE and on invalid terrain bytes",
+      "candidate": {
+        "details": [
+          "Error: expect(locator).toHaveAttribute(expected) failed",
+          "Expected: \"failed\"",
+          "Received: \"lite\""
+        ],
+        "assertion": [
+          "terrain3d-registry.spec.ts",
+          "362",
+          "42"
+        ]
+      },
+      "baseAttempts": [
+        {
+          "receipt": "base-final.json",
+          "fingerprint": {
+            "details": [
+              "Error: expect(locator).toHaveAttribute(expected) failed",
+              "Expected: \"failed\"",
+              "Received: \"lite\""
+            ],
+            "assertion": [
+              "terrain3d-registry.spec.ts",
+              "362",
+              "42"
+            ]
+          }
+        }
+      ],
+      "fingerprintMatches": true
+    },
+    {
+      "test": "mobile-chrome e2e/true-reel-harness.spec.ts:12:1 the browser replays the Claim control and a terrain-reading Motor reel to the claimed and node hashes",
+      "candidate": {
+        "details": [
+          "Error: Command failed: /opt/homebrew/Cellar/node/26.4.0/bin/node scripts/assay-replay-agent.mjs artifacts/e4-roads-and-convoys/e4-dust-flats-floor.tape.json",
+          "assay replay failed: malformed tape"
+        ],
+        "assertion": [
+          "true-reel-harness.spec.ts",
+          "23",
+          "29"
+        ]
+      },
+      "baseAttempts": [
+        {
+          "receipt": "base-final.json",
+          "fingerprint": {
+            "details": [
+              "Error: Command failed: /opt/homebrew/Cellar/node/26.4.0/bin/node scripts/assay-replay-agent.mjs artifacts/e4-roads-and-convoys/e4-dust-flats-floor.tape.json",
+              "assay replay failed: malformed tape"
+            ],
+            "assertion": [
+              "true-reel-harness.spec.ts",
+              "23",
+              "29"
+            ]
+          }
+        }
+      ],
+      "fingerprintMatches": true
+    },
+    {
+      "test": "mobile-chrome e2e/true-reel-harness.spec.ts:44:1 the module worker takes Hill Mine from the tape without a page location",
+      "candidate": {
+        "details": [
+          "Error: Command failed: /opt/homebrew/Cellar/node/26.4.0/bin/node scripts/assay-replay-agent.mjs artifacts/claude-debut-20260901/claude-opus-hillmine/t09-verify.json",
+          "assay replay failed: malformed tape"
+        ],
+        "assertion": [
+          "true-reel-harness.spec.ts",
+          "46",
+          "27"
+        ]
+      },
+      "baseAttempts": [
+        {
+          "receipt": "base-final.json",
+          "fingerprint": {
+            "details": [
+              "Error: Command failed: /opt/homebrew/Cellar/node/26.4.0/bin/node scripts/assay-replay-agent.mjs artifacts/claude-debut-20260901/claude-opus-hillmine/t09-verify.json",
+              "assay replay failed: malformed tape"
+            ],
+            "assertion": [
+              "true-reel-harness.spec.ts",
+              "46",
+              "27"
+            ]
+          }
+        }
+      ],
+      "fingerprintMatches": true
+    }
+  ]
+}

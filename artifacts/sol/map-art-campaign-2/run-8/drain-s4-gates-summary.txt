@@ -1,0 +1,40 @@
+slice 4: lane ba330ec92f4bbd644f540184f5e9c88da133275e store adf6bd1a22582459e64c2ddc1a37b1bd707ffa14 maps: the River, the Motor vehicle 14:47Z
+store on 'main', dirty 0 (Astra's, untouched)
+store main -> adf6bd1 (art(store): Motor hauler — authored cab, brass details and plank bed)
+store main pushed: adf6bd1
+scratch store: detached at adf6bd1, clean
+chain fast-forwarded to main 196fbdc9b
+chain base 196fbdc9b merging lane ba330ec92 (lane tip ba330ec92) 14:47Z
+merged 440f9cb93
+single-line law: nothing to flatten
+law-pointer (pre): rc=0, no re-base needed
+engine hash merged (scratch store at adf6bd1): b7113b37c1a7e10b10f504947a660147c581c22b667aa1df2feb695bbb96100c
+droplet mirror closure (early check, F-FID1-5 class: a store slice can add a corpus file the mirror does not ship): rc=0
+tsc/build/e1: 0 / 0 / 0
+first-town payload: 34283803 bytes
+halo: rc=0 halo re-extraction PASS: 315 cured, 0 held, 760 regenerated-and-cured, 2127 scanned; alpha and opaque RGB unchanged
+null floors: rc=0 83 of 83 null floors match assets/contracts/null-floors.json (313.5s).
+law-pointer: rc=0 law-pointer-guard — do the law surfaces still point at what they claim?
+guards: ℹ pass 97 ℹ fail 0 
+e2e start 14:54Z: e2e/e10-river-boot-guard.spec.ts e2e/e10-finale-staging.spec.ts e2e/e10-static-boss.spec.ts e2e/ceremony-framework.spec.ts e2e/ss-11-e10-beats.spec.ts e2e/er01-e10-census.spec.ts e2e/map-census.spec.ts e2e/e4-roads-and-convoys.spec.ts e2e/er01-e4-census.spec.ts e2e/fort-landmark-collision.spec.ts e2e/landmark-brightness.spec.ts e2e/landmark-collision.spec.ts e2e/task-025-bandits-dont-swim.spec.ts e2e/m2-01-build-menu.spec.ts 
+e2e: rc=1   7 failed   4 skipped   205 passed (27.4m)  15:22Z
+1) [desktop-chrome] › e2e/e10-static-boss.spec.ts:153:1 › recession hands the secured claim to the existing T10 re-inking finale 
+2) [desktop-chrome] › e2e/e4-roads-and-convoys.spec.ts:69:1 › every Motor reel replays to its claimed hash in Node and Chromium 
+3) [desktop-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-archive-world census cites the existing Deep Sky debt 
+4) [mobile-chrome] › e2e/e10-static-boss.spec.ts:153:1 › recession hands the secured claim to the existing T10 re-inking finale 
+5) [mobile-chrome] › e2e/e4-roads-and-convoys.spec.ts:69:1 › every Motor reel replays to its claimed hash in Node and Chromium 
+6) [mobile-chrome] › e2e/e4-roads-and-convoys.spec.ts:197:1 › a plain-boot Dust Flats player gathers tar and calls the Hauler with recorded 
+7) [mobile-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-archive-world census cites the existing Deep Sky debt 
+battery start 15:22Z
+battery: rc=1 ℹ tests 950 ℹ pass 942 ℹ fail 3 ℹ skipped 5  15:29Z
+✖ all 152 scripts/*.test.mjs fixture owners remove their temp directories (167056.822625ms)
+✖ failing tests:
+✖ rotation registry stays outside the engine identity corpus (606.198667ms)
+✖ the landed registry names the live engine and stays outside its hash corpus (231.865125ms)
+dirt after battery: 1
+FID1-S4-PREP-DONE
+known-red overrides: e2e e2e/ceremony-framework\.spec\.ts:777:1|e2e/e10-static-boss\.spec\.ts:153:1|e2e/e4-roads-and-convoys\.spec\.ts:69:1|e2e/er01-e10-census\.spec\.ts:120:3 battery ^$
+known-red overrides: e2e e2e/ceremony-framework\.spec\.ts:777:1|e2e/e10-static-boss\.spec\.ts:153:1|e2e/e4-roads-and-convoys\.spec\.ts:69:1|e2e/er01-e10-census\.spec\.ts:120:3|e2e/e4-roads-and-convoys\.spec\.ts:197:1 battery ^$
+hash at pin time: b7113b37c1a7e10b10f504947a660147c581c22b667aa1df2feb695bbb96100c
+pin #37
+era (chain, scratch store): ℹ pass 9 ℹ fail 0 
