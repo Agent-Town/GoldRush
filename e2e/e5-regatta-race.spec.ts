@@ -163,7 +163,9 @@ test('the Regatta is won by the BOAT and secures both bench seeds deterministica
       expect(turn.terminal).toBe(true);
       expect(turn.view.now.deepwater?.race?.forfeited).toBe(false);
       expect(turn.view.now.deepwater?.race?.finished).toBe(true);
-      expect(turn.view.now.deepwater?.race?.gatesPassed).toHaveLength(5);
+      // Schema 4 (2026-09-22, sol-regatta-view-parity): the finish stake `claim-boat` is the sixth and last
+      // gate row, with the same timestamp as `finishedAt`; five course gates plus the finish.
+      expect(turn.view.now.deepwater?.race?.gatesPassed).toHaveLength(6);
       return sim.outcome();
     };
 
