@@ -72,6 +72,9 @@ test('plain maps retain their footprints without duplication', () => {
   assert.deepEqual(landmarkBlockersFor('e7-relay-valley'), relayValley);
   assert.deepEqual(landmarkBlockersFor('relay-valley'), relayValley);
   assert.deepEqual(landmarkBlockersFor('unknown-map'), []);
+  for (const id of ['constructor', '__proto__', 'toString']) {
+    assert.deepEqual(landmarkBlockersFor(id), []);
+  }
   const post = landmarkBlockersFor('dead-band').find(({ id }) => id === 'dead-band:dead-band-yard-null-post');
   assert.deepEqual(post, { id: 'dead-band:dead-band-yard-null-post', x: 0, z: -40, halfX: 0.864, halfZ: 0.864 });
 });

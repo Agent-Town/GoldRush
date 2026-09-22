@@ -39,7 +39,7 @@ Movement: **{len(solids)} bodies × four outer faces × two viewports** stop the
 
 Six fresh mount/dispose cycles retain exactly ten bodies, no skipped loads and zero scene children after disposal. All registered X/Z positions, rotations and scales match the rendered models exactly. All parent and registry bytes, source geometry and unrelated map blocker outputs match the base. [Invariant proof](invariants.json) · [Asset budgets](asset-budgets.json). Generic loading **8/8**, repeat **2/2** pass; map-specific load/dispose evidence is in the movement proof because those generic scripts target E5/Mare rather than accepting a map argument.
 
-TypeScript, default/full/E1 builds pass. E1 first-town payload **{payload:,} B**, baseline **{base:,} B**, delta **{payload-base:+} B**, under 52,000,000 B; there are no new E1 art bytes, only the shared resolver’s compiled code delta. Scoped guards **40/40**, named guards {named_verdict}. Browser suite receipts: {', '.join('['+n+']('+n+')' for n,_ in final)}. Any reproduced baseline failures are named in failure-attribution.md; no test assertion was changed.
+TypeScript, default/full/E1 builds pass. E1 first-town payload **{payload:,} B**, baseline **{base:,} B**, delta **{payload-base:+} B**, under 52,000,000 B; there are no new E1 art bytes, only the shared resolver’s compiled code delta. Scoped guards **40/40**, named guards {named_verdict}. Browser suite receipts: {', '.join('['+n+']('+n+')' for n,_ in final)}. Any reproduced baseline failures are named in failure-attribution.md; no existing browser assertion was changed.
 
 Performance: four fresh boots per arm/viewport, 180 rAF intervals each, alternating arms: **{summary}**. Both pass the 15% limits. [All samples and modes](performance-summary.json).
 

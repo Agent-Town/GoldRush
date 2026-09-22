@@ -35,6 +35,8 @@ const aliases: Record<string, readonly string[]> = {
 export function landmarkBlockersFor(contractId: string): LandmarkBlocker[] {
   // Only the authorized variant packs supplement their parent's solid footprints.
   const maps = aliases[contractId] ?? [contractId.replace(/^e\d+-/, '')];
+  // Inherited Object.prototype names keep the legacy unknown-contract result.
+  if (!Array.isArray(maps)) return [];
   return maps.flatMap((map) => (registry.maps[map] ?? []).map((mount) => {
     const scaleX = Math.abs(mount.scale[0]);
     const scaleZ = Math.abs(mount.scale[1]);

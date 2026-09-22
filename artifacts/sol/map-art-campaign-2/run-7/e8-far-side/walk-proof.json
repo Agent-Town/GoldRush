@@ -1,0 +1,2136 @@
+[
+  {
+    "width": 1280,
+    "navigation": {
+      "spawn": {
+        "x": 0,
+        "y": 0.06,
+        "z": -36
+      },
+      "spawnWalkable": true,
+      "own": [
+        {
+          "id": "far-side:probe-recovery-cradle",
+          "x": 0,
+          "z": 45,
+          "halfX": 2.52001322347037,
+          "halfZ": 1.800018512905148
+        },
+        {
+          "id": "far-side:west-comms-shadow-marker",
+          "x": -42,
+          "z": 24,
+          "halfX": 1.08,
+          "halfZ": 1.08
+        },
+        {
+          "id": "far-side:east-suit-cache-rack",
+          "x": 42,
+          "z": -24,
+          "halfX": 2.704863368342605,
+          "halfZ": 1.69079757794611
+        },
+        {
+          "id": "far-side:far-horizon-listening-post",
+          "x": 0,
+          "z": 56,
+          "halfX": 1.512,
+          "halfZ": 1.512
+        }
+      ],
+      "blockers": [
+        {
+          "id": "mare-claim:earthrise-listening-array",
+          "x": 0,
+          "z": 56,
+          "halfX": 2.952,
+          "halfZ": 1.368
+        },
+        {
+          "id": "mare-claim:lava-tube-survey-gantry",
+          "x": -42,
+          "z": 28,
+          "halfX": 2.5578877821068686,
+          "halfZ": 2.0749993104894906
+        },
+        {
+          "id": "mare-claim:regolith-core-yard",
+          "x": 22,
+          "z": 18,
+          "halfX": 2.7097332651828494,
+          "halfZ": 2.0173677973308464
+        },
+        {
+          "id": "mare-claim:west-rim-debris-catcher",
+          "x": -56,
+          "z": 20,
+          "halfX": 2.053438420678391,
+          "halfZ": 1.7851958798077034
+        },
+        {
+          "id": "mare-claim:east-rim-debris-catcher",
+          "x": 56,
+          "z": 20,
+          "halfX": 2.053438420678391,
+          "halfZ": 1.7851958798077034
+        },
+        {
+          "id": "far-side:probe-recovery-cradle",
+          "x": 0,
+          "z": 45,
+          "halfX": 2.52001322347037,
+          "halfZ": 1.800018512905148
+        },
+        {
+          "id": "far-side:west-comms-shadow-marker",
+          "x": -42,
+          "z": 24,
+          "halfX": 1.08,
+          "halfZ": 1.08
+        },
+        {
+          "id": "far-side:east-suit-cache-rack",
+          "x": 42,
+          "z": -24,
+          "halfX": 2.704863368342605,
+          "halfZ": 1.69079757794611
+        },
+        {
+          "id": "far-side:far-horizon-listening-post",
+          "x": 0,
+          "z": 56,
+          "halfX": 1.512,
+          "halfZ": 1.512
+        }
+      ],
+      "targets": [
+        {
+          "kind": "stake",
+          "id": "far-side-landing-stake",
+          "x": 0,
+          "z": -36,
+          "reachable": true
+        },
+        {
+          "kind": "harvest",
+          "id": "0",
+          "x": -16,
+          "z": -34,
+          "reachable": true
+        },
+        {
+          "kind": "harvest",
+          "id": "1",
+          "x": 16,
+          "z": -34,
+          "reachable": true
+        },
+        {
+          "kind": "harvest",
+          "id": "2",
+          "x": -9,
+          "z": -22,
+          "reachable": true
+        },
+        {
+          "kind": "harvest",
+          "id": "3",
+          "x": 9,
+          "z": -22,
+          "reachable": true
+        },
+        {
+          "kind": "station",
+          "id": "far-side-landing-frame",
+          "x": 0,
+          "z": -37,
+          "reachable": true
+        },
+        {
+          "kind": "station",
+          "id": "earthrise-listening-array",
+          "x": 0,
+          "z": 59,
+          "reachable": true
+        },
+        {
+          "kind": "site",
+          "id": "far-side-landing-yard",
+          "center": {
+            "x": 0,
+            "z": -39
+          },
+          "approach": {
+            "x": 0,
+            "z": -39
+          },
+          "reachable": true
+        },
+        {
+          "kind": "site",
+          "id": "listening-probe-recovery",
+          "center": {
+            "x": 0,
+            "z": 45
+          },
+          "approach": {
+            "x": 0,
+            "z": 42.5
+          },
+          "reachable": true
+        },
+        {
+          "kind": "probe-zone",
+          "id": "listening-probe-crater",
+          "center": {
+            "x": 0,
+            "z": 45
+          },
+          "approach": {
+            "x": 0,
+            "z": 42.5
+          },
+          "reachable": true
+        }
+      ],
+      "reachableCells": 63126,
+      "step": 0.5
+    },
+    "probes": [
+      {
+        "id": "far-side:probe-recovery-cradle",
+        "overlappingBlockerGroup": [
+          "far-side:probe-recovery-cradle"
+        ],
+        "faces": [
+          {
+            "axis": "x",
+            "sign": -1,
+            "key": "KeyD",
+            "faceBody": "far-side:probe-recovery-cradle",
+            "start": {
+              "x": -3.70001322347037,
+              "z": 45
+            },
+            "hero": {
+              "x": -3.1087716660617484,
+              "y": 6.06,
+              "z": 45
+            },
+            "boundaryDistance": 0.00875844259137848,
+            "outsideAllBlockers": true
+          },
+          {
+            "axis": "x",
+            "sign": 1,
+            "key": "KeyA",
+            "faceBody": "far-side:probe-recovery-cradle",
+            "start": {
+              "x": 3.70001322347037,
+              "z": 45
+            },
+            "hero": {
+              "x": 3.1087716660617484,
+              "y": 6.06,
+              "z": 45
+            },
+            "boundaryDistance": 0.00875844259137848,
+            "outsideAllBlockers": true
+          },
+          {
+            "axis": "z",
+            "sign": -1,
+            "key": "KeyS",
+            "faceBody": "far-side:probe-recovery-cradle",
+            "start": {
+              "x": 0,
+              "z": 42.01998148709485
+            },
+            "hero": {
+              "x": 0,
+              "y": 6.06,
+              "z": 42.611223044503475
+            },
+            "boundaryDistance": 0.008758442591378923,
+            "outsideAllBlockers": true
+          },
+          {
+            "axis": "z",
+            "sign": 1,
+            "key": "KeyW",
+            "faceBody": "far-side:probe-recovery-cradle",
+            "start": {
+              "x": 0,
+              "z": 47.98001851290515
+            },
+            "hero": {
+              "x": 0,
+              "y": 6.06,
+              "z": 47.388776955496525
+            },
+            "boundaryDistance": 0.008758442591378923,
+            "outsideAllBlockers": true
+          }
+        ],
+        "depenetrated": true,
+        "releasePosition": {
+          "x": 12.931678962445377,
+          "y": 6.06,
+          "z": 42.599999999999966
+        }
+      },
+      {
+        "id": "far-side:west-comms-shadow-marker",
+        "overlappingBlockerGroup": [
+          "far-side:west-comms-shadow-marker",
+          "mare-claim:lava-tube-survey-gantry"
+        ],
+        "faces": [
+          {
+            "axis": "x",
+            "sign": -1,
+            "key": "KeyD",
+            "faceBody": "mare-claim:lava-tube-survey-gantry",
+            "start": {
+              "x": -45.73788778210687,
+              "z": 28
+            },
+            "hero": {
+              "x": -45.146646224698245,
+              "y": 6.06,
+              "z": 28
+            },
+            "boundaryDistance": 0.008758442591378923,
+            "outsideAllBlockers": true
+          },
+          {
+            "axis": "x",
+            "sign": 1,
+            "key": "KeyA",
+            "faceBody": "mare-claim:lava-tube-survey-gantry",
+            "start": {
+              "x": -38.26211221789313,
+              "z": 28
+            },
+            "hero": {
+              "x": -38.853353775301755,
+              "y": 0.06,
+              "z": 28
+            },
+            "boundaryDistance": 0.008758442591378923,
+            "outsideAllBlockers": true
+          },
+          {
+            "axis": "z",
+            "sign": -1,
+            "key": "KeyS",
+            "faceBody": "far-side:west-comms-shadow-marker",
+            "start": {
+              "x": -42,
+              "z": 21.74
+            },
+            "hero": {
+              "x": -42,
+              "y": 6.06,
+              "z": 22.33124155740862
+            },
+            "boundaryDistance": 0.008758442591378923,
+            "outsideAllBlockers": true
+          },
+          {
+            "axis": "z",
+            "sign": 1,
+            "key": "KeyW",
+            "faceBody": "mare-claim:lava-tube-survey-gantry",
+            "start": {
+              "x": -42,
+              "z": 31.25499931048949
+            },
+            "hero": {
+              "x": -42,
+              "y": 6.06,
+              "z": 30.66375775308087
+            },
+            "boundaryDistance": 0.008758442591378923,
+            "outsideAllBlockers": true
+          }
+        ],
+        "depenetrated": true,
+        "releasePosition": {
+          "x": -43.66191519316725,
+          "y": 6.06,
+          "z": 24
+        }
+      },
+      {
+        "id": "far-side:east-suit-cache-rack",
+        "overlappingBlockerGroup": [
+          "far-side:east-suit-cache-rack"
+        ],
+        "faces": [
+          {
+            "axis": "x",
+            "sign": -1,
+            "key": "KeyD",
+            "faceBody": "far-side:east-suit-cache-rack",
+            "start": {
+              "x": 38.11513663165739,
+              "z": -24
+            },
+            "hero": {
+              "x": 38.706378189066015,
+              "y": 0.06,
+              "z": -24
+            },
+            "boundaryDistance": 0.008758442591378923,
+            "outsideAllBlockers": true
+          },
+          {
+            "axis": "x",
+            "sign": 1,
+            "key": "KeyA",
+            "faceBody": "far-side:east-suit-cache-rack",
+            "start": {
+              "x": 45.88486336834261,
+              "z": -24
+            },
+            "hero": {
+              "x": 45.293621810933985,
+              "y": 6.06,
+              "z": -24
+            },
+            "boundaryDistance": 0.008758442591378923,
+            "outsideAllBlockers": true
+          },
+          {
+            "axis": "z",
+            "sign": -1,
+            "key": "KeyS",
+            "faceBody": "far-side:east-suit-cache-rack",
+            "start": {
+              "x": 42,
+              "z": -26.87079757794611
+            },
+            "hero": {
+              "x": 42,
+              "y": 4.382663876775095,
+              "z": -26.279556020537488
+            },
+            "boundaryDistance": 0.008758442591378923,
+            "outsideAllBlockers": true
+          },
+          {
+            "axis": "z",
+            "sign": 1,
+            "key": "KeyW",
+            "faceBody": "far-side:east-suit-cache-rack",
+            "start": {
+              "x": 42,
+              "z": -21.12920242205389
+            },
+            "hero": {
+              "x": 42,
+              "y": 6.06,
+              "z": -21.720443979462512
+            },
+            "boundaryDistance": 0.008758442591378923,
+            "outsideAllBlockers": true
+          }
+        ],
+        "depenetrated": true,
+        "releasePosition": {
+          "x": 54.931678962445375,
+          "y": 3.381681165695204,
+          "z": -26.299999999999994
+        }
+      },
+      {
+        "id": "far-side:far-horizon-listening-post",
+        "overlappingBlockerGroup": [
+          "far-side:far-horizon-listening-post",
+          "mare-claim:earthrise-listening-array"
+        ],
+        "faces": [
+          {
+            "axis": "x",
+            "sign": -1,
+            "key": "KeyD",
+            "faceBody": "mare-claim:earthrise-listening-array",
+            "start": {
+              "x": -4.132,
+              "z": 56
+            },
+            "hero": {
+              "x": -3.540758442591377,
+              "y": 4.222345673853002,
+              "z": 56
+            },
+            "boundaryDistance": 0.008758442591377147,
+            "outsideAllBlockers": true
+          },
+          {
+            "axis": "x",
+            "sign": 1,
+            "key": "KeyA",
+            "faceBody": "mare-claim:earthrise-listening-array",
+            "start": {
+              "x": 4.132,
+              "z": 56
+            },
+            "hero": {
+              "x": 3.540758442591377,
+              "y": 5.023005011430152,
+              "z": 56
+            },
+            "boundaryDistance": 0.008758442591377147,
+            "outsideAllBlockers": true
+          },
+          {
+            "axis": "z",
+            "sign": -1,
+            "key": "KeyS",
+            "faceBody": "far-side:far-horizon-listening-post",
+            "start": {
+              "x": 0,
+              "z": 53.308
+            },
+            "hero": {
+              "x": 0,
+              "y": 6.06,
+              "z": 53.89924155740862
+            },
+            "boundaryDistance": 0.008758442591378923,
+            "outsideAllBlockers": true
+          },
+          {
+            "axis": "z",
+            "sign": 1,
+            "key": "KeyW",
+            "faceBody": "far-side:far-horizon-listening-post",
+            "start": {
+              "x": 0,
+              "z": 58.692
+            },
+            "hero": {
+              "x": 0,
+              "y": 3.789828509984084,
+              "z": 58.10075844259138
+            },
+            "boundaryDistance": 0.008758442591378923,
+            "outsideAllBlockers": true
+          }
+        ],
+        "depenetrated": true,
+        "releasePosition": {
+          "x": 13.13074462780354,
+          "y": 6.06,
+          "z": 53.89999999999997
+        }
+      }
+    ],
+    "cycles": [
+      {
+        "cycle": 0,
+        "bodies": [
+          {
+            "id": "probe-recovery-cradle",
+            "position": [
+              0,
+              6,
+              45
+            ],
+            "rotation": [
+              0,
+              3.1416,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "bounds": {
+              "isBox3": true,
+              "min": {
+                "x": -3.5000183659310684,
+                "y": 6,
+                "z": 42.49997428763174
+              },
+              "max": {
+                "x": 3.5000183659310684,
+                "y": 7.940000057220459,
+                "z": 47.50002571236826
+              }
+            }
+          },
+          {
+            "id": "west-comms-shadow-marker",
+            "position": [
+              -42,
+              6,
+              24
+            ],
+            "rotation": [
+              0,
+              0.18,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "bounds": {
+              "isBox3": true,
+              "min": {
+                "x": -43.84269429205639,
+                "y": 6,
+                "z": 22.2377871390681
+              },
+              "max": {
+                "x": -40.15730570794361,
+                "y": 13.157402515411377,
+                "z": 25.7622128609319
+              }
+            }
+          },
+          {
+            "id": "east-suit-cache-rack",
+            "position": [
+              42,
+              6,
+              -24
+            ],
+            "rotation": [
+              0,
+              -0.18,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "bounds": {
+              "isBox3": true,
+              "min": {
+                "x": 38.243245321746386,
+                "y": 6,
+                "z": -26.348329969369598
+              },
+              "max": {
+                "x": 45.756754678253614,
+                "y": 11.309999942779541,
+                "z": -21.651670030630402
+              }
+            }
+          },
+          {
+            "id": "far-horizon-listening-post",
+            "position": [
+              0,
+              4.5356597900390625,
+              56
+            ],
+            "rotation": [
+              0,
+              3.1416,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "bounds": {
+              "isBox3": true,
+              "min": {
+                "x": -2.400015522763401,
+                "y": 4.5356597900390625,
+                "z": 53.89998246403891
+              },
+              "max": {
+                "x": 2.400015522763401,
+                "y": 12.885659217834473,
+                "z": 58.10001753596109
+              }
+            }
+          }
+        ],
+        "dataset": {
+          "terrain3dPilotContract": "e8-far-side",
+          "terrain3dPilotTerrainLoadState": "mounted",
+          "terrain3dPilotPanoramaLoadState": "mounted",
+          "terrain3dPilotLandmarkLoadState": "mounted",
+          "terrain3dPilotState": "ready",
+          "terrain3dPilotRenderSource": "glb",
+          "terrain3dPilotHeightSource": "baked-grid",
+          "terrain3dPilotMeshes": "1",
+          "terrain3dPilotTriangles": "32768",
+          "terrain3dPilotMaterials": "1",
+          "terrain3dPilotVertices": "16641",
+          "terrain3dPilotPanorama": "mare-claim-panorama",
+          "terrain3dPilotPanoramaMeshes": "1",
+          "terrain3dPilotPanoramaTriangles": "3072",
+          "terrain3dPilotPanoramaMaterials": "1",
+          "terrain3dPilotPanoramaVertices": "2222",
+          "assetLoadingLabel": "the claim",
+          "assetLoadingReady": "24",
+          "assetLoadingTotal": "24",
+          "assetLoadingProgress": "24/24",
+          "assetLoadingState": "ready",
+          "terrain3dPilotNightPools": "off",
+          "terrain3dPilotNightPoolSources": "0",
+          "terrain3dPilotSpringPonds": "0",
+          "terrain3dPilotSpringPondWaterRadii": "[]",
+          "terrain3dPilotChannelWater": "0",
+          "terrain3dPilotFordWater": "0",
+          "terrain3dPilotChannelWaterHalfWidths": "[]",
+          "terrain3dPilotHiddenRelief": "0",
+          "terrain3dPilotHiddenGroundLayers": "",
+          "terrain3dPilotContinuation": "panorama-owned-continuation",
+          "terrain3dPilotHorizonApron": "none",
+          "terrain3dPilotFarGroundProbe": "off",
+          "terrain3dPilotPanoramaFraming": "world-projected-horizon",
+          "terrain3dPilotSkirtBlend": "opaque-sculpt-edge",
+          "terrain3dPilotPanoramaFog": "excluded",
+          "terrain3dPilotPanoramaDepth": "screen-horizon-backdrop",
+          "terrain3dPilotLandmarkExpected": "10",
+          "terrain3dPilotWalkSurfaces": "0",
+          "terrain3dPilotLandmarkEmissive": "3",
+          "terrain3dPilotLandmarkSides": "{\"total\":{\"meshes\":10,\"closed\":10,\"open\":0,\"culled\":10,\"doubleSided\":0},\"mounts\":[{\"id\":\"earthrise-listening-array\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":4.536,\"topY\":11.796},{\"id\":\"lava-tube-survey-gantry\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":6,\"topY\":12.99},{\"id\":\"regolith-core-yard\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0,\"topY\":7.1},{\"id\":\"west-rim-debris-catcher\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":4.462,\"topY\":11.332},{\"id\":\"east-rim-debris-catcher\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5.062,\"topY\":11.932},{\"id\":\"far-side-landing-frame\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0,\"topY\":6.99},{\"id\":\"probe-recovery-cradle\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":6,\"topY\":7.94},{\"id\":\"west-comms-shadow-marker\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":6,\"topY\":13.157},{\"id\":\"east-suit-cache-rack\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":6,\"topY\":11.31},{\"id\":\"far-horizon-listening-post\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":4.536,\"topY\":12.886}]}",
+          "terrain3dPilotLandmarks": "10",
+          "terrain3dPilotLandmarkSkipped": "0",
+          "terrain3dPilotLandmarkDiagnostics": "",
+          "terrain3dPilotLandmarkMounts": "[{\"id\":\"earthrise-listening-array\",\"x\":0,\"y\":4.5356597900390625,\"z\":56},{\"id\":\"lava-tube-survey-gantry\",\"x\":-42,\"y\":6,\"z\":28},{\"id\":\"regolith-core-yard\",\"x\":22,\"y\":0,\"z\":18},{\"id\":\"west-rim-debris-catcher\",\"x\":-56,\"y\":4.461697101593018,\"z\":20},{\"id\":\"east-rim-debris-catcher\",\"x\":56,\"y\":5.061962604522705,\"z\":20},{\"id\":\"far-side-landing-frame\",\"x\":0,\"y\":0,\"z\":-40},{\"id\":\"probe-recovery-cradle\",\"x\":0,\"y\":6,\"z\":45},{\"id\":\"west-comms-shadow-marker\",\"x\":-42,\"y\":6,\"z\":24},{\"id\":\"east-suit-cache-rack\",\"x\":42,\"y\":6,\"z\":-24},{\"id\":\"far-horizon-listening-post\",\"x\":0,\"y\":4.5356597900390625,\"z\":56}]",
+          "terrain3dPilotLandmarkMaterials": "[{\"id\":\"earthrise-listening-array\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"lava-tube-survey-gantry\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"regolith-core-yard\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"west-rim-debris-catcher\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"east-rim-debris-catcher\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"far-side-landing-frame\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"probe-recovery-cradle\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"west-comms-shadow-marker\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"east-suit-cache-rack\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"far-horizon-listening-post\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0}]"
+        },
+        "remainingSceneChildren": 0
+      },
+      {
+        "cycle": 1,
+        "bodies": [
+          {
+            "id": "probe-recovery-cradle",
+            "position": [
+              0,
+              6,
+              45
+            ],
+            "rotation": [
+              0,
+              3.1416,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "bounds": {
+              "isBox3": true,
+              "min": {
+                "x": -3.5000183659310684,
+                "y": 6,
+                "z": 42.49997428763174
+              },
+              "max": {
+                "x": 3.5000183659310684,
+                "y": 7.940000057220459,
+                "z": 47.50002571236826
+              }
+            }
+          },
+          {
+            "id": "west-comms-shadow-marker",
+            "position": [
+              -42,
+              6,
+              24
+            ],
+            "rotation": [
+              0,
+              0.18,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "bounds": {
+              "isBox3": true,
+              "min": {
+                "x": -43.84269429205639,
+                "y": 6,
+                "z": 22.2377871390681
+              },
+              "max": {
+                "x": -40.15730570794361,
+                "y": 13.157402515411377,
+                "z": 25.7622128609319
+              }
+            }
+          },
+          {
+            "id": "east-suit-cache-rack",
+            "position": [
+              42,
+              6,
+              -24
+            ],
+            "rotation": [
+              0,
+              -0.18,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "bounds": {
+              "isBox3": true,
+              "min": {
+                "x": 38.243245321746386,
+                "y": 6,
+                "z": -26.348329969369598
+              },
+              "max": {
+                "x": 45.756754678253614,
+                "y": 11.309999942779541,
+                "z": -21.651670030630402
+              }
+            }
+          },
+          {
+            "id": "far-horizon-listening-post",
+            "position": [
+              0,
+              4.5356597900390625,
+              56
+            ],
+            "rotation": [
+              0,
+              3.1416,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "bounds": {
+              "isBox3": true,
+              "min": {
+                "x": -2.400015522763401,
+                "y": 4.5356597900390625,
+                "z": 53.89998246403891
+              },
+              "max": {
+                "x": 2.400015522763401,
+                "y": 12.885659217834473,
+                "z": 58.10001753596109
+              }
+            }
+          }
+        ],
+        "dataset": {
+          "terrain3dPilotContract": "e8-far-side",
+          "terrain3dPilotTerrainLoadState": "mounted",
+          "terrain3dPilotPanoramaLoadState": "mounted",
+          "terrain3dPilotLandmarkLoadState": "mounted",
+          "terrain3dPilotState": "ready",
+          "terrain3dPilotRenderSource": "glb",
+          "terrain3dPilotHeightSource": "baked-grid",
+          "terrain3dPilotMeshes": "1",
+          "terrain3dPilotTriangles": "32768",
+          "terrain3dPilotMaterials": "1",
+          "terrain3dPilotVertices": "16641",
+          "terrain3dPilotPanorama": "mare-claim-panorama",
+          "terrain3dPilotPanoramaMeshes": "1",
+          "terrain3dPilotPanoramaTriangles": "3072",
+          "terrain3dPilotPanoramaMaterials": "1",
+          "terrain3dPilotPanoramaVertices": "2222",
+          "assetLoadingLabel": "the claim",
+          "assetLoadingReady": "24",
+          "assetLoadingTotal": "24",
+          "assetLoadingProgress": "24/24",
+          "assetLoadingState": "ready",
+          "terrain3dPilotNightPools": "off",
+          "terrain3dPilotNightPoolSources": "0",
+          "terrain3dPilotSpringPonds": "0",
+          "terrain3dPilotSpringPondWaterRadii": "[]",
+          "terrain3dPilotChannelWater": "0",
+          "terrain3dPilotFordWater": "0",
+          "terrain3dPilotChannelWaterHalfWidths": "[]",
+          "terrain3dPilotHiddenRelief": "0",
+          "terrain3dPilotHiddenGroundLayers": "",
+          "terrain3dPilotContinuation": "panorama-owned-continuation",
+          "terrain3dPilotHorizonApron": "none",
+          "terrain3dPilotFarGroundProbe": "off",
+          "terrain3dPilotPanoramaFraming": "world-projected-horizon",
+          "terrain3dPilotSkirtBlend": "opaque-sculpt-edge",
+          "terrain3dPilotPanoramaFog": "excluded",
+          "terrain3dPilotPanoramaDepth": "screen-horizon-backdrop",
+          "terrain3dPilotLandmarkExpected": "10",
+          "terrain3dPilotWalkSurfaces": "0",
+          "terrain3dPilotLandmarkEmissive": "3",
+          "terrain3dPilotLandmarkSides": "{\"total\":{\"meshes\":10,\"closed\":10,\"open\":0,\"culled\":10,\"doubleSided\":0},\"mounts\":[{\"id\":\"earthrise-listening-array\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":4.536,\"topY\":11.796},{\"id\":\"lava-tube-survey-gantry\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":6,\"topY\":12.99},{\"id\":\"regolith-core-yard\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0,\"topY\":7.1},{\"id\":\"west-rim-debris-catcher\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":4.462,\"topY\":11.332},{\"id\":\"east-rim-debris-catcher\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5.062,\"topY\":11.932},{\"id\":\"far-side-landing-frame\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0,\"topY\":6.99},{\"id\":\"probe-recovery-cradle\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":6,\"topY\":7.94},{\"id\":\"west-comms-shadow-marker\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":6,\"topY\":13.157},{\"id\":\"east-suit-cache-rack\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":6,\"topY\":11.31},{\"id\":\"far-horizon-listening-post\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":4.536,\"topY\":12.886}]}",
+          "terrain3dPilotLandmarks": "10",
+          "terrain3dPilotLandmarkSkipped": "0",
+          "terrain3dPilotLandmarkDiagnostics": "",
+          "terrain3dPilotLandmarkMounts": "[{\"id\":\"earthrise-listening-array\",\"x\":0,\"y\":4.5356597900390625,\"z\":56},{\"id\":\"lava-tube-survey-gantry\",\"x\":-42,\"y\":6,\"z\":28},{\"id\":\"regolith-core-yard\",\"x\":22,\"y\":0,\"z\":18},{\"id\":\"west-rim-debris-catcher\",\"x\":-56,\"y\":4.461697101593018,\"z\":20},{\"id\":\"east-rim-debris-catcher\",\"x\":56,\"y\":5.061962604522705,\"z\":20},{\"id\":\"far-side-landing-frame\",\"x\":0,\"y\":0,\"z\":-40},{\"id\":\"probe-recovery-cradle\",\"x\":0,\"y\":6,\"z\":45},{\"id\":\"west-comms-shadow-marker\",\"x\":-42,\"y\":6,\"z\":24},{\"id\":\"east-suit-cache-rack\",\"x\":42,\"y\":6,\"z\":-24},{\"id\":\"far-horizon-listening-post\",\"x\":0,\"y\":4.5356597900390625,\"z\":56}]",
+          "terrain3dPilotLandmarkMaterials": "[{\"id\":\"earthrise-listening-array\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"lava-tube-survey-gantry\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"regolith-core-yard\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"west-rim-debris-catcher\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"east-rim-debris-catcher\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"far-side-landing-frame\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"probe-recovery-cradle\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"west-comms-shadow-marker\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"east-suit-cache-rack\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"far-horizon-listening-post\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0}]"
+        },
+        "remainingSceneChildren": 0
+      },
+      {
+        "cycle": 2,
+        "bodies": [
+          {
+            "id": "probe-recovery-cradle",
+            "position": [
+              0,
+              6,
+              45
+            ],
+            "rotation": [
+              0,
+              3.1416,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "bounds": {
+              "isBox3": true,
+              "min": {
+                "x": -3.5000183659310684,
+                "y": 6,
+                "z": 42.49997428763174
+              },
+              "max": {
+                "x": 3.5000183659310684,
+                "y": 7.940000057220459,
+                "z": 47.50002571236826
+              }
+            }
+          },
+          {
+            "id": "west-comms-shadow-marker",
+            "position": [
+              -42,
+              6,
+              24
+            ],
+            "rotation": [
+              0,
+              0.18,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "bounds": {
+              "isBox3": true,
+              "min": {
+                "x": -43.84269429205639,
+                "y": 6,
+                "z": 22.2377871390681
+              },
+              "max": {
+                "x": -40.15730570794361,
+                "y": 13.157402515411377,
+                "z": 25.7622128609319
+              }
+            }
+          },
+          {
+            "id": "east-suit-cache-rack",
+            "position": [
+              42,
+              6,
+              -24
+            ],
+            "rotation": [
+              0,
+              -0.18,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "bounds": {
+              "isBox3": true,
+              "min": {
+                "x": 38.243245321746386,
+                "y": 6,
+                "z": -26.348329969369598
+              },
+              "max": {
+                "x": 45.756754678253614,
+                "y": 11.309999942779541,
+                "z": -21.651670030630402
+              }
+            }
+          },
+          {
+            "id": "far-horizon-listening-post",
+            "position": [
+              0,
+              4.5356597900390625,
+              56
+            ],
+            "rotation": [
+              0,
+              3.1416,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "bounds": {
+              "isBox3": true,
+              "min": {
+                "x": -2.400015522763401,
+                "y": 4.5356597900390625,
+                "z": 53.89998246403891
+              },
+              "max": {
+                "x": 2.400015522763401,
+                "y": 12.885659217834473,
+                "z": 58.10001753596109
+              }
+            }
+          }
+        ],
+        "dataset": {
+          "terrain3dPilotContract": "e8-far-side",
+          "terrain3dPilotTerrainLoadState": "mounted",
+          "terrain3dPilotPanoramaLoadState": "mounted",
+          "terrain3dPilotLandmarkLoadState": "mounted",
+          "terrain3dPilotState": "ready",
+          "terrain3dPilotRenderSource": "glb",
+          "terrain3dPilotHeightSource": "baked-grid",
+          "terrain3dPilotMeshes": "1",
+          "terrain3dPilotTriangles": "32768",
+          "terrain3dPilotMaterials": "1",
+          "terrain3dPilotVertices": "16641",
+          "terrain3dPilotPanorama": "mare-claim-panorama",
+          "terrain3dPilotPanoramaMeshes": "1",
+          "terrain3dPilotPanoramaTriangles": "3072",
+          "terrain3dPilotPanoramaMaterials": "1",
+          "terrain3dPilotPanoramaVertices": "2222",
+          "assetLoadingLabel": "the claim",
+          "assetLoadingReady": "24",
+          "assetLoadingTotal": "24",
+          "assetLoadingProgress": "24/24",
+          "assetLoadingState": "ready",
+          "terrain3dPilotNightPools": "off",
+          "terrain3dPilotNightPoolSources": "0",
+          "terrain3dPilotSpringPonds": "0",
+          "terrain3dPilotSpringPondWaterRadii": "[]",
+          "terrain3dPilotChannelWater": "0",
+          "terrain3dPilotFordWater": "0",
+          "terrain3dPilotChannelWaterHalfWidths": "[]",
+          "terrain3dPilotHiddenRelief": "0",
+          "terrain3dPilotHiddenGroundLayers": "",
+          "terrain3dPilotContinuation": "panorama-owned-continuation",
+          "terrain3dPilotHorizonApron": "none",
+          "terrain3dPilotFarGroundProbe": "off",
+          "terrain3dPilotPanoramaFraming": "world-projected-horizon",
+          "terrain3dPilotSkirtBlend": "opaque-sculpt-edge",
+          "terrain3dPilotPanoramaFog": "excluded",
+          "terrain3dPilotPanoramaDepth": "screen-horizon-backdrop",
+          "terrain3dPilotLandmarkExpected": "10",
+          "terrain3dPilotWalkSurfaces": "0",
+          "terrain3dPilotLandmarkEmissive": "3",
+          "terrain3dPilotLandmarkSides": "{\"total\":{\"meshes\":10,\"closed\":10,\"open\":0,\"culled\":10,\"doubleSided\":0},\"mounts\":[{\"id\":\"earthrise-listening-array\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":4.536,\"topY\":11.796},{\"id\":\"lava-tube-survey-gantry\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":6,\"topY\":12.99},{\"id\":\"regolith-core-yard\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0,\"topY\":7.1},{\"id\":\"west-rim-debris-catcher\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":4.462,\"topY\":11.332},{\"id\":\"east-rim-debris-catcher\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5.062,\"topY\":11.932},{\"id\":\"far-side-landing-frame\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0,\"topY\":6.99},{\"id\":\"probe-recovery-cradle\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":6,\"topY\":7.94},{\"id\":\"west-comms-shadow-marker\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":6,\"topY\":13.157},{\"id\":\"east-suit-cache-rack\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":6,\"topY\":11.31},{\"id\":\"far-horizon-listening-post\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":4.536,\"topY\":12.886}]}",
+          "terrain3dPilotLandmarks": "10",
+          "terrain3dPilotLandmarkSkipped": "0",
+          "terrain3dPilotLandmarkDiagnostics": "",
+          "terrain3dPilotLandmarkMounts": "[{\"id\":\"earthrise-listening-array\",\"x\":0,\"y\":4.5356597900390625,\"z\":56},{\"id\":\"lava-tube-survey-gantry\",\"x\":-42,\"y\":6,\"z\":28},{\"id\":\"regolith-core-yard\",\"x\":22,\"y\":0,\"z\":18},{\"id\":\"west-rim-debris-catcher\",\"x\":-56,\"y\":4.461697101593018,\"z\":20},{\"id\":\"east-rim-debris-catcher\",\"x\":56,\"y\":5.061962604522705,\"z\":20},{\"id\":\"far-side-landing-frame\",\"x\":0,\"y\":0,\"z\":-40},{\"id\":\"probe-recovery-cradle\",\"x\":0,\"y\":6,\"z\":45},{\"id\":\"west-comms-shadow-marker\",\"x\":-42,\"y\":6,\"z\":24},{\"id\":\"east-suit-cache-rack\",\"x\":42,\"y\":6,\"z\":-24},{\"id\":\"far-horizon-listening-post\",\"x\":0,\"y\":4.5356597900390625,\"z\":56}]",
+          "terrain3dPilotLandmarkMaterials": "[{\"id\":\"earthrise-listening-array\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"lava-tube-survey-gantry\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"regolith-core-yard\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"west-rim-debris-catcher\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"east-rim-debris-catcher\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"far-side-landing-frame\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"probe-recovery-cradle\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"west-comms-shadow-marker\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"east-suit-cache-rack\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"far-horizon-listening-post\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0}]"
+        },
+        "remainingSceneChildren": 0
+      }
+    ],
+    "errors": []
+  },
+  {
+    "width": 390,
+    "navigation": {
+      "spawn": {
+        "x": 0,
+        "y": 0.06,
+        "z": -36
+      },
+      "spawnWalkable": true,
+      "own": [
+        {
+          "id": "far-side:probe-recovery-cradle",
+          "x": 0,
+          "z": 45,
+          "halfX": 2.52001322347037,
+          "halfZ": 1.800018512905148
+        },
+        {
+          "id": "far-side:west-comms-shadow-marker",
+          "x": -42,
+          "z": 24,
+          "halfX": 1.08,
+          "halfZ": 1.08
+        },
+        {
+          "id": "far-side:east-suit-cache-rack",
+          "x": 42,
+          "z": -24,
+          "halfX": 2.704863368342605,
+          "halfZ": 1.69079757794611
+        },
+        {
+          "id": "far-side:far-horizon-listening-post",
+          "x": 0,
+          "z": 56,
+          "halfX": 1.512,
+          "halfZ": 1.512
+        }
+      ],
+      "blockers": [
+        {
+          "id": "mare-claim:earthrise-listening-array",
+          "x": 0,
+          "z": 56,
+          "halfX": 2.952,
+          "halfZ": 1.368
+        },
+        {
+          "id": "mare-claim:lava-tube-survey-gantry",
+          "x": -42,
+          "z": 28,
+          "halfX": 2.5578877821068686,
+          "halfZ": 2.0749993104894906
+        },
+        {
+          "id": "mare-claim:regolith-core-yard",
+          "x": 22,
+          "z": 18,
+          "halfX": 2.7097332651828494,
+          "halfZ": 2.0173677973308464
+        },
+        {
+          "id": "mare-claim:west-rim-debris-catcher",
+          "x": -56,
+          "z": 20,
+          "halfX": 2.053438420678391,
+          "halfZ": 1.7851958798077034
+        },
+        {
+          "id": "mare-claim:east-rim-debris-catcher",
+          "x": 56,
+          "z": 20,
+          "halfX": 2.053438420678391,
+          "halfZ": 1.7851958798077034
+        },
+        {
+          "id": "far-side:probe-recovery-cradle",
+          "x": 0,
+          "z": 45,
+          "halfX": 2.52001322347037,
+          "halfZ": 1.800018512905148
+        },
+        {
+          "id": "far-side:west-comms-shadow-marker",
+          "x": -42,
+          "z": 24,
+          "halfX": 1.08,
+          "halfZ": 1.08
+        },
+        {
+          "id": "far-side:east-suit-cache-rack",
+          "x": 42,
+          "z": -24,
+          "halfX": 2.704863368342605,
+          "halfZ": 1.69079757794611
+        },
+        {
+          "id": "far-side:far-horizon-listening-post",
+          "x": 0,
+          "z": 56,
+          "halfX": 1.512,
+          "halfZ": 1.512
+        }
+      ],
+      "targets": [
+        {
+          "kind": "stake",
+          "id": "far-side-landing-stake",
+          "x": 0,
+          "z": -36,
+          "reachable": true
+        },
+        {
+          "kind": "harvest",
+          "id": "0",
+          "x": -16,
+          "z": -34,
+          "reachable": true
+        },
+        {
+          "kind": "harvest",
+          "id": "1",
+          "x": 16,
+          "z": -34,
+          "reachable": true
+        },
+        {
+          "kind": "harvest",
+          "id": "2",
+          "x": -9,
+          "z": -22,
+          "reachable": true
+        },
+        {
+          "kind": "harvest",
+          "id": "3",
+          "x": 9,
+          "z": -22,
+          "reachable": true
+        },
+        {
+          "kind": "station",
+          "id": "far-side-landing-frame",
+          "x": 0,
+          "z": -37,
+          "reachable": true
+        },
+        {
+          "kind": "station",
+          "id": "earthrise-listening-array",
+          "x": 0,
+          "z": 59,
+          "reachable": true
+        },
+        {
+          "kind": "site",
+          "id": "far-side-landing-yard",
+          "center": {
+            "x": 0,
+            "z": -39
+          },
+          "approach": {
+            "x": 0,
+            "z": -39
+          },
+          "reachable": true
+        },
+        {
+          "kind": "site",
+          "id": "listening-probe-recovery",
+          "center": {
+            "x": 0,
+            "z": 45
+          },
+          "approach": {
+            "x": 0,
+            "z": 42.5
+          },
+          "reachable": true
+        },
+        {
+          "kind": "probe-zone",
+          "id": "listening-probe-crater",
+          "center": {
+            "x": 0,
+            "z": 45
+          },
+          "approach": {
+            "x": 0,
+            "z": 42.5
+          },
+          "reachable": true
+        }
+      ],
+      "reachableCells": 63126,
+      "step": 0.5
+    },
+    "probes": [
+      {
+        "id": "far-side:probe-recovery-cradle",
+        "overlappingBlockerGroup": [
+          "far-side:probe-recovery-cradle"
+        ],
+        "faces": [
+          {
+            "axis": "x",
+            "sign": -1,
+            "key": "KeyD",
+            "faceBody": "far-side:probe-recovery-cradle",
+            "start": {
+              "x": -3.70001322347037,
+              "z": 45
+            },
+            "hero": {
+              "x": -3.1087716660617484,
+              "y": 6.06,
+              "z": 45
+            },
+            "boundaryDistance": 0.00875844259137848,
+            "outsideAllBlockers": true
+          },
+          {
+            "axis": "x",
+            "sign": 1,
+            "key": "KeyA",
+            "faceBody": "far-side:probe-recovery-cradle",
+            "start": {
+              "x": 3.70001322347037,
+              "z": 45
+            },
+            "hero": {
+              "x": 3.1087716660617484,
+              "y": 6.06,
+              "z": 45
+            },
+            "boundaryDistance": 0.00875844259137848,
+            "outsideAllBlockers": true
+          },
+          {
+            "axis": "z",
+            "sign": -1,
+            "key": "KeyS",
+            "faceBody": "far-side:probe-recovery-cradle",
+            "start": {
+              "x": 0,
+              "z": 42.01998148709485
+            },
+            "hero": {
+              "x": 0,
+              "y": 6.06,
+              "z": 42.611223044503475
+            },
+            "boundaryDistance": 0.008758442591378923,
+            "outsideAllBlockers": true
+          },
+          {
+            "axis": "z",
+            "sign": 1,
+            "key": "KeyW",
+            "faceBody": "far-side:probe-recovery-cradle",
+            "start": {
+              "x": 0,
+              "z": 47.98001851290515
+            },
+            "hero": {
+              "x": 0,
+              "y": 6.06,
+              "z": 47.388776955496525
+            },
+            "boundaryDistance": 0.008758442591378923,
+            "outsideAllBlockers": true
+          }
+        ],
+        "depenetrated": true,
+        "releasePosition": {
+          "x": 12.931678962445377,
+          "y": 6.06,
+          "z": 42.599999999999966
+        }
+      },
+      {
+        "id": "far-side:west-comms-shadow-marker",
+        "overlappingBlockerGroup": [
+          "far-side:west-comms-shadow-marker",
+          "mare-claim:lava-tube-survey-gantry"
+        ],
+        "faces": [
+          {
+            "axis": "x",
+            "sign": -1,
+            "key": "KeyD",
+            "faceBody": "mare-claim:lava-tube-survey-gantry",
+            "start": {
+              "x": -45.73788778210687,
+              "z": 28
+            },
+            "hero": {
+              "x": -45.146646224698245,
+              "y": 6.06,
+              "z": 28
+            },
+            "boundaryDistance": 0.008758442591378923,
+            "outsideAllBlockers": true
+          },
+          {
+            "axis": "x",
+            "sign": 1,
+            "key": "KeyA",
+            "faceBody": "mare-claim:lava-tube-survey-gantry",
+            "start": {
+              "x": -38.26211221789313,
+              "z": 28
+            },
+            "hero": {
+              "x": -38.853353775301755,
+              "y": 0.06,
+              "z": 28
+            },
+            "boundaryDistance": 0.008758442591378923,
+            "outsideAllBlockers": true
+          },
+          {
+            "axis": "z",
+            "sign": -1,
+            "key": "KeyS",
+            "faceBody": "far-side:west-comms-shadow-marker",
+            "start": {
+              "x": -42,
+              "z": 21.74
+            },
+            "hero": {
+              "x": -42,
+              "y": 6.06,
+              "z": 22.33124155740862
+            },
+            "boundaryDistance": 0.008758442591378923,
+            "outsideAllBlockers": true
+          },
+          {
+            "axis": "z",
+            "sign": 1,
+            "key": "KeyW",
+            "faceBody": "mare-claim:lava-tube-survey-gantry",
+            "start": {
+              "x": -42,
+              "z": 31.25499931048949
+            },
+            "hero": {
+              "x": -42,
+              "y": 6.06,
+              "z": 30.66375775308087
+            },
+            "boundaryDistance": 0.008758442591378923,
+            "outsideAllBlockers": true
+          }
+        ],
+        "depenetrated": true,
+        "releasePosition": {
+          "x": -43.66191519316725,
+          "y": 6.06,
+          "z": 24
+        }
+      },
+      {
+        "id": "far-side:east-suit-cache-rack",
+        "overlappingBlockerGroup": [
+          "far-side:east-suit-cache-rack"
+        ],
+        "faces": [
+          {
+            "axis": "x",
+            "sign": -1,
+            "key": "KeyD",
+            "faceBody": "far-side:east-suit-cache-rack",
+            "start": {
+              "x": 38.11513663165739,
+              "z": -24
+            },
+            "hero": {
+              "x": 38.706378189066015,
+              "y": 0.06,
+              "z": -24
+            },
+            "boundaryDistance": 0.008758442591378923,
+            "outsideAllBlockers": true
+          },
+          {
+            "axis": "x",
+            "sign": 1,
+            "key": "KeyA",
+            "faceBody": "far-side:east-suit-cache-rack",
+            "start": {
+              "x": 45.88486336834261,
+              "z": -24
+            },
+            "hero": {
+              "x": 45.293621810933985,
+              "y": 6.06,
+              "z": -24
+            },
+            "boundaryDistance": 0.008758442591378923,
+            "outsideAllBlockers": true
+          },
+          {
+            "axis": "z",
+            "sign": -1,
+            "key": "KeyS",
+            "faceBody": "far-side:east-suit-cache-rack",
+            "start": {
+              "x": 42,
+              "z": -26.87079757794611
+            },
+            "hero": {
+              "x": 42,
+              "y": 4.382663876775095,
+              "z": -26.279556020537488
+            },
+            "boundaryDistance": 0.008758442591378923,
+            "outsideAllBlockers": true
+          },
+          {
+            "axis": "z",
+            "sign": 1,
+            "key": "KeyW",
+            "faceBody": "far-side:east-suit-cache-rack",
+            "start": {
+              "x": 42,
+              "z": -21.12920242205389
+            },
+            "hero": {
+              "x": 42,
+              "y": 6.06,
+              "z": -21.720443979462512
+            },
+            "boundaryDistance": 0.008758442591378923,
+            "outsideAllBlockers": true
+          }
+        ],
+        "depenetrated": true,
+        "releasePosition": {
+          "x": 54.931678962445375,
+          "y": 3.381681165695204,
+          "z": -26.299999999999994
+        }
+      },
+      {
+        "id": "far-side:far-horizon-listening-post",
+        "overlappingBlockerGroup": [
+          "far-side:far-horizon-listening-post",
+          "mare-claim:earthrise-listening-array"
+        ],
+        "faces": [
+          {
+            "axis": "x",
+            "sign": -1,
+            "key": "KeyD",
+            "faceBody": "mare-claim:earthrise-listening-array",
+            "start": {
+              "x": -4.132,
+              "z": 56
+            },
+            "hero": {
+              "x": -3.540758442591377,
+              "y": 4.222345673853002,
+              "z": 56
+            },
+            "boundaryDistance": 0.008758442591377147,
+            "outsideAllBlockers": true
+          },
+          {
+            "axis": "x",
+            "sign": 1,
+            "key": "KeyA",
+            "faceBody": "mare-claim:earthrise-listening-array",
+            "start": {
+              "x": 4.132,
+              "z": 56
+            },
+            "hero": {
+              "x": 3.540758442591377,
+              "y": 5.023005011430152,
+              "z": 56
+            },
+            "boundaryDistance": 0.008758442591377147,
+            "outsideAllBlockers": true
+          },
+          {
+            "axis": "z",
+            "sign": -1,
+            "key": "KeyS",
+            "faceBody": "far-side:far-horizon-listening-post",
+            "start": {
+              "x": 0,
+              "z": 53.308
+            },
+            "hero": {
+              "x": 0,
+              "y": 6.06,
+              "z": 53.89924155740862
+            },
+            "boundaryDistance": 0.008758442591378923,
+            "outsideAllBlockers": true
+          },
+          {
+            "axis": "z",
+            "sign": 1,
+            "key": "KeyW",
+            "faceBody": "far-side:far-horizon-listening-post",
+            "start": {
+              "x": 0,
+              "z": 58.692
+            },
+            "hero": {
+              "x": 0,
+              "y": 3.789828509984084,
+              "z": 58.10075844259138
+            },
+            "boundaryDistance": 0.008758442591378923,
+            "outsideAllBlockers": true
+          }
+        ],
+        "depenetrated": true,
+        "releasePosition": {
+          "x": 13.13074462780354,
+          "y": 6.06,
+          "z": 53.89999999999997
+        }
+      }
+    ],
+    "cycles": [
+      {
+        "cycle": 0,
+        "bodies": [
+          {
+            "id": "probe-recovery-cradle",
+            "position": [
+              0,
+              6,
+              45
+            ],
+            "rotation": [
+              0,
+              3.1416,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "bounds": {
+              "isBox3": true,
+              "min": {
+                "x": -3.5000183659310684,
+                "y": 6,
+                "z": 42.49997428763174
+              },
+              "max": {
+                "x": 3.5000183659310684,
+                "y": 7.940000057220459,
+                "z": 47.50002571236826
+              }
+            }
+          },
+          {
+            "id": "west-comms-shadow-marker",
+            "position": [
+              -42,
+              6,
+              24
+            ],
+            "rotation": [
+              0,
+              0.18,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "bounds": {
+              "isBox3": true,
+              "min": {
+                "x": -43.84269429205639,
+                "y": 6,
+                "z": 22.2377871390681
+              },
+              "max": {
+                "x": -40.15730570794361,
+                "y": 13.157402515411377,
+                "z": 25.7622128609319
+              }
+            }
+          },
+          {
+            "id": "east-suit-cache-rack",
+            "position": [
+              42,
+              6,
+              -24
+            ],
+            "rotation": [
+              0,
+              -0.18,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "bounds": {
+              "isBox3": true,
+              "min": {
+                "x": 38.243245321746386,
+                "y": 6,
+                "z": -26.348329969369598
+              },
+              "max": {
+                "x": 45.756754678253614,
+                "y": 11.309999942779541,
+                "z": -21.651670030630402
+              }
+            }
+          },
+          {
+            "id": "far-horizon-listening-post",
+            "position": [
+              0,
+              4.5356597900390625,
+              56
+            ],
+            "rotation": [
+              0,
+              3.1416,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "bounds": {
+              "isBox3": true,
+              "min": {
+                "x": -2.400015522763401,
+                "y": 4.5356597900390625,
+                "z": 53.89998246403891
+              },
+              "max": {
+                "x": 2.400015522763401,
+                "y": 12.885659217834473,
+                "z": 58.10001753596109
+              }
+            }
+          }
+        ],
+        "dataset": {
+          "terrain3dPilotContract": "e8-far-side",
+          "terrain3dPilotTerrainLoadState": "mounted",
+          "terrain3dPilotPanoramaLoadState": "mounted",
+          "terrain3dPilotLandmarkLoadState": "mounted",
+          "terrain3dPilotState": "ready",
+          "terrain3dPilotRenderSource": "glb",
+          "terrain3dPilotHeightSource": "baked-grid",
+          "terrain3dPilotMeshes": "1",
+          "terrain3dPilotTriangles": "32768",
+          "terrain3dPilotMaterials": "1",
+          "terrain3dPilotVertices": "16641",
+          "terrain3dPilotPanorama": "mare-claim-panorama",
+          "terrain3dPilotPanoramaMeshes": "1",
+          "terrain3dPilotPanoramaTriangles": "3072",
+          "terrain3dPilotPanoramaMaterials": "1",
+          "terrain3dPilotPanoramaVertices": "2222",
+          "assetLoadingLabel": "the claim",
+          "assetLoadingReady": "24",
+          "assetLoadingTotal": "24",
+          "assetLoadingProgress": "24/24",
+          "assetLoadingState": "ready",
+          "terrain3dPilotNightPools": "off",
+          "terrain3dPilotNightPoolSources": "0",
+          "terrain3dPilotSpringPonds": "0",
+          "terrain3dPilotSpringPondWaterRadii": "[]",
+          "terrain3dPilotChannelWater": "0",
+          "terrain3dPilotFordWater": "0",
+          "terrain3dPilotChannelWaterHalfWidths": "[]",
+          "terrain3dPilotHiddenRelief": "0",
+          "terrain3dPilotHiddenGroundLayers": "",
+          "terrain3dPilotContinuation": "panorama-owned-continuation",
+          "terrain3dPilotHorizonApron": "none",
+          "terrain3dPilotFarGroundProbe": "off",
+          "terrain3dPilotPanoramaFraming": "world-projected-horizon",
+          "terrain3dPilotSkirtBlend": "opaque-sculpt-edge",
+          "terrain3dPilotPanoramaFog": "excluded",
+          "terrain3dPilotPanoramaDepth": "screen-horizon-backdrop",
+          "terrain3dPilotLandmarkExpected": "10",
+          "terrain3dPilotWalkSurfaces": "0",
+          "terrain3dPilotLandmarkEmissive": "3",
+          "terrain3dPilotLandmarkSides": "{\"total\":{\"meshes\":10,\"closed\":10,\"open\":0,\"culled\":10,\"doubleSided\":0},\"mounts\":[{\"id\":\"earthrise-listening-array\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":4.536,\"topY\":11.796},{\"id\":\"lava-tube-survey-gantry\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":6,\"topY\":12.99},{\"id\":\"regolith-core-yard\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0,\"topY\":7.1},{\"id\":\"west-rim-debris-catcher\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":4.462,\"topY\":11.332},{\"id\":\"east-rim-debris-catcher\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5.062,\"topY\":11.932},{\"id\":\"far-side-landing-frame\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0,\"topY\":6.99},{\"id\":\"probe-recovery-cradle\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":6,\"topY\":7.94},{\"id\":\"west-comms-shadow-marker\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":6,\"topY\":13.157},{\"id\":\"east-suit-cache-rack\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":6,\"topY\":11.31},{\"id\":\"far-horizon-listening-post\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":4.536,\"topY\":12.886}]}",
+          "terrain3dPilotLandmarks": "10",
+          "terrain3dPilotLandmarkSkipped": "0",
+          "terrain3dPilotLandmarkDiagnostics": "",
+          "terrain3dPilotLandmarkMounts": "[{\"id\":\"earthrise-listening-array\",\"x\":0,\"y\":4.5356597900390625,\"z\":56},{\"id\":\"lava-tube-survey-gantry\",\"x\":-42,\"y\":6,\"z\":28},{\"id\":\"regolith-core-yard\",\"x\":22,\"y\":0,\"z\":18},{\"id\":\"west-rim-debris-catcher\",\"x\":-56,\"y\":4.461697101593018,\"z\":20},{\"id\":\"east-rim-debris-catcher\",\"x\":56,\"y\":5.061962604522705,\"z\":20},{\"id\":\"far-side-landing-frame\",\"x\":0,\"y\":0,\"z\":-40},{\"id\":\"probe-recovery-cradle\",\"x\":0,\"y\":6,\"z\":45},{\"id\":\"west-comms-shadow-marker\",\"x\":-42,\"y\":6,\"z\":24},{\"id\":\"east-suit-cache-rack\",\"x\":42,\"y\":6,\"z\":-24},{\"id\":\"far-horizon-listening-post\",\"x\":0,\"y\":4.5356597900390625,\"z\":56}]",
+          "terrain3dPilotLandmarkMaterials": "[{\"id\":\"earthrise-listening-array\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"lava-tube-survey-gantry\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"regolith-core-yard\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"west-rim-debris-catcher\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"east-rim-debris-catcher\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"far-side-landing-frame\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"probe-recovery-cradle\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"west-comms-shadow-marker\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"east-suit-cache-rack\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"far-horizon-listening-post\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0}]"
+        },
+        "remainingSceneChildren": 0
+      },
+      {
+        "cycle": 1,
+        "bodies": [
+          {
+            "id": "probe-recovery-cradle",
+            "position": [
+              0,
+              6,
+              45
+            ],
+            "rotation": [
+              0,
+              3.1416,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "bounds": {
+              "isBox3": true,
+              "min": {
+                "x": -3.5000183659310684,
+                "y": 6,
+                "z": 42.49997428763174
+              },
+              "max": {
+                "x": 3.5000183659310684,
+                "y": 7.940000057220459,
+                "z": 47.50002571236826
+              }
+            }
+          },
+          {
+            "id": "west-comms-shadow-marker",
+            "position": [
+              -42,
+              6,
+              24
+            ],
+            "rotation": [
+              0,
+              0.18,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "bounds": {
+              "isBox3": true,
+              "min": {
+                "x": -43.84269429205639,
+                "y": 6,
+                "z": 22.2377871390681
+              },
+              "max": {
+                "x": -40.15730570794361,
+                "y": 13.157402515411377,
+                "z": 25.7622128609319
+              }
+            }
+          },
+          {
+            "id": "east-suit-cache-rack",
+            "position": [
+              42,
+              6,
+              -24
+            ],
+            "rotation": [
+              0,
+              -0.18,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "bounds": {
+              "isBox3": true,
+              "min": {
+                "x": 38.243245321746386,
+                "y": 6,
+                "z": -26.348329969369598
+              },
+              "max": {
+                "x": 45.756754678253614,
+                "y": 11.309999942779541,
+                "z": -21.651670030630402
+              }
+            }
+          },
+          {
+            "id": "far-horizon-listening-post",
+            "position": [
+              0,
+              4.5356597900390625,
+              56
+            ],
+            "rotation": [
+              0,
+              3.1416,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "bounds": {
+              "isBox3": true,
+              "min": {
+                "x": -2.400015522763401,
+                "y": 4.5356597900390625,
+                "z": 53.89998246403891
+              },
+              "max": {
+                "x": 2.400015522763401,
+                "y": 12.885659217834473,
+                "z": 58.10001753596109
+              }
+            }
+          }
+        ],
+        "dataset": {
+          "terrain3dPilotContract": "e8-far-side",
+          "terrain3dPilotTerrainLoadState": "mounted",
+          "terrain3dPilotPanoramaLoadState": "mounted",
+          "terrain3dPilotLandmarkLoadState": "mounted",
+          "terrain3dPilotState": "ready",
+          "terrain3dPilotRenderSource": "glb",
+          "terrain3dPilotHeightSource": "baked-grid",
+          "terrain3dPilotMeshes": "1",
+          "terrain3dPilotTriangles": "32768",
+          "terrain3dPilotMaterials": "1",
+          "terrain3dPilotVertices": "16641",
+          "terrain3dPilotPanorama": "mare-claim-panorama",
+          "terrain3dPilotPanoramaMeshes": "1",
+          "terrain3dPilotPanoramaTriangles": "3072",
+          "terrain3dPilotPanoramaMaterials": "1",
+          "terrain3dPilotPanoramaVertices": "2222",
+          "assetLoadingLabel": "the claim",
+          "assetLoadingReady": "24",
+          "assetLoadingTotal": "24",
+          "assetLoadingProgress": "24/24",
+          "assetLoadingState": "ready",
+          "terrain3dPilotNightPools": "off",
+          "terrain3dPilotNightPoolSources": "0",
+          "terrain3dPilotSpringPonds": "0",
+          "terrain3dPilotSpringPondWaterRadii": "[]",
+          "terrain3dPilotChannelWater": "0",
+          "terrain3dPilotFordWater": "0",
+          "terrain3dPilotChannelWaterHalfWidths": "[]",
+          "terrain3dPilotHiddenRelief": "0",
+          "terrain3dPilotHiddenGroundLayers": "",
+          "terrain3dPilotContinuation": "panorama-owned-continuation",
+          "terrain3dPilotHorizonApron": "none",
+          "terrain3dPilotFarGroundProbe": "off",
+          "terrain3dPilotPanoramaFraming": "world-projected-horizon",
+          "terrain3dPilotSkirtBlend": "opaque-sculpt-edge",
+          "terrain3dPilotPanoramaFog": "excluded",
+          "terrain3dPilotPanoramaDepth": "screen-horizon-backdrop",
+          "terrain3dPilotLandmarkExpected": "10",
+          "terrain3dPilotWalkSurfaces": "0",
+          "terrain3dPilotLandmarkEmissive": "3",
+          "terrain3dPilotLandmarkSides": "{\"total\":{\"meshes\":10,\"closed\":10,\"open\":0,\"culled\":10,\"doubleSided\":0},\"mounts\":[{\"id\":\"earthrise-listening-array\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":4.536,\"topY\":11.796},{\"id\":\"lava-tube-survey-gantry\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":6,\"topY\":12.99},{\"id\":\"regolith-core-yard\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0,\"topY\":7.1},{\"id\":\"west-rim-debris-catcher\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":4.462,\"topY\":11.332},{\"id\":\"east-rim-debris-catcher\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5.062,\"topY\":11.932},{\"id\":\"far-side-landing-frame\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0,\"topY\":6.99},{\"id\":\"probe-recovery-cradle\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":6,\"topY\":7.94},{\"id\":\"west-comms-shadow-marker\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":6,\"topY\":13.157},{\"id\":\"east-suit-cache-rack\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":6,\"topY\":11.31},{\"id\":\"far-horizon-listening-post\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":4.536,\"topY\":12.886}]}",
+          "terrain3dPilotLandmarks": "10",
+          "terrain3dPilotLandmarkSkipped": "0",
+          "terrain3dPilotLandmarkDiagnostics": "",
+          "terrain3dPilotLandmarkMounts": "[{\"id\":\"earthrise-listening-array\",\"x\":0,\"y\":4.5356597900390625,\"z\":56},{\"id\":\"lava-tube-survey-gantry\",\"x\":-42,\"y\":6,\"z\":28},{\"id\":\"regolith-core-yard\",\"x\":22,\"y\":0,\"z\":18},{\"id\":\"west-rim-debris-catcher\",\"x\":-56,\"y\":4.461697101593018,\"z\":20},{\"id\":\"east-rim-debris-catcher\",\"x\":56,\"y\":5.061962604522705,\"z\":20},{\"id\":\"far-side-landing-frame\",\"x\":0,\"y\":0,\"z\":-40},{\"id\":\"probe-recovery-cradle\",\"x\":0,\"y\":6,\"z\":45},{\"id\":\"west-comms-shadow-marker\",\"x\":-42,\"y\":6,\"z\":24},{\"id\":\"east-suit-cache-rack\",\"x\":42,\"y\":6,\"z\":-24},{\"id\":\"far-horizon-listening-post\",\"x\":0,\"y\":4.5356597900390625,\"z\":56}]",
+          "terrain3dPilotLandmarkMaterials": "[{\"id\":\"earthrise-listening-array\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"lava-tube-survey-gantry\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"regolith-core-yard\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"west-rim-debris-catcher\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"east-rim-debris-catcher\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"far-side-landing-frame\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"probe-recovery-cradle\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"west-comms-shadow-marker\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"east-suit-cache-rack\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"far-horizon-listening-post\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0}]"
+        },
+        "remainingSceneChildren": 0
+      },
+      {
+        "cycle": 2,
+        "bodies": [
+          {
+            "id": "probe-recovery-cradle",
+            "position": [
+              0,
+              6,
+              45
+            ],
+            "rotation": [
+              0,
+              3.1416,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "bounds": {
+              "isBox3": true,
+              "min": {
+                "x": -3.5000183659310684,
+                "y": 6,
+                "z": 42.49997428763174
+              },
+              "max": {
+                "x": 3.5000183659310684,
+                "y": 7.940000057220459,
+                "z": 47.50002571236826
+              }
+            }
+          },
+          {
+            "id": "west-comms-shadow-marker",
+            "position": [
+              -42,
+              6,
+              24
+            ],
+            "rotation": [
+              0,
+              0.18,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "bounds": {
+              "isBox3": true,
+              "min": {
+                "x": -43.84269429205639,
+                "y": 6,
+                "z": 22.2377871390681
+              },
+              "max": {
+                "x": -40.15730570794361,
+                "y": 13.157402515411377,
+                "z": 25.7622128609319
+              }
+            }
+          },
+          {
+            "id": "east-suit-cache-rack",
+            "position": [
+              42,
+              6,
+              -24
+            ],
+            "rotation": [
+              0,
+              -0.18,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "bounds": {
+              "isBox3": true,
+              "min": {
+                "x": 38.243245321746386,
+                "y": 6,
+                "z": -26.348329969369598
+              },
+              "max": {
+                "x": 45.756754678253614,
+                "y": 11.309999942779541,
+                "z": -21.651670030630402
+              }
+            }
+          },
+          {
+            "id": "far-horizon-listening-post",
+            "position": [
+              0,
+              4.5356597900390625,
+              56
+            ],
+            "rotation": [
+              0,
+              3.1416,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "bounds": {
+              "isBox3": true,
+              "min": {
+                "x": -2.400015522763401,
+                "y": 4.5356597900390625,
+                "z": 53.89998246403891
+              },
+              "max": {
+                "x": 2.400015522763401,
+                "y": 12.885659217834473,
+                "z": 58.10001753596109
+              }
+            }
+          }
+        ],
+        "dataset": {
+          "terrain3dPilotContract": "e8-far-side",
+          "terrain3dPilotTerrainLoadState": "mounted",
+          "terrain3dPilotPanoramaLoadState": "mounted",
+          "terrain3dPilotLandmarkLoadState": "mounted",
+          "terrain3dPilotState": "ready",
+          "terrain3dPilotRenderSource": "glb",
+          "terrain3dPilotHeightSource": "baked-grid",
+          "terrain3dPilotMeshes": "1",
+          "terrain3dPilotTriangles": "32768",
+          "terrain3dPilotMaterials": "1",
+          "terrain3dPilotVertices": "16641",
+          "terrain3dPilotPanorama": "mare-claim-panorama",
+          "terrain3dPilotPanoramaMeshes": "1",
+          "terrain3dPilotPanoramaTriangles": "3072",
+          "terrain3dPilotPanoramaMaterials": "1",
+          "terrain3dPilotPanoramaVertices": "2222",
+          "assetLoadingLabel": "the claim",
+          "assetLoadingReady": "24",
+          "assetLoadingTotal": "24",
+          "assetLoadingProgress": "24/24",
+          "assetLoadingState": "ready",
+          "terrain3dPilotNightPools": "off",
+          "terrain3dPilotNightPoolSources": "0",
+          "terrain3dPilotSpringPonds": "0",
+          "terrain3dPilotSpringPondWaterRadii": "[]",
+          "terrain3dPilotChannelWater": "0",
+          "terrain3dPilotFordWater": "0",
+          "terrain3dPilotChannelWaterHalfWidths": "[]",
+          "terrain3dPilotHiddenRelief": "0",
+          "terrain3dPilotHiddenGroundLayers": "",
+          "terrain3dPilotContinuation": "panorama-owned-continuation",
+          "terrain3dPilotHorizonApron": "none",
+          "terrain3dPilotFarGroundProbe": "off",
+          "terrain3dPilotPanoramaFraming": "world-projected-horizon",
+          "terrain3dPilotSkirtBlend": "opaque-sculpt-edge",
+          "terrain3dPilotPanoramaFog": "excluded",
+          "terrain3dPilotPanoramaDepth": "screen-horizon-backdrop",
+          "terrain3dPilotLandmarkExpected": "10",
+          "terrain3dPilotWalkSurfaces": "0",
+          "terrain3dPilotLandmarkEmissive": "3",
+          "terrain3dPilotLandmarkSides": "{\"total\":{\"meshes\":10,\"closed\":10,\"open\":0,\"culled\":10,\"doubleSided\":0},\"mounts\":[{\"id\":\"earthrise-listening-array\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":4.536,\"topY\":11.796},{\"id\":\"lava-tube-survey-gantry\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":6,\"topY\":12.99},{\"id\":\"regolith-core-yard\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0,\"topY\":7.1},{\"id\":\"west-rim-debris-catcher\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":4.462,\"topY\":11.332},{\"id\":\"east-rim-debris-catcher\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5.062,\"topY\":11.932},{\"id\":\"far-side-landing-frame\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0,\"topY\":6.99},{\"id\":\"probe-recovery-cradle\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":6,\"topY\":7.94},{\"id\":\"west-comms-shadow-marker\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":6,\"topY\":13.157},{\"id\":\"east-suit-cache-rack\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":6,\"topY\":11.31},{\"id\":\"far-horizon-listening-post\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":4.536,\"topY\":12.886}]}",
+          "terrain3dPilotLandmarks": "10",
+          "terrain3dPilotLandmarkSkipped": "0",
+          "terrain3dPilotLandmarkDiagnostics": "",
+          "terrain3dPilotLandmarkMounts": "[{\"id\":\"earthrise-listening-array\",\"x\":0,\"y\":4.5356597900390625,\"z\":56},{\"id\":\"lava-tube-survey-gantry\",\"x\":-42,\"y\":6,\"z\":28},{\"id\":\"regolith-core-yard\",\"x\":22,\"y\":0,\"z\":18},{\"id\":\"west-rim-debris-catcher\",\"x\":-56,\"y\":4.461697101593018,\"z\":20},{\"id\":\"east-rim-debris-catcher\",\"x\":56,\"y\":5.061962604522705,\"z\":20},{\"id\":\"far-side-landing-frame\",\"x\":0,\"y\":0,\"z\":-40},{\"id\":\"probe-recovery-cradle\",\"x\":0,\"y\":6,\"z\":45},{\"id\":\"west-comms-shadow-marker\",\"x\":-42,\"y\":6,\"z\":24},{\"id\":\"east-suit-cache-rack\",\"x\":42,\"y\":6,\"z\":-24},{\"id\":\"far-horizon-listening-post\",\"x\":0,\"y\":4.5356597900390625,\"z\":56}]",
+          "terrain3dPilotLandmarkMaterials": "[{\"id\":\"earthrise-listening-array\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"lava-tube-survey-gantry\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"regolith-core-yard\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"west-rim-debris-catcher\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"east-rim-debris-catcher\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"far-side-landing-frame\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"probe-recovery-cradle\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"west-comms-shadow-marker\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"east-suit-cache-rack\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"far-horizon-listening-post\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0}]"
+        },
+        "remainingSceneChildren": 0
+      }
+    ],
+    "errors": []
+  }
+]

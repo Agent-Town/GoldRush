@@ -66,6 +66,8 @@ try {for(const width of [1280,390])for(let cycle=0;cycle<(mode==='performance'?4
    for(const [name,x,z] of config.viewpoints??[]){
     await page.evaluate(({x,z})=>window.__GR_TEST__.teleport(x,z),{x,z});await page.waitForTimeout(900);
     await page.screenshot({path:`${out}/viewpoint-${arm}-${name}-${width}.png`});
+    const point=await page.evaluate(async()=>{const terrain=await import('/src/world/Terrain.ts');const hero={...window.__THREE_GAME_DIAGNOSTICS__.heroPos};return {hero,walkable:terrain.sample(hero.x,hero.z).walkable}});
+    rows.push({width,arm,viewpoint:name,...point,errors});
    }
    if(!config.stations.length)rows.push({width,arm,emptyLandmarks:true,errors});
    for(const [focus,station,x,z,stationArm] of config.stations){

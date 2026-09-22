@@ -1,0 +1,666 @@
+{
+  "status": "READY-FOR-GATES with documented holds",
+  "codeBranch": "sol/map-art-campaign-2",
+  "storeBranch": "astra/f-corr4-2",
+  "storeHead": "300caacfa15ad6be5e6bf41be80b0c5a331c443c",
+  "maps": [
+    {
+      "contract": "e6-picnic",
+      "solids": [
+        {
+          "id": "mesa-civilian-shade",
+          "position": [
+            0,
+            40
+          ],
+          "rotation": 3.1416,
+          "scale": [
+            1,
+            1
+          ],
+          "footprint": {
+            "kind": "rect",
+            "w": 6.797,
+            "d": 4.725
+          }
+        }
+      ],
+      "mountedBodies": 10,
+      "destinationsPerViewport": 19,
+      "faceProbes": 8,
+      "escapeProbes": 2,
+      "mountDisposeCycles": 6,
+      "performance": [
+        {
+          "width": 1280,
+          "before": {
+            "p95": [
+              10.199999999999818,
+              10.199999999999818,
+              10.199999999999818,
+              10.299999999999272
+            ],
+            "median": 10.199999999999818,
+            "modes": [
+              [
+                10.199999999999818,
+                10.199999999999818,
+                10.199999999999818,
+                10.299999999999272
+              ]
+            ],
+            "calls": [
+              90
+            ],
+            "triangles": [
+              102296
+            ]
+          },
+          "after": {
+            "p95": [
+              10.199999999999818,
+              10.200000000000728,
+              10.299999999999272,
+              10.299999999999272
+            ],
+            "median": 10.25,
+            "modes": [
+              [
+                10.199999999999818,
+                10.200000000000728,
+                10.299999999999272,
+                10.299999999999272
+              ]
+            ],
+            "calls": [
+              90
+            ],
+            "triangles": [
+              102296
+            ]
+          },
+          "pooledMedianChangePercent": 0.49019607843316937,
+          "singleMode": true,
+          "within15Percent": true
+        },
+        {
+          "width": 390,
+          "before": {
+            "p95": [
+              9.800000000000182,
+              9.900000000000546,
+              9.900000000000546,
+              10.100000000000364
+            ],
+            "median": 9.900000000000546,
+            "modes": [
+              [
+                9.800000000000182,
+                9.900000000000546,
+                9.900000000000546,
+                10.100000000000364
+              ]
+            ],
+            "calls": [
+              54
+            ],
+            "triangles": [
+              99266
+            ]
+          },
+          "after": {
+            "p95": [
+              10,
+              10.099999999999454,
+              10.099999999999454,
+              10.099999999999454
+            ],
+            "median": 10.099999999999454,
+            "modes": [
+              [
+                10,
+                10.099999999999454,
+                10.099999999999454,
+                10.099999999999454
+              ]
+            ],
+            "calls": [
+              54
+            ],
+            "triangles": [
+              99266
+            ]
+          },
+          "pooledMedianChangePercent": 2.0202020201908866,
+          "singleMode": true,
+          "within15Percent": true
+        }
+      ],
+      "engine": {
+        "before": "4374cdbfcb7631c86982f9439fb30583eb3eba1acbf70e1bcccaf8fb6e210b21",
+        "after": "da49237c406cfbb90e634443440aaaddeb0d4185afa98e99e9e5f6cf0848d232",
+        "storeCommit": "187e555ea982f12fe7f988184c6574a6298dcaa9"
+      },
+      "review": "artifacts/sol/map-art-campaign-2/run-7/e6-picnic/review.md"
+    },
+    {
+      "contract": "e7-dead-band",
+      "solids": [
+        {
+          "id": "dead-band-yard-null-post",
+          "position": [
+            0,
+            -40
+          ],
+          "rotation": 0,
+          "scale": [
+            1,
+            1
+          ],
+          "footprint": {
+            "kind": "radius",
+            "radius": 0.864
+          }
+        },
+        {
+          "id": "west-old-tool-cache",
+          "position": [
+            -42,
+            38
+          ],
+          "rotation": 0.16,
+          "scale": [
+            1,
+            1
+          ],
+          "footprint": {
+            "kind": "rect",
+            "w": 4.862,
+            "d": 2.95
+          }
+        },
+        {
+          "id": "east-old-tool-cache",
+          "position": [
+            42,
+            38
+          ],
+          "rotation": -0.16,
+          "scale": [
+            1,
+            1
+          ],
+          "footprint": {
+            "kind": "rect",
+            "w": 4.862,
+            "d": 2.95
+          }
+        }
+      ],
+      "mountedBodies": 10,
+      "destinationsPerViewport": 10,
+      "faceProbes": 24,
+      "escapeProbes": 6,
+      "mountDisposeCycles": 6,
+      "performance": [
+        {
+          "width": 1280,
+          "before": {
+            "p95": [
+              10,
+              10,
+              10,
+              10.100000000000364
+            ],
+            "median": 10.0,
+            "modes": [
+              [
+                10,
+                10,
+                10,
+                10.100000000000364
+              ]
+            ],
+            "calls": [
+              78
+            ],
+            "triangles": [
+              101548
+            ]
+          },
+          "after": {
+            "p95": [
+              9.899999999999636,
+              10,
+              10,
+              10.099999999999454
+            ],
+            "median": 10.0,
+            "modes": [
+              [
+                9.899999999999636,
+                10,
+                10,
+                10.099999999999454
+              ]
+            ],
+            "calls": [
+              78
+            ],
+            "triangles": [
+              101548
+            ]
+          },
+          "pooledMedianChangePercent": 0.0,
+          "singleMode": true,
+          "within15Percent": true
+        },
+        {
+          "width": 390,
+          "before": {
+            "p95": [
+              10,
+              10,
+              10,
+              10
+            ],
+            "median": 10.0,
+            "modes": [
+              [
+                10,
+                10,
+                10,
+                10
+              ]
+            ],
+            "calls": [
+              56,
+              57
+            ],
+            "triangles": [
+              99466,
+              99468
+            ]
+          },
+          "after": {
+            "p95": [
+              9.600000000000364,
+              10,
+              10.099999999999454,
+              10.099999999999454
+            ],
+            "median": 10.049999999999727,
+            "modes": [
+              [
+                9.600000000000364,
+                10,
+                10.099999999999454,
+                10.099999999999454
+              ]
+            ],
+            "calls": [
+              56
+            ],
+            "triangles": [
+              99466
+            ]
+          },
+          "pooledMedianChangePercent": 0.4999999999972804,
+          "singleMode": true,
+          "within15Percent": true
+        }
+      ],
+      "engine": {
+        "before": "da49237c406cfbb90e634443440aaaddeb0d4185afa98e99e9e5f6cf0848d232",
+        "after": "f00319a05cf5f5d6bea92a824e5377188e98c44da7238d8db2d659e32e4f9f13",
+        "storeCommit": "3c25d72a9de66c5fbaa633be41df390a8d79d245"
+      },
+      "review": "artifacts/sol/map-art-campaign-2/run-7/e7-dead-band/review.md"
+    },
+    {
+      "contract": "e7-relay-rush",
+      "solids": [
+        {
+          "id": "rush-start-horn",
+          "position": [
+            0,
+            -50
+          ],
+          "rotation": 0,
+          "scale": [
+            1,
+            1
+          ],
+          "footprint": {
+            "kind": "rect",
+            "w": 2.938,
+            "d": 2.16
+          }
+        }
+      ],
+      "mountedBodies": 10,
+      "destinationsPerViewport": 15,
+      "faceProbes": 8,
+      "escapeProbes": 2,
+      "mountDisposeCycles": 6,
+      "performance": [
+        {
+          "width": 1280,
+          "before": {
+            "p95": [
+              9.5,
+              9.599999999999454,
+              9.899999999999636,
+              9.900000000000546
+            ],
+            "median": 9.749999999999545,
+            "modes": [
+              [
+                9.5,
+                9.599999999999454,
+                9.899999999999636,
+                9.900000000000546
+              ]
+            ],
+            "calls": [
+              70
+            ],
+            "triangles": [
+              101072
+            ]
+          },
+          "after": {
+            "p95": [
+              9.099999999999454,
+              9.199999999999818,
+              9.199999999999818,
+              9.699999999999818
+            ],
+            "median": 9.199999999999818,
+            "modes": [
+              [
+                9.099999999999454,
+                9.199999999999818,
+                9.199999999999818,
+                9.699999999999818
+              ]
+            ],
+            "calls": [
+              70
+            ],
+            "triangles": [
+              101072
+            ]
+          },
+          "pooledMedianChangePercent": -5.6410256410231,
+          "singleMode": true,
+          "within15Percent": true
+        },
+        {
+          "width": 390,
+          "before": {
+            "p95": [
+              8.799999999999272,
+              9.700000000000728,
+              9.899999999999636,
+              10.100000000000364
+            ],
+            "median": 9.800000000000182,
+            "modes": [
+              [
+                8.799999999999272,
+                9.700000000000728,
+                9.899999999999636,
+                10.100000000000364
+              ]
+            ],
+            "calls": [
+              52
+            ],
+            "triangles": [
+              98190
+            ]
+          },
+          "after": {
+            "p95": [
+              9.199999999999818,
+              9.599999999999454,
+              9.600000000000364,
+              9.900000000000546
+            ],
+            "median": 9.599999999999909,
+            "modes": [
+              [
+                9.199999999999818,
+                9.599999999999454,
+                9.600000000000364,
+                9.900000000000546
+              ]
+            ],
+            "calls": [
+              52
+            ],
+            "triangles": [
+              98190
+            ]
+          },
+          "pooledMedianChangePercent": -2.0408163265333568,
+          "singleMode": true,
+          "within15Percent": true
+        }
+      ],
+      "engine": {
+        "before": "f00319a05cf5f5d6bea92a824e5377188e98c44da7238d8db2d659e32e4f9f13",
+        "after": "39f21aea8a827ba58c52363c354420aa5cc19ea55ba1b2751ea264e04b6f6d2b",
+        "storeCommit": "0787a539f6ee70886bc4867909fd70c0de4a3ba7"
+      },
+      "review": "artifacts/sol/map-art-campaign-2/run-7/e7-relay-rush/review.md"
+    },
+    {
+      "contract": "e8-far-side",
+      "solids": [
+        {
+          "id": "probe-recovery-cradle",
+          "position": [
+            0,
+            45
+          ],
+          "rotation": 3.1416,
+          "scale": [
+            1,
+            1
+          ],
+          "footprint": {
+            "kind": "rect",
+            "w": 5.04,
+            "d": 3.6
+          }
+        },
+        {
+          "id": "west-comms-shadow-marker",
+          "position": [
+            -42,
+            24
+          ],
+          "rotation": 0.18,
+          "scale": [
+            1,
+            1
+          ],
+          "footprint": {
+            "kind": "radius",
+            "radius": 1.08
+          }
+        },
+        {
+          "id": "east-suit-cache-rack",
+          "position": [
+            42,
+            -24
+          ],
+          "rotation": -0.18,
+          "scale": [
+            1,
+            1
+          ],
+          "footprint": {
+            "kind": "rect",
+            "w": 5.04,
+            "d": 2.52
+          }
+        },
+        {
+          "id": "far-horizon-listening-post",
+          "position": [
+            0,
+            56
+          ],
+          "rotation": 3.1416,
+          "scale": [
+            1,
+            1
+          ],
+          "footprint": {
+            "kind": "radius",
+            "radius": 1.512
+          }
+        }
+      ],
+      "mountedBodies": 10,
+      "destinationsPerViewport": 10,
+      "faceProbes": 32,
+      "escapeProbes": 8,
+      "mountDisposeCycles": 6,
+      "performance": [
+        {
+          "width": 1280,
+          "before": {
+            "p95": [
+              8.800000000000182,
+              9.399999999999636,
+              9.399999999999636,
+              9.600000000000364
+            ],
+            "median": 9.399999999999636,
+            "modes": [
+              [
+                8.800000000000182,
+                9.399999999999636,
+                9.399999999999636,
+                9.600000000000364
+              ]
+            ],
+            "calls": [
+              63
+            ],
+            "triangles": [
+              100348
+            ]
+          },
+          "after": {
+            "p95": [
+              9.600000000000364,
+              9.600000000000364,
+              9.800000000000182,
+              9.899999999999636
+            ],
+            "median": 9.700000000000273,
+            "modes": [
+              [
+                9.600000000000364,
+                9.600000000000364,
+                9.800000000000182,
+                9.899999999999636
+              ]
+            ],
+            "calls": [
+              63
+            ],
+            "triangles": [
+              100348
+            ]
+          },
+          "pooledMedianChangePercent": 3.1914893617090323,
+          "singleMode": true,
+          "within15Percent": true
+        },
+        {
+          "width": 390,
+          "before": {
+            "p95": [
+              8.5,
+              9.400000000000546,
+              9.5,
+              10
+            ],
+            "median": 9.450000000000273,
+            "modes": [
+              [
+                8.5,
+                9.400000000000546,
+                9.5,
+                10
+              ]
+            ],
+            "calls": [
+              50
+            ],
+            "triangles": [
+              98430
+            ]
+          },
+          "after": {
+            "p95": [
+              9.599999999999454,
+              9.699999999999818,
+              9.800000000000182,
+              9.800000000000182
+            ],
+            "median": 9.75,
+            "modes": [
+              [
+                9.599999999999454,
+                9.699999999999818,
+                9.800000000000182,
+                9.800000000000182
+              ]
+            ],
+            "calls": [
+              50
+            ],
+            "triangles": [
+              98430
+            ]
+          },
+          "pooledMedianChangePercent": 3.174603174600188,
+          "singleMode": true,
+          "within15Percent": true
+        }
+      ],
+      "engine": {
+        "before": "39f21aea8a827ba58c52363c354420aa5cc19ea55ba1b2751ea264e04b6f6d2b",
+        "after": "3ece8e8fac9f610d43579194a9d83b81f36f81a7ffdd5105fcf6c4ec191112a9",
+        "storeCommit": "300caacfa15ad6be5e6bf41be80b0c5a331c443c"
+      },
+      "review": "artifacts/sol/map-art-campaign-2/run-7/e8-far-side/review.md"
+    }
+  ],
+  "totals": {
+    "destinationsPerViewport": 54,
+    "faceProbes": 72,
+    "escapeProbes": 18,
+    "mountDisposeCycles": 24
+  },
+  "newSolids": 9,
+  "e1PayloadBytes": 34271491,
+  "e1BaselineBytes": 34271395,
+  "remainingMaps": [],
+  "holds": [
+    "Package test roster entry is outside the explicit task firewall; owner permission requested; patch prepared and git apply --check passes. Named guards are 2/3, not 3/3.",
+    "Two Picnic null-floor seeds moved; no floor or engine-era pin was edited.",
+    "Static same-game audit is 32 equal / 10 agent-lacks per map on both exact base and candidate, not all EQUAL.",
+    "Broad browser suites retain documented base failure classes. Relay Rush baseline replay covers representative shared Lantern-helper failures, not every individual mode.",
+    "Prior composition limitations remain; northern Far Side hero occlusion is present in both before and after diagnostic views."
+  ],
+  "devServer5303": "Stopped after all browser checks; port verified free."
+}
