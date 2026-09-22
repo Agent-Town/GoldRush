@@ -1,0 +1,3869 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.4.0/bin/node",
+      "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/node_modules/.bin/playwright",
+      "test",
+      "e2e/mp-06-party-overview.spec.ts",
+      "e2e/safari-swap.spec.ts",
+      "e2e/locked-win.spec.ts:65",
+      "e2e/m4-06-embodiment.spec.ts:187",
+      "e2e/bt-04b-automation.spec.ts",
+      "e2e/contract-briefings.spec.ts",
+      "e2e/drill-yard.spec.ts",
+      "e2e/e7-playbook-rows.spec.ts",
+      "e2e/en-01-claim-ledger.spec.ts",
+      "e2e/en-02-e1-coverage.spec.ts",
+      "e2e/m4-09-agent-rung-clarity.spec.ts",
+      "e2e/m4-10-agent-actions-integrity.spec.ts",
+      "e2e/meta-presence.spec.ts",
+      "e2e/pause-goal-progress.spec.ts",
+      "e2e/run-suspend.spec.ts",
+      "--project=desktop-chrome",
+      "--project=mobile-chrome",
+      "--workers=1",
+      "--reporter=line,json"
+    ],
+    "configFile": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/playwright.config.ts",
+    "rootDir": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/scripts/external-server-guard.mjs",
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "revision": "b95e2c4f0fb3e4cc08563ae8999b0f6935e1830e",
+      "dirty": true,
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "revision": "b95e2c4f0fb3e4cc08563ae8999b0f6935e1830e",
+          "dirty": true,
+          "actualWorkers": 1
+        },
+        "id": "desktop-chrome",
+        "name": "desktop-chrome",
+        "testDir": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e",
+        "testIgnore": [
+          "**/*.rig.ts",
+          "**/release-build.spec.ts",
+          "**/release-base-path.spec.ts",
+          "**/accounts-sync.spec.ts"
+        ],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "revision": "b95e2c4f0fb3e4cc08563ae8999b0f6935e1830e",
+          "dirty": true,
+          "actualWorkers": 1
+        },
+        "id": "mobile-chrome",
+        "name": "mobile-chrome",
+        "testDir": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e",
+        "testIgnore": [
+          "**/*.rig.ts",
+          "**/release-build.spec.ts",
+          "**/release-base-path.spec.ts",
+          "**/accounts-sync.spec.ts"
+        ],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "revision": "b95e2c4f0fb3e4cc08563ae8999b0f6935e1830e",
+          "dirty": true,
+          "actualWorkers": 1
+        },
+        "id": "desktop-webkit",
+        "name": "desktop-webkit",
+        "testDir": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e",
+        "testIgnore": [
+          "**/*.rig.ts",
+          "**/release-build.spec.ts",
+          "**/release-base-path.spec.ts",
+          "**/accounts-sync.spec.ts"
+        ],
+        "testMatch": [
+          "/058-device-tiers\\.spec\\.ts/"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "line"
+      ],
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "bt-04b-automation.spec.ts",
+      "file": "bt-04b-automation.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "repair and idle boundaries update the live loop on the next sim tick",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3646,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "boundary boot watchErrors suppressed 0 known GLTFLoader blob error(s)\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:09:11.244Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "23cbb445c6f40b7bd12d-8de93eb0dc4b9a89282f",
+          "file": "bt-04b-automation.spec.ts",
+          "line": 36,
+          "column": 1
+        },
+        {
+          "title": "automation tunables survive suspend restore and old saves receive defaults",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3120,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "suspend boot watchErrors suppressed 0 known GLTFLoader blob error(s)\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:09:15.224Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "23cbb445c6f40b7bd12d-7a63a092234956dd6696",
+          "file": "bt-04b-automation.spec.ts",
+          "line": 72,
+          "column": 1
+        },
+        {
+          "title": "plain boot exposes operable automation controls",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3100,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "plain boot watchErrors suppressed 0 known GLTFLoader blob error(s)\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:09:18.349Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "23cbb445c6f40b7bd12d-5c013d48e0c1d69b8caf",
+          "file": "bt-04b-automation.spec.ts",
+          "line": 102,
+          "column": 1
+        },
+        {
+          "title": "repair and idle boundaries update the live loop on the next sim tick",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4873,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "boundary boot watchErrors suppressed 0 known GLTFLoader blob error(s)\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:15:45.298Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "23cbb445c6f40b7bd12d-1cf7f80ecc4ad0589f9f",
+          "file": "bt-04b-automation.spec.ts",
+          "line": 36,
+          "column": 1
+        },
+        {
+          "title": "automation tunables survive suspend restore and old saves receive defaults",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4210,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "suspend boot watchErrors suppressed 0 known GLTFLoader blob error(s)\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:15:50.560Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "23cbb445c6f40b7bd12d-a3465f8617f5eeddf77e",
+          "file": "bt-04b-automation.spec.ts",
+          "line": 72,
+          "column": 1
+        },
+        {
+          "title": "plain boot exposes operable automation controls",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4107,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "plain boot watchErrors suppressed 0 known GLTFLoader blob error(s)\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:15:54.781Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "23cbb445c6f40b7bd12d-23f5151d7c244af80f63",
+          "file": "bt-04b-automation.spec.ts",
+          "line": 102,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "contract-briefings.spec.ts",
+      "file": "contract-briefings.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "all 42 card briefings use in-world copy and only cite authored wave numbers",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 18,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:09:21.503Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "02a9d739e63abd1b8f4c-453809f8dcde1cf74f52",
+          "file": "contract-briefings.spec.ts",
+          "line": 329,
+          "column": 1
+        },
+        {
+          "title": "every current contract launch shows manifest briefing goals and rules",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 15049,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:09:21.526Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "02a9d739e63abd1b8f4c-ccf68a46cb0805292179",
+          "file": "contract-briefings.spec.ts",
+          "line": 344,
+          "column": 1
+        },
+        {
+          "title": "run briefing dismisses by click and by eight second timer while sim keeps running",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 12318,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:09:36.580Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "02a9d739e63abd1b8f4c-92f87bc6c1e7c1bb0ff8",
+          "file": "contract-briefings.spec.ts",
+          "line": 356,
+          "column": 1
+        },
+        {
+          "title": "pause panel repeats the active contract briefing",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3372,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:09:48.903Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "02a9d739e63abd1b8f4c-7ed21e97755f549da64f",
+          "file": "contract-briefings.spec.ts",
+          "line": 373,
+          "column": 1
+        },
+        {
+          "title": "plain no-debug board launch still briefs The Claim",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5964,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:09:52.284Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "02a9d739e63abd1b8f4c-d85ebf0c97c7c9e2f8af",
+          "file": "contract-briefings.spec.ts",
+          "line": 384,
+          "column": 1
+        },
+        {
+          "title": "board cards show the same briefing data",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4087,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:09:58.255Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "02a9d739e63abd1b8f4c-6ac89efe1b6c5c1a9872",
+          "file": "contract-briefings.spec.ts",
+          "line": 395,
+          "column": 1
+        },
+        {
+          "title": "briefing card and pause contract fit at 390px",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3255,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:10:02.350Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "02a9d739e63abd1b8f4c-fc7cfff506c56e03bb7f",
+          "file": "contract-briefings.spec.ts",
+          "line": 405,
+          "column": 1
+        },
+        {
+          "title": "all 42 card briefings use in-world copy and only cite authored wave numbers",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 49,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:15:58.994Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "02a9d739e63abd1b8f4c-36a80f33fa21b3635769",
+          "file": "contract-briefings.spec.ts",
+          "line": 329,
+          "column": 1
+        },
+        {
+          "title": "every current contract launch shows manifest briefing goals and rules",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 21063,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:15:59.071Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "02a9d739e63abd1b8f4c-f0c87e81ee11cdfe101f",
+          "file": "contract-briefings.spec.ts",
+          "line": 344,
+          "column": 1
+        },
+        {
+          "title": "run briefing dismisses by click and by eight second timer while sim keeps running",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 14701,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:16:20.143Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "02a9d739e63abd1b8f4c-26368422a636ea72c44d",
+          "file": "contract-briefings.spec.ts",
+          "line": 356,
+          "column": 1
+        },
+        {
+          "title": "pause panel repeats the active contract briefing",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4635,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:16:34.858Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "02a9d739e63abd1b8f4c-b7b2ff9ac0cd95e4147d",
+          "file": "contract-briefings.spec.ts",
+          "line": 373,
+          "column": 1
+        },
+        {
+          "title": "plain no-debug board launch still briefs The Claim",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 8105,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:16:39.502Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "02a9d739e63abd1b8f4c-dbe96c6b9a9e5907a6ac",
+          "file": "contract-briefings.spec.ts",
+          "line": 384,
+          "column": 1
+        },
+        {
+          "title": "board cards show the same briefing data",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6226,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:16:47.619Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "02a9d739e63abd1b8f4c-598fbf9d6d7fae892836",
+          "file": "contract-briefings.spec.ts",
+          "line": 395,
+          "column": 1
+        },
+        {
+          "title": "briefing card and pause contract fit at 390px",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6003,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:16:53.853Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "02a9d739e63abd1b8f4c-b7a30b015312e66ae95d",
+          "file": "contract-briefings.spec.ts",
+          "line": 405,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "drill-yard.spec.ts",
+      "file": "drill-yard.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "plain boot keeps the Drill Yard visible and launchable on both sides of the welcome",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5931,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "watchErrors suppressed 0 known GLTFLoader blob error(s)\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:10:05.620Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9d5088c40e8ed606cc08-7f3412feacfd6df374af",
+          "file": "drill-yard.spec.ts",
+          "line": 68,
+          "column": 1
+        },
+        {
+          "title": "The Drill Yard is a resettable, ledger-free practice claim",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 10430,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "watchErrors suppressed 0 known GLTFLoader blob error(s)\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:10:11.558Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9d5088c40e8ed606cc08-f90324b5a8a07c4d4adb",
+          "file": "drill-yard.spec.ts",
+          "line": 115,
+          "column": 1
+        },
+        {
+          "title": "plain boot keeps the Drill Yard visible and launchable on both sides of the welcome",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 8687,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "watchErrors suppressed 0 known GLTFLoader blob error(s)\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:16:59.876Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9d5088c40e8ed606cc08-4bafddcbd0a124212403",
+          "file": "drill-yard.spec.ts",
+          "line": 68,
+          "column": 1
+        },
+        {
+          "title": "The Drill Yard is a resettable, ledger-free practice claim",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 21619,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "watchErrors suppressed 0 known GLTFLoader blob error(s)\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:17:08.570Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9d5088c40e8ed606cc08-4370f8e63eba0caa2d25",
+          "file": "drill-yard.spec.ts",
+          "line": 115,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "e7-playbook-rows.spec.ts",
+      "file": "e7-playbook-rows.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "the four Signal maps run the playbook verb identically in the browser runtime and in Node",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 13417,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "[e7-both-engines] e7-relay-valley tickHash node=fnv1a32:0d9d07c9 browser=fnv1a32:0d9d07c9 met=true uses=1 runs=1 relays=[\"relay-site-r1\"] refusals={\"suppressed\":0,\"muted\":0,\"unrecorded\":0}\n"
+                    },
+                    {
+                      "text": "[e7-both-engines] e7-echo-canyon tickHash node=fnv1a32:becbba92 browser=fnv1a32:becbba92 met=false uses=2 runs=2 relays=[] refusals={\"suppressed\":0,\"muted\":0,\"unrecorded\":0}\n"
+                    },
+                    {
+                      "text": "[e7-both-engines] e7-dead-band tickHash node=fnv1a32:97bdab00 browser=fnv1a32:97bdab00 met=true uses=0 runs=0 relays=[] refusals={\"suppressed\":1,\"muted\":0,\"unrecorded\":0}\n"
+                    },
+                    {
+                      "text": "[e7-both-engines] e7-relay-rush tickHash node=fnv1a32:00793392 browser=fnv1a32:00793392 met=false uses=1 runs=1 relays=[\"relay-site-r1\"] refusals={\"suppressed\":0,\"muted\":0,\"unrecorded\":0}\n"
+                    }
+                  ],
+                  "stderr": [
+                    {
+                      "text": "(node:66338) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:66338) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n"
+                    }
+                  ],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:10:21.999Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d042edf73798658ae7ea-a11a67e7fe678342c735",
+          "file": "e7-playbook-rows.spec.ts",
+          "line": 163,
+          "column": 1
+        },
+        {
+          "title": "every Signal map still boots clean for a player, and the E7 board is where the player sees it",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 9911,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:10:35.421Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d042edf73798658ae7ea-489304e802f5f3a857b6",
+          "file": "e7-playbook-rows.spec.ts",
+          "line": 198,
+          "column": 1
+        },
+        {
+          "title": "HUMAN PARITY: a plain-boot player records and delegates a patrol through the shared latch",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 23530,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "[e7-parity] plain player use={\"declared\":true,\"objective\":\"relay\",\"objectiveMet\":true,\"uses\":1,\"relaysLitByProgram\":[\"relay-site-r1\"]} lit=[\"ford-table\"]\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:10:45.336Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d042edf73798658ae7ea-72da772e25190d5b2d90",
+          "file": "e7-playbook-rows.spec.ts",
+          "line": 218,
+          "column": 1
+        },
+        {
+          "title": "the human run tape records and assay-replays a player playbook use",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6497,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:11:08.871Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d042edf73798658ae7ea-94e8c49cd3057a5c439e",
+          "file": "e7-playbook-rows.spec.ts",
+          "line": 267,
+          "column": 1
+        },
+        {
+          "title": "the four Signal maps run the playbook verb identically in the browser runtime and in Node",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 16032,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "[e7-both-engines] e7-relay-valley tickHash node=fnv1a32:0d9d07c9 browser=fnv1a32:0d9d07c9 met=true uses=1 runs=1 relays=[\"relay-site-r1\"] refusals={\"suppressed\":0,\"muted\":0,\"unrecorded\":0}\n"
+                    },
+                    {
+                      "text": "[e7-both-engines] e7-echo-canyon tickHash node=fnv1a32:becbba92 browser=fnv1a32:becbba92 met=false uses=2 runs=2 relays=[] refusals={\"suppressed\":0,\"muted\":0,\"unrecorded\":0}\n"
+                    },
+                    {
+                      "text": "[e7-both-engines] e7-dead-band tickHash node=fnv1a32:97bdab00 browser=fnv1a32:97bdab00 met=true uses=0 runs=0 relays=[] refusals={\"suppressed\":1,\"muted\":0,\"unrecorded\":0}\n"
+                    },
+                    {
+                      "text": "[e7-both-engines] e7-relay-rush tickHash node=fnv1a32:00793392 browser=fnv1a32:00793392 met=false uses=1 runs=1 relays=[\"relay-site-r1\"] refusals={\"suppressed\":0,\"muted\":0,\"unrecorded\":0}\n"
+                    }
+                  ],
+                  "stderr": [
+                    {
+                      "text": "(node:68669) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:68669) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n"
+                    }
+                  ],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:17:30.208Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d042edf73798658ae7ea-f73de106c3ff758eb705",
+          "file": "e7-playbook-rows.spec.ts",
+          "line": 163,
+          "column": 1
+        },
+        {
+          "title": "every Signal map still boots clean for a player, and the E7 board is where the player sees it",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 9796,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:17:46.246Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d042edf73798658ae7ea-6f8b763f37995858272a",
+          "file": "e7-playbook-rows.spec.ts",
+          "line": 198,
+          "column": 1
+        },
+        {
+          "title": "HUMAN PARITY: a plain-boot player records and delegates a patrol through the shared latch",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "timedOut",
+                  "duration": 185783,
+                  "error": {
+                    "message": "\u001b[31mTest timeout of 180000ms exceeded.\u001b[39m",
+                    "stack": "\u001b[31mTest timeout of 180000ms exceeded.\u001b[39m"
+                  },
+                  "errors": [
+                    {
+                      "message": "\u001b[31mTest timeout of 180000ms exceeded.\u001b[39m"
+                    },
+                    {
+                      "location": {
+                        "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/e7-playbook-rows.spec.ts",
+                        "column": 45,
+                        "line": 249
+                      },
+                      "message": "Error: locator.click: Test timeout of 180000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByTestId('playbook-record')\u001b[22m\n\u001b[2m    - locator resolved to <button type=\"button\" data-recording=\"true\" data-testid=\"playbook-record\">Save Tape</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    314 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m        - element is not visible\u001b[22m\n\u001b[2m      - retrying click action\u001b[22m\n\u001b[2m        - waiting 500ms\u001b[22m\n\n\n  247 |   if (await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.build.mode)) await page.keyboard.press('KeyB');\n  248 |   await page.getByTestId('playbook-toggle').click();\n> 249 |   await page.getByTestId('playbook-record').click();\n      |                                             ^\n  250 |   await page.getByTestId('playbook-toggle').click();\n  251 |   await page.getByTestId('playbook-toggle').click();\n  252 |   await page.getByTestId('playbook-replay-Relay Patrol').click();\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/e7-playbook-rows.spec.ts:249:45"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:17:56.049Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/test-results/e7-playbook-rows-HUMAN-PAR-818a2-ol-through-the-shared-latch-mobile-chrome/test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/test-results/e7-playbook-rows-HUMAN-PAR-818a2-ol-through-the-shared-latch-mobile-chrome/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/test-results/e7-playbook-rows-HUMAN-PAR-818a2-ol-through-the-shared-latch-mobile-chrome/trace.zip"
+                    }
+                  ]
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "d042edf73798658ae7ea-398994581d97e9b57591",
+          "file": "e7-playbook-rows.spec.ts",
+          "line": 218,
+          "column": 1
+        },
+        {
+          "title": "the human run tape records and assay-replays a player playbook use",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 8261,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:21:07.012Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d042edf73798658ae7ea-6cdaf6ba4a8569c95f83",
+          "file": "e7-playbook-rows.spec.ts",
+          "line": 267,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "en-01-claim-ledger.spec.ts",
+      "file": "en-01-claim-ledger.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "EN-01 claim ledger access, discovery beat, dupe guard, persistence, and fact cap",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 10135,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:11:15.379Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f90b47bc83584c24f104-ddebdcfd039fb406ce5f",
+          "file": "en-01-claim-ledger.spec.ts",
+          "line": 94,
+          "column": 1
+        },
+        {
+          "title": "EN-01 claim ledger access, discovery beat, dupe guard, persistence, and fact cap",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 10585,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:21:15.534Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f90b47bc83584c24f104-2ec290bd75370ddd4f02",
+          "file": "en-01-claim-ledger.spec.ts",
+          "line": 94,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "en-02-e1-coverage.spec.ts",
+      "file": "en-02-e1-coverage.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "EN-02 plain ledger access and fresh seeds stay intact",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 75000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5164,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:11:25.536Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1bc184fa293e8b004f7b-7f7f1b63911bfb312cf4",
+          "file": "en-02-e1-coverage.spec.ts",
+          "line": 279,
+          "column": 1
+        },
+        {
+          "title": "EN-02 full E1 roster has manifest-backed entries and capped facts",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1915,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:11:30.708Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1bc184fa293e8b004f7b-b963b2fff30f9ff09ce1",
+          "file": "en-02-e1-coverage.spec.ts",
+          "line": 313,
+          "column": 1
+        },
+        {
+          "title": "EN-02 town board and bark discover contracts and townsfolk",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2992,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:11:32.628Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1bc184fa293e8b004f7b-55d458ea028c17d35738",
+          "file": "en-02-e1-coverage.spec.ts",
+          "line": 348,
+          "column": 1
+        },
+        {
+          "title": "EN-02 locked contract ledger pages keep terms hidden until unlock",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3348,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:11:35.626Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1bc184fa293e8b004f7b-d3b83ae7b98939c1ca1e",
+          "file": "en-02-e1-coverage.spec.ts",
+          "line": 369,
+          "column": 1
+        },
+        {
+          "title": "EN-02 enemy stats reveal once, persist, and hero facts live-read abilities",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 75000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 18378,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m1\u001b[39m\nReceived: \u001b[31m0\u001b[39m\n\nCall Log:\n- Timeout 12000ms exceeded while waiting on the predicate",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m1\u001b[39m\nReceived: \u001b[31m0\u001b[39m\n\nCall Log:\n- Timeout 12000ms exceeded while waiting on the predicate\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/en-02-e1-coverage.spec.ts:435:110",
+                    "location": {
+                      "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/en-02-e1-coverage.spec.ts",
+                      "column": 110,
+                      "line": 435
+                    },
+                    "snippet": "  433 |   // so this wait is gated behind the card queue: residual CARD_MS (6000) + GAP_MS (3000) = 9s worst\n  434 |   // case. The 5000ms poll default sits BELOW that floor, which made this a ~50% flake (F-1337-1).\n> 435 |   await expect.poll(() => storyHintCount(page, 'story:ledger-page:claim_jumper_stats'), { timeout: 12_000 }).toBe(1);\n      |                                                                                                              ^\n  436 |\n  437 |   await openLedgerDirect(page, 'claim_jumper');\n  438 |   await expect(page.getByTestId('claim-ledger-facts-claim_jumper')).not.toContainText('Not yet measured');"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/en-02-e1-coverage.spec.ts",
+                        "column": 110,
+                        "line": 435
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m1\u001b[39m\nReceived: \u001b[31m0\u001b[39m\n\nCall Log:\n- Timeout 12000ms exceeded while waiting on the predicate\n\n  433 |   // so this wait is gated behind the card queue: residual CARD_MS (6000) + GAP_MS (3000) = 9s worst\n  434 |   // case. The 5000ms poll default sits BELOW that floor, which made this a ~50% flake (F-1337-1).\n> 435 |   await expect.poll(() => storyHintCount(page, 'story:ledger-page:claim_jumper_stats'), { timeout: 12_000 }).toBe(1);\n      |                                                                                                              ^\n  436 |\n  437 |   await openLedgerDirect(page, 'claim_jumper');\n  438 |   await expect(page.getByTestId('claim-ledger-facts-claim_jumper')).not.toContainText('Not yet measured');\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/en-02-e1-coverage.spec.ts:435:110"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:11:38.981Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/test-results/en-02-e1-coverage-EN-02-en-b81bd-o-facts-live-read-abilities-desktop-chrome/test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/test-results/en-02-e1-coverage-EN-02-en-b81bd-o-facts-live-read-abilities-desktop-chrome/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/test-results/en-02-e1-coverage-EN-02-en-b81bd-o-facts-live-read-abilities-desktop-chrome/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/en-02-e1-coverage.spec.ts",
+                    "column": 110,
+                    "line": 435
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1bc184fa293e8b004f7b-6e331963057125ba1083",
+          "file": "en-02-e1-coverage.spec.ts",
+          "line": 407,
+          "column": 1
+        },
+        {
+          "title": "EN-02 plain ledger access and fresh seeds stay intact",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 75000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5081,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:21:26.144Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1bc184fa293e8b004f7b-785284e6b2ab8d9be5fd",
+          "file": "en-02-e1-coverage.spec.ts",
+          "line": 279,
+          "column": 1
+        },
+        {
+          "title": "EN-02 full E1 roster has manifest-backed entries and capped facts",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2202,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:21:31.231Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1bc184fa293e8b004f7b-13b5a05de518745a955d",
+          "file": "en-02-e1-coverage.spec.ts",
+          "line": 313,
+          "column": 1
+        },
+        {
+          "title": "EN-02 town board and bark discover contracts and townsfolk",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2932,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:21:33.438Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1bc184fa293e8b004f7b-92d36e02c5566f8bae20",
+          "file": "en-02-e1-coverage.spec.ts",
+          "line": 348,
+          "column": 1
+        },
+        {
+          "title": "EN-02 locked contract ledger pages keep terms hidden until unlock",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3425,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:21:36.376Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1bc184fa293e8b004f7b-f8c648284b4c58d6dc2f",
+          "file": "en-02-e1-coverage.spec.ts",
+          "line": 369,
+          "column": 1
+        },
+        {
+          "title": "EN-02 enemy stats reveal once, persist, and hero facts live-read abilities",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 75000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 17802,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m1\u001b[39m\nReceived: \u001b[31m0\u001b[39m\n\nCall Log:\n- Timeout 12000ms exceeded while waiting on the predicate",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m1\u001b[39m\nReceived: \u001b[31m0\u001b[39m\n\nCall Log:\n- Timeout 12000ms exceeded while waiting on the predicate\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/en-02-e1-coverage.spec.ts:435:110",
+                    "location": {
+                      "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/en-02-e1-coverage.spec.ts",
+                      "column": 110,
+                      "line": 435
+                    },
+                    "snippet": "  433 |   // so this wait is gated behind the card queue: residual CARD_MS (6000) + GAP_MS (3000) = 9s worst\n  434 |   // case. The 5000ms poll default sits BELOW that floor, which made this a ~50% flake (F-1337-1).\n> 435 |   await expect.poll(() => storyHintCount(page, 'story:ledger-page:claim_jumper_stats'), { timeout: 12_000 }).toBe(1);\n      |                                                                                                              ^\n  436 |\n  437 |   await openLedgerDirect(page, 'claim_jumper');\n  438 |   await expect(page.getByTestId('claim-ledger-facts-claim_jumper')).not.toContainText('Not yet measured');"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/en-02-e1-coverage.spec.ts",
+                        "column": 110,
+                        "line": 435
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m1\u001b[39m\nReceived: \u001b[31m0\u001b[39m\n\nCall Log:\n- Timeout 12000ms exceeded while waiting on the predicate\n\n  433 |   // so this wait is gated behind the card queue: residual CARD_MS (6000) + GAP_MS (3000) = 9s worst\n  434 |   // case. The 5000ms poll default sits BELOW that floor, which made this a ~50% flake (F-1337-1).\n> 435 |   await expect.poll(() => storyHintCount(page, 'story:ledger-page:claim_jumper_stats'), { timeout: 12_000 }).toBe(1);\n      |                                                                                                              ^\n  436 |\n  437 |   await openLedgerDirect(page, 'claim_jumper');\n  438 |   await expect(page.getByTestId('claim-ledger-facts-claim_jumper')).not.toContainText('Not yet measured');\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/en-02-e1-coverage.spec.ts:435:110"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:21:39.805Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/test-results/en-02-e1-coverage-EN-02-en-b81bd-o-facts-live-read-abilities-mobile-chrome/test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/test-results/en-02-e1-coverage-EN-02-en-b81bd-o-facts-live-read-abilities-mobile-chrome/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/test-results/en-02-e1-coverage-EN-02-en-b81bd-o-facts-live-read-abilities-mobile-chrome/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/en-02-e1-coverage.spec.ts",
+                    "column": 110,
+                    "line": 435
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1bc184fa293e8b004f7b-140fa23f11063377ec05",
+          "file": "en-02-e1-coverage.spec.ts",
+          "line": 407,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "locked-win.spec.ts",
+      "file": "locked-win.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "wave 10 banks the win; a wave 12 Rush death keeps it and records both wave marks",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6820,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:12:01.283Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "08de62a17449faba3cb5-6752775bf82b0168584b",
+          "file": "locked-win.spec.ts",
+          "line": 65,
+          "column": 1
+        },
+        {
+          "title": "wave 10 banks the win; a wave 12 Rush death keeps it and records both wave marks",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6227,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:22:00.778Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "08de62a17449faba3cb5-4d75b794ba5c6225d8f5",
+          "file": "locked-win.spec.ts",
+          "line": 65,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "m4-06-embodiment.spec.ts",
+      "file": "m4-06-embodiment.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "permission chip shows portrait, current level, abilities, and growth path",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3263,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:12:08.415Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "7dda6102ae1197d1cda4-246d2f151d231eb150d3",
+          "file": "m4-06-embodiment.spec.ts",
+          "line": 187,
+          "column": 1
+        },
+        {
+          "title": "permission chip shows portrait, current level, abilities, and growth path",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2629,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:22:07.301Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "7dda6102ae1197d1cda4-1ef82e84cc428a70ea29",
+          "file": "m4-06-embodiment.spec.ts",
+          "line": 187,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "m4-09-agent-rung-clarity.spec.ts",
+      "file": "m4-09-agent-rung-clarity.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "rung 0 panel shows the canonical ladder, progress, and blocked repair reason",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3182,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:12:11.691Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "42bfa06ff2fb88c27366-a46ae2883f373bdf17af",
+          "file": "m4-09-agent-rung-clarity.spec.ts",
+          "line": 89,
+          "column": 1
+        },
+        {
+          "title": "rung 1 panel highlights approval-required and keeps earned controls readable",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2882,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:12:14.879Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "42bfa06ff2fb88c27366-eb24ee2945587163a66d",
+          "file": "m4-09-agent-rung-clarity.spec.ts",
+          "line": 119,
+          "column": 1
+        },
+        {
+          "title": "run-only policy slot bonus is named beside base autonomy progress",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2994,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:12:17.767Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "42bfa06ff2fb88c27366-0d0e8b80355c9cf97b16",
+          "file": "m4-09-agent-rung-clarity.spec.ts",
+          "line": 137,
+          "column": 1
+        },
+        {
+          "title": "run ledger only adds Prospector growth when agent autonomy moved",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2783,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:12:20.768Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "42bfa06ff2fb88c27366-2d18de48cbd15afa0d26",
+          "file": "m4-09-agent-rung-clarity.spec.ts",
+          "line": 156,
+          "column": 1
+        },
+        {
+          "title": "secured run ledger names the Prospector autonomy gain",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3513,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:12:23.557Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "42bfa06ff2fb88c27366-9ec820e9a8dfd3520fb7",
+          "file": "m4-09-agent-rung-clarity.spec.ts",
+          "line": 164,
+          "column": 1
+        },
+        {
+          "title": "secured run ledger does not advertise autonomy past the max rung",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3398,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:12:27.077Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "42bfa06ff2fb88c27366-79f22e9bdfca638dd1db",
+          "file": "m4-09-agent-rung-clarity.spec.ts",
+          "line": 180,
+          "column": 1
+        },
+        {
+          "title": "rung 0 panel shows the canonical ladder, progress, and blocked repair reason",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2651,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:22:09.943Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "42bfa06ff2fb88c27366-2efa01d83a0d6bfdcad9",
+          "file": "m4-09-agent-rung-clarity.spec.ts",
+          "line": 89,
+          "column": 1
+        },
+        {
+          "title": "rung 1 panel highlights approval-required and keeps earned controls readable",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2451,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:22:12.599Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "42bfa06ff2fb88c27366-18fd21a166407bd3c83a",
+          "file": "m4-09-agent-rung-clarity.spec.ts",
+          "line": 119,
+          "column": 1
+        },
+        {
+          "title": "run-only policy slot bonus is named beside base autonomy progress",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2525,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:22:15.055Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "42bfa06ff2fb88c27366-f1168b33852f1e16cad9",
+          "file": "m4-09-agent-rung-clarity.spec.ts",
+          "line": 137,
+          "column": 1
+        },
+        {
+          "title": "run ledger only adds Prospector growth when agent autonomy moved",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2604,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:22:17.585Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "42bfa06ff2fb88c27366-cccb195e1f9f90cd91da",
+          "file": "m4-09-agent-rung-clarity.spec.ts",
+          "line": 156,
+          "column": 1
+        },
+        {
+          "title": "secured run ledger names the Prospector autonomy gain",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3182,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:22:20.195Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "42bfa06ff2fb88c27366-49845438129069d8683c",
+          "file": "m4-09-agent-rung-clarity.spec.ts",
+          "line": 164,
+          "column": 1
+        },
+        {
+          "title": "secured run ledger does not advertise autonomy past the max rung",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3217,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:22:23.385Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "42bfa06ff2fb88c27366-e0a31b9987ac2677a40f",
+          "file": "m4-09-agent-rung-clarity.spec.ts",
+          "line": 180,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "m4-10-agent-actions-integrity.spec.ts",
+      "file": "m4-10-agent-actions-integrity.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "panel only offers registered ToolSurface capabilities",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2983,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:12:30.486Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "panel-real-functions",
+                      "contentType": "image/png",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/test-results/m4-10-agent-actions-integr-66156-ed-ToolSurface-capabilities-desktop-chrome/attachments/panel-real-functions-e9ca80a05dca528e66abd9cea1f32438918c33f7.png"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6e89f6b54505971ce3b8-b04aee31b95b5d966919",
+          "file": "m4-10-agent-actions-integrity.spec.ts",
+          "line": 103,
+          "column": 1
+        },
+        {
+          "title": "repair, dropped-gold, and XP actions work and freeze while paused",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 12055,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:12:33.475Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "agent-repair-receipt",
+                      "contentType": "image/png",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/test-results/m4-10-agent-actions-integr-f915a-ork-and-freeze-while-paused-desktop-chrome/attachments/agent-repair-receipt-d0626c8e64ac149e7f86364510cc484745f085a8.png"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6e89f6b54505971ce3b8-14f0f57b2dd5c34789c6",
+          "file": "m4-10-agent-actions-integrity.spec.ts",
+          "line": 124,
+          "column": 1
+        },
+        {
+          "title": "panel only offers registered ToolSurface capabilities",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2621,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:22:26.614Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6e89f6b54505971ce3b8-05046053162addf650e0",
+          "file": "m4-10-agent-actions-integrity.spec.ts",
+          "line": 103,
+          "column": 1
+        },
+        {
+          "title": "repair, dropped-gold, and XP actions work and freeze while paused",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 11792,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:22:29.240Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6e89f6b54505971ce3b8-3cc23d8f66065543b1ca",
+          "file": "m4-10-agent-actions-integrity.spec.ts",
+          "line": 124,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "meta-presence.spec.ts",
+      "file": "meta-presence.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "earned meta is visible in run recap, pause ledger, and boosted cards",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3565,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:12:45.539Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c608879e2c4d0dfaef31-b1ccf4b705ecbaba1fde",
+          "file": "meta-presence.spec.ts",
+          "line": 114,
+          "column": 1
+        },
+        {
+          "title": "gated prospecting cards keep assay provenance when both research perks apply",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2827,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:12:49.109Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c608879e2c4d0dfaef31-9cdfc77eb1169b9b869e",
+          "file": "meta-presence.spec.ts",
+          "line": 157,
+          "column": 1
+        },
+        {
+          "title": "conditional research recap copy does not imply a run-start stat",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2597,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:12:51.941Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c608879e2c4d0dfaef31-2fbbc5ae9ec5cbf46186",
+          "file": "meta-presence.spec.ts",
+          "line": 170,
+          "column": 1
+        },
+        {
+          "title": "continued study recap matches the live run stat on first load",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2780,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:12:54.544Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c608879e2c4d0dfaef31-559c1e0ec548f5ff32fb",
+          "file": "meta-presence.spec.ts",
+          "line": 180,
+          "column": 1
+        },
+        {
+          "title": "fresh profile shows no false meta recap or card provenance",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2769,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:12:57.330Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c608879e2c4d0dfaef31-a73255c9a4489dbaced7",
+          "file": "meta-presence.spec.ts",
+          "line": 199,
+          "column": 1
+        },
+        {
+          "title": "stay for the rush does not call newly banked territory active",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3096,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:13:00.109Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c608879e2c4d0dfaef31-00d5b65b85ac14bb79a6",
+          "file": "meta-presence.spec.ts",
+          "line": 209,
+          "column": 1
+        },
+        {
+          "title": "combat hit-pause does not open the claim memory ledger",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4435,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:13:03.210Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c608879e2c4d0dfaef31-3b7ee062e7bd2eb577c2",
+          "file": "meta-presence.spec.ts",
+          "line": 225,
+          "column": 1
+        },
+        {
+          "title": "secured new claim shows recap after research ledger closes",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3004,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:13:07.651Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c608879e2c4d0dfaef31-25763ac6bc63c489e540",
+          "file": "meta-presence.spec.ts",
+          "line": 264,
+          "column": 1
+        },
+        {
+          "title": "earned meta is visible in run recap, pause ledger, and boosted cards",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3934,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:22:41.043Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c608879e2c4d0dfaef31-3888b2655fdf18bb5f4e",
+          "file": "meta-presence.spec.ts",
+          "line": 114,
+          "column": 1
+        },
+        {
+          "title": "gated prospecting cards keep assay provenance when both research perks apply",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2748,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:22:44.982Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c608879e2c4d0dfaef31-d72950d5dccb473eb4fb",
+          "file": "meta-presence.spec.ts",
+          "line": 157,
+          "column": 1
+        },
+        {
+          "title": "conditional research recap copy does not imply a run-start stat",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2829,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:22:47.735Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c608879e2c4d0dfaef31-e2cb2d879033e5069c26",
+          "file": "meta-presence.spec.ts",
+          "line": 170,
+          "column": 1
+        },
+        {
+          "title": "continued study recap matches the live run stat on first load",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2762,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:22:50.574Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c608879e2c4d0dfaef31-ceed03f7bde32b038ae9",
+          "file": "meta-presence.spec.ts",
+          "line": 180,
+          "column": 1
+        },
+        {
+          "title": "fresh profile shows no false meta recap or card provenance",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2688,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:22:53.343Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c608879e2c4d0dfaef31-5a50c5d217972db9d317",
+          "file": "meta-presence.spec.ts",
+          "line": 199,
+          "column": 1
+        },
+        {
+          "title": "stay for the rush does not call newly banked territory active",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2860,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:22:56.040Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c608879e2c4d0dfaef31-d66ddd4be7bbca6a7b3a",
+          "file": "meta-presence.spec.ts",
+          "line": 209,
+          "column": 1
+        },
+        {
+          "title": "combat hit-pause does not open the claim memory ledger",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4432,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:22:58.904Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c608879e2c4d0dfaef31-c7117c900b140e32b50d",
+          "file": "meta-presence.spec.ts",
+          "line": 225,
+          "column": 1
+        },
+        {
+          "title": "secured new claim shows recap after research ledger closes",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2916,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:23:03.342Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c608879e2c4d0dfaef31-bad5dd005d15a26deb11",
+          "file": "meta-presence.spec.ts",
+          "line": 264,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "mp-06-party-overview.spec.ts",
+      "file": "mp-06-party-overview.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "party roster shows live shared truth and local camera glance",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 17998,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:13:10.665Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "44da2885e1233679f0ff-158732ea679211369330",
+          "file": "mp-06-party-overview.spec.ts",
+          "line": 30,
+          "column": 1
+        },
+        {
+          "title": "solo boot renders no party roster",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4262,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:13:30.241Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "44da2885e1233679f0ff-b545305a14bf3cdbf7ea",
+          "file": "mp-06-party-overview.spec.ts",
+          "line": 130,
+          "column": 1
+        },
+        {
+          "title": "party roster shows live shared truth and local camera glance",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 10428,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:23:06.274Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "44da2885e1233679f0ff-986d02b45659c609705f",
+          "file": "mp-06-party-overview.spec.ts",
+          "line": 30,
+          "column": 1
+        },
+        {
+          "title": "solo boot renders no party roster",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2786,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:23:18.256Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "44da2885e1233679f0ff-f305d9ee9727c08fb223",
+          "file": "mp-06-party-overview.spec.ts",
+          "line": 130,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "pause-goal-progress.spec.ts",
+      "file": "pause-goal-progress.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "Twin Banks pause goals show the win wave and live progress",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5234,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:13:34.549Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "89b15bc9a3fe2a99c6b3-41e4e77eaa6db8b49f3e",
+          "file": "pause-goal-progress.spec.ts",
+          "line": 7,
+          "column": 1
+        },
+        {
+          "title": "Twin Banks pause goals show the win wave and live progress",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3128,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:23:21.083Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "89b15bc9a3fe2a99c6b3-46a38237e7da7b3328b9",
+          "file": "pause-goal-progress.spec.ts",
+          "line": 7,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "run-suspend.spec.ts",
+      "file": "run-suspend.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "pause overlay explains the ledger before the first boundary save",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6657,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:13:39.800Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3748b986a19340f5e4b4-8293e67b4c27a55251c8",
+          "file": "run-suspend.spec.ts",
+          "line": 165,
+          "column": 1
+        },
+        {
+          "title": "pause Back-to-Town exits the run, keeps the suspend, and Continue resumes it",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 14321,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:13:46.464Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3748b986a19340f5e4b4-a803558f9a48dc21272d",
+          "file": "run-suspend.spec.ts",
+          "line": 176,
+          "column": 1
+        },
+        {
+          "title": "wave-boundary suspend restores state and matches the uninterrupted seeded run",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 46460,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:14:00.792Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3748b986a19340f5e4b4-0cba72fd924c31474be9",
+          "file": "run-suspend.spec.ts",
+          "line": 194,
+          "column": 1
+        },
+        {
+          "title": "legacy no-controls restore at Territory I keeps the removed ring and its hints absent",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 8360,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:14:47.258Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3748b986a19340f5e4b4-4ea53383af8a4c8fb713",
+          "file": "run-suspend.spec.ts",
+          "line": 282,
+          "column": 1
+        },
+        {
+          "title": "ended runs clear suspend and town board launch confirms abandoning a saved claim",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 25654,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:14:55.624Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3748b986a19340f5e4b4-1b7038f26ba07b0dfedc",
+          "file": "run-suspend.spec.ts",
+          "line": 351,
+          "column": 1
+        },
+        {
+          "title": "pause overlay explains the ledger before the first boundary save",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3429,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:23:24.224Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3748b986a19340f5e4b4-f7e0ec4337afa52106f7",
+          "file": "run-suspend.spec.ts",
+          "line": 165,
+          "column": 1
+        },
+        {
+          "title": "pause Back-to-Town exits the run, keeps the suspend, and Continue resumes it",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 11809,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:23:27.659Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3748b986a19340f5e4b4-785742ac0f9b19cca8a4",
+          "file": "run-suspend.spec.ts",
+          "line": 176,
+          "column": 1
+        },
+        {
+          "title": "wave-boundary suspend restores state and matches the uninterrupted seeded run",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 40486,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:23:39.472Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3748b986a19340f5e4b4-3e8247d8267b33464dc5",
+          "file": "run-suspend.spec.ts",
+          "line": 194,
+          "column": 1
+        },
+        {
+          "title": "legacy no-controls restore at Territory I keeps the removed ring and its hints absent",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5625,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:24:19.964Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3748b986a19340f5e4b4-d128b055d0a59a8c171e",
+          "file": "run-suspend.spec.ts",
+          "line": 282,
+          "column": 1
+        },
+        {
+          "title": "ended runs clear suspend and town board launch confirms abandoning a saved claim",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 21806,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:24:25.598Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3748b986a19340f5e4b4-431ea561ccd0e5976eb0",
+          "file": "run-suspend.spec.ts",
+          "line": 351,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "safari-swap.spec.ts",
+      "file": "safari-swap.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "Safari swap removes the run HUD and keeps town buildings solid",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 13034,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:15:21.292Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a935a64c3694dfde3e20-3dddb0ca1aaa05db84d3",
+          "file": "safari-swap.spec.ts",
+          "line": 7,
+          "column": 1
+        },
+        {
+          "title": "plain boot is error-free",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3377,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:15:34.332Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a935a64c3694dfde3e20-2549f4279d5171216611",
+          "file": "safari-swap.spec.ts",
+          "line": 61,
+          "column": 1
+        },
+        {
+          "title": "Safari swap removes the run HUD and keeps town buildings solid",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 8630,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:24:47.415Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a935a64c3694dfde3e20-303c5a69655bc05df75a",
+          "file": "safari-swap.spec.ts",
+          "line": 7,
+          "column": 1
+        },
+        {
+          "title": "plain boot is error-free",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1106,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:24:56.052Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a935a64c3694dfde3e20-8606f647478177819564",
+          "file": "safari-swap.spec.ts",
+          "line": 61,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-09-22T11:09:10.819Z",
+    "duration": 946666.299,
+    "expected": 97,
+    "skipped": 0,
+    "unexpected": 3,
+    "flaky": 0
+  }
+}

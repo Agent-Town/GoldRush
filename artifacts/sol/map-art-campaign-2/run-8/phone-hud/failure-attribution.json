@@ -1,0 +1,1518 @@
+[
+  {
+    "suite": "e2e-hud",
+    "file": "audio-integration.spec.ts",
+    "line": 80,
+    "title": "settings volume and mute persist across reload",
+    "project": "desktop-chrome",
+    "status": "unexpected",
+    "actual": "timedOut",
+    "expected": "passed",
+    "startTime": "2026-09-22T10:05:07.820Z",
+    "durationMs": 30490,
+    "error": "Test timeout of 30000ms exceeded.\nError: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n  - waiting for getByTestId('start-menu-settings')\n\n\n  87 |   await page.reload();\n  88 |\n> 89 |   await page.getByTestId('start-menu-settings').click();\n     |                                                 ^\n  90 |   await mkdir(SHOT_DIR, { recursive: true });\n  91 |   await page.screenshot({ path: `${SHOT_DIR}/${testInfo.project.name}-settings.png`, fullPage: true });\n  92 |\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/audio-integration.spec.ts:89:49",
+    "controls": [
+      {
+        "file": "audio-integration.spec.ts",
+        "line": 80,
+        "title": "settings volume and mute persist across reload",
+        "project": "desktop-chrome",
+        "status": "unexpected",
+        "actual": "timedOut",
+        "expected": "passed",
+        "startTime": "2026-09-22T11:26:20.441Z",
+        "durationMs": 30678,
+        "error": "Test timeout of 30000ms exceeded.\nError: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n  - waiting for getByTestId('start-menu-settings')\n\n\n  87 |   await page.reload();\n  88 |\n> 89 |   await page.getByTestId('start-menu-settings').click();\n     |                                                 ^\n  90 |   await mkdir(SHOT_DIR, { recursive: true });\n  91 |   await page.screenshot({ path: `${SHOT_DIR}/${testInfo.project.name}-settings.png`, fullPage: true });\n  92 |\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/audio-integration.spec.ts:89:49"
+      }
+    ],
+    "recheck": null,
+    "classification": "fails with pre-cure CSS too; retained as baseline hold"
+  },
+  {
+    "suite": "e2e-hud",
+    "file": "audio-integration.spec.ts",
+    "line": 80,
+    "title": "settings volume and mute persist across reload",
+    "project": "mobile-chrome",
+    "status": "unexpected",
+    "actual": "timedOut",
+    "expected": "passed",
+    "startTime": "2026-09-22T10:33:36.003Z",
+    "durationMs": 30672,
+    "error": "Test timeout of 30000ms exceeded.\nError: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n  - waiting for getByTestId('start-menu-settings')\n\n\n  87 |   await page.reload();\n  88 |\n> 89 |   await page.getByTestId('start-menu-settings').click();\n     |                                                 ^\n  90 |   await mkdir(SHOT_DIR, { recursive: true });\n  91 |   await page.screenshot({ path: `${SHOT_DIR}/${testInfo.project.name}-settings.png`, fullPage: true });\n  92 |\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/audio-integration.spec.ts:89:49",
+    "controls": [
+      {
+        "file": "audio-integration.spec.ts",
+        "line": 80,
+        "title": "settings volume and mute persist across reload",
+        "project": "mobile-chrome",
+        "status": "unexpected",
+        "actual": "timedOut",
+        "expected": "passed",
+        "startTime": "2026-09-22T11:34:58.216Z",
+        "durationMs": 30655,
+        "error": "Test timeout of 30000ms exceeded.\nError: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n  - waiting for getByTestId('start-menu-settings')\n\n\n  87 |   await page.reload();\n  88 |\n> 89 |   await page.getByTestId('start-menu-settings').click();\n     |                                                 ^\n  90 |   await mkdir(SHOT_DIR, { recursive: true });\n  91 |   await page.screenshot({ path: `${SHOT_DIR}/${testInfo.project.name}-settings.png`, fullPage: true });\n  92 |\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/audio-integration.spec.ts:89:49"
+      }
+    ],
+    "recheck": null,
+    "classification": "fails with pre-cure CSS too; retained as baseline hold"
+  },
+  {
+    "suite": "e2e-hud",
+    "file": "bt-01-tiers.spec.ts",
+    "line": 205,
+    "title": "Enter tears down after clicking upgrade instead of re-clicking the focused upgrade button",
+    "project": "desktop-chrome",
+    "status": "unexpected",
+    "actual": "failed",
+    "expected": "passed",
+    "startTime": "2026-09-22T10:05:54.819Z",
+    "durationMs": 13863,
+    "error": "Error: expect(received).toBeNull()\n\nReceived: {\"effectiveDamage\": 72.8, \"effectiveFireRate\": 1.298, \"hp\": 50, \"id\": \"turret\", \"index\": 0, \"maxHp\": 50, \"panRateMult\": undefined, \"position\": {\"x\": 0, \"z\": 12}, \"repairCost\": 0, \"repairProgress\": 0, \"tier\": 2, \"worn\": false, \"wrecked\": false, \"yieldPerCycle\": undefined}\n\nCall Log:\n- Timeout 5000ms exceeded while waiting on the predicate\n\n  214 |   await page.keyboard.press('Enter');\n  215 |\n> 216 |   await expect.poll(() => hpEntry(page, 'turret', turret.index)).toBeNull();\n      |                                                                  ^\n  217 |   await expect.poll(() => buildableCount(page, 'turret')).toBe(0);\n  218 |   expect(errors.consoleErrors).toEqual([]);\n  219 |   expect(errors.pageErrors).toEqual([]);\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/bt-01-tiers.spec.ts:216:66",
+    "controls": [
+      {
+        "file": "bt-01-tiers.spec.ts",
+        "line": 205,
+        "title": "Enter tears down after clicking upgrade instead of re-clicking the focused upgrade button",
+        "project": "desktop-chrome",
+        "status": "unexpected",
+        "actual": "failed",
+        "expected": "passed",
+        "startTime": "2026-09-22T11:26:52.381Z",
+        "durationMs": 10772,
+        "error": "Error: expect(received).toBeNull()\n\nReceived: {\"effectiveDamage\": 72.8, \"effectiveFireRate\": 1.298, \"hp\": 50, \"id\": \"turret\", \"index\": 0, \"maxHp\": 50, \"panRateMult\": undefined, \"position\": {\"x\": 0, \"z\": 12}, \"repairCost\": 0, \"repairProgress\": 0, \"tier\": 2, \"worn\": false, \"wrecked\": false, \"yieldPerCycle\": undefined}\n\nCall Log:\n- Timeout 5000ms exceeded while waiting on the predicate\n\n  214 |   await page.keyboard.press('Enter');\n  215 |\n> 216 |   await expect.poll(() => hpEntry(page, 'turret', turret.index)).toBeNull();\n      |                                                                  ^\n  217 |   await expect.poll(() => buildableCount(page, 'turret')).toBe(0);\n  218 |   expect(errors.consoleErrors).toEqual([]);\n  219 |   expect(errors.pageErrors).toEqual([]);\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/bt-01-tiers.spec.ts:216:66"
+      }
+    ],
+    "recheck": null,
+    "classification": "fails with pre-cure CSS too; retained as baseline hold"
+  },
+  {
+    "suite": "e2e-hud",
+    "file": "bt-01-tiers.spec.ts",
+    "line": 430,
+    "title": "insufficient gold leaves tier and gold unchanged",
+    "project": "desktop-chrome",
+    "status": "unexpected",
+    "actual": "failed",
+    "expected": "passed",
+    "startTime": "2026-09-22T10:06:42.968Z",
+    "durationMs": 11314,
+    "error": "Error: expect(received).toBeNull()\n\nReceived: {\"effectiveDamage\": undefined, \"effectiveFireRate\": undefined, \"hp\": 60, \"id\": \"palisade\", \"index\": 0, \"maxHp\": 60, \"panRateMult\": undefined, \"position\": {\"x\": 0, \"z\": 9}, \"repairCost\": 0, \"repairProgress\": 0, \"tier\": 1, \"worn\": false, \"wrecked\": false, \"yieldPerCycle\": undefined}\n\nCall Log:\n- Timeout 5000ms exceeded while waiting on the predicate\n\n  441 |   await expect(page.getByTestId('building-context-prompt')).toBeVisible();\n  442 |   await page.keyboard.press('Enter');\n> 443 |   await expect.poll(() => hpEntry(page, 'palisade', palisade.index)).toBeNull();\n      |                                                                      ^\n  444 |   expect(await gold(page)).toBe(Math.floor(Balance.demolish.refundPctOfCost * Balance.palisade.cost));\n  445 |   expect(errors.consoleErrors).toEqual([]);\n  446 |   expect(errors.pageErrors).toEqual([]);\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/bt-01-tiers.spec.ts:443:70",
+    "controls": [
+      {
+        "file": "bt-01-tiers.spec.ts",
+        "line": 430,
+        "title": "insufficient gold leaves tier and gold unchanged",
+        "project": "desktop-chrome",
+        "status": "unexpected",
+        "actual": "failed",
+        "expected": "passed",
+        "startTime": "2026-09-22T11:27:06.279Z",
+        "durationMs": 14981,
+        "error": "Error: expect(received).toBeNull()\n\nReceived: {\"effectiveDamage\": undefined, \"effectiveFireRate\": undefined, \"hp\": 60, \"id\": \"palisade\", \"index\": 0, \"maxHp\": 60, \"panRateMult\": undefined, \"position\": {\"x\": 0, \"z\": 9}, \"repairCost\": 0, \"repairProgress\": 0, \"tier\": 1, \"worn\": false, \"wrecked\": false, \"yieldPerCycle\": undefined}\n\nCall Log:\n- Timeout 5000ms exceeded while waiting on the predicate\n\n  441 |   await expect(page.getByTestId('building-context-prompt')).toBeVisible();\n  442 |   await page.keyboard.press('Enter');\n> 443 |   await expect.poll(() => hpEntry(page, 'palisade', palisade.index)).toBeNull();\n      |                                                                      ^\n  444 |   expect(await gold(page)).toBe(Math.floor(Balance.demolish.refundPctOfCost * Balance.palisade.cost));\n  445 |   expect(errors.consoleErrors).toEqual([]);\n  446 |   expect(errors.pageErrors).toEqual([]);\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/bt-01-tiers.spec.ts:443:70"
+      }
+    ],
+    "recheck": null,
+    "classification": "fails with pre-cure CSS too; retained as baseline hold"
+  },
+  {
+    "suite": "e2e-hud",
+    "file": "bt-01-tiers.spec.ts",
+    "line": 205,
+    "title": "Enter tears down after clicking upgrade instead of re-clicking the focused upgrade button",
+    "project": "mobile-chrome",
+    "status": "unexpected",
+    "actual": "failed",
+    "expected": "passed",
+    "startTime": "2026-09-22T10:34:21.726Z",
+    "durationMs": 10523,
+    "error": "Error: expect(received).toBeNull()\n\nReceived: {\"effectiveDamage\": 72.8, \"effectiveFireRate\": 1.298, \"hp\": 50, \"id\": \"turret\", \"index\": 0, \"maxHp\": 50, \"panRateMult\": undefined, \"position\": {\"x\": 0, \"z\": 12}, \"repairCost\": 0, \"repairProgress\": 0, \"tier\": 2, \"worn\": false, \"wrecked\": false, \"yieldPerCycle\": undefined}\n\nCall Log:\n- Timeout 5000ms exceeded while waiting on the predicate\n\n  214 |   await page.keyboard.press('Enter');\n  215 |\n> 216 |   await expect.poll(() => hpEntry(page, 'turret', turret.index)).toBeNull();\n      |                                                                  ^\n  217 |   await expect.poll(() => buildableCount(page, 'turret')).toBe(0);\n  218 |   expect(errors.consoleErrors).toEqual([]);\n  219 |   expect(errors.pageErrors).toEqual([]);\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/bt-01-tiers.spec.ts:216:66",
+    "controls": [
+      {
+        "file": "bt-01-tiers.spec.ts",
+        "line": 205,
+        "title": "Enter tears down after clicking upgrade instead of re-clicking the focused upgrade button",
+        "project": "mobile-chrome",
+        "status": "unexpected",
+        "actual": "failed",
+        "expected": "passed",
+        "startTime": "2026-09-22T11:35:29.775Z",
+        "durationMs": 11185,
+        "error": "Error: expect(received).toBeNull()\n\nReceived: {\"effectiveDamage\": 72.8, \"effectiveFireRate\": 1.298, \"hp\": 50, \"id\": \"turret\", \"index\": 0, \"maxHp\": 50, \"panRateMult\": undefined, \"position\": {\"x\": 0, \"z\": 12}, \"repairCost\": 0, \"repairProgress\": 0, \"tier\": 2, \"worn\": false, \"wrecked\": false, \"yieldPerCycle\": undefined}\n\nCall Log:\n- Timeout 5000ms exceeded while waiting on the predicate\n\n  214 |   await page.keyboard.press('Enter');\n  215 |\n> 216 |   await expect.poll(() => hpEntry(page, 'turret', turret.index)).toBeNull();\n      |                                                                  ^\n  217 |   await expect.poll(() => buildableCount(page, 'turret')).toBe(0);\n  218 |   expect(errors.consoleErrors).toEqual([]);\n  219 |   expect(errors.pageErrors).toEqual([]);\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/bt-01-tiers.spec.ts:216:66"
+      }
+    ],
+    "recheck": null,
+    "classification": "fails with pre-cure CSS too; retained as baseline hold"
+  },
+  {
+    "suite": "e2e-hud",
+    "file": "bt-01-tiers.spec.ts",
+    "line": 430,
+    "title": "insufficient gold leaves tier and gold unchanged",
+    "project": "mobile-chrome",
+    "status": "unexpected",
+    "actual": "failed",
+    "expected": "passed",
+    "startTime": "2026-09-22T10:35:07.214Z",
+    "durationMs": 11096,
+    "error": "Error: expect(received).toBeNull()\n\nReceived: {\"effectiveDamage\": undefined, \"effectiveFireRate\": undefined, \"hp\": 60, \"id\": \"palisade\", \"index\": 0, \"maxHp\": 60, \"panRateMult\": undefined, \"position\": {\"x\": 0, \"z\": 9}, \"repairCost\": 0, \"repairProgress\": 0, \"tier\": 1, \"worn\": false, \"wrecked\": false, \"yieldPerCycle\": undefined}\n\nCall Log:\n- Timeout 5000ms exceeded while waiting on the predicate\n\n  441 |   await expect(page.getByTestId('building-context-prompt')).toBeVisible();\n  442 |   await page.keyboard.press('Enter');\n> 443 |   await expect.poll(() => hpEntry(page, 'palisade', palisade.index)).toBeNull();\n      |                                                                      ^\n  444 |   expect(await gold(page)).toBe(Math.floor(Balance.demolish.refundPctOfCost * Balance.palisade.cost));\n  445 |   expect(errors.consoleErrors).toEqual([]);\n  446 |   expect(errors.pageErrors).toEqual([]);\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/bt-01-tiers.spec.ts:443:70",
+    "controls": [
+      {
+        "file": "bt-01-tiers.spec.ts",
+        "line": 430,
+        "title": "insufficient gold leaves tier and gold unchanged",
+        "project": "mobile-chrome",
+        "status": "unexpected",
+        "actual": "failed",
+        "expected": "passed",
+        "startTime": "2026-09-22T11:35:43.892Z",
+        "durationMs": 11084,
+        "error": "Error: expect(received).toBeNull()\n\nReceived: {\"effectiveDamage\": undefined, \"effectiveFireRate\": undefined, \"hp\": 60, \"id\": \"palisade\", \"index\": 0, \"maxHp\": 60, \"panRateMult\": undefined, \"position\": {\"x\": 0, \"z\": 9}, \"repairCost\": 0, \"repairProgress\": 0, \"tier\": 1, \"worn\": false, \"wrecked\": false, \"yieldPerCycle\": undefined}\n\nCall Log:\n- Timeout 5000ms exceeded while waiting on the predicate\n\n  441 |   await expect(page.getByTestId('building-context-prompt')).toBeVisible();\n  442 |   await page.keyboard.press('Enter');\n> 443 |   await expect.poll(() => hpEntry(page, 'palisade', palisade.index)).toBeNull();\n      |                                                                      ^\n  444 |   expect(await gold(page)).toBe(Math.floor(Balance.demolish.refundPctOfCost * Balance.palisade.cost));\n  445 |   expect(errors.consoleErrors).toEqual([]);\n  446 |   expect(errors.pageErrors).toEqual([]);\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/bt-01-tiers.spec.ts:443:70"
+      }
+    ],
+    "recheck": null,
+    "classification": "fails with pre-cure CSS too; retained as baseline hold"
+  },
+  {
+    "suite": "e2e-hud",
+    "file": "e3-canyon-works.spec.ts",
+    "line": 34,
+    "title": "strings the gorge, holds the night, and restores a cut span",
+    "project": "mobile-chrome",
+    "status": "unexpected",
+    "actual": "failed",
+    "expected": "passed",
+    "startTime": "2026-09-22T10:37:33.499Z",
+    "durationMs": 8005,
+    "error": "Error: locator.screenshot: Element is not attached to the DOM\nCall log:\n  - taking element screenshot\n  - waiting for fonts to load...\n  - fonts loaded\n  - attempting scroll into view action\n    - waiting for navigation to finish...\n    - navigated to \"http://127.0.0.1:5312/?debug&epoch=epoch-3-voltage&contract=e3-canyon-works&nowaves&nospawn&nolevel&nopause&seed=canyon-1\"\n    - waiting for element to be stable\n\n\n  29 | async function shot(page: Page, testInfo: TestInfo, name: string): Promise<void> {\n  30 |   await mkdir(ARTIFACT_DIR, { recursive: true });\n> 31 |   await page.locator('#game-canvas').screenshot({ path: `${ARTIFACT_DIR}/${testInfo.project.name}-${name}.png` });\n     |                                      ^\n  32 | }\n  33 |\n  34 | test('strings the gorge, holds the night, and restores a cut span', async ({ page }, testInfo) => {\n    at shot (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/e3-canyon-works.spec.ts:31:38)\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/e3-canyon-works.spec.ts:83:3",
+    "controls": [
+      {
+        "file": "e3-canyon-works.spec.ts",
+        "line": 34,
+        "title": "strings the gorge, holds the night, and restores a cut span",
+        "project": "mobile-chrome",
+        "status": "expected",
+        "actual": "passed",
+        "expected": "passed",
+        "startTime": "2026-09-22T11:35:58.228Z",
+        "durationMs": 4823,
+        "error": ""
+      }
+    ],
+    "recheck": {
+      "file": "e3-canyon-works.spec.ts",
+      "line": 34,
+      "title": "strings the gorge, holds the night, and restores a cut span",
+      "project": "mobile-chrome",
+      "status": "expected",
+      "actual": "passed",
+      "expected": "passed",
+      "startTime": "2026-09-22T11:52:30.267Z",
+      "durationMs": 5956,
+      "error": ""
+    },
+    "classification": "passes on final CSS; initial failure not reproduced"
+  },
+  {
+    "suite": "e2e-hud",
+    "file": "e7-playbook-surface.spec.ts",
+    "line": 33,
+    "title": "the tape drawer arms at the Signal Era and remains inherited afterward",
+    "project": "desktop-chrome",
+    "status": "unexpected",
+    "actual": "failed",
+    "expected": "passed",
+    "startTime": "2026-09-22T10:13:49.405Z",
+    "durationMs": 19552,
+    "error": "Error: expect(locator).toBeVisible() failed\n\nLocator: getByTestId('playbook-toggle')\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n  - Expect \"toBeVisible\" with timeout 5000ms\n  - waiting for getByTestId('playbook-toggle')\n\n\n  47 |\n  48 |   await page.goto('/?contract=the-claim&nowaves&nolevel&nopause');\n> 49 |   await expect(page.getByTestId('playbook-toggle')).toBeVisible();\n     |                                                     ^\n  50 |   expect(await page.evaluate(() => window.__GR_TEST__)).toBeUndefined();\n  51 |   expect(errors).toEqual({ consoleErrors: [], pageErrors: [] });\n  52 | });\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/e7-playbook-surface.spec.ts:49:53",
+    "controls": [
+      {
+        "file": "e7-playbook-surface.spec.ts",
+        "line": 33,
+        "title": "the tape drawer arms at the Signal Era and remains inherited afterward",
+        "project": "desktop-chrome",
+        "status": "unexpected",
+        "actual": "failed",
+        "expected": "passed",
+        "startTime": "2026-09-22T11:27:59.113Z",
+        "durationMs": 20022,
+        "error": "Error: expect(locator).toBeVisible() failed\n\nLocator: getByTestId('playbook-toggle')\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n  - Expect \"toBeVisible\" with timeout 5000ms\n  - waiting for getByTestId('playbook-toggle')\n\n\n  47 |\n  48 |   await page.goto('/?contract=the-claim&nowaves&nolevel&nopause');\n> 49 |   await expect(page.getByTestId('playbook-toggle')).toBeVisible();\n     |                                                     ^\n  50 |   expect(await page.evaluate(() => window.__GR_TEST__)).toBeUndefined();\n  51 |   expect(errors).toEqual({ consoleErrors: [], pageErrors: [] });\n  52 | });\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/e7-playbook-surface.spec.ts:49:53"
+      }
+    ],
+    "recheck": null,
+    "classification": "fails with pre-cure CSS too; retained as baseline hold"
+  },
+  {
+    "suite": "e2e-hud",
+    "file": "e7-playbook-surface.spec.ts",
+    "line": 33,
+    "title": "the tape drawer arms at the Signal Era and remains inherited afterward",
+    "project": "mobile-chrome",
+    "status": "unexpected",
+    "actual": "failed",
+    "expected": "passed",
+    "startTime": "2026-09-22T10:42:16.979Z",
+    "durationMs": 17327,
+    "error": "Error: expect(locator).toBeVisible() failed\n\nLocator: getByTestId('playbook-toggle')\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n  - Expect \"toBeVisible\" with timeout 5000ms\n  - waiting for getByTestId('playbook-toggle')\n\n\n  47 |\n  48 |   await page.goto('/?contract=the-claim&nowaves&nolevel&nopause');\n> 49 |   await expect(page.getByTestId('playbook-toggle')).toBeVisible();\n     |                                                     ^\n  50 |   expect(await page.evaluate(() => window.__GR_TEST__)).toBeUndefined();\n  51 |   expect(errors).toEqual({ consoleErrors: [], pageErrors: [] });\n  52 | });\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/e7-playbook-surface.spec.ts:49:53",
+    "controls": [
+      {
+        "file": "e7-playbook-surface.spec.ts",
+        "line": 33,
+        "title": "the tape drawer arms at the Signal Era and remains inherited afterward",
+        "project": "mobile-chrome",
+        "status": "unexpected",
+        "actual": "failed",
+        "expected": "passed",
+        "startTime": "2026-09-22T11:39:12.577Z",
+        "durationMs": 14789,
+        "error": "Error: expect(locator).toBeVisible() failed\n\nLocator: getByTestId('playbook-toggle')\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n  - Expect \"toBeVisible\" with timeout 5000ms\n  - waiting for getByTestId('playbook-toggle')\n\n\n  47 |\n  48 |   await page.goto('/?contract=the-claim&nowaves&nolevel&nopause');\n> 49 |   await expect(page.getByTestId('playbook-toggle')).toBeVisible();\n     |                                                     ^\n  50 |   expect(await page.evaluate(() => window.__GR_TEST__)).toBeUndefined();\n  51 |   expect(errors).toEqual({ consoleErrors: [], pageErrors: [] });\n  52 | });\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/e7-playbook-surface.spec.ts:49:53"
+      }
+    ],
+    "recheck": null,
+    "classification": "fails with pre-cure CSS too; retained as baseline hold"
+  },
+  {
+    "suite": "e2e-hud",
+    "file": "e7-signal-systems.spec.ts",
+    "line": 104,
+    "title": "S3 silences wait for midpoint, darken in canon order, and arm the last beat exactly once",
+    "project": "desktop-chrome",
+    "status": "unexpected",
+    "actual": "failed",
+    "expected": "passed",
+    "startTime": "2026-09-22T10:14:53.725Z",
+    "durationMs": 23510,
+    "error": "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: true\nReceived: false\n\n  136 |     const contracts = (await Function('return import(\"/src/meta/ContractFamilies.ts\")')()) as typeof import('../src/meta/ContractFamilies');\n  137 |     return contracts.activateEpoch('epoch-8-orbital');\n> 138 |   })).toBe(true);\n      |       ^\n  139 |   expect(errors).toEqual({ consoleErrors: [], pageErrors: [] });\n  140 | });\n  141 |\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/e7-signal-systems.spec.ts:138:7",
+    "controls": [
+      {
+        "file": "e7-signal-systems.spec.ts",
+        "line": 104,
+        "title": "S3 silences wait for midpoint, darken in canon order, and arm the last beat exactly once",
+        "project": "desktop-chrome",
+        "status": "unexpected",
+        "actual": "failed",
+        "expected": "passed",
+        "startTime": "2026-09-22T11:28:28.129Z",
+        "durationMs": 8734,
+        "error": "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: true\nReceived: false\n\n  136 |     const contracts = (await Function('return import(\"/src/meta/ContractFamilies.ts\")')()) as typeof import('../src/meta/ContractFamilies');\n  137 |     return contracts.activateEpoch('epoch-8-orbital');\n> 138 |   })).toBe(true);\n      |       ^\n  139 |   expect(errors).toEqual({ consoleErrors: [], pageErrors: [] });\n  140 | });\n  141 |\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/e7-signal-systems.spec.ts:138:7"
+      }
+    ],
+    "recheck": null,
+    "classification": "fails with pre-cure CSS too; retained as baseline hold"
+  },
+  {
+    "suite": "e2e-hud",
+    "file": "e7-signal-systems.spec.ts",
+    "line": 104,
+    "title": "S3 silences wait for midpoint, darken in canon order, and arm the last beat exactly once",
+    "project": "mobile-chrome",
+    "status": "unexpected",
+    "actual": "failed",
+    "expected": "passed",
+    "startTime": "2026-09-22T10:43:00.220Z",
+    "durationMs": 6289,
+    "error": "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: true\nReceived: false\n\n  136 |     const contracts = (await Function('return import(\"/src/meta/ContractFamilies.ts\")')()) as typeof import('../src/meta/ContractFamilies');\n  137 |     return contracts.activateEpoch('epoch-8-orbital');\n> 138 |   })).toBe(true);\n      |       ^\n  139 |   expect(errors).toEqual({ consoleErrors: [], pageErrors: [] });\n  140 | });\n  141 |\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/e7-signal-systems.spec.ts:138:7",
+    "controls": [
+      {
+        "file": "e7-signal-systems.spec.ts",
+        "line": 104,
+        "title": "S3 silences wait for midpoint, darken in canon order, and arm the last beat exactly once",
+        "project": "mobile-chrome",
+        "status": "unexpected",
+        "actual": "failed",
+        "expected": "passed",
+        "startTime": "2026-09-22T11:39:30.499Z",
+        "durationMs": 5214,
+        "error": "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: true\nReceived: false\n\n  136 |     const contracts = (await Function('return import(\"/src/meta/ContractFamilies.ts\")')()) as typeof import('../src/meta/ContractFamilies');\n  137 |     return contracts.activateEpoch('epoch-8-orbital');\n> 138 |   })).toBe(true);\n      |       ^\n  139 |   expect(errors).toEqual({ consoleErrors: [], pageErrors: [] });\n  140 | });\n  141 |\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/e7-signal-systems.spec.ts:138:7"
+      }
+    ],
+    "recheck": null,
+    "classification": "fails with pre-cure CSS too; retained as baseline hold"
+  },
+  {
+    "suite": "e2e-hud",
+    "file": "feedback-fx.spec.ts",
+    "line": 28,
+    "title": "announcement banner fades after the opening claim notice",
+    "project": "desktop-chrome",
+    "status": "unexpected",
+    "actual": "failed",
+    "expected": "passed",
+    "startTime": "2026-09-22T10:16:01.401Z",
+    "durationMs": 12187,
+    "error": "Error: expect(locator).toContainText(expected) failed\n\nLocator: getByTestId('hud-wave')\nTimeout: 5000ms\n- Expected substring  - 1\n+ Received string     + 8\n\n- Stake your claim.\n+\n+         \n+         \n+         \n+           \n+           the Prospector: follows and observes. Chip by weapon; claim wins grow it.\n+         \n+       \n\nCall log:\n  - Expect \"toContainText\" with timeout 5000ms\n  - waiting for getByTestId('hud-wave')\n    12 × locator resolved to <div class=\"hud__wave\" data-testid=\"hud-wave\" aria-label=\"Wave status\">…</div>\n       - unexpected value \"\n        \n        \n        \n          \n          the Prospector: follows and observes. Chip by weapon; claim wins grow it.\n        \n      \"\n\n\n  31 |\n  32 |   const banner = page.getByTestId('hud-wave');\n> 33 |   await expect(banner).toContainText('Stake your claim.');\n     |                        ^\n  34 |   await expect\n  35 |     .poll(async () => Number(await banner.evaluate((element) => getComputedStyle(element).opacity)))\n  36 |     .toBeGreaterThan(0.5);\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/feedback-fx.spec.ts:33:24",
+    "controls": [
+      {
+        "file": "feedback-fx.spec.ts",
+        "line": 28,
+        "title": "announcement banner fades after the opening claim notice",
+        "project": "desktop-chrome",
+        "status": "unexpected",
+        "actual": "failed",
+        "expected": "passed",
+        "startTime": "2026-09-22T11:29:28.728Z",
+        "durationMs": 12001,
+        "error": "Error: expect(locator).toContainText(expected) failed\n\nLocator: getByTestId('hud-wave')\nTimeout: 5000ms\n- Expected substring  - 1\n+ Received string     + 8\n\n- Stake your claim.\n+\n+         \n+         \n+         \n+           \n+           the Prospector: follows and observes. Chip by weapon; claim wins grow it.\n+         \n+       \n\nCall log:\n  - Expect \"toContainText\" with timeout 5000ms\n  - waiting for getByTestId('hud-wave')\n    12 × locator resolved to <div class=\"hud__wave\" data-testid=\"hud-wave\" aria-label=\"Wave status\">…</div>\n       - unexpected value \"\n        \n        \n        \n          \n          the Prospector: follows and observes. Chip by weapon; claim wins grow it.\n        \n      \"\n\n\n  31 |\n  32 |   const banner = page.getByTestId('hud-wave');\n> 33 |   await expect(banner).toContainText('Stake your claim.');\n     |                        ^\n  34 |   await expect\n  35 |     .poll(async () => Number(await banner.evaluate((element) => getComputedStyle(element).opacity)))\n  36 |     .toBeGreaterThan(0.5);\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/feedback-fx.spec.ts:33:24"
+      }
+    ],
+    "recheck": null,
+    "classification": "fails with pre-cure CSS too; retained as baseline hold"
+  },
+  {
+    "suite": "e2e-hud",
+    "file": "feedback-fx.spec.ts",
+    "line": 28,
+    "title": "announcement banner fades after the opening claim notice",
+    "project": "mobile-chrome",
+    "status": "unexpected",
+    "actual": "failed",
+    "expected": "passed",
+    "startTime": "2026-09-22T10:43:30.100Z",
+    "durationMs": 8447,
+    "error": "Error: expect(locator).toContainText(expected) failed\n\nLocator: getByTestId('hud-wave')\nTimeout: 5000ms\n- Expected substring  - 1\n+ Received string     + 8\n\n- Stake your claim.\n+\n+         \n+         \n+         \n+           \n+           the Prospector: follows and observes. Chip by weapon; claim wins grow it.\n+         \n+       \n\nCall log:\n  - Expect \"toContainText\" with timeout 5000ms\n  - waiting for getByTestId('hud-wave')\n    13 × locator resolved to <div class=\"hud__wave\" data-testid=\"hud-wave\" aria-label=\"Wave status\">…</div>\n       - unexpected value \"\n        \n        \n        \n          \n          the Prospector: follows and observes. Chip by weapon; claim wins grow it.\n        \n      \"\n\n\n  31 |\n  32 |   const banner = page.getByTestId('hud-wave');\n> 33 |   await expect(banner).toContainText('Stake your claim.');\n     |                        ^\n  34 |   await expect\n  35 |     .poll(async () => Number(await banner.evaluate((element) => getComputedStyle(element).opacity)))\n  36 |     .toBeGreaterThan(0.5);\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/feedback-fx.spec.ts:33:24",
+    "controls": [
+      {
+        "file": "feedback-fx.spec.ts",
+        "line": 28,
+        "title": "announcement banner fades after the opening claim notice",
+        "project": "mobile-chrome",
+        "status": "unexpected",
+        "actual": "failed",
+        "expected": "passed",
+        "startTime": "2026-09-22T11:40:10.642Z",
+        "durationMs": 8566,
+        "error": "Error: expect(locator).toContainText(expected) failed\n\nLocator: getByTestId('hud-wave')\nTimeout: 5000ms\n- Expected substring  - 1\n+ Received string     + 8\n\n- Stake your claim.\n+\n+         \n+         \n+         \n+           \n+           the Prospector: follows and observes. Chip by weapon; claim wins grow it.\n+         \n+       \n\nCall log:\n  - Expect \"toContainText\" with timeout 5000ms\n  - waiting for getByTestId('hud-wave')\n    13 × locator resolved to <div class=\"hud__wave\" data-testid=\"hud-wave\" aria-label=\"Wave status\">…</div>\n       - unexpected value \"\n        \n        \n        \n          \n          the Prospector: follows and observes. Chip by weapon; claim wins grow it.\n        \n      \"\n\n\n  31 |\n  32 |   const banner = page.getByTestId('hud-wave');\n> 33 |   await expect(banner).toContainText('Stake your claim.');\n     |                        ^\n  34 |   await expect\n  35 |     .poll(async () => Number(await banner.evaluate((element) => getComputedStyle(element).opacity)))\n  36 |     .toBeGreaterThan(0.5);\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/feedback-fx.spec.ts:33:24"
+      }
+    ],
+    "recheck": null,
+    "classification": "fails with pre-cure CSS too; retained as baseline hold"
+  },
+  {
+    "suite": "e2e-hud",
+    "file": "locked-win.spec.ts",
+    "line": 65,
+    "title": "wave 10 banks the win; a wave 12 Rush death keeps it and records both wave marks",
+    "project": "mobile-chrome",
+    "status": "unexpected",
+    "actual": "timedOut",
+    "expected": "passed",
+    "startTime": "2026-09-22T10:44:02.617Z",
+    "durationMs": 34618,
+    "error": "Test timeout of 30000ms exceeded.\nError: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n  - waiting for getByTestId('hud-pause')\n    - locator resolved to <button type=\"button\" class=\"hud-pause\" data-hud-pause=\"\" data-testid=\"hud-pause\" aria-keyshortcuts=\"P Escape\" aria-label=\"Pause the claim\">…</button>\n  - attempting click action\n    2 × waiting for element to be visible, enabled and stable\n      - element is visible, enabled and stable\n      - scrolling into view if needed\n      - done scrolling\n      - <button class=\"lil-title\" aria-expanded=\"false\">Game tuning</button> from <div class=\"lil-gui lil-root lil-allow-touch-styles lil-auto-place autoPlace lil-closed\">…</div> subtree intercepts pointer events\n    - retrying click action\n    - waiting 20ms\n    2 × waiting for element to be visible, enabled and stable\n      - element is visible, enabled and stable\n      - scrolling into view if needed\n      - done scrolling\n      - <button class=\"lil-title\" aria-expanded=\"false\">Game tuning</button> from <div class=\"lil-gui lil-root lil-allow-touch-styles lil-auto-place autoPlace lil-closed\">…</div> subtree intercepts pointer events\n    - retrying click action\n      - waiting 100ms\n    59 × waiting for element to be visible, enabled and stable\n       - element is visible, enabled and stable\n       - scrolling into view if needed\n       - done scrolling\n       - <button class=\"lil-title\" aria-expanded=\"false\">Game tuning</button> from <div class=\"lil-gui lil-root lil-allow-touch-styles lil-auto-place autoPlace lil-closed\">…</div> subtree intercepts pointer events\n     - retrying click action\n       - waiting 500ms\n    - waiting for element to be visible, enabled and stable\n\n\n  78 |   await expect(page.getByTestId('claim-secured-chip')).toContainText('CLAIM SECURED ✓');\n  79 |   await expect(page.getByTestId('claim-secured-chip')).toContainText('The win is banked');\n> 80 |   await page.getByTestId('hud-pause').click();\n     |                                       ^\n  81 |   await expect(page.getByTestId('claim-secured-chip')).toBeVisible();\n  82 |   await page.getByTestId('hud-pause').click();\n  83 |   await page.evaluate(() => window.__GR_TEST__?.startWaveForTest(11));\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/locked-win.spec.ts:80:39",
+    "controls": [
+      {
+        "file": "locked-win.spec.ts",
+        "line": 65,
+        "title": "wave 10 banks the win; a wave 12 Rush death keeps it and records both wave marks",
+        "project": "mobile-chrome",
+        "status": "expected",
+        "actual": "passed",
+        "expected": "passed",
+        "startTime": "2026-09-22T11:40:21.538Z",
+        "durationMs": 6234,
+        "error": ""
+      }
+    ],
+    "recheck": {
+      "file": "locked-win.spec.ts",
+      "line": 65,
+      "title": "wave 10 banks the win; a wave 12 Rush death keeps it and records both wave marks",
+      "project": "mobile-chrome",
+      "status": "expected",
+      "actual": "passed",
+      "expected": "passed",
+      "startTime": "2026-09-22T11:52:52.088Z",
+      "durationMs": 10256,
+      "error": ""
+    },
+    "classification": "HUD regression corrected; original assertion passes on final CSS"
+  },
+  {
+    "suite": "e2e-hud",
+    "file": "m1-03-wave-pressure.spec.ts",
+    "line": 31,
+    "title": "grace holds pressure until sim-t 5, then first trickle arrives",
+    "project": "desktop-chrome",
+    "status": "unexpected",
+    "actual": "failed",
+    "expected": "passed",
+    "startTime": "2026-09-22T10:17:01.902Z",
+    "durationMs": 5219,
+    "error": "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: 0\nReceived: 2\n\n  33 |\n  34 |   await waitForSim(page, 4.8);\n> 35 |   expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.enemiesAlive ?? -1)).toBe(0);\n     |                                                                                            ^\n  36 |\n  37 |   await waitForSim(page, 8);\n  38 |   await expect.poll(async () => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.enemiesAlive ?? 0)).toBeGreaterThan(0);\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/m1-03-wave-pressure.spec.ts:35:92",
+    "controls": [
+      {
+        "file": "m1-03-wave-pressure.spec.ts",
+        "line": 31,
+        "title": "grace holds pressure until sim-t 5, then first trickle arrives",
+        "project": "desktop-chrome",
+        "status": "unexpected",
+        "actual": "failed",
+        "expected": "passed",
+        "startTime": "2026-09-22T11:30:14.987Z",
+        "durationMs": 7630,
+        "error": "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: 0\nReceived: 2\n\n  33 |\n  34 |   await waitForSim(page, 4.8);\n> 35 |   expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.enemiesAlive ?? -1)).toBe(0);\n     |                                                                                            ^\n  36 |\n  37 |   await waitForSim(page, 8);\n  38 |   await expect.poll(async () => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.enemiesAlive ?? 0)).toBeGreaterThan(0);\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/m1-03-wave-pressure.spec.ts:35:92"
+      }
+    ],
+    "recheck": null,
+    "classification": "fails with pre-cure CSS too; retained as baseline hold"
+  },
+  {
+    "suite": "e2e-hud",
+    "file": "m1-03-wave-pressure.spec.ts",
+    "line": 31,
+    "title": "grace holds pressure until sim-t 5, then first trickle arrives",
+    "project": "mobile-chrome",
+    "status": "unexpected",
+    "actual": "failed",
+    "expected": "passed",
+    "startTime": "2026-09-22T10:44:51.586Z",
+    "durationMs": 4728,
+    "error": "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: 0\nReceived: 1\n\n  33 |\n  34 |   await waitForSim(page, 4.8);\n> 35 |   expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.enemiesAlive ?? -1)).toBe(0);\n     |                                                                                            ^\n  36 |\n  37 |   await waitForSim(page, 8);\n  38 |   await expect.poll(async () => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.enemiesAlive ?? 0)).toBeGreaterThan(0);\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/m1-03-wave-pressure.spec.ts:35:92",
+    "controls": [
+      {
+        "file": "m1-03-wave-pressure.spec.ts",
+        "line": 31,
+        "title": "grace holds pressure until sim-t 5, then first trickle arrives",
+        "project": "mobile-chrome",
+        "status": "unexpected",
+        "actual": "failed",
+        "expected": "passed",
+        "startTime": "2026-09-22T11:40:27.975Z",
+        "durationMs": 4287,
+        "error": "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: 0\nReceived: 1\n\n  33 |\n  34 |   await waitForSim(page, 4.8);\n> 35 |   expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.enemiesAlive ?? -1)).toBe(0);\n     |                                                                                            ^\n  36 |\n  37 |   await waitForSim(page, 8);\n  38 |   await expect.poll(async () => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.enemiesAlive ?? 0)).toBeGreaterThan(0);\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/m1-03-wave-pressure.spec.ts:35:92"
+      }
+    ],
+    "recheck": null,
+    "classification": "fails with pre-cure CSS too; retained as baseline hold"
+  },
+  {
+    "suite": "e2e-hud",
+    "file": "m2-05b-overwhelm-valves.spec.ts",
+    "line": 223,
+    "title": "lullFloor12 only clamps post-wave-12 pulse spacing",
+    "project": "mobile-chrome",
+    "status": "unexpected",
+    "actual": "failed",
+    "expected": "passed",
+    "startTime": "2026-09-22T10:49:02.260Z",
+    "durationMs": 8970,
+    "error": "TypeError: Cannot read properties of undefined (reading 'lastPulseAt')\n\n  244 |   const wave1 = records.filter((record) => record.wave === 1);\n  245 |   const wave12 = records.filter((record) => record.wave === 12);\n> 246 |   expect(wave1[1].lastPulseAt - wave1[0].lastPulseAt).toBeCloseTo(0.5, 4);\n      |                   ^\n  247 |   expect(wave12[1].lastPulseAt - wave12[0].lastPulseAt).toBeGreaterThanOrEqual(2);\n  248 |   expect(errors.consoleErrors).toEqual([]);\n  249 |   expect(errors.pageErrors).toEqual([]);\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/m2-05b-overwhelm-valves.spec.ts:246:19",
+    "controls": [
+      {
+        "file": "m2-05b-overwhelm-valves.spec.ts",
+        "line": 223,
+        "title": "lullFloor12 only clamps post-wave-12 pulse spacing",
+        "project": "mobile-chrome",
+        "status": "expected",
+        "actual": "passed",
+        "expected": "passed",
+        "startTime": "2026-09-22T11:40:34.446Z",
+        "durationMs": 6572,
+        "error": ""
+      },
+      {
+        "file": "m2-05b-overwhelm-valves.spec.ts",
+        "line": 223,
+        "title": "lullFloor12 only clamps post-wave-12 pulse spacing",
+        "project": "mobile-chrome",
+        "status": "unexpected",
+        "actual": "failed",
+        "expected": "passed",
+        "startTime": "2026-09-22T11:56:18.358Z",
+        "durationMs": 9697,
+        "error": "TypeError: Cannot read properties of undefined (reading 'lastPulseAt')\n\n  244 |   const wave1 = records.filter((record) => record.wave === 1);\n  245 |   const wave12 = records.filter((record) => record.wave === 12);\n> 246 |   expect(wave1[1].lastPulseAt - wave1[0].lastPulseAt).toBeCloseTo(0.5, 4);\n      |                   ^\n  247 |   expect(wave12[1].lastPulseAt - wave12[0].lastPulseAt).toBeGreaterThanOrEqual(2);\n  248 |   expect(errors.consoleErrors).toEqual([]);\n  249 |   expect(errors.pageErrors).toEqual([]);\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/m2-05b-overwhelm-valves.spec.ts:246:19"
+      }
+    ],
+    "recheck": {
+      "file": "m2-05b-overwhelm-valves.spec.ts",
+      "line": 223,
+      "title": "lullFloor12 only clamps post-wave-12 pulse spacing",
+      "project": "mobile-chrome",
+      "status": "unexpected",
+      "actual": "failed",
+      "expected": "passed",
+      "startTime": "2026-09-22T11:53:42.996Z",
+      "durationMs": 10230,
+      "error": "TypeError: Cannot read properties of undefined (reading 'lastPulseAt')\n\n  244 |   const wave1 = records.filter((record) => record.wave === 1);\n  245 |   const wave12 = records.filter((record) => record.wave === 12);\n> 246 |   expect(wave1[1].lastPulseAt - wave1[0].lastPulseAt).toBeCloseTo(0.5, 4);\n      |                   ^\n  247 |   expect(wave12[1].lastPulseAt - wave12[0].lastPulseAt).toBeGreaterThanOrEqual(2);\n  248 |   expect(errors.consoleErrors).toEqual([]);\n  249 |   expect(errors.pageErrors).toEqual([]);\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/m2-05b-overwhelm-valves.spec.ts:246:19"
+    },
+    "classification": "fails with pre-cure CSS too; retained as baseline hold"
+  },
+  {
+    "suite": "e2e-hud",
+    "file": "m2-06-arsenal-blast-charge.spec.ts",
+    "line": 131,
+    "title": "turret line of sight ignores blocked nearest and shoots clear second target",
+    "project": "desktop-chrome",
+    "status": "unexpected",
+    "actual": "failed",
+    "expected": "passed",
+    "startTime": "2026-09-22T10:21:32.956Z",
+    "durationMs": 8296,
+    "error": "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: 0\nReceived: 1\n\n  153 |   await page.evaluate(() => window.__GR_TEST__?.spawnEnemyAt(0, 8));\n  154 |   await page.waitForTimeout(2200);\n> 155 |   expect(await page.evaluate(() => window.__GR_TEST__?.state().arsenal.turretKills ?? 0)).toBe(0);\n      |                                                                                           ^\n  156 |   expect(await page.evaluate(() => window.__GR_TEST__?.state().enemiesAlive ?? 0)).toBe(1);\n  157 |\n  158 |   await page.evaluate(() => window.__GR_TEST__?.spawnEnemyAt(6, 12));\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/m2-06-arsenal-blast-charge.spec.ts:155:91",
+    "controls": [
+      {
+        "file": "m2-06-arsenal-blast-charge.spec.ts",
+        "line": 131,
+        "title": "turret line of sight ignores blocked nearest and shoots clear second target",
+        "project": "desktop-chrome",
+        "status": "unexpected",
+        "actual": "failed",
+        "expected": "passed",
+        "startTime": "2026-09-22T11:30:49.840Z",
+        "durationMs": 12212,
+        "error": "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: 0\nReceived: 1\n\n  153 |   await page.evaluate(() => window.__GR_TEST__?.spawnEnemyAt(0, 8));\n  154 |   await page.waitForTimeout(2200);\n> 155 |   expect(await page.evaluate(() => window.__GR_TEST__?.state().arsenal.turretKills ?? 0)).toBe(0);\n      |                                                                                           ^\n  156 |   expect(await page.evaluate(() => window.__GR_TEST__?.state().enemiesAlive ?? 0)).toBe(1);\n  157 |\n  158 |   await page.evaluate(() => window.__GR_TEST__?.spawnEnemyAt(6, 12));\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/m2-06-arsenal-blast-charge.spec.ts:155:91"
+      }
+    ],
+    "recheck": null,
+    "classification": "fails with pre-cure CSS too; retained as baseline hold"
+  },
+  {
+    "suite": "e2e-hud",
+    "file": "m2-06-arsenal-blast-charge.spec.ts",
+    "line": 212,
+    "title": "stress blast pool never exceeds cap",
+    "project": "desktop-chrome",
+    "status": "unexpected",
+    "actual": "failed",
+    "expected": "passed",
+    "startTime": "2026-09-22T10:21:53.333Z",
+    "durationMs": 21521,
+    "error": "Error: expect(received).toBeGreaterThan(expected)\n\nExpected: > 0\nReceived:   0\n\nCall Log:\n- Timeout 15000ms exceeded while waiting on the predicate\n\n  226 |   });\n  227 |\n> 228 |   await expect.poll(() => page.evaluate(() => window.__GR_TEST__?.state().arsenal.detonations ?? 0), { timeout: 15_000 }).toBeGreaterThan(0);\n      |                                                                                                                           ^\n  229 |   // Give the rAF tracker time to actually sample: at ~6fps one poll round-trip spans ~2 frames,\n  230 |   // so asserting samples>2 immediately after the detonation poll is a coin flip (s25 gate, env A/B-proven).\n  231 |   await expect\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/m2-06-arsenal-blast-charge.spec.ts:228:123",
+    "controls": [
+      {
+        "file": "m2-06-arsenal-blast-charge.spec.ts",
+        "line": 212,
+        "title": "stress blast pool never exceeds cap",
+        "project": "desktop-chrome",
+        "status": "unexpected",
+        "actual": "failed",
+        "expected": "passed",
+        "startTime": "2026-09-22T11:31:08.382Z",
+        "durationMs": 26438,
+        "error": "Error: expect(received).toBeGreaterThan(expected)\n\nExpected: > 0\nReceived:   0\n\nCall Log:\n- Timeout 15000ms exceeded while waiting on the predicate\n\n  226 |   });\n  227 |\n> 228 |   await expect.poll(() => page.evaluate(() => window.__GR_TEST__?.state().arsenal.detonations ?? 0), { timeout: 15_000 }).toBeGreaterThan(0);\n      |                                                                                                                           ^\n  229 |   // Give the rAF tracker time to actually sample: at ~6fps one poll round-trip spans ~2 frames,\n  230 |   // so asserting samples>2 immediately after the detonation poll is a coin flip (s25 gate, env A/B-proven).\n  231 |   await expect\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/m2-06-arsenal-blast-charge.spec.ts:228:123"
+      }
+    ],
+    "recheck": null,
+    "classification": "fails with pre-cure CSS too; retained as baseline hold"
+  },
+  {
+    "suite": "e2e-hud",
+    "file": "m2-06-arsenal-blast-charge.spec.ts",
+    "line": 131,
+    "title": "turret line of sight ignores blocked nearest and shoots clear second target",
+    "project": "mobile-chrome",
+    "status": "unexpected",
+    "actual": "failed",
+    "expected": "passed",
+    "startTime": "2026-09-22T10:49:43.882Z",
+    "durationMs": 7462,
+    "error": "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: 0\nReceived: 1\n\n  153 |   await page.evaluate(() => window.__GR_TEST__?.spawnEnemyAt(0, 8));\n  154 |   await page.waitForTimeout(2200);\n> 155 |   expect(await page.evaluate(() => window.__GR_TEST__?.state().arsenal.turretKills ?? 0)).toBe(0);\n      |                                                                                           ^\n  156 |   expect(await page.evaluate(() => window.__GR_TEST__?.state().enemiesAlive ?? 0)).toBe(1);\n  157 |\n  158 |   await page.evaluate(() => window.__GR_TEST__?.spawnEnemyAt(6, 12));\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/m2-06-arsenal-blast-charge.spec.ts:155:91",
+    "controls": [
+      {
+        "file": "m2-06-arsenal-blast-charge.spec.ts",
+        "line": 131,
+        "title": "turret line of sight ignores blocked nearest and shoots clear second target",
+        "project": "mobile-chrome",
+        "status": "unexpected",
+        "actual": "failed",
+        "expected": "passed",
+        "startTime": "2026-09-22T11:40:41.240Z",
+        "durationMs": 6938,
+        "error": "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: 0\nReceived: 1\n\n  153 |   await page.evaluate(() => window.__GR_TEST__?.spawnEnemyAt(0, 8));\n  154 |   await page.waitForTimeout(2200);\n> 155 |   expect(await page.evaluate(() => window.__GR_TEST__?.state().arsenal.turretKills ?? 0)).toBe(0);\n      |                                                                                           ^\n  156 |   expect(await page.evaluate(() => window.__GR_TEST__?.state().enemiesAlive ?? 0)).toBe(1);\n  157 |\n  158 |   await page.evaluate(() => window.__GR_TEST__?.spawnEnemyAt(6, 12));\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/m2-06-arsenal-blast-charge.spec.ts:155:91"
+      }
+    ],
+    "recheck": null,
+    "classification": "fails with pre-cure CSS too; retained as baseline hold"
+  },
+  {
+    "suite": "e2e-hud",
+    "file": "m4-06-embodiment.spec.ts",
+    "line": 298,
+    "title": "real Prospector sprite loads and faces pan movement",
+    "project": "desktop-chrome",
+    "status": "unexpected",
+    "actual": "failed",
+    "expected": "passed",
+    "startTime": "2026-09-22T10:22:46.156Z",
+    "durationMs": 5269,
+    "error": "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: 8\nReceived: 1\n\n  303 |   const idle = await waitForProspectorSprite(page);\n  304 |   expect(['idle', 'walk']).toContain(idle.clip);\n> 305 |   expect(idle.fps).toBe(8);\n      |                    ^\n  306 |   expect(idle.frameKey).not.toContain('createProspectorTexture');\n  307 |   await saveM407Shot(page, testInfo, 'idle');\n  308 |\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/m4-06-embodiment.spec.ts:305:20",
+    "controls": [
+      {
+        "file": "m4-06-embodiment.spec.ts",
+        "line": 298,
+        "title": "real Prospector sprite loads and faces pan movement",
+        "project": "desktop-chrome",
+        "status": "unexpected",
+        "actual": "failed",
+        "expected": "passed",
+        "startTime": "2026-09-22T11:31:48.842Z",
+        "durationMs": 6777,
+        "error": "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: 8\nReceived: 1\n\n  303 |   const idle = await waitForProspectorSprite(page);\n  304 |   expect(['idle', 'walk']).toContain(idle.clip);\n> 305 |   expect(idle.fps).toBe(8);\n      |                    ^\n  306 |   expect(idle.frameKey).not.toContain('createProspectorTexture');\n  307 |   await saveM407Shot(page, testInfo, 'idle');\n  308 |\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/m4-06-embodiment.spec.ts:305:20"
+      }
+    ],
+    "recheck": null,
+    "classification": "fails with pre-cure CSS too; retained as baseline hold"
+  },
+  {
+    "suite": "e2e-hud",
+    "file": "m4-06-embodiment.spec.ts",
+    "line": 187,
+    "title": "permission chip shows portrait, current level, abilities, and growth path",
+    "project": "mobile-chrome",
+    "status": "unexpected",
+    "actual": "failed",
+    "expected": "passed",
+    "startTime": "2026-09-22T10:50:09.152Z",
+    "durationMs": 9595,
+    "error": "Error: expect(locator).toBeVisible() failed\n\nLocator:  getByTestId('hud-agent').locator('[data-hud-agent-portrait]')\nExpected: visible\nReceived: hidden\nTimeout:  5000ms\n\nCall log:\n  - Expect \"toBeVisible\" with timeout 5000ms\n  - waiting for getByTestId('hud-agent').locator('[data-hud-agent-portrait]')\n    13 × locator resolved to <img alt=\"\" data-hud-agent-portrait=\"\" class=\"hud-agent-chip__portrait\" src=\"http://127.0.0.1:5312/assets/processed/char-prospector-portrait.png\"/>\n       - unexpected value \"hidden\"\n\n\n  190 |   const chip = page.getByTestId('hud-agent');\n  191 |\n> 192 |   await expect(chip.locator('[data-hud-agent-portrait]')).toBeVisible();\n      |                                                           ^\n  193 |   await expect(chip).toContainText('L1');\n  194 |   await expect(chip).toContainText('approval-required');\n  195 |   await chip.click();\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/m4-06-embodiment.spec.ts:192:59",
+    "controls": [
+      {
+        "file": "m4-06-embodiment.spec.ts",
+        "line": 187,
+        "title": "permission chip shows portrait, current level, abilities, and growth path",
+        "project": "mobile-chrome",
+        "status": "expected",
+        "actual": "passed",
+        "expected": "passed",
+        "startTime": "2026-09-22T11:40:53.700Z",
+        "durationMs": 2778,
+        "error": ""
+      }
+    ],
+    "recheck": {
+      "file": "m4-06-embodiment.spec.ts",
+      "line": 187,
+      "title": "permission chip shows portrait, current level, abilities, and growth path",
+      "project": "mobile-chrome",
+      "status": "expected",
+      "actual": "passed",
+      "expected": "passed",
+      "startTime": "2026-09-22T11:53:56.666Z",
+      "durationMs": 3445,
+      "error": ""
+    },
+    "classification": "HUD regression corrected; original assertion passes on final CSS"
+  },
+  {
+    "suite": "e2e-hud",
+    "file": "m4-06-embodiment.spec.ts",
+    "line": 298,
+    "title": "real Prospector sprite loads and faces pan movement",
+    "project": "mobile-chrome",
+    "status": "unexpected",
+    "actual": "failed",
+    "expected": "passed",
+    "startTime": "2026-09-22T10:50:40.314Z",
+    "durationMs": 4838,
+    "error": "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: 8\nReceived: 1\n\n  303 |   const idle = await waitForProspectorSprite(page);\n  304 |   expect(['idle', 'walk']).toContain(idle.clip);\n> 305 |   expect(idle.fps).toBe(8);\n      |                    ^\n  306 |   expect(idle.frameKey).not.toContain('createProspectorTexture');\n  307 |   await saveM407Shot(page, testInfo, 'idle');\n  308 |\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/m4-06-embodiment.spec.ts:305:20",
+    "controls": [
+      {
+        "file": "m4-06-embodiment.spec.ts",
+        "line": 298,
+        "title": "real Prospector sprite loads and faces pan movement",
+        "project": "mobile-chrome",
+        "status": "unexpected",
+        "actual": "failed",
+        "expected": "passed",
+        "startTime": "2026-09-22T11:40:56.483Z",
+        "durationMs": 4752,
+        "error": "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: 8\nReceived: 19\n\n  303 |   const idle = await waitForProspectorSprite(page);\n  304 |   expect(['idle', 'walk']).toContain(idle.clip);\n> 305 |   expect(idle.fps).toBe(8);\n      |                    ^\n  306 |   expect(idle.frameKey).not.toContain('createProspectorTexture');\n  307 |   await saveM407Shot(page, testInfo, 'idle');\n  308 |\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/m4-06-embodiment.spec.ts:305:20"
+      }
+    ],
+    "recheck": null,
+    "classification": "fails with pre-cure CSS too; retained as baseline hold"
+  },
+  {
+    "suite": "e2e-hud",
+    "file": "mp-02-lockstep.spec.ts",
+    "line": 183,
+    "title": "two clients advance 500 ticks with identical lockstep hashes",
+    "project": "desktop-chrome",
+    "status": "unexpected",
+    "actual": "failed",
+    "expected": "passed",
+    "startTime": "2026-09-22T10:25:00.945Z",
+    "durationMs": 58501,
+    "error": "TimeoutError: page.waitForFunction: Timeout 30000ms exceeded.\n\n  906 |\n  907 | async function waitForTick(page: Page, tick: number, timeout = 30_000): Promise<void> {\n> 908 |   await page.waitForFunction((target) => (window.__GR_MP__?.state()?.tick ?? 0) >= target, tick, { timeout });\n      |              ^\n  909 | }\n  910 |\n  911 | async function waitForActors(page: Page, count = 2): Promise<void> {\n    at waitForTick (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/mp-02-lockstep.spec.ts:908:14)\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/mp-02-lockstep.spec.ts:193:11",
+    "controls": [
+      {
+        "file": "mp-02-lockstep.spec.ts",
+        "line": 183,
+        "title": "two clients advance 500 ticks with identical lockstep hashes",
+        "project": "desktop-chrome",
+        "status": "expected",
+        "actual": "passed",
+        "expected": "passed",
+        "startTime": "2026-09-22T11:31:58.222Z",
+        "durationMs": 26537,
+        "error": ""
+      }
+    ],
+    "recheck": {
+      "file": "mp-02-lockstep.spec.ts",
+      "line": 183,
+      "title": "two clients advance 500 ticks with identical lockstep hashes",
+      "project": "desktop-chrome",
+      "status": "expected",
+      "actual": "passed",
+      "expected": "passed",
+      "startTime": "2026-09-22T11:51:11.466Z",
+      "durationMs": 27012,
+      "error": ""
+    },
+    "classification": "passes on final CSS; initial failure not reproduced"
+  },
+  {
+    "suite": "e2e-hud",
+    "file": "ss-01-beats.spec.ts",
+    "line": 103,
+    "title": "founding, first contract, and Prospector XP beats fire once with portraits",
+    "project": "desktop-chrome",
+    "status": "unexpected",
+    "actual": "failed",
+    "expected": "passed",
+    "startTime": "2026-09-22T10:27:16.485Z",
+    "durationMs": 16955,
+    "error": "Error: expect(locator).toHaveAttribute(expected) failed\n\nLocator:  getByTestId('story-beat-card')\nExpected: \"founding-welcome\"\nReceived: \"ledger-page:the_claim\"\nTimeout:  5000ms\n\nCall log:\n  - Expect \"toHaveAttribute\" with timeout 5000ms\n  - waiting for getByTestId('story-beat-card')\n    14 × locator resolved to <article role=\"status\" data-art-key=\"\" aria-live=\"polite\" data-speaker=\"clerk\" data-ceremony-step=\"\" data-testid=\"story-beat-card\" data-beat-id=\"ledger-page:the_claim\" class=\"story-beat-card story-beat-card--visible\">…</article>\n       - unexpected value \"ledger-page:the_claim\"\n\n\n  86 |   await expect(card).toBeVisible({ timeout: 8_000 });\n  87 |   await expect(card).toHaveClass(/story-beat-card--visible/);\n> 88 |   await expect(card).toHaveAttribute('data-beat-id', id);\n     |                      ^\n  89 |   await expect(card).toHaveAttribute('data-speaker', speaker);\n  90 |   await expect(page.getByTestId('story-beat-portrait')).toHaveAttribute('src', new RegExp(portraitNeedle));\n  91 | }\n    at expectBeat (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/ss-01-beats.spec.ts:88:22)\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/ss-01-beats.spec.ts:113:3",
+    "controls": [
+      {
+        "file": "ss-01-beats.spec.ts",
+        "line": 103,
+        "title": "founding, first contract, and Prospector XP beats fire once with portraits",
+        "project": "desktop-chrome",
+        "status": "unexpected",
+        "actual": "failed",
+        "expected": "passed",
+        "startTime": "2026-09-22T11:32:26.737Z",
+        "durationMs": 17858,
+        "error": "Error: expect(locator).toHaveAttribute(expected) failed\n\nLocator:  getByTestId('story-beat-card')\nExpected: \"first-contract\"\nReceived: \"ledger-page:town_elder\"\nTimeout:  5000ms\n\nCall log:\n  - Expect \"toHaveAttribute\" with timeout 5000ms\n  - waiting for getByTestId('story-beat-card')\n    14 × locator resolved to <article role=\"status\" data-art-key=\"\" aria-live=\"polite\" data-speaker=\"clerk\" data-ceremony-step=\"\" data-testid=\"story-beat-card\" data-beat-id=\"ledger-page:town_elder\" class=\"story-beat-card story-beat-card--visible\">…</article>\n       - unexpected value \"ledger-page:town_elder\"\n\n\n  86 |   await expect(card).toBeVisible({ timeout: 8_000 });\n  87 |   await expect(card).toHaveClass(/story-beat-card--visible/);\n> 88 |   await expect(card).toHaveAttribute('data-beat-id', id);\n     |                      ^\n  89 |   await expect(card).toHaveAttribute('data-speaker', speaker);\n  90 |   await expect(page.getByTestId('story-beat-portrait')).toHaveAttribute('src', new RegExp(portraitNeedle));\n  91 | }\n    at expectBeat (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/ss-01-beats.spec.ts:88:22)\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/ss-01-beats.spec.ts:118:3"
+      }
+    ],
+    "recheck": null,
+    "classification": "fails with pre-cure CSS too; retained as baseline hold"
+  },
+  {
+    "suite": "e2e-hud",
+    "file": "ss-01-beats.spec.ts",
+    "line": 187,
+    "title": "story card waits until wave banner clears when both fire same tick",
+    "project": "desktop-chrome",
+    "status": "unexpected",
+    "actual": "failed",
+    "expected": "passed",
+    "startTime": "2026-09-22T10:27:56.434Z",
+    "durationMs": 20312,
+    "error": "Error: expect(locator).toHaveAttribute(expected) failed\n\nLocator:  getByTestId('story-beat-card')\nExpected: \"first-loss\"\nReceived: \"first-boot\"\nTimeout:  5000ms\n\nCall log:\n  - Expect \"toHaveAttribute\" with timeout 5000ms\n  - waiting for getByTestId('story-beat-card')\n    14 × locator resolved to <article role=\"status\" data-art-key=\"\" aria-live=\"polite\" data-ceremony-step=\"\" data-beat-id=\"first-boot\" data-speaker=\"tavernkeeper\" data-testid=\"story-beat-card\" class=\"story-beat-card story-beat-card--visible\">…</article>\n       - unexpected value \"first-boot\"\n\n\n  86 |   await expect(card).toBeVisible({ timeout: 8_000 });\n  87 |   await expect(card).toHaveClass(/story-beat-card--visible/);\n> 88 |   await expect(card).toHaveAttribute('data-beat-id', id);\n     |                      ^\n  89 |   await expect(card).toHaveAttribute('data-speaker', speaker);\n  90 |   await expect(page.getByTestId('story-beat-portrait')).toHaveAttribute('src', new RegExp(portraitNeedle));\n  91 | }\n    at expectBeat (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/ss-01-beats.spec.ts:88:22)\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/ss-01-beats.spec.ts:202:3",
+    "controls": [
+      {
+        "file": "ss-01-beats.spec.ts",
+        "line": 187,
+        "title": "story card waits until wave banner clears when both fire same tick",
+        "project": "desktop-chrome",
+        "status": "expected",
+        "actual": "passed",
+        "expected": "passed",
+        "startTime": "2026-09-22T11:32:57.901Z",
+        "durationMs": 9692,
+        "error": ""
+      },
+      {
+        "file": "ss-01-beats.spec.ts",
+        "line": 187,
+        "title": "story card waits until wave banner clears when both fire same tick",
+        "project": "desktop-chrome",
+        "status": "unexpected",
+        "actual": "failed",
+        "expected": "passed",
+        "startTime": "2026-09-22T11:55:58.378Z",
+        "durationMs": 16691,
+        "error": "Error: expect(locator).toHaveAttribute(expected) failed\n\nLocator:  getByTestId('story-beat-card')\nExpected: \"first-loss\"\nReceived: \"first-boot\"\nTimeout:  5000ms\n\nCall log:\n  - Expect \"toHaveAttribute\" with timeout 5000ms\n  - waiting for getByTestId('story-beat-card')\n    14 × locator resolved to <article role=\"status\" data-art-key=\"\" aria-live=\"polite\" data-ceremony-step=\"\" data-beat-id=\"first-boot\" data-speaker=\"tavernkeeper\" data-testid=\"story-beat-card\" class=\"story-beat-card story-beat-card--visible\">…</article>\n       - unexpected value \"first-boot\"\n\n\n  86 |   await expect(card).toBeVisible({ timeout: 8_000 });\n  87 |   await expect(card).toHaveClass(/story-beat-card--visible/);\n> 88 |   await expect(card).toHaveAttribute('data-beat-id', id);\n     |                      ^\n  89 |   await expect(card).toHaveAttribute('data-speaker', speaker);\n  90 |   await expect(page.getByTestId('story-beat-portrait')).toHaveAttribute('src', new RegExp(portraitNeedle));\n  91 | }\n    at expectBeat (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/ss-01-beats.spec.ts:88:22)\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/ss-01-beats.spec.ts:202:3"
+      }
+    ],
+    "recheck": {
+      "file": "ss-01-beats.spec.ts",
+      "line": 187,
+      "title": "story card waits until wave banner clears when both fire same tick",
+      "project": "desktop-chrome",
+      "status": "unexpected",
+      "actual": "failed",
+      "expected": "passed",
+      "startTime": "2026-09-22T11:52:00.379Z",
+      "durationMs": 24169,
+      "error": "Error: expect(locator).toHaveAttribute(expected) failed\n\nLocator:  getByTestId('story-beat-card')\nExpected: \"first-loss\"\nReceived: \"first-boot\"\nTimeout:  5000ms\n\nCall log:\n  - Expect \"toHaveAttribute\" with timeout 5000ms\n  - waiting for getByTestId('story-beat-card')\n    14 × locator resolved to <article role=\"status\" data-art-key=\"\" aria-live=\"polite\" data-ceremony-step=\"\" data-beat-id=\"first-boot\" data-speaker=\"tavernkeeper\" data-testid=\"story-beat-card\" class=\"story-beat-card story-beat-card--visible\">…</article>\n       - unexpected value \"first-boot\"\n\n\n  86 |   await expect(card).toBeVisible({ timeout: 8_000 });\n  87 |   await expect(card).toHaveClass(/story-beat-card--visible/);\n> 88 |   await expect(card).toHaveAttribute('data-beat-id', id);\n     |                      ^\n  89 |   await expect(card).toHaveAttribute('data-speaker', speaker);\n  90 |   await expect(page.getByTestId('story-beat-portrait')).toHaveAttribute('src', new RegExp(portraitNeedle));\n  91 | }\n    at expectBeat (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/ss-01-beats.spec.ts:88:22)\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/ss-01-beats.spec.ts:202:3"
+    },
+    "classification": "fails with pre-cure CSS too; retained as baseline hold"
+  },
+  {
+    "suite": "e2e-hud",
+    "file": "ss-01-beats.spec.ts",
+    "line": 103,
+    "title": "founding, first contract, and Prospector XP beats fire once with portraits",
+    "project": "mobile-chrome",
+    "status": "unexpected",
+    "actual": "failed",
+    "expected": "passed",
+    "startTime": "2026-09-22T10:53:30.188Z",
+    "durationMs": 11805,
+    "error": "Error: expect(locator).toHaveAttribute(expected) failed\n\nLocator:  getByTestId('story-beat-card')\nExpected: \"founding-welcome\"\nReceived: \"ledger-page:the_claim\"\nTimeout:  5000ms\n\nCall log:\n  - Expect \"toHaveAttribute\" with timeout 5000ms\n  - waiting for getByTestId('story-beat-card')\n    14 × locator resolved to <article role=\"status\" data-art-key=\"\" aria-live=\"polite\" data-speaker=\"clerk\" data-ceremony-step=\"\" data-testid=\"story-beat-card\" data-beat-id=\"ledger-page:the_claim\" class=\"story-beat-card story-beat-card--visible\">…</article>\n       - unexpected value \"ledger-page:the_claim\"\n\n\n  86 |   await expect(card).toBeVisible({ timeout: 8_000 });\n  87 |   await expect(card).toHaveClass(/story-beat-card--visible/);\n> 88 |   await expect(card).toHaveAttribute('data-beat-id', id);\n     |                      ^\n  89 |   await expect(card).toHaveAttribute('data-speaker', speaker);\n  90 |   await expect(page.getByTestId('story-beat-portrait')).toHaveAttribute('src', new RegExp(portraitNeedle));\n  91 | }\n    at expectBeat (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/ss-01-beats.spec.ts:88:22)\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/ss-01-beats.spec.ts:113:3",
+    "controls": [
+      {
+        "file": "ss-01-beats.spec.ts",
+        "line": 103,
+        "title": "founding, first contract, and Prospector XP beats fire once with portraits",
+        "project": "mobile-chrome",
+        "status": "unexpected",
+        "actual": "failed",
+        "expected": "passed",
+        "startTime": "2026-09-22T11:41:05.164Z",
+        "durationMs": 17196,
+        "error": "Error: expect(locator).toHaveAttribute(expected) failed\n\nLocator:  getByTestId('story-beat-card')\nExpected: \"first-contract\"\nReceived: \"ledger-page:town_elder\"\nTimeout:  5000ms\n\nCall log:\n  - Expect \"toHaveAttribute\" with timeout 5000ms\n  - waiting for getByTestId('story-beat-card')\n    14 × locator resolved to <article role=\"status\" data-art-key=\"\" aria-live=\"polite\" data-speaker=\"clerk\" data-ceremony-step=\"\" data-testid=\"story-beat-card\" data-beat-id=\"ledger-page:town_elder\" class=\"story-beat-card story-beat-card--visible\">…</article>\n       - unexpected value \"ledger-page:town_elder\"\n\n\n  86 |   await expect(card).toBeVisible({ timeout: 8_000 });\n  87 |   await expect(card).toHaveClass(/story-beat-card--visible/);\n> 88 |   await expect(card).toHaveAttribute('data-beat-id', id);\n     |                      ^\n  89 |   await expect(card).toHaveAttribute('data-speaker', speaker);\n  90 |   await expect(page.getByTestId('story-beat-portrait')).toHaveAttribute('src', new RegExp(portraitNeedle));\n  91 | }\n    at expectBeat (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/ss-01-beats.spec.ts:88:22)\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/ss-01-beats.spec.ts:118:3"
+      }
+    ],
+    "recheck": null,
+    "classification": "fails with pre-cure CSS too; retained as baseline hold"
+  },
+  {
+    "suite": "e2e-hud",
+    "file": "ss-01-beats.spec.ts",
+    "line": 169,
+    "title": "pointer glow clears on first interaction",
+    "project": "mobile-chrome",
+    "status": "unexpected",
+    "actual": "failed",
+    "expected": "passed",
+    "startTime": "2026-09-22T10:53:48.847Z",
+    "durationMs": 15529,
+    "error": "Error: expect(locator).toHaveAttribute(expected) failed\n\nLocator:  getByTestId('story-beat-card')\nExpected: \"deputy-hello\"\nReceived: \"first-boot\"\nTimeout:  5000ms\n\nCall log:\n  - Expect \"toHaveAttribute\" with timeout 5000ms\n  - waiting for getByTestId('story-beat-card')\n    14 × locator resolved to <article role=\"status\" data-art-key=\"\" aria-live=\"polite\" data-ceremony-step=\"\" data-beat-id=\"first-boot\" data-speaker=\"tavernkeeper\" data-testid=\"story-beat-card\" class=\"story-beat-card story-beat-card--visible\">…</article>\n       - unexpected value \"first-boot\"\n\n\n  86 |   await expect(card).toBeVisible({ timeout: 8_000 });\n  87 |   await expect(card).toHaveClass(/story-beat-card--visible/);\n> 88 |   await expect(card).toHaveAttribute('data-beat-id', id);\n     |                      ^\n  89 |   await expect(card).toHaveAttribute('data-speaker', speaker);\n  90 |   await expect(page.getByTestId('story-beat-portrait')).toHaveAttribute('src', new RegExp(portraitNeedle));\n  91 | }\n    at expectBeat (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/ss-01-beats.spec.ts:88:22)\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/ss-01-beats.spec.ts:177:3",
+    "controls": [
+      {
+        "file": "ss-01-beats.spec.ts",
+        "line": 169,
+        "title": "pointer glow clears on first interaction",
+        "project": "mobile-chrome",
+        "status": "expected",
+        "actual": "passed",
+        "expected": "passed",
+        "startTime": "2026-09-22T11:41:24.862Z",
+        "durationMs": 8940,
+        "error": ""
+      },
+      {
+        "file": "ss-01-beats.spec.ts",
+        "line": 169,
+        "title": "pointer glow clears on first interaction",
+        "project": "mobile-chrome",
+        "status": "unexpected",
+        "actual": "failed",
+        "expected": "passed",
+        "startTime": "2026-09-22T11:56:31.100Z",
+        "durationMs": 16473,
+        "error": "Error: expect(locator).toHaveAttribute(expected) failed\n\nLocator:  getByTestId('story-beat-card')\nExpected: \"deputy-hello\"\nReceived: \"first-boot\"\nTimeout:  5000ms\n\nCall log:\n  - Expect \"toHaveAttribute\" with timeout 5000ms\n  - waiting for getByTestId('story-beat-card')\n    14 × locator resolved to <article role=\"status\" data-art-key=\"\" aria-live=\"polite\" data-ceremony-step=\"\" data-beat-id=\"first-boot\" data-speaker=\"tavernkeeper\" data-testid=\"story-beat-card\" class=\"story-beat-card story-beat-card--visible\">…</article>\n       - unexpected value \"first-boot\"\n\n\n  86 |   await expect(card).toBeVisible({ timeout: 8_000 });\n  87 |   await expect(card).toHaveClass(/story-beat-card--visible/);\n> 88 |   await expect(card).toHaveAttribute('data-beat-id', id);\n     |                      ^\n  89 |   await expect(card).toHaveAttribute('data-speaker', speaker);\n  90 |   await expect(page.getByTestId('story-beat-portrait')).toHaveAttribute('src', new RegExp(portraitNeedle));\n  91 | }\n    at expectBeat (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/ss-01-beats.spec.ts:88:22)\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/ss-01-beats.spec.ts:177:3"
+      }
+    ],
+    "recheck": {
+      "file": "ss-01-beats.spec.ts",
+      "line": 169,
+      "title": "pointer glow clears on first interaction",
+      "project": "mobile-chrome",
+      "status": "unexpected",
+      "actual": "failed",
+      "expected": "passed",
+      "startTime": "2026-09-22T11:54:14.198Z",
+      "durationMs": 16178,
+      "error": "Error: expect(locator).toHaveAttribute(expected) failed\n\nLocator:  getByTestId('story-beat-card')\nExpected: \"deputy-hello\"\nReceived: \"first-boot\"\nTimeout:  5000ms\n\nCall log:\n  - Expect \"toHaveAttribute\" with timeout 5000ms\n  - waiting for getByTestId('story-beat-card')\n    14 × locator resolved to <article role=\"status\" data-art-key=\"\" aria-live=\"polite\" data-ceremony-step=\"\" data-beat-id=\"first-boot\" data-speaker=\"tavernkeeper\" data-testid=\"story-beat-card\" class=\"story-beat-card story-beat-card--visible\">…</article>\n       - unexpected value \"first-boot\"\n\n\n  86 |   await expect(card).toBeVisible({ timeout: 8_000 });\n  87 |   await expect(card).toHaveClass(/story-beat-card--visible/);\n> 88 |   await expect(card).toHaveAttribute('data-beat-id', id);\n     |                      ^\n  89 |   await expect(card).toHaveAttribute('data-speaker', speaker);\n  90 |   await expect(page.getByTestId('story-beat-portrait')).toHaveAttribute('src', new RegExp(portraitNeedle));\n  91 | }\n    at expectBeat (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/ss-01-beats.spec.ts:88:22)\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/ss-01-beats.spec.ts:177:3"
+    },
+    "classification": "fails with pre-cure CSS too; retained as baseline hold"
+  },
+  {
+    "suite": "e2e-hud",
+    "file": "task-037-assay-bench-ungate.spec.ts",
+    "line": 202,
+    "title": "mobile touch confirm opens and closes the bench without HUD overlap",
+    "project": "mobile-chrome",
+    "status": "unexpected",
+    "actual": "failed",
+    "expected": "passed",
+    "startTime": "2026-09-22T10:54:20.004Z",
+    "durationMs": 5151,
+    "error": "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: false\nReceived: true\n\n  209 |   await expect(prompt.locator('.assay-office-prompt__key')).toBeHidden();\n  210 |   const promptBox = await prompt.boundingBox();\n> 211 |   expect(intersects(promptBox, await page.locator('#touch-controls').boundingBox())).toBe(false);\n      |                                                                                      ^\n  212 |   expect(intersects(promptBox, await page.getByTestId('hud-build-panel').boundingBox())).toBe(false);\n  213 |   expect(intersects(promptBox, await page.getByTestId('hud-xp').boundingBox())).toBe(false);\n  214 |\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/task-037-assay-bench-ungate.spec.ts:211:86",
+    "controls": [
+      {
+        "file": "task-037-assay-bench-ungate.spec.ts",
+        "line": 202,
+        "title": "mobile touch confirm opens and closes the bench without HUD overlap",
+        "project": "mobile-chrome",
+        "status": "unexpected",
+        "actual": "failed",
+        "expected": "passed",
+        "startTime": "2026-09-22T11:41:52.573Z",
+        "durationMs": 4526,
+        "error": "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: false\nReceived: true\n\n  209 |   await expect(prompt.locator('.assay-office-prompt__key')).toBeHidden();\n  210 |   const promptBox = await prompt.boundingBox();\n> 211 |   expect(intersects(promptBox, await page.locator('#touch-controls').boundingBox())).toBe(false);\n      |                                                                                      ^\n  212 |   expect(intersects(promptBox, await page.getByTestId('hud-build-panel').boundingBox())).toBe(false);\n  213 |   expect(intersects(promptBox, await page.getByTestId('hud-xp').boundingBox())).toBe(false);\n  214 |\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/task-037-assay-bench-ungate.spec.ts:211:86"
+      }
+    ],
+    "recheck": null,
+    "classification": "fails with pre-cure CSS too; retained as baseline hold"
+  },
+  {
+    "suite": "e2e-hud",
+    "file": "task-046-territory-ring-pacing.spec.ts",
+    "line": 76,
+    "title": "T1 banks the old ring as a run-scoped palisade kit and spends it before gold",
+    "project": "mobile-chrome",
+    "status": "unexpected",
+    "actual": "failed",
+    "expected": "passed",
+    "startTime": "2026-09-22T10:54:27.609Z",
+    "durationMs": 10769,
+    "error": "Error: expect(locator).toHaveText(expected) failed\n\nLocator: getByTestId('pause-meta-territory')\nExpected: \"Territory I: palisade kit ready (7 free placements)\"\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n  - Expect \"toHaveText\" with timeout 5000ms\n  - waiting for getByTestId('pause-meta-territory')\n\n\n  91 |   await placePalisade(page, PALISADE_SITES[0]!);\n  92 |   await page.keyboard.press('KeyP');\n> 93 |   await expect(page.getByTestId('pause-meta-territory')).toHaveText('Territory I: palisade kit ready (7 free placements)');\n     |                                                          ^\n  94 |   await page.waitForTimeout(100);\n  95 |   await page.keyboard.press('KeyP');\n  96 |   await expect(page.getByTestId('pause-meta-panel')).toBeHidden();\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/task-046-territory-ring-pacing.spec.ts:93:58",
+    "controls": [
+      {
+        "file": "task-046-territory-ring-pacing.spec.ts",
+        "line": 76,
+        "title": "T1 banks the old ring as a run-scoped palisade kit and spends it before gold",
+        "project": "mobile-chrome",
+        "status": "unexpected",
+        "actual": "failed",
+        "expected": "passed",
+        "startTime": "2026-09-22T11:41:59.417Z",
+        "durationMs": 10556,
+        "error": "Error: expect(locator).toHaveText(expected) failed\n\nLocator: getByTestId('pause-meta-territory')\nExpected: \"Territory I: palisade kit ready (7 free placements)\"\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n  - Expect \"toHaveText\" with timeout 5000ms\n  - waiting for getByTestId('pause-meta-territory')\n\n\n  91 |   await placePalisade(page, PALISADE_SITES[0]!);\n  92 |   await page.keyboard.press('KeyP');\n> 93 |   await expect(page.getByTestId('pause-meta-territory')).toHaveText('Territory I: palisade kit ready (7 free placements)');\n     |                                                          ^\n  94 |   await page.waitForTimeout(100);\n  95 |   await page.keyboard.press('KeyP');\n  96 |   await expect(page.getByTestId('pause-meta-panel')).toBeHidden();\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/task-046-territory-ring-pacing.spec.ts:93:58"
+      }
+    ],
+    "recheck": null,
+    "classification": "fails with pre-cure CSS too; retained as baseline hold"
+  },
+  {
+    "suite": "e2e-hud",
+    "file": "trail-guide.spec.ts",
+    "line": 100,
+    "title": "fresh profile sees the first three trail beats once, in order, and reload stays quiet",
+    "project": "desktop-chrome",
+    "status": "unexpected",
+    "actual": "failed",
+    "expected": "passed",
+    "startTime": "2026-09-22T10:30:09.690Z",
+    "durationMs": 14415,
+    "error": "Error: expect(locator).toHaveCount(expected) failed\n\nLocator:  getByTestId('story-beat-card')\nExpected: 0\nReceived: 1\nTimeout:  5000ms\n\nCall log:\n  - Expect \"toHaveCount\" with timeout 5000ms\n  - waiting for getByTestId('story-beat-card')\n    14 × locator resolved to 1 element\n       - unexpected value \"1\"\n\n\n  51 | async function expectBark(page: Page, text: string): Promise<void> {\n  52 |   await expect(page.getByTestId('hud-agent-feed')).toContainText(text);\n> 53 |   await expect(page.getByTestId('story-beat-card')).toHaveCount(0);\n     |                                                     ^\n  54 | }\n  55 |\n  56 | async function approachFirstSeam(page: Page, seconds: number): Promise<void> {\n    at expectBark (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/trail-guide.spec.ts:53:53)\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/trail-guide.spec.ts:112:3",
+    "controls": [
+      {
+        "file": "trail-guide.spec.ts",
+        "line": 100,
+        "title": "fresh profile sees the first three trail beats once, in order, and reload stays quiet",
+        "project": "desktop-chrome",
+        "status": "unexpected",
+        "actual": "failed",
+        "expected": "passed",
+        "startTime": "2026-09-22T11:33:14.999Z",
+        "durationMs": 14633,
+        "error": "Error: expect(locator).toHaveCount(expected) failed\n\nLocator:  getByTestId('story-beat-card')\nExpected: 0\nReceived: 1\nTimeout:  5000ms\n\nCall log:\n  - Expect \"toHaveCount\" with timeout 5000ms\n  - waiting for getByTestId('story-beat-card')\n    14 × locator resolved to 1 element\n       - unexpected value \"1\"\n\n\n  51 | async function expectBark(page: Page, text: string): Promise<void> {\n  52 |   await expect(page.getByTestId('hud-agent-feed')).toContainText(text);\n> 53 |   await expect(page.getByTestId('story-beat-card')).toHaveCount(0);\n     |                                                     ^\n  54 | }\n  55 |\n  56 | async function approachFirstSeam(page: Page, seconds: number): Promise<void> {\n    at expectBark (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/trail-guide.spec.ts:53:53)\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/trail-guide.spec.ts:112:3"
+      }
+    ],
+    "recheck": null,
+    "classification": "fails with pre-cure CSS too; retained as baseline hold"
+  },
+  {
+    "suite": "e2e-hud",
+    "file": "trail-guide.spec.ts",
+    "line": 128,
+    "title": "first build-menu open teaches once, survives reload, and stays off for veterans",
+    "project": "desktop-chrome",
+    "status": "unexpected",
+    "actual": "failed",
+    "expected": "passed",
+    "startTime": "2026-09-22T10:30:26.989Z",
+    "durationMs": 14953,
+    "error": "Error: expect(locator).toHaveCount(expected) failed\n\nLocator:  getByTestId('story-beat-card')\nExpected: 0\nReceived: 1\nTimeout:  5000ms\n\nCall log:\n  - Expect \"toHaveCount\" with timeout 5000ms\n  - waiting for getByTestId('story-beat-card')\n    14 × locator resolved to 1 element\n       - unexpected value \"1\"\n\n\n  51 | async function expectBark(page: Page, text: string): Promise<void> {\n  52 |   await expect(page.getByTestId('hud-agent-feed')).toContainText(text);\n> 53 |   await expect(page.getByTestId('story-beat-card')).toHaveCount(0);\n     |                                                     ^\n  54 | }\n  55 |\n  56 | async function approachFirstSeam(page: Page, seconds: number): Promise<void> {\n    at expectBark (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/trail-guide.spec.ts:53:53)\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/trail-guide.spec.ts:140:3",
+    "controls": [
+      {
+        "file": "trail-guide.spec.ts",
+        "line": 128,
+        "title": "first build-menu open teaches once, survives reload, and stays off for veterans",
+        "project": "desktop-chrome",
+        "status": "unexpected",
+        "actual": "failed",
+        "expected": "passed",
+        "startTime": "2026-09-22T11:33:32.792Z",
+        "durationMs": 16451,
+        "error": "Error: expect(locator).toHaveCount(expected) failed\n\nLocator:  getByTestId('story-beat-card')\nExpected: 0\nReceived: 1\nTimeout:  5000ms\n\nCall log:\n  - Expect \"toHaveCount\" with timeout 5000ms\n  - waiting for getByTestId('story-beat-card')\n    14 × locator resolved to 1 element\n       - unexpected value \"1\"\n\n\n  51 | async function expectBark(page: Page, text: string): Promise<void> {\n  52 |   await expect(page.getByTestId('hud-agent-feed')).toContainText(text);\n> 53 |   await expect(page.getByTestId('story-beat-card')).toHaveCount(0);\n     |                                                     ^\n  54 | }\n  55 |\n  56 | async function approachFirstSeam(page: Page, seconds: number): Promise<void> {\n    at expectBark (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/trail-guide.spec.ts:53:53)\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/trail-guide.spec.ts:140:3"
+      }
+    ],
+    "recheck": null,
+    "classification": "fails with pre-cure CSS too; retained as baseline hold"
+  },
+  {
+    "suite": "e2e-hud",
+    "file": "trail-guide.spec.ts",
+    "line": 100,
+    "title": "fresh profile sees the first three trail beats once, in order, and reload stays quiet",
+    "project": "mobile-chrome",
+    "status": "unexpected",
+    "actual": "failed",
+    "expected": "passed",
+    "startTime": "2026-09-22T10:55:37.137Z",
+    "durationMs": 14701,
+    "error": "Error: expect(locator).toHaveCount(expected) failed\n\nLocator:  getByTestId('story-beat-card')\nExpected: 0\nReceived: 1\nTimeout:  5000ms\n\nCall log:\n  - Expect \"toHaveCount\" with timeout 5000ms\n  - waiting for getByTestId('story-beat-card')\n    14 × locator resolved to 1 element\n       - unexpected value \"1\"\n\n\n  51 | async function expectBark(page: Page, text: string): Promise<void> {\n  52 |   await expect(page.getByTestId('hud-agent-feed')).toContainText(text);\n> 53 |   await expect(page.getByTestId('story-beat-card')).toHaveCount(0);\n     |                                                     ^\n  54 | }\n  55 |\n  56 | async function approachFirstSeam(page: Page, seconds: number): Promise<void> {\n    at expectBark (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/trail-guide.spec.ts:53:53)\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/trail-guide.spec.ts:112:3",
+    "controls": [
+      {
+        "file": "trail-guide.spec.ts",
+        "line": 100,
+        "title": "fresh profile sees the first three trail beats once, in order, and reload stays quiet",
+        "project": "mobile-chrome",
+        "status": "unexpected",
+        "actual": "failed",
+        "expected": "passed",
+        "startTime": "2026-09-22T11:42:12.623Z",
+        "durationMs": 14603,
+        "error": "Error: expect(locator).toHaveCount(expected) failed\n\nLocator:  getByTestId('story-beat-card')\nExpected: 0\nReceived: 1\nTimeout:  5000ms\n\nCall log:\n  - Expect \"toHaveCount\" with timeout 5000ms\n  - waiting for getByTestId('story-beat-card')\n    14 × locator resolved to 1 element\n       - unexpected value \"1\"\n\n\n  51 | async function expectBark(page: Page, text: string): Promise<void> {\n  52 |   await expect(page.getByTestId('hud-agent-feed')).toContainText(text);\n> 53 |   await expect(page.getByTestId('story-beat-card')).toHaveCount(0);\n     |                                                     ^\n  54 | }\n  55 |\n  56 | async function approachFirstSeam(page: Page, seconds: number): Promise<void> {\n    at expectBark (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/trail-guide.spec.ts:53:53)\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/trail-guide.spec.ts:112:3"
+      }
+    ],
+    "recheck": null,
+    "classification": "fails with pre-cure CSS too; retained as baseline hold"
+  },
+  {
+    "suite": "e2e-hud",
+    "file": "trail-guide.spec.ts",
+    "line": 128,
+    "title": "first build-menu open teaches once, survives reload, and stays off for veterans",
+    "project": "mobile-chrome",
+    "status": "unexpected",
+    "actual": "failed",
+    "expected": "passed",
+    "startTime": "2026-09-22T10:55:54.525Z",
+    "durationMs": 17191,
+    "error": "Error: expect(locator).toHaveCount(expected) failed\n\nLocator:  getByTestId('story-beat-card')\nExpected: 0\nReceived: 1\nTimeout:  5000ms\n\nCall log:\n  - Expect \"toHaveCount\" with timeout 5000ms\n  - waiting for getByTestId('story-beat-card')\n    14 × locator resolved to 1 element\n       - unexpected value \"1\"\n\n\n  51 | async function expectBark(page: Page, text: string): Promise<void> {\n  52 |   await expect(page.getByTestId('hud-agent-feed')).toContainText(text);\n> 53 |   await expect(page.getByTestId('story-beat-card')).toHaveCount(0);\n     |                                                     ^\n  54 | }\n  55 |\n  56 | async function approachFirstSeam(page: Page, seconds: number): Promise<void> {\n    at expectBark (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/trail-guide.spec.ts:53:53)\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/trail-guide.spec.ts:140:3",
+    "controls": [
+      {
+        "file": "trail-guide.spec.ts",
+        "line": 128,
+        "title": "first build-menu open teaches once, survives reload, and stays off for veterans",
+        "project": "mobile-chrome",
+        "status": "unexpected",
+        "actual": "failed",
+        "expected": "passed",
+        "startTime": "2026-09-22T11:42:29.944Z",
+        "durationMs": 14798,
+        "error": "Error: expect(locator).toHaveCount(expected) failed\n\nLocator:  getByTestId('story-beat-card')\nExpected: 0\nReceived: 1\nTimeout:  5000ms\n\nCall log:\n  - Expect \"toHaveCount\" with timeout 5000ms\n  - waiting for getByTestId('story-beat-card')\n    14 × locator resolved to 1 element\n       - unexpected value \"1\"\n\n\n  51 | async function expectBark(page: Page, text: string): Promise<void> {\n  52 |   await expect(page.getByTestId('hud-agent-feed')).toContainText(text);\n> 53 |   await expect(page.getByTestId('story-beat-card')).toHaveCount(0);\n     |                                                     ^\n  54 | }\n  55 |\n  56 | async function approachFirstSeam(page: Page, seconds: number): Promise<void> {\n    at expectBark (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/trail-guide.spec.ts:53:53)\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/trail-guide.spec.ts:140:3"
+      }
+    ],
+    "recheck": null,
+    "classification": "fails with pre-cure CSS too; retained as baseline hold"
+  },
+  {
+    "suite": "e2e-hud",
+    "file": "visual.spec.ts",
+    "line": 113,
+    "title": "terrain diagnostics expose claim zones and speeds",
+    "project": "desktop-chrome",
+    "status": "unexpected",
+    "actual": "failed",
+    "expected": "passed",
+    "startTime": "2026-09-22T10:31:04.742Z",
+    "durationMs": 4553,
+    "error": "Error: expect(received).toMatchObject(expected)\n\n- Expected  - 4\n+ Received  + 4\n\n@@ -8,22 +8,22 @@\n      \"speedMul\": 0.85,\n      \"walkable\": true,\n      \"zone\": \"ford\",\n    },\n    \"northBank\": Object {\n-     \"speedMul\": 1,\n-     \"walkable\": true,\n+     \"speedMul\": 0,\n+     \"walkable\": false,\n      \"zone\": \"bank\",\n    },\n    \"out\": Object {\n      \"speedMul\": 0,\n      \"walkable\": false,\n      \"zone\": \"out\",\n    },\n    \"river\": Object {\n-     \"speedMul\": 0.55,\n-     \"walkable\": true,\n+     \"speedMul\": 0,\n+     \"walkable\": false,\n      \"zone\": \"river\",\n    },\n    \"shallows\": Object {\n      \"speedMul\": 0.8,\n      \"walkable\": true,\n\n  116 |\n  117 |   const probes = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.terrain.probes);\n> 118 |   expect(probes).toMatchObject({\n      |                  ^\n  119 |     bank: { walkable: true, speedMul: 1, zone: 'bank' },\n  120 |     shallows: { walkable: true, speedMul: 0.8, zone: 'shallows' },\n  121 |     river: { walkable: true, speedMul: 0.55, zone: 'river' },\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/visual.spec.ts:118:18",
+    "controls": [
+      {
+        "file": "visual.spec.ts",
+        "line": 113,
+        "title": "terrain diagnostics expose claim zones and speeds",
+        "project": "desktop-chrome",
+        "status": "unexpected",
+        "actual": "failed",
+        "expected": "passed",
+        "startTime": "2026-09-22T11:33:52.570Z",
+        "durationMs": 4784,
+        "error": "Error: expect(received).toMatchObject(expected)\n\n- Expected  - 4\n+ Received  + 4\n\n@@ -8,22 +8,22 @@\n      \"speedMul\": 0.85,\n      \"walkable\": true,\n      \"zone\": \"ford\",\n    },\n    \"northBank\": Object {\n-     \"speedMul\": 1,\n-     \"walkable\": true,\n+     \"speedMul\": 0,\n+     \"walkable\": false,\n      \"zone\": \"bank\",\n    },\n    \"out\": Object {\n      \"speedMul\": 0,\n      \"walkable\": false,\n      \"zone\": \"out\",\n    },\n    \"river\": Object {\n-     \"speedMul\": 0.55,\n-     \"walkable\": true,\n+     \"speedMul\": 0,\n+     \"walkable\": false,\n      \"zone\": \"river\",\n    },\n    \"shallows\": Object {\n      \"speedMul\": 0.8,\n      \"walkable\": true,\n\n  116 |\n  117 |   const probes = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.terrain.probes);\n> 118 |   expect(probes).toMatchObject({\n      |                  ^\n  119 |     bank: { walkable: true, speedMul: 1, zone: 'bank' },\n  120 |     shallows: { walkable: true, speedMul: 0.8, zone: 'shallows' },\n  121 |     river: { walkable: true, speedMul: 0.55, zone: 'river' },\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/visual.spec.ts:118:18"
+      }
+    ],
+    "recheck": null,
+    "classification": "fails with pre-cure CSS too; retained as baseline hold"
+  },
+  {
+    "suite": "e2e-hud",
+    "file": "visual.spec.ts",
+    "line": 212,
+    "title": "river band slows the hero through diagnostics",
+    "project": "desktop-chrome",
+    "status": "unexpected",
+    "actual": "failed",
+    "expected": "passed",
+    "startTime": "2026-09-22T10:31:19.058Z",
+    "durationMs": 11589,
+    "error": "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: \"river\"\nReceived: \"shallows\"\n\nCall Log:\n- Timeout 5000ms exceeded while waiting on the predicate\n\n  228 |   await expect\n  229 |     .poll(async () => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.terrain.playerZone))\n> 230 |     .toBe('river');\n      |      ^\n  231 |   await page.waitForTimeout(400);\n  232 |   const riverSpeed = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.speed ?? 0);\n  233 |   await page.keyboard.up('KeyW');\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/visual.spec.ts:230:6",
+    "controls": [
+      {
+        "file": "visual.spec.ts",
+        "line": 212,
+        "title": "river band slows the hero through diagnostics",
+        "project": "desktop-chrome",
+        "status": "unexpected",
+        "actual": "failed",
+        "expected": "passed",
+        "startTime": "2026-09-22T11:33:59.618Z",
+        "durationMs": 13857,
+        "error": "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: \"river\"\nReceived: \"shallows\"\n\nCall Log:\n- Timeout 5000ms exceeded while waiting on the predicate\n\n  228 |   await expect\n  229 |     .poll(async () => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.terrain.playerZone))\n> 230 |     .toBe('river');\n      |      ^\n  231 |   await page.waitForTimeout(400);\n  232 |   const riverSpeed = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.speed ?? 0);\n  233 |   await page.keyboard.up('KeyW');\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/visual.spec.ts:230:6"
+      }
+    ],
+    "recheck": null,
+    "classification": "fails with pre-cure CSS too; retained as baseline hold"
+  },
+  {
+    "suite": "e2e-hud",
+    "file": "visual.spec.ts",
+    "line": 113,
+    "title": "terrain diagnostics expose claim zones and speeds",
+    "project": "mobile-chrome",
+    "status": "unexpected",
+    "actual": "failed",
+    "expected": "passed",
+    "startTime": "2026-09-22T10:56:56.642Z",
+    "durationMs": 9927,
+    "error": "Error: expect(received).toMatchObject(expected)\n\n- Expected  - 4\n+ Received  + 4\n\n@@ -8,22 +8,22 @@\n      \"speedMul\": 0.85,\n      \"walkable\": true,\n      \"zone\": \"ford\",\n    },\n    \"northBank\": Object {\n-     \"speedMul\": 1,\n-     \"walkable\": true,\n+     \"speedMul\": 0,\n+     \"walkable\": false,\n      \"zone\": \"bank\",\n    },\n    \"out\": Object {\n      \"speedMul\": 0,\n      \"walkable\": false,\n      \"zone\": \"out\",\n    },\n    \"river\": Object {\n-     \"speedMul\": 0.55,\n-     \"walkable\": true,\n+     \"speedMul\": 0,\n+     \"walkable\": false,\n      \"zone\": \"river\",\n    },\n    \"shallows\": Object {\n      \"speedMul\": 0.8,\n      \"walkable\": true,\n\n  116 |\n  117 |   const probes = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.terrain.probes);\n> 118 |   expect(probes).toMatchObject({\n      |                  ^\n  119 |     bank: { walkable: true, speedMul: 1, zone: 'bank' },\n  120 |     shallows: { walkable: true, speedMul: 0.8, zone: 'shallows' },\n  121 |     river: { walkable: true, speedMul: 0.55, zone: 'river' },\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/visual.spec.ts:118:18",
+    "controls": [
+      {
+        "file": "visual.spec.ts",
+        "line": 113,
+        "title": "terrain diagnostics expose claim zones and speeds",
+        "project": "mobile-chrome",
+        "status": "unexpected",
+        "actual": "failed",
+        "expected": "passed",
+        "startTime": "2026-09-22T11:42:47.425Z",
+        "durationMs": 4300,
+        "error": "Error: expect(received).toMatchObject(expected)\n\n- Expected  - 4\n+ Received  + 4\n\n@@ -8,22 +8,22 @@\n      \"speedMul\": 0.85,\n      \"walkable\": true,\n      \"zone\": \"ford\",\n    },\n    \"northBank\": Object {\n-     \"speedMul\": 1,\n-     \"walkable\": true,\n+     \"speedMul\": 0,\n+     \"walkable\": false,\n      \"zone\": \"bank\",\n    },\n    \"out\": Object {\n      \"speedMul\": 0,\n      \"walkable\": false,\n      \"zone\": \"out\",\n    },\n    \"river\": Object {\n-     \"speedMul\": 0.55,\n-     \"walkable\": true,\n+     \"speedMul\": 0,\n+     \"walkable\": false,\n      \"zone\": \"river\",\n    },\n    \"shallows\": Object {\n      \"speedMul\": 0.8,\n      \"walkable\": true,\n\n  116 |\n  117 |   const probes = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.terrain.probes);\n> 118 |   expect(probes).toMatchObject({\n      |                  ^\n  119 |     bank: { walkable: true, speedMul: 1, zone: 'bank' },\n  120 |     shallows: { walkable: true, speedMul: 0.8, zone: 'shallows' },\n  121 |     river: { walkable: true, speedMul: 0.55, zone: 'river' },\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/visual.spec.ts:118:18"
+      }
+    ],
+    "recheck": null,
+    "classification": "fails with pre-cure CSS too; retained as baseline hold"
+  },
+  {
+    "suite": "e2e-hud",
+    "file": "visual.spec.ts",
+    "line": 212,
+    "title": "river band slows the hero through diagnostics",
+    "project": "mobile-chrome",
+    "status": "unexpected",
+    "actual": "failed",
+    "expected": "passed",
+    "startTime": "2026-09-22T10:57:24.322Z",
+    "durationMs": 17269,
+    "error": "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: \"river\"\nReceived: \"shallows\"\n\nCall Log:\n- Timeout 5000ms exceeded while waiting on the predicate\n\n  228 |   await expect\n  229 |     .poll(async () => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.terrain.playerZone))\n> 230 |     .toBe('river');\n      |      ^\n  231 |   await page.waitForTimeout(400);\n  232 |   const riverSpeed = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.speed ?? 0);\n  233 |   await page.keyboard.up('KeyW');\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/visual.spec.ts:230:6",
+    "controls": [
+      {
+        "file": "visual.spec.ts",
+        "line": 212,
+        "title": "river band slows the hero through diagnostics",
+        "project": "mobile-chrome",
+        "status": "unexpected",
+        "actual": "failed",
+        "expected": "passed",
+        "startTime": "2026-09-22T11:42:53.985Z",
+        "durationMs": 11723,
+        "error": "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: \"river\"\nReceived: \"shallows\"\n\nCall Log:\n- Timeout 5000ms exceeded while waiting on the predicate\n\n  228 |   await expect\n  229 |     .poll(async () => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.terrain.playerZone))\n> 230 |     .toBe('river');\n      |      ^\n  231 |   await page.waitForTimeout(400);\n  232 |   const riverSpeed = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.speed ?? 0);\n  233 |   await page.keyboard.up('KeyW');\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/visual.spec.ts:230:6"
+      }
+    ],
+    "recheck": null,
+    "classification": "fails with pre-cure CSS too; retained as baseline hold"
+  },
+  {
+    "suite": "e2e-hud",
+    "file": "world-info-notes.spec.ts",
+    "line": 196,
+    "title": "building notes sit with existing assay and upgrade prompts",
+    "project": "desktop-chrome",
+    "status": "unexpected",
+    "actual": "failed",
+    "expected": "passed",
+    "startTime": "2026-09-22T10:31:39.051Z",
+    "durationMs": 13656,
+    "error": "Error: expect(locator).toBeVisible() failed\n\nLocator:  getByTestId('world-info-note')\nExpected: visible\nReceived: hidden\nTimeout:  5000ms\n\nCall log:\n  - Expect \"toBeVisible\" with timeout 5000ms\n  - waiting for getByTestId('world-info-note')\n    14 × locator resolved to <details name=\"\" hidden=\"\" aria-live=\"polite\" data-compact=\"true\" data-testid=\"world-info-note\" data-object-class=\"assay_office\" class=\"world-info-note world-info-note--compact\">…</details>\n       - unexpected value \"hidden\"\n\n\n   96 | async function expectNote(page: Page, objectClass: WorldInfoObjectClass, text?: string): Promise<void> {\n   97 |   const note = page.getByTestId('world-info-note');\n>  98 |   await expect(note).toBeVisible();\n      |                      ^\n   99 |   await expect(note).toHaveAttribute('data-object-class', objectClass);\n  100 |   if (text) await expect(note).toContainText(text);\n  101 | }\n    at expectNote (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/world-info-notes.spec.ts:98:22)\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/world-info-notes.spec.ts:222:9",
+    "controls": [
+      {
+        "file": "world-info-notes.spec.ts",
+        "line": 196,
+        "title": "building notes sit with existing assay and upgrade prompts",
+        "project": "desktop-chrome",
+        "status": "unexpected",
+        "actual": "failed",
+        "expected": "passed",
+        "startTime": "2026-09-22T11:34:17.436Z",
+        "durationMs": 17275,
+        "error": "Error: expect(locator).toBeVisible() failed\n\nLocator:  getByTestId('world-info-note')\nExpected: visible\nReceived: hidden\nTimeout:  5000ms\n\nCall log:\n  - Expect \"toBeVisible\" with timeout 5000ms\n  - waiting for getByTestId('world-info-note')\n    14 × locator resolved to <details name=\"\" hidden=\"\" aria-live=\"polite\" data-compact=\"true\" data-testid=\"world-info-note\" data-object-class=\"assay_office\" class=\"world-info-note world-info-note--compact\">…</details>\n       - unexpected value \"hidden\"\n\n\n   96 | async function expectNote(page: Page, objectClass: WorldInfoObjectClass, text?: string): Promise<void> {\n   97 |   const note = page.getByTestId('world-info-note');\n>  98 |   await expect(note).toBeVisible();\n      |                      ^\n   99 |   await expect(note).toHaveAttribute('data-object-class', objectClass);\n  100 |   if (text) await expect(note).toContainText(text);\n  101 | }\n    at expectNote (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/world-info-notes.spec.ts:98:22)\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/world-info-notes.spec.ts:222:9"
+      }
+    ],
+    "recheck": null,
+    "classification": "fails with pre-cure CSS too; retained as baseline hold"
+  },
+  {
+    "suite": "e2e-hud",
+    "file": "world-info-notes.spec.ts",
+    "line": 293,
+    "title": "town shells use info notes beside opens-soon prompts",
+    "project": "desktop-chrome",
+    "status": "unexpected",
+    "actual": "failed",
+    "expected": "passed",
+    "startTime": "2026-09-22T10:32:07.167Z",
+    "durationMs": 8222,
+    "error": "Error: expect(locator).toContainText(expected) failed\n\nLocator: getByTestId('town-approach-prompt')\nTimeout: 5000ms\n- Expected substring  - 1\n+ Received string     + 4\n\n- opens soon\n+\n+         Tavern ... the board is warm\n+         Board\n+       \n\nCall log:\n  - Expect \"toContainText\" with timeout 5000ms\n  - waiting for getByTestId('town-approach-prompt')\n    7 × locator resolved to <div hidden=\"\" role=\"status\" aria-live=\"polite\" class=\"town-ui__prompt\" data-testid=\"town-approach-prompt\">…</div>\n      - unexpected value \"\n        Tavern ... the board is warm\n        Board\n      \"\n    7 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"town-ui__prompt\" data-testid=\"town-approach-prompt\">…</div>\n      - unexpected value \"\n        Tavern ... the board is warm\n        Board\n      \"\n\n\n  299 |\n  300 |   await approachTownBuilding(page, 'tavern');\n> 301 |   await expect(page.getByTestId('town-approach-prompt')).toContainText('opens soon');\n      |                                                          ^\n  302 |   await expect(page.getByTestId('town-open-board')).toBeVisible();\n  303 |   await expectNote(page, 'town_tavern', 'contract board');\n  304 |\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/world-info-notes.spec.ts:301:58",
+    "controls": [
+      {
+        "file": "world-info-notes.spec.ts",
+        "line": 293,
+        "title": "town shells use info notes beside opens-soon prompts",
+        "project": "desktop-chrome",
+        "status": "unexpected",
+        "actual": "failed",
+        "expected": "passed",
+        "startTime": "2026-09-22T11:34:39.094Z",
+        "durationMs": 8600,
+        "error": "Error: expect(locator).toContainText(expected) failed\n\nLocator: getByTestId('town-approach-prompt')\nTimeout: 5000ms\n- Expected substring  - 1\n+ Received string     + 4\n\n- opens soon\n+\n+         Tavern ... the board is warm\n+         Board\n+       \n\nCall log:\n  - Expect \"toContainText\" with timeout 5000ms\n  - waiting for getByTestId('town-approach-prompt')\n    7 × locator resolved to <div hidden=\"\" role=\"status\" aria-live=\"polite\" class=\"town-ui__prompt\" data-testid=\"town-approach-prompt\">…</div>\n      - unexpected value \"\n        Tavern ... the board is warm\n        Board\n      \"\n    7 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"town-ui__prompt\" data-testid=\"town-approach-prompt\">…</div>\n      - unexpected value \"\n        Tavern ... the board is warm\n        Board\n      \"\n\n\n  299 |\n  300 |   await approachTownBuilding(page, 'tavern');\n> 301 |   await expect(page.getByTestId('town-approach-prompt')).toContainText('opens soon');\n      |                                                          ^\n  302 |   await expect(page.getByTestId('town-open-board')).toBeVisible();\n  303 |   await expectNote(page, 'town_tavern', 'contract board');\n  304 |\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/world-info-notes.spec.ts:301:58"
+      }
+    ],
+    "recheck": null,
+    "classification": "fails with pre-cure CSS too; retained as baseline hold"
+  },
+  {
+    "suite": "e2e-hud",
+    "file": "world-info-notes.spec.ts",
+    "line": 322,
+    "title": "390px world note clears the touch stick zone",
+    "project": "desktop-chrome",
+    "status": "unexpected",
+    "actual": "failed",
+    "expected": "passed",
+    "startTime": "2026-09-22T10:32:17.058Z",
+    "durationMs": 13302,
+    "error": "Error: expect(locator).toBeVisible() failed\n\nLocator:  getByTestId('world-info-note')\nExpected: visible\nReceived: hidden\nTimeout:  5000ms\n\nCall log:\n  - Expect \"toBeVisible\" with timeout 5000ms\n  - waiting for getByTestId('world-info-note')\n    13 × locator resolved to <details name=\"\" hidden=\"\" aria-live=\"polite\" class=\"world-info-note\" data-testid=\"world-info-note\">…</details>\n       - unexpected value \"hidden\"\n\n\n   96 | async function expectNote(page: Page, objectClass: WorldInfoObjectClass, text?: string): Promise<void> {\n   97 |   const note = page.getByTestId('world-info-note');\n>  98 |   await expect(note).toBeVisible();\n      |                      ^\n   99 |   await expect(note).toHaveAttribute('data-object-class', objectClass);\n  100 |   if (text) await expect(note).toContainText(text);\n  101 | }\n    at expectNote (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/world-info-notes.spec.ts:98:22)\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/world-info-notes.spec.ts:326:9",
+    "controls": [
+      {
+        "file": "world-info-notes.spec.ts",
+        "line": 322,
+        "title": "390px world note clears the touch stick zone",
+        "project": "desktop-chrome",
+        "status": "unexpected",
+        "actual": "failed",
+        "expected": "passed",
+        "startTime": "2026-09-22T11:34:49.790Z",
+        "durationMs": 5458,
+        "error": "Error: expect(received).toBeLessThanOrEqual(expected)\n\nExpected: <= 586\nReceived:    660\n\n  337 |   });\n  338 |   expect(boxes).toBeTruthy();\n> 339 |   expect(boxes!.note.bottom).toBeLessThanOrEqual(boxes!.controls.top - 8);\n      |                              ^\n  340 |   await shot(page, testInfo, 'mobile-390-stake-note');\n  341 |   assertNoErrors(errors);\n  342 | });\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/world-info-notes.spec.ts:339:30"
+      }
+    ],
+    "recheck": null,
+    "classification": "fails with pre-cure CSS too; retained as baseline hold"
+  },
+  {
+    "suite": "e2e-hud",
+    "file": "world-info-notes.spec.ts",
+    "line": 196,
+    "title": "building notes sit with existing assay and upgrade prompts",
+    "project": "mobile-chrome",
+    "status": "unexpected",
+    "actual": "failed",
+    "expected": "passed",
+    "startTime": "2026-09-22T10:58:01.671Z",
+    "durationMs": 20166,
+    "error": "Error: expect(locator).toBeVisible() failed\n\nLocator:  getByTestId('world-info-note')\nExpected: visible\nReceived: hidden\nTimeout:  5000ms\n\nCall log:\n  - Expect \"toBeVisible\" with timeout 5000ms\n  - waiting for getByTestId('world-info-note')\n    14 × locator resolved to <details name=\"\" hidden=\"\" aria-live=\"polite\" data-compact=\"true\" data-testid=\"world-info-note\" data-object-class=\"assay_office\" class=\"world-info-note world-info-note--compact\">…</details>\n       - unexpected value \"hidden\"\n\n\n   96 | async function expectNote(page: Page, objectClass: WorldInfoObjectClass, text?: string): Promise<void> {\n   97 |   const note = page.getByTestId('world-info-note');\n>  98 |   await expect(note).toBeVisible();\n      |                      ^\n   99 |   await expect(note).toHaveAttribute('data-object-class', objectClass);\n  100 |   if (text) await expect(note).toContainText(text);\n  101 | }\n    at expectNote (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/world-info-notes.spec.ts:98:22)\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/world-info-notes.spec.ts:222:9",
+    "controls": [
+      {
+        "file": "world-info-notes.spec.ts",
+        "line": 196,
+        "title": "building notes sit with existing assay and upgrade prompts",
+        "project": "mobile-chrome",
+        "status": "unexpected",
+        "actual": "failed",
+        "expected": "passed",
+        "startTime": "2026-09-22T11:43:08.872Z",
+        "durationMs": 13344,
+        "error": "Error: expect(locator).toBeVisible() failed\n\nLocator:  getByTestId('world-info-note')\nExpected: visible\nReceived: hidden\nTimeout:  5000ms\n\nCall log:\n  - Expect \"toBeVisible\" with timeout 5000ms\n  - waiting for getByTestId('world-info-note')\n    14 × locator resolved to <details name=\"\" hidden=\"\" aria-live=\"polite\" data-compact=\"true\" data-testid=\"world-info-note\" data-object-class=\"assay_office\" class=\"world-info-note world-info-note--compact\">…</details>\n       - unexpected value \"hidden\"\n\n\n   96 | async function expectNote(page: Page, objectClass: WorldInfoObjectClass, text?: string): Promise<void> {\n   97 |   const note = page.getByTestId('world-info-note');\n>  98 |   await expect(note).toBeVisible();\n      |                      ^\n   99 |   await expect(note).toHaveAttribute('data-object-class', objectClass);\n  100 |   if (text) await expect(note).toContainText(text);\n  101 | }\n    at expectNote (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/world-info-notes.spec.ts:98:22)\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/world-info-notes.spec.ts:222:9"
+      }
+    ],
+    "recheck": null,
+    "classification": "fails with pre-cure CSS too; retained as baseline hold"
+  },
+  {
+    "suite": "e2e-hud",
+    "file": "world-info-notes.spec.ts",
+    "line": 293,
+    "title": "town shells use info notes beside opens-soon prompts",
+    "project": "mobile-chrome",
+    "status": "unexpected",
+    "actual": "failed",
+    "expected": "passed",
+    "startTime": "2026-09-22T10:58:48.687Z",
+    "durationMs": 10959,
+    "error": "Error: expect(locator).toContainText(expected) failed\n\nLocator: getByTestId('town-approach-prompt')\nTimeout: 5000ms\n- Expected substring  - 1\n+ Received string     + 4\n\n- opens soon\n+\n+         Tavern ... the board is warm\n+         Board\n+       \n\nCall log:\n  - Expect \"toContainText\" with timeout 5000ms\n  - waiting for getByTestId('town-approach-prompt')\n    6 × locator resolved to <div hidden=\"\" role=\"status\" aria-live=\"polite\" class=\"town-ui__prompt\" data-testid=\"town-approach-prompt\">…</div>\n      - unexpected value \"\n        Tavern ... the board is warm\n        Board\n      \"\n    8 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"town-ui__prompt\" data-testid=\"town-approach-prompt\">…</div>\n      - unexpected value \"\n        Tavern ... the board is warm\n        Board\n      \"\n\n\n  299 |\n  300 |   await approachTownBuilding(page, 'tavern');\n> 301 |   await expect(page.getByTestId('town-approach-prompt')).toContainText('opens soon');\n      |                                                          ^\n  302 |   await expect(page.getByTestId('town-open-board')).toBeVisible();\n  303 |   await expectNote(page, 'town_tavern', 'contract board');\n  304 |\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/world-info-notes.spec.ts:301:58",
+    "controls": [
+      {
+        "file": "world-info-notes.spec.ts",
+        "line": 293,
+        "title": "town shells use info notes beside opens-soon prompts",
+        "project": "mobile-chrome",
+        "status": "unexpected",
+        "actual": "failed",
+        "expected": "passed",
+        "startTime": "2026-09-22T11:43:25.963Z",
+        "durationMs": 8417,
+        "error": "Error: expect(locator).toContainText(expected) failed\n\nLocator: getByTestId('town-approach-prompt')\nTimeout: 5000ms\n- Expected substring  - 1\n+ Received string     + 4\n\n- opens soon\n+\n+         Tavern ... the board is warm\n+         Board\n+       \n\nCall log:\n  - Expect \"toContainText\" with timeout 5000ms\n  - waiting for getByTestId('town-approach-prompt')\n    7 × locator resolved to <div hidden=\"\" role=\"status\" aria-live=\"polite\" class=\"town-ui__prompt\" data-testid=\"town-approach-prompt\">…</div>\n      - unexpected value \"\n        Tavern ... the board is warm\n        Board\n      \"\n    7 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"town-ui__prompt\" data-testid=\"town-approach-prompt\">…</div>\n      - unexpected value \"\n        Tavern ... the board is warm\n        Board\n      \"\n\n\n  299 |\n  300 |   await approachTownBuilding(page, 'tavern');\n> 301 |   await expect(page.getByTestId('town-approach-prompt')).toContainText('opens soon');\n      |                                                          ^\n  302 |   await expect(page.getByTestId('town-open-board')).toBeVisible();\n  303 |   await expectNote(page, 'town_tavern', 'contract board');\n  304 |\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/world-info-notes.spec.ts:301:58"
+      }
+    ],
+    "recheck": null,
+    "classification": "fails with pre-cure CSS too; retained as baseline hold"
+  },
+  {
+    "suite": "e2e-hud",
+    "file": "world-info-notes.spec.ts",
+    "line": 322,
+    "title": "390px world note clears the touch stick zone",
+    "project": "mobile-chrome",
+    "status": "unexpected",
+    "actual": "failed",
+    "expected": "passed",
+    "startTime": "2026-09-22T10:59:04.124Z",
+    "durationMs": 10173,
+    "error": "Error: expect(received).toBeLessThanOrEqual(expected)\n\nExpected: <= 586\nReceived:    660\n\n  337 |   });\n  338 |   expect(boxes).toBeTruthy();\n> 339 |   expect(boxes!.note.bottom).toBeLessThanOrEqual(boxes!.controls.top - 8);\n      |                              ^\n  340 |   await shot(page, testInfo, 'mobile-390-stake-note');\n  341 |   assertNoErrors(errors);\n  342 | });\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/world-info-notes.spec.ts:339:30",
+    "controls": [
+      {
+        "file": "world-info-notes.spec.ts",
+        "line": 322,
+        "title": "390px world note clears the touch stick zone",
+        "project": "mobile-chrome",
+        "status": "unexpected",
+        "actual": "failed",
+        "expected": "passed",
+        "startTime": "2026-09-22T11:43:36.344Z",
+        "durationMs": 5752,
+        "error": "Error: expect(received).toBeLessThanOrEqual(expected)\n\nExpected: <= 586\nReceived:    660\n\n  337 |   });\n  338 |   expect(boxes).toBeTruthy();\n> 339 |   expect(boxes!.note.bottom).toBeLessThanOrEqual(boxes!.controls.top - 8);\n      |                              ^\n  340 |   await shot(page, testInfo, 'mobile-390-stake-note');\n  341 |   assertNoErrors(errors);\n  342 | });\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/world-info-notes.spec.ts:339:30"
+      }
+    ],
+    "recheck": null,
+    "classification": "fails with pre-cure CSS too; retained as baseline hold"
+  },
+  {
+    "suite": "e2e-campaign",
+    "file": "e9-seed-run-caravan.spec.ts",
+    "line": 180,
+    "title": "planting at the stake spends the guard, lands at run end, and is born as a green next run",
+    "project": "mobile-chrome",
+    "status": "unexpected",
+    "actual": "failed",
+    "expected": "passed",
+    "startTime": "2026-09-22T11:00:25.280Z",
+    "durationMs": 13665,
+    "error": "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: \"paused\"\nReceived: \"moving\"\n\n  186 |   // Walk the train to the centre ground on its own fixed schedule and stop inside the window.\n  187 |   await advanceUntil(page, (state) => state.atGround === CENTER_GROUND);\n> 188 |   expect((await caravan(page))!.state).toBe('paused');\n      |                                        ^\n  189 |   // A8-LEGIBILITY: this is the frame the owner never got — the train standing nine wu from the\n  190 |   // claim, named, guard-barred, on its drawn road, with the county's halt line on the banner. The\n  191 |   // shot is kept because \"the box was grey and nobody knew what it was\" is a VISUAL complaint and\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/e9-seed-run-caravan.spec.ts:188:40",
+    "controls": [
+      {
+        "file": "e9-seed-run-caravan.spec.ts",
+        "line": 180,
+        "title": "planting at the stake spends the guard, lands at run end, and is born as a green next run",
+        "project": "mobile-chrome",
+        "status": "expected",
+        "actual": "passed",
+        "expected": "passed",
+        "startTime": "2026-09-22T11:39:38.356Z",
+        "durationMs": 10760,
+        "error": ""
+      }
+    ],
+    "recheck": {
+      "file": "e9-seed-run-caravan.spec.ts",
+      "line": 180,
+      "title": "planting at the stake spends the guard, lands at run end, and is born as a green next run",
+      "project": "mobile-chrome",
+      "status": "expected",
+      "actual": "passed",
+      "expected": "passed",
+      "startTime": "2026-09-22T11:52:36.690Z",
+      "durationMs": 15355,
+      "error": ""
+    },
+    "classification": "passes on final CSS; initial failure not reproduced"
+  },
+  {
+    "suite": "e2e-additional",
+    "file": "e7-playbook-rows.spec.ts",
+    "line": 218,
+    "title": "HUMAN PARITY: a plain-boot player records and delegates a patrol through the shared latch",
+    "project": "mobile-chrome",
+    "status": "unexpected",
+    "actual": "timedOut",
+    "expected": "passed",
+    "startTime": "2026-09-22T11:17:56.049Z",
+    "durationMs": 185783,
+    "error": "Test timeout of 180000ms exceeded.\nError: locator.click: Test timeout of 180000ms exceeded.\nCall log:\n  - waiting for getByTestId('playbook-record')\n    - locator resolved to <button type=\"button\" data-recording=\"true\" data-testid=\"playbook-record\">Save Tape</button>\n  - attempting click action\n    2 × waiting for element to be visible, enabled and stable\n      - element is not visible\n    - retrying click action\n    - waiting 20ms\n    2 × waiting for element to be visible, enabled and stable\n      - element is not visible\n    - retrying click action\n      - waiting 100ms\n    314 × waiting for element to be visible, enabled and stable\n        - element is not visible\n      - retrying click action\n        - waiting 500ms\n\n\n  247 |   if (await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.build.mode)) await page.keyboard.press('KeyB');\n  248 |   await page.getByTestId('playbook-toggle').click();\n> 249 |   await page.getByTestId('playbook-record').click();\n      |                                             ^\n  250 |   await page.getByTestId('playbook-toggle').click();\n  251 |   await page.getByTestId('playbook-toggle').click();\n  252 |   await page.getByTestId('playbook-replay-Relay Patrol').click();\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/e7-playbook-rows.spec.ts:249:45",
+    "controls": [
+      {
+        "file": "e7-playbook-rows.spec.ts",
+        "line": 218,
+        "title": "HUMAN PARITY: a plain-boot player records and delegates a patrol through the shared latch",
+        "project": "mobile-chrome",
+        "status": "unexpected",
+        "actual": "timedOut",
+        "expected": "passed",
+        "startTime": "2026-09-22T11:36:03.284Z",
+        "durationMs": 184572,
+        "error": "Test timeout of 180000ms exceeded.\nError: locator.click: Test timeout of 180000ms exceeded.\nCall log:\n  - waiting for getByTestId('playbook-record')\n    - locator resolved to <button type=\"button\" data-recording=\"true\" data-testid=\"playbook-record\">Save Tape</button>\n  - attempting click action\n    2 × waiting for element to be visible, enabled and stable\n      - element is not visible\n    - retrying click action\n    - waiting 20ms\n    2 × waiting for element to be visible, enabled and stable\n      - element is not visible\n    - retrying click action\n      - waiting 100ms\n    312 × waiting for element to be visible, enabled and stable\n        - element is not visible\n      - retrying click action\n        - waiting 500ms\n\n\n  247 |   if (await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.build.mode)) await page.keyboard.press('KeyB');\n  248 |   await page.getByTestId('playbook-toggle').click();\n> 249 |   await page.getByTestId('playbook-record').click();\n      |                                             ^\n  250 |   await page.getByTestId('playbook-toggle').click();\n  251 |   await page.getByTestId('playbook-toggle').click();\n  252 |   await page.getByTestId('playbook-replay-Relay Patrol').click();\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/e7-playbook-rows.spec.ts:249:45"
+      }
+    ],
+    "recheck": null,
+    "classification": "fails with pre-cure CSS too; retained as baseline hold"
+  },
+  {
+    "suite": "e2e-additional",
+    "file": "en-02-e1-coverage.spec.ts",
+    "line": 407,
+    "title": "EN-02 enemy stats reveal once, persist, and hero facts live-read abilities",
+    "project": "desktop-chrome",
+    "status": "unexpected",
+    "actual": "failed",
+    "expected": "passed",
+    "startTime": "2026-09-22T11:11:38.981Z",
+    "durationMs": 18378,
+    "error": "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: 1\nReceived: 0\n\nCall Log:\n- Timeout 12000ms exceeded while waiting on the predicate\n\n  433 |   // so this wait is gated behind the card queue: residual CARD_MS (6000) + GAP_MS (3000) = 9s worst\n  434 |   // case. The 5000ms poll default sits BELOW that floor, which made this a ~50% flake (F-1337-1).\n> 435 |   await expect.poll(() => storyHintCount(page, 'story:ledger-page:claim_jumper_stats'), { timeout: 12_000 }).toBe(1);\n      |                                                                                                              ^\n  436 |\n  437 |   await openLedgerDirect(page, 'claim_jumper');\n  438 |   await expect(page.getByTestId('claim-ledger-facts-claim_jumper')).not.toContainText('Not yet measured');\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/en-02-e1-coverage.spec.ts:435:110",
+    "controls": [
+      {
+        "file": "en-02-e1-coverage.spec.ts",
+        "line": 407,
+        "title": "EN-02 enemy stats reveal once, persist, and hero facts live-read abilities",
+        "project": "desktop-chrome",
+        "status": "unexpected",
+        "actual": "failed",
+        "expected": "passed",
+        "startTime": "2026-09-22T11:28:58.075Z",
+        "durationMs": 21916,
+        "error": "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: 1\nReceived: 0\n\nCall Log:\n- Timeout 12000ms exceeded while waiting on the predicate\n\n  433 |   // so this wait is gated behind the card queue: residual CARD_MS (6000) + GAP_MS (3000) = 9s worst\n  434 |   // case. The 5000ms poll default sits BELOW that floor, which made this a ~50% flake (F-1337-1).\n> 435 |   await expect.poll(() => storyHintCount(page, 'story:ledger-page:claim_jumper_stats'), { timeout: 12_000 }).toBe(1);\n      |                                                                                                              ^\n  436 |\n  437 |   await openLedgerDirect(page, 'claim_jumper');\n  438 |   await expect(page.getByTestId('claim-ledger-facts-claim_jumper')).not.toContainText('Not yet measured');\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/en-02-e1-coverage.spec.ts:435:110"
+      }
+    ],
+    "recheck": null,
+    "classification": "fails with pre-cure CSS too; retained as baseline hold"
+  },
+  {
+    "suite": "e2e-additional",
+    "file": "en-02-e1-coverage.spec.ts",
+    "line": 407,
+    "title": "EN-02 enemy stats reveal once, persist, and hero facts live-read abilities",
+    "project": "mobile-chrome",
+    "status": "unexpected",
+    "actual": "failed",
+    "expected": "passed",
+    "startTime": "2026-09-22T11:21:39.805Z",
+    "durationMs": 17802,
+    "error": "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: 1\nReceived: 0\n\nCall Log:\n- Timeout 12000ms exceeded while waiting on the predicate\n\n  433 |   // so this wait is gated behind the card queue: residual CARD_MS (6000) + GAP_MS (3000) = 9s worst\n  434 |   // case. The 5000ms poll default sits BELOW that floor, which made this a ~50% flake (F-1337-1).\n> 435 |   await expect.poll(() => storyHintCount(page, 'story:ledger-page:claim_jumper_stats'), { timeout: 12_000 }).toBe(1);\n      |                                                                                                              ^\n  436 |\n  437 |   await openLedgerDirect(page, 'claim_jumper');\n  438 |   await expect(page.getByTestId('claim-ledger-facts-claim_jumper')).not.toContainText('Not yet measured');\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/en-02-e1-coverage.spec.ts:435:110",
+    "controls": [
+      {
+        "file": "en-02-e1-coverage.spec.ts",
+        "line": 407,
+        "title": "EN-02 enemy stats reveal once, persist, and hero facts live-read abilities",
+        "project": "mobile-chrome",
+        "status": "unexpected",
+        "actual": "failed",
+        "expected": "passed",
+        "startTime": "2026-09-22T11:39:49.402Z",
+        "durationMs": 18115,
+        "error": "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: 1\nReceived: 0\n\nCall Log:\n- Timeout 12000ms exceeded while waiting on the predicate\n\n  433 |   // so this wait is gated behind the card queue: residual CARD_MS (6000) + GAP_MS (3000) = 9s worst\n  434 |   // case. The 5000ms poll default sits BELOW that floor, which made this a ~50% flake (F-1337-1).\n> 435 |   await expect.poll(() => storyHintCount(page, 'story:ledger-page:claim_jumper_stats'), { timeout: 12_000 }).toBe(1);\n      |                                                                                                              ^\n  436 |\n  437 |   await openLedgerDirect(page, 'claim_jumper');\n  438 |   await expect(page.getByTestId('claim-ledger-facts-claim_jumper')).not.toContainText('Not yet measured');\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/en-02-e1-coverage.spec.ts:435:110"
+      }
+    ],
+    "recheck": null,
+    "classification": "fails with pre-cure CSS too; retained as baseline hold"
+  }
+]

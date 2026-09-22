@@ -1,0 +1,84 @@
+(node:40061) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 20 tests using 1 worker
+
+
+
+(node:40172) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[1/20] [mobile-chrome] › e2e/e7-dead-band-suppression.spec.ts:45:1 › the Dead Band refuses drones, playbooks and relay chains
+[2/20] [mobile-chrome] › e2e/e7-dead-band-suppression.spec.ts:81:1 › CONTROL — Relay Valley, same tile, keeps all three
+[3/20] [mobile-chrome] › e2e/e7-relay-rush-front.spec.ts:60:1 › the front keeps its schedule, mutes only what it covers, and never damages it
+[4/20] [mobile-chrome] › e2e/e7-relay-rush-front.spec.ts:147:1 › a playbook refuses under the wall and works the moment it passes
+[5/20] [mobile-chrome] › e2e/e7-relay-rush-front.spec.ts:227:1 › a plain boot fields the front and its objective without ?debug
+[6/20] [mobile-chrome] › e2e/e7-relay-rush-front.spec.ts:269:1 › the deadline latch arms only on a front that can be discharged
+[7/20] [mobile-chrome] › e2e/e8-low-orbit-momentum.spec.ts:35:1 › the contract wires the low-orbit consumer with its declared geography
+[8/20] [mobile-chrome] › e2e/e8-low-orbit-momentum.spec.ts:50:1 › a lob that hits nothing returns once after 12s, then is gone
+[9/20] [mobile-chrome] › e2e/e8-low-orbit-momentum.spec.ts:111:1 › a lob that hits something is spent, and never returns
+[10/20] [mobile-chrome] › e2e/e8-low-orbit-momentum.spec.ts:143:1 › handholds are a soft constraint: off-route thrust halves, and is never a wall
+[11/20] [mobile-chrome] › e2e/e8-low-orbit-momentum.spec.ts:184:1 › the debris bands slow the suit and chip it
+[12/20] [mobile-chrome] › e2e/e9-seed-run-caravan.spec.ts:157:1 › the board refuses the Seed Run until Dome Basin is secured — the reach, measured
+[13/20] [mobile-chrome] › e2e/e9-seed-run-caravan.spec.ts:180:1 › planting at the stake spends the guard, lands at run end, and is born as a green next run
+  1) [mobile-chrome] › e2e/e9-seed-run-caravan.spec.ts:180:1 › planting at the stake spends the guard, lands at run end, and is born as a green next run 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "paused"
+    Received: "moving"
+
+      186 |   // Walk the train to the centre ground on its own fixed schedule and stop inside the window.
+      187 |   await advanceUntil(page, (state) => state.atGround === CENTER_GROUND);
+    > 188 |   expect((await caravan(page))!.state).toBe('paused');
+          |                                        ^
+      189 |   // A8-LEGIBILITY: this is the frame the owner never got — the train standing nine wu from the
+      190 |   // claim, named, guard-barred, on its drawn road, with the county's halt line on the banner. The
+      191 |   // shot is kept because "the box was grey and nobody knew what it was" is a VISUAL complaint and
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/e9-seed-run-caravan.spec.ts:188:40
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e9-seed-run-caravan-planti-b6771-is-born-as-a-green-next-run-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e9-seed-run-caravan-planti-b6771-is-born-as-a-green-next-run-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e9-seed-run-caravan-planti-b6771-is-born-as-a-green-next-run-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e9-seed-run-caravan-planti-b6771-is-born-as-a-green-next-run-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+
+(node:42356) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[14/20] [mobile-chrome] › e2e/e9-seed-run-caravan.spec.ts:260:1 › the caravan reaching the basin is what latches the objective
+[15/20] [mobile-chrome] › e2e/e9-seed-run-caravan.spec.ts:313:1 › a plain boot tells a stranger the caravan IS the mission
+[mobile-chrome] › e2e/e9-seed-run-caravan.spec.ts:313:1 › a plain boot tells a stranger the caravan IS the mission
+e9-seed-run plain boot watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+
+(node:42356) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[16/20] [mobile-chrome] › e2e/ss-07-e6-beats.spec.ts:111:1 › SS-07 table is attributed, presentational, and uses the E2/E3 trigger vocabulary
+[17/20] [mobile-chrome] › e2e/ss-07-e6-beats.spec.ts:123:1 › a player-selected Atomic town presents the mesa arrival and the steward before the ride
+[mobile-chrome] › e2e/ss-07-e6-beats.spec.ts:123:1 › a player-selected Atomic town presents the mesa arrival and the steward before the ride
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[18/20] [mobile-chrome] › e2e/ss-07-e6-beats.spec.ts:150:1 › The Claim cannot load Atomic beats in Frontier
+[mobile-chrome] › e2e/ss-07-e6-beats.spec.ts:150:1 › The Claim cannot load Atomic beats in Frontier
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[19/20] [mobile-chrome] › e2e/ss-07-e6-beats.spec.ts:165:1 › epoch-3-voltage cannot load Atomic beats
+[mobile-chrome] › e2e/ss-07-e6-beats.spec.ts:165:1 › epoch-3-voltage cannot load Atomic beats
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[20/20] [mobile-chrome] › e2e/ss-07-e6-beats.spec.ts:182:1 › the Atomic boss and return beats fire only on their own triggers
+[mobile-chrome] › e2e/ss-07-e6-beats.spec.ts:182:1 › the Atomic boss and return beats fire only on their own triggers
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+  1 failed
+    [mobile-chrome] › e2e/e9-seed-run-caravan.spec.ts:180:1 › planting at the stake spends the guard, lands at run end, and is born as a green next run 
+  19 passed (3.1m)
