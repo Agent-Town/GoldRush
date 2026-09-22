@@ -12,10 +12,14 @@ for (const [contract, parent, solidIds] of [
   ['e6-picnic', 'glow-mesa', ['mesa-civilian-shade']],
   ['e7-dead-band', 'relay-valley', ['dead-band-yard-null-post', 'west-old-tool-cache', 'east-old-tool-cache']],
   ['e7-relay-rush', 'relay-valley', ['rush-start-horn']],
-  // F-FC2-5 (attended drain 2026-09-22): the probe-recovery-cradle is NOT among the Far Side's solids — its footprint at (0,45)
-  // sits on the probe recovery point and left the A6 latch unclosable (scripts/e8-remaining-maps.test.mjs:512); it returned to
-  // unselected in the store and was removed from the registry until the contract/collision owner reconciles the point.
-  ['e8-far-side', 'mare-claim', ['west-comms-shadow-marker', 'east-suit-cache-rack', 'far-horizon-listening-post']],
+  // F-FC2-5 (owner ruling 2026-09-22, verbatim: "lets move it"): the probe-recovery-cradle is back among the Far Side's solids,
+  // MOVED to the recovery zone's north rim at (0,50.5) rather than removed. At (0,45) — the zone's centre — its 5.04 x 3.6 m
+  // footprint made `Terrain.sample(0,45).walkable` false, so the ride's `MOVE_HERO` to the recovery point was refused outright
+  // (`UNREACHABLE_TERRAIN`) and the hero never left its stake: the A6 latch could not close and no secure was offered
+  // (`scripts/e8-remaining-maps.test.mjs:512`). At (0,50.5) the footprint spans z 48.7..52.3, straddling the zone's north rim at
+  // z 52 and clear of `far-horizon-listening-post` (z >= 54.5), so the walk in from the south stake reaches the point and that
+  // test secures at wave 20. The zone itself never moved — it is also the E8 air crossing (`src/systems/E8SuitAirSystem.ts:264`).
+  ['e8-far-side', 'mare-claim', ['probe-recovery-cradle', 'west-comms-shadow-marker', 'east-suit-cache-rack', 'far-horizon-listening-post']],
 ]) {
   test(`${contract} retains the parent blockers and appends its own registered solids`, () => {
     const ownMap = contract.replace(/^e\d+-/, '');
