@@ -1,0 +1,6 @@
+contract clock census 42/25/17/0
+refusals kv sample {"ok":true,"counts":{"unsecured":1,"bad_payload":1},"recent":[{"reason":"bad_payload","contractId":"the-claim","refusedAt":1790061157170},{"reason":"unsecured","contractId":"the-claim","refusedAt":1790061157170}]}
+standings assay kv checks passed (372)
+contract clock census 42/25/17/0
+refusals sqlite sample {"ok":true,"counts":{"bad_payload":1,"unsecured":1},"recent":[{"reason":"bad_payload","contractId":"the-claim","refusedAt":1790061158236},{"reason":"unsecured","contractId":"the-claim","refusedAt":1790061158235}]}
+standings assay sqlite checks passed (372)
