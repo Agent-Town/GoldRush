@@ -81,11 +81,19 @@ try {
   );
   if (errors.length) throw new Error(errors.join('\n'));
 
-  const replay = await page.evaluate(() => {
+  // F-H154-1 (attended drain, 2026-09-22): the browser arm reports the map's signature mechanic exactly
+  // as the headless arm does (`HeadlessContractSim.MECHANIC_OUTCOMES`, one row today) — a human's
+  // browser-recorded Regatta reel would otherwise verify with no finish and rank below every agent
+  // finish. Hand mirror of the engine's table; `scripts/skillmd-guard.test.mjs` pins it equal.
+  const MECHANIC_BROWSER_CONTRACTS = new Set(['e5-regatta']);
+  const replay = await page.evaluate((mechanicContracts) => {
     const diagnostics = window.__THREE_GAME_DIAGNOSTICS__;
     const show = document.querySelector('[data-testid="lantern-show"]');
     const status = document.querySelector('[data-testid="lantern-playback-status"]');
     if (!diagnostics || !show || !status) throw new Error('replay diagnostics unavailable');
+    const mechanic = mechanicContracts.includes(diagnostics.contract?.activeId) && diagnostics.regatta
+      ? { id: 'regatta-race', complete: diagnostics.regatta.race?.finished === true }
+      : null;
     return {
       eventLogHash: status.getAttribute('data-hash'),
       outcome: {
@@ -101,9 +109,10 @@ try {
         timeAlive: Math.round(diagnostics.timeAlive * 1_000_000) / 1_000_000,
       },
       securedSnapshot: diagnostics.run.securedSnapshot,
+      ...(mechanic ? { mechanic } : {}),
       ticks: Number(show.getAttribute('data-tick')),
     };
-  });
+  }, [...MECHANIC_BROWSER_CONTRACTS]);
   process.stdout.write(`${JSON.stringify({ ...replay, wallMs: Math.round(performance.now() - startedAt) })}\n`);
 } catch (error) {
   process.stderr.write(`assay replay failed: ${error instanceof Error ? error.message : String(error)}\n`);

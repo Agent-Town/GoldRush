@@ -67,6 +67,11 @@ test('the door mirrors the engine\'s mechanic contracts', () => {
   const engine = [...HeadlessContractSimClass.mechanicContractIds()].sort();
   assert.ok(engine.length > 0, 'the engine must declare at least one mechanic contract');
   assert.deepEqual(door, engine);
+  // F-H154-1: the browser replay arm mirrors the same table (a human's reel must report the finish too).
+  const arm = /const MECHANIC_BROWSER_CONTRACTS = new Set\(\[([^\]]*)\]\)/.exec(read('scripts/assay-replay.mjs'));
+  assert.ok(arm, 'MECHANIC_BROWSER_CONTRACTS declaration not found in scripts/assay-replay.mjs (F-H154-1)');
+  const browserArm = [...arm[1].matchAll(/'([^']+)'/g)].map((match) => match[1]).sort();
+  assert.deepEqual(browserArm, engine);
 });
 
 test('skill.md pins optional declared tokens outside ranking', () => {
