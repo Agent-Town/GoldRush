@@ -193,15 +193,40 @@ export class CanalFlowPresentation {
       const columns = Math.ceil(w / 1.15), rows = Math.ceil(d / 1.15);
       for (let col = 0; col < columns; col += 1) for (let row = 0; row < rows; row += 1) {
         const brickHeight = h * (0.86 + ((col + row) % 3) * 0.07);
-        const geometry = new THREE.BoxGeometry(w / columns - 0.035, brickHeight, d / rows - 0.035);
-        geometry.translate((col + 0.5) * w / columns - w * 0.5, brickHeight * 0.5 + 0.015, (row + 0.5) * d / rows - d * 0.5);
-        geometry.rotateY(turn);
-        geometry.translate(x, 0, z);
-        const colors = new Float32Array(geometry.getAttribute('position').count * 3);
-        const value = shade * (0.90 + ((col + row) % 3) * 0.05);
-        for (let i = 0; i < colors.length; i += 3) colors.set([value, value, value], i);
-        geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
-        pieces.push(geometry);
+        // Two low courses and clipped stone corners add visible masonry depth
+        // inside the same crossable rubble envelope. No canal band or height moves.
+        const courses = h > 0.3 ? 2 : 1;
+        const gap = 0.022;
+        const courseHeight = (brickHeight - gap * (courses - 1)) / courses;
+        const halfWidth = (w / columns - 0.035) * 0.5;
+        const halfDepth = (d / rows - 0.035) * 0.5;
+        const chip = Math.min(0.06, halfWidth * 0.18, halfDepth * 0.18);
+        const outline = new THREE.Shape();
+        outline.moveTo(-halfWidth + chip, -halfDepth);
+        outline.lineTo(halfWidth - chip, -halfDepth);
+        outline.lineTo(halfWidth, -halfDepth + chip);
+        outline.lineTo(halfWidth, halfDepth - chip);
+        outline.lineTo(halfWidth - chip, halfDepth);
+        outline.lineTo(-halfWidth + chip, halfDepth);
+        outline.lineTo(-halfWidth, halfDepth - chip);
+        outline.lineTo(-halfWidth, -halfDepth + chip);
+        outline.closePath();
+        for (let course = 0; course < courses; course += 1) {
+          const geometry = new THREE.ExtrudeGeometry(outline, { depth: courseHeight, bevelEnabled: false, steps: 1, curveSegments: 1 });
+          geometry.rotateX(-Math.PI / 2);
+          geometry.translate((col + 0.5) * w / columns - w * 0.5, course * (courseHeight + gap) + 0.015, (row + 0.5) * d / rows - d * 0.5);
+          geometry.rotateY(turn);
+          geometry.translate(x, 0, z);
+          const normals = geometry.getAttribute('normal');
+          const colors = new Float32Array(geometry.getAttribute('position').count * 3);
+          const value = shade * (0.90 + ((col + row + course) % 3) * 0.05);
+          for (let i = 0; i < normals.count; i += 1) {
+            const face = normals.getY(i) > 0.5 ? 1.16 : normals.getY(i) < -0.5 ? 0.64 : 0.82;
+            colors.set([value * face, value * face, value * face], i * 3);
+          }
+          geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+          pieces.push(geometry);
+        }
       }
     };
     for (const side of [-1, 1]) {

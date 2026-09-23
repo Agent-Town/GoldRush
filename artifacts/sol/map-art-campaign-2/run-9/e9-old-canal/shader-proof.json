@@ -1,0 +1,384 @@
+{
+  "rows": [
+    {
+      "id": "dome-basin",
+      "vertexAndRouteUniformsExact": true,
+      "unchangedShaderAndCache": true,
+      "before": {
+        "uniforms": {
+          "domeCanalSegments": {
+            "value": [
+              {
+                "x": -38,
+                "y": 48,
+                "z": -28,
+                "w": 34
+              },
+              {
+                "x": -28,
+                "y": 34,
+                "z": -18,
+                "w": 20
+              },
+              {
+                "x": -18,
+                "y": 20,
+                "z": -12,
+                "w": 10
+              },
+              {
+                "x": -12,
+                "y": 10,
+                "z": -4,
+                "w": -6
+              },
+              {
+                "x": -4,
+                "y": -6,
+                "z": 4,
+                "w": -24
+              }
+            ]
+          },
+          "domeCanalEarth": {
+            "value": 11504489
+          },
+          "domeCanalBed": {
+            "value": 7828583
+          },
+          "redFieldsGreen": {
+            "value": 8556910
+          },
+          "redFieldsZones": {
+            "value": []
+          }
+        },
+        "vertexShader": "#include <common>\nvarying vec3 vDomeCanal;\n#include <begin_vertex>\nvDomeCanal = (modelMatrix * vec4(position, 1.0)).xyz;",
+        "fragmentShader": "#include <common>\nvarying vec3 vDomeCanal;\nuniform vec4 domeCanalSegments[5];\nuniform vec3 domeCanalEarth, domeCanalBed;\n#include <map_fragment>\nfloat domeCanalDistance = 1000.0;\nfor (int i = 0; i < 5; i++) {\n  vec2 a = domeCanalSegments[i].xy, ab = domeCanalSegments[i].zw - a;\n  float t = clamp(dot(vDomeCanal.xz - a, ab) / max(dot(ab, ab), 0.001), 0.0, 1.0);\n  domeCanalDistance = min(domeCanalDistance, length(vDomeCanal.xz - a - ab * t));\n}\nfloat domeCanalInterior = 1.0 - smoothstep(50.0, 63.0, max(abs(vDomeCanal.x), abs(vDomeCanal.z)));\nfloat domeCanalGrain = sin(vDomeCanal.x * 1.7 + sin(vDomeCanal.z * 0.8)) * sin(vDomeCanal.z * 2.3);\nvec3 domeCanalPigment = domeCanalEarth * mix(0.82, 1.13, smoothstep(-2.0, 4.0, vDomeCanal.y));\n\ndiffuseColor.rgb = mix(diffuseColor.rgb, domeCanalPigment * (1.0 + domeCanalGrain * 0.035), 0.58 * domeCanalInterior);\nfloat domeCanalBedMask = 1.0 - smoothstep(1.3, 2.1, domeCanalDistance);\nfloat domeCanalShoulder = smoothstep(1.5, 2.1, domeCanalDistance) * (1.0 - smoothstep(2.8, 3.8, domeCanalDistance));\ndiffuseColor.rgb = mix(diffuseColor.rgb, domeCanalBed * (0.94 + domeCanalGrain * 0.04), 0.68 * domeCanalBedMask * domeCanalInterior);\ndiffuseColor.rgb = mix(diffuseColor.rgb, domeCanalEarth * 1.22, 0.35 * domeCanalShoulder * domeCanalInterior);",
+        "cacheKey": "redfields-dry-route-v2:5:0"
+      },
+      "after": {
+        "uniforms": {
+          "domeCanalSegments": {
+            "value": [
+              {
+                "x": -38,
+                "y": 48,
+                "z": -28,
+                "w": 34
+              },
+              {
+                "x": -28,
+                "y": 34,
+                "z": -18,
+                "w": 20
+              },
+              {
+                "x": -18,
+                "y": 20,
+                "z": -12,
+                "w": 10
+              },
+              {
+                "x": -12,
+                "y": 10,
+                "z": -4,
+                "w": -6
+              },
+              {
+                "x": -4,
+                "y": -6,
+                "z": 4,
+                "w": -24
+              }
+            ]
+          },
+          "domeCanalEarth": {
+            "value": 11504489
+          },
+          "domeCanalBed": {
+            "value": 7828583
+          },
+          "redFieldsGreen": {
+            "value": 8556910
+          },
+          "redFieldsZones": {
+            "value": []
+          }
+        },
+        "vertexShader": "#include <common>\nvarying vec3 vDomeCanal;\n#include <begin_vertex>\nvDomeCanal = (modelMatrix * vec4(position, 1.0)).xyz;",
+        "fragmentShader": "#include <common>\nvarying vec3 vDomeCanal;\nuniform vec4 domeCanalSegments[5];\nuniform vec3 domeCanalEarth, domeCanalBed;\n#include <map_fragment>\nfloat domeCanalDistance = 1000.0;\nfor (int i = 0; i < 5; i++) {\n  vec2 a = domeCanalSegments[i].xy, ab = domeCanalSegments[i].zw - a;\n  float t = clamp(dot(vDomeCanal.xz - a, ab) / max(dot(ab, ab), 0.001), 0.0, 1.0);\n  domeCanalDistance = min(domeCanalDistance, length(vDomeCanal.xz - a - ab * t));\n}\nfloat domeCanalInterior = 1.0 - smoothstep(50.0, 63.0, max(abs(vDomeCanal.x), abs(vDomeCanal.z)));\nfloat domeCanalGrain = sin(vDomeCanal.x * 1.7 + sin(vDomeCanal.z * 0.8)) * sin(vDomeCanal.z * 2.3);\nvec3 domeCanalPigment = domeCanalEarth * mix(0.82, 1.13, smoothstep(-2.0, 4.0, vDomeCanal.y));\n\ndiffuseColor.rgb = mix(diffuseColor.rgb, domeCanalPigment * (1.0 + domeCanalGrain * 0.035), 0.58 * domeCanalInterior);\nfloat domeCanalBedMask = 1.0 - smoothstep(1.3, 2.1, domeCanalDistance);\nfloat domeCanalShoulder = smoothstep(1.5, 2.1, domeCanalDistance) * (1.0 - smoothstep(2.8, 3.8, domeCanalDistance));\ndiffuseColor.rgb = mix(diffuseColor.rgb, domeCanalBed * (0.94 + domeCanalGrain * 0.04), 0.68 * domeCanalBedMask * domeCanalInterior);\ndiffuseColor.rgb = mix(diffuseColor.rgb, domeCanalEarth * 1.22, 0.35 * domeCanalShoulder * domeCanalInterior);",
+        "cacheKey": "redfields-dry-route-v2:5:0"
+      }
+    },
+    {
+      "id": "seed-run",
+      "vertexAndRouteUniformsExact": true,
+      "unchangedShaderAndCache": true,
+      "before": {
+        "uniforms": {
+          "domeCanalSegments": {
+            "value": [
+              {
+                "x": 0,
+                "y": -48,
+                "z": -34,
+                "w": -21
+              },
+              {
+                "x": -34,
+                "y": -21,
+                "z": 0,
+                "w": 3
+              },
+              {
+                "x": 0,
+                "y": 3,
+                "z": 34,
+                "w": 27
+              },
+              {
+                "x": 34,
+                "y": 27,
+                "z": 0,
+                "w": 48
+              }
+            ]
+          },
+          "domeCanalEarth": {
+            "value": 11504489
+          },
+          "domeCanalBed": {
+            "value": 11770740
+          },
+          "redFieldsGreen": {
+            "value": 8556910
+          },
+          "redFieldsZones": {
+            "value": [
+              {
+                "x": -44,
+                "y": -30,
+                "z": -24,
+                "w": -12
+              },
+              {
+                "x": -10,
+                "y": -6,
+                "z": 10,
+                "w": 12
+              },
+              {
+                "x": 24,
+                "y": 18,
+                "z": 44,
+                "w": 36
+              }
+            ]
+          }
+        },
+        "vertexShader": "#include <common>\nvarying vec3 vDomeCanal;\n#include <begin_vertex>\nvDomeCanal = (modelMatrix * vec4(position, 1.0)).xyz;",
+        "fragmentShader": "#include <common>\nvarying vec3 vDomeCanal;\nuniform vec4 domeCanalSegments[4];\nuniform vec3 domeCanalEarth, domeCanalBed;\nuniform vec3 redFieldsGreen;\nuniform vec4 redFieldsZones[3];\n#include <map_fragment>\nfloat domeCanalDistance = 1000.0;\nfor (int i = 0; i < 4; i++) {\n  vec2 a = domeCanalSegments[i].xy, ab = domeCanalSegments[i].zw - a;\n  float t = clamp(dot(vDomeCanal.xz - a, ab) / max(dot(ab, ab), 0.001), 0.0, 1.0);\n  domeCanalDistance = min(domeCanalDistance, length(vDomeCanal.xz - a - ab * t));\n}\nfloat domeCanalInterior = 1.0 - smoothstep(50.0, 63.0, max(abs(vDomeCanal.x), abs(vDomeCanal.z)));\nfloat domeCanalGrain = sin(vDomeCanal.x * 1.7 + sin(vDomeCanal.z * 0.8)) * sin(vDomeCanal.z * 2.3);\nvec3 domeCanalPigment = domeCanalEarth * mix(0.82, 1.13, smoothstep(-2.0, 4.0, vDomeCanal.y));\nfloat redFieldsGreenMask = 0.0;\nfor (int i = 0; i < 3; i++) {\n  vec4 zone = redFieldsZones[i];\n  vec2 inset = min(vDomeCanal.xz - zone.xy, zone.zw - vDomeCanal.xz);\n  redFieldsGreenMask = max(redFieldsGreenMask, smoothstep(0.0, 2.0, min(inset.x, inset.y)));\n}\ndomeCanalPigment = mix(domeCanalPigment, redFieldsGreen, redFieldsGreenMask * 0.82);\ndiffuseColor.rgb = mix(diffuseColor.rgb, domeCanalPigment * (1.0 + domeCanalGrain * 0.035), 0.48 * domeCanalInterior);\nfloat domeCanalBedMask = 1.0 - smoothstep(1.3, 2.1, domeCanalDistance);\nfloat domeCanalShoulder = smoothstep(1.5, 2.1, domeCanalDistance) * (1.0 - smoothstep(2.8, 3.8, domeCanalDistance));\ndiffuseColor.rgb = mix(diffuseColor.rgb, domeCanalBed * (0.94 + domeCanalGrain * 0.04), 0.48 * domeCanalBedMask * domeCanalInterior);\ndiffuseColor.rgb = mix(diffuseColor.rgb, domeCanalEarth * 1.22, 0.18 * domeCanalShoulder * domeCanalInterior);",
+        "cacheKey": "redfields-dry-route-v2:4:3"
+      },
+      "after": {
+        "uniforms": {
+          "domeCanalSegments": {
+            "value": [
+              {
+                "x": 0,
+                "y": -48,
+                "z": -34,
+                "w": -21
+              },
+              {
+                "x": -34,
+                "y": -21,
+                "z": 0,
+                "w": 3
+              },
+              {
+                "x": 0,
+                "y": 3,
+                "z": 34,
+                "w": 27
+              },
+              {
+                "x": 34,
+                "y": 27,
+                "z": 0,
+                "w": 48
+              }
+            ]
+          },
+          "domeCanalEarth": {
+            "value": 11504489
+          },
+          "domeCanalBed": {
+            "value": 11770740
+          },
+          "redFieldsGreen": {
+            "value": 8556910
+          },
+          "redFieldsZones": {
+            "value": [
+              {
+                "x": -44,
+                "y": -30,
+                "z": -24,
+                "w": -12
+              },
+              {
+                "x": -10,
+                "y": -6,
+                "z": 10,
+                "w": 12
+              },
+              {
+                "x": 24,
+                "y": 18,
+                "z": 44,
+                "w": 36
+              }
+            ]
+          }
+        },
+        "vertexShader": "#include <common>\nvarying vec3 vDomeCanal;\n#include <begin_vertex>\nvDomeCanal = (modelMatrix * vec4(position, 1.0)).xyz;",
+        "fragmentShader": "#include <common>\nvarying vec3 vDomeCanal;\nuniform vec4 domeCanalSegments[4];\nuniform vec3 domeCanalEarth, domeCanalBed;\nuniform vec3 redFieldsGreen;\nuniform vec4 redFieldsZones[3];\n#include <map_fragment>\nfloat domeCanalDistance = 1000.0;\nfor (int i = 0; i < 4; i++) {\n  vec2 a = domeCanalSegments[i].xy, ab = domeCanalSegments[i].zw - a;\n  float t = clamp(dot(vDomeCanal.xz - a, ab) / max(dot(ab, ab), 0.001), 0.0, 1.0);\n  domeCanalDistance = min(domeCanalDistance, length(vDomeCanal.xz - a - ab * t));\n}\nfloat domeCanalInterior = 1.0 - smoothstep(50.0, 63.0, max(abs(vDomeCanal.x), abs(vDomeCanal.z)));\nfloat domeCanalGrain = sin(vDomeCanal.x * 1.7 + sin(vDomeCanal.z * 0.8)) * sin(vDomeCanal.z * 2.3);\nvec3 domeCanalPigment = domeCanalEarth * mix(0.82, 1.13, smoothstep(-2.0, 4.0, vDomeCanal.y));\nfloat redFieldsGreenMask = 0.0;\nfor (int i = 0; i < 3; i++) {\n  vec4 zone = redFieldsZones[i];\n  vec2 inset = min(vDomeCanal.xz - zone.xy, zone.zw - vDomeCanal.xz);\n  redFieldsGreenMask = max(redFieldsGreenMask, smoothstep(0.0, 2.0, min(inset.x, inset.y)));\n}\ndomeCanalPigment = mix(domeCanalPigment, redFieldsGreen, redFieldsGreenMask * 0.82);\ndiffuseColor.rgb = mix(diffuseColor.rgb, domeCanalPigment * (1.0 + domeCanalGrain * 0.035), 0.48 * domeCanalInterior);\nfloat domeCanalBedMask = 1.0 - smoothstep(1.3, 2.1, domeCanalDistance);\nfloat domeCanalShoulder = smoothstep(1.5, 2.1, domeCanalDistance) * (1.0 - smoothstep(2.8, 3.8, domeCanalDistance));\ndiffuseColor.rgb = mix(diffuseColor.rgb, domeCanalBed * (0.94 + domeCanalGrain * 0.04), 0.48 * domeCanalBedMask * domeCanalInterior);\ndiffuseColor.rgb = mix(diffuseColor.rgb, domeCanalEarth * 1.22, 0.18 * domeCanalShoulder * domeCanalInterior);",
+        "cacheKey": "redfields-dry-route-v2:4:3"
+      }
+    },
+    {
+      "id": "old-canal",
+      "vertexAndRouteUniformsExact": true,
+      "unchangedShaderAndCache": false,
+      "before": {
+        "uniforms": {
+          "domeCanalSegments": {
+            "value": [
+              {
+                "x": -46,
+                "y": -38,
+                "z": -30,
+                "w": -23
+              },
+              {
+                "x": -30,
+                "y": -23,
+                "z": -12,
+                "w": -26
+              },
+              {
+                "x": -12,
+                "y": -26,
+                "z": 2,
+                "w": 0
+              },
+              {
+                "x": 2,
+                "y": 0,
+                "z": 26,
+                "w": 6
+              },
+              {
+                "x": 26,
+                "y": 6,
+                "z": 32,
+                "w": 23
+              },
+              {
+                "x": 32,
+                "y": 23,
+                "z": 12,
+                "w": 48
+              }
+            ]
+          },
+          "domeCanalEarth": {
+            "value": 11504489
+          },
+          "domeCanalBed": {
+            "value": 7828583
+          },
+          "redFieldsGreen": {
+            "value": 8556910
+          },
+          "redFieldsZones": {
+            "value": []
+          }
+        },
+        "vertexShader": "#include <common>\nvarying vec3 vDomeCanal;\n#include <begin_vertex>\nvDomeCanal = (modelMatrix * vec4(position, 1.0)).xyz;",
+        "fragmentShader": "#include <common>\nvarying vec3 vDomeCanal;\nuniform vec4 domeCanalSegments[6];\nuniform vec3 domeCanalEarth, domeCanalBed;\n#include <map_fragment>\nfloat domeCanalDistance = 1000.0;\nfor (int i = 0; i < 6; i++) {\n  vec2 a = domeCanalSegments[i].xy, ab = domeCanalSegments[i].zw - a;\n  float t = clamp(dot(vDomeCanal.xz - a, ab) / max(dot(ab, ab), 0.001), 0.0, 1.0);\n  domeCanalDistance = min(domeCanalDistance, length(vDomeCanal.xz - a - ab * t));\n}\nfloat domeCanalInterior = 1.0 - smoothstep(50.0, 63.0, max(abs(vDomeCanal.x), abs(vDomeCanal.z)));\nfloat domeCanalGrain = sin(vDomeCanal.x * 1.7 + sin(vDomeCanal.z * 0.8)) * sin(vDomeCanal.z * 2.3);\nvec3 domeCanalPigment = domeCanalEarth * mix(0.82, 1.13, smoothstep(-2.0, 4.0, vDomeCanal.y));\n\ndiffuseColor.rgb = mix(diffuseColor.rgb, domeCanalPigment * (1.0 + domeCanalGrain * 0.035), 0.58 * domeCanalInterior);\nfloat domeCanalBedMask = 1.0 - smoothstep(1.3, 2.1, domeCanalDistance);\nfloat domeCanalShoulder = smoothstep(1.5, 2.1, domeCanalDistance) * (1.0 - smoothstep(2.8, 3.8, domeCanalDistance));\ndiffuseColor.rgb = mix(diffuseColor.rgb, domeCanalBed * (0.94 + domeCanalGrain * 0.04), 0.68 * domeCanalBedMask * domeCanalInterior);\ndiffuseColor.rgb = mix(diffuseColor.rgb, domeCanalEarth * 1.22, 0.35 * domeCanalShoulder * domeCanalInterior);",
+        "cacheKey": "redfields-dry-route-v2:6:0"
+      },
+      "after": {
+        "uniforms": {
+          "domeCanalSegments": {
+            "value": [
+              {
+                "x": -46,
+                "y": -38,
+                "z": -30,
+                "w": -23
+              },
+              {
+                "x": -30,
+                "y": -23,
+                "z": -12,
+                "w": -26
+              },
+              {
+                "x": -12,
+                "y": -26,
+                "z": 2,
+                "w": 0
+              },
+              {
+                "x": 2,
+                "y": 0,
+                "z": 26,
+                "w": 6
+              },
+              {
+                "x": 26,
+                "y": 6,
+                "z": 32,
+                "w": 23
+              },
+              {
+                "x": 32,
+                "y": 23,
+                "z": 12,
+                "w": 48
+              }
+            ]
+          },
+          "domeCanalEarth": {
+            "value": 11504489
+          },
+          "domeCanalBed": {
+            "value": 7828583
+          },
+          "redFieldsGreen": {
+            "value": 8556910
+          },
+          "redFieldsZones": {
+            "value": []
+          }
+        },
+        "vertexShader": "#include <common>\nvarying vec3 vDomeCanal;\n#include <begin_vertex>\nvDomeCanal = (modelMatrix * vec4(position, 1.0)).xyz;",
+        "fragmentShader": "#include <common>\nvarying vec3 vDomeCanal;\nuniform vec4 domeCanalSegments[6];\nuniform vec3 domeCanalEarth, domeCanalBed;\n#include <map_fragment>\nfloat domeCanalDistance = 1000.0;\nfor (int i = 0; i < 6; i++) {\n  vec2 a = domeCanalSegments[i].xy, ab = domeCanalSegments[i].zw - a;\n  float t = clamp(dot(vDomeCanal.xz - a, ab) / max(dot(ab, ab), 0.001), 0.0, 1.0);\n  domeCanalDistance = min(domeCanalDistance, length(vDomeCanal.xz - a - ab * t));\n}\nfloat domeCanalInterior = 1.0 - smoothstep(50.0, 63.0, max(abs(vDomeCanal.x), abs(vDomeCanal.z)));\nfloat domeCanalGrain = sin(vDomeCanal.x * 1.7 + sin(vDomeCanal.z * 0.8)) * sin(vDomeCanal.z * 2.3);\nvec3 domeCanalPigment = domeCanalEarth * mix(0.82, 1.13, smoothstep(-2.0, 4.0, vDomeCanal.y));\n\ndiffuseColor.rgb = mix(diffuseColor.rgb, domeCanalPigment * (1.0 + domeCanalGrain * 0.035), 0.58 * domeCanalInterior);\nfloat domeCanalBedMask = 1.0 - smoothstep(1.4, 1.65, domeCanalDistance);\nfloat domeCanalShoulder = smoothstep(1.4, 1.65, domeCanalDistance) * (1.0 - smoothstep(2.35, 2.8, domeCanalDistance));\ndiffuseColor.rgb = mix(diffuseColor.rgb, domeCanalBed * (0.94 + domeCanalGrain * 0.04), 0.68 * domeCanalBedMask * domeCanalInterior);\ndiffuseColor.rgb = mix(diffuseColor.rgb, domeCanalEarth * 1.22, 0.35 * domeCanalShoulder * domeCanalInterior);\n// A narrow mineral lip defines the inherited cut without inventing height or water.\nfloat oldCanalLip = smoothstep(1.25, 1.4, domeCanalDistance) * (1.0 - smoothstep(1.6, 1.8, domeCanalDistance));\ndiffuseColor.rgb *= 1.0 - oldCanalLip * domeCanalInterior * 0.16;",
+        "cacheKey": "redfields-dry-route-v2:6:0:cut-banks-v1"
+      }
+    }
+  ],
+  "bedTransitionMeters": {
+    "before": 0.8,
+    "after": 0.25
+  },
+  "outerShoulderTransitionMeters": {
+    "before": 1,
+    "after": 0.45
+  },
+  "newTexturesOrGeometry": false
+}

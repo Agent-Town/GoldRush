@@ -2478,7 +2478,7 @@ diffuseColor.rgb = mix(diffuseColor.rgb, mix(vec3(0.20, 0.034, 0.010), vec3(0.38
 
 /** Dry canal/road pigment follows published routes. Permanent green zones are
  * authored terrain paint; staged water and planted state keep their existing owners. */
-function clarifyRedFieldsRoute(model: THREE.Object3D, points: PaintRoutePoint[], greenZones: PaintZone[] = []): void {
+function clarifyRedFieldsRoute(model: THREE.Object3D, points: PaintRoutePoint[], greenZones: PaintZone[] = [], cutBanks = false): void {
   if (isMapBeautyDisabled() || points.length < 2) return;
   const segments = points.slice(1).map((end, i) => new THREE.Vector4(points[i]!.x, points[i]!.z, end.x, end.z));
   const materials = new Set<THREE.MeshStandardMaterial>();
@@ -2518,12 +2518,15 @@ for (int i = 0; i < ${greenZones.length}; i++) {
 }
 domeCanalPigment = mix(domeCanalPigment, redFieldsGreen, redFieldsGreenMask * 0.82);` : ''}
 diffuseColor.rgb = mix(diffuseColor.rgb, domeCanalPigment * (1.0 + domeCanalGrain * 0.035), ${greenZones.length ? '0.48' : '0.58'} * domeCanalInterior);
-float domeCanalBedMask = 1.0 - smoothstep(1.3, 2.1, domeCanalDistance);
-float domeCanalShoulder = smoothstep(1.5, 2.1, domeCanalDistance) * (1.0 - smoothstep(2.8, 3.8, domeCanalDistance));
+float domeCanalBedMask = 1.0 - smoothstep(${cutBanks ? '1.4, 1.65' : '1.3, 2.1'}, domeCanalDistance);
+float domeCanalShoulder = smoothstep(${cutBanks ? '1.4, 1.65' : '1.5, 2.1'}, domeCanalDistance) * (1.0 - smoothstep(${cutBanks ? '2.35, 2.8' : '2.8, 3.8'}, domeCanalDistance));
 diffuseColor.rgb = mix(diffuseColor.rgb, domeCanalBed * (0.94 + domeCanalGrain * 0.04), ${greenZones.length ? '0.48' : '0.68'} * domeCanalBedMask * domeCanalInterior);
-diffuseColor.rgb = mix(diffuseColor.rgb, domeCanalEarth * 1.22, ${greenZones.length ? '0.18' : '0.35'} * domeCanalShoulder * domeCanalInterior);`);
+diffuseColor.rgb = mix(diffuseColor.rgb, domeCanalEarth * 1.22, ${greenZones.length ? '0.18' : '0.35'} * domeCanalShoulder * domeCanalInterior);${cutBanks ? `
+// A narrow mineral lip defines the inherited cut without inventing height or water.
+float oldCanalLip = smoothstep(1.25, 1.4, domeCanalDistance) * (1.0 - smoothstep(1.6, 1.8, domeCanalDistance));
+diffuseColor.rgb *= 1.0 - oldCanalLip * domeCanalInterior * 0.16;` : ''}`);
     };
-    material.customProgramCacheKey = () => `redfields-dry-route-v2:${segments.length}:${greenZones.length}`;
+    material.customProgramCacheKey = () => `redfields-dry-route-v2:${segments.length}:${greenZones.length}${cutBanks ? ':cut-banks-v1' : ''}`;
     material.needsUpdate = true;
   }
 }
@@ -3205,7 +3208,7 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
       if (host.contractId === 'e8-low-orbit') gradeTerrainByHeight(nextTerrain, '#777a76', '#a5a28e', -4.8, 0.7, 0.38);
       if (host.contractId === 'e8-far-side') clarifyFarSideRegolith(nextTerrain);
       if (host.contractId === 'e9-dome-basin' && selected.contract.maskTruth?.canalRoute) clarifyRedFieldsRoute(nextTerrain, selected.contract.maskTruth.canalRoute.points);
-      if (host.contractId === 'e9-old-canal' && selected.contract.maskTruth?.inheritedCanalRoute) clarifyRedFieldsRoute(nextTerrain, selected.contract.maskTruth.inheritedCanalRoute.points);
+      if (host.contractId === 'e9-old-canal' && selected.contract.maskTruth?.inheritedCanalRoute) clarifyRedFieldsRoute(nextTerrain, selected.contract.maskTruth.inheritedCanalRoute.points, [], true);
       if (host.contractId === 'e9-seed-run' && selected.contract.maskTruth?.caravanRoute) clarifyRedFieldsRoute(nextTerrain, selected.contract.maskTruth.caravanRoute, selected.contract.maskTruth.permanentGreenWaypointZones);
       if (host.contractId === 'e6-glow-mesa') gradeTerrainByHeight(nextTerrain, '#9f8867', '#9b9682', 1.5, 4.6, 0.34);
       if (host.contractId === 'e7-relay-rush') gradeTerrainByHeight(nextTerrain, '#898476', '#b2a482', 0.4, 4.6, 0.34);
