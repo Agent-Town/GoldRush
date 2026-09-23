@@ -2113,7 +2113,7 @@ for (int i = 0; i < ${seams.length}; i++) {
 }
 float motorInterior = 1.0 - smoothstep(0.72, 1.0, max(abs(motorP.x) / motorHalfSize.x, abs(motorP.y) / motorHalfSize.y));
 if (motorHalfSize.x > 100.0) motorInterior = (1.0 - smoothstep(205.0, 260.0, abs(motorP.x))) * (1.0 - smoothstep(0.72, 1.0, abs(motorP.y) / motorHalfSize.y)) * (1.0 - smoothstep(1.0, 12.0, vMotorGround.y));
-diffuseColor.rgb = mix(motorOriginal, diffuseColor.rgb, motorInterior);`);
+diffuseColor.rgb = mix(motorOriginal, diffuseColor.rgb, motorInterior);${panorama ? '\n// Balance the differently lit Long Road apron against its adjacent earth.\ndiffuseColor.rgb *= mix(1.0, 1.12, motorInterior);' : ''}`);
       if (panorama) shader.fragmentShader = shader.fragmentShader.replace('#include <emissivemap_fragment>', '#include <emissivemap_fragment>\ntotalEmissiveRadiance *= 1.0 - motorInterior;');
     };
     material.customProgramCacheKey = () => `motor-ground-${roads.length}-${seams.length}-${panorama}-v2`;
