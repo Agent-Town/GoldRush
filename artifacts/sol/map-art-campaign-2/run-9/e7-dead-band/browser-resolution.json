@@ -1,0 +1,50 @@
+{
+  "initialCandidate": {
+    "passed": 103,
+    "skipped": 5,
+    "failed": 12
+  },
+  "exactBaseline": {
+    "passed": 3,
+    "skipped": 0,
+    "failed": 11
+  },
+  "reproducedBaselineFailures": 11,
+  "exactFingerprints": 9,
+  "variableHorizonValues": 2,
+  "transientCandidateFailure": {
+    "project": "mobile-chrome",
+    "spec": "e2e/ceremony-framework.spec.ts",
+    "title": "T10 THE CHARTER PRESS: the E10 science ceiling opens the existing River finale and idle opens nothing",
+    "baseAlsoFails": false,
+    "exactFingerprint": false,
+    "candidate": {
+      "project": "mobile-chrome",
+      "spec": "e2e/ceremony-framework.spec.ts",
+      "testLine": 777,
+      "title": "T10 THE CHARTER PRESS: the E10 science ceiling opens the existing River finale and idle opens nothing",
+      "fingerprint": [
+        "Error: expect(locator).toHaveCount(expected) failed",
+        "Expected: 0",
+        "Received: 1"
+      ],
+      "assertionLocations": [
+        "e2e/ceremony-framework.spec.ts:822:61"
+      ]
+    },
+    "base": null
+  },
+  "candidateRetry": {
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-9/e7-dead-band-charter-press-recheck.log",
+    "counts": {
+      "passed": 2,
+      "skipped": 0,
+      "failed": 0
+    },
+    "failures": []
+  },
+  "allFailuresReproducedOrPassedCandidateRetry": true,
+  "persistentUnattributedFailures": [],
+  "candidateEngine": "6655ba7569775a529216d58cf8f288556ca9fc19cfd7bbeae41dbeb9a99adf33",
+  "initialControlCaveat": "The first pre-art control is diagnostic only; final attribution uses the engine-verified base replay and parks the new source JSON."
+}
