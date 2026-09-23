@@ -6,6 +6,8 @@ Completed: e4-dust-flats — IMPROVED / HELD, READY-FOR-GATES; store b1e2c12a979
 
 Completed: e4-long-road — IMPROVED / HELD, READY-FOR-GATES; store e33b81277c9058ae8e8a18c595c975703d4887a7 pushed/read back.
 
-Remaining list in order: e4-gusher-county, e4-boneyard.
+Completed: e4-gusher-county — IMPROVED / HELD, READY-FOR-GATES; store 8ef0a035c47622425dada043aca1145e88aaca80 pushed/read back.
+
+Remaining list in order: e4-boneyard.
 
 The leg is in progress; only the completed maps above are ready. No shared Motor vehicle change: it belongs to run 8. Camera, HUD, mount/station transforms, gameplay, collision and height truth remain outside this slice.

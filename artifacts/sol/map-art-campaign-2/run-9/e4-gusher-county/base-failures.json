@@ -1,0 +1,75 @@
+{
+  "storeBase": "e33b81277c9058ae8e8a18c595c975703d4887a7",
+  "base": "acdecff85dcd55bda4f663cdbe1f973a3b9aee97",
+  "paths": {
+    "assets/pilots/map-rebuild-spike/landmarks/gusher-county/derrick-01.glb": {
+      "candidateSha256": "79dd963e9248beb4505770b28a8b559af09ba3450dedf1b2eff9450ce5b6930f",
+      "baseSha256": "916cfb5af0041472c448245507995e44f2ed71966fd18a63b2cce452188ac286"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/gusher-county/derrick-02.glb": {
+      "candidateSha256": "63b605084bb82e132956133f3a86759cbc0b795c288a5dbccbc750a5866d78c1",
+      "baseSha256": "dd40856dc193de08160d34c2eb8f50ad982f84b2da4c015974858296949442d6"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/gusher-county/derrick-03.glb": {
+      "candidateSha256": "1378e184a4dd3c702a719bfeead6d5703764f48bcab00291c1308b4ee470da5c",
+      "baseSha256": "6f5030bfa92a5f30c42b0a804fd5b046db3f35084097029c6f328766b0be5262"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/gusher-county/derrick-04.glb": {
+      "candidateSha256": "f5e4a795578f292bc3edaf4359828940958b015a0a5e437a6151b2b93a360db4",
+      "baseSha256": "c864fda9761c3e930a6fac2db4170b0f44a1532eaf4425658fee2fb28bd71d43"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/gusher-county/derrick-05.glb": {
+      "candidateSha256": "3e388464a9696e2b504e0210ecb4040c0c700407570d288f74ead8ebf54d81c0",
+      "baseSha256": "61e966ec242f1fa7416e68b06651333cc815b46dc066e751dcff47616e9a5952"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/gusher-county/derrick-06.glb": {
+      "candidateSha256": "2632f559651120a6d47d90eb682c0de2b52a0294cfb45cc360bbba859db80f78",
+      "baseSha256": "cc775c09277376d5bbb022d0d839816ff35d130888da8aab5235cbf9316112a8"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/gusher-county/derrick-07.glb": {
+      "candidateSha256": "33264a950b6c854ed69c48faa7e6374c880b8fd619279fec42e736c8c728293a",
+      "baseSha256": "914eb5fdf38f4e81aa9bde2ba8ff110305e666ef797ba56389537bf6007ed191"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/gusher-county/derrick-08.glb": {
+      "candidateSha256": "b64b8fe714e1908de58101ce3bd13f924b6226c5ddcf329e9150166c594d9a1b",
+      "baseSha256": "4131b96844c84efa4b5d8ff6f2b844c602bedff0c20bcf413bdb9ec20d60cd85"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/gusher-county/gusher-county-landmark-pack-contract.json": {
+      "candidateSha256": "b0aa96e498a7221b32c6d8f2416616d34ba25f1526ab588a577eaef89758577b",
+      "baseSha256": "10c7e2ba213daad26aa3f379ba32e4016f4f53a543430ecf253e8b8f9eebfa20"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/gusher-county/gusher-county-landmarks.blend": {
+      "candidateSha256": "1f2990e63c0f52f15ca94a15c2183e532c56552210ea5d981137178bed858b3a",
+      "baseSha256": "e2808a578f926fd1ba3b588dbdf01cc383996078e8c5b38da9d28f409295192f"
+    }
+  },
+  "pattern": "all\\ sixteen\\ contracts\\ mount\\ terrain,\\ panorama,\\ and\\ grounded\\ render\\-only\\ landmarks\\ with\\ matching\\ water|every\\ Motor\\ reel\\ replays\\ to\\ its\\ claimed\\ hash\\ in\\ Node\\ and\\ Chromium|rim\\ and\\ horizon\\ probes\\ keep\\ the\\ terrain\\ meeting\\ gradual\\ and\\ every\\ panorama\\ readable",
+  "specs": [
+    "e2e/e4-roads-and-convoys.spec.ts",
+    "e2e/terrain3d-registry.spec.ts"
+  ],
+  "candidateEngine": "e5acca191da821a5e1bf2ad225fef65ce93a11bd32d0610213465b7b23680bd7",
+  "baseEngine": "8a51dec200e748ad42ea24d3ffd8f53525dfc7f34edba41b260107179b9f809c",
+  "command": [
+    "npx",
+    "playwright",
+    "test",
+    "--workers=1",
+    "--project=desktop-chrome",
+    "--project=mobile-chrome",
+    "--trace=off",
+    "--reporter=line",
+    "--output=artifacts/sol/map-art-campaign-2/_raw/run-9/e4-gusher-county-base-failures/test-results",
+    "--grep",
+    "all\\ sixteen\\ contracts\\ mount\\ terrain,\\ panorama,\\ and\\ grounded\\ render\\-only\\ landmarks\\ with\\ matching\\ water|every\\ Motor\\ reel\\ replays\\ to\\ its\\ claimed\\ hash\\ in\\ Node\\ and\\ Chromium|rim\\ and\\ horizon\\ probes\\ keep\\ the\\ terrain\\ meeting\\ gradual\\ and\\ every\\ panorama\\ readable",
+    "e2e/e4-roads-and-convoys.spec.ts",
+    "e2e/terrain3d-registry.spec.ts"
+  ],
+  "exit": 1,
+  "newAssetsAbsentDuringBase": {
+    "assets/pilots/map-rebuild-spike/sources/e4-gusher-county-fidelity-2/landmark-input-contract.json": "10c7e2ba213daad26aa3f379ba32e4016f4f53a543430ecf253e8b8f9eebfa20"
+  },
+  "restoredEngine": "e5acca191da821a5e1bf2ad225fef65ce93a11bd32d0610213465b7b23680bd7",
+  "candidateRestoredExactly": true,
+  "log": "artifacts/sol/map-art-campaign-2/_raw/run-9/e4-gusher-county-base-failures/tests.log"
+}
