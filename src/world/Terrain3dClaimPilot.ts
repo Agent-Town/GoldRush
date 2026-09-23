@@ -2611,11 +2611,11 @@ diffuseColor.rgb = mix(diffuseColor.rgb, gardenRowPigment, gardenCrest * gardenW
   }
 }
 
-/** Bank stones are foreground scenery, not the panorama's depthless sky. */
-function preparePressureGardenBanks(model: THREE.Object3D): void {
+/** Authored rocks use world depth even when carried by the panorama pack. */
+function preparePanoramaRocks(model: THREE.Object3D, ...materialNames: string[]): void {
   model.traverse(node => {
     const mesh = node as THREE.Mesh<THREE.BufferGeometry, THREE.MeshStandardMaterial>;
-    if (!mesh.isMesh || Array.isArray(mesh.material) || mesh.material.name !== 'GardenBankStone') return;
+    if (!mesh.isMesh || Array.isArray(mesh.material) || !materialNames.includes(mesh.material.name)) return;
     const material = mesh.material, compile = material.onBeforeCompile.bind(material);
     const key = material.customProgramCacheKey();
     mesh.renderOrder = 0;
@@ -2682,7 +2682,7 @@ function clarifyCanyonGround(model: THREE.Object3D, panorama = false): void {
         .replace('#include <begin_vertex>', '#include <begin_vertex>\nvCanyonGround = (modelMatrix * vec4(position, 1.0)).xyz;');
       shader.fragmentShader = shader.fragmentShader
         .replace('#include <common>', '#include <common>\nvarying vec3 vCanyonGround;\nuniform vec3 canyonEarth;');
-      if (panorama) {
+      if (panorama && material.name !== 'CanyonApronEarth') {
         // The apron belongs to the panorama mesh, not the heightfield. Preserve sky paint.
         shader.fragmentShader = shader.fragmentShader.replace('#include <emissivemap_fragment>', `#include <emissivemap_fragment>
 float canyonApron = (1.0 - smoothstep(66.0, 108.0, max(abs(vCanyonGround.x) * 56.0 / 48.0, abs(vCanyonGround.z)))) * (1.0 - smoothstep(1.0, 8.0, vCanyonGround.y));
@@ -2695,7 +2695,7 @@ float canyonShelf = smoothstep(0.5, 6.0, vCanyonGround.y);
 diffuseColor.rgb *= 1.0 + canyonShelf * 0.10;`);
       }
     };
-    material.customProgramCacheKey = () => `canyon-ground-v1-${panorama}`;
+    material.customProgramCacheKey = () => `canyon-ground-v2-${panorama}-${material.name}`;
     material.needsUpdate = true;
   }
 }
@@ -3192,7 +3192,8 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
       nextPanorama.rotation.set(...mount.rotation);
       nextPanorama.scale.fromArray(mount.scale);
       preparePanorama(nextPanorama);
-      if (host.contractId === 'e2-pressure-garden') preparePressureGardenBanks(nextPanorama);
+      if (host.contractId === 'e2-pressure-garden') preparePanoramaRocks(nextPanorama, 'GardenBankStone');
+      if (host.contractId === 'e3-canyon-works') preparePanoramaRocks(nextPanorama, 'CanyonCliffStone', 'CanyonApronEarth');
       if (host.contractId === 'e10-archive-world') prepareArchiveLibrary(nextPanorama, selected.detailTextureUrl);
       if (host.contractId === 'e10-ember-shore') clarifyEmberBasalt(nextPanorama, selected.detailTextureUrl, true);
       if (host.contractId === 'e3-canyon-works') clarifyCanyonGround(nextPanorama, true);
