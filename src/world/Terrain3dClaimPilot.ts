@@ -1815,7 +1815,7 @@ function mountHaulSteam(
   }];
   if (cableHouse) vents.push({
     id: 'cable-house', x: cableHouse.position.x - 0.6, z: cableHouse.position.z - 1.4, y: 5,
-    interval: 1.5, phase: 0.4, life: 3.2, rise: 1.3, radius: 3.6, grow: 1.9,
+    interval: 1.5, phase: 0.4, life: 3.2, rise: 1.3, radius: 1.45, grow: 1.4,
     drift: [-0.4, -0.2], slots: 3,
   });
   if (crane) vents.push({

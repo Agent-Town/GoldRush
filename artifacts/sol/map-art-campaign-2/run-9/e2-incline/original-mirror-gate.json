@@ -1,0 +1,11 @@
+{
+  "command": [
+    "node",
+    "--test",
+    "scripts/deploy-mirror-allowlist.test.mjs"
+  ],
+  "exit": 1,
+  "log": "artifacts/sol/map-art-campaign-2/_raw/run-9/e2-incline-original-mirror.log",
+  "disposition": "Lane predates required includes already on main. Main script passes unchanged assertion in isolated tree; see mirror-prerequisite-proof.json.",
+  "baseOmissionsProvenBy": "base-mirror.json"
+}

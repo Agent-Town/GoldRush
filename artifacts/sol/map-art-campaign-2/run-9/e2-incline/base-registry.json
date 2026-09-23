@@ -1,0 +1,52 @@
+{
+  "storeBase": "25fed85ea017ff54abd78d5e4186dddf1dea6efc",
+  "base": "6e306d1a0c8ebec7ac44d19a5c066518e3e48817",
+  "paths": {
+    "src/world/Terrain3dClaimPilot.ts": {
+      "candidateSha256": "b427e4c8190c9dcb21694db0bcf86e28dbdb987bba5fd0e98581bf038ee2be55",
+      "baseSha256": "f85bf724ef08a6a8acd443f96e79a6955f6aa19bab5c878542f16ee898af2b12"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/incline/incline-landmark-pack-contract.json": {
+      "candidateSha256": "6cc23a4274d39fd1d6cfa28361d9cf7e3a6561de2a7e6e19c7f47b9318bf8a30",
+      "baseSha256": "8429fdffb3a56851f75c08054d7f115973c20c5aac201200787c3fc50312dc16"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/incline/incline-landmarks.blend": {
+      "candidateSha256": "a810e8f8ebe37cc4460e5609ce8c4c861abe146f2d58123761f7676fe4738e4f",
+      "baseSha256": "5c2c55d4376649e54bb68ec5a868f6f8d4f6607b03f132ecb9bae56aff0d65e2"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/incline/upper-ore-cable-house.glb": {
+      "candidateSha256": "76bff4fb7e4a7ccc3e32fb678a528f051132153ce79da477081d33c8cb888177",
+      "baseSha256": "0aae8d0429910833a2efb8c7843357fe6e8bc8f9955e05be08682440dc133da9"
+    }
+  },
+  "pattern": "all sixteen contracts mount|rim and horizon probes|all fifteen contracts stay painted",
+  "specs": [
+    "e2e/terrain3d-registry.spec.ts"
+  ],
+  "candidateEngine": "72968f9ab06af85b2754a57ba175fb04a106f60db887103b4cf8f494584ea3c2",
+  "baseEngine": "e300ac0f43d653be8b76c3f65610264ad5c2db023a9dd15a115a275cad6ea6f7",
+  "command": [
+    "npx",
+    "playwright",
+    "test",
+    "--workers=1",
+    "--project=desktop-chrome",
+    "--project=mobile-chrome",
+    "--trace=off",
+    "--reporter=line",
+    "--output=artifacts/sol/map-art-campaign-2/_raw/run-9/e2-incline-base-registry/test-results",
+    "--grep",
+    "all sixteen contracts mount|rim and horizon probes|all fifteen contracts stay painted",
+    "e2e/terrain3d-registry.spec.ts"
+  ],
+  "exit": 1,
+  "newAssetsAbsentDuringBase": {
+    "assets/pilots/map-rebuild-spike/sources/e2-incline-fidelity-2/landmarks-input.blend": "5c2c55d4376649e54bb68ec5a868f6f8d4f6607b03f132ecb9bae56aff0d65e2",
+    "assets/pilots/map-rebuild-spike/sources/e2-incline-fidelity-2/provenance.md": "0094f30b14aef294f9d26194cb2af28ea30bf605102f9859ef69acdaa1838975",
+    "assets/pilots/map-rebuild-spike/sources/e2-incline-fidelity-2/refine-cable-house.py": "f6a448f901a520bd474e5106b5a631d15f58012bcdd4a3283b2b54b55bdb4544",
+    "assets/pilots/map-rebuild-spike/sources/e2-incline-fidelity-2/landmark-input-contract.json": "8429fdffb3a56851f75c08054d7f115973c20c5aac201200787c3fc50312dc16"
+  },
+  "restoredEngine": "72968f9ab06af85b2754a57ba175fb04a106f60db887103b4cf8f494584ea3c2",
+  "candidateRestoredExactly": true,
+  "log": "artifacts/sol/map-art-campaign-2/_raw/run-9/e2-incline-base-registry/tests.log"
+}
