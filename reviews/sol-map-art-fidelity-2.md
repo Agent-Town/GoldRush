@@ -132,3 +132,33 @@ Code: `src/world/*` (render side, incl. `Water.ts`), the render-only presentatio
 ### Findings
 - **F-F2-11 (pre-existing, attributed by Astra on the exact base):** the Dust Flats' browser batch carries 20 base-red tests (16 exact fingerprints, two variable Claim-horizon samples, two opposite immediate E5 arsenal toggle phases), all distinguished by class in `run-9/e4-dust-flats/review.md`; outside this slice's gate, where the map's own spec and the E4 census run on both projects.
 - **F-F2-12 (information):** the slice is store-only on the code side (one status-doc row; no source change), so the engine hash moves by the pack contract alone; the early droplet-mirror check on the merged tree proves the two corpus JSONs ship.
+
+## Slice 5 — LANDED `8d3dd7b10` (2026-09-23 12:16Z): the Long Road
+
+**Lane up to** `acdecff85` · **store main** `e33b812` (landed first, pushed) · **merge** `8d3dd7b10` · same-era pin #45 `8a51dec2`
+
+### What it does (the run-6 HELD clauses answered FIXED / IMPROVED with a number against run 6 / HELD with the owner named)
+**The Long Road — IMPROVED / HELD (Astra's own verdict).** The west way station's closed shed becomes an open service canopy with an elevated water tank, and the covered hull at the convoy start becomes an articulated static convoy; bounds, the original atlas, mounts, collision and stations are exact. The apron's boundary luminance difference falls from 0.0207 to 0.0021 (−89.8%) while the ground's fixed boxes are unchanged and the RMS moves from 0.0118 to 0.0123, reported separately as the new silhouettes; the phone stop's HUD coverage rises by 0.0015 percentage points. HELD: the entry's ownership and the UI limits. Frame p95 9.45 → 9.60 ms desktop and 9.90 → 9.90 ms phone, draws 61 / 51 unchanged; no E1 art. Astra measured the engine hash at `8a51dec2…` with the lane store at `e33b812`; the drain's own measurement on the merged tree is the pin below.
+Where the player sees it: the plain entry of these maps, on production and the all-epochs preview.
+
+### Evidence (this slice's gates on the merged tree, the scratch store clean at the landed store main)
+| Check | Result |
+| --- | --- |
+| the store landing | `e33b812` on `Agent-Town/GoldRush-assets` main, pushed; the scratch store worktree detached at it, clean, before any hash was measured (F-A3-2) |
+| merge | `clean, no conflicts` |
+| single-line law (F-CORR1-4) | `nothing to flatten` |
+| tsc / build / e1 | `0 / 0 / 0` (rc) · payload `34317219 bytes` |
+| engine hash | `8a51dec200e748ad…`; same-era pin #45 `8a51dec2`, era guards in the chain `ℹ pass 9 ℹ fail 0` |
+| halo / null floors / law-pointer | `rc=0 halo re-extraction PASS: 315 cured, 0 held, 760 regenerated-and-cured, 2127 scanned; alpha and opaque RGB unchanged` · `rc=0 83 of 83 null floors match assets/contracts/null-floors.json (334.7s).` · `rc=0 law-pointer-guard — do the law surfaces still point at what they claim?` |
+| named guards | `ℹ pass 98 ℹ fail 0` |
+| e2e both projects, `--workers=1` (the maps' own specs, landmark brightness/collision, fort collision, task-025, m2-01) | `rc=1   2 failed   4 skipped   52 passed (4.6m)  12:16Z` |
+| e2e reds | `1) [desktop-chrome] › e2e/e4-roads-and-convoys.spec.ts:69:1 › every Motor reel replays to its claimed hash in Node and Chromium `<br>`2) [mobile-chrome] › e2e/e4-roads-and-convoys.spec.ts:69:1 › every Motor reel replays to its claimed hash in Node and Chromium `<br>Attribution: Attribution: pre-attributed by a control of this slice's specs on main `72a9da604` with the store's main at `b1e2c12` before the merge (`drain-s5-e2e-control-main.log`: rc=1, 5 failure lines) — every red on the merged tree below matches a line of that control by file, test line and project; nothing in this slice's diff touches those tests' subjects. |
+| full `npm run test:node-guards` (before the pin) | `rc=1 ℹ tests 955 ℹ pass 947 ℹ fail 3 ℹ skipped 5  12:09Z` |
+| battery reds | `✖ all 152 scripts/*.test.mjs fixture owners remove their temp directories (261532.4485ms)`<br>`✖ failing tests:`<br>`✖ rotation registry stays outside the engine identity corpus (702.45825ms)`<br>`✖ the landed registry names the live engine and stays outside its hash corpus (323.644625ms)` (the engine-era, bench-seeds and fixture-sweep rows are the pre-pin hash class, cured by the pin above) |
+
+### Merge classification
+Code: `src/world/*` (render side, incl. `Water.ts`), the render-only presentation owners, `src/entities/*` pure visuals (the Motor vehicle), `reviews/sol-map-art-current-status-20260909.md`, `artifacts/sol/map-art-campaign-2/report.md` (a dated run-9 section) and `run-9/**`. Store: `pilots/map-rebuild-spike/**` for these maps, one commit per map, landed on the store's main first. Firewall: within the master's Touch ONLY plus the store. Base: the chain's previous tip; MAIN-MOVED files are fire bookkeeping taken as theirs at the main merge before the fast-forward.
+
+### Findings
+- **F-F2-13 (pre-existing, attributed by Astra on the exact base):** the Long Road's browser batch carries ten base-red cases (eight exact fingerprints, two horizon-value variations), outside this slice's gate; the map's own spec and the E4 census run on both projects here.
+- **F-F2-15 (drain infrastructure, cured in the prep):** the slice's first e2e run timed out on 46 of 58 tests across every spec: vite's dependency optimiser re-ran under the first tests and its "optimized dependencies changed. reloading" destroyed the page contexts (`Execution context was destroyed`, `Failed to fetch dynamically imported module …/Game.ts`), because the chain worktree's `node_modules` is a symlink to the primary checkout's and the shared `node_modules/.vite` cache had been rewritten by the battery on main running beside the gate. A curl of `/` loads no module, so it never warmed the optimiser. Cure: the store-slice prep now boots one cheap test twice with a pause before the gate, and the post-fast-forward battery on main is serialised under the drain lock rather than run beside a gate. This slice was re-gated on a warmed server; the numbers in the table are the re-gate's.
