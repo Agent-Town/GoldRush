@@ -788,3 +788,12 @@ Engine `e5acca191da821a5e1bf2ad225fef65ce93a11bd32d0610213465b7b23680bd7` → `4
 Builds, scoped34+3 guards, loading8/8, repeat2/2 and source/recipe proofs pass. Complete browser51 pass/5 skip/4 failures reproduced on exact base; three exact fingerprints and one variable desktop horizon value. Corrected attribution excludes the new source-input JSON; rejected first receipt retained. Entry p95 **9.25→9.30 /9.55→9.65 ms**; gate view **8.65→9.20 /9.60→9.45**, unchanged draws, all within15%, zero capture errors. Runtime GLB **+92,996 B**; E1 delta N/A.
 
 Engine `49242d1713cb1c67838adc284919b18f067b4efad6ea61a61b42cba95bdfd731` → `083530624944acf74fd7beb888149f7dc017721185f8398be1b7eefec2e14ca6`; store `92db3dc4f87789f976b7c310b7adb7372f8c5c30` pushed on `astra/fidelity-2`. Pin untouched. Remaining E6 list in order: **e6-picnic**.
+
+
+## 2026-09-23 — run 9 E6: The Picnic and leg completion
+
+“The existing large cross-shaped ground shadow and primitive prop forms remain visible in the board; no full art-fidelity claim.” **FIXED** painted cross marks; **IMPROVED / HELD** props. Native-generated ground pigment and cloth atlas, cups/dishes/baskets/food and sagging canvas with retained bench/atom. Own run-6 RMS **−43.96% desktop /−29.56% phone**, center median **0.16403→0.58581 /0.16793→0.58300**; emission 0.45. Every body ≤3,000; all bounds, mounts, collision and station authority exact. Small desktop HUD rises and inherited entry/UI holds are explicit. Full ground/material/contact fidelity remains held. [Verbatim clause, boards, independent critique and all numbers](run-9/e6-picnic/review.md).
+
+Builds, 34+3 scoped guards,mirror,loading 8/8,repeat 2/2 and dedicated six-cycle mount/dispose pass. Browser **51 pass /5 skips /4 failures**, all reproduced on exact base (2 exact fingerprints). Entry p95 **10.10→10.20 /10.00→10.05ms**; grouping **9.70→10.05 /9.75→9.95ms**; all within 15%. Raw runtime **+11,804,162B**; E1 payload not applicable.
+
+Engine `083530624944acf74fd7beb888149f7dc017721185f8398be1b7eefec2e14ca6` → `e7c87a88d08517d84983d408a876cfa994068807fa51b3c54ee96bbe24710e32`; store `9e33801ab1a2f2349fce6929f576a81a6611a7e2` pushed and read back. Pin untouched. **Remaining E6 list: none. READY-FOR-GATES.** Glow Mesa skipped, Hollow and Picnic completed. Later epochs are separate tasks. [E6 handoff](run-9/e6-handoff.md).

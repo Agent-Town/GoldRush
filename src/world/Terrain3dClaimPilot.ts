@@ -202,7 +202,7 @@ const REGISTRY: Record<string, Entry> = {
   'e6-showroom': entry(new URL('../../assets/pilots/map-rebuild-spike/showroom-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/showroom-panorama.glb', import.meta.url).href, showroomContractText, showroomPanoramaContractText),
   'e6-half-life-hollow': entry(new URL('../../assets/pilots/map-rebuild-spike/half-life-hollow-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/half-life-hollow-panorama.glb', import.meta.url).href, halfLifeHollowContractText, halfLifeHollowPanoramaContractText),
   // Picnic retains the Glow Mesa sculpt and collision-backed bodies, adding its nonblocking dressing.
-  'e6-picnic': entry(new URL('../../assets/pilots/map-rebuild-spike/glow-mesa-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/glow-mesa-panorama.glb', import.meta.url).href, glowMesaContractText, glowMesaPanoramaContractText, picnicContractText),
+  'e6-picnic': entry(new URL('../../assets/pilots/map-rebuild-spike/glow-mesa-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/glow-mesa-panorama.glb', import.meta.url).href, glowMesaContractText, glowMesaPanoramaContractText, picnicContractText, new URL('../../assets/pilots/map-rebuild-spike/sources/e6-picnic-fidelity-2/picnic-ground-clean.png', import.meta.url).href),
   'e7-echo-canyon': entry(new URL('../../assets/pilots/map-rebuild-spike/echo-canyon-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/echo-canyon-panorama.glb', import.meta.url).href, echoCanyonContractText, echoCanyonPanoramaContractText),
   // Relay Valley aliases: both signal variants reuse its terrain and panorama.
   'e7-dead-band': entry(new URL('../../assets/pilots/map-rebuild-spike/relay-valley-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/relay-valley-panorama.glb', import.meta.url).href, relayValleyContractText, relayValleyPanoramaContractText, deadBandContractText),
@@ -2528,6 +2528,32 @@ diffuseColor.rgb = mix(diffuseColor.rgb, domeCanalEarth * 1.22, ${greenZones.len
   }
 }
 
+/** Picnic owns a cleaned pigment atlas; the Mesa source and sampled geometry stay shared. */
+function paintPicnicGround(model: THREE.Object3D, detailTextureUrl?: string): void {
+  if (!detailTextureUrl) return;
+  model.traverse(node => {
+    const mesh = node as THREE.Mesh<THREE.BufferGeometry, THREE.MeshStandardMaterial>;
+    if (!mesh.isMesh || Array.isArray(mesh.material) || !mesh.material.isMeshStandardMaterial || !mesh.material.map) return;
+    const material = mesh.material, compile = material.onBeforeCompile.bind(material);
+    let disposed = false;
+    const pigment = new THREE.TextureLoader().load(detailTextureUrl, texture => { if (disposed) texture.dispose(); });
+    pigment.colorSpace = THREE.SRGBColorSpace;
+    pigment.flipY = false; // Match the GLB map's UV orientation.
+    pigment.anisotropy = mesh.material.map.anisotropy;
+    material.addEventListener('dispose', () => { disposed = true; pigment.dispose(); });
+    const cacheKey = material.customProgramCacheKey();
+    material.onBeforeCompile = (shader, renderer) => {
+      compile(shader, renderer);
+      shader.uniforms.picnicGround = { value: pigment };
+      shader.fragmentShader = shader.fragmentShader
+        .replace('#include <common>', '#include <common>\nuniform sampler2D picnicGround;')
+        .replace('#include <map_fragment>', 'diffuseColor *= texture2D(picnicGround, vMapUv);');
+    };
+    material.customProgramCacheKey = () => `${cacheKey}|picnic-ground-v1`;
+    material.needsUpdate = true;
+  });
+}
+
 /** Separate existing shelves from their lower ground without moving any surface. */
 function gradeTerrainByHeight(model: THREE.Object3D, lowColor: string, highColor: string, lowHeight: number, highHeight: number, paintMix: number): void {
   if (isMapBeautyDisabled()) return;
@@ -3185,6 +3211,7 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
       if (host.contractId === 'e7-relay-rush') gradeTerrainByHeight(nextTerrain, '#898476', '#b2a482', 0.4, 4.6, 0.34);
       if (host.contractId === 'e7-dead-band') gradeTerrainByHeight(nextTerrain, '#888474', '#b2ab92', 0.4, 4.6, 0.34);
       if (host.contractId === 'e6-picnic') gradeTerrainByHeight(nextTerrain, '#9f8867', '#a1a483', 1.5, 4.6, 0.34);
+      if (host.contractId === 'e6-picnic') paintPicnicGround(nextTerrain, selected.detailTextureUrl);
       if (host.contractId === 'e6-half-life-hollow') gradeTerrainByHeight(nextTerrain, '#897c68', '#b9a788', -1.9, 1.8, 0.32);
       if ((host.contractId === 'e4-dust-flats' || host.contractId === 'e4-long-road' || host.contractId === 'e4-gusher-county' || host.contractId === 'e4-boneyard') && selected.contract.maskTruth) clarifyMotorGround(nextTerrain, selected.contract.maskTruth, false, host.contractId === 'e4-gusher-county' ? 0.30 : host.contractId === 'e4-boneyard' ? 0.72 : 0.78);
       if (host.nightMode) applyNightTerrainPools(nextTerrain, host);

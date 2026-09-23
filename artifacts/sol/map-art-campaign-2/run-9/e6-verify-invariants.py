@@ -5,7 +5,11 @@ name=sys.argv[1];pack=name.removeprefix('e6-');changed=set(sys.argv[2:])
 out=Path('artifacts/sol/map-art-campaign-2/run-9')/name;p=Path('assets/pilots/map-rebuild-spike');store=p.resolve().parents[1]
 base=json.loads((out/'base.json').read_text());unchanged={}
 def old(path):return subprocess.check_output(['git','-C',str(store),'show',base['store']+':pilots/map-rebuild-spike/'+path])
-paths=[f'{pack}-{kind}{s}' for kind in ['terrain','panorama'] for s in ['.glb','.blend','-contract.json','-atlas.png']]
+terrainPack='glow-mesa' if pack=='picnic' else pack
+paths=[f'{terrainPack}-{kind}{s}' for kind in ['terrain','panorama'] for s in ['.glb','.blend','-contract.json','-atlas.png']]
+if pack=='picnic':
+ paths.append('picnic-terrain-contract.json')
+ paths.extend(str(x.relative_to(p)) for x in (p/'landmarks/glow-mesa').glob('*.glb'))
 paths+=['landmark-collision-contract.json',f'landmarks/{pack}/{pack}-landmarks-atlas.png']
 paths += [str(x.relative_to(p)) for x in (p/f'landmarks/{pack}').glob('*.glb') if x.stem not in changed]
 for path in paths:
@@ -15,7 +19,7 @@ for k in a:
  if k not in ['assets','blend']:assert a[k]==b[k],k
 for id,record in a['assets'].items():
  for k,v in record.items():
-  if id in changed and k in ['triangles','sha256']:continue
+  if id in changed and k in ['triangles','sha256','meshCount','materialCount']:continue
   assert b['assets'][id][k]==v,(id,k)
 assert a['assets'].keys()==b['assets'].keys()
 t=json.loads((p/f'{pack}-terrain-contract.json').read_text());assert t['landmarkMounts']==b['mounts']

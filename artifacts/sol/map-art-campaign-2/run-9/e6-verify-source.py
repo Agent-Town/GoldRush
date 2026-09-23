@@ -22,4 +22,4 @@ for id,a in before.items():
  bpy.ops.export_scene.gltf(filepath=str(target),export_format='GLB',use_selection=True,export_apply=True,export_cameras=False,export_lights=False,export_animations=False,export_materials='EXPORT',export_extras=True)
  shipped=PACK/(id+'.glb');assert target.read_bytes()==shipped.read_bytes(),id
  rows.append({'id':id,'unchangedSourceSibling':id not in changed,'exactBounds':True,'sourceReexportByteIdentical':True,'sha256':sha(target)})
-(OUT/'source-verification.json').write_text(json.dumps({'rows':rows,'newRasters':0},indent=2)+'\n');print('SOURCE PROOF PASS',name)
+(OUT/'source-verification.json').write_text(json.dumps({'rows':rows,'sourceRasters':[{'file':x.name,'sha256':sha(x)} for x in sorted(S.glob('*.png'))]},indent=2)+'\n');print('SOURCE PROOF PASS',name)
