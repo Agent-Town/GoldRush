@@ -1,0 +1,23 @@
+[
+  {
+    "label": "charter-press-recheck",
+    "command": [
+      "npx",
+      "playwright",
+      "test",
+      "--workers=1",
+      "--project=desktop-chrome",
+      "--project=mobile-chrome",
+      "--trace=off",
+      "--reporter=line",
+      "--output=artifacts/sol/map-art-campaign-2/_raw/run-9/e7-dead-band-charter-press-recheck",
+      "e2e/ceremony-framework.spec.ts",
+      "--grep",
+      "T10 THE CHARTER PRESS"
+    ],
+    "environment": {},
+    "exit": 0,
+    "seconds": 17.12,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-9/e7-dead-band-charter-press-recheck.log"
+  }
+]

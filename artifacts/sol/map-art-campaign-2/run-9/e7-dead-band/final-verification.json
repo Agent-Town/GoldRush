@@ -1,0 +1,41 @@
+{
+  "disposition": "READY-FOR-GATES; baseline failures remain held, no shipping claim",
+  "typescriptDefaultFullBuilds": "pass",
+  "renderGuards": {
+    "passed": 34,
+    "failed": 0
+  },
+  "namedGuardsAfterStaging": {
+    "passed": 3,
+    "failed": 0
+  },
+  "browserInitial": {
+    "passed": 103,
+    "skipped": 5,
+    "failed": 12
+  },
+  "reproducedBaselineFailures": 11,
+  "exactBaselineFingerprints": 9,
+  "candidateTransientRecheck": {
+    "passed": 2,
+    "failed": 0
+  },
+  "plainCaptures": 4,
+  "stationCaptures": 20,
+  "timingRuns": 32,
+  "consolePageErrorsInCaptures": 0,
+  "allFourPerformanceComparisonsWithin15Percent": true,
+  "loading": 8,
+  "repeat": 2,
+  "mapMountDisposeCycles": 6,
+  "gameplaySourceAndAuthorityChanges": 0,
+  "sourceAndRecipeReproduction": "byte-identical",
+  "sourceEnvelopeAtlasMountsStationsCollisionTerrainMasks": "unchanged",
+  "maps": {
+    "e7-dead-band": "IMPROVED / HELD",
+    "e7-relay-rush": "SKIPPED: no art-owned held clause"
+  },
+  "remainingE7": [],
+  "releaseE1PayloadDelta": "not applicable",
+  "rawRuntimeGlbDeltaBytes": 183916
+}

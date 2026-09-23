@@ -1,0 +1,25 @@
+[
+  {
+    "label": "exact-base-known-red",
+    "command": [
+      "npx",
+      "playwright",
+      "test",
+      "--workers=1",
+      "--project=desktop-chrome",
+      "--project=mobile-chrome",
+      "--trace=off",
+      "--reporter=line",
+      "--output=artifacts/sol/map-art-campaign-2/_raw/run-9/e7-dead-band-exact-base-known-red",
+      "e2e/e7-roster.spec.ts",
+      "e2e/e7-signal-systems.spec.ts",
+      "e2e/e7-playbook-rows.spec.ts",
+      "--grep",
+      "plain Signal-era boot|S3 silences|HUMAN PARITY"
+    ],
+    "environment": {},
+    "exit": 1,
+    "seconds": 218.41,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-9/e7-dead-band-exact-base-known-red.log"
+  }
+]
