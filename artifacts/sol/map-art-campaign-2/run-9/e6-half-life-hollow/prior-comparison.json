@@ -1,0 +1,66 @@
+{
+  "source": "run-6/e6-half-life-hollow/visual-metrics.json",
+  "stationComparisons": [
+    {
+      "width": 1280,
+      "focus": "south-countdown-gate",
+      "station": 5,
+      "run6": {
+        "bodyPixels": 20973,
+        "bodyMedian": 0.2519607843137255,
+        "persistentHudCoveragePercent": 0.004768035092738283
+      },
+      "run9": {
+        "bodyPixels": 48672,
+        "bodyMedian": 0.2968415686274509,
+        "persistentHudCoveragePercent": 0.026709401709401708
+      },
+      "hudChangePercentagePoints": 0.021941366616663426
+    },
+    {
+      "width": 390,
+      "focus": "south-countdown-gate",
+      "station": 5,
+      "run6": {
+        "bodyPixels": 23530,
+        "bodyMedian": 0.25279843137254904,
+        "persistentHudCoveragePercent": 0.16574585635359115
+      },
+      "run9": {
+        "bodyPixels": 53841,
+        "bodyMedian": 0.29194666666666663,
+        "persistentHudCoveragePercent": 0.06500622202410802
+      },
+      "hudChangePercentagePoints": -0.10073963432948313
+    }
+  ],
+  "terrainBytesUnchanged": true,
+  "ground": [
+    {
+      "width": 1280,
+      "run6": {
+        "median": 0.20791294117647058,
+        "rms": 0.039115247628924675,
+        "darkShareBelow01": 0.0
+      },
+      "run9": {
+        "median": 0.20791294117647058,
+        "rms": 0.03911541262307818,
+        "darkShareBelow01": 0.0
+      }
+    },
+    {
+      "width": 390,
+      "run6": {
+        "median": 0.19754823529411764,
+        "rms": 0.027226171592056942,
+        "darkShareBelow01": 0.0
+      },
+      "run9": {
+        "median": 0.19783137254901959,
+        "rms": 0.027169672802555465,
+        "darkShareBelow01": 0.0
+      }
+    }
+  ]
+}

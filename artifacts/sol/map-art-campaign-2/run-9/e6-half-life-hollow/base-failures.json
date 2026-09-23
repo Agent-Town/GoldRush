@@ -1,0 +1,45 @@
+{
+  "storeBase": "e62dbf97cc8ba3c9d8c98e338b84f37d807a67a3",
+  "base": "e3f6b5d467f19ae36dcd7291bbf4f9f056f7c5e6",
+  "paths": {
+    "assets/pilots/map-rebuild-spike/landmarks/half-life-hollow/half-life-hollow-landmark-pack-contract.json": {
+      "candidateSha256": "21fa903edb7d399d222b777c76182774ea68c9df87330e5e916f4aa4ae8b7253",
+      "baseSha256": "d0d73b17fa08fd0bacda677c7821a683f1e2525ca60c3a38f84b25285d94e1ff"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/half-life-hollow/half-life-hollow-landmarks.blend": {
+      "candidateSha256": "2883a01c31e28debc4cde5477e035953fdb33dc65620fb46b4f8d2520263f535",
+      "baseSha256": "c4e459e7cd545b7681e9ad54d4b064263b6c1cff5bb1b9764d5f23b4e526e523"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/half-life-hollow/south-countdown-gate.glb": {
+      "candidateSha256": "178ddd92768f371647e4fab76a2dfbe179be081abcc9769efff3957ce9d23594",
+      "baseSha256": "6e4037fcbd2a55e7d0dccaefccbdcb00f36dc08aac1f37b5b3a1d1ab0edaa12f"
+    }
+  },
+  "pattern": "all\\ sixteen\\ contracts\\ mount\\ terrain,\\ panorama,\\ and\\ grounded\\ render\\-only\\ landmarks\\ with\\ matching\\ water|rim\\ and\\ horizon\\ probes\\ keep\\ the\\ terrain\\ meeting\\ gradual\\ and\\ every\\ panorama\\ readable",
+  "specs": [
+    "e2e/terrain3d-registry.spec.ts"
+  ],
+  "candidateEngine": "083530624944acf74fd7beb888149f7dc017721185f8398be1b7eefec2e14ca6",
+  "baseEngine": "49242d1713cb1c67838adc284919b18f067b4efad6ea61a61b42cba95bdfd731",
+  "command": [
+    "npx",
+    "playwright",
+    "test",
+    "--workers=1",
+    "--project=desktop-chrome",
+    "--project=mobile-chrome",
+    "--trace=off",
+    "--reporter=line",
+    "--output=artifacts/sol/map-art-campaign-2/_raw/run-9/e6-half-life-hollow-base-failures/test-results",
+    "--grep",
+    "all\\ sixteen\\ contracts\\ mount\\ terrain,\\ panorama,\\ and\\ grounded\\ render\\-only\\ landmarks\\ with\\ matching\\ water|rim\\ and\\ horizon\\ probes\\ keep\\ the\\ terrain\\ meeting\\ gradual\\ and\\ every\\ panorama\\ readable",
+    "e2e/terrain3d-registry.spec.ts"
+  ],
+  "exit": 1,
+  "newAssetsAbsentDuringBase": {
+    "assets/pilots/map-rebuild-spike/sources/e6-half-life-hollow-fidelity-2/landmark-input-contract.json": "d0d73b17fa08fd0bacda677c7821a683f1e2525ca60c3a38f84b25285d94e1ff"
+  },
+  "restoredEngine": "083530624944acf74fd7beb888149f7dc017721185f8398be1b7eefec2e14ca6",
+  "candidateRestoredExactly": true,
+  "log": "artifacts/sol/map-art-campaign-2/_raw/run-9/e6-half-life-hollow-base-failures/tests.log"
+}

@@ -777,3 +777,14 @@ IMPROVED / HELD. Same-box ground RMS versus run 6 falls **25.12% desktop /17.96%
 TypeScript/default/full builds, **34+3** scoped guards, source/recipe proofs, loading **8/8** and repeat **2/2** pass. Browser **55 pass /5 optional skips /6 failures reproduced on exact baseline**, four exact fingerprints and two variable Claim-horizon values. Candidate restored exactly. Entry p95 **9.70→9.70 /9.85→9.90 ms**, draws69/51 unchanged; sleeper-view **10.05→9.90 /9.80→10.00 ms**, draws64→65/45→46, all within15% and one timing mode. Four ordinary boots,24 stations and32 timing runs have zero console/page errors. Runtime GLBs add **159,892 B**. E1 payload N/A.
 
 Engine `e5acca191da821a5e1bf2ad225fef65ce93a11bd32d0610213465b7b23680bd7` → `49242d1713cb1c67838adc284919b18f067b4efad6ea61a61b42cba95bdfd731`; store `e62dbf97cc8ba3c9d8c98e338b84f37d807a67a3`, pushed/read back on `astra/fidelity-2`. Pin unchanged. **READY-FOR-GATES.** All four E4 maps have separate game/store commits; remaining list in this E4 leg: **none**. [Leg handoff](run-9/e4-handoff.md).
+
+
+## 2026-09-23 — run 9 E6: Glow Mesa skip and Half-Life Hollow
+
+**Glow Mesa SKIPPED:** its latest run-6 review has no art-owned HELD clause or independent critique. Existing contract/layout/camera/Atomic/UI holds remain; no asset change.
+
+**Half-Life Hollow IMPROVED / HELD:** architectural clock arch, **508→1,956/3,000 triangles**, exact envelope and passage, original atlas and four sibling bodies preserved. Own run-6 station luminance **0.25196→0.29684 /0.25280→0.29195**. HUD **0.004768%→0.026709% desktop** (small rise reported) and **0.165746%→0.065006% phone**. Full material/contact/lighting and existing camera/layout/UI holds remain. [Verbatim clause, boards and independent critique](run-9/e6-half-life-hollow/review.md).
+
+Builds, scoped34+3 guards, loading8/8, repeat2/2 and source/recipe proofs pass. Complete browser51 pass/5 skip/4 failures reproduced on exact base; three exact fingerprints and one variable desktop horizon value. Corrected attribution excludes the new source-input JSON; rejected first receipt retained. Entry p95 **9.25→9.30 /9.55→9.65 ms**; gate view **8.65→9.20 /9.60→9.45**, unchanged draws, all within15%, zero capture errors. Runtime GLB **+92,996 B**; E1 delta N/A.
+
+Engine `49242d1713cb1c67838adc284919b18f067b4efad6ea61a61b42cba95bdfd731` → `083530624944acf74fd7beb888149f7dc017721185f8398be1b7eefec2e14ca6`; store `92db3dc4f87789f976b7c310b7adb7372f8c5c30` pushed on `astra/fidelity-2`. Pin untouched. Remaining E6 list in order: **e6-picnic**.
