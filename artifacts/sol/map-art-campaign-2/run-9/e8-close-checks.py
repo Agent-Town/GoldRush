@@ -12,11 +12,11 @@ def run(label,cmd,extra=None,check=True):
  if check:assert r.returncode==0,(label,str(path))
  return path
 if '--finish-only' in sys.argv:pass
-elif name=='e8-far-side':
+elif name in ('e8-far-side','e8-low-orbit'):
  gate=p/'e2e-own-and-shared-gates.json';deadline=time.monotonic()+2400
  while not gate.exists():
   assert time.monotonic()<deadline,'Browser batch did not finish';time.sleep(2)
- run('parse-own',[sys.executable,str(root/'e4-failures.py'),name,'own',str(raw/(name+'-own-and-shared.log'))])
+ run('parse-own',[sys.executable,str(root/'e4-failures.py'),name,'own',json.loads(gate.read_text())[0]['log']])
  candidate=json.loads((p/'own-failures.json').read_text());base=json.loads((p/'base.json').read_text())
  if candidate['failures']:
   titles=sorted({r['title'] for r in candidate['failures']});specs=sorted({r['spec'] for r in candidate['failures']})
@@ -31,13 +31,13 @@ elif name=='e8-far-side':
   (p/'browser-failure-attribution.json').write_text(json.dumps(result,indent=2)+'\n');assert result['allCasesAlsoFailOnBase'],'New or unstable failure needs investigation'
  # The final local material/brace refinement happened during the broad batch.
  # Re-run all directly affected map and landmark cases on immutable final bytes.
- run('final-impact-driver',[sys.executable,str(root/'e4-gates.py'),name,'e2e','final-impact','e2e/e8-far-side-probe.spec.ts','e2e/landmark-brightness.spec.ts','e2e/landmark-collision.spec.ts','e2e/fort-landmark-collision.spec.ts'])
+ if name=='e8-far-side':run('final-impact-driver',[sys.executable,str(root/'e4-gates.py'),name,'e2e','final-impact','e2e/e8-far-side-probe.spec.ts','e2e/landmark-brightness.spec.ts','e2e/landmark-collision.spec.ts','e2e/fort-landmark-collision.spec.ts'])
  run('parity-driver',[sys.executable,str(root/'e4-gates.py'),name,'e2e','parity-census','--grep',name,'e2e/e8-remaining-maps-parity.spec.ts','e2e/er01-e8-census.spec.ts','e2e/map-census.spec.ts'])
 else:
  run('own-driver',[sys.executable,str(root/'e4-gates.py'),name,'e2e','own-and-shared','e2e/e8-low-orbit-momentum.spec.ts','e2e/e8-physics.spec.ts','e2e/landmark-brightness.spec.ts','e2e/landmark-collision.spec.ts','e2e/fort-landmark-collision.spec.ts'])
  run('parity-driver',[sys.executable,str(root/'e4-gates.py'),name,'e2e','parity-census','--grep',name,'e2e/e8-remaining-maps-parity.spec.ts','e2e/er01-e8-census.spec.ts','e2e/map-census.spec.ts'])
-if '--finish-only' not in sys.argv:run('final-stations',['node',str(root/'paired-capture.mjs')],{'MAP':name,'MODE':'stations'})
-if '--finish-only' not in sys.argv:run('final-plain',['node',str(root/'paired-capture.mjs')],{'MAP':name,'MODE':'plain'})
+if '--finish-only' not in sys.argv and '--captured' not in sys.argv:run('final-stations',['node',str(root/'paired-capture.mjs')],{'MAP':name,'MODE':'stations'})
+if '--finish-only' not in sys.argv and '--captured' not in sys.argv:run('final-plain',['node',str(root/'paired-capture.mjs')],{'MAP':name,'MODE':'plain'})
 run('final-metrics',[sys.executable,str(root/'metrics.py'),name])
 run('final-boards',[sys.executable,str(root/'boards.py'),name])
 run('generic-probes',[sys.executable,str(root/'e4-gates.py'),name,'probes'])

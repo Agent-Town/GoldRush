@@ -1,0 +1,38 @@
+{
+  "log": "artifacts/sol/map-art-campaign-2/_raw/run-9/e8-low-orbit-own-and-shared-rerun-2.log",
+  "counts": {
+    "passed": 58,
+    "skipped": 4,
+    "failed": 2
+  },
+  "failures": [
+    {
+      "project": "desktop-chrome",
+      "spec": "e2e/e8-roster.spec.ts",
+      "testLine": 172,
+      "title": "plain Orbital-era boot stays error-free without the debug harness",
+      "fingerprint": [
+        "Error: expect(received).toBe(expected) // Object.is equality",
+        "Expected: true",
+        "Received: false"
+      ],
+      "assertionLocations": [
+        "e2e/e8-roster.spec.ts:183:93"
+      ]
+    },
+    {
+      "project": "mobile-chrome",
+      "spec": "e2e/e8-roster.spec.ts",
+      "testLine": 172,
+      "title": "plain Orbital-era boot stays error-free without the debug harness",
+      "fingerprint": [
+        "Error: expect(received).toBe(expected) // Object.is equality",
+        "Expected: true",
+        "Received: false"
+      ],
+      "assertionLocations": [
+        "e2e/e8-roster.spec.ts:183:93"
+      ]
+    }
+  ]
+}
