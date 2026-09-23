@@ -36,3 +36,36 @@ Code: `src/world/*` (render side, incl. `Water.ts`), the render-only presentatio
 - **F-F2-1 (the master's rule applied, information):** the E1 three and the Trestle carry no art-owned clause in their latest reviews and no independent critique, so Astra skipped them with the owner audit in `run-9/run-note.md`; the E1 payload law therefore had nothing to bite on in this leg, and the leg is the Pressure Garden and the Incline.
 - **F-F2-2 (pre-existing, attributed):** Astra's broad batch carries six registry failures reproduced on its exact base (its lane predates the test-truth landing, so it sees the three old rows); on the merged tree the drain's control expects the two rows F-TTRC-1 holds.
 - **F-F2-3 (information):** the lane predates the two mirror cures on main (`214a54568`, `82c226185`), so Astra's own droplet-mirror gate stayed red while it proved the current main script passes in an isolated tree (`run-9/mirror-prerequisite-proof.json`); the drain's early mirror check on the merged tree is the proof that counts.
+
+## Slice 2 — LANDED `5d2748f27` (2026-09-23 01:36Z): the Incline
+
+**Lane up to** `84992f3bf` · **store main** `d76ee14` (landed first, pushed) · **merge** `5d2748f27` · same-era pin #42 `16c2576d`
+
+### What it does (the run-6 HELD clauses answered FIXED / IMPROVED with a number against run 6 / HELD with the owner named)
+**The Incline — IMPROVED / HELD (Astra's own verdict).** The upper ore cable house reads as a mechanism: a spoked sheave and hub, explicit cable returns and a wound drum replace the buried dark winch, which is removed as a whole component; a timber roof, an exhaust neck and a boarded platform with a 0.48 m fascia (from 0.24 m) replace the thin red-roof and sheet reading. The body grows 2,028 → 2,136 of 3,000 triangles with its bounds, mount, collision footprint and inspection station exact, the four sibling GLBs and every atlas pixel untouched; the body median rises against run 4 from 0.134 to 0.164 desktop and 0.137 to 0.166 phone at emission 0.375; the ground median is unchanged and its RMS moves under one percent with no noise claim. The phone's primary persistent HUD coverage falls 0.270% → 0.246%, the desktop's rises 0.008% → 0.059% and is reported as such; ordinary phone dialogue still hides the upper mechanism. HELD by art: the similar brown materials, the exposed pale base strips and the weak platform contact; the entry and offscreen terminal, the track connection, the cliffs and the UI stay with their owners. The independent critique prefers the cleared mechanism and finds no new geometry or depth-ordering defect. Frame p95 9.65 → 9.60 ms desktop and 9.80 → 9.55 ms phone, draws 76 / 58 unchanged; the E1 first-town payload reads 34,311,866 B (+1 B; +2,036 B across the leg, no E1 art changes). Astra measured the engine hash at `72968f9a…` with the lane store at `d76ee14`; the drain's own measurement on the merged tree is the pin below.
+
+**Leg verdict (E1 and E2).** Two maps carried an art-owned clause and both are answered with numbers against their own earlier runs: the Pressure Garden's river and banks, the Incline's cable house and platform. Night Shift, Twin Banks, the Claim-Jumper Baron and the Trestle hold no clause for an art owner in their latest reviews and are skipped without promoting their verdicts; the E1 payload law had nothing to bite on. The run ended without a quota refusal; the next leg (E3, the Canyon Works) waits for the owner's word.
+Where the player sees it: the plain entry of these maps, on production and the all-epochs preview.
+
+### Evidence (this slice's gates on the merged tree, the scratch store clean at the landed store main)
+| Check | Result |
+| --- | --- |
+| the store landing | `d76ee14` on `Agent-Town/GoldRush-assets` main, pushed; the scratch store worktree detached at it, clean, before any hash was measured (F-A3-2) |
+| merge | `clean, no conflicts` |
+| single-line law (F-CORR1-4) | `nothing to flatten` |
+| tsc / build / e1 | `0 / 0 / 0` (rc) · payload `34316950 bytes` |
+| engine hash | `16c2576d36273edf…`; same-era pin #42 `16c2576d`, era guards in the chain `ℹ pass 9 ℹ fail 0` |
+| halo / null floors / law-pointer | `rc=0 halo re-extraction PASS: 315 cured, 0 held, 760 regenerated-and-cured, 2127 scanned; alpha and opaque RGB unchanged` · `rc=0 83 of 83 null floors match assets/contracts/null-floors.json (295.4s).` · `rc=0 law-pointer-guard — do the law surfaces still point at what they claim?` |
+| named guards | `ℹ pass 98 ℹ fail 0` |
+| e2e both projects, `--workers=1` (the maps' own specs, landmark brightness/collision, fort collision, task-025, m2-01) | `rc=0   4 skipped   48 passed (5.7m)  01:29Z` |
+| e2e reds | none<br>Attribution: Attribution: pre-attributed by a control of this slice's specs on main `a07c0f251` with the store's main at `25fed85` before the merge (`drain-s2-e2e-control-main.log`: rc=0, 0 failure lines) — every red on the merged tree below matches a line of that control by file, test line and project; nothing in this slice's diff touches those tests' subjects. |
+| full `npm run test:node-guards` (before the pin) | `rc=1 ℹ tests 955 ℹ pass 947 ℹ fail 3 ℹ skipped 5  01:36Z` |
+| battery reds | `✖ all 152 scripts/*.test.mjs fixture owners remove their temp directories (185983.790292ms)`<br>`✖ failing tests:`<br>`✖ rotation registry stays outside the engine identity corpus (608.618ms)`<br>`✖ the landed registry names the live engine and stays outside its hash corpus (188.606833ms)` (the engine-era, bench-seeds and fixture-sweep rows are the pre-pin hash class, cured by the pin above) |
+
+### Merge classification
+Code: `src/world/*` (render side, incl. `Water.ts`), the render-only presentation owners, `src/entities/*` pure visuals (the Motor vehicle), `reviews/sol-map-art-current-status-20260909.md`, `artifacts/sol/map-art-campaign-2/report.md` (a dated run-9 section) and `run-9/**`. Store: `pilots/map-rebuild-spike/**` for these maps, one commit per map, landed on the store's main first. Firewall: within the master's Touch ONLY plus the store. Base: the chain's previous tip; MAIN-MOVED files are fire bookkeeping taken as theirs at the main merge before the fast-forward.
+
+### Findings
+- **F-F2-4 (pre-existing, attributed by Astra on the exact preceding code/store):** the Incline's own and pack browser batch carries six registry failures matched by fingerprint to the exact preceding engine (the three old registry rows, both projects; the lane predates the test-truth landing), outside this slice's gate; the drain's control on the current main expects the two rows F-TTRC-1 holds.
+- **F-F2-5 (information, the leg's payload):** the E1 first-town payload moved +2,036 B across the leg with no E1 art asset changed (the render-side table edits for E2 maps), under the 52,000,000 B law by a wide margin.
+- **F-F2-6 (the next leg):** `sol-map-art-fidelity-2-e3` (the Canyon Works, one map) is prepared with its leaf gate-side and queues on the owner's word; the remaining legs follow in epoch order.

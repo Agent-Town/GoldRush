@@ -1,0 +1,32 @@
+slice 2: lane 84992f3bf69f04cb7815744442b81b50958775c7 store d76ee141dcac825aa29cf4e5d4a868fe845fb1c8 maps: the Incline 01:16Z
+store on 'main', dirty 0 (Astra's, untouched)
+store main -> d76ee14 (art(store): Incline — clarify cable-house mechanism and platform)
+store main pushed: d76ee14
+scratch store: detached at d76ee14, clean
+chain fast-forwarded to main a07c0f251
+chain base a07c0f251 merging lane 84992f3bf (lane tip 84992f3bf) 01:16Z
+merged 5d2748f27
+single-line law: nothing to flatten
+law-pointer (pre): rc=0, no re-base needed
+engine hash merged (scratch store at d76ee14): 16c2576d36273edf4d202c5c9e364daaf6812474927f4cee9ce1834138b6e86a
+droplet mirror closure (early check, F-FID1-5 class: a store slice can add a corpus file the mirror does not ship): rc=0
+tsc/build/e1: 0 / 0 / 0
+first-town payload: 34316950 bytes
+halo: rc=0 halo re-extraction PASS: 315 cured, 0 held, 760 regenerated-and-cured, 2127 scanned; alpha and opaque RGB unchanged
+null floors: rc=0 83 of 83 null floors match assets/contracts/null-floors.json (295.4s).
+law-pointer: rc=0 law-pointer-guard — do the law surfaces still point at what they claim?
+guards: ℹ pass 98 ℹ fail 0 
+e2e start 01:23Z: e2e/e2-incline.spec.ts e2e/er01-e2-census.spec.ts e2e/landmark-brightness.spec.ts e2e/landmark-collision.spec.ts e2e/task-025-bandits-dont-swim.spec.ts e2e/m2-01-build-menu.spec.ts 
+e2e: rc=0   4 skipped   48 passed (5.7m)  01:29Z
+battery start 01:29Z
+battery: rc=1 ℹ tests 955 ℹ pass 947 ℹ fail 3 ℹ skipped 5  01:36Z
+✖ all 152 scripts/*.test.mjs fixture owners remove their temp directories (185983.790292ms)
+✖ failing tests:
+✖ rotation registry stays outside the engine identity corpus (608.618ms)
+✖ the landed registry names the live engine and stays outside its hash corpus (188.606833ms)
+dirt after battery: 0
+FID2-S2-PREP-DONE
+known-red overrides: e2e ^$ battery ^$
+hash at pin time: 16c2576d36273edf4d202c5c9e364daaf6812474927f4cee9ce1834138b6e86a
+pin #42
+era (chain, scratch store): ℹ pass 9 ℹ fail 0 
