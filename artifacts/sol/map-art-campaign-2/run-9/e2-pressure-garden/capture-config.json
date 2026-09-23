@@ -1,0 +1,108 @@
+{
+  "allowFallbackBefore": false,
+  "extraSources": [],
+  "epoch": "epoch-2-steamworks",
+  "assets": [
+    {
+      "name": "pressure-garden-terrain.glb",
+      "type": "model/gltf-binary"
+    },
+    {
+      "name": "pressure-garden-panorama.glb",
+      "type": "model/gltf-binary"
+    },
+    {
+      "name": "garden-pressure-manifold.glb",
+      "type": "model/gltf-binary"
+    },
+    {
+      "name": "west-terrace-pipe-header.glb",
+      "type": "model/gltf-binary"
+    },
+    {
+      "name": "east-terrace-pipe-header.glb",
+      "type": "model/gltf-binary"
+    },
+    {
+      "name": "coal-seam-service-winch.glb",
+      "type": "model/gltf-binary"
+    },
+    {
+      "name": "water-band-pump-station.glb",
+      "type": "model/gltf-binary"
+    }
+  ],
+  "stations": [
+    [
+      "garden-pressure-manifold",
+      "entry",
+      -12,
+      12
+    ],
+    [
+      "garden-pressure-manifold",
+      "new5",
+      0,
+      9
+    ],
+    [
+      "water-band-pump-station",
+      "new13",
+      42,
+      7
+    ],
+    [
+      "coal-seam-service-winch",
+      "new5",
+      -42,
+      45
+    ],
+    [
+      "west-terrace-pipe-header",
+      "new9",
+      -47,
+      33
+    ],
+    [
+      "east-terrace-pipe-header",
+      "new9",
+      47.5,
+      33
+    ]
+  ],
+  "regions": [
+    [
+      1280,
+      [
+        930,
+        380,
+        1130,
+        560
+      ]
+    ],
+    [
+      390,
+      [
+        285,
+        385,
+        375,
+        515
+      ]
+    ]
+  ],
+  "viewpoints": [
+    [
+      "river",
+      0,
+      14
+    ],
+    [
+      "bank-west",
+      -22,
+      14
+    ]
+  ],
+  "contracts": [
+    "pressure-garden-panorama-contract.json"
+  ]
+}

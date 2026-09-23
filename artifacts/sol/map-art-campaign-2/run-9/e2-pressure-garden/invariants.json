@@ -1,0 +1,33 @@
+{
+  "unchangedBytes": {
+    "pressure-garden-terrain.glb": "da54c5ceb70e07778e91ae26ace6b562a217fa039af6dfa9493e8f482f424f0b",
+    "pressure-garden-terrain.blend": "73ab24a5d5f6b2b0f4c4333955dcac7a66c68e48bac43b16801fea96982ce002",
+    "pressure-garden-terrain-contract.json": "7faf0c24c5ff51ed04b8c6df5eb41d751123711b39c5894a8ac7b87165f74ab6",
+    "pressure-garden-terrain-atlas.png": "38b5da07037ea6fbbfce2607fac5c418c99e14f2b29f4841ad9fb8d23cf37f58",
+    "pressure-garden-panorama-atlas.png": "fa2f5c58b8ab77ddcc6f92c9c241060a4b2b760dbec4f2f8be23043f37ffcf30",
+    "landmark-collision-contract.json": "929c325001a04c8f098885cc5973fb43e6de89b51781a48ba62d4cdd18c6d4fa",
+    "landmarks/pressure-garden/garden-pressure-manifold.glb": "879ebc6a32c59269ebd5621b09f9ec3030bc704bbb457d3eeaab272a2f83b81c",
+    "landmarks/pressure-garden/water-band-pump-station.glb": "59f769a9aa726923013403467b9cf71087e165651f1c59f6c37729876099be98",
+    "landmarks/pressure-garden/east-terrace-pipe-header.glb": "dcf13b45962743b9a31b6328794f28b16b4a6290b1b53d355981794f4f351c78",
+    "landmarks/pressure-garden/pressure-garden-landmark-pack-contract.json": "ce4283c379668646be572729fde9c0f60d0491ecb17523642c1cb2be0d0413d9",
+    "landmarks/pressure-garden/west-terrace-pipe-header.glb": "9399290248b8bef740436b349b33098e4c767a075f42c23e41409d9d051b23c1",
+    "landmarks/pressure-garden/pressure-garden-landmarks.blend": "d542810d3989b8d42d88fe7338897402956e27dbb7ebab5689c4e4f8b453ca6d",
+    "landmarks/pressure-garden/coal-seam-service-winch.glb": "013460e0ea735d60da0a3670c9e9f385326f89e553b2b01cd1f1ac26caf2fd3a",
+    "landmarks/pressure-garden/pressure-garden-landmarks-atlas.png": "9e38e72df3833391b0886204c86e1c7423a71e14cc772b68fda0b80f4cb36b18"
+  },
+  "terrainAndAllLandmarkBytesExact": true,
+  "heightsMasksMountsStationsCollisionBudgetsExact": true,
+  "singleLineRegistryEntries": 36,
+  "protectedAuthorities": [
+    "src/game",
+    "src/sim",
+    "assets/contracts",
+    "src/world/Terrain.ts",
+    "src/world/LandmarkCollision.ts",
+    "src/systems",
+    "src/entities",
+    "e2e",
+    "assets/engine-era.json"
+  ],
+  "changedWaterBranch": "Only Pressure Garden declares rippleScale or depthContrast. Other maps retain original palette and GLSL branch."
+}

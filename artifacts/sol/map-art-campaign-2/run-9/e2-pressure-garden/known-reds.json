@@ -1,0 +1,56 @@
+{
+  "laneMirrorBaseMissingFiles": [
+    "assets/pilots/map-rebuild-spike/sources/archive-world-fidelity-1/engraved-masonry.png",
+    "assets/pilots/map-rebuild-spike/sources/archive-world-fidelity-1/library-layout.json",
+    "assets/pilots/map-rebuild-spike/sources/archive-world-fidelity-1/panorama-input-contract.json",
+    "assets/pilots/map-rebuild-spike/sources/archive-world-fidelity-1/provenance.json",
+    "assets/pilots/map-rebuild-spike/sources/ember-shore-fidelity-1/engraved-basalt.png",
+    "assets/pilots/map-rebuild-spike/sources/ember-shore-fidelity-1/panorama-input-contract.json",
+    "assets/pilots/map-rebuild-spike/sources/ember-shore-fidelity-1/provenance.json",
+    "assets/pilots/map-rebuild-spike/sources/last-claim-fidelity-1/provenance.json",
+    "assets/pilots/map-rebuild-spike/sources/river-fidelity-1/geometry-proof.json",
+    "assets/pilots/map-rebuild-spike/sources/river-fidelity-1/pack-input.json",
+    "assets/pilots/map-rebuild-spike/sources/river-fidelity-1/provenance.json"
+  ],
+  "laneMirrorCandidateMissingFiles": [
+    "assets/pilots/map-rebuild-spike/sources/archive-world-fidelity-1/engraved-masonry.png",
+    "assets/pilots/map-rebuild-spike/sources/archive-world-fidelity-1/library-layout.json",
+    "assets/pilots/map-rebuild-spike/sources/archive-world-fidelity-1/panorama-input-contract.json",
+    "assets/pilots/map-rebuild-spike/sources/archive-world-fidelity-1/provenance.json",
+    "assets/pilots/map-rebuild-spike/sources/e2-pressure-garden-fidelity-2/bank-grounding.json",
+    "assets/pilots/map-rebuild-spike/sources/e2-pressure-garden-fidelity-2/engraved-river-gravel.png",
+    "assets/pilots/map-rebuild-spike/sources/e2-pressure-garden-fidelity-2/panorama-input-contract.json",
+    "assets/pilots/map-rebuild-spike/sources/ember-shore-fidelity-1/engraved-basalt.png",
+    "assets/pilots/map-rebuild-spike/sources/ember-shore-fidelity-1/panorama-input-contract.json",
+    "assets/pilots/map-rebuild-spike/sources/ember-shore-fidelity-1/provenance.json",
+    "assets/pilots/map-rebuild-spike/sources/last-claim-fidelity-1/provenance.json",
+    "assets/pilots/map-rebuild-spike/sources/river-fidelity-1/geometry-proof.json",
+    "assets/pilots/map-rebuild-spike/sources/river-fidelity-1/pack-input.json",
+    "assets/pilots/map-rebuild-spike/sources/river-fidelity-1/provenance.json"
+  ],
+  "candidateAddedFiles": [
+    "assets/pilots/map-rebuild-spike/sources/e2-pressure-garden-fidelity-2/bank-grounding.json",
+    "assets/pilots/map-rebuild-spike/sources/e2-pressure-garden-fidelity-2/engraved-river-gravel.png",
+    "assets/pilots/map-rebuild-spike/sources/e2-pressure-garden-fidelity-2/panorama-input-contract.json"
+  ],
+  "canonicalMainPrerequisiteProof": "../mirror-prerequisite-proof.json",
+  "registryFailures": {
+    "count": 6,
+    "spec": "e2e/terrain3d-registry.spec.ts",
+    "lines": [
+      196,
+      272,
+      345
+    ],
+    "projects": [
+      "desktop-chrome",
+      "mobile-chrome"
+    ],
+    "baseAttribution": "base-registry.json",
+    "mismatches": [
+      "triangles 32768 expected, unchanged Twin Banks 51200 observed",
+      "painted-underlay-alpha-rim expected, opaque-sculpt-edge observed",
+      "failed expected for invalid terrain, lite observed"
+    ]
+  }
+}
