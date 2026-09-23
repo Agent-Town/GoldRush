@@ -318,3 +318,33 @@ Code: `src/world/*` (render side, incl. `Water.ts`), the render-only presentatio
 ### Findings
 - **F-F2-24 (the master's rule applied, information):** Relay Rush is skipped (no art-owned clause, no critique; `run-9/e7-scope-selection.json`); the E7 leg is the Dead Band alone.
 - **F-F2-25 (pre-existing, attributed by Astra on the exact base):** the Dead Band's browser batch carries eleven base-red cases (nine exact fingerprints, two variable horizon values) and one mobile Charter Press case that passed 2 / 2 on the base and on the restored candidate, outside this slice's gate.
+
+## Slice 11 — LANDED `a383a8d3d` (2026-09-23 18:33Z): the Far Side
+
+**Lane up to** `aef5f1297` · **store main** `70b78b4` (landed first, pushed) · **merge** `a383a8d3d` · same-era pin #51 `b4eff9b0`
+
+### What it does (the run-6 HELD clauses answered FIXED / IMPROVED with a number against run 6 / HELD with the owner named)
+**The Far Side — IMPROVED / HELD (Astra's own verdict).** The landing frame's pressure vessel grows from 600 to 2,966 of 3,000 triangles on a native metal atlas, with the exact source bounds and the gameplay authority unchanged (the probe recovery cradle and the west comms shadow marker take the new atlas too); at its own run-6 station the luminance rises 0.296 → 0.348 desktop and 0.297 → 0.348 phone at emission 0.45, and the ground and stripe corrections of the earlier runs are retained. The declared desktop HUD rises by 0.024 percentage points and is reported; the phone's fall from 5.77% to 0.012% includes the wave's HUD cure and is not claimed for art. HELD: the full surface, mechanism and contact, and the compound, layout and UI. Frame p95 9.35 → 9.35 ms desktop and 9.35 → 9.70 ms phone, draws 63 / 50 unchanged, zero capture errors; the raw runtime grows by 3,330,124 B; no E1 art. Astra measured the engine hash at `b4eff9b0…` with the lane store at `70b78b4`; the drain's own measurement on the merged tree is the pin below.
+Where the player sees it: the plain entry of these maps, on production and the all-epochs preview.
+
+### Evidence (this slice's gates on the merged tree, the scratch store clean at the landed store main)
+| Check | Result |
+| --- | --- |
+| the store landing | `70b78b4` on `Agent-Town/GoldRush-assets` main, pushed; the scratch store worktree detached at it, clean, before any hash was measured (F-A3-2) |
+| merge | `clean, no conflicts` |
+| single-line law (F-CORR1-4) | `nothing to flatten` |
+| tsc / build / e1 | `0 / 0 / 0` (rc) · payload `34318148 bytes` |
+| engine hash | `b4eff9b0b2c8df3d…`; same-era pin #51 `b4eff9b0`, era guards in the chain `ℹ pass 9 ℹ fail 0` |
+| halo / null floors / law-pointer | `rc=0 halo re-extraction PASS: 315 cured, 0 held, 760 regenerated-and-cured, 2127 scanned; alpha and opaque RGB unchanged` · `rc=0 83 of 83 null floors match assets/contracts/null-floors.json (314.7s).` · `rc=0 law-pointer-guard — do the law surfaces still point at what they claim?` |
+| named guards | `ℹ pass 98 ℹ fail 0` |
+| e2e both projects, `--workers=1` (the maps' own specs, landmark brightness/collision, fort collision, task-025, m2-01) | `rc=1   2 failed   4 skipped   70 passed (9.0m)  18:26Z` |
+| e2e reds | `1) [desktop-chrome] › e2e/er01-e8-census.spec.ts:75:3 › e8-mare-claim census pins the Orbital contract's door state `<br>`2) [mobile-chrome] › e2e/er01-e8-census.spec.ts:75:3 › e8-mare-claim census pins the Orbital contract's door state `<br>Attribution: Attribution: pre-attributed by a control of this slice's specs on main `0a4e4ca66` with the store's main at `892b7f6` before the merge (`drain-s11-e2e-control-main.log`: rc=1, 2 failure lines) — every red on the merged tree below matches a line of that control by file, test line and project; nothing in this slice's diff touches those tests' subjects. |
+| full `npm run test:node-guards` (before the pin) | `rc=1 ℹ tests 955 ℹ pass 947 ℹ fail 3 ℹ skipped 5  18:33Z` |
+| battery reds | `✖ all 152 scripts/*.test.mjs fixture owners remove their temp directories (169296.624084ms)`<br>`✖ failing tests:`<br>`✖ rotation registry stays outside the engine identity corpus (598.3245ms)`<br>`✖ the landed registry names the live engine and stays outside its hash corpus (116.311208ms)` (the engine-era, bench-seeds and fixture-sweep rows are the pre-pin hash class, cured by the pin above) |
+
+### Merge classification
+Code: `src/world/*` (render side, incl. `Water.ts`), the render-only presentation owners, `src/entities/*` pure visuals (the Motor vehicle), `reviews/sol-map-art-current-status-20260909.md`, `artifacts/sol/map-art-campaign-2/report.md` (a dated run-9 section) and `run-9/**`. Store: `pilots/map-rebuild-spike/**` for these maps, one commit per map, landed on the store's main first. Firewall: within the master's Touch ONLY plus the store. Base: the chain's previous tip; MAIN-MOVED files are fire bookkeeping taken as theirs at the main merge before the fast-forward.
+
+### Findings
+- **F-F2-26 (pre-existing, attributed by Astra on the exact base):** the Far Side's broad browser batch carries two exact-base failures; the affected set re-ran 22 pass / 4 skipped and the rider parity 6 / 6; outside this slice's gate.
+- **F-F2-27 (information):** the pack's landmark atlas is now a corpus file under `landmarks/` (shipped by the existing include) and the native metal swatches live under `sources/` (shipped by F-FID1-8's include); the early droplet-mirror check on the merged tree is the proof.
