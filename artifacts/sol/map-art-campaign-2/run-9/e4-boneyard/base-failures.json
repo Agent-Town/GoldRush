@@ -1,0 +1,59 @@
+{
+  "storeBase": "8ef0a035c47622425dada043aca1145e88aaca80",
+  "base": "b981d2515172665792408558c558bc46609fe7f9",
+  "paths": {
+    "src/world/Terrain3dClaimPilot.ts": {
+      "candidateSha256": "2dcb9792805db7a58d3fcccc3d57918d832b2c52861a8e913ece1ba8f54f1971",
+      "baseSha256": "bcec7b7670b0e5a7c53a94cb92facf4d5179e95e768f80ba6cf72885537953da"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/boneyard/boneyard-landmark-pack-contract.json": {
+      "candidateSha256": "5c9eefedcf17169f2a005a5c90607a04b978504afe6ee7c206d8a089dc0280b2",
+      "baseSha256": "685adeb864332f5b42f2c9c2ac248d64d43cf06a50da05da7cbae5e2c83ccb8d"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/boneyard/boneyard-landmarks.blend": {
+      "candidateSha256": "e113ff7fa7b67759fe3a8b79695a2dd7b50cd7314aa125ea2ef9d5d5c48b7f6e",
+      "baseSha256": "c47cc6dc3617dfe3667943ee1da2b0a9bfbe1ed71aaffe32be7115450577ebde"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/boneyard/flivver-row-east-b.glb": {
+      "candidateSha256": "bc694ab66677489138f0fa934a5fc79944622bb3f3ecc9dabcd42a5fa77f45ba",
+      "baseSha256": "e3ecd0451c10d11d7be2617428c4a73dc6017d1db3ebf851686ff35f74e57cce"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/boneyard/flivver-row-west-b.glb": {
+      "candidateSha256": "a14bd1da743cf69febff202bb9c63d01d4a2e7146ba92eb980f172a1b6a88e4d",
+      "baseSha256": "6c7b8c7aff703dc375f0ff8292e1fe40032e2aaeb2fb67ca1ed0606d3889e99e"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/boneyard/half-buried-sleeper.glb": {
+      "candidateSha256": "a6ff8a9fd602ef3a3871a278ae95ac66a20ee11e26b84ee0d6c234f40fa9609e",
+      "baseSha256": "954655fdb1fafa558a2195d89cbfe386c03e1e9463e88768d36afaa1d00d1149"
+    }
+  },
+  "pattern": "all\\ sixteen\\ contracts\\ mount\\ terrain,\\ panorama,\\ and\\ grounded\\ render\\-only\\ landmarks\\ with\\ matching\\ water|every\\ Motor\\ reel\\ replays\\ to\\ its\\ claimed\\ hash\\ in\\ Node\\ and\\ Chromium|rim\\ and\\ horizon\\ probes\\ keep\\ the\\ terrain\\ meeting\\ gradual\\ and\\ every\\ panorama\\ readable",
+  "specs": [
+    "e2e/e4-roads-and-convoys.spec.ts",
+    "e2e/terrain3d-registry.spec.ts"
+  ],
+  "candidateEngine": "49242d1713cb1c67838adc284919b18f067b4efad6ea61a61b42cba95bdfd731",
+  "baseEngine": "e5acca191da821a5e1bf2ad225fef65ce93a11bd32d0610213465b7b23680bd7",
+  "command": [
+    "npx",
+    "playwright",
+    "test",
+    "--workers=1",
+    "--project=desktop-chrome",
+    "--project=mobile-chrome",
+    "--trace=off",
+    "--reporter=line",
+    "--output=artifacts/sol/map-art-campaign-2/_raw/run-9/e4-boneyard-base-failures/test-results",
+    "--grep",
+    "all\\ sixteen\\ contracts\\ mount\\ terrain,\\ panorama,\\ and\\ grounded\\ render\\-only\\ landmarks\\ with\\ matching\\ water|every\\ Motor\\ reel\\ replays\\ to\\ its\\ claimed\\ hash\\ in\\ Node\\ and\\ Chromium|rim\\ and\\ horizon\\ probes\\ keep\\ the\\ terrain\\ meeting\\ gradual\\ and\\ every\\ panorama\\ readable",
+    "e2e/e4-roads-and-convoys.spec.ts",
+    "e2e/terrain3d-registry.spec.ts"
+  ],
+  "exit": 1,
+  "newAssetsAbsentDuringBase": {
+    "assets/pilots/map-rebuild-spike/sources/e4-boneyard-fidelity-2/landmark-input-contract.json": "685adeb864332f5b42f2c9c2ac248d64d43cf06a50da05da7cbae5e2c83ccb8d"
+  },
+  "restoredEngine": "49242d1713cb1c67838adc284919b18f067b4efad6ea61a61b42cba95bdfd731",
+  "candidateRestoredExactly": true,
+  "log": "artifacts/sol/map-art-campaign-2/_raw/run-9/e4-boneyard-base-failures/tests.log"
+}

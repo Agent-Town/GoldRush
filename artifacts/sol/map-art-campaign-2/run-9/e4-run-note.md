@@ -8,6 +8,8 @@ Completed: e4-long-road — IMPROVED / HELD, READY-FOR-GATES; store e33b81277c90
 
 Completed: e4-gusher-county — IMPROVED / HELD, READY-FOR-GATES; store 8ef0a035c47622425dada043aca1145e88aaca80 pushed/read back.
 
-Remaining list in order: e4-boneyard.
+Completed: e4-boneyard — IMPROVED / HELD, READY-FOR-GATES; store e62dbf97cc8ba3c9d8c98e338b84f37d807a67a3 pushed/read back.
 
-The leg is in progress; only the completed maps above are ready. No shared Motor vehicle change: it belongs to run 8. Camera, HUD, mount/station transforms, gameplay, collision and height truth remain outside this slice.
+Remaining list in this E4 leg, in order: **none**.
+
+The E4 leg is complete without quota refusal, rate limit or disconnect. Each map has its own game/store commit with boards, source proofs, measured limits and qualified baseline failures. No branch reset/rebase or force-push occurred mid-run. [Commit/hash chain and integration handoff](e4-handoff.md). No shared Motor vehicle change: it belongs to run 8. Camera, HUD, mount/station transforms, gameplay, collision and height truth remain outside this slice.
