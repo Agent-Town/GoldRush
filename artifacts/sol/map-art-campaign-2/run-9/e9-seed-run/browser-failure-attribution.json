@@ -1,0 +1,88 @@
+{
+  "candidateCounts": {
+    "passed": 49,
+    "skipped": 5,
+    "failed": 2
+  },
+  "baseCounts": {
+    "passed": 0,
+    "skipped": 0,
+    "failed": 2
+  },
+  "exactBaseEngine": "9103137b1b23675af890f27fb87c0ea568796246e79560bdf2153e2056ed48f1",
+  "restoredCandidateEngine": "bfa5e66df8f7adb07081b40e77913ff03a6cf3b496bc868189ea70409fe21bdb",
+  "allCasesAlsoFailOnBase": true,
+  "exactFingerprintCount": 2,
+  "failures": [
+    {
+      "project": "desktop-chrome",
+      "spec": "e2e/e9-roster.spec.ts",
+      "title": "plain Red Fields boot stays error-free without the debug harness",
+      "baseAlsoFails": true,
+      "exactFingerprint": true,
+      "candidate": {
+        "project": "desktop-chrome",
+        "spec": "e2e/e9-roster.spec.ts",
+        "testLine": 173,
+        "title": "plain Red Fields boot stays error-free without the debug harness",
+        "fingerprint": [
+          "Error: expect(received).toBe(expected) // Object.is equality",
+          "Expected: true",
+          "Received: false"
+        ],
+        "assertionLocations": [
+          "e2e/e9-roster.spec.ts:184:93"
+        ]
+      },
+      "base": {
+        "project": "desktop-chrome",
+        "spec": "e2e/e9-roster.spec.ts",
+        "testLine": 173,
+        "title": "plain Red Fields boot stays error-free without the debug harness",
+        "fingerprint": [
+          "Error: expect(received).toBe(expected) // Object.is equality",
+          "Expected: true",
+          "Received: false"
+        ],
+        "assertionLocations": [
+          "e2e/e9-roster.spec.ts:184:93"
+        ]
+      }
+    },
+    {
+      "project": "mobile-chrome",
+      "spec": "e2e/e9-roster.spec.ts",
+      "title": "plain Red Fields boot stays error-free without the debug harness",
+      "baseAlsoFails": true,
+      "exactFingerprint": true,
+      "candidate": {
+        "project": "mobile-chrome",
+        "spec": "e2e/e9-roster.spec.ts",
+        "testLine": 173,
+        "title": "plain Red Fields boot stays error-free without the debug harness",
+        "fingerprint": [
+          "Error: expect(received).toBe(expected) // Object.is equality",
+          "Expected: true",
+          "Received: false"
+        ],
+        "assertionLocations": [
+          "e2e/e9-roster.spec.ts:184:93"
+        ]
+      },
+      "base": {
+        "project": "mobile-chrome",
+        "spec": "e2e/e9-roster.spec.ts",
+        "testLine": 173,
+        "title": "plain Red Fields boot stays error-free without the debug harness",
+        "fingerprint": [
+          "Error: expect(received).toBe(expected) // Object.is equality",
+          "Expected: true",
+          "Received: false"
+        ],
+        "assertionLocations": [
+          "e2e/e9-roster.spec.ts:184:93"
+        ]
+      }
+    }
+  ]
+}
