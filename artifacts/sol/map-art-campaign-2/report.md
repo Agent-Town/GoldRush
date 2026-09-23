@@ -831,3 +831,15 @@ Engine `b4eff9b0b2c8df3dcd53fdca0bfbdefdc15f04a241db2293628deeca13b4d4df` → `9
 **IMPROVED / HELD.** Native masonry/metal atlas and bounded bearing/footing detail; 1,580→2,308/3,000 triangles. UV distortion median/p95 3.75/38.52→1.00/1.08 with no collapsed faces. Own run-6 5 m luminance 0.327/0.325→0.466/0.460; ground retained within 0.004% RMS. Station HUD rises 0→0.021%/0.067% explicitly reported. Independent critique retains actual ground contact, coarse courses, dense joins, railway integration and full canal scale. [Every quoted clause and evidence](run-9/e9-dome-basin/review.md).
 
 Final builds,34+3 guards,mirror,census4/4,loading8/8,repeat2/2,six disposal cycles pass. Browser50pass/4skip/4exact-base failures. Four-run p95 9.65→9.55 /9.30→9.45ms; calls94/53 unchanged; zero capture errors. E1 N/A. Engine `984a9f2498c3445a6fe7f4e9b600f9334b4e7a394d0f3b284493b76dc39ba1a5` → `9103137b1b23675af890f27fb87c0ea568796246e79560bdf2153e2056ed48f1`; store `60c635c2e48eedc288ffcf34c685e862f959057d` pushed/read back. **READY-FOR-GATES. Remaining E9 in order: e9-seed-run, e9-devils-alley, e9-old-canal.**
+
+## 2026-09-24 — run 9 E9: Seed Run
+
+**IMPROVED / HELD.** Attached door hardware, framed windows, native surfaces; 2,148→2,828/3,000 triangles. UV distortion 1.82/15.05→1.00/1.24, collapsed area 0.797→0%; own run-6 station body median 0.259/0.259→0.443/0.442. Quieter tapered ruts retain all 110 centers and four rings. Declared HUD remains 0% both. Weak contact, shallow panels, material hierarchy and repeated route spacing remain held. [Verbatim clauses and evidence](run-9/e9-seed-run/review.md).
+
+Builds, 34+3 guards, mirror, census4, loading8, repeat2 and six mount cycles pass. Browser49pass/5skip/2 exact-base roster reds. Performance −1.01%/+0.51%, calls126/72 unchanged, zero capture errors. E1 N/A. Engine `9103137b1b23675af890f27fb87c0ea568796246e79560bdf2153e2056ed48f1` → `bfa5e66df8f7adb07081b40e77913ff03a6cf3b496bc868189ea70409fe21bdb`; store `0c64c9355000a0304978c31c81fdb70439f0730f` pushed/read back. **READY-FOR-GATES. Remaining E9: e9-devils-alley, e9-old-canal.**
+
+## 2026-09-24 — run 9 E9: Devil’s Alley
+
+**IMPROVED / HELD.** Three native-surfaced wind anchors gain connected fittings, 2,284/2,628/2,972 of 3,000 triangles. Own run-6 upper median 0.193/0.192→0.353/0.352; dark share 12.91/9.65→0%; UV p95 31–50→1.44. Safety rings and all gameplay geometry remain exact. Full scale, coil hierarchy, contact, texture crispness and landscape/VFX remain held. Raw phone station HUD 0.0041→0.0081% reported. [Every clause and evidence](run-9/e9-devils-alley/review.md).
+
+Builds,34+3 guards,mirror,census4,loading8,repeat2,six disposal cycles pass. Browser36pass/4skip/2 exact-base roster failures. Four-run performance +1.55%/−0.52%, calls88/58 unchanged; zero capture errors. E1 N/A. Engine `bfa5e66df8f7adb07081b40e77913ff03a6cf3b496bc868189ea70409fe21bdb` → `fa80dda3304171f1c703a8baa2d6f304204e34ea9a1de4f10d2bf70caf71a4fa`; store `03ccce800126faf8f347b51e9a9e751b20b80d19` pushed/read back. **READY-FOR-GATES. Remaining E9: e9-old-canal.**

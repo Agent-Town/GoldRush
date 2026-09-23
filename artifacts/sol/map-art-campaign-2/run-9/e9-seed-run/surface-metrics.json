@@ -1,0 +1,19 @@
+{
+  "method": "Ratio of singular values of per-triangle surface-to-UV Jacobian; 1 is isotropic. Area weighted, collapses reported separately. This tests UV distortion, not visual material fidelity.",
+  "rows": [
+    {
+      "arm": "before",
+      "id": "center-seed-vault",
+      "areaWeightedMedianUvAnisotropy": 1.8218476260719259,
+      "areaWeightedP95UvAnisotropy": 15.054576915263965,
+      "collapsedUvAreaSharePercent": 0.7969562032210501
+    },
+    {
+      "arm": "after",
+      "id": "center-seed-vault",
+      "areaWeightedMedianUvAnisotropy": 1.000000563722067,
+      "areaWeightedP95UvAnisotropy": 1.2360681133668396,
+      "collapsedUvAreaSharePercent": 0.0
+    }
+  ]
+}

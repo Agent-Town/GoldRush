@@ -1,0 +1,167 @@
+{
+  "source": "Own run-6 after metrics, identical labelled stations and fixed ground boxes; run-8 HUD changes are retained but not credited to art. Raw sub-0.1% mask differences are reported, not rounded to zero.",
+  "stations": [
+    {
+      "width": 1280,
+      "focus": "center-seed-vault",
+      "station": "entry",
+      "run6": {
+        "bodyDarkShareBelow01Percent": 0.7600184246890833,
+        "bodyMedian": 0.2536949019607843,
+        "pixels": 26052,
+        "persistentHudCoveragePercent": 0.0
+      },
+      "run9": {
+        "bodyDarkShareBelow01Percent": 0.0,
+        "bodyMedian": 0.4342886274509804,
+        "pixels": 26392,
+        "persistentHudCoveragePercent": 0.0
+      },
+      "hudDeltaPercentagePoints": 0.0,
+      "bboxRun6": {
+        "minX": 541.858471581064,
+        "maxX": 738.141528419178,
+        "minY": 62.21626005096299,
+        "maxY": 318.45679843450813
+      },
+      "bboxRun9": {
+        "minX": 541.8584715346703,
+        "maxX": 738.1415284653298,
+        "minY": 62.21625989808,
+        "maxY": 318.45679837734116
+      }
+    },
+    {
+      "width": 1280,
+      "focus": "center-seed-vault",
+      "station": 3,
+      "run6": {
+        "bodyDarkShareBelow01Percent": 0.7552447552447552,
+        "bodyMedian": 0.2587490196078431,
+        "pixels": 32175,
+        "persistentHudCoveragePercent": 0.0
+      },
+      "run9": {
+        "bodyDarkShareBelow01Percent": 0.0,
+        "bodyMedian": 0.44268235294117647,
+        "pixels": 32593,
+        "persistentHudCoveragePercent": 0.0
+      },
+      "hudDeltaPercentagePoints": 0.0,
+      "bboxRun6": {
+        "minX": 527.518855262879,
+        "maxX": 752.481144737121,
+        "minY": 181.55837080734722,
+        "maxY": 458.6595915249979
+      },
+      "bboxRun9": {
+        "minX": 527.5463598491431,
+        "maxX": 752.4536401508569,
+        "minY": 181.57872928653106,
+        "maxY": 458.63755571994824
+      }
+    },
+    {
+      "width": 390,
+      "focus": "center-seed-vault",
+      "station": "entry",
+      "run6": {
+        "bodyDarkShareBelow01Percent": 0.5582549364209656,
+        "bodyMedian": 0.2539105882352941,
+        "pixels": 29019,
+        "persistentHudCoveragePercent": 23.326096695268618
+      },
+      "run9": {
+        "bodyDarkShareBelow01Percent": 0.0,
+        "bodyMedian": 0.43264470588235293,
+        "pixels": 29384,
+        "persistentHudCoveragePercent": 2.1099918322896816
+      },
+      "hudDeltaPercentagePoints": -21.216104862978938,
+      "bboxRun6": {
+        "minX": 91.46068758787243,
+        "maxX": 298.53931241272034,
+        "minY": 65.63815458248517,
+        "maxY": 335.97192242921926
+      },
+      "bboxRun9": {
+        "minX": 91.46068746907714,
+        "maxX": 298.53931253092287,
+        "minY": 65.63815419247439,
+        "maxY": 335.9719222880949
+      }
+    },
+    {
+      "width": 390,
+      "focus": "center-seed-vault",
+      "station": 3,
+      "run6": {
+        "bodyDarkShareBelow01Percent": 0.7726638772663877,
+        "bodyMedian": 0.25892156862745097,
+        "pixels": 35850,
+        "persistentHudCoveragePercent": 0.0
+      },
+      "run9": {
+        "bodyDarkShareBelow01Percent": 0.0,
+        "bodyMedian": 0.4422925490196078,
+        "pixels": 36250,
+        "persistentHudCoveragePercent": 0.0
+      },
+      "hudDeltaPercentagePoints": 0.0,
+      "bboxRun6": {
+        "minX": 76.33232334141319,
+        "maxX": 313.6676766585868,
+        "minY": 191.54403151640622,
+        "maxY": 483.8859247907837
+      },
+      "bboxRun9": {
+        "minX": 76.36392570305865,
+        "maxX": 313.63607429694133,
+        "minY": 191.56742299410723,
+        "maxY": 483.86060553208875
+      }
+    }
+  ],
+  "groundRegions": [
+    {
+      "width": 1280,
+      "box": [
+        790,
+        520,
+        940,
+        620
+      ],
+      "run6": {
+        "median": 0.2741364705882353,
+        "rms": 0.014976765268105052,
+        "darkShareBelow01": 0.0
+      },
+      "run9": {
+        "median": 0.2741364705882353,
+        "rms": 0.014977226743008247,
+        "darkShareBelow01": 0.0
+      },
+      "rmsChangePercent": 0.003081272190175177
+    },
+    {
+      "width": 390,
+      "box": [
+        255,
+        430,
+        365,
+        505
+      ],
+      "run6": {
+        "median": 0.3078603921568627,
+        "rms": 0.019935081811663407,
+        "darkShareBelow01": 0.0
+      },
+      "run9": {
+        "median": 0.3078603921568627,
+        "rms": 0.01993475121267039,
+        "darkShareBelow01": 0.0
+      },
+      "rmsChangePercent": -0.0016583779095635798
+    }
+  ]
+}

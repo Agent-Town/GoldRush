@@ -6,4 +6,8 @@ Preflight clear: no ahead lane commits; both store worktrees clean; expected unt
 
 Completed: [Dome Basin](e9-dome-basin/review.md), store `60c635c`. READY-FOR-GATES, with explicit held clauses. No gameplay edits.
 
-Remaining in order: e9-seed-run, e9-devils-alley, e9-old-canal. Nothing is marked ready until its evidence and commits are recorded.
+Also completed: [Seed Run](e9-seed-run/review.md), store `0c64c93`. READY-FOR-GATES with explicit held clauses.
+
+Also completed: [Devil’s Alley](e9-devils-alley/review.md), store `03ccce8`. READY-FOR-GATES; tiny phone inspection-mask rise explicitly reported.
+
+Remaining in order: e9-old-canal. Nothing is marked ready until its evidence and commits are recorded.

@@ -16,7 +16,7 @@ for id,record in a['assets'].items():
 assert a['assets'].keys()==b['assets'].keys()
 authorities=['src/sim','src/game','src/collision','assets/contracts','e2e','scripts','assets/engine-era.json','specs','STATUS.md','tasks']
 for path in authorities:assert not subprocess.check_output(['git','diff',base['code'],'--',path]),path
-allowed=[] if name!='e9-old-canal' else ['src/systems/CanalFlowPresentation.ts','src/world/Terrain3dClaimPilot.ts']
+allowed={'e9-seed-run':['src/systems/SeedCaravanPresentation.ts'],'e9-old-canal':['src/systems/CanalFlowPresentation.ts','src/world/Terrain3dClaimPilot.ts']}.get(name,[])
 changed=subprocess.check_output(['git','diff','--name-only',base['code'],'--','src'],text=True).splitlines();assert set(changed)<=set(allowed),changed
 registry=[s for s in Path('src/world/Terrain3dClaimPilot.ts').read_text().splitlines() if s.lstrip().startswith(tuple("'e%d-"%i for i in range(2,11))) and ': entry(' in s];assert len(registry)==36 and all(s.rstrip().endswith('),') for s in registry)
 (out/'invariants.json').write_text(json.dumps({'unchangedBytes':unchanged,'terrainHeightsMasksRoutesSpawnsCollisionMountsStationsBudgetsExact':True,'sourceBoundsAndSiblingGeometry':'source-verification.json','singleLineRegistryEntries':len(registry),'protectedAuthorities':authorities,'renderSourceChanges':changed},indent=2)+'\n');print('E9 INVARIANTS PASS',name)

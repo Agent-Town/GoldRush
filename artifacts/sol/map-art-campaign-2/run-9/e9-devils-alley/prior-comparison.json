@@ -1,0 +1,167 @@
+{
+  "source": "Own run-6 after metrics, identical labelled stations and fixed ground boxes; run-8 HUD changes are retained but not credited to art. Raw sub-0.1% mask differences are reported, not rounded to zero.",
+  "stations": [
+    {
+      "width": 1280,
+      "focus": "center-wind-anchor",
+      "station": "entry",
+      "run6": {
+        "bodyDarkShareBelow01Percent": 2.1426037601986523,
+        "bodyMedian": 0.25358745098039215,
+        "pixels": 14095,
+        "persistentHudCoveragePercent": 0.0
+      },
+      "run9": {
+        "bodyDarkShareBelow01Percent": 0.0,
+        "bodyMedian": 0.45346039215686273,
+        "pixels": 14444,
+        "persistentHudCoveragePercent": 0.0
+      },
+      "hudDeltaPercentagePoints": 0.0,
+      "bboxRun6": {
+        "minX": 545.7276775683887,
+        "maxX": 734.2723224316113,
+        "minY": 106.48243467531967,
+        "maxY": 333.55217732027296
+      },
+      "bboxRun9": {
+        "minX": 545.7276775970859,
+        "maxX": 734.2723224029141,
+        "minY": 106.48243471055477,
+        "maxY": 333.5521772834069
+      }
+    },
+    {
+      "width": 1280,
+      "focus": "center-wind-anchor",
+      "station": 3,
+      "run6": {
+        "bodyDarkShareBelow01Percent": 2.8280231383711323,
+        "bodyMedian": 0.25764313725490195,
+        "pixels": 21782,
+        "persistentHudCoveragePercent": 0.004590946653199889
+      },
+      "run9": {
+        "bodyDarkShareBelow01Percent": 0.0,
+        "bodyMedian": 0.46191372549019605,
+        "pixels": 22251,
+        "persistentHudCoveragePercent": 0.004494180036852276
+      },
+      "hudDeltaPercentagePoints": -9.676661634761344e-05,
+      "bboxRun6": {
+        "minX": 516.6392051168283,
+        "maxX": 763.3607948831717,
+        "minY": 194.05331346954932,
+        "maxY": 472.5248247386565
+      },
+      "bboxRun9": {
+        "minX": 516.7207881488558,
+        "maxX": 763.279211851144,
+        "minY": 194.14857457161526,
+        "maxY": 472.4761856666221
+      }
+    },
+    {
+      "width": 390,
+      "focus": "center-wind-anchor",
+      "station": "entry",
+      "run6": {
+        "bodyDarkShareBelow01Percent": 2.063957191998981,
+        "bodyMedian": 0.25374196078431377,
+        "pixels": 15698,
+        "persistentHudCoveragePercent": 5.879729901898331
+      },
+      "run9": {
+        "bodyDarkShareBelow01Percent": 0.0,
+        "bodyMedian": 0.45365725490196074,
+        "pixels": 16092,
+        "persistentHudCoveragePercent": 0.03107133979617201
+      },
+      "hudDeltaPercentagePoints": -5.848658562102159,
+      "bboxRun6": {
+        "minX": 95.54269978721396,
+        "maxX": 294.45730021278604,
+        "minY": 112.33896852422008,
+        "maxY": 351.8975471338283
+      },
+      "bboxRun9": {
+        "minX": 95.54269986492554,
+        "maxX": 294.4573001350745,
+        "minY": 112.33896861963528,
+        "maxY": 351.8975470339943
+      }
+    },
+    {
+      "width": 390,
+      "focus": "center-wind-anchor",
+      "station": 3,
+      "run6": {
+        "bodyDarkShareBelow01Percent": 2.3517340447363018,
+        "bodyMedian": 0.2558211764705883,
+        "pixels": 24365,
+        "persistentHudCoveragePercent": 0.004104247896572953
+      },
+      "run9": {
+        "bodyDarkShareBelow01Percent": 0.0,
+        "bodyMedian": 0.4615003921568628,
+        "pixels": 24755,
+        "persistentHudCoveragePercent": 0.008079175924055746
+      },
+      "hudDeltaPercentagePoints": 0.003974928027482793,
+      "bboxRun6": {
+        "minX": 64.85458634517765,
+        "maxX": 325.1454136548224,
+        "minY": 204.72641555032783,
+        "maxY": 498.5135261845917
+      },
+      "bboxRun9": {
+        "minX": 64.94146431242174,
+        "maxX": 325.0585356875783,
+        "minY": 204.82787308778737,
+        "maxY": 498.46173453520373
+      }
+    }
+  ],
+  "groundRegions": [
+    {
+      "width": 1280,
+      "box": [
+        790,
+        520,
+        940,
+        620
+      ],
+      "run6": {
+        "median": 0.29681176470588233,
+        "rms": 0.03774152061919575,
+        "darkShareBelow01": 0.0
+      },
+      "run9": {
+        "median": 0.29681176470588233,
+        "rms": 0.037742067181676595,
+        "darkShareBelow01": 0.0
+      },
+      "rmsChangePercent": 0.0014481729190496395
+    },
+    {
+      "width": 390,
+      "box": [
+        255,
+        430,
+        365,
+        505
+      ],
+      "run6": {
+        "median": 0.25458039215686273,
+        "rms": 0.06024234521833886,
+        "darkShareBelow01": 0.0
+      },
+      "run9": {
+        "median": 0.25458039215686273,
+        "rms": 0.06024179437663611,
+        "darkShareBelow01": 0.0
+      },
+      "rmsChangePercent": -0.0009143762593422089
+    }
+  ]
+}
