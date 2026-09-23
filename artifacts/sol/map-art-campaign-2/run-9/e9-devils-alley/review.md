@@ -1,0 +1,25 @@
+# Devil’s Alley — run 9 E9 fidelity
+
+**IMPROVED / HELD.** Native metal/masonry surfaces and proportionate UVs clarify the upper mast and foundation. Attached pressure gauges, hex bolts and drive/spindle collars add real hardware inside the three existing envelopes. Full architectural/storm-corridor fidelity remains unaccepted.
+
+| Earlier clause, verbatim | Result against its own earlier evidence |
+| --- | --- |
+| “HELD fine metalwork, upper dark mast contrast and full architectural scale for further landmark art.” | **IMPROVED metalwork and upper contrast.** West/center/east **1,848/2,192/2,536→2,284/2,628/2,972**, all within **3,000 triangles** and exact original bounds. Mounted gauges, hex anchors and shaft/drive collars add connected fittings. Own run-6 upper 40%-body median **0.192716→0.352759 desktop /0.192390→0.352209 phone**; dark share **12.91→0% /9.65→0%**, whole-body emission **0.45** unchanged. **HELD** monumental scale, coil hierarchy and crisp fine workmanship; a brighter surface does not establish those. |
+| “Original red panels and mast remain, with incomplete material detail.” | **IMPROVED** native surfaces and physical UV mapping. UV median/p95: west **1.923/31.152→1.000/1.439**, center **1.949/33.531→1.000/1.439**, east **1.949/49.929→1.007/1.439**, zero collapsed UV area before/after. Original panel/mast geometry retained. **HELD** red-panel fastening clarity, soft detailed texture and weak terrain contact, as the reviewer records. |
+| “Dark upper hoops/mast retain weaker contrast” | **IMPROVED** by the own-prior upper-mask measurements above. Reviewer sees clearer mast/crossbar intersections and counterweight fittings at normal scale. **HELD** the similarly weighted hoops/braces crowding the central mechanism; material separation is not structural hierarchy. |
+| “Similar ground values and haze still weaken relief” | **HELD**, with the earlier ground correction retained. No terrain/panorama/sampler/layout changes in this map. The current bowl remains smooth and repetitive compared with the reference’s irregular ridges and creases. |
+| “further VFX art belongs to DevilsAlleyPresentation.” | **HELD** concept-scale storms. Timed sweep/relocation and its presentation are unchanged; this pass authors the rigs’ surfaces/hardware only. No false storm-at-entry claim. |
+
+[Desktop board](board-1280.png) · [Phone board](board-390.png) · [Independent critique](independent-review.md) · [UV](surface-metrics.json) · [Upper mast](upper-mast-metrics.json).
+
+**Boundary and reproduction.** Three 8 m safety rings retain exact geometry, opacity, color, visibility and activation owner. All source bounds, mounts, collision footprints, masks, route and spawn data remain exact. Both gate peers retain exact mesh/UV geometry; shared atlas changes. All five GLBs reexport and reproduce byte-identically. Terrain **32,768/60,000**, panorama **3,072/4,000**. Native provenance in store `sources/e9-devils-alley-fidelity-2/`; no new runtime texture URL. E1 byte delta **N/A**. [Source](source-verification.json) · [Recipe](recipe-verification.json) · [Invariants](invariants.json) · [Budgets](asset-budgets.json).
+
+**Own earlier numbers.** At the same 3 m station, body median **0.257643→0.461914 desktop /0.255821→0.461500 phone**. Run-6 ground medians **0.296812/0.254580** unchanged; RMS **0.03774152→0.03774207 /0.06024235→0.06024179** (**+0.00145%/−0.00091%**). Current A/B ground regions are identical. [Prior comparison](prior-comparison.json).
+
+**HUD rise reported.** Station raw persistent coverage **0.004591→0.004494% desktop /0.004104→0.008079% phone**. Phone rises by **0.003975 percentage points**, so the prior limit is not silently called zero or passed. Full projected body fits; neither station nor camera/UI changed. Ordinary phone entry **5.880→0.031%** reflects intervening HUD work already in the baseline, not art credit. Story and safety-circle crowding remain visible.
+
+**Verification.** Final TypeScript/default/full builds, 34 render guards, three named guards, mirror allowlist, census 4/4, loading 8/8, repeat 2/2, and six map-specific mount/dispose cycles pass. Own/adjacent browser batch **36 pass /4 opt-in skips /2 failures**. Both plain-roster cases reproduce on the exact baseline with identical assertion fingerprints; candidate restoration is exact. [Attribution](browser-failure-attribution.json). No assertion changed.
+
+Four fresh runs per arm/viewport: p95 **9.70→9.85 ms desktop /9.65→9.60 ms phone** (**+1.55%/−0.52%**), calls **88/58 unchanged**, single comparable modes within 15%. Four ordinary boots, eight station captures and sixteen timing boots have zero console/page errors. [Performance](performance-summary.json).
+
+Engine `bfa5e66df8f7adb07081b40e77913ff03a6cf3b496bc868189ea70409fe21bdb` → `fa80dda3304171f1c703a8baa2d6f304204e34ea9a1de4f10d2bf70caf71a4fa`; pin untouched. Store `03ccce800126faf8f347b51e9a9e751b20b80d19` committed, pushed and read back. **READY-FOR-GATES for this map**, with the raw station HUD rise explicitly referred to the drain. Remaining E9 list: **e9-old-canal**.
