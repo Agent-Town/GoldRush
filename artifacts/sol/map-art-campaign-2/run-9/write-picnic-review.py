@@ -1,0 +1,44 @@
+"""Format final evidence already measured; fail if any required receipt is absent."""
+from pathlib import Path
+import json
+R=Path('artifacts/sol/map-art-campaign-2/run-9');O=R/'e6-picnic'
+read=lambda p:json.loads((O/p).read_text())
+a=read('prior-comparison.json');m=read('visual-metrics.json');b=read('browser-failure-attribution.json');perf=read('performance-summary.json');gp=read('blanket-performance/performance-summary.json');payload=read('payload-delta.json');store=read('store-commit.json');engine=read('engine-hashes.json')
+assert b['allCasesAlsoFailOnBase']
+assert all(v['within15Percent'] for p in [perf,gp] for v in p['rows'])
+assert all(v['exit']==0 for v in read('build-gates.json'))
+assert all(v['exit']==0 for v in read('probes-gates.json'))
+assert read('node-gates.json')['renderGuards']['exit']==0 and read('node-gates.json')['namedGuards']['exit']==0
+f=lambda x:f'{x:.6f}'
+def pstat(p):
+ return ' / '.join(f"{v['before']['median']:.2f}→{v['after']['median']:.2f} ms ({v['pooledMedianChangePercent']:+.2f}%), draws {v['before']['calls']}→{v['after']['calls']}" for v in p['rows'])
+center=[r for r in a['stationComparisons'] if r['focus']=='center-picnic-blanket'];west=[r for r in a['stationComparisons'] if r['focus']=='west-picnic-blanket']
+g=a['ground'];shade=[r for r in m['stations'] if r['focus']=='mesa-civilian-shade']
+hud='; '.join(f"{r['focus']} {r['width']}px **{f(r['run6']['persistentHudCoveragePercent'])}%→{f(r['run9']['persistentHudCoveragePercent'])}% ({r['hudChangePercentagePoints']:+.6f} points)**" for r in center+west)
+text=f'''# The Picnic — run 9 fidelity
+
+**FIXED painted cross marks / IMPROVED props / HELD full fidelity.** The existing three blankets now carry gingham cloth, open handled cups, rimmed dishes, rounded baskets, food boards and a brass atom centerpiece. The mounted shade has a sagging canvas and retains its bench and atom ornament. All body envelopes and gameplay authorities are unchanged.
+
+| Earlier art clause, verbatim | Answer against its own earlier evidence |
+| --- | --- |
+| “The existing large cross-shaped ground shadow and primitive prop forms remain visible in the board; no full art-fidelity claim.” | **FIXED** the oversized painted cross/branch marks with a Picnic-only native-generated ground pigment. Own run-6 fixed-region RMS **{g[0]['run6']['rms']:.8f}→{g[0]['run9']['rms']:.8f} desktop ({g[0]['rmsChangePercent']:.2f}%) /{g[1]['run6']['rms']:.8f}→{g[1]['run9']['rms']:.8f} phone ({g[1]['rmsChangePercent']:.2f}%)**, preserving and extending the quieter-ground correction. Median **{g[0]['medianChangePercent']:+.2f}% /{g[1]['medianChangePercent']:+.2f}%**, dark share below 0.1 stays **0%**. **IMPROVED** prop forms: center **516→2,480**, each side **324→1,888**, shade **216→1,960**, all **/3,000** triangles. Own run-6 center luminance **{center[0]['run6']['bodyMedian']:.5f}→{center[0]['run9']['bodyMedian']:.5f} /{center[1]['run6']['bodyMedian']:.5f}→{center[1]['run9']['bodyMedian']:.5f}**, emission remains **0.45≤0.6**. **HELD for landmark/terrain art:** soft ground and wicker detail, diagonal texture pattern, weak contact/lighting, blocky food, congested ornament/food contours and bright canopy dominance. No full art-fidelity claim. |
+
+No prior independent-review file existed in the run-6 Picnic folder. The fresh [independent critique](independent-review.md) confirms clearer picnic identity and reduced ground clutter. It caught the missing bench in an intermediate; the final bench and supports are independently confirmed visible with no new clipping. Cloth source comes solely from the native image tool and is embedded at the existing 1024-pixel family cap; both new originals and exact prompts are retained in store `sources/e6-picnic-fidelity-2/`. The runtime ground URL is inside the deployment mirror include. Shared Mesa and original Picnic atlases remain unchanged.
+
+Station HUD versus run 6: {hud}. Small desktop rises are explicitly retained, not rounded to zero or described as accepted. East phone paired coverage rises **{next(r for r in m['stations'] if r['arm']=='before' and r['focus']=='east-picnic-blanket' and r['width']==390)['persistentHudCoveragePercent']:.6f}%→{next(r for r in m['stations'] if r['arm']=='after' and r['focus']=='east-picnic-blanket' and r['width']==390)['persistentHudCoveragePercent']:.6f}%**; no run-6 east record exists. Supplemental shade 8 m phone HUD falls **{next(r for r in shade if r['arm']=='before' and r['width']==390)['persistentHudCoveragePercent']:.6f}%→{next(r for r in shade if r['arm']=='after' and r['width']==390)['persistentHudCoveragePercent']:.6f}%**; this is a current-base pair, not a run-6 mounted-shade claim. [Prior comparison](prior-comparison.json) · [Every station and projected bound](visual-metrics.json).
+
+Unchanged pylon phone entry is **{next(r for r in m['stations'] if r['arm']=='after' and r['focus']=='six-vein-control-pylon' and r['station']=='entry' and r['width']==390)['persistentHudCoveragePercent']:.6f}%** HUD-covered versus run-6 **21.419518%**; the fresh before is already **{next(r for r in m['stations'] if r['arm']=='before' and r['focus']=='six-vein-control-pylon' and r['station']=='entry' and r['width']==390)['persistentHudCoveragePercent']:.6f}%**. That historical increase predates this render change; the pylon GLB/mount and HUD code are unchanged. Ordinary portrait entry still lacks the blanket grouping. Existing contract/layout/camera/UI and character/gathering holds stay with those owners. Shade mounting was completed in run 7, and is not credited to this art pass. The ten mounted bodies and zero skipped loads are preserved.
+
+Source and recipe proofs reproduce all four rebuilt GLBs byte-for-byte. Original float32 bounds, object matrices, all mounts/stations/footprints/budgets, terrain/panorama/sculpt/height/mask bytes, staging gate and five inherited Mesa models are exact. Within the existing contracts, only render artifact triangle/material/primitive counts and hashes change; new fidelity provenance is added. Terrain **32,768/60,000**, panorama **2,496/4,000**. Raw runtime delta **+{payload['totalRawRuntimeDelta']:,} B**, including **+{payload['rawGlbDelta']:,} B** in GLBs and **{payload['runtimeGroundPngBytes']:,} B** for the new ground PNG; not a measured transfer budget. E1 payload delta: **not applicable**. [Invariants](invariants.json) · [Budgets](asset-budgets.json) · [Source proof](source-verification.json) · [Recipe proof](recipe-verification.json) · [Bytes](payload-delta.json).
+
+Plain 1280×800 /390×844, DPR1 boots use normal HUD, no debug/test hook, seed `map-art-campaign-2` and approximately ten-second game clock. All plain/station captures have **zero console/page errors**. Transient story cards stay in normal frames and are excluded only from labelled persistent-HUD masks. [Desktop board](board-1280.png) · [Phone board](board-390.png) · [Ground before](ground-before-crop.png) · [Ground after](ground-after-crop.png) · [Blanket detail](center-picnic-blanket-after-crop.png) · [Canopy detail](mesa-civilian-shade-after-crop.png).
+
+TypeScript/default/full builds, scoped render guards **34/34**, named guards **3/3**, deployment mirror, loading **8/8**, repeat **2/2**, and six dedicated Picnic mount/dispose cycles pass. The dedicated probe confirms ten bodies, three blankets plus shade, one decoded/released ground texture per cycle, zero retained scene children and zero errors on both widths. Browser counts and exact-baseline attribution: **{b['candidateCounts']['passed']} pass /{b['candidateCounts']['skipped']} opt-in skips /{b['candidateCounts']['failed']} failures**; all failing cases also fail on the exact baseline, **{b['exactFingerprintCount']} exact fingerprints**. No assertions changed. This is not an all-green browser-suite claim. [Browser attribution](browser-failure-attribution.json) · [Final checks](final-checks.json) · [Mount/dispose](mount-repeat-proof.json) · [Rejected iterations](rejected-attempts.md).
+
+Four fresh timing runs per arm/viewport, alternating order and retaining all samples: entry **{pstat(perf)}**; grouping view **{pstat(gp)}**. One comparable mode in each pair, all within **15%**. Lane builds, captures and browser gates ran sequentially; a separate attended-drain browser was observed on the shared host, which is not claimed to be isolated. [Entry timings](performance-summary.json) · [Grouping timings](blanket-performance/performance-summary.json) · [Host context](host-context.json).
+
+Engine `{engine['before']}` → `{engine['after']}`; pin untouched. Store `{store['commit']}` pushed and read back on `astra/fidelity-2`.
+
+**READY-FOR-GATES.** Remaining E6 list: **none**. Glow Mesa was skipped for no art-owned held clause; Hollow and Picnic complete this leg. Later epochs remain separate tasks.
+'''
+(O/'review.md').write_text(text)

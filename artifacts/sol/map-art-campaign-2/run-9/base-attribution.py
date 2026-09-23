@@ -43,6 +43,8 @@ try:
         receipt['paths'][p] = {'candidateSha256': sha(data), 'baseSha256': sha(original)}
         Path(p).write_bytes(original)
     receipt['baseEngine'] = engine()
+    expected_base = json.loads((out / 'base.json').read_text())['engine']
+    assert receipt['baseEngine'] == expected_base, ('Base identity mismatch before replay', receipt['baseEngine'], expected_base)
     if specs == ['--e1-build']:
         command = ['npm', 'run', 'build:release']
         env = {**env, 'GR_RELEASE': 'e1'}
