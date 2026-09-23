@@ -5,7 +5,7 @@ import { readFileSync, writeFileSync } from 'node:fs';
 import assert from 'node:assert/strict';
 const id=process.env.MAP, mode=process.env.MODE??'plain';
 assert.ok(id);assert.ok(['plain','stations','performance'].includes(mode));
-const out=`artifacts/sol/map-art-campaign-2/run-9/${id}`;
+const out=process.env.CAPTURE_OUT??`artifacts/sol/map-art-campaign-2/run-9/${id}`;
 const raw=`artifacts/sol/map-art-campaign-2/_raw/run-9/${id}-before`;
 const config=JSON.parse(readFileSync(`${out}/capture-config.json`,'utf8'));
 const base='http://127.0.0.1:5303',rows=[];
@@ -59,11 +59,15 @@ try {for(const width of [1280,390])for(let cycle=0;cycle<(mode==='performance'?4
  }else{
   await page.evaluate(()=>{window.__GR_TEST__.setManualSim(true);const t=window.__THREE_GAME_DIAGNOSTICS__.timeAlive;if(t>10)throw Error('late diagnostic freeze '+t);window.__GR_TEST__.advanceSim(10-t);window.__GR_GUI__?.hide()});await page.waitForTimeout(1500);
   assert.equal(await page.evaluate(()=>window.__THREE_GAME_DIAGNOSTICS__.performance.runtimeVerdict),0);
+  if(mode==='performance'&&config.performanceViewpoint){
+   const [x,z]=config.performanceViewpoint;
+   await page.evaluate(({x,z})=>window.__GR_TEST__.teleport(x,z),{x,z});await page.waitForTimeout(900);
+  }
   if(mode==='performance'){
    const stats=await page.evaluate(async()=>{
     const frames=[],calls=[],triangles=[];let last=performance.now();await new Promise(resolve=>{const tick=now=>{frames.push(now-last);last=now;calls.push(window.__THREE_GAME_DIAGNOSTICS__.renderer.calls);triangles.push(window.__THREE_GAME_DIAGNOSTICS__.renderer.triangles);if(frames.length<180)requestAnimationFrame(tick);else resolve()};requestAnimationFrame(tick)});
     const sorted=[...frames].sort((a,b)=>a-b);return {frames,calls,triangles,p95:sorted[Math.floor(.95*sorted.length)]};
-   });rows.push({width,arm,cycle,...stats,errors});console.log(width,cycle,arm,stats.p95,[...new Set(stats.calls)]);
+   });rows.push({width,arm,cycle,viewpoint:config.performanceViewpoint??null,...stats,errors});console.log(width,cycle,arm,stats.p95,[...new Set(stats.calls)]);
   }else{
    await page.screenshot({path:`${out}/${arm}-frozen-${width}.png`});
    for(const [name,x,z] of config.viewpoints??[]){

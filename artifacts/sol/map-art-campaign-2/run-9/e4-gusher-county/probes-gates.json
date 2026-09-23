@@ -1,0 +1,28 @@
+[
+  {
+    "label": "loading",
+    "command": [
+      "node",
+      "scripts/map-landmark-loading-check.mjs"
+    ],
+    "environment": {
+      "PROBE_BASE": "http://127.0.0.1:5303"
+    },
+    "exit": 0,
+    "seconds": 20.43,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-9/e4-gusher-county-loading.log"
+  },
+  {
+    "label": "repeat",
+    "command": [
+      "node",
+      "scripts/map-landmark-repeat-check.mjs"
+    ],
+    "environment": {
+      "PROBE_BASE": "http://127.0.0.1:5303"
+    },
+    "exit": 0,
+    "seconds": 5.8,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-9/e4-gusher-county-repeat.log"
+  }
+]

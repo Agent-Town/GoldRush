@@ -3,6 +3,7 @@ from pathlib import Path
 import json,re,subprocess,sys
 name=sys.argv[1];root=Path('artifacts/sol/map-art-campaign-2/run-9');p=root/name
 candidate=json.loads((p/'own-failures.json').read_text());base=json.loads((p/'base.json').read_text())
+gate=json.loads((p/'e2e-own-gates.json').read_text())[0];assert gate['exit']==0 or candidate['failures'], 'Unparsed browser gate failure'
 if not candidate['failures']:
  (p/'browser-failure-attribution.json').write_text(json.dumps({'candidateCounts':candidate['counts'],'failures':[]},indent=2)+'\n');sys.exit()
 pattern='|'.join(re.escape(t) for t in sorted({r['title'] for r in candidate['failures']}))
