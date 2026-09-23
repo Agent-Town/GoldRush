@@ -4,6 +4,8 @@ Preflight: code 351250255744e7b482a9af050e1c533481d705f7; store b04141647762fd25
 
 Completed: e4-dust-flats — IMPROVED / HELD, READY-FOR-GATES; store b1e2c12a979e6b598860bfb5273142ed7b05d2f3 pushed/read back.
 
-Remaining list in order: e4-long-road, e4-gusher-county, e4-boneyard.
+Completed: e4-long-road — IMPROVED / HELD, READY-FOR-GATES; store e33b81277c9058ae8e8a18c595c975703d4887a7 pushed/read back.
 
-The leg is in progress; only the completed map above is ready. No shared Motor vehicle change: it belongs to run 8. Camera, HUD, mount/station transforms, gameplay, collision and height truth remain outside this slice.
+Remaining list in order: e4-gusher-county, e4-boneyard.
+
+The leg is in progress; only the completed maps above are ready. No shared Motor vehicle change: it belongs to run 8. Camera, HUD, mount/station transforms, gameplay, collision and height truth remain outside this slice.

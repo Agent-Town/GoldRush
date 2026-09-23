@@ -1,0 +1,57 @@
+{
+  "storeBase": "b1e2c12a979e6b598860bfb5273142ed7b05d2f3",
+  "base": "47b47e43b2ab36d1ddfcd3ed9bd84ecc38ef2ec2",
+  "paths": {
+    "src/world/Terrain3dClaimPilot.ts": {
+      "candidateSha256": "bcec7b7670b0e5a7c53a94cb92facf4d5179e95e768f80ba6cf72885537953da",
+      "baseSha256": "cb7d47198fa378f187b4cbc1d679ee30f1409e5b1103a5df8cc5f53097670eff"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/long-road/convoy-lead-hauler-start.glb": {
+      "candidateSha256": "656d8d08ab3d6436aec7a9bcb38261b801c262fbde2416f1abd32823d1e4dbd5",
+      "baseSha256": "8731d8e982d701fcf27cf8e9491f369cc25c12f9156c476fa7b5c02c7faa93ec"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/long-road/long-road-landmark-pack-contract.json": {
+      "candidateSha256": "7148b5f3cf7ce753cb81f044125bf9d42e6bd8056e68ad31e52c1898d80b7c42",
+      "baseSha256": "f39a5d4dc294bb513ba47e1bca10a9ee0c43e1bcd79b6f37cc56f8dbff651622"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/long-road/long-road-landmarks.blend": {
+      "candidateSha256": "127f50093646d5ce7fa583ed35bd627455e36f330ab8bac6afb56ac6636b4ec7",
+      "baseSha256": "03fafcd06dc54a4d71d97e3435900373057bb822f712c8c49479f00b0aef1d1d"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/long-road/west-way-station.glb": {
+      "candidateSha256": "de2d6e9777be399fa2e3214a7f259ea9c33a190fbd16fda495b2a733119d64a3",
+      "baseSha256": "7d5df54632a942687237ff8f7cfdaf30c88039ac59f6667139b5aca6e9964e38"
+    }
+  },
+  "pattern": "a\\ plain\\-boot\\ human\\ can\\ build\\ on\\ the\\ Claim\\-Boat\\ deck\\ \\(BOAT_BUILD\\ parity\\)|a\\ plain\\-boot\\ human\\ can\\ weigh\\ anchor\\ from\\ the\\ same\\ prompt\\ \\(REANCHOR\\ parity\\)|all\\ sixteen\\ contracts\\ mount\\ terrain,\\ panorama,\\ and\\ grounded\\ render\\-only\\ landmarks\\ with\\ matching\\ water|every\\ Motor\\ reel\\ replays\\ to\\ its\\ claimed\\ hash\\ in\\ Node\\ and\\ Chromium|rim\\ and\\ horizon\\ probes\\ keep\\ the\\ terrain\\ meeting\\ gradual\\ and\\ every\\ panorama\\ readable",
+  "specs": [
+    "e2e/e4-roads-and-convoys.spec.ts",
+    "e2e/rider-parity-grammar.spec.ts",
+    "e2e/terrain3d-registry.spec.ts"
+  ],
+  "candidateEngine": "8a51dec200e748ad42ea24d3ffd8f53525dfc7f34edba41b260107179b9f809c",
+  "baseEngine": "7811cb664727d4e4e9da87f09ae49a92f429af42d000a50d495f36aa5e250443",
+  "command": [
+    "npx",
+    "playwright",
+    "test",
+    "--workers=1",
+    "--project=desktop-chrome",
+    "--project=mobile-chrome",
+    "--trace=off",
+    "--reporter=line",
+    "--output=artifacts/sol/map-art-campaign-2/_raw/run-9/e4-long-road-base-failures/test-results",
+    "--grep",
+    "a\\ plain\\-boot\\ human\\ can\\ build\\ on\\ the\\ Claim\\-Boat\\ deck\\ \\(BOAT_BUILD\\ parity\\)|a\\ plain\\-boot\\ human\\ can\\ weigh\\ anchor\\ from\\ the\\ same\\ prompt\\ \\(REANCHOR\\ parity\\)|all\\ sixteen\\ contracts\\ mount\\ terrain,\\ panorama,\\ and\\ grounded\\ render\\-only\\ landmarks\\ with\\ matching\\ water|every\\ Motor\\ reel\\ replays\\ to\\ its\\ claimed\\ hash\\ in\\ Node\\ and\\ Chromium|rim\\ and\\ horizon\\ probes\\ keep\\ the\\ terrain\\ meeting\\ gradual\\ and\\ every\\ panorama\\ readable",
+    "e2e/e4-roads-and-convoys.spec.ts",
+    "e2e/rider-parity-grammar.spec.ts",
+    "e2e/terrain3d-registry.spec.ts"
+  ],
+  "exit": 1,
+  "newAssetsAbsentDuringBase": {
+    "assets/pilots/map-rebuild-spike/sources/e4-long-road-fidelity-2/landmark-input-contract.json": "f39a5d4dc294bb513ba47e1bca10a9ee0c43e1bcd79b6f37cc56f8dbff651622"
+  },
+  "restoredEngine": "8a51dec200e748ad42ea24d3ffd8f53525dfc7f34edba41b260107179b9f809c",
+  "candidateRestoredExactly": true,
+  "log": "artifacts/sol/map-art-campaign-2/_raw/run-9/e4-long-road-base-failures/tests.log"
+}

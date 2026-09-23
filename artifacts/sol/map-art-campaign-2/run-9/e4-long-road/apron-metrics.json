@@ -1,0 +1,24 @@
+{
+  "method": "Same desktop fixed apron box as run 5 [20,180,130,300]. Boundary sample uses y180..299 and x=floor(273-.451*y), eight pixels per side, offsets -12:-4 and +4:+12. Absolute side luminance difference is reported separately from spatial RMS.",
+  "arms": {
+    "before": {
+      "apronMedian": 0.2842541176470588,
+      "apronRms": 0.011795174469154214,
+      "boundarySideMeans": [
+        0.31595645098039227,
+        0.33661158986928086
+      ],
+      "meanAbsoluteBoundaryDifference": 0.02065513888888888
+    },
+    "after": {
+      "apronMedian": 0.30412941176470587,
+      "apronRms": 0.012284804330071824,
+      "boundarySideMeans": [
+        0.33801440277777767,
+        0.3366591021241828
+      ],
+      "meanAbsoluteBoundaryDifference": 0.0021045473856209133
+    }
+  },
+  "boundaryDifferenceChangePercent": -89.81102283096715
+}
