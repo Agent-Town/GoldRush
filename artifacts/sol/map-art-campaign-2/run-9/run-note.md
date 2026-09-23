@@ -7,7 +7,9 @@ Scope audit against the latest individual review and independent critique:
 - `e1-twin-banks`: SKIPPED — latest run-3 review holds camera/UI and excluded `src/world/Scatter.ts` owner clauses, none for this art owner; no independent critique exists.
 - `e1-baron`: SKIPPED — latest run-3 review holds camera/UI/contract-layout/geography clauses only; no independent critique exists.
 - `e2-pressure-garden`: COMPLETE — river/bank art improved with explicit remaining holds; store `25fed85ea017ff54abd78d5e4186dddf1dea6efc` pushed/read back; exact-base registry attribution and current-main mirror prerequisite recorded.
-- `e2-incline`: PENDING — terminal silhouette/platform, axle/spokes, lower assembly and material fidelity.
+- `e2-incline`: COMPLETE — terminal silhouette/platform and mechanism improved with explicit material/contact and entry/UI holds; store `d76ee141dcac825aa29cf4e5d4a868fe845fb1c8` pushed/read back; 62 browser passes, six skips and six exact-base-attributed registry failures; loading/repeat, builds and scoped guards pass.
 - `e2-trestle`: SKIPPED — latest run-3 review holds camera/UI and excluded `src/world/RailPath.ts` route-join owner clauses, none for this art owner; no independent critique exists.
 
-Remaining implementation list in order: `e2-incline`. No E1 production assets change. Skipping a map does not promote its art or gameplay verdict to accepted.
+Remaining implementation list in this E1/E2 leg, in order: **none**. No E1 production assets change. Skipping a map does not promote its art or gameplay verdict to accepted.
+
+Completed without quota refusal, rate limit or disconnect. Both finished maps have their own game/store commit and READY-FOR-GATES evidence; no branch reset/rebase or force-push occurred mid-run. [Final handoff, commits and hash pairs](handoff.md).

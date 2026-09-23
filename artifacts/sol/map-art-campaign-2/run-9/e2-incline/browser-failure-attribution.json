@@ -1,0 +1,63 @@
+{
+  "candidate": {
+    "passed": 62,
+    "skipped": 6,
+    "failed": 6,
+    "receipt": "e2e-own-and-pack-gates.json"
+  },
+  "exactBase": "6e306d1a0c8ebec7ac44d19a5c066518e3e48817",
+  "exactStoreBase": "25fed85ea017ff54abd78d5e4186dddf1dea6efc",
+  "exactBaseEngine": "e300ac0f43d653be8b76c3f65610264ad5c2db023a9dd15a115a275cad6ea6f7",
+  "restoredCandidateEngine": "72968f9ab06af85b2754a57ba175fb04a106f60db887103b4cf8f494584ea3c2",
+  "allFingerprintsMatch": true,
+  "failures": [
+    {
+      "project": "desktop-chrome",
+      "spec": "e2e/terrain3d-registry.spec.ts",
+      "testLine": 196,
+      "title": "all sixteen contracts mount terrain, panorama, and grounded render-only landmarks with matching water",
+      "expected": "32768",
+      "received": "51200"
+    },
+    {
+      "project": "desktop-chrome",
+      "spec": "e2e/terrain3d-registry.spec.ts",
+      "testLine": 272,
+      "title": "rim and horizon probes keep the terrain meeting gradual and every panorama readable",
+      "expected": "\"painted-underlay-alpha-rim\"",
+      "received": "\"opaque-sculpt-edge\""
+    },
+    {
+      "project": "desktop-chrome",
+      "spec": "e2e/terrain3d-registry.spec.ts",
+      "testLine": 345,
+      "title": "all fifteen contracts stay painted in LITE and on invalid terrain bytes",
+      "expected": "\"failed\"",
+      "received": "\"lite\""
+    },
+    {
+      "project": "mobile-chrome",
+      "spec": "e2e/terrain3d-registry.spec.ts",
+      "testLine": 196,
+      "title": "all sixteen contracts mount terrain, panorama, and grounded render-only landmarks with matching water",
+      "expected": "32768",
+      "received": "51200"
+    },
+    {
+      "project": "mobile-chrome",
+      "spec": "e2e/terrain3d-registry.spec.ts",
+      "testLine": 272,
+      "title": "rim and horizon probes keep the terrain meeting gradual and every panorama readable",
+      "expected": "\"painted-underlay-alpha-rim\"",
+      "received": "\"opaque-sculpt-edge\""
+    },
+    {
+      "project": "mobile-chrome",
+      "spec": "e2e/terrain3d-registry.spec.ts",
+      "testLine": 345,
+      "title": "all fifteen contracts stay painted in LITE and on invalid terrain bytes",
+      "expected": "\"failed\"",
+      "received": "\"lite\""
+    }
+  ]
+}

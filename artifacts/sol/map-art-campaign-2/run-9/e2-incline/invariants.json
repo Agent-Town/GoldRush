@@ -1,0 +1,33 @@
+{
+  "unchangedBytes": {
+    "incline-terrain.glb": "d9581d57c6ccde8ca983a82dc86aba2ea2b873620191ec7139f041a033d40025",
+    "incline-terrain.blend": "7cf590860fd11915beba3529400fb4253b10c8fa69ec1919b49df7e860573548",
+    "incline-terrain-contract.json": "871501a301fa40838785161283f8589eaceb8b2768f0878112fe0401a4e4bb05",
+    "incline-terrain-atlas.png": "0c79ece2e2dca5d6f6490d5c17534d4878b7728a0b9c80e9d31268af89249c54",
+    "incline-panorama.glb": "9c06e4dd401a71231aae7aa0268b41d695113142bfef1536c114ae3e1f783f7b",
+    "incline-panorama.blend": "830f15dc88bab7d8346601d15c383a504f2e21c42ce823a023fe6778f228ecba",
+    "incline-panorama-contract.json": "3f73c5554042db16d9f7f29b045ecf66b92b6140003b4a08a4566513a7c36681",
+    "incline-panorama-atlas.png": "295363ab10395a9f34ba794c1f4db0ffd0958b59d30a973c59647b9df8ab55ef",
+    "landmark-collision-contract.json": "929c325001a04c8f098885cc5973fb43e6de89b51781a48ba62d4cdd18c6d4fa",
+    "landmarks/incline/incline-landmarks-atlas.png": "185f7420a26ec753c2f25042e94f875fff003b27e84419ff1aac863625e1c91b",
+    "landmarks/incline/lower-yard-engine-crane.glb": "0de1b5381a817da9402d0dece2c0ac14ea845ac0825468676526e8f22742f013",
+    "landmarks/incline/ford-service-pump.glb": "9efe77e3ddeeebe59c5d8ca55da515d425a6ca3bc39465048547c29788bad510",
+    "landmarks/incline/east-line-brake-tower.glb": "2dbb7711db8d2997e44f439ae6f0edfd08a5f3c307ac4c7dccd6ae595120946c",
+    "landmarks/incline/west-line-brake-tower.glb": "f5c5c604c852c41db9aa929f2bc8537ec1c49c64adc3b3d85546218e5d60510f"
+  },
+  "terrainPanoramaFourSiblingBodiesAndAtlasExact": true,
+  "heightsMasksMountsStationsCollisionBoundsBudgetsExact": true,
+  "singleLineRegistryEntries": 36,
+  "protectedAuthorities": [
+    "src/game",
+    "src/sim",
+    "assets/contracts",
+    "src/world/Terrain.ts",
+    "src/world/LandmarkCollision.ts",
+    "src/systems",
+    "src/entities",
+    "e2e",
+    "assets/engine-era.json"
+  ],
+  "wholeBodyEmission": "unchanged 0.375 on cable house and brake towers; 0.2175 on two siblings"
+}

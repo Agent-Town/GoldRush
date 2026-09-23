@@ -2,8 +2,10 @@
 Never edits production scripts. Original-tree failure remains a held prerequisite.
 """
 from pathlib import Path
-import difflib,hashlib,json,os,subprocess,tempfile
+import difflib,hashlib,json,os,subprocess,tempfile,sys
 root=Path.cwd();out=root/'artifacts/sol/map-art-campaign-2/run-9';raw=root/'artifacts/sol/map-art-campaign-2/_raw/run-9'
+map_name=sys.argv[1] if len(sys.argv)>1 else None
+proof_out=out/map_name if map_name else out
 original=(root/'scripts/deploy.sh').read_text()
 main=subprocess.check_output(['git','rev-parse','main'],text=True).strip()
 proposed=subprocess.check_output(['git','show',main+':scripts/deploy.sh'],text=True)
@@ -21,6 +23,6 @@ with tempfile.TemporaryDirectory(prefix='gr9-mirror-proposal-') as t:
  (clone/'scripts/deploy-mirror-allowlist.test.mjs').write_bytes((root/'scripts/deploy-mirror-allowlist.test.mjs').read_bytes())
  assert sha(clone/'scripts/deploy-mirror-allowlist.test.mjs')==receipt['originalTestSha256']
  env={**os.environ,'PATH':'/opt/homebrew/bin:'+os.environ['PATH']}
- log=raw/'mirror-current-main-filters.log'
+ log=raw/(f'mirror-{map_name}-current-main-filters.log' if map_name else 'mirror-current-main-filters.log')
  with log.open('w') as f:receipt['currentMainFilterTestExit']=subprocess.run(['node','--test','scripts/deploy-mirror-allowlist.test.mjs'],cwd=clone,env=env,stdout=f,stderr=subprocess.STDOUT).returncode
-receipt['log']=str(log.relative_to(root));assert sha(root/'scripts/deploy.sh')==receipt['originalDeploySha256'];(out/'mirror-prerequisite-proof.json').write_text(json.dumps(receipt,indent=2)+'\n');print(json.dumps(receipt,indent=2));assert receipt['currentMainFilterTestExit']==0
+receipt['log']=str(log.relative_to(root));assert sha(root/'scripts/deploy.sh')==receipt['originalDeploySha256'];(proof_out/'mirror-prerequisite-proof.json').write_text(json.dumps(receipt,indent=2)+'\n');print(json.dumps(receipt,indent=2));assert receipt['currentMainFilterTestExit']==0

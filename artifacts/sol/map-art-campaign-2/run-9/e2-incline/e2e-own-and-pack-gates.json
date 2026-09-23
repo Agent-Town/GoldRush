@@ -1,0 +1,31 @@
+[
+  {
+    "label": "own-and-pack",
+    "command": [
+      "npx",
+      "playwright",
+      "test",
+      "--workers=1",
+      "--project=desktop-chrome",
+      "--project=mobile-chrome",
+      "--trace=off",
+      "--reporter=line",
+      "--output=artifacts/sol/map-art-campaign-2/_raw/run-9/e2-incline-own-and-pack",
+      "e2e/board-upcoming-surveys.spec.ts",
+      "e2e/landmark-brightness.spec.ts",
+      "e2e/e2-incline.spec.ts",
+      "e2e/terrain3d-registry.spec.ts",
+      "e2e/board-gating-and-profiles.spec.ts",
+      "e2e/er01-e9-census.spec.ts",
+      "e2e/er01-e2-census.spec.ts",
+      "e2e/072-era-activation.spec.ts",
+      "e2e/ap16-4-contract-admission.spec.ts",
+      "e2e/landmark-collision.spec.ts",
+      "e2e/fort-landmark-collision.spec.ts"
+    ],
+    "environment": {},
+    "exit": 1,
+    "seconds": 788.91,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-9/e2-incline-own-and-pack.log"
+  }
+]

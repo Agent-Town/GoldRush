@@ -1,0 +1,34 @@
+{
+  "builds": "tsc/default/full/e1 pass",
+  "e1PayloadBytes": 34311866,
+  "deltaFromPrecedingMapBytes": 1,
+  "legDeltaBytes": 2036,
+  "e1ArtAssetsChanged": false,
+  "ownPackBrowser": {
+    "passed": 62,
+    "skipped": 6,
+    "exactBaseAttributedFailures": 6,
+    "attribution": "browser-failure-attribution.json"
+  },
+  "loading": {
+    "passed": 8,
+    "failed": 0
+  },
+  "repeat": {
+    "passed": 2,
+    "failed": 0
+  },
+  "renderGuards": 34,
+  "namedGuards": 3,
+  "sourceReexport": "source-verification.json",
+  "authorityInvariants": "invariants.json",
+  "allCaptureErrors": 0,
+  "captureProof": "capture-error-check.json",
+  "performance": "performance-summary.json",
+  "mirror": "Original lane remains red; exact base attributed and unchanged assertion passes with canonical main script. Retain 214a54568 and 82c226185.",
+  "storeCommit": "d76ee141dcac825aa29cf4e5d4a868fe845fb1c8",
+  "engine": {
+    "before": "e300ac0f43d653be8b76c3f65610264ad5c2db023a9dd15a115a275cad6ea6f7",
+    "after": "72968f9ab06af85b2754a57ba175fb04a106f60db887103b4cf8f494584ea3c2"
+  }
+}
