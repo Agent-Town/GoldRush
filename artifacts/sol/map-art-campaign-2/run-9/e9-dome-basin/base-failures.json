@@ -1,0 +1,67 @@
+{
+  "storeBase": "4a2976f52ae92d17da23d883d0bf5756e75c9f74",
+  "base": "47ddbdd432eb6ebbc93e77b25b1a98b8f4c3209c",
+  "paths": {
+    "assets/pilots/map-rebuild-spike/landmarks/dome-basin/ark-yard-scaffold.glb": {
+      "candidateSha256": "e79915d8a38833d2a700706faed07e498722e6579591e2737ffe8eb8f625c8ac",
+      "baseSha256": "1199c1032244ce75cc2a9643e5b86b8e5b060a87939908df4929bd7fbb939e60"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/dome-basin/canal-gate-works.glb": {
+      "candidateSha256": "b58afdf92c73e8e65ee39d63b7ee97858f9005384b93fec7d50de24efc3c022d",
+      "baseSha256": "41740fe984866b67f1673ac6041e9bc66a97e38740804da07c0d2e8fb36bf56c"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/dome-basin/dome-basin-landmark-pack-contract.json": {
+      "candidateSha256": "2c14800e203aae4a6db73bd49491e251d886d8a0a4c86b779b51af3a8769e198",
+      "baseSha256": "964e8f0f9d45b81a57e7579d5ef5b62bed9e5491f4eab2d2ddffe0801bee673c"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/dome-basin/dome-basin-landmarks-atlas.png": {
+      "candidateSha256": "3b23219ef04870fa71a73f3006a8f80225c95d1f3be56f66a8b4e0975e3b721b",
+      "baseSha256": "f92189af7b358669928803da9af4c26c2f509f1f301a40ee1f326d4360a5f643"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/dome-basin/dome-basin-landmarks.blend": {
+      "candidateSha256": "c61676d78c5c07cc182b0f56f8dcf3a99a1b608e20451cab1df799a2c3f1dfdb",
+      "baseSha256": "4eaee88d717c7e3f843cc2926cb57ba322febfc21d478a32c4768f88b95564a3"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/dome-basin/dust-devil-warning-mast.glb": {
+      "candidateSha256": "4bd3bbdc29cf45969b1ab0266ebb67802edb8403be632f9f65b191bb82631bb2",
+      "baseSha256": "dc96dd834bacfe161fb360acc685598f2262d1c34a1bd91408880727cf97e4f5"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/dome-basin/ice-quarry-hoist.glb": {
+      "candidateSha256": "f1bc6c7846a4df9e90292fdd705f8bb48bad6df4f456e387062c374e5e13bb75",
+      "baseSha256": "f5910999b56799da81ec56776b96b1e60d8b96e1b1f46ed99131615bc97b4044"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/dome-basin/seed-row-weather-station.glb": {
+      "candidateSha256": "95452133af0bbfe6d7735f0dec82354110bddcc8ee63f3cfb7d75d7a26229836",
+      "baseSha256": "6766077a07488fd810f094659943e9a25ffb450b1486913d6e34d387ae9596ed"
+    }
+  },
+  "pattern": "Cure\\-Arms\\ free\\ people\\ and\\ power\\ fevered\\ machines\\ down\\ without\\ death\\ events|plain\\ Red\\ Fields\\ boot\\ stays\\ error\\-free\\ without\\ the\\ debug\\ harness",
+  "specs": [
+    "e2e/e9-arsenal.spec.ts",
+    "e2e/e9-roster.spec.ts"
+  ],
+  "candidateEngine": "9103137b1b23675af890f27fb87c0ea568796246e79560bdf2153e2056ed48f1",
+  "baseEngine": "984a9f2498c3445a6fe7f4e9b600f9334b4e7a394d0f3b284493b76dc39ba1a5",
+  "command": [
+    "npx",
+    "playwright",
+    "test",
+    "--workers=1",
+    "--project=desktop-chrome",
+    "--project=mobile-chrome",
+    "--trace=off",
+    "--reporter=line",
+    "--output=artifacts/sol/map-art-campaign-2/_raw/run-9/e9-dome-basin-base-failures/test-results",
+    "--grep",
+    "Cure\\-Arms\\ free\\ people\\ and\\ power\\ fevered\\ machines\\ down\\ without\\ death\\ events|plain\\ Red\\ Fields\\ boot\\ stays\\ error\\-free\\ without\\ the\\ debug\\ harness",
+    "e2e/e9-arsenal.spec.ts",
+    "e2e/e9-roster.spec.ts"
+  ],
+  "exit": 1,
+  "newAssetsAbsentDuringBase": {
+    "assets/pilots/map-rebuild-spike/sources/e9-dome-basin-fidelity-2/landmark-input-contract.json": "964e8f0f9d45b81a57e7579d5ef5b62bed9e5491f4eab2d2ddffe0801bee673c"
+  },
+  "restoredEngine": "9103137b1b23675af890f27fb87c0ea568796246e79560bdf2153e2056ed48f1",
+  "candidateRestoredExactly": true,
+  "log": "artifacts/sol/map-art-campaign-2/_raw/run-9/e9-dome-basin-base-failures/tests.log"
+}

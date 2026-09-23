@@ -1,0 +1,158 @@
+{
+  "candidateCounts": {
+    "passed": 50,
+    "skipped": 4,
+    "failed": 4
+  },
+  "baseCounts": {
+    "passed": 0,
+    "skipped": 0,
+    "failed": 4
+  },
+  "exactBaseEngine": "984a9f2498c3445a6fe7f4e9b600f9334b4e7a394d0f3b284493b76dc39ba1a5",
+  "restoredCandidateEngine": "9103137b1b23675af890f27fb87c0ea568796246e79560bdf2153e2056ed48f1",
+  "allCasesAlsoFailOnBase": true,
+  "exactFingerprintCount": 4,
+  "failures": [
+    {
+      "project": "desktop-chrome",
+      "spec": "e2e/e9-arsenal.spec.ts",
+      "title": "Cure-Arms free people and power fevered machines down without death events",
+      "baseAlsoFails": true,
+      "exactFingerprint": true,
+      "candidate": {
+        "project": "desktop-chrome",
+        "spec": "e2e/e9-arsenal.spec.ts",
+        "testLine": 77,
+        "title": "Cure-Arms free people and power fevered machines down without death events",
+        "fingerprint": [
+          "Error: expect(received).toEqual(expected) // deep equality",
+          "Expected: ArrayContaining [ObjectContaining {\"lethal\": false, \"type\": \"freed_turned_back\"}, ObjectContaining {\"lethal\": false, \"type\": \"fevered_machine_powered_down\", \"variantId\": \"steam_wrecker\"}]",
+          "Received: [{\"enemyId\": 0, \"lethal\": false, \"type\": \"freed_turned_back\", \"variantId\": null, \"weapon\": \"terraformCannon\"}]"
+        ],
+        "assertionLocations": [
+          "e2e/e9-arsenal.spec.ts:92:20"
+        ]
+      },
+      "base": {
+        "project": "desktop-chrome",
+        "spec": "e2e/e9-arsenal.spec.ts",
+        "testLine": 77,
+        "title": "Cure-Arms free people and power fevered machines down without death events",
+        "fingerprint": [
+          "Error: expect(received).toEqual(expected) // deep equality",
+          "Expected: ArrayContaining [ObjectContaining {\"lethal\": false, \"type\": \"freed_turned_back\"}, ObjectContaining {\"lethal\": false, \"type\": \"fevered_machine_powered_down\", \"variantId\": \"steam_wrecker\"}]",
+          "Received: [{\"enemyId\": 0, \"lethal\": false, \"type\": \"freed_turned_back\", \"variantId\": null, \"weapon\": \"terraformCannon\"}]"
+        ],
+        "assertionLocations": [
+          "e2e/e9-arsenal.spec.ts:92:20"
+        ]
+      }
+    },
+    {
+      "project": "desktop-chrome",
+      "spec": "e2e/e9-roster.spec.ts",
+      "title": "plain Red Fields boot stays error-free without the debug harness",
+      "baseAlsoFails": true,
+      "exactFingerprint": true,
+      "candidate": {
+        "project": "desktop-chrome",
+        "spec": "e2e/e9-roster.spec.ts",
+        "testLine": 173,
+        "title": "plain Red Fields boot stays error-free without the debug harness",
+        "fingerprint": [
+          "Error: expect(received).toBe(expected) // Object.is equality",
+          "Expected: true",
+          "Received: false"
+        ],
+        "assertionLocations": [
+          "e2e/e9-roster.spec.ts:184:93"
+        ]
+      },
+      "base": {
+        "project": "desktop-chrome",
+        "spec": "e2e/e9-roster.spec.ts",
+        "testLine": 173,
+        "title": "plain Red Fields boot stays error-free without the debug harness",
+        "fingerprint": [
+          "Error: expect(received).toBe(expected) // Object.is equality",
+          "Expected: true",
+          "Received: false"
+        ],
+        "assertionLocations": [
+          "e2e/e9-roster.spec.ts:184:93"
+        ]
+      }
+    },
+    {
+      "project": "mobile-chrome",
+      "spec": "e2e/e9-arsenal.spec.ts",
+      "title": "Cure-Arms free people and power fevered machines down without death events",
+      "baseAlsoFails": true,
+      "exactFingerprint": true,
+      "candidate": {
+        "project": "mobile-chrome",
+        "spec": "e2e/e9-arsenal.spec.ts",
+        "testLine": 77,
+        "title": "Cure-Arms free people and power fevered machines down without death events",
+        "fingerprint": [
+          "Error: expect(received).toEqual(expected) // deep equality",
+          "Expected: ArrayContaining [ObjectContaining {\"lethal\": false, \"type\": \"freed_turned_back\"}, ObjectContaining {\"lethal\": false, \"type\": \"fevered_machine_powered_down\", \"variantId\": \"steam_wrecker\"}]",
+          "Received: [{\"enemyId\": 0, \"lethal\": false, \"type\": \"freed_turned_back\", \"variantId\": null, \"weapon\": \"terraformCannon\"}]"
+        ],
+        "assertionLocations": [
+          "e2e/e9-arsenal.spec.ts:92:20"
+        ]
+      },
+      "base": {
+        "project": "mobile-chrome",
+        "spec": "e2e/e9-arsenal.spec.ts",
+        "testLine": 77,
+        "title": "Cure-Arms free people and power fevered machines down without death events",
+        "fingerprint": [
+          "Error: expect(received).toEqual(expected) // deep equality",
+          "Expected: ArrayContaining [ObjectContaining {\"lethal\": false, \"type\": \"freed_turned_back\"}, ObjectContaining {\"lethal\": false, \"type\": \"fevered_machine_powered_down\", \"variantId\": \"steam_wrecker\"}]",
+          "Received: [{\"enemyId\": 0, \"lethal\": false, \"type\": \"freed_turned_back\", \"variantId\": null, \"weapon\": \"terraformCannon\"}]"
+        ],
+        "assertionLocations": [
+          "e2e/e9-arsenal.spec.ts:92:20"
+        ]
+      }
+    },
+    {
+      "project": "mobile-chrome",
+      "spec": "e2e/e9-roster.spec.ts",
+      "title": "plain Red Fields boot stays error-free without the debug harness",
+      "baseAlsoFails": true,
+      "exactFingerprint": true,
+      "candidate": {
+        "project": "mobile-chrome",
+        "spec": "e2e/e9-roster.spec.ts",
+        "testLine": 173,
+        "title": "plain Red Fields boot stays error-free without the debug harness",
+        "fingerprint": [
+          "Error: expect(received).toBe(expected) // Object.is equality",
+          "Expected: true",
+          "Received: false"
+        ],
+        "assertionLocations": [
+          "e2e/e9-roster.spec.ts:184:93"
+        ]
+      },
+      "base": {
+        "project": "mobile-chrome",
+        "spec": "e2e/e9-roster.spec.ts",
+        "testLine": 173,
+        "title": "plain Red Fields boot stays error-free without the debug harness",
+        "fingerprint": [
+          "Error: expect(received).toBe(expected) // Object.is equality",
+          "Expected: true",
+          "Received: false"
+        ],
+        "assertionLocations": [
+          "e2e/e9-roster.spec.ts:184:93"
+        ]
+      }
+    }
+  ]
+}

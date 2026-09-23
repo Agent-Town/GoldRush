@@ -1,0 +1,19 @@
+{
+  "method": "Ratio of singular values of per-triangle surface-to-UV Jacobian; 1 is isotropic. Area weighted, collapses reported separately. This tests UV distortion, not visual material fidelity.",
+  "rows": [
+    {
+      "arm": "before",
+      "id": "canal-gate-works",
+      "areaWeightedMedianUvAnisotropy": 3.7452581381542265,
+      "areaWeightedP95UvAnisotropy": 38.51628769862957,
+      "collapsedUvAreaSharePercent": 0.0
+    },
+    {
+      "arm": "after",
+      "id": "canal-gate-works",
+      "areaWeightedMedianUvAnisotropy": 1.0000003796406076,
+      "areaWeightedP95UvAnisotropy": 1.0823920648733767,
+      "collapsedUvAreaSharePercent": 0.0
+    }
+  ]
+}
