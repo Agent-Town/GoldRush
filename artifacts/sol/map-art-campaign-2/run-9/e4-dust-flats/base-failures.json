@@ -1,0 +1,32 @@
+{
+  "base": "351250255744e7b482a9af050e1c533481d705f7",
+  "storeBase": "b04141647762fd25aed02a86ac5ee00a627f8d14",
+  "baseEngine": "0a23a5425e7b47bb1e7bf7cef05dacb2b3b68c103cc9337459d2bc6cc32823b0",
+  "candidateEngine": "7811cb664727d4e4e9da87f09ae49a92f429af42d000a50d495f36aa5e250443",
+  "restoredEngine": "7811cb664727d4e4e9da87f09ae49a92f429af42d000a50d495f36aa5e250443",
+  "candidateRestoredExactly": true,
+  "exit": 1,
+  "paths": {
+    "assets/pilots/map-rebuild-spike/landmarks/dust-flats/north-railhead-storm-tower.glb": {
+      "candidateSha256": "9ba1744a8c4b6879f48a730eb9f9c35b354c3556298047fe96b265afb5ce010b",
+      "baseSha256": "65e905b780d209cfe97d9ea45c9ade7bca145dda6929da5ddbb648350a86ef14"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/dust-flats/dust-flats-landmark-pack-contract.json": {
+      "candidateSha256": "53803b2e24bd5281fa926c3c3d6e7671834354862ca3dd7dcf3fd38214f14e91",
+      "baseSha256": "fb8bbb4e34839e07167f77f0ab6360549aef0326a773bf118e1135ce9d68f791"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/dust-flats/dust-flats-landmarks.blend": {
+      "candidateSha256": "46780e73924017ed0202e50568173cd4f2098bf39c6c12e198a6fc2a058de1fa",
+      "baseSha256": "c82cbf9cb928466cfd8e19106bcd51355cd756324c9531dfae7223ab1cb96ef4"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/dust-flats/east-horizon-fuel-reserve.glb": {
+      "candidateSha256": "c385acec37966824b140144a1193e057c29003aee826027cf6f7f62da940f3a2",
+      "baseSha256": "e5efcee5a9a27d883b18712810b9b7a8472984765f0c171d094b0d41ffc68770"
+    }
+  },
+  "log": "artifacts/sol/map-art-campaign-2/_raw/run-9/e4-dust-flats-base-failures/tests.log",
+  "newAssetsAbsentDuringBase": {
+    "assets/pilots/map-rebuild-spike/sources/e4-dust-flats-fidelity-2/landmark-input-contract.json": "fb8bbb4e34839e07167f77f0ab6360549aef0326a773bf118e1135ce9d68f791"
+  },
+  "receiptRecovery": "Values preserved from the actual base-attribution tool stdout. The assertion parser was initially called with label base and overwrote base-failures.json; its output is now baseline-failures.json. Candidate backup byte equality rechecked during recovery."
+}
