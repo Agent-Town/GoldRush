@@ -1,0 +1,34 @@
+slice 3: lane 2eb4615627be74474aaca1a800bc98ebcda5ea74 store b04141647762fd25aed02a86ac5ee00a627f8d14 maps: the Canyon Works 09:34Z
+store on 'main', dirty 0 (Astra's, untouched)
+store main -> b041416 (art(store): Canyon Works — supported dynamo and layered rim)
+store main pushed: b041416
+scratch store: detached at b041416, clean
+chain fast-forwarded to main 5fffc1e68
+chain base 5fffc1e68 merging lane 2eb461562 (lane tip 2eb461562) 09:34Z
+merged 155a99214
+single-line law: nothing to flatten
+law-pointer (pre): rc=0, no re-base needed
+engine hash merged (scratch store at b041416): 0a23a5425e7b47bb1e7bf7cef05dacb2b3b68c103cc9337459d2bc6cc32823b0
+droplet mirror closure (early check, F-FID1-5 class: a store slice can add a corpus file the mirror does not ship): rc=0
+tsc/build/e1: 0 / 0 / 0
+first-town payload: 34317083 bytes
+halo: rc=0 halo re-extraction PASS: 315 cured, 0 held, 760 regenerated-and-cured, 2127 scanned; alpha and opaque RGB unchanged
+null floors: rc=0 83 of 83 null floors match assets/contracts/null-floors.json (310.6s).
+law-pointer: rc=0 law-pointer-guard — do the law surfaces still point at what they claim?
+guards: ℹ pass 98 ℹ fail 0 
+e2e start 09:41Z: e2e/e3-canyon-works.spec.ts e2e/er01-e3-census.spec.ts e2e/landmark-brightness.spec.ts e2e/landmark-collision.spec.ts e2e/task-025-bandits-dont-swim.spec.ts e2e/m2-01-build-menu.spec.ts 
+e2e: rc=1   2 failed   4 skipped   48 passed (5.9m)  09:47Z
+1) [desktop-chrome] › e2e/er01-e3-census.spec.ts:16:3 › e3-canyon-works census support is explicit and deterministic 
+2) [mobile-chrome] › e2e/er01-e3-census.spec.ts:16:3 › e3-canyon-works census support is explicit and deterministic 
+battery start 09:47Z
+battery: rc=1 ℹ tests 955 ℹ pass 947 ℹ fail 3 ℹ skipped 5  09:55Z
+✖ all 152 scripts/*.test.mjs fixture owners remove their temp directories (184530.439333ms)
+✖ failing tests:
+✖ rotation registry stays outside the engine identity corpus (584.342833ms)
+✖ the landed registry names the live engine and stays outside its hash corpus (130.880917ms)
+dirt after battery: 0
+FID2-S3-PREP-DONE
+known-red overrides: e2e e2e/er01-e3-census\.spec\.ts:16:3 battery ^$
+hash at pin time: 0a23a5425e7b47bb1e7bf7cef05dacb2b3b68c103cc9337459d2bc6cc32823b0
+pin #43
+era (chain, scratch store): ℹ pass 9 ℹ fail 0 
