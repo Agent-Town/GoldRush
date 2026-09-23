@@ -191,3 +191,35 @@ Code: `src/world/*` (render side, incl. `Water.ts`), the render-only presentatio
 
 ### Findings
 - **F-F2-14 (pre-existing, attributed by Astra on the exact base):** Gusher County's browser batch carries six base-red cases (four exact fingerprints, two horizon-value variations), outside this slice's gate; the shared Motor spec and the E4 census run on both projects here.
+
+## Slice 7 — LANDED `e99defc97` (2026-09-23 13:44Z): the Boneyard
+
+**Lane up to** `23cd4988e` · **store main** `e62dbf9` (landed first, pushed) · **merge** `e99defc97` · same-era pin #47 `49242d17`
+
+### What it does (the run-6 HELD clauses answered FIXED / IMPROVED with a number against run 6 / HELD with the owner named)
+**The Boneyard — IMPROVED / HELD (Astra's own verdict).** The half-buried sleeper gains clearer pressure-engine detail and a partial wheel burial (1,842 → 2,926 of 3,000 triangles) and the two small flivver-row wrecks become distinct salvage silhouettes (512 → 1,370 and 512 → 1,250); a matte, non-emissive earth material replaces two rejected atlas-coloured mound treatments. The same-box ground RMS falls 25.12% desktop and 17.96% phone against run 6; bounds, collision, mounts and stations are unchanged, the nine sibling GLBs and the atlas pixels exact. Every small HUD increase is reported against its own earlier figure, and the historical phone reduction at the sleeper is not credited to this pass. HELD: full ground and metal fidelity, smooth terrain contact, the small wrecks' readability, and the entry and UI. Frame p95 at entry 9.70 → 9.70 ms desktop and 9.85 → 9.90 ms phone, at the sleeper view 10.05 → 9.90 and 9.80 → 10.00, draws within one; four boots, 24 stations and 32 timing runs with zero console or page errors; the runtime GLBs grow by 159,892 B; no E1 art. Astra measured the engine hash at `49242d17…` with the lane store at `e62dbf9`; the drain's own measurement on the merged tree is the pin below.
+
+**Leg verdict (E4).** All four Motor maps carried art-owned clauses and each is answered with numbers against its own earlier run: the Dust Flats' service landmarks (tanks and a lattice tower), the Long Road's open service stop and articulated convoy, Gusher County's eight braced derricks, the Boneyard's buried salvage. Each landed as its own slice with its own control, pin and deploy; the remaining list is empty and the run ended without a quota refusal. The next leg (E6: the Glow Mesa, Half-Life Hollow, the Picnic) is queued by this drain on the owner's word.
+Where the player sees it: the plain entry of these maps, on production and the all-epochs preview.
+
+### Evidence (this slice's gates on the merged tree, the scratch store clean at the landed store main)
+| Check | Result |
+| --- | --- |
+| the store landing | `e62dbf9` on `Agent-Town/GoldRush-assets` main, pushed; the scratch store worktree detached at it, clean, before any hash was measured (F-A3-2) |
+| merge | `clean, no conflicts` |
+| single-line law (F-CORR1-4) | `nothing to flatten` |
+| tsc / build / e1 | `0 / 0 / 0` (rc) · payload `34317374 bytes` |
+| engine hash | `49242d1713cb1c67…`; same-era pin #47 `49242d17`, era guards in the chain `ℹ pass 9 ℹ fail 0` |
+| halo / null floors / law-pointer | `rc=0 halo re-extraction PASS: 315 cured, 0 held, 760 regenerated-and-cured, 2127 scanned; alpha and opaque RGB unchanged` · `rc=0 83 of 83 null floors match assets/contracts/null-floors.json (299.2s).` · `rc=0 law-pointer-guard — do the law surfaces still point at what they claim?` |
+| named guards | `ℹ pass 98 ℹ fail 0` |
+| e2e both projects, `--workers=1` (the maps' own specs, landmark brightness/collision, fort collision, task-025, m2-01) | `rc=1   2 failed   4 skipped   52 passed (4.4m)  13:36Z` |
+| e2e reds | `1) [desktop-chrome] › e2e/e4-roads-and-convoys.spec.ts:69:1 › every Motor reel replays to its claimed hash in Node and Chromium `<br>`2) [mobile-chrome] › e2e/e4-roads-and-convoys.spec.ts:69:1 › every Motor reel replays to its claimed hash in Node and Chromium `<br>Attribution: Attribution: pre-attributed by a control of this slice's specs on main `ad20d8889` with the store's main at `8ef0a03` before the merge (`drain-s7-e2e-control-main.log`: rc=1, 2 failure lines) — every red on the merged tree below matches a line of that control by file, test line and project; nothing in this slice's diff touches those tests' subjects. |
+| full `npm run test:node-guards` (before the pin) | `rc=1 ℹ tests 955 ℹ pass 947 ℹ fail 3 ℹ skipped 5  13:44Z` |
+| battery reds | `✖ all 152 scripts/*.test.mjs fixture owners remove their temp directories (190371.051125ms)`<br>`✖ failing tests:`<br>`✖ rotation registry stays outside the engine identity corpus (518.8995ms)`<br>`✖ the landed registry names the live engine and stays outside its hash corpus (175.130334ms)` (the engine-era, bench-seeds and fixture-sweep rows are the pre-pin hash class, cured by the pin above) |
+
+### Merge classification
+Code: `src/world/*` (render side, incl. `Water.ts`), the render-only presentation owners, `src/entities/*` pure visuals (the Motor vehicle), `reviews/sol-map-art-current-status-20260909.md`, `artifacts/sol/map-art-campaign-2/report.md` (a dated run-9 section) and `run-9/**`. Store: `pilots/map-rebuild-spike/**` for these maps, one commit per map, landed on the store's main first. Firewall: within the master's Touch ONLY plus the store. Base: the chain's previous tip; MAIN-MOVED files are fire bookkeeping taken as theirs at the main merge before the fast-forward.
+
+### Findings
+- **F-F2-16 (pre-existing, attributed by Astra on the exact base):** the Boneyard's browser batch carries six base-red cases (four exact fingerprints, two variable Claim-horizon values), outside this slice's gate; the shared Motor spec and the E4 census run on both projects here.
+- **F-F2-17 (information, the leg's payload):** across the E4 leg the runtime GLBs grew by about 0.5 MB in total (the Boneyard +159,892 B, the derricks about +300 KB, the Dust Flats and the Long Road net smaller); no E1 asset moved, and nothing approaches the Canyon Works' panorama (F-F2-7).

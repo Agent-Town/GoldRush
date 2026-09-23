@@ -1,0 +1,35 @@
+slice 7: lane 23cd4988ea01fcc2c60d95045d053f2e80fcfa39 store e62dbf97cc8ba3c9d8c98e338b84f37d807a67a3 maps: the Boneyard 13:24Z
+store on 'main', dirty 0 (Astra's, untouched)
+store main -> e62dbf9 (art(store): Boneyard — refine buried salvage)
+store main pushed: e62dbf9
+scratch store: detached at e62dbf9, clean
+chain fast-forwarded to main ad20d8889
+chain base ad20d8889 merging lane 23cd4988e (lane tip 23cd4988e) 13:24Z
+merged e99defc97
+single-line law: nothing to flatten
+law-pointer (pre): rc=0, no re-base needed
+engine hash merged (scratch store at e62dbf9): 49242d1713cb1c67838adc284919b18f067b4efad6ea61a61b42cba95bdfd731
+droplet mirror closure (early check, F-FID1-5 class: a store slice can add a corpus file the mirror does not ship): rc=0
+tsc/build/e1: 0 / 0 / 0
+first-town payload: 34317374 bytes
+halo: rc=0 halo re-extraction PASS: 315 cured, 0 held, 760 regenerated-and-cured, 2127 scanned; alpha and opaque RGB unchanged
+null floors: rc=0 83 of 83 null floors match assets/contracts/null-floors.json (299.2s).
+law-pointer: rc=0 law-pointer-guard — do the law surfaces still point at what they claim?
+guards: ℹ pass 98 ℹ fail 0 
+e2e start 13:31Z: e2e/er01-e4-census.spec.ts e2e/landmark-brightness.spec.ts e2e/landmark-collision.spec.ts e2e/task-025-bandits-dont-swim.spec.ts e2e/m2-01-build-menu.spec.ts e2e/e4-roads-and-convoys.spec.ts 
+warm-up: first boot rc=0, second rc=0 (the gate below starts on a warmed server; optimizer lines in the vite log: 1)
+e2e: rc=1   2 failed   4 skipped   52 passed (4.4m)  13:36Z
+1) [desktop-chrome] › e2e/e4-roads-and-convoys.spec.ts:69:1 › every Motor reel replays to its claimed hash in Node and Chromium 
+2) [mobile-chrome] › e2e/e4-roads-and-convoys.spec.ts:69:1 › every Motor reel replays to its claimed hash in Node and Chromium 
+battery start 13:36Z
+battery: rc=1 ℹ tests 955 ℹ pass 947 ℹ fail 3 ℹ skipped 5  13:44Z
+✖ all 152 scripts/*.test.mjs fixture owners remove their temp directories (190371.051125ms)
+✖ failing tests:
+✖ rotation registry stays outside the engine identity corpus (518.8995ms)
+✖ the landed registry names the live engine and stays outside its hash corpus (175.130334ms)
+dirt after battery: 0
+FID2-S7-PREP-DONE
+known-red overrides: e2e e2e/e4-roads-and-convoys\.spec\.ts:69:1 battery ^$
+hash at pin time: 49242d1713cb1c67838adc284919b18f067b4efad6ea61a61b42cba95bdfd731
+pin #47
+era (chain, scratch store): ℹ pass 9 ℹ fail 0 
