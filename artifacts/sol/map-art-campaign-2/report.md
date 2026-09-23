@@ -748,3 +748,13 @@ Paired p95 **9.50→9.75 / 9.65→9.65 ms**, single mode, draws **72→74 / 54�
 The original lane mirror gate fails on **15 base / 18 candidate** paths; the exact current-main filters pass the unchanged assertion. Retain main fixes **214a54568 / 82c226185** at integration. [Bound prerequisite](run-9/e3-canyon-works/mirror-prerequisite-proof.json). Engine **72968f9ab06af85b2754a57ba175fb04a106f60db887103b4cf8f494584ea3c2 → c01ea77a83fe3183df84df0b627f3f5ab252047ad3f1afb7d3b840e31879e56e**; pin unchanged. Store **b04141647762fd25aed02a86ac5ee00a627f8d14** on `astra/fidelity-2`. **READY-FOR-GATES**, bounded IMPROVED / HELD. [Integration handoff](run-9/e3-canyon-works/handoff.md).
 
 Remaining list in this E3 leg: **none**. Future epoch legs, in order and outside this task: **e4-dust-flats, e4-long-road, e4-gusher-county, e4-boneyard, e6-glow-mesa, e6-half-life-hollow, e6-picnic, e7-dead-band, e7-relay-rush, e8-far-side, e8-low-orbit, e9-dome-basin, e9-seed-run, e9-devils-alley, e9-old-canal**. No other map is changed in this leg.
+
+## 2026-09-23 — run 9 E4 fidelity: Dust Flats
+
+**IMPROVED / HELD — READY-FOR-GATES.** Existing reserve and watchtower now read as three connected tanks and an open lattice lookout. Exact original bounds, atlas pixels, mount/collision/station declarations and three siblings retained. Reserve **2,380→2,224/3,000** triangles; tower **628→826/3,000**. Tank silhouette is **24.65% less solid** at unchanged bounds. Fixed-region RMS **0.0165662/0.0206802** preserves run-5 **0.0165664/0.0206796**, fresh A/B identical. Emission **0.45**. Declared post station HUD **0.021512%/0.027662%**, versus run-5 **0%/0.005586%**: rises disclosed; post geometry/HUD/station unchanged.
+
+HELD missing outer-claim derrick mounts (art/contract coordination), full entry/camera vista, dark roof/cabin and stronger contact. Independent review prefers the bodies but withholds full fidelity. [Every verbatim art clause, boards and metrics](run-9/e4-dust-flats/review.md).
+
+Builds, **34+3** guards, source/recipe reproduction, loading **8/8** and repeat **2/2** pass. Browser **85 pass / 5 skips / 20 base-red tests**: 16 exact fingerprints, two variable Claim-horizon samples and two opposite immediate E5 toggle phases, all explicitly distinguished. Zero errors in final captures. Four runs per arm: p95 **9.85→9.65 / 9.65→9.60 ms**, draws **84/52** unchanged, within 15%. E1 payload not applicable, no E1 art change.
+
+Engine `0a23a5425e7b47bb1e7bf7cef05dacb2b3b68c103cc9337459d2bc6cc32823b0` → `7811cb664727d4e4e9da87f09ae49a92f429af42d000a50d495f36aa5e250443`; pin unchanged. Store `b1e2c12a979e6b598860bfb5273142ed7b05d2f3`, pushed/read back. Remaining E4 maps in order: **e4-long-road, e4-gusher-county, e4-boneyard**.
