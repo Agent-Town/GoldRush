@@ -1,0 +1,24 @@
+[
+  {
+    "label": "final-impact",
+    "command": [
+      "npx",
+      "playwright",
+      "test",
+      "--workers=1",
+      "--project=desktop-chrome",
+      "--project=mobile-chrome",
+      "--trace=off",
+      "--reporter=line",
+      "--output=artifacts/sol/map-art-campaign-2/_raw/run-9/e8-far-side-final-impact",
+      "e2e/e8-far-side-probe.spec.ts",
+      "e2e/landmark-brightness.spec.ts",
+      "e2e/landmark-collision.spec.ts",
+      "e2e/fort-landmark-collision.spec.ts"
+    ],
+    "environment": {},
+    "exit": 0,
+    "seconds": 158.16,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-9/e8-far-side-final-impact.log"
+  }
+]
