@@ -1,0 +1,662 @@
+{
+  "task": "sol-map-art-fidelity-2-e9",
+  "remainingTaskMaps": [],
+  "pinUntouched": true,
+  "gameplayTruthUntouched": true,
+  "fullConceptAcceptance": false,
+  "e1PayloadDelta": "N/A; E9-only leg",
+  "maps": [
+    {
+      "map": "e9-dome-basin",
+      "status": "IMPROVED / HELD; READY-FOR-GATES",
+      "engine": {
+        "before": "984a9f2498c3445a6fe7f4e9b600f9334b4e7a394d0f3b284493b76dc39ba1a5",
+        "after": "9103137b1b23675af890f27fb87c0ea568796246e79560bdf2153e2056ed48f1",
+        "pinUntouched": true
+      },
+      "store": {
+        "commit": "60c635c2e48eedc288ffcf34c685e862f959057d",
+        "remote": "60c635c2e48eedc288ffcf34c685e862f959057d",
+        "branch": "astra/fidelity-2"
+      },
+      "browser": {
+        "passed": 50,
+        "skipped": 4,
+        "failed": 4
+      },
+      "allBrowserFailuresExactBaseline": true,
+      "performance": [
+        {
+          "width": 1280,
+          "before": {
+            "p95": [
+              9.399999999999636,
+              9.399999999999636,
+              9.899999999999636,
+              10.100000000000364
+            ],
+            "median": 9.649999999999636,
+            "modes": [
+              [
+                9.399999999999636,
+                9.399999999999636,
+                9.899999999999636,
+                10.100000000000364
+              ]
+            ],
+            "calls": [
+              94
+            ],
+            "triangles": [
+              106902
+            ]
+          },
+          "after": {
+            "p95": [
+              9.300000000000182,
+              9.5,
+              9.599999999999454,
+              9.600000000000364
+            ],
+            "median": 9.549999999999727,
+            "modes": [
+              [
+                9.300000000000182,
+                9.5,
+                9.599999999999454,
+                9.600000000000364
+              ]
+            ],
+            "calls": [
+              94
+            ],
+            "triangles": [
+              107630
+            ]
+          },
+          "pooledMedianChangePercent": -1.0362694300509068,
+          "singleMode": true,
+          "within15Percent": true
+        },
+        {
+          "width": 390,
+          "before": {
+            "p95": [
+              8.699999999999818,
+              9,
+              9.599999999999454,
+              9.700000000000728
+            ],
+            "median": 9.299999999999727,
+            "modes": [
+              [
+                8.699999999999818,
+                9,
+                9.599999999999454,
+                9.700000000000728
+              ]
+            ],
+            "calls": [
+              53
+            ],
+            "triangles": [
+              102118
+            ]
+          },
+          "after": {
+            "p95": [
+              9.299999999999272,
+              9.399999999999636,
+              9.5,
+              9.800000000000182
+            ],
+            "median": 9.449999999999818,
+            "modes": [
+              [
+                9.299999999999272,
+                9.399999999999636,
+                9.5,
+                9.800000000000182
+              ]
+            ],
+            "calls": [
+              53
+            ],
+            "triangles": [
+              102118
+            ]
+          },
+          "pooledMedianChangePercent": 1.6129032258074716,
+          "singleMode": true,
+          "within15Percent": true
+        }
+      ],
+      "inspectionHud": [
+        {
+          "width": 1280,
+          "station": 5,
+          "run6": {
+            "bodyDarkShareBelow01Percent": 0.3633775380235259,
+            "bodyMedian": 0.3270517647058823,
+            "pixels": 26694,
+            "persistentHudCoveragePercent": 0.0
+          },
+          "run9": {
+            "bodyDarkShareBelow01Percent": 0.0,
+            "bodyMedian": 0.46605098039215687,
+            "pixels": 28214,
+            "persistentHudCoveragePercent": 0.02126603813709506
+          },
+          "hudDeltaPercentagePoints": 0.02126603813709506
+        },
+        {
+          "width": 390,
+          "station": 5,
+          "run6": {
+            "bodyDarkShareBelow01Percent": 0.3363040188330251,
+            "bodyMedian": 0.32538431372549015,
+            "pixels": 29735,
+            "persistentHudCoveragePercent": 0.0
+          },
+          "run9": {
+            "bodyDarkShareBelow01Percent": 0.0,
+            "bodyMedian": 0.46042588235294113,
+            "pixels": 31393,
+            "persistentHudCoveragePercent": 0.06689389354314657
+          },
+          "hudDeltaPercentagePoints": 0.06689389354314657
+        }
+      ],
+      "review": "e9-dome-basin/review.md"
+    },
+    {
+      "map": "e9-seed-run",
+      "status": "IMPROVED / HELD; READY-FOR-GATES",
+      "engine": {
+        "before": "9103137b1b23675af890f27fb87c0ea568796246e79560bdf2153e2056ed48f1",
+        "after": "bfa5e66df8f7adb07081b40e77913ff03a6cf3b496bc868189ea70409fe21bdb",
+        "pinUntouched": true
+      },
+      "store": {
+        "commit": "0c64c9355000a0304978c31c81fdb70439f0730f",
+        "remote": "0c64c9355000a0304978c31c81fdb70439f0730f",
+        "branch": "astra/fidelity-2"
+      },
+      "browser": {
+        "passed": 49,
+        "skipped": 5,
+        "failed": 2
+      },
+      "allBrowserFailuresExactBaseline": true,
+      "performance": [
+        {
+          "width": 1280,
+          "before": {
+            "p95": [
+              9.699999999999818,
+              9.899999999999636,
+              10,
+              10.100000000000364
+            ],
+            "median": 9.949999999999818,
+            "modes": [
+              [
+                9.699999999999818,
+                9.899999999999636,
+                10,
+                10.100000000000364
+              ]
+            ],
+            "calls": [
+              126
+            ],
+            "triangles": [
+              103466
+            ]
+          },
+          "after": {
+            "p95": [
+              9.5,
+              9.699999999999818,
+              10,
+              10.100000000000364
+            ],
+            "median": 9.849999999999909,
+            "modes": [
+              [
+                9.5,
+                9.699999999999818,
+                10,
+                10.100000000000364
+              ]
+            ],
+            "calls": [
+              126
+            ],
+            "triangles": [
+              104392
+            ]
+          },
+          "pooledMedianChangePercent": -1.0050251256272458,
+          "singleMode": true,
+          "within15Percent": true
+        },
+        {
+          "width": 390,
+          "before": {
+            "p95": [
+              9.199999999999818,
+              9.800000000000182,
+              9.800000000000182,
+              9.899999999999636
+            ],
+            "median": 9.800000000000182,
+            "modes": [
+              [
+                9.199999999999818,
+                9.800000000000182,
+                9.800000000000182,
+                9.899999999999636
+              ]
+            ],
+            "calls": [
+              72
+            ],
+            "triangles": [
+              101118
+            ]
+          },
+          "after": {
+            "p95": [
+              9.699999999999818,
+              9.800000000000182,
+              9.899999999999636,
+              10.099999999999454
+            ],
+            "median": 9.849999999999909,
+            "modes": [
+              [
+                9.699999999999818,
+                9.800000000000182,
+                9.899999999999636,
+                10.099999999999454
+              ]
+            ],
+            "calls": [
+              72
+            ],
+            "triangles": [
+              101876
+            ]
+          },
+          "pooledMedianChangePercent": 0.5102040816298503,
+          "singleMode": true,
+          "within15Percent": true
+        }
+      ],
+      "inspectionHud": [
+        {
+          "width": 1280,
+          "station": 3,
+          "run6": {
+            "bodyDarkShareBelow01Percent": 0.7552447552447552,
+            "bodyMedian": 0.2587490196078431,
+            "pixels": 32175,
+            "persistentHudCoveragePercent": 0.0
+          },
+          "run9": {
+            "bodyDarkShareBelow01Percent": 0.0,
+            "bodyMedian": 0.44268235294117647,
+            "pixels": 32593,
+            "persistentHudCoveragePercent": 0.0
+          },
+          "hudDeltaPercentagePoints": 0.0
+        },
+        {
+          "width": 390,
+          "station": 3,
+          "run6": {
+            "bodyDarkShareBelow01Percent": 0.7726638772663877,
+            "bodyMedian": 0.25892156862745097,
+            "pixels": 35850,
+            "persistentHudCoveragePercent": 0.0
+          },
+          "run9": {
+            "bodyDarkShareBelow01Percent": 0.0,
+            "bodyMedian": 0.4422925490196078,
+            "pixels": 36250,
+            "persistentHudCoveragePercent": 0.0
+          },
+          "hudDeltaPercentagePoints": 0.0
+        }
+      ],
+      "review": "e9-seed-run/review.md"
+    },
+    {
+      "map": "e9-devils-alley",
+      "status": "IMPROVED / HELD; READY-FOR-GATES",
+      "engine": {
+        "before": "bfa5e66df8f7adb07081b40e77913ff03a6cf3b496bc868189ea70409fe21bdb",
+        "after": "fa80dda3304171f1c703a8baa2d6f304204e34ea9a1de4f10d2bf70caf71a4fa",
+        "pinUntouched": true
+      },
+      "store": {
+        "commit": "03ccce800126faf8f347b51e9a9e751b20b80d19",
+        "remote": "03ccce800126faf8f347b51e9a9e751b20b80d19",
+        "branch": "astra/fidelity-2"
+      },
+      "browser": {
+        "passed": 36,
+        "skipped": 4,
+        "failed": 2
+      },
+      "allBrowserFailuresExactBaseline": true,
+      "performance": [
+        {
+          "width": 1280,
+          "before": {
+            "p95": [
+              9.5,
+              9.699999999999818,
+              9.700000000000728,
+              9.900000000000546
+            ],
+            "median": 9.700000000000273,
+            "modes": [
+              [
+                9.5,
+                9.699999999999818,
+                9.700000000000728,
+                9.900000000000546
+              ]
+            ],
+            "calls": [
+              88
+            ],
+            "triangles": [
+              103416
+            ]
+          },
+          "after": {
+            "p95": [
+              9.5,
+              9.699999999999818,
+              10,
+              10.100000000000364
+            ],
+            "median": 9.849999999999909,
+            "modes": [
+              [
+                9.5,
+                9.699999999999818,
+                10,
+                10.100000000000364
+              ]
+            ],
+            "calls": [
+              88
+            ],
+            "triangles": [
+              103852
+            ]
+          },
+          "pooledMedianChangePercent": 1.5463917525735171,
+          "singleMode": true,
+          "within15Percent": true
+        },
+        {
+          "width": 390,
+          "before": {
+            "p95": [
+              9.399999999999636,
+              9.600000000000364,
+              9.699999999999818,
+              9.799999999999272
+            ],
+            "median": 9.650000000000091,
+            "modes": [
+              [
+                9.399999999999636,
+                9.600000000000364,
+                9.699999999999818,
+                9.799999999999272
+              ]
+            ],
+            "calls": [
+              58
+            ],
+            "triangles": [
+              101150
+            ]
+          },
+          "after": {
+            "p95": [
+              9.600000000000364,
+              9.600000000000364,
+              9.600000000000364,
+              9.800000000000182
+            ],
+            "median": 9.600000000000364,
+            "modes": [
+              [
+                9.600000000000364,
+                9.600000000000364,
+                9.600000000000364,
+                9.800000000000182
+              ]
+            ],
+            "calls": [
+              58
+            ],
+            "triangles": [
+              101586
+            ]
+          },
+          "pooledMedianChangePercent": -0.5181347150230775,
+          "singleMode": true,
+          "within15Percent": true
+        }
+      ],
+      "inspectionHud": [
+        {
+          "width": 1280,
+          "station": 3,
+          "run6": {
+            "bodyDarkShareBelow01Percent": 2.8280231383711323,
+            "bodyMedian": 0.25764313725490195,
+            "pixels": 21782,
+            "persistentHudCoveragePercent": 0.004590946653199889
+          },
+          "run9": {
+            "bodyDarkShareBelow01Percent": 0.0,
+            "bodyMedian": 0.46191372549019605,
+            "pixels": 22251,
+            "persistentHudCoveragePercent": 0.004494180036852276
+          },
+          "hudDeltaPercentagePoints": -9.676661634761344e-05
+        },
+        {
+          "width": 390,
+          "station": 3,
+          "run6": {
+            "bodyDarkShareBelow01Percent": 2.3517340447363018,
+            "bodyMedian": 0.2558211764705883,
+            "pixels": 24365,
+            "persistentHudCoveragePercent": 0.004104247896572953
+          },
+          "run9": {
+            "bodyDarkShareBelow01Percent": 0.0,
+            "bodyMedian": 0.4615003921568628,
+            "pixels": 24755,
+            "persistentHudCoveragePercent": 0.008079175924055746
+          },
+          "hudDeltaPercentagePoints": 0.003974928027482793
+        }
+      ],
+      "review": "e9-devils-alley/review.md"
+    },
+    {
+      "map": "e9-old-canal",
+      "status": "IMPROVED / HELD; READY-FOR-GATES",
+      "engine": {
+        "before": "fa80dda3304171f1c703a8baa2d6f304204e34ea9a1de4f10d2bf70caf71a4fa",
+        "after": "d4e4bfb1167e66755209b2f679bf8682e03286b48dc9f8d1b929a1465f264959",
+        "pinUntouched": true
+      },
+      "store": {
+        "commit": "c092e3de241f34163e903279bf071fe1f4fa6d56",
+        "remote": "c092e3de241f34163e903279bf071fe1f4fa6d56",
+        "branch": "astra/fidelity-2"
+      },
+      "browser": {
+        "passed": 40,
+        "skipped": 4,
+        "failed": 2
+      },
+      "allBrowserFailuresExactBaseline": true,
+      "performance": [
+        {
+          "width": 1280,
+          "before": {
+            "p95": [
+              9.699999999999818,
+              9.700000000000728,
+              9.899999999999636,
+              9.899999999999636
+            ],
+            "median": 9.800000000000182,
+            "modes": [
+              [
+                9.699999999999818,
+                9.700000000000728,
+                9.899999999999636,
+                9.899999999999636
+              ]
+            ],
+            "calls": [
+              90
+            ],
+            "triangles": [
+              104956
+            ]
+          },
+          "after": {
+            "p95": [
+              9.600000000000364,
+              9.700000000000728,
+              9.900000000000546,
+              10.100000000000364
+            ],
+            "median": 9.800000000000637,
+            "modes": [
+              [
+                9.600000000000364,
+                9.700000000000728,
+                9.900000000000546,
+                10.100000000000364
+              ]
+            ],
+            "calls": [
+              90
+            ],
+            "triangles": [
+              109644
+            ]
+          },
+          "pooledMedianChangePercent": 4.640732242933154e-12,
+          "singleMode": true,
+          "within15Percent": true
+        },
+        {
+          "width": 390,
+          "before": {
+            "p95": [
+              9.599999999999454,
+              9.699999999999818,
+              9.800000000000182,
+              9.899999999999636
+            ],
+            "median": 9.75,
+            "modes": [
+              [
+                9.599999999999454,
+                9.699999999999818,
+                9.800000000000182,
+                9.899999999999636
+              ]
+            ],
+            "calls": [
+              59
+            ],
+            "triangles": [
+              100808
+            ]
+          },
+          "after": {
+            "p95": [
+              9.600000000000364,
+              9.699999999999818,
+              9.800000000000182,
+              10.100000000000364
+            ],
+            "median": 9.75,
+            "modes": [
+              [
+                9.600000000000364,
+                9.699999999999818,
+                9.800000000000182,
+                10.100000000000364
+              ]
+            ],
+            "calls": [
+              59
+            ],
+            "triangles": [
+              103152
+            ]
+          },
+          "pooledMedianChangePercent": 0.0,
+          "singleMode": true,
+          "within15Percent": true
+        }
+      ],
+      "inspectionHud": [
+        {
+          "width": 1280,
+          "station": 5,
+          "run6": {
+            "bodyDarkShareBelow01Percent": 1.9464341326689505,
+            "bodyMedian": 0.1904619607843137,
+            "pixels": 6422,
+            "persistentHudCoveragePercent": 0.06228589224540641
+          },
+          "run9": {
+            "bodyDarkShareBelow01Percent": 0.0,
+            "bodyMedian": 0.3843835294117647,
+            "pixels": 8149,
+            "persistentHudCoveragePercent": 0.03681433304699963
+          },
+          "hudDeltaPercentagePoints": -0.025471559198406782
+        },
+        {
+          "width": 390,
+          "station": 5,
+          "run6": {
+            "bodyDarkShareBelow01Percent": 2.0859407592824364,
+            "bodyMedian": 0.19004000000000001,
+            "pixels": 7191,
+            "persistentHudCoveragePercent": 0.11125017382839661
+          },
+          "run9": {
+            "bodyDarkShareBelow01Percent": 0.0,
+            "bodyMedian": 0.3858847058823529,
+            "pixels": 9073,
+            "persistentHudCoveragePercent": 0.06613027664499063
+          },
+          "hudDeltaPercentagePoints": -0.04511989718340598
+        }
+      ],
+      "review": "e9-old-canal/review.md"
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "method": "Ratio of singular values of per-triangle surface-to-UV Jacobian; 1 is isotropic. Area weighted, collapses reported separately. This tests UV distortion, not visual material fidelity.",
+  "rows": [
+    {
+      "arm": "before",
+      "id": "canal-segment-a-marker",
+      "areaWeightedMedianUvAnisotropy": 3.687402026316086,
+      "areaWeightedP95UvAnisotropy": 20.36997686898496,
+      "collapsedUvAreaSharePercent": 0.0
+    },
+    {
+      "arm": "before",
+      "id": "canal-segment-b-marker",
+      "areaWeightedMedianUvAnisotropy": 3.5419908097832966,
+      "areaWeightedP95UvAnisotropy": 17.104770533485535,
+      "collapsedUvAreaSharePercent": 0.0
+    },
+    {
+      "arm": "before",
+      "id": "canal-segment-c-marker",
+      "areaWeightedMedianUvAnisotropy": 3.541991912780915,
+      "areaWeightedP95UvAnisotropy": 14.953046876303583,
+      "collapsedUvAreaSharePercent": 0.0
+    },
+    {
+      "arm": "after",
+      "id": "canal-segment-a-marker",
+      "areaWeightedMedianUvAnisotropy": 1.0000003779524842,
+      "areaWeightedP95UvAnisotropy": 1.3813818370844169,
+      "collapsedUvAreaSharePercent": 0.0
+    },
+    {
+      "arm": "after",
+      "id": "canal-segment-b-marker",
+      "areaWeightedMedianUvAnisotropy": 1.0000003779524842,
+      "areaWeightedP95UvAnisotropy": 1.3813974003126261,
+      "collapsedUvAreaSharePercent": 0.0
+    },
+    {
+      "arm": "after",
+      "id": "canal-segment-c-marker",
+      "areaWeightedMedianUvAnisotropy": 1.0000003779524842,
+      "areaWeightedP95UvAnisotropy": 1.3740693393921317,
+      "collapsedUvAreaSharePercent": 0.0
+    }
+  ]
+}

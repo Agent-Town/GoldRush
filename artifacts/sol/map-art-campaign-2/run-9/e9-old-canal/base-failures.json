@@ -1,0 +1,73 @@
+{
+  "storeBase": "03ccce800126faf8f347b51e9a9e751b20b80d19",
+  "base": "e0fa15426281e4a98a2c0c8b47b17e84c58368d5",
+  "paths": {
+    "src/systems/CanalFlowPresentation.ts": {
+      "candidateSha256": "64cb9652ba084491367138d85122247e174a6b1b8be53034480dae7ffbfb1028",
+      "baseSha256": "b6153a0c581bf0a5cefbac64a78d4e2db2d3f60296eefc1e7e2859658e2ffd7a"
+    },
+    "src/world/Terrain3dClaimPilot.ts": {
+      "candidateSha256": "a481a5a97d638fdc6e62ec59df671ae0da148eca856a98294a14c4b75dfe721c",
+      "baseSha256": "6d24239063199ec62d1615359c3f906821cba42cd95836705b424c2173aae490"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/old-canal/canal-segment-a-marker.glb": {
+      "candidateSha256": "493934a9bd0871b0dc11a13340fdd9347d5b8579908e7c28c2b164831f27fcdd",
+      "baseSha256": "7f196d63a45a2850ad57514b0df41a024c79fcaae28c2818f64bcdf0266aad21"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/old-canal/canal-segment-b-marker.glb": {
+      "candidateSha256": "d2c41aec915437ac487d7a13e1d6f3f2bb8ee80fddf647c1566dfcac48e27035",
+      "baseSha256": "5fd0c138d216499e66ce26b1acfaf19fd7ad570dac3b14989e9c860928dce256"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/old-canal/canal-segment-c-marker.glb": {
+      "candidateSha256": "9dcc77afc1dfb36f875f898c290e11ef07094d3484cfc3d963cf72f9680b4e9f",
+      "baseSha256": "334fd4e355fb9a29ecf79f2ba9aac3a81008aafbdc5d892d01dc5dbdd7b58e9b"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/old-canal/north-outflow-gate.glb": {
+      "candidateSha256": "94302e96562835f90ed3ae11d9a63e0a4592aff7e2ff372092d80ba97706812f",
+      "baseSha256": "33afcbfbb1800998bc1d709d8af361b3f128984f117854772ccded1fc7d4dfda"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/old-canal/old-canal-landmark-pack-contract.json": {
+      "candidateSha256": "ca3879bd7c3d775a7fcecd573a31d46e13ff71178c09e54fcc8ce1dbc3b878d0",
+      "baseSha256": "efd858e1af5e6d5f0c0c2f1bbaadc7f3d4a7c32edec016bf72718b0c213862e0"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/old-canal/old-canal-landmarks-atlas.png": {
+      "candidateSha256": "3b23219ef04870fa71a73f3006a8f80225c95d1f3be56f66a8b4e0975e3b721b",
+      "baseSha256": "2522b65a4aa152f0c4f9278204ebb46e035c2d95d221f5ed49da372bc146a1b7"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/old-canal/old-canal-landmarks.blend": {
+      "candidateSha256": "49b9e3050a9a2e954d55760161211047a6ce89d9fa1cb4b42310f8b2643d5460",
+      "baseSha256": "61addf49a9620a2d4c2c74fa16fa1decaada1d3a32f8d18d346761f58f39e465"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/old-canal/south-survey-rig.glb": {
+      "candidateSha256": "812b019d728e547bd7be4bab34b36092259fa9b1bee84113d7f3b14b3034f7a2",
+      "baseSha256": "5a3db26c48191a4d2d55be181786e6c2f9118c3fe75d3471af93b9860ea5e412"
+    }
+  },
+  "pattern": "plain\\ Red\\ Fields\\ boot\\ stays\\ error\\-free\\ without\\ the\\ debug\\ harness",
+  "specs": [
+    "e2e/e9-roster.spec.ts"
+  ],
+  "candidateEngine": "d4e4bfb1167e66755209b2f679bf8682e03286b48dc9f8d1b929a1465f264959",
+  "baseEngine": "fa80dda3304171f1c703a8baa2d6f304204e34ea9a1de4f10d2bf70caf71a4fa",
+  "command": [
+    "npx",
+    "playwright",
+    "test",
+    "--workers=1",
+    "--project=desktop-chrome",
+    "--project=mobile-chrome",
+    "--trace=off",
+    "--reporter=line",
+    "--output=artifacts/sol/map-art-campaign-2/_raw/run-9/e9-old-canal-base-failures/test-results",
+    "--grep",
+    "plain\\ Red\\ Fields\\ boot\\ stays\\ error\\-free\\ without\\ the\\ debug\\ harness",
+    "e2e/e9-roster.spec.ts"
+  ],
+  "exit": 1,
+  "newAssetsAbsentDuringBase": {
+    "assets/pilots/map-rebuild-spike/sources/e9-old-canal-fidelity-2/landmark-input-contract.json": "efd858e1af5e6d5f0c0c2f1bbaadc7f3d4a7c32edec016bf72718b0c213862e0"
+  },
+  "restoredEngine": "d4e4bfb1167e66755209b2f679bf8682e03286b48dc9f8d1b929a1465f264959",
+  "candidateRestoredExactly": true,
+  "log": "artifacts/sol/map-art-campaign-2/_raw/run-9/e9-old-canal-base-failures/tests.log"
+}

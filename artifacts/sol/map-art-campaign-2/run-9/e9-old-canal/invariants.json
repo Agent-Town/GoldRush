@@ -1,0 +1,30 @@
+{
+  "unchangedBytes": {
+    "landmark-collision-contract.json": "929c325001a04c8f098885cc5973fb43e6de89b51781a48ba62d4cdd18c6d4fa",
+    "old-canal-terrain-contract.json": "3505fbd901ed9b06e03a344a1590705aaffde3eb0320b1287191b30fb198be91",
+    "old-canal-terrain.glb": "60f56a19ab72af4f01c32c31351e0e00fc37892f442bb70f25d22b2cade5d239",
+    "old-canal-panorama.glb": "4957312736c0a209f5d853ce335d636b2b3d471a2fff511627f234e47bfd8238",
+    "old-canal-panorama-contract.json": "9577e41783eec2ef75a5ced1a255351120c170e319b2b15d1f166c3a8518292f",
+    "old-canal-terrain-atlas.png": "b86904a5fa69a8abded604f06268cf9c68591498a44ebd18c44b3dc4b3fd047c",
+    "old-canal-panorama-atlas.png": "4faedf3c7f6277f9370a1d1fdfd8d065d3fc3e5c0f17b849b7120f66a06022f3"
+  },
+  "terrainHeightsMasksRoutesSpawnsCollisionMountsStationsBudgetsExact": true,
+  "sourceBoundsAndSiblingGeometry": "source-verification.json",
+  "singleLineRegistryEntries": 36,
+  "protectedAuthorities": [
+    "src/sim",
+    "src/game",
+    "src/collision",
+    "assets/contracts",
+    "e2e",
+    "scripts",
+    "assets/engine-era.json",
+    "specs",
+    "STATUS.md",
+    "tasks"
+  ],
+  "renderSourceChanges": [
+    "src/systems/CanalFlowPresentation.ts",
+    "src/world/Terrain3dClaimPilot.ts"
+  ]
+}

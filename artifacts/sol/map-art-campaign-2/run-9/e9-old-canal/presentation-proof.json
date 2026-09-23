@@ -1,0 +1,187 @@
+{
+  "rows": [
+    {
+      "arm": "before",
+      "geometry": [
+        {
+          "id": "CanalDerelictBand-decide-segment-a",
+          "triangles": 552,
+          "minAboveGround": 0.014999980449676542,
+          "maxAboveGround": 0.39500003242492676,
+          "opaque": true,
+          "position": [
+            -30,
+            -23
+          ],
+          "xzBounds": [
+            -10.426291465759277,
+            10.426291465759277,
+            -8.828214645385742,
+            8.834747314453125
+          ],
+          "colorCount": 9
+        },
+        {
+          "id": "CanalDerelictBand-decide-segment-b",
+          "triangles": 552,
+          "minAboveGround": 0.014999984264373545,
+          "maxAboveGround": 0.3950000262260436,
+          "opaque": true,
+          "position": [
+            2,
+            0
+          ],
+          "xzBounds": [
+            -10.421892166137695,
+            10.421892166137695,
+            -7.8453569412231445,
+            7.977604389190674
+          ],
+          "colorCount": 9
+        },
+        {
+          "id": "CanalDerelictBand-decide-segment-c",
+          "triangles": 552,
+          "minAboveGround": 0.014999980449676542,
+          "maxAboveGround": 0.3950000324249272,
+          "opaque": true,
+          "position": [
+            32,
+            23
+          ],
+          "xzBounds": [
+            -10.426291465759277,
+            10.426291465759277,
+            -8.828214645385742,
+            8.834747314453125
+          ],
+          "colorCount": 9
+        }
+      ],
+      "state": {
+        "wetBands": [
+          "decide-segment-a"
+        ],
+        "filledBands": [
+          "decide-segment-b"
+        ],
+        "derelictBands": [
+          "decide-segment-c"
+        ],
+        "posts": [
+          {
+            "id": "decide-segment-a",
+            "state": "redig"
+          },
+          {
+            "id": "decide-segment-b",
+            "state": "demolish"
+          },
+          {
+            "id": "decide-segment-c",
+            "state": "undecided"
+          }
+        ]
+      },
+      "inputUnchanged": true,
+      "resampleIdempotent": true,
+      "terrainShiftMeters": 3,
+      "allFinalResourcesDisposed": 18,
+      "groupCleared": true,
+      "childCountBeforeDispose": 12,
+      "errors": []
+    },
+    {
+      "arm": "after",
+      "geometry": [
+        {
+          "id": "CanalDerelictBand-decide-segment-a",
+          "triangles": 2184,
+          "minAboveGround": 0.0149999849796294,
+          "maxAboveGround": 0.39500003814697227,
+          "opaque": true,
+          "position": [
+            -30,
+            -23
+          ],
+          "xzBounds": [
+            -10.424354553222656,
+            10.424354553222656,
+            -8.828214645385742,
+            8.828214645385742
+          ],
+          "colorCount": 33
+        },
+        {
+          "id": "CanalDerelictBand-decide-segment-b",
+          "triangles": 2184,
+          "minAboveGround": 0.014999985456466636,
+          "maxAboveGround": 0.3950000348091125,
+          "opaque": true,
+          "position": [
+            2,
+            0
+          ],
+          "xzBounds": [
+            -10.419955253601074,
+            10.419955253601074,
+            -7.8453569412231445,
+            7.949983596801758
+          ],
+          "colorCount": 33
+        },
+        {
+          "id": "CanalDerelictBand-decide-segment-c",
+          "triangles": 2184,
+          "minAboveGround": 0.014999984979629843,
+          "maxAboveGround": 0.39500003814697315,
+          "opaque": true,
+          "position": [
+            32,
+            23
+          ],
+          "xzBounds": [
+            -10.424354553222656,
+            10.424354553222656,
+            -8.828214645385742,
+            8.828214645385742
+          ],
+          "colorCount": 33
+        }
+      ],
+      "state": {
+        "wetBands": [
+          "decide-segment-a"
+        ],
+        "filledBands": [
+          "decide-segment-b"
+        ],
+        "derelictBands": [
+          "decide-segment-c"
+        ],
+        "posts": [
+          {
+            "id": "decide-segment-a",
+            "state": "redig"
+          },
+          {
+            "id": "decide-segment-b",
+            "state": "demolish"
+          },
+          {
+            "id": "decide-segment-c",
+            "state": "undecided"
+          }
+        ]
+      },
+      "inputUnchanged": true,
+      "resampleIdempotent": true,
+      "terrainShiftMeters": 3,
+      "allFinalResourcesDisposed": 18,
+      "groupCleared": true,
+      "childCountBeforeDispose": 12,
+      "errors": []
+    }
+  ],
+  "bandCentersStatesAndLowEnvelopeUnchanged": true
+}

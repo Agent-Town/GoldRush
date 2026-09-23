@@ -1,0 +1,26 @@
+[
+  {
+    "label": "own-and-shared",
+    "command": [
+      "npx",
+      "playwright",
+      "test",
+      "--workers=1",
+      "--project=desktop-chrome",
+      "--project=mobile-chrome",
+      "--trace=off",
+      "--reporter=line",
+      "--output=artifacts/sol/map-art-campaign-2/_raw/run-9/e9-old-canal-own-and-shared",
+      "e2e/e9-old-canal-choices.spec.ts",
+      "e2e/e9-roster.spec.ts",
+      "e2e/ss-10-e9-beats.spec.ts",
+      "e2e/landmark-brightness.spec.ts",
+      "e2e/landmark-collision.spec.ts",
+      "e2e/fort-landmark-collision.spec.ts"
+    ],
+    "environment": {},
+    "exit": 1,
+    "seconds": 355.54,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-9/e9-old-canal-own-and-shared.log"
+  }
+]
