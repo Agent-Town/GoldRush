@@ -95,6 +95,24 @@ Astra's run 4 corrected all sixteen rows (the thirteen UNACCEPTED maps and the t
 ### F-FID1-4 — the Last Claim's playable square against the plate's circular perimeter (added 2026-09-22)
 Astra's fidelity run 8 (slice 1, landed as `4b4ec03bc`) rebuilt the memorial deck and rim inside the square playable silhouette and records again that the plate's articulated circular perimeter is not achievable by art: the silhouette is contract-owned (the mask tables, collisions, every tape replay). **Recommendation: keep the square.** Gameplay bounds, collisions and the tape replays stay untouched, and art may round the rim's ornament inside the square; a circular playable area would be a new contract, a new census row and a re-pin of every Last Claim tape. Reverse with one word. Review: `reviews/sol-map-art-fidelity-1.md`, slice 1.
 
+### F-F2-39 — the six maps fidelity-2 skipped: what each still holds, and which of it is yours (added 2026-09-24)
+Fidelity-2's master let Astra touch only clauses its own latest review had HELD **for an art owner**; everything held for a contract, layout, camera, UI, HUD or code owner was the desk's (F-CORR4-2, ruled 2026-09-22: items 1 and 6 done, items 2–5 "stay as recorded, no action asked"; the wave then did item 3 for five maps and item 4 for six). Six maps hold nothing for art, so Astra skipped them by that rule and left their verdicts as they were. What each still holds, verbatim from its latest row in `reviews/sol-map-art-current-status-20260909.md`:
+
+| Map | What is still HELD | Owner named by the review |
+|---|---|---|
+| Night Shift (E1) | seven cold fixtures and the wide river geometry; plain-entry cropping and HUD coverage 20.58% / 89.46% | contract; UI/camera |
+| Twin Banks (E1) | the entry camera cannot show both braids and banks; on-screen water 2.13% / 1.02% of the viewport; the phone house and rig fully offscreen; generic scatter cards | camera/UI; the scatter code (`src/world/Scatter.ts`) |
+| the Claim-Jumper Baron (E1) | the 55.21 m fort width, both phone entry rigs fully offscreen, the dense occupied-valley vista and winding geography | camera/UI; contract/layout |
+| the Trestle (E2) | bridge phone HUD 11.55%, stock 23.01%, the wide approach 12.98% with side cropping; bridge and stock fully offscreen at phone entry; shared rail joins and ends | camera/UI; the rail-presentation code (`src/world/RailPath.ts`) |
+| the Glow Mesa (E6) | the entry cooling rack still OFFSCREEN after the derrick glance; the full mesa, grouping and node-ring composition | camera; contract/layout |
+| Relay Rush (E7) | the charting station and west dishes still OFFSCREEN; the full route and the active-signal composition | camera; contract/layout; the signal code |
+
+Three kinds of thing are in that table, and only one of them is a decision:
+1. **Camera and phone HUD on the E1/E2 maps (and the two bodies that stay offscreen on the Glow Mesa and Relay Rush).** The wave's two cures covered five and six maps by name; these were not on the lists. This is authorable work, not a design fork: one lane-b master for Astra extending the timed glance and the 390 px HUD cure to Night Shift, Twin Banks, the Baron and the Trestle, and declaring a second entry landmark (the rack, the charting station) where the first glance cannot reach. About an hour of Astra. **Recommendation: yes, on your word.** (The E1 three carry the release payload law; the HUD cure is CSS, the glance is camera only.)
+2. **Contract and layout holds: Night Shift's seven fixtures and river width, the Baron's fort width and geography, the Glow Mesa's mesa and node-ring composition, Relay Rush's route.** These are the maps' gameplay geometry; changing them moves collisions, spawns, routes and every tape on those maps, and for E1 the release itself. **Recommendation: accept as they are** (the plates were reference, the maps play, and the art on them is corrected); reopen any one of them only as its own design task with a re-pin, never inside an art run.
+3. **Code-owned presentation: the scatter cards, the rail joins and ends, Relay Rush's active signal.** Small code tasks with no design fork, the class you left "as recorded" on 2026-09-22. **Recommendation: leave them until you have looked at the preview; bundle them in one master if the eye wants them.**
+Two more words are yours that this closes on: **whether fidelity-3** (the sixteen landed maps' remaining art holds: materials, contact, ornament, per map in `reviews/sol-map-art-fidelity-2.md`) is wanted — recommendation: yes, after a look at the all-epochs preview; and **the download cost** (about 60 MB of raw runtime over the run outside E1, half of it the Canyon Works' panorama and the Picnic's cloth and ground; F-F2-7, F-F2-21, F-F2-36) — recommendation: no ceiling now, measure the preview's first load first. Reverse any of this with one word.
+
 ## 2. Art — your eye
 
 ### F-SSL-3 — two prospector hover8 regenerations
