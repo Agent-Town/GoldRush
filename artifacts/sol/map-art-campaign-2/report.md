@@ -824,3 +824,10 @@ Builds,34+3 scoped guards,mirror,source/recipe,loading8/8,repeat2/2 and six moun
 TypeScript/default/full builds, **34+3** scoped guards, mirror, source/recipe reproduction, loading **8/8**, repeat **2/2**, six mount/dispose cycles and parity/census **6/6** pass. Browser **58 pass /4 skip /2 failures**, both reproduced by exact fingerprint on the engine-verified base. Four runs per arm/viewport: p95 **9.55→9.55 /9.80→9.60 ms**, unchanged **77/55** draws, within **15%**, zero capture errors. Runtime GLBs **+3,195,408 B**; E1 **N/A**.
 
 Engine `b4eff9b0b2c8df3dcd53fdca0bfbdefdc15f04a241db2293628deeca13b4d4df` → `984a9f2498c3445a6fe7f4e9b600f9334b4e7a394d0f3b284493b76dc39ba1a5`; store `4a2976f52ae92d17da23d883d0bf5756e75c9f74` pushed and remotely verified on **astra/fidelity-2**. Pin untouched. **READY-FOR-GATES. Remaining E8 list: none.** Later maps, outside this task, in order: **e9-dome-basin → e9-seed-run → e9-devils-alley → e9-old-canal**. [E8 handoff](run-9/e8-handoff.md).
+
+
+## 2026-09-24 — run 9 E9: Dome Basin
+
+**IMPROVED / HELD.** Native masonry/metal atlas and bounded bearing/footing detail; 1,580→2,308/3,000 triangles. UV distortion median/p95 3.75/38.52→1.00/1.08 with no collapsed faces. Own run-6 5 m luminance 0.327/0.325→0.466/0.460; ground retained within 0.004% RMS. Station HUD rises 0→0.021%/0.067% explicitly reported. Independent critique retains actual ground contact, coarse courses, dense joins, railway integration and full canal scale. [Every quoted clause and evidence](run-9/e9-dome-basin/review.md).
+
+Final builds,34+3 guards,mirror,census4/4,loading8/8,repeat2/2,six disposal cycles pass. Browser50pass/4skip/4exact-base failures. Four-run p95 9.65→9.55 /9.30→9.45ms; calls94/53 unchanged; zero capture errors. E1 N/A. Engine `984a9f2498c3445a6fe7f4e9b600f9334b4e7a394d0f3b284493b76dc39ba1a5` → `9103137b1b23675af890f27fb87c0ea568796246e79560bdf2153e2056ed48f1`; store `60c635c2e48eedc288ffcf34c685e862f959057d` pushed/read back. **READY-FOR-GATES. Remaining E9 in order: e9-seed-run, e9-devils-alley, e9-old-canal.**
