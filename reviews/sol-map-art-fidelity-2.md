@@ -348,3 +348,35 @@ Code: `src/world/*` (render side, incl. `Water.ts`), the render-only presentatio
 ### Findings
 - **F-F2-26 (pre-existing, attributed by Astra on the exact base):** the Far Side's broad browser batch carries two exact-base failures; the affected set re-ran 22 pass / 4 skipped and the rider parity 6 / 6; outside this slice's gate.
 - **F-F2-27 (information):** the pack's landmark atlas is now a corpus file under `landmarks/` (shipped by the existing include) and the native metal swatches live under `sources/` (shipped by F-FID1-8's include); the early droplet-mirror check on the merged tree is the proof.
+
+## Slice 12 — LANDED `0f78c83a2` (2026-09-23 19:10Z): Low Orbit
+
+**Lane up to** `47ddbdd43` · **store main** `4a2976f` (landed first, pushed) · **merge** `0f78c83a2` · same-era pin #52 `984a9f24`
+
+### What it does (the run-6 HELD clauses answered FIXED / IMPROVED with a number against run 6 / HELD with the owner named)
+**Low Orbit — IMPROVED / HELD (Astra's own verdict).** The salvage rig reads as one joined machine: an integrated recovery housing with an attached rim, pointed pressure towers, visible jaws, teal controls and native metal surfaces, at 2,964 of 3,000 triangles (from 2,972) with the exact full-body bounds and collision unchanged; the eight-sided visual base keeps its 29.29% corner-area reduction and is 1.5% smaller in plan area. At its own run-6 station the median rises 0.319 → 0.404 on both viewports and the dark-body share falls from 7.7% to 0%, emission 0.45; the station HUD coverage falls to 0% desktop and 0.020% phone, under the earlier ceilings. The ground values are exact with no improvement claimed. HELD: the fine material, contact and claw identity, the smooth ground, the full orbital composition and the phone UI. Frame p95 9.55 → 9.55 ms desktop and 9.80 → 9.60 ms phone, draws 77 / 55 unchanged, zero capture errors; the runtime GLBs grow by 3,195,408 B; no E1 art. Astra measured the engine hash at `984a9f24…` with the lane store at `4a2976f`; the drain's own measurement on the merged tree is the pin below.
+
+**Leg verdict (E8).** Both maps carried art-owned clauses and both are answered with numbers against their own run 6: the Far Side's pressure vessel and Low Orbit's salvage rig, each on a native metal atlas. The remaining list is empty and the run ended without a quota refusal; the last leg (E9: the Dome Basin, the Seed Run, Devil's Alley, the Old Canal) is queued by this drain on the owner's word.
+Where the player sees it: the plain entry of these maps, on production and the all-epochs preview.
+
+### Evidence (this slice's gates on the merged tree, the scratch store clean at the landed store main)
+| Check | Result |
+| --- | --- |
+| the store landing | `4a2976f` on `Agent-Town/GoldRush-assets` main, pushed; the scratch store worktree detached at it, clean, before any hash was measured (F-A3-2) |
+| merge | `clean, no conflicts` |
+| single-line law (F-CORR1-4) | `nothing to flatten` |
+| tsc / build / e1 | `0 / 0 / 0` (rc) · payload `34318148 bytes` |
+| engine hash | `984a9f2498c3445a…`; same-era pin #52 `984a9f24`, era guards in the chain `ℹ pass 9 ℹ fail 0` |
+| halo / null floors / law-pointer | `rc=0 halo re-extraction PASS: 315 cured, 0 held, 760 regenerated-and-cured, 2127 scanned; alpha and opaque RGB unchanged` · `rc=0 83 of 83 null floors match assets/contracts/null-floors.json (297.5s).` · `rc=0 law-pointer-guard — do the law surfaces still point at what they claim?` |
+| named guards | `ℹ pass 98 ℹ fail 0` |
+| e2e both projects, `--workers=1` (the maps' own specs, landmark brightness/collision, fort collision, task-025, m2-01) | `rc=1   2 failed   4 skipped   74 passed (9.2m)  19:03Z` |
+| e2e reds | `1) [desktop-chrome] › e2e/er01-e8-census.spec.ts:75:3 › e8-mare-claim census pins the Orbital contract's door state `<br>`2) [mobile-chrome] › e2e/er01-e8-census.spec.ts:75:3 › e8-mare-claim census pins the Orbital contract's door state `<br>Attribution: Attribution: pre-attributed by a control of this slice's specs on main `24d021da2` with the store's main at `70b78b4` before the merge (`drain-s12-e2e-control-main.log`: rc=1, 2 failure lines) — every red on the merged tree below matches a line of that control by file, test line and project; nothing in this slice's diff touches those tests' subjects. |
+| full `npm run test:node-guards` (before the pin) | `rc=1 ℹ tests 955 ℹ pass 947 ℹ fail 3 ℹ skipped 5  19:10Z` |
+| battery reds | `✖ all 152 scripts/*.test.mjs fixture owners remove their temp directories (178545.995459ms)`<br>`✖ failing tests:`<br>`✖ rotation registry stays outside the engine identity corpus (617.018667ms)`<br>`✖ the landed registry names the live engine and stays outside its hash corpus (212.726541ms)` (the engine-era, bench-seeds and fixture-sweep rows are the pre-pin hash class, cured by the pin above) |
+
+### Merge classification
+Code: `src/world/*` (render side, incl. `Water.ts`), the render-only presentation owners, `src/entities/*` pure visuals (the Motor vehicle), `reviews/sol-map-art-current-status-20260909.md`, `artifacts/sol/map-art-campaign-2/report.md` (a dated run-9 section) and `run-9/**`. Store: `pilots/map-rebuild-spike/**` for these maps, one commit per map, landed on the store's main first. Firewall: within the master's Touch ONLY plus the store. Base: the chain's previous tip; MAIN-MOVED files are fire bookkeeping taken as theirs at the main merge before the fast-forward.
+
+### Findings
+- **F-F2-28 (pre-existing, attributed by Astra on the exact base):** Low Orbit's browser batch carries two failures reproduced by exact fingerprint on the engine-verified base; outside this slice's gate, where the map's own spec, the E8 census, the E8 beats and the remaining-maps parity run on both projects.
+- **F-F2-29 (information, the leg's payload):** the E8 leg adds about 6.5 MB of raw runtime (the Far Side +3.3 MB, Low Orbit +3.2 MB, native metal atlases in both packs); the running total for the owner's eye stands with F-F2-7 and F-F2-21.
