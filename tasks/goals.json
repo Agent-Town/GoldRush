@@ -5870,7 +5870,7 @@
             {
               "id": "sol-map-art-fidelity-2-e4",
               "title": "fidelity-2 leg E4: e4-dust-flats, e4-long-road, e4-gusher-county, e4-boneyard (lane-c, Astra, run 9 split by epoch on the owner's word)",
-              "status": "queued",
+              "status": "merged",
               "taskFile": "sol-map-art-fidelity-2-e4.md",
               "lane": "lane-c",
               "authoredAt": "2026-09-22",
@@ -5901,8 +5901,20 @@
                   "store": "8ef0a03",
                   "pin": "#46 `e5acca19`",
                   "landedAt": "2026-09-23"
+                },
+                {
+                  "slice": 7,
+                  "maps": "the Boneyard",
+                  "mergeHash": "e99defc97ae06145bf8de5d01d3532d2217811bf",
+                  "store": "e62dbf9",
+                  "pin": "#47 `49242d17`",
+                  "landedAt": "2026-09-23"
                 }
-              ]
+              ],
+              "mergeHash": "e99defc97ae06145bf8de5d01d3532d2217811bf",
+              "mergedAt": "2026-09-23",
+              "review": "reviews/sol-map-art-fidelity-2.md",
+              "drainedBy": "attended (landed in 7 slices; the store branch landed first each time, from the lanes' own store worktree)"
             },
             {
               "id": "sol-map-art-fidelity-2-e6",
