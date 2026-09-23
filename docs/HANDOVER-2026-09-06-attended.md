@@ -418,3 +418,4 @@ Owner, verbatim: "F-HEAT15-4: yes, F-FC2-5: lets move it - what else is open for
 
 - **E7 complete on main:** the Dead Band (slice 10, the leg's only map and final slice, pin **#50 `6655ba75`**, 17:29Z; layered pylons, socket feet, collars and truss headers on both silent frames, 156 → 1,464 and 180 → 1,548 triangles, bounds exact); Relay Rush skipped by the master's rule (no art-owned clause). The leg's leaf merged; the store's main at `892b7f6`. The battery on main after the leg runs under the drain lock.
 - **E8 queued by the Dead Band's drain at 17:29Z on the owner's word** (`sol-map-art-fidelity-2-e8`: the Far Side, Low Orbit); lane-c picked it up at 17:29Z. The E8 and E9 final slices are armed; E9 (the Dome Basin, the Seed Run, Devil's Alley, the Old Canal) is the last leg.
+- **Battery on main after the E7 leg (`686f99f00`, 17:29Z to 17:50Z, under the drain lock): green, 950 pass / 0 fail / 5 skipped, plus the 48-test second stage.**
