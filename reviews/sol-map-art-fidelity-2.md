@@ -253,3 +253,36 @@ Code: `src/world/*` (render side, incl. `Water.ts`), the render-only presentatio
 ### Findings
 - **F-F2-19 (the master's rule applied, information):** the Glow Mesa is skipped (no art-owned clause in its latest review, no independent critique); the E6 leg is Half-Life Hollow and the Picnic.
 - **F-F2-20 (pre-existing, attributed by Astra on the exact base):** Half-Life Hollow's browser batch carries four base-red cases (three exact fingerprints, one variable desktop horizon value; the first attribution receipt that wrongly included the new source-input JSON is kept beside the corrected one), outside this slice's gate.
+
+## Slice 9 — LANDED `bd266495f` (2026-09-23 16:01Z): the Picnic
+
+**Lane up to** `8f87f6042` · **store main** `9e33801` (landed first, pushed) · **merge** `bd266495f` · same-era pin #49 `e7c87a88`
+
+### What it does (the run-6 HELD clauses answered FIXED / IMPROVED with a number against run 6 / HELD with the owner named)
+**The Picnic — the painted cross marks FIXED, the props IMPROVED / HELD (Astra's own verdict).** The clause quoted from its own review ("the existing large cross-shaped ground shadow and primitive prop forms remain visible") is answered on both halves: a native ground pigment replaces the painted cross marks, and the west picnic blanket carries authored cloth props (cups, dishes, baskets, food, sagging canvas) on a native cloth-and-wicker atlas with the bench and the atom retained; every body stays at or under 3,000 triangles with bounds, mounts, collision and station authority exact. Against its own run 6 the ground RMS falls 43.96% desktop and 29.56% phone and the centre median rises 0.164 → 0.586 desktop and 0.168 → 0.583 phone at emission 0.45; the small desktop HUD rises and the inherited entry and UI holds are explicit, and the full ground, material and contact fidelity stays HELD. Frame p95 at entry 10.10 → 10.20 ms desktop and 10.00 → 10.05 ms phone, at the grouping 9.70 → 10.05 and 9.75 → 9.95, all within the bar; the raw runtime grows by 11.8 MB (the blanket's GLB 1.5 → 3.7 MB and two native textures of about 3 MB each under `sources/`), no E1 art. Astra measured the engine hash at `e7c87a88…` with the lane store at `9e33801`; the drain's own measurement on the merged tree is the pin below.
+
+**Leg verdict (E6).** Two maps carried an art-owned clause and both are answered with numbers against their own run 6: Half-Life Hollow's countdown gate and the Picnic's props and ground; the Glow Mesa held no art-owned clause and was skipped without promoting its verdict. The remaining list is empty and the run ended without a quota refusal; the next leg (E7: the Dead Band, Relay Rush) is queued by this drain on the owner's word.
+Where the player sees it: the plain entry of these maps, on production and the all-epochs preview.
+
+### Evidence (this slice's gates on the merged tree, the scratch store clean at the landed store main)
+| Check | Result |
+| --- | --- |
+| the store landing | `9e33801` on `Agent-Town/GoldRush-assets` main, pushed; the scratch store worktree detached at it, clean, before any hash was measured (F-A3-2) |
+| merge | `clean, no conflicts` |
+| single-line law (F-CORR1-4) | `nothing to flatten` |
+| tsc / build / e1 | `0 / 0 / 0` (rc) · payload `34318148 bytes` |
+| engine hash | `e7c87a88d08517d8…`; same-era pin #49 `e7c87a88`, era guards in the chain `ℹ pass 9 ℹ fail 0` |
+| halo / null floors / law-pointer | `rc=0 halo re-extraction PASS: 315 cured, 0 held, 760 regenerated-and-cured, 2127 scanned; alpha and opaque RGB unchanged` · `rc=0 83 of 83 null floors match assets/contracts/null-floors.json (296.4s).` · `rc=0 law-pointer-guard — do the law surfaces still point at what they claim?` |
+| named guards | `ℹ pass 98 ℹ fail 0` |
+| e2e both projects, `--workers=1` (the maps' own specs, landmark brightness/collision, fort collision, task-025, m2-01) | `rc=0   4 skipped   74 passed (13.4m)  15:53Z` |
+| e2e reds | none<br>Attribution: Attribution: pre-attributed by a control of this slice's specs on main `dc74cd4cf` with the store's main at `92db3dc` before the merge (`drain-s9-e2e-control-main.log`: rc=0, 0 failure lines) — every red on the merged tree below matches a line of that control by file, test line and project; nothing in this slice's diff touches those tests' subjects. |
+| full `npm run test:node-guards` (before the pin) | `rc=1 ℹ tests 955 ℹ pass 947 ℹ fail 3 ℹ skipped 5  16:00Z` |
+| battery reds | `✖ all 152 scripts/*.test.mjs fixture owners remove their temp directories (182213.880459ms)`<br>`✖ failing tests:`<br>`✖ rotation registry stays outside the engine identity corpus (584.113666ms)`<br>`✖ the landed registry names the live engine and stays outside its hash corpus (117.543708ms)` (the engine-era, bench-seeds and fixture-sweep rows are the pre-pin hash class, cured by the pin above) |
+
+### Merge classification
+Code: `src/world/*` (render side, incl. `Water.ts`), the render-only presentation owners, `src/entities/*` pure visuals (the Motor vehicle), `reviews/sol-map-art-current-status-20260909.md`, `artifacts/sol/map-art-campaign-2/report.md` (a dated run-9 section) and `run-9/**`. Store: `pilots/map-rebuild-spike/**` for these maps, one commit per map, landed on the store's main first. Firewall: within the master's Touch ONLY plus the store. Base: the chain's previous tip; MAIN-MOVED files are fire bookkeeping taken as theirs at the main merge before the fast-forward.
+
+### Findings
+- **F-F2-21 (for the owner's eye, with F-F2-7):** the Picnic adds 11.8 MB of raw runtime (a 3.7 MB blanket GLB and two native textures of about 3 MB each), the campaign's second-largest landing after the Canyon Works' panorama; both sit outside the E1 release and under the owner's 2026-09-15 preference, and the asset-diet ceilings are read against the sum before E9 lands.
+- **F-F2-22 (pre-existing, attributed by Astra on the exact base):** the Picnic's browser batch carries four base-red cases (two exact fingerprints), outside this slice's gate.
+- **F-F2-23 (information):** the two runtime-referenced textures live under `sources/e6-picnic-fidelity-2/`, the place the F-FID1-8 include ships images from; the early droplet-mirror check on the merged tree is the proof.

@@ -1,0 +1,33 @@
+slice 9: lane 8f87f6042fa992b487c247817c795a4ae57de7ff store 9e33801ab1a2f2349fce6929f576a81a6611a7e2 maps: the Picnic 15:32Z
+store on 'main', dirty 0 (Astra's, untouched)
+store main -> 9e33801 (art(store): e6-picnic — authored cloth props and clean ground pigment)
+store main pushed: 9e33801
+scratch store: detached at 9e33801, clean
+chain fast-forwarded to main 8c0220466
+chain base 8c0220466 merging lane 8f87f6042 (lane tip 8f87f6042) 15:32Z
+merged bd266495f
+single-line law: nothing to flatten
+law-pointer (pre): rc=0, no re-base needed
+engine hash merged (scratch store at 9e33801): e7c87a88d08517d84983d408a876cfa994068807fa51b3c54ee96bbe24710e32
+droplet mirror closure (early check, F-FID1-5 class: a store slice can add a corpus file the mirror does not ship): rc=0
+tsc/build/e1: 0 / 0 / 0
+first-town payload: 34318148 bytes
+halo: rc=0 halo re-extraction PASS: 315 cured, 0 held, 760 regenerated-and-cured, 2127 scanned; alpha and opaque RGB unchanged
+null floors: rc=0 83 of 83 null floors match assets/contracts/null-floors.json (296.4s).
+law-pointer: rc=0 law-pointer-guard — do the law surfaces still point at what they claim?
+guards: ℹ pass 98 ℹ fail 0 
+e2e start 15:39Z: e2e/e6-picnic-hold.spec.ts e2e/e6-picnic-opening.spec.ts e2e/er01-e6-census.spec.ts e2e/landmark-brightness.spec.ts e2e/landmark-collision.spec.ts e2e/task-025-bandits-dont-swim.spec.ts e2e/m2-01-build-menu.spec.ts e2e/ss-07-e6-beats.spec.ts e2e/e6-tile-consumers.spec.ts 
+warm-up: first boot rc=0, second rc=0 (the gate below starts on a warmed server; optimizer lines in the vite log: 1)
+e2e: rc=0   4 skipped   74 passed (13.4m)  15:53Z
+battery start 15:53Z
+battery: rc=1 ℹ tests 955 ℹ pass 947 ℹ fail 3 ℹ skipped 5  16:00Z
+✖ all 152 scripts/*.test.mjs fixture owners remove their temp directories (182213.880459ms)
+✖ failing tests:
+✖ rotation registry stays outside the engine identity corpus (584.113666ms)
+✖ the landed registry names the live engine and stays outside its hash corpus (117.543708ms)
+dirt after battery: 0
+FID2-S9-PREP-DONE
+known-red overrides: e2e ^$ battery ^$
+hash at pin time: e7c87a88d08517d84983d408a876cfa994068807fa51b3c54ee96bbe24710e32
+pin #49
+era (chain, scratch store): ℹ pass 9 ℹ fail 0 
