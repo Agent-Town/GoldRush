@@ -380,3 +380,33 @@ Code: `src/world/*` (render side, incl. `Water.ts`), the render-only presentatio
 ### Findings
 - **F-F2-28 (pre-existing, attributed by Astra on the exact base):** Low Orbit's browser batch carries two failures reproduced by exact fingerprint on the engine-verified base; outside this slice's gate, where the map's own spec, the E8 census, the E8 beats and the remaining-maps parity run on both projects.
 - **F-F2-29 (information, the leg's payload):** the E8 leg adds about 6.5 MB of raw runtime (the Far Side +3.3 MB, Low Orbit +3.2 MB, native metal atlases in both packs); the running total for the owner's eye stands with F-F2-7 and F-F2-21.
+
+## Slice 13 — LANDED `ce288f378` (2026-09-23 20:07Z): the Dome Basin
+
+**Lane up to** `7cc23fb59` · **store main** `60c635c` (landed first, pushed) · **merge** `ce288f378` · same-era pin #53 `9103137b`
+
+### What it does (the run-6 HELD clauses answered FIXED / IMPROVED with a number against run 6 / HELD with the owner named)
+**The Dome Basin — IMPROVED / HELD (Astra's own verdict).** The three lock bodies (the dust-devil warning mast, the ice-quarry hoist, the seed-row weather station) take a native masonry-and-metal atlas with bounded bearing and footing detail, 1,580 → 2,308 of 3,000 triangles; the UV distortion falls from a median of 3.75 and a p95 of 38.52 to 1.00 and 1.08 with no collapsed face, and at the 5 m station the run-6 luminance rises 0.327 → 0.466 desktop and 0.325 → 0.460 phone; the ground is retained within 0.004% RMS and the station HUD's rise from 0% to 0.021% / 0.067% is reported. The independent critique keeps the real ground contact, the coarse courses, the dense joins, the railway integration and the full canal scale as held. Frame p95 9.65 → 9.55 ms desktop and 9.30 → 9.45 ms phone over four runs, draws 94 / 53 unchanged, zero capture errors; no E1 art. Astra measured the engine hash at `9103137b…` with the lane store at `60c635c`; the drain's own measurement on the merged tree is the pin below.
+Where the player sees it: the plain entry of these maps, on production and the all-epochs preview.
+
+### Evidence (this slice's gates on the merged tree, the scratch store clean at the landed store main)
+| Check | Result |
+| --- | --- |
+| the store landing | `60c635c` on `Agent-Town/GoldRush-assets` main, pushed; the scratch store worktree detached at it, clean, before any hash was measured (F-A3-2) |
+| merge | `clean, no conflicts` |
+| single-line law (F-CORR1-4) | `nothing to flatten` |
+| tsc / build / e1 | `0 / 0 / 0` (rc) · payload `34318148 bytes` |
+| engine hash | `9103137b1b23675a…`; same-era pin #53 `9103137b`, era guards in the chain `ℹ pass 9 ℹ fail 0` |
+| halo / null floors / law-pointer | `rc=0 halo re-extraction PASS: 315 cured, 0 held, 760 regenerated-and-cured, 2127 scanned; alpha and opaque RGB unchanged` · `rc=0 83 of 83 null floors match assets/contracts/null-floors.json (318.0s).` · `rc=0 law-pointer-guard — do the law surfaces still point at what they claim?` |
+| named guards | `ℹ pass 98 ℹ fail 0` |
+| e2e both projects, `--workers=1` (the maps' own specs, landmark brightness/collision, fort collision, task-025, m2-01) | `rc=0   4 skipped   58 passed (5.9m)  19:59Z` |
+| e2e reds | none<br>Attribution: Attribution: pre-attributed by a control of this slice's specs on main `f969e9fe4` with the store's main at `4a2976f` before the merge (`drain-s13-e2e-control-main.log`: rc=0, 0 failure lines) — every red on the merged tree below matches a line of that control by file, test line and project; nothing in this slice's diff touches those tests' subjects. |
+| full `npm run test:node-guards` (before the pin) | `rc=1 ℹ tests 955 ℹ pass 946 ℹ fail 4 ℹ skipped 5  20:07Z` |
+| battery reds | `    actual: [ 'CONTENDED — 3 concurrent batteries', 'CONTENDED — 3 concurrent batteries' ],`<br>`    expected: [ 'CONTENDED — 2 concurrent batteries', 'CONTENDED — 2 concurrent batteries' ],`<br>`  +   'CONTENDED — 3 concurrent batteries'`<br>`  +   'CONTENDED — 3 concurrent batteries',`<br>`  -   'CONTENDED — 2 concurrent batteries'`<br>`  -   'CONTENDED — 2 concurrent batteries',`<br>`✖ all 152 scripts/*.test.mjs fixture owners remove their temp directories (190841.6065ms)`<br>`✖ contention is advisory, correctly counted, and absent when alone (3414.873667ms)`<br>`✖ failing tests:`<br>`✖ rotation registry stays outside the engine identity corpus (549.182416ms)`<br>`✖ the landed registry names the live engine and stays outside its hash corpus (206.434333ms)` (the engine-era, bench-seeds and fixture-sweep rows are the pre-pin hash class, cured by the pin above) |
+
+### Merge classification
+Code: `src/world/*` (render side, incl. `Water.ts`), the render-only presentation owners, `src/entities/*` pure visuals (the Motor vehicle), `reviews/sol-map-art-current-status-20260909.md`, `artifacts/sol/map-art-campaign-2/report.md` (a dated run-9 section) and `run-9/**`. Store: `pilots/map-rebuild-spike/**` for these maps, one commit per map, landed on the store's main first. Firewall: within the master's Touch ONLY plus the store. Base: the chain's previous tip; MAIN-MOVED files are fire bookkeeping taken as theirs at the main merge before the fast-forward.
+
+### Findings
+- **F-F2-30 (pre-existing, attributed by Astra on the exact base):** the Dome Basin's browser batch carries four exact-base failures, outside this slice's gate, where the E9 census, the E9 beats and the shared suites run on both projects (the Dome Basin has no spec of its own).
+- **F-F2-31 (information):** the pack's landmark atlas and two native material swatches join the corpus (under `landmarks/` and `sources/`), shipped by the existing includes; the early droplet-mirror check on the merged tree is the proof.
