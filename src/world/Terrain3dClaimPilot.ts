@@ -1013,6 +1013,12 @@ function cullVerifiedClosedMeshes(model: THREE.Object3D, mountId: string): Closu
 }
 
 function dressLandmark(model: THREE.Object3D, contractId: string, mountId: string): void {
+  if (contractId === 'e4-boneyard') model.traverse(node => {
+    const mesh = node as THREE.Mesh<THREE.BufferGeometry, THREE.MeshStandardMaterial>;
+    if (!mesh.isMesh || Array.isArray(mesh.material) || mesh.material.name !== 'BoneyardDriftEarth') return;
+    // Untextured burial soil follows the earth's light, not the machinery's paint.
+    mesh.material.emissiveIntensity = 0;
+  });
   if (contractId === 'e10-ember-shore' && mountId === 'last-warm-vent-altar') {
     const lamp = new THREE.Mesh(new THREE.CylinderGeometry(0.684, 0.684, 0.96, 16), new THREE.MeshBasicMaterial({ color: 0xffb438 }));
     lamp.name = 'last-warm-vent-altar.AmberWindow';
@@ -3180,7 +3186,7 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
       if (host.contractId === 'e7-dead-band') gradeTerrainByHeight(nextTerrain, '#888474', '#b2ab92', 0.4, 4.6, 0.34);
       if (host.contractId === 'e6-picnic') gradeTerrainByHeight(nextTerrain, '#9f8867', '#a1a483', 1.5, 4.6, 0.34);
       if (host.contractId === 'e6-half-life-hollow') gradeTerrainByHeight(nextTerrain, '#897c68', '#b9a788', -1.9, 1.8, 0.32);
-      if ((host.contractId === 'e4-dust-flats' || host.contractId === 'e4-long-road' || host.contractId === 'e4-gusher-county' || host.contractId === 'e4-boneyard') && selected.contract.maskTruth) clarifyMotorGround(nextTerrain, selected.contract.maskTruth, false, host.contractId === 'e4-gusher-county' ? 0.30 : host.contractId === 'e4-boneyard' ? 0.55 : 0.78);
+      if ((host.contractId === 'e4-dust-flats' || host.contractId === 'e4-long-road' || host.contractId === 'e4-gusher-county' || host.contractId === 'e4-boneyard') && selected.contract.maskTruth) clarifyMotorGround(nextTerrain, selected.contract.maskTruth, false, host.contractId === 'e4-gusher-county' ? 0.30 : host.contractId === 'e4-boneyard' ? 0.72 : 0.78);
       if (host.nightMode) applyNightTerrainPools(nextTerrain, host);
       else {
         host.canvas.dataset.terrain3dPilotNightPools = 'off';
