@@ -1,0 +1,163 @@
+{
+  "ground": [
+    {
+      "width": 1280,
+      "box": [
+        800,
+        350,
+        1000,
+        510
+      ],
+      "run4": {
+        "median": 0.14965098039215688,
+        "rms": 0.013169025534139765,
+        "darkShareBelow01": 0.0
+      },
+      "run9Base": {
+        "median": 0.14965098039215688,
+        "rms": 0.013169043625000484,
+        "darkShareBelow01": 0.0
+      },
+      "run9": {
+        "median": 0.14965098039215688,
+        "rms": 0.013169043625000484,
+        "darkShareBelow01": 0.0
+      }
+    },
+    {
+      "width": 390,
+      "box": [
+        270,
+        340,
+        375,
+        470
+      ],
+      "run4": {
+        "median": 0.1532894117647059,
+        "rms": 0.01429937847087761,
+        "darkShareBelow01": 0.0
+      },
+      "run9Base": {
+        "median": 0.1532894117647059,
+        "rms": 0.014299622439492114,
+        "darkShareBelow01": 0.0
+      },
+      "run9": {
+        "median": 0.1532894117647059,
+        "rms": 0.014299622439492114,
+        "darkShareBelow01": 0.0
+      }
+    }
+  ],
+  "bodies": [
+    {
+      "width": 1280,
+      "focus": "sub-hall-dynamo-house",
+      "station": "entry",
+      "run4Median": 0.1465270588235294,
+      "run9Median": 0.1517411764705882,
+      "run4Hud": 0.0,
+      "run9Hud": 0.0
+    },
+    {
+      "width": 1280,
+      "focus": "sub-hall-dynamo-house",
+      "station": "new3",
+      "run4Median": 0.13841647058823528,
+      "run9Median": 0.14194745098039216,
+      "run4Hud": 0.002261011124174731,
+      "run9Hud": 0.0
+    },
+    {
+      "width": 1280,
+      "focus": "west-switchback-line-house",
+      "station": "new4",
+      "run4Median": 0.15090745098039215,
+      "run9Median": 0.15090745098039215,
+      "run4Hud": 0.08209825865272437,
+      "run9Hud": 0.004280089025851737
+    },
+    {
+      "width": 1280,
+      "focus": "east-switchback-line-house",
+      "station": "new4",
+      "run4Median": 0.15128235294117645,
+      "run9Median": 0.15090745098039215,
+      "run4Hud": 0.06968944640446012,
+      "run9Hud": 0.025746652935118436
+    },
+    {
+      "width": 1280,
+      "focus": "dam-crest-gate-house",
+      "station": "new5",
+      "run4Median": 0.14008392156862742,
+      "run9Median": 0.14008392156862742,
+      "run4Hud": 0.05559085133418043,
+      "run9Hud": 0.02096216329525207
+    },
+    {
+      "width": 1280,
+      "focus": "downriver-tram-lamp",
+      "station": "new5",
+      "run4Median": 0.18283058823529413,
+      "run9Median": 0.18283058823529413,
+      "run4Hud": 0.09916699722332407,
+      "run9Hud": 0.038502262007892966
+    },
+    {
+      "width": 390,
+      "focus": "sub-hall-dynamo-house",
+      "station": "entry",
+      "run4Median": 0.14764392156862746,
+      "run9Median": 0.15348470588235294,
+      "run4Hud": 27.304630211606955,
+      "run9Hud": 26.62173329201529
+    },
+    {
+      "width": 390,
+      "focus": "sub-hall-dynamo-house",
+      "station": "new3",
+      "run4Median": 0.1399764705882353,
+      "run9Median": 0.14400549019607842,
+      "run4Hud": 0.0020182856681534704,
+      "run9Hud": 0.009873032798214956
+    },
+    {
+      "width": 390,
+      "focus": "west-switchback-line-house",
+      "station": "new4",
+      "run4Median": 0.15090745098039215,
+      "run9Median": 0.15090745098039215,
+      "run4Hud": 0.06974581525108493,
+      "run9Hud": 0.08062039312039312
+    },
+    {
+      "width": 390,
+      "focus": "east-switchback-line-house",
+      "station": "new4",
+      "run4Median": 0.15202431372549016,
+      "run9Median": 0.1517772549019608,
+      "run4Hud": 0.13169106824695948,
+      "run9Hud": 0.15273004963726614
+    },
+    {
+      "width": 390,
+      "focus": "dam-crest-gate-house",
+      "station": "new5",
+      "run4Median": 0.14372235294117644,
+      "run9Median": 0.14372235294117644,
+      "run4Hud": 0.25884587983851814,
+      "run9Hud": 0.06588700378850272
+    },
+    {
+      "width": 390,
+      "focus": "downriver-tram-lamp",
+      "station": "new5",
+      "run4Median": 0.18283058823529413,
+      "run9Median": 0.18283058823529413,
+      "run4Hud": 0.2041722148246782,
+      "run9Hud": 0.19831005345749267
+    }
+  ],
+  "method": "Same run-4 region coordinates and body stations. Full ordinary-HUD captures retained; offscreen entries are not counted as unobstructed bodies."
+}

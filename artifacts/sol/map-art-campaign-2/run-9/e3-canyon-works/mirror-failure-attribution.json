@@ -1,0 +1,59 @@
+{
+  "command": [
+    "node",
+    "--test",
+    "scripts/deploy-mirror-allowlist.test.mjs"
+  ],
+  "candidateExit": 1,
+  "baseExit": 1,
+  "candidateMissing": [
+    "assets/pilots/map-rebuild-spike/sources/archive-world-fidelity-1/engraved-masonry.png",
+    "assets/pilots/map-rebuild-spike/sources/archive-world-fidelity-1/library-layout.json",
+    "assets/pilots/map-rebuild-spike/sources/archive-world-fidelity-1/panorama-input-contract.json",
+    "assets/pilots/map-rebuild-spike/sources/archive-world-fidelity-1/provenance.json",
+    "assets/pilots/map-rebuild-spike/sources/e2-incline-fidelity-2/landmark-input-contract.json",
+    "assets/pilots/map-rebuild-spike/sources/e2-pressure-garden-fidelity-2/bank-grounding.json",
+    "assets/pilots/map-rebuild-spike/sources/e2-pressure-garden-fidelity-2/engraved-river-gravel.png",
+    "assets/pilots/map-rebuild-spike/sources/e2-pressure-garden-fidelity-2/panorama-input-contract.json",
+    "assets/pilots/map-rebuild-spike/sources/e3-canyon-works-fidelity-2/landmark-input-contract.json",
+    "assets/pilots/map-rebuild-spike/sources/e3-canyon-works-fidelity-2/panorama-input-contract.json",
+    "assets/pilots/map-rebuild-spike/sources/e3-canyon-works-fidelity-2/rim-layout.json",
+    "assets/pilots/map-rebuild-spike/sources/ember-shore-fidelity-1/engraved-basalt.png",
+    "assets/pilots/map-rebuild-spike/sources/ember-shore-fidelity-1/panorama-input-contract.json",
+    "assets/pilots/map-rebuild-spike/sources/ember-shore-fidelity-1/provenance.json",
+    "assets/pilots/map-rebuild-spike/sources/last-claim-fidelity-1/provenance.json",
+    "assets/pilots/map-rebuild-spike/sources/river-fidelity-1/geometry-proof.json",
+    "assets/pilots/map-rebuild-spike/sources/river-fidelity-1/pack-input.json",
+    "assets/pilots/map-rebuild-spike/sources/river-fidelity-1/provenance.json"
+  ],
+  "baseMissing": [
+    "assets/pilots/map-rebuild-spike/sources/archive-world-fidelity-1/engraved-masonry.png",
+    "assets/pilots/map-rebuild-spike/sources/archive-world-fidelity-1/library-layout.json",
+    "assets/pilots/map-rebuild-spike/sources/archive-world-fidelity-1/panorama-input-contract.json",
+    "assets/pilots/map-rebuild-spike/sources/archive-world-fidelity-1/provenance.json",
+    "assets/pilots/map-rebuild-spike/sources/e2-incline-fidelity-2/landmark-input-contract.json",
+    "assets/pilots/map-rebuild-spike/sources/e2-pressure-garden-fidelity-2/bank-grounding.json",
+    "assets/pilots/map-rebuild-spike/sources/e2-pressure-garden-fidelity-2/engraved-river-gravel.png",
+    "assets/pilots/map-rebuild-spike/sources/e2-pressure-garden-fidelity-2/panorama-input-contract.json",
+    "assets/pilots/map-rebuild-spike/sources/ember-shore-fidelity-1/engraved-basalt.png",
+    "assets/pilots/map-rebuild-spike/sources/ember-shore-fidelity-1/panorama-input-contract.json",
+    "assets/pilots/map-rebuild-spike/sources/ember-shore-fidelity-1/provenance.json",
+    "assets/pilots/map-rebuild-spike/sources/last-claim-fidelity-1/provenance.json",
+    "assets/pilots/map-rebuild-spike/sources/river-fidelity-1/geometry-proof.json",
+    "assets/pilots/map-rebuild-spike/sources/river-fidelity-1/pack-input.json",
+    "assets/pilots/map-rebuild-spike/sources/river-fidelity-1/provenance.json"
+  ],
+  "addedSourceMetadata": [
+    "assets/pilots/map-rebuild-spike/sources/e3-canyon-works-fidelity-2/landmark-input-contract.json",
+    "assets/pilots/map-rebuild-spike/sources/e3-canyon-works-fidelity-2/panorama-input-contract.json",
+    "assets/pilots/map-rebuild-spike/sources/e3-canyon-works-fidelity-2/rim-layout.json"
+  ],
+  "baseEngine": "72968f9ab06af85b2754a57ba175fb04a106f60db887103b4cf8f494584ea3c2",
+  "restoredEngine": "c01ea77a83fe3183df84df0b627f3f5ab252047ad3f1afb7d3b840e31879e56e",
+  "verdict": "Original lane filters fail on base and candidate; three added source JSONs join the same missing include class. Exact canonical main filters pass the unchanged test. Integration must retain both already-landed mirror fixes.",
+  "requiredMainCommits": [
+    "214a54568",
+    "82c226185"
+  ],
+  "currentMainFilterTestExit": 0
+}
