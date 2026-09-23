@@ -1,0 +1,27 @@
+[
+  {
+    "label": "own",
+    "command": [
+      "npx",
+      "playwright",
+      "test",
+      "--workers=1",
+      "--project=desktop-chrome",
+      "--project=mobile-chrome",
+      "--trace=off",
+      "--reporter=line",
+      "--output=artifacts/sol/map-art-campaign-2/_raw/run-9/e6-half-life-hollow-own",
+      "e2e/e6-half-life-hollow-crossing.spec.ts",
+      "e2e/e6-roster.spec.ts",
+      "e2e/er01-e6-census.spec.ts",
+      "e2e/terrain3d-registry.spec.ts",
+      "e2e/landmark-brightness.spec.ts",
+      "e2e/landmark-collision.spec.ts",
+      "e2e/fort-landmark-collision.spec.ts"
+    ],
+    "environment": {},
+    "exit": 1,
+    "seconds": 697.24,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-9/e6-half-life-hollow-own.log"
+  }
+]
