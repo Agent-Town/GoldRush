@@ -1,0 +1,33 @@
+slice 8: lane d3e30384225b8a3d332693d5dcf567286a7bfdfc store 92db3dc4f87789f976b7c310b7adb7372f8c5c30 maps: Half-Life Hollow 14:27Z
+store on 'main', dirty 0 (Astra's, untouched)
+store main -> 92db3dc (art(store): e6-half-life-hollow — architectural countdown gate)
+store main pushed: 92db3dc
+scratch store: detached at 92db3dc, clean
+chain fast-forwarded to main 72bccc68b
+chain base 72bccc68b merging lane d3e303842 (lane tip a14029b7a) 14:28Z
+merged 75f94354d
+single-line law: nothing to flatten
+law-pointer (pre): rc=0, no re-base needed
+engine hash merged (scratch store at 92db3dc): 083530624944acf74fd7beb888149f7dc017721185f8398be1b7eefec2e14ca6
+droplet mirror closure (early check, F-FID1-5 class: a store slice can add a corpus file the mirror does not ship): rc=0
+tsc/build/e1: 0 / 0 / 0
+first-town payload: 34317374 bytes
+halo: rc=0 halo re-extraction PASS: 315 cured, 0 held, 760 regenerated-and-cured, 2127 scanned; alpha and opaque RGB unchanged
+null floors: rc=0 83 of 83 null floors match assets/contracts/null-floors.json (311.7s).
+law-pointer: rc=0 law-pointer-guard — do the law surfaces still point at what they claim?
+guards: ℹ pass 98 ℹ fail 0 
+e2e start 14:35Z: e2e/e6-half-life-hollow-crossing.spec.ts e2e/er01-e6-census.spec.ts e2e/landmark-brightness.spec.ts e2e/landmark-collision.spec.ts e2e/task-025-bandits-dont-swim.spec.ts e2e/m2-01-build-menu.spec.ts e2e/ss-07-e6-beats.spec.ts e2e/e6-tile-consumers.spec.ts 
+warm-up: first boot rc=0, second rc=0 (the gate below starts on a warmed server; optimizer lines in the vite log: 1)
+e2e: rc=0   4 skipped   68 passed (6.7m)  14:42Z
+battery start 14:42Z
+battery: rc=1 ℹ tests 955 ℹ pass 947 ℹ fail 3 ℹ skipped 5  14:50Z
+✖ all 152 scripts/*.test.mjs fixture owners remove their temp directories (202754.739708ms)
+✖ failing tests:
+✖ rotation registry stays outside the engine identity corpus (594.876875ms)
+✖ the landed registry names the live engine and stays outside its hash corpus (184.596041ms)
+dirt after battery: 0
+FID2-S8-PREP-DONE
+known-red overrides: e2e ^$ battery ^$
+hash at pin time: 083530624944acf74fd7beb888149f7dc017721185f8398be1b7eefec2e14ca6
+pin #48
+era (chain, scratch store): ℹ pass 9 ℹ fail 0 

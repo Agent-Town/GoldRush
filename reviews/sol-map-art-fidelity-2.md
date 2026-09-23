@@ -223,3 +223,33 @@ Code: `src/world/*` (render side, incl. `Water.ts`), the render-only presentatio
 ### Findings
 - **F-F2-16 (pre-existing, attributed by Astra on the exact base):** the Boneyard's browser batch carries six base-red cases (four exact fingerprints, two variable Claim-horizon values), outside this slice's gate; the shared Motor spec and the E4 census run on both projects here.
 - **F-F2-17 (information, the leg's payload):** across the E4 leg the runtime GLBs grew by about 0.5 MB in total (the Boneyard +159,892 B, the derricks about +300 KB, the Dust Flats and the Long Road net smaller); no E1 asset moved, and nothing approaches the Canyon Works' panorama (F-F2-7).
+
+## Slice 8 — LANDED `75f94354d` (2026-09-23 14:50Z): Half-Life Hollow
+
+**Lane up to** `d3e303842` · **store main** `92db3dc` (landed first, pushed) · **merge** `75f94354d` · same-era pin #48 `08353062`
+
+### What it does (the run-6 HELD clauses answered FIXED / IMPROVED with a number against run 6 / HELD with the owner named)
+**Half-Life Hollow — IMPROVED / HELD (Astra's own verdict); the Glow Mesa skipped by the master's rule.** The south countdown gate becomes an architectural clock arch at 1,956 of 3,000 triangles (from 508) with its envelope and passage exact, the original atlas and the four sibling bodies preserved; at its own run-6 station the luminance rises 0.252 → 0.297 desktop and 0.253 → 0.292 phone; the desktop HUD coverage rises 0.005% → 0.027% (reported) and the phone's falls 0.166% → 0.065%. HELD: full material, contact and lighting, and the existing camera, layout and UI holds. Frame p95 at entry 9.25 → 9.30 ms desktop and 9.55 → 9.65 ms phone, at the gate view 8.65 → 9.20 and 9.60 → 9.45, draws unchanged, zero capture errors; the runtime GLB grows by 92,996 B; no E1 art. The Glow Mesa's latest run-6 review holds no art-owned clause and no independent critique, so it is skipped without promoting its verdict (its contract, layout, camera, Atomic and UI holds stand). Astra measured the engine hash at `08353062…` with the lane store at `92db3dc`; the drain's own measurement on the merged tree is the pin below.
+Where the player sees it: the plain entry of these maps, on production and the all-epochs preview.
+
+### Evidence (this slice's gates on the merged tree, the scratch store clean at the landed store main)
+| Check | Result |
+| --- | --- |
+| the store landing | `92db3dc` on `Agent-Town/GoldRush-assets` main, pushed; the scratch store worktree detached at it, clean, before any hash was measured (F-A3-2) |
+| merge | `clean, no conflicts` |
+| single-line law (F-CORR1-4) | `nothing to flatten` |
+| tsc / build / e1 | `0 / 0 / 0` (rc) · payload `34317374 bytes` |
+| engine hash | `083530624944acf7…`; same-era pin #48 `08353062`, era guards in the chain `ℹ pass 9 ℹ fail 0` |
+| halo / null floors / law-pointer | `rc=0 halo re-extraction PASS: 315 cured, 0 held, 760 regenerated-and-cured, 2127 scanned; alpha and opaque RGB unchanged` · `rc=0 83 of 83 null floors match assets/contracts/null-floors.json (311.7s).` · `rc=0 law-pointer-guard — do the law surfaces still point at what they claim?` |
+| named guards | `ℹ pass 98 ℹ fail 0` |
+| e2e both projects, `--workers=1` (the maps' own specs, landmark brightness/collision, fort collision, task-025, m2-01) | `rc=0   4 skipped   68 passed (6.7m)  14:42Z` |
+| e2e reds | none<br>Attribution: Attribution: pre-attributed by a control of this slice's specs on main `72bccc68b` with the store's main at `e62dbf9` before the merge (`drain-s8-e2e-control-main.log`: rc=0, 0 failure lines) — every red on the merged tree below matches a line of that control by file, test line and project; nothing in this slice's diff touches those tests' subjects. |
+| full `npm run test:node-guards` (before the pin) | `rc=1 ℹ tests 955 ℹ pass 947 ℹ fail 3 ℹ skipped 5  14:50Z` |
+| battery reds | `✖ all 152 scripts/*.test.mjs fixture owners remove their temp directories (202754.739708ms)`<br>`✖ failing tests:`<br>`✖ rotation registry stays outside the engine identity corpus (594.876875ms)`<br>`✖ the landed registry names the live engine and stays outside its hash corpus (184.596041ms)` (the engine-era, bench-seeds and fixture-sweep rows are the pre-pin hash class, cured by the pin above) |
+
+### Merge classification
+Code: `src/world/*` (render side, incl. `Water.ts`), the render-only presentation owners, `src/entities/*` pure visuals (the Motor vehicle), `reviews/sol-map-art-current-status-20260909.md`, `artifacts/sol/map-art-campaign-2/report.md` (a dated run-9 section) and `run-9/**`. Store: `pilots/map-rebuild-spike/**` for these maps, one commit per map, landed on the store's main first. Firewall: within the master's Touch ONLY plus the store. Base: the chain's previous tip; MAIN-MOVED files are fire bookkeeping taken as theirs at the main merge before the fast-forward.
+
+### Findings
+- **F-F2-19 (the master's rule applied, information):** the Glow Mesa is skipped (no art-owned clause in its latest review, no independent critique); the E6 leg is Half-Life Hollow and the Picnic.
+- **F-F2-20 (pre-existing, attributed by Astra on the exact base):** Half-Life Hollow's browser batch carries four base-red cases (three exact fingerprints, one variable desktop horizon value; the first attribution receipt that wrongly included the new source-input JSON is kept beside the corrected one), outside this slice's gate.
