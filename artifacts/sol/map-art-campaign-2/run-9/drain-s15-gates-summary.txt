@@ -1,0 +1,33 @@
+slice 15: lane e0fa15426281e4a98a2c0c8b47b17e84c58368d5 store 03ccce800126faf8f347b51e9a9e751b20b80d19 maps: Devil\'s Alley 20:16Z
+store on 'main', dirty 0 (Astra's, untouched)
+store main -> 03ccce8 (art(store): e9-devils-alley — wind anchor materials and fittings)
+store main pushed: 03ccce8
+scratch store: detached at 03ccce8, clean
+chain fast-forwarded to main b750f46ba
+chain base b750f46ba merging lane e0fa15426 (lane tip e0fa15426) 20:16Z
+merged f3e95539c
+single-line law: nothing to flatten
+law-pointer (pre): rc=0, no re-base needed
+engine hash merged (scratch store at 03ccce8): fa80dda3304171f1c703a8baa2d6f304204e34ea9a1de4f10d2bf70caf71a4fa
+droplet mirror closure (early check, F-FID1-5 class: a store slice can add a corpus file the mirror does not ship): rc=0
+tsc/build/e1: 0 / 0 / 0
+first-town payload: 34318148 bytes
+halo: rc=0 halo re-extraction PASS: 315 cured, 0 held, 760 regenerated-and-cured, 2127 scanned; alpha and opaque RGB unchanged
+null floors: rc=0 83 of 83 null floors match assets/contracts/null-floors.json (303.0s).
+law-pointer: rc=0 law-pointer-guard — do the law surfaces still point at what they claim?
+guards: ℹ pass 98 ℹ fail 0 
+e2e start 20:23Z: e2e/e9-devils-alley-relocation.spec.ts e2e/er01-e9-census.spec.ts e2e/landmark-brightness.spec.ts e2e/landmark-collision.spec.ts e2e/task-025-bandits-dont-swim.spec.ts e2e/m2-01-build-menu.spec.ts e2e/ss-10-e9-beats.spec.ts 
+warm-up: first boot rc=0, second rc=0 (the gate below starts on a warmed server; optimizer lines in the vite log: 1)
+e2e: rc=0   4 skipped   62 passed (6.1m)  20:30Z
+battery start 20:30Z
+battery: rc=1 ℹ tests 955 ℹ pass 947 ℹ fail 3 ℹ skipped 5  20:38Z
+✖ all 152 scripts/*.test.mjs fixture owners remove their temp directories (189177.239209ms)
+✖ failing tests:
+✖ rotation registry stays outside the engine identity corpus (588.500375ms)
+✖ the landed registry names the live engine and stays outside its hash corpus (126.088333ms)
+dirt after battery: 0
+FID2-S15-PREP-DONE
+known-red overrides: e2e ^$ battery ^$
+hash at pin time: fa80dda3304171f1c703a8baa2d6f304204e34ea9a1de4f10d2bf70caf71a4fa
+pin #54
+era (chain, scratch store): ℹ pass 9 ℹ fail 0 

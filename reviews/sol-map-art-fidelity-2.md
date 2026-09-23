@@ -410,3 +410,38 @@ Code: `src/world/*` (render side, incl. `Water.ts`), the render-only presentatio
 ### Findings
 - **F-F2-30 (pre-existing, attributed by Astra on the exact base):** the Dome Basin's browser batch carries four exact-base failures, outside this slice's gate, where the E9 census, the E9 beats and the shared suites run on both projects (the Dome Basin has no spec of its own).
 - **F-F2-31 (information):** the pack's landmark atlas and two native material swatches join the corpus (under `landmarks/` and `sources/`), shipped by the existing includes; the early droplet-mirror check on the merged tree is the proof.
+
+## Slice 15 — LANDED `f3e95539c` (2026-09-23 20:38Z): the Seed Run, Devil's Alley
+
+**Lane up to** `e0fa15426` · **store main** `03ccce8` (landed first, pushed) · **merge** `f3e95539c` · same-era pin #54 `fa80dda3`
+
+### What it does (the run-6 HELD clauses answered FIXED / IMPROVED with a number against run 6 / HELD with the owner named)
+This slice carries two maps: the lane range `87f218e98..e0fa15426` (the Seed Run, then Devil's Alley) and the store commits `0c64c93` and `03ccce8`; the two launchers were queued on the drain lock in order and the later one acquired it first (the lock is not first-in-first-out, F-F2-34), so the Seed Run's code and pack land here and its own slice stopped at its store precondition without touching anything.
+
+**The Seed Run — IMPROVED / HELD (Astra's own verdict).** The west seed vault and the south caravan gate gain attached door hardware, framed windows and native surfaces at 2,828 of 3,000 triangles (from 2,148); the UV distortion falls from a median of 1.82 and a p95 of 15.05 to 1.00 and 1.24 and the collapsed area from 0.8% to 0%; at the run-6 station the body median rises 0.259 → 0.443 on both viewports. The convoy's ruts become quieter, tapered marks that keep all 110 centres and four rings (a render-only change in the caravan presentation), and the declared HUD stays at 0% on both viewports. HELD: weak contact, shallow panels, the material hierarchy and the repeated route spacing. Performance −1.0% / +0.5%, draws 126 / 72 unchanged, zero capture errors; no E1 art. Astra measured the engine hash at `bfa5e66d…` with the lane store at `0c64c93`; the drain's own measurement on the merged tree is the pin below.
+
+**Devil's Alley — IMPROVED / HELD (Astra's own verdict).** The three wind anchors take native surfaces and connected fittings at 2,284, 2,628 and 2,972 of 3,000 triangles (the two anchor gates with them); at the run-6 upper stations the median rises 0.193 → 0.353 desktop and 0.192 → 0.352 phone, the dark share falls from 12.9% and 9.7% to 0%, and the UV p95 falls from 31 to 50 down to 1.44; the safety rings and all gameplay geometry are exact, and the raw phone station HUD's rise from 0.004% to 0.008% is reported. HELD: the full scale, the coil hierarchy, contact, texture crispness, and the landscape and VFX. Performance +1.6% / −0.5% over four runs, draws 88 / 58 unchanged, zero capture errors; no E1 art. Astra measured the engine hash at `fa80dda3…` with the lane store at `03ccce8`; the drain's own measurement on the merged tree is the pin below.
+Where the player sees it: the plain entry of these maps, on production and the all-epochs preview.
+
+### Evidence (this slice's gates on the merged tree, the scratch store clean at the landed store main)
+| Check | Result |
+| --- | --- |
+| the store landing | `03ccce8` on `Agent-Town/GoldRush-assets` main, pushed; the scratch store worktree detached at it, clean, before any hash was measured (F-A3-2) |
+| merge | `clean, no conflicts` |
+| single-line law (F-CORR1-4) | `nothing to flatten` |
+| tsc / build / e1 | `0 / 0 / 0` (rc) · payload `34318148 bytes` |
+| engine hash | `fa80dda3304171f1…`; same-era pin #54 `fa80dda3`, era guards in the chain `ℹ pass 9 ℹ fail 0` |
+| halo / null floors / law-pointer | `rc=0 halo re-extraction PASS: 315 cured, 0 held, 760 regenerated-and-cured, 2127 scanned; alpha and opaque RGB unchanged` · `rc=0 83 of 83 null floors match assets/contracts/null-floors.json (303.0s).` · `rc=0 law-pointer-guard — do the law surfaces still point at what they claim?` |
+| named guards | `ℹ pass 98 ℹ fail 0` |
+| e2e both projects, `--workers=1` (the maps' own specs, landmark brightness/collision, fort collision, task-025, m2-01) | `rc=0   4 skipped   62 passed (6.1m)  20:30Z` |
+| e2e reds | none<br>Attribution: Attribution: pre-attributed by a control of this slice's specs on main `b750f46ba` with the store's main at `60c635c` before the merge (`drain-s15-e2e-control-main.log`: rc=0, 0 failure lines) — every red on the merged tree below matches a line of that control by file, test line and project; nothing in this slice's diff touches those tests' subjects. |
+| full `npm run test:node-guards` (before the pin) | `rc=1 ℹ tests 955 ℹ pass 947 ℹ fail 3 ℹ skipped 5  20:38Z` |
+| battery reds | `✖ all 152 scripts/*.test.mjs fixture owners remove their temp directories (189177.239209ms)`<br>`✖ failing tests:`<br>`✖ rotation registry stays outside the engine identity corpus (588.500375ms)`<br>`✖ the landed registry names the live engine and stays outside its hash corpus (126.088333ms)` (the engine-era, bench-seeds and fixture-sweep rows are the pre-pin hash class, cured by the pin above) |
+
+### Merge classification
+Code: `src/world/*` (render side, incl. `Water.ts`), the render-only presentation owners, `src/entities/*` pure visuals (the Motor vehicle), `reviews/sol-map-art-current-status-20260909.md`, `artifacts/sol/map-art-campaign-2/report.md` (a dated run-9 section) and `run-9/**`. Store: `pilots/map-rebuild-spike/**` for these maps, one commit per map, landed on the store's main first. Firewall: within the master's Touch ONLY plus the store. Base: the chain's previous tip; MAIN-MOVED files are fire bookkeeping taken as theirs at the main merge before the fast-forward.
+
+### Findings
+- **F-F2-32 (pre-existing, attributed by Astra on the exact base):** the Seed Run's browser batch carries two exact-base roster reds, outside this slice's gate, where the map's own caravan spec, the E9 census and the E9 beats run on both projects.
+- **F-F2-33 (pre-existing, attributed by Astra on the exact base):** Devil's Alley's browser batch carries two exact-base roster failures, outside this slice's gate, where the map's relocation spec, the E9 census and the E9 beats run on both projects.
+- **F-F2-34 (drain infrastructure):** the drain lock is a mkdir loop with no first-in-first-out order; two launchers queued for slices 14 and 15 raced and the later one won, so the Seed Run landed inside Devil's Alley's slice (its commits are ancestors of the lane commit merged here, its store commit an ancestor of the store main moved here) and the Seed Run's own launcher was stopped by hand before its store precondition could refuse it. Cure for the drains: queue one mid-run slice at a time, or make a launcher wait for the previous slice's landing marker before taking the lock.
