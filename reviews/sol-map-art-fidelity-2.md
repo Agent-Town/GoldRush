@@ -286,3 +286,35 @@ Code: `src/world/*` (render side, incl. `Water.ts`), the render-only presentatio
 - **F-F2-21 (for the owner's eye, with F-F2-7):** the Picnic adds 11.8 MB of raw runtime (a 3.7 MB blanket GLB and two native textures of about 3 MB each), the campaign's second-largest landing after the Canyon Works' panorama; both sit outside the E1 release and under the owner's 2026-09-15 preference, and the asset-diet ceilings are read against the sum before E9 lands.
 - **F-F2-22 (pre-existing, attributed by Astra on the exact base):** the Picnic's browser batch carries four base-red cases (two exact fingerprints), outside this slice's gate.
 - **F-F2-23 (information):** the two runtime-referenced textures live under `sources/e6-picnic-fidelity-2/`, the place the F-FID1-8 include ships images from; the early droplet-mirror check on the merged tree is the proof.
+
+## Slice 10 — LANDED `114eb2b98` (2026-09-23 17:26Z): the Dead Band
+
+**Lane up to** `b208f876c` · **store main** `892b7f6` (landed first, pushed) · **merge** `114eb2b98` · same-era pin #50 `6655ba75`
+
+### What it does (the run-6 HELD clauses answered FIXED / IMPROVED with a number against run 6 / HELD with the owner named)
+**The Dead Band — IMPROVED / HELD (Astra's own verdict); Relay Rush skipped by the master's rule.** The clause quoted from its own review ("these simple braced frames do not yet equal the plate's layered antenna architecture") is answered with layered pylons, socket feet, collars and truss headers on both silent frames: the iron-shadow warning frame 156 → 1,464 and the north silence gate 180 → 1,548 of 3,000 triangles, bounds exact. At the unchanged 3 m stations the run-6 luminance rises 0.104 → 0.189 desktop and 0.110 → 0.192 phone at the warning frame and 0.137 → 0.167 / 0.130 → 0.167 at the north gate, emission 0.45; both bodies stay under their run-6 station HUD figures, and every ground metric and source bound is exact. HELD: the full architecture, material and weathering, the buried north footing, the yard composition and the existing entry and UI. Frame p95 at entry 8.90 → 8.90 ms desktop and 9.80 → 9.45 ms phone, at the north gate 9.00 → 9.65 and 9.30 → 9.45, draws unchanged, zero errors across 56 captures; the raw GLBs grow by 183,916 B; no E1 art. Relay Rush holds no art-owned clause and no independent critique in the required runs and is skipped without promoting its verdict. Astra measured the engine hash at `6655ba75…` with the lane store at `892b7f6`; the drain's own measurement on the merged tree is the pin below.
+
+**Leg verdict (E7).** One map carried an art-owned clause and it is answered with numbers against its own run 6; Relay Rush is skipped by the rule; the remaining list is empty and the run ended without a quota refusal. The next leg (E8: the Far Side, Low Orbit) is queued by this drain on the owner's word.
+Where the player sees it: the plain entry of these maps, on production and the all-epochs preview.
+
+### Evidence (this slice's gates on the merged tree, the scratch store clean at the landed store main)
+| Check | Result |
+| --- | --- |
+| the store landing | `892b7f6` on `Agent-Town/GoldRush-assets` main, pushed; the scratch store worktree detached at it, clean, before any hash was measured (F-A3-2) |
+| merge | `clean, no conflicts` |
+| single-line law (F-CORR1-4) | `nothing to flatten` |
+| tsc / build / e1 | `0 / 0 / 0` (rc) · payload `34318148 bytes` |
+| engine hash | `6655ba7569775a52…`; same-era pin #50 `6655ba75`, era guards in the chain `ℹ pass 9 ℹ fail 0` |
+| halo / null floors / law-pointer | `rc=0 halo re-extraction PASS: 315 cured, 0 held, 760 regenerated-and-cured, 2127 scanned; alpha and opaque RGB unchanged` · `rc=0 83 of 83 null floors match assets/contracts/null-floors.json (297.2s).` · `rc=0 law-pointer-guard — do the law surfaces still point at what they claim?` |
+| named guards | `ℹ pass 98 ℹ fail 0` |
+| e2e both projects, `--workers=1` (the maps' own specs, landmark brightness/collision, fort collision, task-025, m2-01) | `rc=0   4 skipped   60 passed (6.0m)  17:19Z` |
+| e2e reds | none<br>Attribution: Attribution: pre-attributed by a control of this slice's specs on main `1e816ed6a` with the store's main at `9e33801` before the merge (`drain-s10-e2e-control-main.log`: rc=0, 0 failure lines) — every red on the merged tree below matches a line of that control by file, test line and project; nothing in this slice's diff touches those tests' subjects. |
+| full `npm run test:node-guards` (before the pin) | `rc=1 ℹ tests 955 ℹ pass 947 ℹ fail 3 ℹ skipped 5  17:26Z` |
+| battery reds | `✖ all 152 scripts/*.test.mjs fixture owners remove their temp directories (184714.791125ms)`<br>`✖ failing tests:`<br>`✖ rotation registry stays outside the engine identity corpus (798.816041ms)`<br>`✖ the landed registry names the live engine and stays outside its hash corpus (173.206667ms)` (the engine-era, bench-seeds and fixture-sweep rows are the pre-pin hash class, cured by the pin above) |
+
+### Merge classification
+Code: `src/world/*` (render side, incl. `Water.ts`), the render-only presentation owners, `src/entities/*` pure visuals (the Motor vehicle), `reviews/sol-map-art-current-status-20260909.md`, `artifacts/sol/map-art-campaign-2/report.md` (a dated run-9 section) and `run-9/**`. Store: `pilots/map-rebuild-spike/**` for these maps, one commit per map, landed on the store's main first. Firewall: within the master's Touch ONLY plus the store. Base: the chain's previous tip; MAIN-MOVED files are fire bookkeeping taken as theirs at the main merge before the fast-forward.
+
+### Findings
+- **F-F2-24 (the master's rule applied, information):** Relay Rush is skipped (no art-owned clause, no critique; `run-9/e7-scope-selection.json`); the E7 leg is the Dead Band alone.
+- **F-F2-25 (pre-existing, attributed by Astra on the exact base):** the Dead Band's browser batch carries eleven base-red cases (nine exact fingerprints, two variable horizon values) and one mobile Charter Press case that passed 2 / 2 on the base and on the restored candidate, outside this slice's gate.
