@@ -6110,12 +6110,16 @@
             {
               "id": "sec-signin-hardening-1",
               "title": "SEC-1/SEC-10/SEC-9 of the outside review: the sign-in door counts guesses atomically, verify gets a per-IP cap, dev-only answers stay dev-only, the admin token leaves the URL",
-              "status": "queued",
+              "status": "merged",
               "taskFile": "sec-signin-hardening-1.md",
               "lane": "scratch worktree beside the primary, Opus implementer on the Anthropic subscription",
               "authoredAt": "2026-09-24",
               "authoredBy": "attended (Fable) from the outside review of 2026-09-24 and its three verification passes",
-              "queuedAt": "2026-09-24 05:16Z, launched by the attended session as an Opus implementer in its scratch worktree (not a Codex lane)"
+              "queuedAt": "2026-09-24 05:16Z, launched by the attended session as an Opus implementer in its scratch worktree (not a Codex lane)",
+              "mergeHash": "78934b5b764338808e588edb85b32a444bbfd9d8",
+              "mergedAt": "2026-09-24",
+              "review": "reviews/sec-signin-hardening-1.md",
+              "drainedBy": "attended 2026-09-24 (the outside review of 2026-09-24)"
             },
             {
               "id": "ux-entry-robustness-1",
