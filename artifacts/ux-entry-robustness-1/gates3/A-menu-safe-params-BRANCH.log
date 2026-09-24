@@ -1,0 +1,87 @@
+
+Running 4 tests using 1 worker
+
+[1/4] [desktop-chrome] › e2e/menu-safe-params.spec.ts:5:1 › ?town3dPilot=all boots the start menu, not a run
+  1) [desktop-chrome] › e2e/menu-safe-params.spec.ts:5:1 › ?town3dPilot=all boots the start menu, not a run 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByTestId('start-menu-enter-town')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for getByTestId('start-menu-enter-town')
+
+
+       7 |   page.on('pageerror', (error) => errors.push(error.message));
+       8 |   await page.goto('/?town3dPilot=all');
+    >  9 |   await expect(page.getByTestId('start-menu-enter-town')).toBeVisible();
+         |                                                           ^
+      10 |   await page.getByTestId('start-menu-enter-town').click();
+      11 |   await page.waitForFunction(() => (window.__GR_TOWN_DIAGNOSTICS__?.frame ?? 0) > 10);
+      12 |   await expect
+        at /Users/robin/Claude/Projects/wt-ux1/e2e/menu-safe-params.spec.ts:9:59
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/menu-safe-params--town3dPi-ba6fa-ts-the-start-menu-not-a-run-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/menu-safe-params--town3dPi-ba6fa-ts-the-start-menu-not-a-run-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/menu-safe-params--town3dPi-ba6fa-ts-the-start-menu-not-a-run-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/menu-safe-params--town3dPi-ba6fa-ts-the-start-menu-not-a-run-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[2/4] [desktop-chrome] › e2e/menu-safe-params.spec.ts:18:1 › a contract param still launches the run path
+[3/4] [mobile-chrome] › e2e/menu-safe-params.spec.ts:5:1 › ?town3dPilot=all boots the start menu, not a run
+  2) [mobile-chrome] › e2e/menu-safe-params.spec.ts:5:1 › ?town3dPilot=all boots the start menu, not a run 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByTestId('start-menu-enter-town')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for getByTestId('start-menu-enter-town')
+
+
+       7 |   page.on('pageerror', (error) => errors.push(error.message));
+       8 |   await page.goto('/?town3dPilot=all');
+    >  9 |   await expect(page.getByTestId('start-menu-enter-town')).toBeVisible();
+         |                                                           ^
+      10 |   await page.getByTestId('start-menu-enter-town').click();
+      11 |   await page.waitForFunction(() => (window.__GR_TOWN_DIAGNOSTICS__?.frame ?? 0) > 10);
+      12 |   await expect
+        at /Users/robin/Claude/Projects/wt-ux1/e2e/menu-safe-params.spec.ts:9:59
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/menu-safe-params--town3dPi-ba6fa-ts-the-start-menu-not-a-run-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/menu-safe-params--town3dPi-ba6fa-ts-the-start-menu-not-a-run-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/menu-safe-params--town3dPi-ba6fa-ts-the-start-menu-not-a-run-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/menu-safe-params--town3dPi-ba6fa-ts-the-start-menu-not-a-run-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[4/4] [mobile-chrome] › e2e/menu-safe-params.spec.ts:18:1 › a contract param still launches the run path
+  2 failed
+    [desktop-chrome] › e2e/menu-safe-params.spec.ts:5:1 › ?town3dPilot=all boots the start menu, not a run 
+    [mobile-chrome] › e2e/menu-safe-params.spec.ts:5:1 › ?town3dPilot=all boots the start menu, not a run 
+  2 passed (17.6s)

@@ -1475,6 +1475,20 @@ export class Game {
     this.resetFrameWindow();
     this.skipNextVisibleFrameSample = true;
   };
+  /**
+   * Closes the solo pick-clock interval AT the visibility transition (UX-4). Required, not belt-and-
+   * braces: requestAnimationFrame stops while a tab is hidden, so `syncUpgradeOverlay` gets no frame
+   * during the gap and the first frame after the return would otherwise charge the whole absence.
+   * Settling on the event closes the visible interval while the document still reads hidden, and
+   * opens the hidden one as non-counting.
+   */
+  private readonly onPickClockVisibilityChange = () => {
+    // Flag first, settle second. `settleUpgradeOfferClock` closes the interval that just ended using
+    // the flag stamped when it OPENED, then opens the next one from this flag - so updating it here
+    // is what makes the new interval non-counting on the way out and counting again on the way back.
+    this.pickClockDocumentHidden = document.visibilityState === 'hidden';
+    this.settleUpgradeOfferClock();
+  };
   private profileElapsed = 0;
   private debugBeaconWaveOverride: number | null = null;
   private stolenTotal = 0;
@@ -1483,7 +1497,24 @@ export class Game {
   private buildingsWrecked = 0;
   private defaultedPicks = 0;
   private upgradeOfferClockKey = '';
-  private upgradeOfferDeadlineMs = 0;
+  // UX-4 (outside review 2026-09-24): the SOLO pick clock was an absolute wall-clock deadline
+  // (`performance.now() + pickSeconds * 1000`), so a player who switched tabs mid-offer came back to
+  // find the game had picked upgrade index 0 for them. A remaining-time budget with an explicit
+  // "was the interval I am closing a counting one?" flag freezes correctly in BOTH directions; an
+  // absolute deadline cannot, because on return the whole hidden gap has already elapsed.
+  private upgradeOfferRemainingMs = 0;
+  private upgradeOfferClockAt = 0;
+  private upgradeOfferClockCounting = false;
+  /**
+   * Hidden-ness as OBSERVED through a `visibilitychange` event, never as asked of the document at an
+   * arbitrary moment. A clock that freezes on whatever `document.visibilityState` happens to say at
+   * boot can be frozen for the life of a page by an embedder or an automation host that reports a
+   * stale 'hidden' - and a pick clock that never drains never files the default pick, which is a
+   * worse defect than the one this fixes. A page that boots hidden cannot have an offer on screen
+   * anyway (requestAnimationFrame is throttled, and a level-up needs a player), and the transition
+   * that brings such a page to the front fires this event, so nothing real is lost by waiting for it.
+   */
+  private pickClockDocumentHidden = false;
   private upgradeOfferDeadlineTick = 0;
   private upgradeExpiryQueued = false;
   private territoryRingPresent = false;
@@ -1646,6 +1677,7 @@ export class Game {
     this.blastAimReticle.visible = false;
     this.canvas.addEventListener('pointermove', this.onBlastAimPointerMove);
     document.addEventListener('visibilitychange', this.onPerformanceVisibilityChange);
+    document.addEventListener('visibilitychange', this.onPickClockVisibilityChange);
     this.updateActionActorPosition();
     this.buildSystem = new BuildSystem(
       canvas,
@@ -2802,6 +2834,7 @@ export class Game {
     this.canvas.removeEventListener('pointermove', this.onBlastAimPointerMove);
     this.prospectorDispatchInput.dispose();
     document.removeEventListener('visibilitychange', this.onPerformanceVisibilityChange);
+    document.removeEventListener('visibilitychange', this.onPickClockVisibilityChange);
     this.input.dispose();
     this.cameraZoom.dispose();
     this.playbookSurface?.dispose();
@@ -10466,6 +10499,39 @@ export class Game {
     this.blastAimReticleRadius = nextRadius;
   }
 
+  /**
+   * Charges the interval that just ended against the solo pick budget, then opens a new interval.
+   *
+   * The `upgradeOfferClockCounting` flag describes THE INTERVAL BEING CLOSED, never the instant. That
+   * is the whole trick: on `visibilitychange` back to visible, `document.visibilityState` already
+   * reads 'visible', so an instant-based test would charge the entire hidden gap - exactly the bug.
+   * Reading the flag stamped when the interval opened gets both transitions right.
+   */
+  private settleUpgradeOfferClock(): void {
+    const now = performance.now();
+    if (this.upgradeOfferClockCounting) {
+      this.upgradeOfferRemainingMs = Math.max(0, this.upgradeOfferRemainingMs - (now - this.upgradeOfferClockAt));
+    }
+    this.upgradeOfferClockAt = now;
+    this.upgradeOfferClockCounting = this.upgradeOfferClockRunning;
+  }
+
+  /** Opens a fresh interval without charging anything: used when the budget is (re)set. */
+  private stampUpgradeOfferClock(): void {
+    this.upgradeOfferClockAt = performance.now();
+    this.upgradeOfferClockCounting = this.upgradeOfferClockRunning;
+  }
+
+  /**
+   * ⚠️ `isPaused` is defensive, not the live cure. `GameState.transition` clears `paused` on the way
+   * into 'levelup' and `togglePause` refuses outside 'playing' (game/GameState.ts:31,37), so an offer
+   * is UNPAUSABLE today and the hidden-document half is the whole reachable fix. It is here because
+   * the freeze is a property of the clock, not of one state machine's current shape (F-UX4-2).
+   */
+  private get upgradeOfferClockRunning(): boolean {
+    return !this.state.isPaused && !this.pickClockDocumentHidden;
+  }
+
   private syncUpgradeOverlay(): void {
     const offer = this.progression.offer;
     if (this.state.current !== 'levelup' || !offer) {
@@ -10481,15 +10547,18 @@ export class Game {
     const offerKey = `${this.progression.snapshot.pendingLevels}:${offer.map((def) => def.id).join('|')}`;
     if (offerKey !== this.upgradeOfferClockKey) {
       this.upgradeOfferClockKey = offerKey;
-      this.upgradeOfferDeadlineMs = performance.now() + Balance.offers.pickSeconds * 1_000;
+      this.upgradeOfferRemainingMs = Balance.offers.pickSeconds * 1_000;
+      this.stampUpgradeOfferClock();
       this.upgradeOfferDeadlineTick = (offerTick ?? 0) + Math.ceil(Balance.offers.pickSeconds / (this.mpClient?.stepSeconds ?? PLAYBOOK_STEP_SECONDS));
       this.upgradeExpiryQueued = false;
     }
-    // Solo uses wall time; MP and agent-tape replay use their authoritative ticks.
-    // Neither opening settings nor pausing the already-frozen sim stops the applicable clock.
+    // Solo spends a wall-time BUDGET; MP and agent-tape replay keep their authoritative ticks
+    // untouched - the lockstep contract is that every seat counts the same ticks, and a clock one
+    // seat can freeze is not that. So only the solo branch below consults the freeze.
+    if (offerTick === null) this.settleUpgradeOfferClock();
     const secondsRemaining = offerTick !== null
       ? Math.max(0, Math.ceil((this.upgradeOfferDeadlineTick - offerTick) * (this.mpClient?.stepSeconds ?? PLAYBOOK_STEP_SECONDS)))
-      : Math.max(0, Math.ceil((this.upgradeOfferDeadlineMs - performance.now()) / 1_000));
+      : Math.max(0, Math.ceil(this.upgradeOfferRemainingMs / 1_000));
     const multiplayerAuthority = !multiplayerState || multiplayerState.playerId === multiplayerState.roster[0]?.playerId;
     if (secondsRemaining === 0 && !this.upgradeExpiryQueued && multiplayerAuthority) {
       this.upgradeExpiryQueued = true;

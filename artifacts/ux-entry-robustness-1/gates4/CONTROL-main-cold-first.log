@@ -1,0 +1,50 @@
+(node:17531) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 6 tests using 1 worker
+
+
+(node:17598) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[1/6] [desktop-chrome] › e2e/profile-first-boot.spec.ts:41:1 › cleared-storage boot asks who is prospecting and creates no Robin ghost
+  1) [desktop-chrome] › e2e/profile-first-boot.spec.ts:41:1 › cleared-storage boot asks who is prospecting and creates no Robin ghost 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: page.waitForFunction: Test timeout of 30000ms exceeded.
+
+      51 |   await page.getByTestId('profile-create').click();
+      52 |   await expect(page.getByTestId('start-menu')).toHaveCount(0);
+    > 53 |   await page.waitForFunction(() => (window.__GR_TOWN_DIAGNOSTICS__?.frame ?? 0) > 10);
+         |              ^
+      54 |   await expect(page.getByTestId('town-name-card')).toBeVisible();
+      55 |   await page.getByTestId('town-name-input').fill('Aurora Bend');
+      56 |   await page.getByTestId('town-name-submit').click();
+        at /Users/robin/Claude/Projects/wt-ux1-control/e2e/profile-first-boot.spec.ts:53:14
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/profile-first-boot-cleared-efd16--and-creates-no-Robin-ghost-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/profile-first-boot-cleared-efd16--and-creates-no-Robin-ghost-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/profile-first-boot-cleared-efd16--and-creates-no-Robin-ghost-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/profile-first-boot-cleared-efd16--and-creates-no-Robin-ghost-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:18357) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[2/6] [desktop-chrome] › e2e/profile-first-boot.spec.ts:72:1 › existing profile state boots straight to the menu
+[3/6] [desktop-chrome] › e2e/profile-first-boot.spec.ts:85:1 › pack the ledger downloads human-readable active profile data
+[4/6] [desktop-chrome] › e2e/profile-first-boot.spec.ts:106:1 › unpack a ledger previews, imports as a new profile, and suffixes collisions
+[5/6] [desktop-chrome] › e2e/profile-first-boot.spec.ts:138:1 › malformed ledgers are rejected warmly and the picker fits at 390px
+[6/6] [desktop-chrome] › e2e/profile-first-boot.spec.ts:264:1 › blocked profile storage boots without offering an unusable first profile
+  1 failed
+    [desktop-chrome] › e2e/profile-first-boot.spec.ts:41:1 › cleared-storage boot asks who is prospecting and creates no Robin ghost 
+  5 passed (37.9s)

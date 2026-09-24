@@ -1,0 +1,89 @@
+(node:58431) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 14 tests using 1 worker
+
+
+(node:58490) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[1/14] [desktop-chrome] › e2e/044-start-screen.spec.ts:45:1 › plain boot shows the Storybook start menu without Continue
+[2/14] [desktop-chrome] › e2e/044-start-screen.spec.ts:70:1 › debug boot skips the start menu and enters the game
+[3/14] [desktop-chrome] › e2e/044-start-screen.spec.ts:80:1 › Enter Town opens the town scene and disposes the menu
+[4/14] [desktop-chrome] › e2e/044-start-screen.spec.ts:92:1 › Profile opens the existing selector with arrow and Enter
+[5/14] [desktop-chrome] › e2e/044-start-screen.spec.ts:104:1 › the profiles page offers a way back to the menu
+[6/14] [desktop-chrome] › e2e/044-start-screen.spec.ts:119:1 › Settings volume writes through
+[7/14] [desktop-chrome] › e2e/044-start-screen.spec.ts:135:1 › Continue appears only for an existing suspend slot and enters the run path
+  1) [desktop-chrome] › e2e/044-start-screen.spec.ts:135:1 › Continue appears only for an existing suspend slot and enters the run path 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: page.waitForFunction: Test timeout of 30000ms exceeded.
+
+      153 |   await page.getByTestId('start-menu-continue').click();
+      154 |   await expect(page.getByTestId('start-menu')).toHaveCount(0);
+    > 155 |   await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+          |              ^
+      156 |   assertNoErrors(errors);
+      157 | });
+      158 |
+        at /Users/robin/Claude/Projects/wt-ux1/e2e/044-start-screen.spec.ts:155:14
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/044-start-screen-Continue--0cb8b-lot-and-enters-the-run-path-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/044-start-screen-Continue--0cb8b-lot-and-enters-the-run-path-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/044-start-screen-Continue--0cb8b-lot-and-enters-the-run-path-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/044-start-screen-Continue--0cb8b-lot-and-enters-the-run-path-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:67466) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[8/14] [mobile-chrome] › e2e/044-start-screen.spec.ts:45:1 › plain boot shows the Storybook start menu without Continue
+[9/14] [mobile-chrome] › e2e/044-start-screen.spec.ts:70:1 › debug boot skips the start menu and enters the game
+[10/14] [mobile-chrome] › e2e/044-start-screen.spec.ts:80:1 › Enter Town opens the town scene and disposes the menu
+[11/14] [mobile-chrome] › e2e/044-start-screen.spec.ts:92:1 › Profile opens the existing selector with arrow and Enter
+[12/14] [mobile-chrome] › e2e/044-start-screen.spec.ts:104:1 › the profiles page offers a way back to the menu
+[13/14] [mobile-chrome] › e2e/044-start-screen.spec.ts:119:1 › Settings volume writes through
+[14/14] [mobile-chrome] › e2e/044-start-screen.spec.ts:135:1 › Continue appears only for an existing suspend slot and enters the run path
+  2) [mobile-chrome] › e2e/044-start-screen.spec.ts:135:1 › Continue appears only for an existing suspend slot and enters the run path 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: page.waitForFunction: Test timeout of 30000ms exceeded.
+
+      153 |   await page.getByTestId('start-menu-continue').click();
+      154 |   await expect(page.getByTestId('start-menu')).toHaveCount(0);
+    > 155 |   await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+          |              ^
+      156 |   assertNoErrors(errors);
+      157 | });
+      158 |
+        at /Users/robin/Claude/Projects/wt-ux1/e2e/044-start-screen.spec.ts:155:14
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/044-start-screen-Continue--0cb8b-lot-and-enters-the-run-path-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/044-start-screen-Continue--0cb8b-lot-and-enters-the-run-path-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/044-start-screen-Continue--0cb8b-lot-and-enters-the-run-path-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/044-start-screen-Continue--0cb8b-lot-and-enters-the-run-path-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  2 failed
+    [desktop-chrome] › e2e/044-start-screen.spec.ts:135:1 › Continue appears only for an existing suspend slot and enters the run path 
+    [mobile-chrome] › e2e/044-start-screen.spec.ts:135:1 › Continue appears only for an existing suspend slot and enters the run path 
+  12 passed (1.4m)

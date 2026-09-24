@@ -1,3 +1,8 @@
+// FIRST, before every other import: arming the boot guard is the point of putting it here. Module
+// bodies evaluate in import order, so `./core/BootGuard` is listening for `error`,
+// `unhandledrejection` and `vite:preloadError` before any line below it can fail (UX-2, the outside
+// review of 2026-09-24: a failed chunk used to leave a BLANK PAGE).
+import { guardedImport, installBootGuard, markBootReached, showBootFailureCard, webgl2Available } from './core/BootGuard';
 import './styles.css';
 import './ui/theme.css';
 import { createAdvanceStream } from './assets/AdvanceStream';
@@ -15,6 +20,7 @@ import {
   DEFAULT_CONTRACT_ID,
   loadContract,
   readCharterLaunch,
+  stagedPlayerContractLaunch,
   stageReplayContract,
   stagePlayerContractLaunch,
   type ContractRunBoot,
@@ -35,6 +41,8 @@ type GameBoot = import('./game/Game').GameBoot;
 type RunTape = import('./game/RunTape').RunTape;
 type StartMenu = import('./ui/menu/StartMenu').StartMenu;
 type TownScene = import('./town/TownScene').TownScene;
+
+installBootGuard();
 
 const canvas = document.querySelector<HTMLCanvasElement>('#game-canvas');
 
@@ -57,33 +65,33 @@ if (__GR_RELEASE_E1__) {
 
 const initialSearch = new URLSearchParams(window.location.search);
 if (!__GR_RELEASE_E1__ && initialSearch.has('debug') && initialSearch.has('simitem')) {
-  void import('./crafting/StatSimHarness').then(({ installStatSimHarnessFromSearch }) => installStatSimHarnessFromSearch());
+  void guardedImport('crafting/StatSimHarness', () => import('./crafting/StatSimHarness')).then(({ installStatSimHarnessFromSearch }) => installStatSimHarnessFromSearch());
 }
 
 if (!__GR_RELEASE_E1__ && initialSearch.has('debug') && initialSearch.has('determinism')) {
-  void import('./diagnostics/DeterminismHarness').then(({ installDeterminismHarnessFromSearch }) => installDeterminismHarnessFromSearch());
+  void guardedImport('diagnostics/DeterminismHarness', () => import('./diagnostics/DeterminismHarness')).then(({ installDeterminismHarnessFromSearch }) => installDeterminismHarnessFromSearch());
 }
 
 if (!__GR_RELEASE_E1__ && initialSearch.has('debug') && initialSearch.has('mpbalance')) {
-  void import('./mp/MultiplayerBalanceHarness').then(({ installMultiplayerBalanceHarnessFromSearch }) =>
+  void guardedImport('mp/MultiplayerBalanceHarness', () => import('./mp/MultiplayerBalanceHarness')).then(({ installMultiplayerBalanceHarnessFromSearch }) =>
     installMultiplayerBalanceHarnessFromSearch(),
   );
 }
 
 if (!__GR_RELEASE_E1__ && initialSearch.has('debug') && initialSearch.has('e4convoyweather')) {
-  void import('./diagnostics/E4ConvoyWeatherHarness').then(({ installE4ConvoyWeatherHarnessFromSearch }) =>
+  void guardedImport('diagnostics/E4ConvoyWeatherHarness', () => import('./diagnostics/E4ConvoyWeatherHarness')).then(({ installE4ConvoyWeatherHarnessFromSearch }) =>
     installE4ConvoyWeatherHarnessFromSearch(),
   );
 }
 
 if (!__GR_RELEASE_E1__ && initialSearch.has('debug') && initialSearch.has('e4orbit')) {
-  void import('./diagnostics/E4OrbitRoadHarness').then(({ installE4OrbitRoadHarnessFromSearch }) =>
+  void guardedImport('diagnostics/E4OrbitRoadHarness', () => import('./diagnostics/E4OrbitRoadHarness')).then(({ installE4OrbitRoadHarnessFromSearch }) =>
     installE4OrbitRoadHarnessFromSearch(),
   );
 }
 
 if (!__GR_RELEASE_E1__ && initialSearch.has('debug') && initialSearch.has('deepwater')) {
-  void import('./diagnostics/E5DeepwaterHarness').then(({ installE5DeepwaterHarnessFromSearch }) =>
+  void guardedImport('diagnostics/E5DeepwaterHarness', () => import('./diagnostics/E5DeepwaterHarness')).then(({ installE5DeepwaterHarnessFromSearch }) =>
     installE5DeepwaterHarnessFromSearch(),
   );
 }
@@ -103,7 +111,7 @@ if (!__GR_RELEASE_E1__ && initialSearch.get('bench') === 'fullbase') {
 
 const app = document.querySelector<HTMLElement>('#app') ?? document.body;
 if (!__GR_RELEASE_E1__ && initialSearch.has('debug') && initialSearch.has('playbook')) {
-  void import('./spikes/playbook/PlaybookLab').then(({ installPlaybookLab }) => installPlaybookLab(app));
+  void guardedImport('spikes/playbook/PlaybookLab', () => import('./spikes/playbook/PlaybookLab')).then(({ installPlaybookLab }) => installPlaybookLab(app));
 }
 accountSync.install();
 let game: Game | undefined;
@@ -150,33 +158,61 @@ function claimFirstBootForProfile(): boolean {
   }
 }
 
-afterFirstFrame(() => {
-  void import('./story').then(({ emitStorySignal, installStoryRuntime }) => {
+/**
+ * THE ONE WRITER of the `first-boot` signal (UX-7, outside review 2026-09-24). It installs the
+ * runtime FIRST and claims SECOND, in that order and never the other way: `emitStorySignal` with no
+ * listener subscribed drops the signal on the floor while the claim has already spent the datum, and
+ * the Tavernkeeper's opening card would be lost for the life of that profile.
+ *
+ * ONE call site, `afterFirstFrame` below, and the datum (not the caller) is the one-shot guard.
+ *
+ * On a FRESH store the boot-path claim cannot fire, because no profile exists yet to own the datum
+ * (see `claimFirstBootForProfile`), so the greeting arrives on the NEXT load - after the founding
+ * beat, which is out of story order and is UX-7's open half. Emitting at `onEnterTown` instead, where
+ * the naming flow lands, was tried and reverted: it reorders every beat behind it through
+ * StoryRuntime's FIFO queue. The measurement and the real fix are in the ⛔ note at that call site.
+ */
+function announceFirstBootIfUnclaimed(): void {
+  void guardedImport('story', () => import('./story')).then(({ emitStorySignal, installStoryRuntime }) => {
     installStoryRuntime(app);
     if (claimFirstBootForProfile()) emitStorySignal({ type: 'first-boot' });
   });
+}
+
+afterFirstFrame(() => {
+  // A scene has had two frames to appear: from here an error belongs to a running game, not to the
+  // boot, and the guard stops raising its card over a working page.
+  markBootReached();
+  announceFirstBootIfUnclaimed();
 });
 
 async function startGame(boot: GameBoot = {}): Promise<void> {
+  // Before the renderer, never after: `createRenderer` (core/Renderer.ts:28) constructs
+  // THREE.WebGLRenderer with no probe and no try/catch, so on a machine or browser refusing webgl2
+  // the boot died silently and the player got a blank page (UX-2).
+  if (!webgl2Available()) {
+    showBootFailureCard('webgl', 'webgl2 context refused before the run renderer');
+    return;
+  }
   if (__GR_RELEASE_E1__) reconcileActiveEpoch();
   if (!boot.replay) reverifyStagedContractLaunch();
   seedDebugEraFromSearch(gameCanvas);
   advanceStream.enter({ kind: 'run', contractId: activeContract().id });
   const currentSearch = new URLSearchParams(window.location.search);
-  const { Game } = await import('./game/Game');
+  const { Game } = await guardedImport('game/Game', () => import('./game/Game'));
   applyStoredDifficultyPreset();
   applyStoredPerformanceTier(activeContract().id);
   applyUpgradeBudgetsFromBalance();
   game = new Game(gameCanvas, () => assayBench?.focus(), runReturnCallback, { ...runBootFromSearch(currentSearch), ...boot });
   game.start();
   if (!__GR_RELEASE_E1__ && currentSearch.has('editor')) {
-    void import('./editor/DescriptorInspector').then(({ installDescriptorInspector }) => installDescriptorInspector(app));
+    void guardedImport('editor/DescriptorInspector', () => import('./editor/DescriptorInspector')).then(({ installDescriptorInspector }) => installDescriptorInspector(app));
   }
   releaseStartupAssetGateOnFirstGameFrame();
   installWaveTelegraphPrefetch();
   if (!boot.replay) {
     afterFirstFrame(() => {
-      void import('./crafting/AssayBench').then(({ install }) => {
+      void guardedImport('crafting/AssayBench', () => import('./crafting/AssayBench')).then(({ install }) => {
         if (!game) return;
         assayBench = install(app, {
           initiallyOpen: currentSearch.has('profile') || currentSearch.has('queueNow'),
@@ -199,7 +235,7 @@ function startWithProfiles(options: { showTitle?: boolean; skipTitle?: boolean; 
 function showStartMenu(): void {
   applyStoredPerformanceTier(null);
   startMenu?.dispose();
-  void import('./ui/menu/StartMenu').then(({ install }) => {
+  void guardedImport('ui/menu/StartMenu', () => import('./ui/menu/StartMenu')).then(({ install }) => {
     if (game || town || profiles) return;
     startMenu?.dispose();
     startMenu = install(app, {
@@ -212,6 +248,22 @@ function showStartMenu(): void {
       onEnterTown: () => {
         startMenu?.dispose();
         startMenu = undefined;
+        // ⛔ UX-7 / item 4 WAS TRIED HERE AND REVERTED. MEASURED, DO NOT RE-ADD WITHOUT THE QUEUE FIX.
+        //
+        // `StartMenu.createFirstProfile` calls this as its last statement, so on a fresh store it is
+        // the first moment a profile exists and the town has not mounted yet - the exact seam the
+        // greeting wants. Emitting `first-boot` here does play the Tavernkeeper in story order. It
+        // also REORDERS EVERY BEAT BEHIND IT, because `StoryRuntime` is a FIFO queue with one card on
+        // screen for 6 s (src/story/StoryRuntime.ts:10,105,137): the greeting holds the slot across
+        // the town mount, so `ledger-page:the_claim` - which the mount emits - queues AHEAD of
+        // `town-named`'s `founding-welcome`. Measured 2026-09-24: the card read
+        // `data-beat-id="ledger-page:the_claim"` where e2e/profile-first-boot.spec.ts:57 expects
+        // `founding-welcome`, 2 failed / 10 passed on both projects.
+        //
+        // Fixing the order needs `StoryRuntime`'s queue (a priority, or the `run-return-town`
+        // unshift treatment for `first-boot`), which is outside this task's firewall, and item 5
+        // requires profile-first-boot GREEN UNMODIFIED. So the greeting stays on the boot path and
+        // arrives on the next load. F-UX7-1 in artifacts/ux-entry-robustness-1/report.md.
         openTown();
       },
       onOpenLedger: () => openClaimLedger(),
@@ -360,37 +412,98 @@ function replaceRunRoute(scene: 'town' | 'menu'): void {
   );
 }
 
-// Visual pilot flags are menu-safe: they configure the town/run scenes but must
-// not hijack the boot into a contract launch (owner hit /?town3dPilot=all → The Claim).
-// townDusk/townNight join them (U7). townNight has existed in TownScene since the town
-// shipped and has never had a door: /?townNight fell through to startWithProfiles and booted
-// a CONTRACT RUN, so the only way to see the night town was to enter it and then rewrite
-// history. A visual flag nobody can reach is a visual that does not exist (Mistake #10).
-// townSky joins the town's look flags for the same reason townDusk/townNight did (F-BT-1): a
-// search key that is not menu-safe falls through to startWithProfiles() and launches a contract
-// run, so a sky variant nobody can reach by typing its URL is a variant that does not exist.
-const MENU_SAFE_PARAMS = new Set(['town3dPilot', 'run3dPilot', 'tier', 'townDusk', 'townNight', 'townSky']);
+// THE MENU DECISION — an ALLOWLIST OF RUN ROUTES, inverted here by UX-1 (outside review
+// 2026-09-24, observed live in Chromium).
+//
+// It used to be a denylist: show the menu only if EVERY query key is menu-safe, otherwise launch a
+// run. That made the DEFAULT for an unrecognised parameter "skip the menu and start playing", and
+// the internet is full of unrecognised parameters. A newsletter link carrying `?utm_source=`, a
+// Facebook `?fbclid=`, a Google `?gclid=`, a `?contract=` a player pasted to a friend: every one of
+// them fell through to `startWithProfiles()`, which on a fresh browser MINTED AND SAVED a profile
+// named after the owner (ProfileStorage.ts:144) and started a run. The player never saw the start
+// menu, never named their claim-holder, and the once-per-profile first-boot signal was spent.
+//
+// So the default is the menu now, exactly as `/` behaves, and a run launches only when the query
+// NAMES a route into one. Two groups, both closed:
+//
+//  1. RUN ROUTES — honoured by a release build. `contract` is the one conditional member and is
+//     handled below; `watch` has its own branch above.
+//  2. THE DEBUG HARNESS — every key `src/core/DebugParams.ts` honours, plus its two aliases
+//     (`bench=fullbase`, `editor`, DebugParams.ts:40) and the multiplayer/era harness doors. None of
+//     these mean anything in a release build (`readDebugParams` returns DEFAULT_PARAMS when
+//     `__GR_RELEASE_E1__`, DebugParams.ts:34), so the release build's only run routes are group 1.
+//
+// ⚠️ A NEW HARNESS KEY MUST BE ADDED HERE or a URL carrying only that key lands on the menu instead
+// of in a run. Measured when this landed: 482 e2e files, 759 `goto` calls, zero flipped verdicts.
+//
+// The menu-safe pilot flags are NOT on either list and keep their old behaviour deliberately: the
+// owner hit /?town3dPilot=all and got dropped into The Claim, townDusk/townNight/townSky were
+// unreachable variants for the same reason (F-BT-1, U7, Mistake #10). Under the inverted rule they
+// are no longer a special case at all - they are simply not run routes, like every other key.
+const RUN_ROUTE_LAUNCH_PARAMS = new Set([
+  // 1. Run routes.
+  'seed', 'difficulty', 'mode', 'press', 'replay', 'epoch', 'profiles',
+  // 2. The debug harness, compiled out of the release build.
+  'debug', 'bench', 'editor', 'timescale', 'nospawn', 'nowaves', 'nolevel', 'nokill', 'nopause',
+  'nosteal', 'nowreck', 'noping', 'stress', 'profile', 'nobeauty', 'nopoolgrade', 'performance',
+  'era', 'mp', 'mpRelay', 'mpCode', 'mpName', 'mpTown', 'mpParty', 'mpDesyncAt',
+]);
+
+// `?contract=` is the one key that cannot answer for itself. A board click, a reload-resume and a
+// Charter Press return all reach the run through it - and they all STAGE the launch in sessionStorage
+// first (`stagePlayerContractLaunch`, and `launchContract`/`continueSavedRun` below). A typed or
+// shared `?contract=` stages nothing, so it is a share link, not a launch: it goes to the menu. This
+// closes no door the release build keeps open, because `?contract=` without a staged launch never
+// opened the named contract anyway - it fell back to the Claim (specs/release-e1/README.md §4,
+// F-TOUR-1). `?debug` keeps the testing door: the factory boots contracts by URL all day.
+function contractParamNamesARun(search: URLSearchParams): boolean {
+  const contractId = search.get('contract');
+  if (contractId === null) return false;
+  if (!__GR_RELEASE_E1__ && search.has('debug')) return true;
+  if (stagedPlayerContractLaunch() !== null) return true;
+  // RELOAD-RESUME, and it needs its OWN durable proof. `continueSavedRun` stages the launch and then
+  // reloads, so the staged marker is the normal signal - but sessionStorage is exactly the store a
+  // reload can arrive without (a harness that clears it per navigation, a session restored into a
+  // fresh context), and losing a saved run to a dropped session key is not a trade worth making.
+  // Measured 2026-09-24: e2e/044-start-screen.spec.ts:135 clears sessionStorage in an init script
+  // that re-runs on the reload Continue triggers, and the resumed run landed on the menu.
+  // A suspend whose contract IS this contract lives in localStorage and is durable proof the player
+  // really is resuming this run. EXACT match only, so a shared link naming any other map still gets
+  // the menu and item 5's rule is untouched (specs/release-e1/README.md §4 blesses precisely this:
+  // "Reload-resume of a legitimately started run keeps working").
+  return readRunSuspend()?.contractId === contractId;
+}
+
+function searchNamesARun(search: URLSearchParams): boolean {
+  return [...search.keys()].some((key) => RUN_ROUTE_LAUNCH_PARAMS.has(key)) || contractParamNamesARun(search);
+}
+
 if (history.state?.goldRushScene === 'town') {
   openTown();
 } else if (history.state?.goldRushScene === 'menu') {
   showStartMenu();
 } else if (initialSearch.has('watch')) {
   void openWatchDeepLink(initialSearch);
-} else if ([...initialSearch.keys()].every((key) => MENU_SAFE_PARAMS.has(key))) {
-  showStartMenu();
-} else {
+} else if (searchNamesARun(initialSearch)) {
   startWithProfiles();
+} else {
+  showStartMenu();
 }
 
 if (!__GR_RELEASE_E1__ && initialSearch.get('bench') === 'fullbase') {
-  void import('./diagnostics/fullBaseBenchmark').then(({ installFullBaseBenchmark }) => installFullBaseBenchmark());
+  void guardedImport('diagnostics/fullBaseBenchmark', () => import('./diagnostics/fullBaseBenchmark')).then(({ installFullBaseBenchmark }) => installFullBaseBenchmark());
 }
 
 function openTown(options: { openBoard?: boolean; returnResult?: RunReturnResult; initialBoardContractId?: string } = {}): void {
+  // Same probe, same reason as `startGame`: the town builds a renderer too (UX-2).
+  if (!webgl2Available()) {
+    showBootFailureCard('webgl', 'webgl2 context refused before the town renderer');
+    return;
+  }
   applyStoredPerformanceTier(null);
   markStartupFrameReady();
   advanceStream.enter({ kind: 'town' });
-  void import('./town/TownScene').then(({ TownScene }) => {
+  void guardedImport('town/TownScene', () => import('./town/TownScene')).then(({ TownScene }) => {
     if (game || profiles) return;
     town?.dispose();
     town = new TownScene(gameCanvas, returnToStartMenu, {
@@ -403,13 +516,13 @@ function openTown(options: { openBoard?: boolean; returnResult?: RunReturnResult
 }
 
 function openRunTapeShelf(): void {
-  void import('./ui/LanternShow').then(({ openTapeShelf }) => openTapeShelf(localStorage, watchRunTape));
+  void guardedImport('ui/LanternShow', () => import('./ui/LanternShow')).then(({ openTapeShelf }) => openTapeShelf(localStorage, watchRunTape));
 }
 
 async function watchRunTape(tape: RunTape, epochId = activeEpochId(), closeToMenu = false, freshPage = false): Promise<void> {
   const initialOptions = new URLSearchParams(window.location.search);
   const tactical = initialOptions.get('reel') === 'tactical';
-  const { usesLanternWorker } = await import('./replay/LanternController');
+  const { usesLanternWorker } = await guardedImport('replay/LanternController', () => import('./replay/LanternController'));
   const independent = usesLanternWorker(tape);
   // Town/Game may already have evaluated Terrain for another contract. A fresh page is the
   // contract boundary, including local-only shelf reels which cannot be fetched from standings.
@@ -424,13 +537,13 @@ async function watchRunTape(tape: RunTape, epochId = activeEpochId(), closeToMen
   if (tactical) bootSearch.set('reel', 'tactical');
   if (initialOptions.has('tier')) bootSearch.set('tier', initialOptions.get('tier')!);
   history.replaceState({ goldRushScene: 'replay' }, '', `${window.location.pathname}?${bootSearch.toString()}${window.location.hash}`);
-  const { isolateReplayStorage } = await import('./ui/LanternShow');
+  const { isolateReplayStorage } = await guardedImport('ui/LanternShow', () => import('./ui/LanternShow'));
   restoreReplayStorage = isolateReplayStorage(localStorage, independent);
   try {
     const shareUrl = reelUrl(tape.id, tape.contract, epochId);
     if (independent) {
       advanceStream.pause();
-      const { bootLantern } = await import('./replay/LanternBoot');
+      const { bootLantern } = await guardedImport('replay/LanternBoot', () => import('./replay/LanternBoot'));
       lanternBoot = await bootLantern(app, tape, { shareUrl, tactical, close: closeToMenu ? closeDeepLinkToMenu : closeRunTapeReplay });
     } else await startGame({ replay: { tape, shareUrl, onClose: closeToMenu ? closeDeepLinkToMenu : closeRunTapeReplay } });
     history.replaceState({ goldRushScene: 'replay' }, '', shareUrl);
@@ -466,7 +579,7 @@ async function openWatchDeepLink(search: URLSearchParams): Promise<void> {
       // The Lantern Show gives the same quiet refusal as the county board.
     }
   }
-  const { LANTERN_REEL_UNAVAILABLE, LANTERN_VERSION_REFUSAL, openLanternRefusal, readStandingsReel } = await import('./ui/LanternShow');
+  const { LANTERN_REEL_UNAVAILABLE, LANTERN_VERSION_REFUSAL, openLanternRefusal, readStandingsReel } = await guardedImport('ui/LanternShow', () => import('./ui/LanternShow'));
   const verdict = readStandingsReel(payload);
   if (verdict.ok) {
     await watchRunTape(verdict.tape, epochId!, !localShelf, true);
@@ -514,7 +627,7 @@ function openClaimLedger(entryId?: LedgerEntryId): void {
   // TAPE-03: WATCH THIS RUN on a standings row rides the SAME viewer as the tape shelf's WATCH.
   // Only this out-of-game path hands it in — Game.ts's in-run ledger deliberately does not, so a
   // reel can never tear down a live run from behind the modal.
-  void import('./encyclopedia/reader').then(({ openClaimLedger }) => openClaimLedger({ entryId, onWatchTape: watchRunTape }));
+  void guardedImport('encyclopedia/reader', () => import('./encyclopedia/reader')).then(({ openClaimLedger }) => openClaimLedger({ entryId, onWatchTape: watchRunTape }));
 }
 
 function afterFirstFrame(task: () => void): void {
@@ -555,7 +668,7 @@ function releaseStartupAssetGateOnFirstGameFrame(): void {
 
 function prefetchNonCriticalStartupAssets(): void {
   void prefetchNonCriticalGeneratedTextures();
-  void import('./assets/SpriteAnimator').then(({ prefetchNonCriticalSpriteRuntimes }) => prefetchNonCriticalSpriteRuntimes());
+  void guardedImport('assets/SpriteAnimator', () => import('./assets/SpriteAnimator')).then(({ prefetchNonCriticalSpriteRuntimes }) => prefetchNonCriticalSpriteRuntimes());
 }
 
 if (import.meta.hot) {

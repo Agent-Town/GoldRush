@@ -1,0 +1,109 @@
+(node:88423) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 8 tests using 1 worker
+
+
+(node:88487) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[1/8] [desktop-chrome] › e2e/m3-06-demo-profiles.spec.ts:14:1 › two title profiles isolate meta, suspend slots, and Best Claims scores
+[2/8] [desktop-chrome] › e2e/m3-06-demo-profiles.spec.ts:49:1 › legacy single-profile scores migrate into Robin with difficulty and hints defaults
+  1) [desktop-chrome] › e2e/m3-06-demo-profiles.spec.ts:49:1 › legacy single-profile scores migrate into Robin with difficulty and hints defaults 
+
+    Error: expect(received).toMatchObject(expected)
+
+    - Expected  - 1
+    + Received  + 3
+
+      Object {
+        "difficultyPreset": "trail",
+    -   "hintsSeen": Array [],
+    +   "hintsSeen": Array [
+    +     "story:first-boot",
+    +   ],
+        "name": "Robin",
+      }
+
+      57 |   const state = await readJson<ProfileState>(page, PROFILE_KEY);
+      58 |   expect(state.activeId).toBe('robin');
+    > 59 |   expect(state.profiles[0]).toMatchObject({ name: 'Robin', difficultyPreset: 'trail', hintsSeen: [] });
+         |                             ^
+      60 |   expect(await readJson<unknown[]>(page, profileDataKey('robin', SCOREBOARD_KEY))).toHaveLength(1);
+      61 |   expect(await page.evaluate(() => window.__GR_PROFILE__?.markHintSeen('first-run'))).toBe(true);
+      62 |   expect((await readJson<ProfileState>(page, PROFILE_KEY)).profiles[0]?.hintsSeen).toContain('first-run');
+        at /Users/robin/Claude/Projects/wt-ux1/e2e/m3-06-demo-profiles.spec.ts:59:29
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/m3-06-demo-profiles-legacy-4e638-fficulty-and-hints-defaults-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/m3-06-demo-profiles-legacy-4e638-fficulty-and-hints-defaults-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/m3-06-demo-profiles-legacy-4e638-fficulty-and-hints-defaults-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/m3-06-demo-profiles-legacy-4e638-fficulty-and-hints-defaults-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:88695) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[3/8] [desktop-chrome] › e2e/m3-06-demo-profiles.spec.ts:75:1 › difficulty preset key follows the active profile
+[4/8] [desktop-chrome] › e2e/m3-06-demo-profiles.spec.ts:103:1 › running profile keeps its storage when another tab changes active profile
+
+(node:88952) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[5/8] [mobile-chrome] › e2e/m3-06-demo-profiles.spec.ts:14:1 › two title profiles isolate meta, suspend slots, and Best Claims scores
+[6/8] [mobile-chrome] › e2e/m3-06-demo-profiles.spec.ts:49:1 › legacy single-profile scores migrate into Robin with difficulty and hints defaults
+  2) [mobile-chrome] › e2e/m3-06-demo-profiles.spec.ts:49:1 › legacy single-profile scores migrate into Robin with difficulty and hints defaults 
+
+    Error: expect(received).toMatchObject(expected)
+
+    - Expected  - 1
+    + Received  + 3
+
+      Object {
+        "difficultyPreset": "trail",
+    -   "hintsSeen": Array [],
+    +   "hintsSeen": Array [
+    +     "story:first-boot",
+    +   ],
+        "name": "Robin",
+      }
+
+      57 |   const state = await readJson<ProfileState>(page, PROFILE_KEY);
+      58 |   expect(state.activeId).toBe('robin');
+    > 59 |   expect(state.profiles[0]).toMatchObject({ name: 'Robin', difficultyPreset: 'trail', hintsSeen: [] });
+         |                             ^
+      60 |   expect(await readJson<unknown[]>(page, profileDataKey('robin', SCOREBOARD_KEY))).toHaveLength(1);
+      61 |   expect(await page.evaluate(() => window.__GR_PROFILE__?.markHintSeen('first-run'))).toBe(true);
+      62 |   expect((await readJson<ProfileState>(page, PROFILE_KEY)).profiles[0]?.hintsSeen).toContain('first-run');
+        at /Users/robin/Claude/Projects/wt-ux1/e2e/m3-06-demo-profiles.spec.ts:59:29
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/m3-06-demo-profiles-legacy-4e638-fficulty-and-hints-defaults-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/m3-06-demo-profiles-legacy-4e638-fficulty-and-hints-defaults-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/m3-06-demo-profiles-legacy-4e638-fficulty-and-hints-defaults-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/m3-06-demo-profiles-legacy-4e638-fficulty-and-hints-defaults-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:89122) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[7/8] [mobile-chrome] › e2e/m3-06-demo-profiles.spec.ts:75:1 › difficulty preset key follows the active profile
+[8/8] [mobile-chrome] › e2e/m3-06-demo-profiles.spec.ts:103:1 › running profile keeps its storage when another tab changes active profile
+  2 failed
+    [desktop-chrome] › e2e/m3-06-demo-profiles.spec.ts:49:1 › legacy single-profile scores migrate into Robin with difficulty and hints defaults 
+    [mobile-chrome] › e2e/m3-06-demo-profiles.spec.ts:49:1 › legacy single-profile scores migrate into Robin with difficulty and hints defaults 
+  6 passed (32.4s)
