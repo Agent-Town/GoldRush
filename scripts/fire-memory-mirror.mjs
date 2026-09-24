@@ -12,7 +12,7 @@ const SRC = join(homedir(), '.claude-fires', 'projects', '-Users-robin-Claude-Pr
 const REMOTE = process.env.GR_ARCHIVE_REMOTE ?? execFileSync('git', ['remote', 'get-url', 'archive'], { cwd: ROOT, encoding: 'utf8' }).trim();
 const BRANCH = 'fire-memory';
 if (!existsSync(SRC)) { console.log(`fire-memory-mirror: nothing at ${SRC}`); process.exit(0); }
-const secretish = /(sk-[A-Za-z0-9]{8,}|AKIA[0-9A-Z]{12,}|-----BEGIN [A-Z ]*PRIVATE KEY|api[_-]?key\s*[:=]\s*['"][^'"]{12,}|token\s*[:=]\s*['"][^'"]{16,})/i;
+const secretish = /(\bsk-(?:ant|proj|live|test)?-?[A-Za-z0-9_-]{24,}|\bAKIA[0-9A-Z]{16}\b|-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----|\bghp_[A-Za-z0-9]{30,}|\bxox[abp]-[A-Za-z0-9-]{20,}|\beyJ[A-Za-z0-9_-]{40,}\.[A-Za-z0-9_-]{20,}\.[A-Za-z0-9_-]{20,})/;
 const walk = (dir) => readdirSync(dir, { withFileTypes: true }).flatMap((e) => e.isDirectory() ? walk(join(dir, e.name)) : [join(dir, e.name)]);
 import { readFileSync } from 'node:fs';
 const hits = walk(SRC).filter((f) => secretish.test(readFileSync(f, 'utf8')));
