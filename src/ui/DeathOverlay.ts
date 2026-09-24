@@ -1,6 +1,7 @@
 import type { ResearchNode } from '../meta/ResearchTree';
 import { COUNTY_STANDING_RULE } from '../../site/standing-rule.js';
 import { upgradeDefById } from '../game/Upgrades';
+import { UNNAMED_PROSPECTOR_NAME } from '../game/ProfileStorage';
 import {
   RESEARCH_ICON_REGISTRY,
   deriveResearchImpact,
@@ -409,7 +410,7 @@ export class DeathOverlay {
           }>
             <span class="death-overlay__score-summary">${waveSummary} · ${this.formatBase(score.baseValue)}</span>
             <strong class="death-overlay__score-stamp">${score.secured ? 'SECURED' : 'OVERRUN'}</strong>
-            <span class="death-overlay__score-detail">${this.escape(score.profileName ?? 'Robin')} · ${
+            <span class="death-overlay__score-detail">${this.escape(score.profileName ?? UNNAMED_PROSPECTOR_NAME)} · ${
               score.waves
             } waves · ${this.formatTime(score.timeAlive)} · ${score.kills} turned back · ${score.gold} gold held · spark ${
               Math.round(score.weaponSplit?.spark ?? 0)
