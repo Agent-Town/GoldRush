@@ -1,0 +1,74 @@
+engine hash merged (scratch store at 5793a96): dcc407bec54d01d4040d835f8140c21368c4cec8c445400d346cda59220b3d0b
+droplet mirror closure (early check, F-FID1-5 class: a store slice can add a corpus file the mirror does not ship): rc=0
+tsc/build/e1: 0 / 0 / 0
+first-town payload: 34340806 bytes
+halo: rc=0 halo re-extraction PASS: 315 cured, 0 held, 760 regenerated-and-cured, 2127 scanned; alpha and opaque RGB unchanged
+(reconstructed 03:02Z: the lines above the engine hash were lost at 03:00:47Z when the drain edited its own running prep script and bash re-read a fragment "> $G" at its consumed offset; the facts below come from the merge log, the chain and the store, F-SEF2-6)
+slice 1: lane 598943981 store 5793a96 maps: Night Shift, Twin Banks, the Claim-Jumper Baron, the Trestle, the Glow Mesa (the cooling rack), Relay Rush (the charting station and west dishes) 02:59Z
+store main -> 5793a96 (art(store): e7-relay-rush — declare entry landmarks), pushed; scratch store: detached at 5793a96, clean
+chain base 4f9e278a6 merging lane 598943981 (lane tip 598943981) 02:59Z
+merge log: "Automatic merge went well; stopped before committing as requested" (no conflicts)
+merged 26e4a5a9c
+single-line law: nothing to flatten (no flatten commit in the chain)
+law-pointer (pre): recorded by the later "law-pointer:" line (the pre-check line was lost with the truncation)
+null floors: rc=0 83 of 83 null floors match assets/contracts/null-floors.json (337.1s).
+law-pointer: rc=0 law-pointer-guard — do the law surfaces still point at what they claim?
+guards: ℹ pass 98 ℹ fail 0 
+e2e start 03:08Z: e2e/e1-night-shift.spec.ts e2e/e1-twin-banks.spec.ts e2e/e1-baron.spec.ts e2e/e2-trestle.spec.ts e2e/ss-07-e6-beats.spec.ts e2e/e6-boss-homemaker.spec.ts e2e/e7-relay-rush-front.spec.ts e2e/ss-08-e7-beats.spec.ts e2e/er01-e2-census.spec.ts e2e/agent-view.spec.ts e2e/e5-regatta-boat.spec.ts e2e/landmark-brightness.spec.ts e2e/landmark-collision.spec.ts e2e/task-025-bandits-dont-swim.spec.ts e2e/m2-01-build-menu.spec.ts e2e/release-build.spec.ts
+warm-up (F-F2-15): first boot rc=0, second rc=0, optimizer reloads so far 1
+e2e: rc=1   15 failed   4 skipped   131 passed (21.8m)  03:31Z
+2) [desktop-chrome] › e2e/e1-baron.spec.ts:411:1 › Baron manifest loads and taunts fire at waves 5, 12, and 18 
+3) [desktop-chrome] › e2e/e1-night-shift.spec.ts:271:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting 
+4) [desktop-chrome] › e2e/e1-twin-banks.spec.ts:64:1 › loads Twin Banks contract with two fords, two build zones, and one loss stake 
+5) [desktop-chrome] › e2e/e1-twin-banks.spec.ts:103:1 › builds sluices and stockpiles on both banks against one gold pool 
+6) [desktop-chrome] › e2e/e1-twin-banks.spec.ts:122:1 › routes enemies through both west and east fords 
+7) [desktop-chrome] › e2e/e1-twin-banks.spec.ts:192:1 › seeded Twin Banks diagnostics are stable ─
+8) [desktop-chrome] › e2e/e5-regatta-boat.spec.ts:122:1 › a human boards the Claim-Boat on the keys and sails her, in a plain boot 
+10) [mobile-chrome] › e2e/e1-baron.spec.ts:411:1 › Baron manifest loads and taunts fire at waves 5, 12, and 18 
+11) [mobile-chrome] › e2e/e1-night-shift.spec.ts:271:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting 
+12) [mobile-chrome] › e2e/e1-night-shift.spec.ts:372:1 › lantern post is Night Shift gated and relights a true-dark light ring 
+13) [mobile-chrome] › e2e/e1-twin-banks.spec.ts:64:1 › loads Twin Banks contract with two fords, two build zones, and one loss stake 
+14) [mobile-chrome] › e2e/e1-twin-banks.spec.ts:103:1 › builds sluices and stockpiles on both banks against one gold pool 
+15) [mobile-chrome] › e2e/e1-twin-banks.spec.ts:122:1 › routes enemies through both west and east fords 
+battery start 03:31Z
+battery: rc=1 ℹ tests 955 ℹ pass 945 ℹ fail 5 ℹ skipped 5  03:38Z
+✖ Twin Banks consumes its declared crossings and build zones before securing at wave 20 (6660.585ms)
+✖ all 152 scripts/*.test.mjs fixture owners remove their temp directories (187345.868417ms)
+✖ failing tests:
+✖ rotation registry stays outside the engine identity corpus (682.610416ms)
+✖ the landed registry names the live engine and stays outside its hash corpus (225.994958ms)
+✖ the live board has no LIVE offender (269.24725ms)
+dirt after battery: 0
+SEF2-PREP-DONE
+node:internal/modules/package_json_reader:301
+  throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+        ^
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'vite' imported from /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/remint-e1-manifests.mjs
+    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:301:9)
+    at packageResolve (node:internal/modules/esm/resolve:784:25)
+    at moduleResolve (node:internal/modules/esm/resolve:873:18)
+    at defaultResolve (node:internal/modules/esm/resolve:1006:11)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:704:20)
+    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:724:38)
+    at ModuleLoader.resolveSync (node:internal/modules/esm/loader:762:56)
+    at #resolve (node:internal/modules/esm/loader:686:17)
+    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:606:35)
+    at ModuleJob.syncLink (node:internal/modules/esm/module_job:164:33) {
+  code: 'ERR_MODULE_NOT_FOUND'
+}
+
+Node.js v26.4.0
+(node:83499) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+E1 manifest fixture: already byte-stable, nothing re-minted
+cure F-SEF2-1 committed 86694fc6a
+gr-sim expectation patched
+cure F-SEF2-8: gr-sim Twin Banks test alone on the cured tree: rc=0 ℹ pass 1 ℹ fail 0 
+cure F-SEF2-8 committed 9f223a347
+cure F-SEF2-1: agent-view re-run alone on the cured merged tree: rc=0   12 passed (33.2s)  03:46Z
+
+cure F-SEF2-1 (before the re-mint the e2e range held): "1) [desktop-chrome] › e2e/agent-view.spec.ts:439:1 › all six E1 mechanics manifests match their byte-stable fixture "; "9) [mobile-chrome] › e2e/agent-view.spec.ts:439:1 › all six E1 mechanics manifests match their byte-stable fixture "known-red overrides: e2e e2e/e1-baron\.spec\.ts:411:1|e2e/e1-night-shift\.spec\.ts:271:1|e2e/e1-night-shift\.spec\.ts:372:1|e2e/e1-night-shift\.spec\.ts:478:1|e2e/e1-twin-banks\.spec\.ts:103:1|e2e/e1-twin-banks\.spec\.ts:122:1|e2e/e1-twin-banks\.spec\.ts:64:1|e2e/e5-regatta-boat\.spec\.ts:122:1|e2e/e1-twin-banks\.spec\.ts:192:1 battery Twin Banks consumes its declared crossings and build zones before securing at wave 20|the live board has no LIVE offender
+hash at pin time: dcc407bec54d01d4040d835f8140c21368c4cec8c445400d346cda59220b3d0b
+pin #56
+era (chain, scratch store): ℹ pass 9 ℹ fail 0 
