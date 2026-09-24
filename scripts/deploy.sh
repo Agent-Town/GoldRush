@@ -106,6 +106,40 @@ note "building…"
 # builds go to PREVIEW branch deployments only (wrangler pages deploy --branch=...), never here.
 # Override GR_RELEASE explicitly only on the owner's word.
 if ! GR_RELEASE="${GR_RELEASE:-e1}" CF_PAGES_COMMIT_SHA="$BUILD_ID" npm run build >> "$LOG" 2>&1; then note "ABORT: build failed — never deploy a red build"; finish build_failed 3; fi
+# THE RELEASE DOOR NOW RUNS ON THE DEPLOY PATH (F-PERFC-1, on the owner's desk since 2026-09-07;
+# confirmed by the outside review of 2026-09-24 as BUILD-1). The line above runs `npm run build`,
+# which does NOT call scripts/assert-release-build.mjs — only `npm run build:release` does, and its
+# one non-test caller was the preview alias script. So for every deploy since the assertion was
+# written, the one instrument that proves "later-era content is ABSENT, not hidden"
+# (specs/release-e1/README.md, THE FRONTIER IS PHYSICAL) ran everywhere EXCEPT on the path that
+# publishes to players. F-CELL-5's own comment above says it in as many words: "The deploy never
+# caught it because scripts/deploy.sh runs `npm run build`, which does not call that assertion."
+# It aborts exactly like a red build, because a leaked later-era asset IS a red build.
+#
+# TWO CONDITIONS, BOTH LOAD-BEARING, NEITHER A HEDGE:
+#   1. `${GR_RELEASE:-e1}` = e1. The block above documents GR_RELEASE as an owner-word override for
+#      a full build; the assertion only describes an E1 bundle (it refuses outright unless
+#      GR_RELEASE=e1) and would abort a deliberate full deploy on the very assets it was told to
+#      ship. The gate follows the build's own variant, and the default is e1, so the normal
+#      production deploy always asserts.
+#   2. The script is on disk. scripts/test-deploy-contract.sh:7 copies THIS FILE ALONE into a
+#      throwaway tree with stub npm/wrangler, and scripts/deploy-budget.test.mjs copies it plus the
+#      payload script; neither copies the assertion, so an unguarded `node` call would turn all
+#      their cases into instrument failures. This is the same absent-script door the payload gate
+#      documents at :208-:213, for the same one caller. ⚠️ UNLIKE the payload gate, nothing yet
+#      asserts this file is present in the real repo: deploy-budget.test.mjs pins
+#      first-town-payload.mjs and its declaration that way, and the equivalent row for
+#      assert-release-build.mjs is OWED (recorded in the F-PERFC-1 rows of tasks/BACKLOG.md and in
+#      artifacts/release-gate-on-deploy-1/report.md; out of this task's firewall).
+RELEASE_ASSERT="$ROOT/scripts/assert-release-build.mjs"
+if [ "${GR_RELEASE:-e1}" = e1 ] && [ -f "$RELEASE_ASSERT" ]; then
+  if ! GR_RELEASE=e1 node "$RELEASE_ASSERT" >> "$LOG" 2>&1; then note "ABORT: release assertion failed — later-era content in the E1 bundle; see $LOG"; finish build_failed 3; fi
+  note "release assertion: E1-only bundle confirmed"
+elif [ ! -f "$RELEASE_ASSERT" ]; then
+  note "RELEASE NOT ASSERTED: $RELEASE_ASSERT is absent; this run cannot prove the bundle is E1-only"
+else
+  note "RELEASE NOT ASSERTED: GR_RELEASE=${GR_RELEASE:-e1} is not e1, so this build is not an E1 bundle"
+fi
 printf '{"build":"%s","builtAt":"%s"}\n' "$BUILD_ID" "$(date -u '+%Y-%m-%dT%H:%M:%SZ')" > dist/version.json
 
 BUDGET_OVER=0
