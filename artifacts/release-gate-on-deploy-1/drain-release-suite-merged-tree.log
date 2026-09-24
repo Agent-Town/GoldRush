@@ -1,0 +1,150 @@
+
+[WebServer] (!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+[WebServer]   - import "./src/crafting/CraftingQueueContract" without a file extension (vite.config.ts:20:8). Add the file extension
+[WebServer] Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+[WebServer] [plugin builtin:vite-reporter] 
+[WebServer] (!) Some chunks are larger than 900 kB after minification. Consider:
+[WebServer] - Using dynamic import() to code-split the application
+[WebServer] - Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+[WebServer] - Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+
+[WebServer] quantize: Skipping TEXCOORD_0; out of [0,1] range.
+
+[WebServer] [asset-diet] WARNING: unrecognised 1024-square tier, converted but NOT resized: twin-banks-landmarks-atlas-jwex6-r3-diet-c2bea0ac.png
+
+[WebServer] (!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+[WebServer]   - import "./src/crafting/CraftingQueueContract" without a file extension (vite.config.ts:20:8). Add the file extension
+[WebServer] Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+(node:1203) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 30 tests using 1 worker
+
+
+(node:4397) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[1/30] [desktop-chrome] › e2e/release-build.spec.ts:24:1 › first player reaches textured town actors and places a Dry Gulch spring sluice
+[desktop-chrome] › e2e/release-build.spec.ts:24:1 › first player reaches textured town actors and places a Dry Gulch spring sluice
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[2/30] [desktop-chrome] › e2e/release-build.spec.ts:103:3 › the-claim boots through the E1 release door
+[desktop-chrome] › e2e/release-build.spec.ts:103:3 › the-claim boots through the E1 release door
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[3/30] [desktop-chrome] › e2e/release-build.spec.ts:103:3 › e1-drill-yard boots through the E1 release door
+[desktop-chrome] › e2e/release-build.spec.ts:103:3 › e1-drill-yard boots through the E1 release door
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[4/30] [desktop-chrome] › e2e/release-build.spec.ts:103:3 › e1-dry-gulch boots through the E1 release door
+[desktop-chrome] › e2e/release-build.spec.ts:103:3 › e1-dry-gulch boots through the E1 release door
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[5/30] [desktop-chrome] › e2e/release-build.spec.ts:103:3 › e1-night-shift boots through the E1 release door
+[desktop-chrome] › e2e/release-build.spec.ts:103:3 › e1-night-shift boots through the E1 release door
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[6/30] [desktop-chrome] › e2e/release-build.spec.ts:103:3 › e1-twin-banks boots through the E1 release door
+[desktop-chrome] › e2e/release-build.spec.ts:103:3 › e1-twin-banks boots through the E1 release door
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[7/30] [desktop-chrome] › e2e/release-build.spec.ts:103:3 › e1-baron boots through the E1 release door
+[desktop-chrome] › e2e/release-build.spec.ts:103:3 › e1-baron boots through the E1 release door
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[8/30] [desktop-chrome] › e2e/release-build.spec.ts:113:1 › the schoolhouse ledger opens clean on a progressed frontier save
+[desktop-chrome] › e2e/release-build.spec.ts:113:1 › the schoolhouse ledger opens clean on a progressed frontier save
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[9/30] [desktop-chrome] › e2e/release-build.spec.ts:131:1 › the in-run Stamp Mill site explains the release horizon without funding controls
+[desktop-chrome] › e2e/release-build.spec.ts:131:1 › the in-run Stamp Mill site explains the release horizon without funding controls
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[10/30] [desktop-chrome] › e2e/release-build.spec.ts:156:1 › debug and era query seams are inert
+[desktop-chrome] › e2e/release-build.spec.ts:156:1 › debug and era query seams are inert
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[11/30] [desktop-chrome] › e2e/release-build.spec.ts:179:1 › an imported later ledger heals to the frontier and plays
+[desktop-chrome] › e2e/release-build.spec.ts:179:1 › an imported later ledger heals to the frontier and plays
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[12/30] [desktop-chrome] › e2e/release-build.spec.ts:214:1 › later contract URLs and modes decline to the Claim
+[desktop-chrome] › e2e/release-build.spec.ts:214:1 › later contract URLs and modes decline to the Claim
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[13/30] [desktop-chrome] › e2e/release-build.spec.ts:224:1 › a forged locked launch declines to the Claim
+[desktop-chrome] › e2e/release-build.spec.ts:224:1 › a forged locked launch declines to the Claim
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[14/30] [desktop-chrome] › e2e/release-build.spec.ts:233:1 › a legitimate suspend resumes its unlocked contract
+[desktop-chrome] › e2e/release-build.spec.ts:233:1 › a legitimate suspend resumes its unlocked contract
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[15/30] [desktop-chrome] › e2e/release-build.spec.ts:244:1 › dist has no later manifest ids or plate/GLB assets
+
+[desktop-chrome] › e2e/release-build.spec.ts:244:1 › dist has no later manifest ids or plate/GLB assets
+
+
+(node:6817) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[16/30] [mobile-chrome] › e2e/release-build.spec.ts:24:1 › first player reaches textured town actors and places a Dry Gulch spring sluice
+[mobile-chrome] › e2e/release-build.spec.ts:24:1 › first player reaches textured town actors and places a Dry Gulch spring sluice
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[17/30] [mobile-chrome] › e2e/release-build.spec.ts:103:3 › the-claim boots through the E1 release door
+[mobile-chrome] › e2e/release-build.spec.ts:103:3 › the-claim boots through the E1 release door
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[18/30] [mobile-chrome] › e2e/release-build.spec.ts:103:3 › e1-drill-yard boots through the E1 release door
+[mobile-chrome] › e2e/release-build.spec.ts:103:3 › e1-drill-yard boots through the E1 release door
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[19/30] [mobile-chrome] › e2e/release-build.spec.ts:103:3 › e1-dry-gulch boots through the E1 release door
+[mobile-chrome] › e2e/release-build.spec.ts:103:3 › e1-dry-gulch boots through the E1 release door
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[20/30] [mobile-chrome] › e2e/release-build.spec.ts:103:3 › e1-night-shift boots through the E1 release door
+[mobile-chrome] › e2e/release-build.spec.ts:103:3 › e1-night-shift boots through the E1 release door
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[21/30] [mobile-chrome] › e2e/release-build.spec.ts:103:3 › e1-twin-banks boots through the E1 release door
+[mobile-chrome] › e2e/release-build.spec.ts:103:3 › e1-twin-banks boots through the E1 release door
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[22/30] [mobile-chrome] › e2e/release-build.spec.ts:103:3 › e1-baron boots through the E1 release door
+[mobile-chrome] › e2e/release-build.spec.ts:103:3 › e1-baron boots through the E1 release door
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[23/30] [mobile-chrome] › e2e/release-build.spec.ts:113:1 › the schoolhouse ledger opens clean on a progressed frontier save
+[mobile-chrome] › e2e/release-build.spec.ts:113:1 › the schoolhouse ledger opens clean on a progressed frontier save
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[24/30] [mobile-chrome] › e2e/release-build.spec.ts:131:1 › the in-run Stamp Mill site explains the release horizon without funding controls
+[mobile-chrome] › e2e/release-build.spec.ts:131:1 › the in-run Stamp Mill site explains the release horizon without funding controls
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[25/30] [mobile-chrome] › e2e/release-build.spec.ts:156:1 › debug and era query seams are inert
+[mobile-chrome] › e2e/release-build.spec.ts:156:1 › debug and era query seams are inert
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[26/30] [mobile-chrome] › e2e/release-build.spec.ts:179:1 › an imported later ledger heals to the frontier and plays
+[mobile-chrome] › e2e/release-build.spec.ts:179:1 › an imported later ledger heals to the frontier and plays
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[27/30] [mobile-chrome] › e2e/release-build.spec.ts:214:1 › later contract URLs and modes decline to the Claim
+[mobile-chrome] › e2e/release-build.spec.ts:214:1 › later contract URLs and modes decline to the Claim
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[28/30] [mobile-chrome] › e2e/release-build.spec.ts:224:1 › a forged locked launch declines to the Claim
+[mobile-chrome] › e2e/release-build.spec.ts:224:1 › a forged locked launch declines to the Claim
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[29/30] [mobile-chrome] › e2e/release-build.spec.ts:233:1 › a legitimate suspend resumes its unlocked contract
+[mobile-chrome] › e2e/release-build.spec.ts:233:1 › a legitimate suspend resumes its unlocked contract
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[30/30] [mobile-chrome] › e2e/release-build.spec.ts:244:1 › dist has no later manifest ids or plate/GLB assets
+
+[mobile-chrome] › e2e/release-build.spec.ts:244:1 › dist has no later manifest ids or plate/GLB assets
+
+  30 passed (2.2m)
