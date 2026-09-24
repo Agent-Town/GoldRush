@@ -6219,13 +6219,14 @@
             {
               "id": "ledger-shape-1",
               "title": "Ruling 13a: STATUS rotates archived line-1s into archive/status/<YYYY-MM>.md, BACKLOG splits closed rows into tasks/backlog/<key>.md, the readers taught the shape, every byte kept",
-              "status": "blocked",
-              "blockClass": "gate-side",
-              "blockedReason": "run by the attended session as an Opus implementer in a scratch worktree (/Users/robin/Claude/Projects/wt-ls1, branch chore/ledger-shape-1) under the drain lock; the branch ships tools, tests and a dry-run report; the attended drain executes the move on fresh main with the fires held; lifted by the attended session when it launches the run",
+              "status": "queued",
               "taskFile": "ledger-shape-1.md",
               "lane": "scratch worktree beside the primary, Opus implementer on the Anthropic subscription",
               "authoredAt": "2026-09-24",
-              "authoredBy": "attended (Fable) from owner rulings 13a/14a of 2026-09-24 and docs/ledger-shape-reader-map-2026-09-24.md"
+              "authoredBy": "attended (Fable) from owner rulings 13a/14a of 2026-09-24 and docs/ledger-shape-reader-map-2026-09-24.md",
+              "liftedFrom": "gate-side: run by the attended session as an Opus implementer in a scratch worktree (/Users/robin/Claude/Projects/wt-ls1, branch chore/ledger-shape-1) under the drain lock; the branch ships tools, tests and a dry-run report; the attended drain executes the move on fresh main with the fires held; lifted by the attended session when it launches the run",
+              "queuedAt": "2026-09-25",
+              "runner": "attended-spawned Opus implementer, scratch worktree /Users/robin/Claude/Projects/wt-ls1, branch chore/ledger-shape-1, tools and dry-run only; the attended drain executes the move on fresh main"
             },
             {
               "id": "evidence-offload-1",
