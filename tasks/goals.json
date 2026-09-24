@@ -6159,13 +6159,14 @@
             {
               "id": "sec-headers-and-data-hygiene-1",
               "title": "SEC-8/SEC-5/SEC-7: security headers with a report-only CSP, the ledger mirror and bug reports out of the repo by rule, bug reports expire, a notice at the sign-in form",
-              "status": "blocked",
-              "blockClass": "gate-side",
-              "blockedReason": "run by the attended session as an Opus implementer in a scratch worktree, one at a time under the drain lock, after the phone-HUD-2 landing; not for a Codex lane; lifted by the attended session when it launches the run",
+              "status": "queued",
               "taskFile": "sec-headers-and-data-hygiene-1.md",
               "lane": "scratch worktree beside the primary, Opus implementer on the Anthropic subscription",
               "authoredAt": "2026-09-24",
-              "authoredBy": "attended (Fable) from the outside review of 2026-09-24 and its three verification passes"
+              "authoredBy": "attended (Fable) from the outside review of 2026-09-24 and its three verification passes",
+              "liftedFrom": "gate-side: run by the attended session as an Opus implementer in a scratch worktree, one at a time under the drain lock, after the phone-HUD-2 landing; not for a Codex lane; lifted by the attended session when it launches the run",
+              "queuedAt": "2026-09-24",
+              "runner": "attended-spawned Opus implementer, scratch worktree /Users/robin/Claude/Projects/wt-sec2, branch fix/sec-headers-and-data-hygiene-1, port 5314, serialized under the attended drain lock"
             },
             {
               "id": "harvest-seed-parity-1",
