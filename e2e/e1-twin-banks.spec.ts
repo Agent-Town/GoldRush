@@ -107,8 +107,24 @@ test('builds sluices and stockpiles on both banks against one gold pool', async 
 
   await placeBuildableAt(page, 'sluice', -16, 7);
   await placeBuildableAt(page, 'sluice', 16, -7);
-  await placeBuildableAt(page, 'stockpile', -16, 10);
-  await placeBuildableAt(page, 'stockpile', 16, -10);
+  // RE-PINNED 2026-09-24 (F-SEF2-5, task e1-spec-truth-1). WAS (-16, 10) and (16, -10), and both have
+  // been UNBUILDABLE since `5e527a28b` (2026-07-19, the landmark-collision landing the owner ordered
+  // as F-N4, "walk-through landmarks: solidity by data") gave the `twin-banks` mounts real footprints.
+  // (-16, 10) sits inside `north_bank_winch` at (-16, 10.7), 3.096 by 1.728 m (z 9.836..11.564); (16,
+  // -10) sits inside `south_bank_winch` at (16, -10.7), 3.096 by 1.767 m (z -11.584..-9.817). Both are
+  // padded by `Balance.hero.radius + 0.08`, so `Terrain.sample` returns walkable: false and
+  // `build.ghostValid` never turns true. Measured on both projects (artifacts/e1-spec-truth-1/
+  // probe.json): walkable false at both old targets, true and unblocked at both new ones.
+  //
+  // WHY -15 AND NOT -13 ON THE SOUTH BANK: `placeBuildableAt` stands the hero 2 m NORTH of its target
+  // and the keyboard-fallback ghost is hero.z - 2 (BuildSystem.updateGhostPosition), so the hero's
+  // stand point has to be clear too. North of the river that offset walks AWAY from the winch; south
+  // of it the offset walks INTO it. Standing at (16, -11) the hero is inside the south winch's padded
+  // footprint, collision pushes it to z -12.2, and the ghost lands at (16, -14) while the line says
+  // -13. At (16, -15) the hero stands clear at (16, -13) and the ghost lands exactly on the target,
+  // identically on desktop and mobile.
+  await placeBuildableAt(page, 'stockpile', -16, 13);
+  await placeBuildableAt(page, 'stockpile', 16, -15);
 
   const build = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.build);
   expect(build.sluices).toBe(2);
@@ -124,7 +140,17 @@ test('routes enemies through both west and east fords', async ({ page }, testInf
   const errors = await openGame(page, '?debug&contract=e1-twin-banks&timescale=12&nowaves&nokill&nolevel&nopause&seed=e1-twin-route');
   await setBalance(page, 'enemy.speed', 3.8);
   await assertFordRoute(page, -16);
-  await assertFordRoute(page, 16);
+  // RE-PINNED 2026-09-24 (F-TB-2, task e1-spec-truth-1). The east arm used to spawn ON the ford's own
+  // x, at (16, 14), which is inside `north_bank_homestead` at (13.5, 14.2), 5.184 by 4.018 m rotated
+  // -0.1 rad (x 10.72..16.28, z 11.94..16.46). A body that starts inside a solid footprint probes only
+  // 0.4 and 0.6 m for an escape and the nearest walkable ground is 0.86 m east, so it never moves:
+  // measured 1,740 samples on desktop and 1,741 on mobile over the same 15 s window, zero ford
+  // samples, final position bit-identical to the spawn point. One metre east, at (17, 14), the same
+  // enemy is on open bank and crosses the east ford to the hero in 887 ms (desktop) / 901 ms (mobile)
+  // with 72 ford samples and 0 deep samples. The FORD WINDOW stays centred on the ford itself (x 16,
+  // +-3.2), so this measures the crossing and not the spawn. The west arm is untouched: it spawns
+  // clear of every mount and reaches the hero in 871 ms / 886 ms with 40 ford samples.
+  await assertFordRoute(page, 16, 17);
   await page.evaluate(() => window.__GR_TEST__?.spawnEnemyAt(-16, 14));
   await page.evaluate(() => window.__GR_TEST__?.spawnEnemyAt(16, 14));
   await page.waitForTimeout(450);
@@ -198,9 +224,14 @@ test('seeded Twin Banks diagnostics are stable', async ({ page }) => {
   expectClean(errors);
 });
 
-async function assertFordRoute(page: Page, fordX: number): Promise<void> {
+/**
+ * `fordX` is the ford whose crossing is being measured (the +-3.2 window below); `spawnX` is where the
+ * body starts. They were the same number until 2026-09-24, when the east arm's spawn had to move off
+ * the `north_bank_homestead` footprint (F-TB-2) without moving the window off the ford.
+ */
+async function assertFordRoute(page: Page, fordX: number, spawnX: number = fordX): Promise<void> {
   await page.evaluate(() => window.__GR_TEST__?.clearEnemies());
-  await expect(page.evaluate((x) => window.__GR_TEST__?.spawnEnemyAt(x, 14), fordX)).resolves.toBe(true);
+  await expect(page.evaluate((x) => window.__GR_TEST__?.spawnEnemyAt(x, 14), spawnX)).resolves.toBe(true);
   await page.evaluate((x) => {
     const w = window as unknown as {
       __twinRoute?: { deepSamples: number; fordSamples: number; reached: boolean; samples: number };

@@ -1,0 +1,965 @@
+{
+  "base": "http://127.0.0.1:5309",
+  "at": "2026-09-24T04:28:05.720Z",
+  "mounts": [
+    {
+      "id": "north_bank_homestead",
+      "x": 13.5,
+      "z": 14.2,
+      "w": 5.184,
+      "d": 4.018,
+      "rotation": -0.1
+    },
+    {
+      "id": "south_bank_homestead",
+      "x": -13,
+      "z": -14,
+      "w": 5.184,
+      "d": 4.018,
+      "rotation": 0.14
+    },
+    {
+      "id": "north_bank_winch",
+      "x": -16,
+      "z": 10.7,
+      "w": 3.096,
+      "d": 1.728,
+      "rotation": 0
+    },
+    {
+      "id": "south_bank_winch",
+      "x": 16,
+      "z": -10.7,
+      "w": 3.096,
+      "d": 1.767,
+      "rotation": 0
+    }
+  ],
+  "heroPad": 0.58,
+  "desktop-chrome": {
+    "placements": [
+      {
+        "id": "sluice",
+        "target": {
+          "x": -16,
+          "z": 7
+        },
+        "heroStand": {
+          "x": -16,
+          "z": 9
+        },
+        "ghostValidMs": 77,
+        "ghostValid": true,
+        "ghost": {
+          "ghostPos": {
+            "x": -16,
+            "z": 7
+          },
+          "ghostValid": true,
+          "selected": "sluice"
+        },
+        "confirmed": true,
+        "heroAfter": {
+          "x": -16,
+          "y": 0.14845770111725434,
+          "z": 9
+        },
+        "targetBlockedBy": [],
+        "heroStandBlockedBy": []
+      },
+      {
+        "id": "sluice",
+        "target": {
+          "x": 16,
+          "z": -7
+        },
+        "heroStand": {
+          "x": 16,
+          "z": -5
+        },
+        "ghostValidMs": 174,
+        "ghostValid": true,
+        "ghost": {
+          "ghostPos": {
+            "x": 16,
+            "z": -7
+          },
+          "ghostValid": true,
+          "selected": "sluice"
+        },
+        "confirmed": true,
+        "heroAfter": {
+          "x": 16,
+          "y": 0.03045419318601489,
+          "z": -5
+        },
+        "targetBlockedBy": [],
+        "heroStandBlockedBy": []
+      },
+      {
+        "id": "stockpile",
+        "target": {
+          "x": -16,
+          "z": 10
+        },
+        "heroStand": {
+          "x": -16,
+          "z": 12
+        },
+        "ghostValidMs": null,
+        "ghostValid": false,
+        "ghost": {
+          "ghostPos": {
+            "x": -16,
+            "z": 10
+          },
+          "ghostValid": false,
+          "selected": "stockpile"
+        },
+        "confirmed": false,
+        "heroAfter": {
+          "x": -16,
+          "y": 0.4191159470379346,
+          "z": 12.15
+        },
+        "targetBlockedBy": [
+          "north_bank_winch"
+        ],
+        "heroStandBlockedBy": [
+          "north_bank_winch"
+        ]
+      },
+      {
+        "id": "stockpile",
+        "target": {
+          "x": -16,
+          "z": 13
+        },
+        "heroStand": {
+          "x": -16,
+          "z": 15
+        },
+        "ghostValidMs": 84,
+        "ghostValid": true,
+        "ghost": {
+          "ghostPos": {
+            "x": -16,
+            "z": 13
+          },
+          "ghostValid": true,
+          "selected": "stockpile"
+        },
+        "confirmed": true,
+        "heroAfter": {
+          "x": -16,
+          "y": 0.7237283563613892,
+          "z": 15
+        },
+        "targetBlockedBy": [],
+        "heroStandBlockedBy": []
+      },
+      {
+        "id": "stockpile",
+        "target": {
+          "x": 16,
+          "z": -10
+        },
+        "heroStand": {
+          "x": 16,
+          "z": -8
+        },
+        "ghostValidMs": null,
+        "ghostValid": false,
+        "ghost": {
+          "ghostPos": {
+            "x": 16,
+            "z": -10
+          },
+          "ghostValid": false,
+          "selected": "stockpile"
+        },
+        "confirmed": false,
+        "heroAfter": {
+          "x": 16,
+          "y": 0.4633718705177307,
+          "z": -8
+        },
+        "targetBlockedBy": [
+          "south_bank_winch"
+        ],
+        "heroStandBlockedBy": []
+      },
+      {
+        "id": "stockpile",
+        "target": {
+          "x": 16,
+          "z": -13
+        },
+        "heroStand": {
+          "x": 16,
+          "z": -11
+        },
+        "ghostValidMs": 84,
+        "ghostValid": true,
+        "ghost": {
+          "ghostPos": {
+            "x": 16,
+            "z": -14
+          },
+          "ghostValid": true,
+          "selected": "stockpile"
+        },
+        "confirmed": true,
+        "heroAfter": {
+          "x": 16,
+          "y": 0.5495051270723342,
+          "z": -12.200000000000001
+        },
+        "targetBlockedBy": [],
+        "heroStandBlockedBy": [
+          "south_bank_winch"
+        ]
+      },
+      {
+        "id": "stockpile",
+        "target": {
+          "x": 16,
+          "z": -15
+        },
+        "heroStand": {
+          "x": 16,
+          "z": -13
+        },
+        "ghostValidMs": null,
+        "ghostValid": false,
+        "ghost": {
+          "ghostPos": {
+            "x": 16,
+            "z": -15
+          },
+          "ghostValid": false,
+          "selected": "stockpile"
+        },
+        "confirmed": false,
+        "heroAfter": {
+          "x": 16,
+          "y": 0.5584252452850342,
+          "z": -13
+        },
+        "targetBlockedBy": [],
+        "heroStandBlockedBy": []
+      }
+    ],
+    "routes": [
+      {
+        "spawn": {
+          "x": 16,
+          "z": 14
+        },
+        "fordWindowCentre": 16,
+        "spawned": true,
+        "spawnBlockedBy": [
+          "north_bank_homestead"
+        ],
+        "deepSamples": 0,
+        "fordSamples": 0,
+        "reached": false,
+        "samples": 1740,
+        "startedAt": 1745.5,
+        "reachedAt": null,
+        "last": {
+          "x": 16,
+          "z": 14,
+          "zone": "bank"
+        }
+      },
+      {
+        "spawn": {
+          "x": 17,
+          "z": 14
+        },
+        "fordWindowCentre": 16,
+        "spawned": true,
+        "spawnBlockedBy": [],
+        "deepSamples": 0,
+        "fordSamples": 72,
+        "reached": true,
+        "samples": 214,
+        "startedAt": 16764.700000286102,
+        "reachedAt": 887.2999997138977,
+        "last": {
+          "x": 0.25641519820240477,
+          "z": -12.381228522214162,
+          "zone": "bank"
+        }
+      },
+      {
+        "spawn": {
+          "x": -16,
+          "z": 14
+        },
+        "fordWindowCentre": -16,
+        "spawned": true,
+        "spawnBlockedBy": [],
+        "deepSamples": 0,
+        "fordSamples": 40,
+        "reached": true,
+        "samples": 105,
+        "startedAt": 17779.900000095367,
+        "reachedAt": 871.4000000953674,
+        "last": {
+          "x": -0.6275943898041187,
+          "z": -12.47300599535778,
+          "zone": "bank"
+        }
+      }
+    ],
+    "samples": {
+      "-16,7": {
+        "zone": "bank",
+        "walkable": true,
+        "speedMul": 1,
+        "blockedBy": []
+      },
+      "-16,10": {
+        "zone": "bank",
+        "walkable": false,
+        "speedMul": 0,
+        "blockedBy": [
+          "north_bank_winch"
+        ]
+      },
+      "-16,12": {
+        "zone": "bank",
+        "walkable": false,
+        "speedMul": 0,
+        "blockedBy": [
+          "north_bank_winch"
+        ]
+      },
+      "-16,13": {
+        "zone": "bank",
+        "walkable": true,
+        "speedMul": 1,
+        "blockedBy": []
+      },
+      "-16,14": {
+        "zone": "bank",
+        "walkable": true,
+        "speedMul": 1,
+        "blockedBy": []
+      },
+      "-16,15": {
+        "zone": "bank",
+        "walkable": true,
+        "speedMul": 1,
+        "blockedBy": []
+      },
+      "16,-7": {
+        "zone": "bank",
+        "walkable": true,
+        "speedMul": 1,
+        "blockedBy": []
+      },
+      "16,-10": {
+        "zone": "bank",
+        "walkable": false,
+        "speedMul": 0,
+        "blockedBy": [
+          "south_bank_winch"
+        ]
+      },
+      "16,-12": {
+        "zone": "bank",
+        "walkable": false,
+        "speedMul": 0,
+        "blockedBy": [
+          "south_bank_winch"
+        ]
+      },
+      "16,-13": {
+        "zone": "bank",
+        "walkable": true,
+        "speedMul": 1,
+        "blockedBy": []
+      },
+      "16,-14": {
+        "zone": "bank",
+        "walkable": true,
+        "speedMul": 1,
+        "blockedBy": []
+      },
+      "16,-15": {
+        "zone": "bank",
+        "walkable": true,
+        "speedMul": 1,
+        "blockedBy": []
+      },
+      "13,-13": {
+        "zone": "bank",
+        "walkable": true,
+        "speedMul": 1,
+        "blockedBy": []
+      },
+      "12,-13": {
+        "zone": "bank",
+        "walkable": true,
+        "speedMul": 1,
+        "blockedBy": []
+      },
+      "16,-11": {
+        "zone": "bank",
+        "walkable": false,
+        "speedMul": 0,
+        "blockedBy": [
+          "south_bank_winch"
+        ]
+      },
+      "16,-8": {
+        "zone": "bank",
+        "walkable": true,
+        "speedMul": 1,
+        "blockedBy": []
+      }
+    },
+    "baron": {
+      "assetsBaron": "loaded",
+      "assetsBanner": "loaded",
+      "assetSpritesBaron": 0,
+      "assetSpritesBanner": 0,
+      "spriteAnimationKeys": [
+        "char.hero",
+        "char.bandit_base",
+        "char.bandit_thief",
+        "char.e2.rail_tough",
+        "char.e2.steam_wrecker",
+        "char.e2.coal_thief",
+        "char.prospector_agent"
+      ],
+      "baronAnimation": null,
+      "spriteStats": {
+        "activeAnimators": 1,
+        "textureSwapsPerFrame": 0,
+        "fadeOverlaysActive": 0
+      },
+      "spriteClipGroups": "claim town",
+      "assetKeysLoaded": [
+        "char.hero",
+        "char.bandit_base",
+        "char.bandit_thief",
+        "node.gold_seam",
+        "bld.sentry_beacon",
+        "bld.portrait.palisade",
+        "bld.portrait.sluice",
+        "bld.portrait.stockpile",
+        "bld.portrait.turret",
+        "terrain.bank",
+        "terrain.river",
+        "prop.baron_banner",
+        "char.baron",
+        "char.town.tavernkeeper",
+        "char.town.storekeeper",
+        "char.town.elder",
+        "char.town.preacher",
+        "char.town.schoolteacher",
+        "char.town.assay_clerk",
+        "char.town.youngster_a",
+        "char.town.youngster_b",
+        "char.town.newsie",
+        "char.e2.rail_tough",
+        "char.e2.steam_wrecker",
+        "char.e2.coal_thief"
+      ],
+      "portraitSrc": null
+    },
+    "consoleErrors": [],
+    "pageErrors": [],
+    "buildAfter": {
+      "sluices": 2,
+      "stockpiles": 2,
+      "sluicePositions": [
+        {
+          "x": -16,
+          "z": 7
+        },
+        {
+          "x": 16,
+          "z": -7
+        }
+      ],
+      "stockpilePositions": [
+        {
+          "x": -16,
+          "z": 13
+        },
+        {
+          "x": 16,
+          "z": -14
+        }
+      ]
+    }
+  },
+  "mobile-chrome": {
+    "placements": [
+      {
+        "id": "sluice",
+        "target": {
+          "x": -16,
+          "z": 7
+        },
+        "heroStand": {
+          "x": -16,
+          "z": 9
+        },
+        "ghostValidMs": 267,
+        "ghostValid": true,
+        "ghost": {
+          "ghostPos": {
+            "x": -16,
+            "z": 7
+          },
+          "ghostValid": true,
+          "selected": "sluice"
+        },
+        "confirmed": true,
+        "heroAfter": {
+          "x": -16,
+          "y": 0.3079709982872009,
+          "z": 9
+        },
+        "targetBlockedBy": [],
+        "heroStandBlockedBy": []
+      },
+      {
+        "id": "sluice",
+        "target": {
+          "x": 16,
+          "z": -7
+        },
+        "heroStand": {
+          "x": 16,
+          "z": -5
+        },
+        "ghostValidMs": 28,
+        "ghostValid": true,
+        "ghost": {
+          "ghostPos": {
+            "x": 16,
+            "z": -7
+          },
+          "ghostValid": true,
+          "selected": "sluice"
+        },
+        "confirmed": true,
+        "heroAfter": {
+          "x": 16,
+          "y": 0.03045419318601489,
+          "z": -5
+        },
+        "targetBlockedBy": [],
+        "heroStandBlockedBy": []
+      },
+      {
+        "id": "stockpile",
+        "target": {
+          "x": -16,
+          "z": 10
+        },
+        "heroStand": {
+          "x": -16,
+          "z": 12
+        },
+        "ghostValidMs": null,
+        "ghostValid": false,
+        "ghost": {
+          "ghostPos": {
+            "x": -16,
+            "z": 10
+          },
+          "ghostValid": false,
+          "selected": "stockpile"
+        },
+        "confirmed": false,
+        "heroAfter": {
+          "x": -16,
+          "y": 0.4191159470379346,
+          "z": 12.15
+        },
+        "targetBlockedBy": [
+          "north_bank_winch"
+        ],
+        "heroStandBlockedBy": [
+          "north_bank_winch"
+        ]
+      },
+      {
+        "id": "stockpile",
+        "target": {
+          "x": -16,
+          "z": 13
+        },
+        "heroStand": {
+          "x": -16,
+          "z": 15
+        },
+        "ghostValidMs": 84,
+        "ghostValid": true,
+        "ghost": {
+          "ghostPos": {
+            "x": -16,
+            "z": 13
+          },
+          "ghostValid": true,
+          "selected": "stockpile"
+        },
+        "confirmed": true,
+        "heroAfter": {
+          "x": -16,
+          "y": 0.7237283563613892,
+          "z": 15
+        },
+        "targetBlockedBy": [],
+        "heroStandBlockedBy": []
+      },
+      {
+        "id": "stockpile",
+        "target": {
+          "x": 16,
+          "z": -10
+        },
+        "heroStand": {
+          "x": 16,
+          "z": -8
+        },
+        "ghostValidMs": null,
+        "ghostValid": false,
+        "ghost": {
+          "ghostPos": {
+            "x": 16,
+            "z": -10
+          },
+          "ghostValid": false,
+          "selected": "stockpile"
+        },
+        "confirmed": false,
+        "heroAfter": {
+          "x": 16,
+          "y": 0.4633718705177307,
+          "z": -8
+        },
+        "targetBlockedBy": [
+          "south_bank_winch"
+        ],
+        "heroStandBlockedBy": []
+      },
+      {
+        "id": "stockpile",
+        "target": {
+          "x": 16,
+          "z": -13
+        },
+        "heroStand": {
+          "x": 16,
+          "z": -11
+        },
+        "ghostValidMs": 84,
+        "ghostValid": true,
+        "ghost": {
+          "ghostPos": {
+            "x": 16,
+            "z": -14
+          },
+          "ghostValid": true,
+          "selected": "stockpile"
+        },
+        "confirmed": true,
+        "heroAfter": {
+          "x": 16,
+          "y": 0.5495051270723342,
+          "z": -12.200000000000001
+        },
+        "targetBlockedBy": [],
+        "heroStandBlockedBy": [
+          "south_bank_winch"
+        ]
+      },
+      {
+        "id": "stockpile",
+        "target": {
+          "x": 16,
+          "z": -15
+        },
+        "heroStand": {
+          "x": 16,
+          "z": -13
+        },
+        "ghostValidMs": null,
+        "ghostValid": false,
+        "ghost": {
+          "ghostPos": {
+            "x": 16,
+            "z": -15
+          },
+          "ghostValid": false,
+          "selected": "stockpile"
+        },
+        "confirmed": false,
+        "heroAfter": {
+          "x": 16,
+          "y": 0.5584252452850342,
+          "z": -13
+        },
+        "targetBlockedBy": [],
+        "heroStandBlockedBy": []
+      }
+    ],
+    "routes": [
+      {
+        "spawn": {
+          "x": 16,
+          "z": 14
+        },
+        "fordWindowCentre": 16,
+        "spawned": true,
+        "spawnBlockedBy": [
+          "north_bank_homestead"
+        ],
+        "deepSamples": 0,
+        "fordSamples": 0,
+        "reached": false,
+        "samples": 1741,
+        "startedAt": 1531.7999997138977,
+        "reachedAt": null,
+        "last": {
+          "x": 16,
+          "z": 14,
+          "zone": "bank"
+        }
+      },
+      {
+        "spawn": {
+          "x": 17,
+          "z": 14
+        },
+        "fordWindowCentre": 16,
+        "spawned": true,
+        "spawnBlockedBy": [],
+        "deepSamples": 0,
+        "fordSamples": 72,
+        "reached": true,
+        "samples": 216,
+        "startedAt": 16558.599999904633,
+        "reachedAt": 900.8000001907349,
+        "last": {
+          "x": 0.25641519820240477,
+          "z": -12.381228522214162,
+          "zone": "bank"
+        }
+      },
+      {
+        "spawn": {
+          "x": -16,
+          "z": 14
+        },
+        "fordWindowCentre": -16,
+        "spawned": true,
+        "spawnBlockedBy": [],
+        "deepSamples": 0,
+        "fordSamples": 40,
+        "reached": true,
+        "samples": 107,
+        "startedAt": 17571.599999904633,
+        "reachedAt": 886.4000000953674,
+        "last": {
+          "x": -0.6275943898041187,
+          "z": -12.47300599535778,
+          "zone": "bank"
+        }
+      }
+    ],
+    "samples": {
+      "-16,7": {
+        "zone": "bank",
+        "walkable": true,
+        "speedMul": 1,
+        "blockedBy": []
+      },
+      "-16,10": {
+        "zone": "bank",
+        "walkable": false,
+        "speedMul": 0,
+        "blockedBy": [
+          "north_bank_winch"
+        ]
+      },
+      "-16,12": {
+        "zone": "bank",
+        "walkable": false,
+        "speedMul": 0,
+        "blockedBy": [
+          "north_bank_winch"
+        ]
+      },
+      "-16,13": {
+        "zone": "bank",
+        "walkable": true,
+        "speedMul": 1,
+        "blockedBy": []
+      },
+      "-16,14": {
+        "zone": "bank",
+        "walkable": true,
+        "speedMul": 1,
+        "blockedBy": []
+      },
+      "-16,15": {
+        "zone": "bank",
+        "walkable": true,
+        "speedMul": 1,
+        "blockedBy": []
+      },
+      "16,-7": {
+        "zone": "bank",
+        "walkable": true,
+        "speedMul": 1,
+        "blockedBy": []
+      },
+      "16,-10": {
+        "zone": "bank",
+        "walkable": false,
+        "speedMul": 0,
+        "blockedBy": [
+          "south_bank_winch"
+        ]
+      },
+      "16,-12": {
+        "zone": "bank",
+        "walkable": false,
+        "speedMul": 0,
+        "blockedBy": [
+          "south_bank_winch"
+        ]
+      },
+      "16,-13": {
+        "zone": "bank",
+        "walkable": true,
+        "speedMul": 1,
+        "blockedBy": []
+      },
+      "16,-14": {
+        "zone": "bank",
+        "walkable": true,
+        "speedMul": 1,
+        "blockedBy": []
+      },
+      "16,-15": {
+        "zone": "bank",
+        "walkable": true,
+        "speedMul": 1,
+        "blockedBy": []
+      },
+      "13,-13": {
+        "zone": "bank",
+        "walkable": true,
+        "speedMul": 1,
+        "blockedBy": []
+      },
+      "12,-13": {
+        "zone": "bank",
+        "walkable": true,
+        "speedMul": 1,
+        "blockedBy": []
+      },
+      "16,-11": {
+        "zone": "bank",
+        "walkable": false,
+        "speedMul": 0,
+        "blockedBy": [
+          "south_bank_winch"
+        ]
+      },
+      "16,-8": {
+        "zone": "bank",
+        "walkable": true,
+        "speedMul": 1,
+        "blockedBy": []
+      }
+    },
+    "baron": {
+      "assetsBaron": "loaded",
+      "assetsBanner": "loaded",
+      "assetSpritesBaron": 0,
+      "assetSpritesBanner": 0,
+      "spriteAnimationKeys": [
+        "char.hero",
+        "char.bandit_base",
+        "char.bandit_thief",
+        "char.e2.rail_tough",
+        "char.e2.steam_wrecker",
+        "char.e2.coal_thief",
+        "char.prospector_agent"
+      ],
+      "baronAnimation": null,
+      "spriteStats": {
+        "activeAnimators": 1,
+        "textureSwapsPerFrame": 0,
+        "fadeOverlaysActive": 0
+      },
+      "spriteClipGroups": "claim town",
+      "assetKeysLoaded": [
+        "char.hero",
+        "char.bandit_base",
+        "char.bandit_thief",
+        "node.gold_seam",
+        "bld.sentry_beacon",
+        "bld.portrait.palisade",
+        "bld.portrait.sluice",
+        "bld.portrait.stockpile",
+        "bld.portrait.turret",
+        "terrain.bank",
+        "terrain.river",
+        "prop.baron_banner",
+        "char.baron",
+        "char.town.tavernkeeper",
+        "char.town.storekeeper",
+        "char.town.elder",
+        "char.town.preacher",
+        "char.town.schoolteacher",
+        "char.town.assay_clerk",
+        "char.town.youngster_a",
+        "char.town.youngster_b",
+        "char.town.newsie",
+        "char.e2.rail_tough",
+        "char.e2.steam_wrecker",
+        "char.e2.coal_thief"
+      ],
+      "portraitSrc": null
+    },
+    "consoleErrors": [],
+    "pageErrors": [],
+    "buildAfter": {
+      "sluices": 2,
+      "stockpiles": 2,
+      "sluicePositions": [
+        {
+          "x": -16,
+          "z": 7
+        },
+        {
+          "x": 16,
+          "z": -7
+        }
+      ],
+      "stockpilePositions": [
+        {
+          "x": -16,
+          "z": 13
+        },
+        {
+          "x": 16,
+          "z": -14
+        }
+      ]
+    }
+  }
+}

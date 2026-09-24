@@ -35,6 +35,19 @@ const COLD_LANTERNS = [
 const COLD_LANTERN_POSITIONS = COLD_LANTERNS.map(({ x, z }) => ({ x, z }));
 const VISIBLE_LIGHT = 0.35;
 const DARK_LIGHT = 0.06;
+/**
+ * The ceiling for a SCREEN-PIXEL read at an unlit point, which is not the same measurement as the
+ * enemy-light one above it: `spriteLuminance` samples the framebuffer, so out of every lantern radius
+ * it measures the night GROUND and FOG, not a sprite. Zeroing the sprite fill leaves the number
+ * bit-identical. `67e7d0af4` (2026-08-03, "night visibility") lifted the dark keyframe off pure black
+ * on purpose - background #000000 -> #080a0f, fog #000000 -> #14141a, fill #28324a -> #384862, ground
+ * #000000 -> #17120f - and on the 390 px viewport that floor lands at a p95 of 0.0605..0.0607 (three
+ * mobile boots, F-SEF2-5) against 0.0437 on desktop, so mobile alone has no headroom under 0.06.
+ * Mobile therefore gets a ceiling of 0.065 with both measurements recorded beside it; desktop keeps
+ * DARK_LIGHT, and every ENEMY-light assertion - which measures the dimming system and not the palette
+ * - keeps DARK_LIGHT on both projects.
+ */
+const DARK_SPRITE_LIGHT = (): number => (test.info().project.name === 'mobile-chrome' ? 0.065 : DARK_LIGHT);
 
 test.beforeEach(async ({ page }) => {
   await page.addInitScript(() => localStorage.clear());
@@ -336,9 +349,20 @@ test('loads Night Shift contract data and ramps full, dusk, dark, dawn lighting'
     phase: 'dark',
     darkness: 1,
   });
+  // RE-PINNED 2026-09-24 (F-SEF2-5, task e1-spec-truth-1). WAS `fogNear: 18, fogFar: 42`, which were
+  // not measurements at all: they were the LERP TARGETS `src/world/LightRig.ts` carried until
+  // `7c2744e5a` (2026-09-12, Astra's campaign committed "not yet gated"), whose diff replaced
+  //   fogNear = lerp(baseFogNear, 18, darkness)
+  //   fogFar  = max(fogNear + 8, lerp(baseFogFar, 42, darkness))
+  // with
+  //   fogNear = baseFogNear + fogOffset
+  //   fogFar  = max(fogNear + 8, lerp(baseFogFar, 58, darkness) + fogOffset)
+  // and while Night Shift is enabled `baseFogNear` is 34 and `baseFogFar` 72, so darkness 1 reads
+  // 34 / 58 with fogOffset 0 (the hero focus sits inside the 34 m near plane on both viewports).
+  // Measured on desktop-chrome and mobile-chrome; numbers in artifacts/e1-spec-truth-1/report.md.
   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.lighting)).toMatchObject({
-    fogNear: 18,
-    fogFar: 42,
+    fogNear: 34,
+    fogFar: 58,
   });
 
   await setWave(page, 4);
@@ -349,12 +373,18 @@ test('loads Night Shift contract data and ramps full, dusk, dark, dawn lighting'
   const darkHero = await spriteLuminance(page, { x: 0, z: 0 });
   const heroRatio = darkHero / Math.max(dayHero, 0.001);
   const darkTint = snapshot.registry?.twist.lightRamp?.keyframes?.find((keyframe) => keyframe.phase === 'dark')?.spriteTint;
-  expect(darkTint).toBe('#34405a');
+  // RE-PINNED 2026-09-24 (F-SEF2-5, task e1-spec-truth-1). WAS `#34405a`; the dark keyframe's
+  // `spriteTint` in assets/contracts/epoch-1-frontier/contracts.json has been `#44516b` since
+  // `67e7d0af4` (2026-08-03, "night visibility: the dark keeps its fear, the ground keeps its shape"),
+  // the only commit ever to touch that value. The hero-brightness band below DERIVES from this
+  // constant, so its three channels move with it: 0x34/0x40/0x5a -> 0x44/0x51/0x6b, which lifts
+  // tintLuminance from 0.0526 to 0.0819 and moves the +-0.04 band to 0.0419..0.1219.
+  expect(darkTint).toBe('#44516b');
   const linear = (channel: number): number => {
     const srgb = channel / 255;
     return srgb <= 0.04045 ? srgb / 12.92 : ((srgb + 0.055) / 1.055) ** 2.4;
   };
-  const tintLuminance = 0.2126 * linear(0x34) + 0.7152 * linear(0x40) + 0.0722 * linear(0x5a);
+  const tintLuminance = 0.2126 * linear(0x44) + 0.7152 * linear(0x51) + 0.0722 * linear(0x6b);
   expect(heroRatio, JSON.stringify({ dayHero, darkHero, heroRatio, tintLuminance })).toBeGreaterThan(tintLuminance - 0.04);
   expect(heroRatio, JSON.stringify({ dayHero, darkHero, heroRatio, tintLuminance })).toBeLessThan(tintLuminance + 0.04);
   await captureDuskStrip(page, testInfo);
@@ -402,7 +432,7 @@ test('lantern post is Night Shift gated and relights a true-dark light ring', as
   await page.waitForTimeout(180);
   expect(await enemyLightNear(page, outOfRadius)).toBeLessThanOrEqual(DARK_LIGHT);
   expect(await enemyLightNear(page, inRadius)).toBeGreaterThanOrEqual(VISIBLE_LIGHT);
-  expect(await spriteLuminance(page, outOfRadius)).toBeLessThanOrEqual(DARK_LIGHT);
+  expect(await spriteLuminance(page, outOfRadius)).toBeLessThanOrEqual(DARK_SPRITE_LIGHT());
   expect(await spriteLuminance(page, inRadius)).toBeGreaterThanOrEqual(VISIBLE_LIGHT);
   expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.enemyDimming.sources)).toBeGreaterThanOrEqual(2);
   await shot(page, testInfo, 'true-dark-lantern-ring');
@@ -478,6 +508,23 @@ test('a lantern pool makes only its build island readable at true dark', async (
 test('cold lantern relight costs survive run suspend and continue', async ({ page, context }) => {
   const errors = await openGame(page, '?debug&contract=e1-night-shift&timescale=40&nokill&nolevel&nosteal&nowreck&seed=e1-night-suspend');
   const saved = await waitForSavedNightWave(page, 1);
+  // DE-RACED 2026-09-24 (F-SEF2-5, task e1-spec-truth-1). This test asserts `restoredWave === 1` after
+  // a round trip, and the suspend record is REWRITTEN on every `wave_started`: `RunManager` calls
+  // `RunSuspendController.captureBoundary(event.wave)`, which stores `wave - 1`, so storage reads 1
+  // only between the start of wave 2 and the start of wave 3. At timescale 40 with waveInterval 30
+  // that window is about 750 ms of wall time, and everything below (four page round trips, the close,
+  // the second boot) had to fit inside it. 5 of 5 green alone, red under a full battery; 5.1 percent
+  // in the 2026-08-11 inventory.
+  //
+  // The interval alone CANNOT freeze it: `WaveSystem.planDueWaves` fixes the next wave's `spawnAt`
+  // into `plannedPulses` one telegraph lead ahead, so raising `waves.waveInterval` after wave 2 has
+  // started moves wave 4, not wave 3. The harness's own wave reset is what retracts the planned pulse
+  // (`setWaveForTest` clears `plannedPulses` and re-derives `nextWaveAt` from the interval it reads at
+  // that moment), so the interval is raised FIRST and the reset applied second. Nothing else writes
+  // the record: `setWave` emits no `wave_started` (Game.ts, the harness handle), and page-hide flushes
+  // the LAST snapshot rather than capturing a new one.
+  await setBalance(page, 'waves.waveInterval', 9999);
+  await setWave(page, 1);
   expect(
     saved.buildings
       .filter((entry) => entry.id === 'lantern_post')
