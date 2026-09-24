@@ -408,7 +408,7 @@ for (const sha of commits) {
   // `s<N> handoff \(line-1 archive`, which silently assumed every line-1 worth archiving is a
   // HANDOFF line. It is not: a fire that DIES mid-work leaves a LOCK line as its last line-1, and
   // its successor must archive THAT. This script already knows the difference -- it records
-  // `kind` at :274 and prints "destroyed s<N>'s lock line" at :407 -- so the old predicate
+  // `kind` at :322 and prints "destroyed s<N>'s lock line" at :459 -- so the old predicate
   // (was :178 and :235 until s2577, when the F-2577-1 supersession arm landed above both. BOTH
   // members were re-based by RE-GREPPING, and they moved by DIFFERENT amounts -- +43 and +87 --
   // because a second insertion sat between them. `source-pointer-guard` flagged only the FIRST:
@@ -418,7 +418,11 @@ for (const sha of commits) {
   // s2674 is the fourth such move and the prediction held EXACTLY: the F-2673-1 preamble landed
   // above both members, the guard flagged `kind` alone -- 221 -> 274 -- and 322 -> 407 was found
   // only by re-grepping the print, which is the discipline this note exists to enforce. Writing
-  // this note moved it TWICE more, 403 -> 406 -> 407; only a re-grep after the LAST edit is true.)
+  // this note moved it TWICE more, 403 -> 406 -> 407; only a re-grep after the LAST edit is true.
+  // ledger-shape-1 (2026-09-25) is the FIFTH move and the note earned its keep again: the archive
+  // corpus read landed ABOVE both members, `source-pointer-guard` flagged `kind` alone -- 274 ->
+  // 322 -- and the print moved 407 -> 459 unflagged, because a range is two pointers and
+  // only one of them is guarded. Both were re-based by RE-GREPPING, after this note's own edit.)
   // contradicted the script's own output, demanding a "handoff" bullet for a fire that never
   // wrote one. Measured s1690: s1689 reached FIRE END rc=0 mid-drain, s1690 archived its lock
   // line honestly as `- **s1689 lock line (line-1 archive -- ...)`, and this guard reported it
