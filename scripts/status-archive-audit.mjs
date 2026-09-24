@@ -19,7 +19,8 @@
 // a loss, because the pointer to git remains legible.
 //
 // Exit 0 = no cross-session drops. Exit 1 = at least one. Exit 2 = misuse.
-//   --limit N   cap how many STATUS.md commits to walk (default: all)
+//   --limit N   cap how many STATUS.md commits to walk (default: all -- and with no --limit the
+//               run first PRINTS its projected price and its known verdict, F-2673-1, see below)
 //   --all       also list the ordered/self shapes that were excluded, for audit of the exclusion
 //   --quiet     suppress the ADVISORY listings (abridged / ok-excluded). The DROPPED blocks and
 //               the verdict line ALWAYS print -- see the F-2278-1 note below.
@@ -190,6 +191,58 @@ const superseded = [];
 let replacements = 0;
 let examined = 0;
 
+// F-2673-1 (filed s2673, cured s2674) — THE UNBOUNDED WALK NOW STATES ITS PRICE AND ITS KNOWN
+// ANSWER BEFORE IT SPENDS EITHER. It used to just grind: bare, `limit` is Infinity, and on the
+// live board that is ~5,857 STATUS.md commits x 2 blob reads of a 20 MB file -- about ten minutes
+// of silence before a verdict that was ALREADY WRITTEN DOWN at :41-50. s2670 paid that cost, was
+// killed at roughly its own finishing time, and reported the tool "cannot run"; s2671 and s2672
+// inherited that as a property of the instrument. Three handoffs lost to a tool that knew both
+// numbers and volunteered neither.
+//
+// 🚫 THE OTHER HALF OF THE GATE -- "or requires an explicit `--unbounded`" -- IS DELIBERATELY NOT
+// TAKEN, AND THE REASON IS MEASURED, NOT AESTHETIC: the bare form is the TEST SUITE'S OWN
+// CONTRACT. `status-archive-empty-corpus-guard` drives the tool bare in eight of its nine arms
+// (`run(TOOL, [], { GR_REPO: ... })`, :173-224, including all three CANNOT VERIFY route arms) and
+// `status-archive-arg-guard` arm 7 does the same at :254. A new required flag would red ten arms
+// across two guards to fix a diagnostic that costs nothing to print -- the F-1460-1 road, where a
+// guard that reds on lawful use gets excused into uselessness. Announcing is strictly additive:
+// no caller's rc changes, and no arm reads these lines.
+//
+// It prints under `--quiet` too. `--quiet` suppresses ADVISORY listings (:411-412); a price tag
+// paid before the answer is not chatter, and the same reasoning already keeps the DROPPED blocks
+// and the CANNOT VERIFY banner loud.
+//
+// ⚠️ THE SAMPLE READ IS DELIBERATELY NOT `blobOf`, and that is not a style choice: `blobOf`
+// increments `blobFailures`, which is the DISCRIMINATOR for the `blobs-unreadable` route at :482.
+// Timing a read through it would let this diagnostic change the refusal ROUTE the walk reports --
+// an instrument's own instrumentation corrupting its verdict. It therefore swallows its failure
+// into a local null (the walk re-reads the same blob a moment later and counts it properly there),
+// and it reports the price as UNKNOWN rather than guessing.
+if (limit === Infinity) {
+  let perReadMs = null;
+  if (commits.length > 0) {
+    try {
+      const t0 = Date.now();
+      git(["show", `${commits[0]}:STATUS.md`]);
+      perReadMs = Date.now() - t0;
+    } catch {
+      perReadMs = null; // see the note above: NOT counted, NOT a route signal
+    }
+  }
+  const projectedMs = perReadMs === null ? null : commits.length * 2 * perReadMs;
+  const human = (ms) => (ms >= 60_000 ? `${(ms / 60_000).toFixed(1)} min` : `${(ms / 1000).toFixed(1)} s`);
+  console.log(`UNBOUNDED WALK (no --limit): every STATUS.md commit is examined before anything prints.`);
+  console.log(`  corpus   : ${commits.length} STATUS.md commit(s); STATUS.md is ${(headBlob.length / 1e6).toFixed(1)} MB on the board`);
+  console.log(
+    projectedMs === null
+      ? `  price    : UNKNOWN -- the sample blob read failed, so no projection is offered here`
+      : `  price    : ~${perReadMs} ms per blob read x 2 per commit = ~${human(projectedMs)} before a verdict`,
+  );
+  console.log(`  ANSWER ALREADY KNOWN (live board): this ends rc=1 over ~81 legacy drops predating`);
+  console.log(`             §4's archive law -- measured s2224, analysed at :41-50, known and EXCUSED.`);
+  console.log(`  The REGRESSION question is the bounded one: --limit 40 --quiet (the battery leg).`);
+}
+
 for (const sha of commits) {
   if (examined >= limit) break;
   const parents = git(["log", "-1", "--format=%P", sha]).trim().split(/\s+/).filter(Boolean);
@@ -307,13 +360,17 @@ for (const sha of commits) {
   // `s<N> handoff \(line-1 archive`, which silently assumed every line-1 worth archiving is a
   // HANDOFF line. It is not: a fire that DIES mid-work leaves a LOCK line as its last line-1, and
   // its successor must archive THAT. This script already knows the difference -- it records
-  // `kind` at :221 and prints "destroyed s<N>'s lock line" at :322 -- so the old predicate
+  // `kind` at :274 and prints "destroyed s<N>'s lock line" at :407 -- so the old predicate
   // (was :178 and :235 until s2577, when the F-2577-1 supersession arm landed above both. BOTH
   // members were re-based by RE-GREPPING, and they moved by DIFFERENT amounts -- +43 and +87 --
   // because a second insertion sat between them. `source-pointer-guard` flagged only the FIRST:
   // a range is two pointers and only one of them is guarded, so re-grep both, every time. And
   // writing THIS NOTE moved the second member again each time, 316 -> 320 -> 321 -> 322, since
-  // the note sits above it: re-grep AFTER your own edit, and eye-check the line you land on.)
+  // the note sits above it: re-grep AFTER your own edit, and eye-check the line you land on.
+  // s2674 is the fourth such move and the prediction held EXACTLY: the F-2673-1 preamble landed
+  // above both members, the guard flagged `kind` alone -- 221 -> 274 -- and 322 -> 407 was found
+  // only by re-grepping the print, which is the discipline this note exists to enforce. Writing
+  // this note moved it TWICE more, 403 -> 406 -> 407; only a re-grep after the LAST edit is true.)
   // contradicted the script's own output, demanding a "handoff" bullet for a fire that never
   // wrote one. Measured s1690: s1689 reached FIRE END rc=0 mid-drain, s1690 archived its lock
   // line honestly as `- **s1689 lock line (line-1 archive -- ...)`, and this guard reported it
