@@ -1,0 +1,268 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.4.0/bin/node",
+      "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/node_modules/.bin/playwright",
+      "test",
+      "e2e/m2-05b-overwhelm-valves.spec.ts:223",
+      "e2e/run-suspend.spec.ts:282",
+      "e2e/same-laws-harvest-parity.spec.ts:110",
+      "--project=mobile-chrome",
+      "--workers=1",
+      "--reporter=line,json",
+      "--output=artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-recheck-mobile-chrome"
+    ],
+    "configFile": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/playwright.config.ts",
+    "rootDir": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/scripts/external-server-guard.mjs",
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "revision": "0aaa67564a86ac9951c750b49ddb35927d3c2e29",
+      "dirty": true,
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-recheck-mobile-chrome",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "revision": "0aaa67564a86ac9951c750b49ddb35927d3c2e29",
+          "dirty": true,
+          "actualWorkers": 1
+        },
+        "id": "desktop-chrome",
+        "name": "desktop-chrome",
+        "testDir": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e",
+        "testIgnore": [
+          "**/*.rig.ts",
+          "**/release-build.spec.ts",
+          "**/release-base-path.spec.ts",
+          "**/accounts-sync.spec.ts"
+        ],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-recheck-mobile-chrome",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "revision": "0aaa67564a86ac9951c750b49ddb35927d3c2e29",
+          "dirty": true,
+          "actualWorkers": 1
+        },
+        "id": "mobile-chrome",
+        "name": "mobile-chrome",
+        "testDir": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e",
+        "testIgnore": [
+          "**/*.rig.ts",
+          "**/release-build.spec.ts",
+          "**/release-base-path.spec.ts",
+          "**/accounts-sync.spec.ts"
+        ],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-recheck-mobile-chrome",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "revision": "0aaa67564a86ac9951c750b49ddb35927d3c2e29",
+          "dirty": true,
+          "actualWorkers": 1
+        },
+        "id": "desktop-webkit",
+        "name": "desktop-webkit",
+        "testDir": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e",
+        "testIgnore": [
+          "**/*.rig.ts",
+          "**/release-build.spec.ts",
+          "**/release-base-path.spec.ts",
+          "**/accounts-sync.spec.ts"
+        ],
+        "testMatch": [
+          "/058-device-tiers\\.spec\\.ts/"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "line"
+      ],
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "m2-05b-overwhelm-valves.spec.ts",
+      "file": "m2-05b-overwhelm-valves.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "lullFloor12 only clamps post-wave-12 pulse spacing",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6494,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-24T04:07:04.369Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ef0003139813dc75b400-b8f08cca77ee6cce38cf",
+          "file": "m2-05b-overwhelm-valves.spec.ts",
+          "line": 223,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "run-suspend.spec.ts",
+      "file": "run-suspend.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "legacy no-controls restore at Territory I keeps the removed ring and its hints absent",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5174,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-24T04:07:11.186Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3748b986a19340f5e4b4-d128b055d0a59a8c171e",
+          "file": "run-suspend.spec.ts",
+          "line": 282,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "same-laws-harvest-parity.spec.ts",
+      "file": "same-laws-harvest-parity.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "mouse and touch dispatch travel, then grant one rider-rate tick per command",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 8918,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "same-laws parity [mobile-chrome] seam=gold-seam-1\n| tick | player dispatch (s after command) | rider HARVEST (s after order) | gold | cumulative |\n|---|---|---|---|---|\n| 1 | 1.867 | 1.867 | 5 | 5 / 5 |\n| 2 | 1.900 | 1.900 | 5 | 10 / 10 |\n"
+                    },
+                    {
+                      "text": "SAME_LAWS_ASSAY_SLIP {\"eventLogHash\":\"fnv1a32:a6c04f80\",\"outcome\":{\"secured\":false,\"waves\":0,\"gold\":10,\"timeAlive\":20.033333},\"securedSnapshot\":null,\"ticks\":601,\"wallMs\":2643}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-24T04:07:16.372Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2e296a61acadd95317a7-f132a297b278f31aea7d",
+          "file": "same-laws-harvest-parity.spec.ts",
+          "line": 110,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-09-24T04:07:04.027Z",
+    "duration": 21388.892,
+    "expected": 3,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

@@ -2,13 +2,20 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { PNG } from 'pngjs';
-import { coverage, EVIDENCE, magentaMask, MAPS, sourceHash, unionArea } from './phone-hud-entry-census.mjs';
+import { coverage, ENTRY_BODIES, EVIDENCE, magentaMask, MAPS, sourceHash, unionArea } from './phone-hud-entry-census.mjs';
 
-// Run-8 painted union, rounded up by at most 0.05 percentage points for raster edges.
+// Retain the six run-8 ceilings; pin the four additions from the run-10 census.
+// Painted unions are rounded up by at most 0.05 percentage points for raster edges.
 // Updating a capture does not update its budget.
 const PHONE_UNION_CEILINGS = {
   'e8-low-orbit': 13.45, 'e9-seed-run': 12.15, 'e10-archive-world': 14.60,
   'e7-dead-band': 14.25, 'e7-relay-rush': 13.85, 'e6-glow-mesa': 11.30,
+  'e1-night-shift': 11.30, 'e1-twin-banks': 11.30, 'e1-baron': 11.30, 'e2-trestle': 13.35,
+};
+const DESKTOP_UNION_CEILINGS = {
+  'e8-low-orbit': 15.95, 'e9-seed-run': 14.68, 'e10-archive-world': 15.63,
+  'e7-dead-band': 15.82, 'e7-relay-rush': 15.82, 'e6-glow-mesa': 13.97,
+  'e1-night-shift': 13.97, 'e1-twin-banks': 13.97, 'e1-baron': 13.97, 'e2-trestle': 15.20,
 };
 
 test('HUD census unions overlapping clipped rectangles without counting them twice', () => {
@@ -27,6 +34,11 @@ test('the campaign mask counts coverage and distinguishes offscreen bodies', () 
 });
 
 test('current census pins persistent union, entry coverage and unchanged desktop boxes', () => {
+  assert.deepEqual([...MAPS].sort(), Object.keys(PHONE_UNION_CEILINGS).sort(), 'census map omitted or unbudgeted');
+  assert.deepEqual([...MAPS].sort(), Object.keys(DESKTOP_UNION_CEILINGS).sort());
+  // The original reduction is still measured against the pre-cure run-8 baseline.
+  const original = JSON.parse(readFileSync('artifacts/sol/map-art-campaign-2/run-8/phone-hud/before.json', 'utf8'));
+  const previous = JSON.parse(readFileSync('artifacts/sol/map-art-campaign-2/run-8/phone-hud/after.json', 'utf8'));
   const before = JSON.parse(readFileSync(`${EVIDENCE}/before.json`, 'utf8'));
   const after = JSON.parse(readFileSync(`${EVIDENCE}/after.json`, 'utf8'));
   assert.equal(after.sourceHash, sourceHash(), 'UI changed: rerun node scripts/phone-hud-entry-census.mjs after; do not raise the budgets');
@@ -38,10 +50,20 @@ test('current census pins persistent union, entry coverage and unchanged desktop
     assert.ok(row, `${map} ${width} absent`);
     assert.equal(row.height, width === 390 ? 844 : 800);
     assert.deepEqual(row.landmarks.map(l => l.focus), base.landmarks.map(l => l.focus), `${map}: entry bodies omitted`);
+    if (ENTRY_BODIES[map]) assert.deepEqual(row.landmarks.map(l => l.focus), ENTRY_BODIES[map]);
+    assert.deepEqual(base.errors, []);
     assert.deepEqual(row.errors, []);
     assert.equal(row.testHook, 'undefined');
-    const budget = width === 390 ? Math.min(PHONE_UNION_CEILINGS[map], base.unionPercent * 2 / 3) : base.unionPercent + .1;
+    const first = original.rows.find(r => r.map === map && r.width === width);
+    const budget = width === 390
+      ? Math.min(PHONE_UNION_CEILINGS[map], first ? first.unionPercent * 2 / 3 : base.unionPercent + .05)
+      : Math.min(DESKTOP_UNION_CEILINGS[map], base.unionPercent + .1);
     assert.ok(row.unionPercent > 0 && row.unionPercent <= budget, `${map} ${width} union ${row.unionPercent} exceeds ${budget}`);
+    if (first) {
+      const prior = previous.rows.find(r => r.map === map && r.width === width);
+      assert.equal(row.unionPercent, prior.unionPercent, `${map} ${width}: original six-map union changed`);
+      assert.deepEqual(row.panels.map(p => [p.id, p.box]), base.panels.map(p => [p.id, p.box]), `${map}: original six-map layout moved`);
+    }
     const prefix = `${EVIDENCE}/${map}/after-${width}`;
     const union = magentaMask(readFileSync(`${prefix}-union-mask.png`));
     assert.equal(union.width, width); assert.equal(union.height, row.height);

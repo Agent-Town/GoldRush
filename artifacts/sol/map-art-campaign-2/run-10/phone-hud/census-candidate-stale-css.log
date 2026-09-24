@@ -1,0 +1,22 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Vite serves stale CSS: restart the capture server
++ actual - expected
+
++ '68d5464a56a52625a84e4272f29decf74c9aeb4a7f255d9ffc4018a986193360'
+- '685b49aaada71d9c276241254a63ccb2356bc1d90a02ebd936f93a2e31f8c4b3'
+
+    at census (file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/scripts/phone-hud-entry-census.mjs:56:10)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/[eval1]:2:1 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: '68d5464a56a52625a84e4272f29decf74c9aeb4a7f255d9ffc4018a986193360',
+  expected: '685b49aaada71d9c276241254a63ccb2356bc1d90a02ebd936f93a2e31f8c4b3',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v26.4.0

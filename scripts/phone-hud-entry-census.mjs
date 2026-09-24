@@ -7,8 +7,15 @@ import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { pathToFileURL } from 'node:url';
 import { PNG } from 'pngjs';
 
-export const EVIDENCE = 'artifacts/sol/map-art-campaign-2/run-8/phone-hud';
-export const MAPS = ['e8-low-orbit', 'e9-seed-run', 'e10-archive-world', 'e7-dead-band', 'e7-relay-rush', 'e6-glow-mesa'];
+export const EVIDENCE = 'artifacts/sol/map-art-campaign-2/run-10/phone-hud';
+// Run-3 entry bodies. The other six retain their run-6 entry station inventory.
+export const ENTRY_BODIES = {
+  'e1-night-shift': ['lampworks_yard'],
+  'e1-twin-banks': ['channel-water'],
+  'e1-baron': ['fortified_far_bank'],
+  'e2-trestle': ['trestle-crossing'],
+};
+export const MAPS = ['e8-low-orbit', 'e9-seed-run', 'e10-archive-world', 'e7-dead-band', 'e7-relay-rush', 'e6-glow-mesa', ...Object.keys(ENTRY_BODIES)];
 export const UI_SOURCES = ['src/ui/Hud.ts', 'src/ui/BuildButton.ts', 'src/ui/ProspectorPanel.ts', 'src/ui/WorldInfoNotes.ts', 'src/styles.css', 'src/ui/theme.css', 'index.html', 'src/playbook/PlaybookSurface.ts', 'src/playbook/playbook-surface.css', 'src/systems/E7SignalSystem.ts'];
 export const KEEP = '#game-canvas,.hud-panel,.hud-panel *,.hud-pause,.hud-pause *,.world-info-note,.world-info-note *,#touch-controls,#touch-controls *,.building-context-prompt,.building-context-prompt *';
 export function sourceHash() {
@@ -56,8 +63,7 @@ export async function census(phase, { maps = MAPS, widths = [390, 1280] } = {}) 
       const height = width === 390 ? 844 : 800;
       const folder = `${EVIDENCE}/${map}`;
       mkdirSync(folder, { recursive: true });
-      const config = JSON.parse(readFileSync(`artifacts/sol/map-art-campaign-2/run-6/${map}/capture-config.json`, 'utf8'));
-      const focuses = [...new Set(config.stations.filter(s => s[1] === 'entry' && s[4] !== 'before').map(s => s[0]))];
+      const focuses = ENTRY_BODIES[map] ?? [...new Set(JSON.parse(readFileSync(`artifacts/sol/map-art-campaign-2/run-6/${map}/capture-config.json`, 'utf8')).stations.filter(s => s[1] === 'entry' && s[4] !== 'before').map(s => s[0]))];
       const page = await browser.newPage({ viewport: { width, height }, deviceScaleFactor: 1, isMobile: width === 390, hasTouch: width === 390 });
       page.setDefaultTimeout(120_000);
       const errors = [];
@@ -69,6 +75,11 @@ export async function census(phase, { maps = MAPS, widths = [390, 1280] } = {}) 
         let body = await response.text();
         assert.equal(body.split('model.name = mount.id;').length, 2);
         body = body.replace('model.name = mount.id;', 'model.name = mount.id; (window.__HUD_CENSUS_MODELS__??=new Map()).set(mount.id,model); window.__HUD_CENSUS_THREE__=THREE;');
+        if (focuses.includes('channel-water')) {
+          const seam = 'const nextChannelWater = createChannelWater(host.contractId, selected.contract, heightAt);';
+          assert.equal(body.split(seam).length, 2);
+          body = body.replace(seam, seam + ' (window.__HUD_CENSUS_MODELS__??=new Map()).set("channel-water",nextChannelWater);');
+        }
         await route.fulfill({ response, body });
       });
       await page.goto(base);
@@ -77,7 +88,7 @@ export async function census(phase, { maps = MAPS, widths = [390, 1280] } = {}) 
       await page.waitForFunction(() => document.querySelector('#game-canvas')?.dataset.terrain3dPilotLandmarkLoadState === 'mounted');
       const begin = page.getByTestId('contract-briefing-dismiss');
       if (await begin.isVisible()) await begin.click();
-      await page.waitForFunction(() => window.__THREE_GAME_DIAGNOSTICS__.timeAlive >= 10);
+      await page.waitForFunction(() => window.__THREE_GAME_DIAGNOSTICS__?.timeAlive >= 10);
       const prefix = `${folder}/${phase}-${width}`;
       await page.screenshot({ path: `${prefix}-plain.png` });
       const state = await page.evaluate(() => ({ contract: window.__THREE_GAME_DIAGNOSTICS__.contract.activeId, hero: window.__THREE_GAME_DIAGNOSTICS__.heroPos, timeAlive: window.__THREE_GAME_DIAGNOSTICS__.timeAlive, testHook: typeof window.__GR_TEST__, renderSource: document.querySelector('#game-canvas').dataset.terrain3dPilotRenderSource }));
@@ -97,13 +108,49 @@ export async function census(phase, { maps = MAPS, widths = [390, 1280] } = {}) 
       await page.locator('#hud-census-backdrop').evaluate(el => el.remove());
       const landmarks = [];
       for (const focus of focuses) {
-        await page.evaluate(focus => window.__HUD_CENSUS_MODELS__.get(focus).traverse(n => { if (n.isMesh) { n.userData.hudCensusMaterial = n.material; n.material = new window.__HUD_CENSUS_THREE__.MeshBasicMaterial({ color: 0xff00ff, side: 2, toneMapped: false, fog: false }); } }), focus);
+        await page.evaluate(focus => {
+          const model = window.__HUD_CENSUS_MODELS__.get(focus);
+          if (!model) throw new Error(`Census body missing: ${focus}`);
+          model.traverse(n => {
+            if (!n.isMesh) return;
+            if (focus !== 'channel-water') {
+              n.userData.hudCensusMaterial = n.material;
+              n.material = new window.__HUD_CENSUS_THREE__.MeshBasicMaterial({ color: 0xff00ff, side: 2, toneMapped: false, fog: false });
+              return;
+            }
+            // Run-3 twin-river mask: retain the channel shader's actual alpha/depth
+            // geography. An opaque replacement would count dry banks and fords.
+            const m = n.material;
+            if (m.userData.hudCensusRestore) return;
+            const old = { compile: m.onBeforeCompile, key: m.customProgramCacheKey, blending: m.blending, fog: m.fog };
+            m.userData.hudCensusRestore = old;
+            m.onBeforeCompile = (shader, renderer) => {
+              old.compile.call(m, shader, renderer);
+              shader.fragmentShader = shader.fragmentShader.replace('#include <opaque_fragment>', 'if(diffuseColor.a < 0.10) discard; outgoingLight=vec3(1.0,0.0,1.0); diffuseColor.a=1.0;\n#include <opaque_fragment>');
+            };
+            m.customProgramCacheKey = () => old.key.call(m) + '|art-water-mask';
+            m.blending = window.__HUD_CENSUS_THREE__.NoBlending;
+            m.fog = false;
+            m.needsUpdate = true;
+          });
+        }, focus);
         const noHud = await page.addStyleTag({ content: 'body *{visibility:hidden!important}#hud,#hud *,#touch-controls,#touch-controls *{visibility:hidden!important}#game-canvas{visibility:visible!important}' });
         const body = magentaMask(await page.screenshot({ path: `${prefix}-${focus}-body-mask.png` }));
         await noHud.evaluate(el => el.remove());
         const hud = magentaMask(await page.screenshot({ path: `${prefix}-${focus}-persistent-mask.png` }));
         landmarks.push({ focus, ...coverage(body, hud) });
-        await page.evaluate(focus => window.__HUD_CENSUS_MODELS__.get(focus).traverse(n => { if (n.isMesh && n.userData.hudCensusMaterial) { n.material.dispose(); n.material = n.userData.hudCensusMaterial; delete n.userData.hudCensusMaterial; } }), focus);
+        await page.evaluate(focus => window.__HUD_CENSUS_MODELS__.get(focus).traverse(n => {
+          if (!n.isMesh) return;
+          if (n.userData.hudCensusMaterial) {
+            n.material.dispose(); n.material = n.userData.hudCensusMaterial; delete n.userData.hudCensusMaterial;
+          }
+          const m = n.material, old = m.userData?.hudCensusRestore;
+          if (old) {
+            m.onBeforeCompile = old.compile; m.customProgramCacheKey = old.key;
+            m.blending = old.blending; m.fog = old.fog; m.needsUpdate = true;
+            delete m.userData.hudCensusRestore;
+          }
+        }), focus);
       }
       await persistentStyle.evaluate(el => el.remove());
       report.rows.push({ map, width, height, ...state, unionPercent, rectangleUnionPercent: unionArea(panels.map(p => p.box), width, height) * 100 / (width * height), panels, landmarks, errors });

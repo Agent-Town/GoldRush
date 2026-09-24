@@ -900,3 +900,22 @@ All six maps are implemented and measured; remaining list is EMPTY. READY-FOR-GA
 Agent-view passes 10/12: the protected fixture lacks the three required E1 landmark sentences (an introduced fixture mismatch). Release checks also remain held: the unchanged suite passes 26/30, with the motor-hauler GLB leak and the Dry Gulch harvest-channeling failures reproduced with pre-task source. Night Shift, Twin Banks and Baron retain the precisely attributed own-suite holds. No assertion, fixture, sim, HUD, GLB or engine pin was changed to clear them.
 
 [Complete handoff: all body counts, duration bounds, reasons, visual holds, test attribution, per-map payload deltas, engine hash pairs and store commits](run-10/entry-framing/run-note.md).
+
+## Phone entry HUD extension — 2026-09-24, run 10
+
+**CENSUS PASS; browser/release acceptance HELD. READY-FOR-GATES.** The four E1/E2 entry bodies omitted by run 8 now join the same census and guard. The before census was committed as `0aaa67564` before any cure. Only the 390px tall-phone CSS changes: Night Shift and Twin Banks compact the centred confirmation target from 76px to 60px; Twin Banks removes joystick backing/glow without moving its bounds, knob or input; Baron places the intact status rail below the visible top-edge fort. Trestle remains camera-owned because its bridge has zero on-screen phone pixels.
+
+| Map | Phone entry coverage before → after | Desktop before → after | Phone / desktop painted union |
+|---|---:|---:|---:|
+| Night Shift rig | 13.09% → 8.03% | 15.09% → 15.09% | 11.28% / 13.92%, unchanged |
+| Twin Banks river | 22.84% → 6.16% | 75.00% → 75.00% | 11.28% / 13.92%, unchanged |
+| Baron fort | 68.14% → 0% | 19.71% → 19.71% | 11.28% / 13.92%, unchanged |
+| Trestle bridge | OFFSCREEN → OFFSCREEN | 58.68% → 58.68% | 13.31% / 15.15%, unchanged |
+
+All twelve original six-map union values remain exactly equal to run 8; every desktop panel box and every original six-map panel box is unchanged. All 40 before/after plain boots record zero console/page errors. The census guard passes 3/3. The selector, threshold and inherited mask limits are unchanged: the painted-union backdrop excludes lower-stacked touch controls and the selector excludes the prompt-stack parent backing; the body-specific persistent masks retain touch controls and establish the measured improvement. Live body-mask sampling varies slightly and is not represented as a CSS change on the original six maps.
+
+TypeScript/default/full/E1 builds pass. E1 first-town payload **34,318,546 → 34,319,307 B (+761 B)**, below 52,000,000. Family delta: CSS +543 B; terrain bundle +218 B while the shared store advanced. The same-game audit is byte-identical before/after/final. Scoped guards pass 25/25 and named task/citation/caller guards pass 3/3. All six new-map 390/430px touch/high-value diagnostics pass, including Pause, Build and Prospector access.
+
+[Exact census and all four boards](run-10/phone-hud/census.md) · [Run note and remaining list](run-10/phone-hud/review.md). Build menu passes 14/14. The 69-file HUD run is 532 passed / 50 failed / 114 existing skips; four own-map mobile specs are 19 passed / 7 failed. Of 56 unique failed cases, 49 reproduce at the same assertion with pre-cure CSS and the other seven pass candidate reruns. E1 release is 26 passed / 4 failed: Dry Gulch harvest channeling and the motor-hauler asset guard fail with and without the new CSS (desktop first hits a briefing timeout, then reproduces harvest on candidate recheck). Assertions are unchanged. [Exact failure attribution](run-10/phone-hud/failure-attribution.md). No persistent candidate-only HUD regression was identified; these gates are still held.
+
+Preflight engine/store `14d5fe939541356c466b5025d72599f5e9885bb63c71f3c4207adec717d24d59` / `c092e3de241f34163e903279bf071fe1f4fa6d56` → final `6eeb451c4cc8cab46792e89dd2b690566e8621285dca6fa084fb78b2b4c2bcc2` / `5793a967da46e8f00c0ba16f92f17dc10d36558d`. Store advance belongs to the concurrent lane; no store/camera/sim/e2e source was edited here. Trestle, Glow Mesa and Relay Rush offscreen bodies remain camera holds. Integrating the separate camera task requires a fresh combined-tree census; the UI-source hash alone does not certify that merge.

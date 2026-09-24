@@ -1,0 +1,24 @@
+(node:33177) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 3 tests using 1 worker
+
+
+
+(node:33236) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[1/3] [mobile-chrome] › e2e/m2-05b-overwhelm-valves.spec.ts:223:1 › lullFloor12 only clamps post-wave-12 pulse spacing
+
+(node:33236) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[2/3] [mobile-chrome] › e2e/run-suspend.spec.ts:282:1 › legacy no-controls restore at Territory I keeps the removed ring and its hints absent
+[3/3] [mobile-chrome] › e2e/same-laws-harvest-parity.spec.ts:110:1 › mouse and touch dispatch travel, then grant one rider-rate tick per command
+[mobile-chrome] › e2e/same-laws-harvest-parity.spec.ts:110:1 › mouse and touch dispatch travel, then grant one rider-rate tick per command
+same-laws parity [mobile-chrome] seam=gold-seam-1
+| tick | player dispatch (s after command) | rider HARVEST (s after order) | gold | cumulative |
+|---|---|---|---|---|
+| 1 | 1.867 | 1.867 | 5 | 5 / 5 |
+| 2 | 1.900 | 1.900 | 5 | 10 / 10 |
+
+SAME_LAWS_ASSAY_SLIP {"eventLogHash":"fnv1a32:a6c04f80","outcome":{"secured":false,"waves":0,"gold":10,"timeAlive":20.033333},"securedSnapshot":null,"ticks":601,"wallMs":2643}
+
+  3 passed (21.4s)

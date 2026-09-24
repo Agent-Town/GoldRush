@@ -1,0 +1,4 @@
+# Retain full Playwright traces locally; each embeds unchanged asset payloads.
+# Commit failure screenshots, contexts, JSON reports and a trace checksum inventory.
+failures/**/*.zip
+failures/**/.playwright-artifacts-*/

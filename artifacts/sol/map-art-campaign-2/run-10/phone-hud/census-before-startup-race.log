@@ -1,0 +1,18 @@
+e8-low-orbit 390 union 13.41 landmarks claw-carcass-rig:6.99
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+page.waitForFunction: TypeError: Cannot read properties of undefined (reading 'timeAlive')
+    at eval (eval at predicate (eval at evaluate (:303:30)), <anonymous>:1:41)
+    at predicate (eval at evaluate (:303:30), <anonymous>:7:27)
+    at next (eval at evaluate (:303:30), <anonymous>:29:33)
+    at eval (eval at evaluate (:303:30), <anonymous>:42:13)
+    at UtilityScript.evaluate (<anonymous>:305:16)
+    at UtilityScript.<anonymous> (<anonymous>:1:44)
+    at census (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/scripts/phone-hud-entry-census.mjs:91:18)
+    at async file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/scripts/phone-hud-entry-census.mjs:166:3 {
+  log: []
+}
+
+Node.js v26.4.0
