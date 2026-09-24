@@ -56,7 +56,13 @@ test('legacy single-profile scores migrate into Robin with difficulty and hints 
 
   const state = await readJson<ProfileState>(page, PROFILE_KEY);
   expect(state.activeId).toBe('robin');
-  expect(state.profiles[0]).toMatchObject({ name: 'Robin', difficultyPreset: 'trail', hintsSeen: [] });
+  expect(state.profiles[0]).toMatchObject({ name: 'Robin', difficultyPreset: 'trail' });
+  // NOT an exact `hintsSeen: []` (F-UX1-5, re-pinned by the s2675 fire). The first-boot story beat
+  // `9336b269c` legitimately marks `story:first-boot` during the very boot this row drives, so the
+  // exact-list mirror went red on clean main on BOTH projects — received `['story:first-boot']`.
+  // The rule this row is named for is that MIGRATION carries no play-earned hint across; the two
+  // lines below still prove that marking one works.
+  expect(state.profiles[0]?.hintsSeen).not.toContain('first-run');
   expect(await readJson<unknown[]>(page, profileDataKey('robin', SCOREBOARD_KEY))).toHaveLength(1);
   expect(await page.evaluate(() => window.__GR_PROFILE__?.markHintSeen('first-run'))).toBe(true);
   expect((await readJson<ProfileState>(page, PROFILE_KEY)).profiles[0]?.hintsSeen).toContain('first-run');
