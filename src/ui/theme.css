@@ -2097,9 +2097,17 @@
 /* Run-10 entry census: keep the compact confirmation control centred and
    above 44px; the mounted contract confines the rule to measured entries. */
 @media (width: 390px) and (min-height: 701px) {
-  body:has(#game-canvas[data-terrain3d-pilot-contract="e1-night-shift"]) #confirm-button {
+  body:has(#game-canvas:is([data-terrain3d-pilot-contract="e1-night-shift"], [data-terrain3d-pilot-contract="e1-twin-banks"])) #confirm-button {
     width: 60px;
     right: 8px;
     bottom: 8px;
+  }
+
+  /* Keep the stick's hit area, centre, knob and input mapping unchanged. */
+  body:has(#game-canvas[data-terrain3d-pilot-contract="e1-twin-banks"]) #touch-stick {
+    background: transparent;
+  }
+  body:has(#game-canvas[data-terrain3d-pilot-contract="e1-twin-banks"]) #touch-knob {
+    box-shadow: none;
   }
 }
