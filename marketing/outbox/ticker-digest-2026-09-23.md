@@ -87,7 +87,9 @@ authority exact — the fidelity is in what the rider sees, not in what the map 
   console and zero capture errors — the detail was bought at the triangle ceiling (3,000 a body), not out of
   the frame.
 - **What it does cost is download, and only outside the opening epoch.** The E1 first-town payload ends the day
-  at **34,311,999 B** (it moved **+134 B** across the whole nine maps, because none of them is E1 art), while
+  at **34,311,999 B**, up from **34,309,830 B** at the entry-framing landing — **+2,169 B** across ten slices
+  (+2,035 at the Pressure Garden, +1 at the Incline, +133 at the Canyon Works, unmoved after that), and **none
+  of it E1 art**: every review records "no E1 art changes" for its own map. Meanwhile
   the raw runtime grew where the new maps live: **+15,677,584 B** at the Canyon Works (almost all of it the
   three-atlas panorama, 836,136 → 16,459,928 B, an explicit E3 cost), **+11.8 MB** at the Picnic, **+159,892 B**
   at the Boneyard and **+92,996 B** at Half-Life Hollow.
