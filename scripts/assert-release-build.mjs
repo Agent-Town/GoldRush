@@ -51,7 +51,11 @@ if (leakedAssets.length) fail(`later plate/GLB assets emitted: ${leakedAssets.sl
 // shut on CLEAN MAIN. Match the module name only, and anchor the tail with `$` so a genuine era
 // suffix (`icons-e2`, `...-e4`) is still caught once the hash is stripped (F-1382-1).
 const moduleName = (file) => basename(file, extname(file)).replace(/-[A-Za-z0-9_-]{8}-diet-[0-9a-f]{8}$/, '');
-const laterEraNamed = files.filter((file) => /(?:^|[.-])e(?:[2-9]|10)(?:[.-]|$)/.test(moduleName(file)));
+// F-RGD-1 (2026-09-24): a sprite sheet's compass token collides with the era token: `char-jumper-e4-codex-v1-r0c0` is
+// the Claim Jumper's EAST plate, four cells (owner 2026-09-19), not an era-4 asset. A direction plate is
+// `<char stem>-<n|e|s|w|ne|nw|se|sw><4|8>-codex-v<n>[-r<row>c<col>]`; it is excused here by that shape only.
+const directionPlate = /^char-[a-z0-9-]+-(?:n|e|s|w|ne|nw|se|sw)(?:4|8)-codex-v\d+(?:-r\d+c\d+)?$/;
+const laterEraNamed = files.filter((file) => !directionPlate.test(moduleName(file)) && /(?:^|[.-])e(?:[2-9]|10)(?:[.-]|$)/.test(moduleName(file)));
 if (laterEraNamed.length) fail(`later era assets emitted: ${laterEraNamed.map((file) => basename(file)).slice(0, 8).join(', ')}`);
 const laterEraAssets = files.map((file) => basename(file)).filter((file) =>
   /^(?:boss-railcar-|char-(?:railtough|steamwrecker|coalthief)-|bld-boiler-house-|ceremony-stage-t(?:[2-9]|10)-|kit-era-(?:[2-9]|10)-)/.test(file),
