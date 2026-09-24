@@ -360,7 +360,7 @@ async function route(
   context: AccountsContext,
   handler: (value: { request: Request; env: AccountsEnv; cors: Record<string, string> }) => Promise<Response>,
 ): Promise<Response> {
-  const cors = corsHeaders(context.request, context.env.ALLOWED_CORS_ORIGINS);
+  const cors = corsHeaders(context.request, context.env);
   if (!cors) return json({}, { ok: false, error: 'cors_forbidden', message: 'Origin not allowed.' }, 403);
   if (context.request.method === 'OPTIONS') return new Response(null, { status: 204, headers: cors });
   try {
@@ -371,7 +371,29 @@ async function route(
   }
 }
 
-function corsHeaders(request: Request, extraOrigins?: ReadonlySet<string>): Record<string, string> | null {
+// SEC-8 (outside review 2026-09-24): this allowlist admitted `http://localhost:*` and
+// `http://127.0.0.1:*` UNCONDITIONALLY, in production, on the door that mints and accepts sign-in
+// codes and hands back a session token. Anything a browser runs on the player's own machine — a
+// page on a dev server, an extension's injected origin — could therefore talk to the live accounts
+// door with the browser's cookies and read the answers, because the reply carried
+// Access-Control-Allow-Origin for whatever localhost port asked.
+//
+// The dev arm now requires the PRODUCTION MAIL SENDER TO BE UNBOUND, which is the one marker a
+// REQUEST cannot reach: `RESEND_API_KEY` is an environment binding (Pages project vars;
+// `server/ledger/serve.mjs` for the droplet) and nothing derives it from a header, an origin or a
+// host. This is deliberately the same unspoofable condition sec-signin-hardening-1 chose for
+// `isDev` below, for the same reason recorded there: a localhost HOST or ORIGIN is whatever the
+// caller writes, and the droplet forwards the caller's own `Host:` header.
+//
+// WHY NOT `isDev(env)` ITSELF (which also demands DEV_AUTH === '1'), measured rather than assumed:
+// `scripts/test-accounts.mjs`'s unconfigured arm starts the worker with NEITHER binding and asserts
+// that `/api/request-code` answers an honest 503 — with `Origin: http://localhost:5188`. Requiring
+// DEV_AUTH here turns that answer into a 403 cors_forbidden, i.e. a developer who has configured
+// nothing yet gets a misleading CORS refusal instead of the truthful "sign-in is not enabled". The
+// half of `isDev` that closes the production hole is the sender binding, and that half is kept.
+// Both live doors bind the sender (the droplet since 2026-08-24, Pages for the accounts flow), so
+// production admits only the three named origins plus a `*.gold-rush-3in.pages.dev` preview.
+function corsHeaders(request: Request, env: AccountsEnv): Record<string, string> | null {
   const origin = request.headers.get('Origin');
   const headers: Record<string, string> = {
     'Access-Control-Allow-Headers': 'authorization, content-type',
@@ -380,7 +402,13 @@ function corsHeaders(request: Request, extraOrigins?: ReadonlySet<string>): Reco
     'Vary': 'Origin',
   };
   if (!origin) return headers;
-  if (ALLOWED_ORIGINS.has(origin) || extraOrigins?.has(origin) || /^https:\/\/[a-z0-9-]+\.gold-rush-3in\.pages\.dev$/.test(origin) || /^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin)) {
+  const devOrigins = !env.RESEND_API_KEY;
+  if (
+    ALLOWED_ORIGINS.has(origin) ||
+    env.ALLOWED_CORS_ORIGINS?.has(origin) ||
+    /^https:\/\/[a-z0-9-]+\.gold-rush-3in\.pages\.dev$/.test(origin) ||
+    (devOrigins && /^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin))
+  ) {
     return { ...headers, 'Access-Control-Allow-Origin': origin };
   }
   return null;
