@@ -2094,8 +2094,9 @@
   .world-info-note[open] > summary::after { display: none; }
 }
 
-/* Run-10 entry census: keep the compact confirmation control centred and
-   above 44px; the mounted contract confines the rule to measured entries. */
+/* Run-10 entry census: these three sculpt entries meet the phone HUD at the
+   viewport edges. Scope to the existing mounted-contract marker so the six
+   previously cleared maps and wider layouts keep their measured geometry. */
 @media (width: 390px) and (min-height: 701px) {
   body:has(#game-canvas:is([data-terrain3d-pilot-contract="e1-night-shift"], [data-terrain3d-pilot-contract="e1-twin-banks"])) #confirm-button {
     width: 60px;
@@ -2109,5 +2110,11 @@
   }
   body:has(#game-canvas[data-terrain3d-pilot-contract="e1-twin-banks"]) #touch-knob {
     box-shadow: none;
+  }
+
+  /* The fort's visible parapet occupies the top 90px at the stock entry.
+     Retain the complete status rail immediately below it, with no text fade. */
+  body:has(#game-canvas[data-terrain3d-pilot-contract="e1-baron"]) #hud:not([data-paused="true"]) {
+    padding-top: max(100px, env(safe-area-inset-top));
   }
 }
