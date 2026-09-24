@@ -1,0 +1,10 @@
+import { readFileSync } from 'node:fs';
+const t = readFileSync('STATUS.md', 'utf8');
+const l1 = t.slice(0, t.indexOf('\n'));
+console.log('line1 chars:', l1.length);
+const DESK = /OWNER.{0,2}S? DESK/i;
+const m = [...l1.matchAll(new RegExp(DESK.source, 'gi'))];
+console.log('desk matches in line1:', m.length);
+if (m.length) console.log('desk tail (600):', l1.slice(m[m.length - 1].index).slice(0, 600));
+console.log('--- last 500 chars of line1 ---');
+console.log(l1.slice(-500));
